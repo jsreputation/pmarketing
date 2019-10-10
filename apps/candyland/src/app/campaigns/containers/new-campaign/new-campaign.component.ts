@@ -3,16 +3,17 @@ import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/fo
 import { CampaignsService, SettingsService, OutcomesService, CommsService, LimitsService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
-import { NewCampaignDonePopupComponent } from '../new-campaign-done-popup/new-campaign-done-popup.component';
+import { NewCampaignDonePopupComponent, NewCampaignDonePopupComponentData } from '../new-campaign-done-popup/new-campaign-done-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { map, switchMap } from 'rxjs/operators';
-import { combineLatest, iif, of } from 'rxjs';
+import { combineLatest, iif, of, Observable } from 'rxjs';
 import { IComm, IOutcome } from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -39,7 +40,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService,
     private commsService: CommsService,
     private outcomesService: OutcomesService,
-    private limitsService: LimitsService
+    private limitsService: LimitsService,
+    private audienceService: AudiencesUserService
   ) {
     store.resetCampaign();
   }
@@ -135,36 +137,52 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getDialogData(campaign: any): { title: string, subTitle: string, type?: string } {
-    const type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
-    switch (type) {
-      case 'sms':
-        return {
-          title: 'Yay! You just created a campaign',
-          subTitle: '100  Weblinks are created fo you. Please download the files.',
-          type: 'download'
-        };
-      case 'weblink':
-        return {
-          title: 'Yay! You just created a campaign',
-          subTitle: 'Copy the link and share your campaign.',
-          type: 'weblink'
-        };
-      default:
-        return {
-          title: 'Yay! You just created a campaign',
-          subTitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.'
-        };
+  private getDialogData(campaign: ICampaign): Observable<NewCampaignDonePopupComponentData> {
+    let type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
+    if (campaign.audience) {
+      type = 'download';
     }
+    const title: string = 'Yay! You just created a campaign';
+    let subTitle: string;
+    switch (type) {
+      case 'weblink':
+        subTitle = 'Copy the link and share your campaign.';
+        break;
+      case 'sms':
+      default:
+        break;
+    }
+    return of({
+      title,
+      subTitle,
+      type
+    });
+  }
+
+  private buildCampaignCsv(): Observable<string> {
+    const getUsersPis: Observable<string[]> = this.audienceService
+      .getAllPoolUser(this.campaign.audience.select)
+      .pipe(
+        map((users: IUserApi[]) => users.map(u => u.primary_identifier)),
+      );
+    const cid = this.campaign.id;
+    return combineLatest(getUsersPis, this.blackcombUrl)
+      .pipe(map(([pis, url]: [string[], string]) => {
+        return pis.reduce((p: string, v: string) => `${p}${url}/?pi=${v}&cid=${cid},\n`, 'urls\n');
+      }));
+  }
+
+  private get blackcombUrl(): Observable<string> {
+    // TODO
+    return of('https://generic-blackcomb-dev1.uat.whistler.perxtech.io');
   }
 
   private openDialog(): void {
-    const config = this.getDialogData(this.store.currentCampaign);
-    const dialogRef = this.dialog.open(NewCampaignDonePopupComponent, { data: config });
-
-    dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['/campaigns']);
-    });
+    this.getDialogData(this.store.currentCampaign)
+      .pipe(
+        switchMap((config) => this.dialog.open(NewCampaignDonePopupComponent, { data: config }).afterClosed())
+      )
+      .subscribe(() => this.router.navigate(['/campaigns']));
   }
 
   private getTenants(): void {
@@ -213,5 +231,4 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         );
     }
   }
-
 }

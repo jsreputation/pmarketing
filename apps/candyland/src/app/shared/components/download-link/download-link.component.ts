@@ -7,5 +7,4 @@ import { Component, Input } from '@angular/core';
 })
 export class DownloadLinkComponent {
   @Input() public file: string;
-
 }
