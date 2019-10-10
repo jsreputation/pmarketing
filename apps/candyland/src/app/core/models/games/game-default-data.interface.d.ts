@@ -5,4 +5,7 @@ declare interface IGameDefaultData {
   gamesTree?: IGraphic[];
   giftBox?: IGraphic[];
   pinata?: IGraphic[];
+  preScratcgImage?: IGraphic[];
+  postScratchSuccessImage?: IGraphic[];
+  postScratchFailImage?: IGraphic[];
 }

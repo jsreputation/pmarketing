@@ -12,6 +12,10 @@ export enum ControlsName {
   giftBox = 'giftBox',
   gameGift = 'gameGift',
 
+  preScratchImage = 'preScratchImage',
+  postScratchSuccessImage = 'postScratchSuccessImage',
+  postScratchFailImage = 'postScratchFailImage',
+
   stampsNumber = 'stampsNumber',
   preStamp = 'preStamp',
   postStamps = 'postStamps',

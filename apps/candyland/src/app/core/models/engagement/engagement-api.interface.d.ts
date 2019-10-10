@@ -25,6 +25,9 @@ declare interface IEngagementApi {
       closed_pinata_img_url?: string;
       opened_pinata_img_url?: string;
       cracking_pinata_img_url?: string;
+      pre_scratch_img_url?: string;
+      post_scratch_success_img_url?: string;
+      post_scratch_fail_img_url?: string;
       pre_stamp_img_url?: string;
       reward_pre_stamp_img_url?: string;
       post_stamp_img_url?: string;
