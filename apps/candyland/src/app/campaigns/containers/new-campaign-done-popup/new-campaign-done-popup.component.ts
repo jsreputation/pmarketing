@@ -5,6 +5,7 @@ export interface NewCampaignDonePopupComponentData {
   title: string;
   subTitle?: string;
   type?: string;
+  url?: string;
 }
 
 @Component({
@@ -16,7 +17,7 @@ export interface NewCampaignDonePopupComponentData {
 export class NewCampaignDonePopupComponent {
   constructor(
     public dialogRef: MatDialogRef<NewCampaignDonePopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { data: NewCampaignDonePopupComponentData }
+    @Inject(MAT_DIALOG_DATA) public data: NewCampaignDonePopupComponentData
   ) { }
 
   public closeDialog(): void {

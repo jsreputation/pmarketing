@@ -22,14 +22,15 @@ import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignComponent implements OnInit, OnDestroy {
-  public id: string;
+  // private id: string;
   public form: FormGroup;
-  public campaign: ICampaign;
+  private campaign: ICampaign;
+  private campaignBaseURL: string;
   public tenantSettings: ITenantsProperties;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
 
   constructor(
-    private store: CampaignCreationStoreService,
+    public store: CampaignCreationStoreService,
     private stepConditionService: StepConditionService,
     private campaignsService: CampaignsService,
     private router: Router,
@@ -41,7 +42,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private commsService: CommsService,
     private outcomesService: OutcomesService,
     private limitsService: LimitsService,
-    private audienceService: AudiencesUserService
+    private audienceService: AudiencesUserService,
   ) {
     store.resetCampaign();
   }
@@ -123,7 +124,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     }
     const hasLimitData = () => this.store.currentCampaign.limits && this.store.currentCampaign.limits.times;
     saveCampaign$.pipe(
-      tap((c: IJsonApiPayload<ICampaignAttributes>) => this.store.currentCampaign.id = c.data.id),
+      tap((res: IJsonApiPayload<ICampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
       switchMap(
         (res) => iif(hasLimitData, updateLimitData$(res), of(res))
       )
@@ -144,11 +145,17 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     if (type === 'weblink' && campaign.audience) {
       return this.buildCampaignCsv(campaign)
         .pipe(
-          map(csv => ({
-            title,
-            subTitle: csv,
-            type: 'download'
-          }))
+          map(csv => {
+            // const b = new Blob([csv], { type: 'application/csv;charset=utf-8;' });
+            //  const url = URL.createObjectURL(b);
+            const url = `data:application/octet-stream;charset=utf-16le;base64,${btoa(csv)}`;
+
+            return {
+              title,
+              url,
+              type: 'download'
+            };
+          })
         );
     }
     if (type === 'weblink') {
@@ -156,7 +163,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         .pipe(map(url => ({
           title,
           subTitle: 'Copy the link and share your campaign.',
-          url: `${url}?cid=${campaign.id}`
+          url,
+          type
         })));
     }
 
@@ -172,16 +180,14 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       .pipe(
         map((users: IJsonApiItem<IUserApi>[]) => users.map(u => u.attributes.primary_identifier)),
       );
-    const cid = campaign.id;
     return combineLatest(getUsersPis, this.blackcombUrl)
       .pipe(map(([pis, url]: [string[], string]) => {
-        return pis.reduce((p: string, v: string) => `${p}${url}/?pi=${v}&cid=${cid},\n`, 'urls\n');
+        return pis.reduce((p: string, v: string) => `${p}${url}&pi=${v},\n`, 'urls,\n');
       }));
   }
 
   private get blackcombUrl(): Observable<string> {
-    // TODO
-    return of('https://generic-blackcomb-dev1.uat.whistler.perxtech.io');
+    return of(this.campaignBaseURL);
   }
 
   private openDialog(): void {
@@ -196,6 +202,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.settingsService.getTenants()
       .subscribe((res: Tenants) => {
         this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+        this.campaignBaseURL = res.display_properties.campaign_base_url;
         this.cdr.detectChanges();
       });
   }
