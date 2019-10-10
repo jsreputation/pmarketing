@@ -1,0 +1,32 @@
+<header class="page-header">
+  <h1 class="title">Loyalty Program</h1>
+  <cl-button (click)="openDialogCreate()" classList="primary">Create New</cl-button>
+</header>
+
+<section class="content">
+  <ng-container *ngIf="hasData">
+    <cl-loyalty-grid [dataSource]="dataSource"
+                     [menuOptions]="options"
+                     (menuTapped)="menuOptionTapped($event)">
+    </cl-loyalty-grid>
+    <!--paginator-->
+    <div class="table-card">
+      <cl-paginator [dataSource]="dataSource"
+                    [pageSize]="5"
+                    [pageSizeOptions]="[5, 10, 20]"
+      ></cl-paginator>
+    </div>
+    <!--/ paginator-->
+  </ng-container>
+
+  <cl-no-data *ngIf="(dataSource.data).length === 0">
+    <img class="no-data-img" src="/assets/images/no-data/engagements-empty-illustration.svg" alt="">
+    <h2 class="no-data-title">
+      Build your customer experience, now!
+    </h2>
+    <p class="no-data-text">
+      Let&rsquo;s begin by creating your first Engagement
+    </p>
+  </cl-no-data>
+</section>
+
