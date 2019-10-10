@@ -62,14 +62,16 @@ export class CampaignsHttpAdapter {
     return data.map(
       reward => {
         let rewardData;
-        if (reward.value) {
+        if (reward.value && reward.value.id) {
           rewardData = {
+            id: reward.value.outcomeId,
             result_id: reward.value.id,
             result_type: 'reward',
             probability: reward.probability / 100 || null
           };
         } else {
           rewardData = {
+            id: reward.value.outcomeId,
             no_outcome: true,
             probability: reward.probability / 100 || null
           };
