@@ -46,6 +46,10 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     return this.form.get('audience');
   }
 
+  public get datenow(): Date {
+    return new Date();
+  }
+
   constructor(
     public store: CampaignCreationStoreService,
     public stepConditionService: StepConditionService,
@@ -75,6 +79,9 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   }
 
   private initData(): void {
+    if (!this.form) {
+      return;
+    }
     this.form.valueChanges
       .pipe(
         untilDestroyed(this),
