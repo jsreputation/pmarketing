@@ -70,12 +70,17 @@ export class OrderComponent implements OnInit {
 
   public onCompleteTransaction(): void {
     const merchantUsername = this.tokenStorage.getAppInfoProperty('merchantUsername');
+
+    // 0 padded date
+    const date = new Date();
+    const dateStamp = ( '0' + date.getDate()).slice(-2) + ('0' + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString();
+
     from(this.selectedProducts)
       .pipe(
         mergeMap((product: IProduct) => {
           return this.merchantAdminService.createTransaction(
             this.payload.id, merchantUsername, product.price, product.currency,
-            'purchase', product.name + '' + product.description);
+            'purchase', dateStamp + '-' + this.payload.id, 'UAT pharmacy', product.name);
         }))
       .subscribe((transaction: IMerchantAdminTransaction) => {
         this.notificationService.addSnack('Transaction ID: ' + transaction.id + 'completed');
