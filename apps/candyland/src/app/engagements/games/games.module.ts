@@ -25,8 +25,8 @@ import {
 import { GamesRoutingModule } from './games-routing.module';
 import { NewShakePageComponent } from './containers/new-shake-page/new-shake-page.component';
 import { NewPinataPageComponent } from './containers/new-pinata-page/new-pinata-page.component';
-import { GameComponent } from './containers/game/game.component';
 import { NewScratchPageComponent } from './containers/new-scratch-page/new-scratch-page.component';
+import { GameComponent } from './containers/game/game.component';
 
 @NgModule({
   declarations: [
