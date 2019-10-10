@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, ElementRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop } from 'rxjs';
 
@@ -26,7 +26,17 @@ export class TabsFilterComponent implements ControlValueAccessor {
   public onChange: any = noop;
   public onTouched: any = noop();
 
-  constructor(private cd: ChangeDetectorRef) {
+  constructor(private cd: ChangeDetectorRef, private el: ElementRef,) {
+  }
+
+  left() {
+    let el = this.el.nativeElement.querySelector(".mat-tab-label-container");
+    el.scrollLeft -= 100;
+  }
+
+  right() {
+    let el = this.el.nativeElement.querySelector(".mat-tab-label-container");
+    el.scrollLeft += 100;
   }
 
   public changeTab(value: any): void {
