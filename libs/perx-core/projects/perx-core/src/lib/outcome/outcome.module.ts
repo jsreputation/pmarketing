@@ -4,10 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { WhistlerInstantOutcomeService } from './whistler-instant-outcome.service';
 import { Config } from '../config/config';
 import { InstantOutcomeService } from './instant-outcome.service';
+import { RewardsService } from '../rewards/rewards.service';
 
-export function instantRewardsSvcFactory(http: HttpClient, config: Config): InstantOutcomeService {
+export function instantRewardsSvcFactory(http: HttpClient, config: Config, rewardService: RewardsService): InstantOutcomeService {
   // Make decision on what to instantiate base on config
-  return new WhistlerInstantOutcomeService(http, config);
+  return new WhistlerInstantOutcomeService(http, config, rewardService);
 }
 
 @NgModule({
@@ -19,7 +20,7 @@ export function instantRewardsSvcFactory(http: HttpClient, config: Config): Inst
     {
       provide: InstantOutcomeService,
       useFactory: instantRewardsSvcFactory,
-      deps: [HttpClient, Config]
+      deps: [HttpClient, Config, RewardsService]
     }
   ]
 })

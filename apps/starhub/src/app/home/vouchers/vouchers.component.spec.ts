@@ -5,14 +5,13 @@ import { MatCardModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IVoucherService } from '@perx/core';
 import { of } from 'rxjs';
-import { vouchers } from 'src/app/vouchers.mock';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
   let fixture: ComponentFixture<VouchersComponent>;
   const vouchersServiceStub = {
-    getAll: () => of(vouchers)
+    getAll: () => of()
   };
 
   beforeEach(async(() => {

@@ -15,16 +15,8 @@ describe('RedemptionComponent', () => {
   let fixture: ComponentFixture<RedemptionComponent>;
   const mockVoucher: Partial<Voucher> = {
     id: 2,
-    rewardId: 2,
     state: VoucherState.issued,
-    name: 'sir',
-    redemptionType: RedemptionType.offline,
-    thumbnailImg: 'nil',
-    rewardBanner: 'nil',
-    merchantImg: 'nil',
-    merchantName: 'nil',
     expiry:  null,
-    description: []
   };
 
   const voucherServiceStub = {

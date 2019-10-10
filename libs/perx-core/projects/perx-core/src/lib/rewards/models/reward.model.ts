@@ -1,3 +1,11 @@
+export enum RedemptionType {
+  pin = 'pin',
+  txtCode = 'txtCode',
+  qr = 'qrcode',
+  none = 'none',
+  offline = 'offline'
+}
+
 export interface IReward {
   id: number;
   name: string;
@@ -15,6 +23,7 @@ export interface IReward {
   merchantWebsite?: string;
   termsAndConditions: string;
   howToRedeem: string;
+  redemptionType?: RedemptionType;
   categoryTags?: ICategoryTags[];
   inventory?: Inventory;
 }

@@ -1,7 +1,7 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
 import { of, Observable, throwError, Subject } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
@@ -12,14 +12,24 @@ import {
   IResetPasswordData,
   ISignUpData,
   IChangePasswordData,
-  ILoginResponse,
   IChangePhoneData
 } from './models/authentication.model';
 import { Config } from '../../config/config';
-import { IJsonApiListPayload } from '../../jsonapi.payload';
+import { IJsonApiListPayload, IJsonApiItemPayload } from '../../jsonapi.payload';
 
 interface ICognitoLogin {
   jwt: string;
+}
+interface ICognitoCreateAndLogin {
+  jwt: string;
+  email_address: string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  primary_identifier: string;
+  properties: any;
+  title: string;
+  urn: string;
 }
 
 interface IUserJWTRequest {
@@ -33,6 +43,7 @@ interface IUserJWTRequest {
 export class WhistlerAuthenticationService extends AuthenticationService implements AuthService {
   private apiHost: string;
   private preAuthEndpoint: string;
+  private createUsersEndPoint: string;
   private lastURL: string;
   private retries: number = 0;
   private maxRetries: number = 2;
@@ -47,8 +58,10 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     this.apiHost = config.apiHost as string;
     if (!config.production) {
       this.preAuthEndpoint = 'http://localhost:4000/cognito/login';
+      this.createUsersEndPoint = 'http://localhost:4000/cognito/users';
     } else {
       this.preAuthEndpoint = config.baseHref + 'cognito/login';
+      this.createUsersEndPoint = config.baseHref + 'cognito/users';
     }
     this.$failedAuthObservableSubject = new Subject();
   }
@@ -64,32 +77,32 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return of(!!token);
   }
 
-  public refreshToken(): Observable<ILoginResponse> {
+  public refreshToken(): Observable<any> {
+    /**
+     * Conditions
+     * login success, but Token expired, when API return 401, this function will be trigged.
+     *  1 IAM user need to redirect to login page
+     *  2 Cognito user we store PI at localStorage when user auto login, then help user to auto login.
+     *
+     * TODO: Andrew, failedAuthObservableSubject is not working, affect refresh page when token is not valid
+     */
+
+    let isRefreshTokenComplete = true;
     this.retries++;
-    return this.getUserWithJWT().pipe(
-      tap(
-        () => {
-          // @ts-ignore
-          const userBearer = resp.headers.get('Authorization');
-          if (!userBearer) {
-            throw new Error('Get authentication token failed!');
-          }
-          this.saveUserAccessToken(userBearer.split(' ')[1]);
-        },
-        () => {
-          if (this.retries >= this.maxRetries) {
-            this.$failedAuthObservableSubject.next(true);
-            this.logout();
-            return false;
-          }
-        }
-      ),
-      map((res: IJsonApiListPayload<ICognitoLogin>) => ({ bearer_token: res.data[0].attributes.jwt }))
-    );
+    if (this.retries <= this.maxRetries && this.getPI()) {
+      this.autoLogin().subscribe(
+        () => console.log('finished refresh token')
+      );
+    } else {
+      isRefreshTokenComplete = false;
+      this.logout();
+    }
+    this.$failedAuthObservableSubject.next(!isRefreshTokenComplete);
+    return of(isRefreshTokenComplete);
   }
 
   public autoLogin(): Observable<any> {
-    return this.getUserWithJWT().pipe(
+    return this.getUserWithPI().pipe(
       tap(
         (res: IJsonApiListPayload<ICognitoLogin>) => {
           const userBearer = res.data[0].attributes.jwt;
@@ -97,20 +110,43 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
             throw new Error('Get authentication token failed!');
           }
           this.saveUserAccessToken(userBearer);
-        },
-        () => this.$failedAuthObservableSubject.next(true)
+        }
       )
     );
   }
 
-  private getUserWithJWT(): Observable<IJsonApiListPayload<ICognitoLogin>> {
-    const user = (window as any).primaryIdentifier;
+  public createUserAndAutoLogin(pi: string): Observable<any> {
+    return this.createUserWithPI(pi).pipe(
+      tap(
+        (res: IJsonApiItemPayload<ICognitoCreateAndLogin>) => {
+          const userBearer = res.data.attributes.jwt;
+          if (!userBearer) {
+            throw new Error('Get authentication token failed!');
+          }
+          this.savePI(pi);
+          this.saveUserAccessToken(userBearer);
+        }
+      )
+    );
+  }
+
+  private getUserWithPI(): Observable<IJsonApiListPayload<ICognitoLogin>> {
+    const user = (window as any).primaryIdentifier || this.getPI();
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: user
     };
 
     return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
+  }
+
+  private createUserWithPI(pi: string): Observable<IJsonApiItemPayload<ICognitoCreateAndLogin>> {
+    const userJWTRequest: IUserJWTRequest = {
+      url: location.host,
+      identifier: pi
+    };
+
+    return this.http.post<IJsonApiItemPayload<ICognitoCreateAndLogin>>(this.createUsersEndPoint, userJWTRequest);
   }
 
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
@@ -162,7 +198,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public logout(): void {
-    this.tokenStorage.clearAppInfoProperty('userAccessToken');
+    this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'pi']);
   }
   // @ts-ignore
   public forgotPassword(phone: string): Observable<IMessageResponse> {
@@ -223,5 +259,13 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
 
   public saveAppAccessToken(accessToken: string): void {
     this.tokenStorage.setAppInfoProperty(accessToken, 'appAccessToken');
+  }
+
+  public getPI(): string {
+    return this.tokenStorage.getAppInfoProperty('pi');
+  }
+
+  public savePI(pi: string): void {
+    this.tokenStorage.setAppInfoProperty(pi, 'pi');
   }
 }

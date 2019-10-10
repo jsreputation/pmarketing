@@ -56,7 +56,7 @@ export class SurveyService {
     return this.surveyHttp.updateSurvey(id, {data: sendData});
   }
 
-  public getSurveyReport(id: string): Observable<any> {
+  public getSurveyReport(id: string): Observable<IBaseQuestionReport> {
     return this.surveyHttp.getSurveyReport(id);
   }
 }

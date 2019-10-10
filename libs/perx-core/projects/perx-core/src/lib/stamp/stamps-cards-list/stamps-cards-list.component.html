@@ -1,0 +1,21 @@
+<div class="card-list-container">
+  <mat-card
+    *ngFor="let stampCard of stampCardsArr | async"
+    mat-ripple
+    (click)="onClick(stampCard)"
+  >
+    <div class="stamp-content">
+      <div class="stamp-img__wrapper">
+        <img src="{{ stampCard.displayProperties.cardBgImage }}" alt="stampimg" />
+      </div>
+      <div class="stamp-details">
+        <h1>
+          {{ stampCard.title }}
+        </h1>
+        <p *ngIf="stampCard.subTitle">
+          {{ stampCard.subTitle }}
+        </p>
+      </div>
+    </div>
+  </mat-card>
+</div>
