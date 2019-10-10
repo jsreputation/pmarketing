@@ -31,7 +31,7 @@ export class SignupComponent implements PageAppearence {
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
       accept_terms: [false, Validators.required],
       accept_marketing: [false, Validators.required],
-      countryCode: ['', Validators.required]
+      countryCode: ['852', Validators.required]
     });
   }
 

@@ -44,6 +44,8 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     rewards: this.fb.array([], [ClValidators.sumMoreThan({ fieldName: 'probability' })]
     )
   });
+  @Input() public slotNumber: number;
+
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;
@@ -116,7 +118,12 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
   public initRewardsList(): void {
     this.rewards.reset();
-    const possibleOutcomes = this.campaign.rewardsList.map(data => this.rewardsService.getReward(data.resultId));
+    const possibleOutcomes = this.campaign.rewardsList.filter(data => {
+      if (!this.slotNumber) {
+        return true;
+      }
+      return data.lootBoxId === this.slotNumber;
+    }).map(data => this.rewardsService.getReward(data.resultId));
     combineLatest(possibleOutcomes).subscribe(
       rewards => rewards.map((reward: IRewardEntity) => this.addReward(reward))
     );

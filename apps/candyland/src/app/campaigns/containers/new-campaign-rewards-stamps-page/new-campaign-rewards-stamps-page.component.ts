@@ -30,6 +30,9 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
 
   public ngOnInit(): void {
     super.ngOnInit();
+    if (!this.form) {
+      return;
+    }
     const stampsSlotNumber = this.store.currentCampaign.template.slots;
     const stampsNumber = +this.store.currentCampaign.template.nb_of_slots;
     for (const slotNumber of stampsSlotNumber) {
@@ -52,8 +55,8 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     this.cd.detach();
   }
 
-  public get rewardsList(): FormArray {
-    return this.form.get('rewardsList') as FormArray;
+  public get rewardsListCollection(): FormArray {
+    return this.form.get('rewardsListCollection') as FormArray;
   }
 
   public get stampRule(): FormArray {
@@ -65,11 +68,11 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   }
 
   public addReward(formGroup: FormGroup): void {
-    this.rewardsList.push(formGroup);
+    this.rewardsListCollection.push(formGroup);
   }
 
   public removeReward(index: number): void {
-    this.rewardsList.removeAt(index);
+    this.rewardsListCollection.removeAt(index);
   }
 
   public addStampRule(): void {
@@ -84,6 +87,9 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
 
   private initForm(): void {
     this.form = this.formService.getForm();
+    if (!this.form) {
+      return;
+    }
     this.form.valueChanges
       .pipe(
         untilDestroyed(this),
