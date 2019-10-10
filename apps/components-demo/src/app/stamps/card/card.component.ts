@@ -12,7 +12,9 @@ import { startWith } from 'rxjs/operators';
 export class CardComponent implements OnInit, AfterViewInit {
   public stamps: PuzzleCollectStamp[];
   public rewardArr: PuzzleCollectReward[];
+  public availStamps: number;
   public stampsRedeemedNumber: number;
+  public showCounter: boolean = false;
   @ViewChild('nbStamps', { static: true }) public nbStamps: MatSlider;
   @ViewChild('nbStampsRedeemed', { static: true }) public nbStampsRedeemed: MatSlider;
   @ViewChildren(MatCheckbox) public matCheckboxes: QueryList<MatCheckbox>;
@@ -20,6 +22,7 @@ export class CardComponent implements OnInit, AfterViewInit {
   constructor() {
     this.stamps = [];
     this.rewardArr = [];
+    this.availStamps = 0;
   }
 
   public ngOnInit(): void {
@@ -40,6 +43,9 @@ export class CardComponent implements OnInit, AfterViewInit {
 
   public ngAfterViewInit(): void {
     this.matCheckboxes.forEach((matbox: MatCheckbox) => {
+      if ((matbox.name) === 'toggler') {
+        return;
+      }
       matbox.change.subscribe((value) => {
         const sourceIdStr = value.source.id;
         const numId = sourceIdStr.substr(sourceIdStr.lastIndexOf('-') + 1);
@@ -54,5 +60,9 @@ export class CardComponent implements OnInit, AfterViewInit {
   // helper function for rendering # slots using ngFor
   public arrayFromNumber(n: number): any[] {
     return Array(n);
+  }
+
+  public toggleShow(): void {
+    this.showCounter = !this.showCounter;
   }
 }
