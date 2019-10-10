@@ -16,12 +16,14 @@ import { GameModule, ConfigModule } from '@perx/core';
 import { environment } from '@cl-environments/environment';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
+import { NewScratchTheCardComponent } from './containers/new-scratch-the-card/new-scratch-the-card.component';
 
 @NgModule({
   declarations: [
     NewShakePageComponent,
     NewPinataPageComponent,
     GameComponent,
+    NewScratchTheCardComponent,
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
