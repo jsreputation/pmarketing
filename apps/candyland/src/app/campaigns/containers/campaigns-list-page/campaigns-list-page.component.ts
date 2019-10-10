@@ -2,8 +2,8 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CustomDataSource, DataSourceStates } from '@cl-shared/table/data-source/custom-data-source';
 import { CampaignsService } from '@cl-core/services';
 import { Router } from '@angular/router';
-import { ICampaignTableData } from '@perx/whistler';
 import { MatSnackBar } from '@angular/material';
+import { ICampaignTableData } from '@cl-core/models/campaign/campaign.interface';
 
 @Component({
   selector: 'cl-campaigns-list-page',

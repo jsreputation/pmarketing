@@ -9,6 +9,7 @@ import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-cam
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { ActivatedRoute } from '@angular/router';
+import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -80,7 +81,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
         distinctUntilChanged(),
         debounceTime(500)
       )
-      .subscribe((val) => {
+      .subscribe((val: ICampaign) => {
         this.store.updateCampaign(val);
         const toggleConfig = this.newCampaignDetailFormService.getToggleConfig(this.form);
         this.toggleControlService.updateFormStructure(toggleConfig);
@@ -93,9 +94,9 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
       this.store.currentCampaign$
         .asObservable()
         .pipe(untilDestroyed(this))
-        .subscribe(data => {
+        .subscribe((data: ICampaign) => {
           if (data && data.campaignInfo && this.isFirstInit) {
-            const select = data.audience.select.toString();
+            const select = data.audience.select;
             data.audience = { ...data.audience, select };
             this.form.patchValue(data);
             if (data.campaignInfo.labels) {
