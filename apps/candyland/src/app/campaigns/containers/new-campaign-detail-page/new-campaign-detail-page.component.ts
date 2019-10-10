@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup, Validators } from '@angular/forms';
 import { AudiencesService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
@@ -34,6 +34,10 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     return this.form.get('channel');
   }
 
+  public get channelType(): AbstractControl | null {
+    return this.form.get('channel').get('type');
+  }
+
   public get schedule(): AbstractControl | null {
     return this.form.get('channel.schedule');
   }
@@ -44,6 +48,14 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
 
   public get audience(): AbstractControl | null {
     return this.form.get('audience');
+  }
+
+  public get pool(): AbstractControl | null {
+    return this.form.get('audience').get('select');
+  }
+
+  public get datenow(): Date {
+    return new Date();
   }
 
   constructor(
@@ -61,6 +73,17 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
 
   public ngOnInit(): void {
     super.ngOnInit();
+    this.channelType.valueChanges.subscribe(
+      value => {
+        if (value === 'sms') {
+          this.pool.setValidators([Validators.required]);
+        } else {
+          this.pool.setValidators(null);
+        }
+        this.pool.updateValueAndValidity();
+      }
+    );
+
     this.campaignId = this.route.snapshot.params.id;
     this.isFirstInit = true;
     this.initPools();

@@ -6,8 +6,9 @@ import { CampaignCreationStoreService } from '../../services/campaigns-creation-
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
 import { combineLatest, of, Observable } from 'rxjs';
-import { IComm, IOutcome } from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { IComm } from '@cl-core/models/comm/schedule';
+import { IOutcome } from '@cl-core/models/outcome/outcome';
 
 @Component({
   selector: 'cl-review-campaign',
@@ -40,7 +41,6 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.store.currentCampaign = null;
   }
   // TODO: it need for get right data from back end in the future
   private getCampaignData(): void {
@@ -63,8 +63,9 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
             ([campaign, commTemplate, commEvent, outcomes]:
               [ICampaign, IComm, IComm, IOutcome[]]) => ({
                 ...campaign,
+                audience: { select: commEvent && parseInt(commEvent.pool_id, 10) || null },
                 channel: {
-                  type: campaign.channel.type,
+                  type: commEvent && commEvent.channel || 'weblink',
                   ...commTemplate,
                   ...commEvent
                 },

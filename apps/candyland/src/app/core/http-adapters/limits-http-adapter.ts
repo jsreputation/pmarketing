@@ -1,4 +1,5 @@
-import { ILimit, IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from '@perx/whistler';
+import { IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from '@perx/whistler';
+import { ILimit } from '@cl-core/models/limit/limit.interface';
 
 enum LimitsDurationToAPIMapping {
   day = 'days',
