@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'cl-user-joining-method',
@@ -8,9 +8,17 @@ import { FormGroup } from '@angular/forms';
 })
 export class UserJoiningMethodComponent implements OnInit {
   @Input() public group: FormGroup;
-  constructor() { }
 
-  ngOnInit() {
+  public get joiningMethodGroup(): AbstractControl {
+    return this.group.get('joiningMethod');
+  }
+
+  public get transactionAmount(): AbstractControl {
+    console.log(this.group.get('joiningMethod.transactionAmount').value);
+    return this.group.get('joiningMethod.transactionAmount');
+  }
+
+  public ngOnInit(): void {
   }
 
 }
