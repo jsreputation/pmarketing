@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ProductService, IProduct} from '../services/product.service';
-import {IMerchantAdminService, IMerchantAdminTransaction, NotificationService} from '@perx/core';
+import {IMerchantAdminService, IMerchantAdminTransaction, NotificationService, TokenStorage} from '@perx/core';
 import {from} from 'rxjs';
 import {mergeMap} from 'rxjs/operators';
 
@@ -34,6 +34,7 @@ export class OrderComponent implements OnInit {
     private productService: ProductService,
     private notificationService: NotificationService,
     private merchantAdminService: IMerchantAdminService,
+    private tokenStorage: TokenStorage
   ) {
   }
 
@@ -68,12 +69,18 @@ export class OrderComponent implements OnInit {
   }
 
   public onCompleteTransaction(): void {
+    const merchantUsername = this.tokenStorage.getAppInfoProperty('merchantUsername');
+
+    // 0 padded date
+    const date = new Date();
+    const dateStamp = ( '0' + date.getDate()).slice(-2) + ('0' + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString();
+
     from(this.selectedProducts)
       .pipe(
         mergeMap((product: IProduct) => {
           return this.merchantAdminService.createTransaction(
-            this.payload.id, product.price, product.currency,
-            'purchase', product.name + '' + product.description);
+            this.payload.id, merchantUsername, product.price, product.currency,
+            'purchase', dateStamp + '-' + this.payload.id, 'UAT pharmacy', product.name);
         }))
       .subscribe((transaction: IMerchantAdminTransaction) => {
         this.notificationService.addSnack('Transaction ID: ' + transaction.id + 'completed');
