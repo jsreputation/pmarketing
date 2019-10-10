@@ -1,4 +1,5 @@
-import { IOutcomeAttributes, IOutcome } from '@perx/whistler';
+import { IOutcomeAttributes } from '@perx/whistler';
+import { IOutcome } from '@cl-core/models/outcome/outcome';
 
 export class OutcomesHttpAdapter {
   public static transformAPIResponseToOutcome(data: IJsonApiItem<IOutcomeAttributes>): IOutcome {
