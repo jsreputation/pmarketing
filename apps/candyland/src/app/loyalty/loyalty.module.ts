@@ -26,6 +26,9 @@ import { LoyaltyFormStepFourComponent } from './components/loyalty-form-step-fou
 import { PointsInfoComponent } from './components/points-info/points-info.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProgramMainImageComponent } from './components/program-main-image/program-main-image.component';
+import { UploadGraphicModule } from '@cl-shared';
+import { UserJoiningMethodComponent } from './components/user-joining-method/user-joining-method.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -39,13 +42,16 @@ import { ProgramMainImageComponent } from './components/program-main-image/progr
     LoyaltyFormStepThreeComponent,
     LoyaltyFormStepFourComponent,
     PointsInfoComponent,
-    ProgramMainImageComponent
+    ProgramMainImageComponent,
+    UserJoiningMethodComponent
   ],
   imports: [
     CommonModule,
     LoyaltyRoutingModule,
     ReactiveFormsModule,
     ButtonModule,
+    UploadGraphicModule,
+
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
@@ -56,6 +62,7 @@ import { ProgramMainImageComponent } from './components/program-main-image/progr
     NoDataModule,
     MatStepperModule,
     MatExpansionModule,
+    MatCheckboxModule,
   ],
   providers: [
     LoyaltyFormsService
