@@ -13,7 +13,7 @@ export class StepConditionService {
     return key in this.stepConditions ? this.stepConditions[key].valid : false;
   }
 
-  public getStepFormValue(key: string | number): boolean {
+  public getStepFormValue(key: string | number): any {
     return key in this.stepConditions ? this.stepConditions[key].value : {};
   }
 
