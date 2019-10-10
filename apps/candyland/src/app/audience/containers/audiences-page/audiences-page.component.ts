@@ -4,19 +4,20 @@ import {
   ChangeDetectorRef,
   AfterViewInit,
   OnInit,
-  OnDestroy,
+  OnDestroy
 } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AudiencesService } from '@cl-core/services';
+import { combineLatest, Observable } from 'rxjs';
 import { AddUserPopupComponent } from '../add-user-popup/add-user-popup.component';
 import { FormControl } from '@angular/forms';
 import { ManageListPopupComponent } from '../manage-list-popup/manage-list-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { SettingsService } from '@cl-core-services';
-import { filter, switchMap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
-import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
+import { CustomDataSource, DataSourceStates } from '@cl-shared/table/data-source/custom-data-source';
 
 @Component({
   selector: 'cl-audiences-page',
@@ -31,10 +32,11 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public searchKey: string = 'query';
   public dataSource: CustomDataSource<IUser>;
   public audiencesDataSource: CustomDataSource<IAudiences>;
+  public dataSourceStates: typeof DataSourceStates = DataSourceStates;
 
   public tabsFilterConfig: OptionConfig[] = [
-    { title: 'Users', value: 'users' },
-    { title: 'Audience List', value: 'audience' }
+    {title: 'Users', value: 'users'},
+    {title: 'Audience List', value: 'audience'}
   ];
   public config: any[];
 
@@ -64,10 +66,11 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   /** necessary as we are using untilDestroyed on observables */
-  public ngOnDestroy(): void { }
+  public ngOnDestroy(): void {
+  }
 
   public openAddUserDialog(): void {
-    const dialogRef = this.dialog.open(AddUserPopupComponent, { panelClass: 'audience-dialog' });
+    const dialogRef = this.dialog.open(AddUserPopupComponent, {panelClass: 'audience-dialog'});
 
     dialogRef.afterClosed()
       .pipe(
@@ -76,13 +79,13 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
       )
       .subscribe(() => {
         this.dataSource.updateData();
-        this.snack.open('User successfully created.', 'x', { duration: 2000 });
+        this.snack.open('User successfully created.', 'x', {duration: 2000});
         this.currentTab = 'users';
       });
   }
 
   public openManageListDialog(item: number): void {
-    const dialogRef = this.dialog.open(ManageListPopupComponent, { panelClass: 'manage-list-dialog', data: item });
+    const dialogRef = this.dialog.open(ManageListPopupComponent, {panelClass: 'manage-list-dialog', data: item});
     dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
@@ -97,7 +100,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
         this.searchKey = 'id';
 
         this.audiencesDataSource = new CustomDataSource<IAudiences>(this.audiencesService);
-        const params: HttpParamsOptions = { include: 'users' };
+        const params: HttpParamsOptions = {include: 'users'};
         this.audiencesDataSource.params = params;
         break;
       case 'users':
@@ -109,7 +112,13 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     this.cd.detectChanges();
   }
 
-  get hasData(): boolean {
-    return true;
+  get hasData$(): Observable<boolean> {
+    return combineLatest(this.dataSource.state$, this.audiencesDataSource.state$).pipe(
+      map(([stateUser, stateAudience]) =>
+        (stateUser === this.dataSourceStates.hasDataApi || stateAudience === this.dataSourceStates.hasDataApi) &&
+        stateUser !== this.dataSourceStates.noDataApi
+      ),
+      distinctUntilChanged()
+    );
   }
 }

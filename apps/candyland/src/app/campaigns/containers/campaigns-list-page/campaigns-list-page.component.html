@@ -5,7 +5,7 @@
 
 <section class="content">
   <ng-container [ngSwitch]="dataSource.state$ | async">
-  <ng-container *ngSwitchCase="dataSource.states.hasDataApi">
+  <ng-container *ngSwitchCase="dataSourceStates.hasDataApi">
     <!--    filters-->
     <cl-table-filters [dataSource]="dataSource">
       <ng-container *clTableFilter="'name'; let filter">
@@ -51,7 +51,7 @@
     </div>
   </ng-container>
 
-  <cl-no-data *ngSwitchCase="dataSource.states.noDataApi">
+  <cl-no-data *ngSwitchCase="dataSourceStates.noDataApi">
     <img class="no-data-img" src="/assets/images/no-data/campaign-empty-illustration.svg" alt="">
     <h2 class="no-data-title">
       Engaging with your customers is easy!
