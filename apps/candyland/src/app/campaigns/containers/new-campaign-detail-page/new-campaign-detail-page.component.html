@@ -82,18 +82,17 @@
             Schedule the sending date
           </h3>
         </div>
-
         <div class="card-content">
           <!--send date-->
           <div class="card-row">
             <div class="input-group">
-              <cl-date-picker [control]="schedule.get('sendDate')" placeholder="Send date">
+              <cl-date-picker [control]="schedule.get('sendDate')" [min]="campaignInfo.value.startDate" placeholder="Send date">
               </cl-date-picker>
               <cl-time-picker [control]="schedule.get('sendTime')">
               </cl-time-picker>
             </div>
           </div>
-          <!--recurrence Settings 
+          <!--recurrence Settings
           <div class="card-row form-field">
             <mat-checkbox color="primary" [formControl]="schedule.get('enableRecurrence')">Recurrence Settings
             </mat-checkbox>
