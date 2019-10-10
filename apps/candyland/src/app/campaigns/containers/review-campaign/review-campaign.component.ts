@@ -6,8 +6,8 @@ import { CampaignCreationStoreService } from '../../services/campaigns-creation-
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
 import { combineLatest, of, Observable } from 'rxjs';
-import { IComm, ICampaign, IOutcome } from '@perx/whistler';
-import { EngagementTypeFromAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
+import { IComm, IOutcome } from '@perx/whistler';
+import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 @Component({
   selector: 'cl-review-campaign',
@@ -75,7 +75,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
             const limitParams: HttpParamsOptions = {
               'filter[campaign_entity_id]': campaign.id
             };
-            const eType = EngagementTypeFromAPIMapping[campaign.engagement_type];
+            const eType = campaign.engagement_type;
             return combineLatest(
               of(campaign),
               this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),

@@ -23,6 +23,7 @@ describe('RedemptionComponent', () => {
   const voucher = {
     id: 1,
     rewardId: 1,
+    reward: null,
     state: VoucherState.expired,
     name: '10% OFF Total Bill',
     redemptionType: RedemptionType.pin,
