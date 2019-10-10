@@ -43,7 +43,10 @@ describe('RedemptionComponent', () => {
       termsAndConditions: '',
       howToRedeem: '',
       redemptionType: null,
-      categoryTags: [],
+      categoryTags: [{
+        id: 1,
+        title: 'test'
+      }],
       inventory: null,
     },
     state: VoucherState.expired,
