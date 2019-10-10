@@ -1,10 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 
 import { NewCampaignDetailPageComponent } from './new-campaign-detail-page.component';
 import { MatSelectModule, MatExpansionModule, MatFormFieldModule, MatOptionModule, MatRadioModule, MatCheckboxModule } from '@angular/material';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { DatePickerModule, TimePickerModule, ChipListModule, SmsEditorModule } from '@cl-shared';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, Validators, FormBuilder, FormsModule } from '@angular/forms';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { Subject } from 'rxjs';
 import { StepConditionService } from '../../services/step-condition.service';
@@ -46,31 +46,62 @@ describe('NewCampaignDetailPageComponent', () => {
                 RouterTestingModule,
                 HttpClientTestingModule,
                 BrowserAnimationsModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                FormsModule,
             ],
             providers: [
-            {
-                provide: CampaignCreationStoreService, useValue: {
-                updateCampaign: (data: any) => data,
-                resetCampaign: () => {},
-                currentCampaign$: new Subject()
-                }
-            },
-            { provide: StepConditionService, useValue: {registerStepCondition: () => ({}) }},
-            { provide: NewCampaignDetailFormService, useValue: newCampaignDetailFormServiceStub },
+                {
+                    provide: CampaignCreationStoreService, useValue: {
+                        updateCampaign: (data: any) => data,
+                        resetCampaign: () => { },
+                        currentCampaign$: new Subject()
+                    }
+                },
+                { provide: StepConditionService, useValue: { registerStepCondition: () => ({}) } },
+                { provide: NewCampaignDetailFormService, useValue: newCampaignDetailFormServiceStub },
             ],
             declarations: [NewCampaignDetailPageComponent],
-            schemas: [ NO_ERRORS_SCHEMA ]
+            schemas: [NO_ERRORS_SCHEMA]
         })
             .compileComponents();
     }));
 
-    beforeEach(() => {
+    beforeEach(inject([FormBuilder], (fb: FormBuilder) => {
         fixture = TestBed.createComponent(NewCampaignDetailPageComponent);
         component = fixture.componentInstance;
-        newCampaignDetailFormServiceStub = TestBed.get(NewCampaignDetailFormService);
+        component.form = fb.group({
+            campaignInfo: fb.group({
+                goal: ['Acquire customers', [Validators.required]],
+                startDate: [null, [Validators.required]],
+                startTime: [null, [Validators.required]],
+                endDate: [null, [Validators.required]],
+                endTime: [null, [Validators.required]],
+                disabledEndDate: [false],
+                labels: []
+            }),
+            channel: fb.group({
+                type: ['weblink', [Validators.required]],
+                message: [],
+                schedule: fb.group({
+                    sendDate: [],
+                    sendTime: [],
+                    enableRecurrence: [],
+                    recurrence: fb.group({
+                        times: [],
+                        period: [],
+                        repeatOn: []
+                    })
+
+                })
+            }),
+            audience: fb.group({
+                type: ['select'],
+                file: [],
+                select: []
+            })
+        });
         fixture.detectChanges();
-    });
+    }));
 
     it('should create', () => {
         expect(component).toBeTruthy();
