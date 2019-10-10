@@ -138,23 +138,29 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   private getDialogData(campaign: ICampaign): Observable<NewCampaignDonePopupComponentData> {
-    let type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
-    if (campaign.audience) {
-      type = 'download';
-    }
+    const type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
     const title: string = 'Yay! You just created a campaign';
-    let subTitle: string;
-    switch (type) {
-      case 'weblink':
-        subTitle = 'Copy the link and share your campaign.';
-        break;
-      case 'sms':
-      default:
-        break;
+    if (type === 'weblink' && campaign.audience) {
+      return this.buildCampaignCsv()
+        .pipe(
+          map(csv => ({
+            title,
+            subTitle: csv,
+            type: 'download'
+          }))
+        );
     }
+    if (type === 'weblink') {
+      return this.blackcombUrl
+        .pipe(map(url => ({
+          title,
+          subTitle: 'Copy the link and share your campaign.',
+          url
+        })));
+    }
+
     return of({
       title,
-      subTitle,
       type
     });
   }
