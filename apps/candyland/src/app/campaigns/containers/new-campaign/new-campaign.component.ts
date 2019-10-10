@@ -11,7 +11,8 @@ import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { map, switchMap } from 'rxjs/operators';
 import { combineLatest, iif, of } from 'rxjs';
-import { IComm, IOutcome, ICampaign } from '@perx/whistler';
+import { IComm, IOutcome } from '@perx/whistler';
+import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -22,7 +23,7 @@ import { IComm, IOutcome, ICampaign } from '@perx/whistler';
 export class NewCampaignComponent implements OnInit, OnDestroy {
   public id: string;
   public form: FormGroup;
-  public campaign: any;
+  public campaign: ICampaign;
   public tenantSettings: ITenantsProperties;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
 
@@ -191,7 +192,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         this.outcomesService.getOutcomes(params)).pipe(
           map(
             ([campaign, commTemplate, commEvent, outcomes]:
-              [ICampaign, IComm, IComm, IOutcome[]]) => ({
+              [ICampaign, IComm, IComm, IOutcome[]]): ICampaign => ({
                 ...campaign,
                 channel: {
                   type: campaign.channel.type,

@@ -6,7 +6,9 @@ import { CampaignCreationStoreService } from '../../services/campaigns-creation-
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
 import { combineLatest, of, Observable } from 'rxjs';
-import { IComm, ICampaign, IOutcome } from '@perx/whistler';
+import { IComm, IOutcome } from '@perx/whistler';
+import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+
 @Component({
   selector: 'cl-review-campaign',
   templateUrl: './review-campaign.component.html',
