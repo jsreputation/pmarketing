@@ -107,7 +107,11 @@ export class CampaignsHttpAdapter {
           '',
         channel: data.channel.type
       }
-    } : null;
+    } : {
+        event: {
+          channel: data.channel.type
+        }
+      };
 
     return {
       type: 'entities',
