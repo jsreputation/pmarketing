@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { AbstractControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'cl-program-main-image',
@@ -6,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./program-main-image.component.scss']
 })
 export class ProgramMainImageComponent implements OnInit {
-
+  @Input() public group: FormGroup;
   constructor() { }
 
+  public get mainImage(): AbstractControl {
+    return this.group.get('mainImage');
+  }
   ngOnInit() {
   }
 

@@ -18,7 +18,7 @@ import { TierSetupPopupComponent } from 'src/app/loyalty/containers/tier-setup-p
 import { LoyaltyListPageComponent } from './containers/loyalty-list-page/loyalty-list-page.component';
 import { LoyaltyComponent } from './containers/loyalty/loyalty.component';
 import { LoyaltyRoutingModule } from './loyalty-routing.module';
-import {LoyaltyFormsService} from './services/loyalty-forms.service';
+import { LoyaltyFormsService } from './services/loyalty-forms.service';
 import { NewLoyaltyComponent } from './containers/new-loyalty/new-loyalty.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { LoyaltyFormStepOneComponent } from './components/loyalty-form-step-one/loyalty-form-step-one.component';
@@ -28,6 +28,9 @@ import { LoyaltyFormStepFourComponent } from './components/loyalty-form-step-fou
 import { PointsInfoComponent } from './components/points-info/points-info.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProgramMainImageComponent } from './components/program-main-image/program-main-image.component';
+import { UploadGraphicModule } from '@cl-shared';
+import { UserJoiningMethodComponent } from './components/user-joining-method/user-joining-method.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -42,13 +45,15 @@ import { ProgramMainImageComponent } from './components/program-main-image/progr
     LoyaltyFormStepFourComponent,
     PointsInfoComponent,
     ProgramMainImageComponent,
-    TierSetupPopupComponent
+    TierSetupPopupComponent,
+    UserJoiningMethodComponent
   ],
   imports: [
     CommonModule,
     LoyaltyRoutingModule,
     ReactiveFormsModule,
     ButtonModule,
+    UploadGraphicModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
@@ -57,15 +62,19 @@ import { ProgramMainImageComponent } from './components/program-main-image/progr
     MatIconModule,
     PaginationModule,
     NoDataModule,
-    StatusLabelModule,
     MatStepperModule,
     MatExpansionModule,
+    MatCheckboxModule
   ],
   providers: [
-    LoyaltyFormsService
+    LoyaltyFormsService,
+    StatusLabelModule,
+    MatStepperModule,
+    MatExpansionModule
   ],
   entryComponents: [
     TierSetupPopupComponent
   ]
 })
-export class LoyaltyModule { }
+export class LoyaltyModule {
+}
