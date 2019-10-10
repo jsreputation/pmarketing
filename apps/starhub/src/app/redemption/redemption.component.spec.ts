@@ -156,7 +156,7 @@ describe('RedemptionComponent', () => {
     expect(router.navigateByUrl).toHaveBeenCalledWith('home/vouchers');
   });
 
-  fit('should', fakeAsync(() => {
+  it('should', fakeAsync(() => {
     const spy = spyOn(analyticsService, 'addEvent');
     params.next({ id: 1 });
     spyOn(voucherService, 'get').and.returnValue(of(voucher));
