@@ -10,12 +10,12 @@
 
   <!--Available Vouchers-->
   <mat-card class="card dark-theme" *ngIf="data?.vouchersStatistics" expanded>
-    <div class="card-header">
-      <h2 class="card-title">Available Vouchers</h2>
-    </div>
-    <div class="card-content">
-      <div class="card-row">
-        <div class="reward-detail-vouchers-value">{{availableVouchers | number: '2.'}}</div>
+    <div class="reward-detail-content">
+      <div class="reward-detail-mast">
+        <h2 class="reward-detail-vouchers-value">
+          <span>{{availableVouchers | number: '2.'}}</span>
+          <small class="reward-detail-title">Available Vouchers</small>
+        </h2>
         <cl-button classList="tertiary opaque" (click)="openDialogReplenish()">Replenish</cl-button>
       </div>
       <cl-vouchers-progress-bar [options]="data?.vouchersStatistics"></cl-vouchers-progress-bar>
@@ -27,7 +27,7 @@
   <!-- temporary hide this panel, until api is ready -->
   <mat-expansion-panel class="card" *ngIf="false && dataSource?.data && dataSource?.data?.length > 0" expanded>
     <mat-expansion-panel-header class="card-header">
-      <h2 class="card-title">
+      <h2 class="reward-detail-title">
         Voucher codes Issued (15 Campaigns)
       </h2>
     </mat-expansion-panel-header>
@@ -59,7 +59,7 @@
   <!--Reward Info-->
   <mat-expansion-panel class="card" *ngIf="data?.rewardInfo" expanded>
     <mat-expansion-panel-header class="card-header">
-      <h2 class="card-title">
+      <h2 class="reward-detail-title">
         Reward Info
       </h2>
     </mat-expansion-panel-header>
@@ -73,7 +73,7 @@
   <!-- Merchant Info-->
   <mat-expansion-panel class="card" *ngIf="data?.merchantInfo" expanded>
     <mat-expansion-panel-header class="card-header">
-      <h2 class="card-title">
+      <h2 class="reward-detail-title">
         Merchant Info
       </h2>
     </mat-expansion-panel-header>
@@ -86,7 +86,7 @@
   <!--Vouchers-->
   <mat-expansion-panel class="card" *ngIf="data?.vouchers" expanded>
     <mat-expansion-panel-header class="card-header">
-      <h2 class="card-title">
+      <h2 class="reward-detail-title">
         Vouchers
       </h2>
     </mat-expansion-panel-header>
@@ -98,7 +98,7 @@
   <!--  Limits-->
   <mat-expansion-panel class="card" *ngIf="data?.limits" expanded>
     <mat-expansion-panel-header class="card-header">
-      <h2 class="card-title">
+      <h2 class="reward-detail-title">
         Limits
       </h2>
     </mat-expansion-panel-header>

@@ -29,5 +29,5 @@ export abstract class TokenStorage {
   /**
    * Remove appInfo property
    */
-  public abstract clearAppInfoProperty(key: string): void;
+  public abstract clearAppInfoProperty(keys: string[]): void;
 }

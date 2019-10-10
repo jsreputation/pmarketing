@@ -54,7 +54,7 @@ export class CampaignsHttpAdapter {
       channel: {
         type: campaignData.comm_channel
       },
-      audience: {type: 'select', select: campaignData.pool_id, file: null},
+      audience: { type: 'select', select: campaignData.pool_id, file: null },
       template: {},
       rewardsList: []
     };
@@ -62,12 +62,24 @@ export class CampaignsHttpAdapter {
 
   public static transformFromCampaign(data: ICampaign): IJsonApiItem<ICampaignAttributes> {
     const possibleOutcomes = data.rewardsOptions.rewards.map(
-      reward => ({
-        result_id: reward.value ? reward.value.id : '',
-        result_type: 'reward',
-        probability: reward.probability / 100
-      })
-    ).filter(outcomes => outcomes.result_id);
+      reward => {
+        let outcomeData = {};
+
+        if (reward.value) {
+          outcomeData = {
+            result_id: reward.value.id,
+            result_type: 'reward',
+            probability: reward.probability / 100
+          };
+        } else {
+          outcomeData = {
+            no_outcome: true,
+            probability: reward.probability / 100
+          };
+        }
+        return outcomeData;
+      }
+    );
     const comm = data.channel.type === 'sms' ? {
       template: {
         content: data.channel.message

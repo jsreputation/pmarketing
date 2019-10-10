@@ -41,7 +41,7 @@ export class StampHttpService {
         value: '22.50'
       }],
       total: 2000,
-      data: [
+      payload: [
         {
           choices: {
             img_url: 'global/assets/stamps/pre-stamp-1.png',
