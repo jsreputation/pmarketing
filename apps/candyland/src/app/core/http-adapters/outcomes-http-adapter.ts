@@ -6,6 +6,7 @@ export class OutcomesHttpAdapter {
       resultId: data.attributes.result_id,
       resultType: data.attributes.result_type,
       probability: data.attributes.probability,
+      lootBoxId: data.attributes.loot_box_id,
     };
   }
 }
