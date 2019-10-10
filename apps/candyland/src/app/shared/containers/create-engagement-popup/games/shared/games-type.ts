@@ -27,7 +27,7 @@ export const GamesType: IGame[] = [
   },
   {
     id: 5,
-    type: 'scratchTheCard',
+    type: 'scratch',
     title: 'Scratch the Card',
     active: false
   }

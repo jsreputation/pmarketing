@@ -15,9 +15,9 @@
   },
   {
     "id": 5,
-    "type": "scratchTheCard",
+    "type": "scratch",
     "title": "Scratch the Card",
-    "img": "assets/images/games/tap.png",
+    "img": "assets/images/games/scratch.png",
     "active": "false"
   }
 ]

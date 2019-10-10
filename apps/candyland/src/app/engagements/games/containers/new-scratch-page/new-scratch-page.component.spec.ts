@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewScratchTheCardComponent } from './new-scratch-the-card.component';
+import { NewScratchPageComponent } from './new-scratch-page.component';
 
-describe('NewScratchTheCardComponent', () => {
-  let component: NewScratchTheCardComponent;
-  let fixture: ComponentFixture<NewScratchTheCardComponent>;
+describe('NewScratchComponent', () => {
+  let component: NewScratchPageComponent;
+  let fixture: ComponentFixture<NewScratchPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewScratchTheCardComponent ]
+      declarations: [ NewScratchPageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewScratchTheCardComponent);
+    fixture = TestBed.createComponent(NewScratchPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
