@@ -9,9 +9,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { combineLatest, iif, of, Observable } from 'rxjs';
-import { IComm, IOutcome } from '@perx/whistler';
+import { IComm, IOutcome, ICampaignAttributes } from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 
@@ -123,6 +123,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     }
     const hasLimitData = () => this.store.currentCampaign.limits && this.store.currentCampaign.limits.times;
     saveCampaign$.pipe(
+      tap((c: IJsonApiPayload<ICampaignAttributes>) => this.store.currentCampaign.id = c.data.id),
       switchMap(
         (res) => iif(hasLimitData, updateLimitData$(res), of(res))
       )
@@ -141,7 +142,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
     const title: string = 'Yay! You just created a campaign';
     if (type === 'weblink' && campaign.audience) {
-      return this.buildCampaignCsv()
+      return this.buildCampaignCsv(campaign)
         .pipe(
           map(csv => ({
             title,
@@ -155,7 +156,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         .pipe(map(url => ({
           title,
           subTitle: 'Copy the link and share your campaign.',
-          url
+          url: `${url}?cid=${campaign.id}`
         })));
     }
 
@@ -165,13 +166,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     });
   }
 
-  private buildCampaignCsv(): Observable<string> {
+  private buildCampaignCsv(campaign: ICampaign): Observable<string> {
     const getUsersPis: Observable<string[]> = this.audienceService
-      .getAllPoolUser(this.campaign.audience.select)
+      .getAllPoolUser(campaign.audience.select)
       .pipe(
-        map((users: IUserApi[]) => users.map(u => u.primary_identifier)),
+        map((users: IJsonApiItem<IUserApi>[]) => users.map(u => u.attributes.primary_identifier)),
       );
-    const cid = this.campaign.id;
+    const cid = campaign.id;
     return combineLatest(getUsersPis, this.blackcombUrl)
       .pipe(map(([pis, url]: [string[], string]) => {
         return pis.reduce((p: string, v: string) => `${p}${url}/?pi=${v}&cid=${cid},\n`, 'urls\n');
