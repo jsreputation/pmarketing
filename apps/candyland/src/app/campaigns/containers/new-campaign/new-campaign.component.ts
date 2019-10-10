@@ -152,7 +152,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
             return {
               title,
-              subTitle: 'Download the individualised links',
+              subTitle: 'Download your individual links',
               url,
               type: 'download'
             };
