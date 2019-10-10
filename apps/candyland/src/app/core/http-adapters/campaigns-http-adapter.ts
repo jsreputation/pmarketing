@@ -53,10 +53,6 @@ export class CampaignsHttpAdapter {
         disabledEndDate: !campaignData.end_date_time,
         labels: campaignData.labels
       },
-      channel: {
-        type: campaignData.comm_channel
-      },
-      audience: { type: 'select', select: campaignData.pool_id, file: null },
       template: {},
       rewardsList: []
     };
@@ -100,13 +96,18 @@ export class CampaignsHttpAdapter {
         content: data.channel.message
       },
       event: {
+        pool_id: data.audience.select,
         provider_id: 1,
         send_at: data.channel.schedule ?
           moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + data.channel.schedule.sendTime).format() :
           '',
         channel: data.channel.type
       }
-    } : null;
+    } : {
+        event: {
+          channel: data.channel.type
+        }
+      };
 
     return {
       type: 'entities',
@@ -114,12 +115,10 @@ export class CampaignsHttpAdapter {
         name: data.name,
         engagement_type: EngagementTypeAPIMapping[data.template.attributes_type],
         engagement_id: data.template.id,
-        comm_channel: data.channel.type,
         status: 'scheduled',
         start_date_time: moment(moment(data.campaignInfo.startDate).format('l') + ' ' + data.campaignInfo.startTime).format(),
         end_date_time: moment(moment(data.campaignInfo.endDate).format('l') + ' ' + data.campaignInfo.endTime).format(),
         goal: data.campaignInfo.goal,
-        pool_id: data.audience.select,
         labels: data.campaignInfo.labels || [],
         possible_outcomes: possibleOutcomes,
         comm

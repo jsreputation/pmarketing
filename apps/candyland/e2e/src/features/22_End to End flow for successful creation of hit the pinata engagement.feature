@@ -1,7 +1,7 @@
 Feature: End to End flow for successful creation of hit the pinata engagment
 
 This will be the test flow for all the features of hit the pinata engagement type.
-@runThis
+
 Scenario: Verifying successful creation of hit the pinata engagment
   Given 8_I am on engagement page
   And   8_I click on the create new button
