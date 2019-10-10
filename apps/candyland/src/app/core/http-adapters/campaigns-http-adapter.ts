@@ -56,7 +56,7 @@ export class CampaignsHttpAdapter {
       channel: {
         type: campaignData.comm_channel
       },
-      audience: { type: 'select', select: campaignData.pool_id, file: null },
+      audience: { select: campaignData.pool_id },
       template: {},
       rewardsList: []
     };
