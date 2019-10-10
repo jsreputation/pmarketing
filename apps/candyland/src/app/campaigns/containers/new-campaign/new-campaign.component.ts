@@ -52,7 +52,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTenants();
     this.initForm();
-    this.store.currentCampaign$.subscribe(res => console.log(res));
     this.form.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(value => {
@@ -62,7 +61,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.store.currentCampaign = null;
     this.cdr.detach();
   }
 
@@ -228,9 +226,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
             ([campaign, commTemplate, commEvent, outcomes]:
               [ICampaign, IComm, IComm, IOutcome[]]): ICampaign => ({
                 ...campaign,
-                audience: { select: parseInt(commEvent.pool_id, 10) },
+                audience: { select: commEvent && parseInt(commEvent.pool_id, 10) || null },
                 channel: {
-                  type: commEvent.channel,
+                  type: commEvent && commEvent.channel || 'weblink',
                   ...commTemplate,
                   ...commEvent
                 },

@@ -41,7 +41,6 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.store.currentCampaign = null;
   }
   // TODO: it need for get right data from back end in the future
   private getCampaignData(): void {
@@ -64,9 +63,9 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
             ([campaign, commTemplate, commEvent, outcomes]:
               [ICampaign, IComm, IComm, IOutcome[]]) => ({
                 ...campaign,
-                audience: { select: commEvent.pool_id },
+                audience: { select: commEvent && parseInt(commEvent.pool_id, 10) || null },
                 channel: {
-                  type: commEvent.channel,
+                  type: commEvent && commEvent.channel || 'weblink',
                   ...commTemplate,
                   ...commEvent
                 },

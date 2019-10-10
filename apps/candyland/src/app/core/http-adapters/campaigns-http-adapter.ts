@@ -53,8 +53,6 @@ export class CampaignsHttpAdapter {
         disabledEndDate: !campaignData.end_date_time,
         labels: campaignData.labels
       },
-      // channel: {},
-      // audience: { select: campaignData.pool_id },
       template: {},
       rewardsList: []
     };
