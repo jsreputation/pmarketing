@@ -3,37 +3,39 @@ import { MatDialog } from '@angular/material';
 import { SettingsService } from '@cl-core/services';
 import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popup/invite-new-users-popup.component';
 import { filter, switchMap } from 'rxjs/operators';
-import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
+import { CustomDataSource, DataSourceStates } from '@cl-shared/table/data-source/custom-data-source';
 
 @Component({
   selector: 'cl-users-roles',
   templateUrl: './users-roles.component.html',
   styleUrls: ['./users-roles.component.scss']
 })
-export class UsersRolesComponent  implements AfterViewInit {
+export class UsersRolesComponent implements AfterViewInit {
   public dataSource: CustomDataSource<IAMUser>;
-  public hasData: boolean = true;
+  public dataSourceStates: typeof DataSourceStates = DataSourceStates;
   public config: any;
   private groups: any;
 
   constructor(private settingsService: SettingsService,
               public cd: ChangeDetectorRef,
-              public dialog: MatDialog,
+              public dialog: MatDialog
   ) {
     this.dataSource = new CustomDataSource<IAMUser>(this.settingsService);
   }
 
   public ngAfterViewInit(): void {
     this.settingsService.getRolesOptions()
-      .subscribe( config => this.config = config);
+      .subscribe(config => this.config = config);
     this.getAllGroups();
   }
 
   public openDialogInviteNewUsers(): void {
-    const dialogRef = this.dialog.open(InviteNewUsersPopupComponent, {panelClass: 'invite-new-users-dialog',
+    const dialogRef = this.dialog.open(InviteNewUsersPopupComponent, {
+      panelClass: 'invite-new-users-dialog',
       data: {
         groups: this.groups
-    }});
+      }
+    });
     dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
@@ -41,15 +43,17 @@ export class UsersRolesComponent  implements AfterViewInit {
       )
       .subscribe(() => {
         this.dataSource.updateData();
-    });
+      });
   }
 
   public openDialogEditUsers(user: IAMUser): void {
-    const dialogRef = this.dialog.open(InviteNewUsersPopupComponent, {panelClass: 'invite-new-users-dialog',
+    const dialogRef = this.dialog.open(InviteNewUsersPopupComponent, {
+      panelClass: 'invite-new-users-dialog',
       data: {
-      user,
+        user,
         groups: this.groups
-      }});
+      }
+    });
 
     dialogRef.afterClosed()
       .pipe(
@@ -65,7 +69,7 @@ export class UsersRolesComponent  implements AfterViewInit {
       )
       .subscribe(() => {
         this.dataSource.updateData();
-    });
+      });
   }
 
   public deleteUser(id: string): void {
