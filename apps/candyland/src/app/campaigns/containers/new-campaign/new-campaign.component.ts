@@ -87,11 +87,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.stepper.previous();
   }
 
-  public goNext(): void {
+  public goNext(value: MatStepper): void {
     const stepIndex = this.stepper.selectedIndex;
     this.stepConditionService.nextEvent(stepIndex);
     this.store.updateCampaign(this.stepConditionService.getStepFormValue(stepIndex));
-    this.stepper.next();
+    if (!value) {
+      this.stepper.next();
+    }
   }
 
   public get isLastStep(): boolean {
