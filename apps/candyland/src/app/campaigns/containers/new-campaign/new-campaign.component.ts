@@ -11,9 +11,11 @@ import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { combineLatest, iif, of, Observable } from 'rxjs';
-import { IComm, IOutcome, ICampaignAttributes } from '@perx/whistler';
+import { ICampaignAttributes } from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
+import { IComm } from '@cl-core/models/comm/schedule';
+import { IOutcome } from '@cl-core/models/outcome/outcome';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -227,8 +229,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
             ([campaign, commTemplate, commEvent, outcomes]:
               [ICampaign, IComm, IComm, IOutcome[]]): ICampaign => ({
                 ...campaign,
+                audience: { select: commEvent.pool_id },
                 channel: {
-                  type: campaign.channel.type,
+                  type: commEvent.channel,
                   ...commTemplate,
                   ...commEvent
                 },
