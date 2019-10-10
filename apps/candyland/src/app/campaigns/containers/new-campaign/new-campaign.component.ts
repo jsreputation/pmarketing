@@ -154,6 +154,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
             return {
               title,
+              subTitle: 'Download your individual links',
               url,
               type: 'download'
             };
@@ -184,7 +185,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       );
     return combineLatest(getUsersPis, this.blackcombUrl)
       .pipe(map(([pis, url]: [string[], string]) => {
-        return pis.reduce((p: string, v: string) => `${p}${url}&pi=${v},\n`, 'urls,\n');
+        return pis.reduce((p: string, v: string) => `${p}${v},${url}&pi=${v},\n`, 'identifier,urls,\n');
       }));
   }
 
