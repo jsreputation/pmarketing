@@ -53,6 +53,10 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   public get pool(): AbstractControl | null {
     return this.form.get('audience').get('select');
   }
+  
+  public get datenow(): Date {
+    return new Date();
+  }
 
   constructor(
     public store: CampaignCreationStoreService,
