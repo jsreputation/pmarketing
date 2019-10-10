@@ -2,7 +2,7 @@ import { IAssignedAttributes, IAssignRequestAttributes } from '@perx/whistler';
 
 export class AudiencesHttpAdapter {
 
-  public static transformFromUserForm(data: IAudiencesUserForm): IUserSendToTransform {
+  public static transformFromUserForm(data: IAudiencesUserForm): IJsonApiItem<IUserApi> {
     const optionalPool = data.audienceList ? { relationships: { pools: {data: data.audienceList}}} : {};
     const mainUserApiObject = {
         type: 'users',
