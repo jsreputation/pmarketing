@@ -43,7 +43,7 @@ export class CampaignsHttpAdapter {
       id: data.id,
       name: campaignData.name,
       engagement_id: campaignData.engagement_id,
-      engagement_type: campaignData.engagement_type,
+      engagement_type: EngagementTypeFromAPIMapping[campaignData.engagement_type],
       campaignInfo: {
         goal: campaignData.goal,
         startDate: campaignData.start_date_time ? new Date(campaignData.start_date_time) : null,
