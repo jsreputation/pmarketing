@@ -30,7 +30,7 @@ export class TabsFilterComponent implements ControlValueAccessor, DoCheck, After
   @ViewChild('labelContainer') labelContainer: ElementRef;
   showScrollButtons = true;
 
-  constructor(private cd: ChangeDetectorRef, private el: ElementRef,) {
+  constructor(private cd: ChangeDetectorRef, private el: ElementRef) {
   }
 
   ngAfterViewInit() {
