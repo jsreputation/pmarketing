@@ -9,9 +9,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { combineLatest, iif, of, Observable } from 'rxjs';
-import { IComm, IOutcome } from '@perx/whistler';
+import { IComm, IOutcome, ICampaignAttributes } from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 
@@ -124,13 +124,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     }
     const hasLimitData = () => this.store.currentCampaign.limits && this.store.currentCampaign.limits.times;
     saveCampaign$.pipe(
+      tap((res: IJsonApiPayload<ICampaignAttributes>) => this.campaignBaseURL = this.campaignBaseURL + '?cid=' + res.data.id),
       switchMap(
         (res) => iif(hasLimitData, updateLimitData$(res), of(res))
       )
     ).subscribe(
       data => {
         if (data) {
-          this.campaignBaseURL = this.campaignBaseURL + '?cid=' + data.id;
           this.openDialog();
           this.store.currentCampaign = null;
         }
@@ -157,7 +157,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         .pipe(map(url => ({
           title,
           subTitle: 'Copy the link and share your campaign.',
-          url
+          url,
+          type
         })));
     }
 

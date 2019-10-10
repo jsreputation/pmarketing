@@ -1,3 +1,4 @@
+{{data | json}}
 <aside class="dialog" role="dialog" aria-labelledby="dialogTitle-campaignConfirm">
   <button class="dialog-closed btn-transparent" (click)="closeDialog()">
     <mat-icon>close</mat-icon>
@@ -9,7 +10,7 @@
     <p class="confirm-copy">{{data?.subTitle || 'Copy the link and share your campaign.'}}</p>
   </div>
   <div class="dialog-actions" [ngSwitch]="data?.type">
-    <cl-copy-link *ngSwitchCase="'weblink'" link="https://www.perxtech.com/r/YDSZY3W"></cl-copy-link>
+    <cl-copy-link *ngSwitchCase="'weblink'" [link]="data.url"></cl-copy-link>
     <cl-download-link *ngSwitchCase="'download'" file="Weblink with audience (100).csv"></cl-download-link>
     <cl-button *ngSwitchDefault classList="primary" class="copy-link-btn" (click)="closeDialog()">Close</cl-button>
   </div>
