@@ -27,7 +27,7 @@ export class TabsFilterComponent implements ControlValueAccessor, DoCheck, After
   public onChange: any = noop;
   public onTouched: any = noop();
 
-  @ViewChild('labelContainer') public labelContainer: ElementRef;
+  @ViewChild('labelContainer', {static: false}) public labelContainer: ElementRef;
   public showScrollButtons: any = true;
 
   constructor(private cd: ChangeDetectorRef, private el: ElementRef) {
