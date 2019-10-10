@@ -23,7 +23,7 @@ import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 export class NewCampaignComponent implements OnInit, OnDestroy {
   public id: string;
   public form: FormGroup;
-  public campaign: any;
+  public campaign: ICampaign;
   public tenantSettings: ITenantsProperties;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
 
@@ -192,7 +192,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         this.outcomesService.getOutcomes(params)).pipe(
           map(
             ([campaign, commTemplate, commEvent, outcomes]:
-              [ICampaign, IComm, IComm, IOutcome[]]) => ({
+              [ICampaign, IComm, IComm, IOutcome[]]): ICampaign => ({
                 ...campaign,
                 channel: {
                   type: campaign.channel.type,
