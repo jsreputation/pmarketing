@@ -125,7 +125,12 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       return data.lootBoxId === this.slotNumber;
     }).map(data => this.rewardsService.getReward(data.resultId));
     combineLatest(possibleOutcomes).subscribe(
-      rewards => rewards.map((reward: IRewardEntity) => this.addReward(reward))
+      (rewards: Partial<IRewardEntity>[]) => {
+        if (rewards[0].probability) {
+          this.enableProbability.patchValue(true);
+        }
+        rewards.map((reward: IRewardEntity) => this.addReward(reward));
+      }
     );
   }
 
