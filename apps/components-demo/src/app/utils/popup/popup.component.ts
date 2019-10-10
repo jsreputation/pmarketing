@@ -1,19 +1,62 @@
 import { Component } from '@angular/core';
 import { NotificationService } from '@perx/core';
+import { Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { CustomValidators } from './customValidator';
 
+interface FormProperties {
+  title: string;
+  text: string;
+  disableOverlay: boolean;
+  btnTxt: string;
+  btnTxt2: string;
+  imageUrl: string;
+}
+
+// type FormProperties = 'title'| 'text' | 'disableOverlay' | 'btnTxt' | 'btnTxt2' | 'imageUrl';
 @Component({
   selector: 'app-popup',
   templateUrl: './popup.component.html',
   styleUrls: ['./popup.component.scss']
 })
 export class PopupComponent {
-  constructor(private notificationService: NotificationService) { }
-  public pop(): void {
-    this.notificationService.addPopup({
-      // tslint:disable-next-line: max-line-length
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-      title: 'Lorem ipsum dolor sit amet',
-      buttonTxt: 'Lorem ipsum'
+  public form: FormGroup;
+
+  public get title(): AbstractControl {
+    return this.form.get('title');
+  }
+
+  public get text(): AbstractControl {
+    return this.form.get('text');
+  }
+
+  public get btnTxt(): AbstractControl {
+    return this.form.get('btnTxt');
+  }
+
+  public get btnTxt2(): AbstractControl {
+    return this.form.get('btnTxt2');
+  }
+
+  constructor(private notificationService: NotificationService, private fb: FormBuilder) {
+
+    this.form = this.fb.group({
+      title: ['', Validators.required],
+      text: ['', Validators.required],
+      btnTxt: ['', [Validators.required, Validators.maxLength(10)]],
+      btnTxt2: ['', [Validators.required, Validators.maxLength(10)]],
+      disableOverlay: [''],
+      imageUrl: ['https://picsum.photos/300/300', [Validators.required, CustomValidators.urlValidator]],
     });
   }
+  public onSubmit({title, text, disableOverlay, btnTxt, btnTxt2, imageUrl}: FormProperties): void {
+    this.notificationService.addPopup({
+      title,
+      text,
+      imageUrl,
+      buttonTxt: btnTxt,
+      disableOverlayClose: disableOverlay,
+      buttonTxt2: btnTxt2
+    });
+  }
+
 }

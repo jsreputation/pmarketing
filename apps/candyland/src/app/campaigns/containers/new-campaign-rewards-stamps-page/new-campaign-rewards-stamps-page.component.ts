@@ -52,8 +52,8 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     this.cd.detach();
   }
 
-  public get rewardsList(): FormArray {
-    return this.form.get('rewardsList') as FormArray;
+  public get rewardsListCollection(): FormArray {
+    return this.form.get('rewardsListCollection') as FormArray;
   }
 
   public get stampRule(): FormArray {
@@ -65,11 +65,11 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   }
 
   public addReward(formGroup: FormGroup): void {
-    this.rewardsList.push(formGroup);
+    this.rewardsListCollection.push(formGroup);
   }
 
   public removeReward(index: number): void {
-    this.rewardsList.removeAt(index);
+    this.rewardsListCollection.removeAt(index);
   }
 
   public addStampRule(): void {
