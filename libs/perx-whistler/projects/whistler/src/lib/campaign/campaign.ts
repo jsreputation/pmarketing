@@ -7,11 +7,9 @@ export interface ICampaignAttributes {
     status?: string;
     start_date_time: string;
     end_date_time: string;
-    pool_id: number;
     goal?: string;
     engagement_type: string;
     engagement_id: string;
-    comm_channel: string;
     possible_outcomes?: any;
     comm?: any;
     labels?: string[];
