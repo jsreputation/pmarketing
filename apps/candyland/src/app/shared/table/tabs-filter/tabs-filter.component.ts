@@ -27,17 +27,17 @@ export class TabsFilterComponent implements ControlValueAccessor, DoCheck, After
   public onChange: any = noop;
   public onTouched: any = noop();
 
-  @ViewChild('labelContainer') labelContainer: ElementRef;
-  showScrollButtons = true;
+  @ViewChild('labelContainer') public labelContainer: ElementRef;
+  public showScrollButtons: any = true;
 
   constructor(private cd: ChangeDetectorRef, private el: ElementRef) {
   }
 
-  ngAfterViewInit() {
-      this.labelContainer.nativeElement.querySelector('.mat-tab-links').style.display = 'flex';
+  public ngAfterViewInit(): any {
+    this.labelContainer.nativeElement.querySelector('.mat-tab-links').style.display = 'flex';
   }
 
-  ngDoCheck() {
+  public ngDoCheck(): any {
     if (this.labelContainer) {
       if (
         this.labelContainer.nativeElement.clientWidth -
@@ -51,13 +51,13 @@ export class TabsFilterComponent implements ControlValueAccessor, DoCheck, After
     }
   }
 
-  left() {
-    let el = this.el.nativeElement.querySelector(".mat-tab-label-container");
+  public left(): any {
+    const el = this.el.nativeElement.querySelector('.mat-tab-label-container');
     el.scrollLeft -= 100;
   }
 
-  right() {
-    let el = this.el.nativeElement.querySelector(".mat-tab-label-container");
+  public right(): any {
+    const el = this.el.nativeElement.querySelector('.mat-tab-label-container');
     el.scrollLeft += 100;
   }
 

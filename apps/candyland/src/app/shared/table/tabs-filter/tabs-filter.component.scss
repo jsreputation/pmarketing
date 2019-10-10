@@ -18,7 +18,8 @@
 .mat-tab-label-container {
   display: flex;
   flex-grow: 1;
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: auto;
   z-index: 1;
 }
 
@@ -30,6 +31,7 @@
   min-width: 32px;
   cursor: pointer;
   z-index: 2;
+  display: flex;
 }
 
 .mat-tab-header-pagination-before,
@@ -37,15 +39,9 @@
   padding-left: 4px;
 }
 
-.mat-tab-header-pagination {
-  display: flex;
-}
 
 .mat-tab-header-pagination-chevron {
   border-color: rgba(0, 0, 0, 0.87);
-}
-
-.mat-tab-header-pagination-chevron {
   border-style: solid;
   border-width: 2px 2px 0 0;
   content: '';
