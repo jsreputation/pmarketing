@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { IVoucherService } from './ivoucher.service';
 import { Observable, combineLatest, of } from 'rxjs';
-import { IVoucher, IGetVoucherParams, VoucherState, RedemptionType } from './models/voucher.model';
+import { IVoucher, IGetVoucherParams, VoucherState } from './models/voucher.model';
 import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
 import { map, switchMap, mergeMap } from 'rxjs/operators';
 import { RewardsService } from '../rewards/rewards.service';
@@ -52,21 +52,10 @@ export class WhistlerVouchersService implements IVoucherService {
   private static WVoucherToVoucher(voucher: IJsonApiItem<IWhistlerVoucher>, reward: IReward): IVoucher {
     return {
       id: (typeof voucher.id === 'string') ? Number.parseInt(voucher.id, 10) : voucher.id,
-      rewardId: voucher.attributes.source_id, // use at \lib\vouchers\vouchers.service.ts
+      reward,
       state: WhistlerVouchersService.WVoucherStatusToState(voucher.attributes.status),
-      name: reward.name,
       code: voucher.attributes.code,
-      redemptionType: RedemptionType.txtCode,
-      thumbnailImg: reward.rewardThumbnail,
-      rewardBanner: reward.rewardThumbnail,
-      merchantImg: reward.merchantImg,
-      merchantName: reward.merchantName,
       expiry: voucher.attributes.end_date_time ? new Date(voucher.attributes.end_date_time) : null,
-      description: [{
-        title: null,
-        content: reward.description,
-        tag: []
-      }]
     };
   }
 

@@ -34,9 +34,9 @@ export class RedeemComponent implements OnInit {
           return this.vouchersService.get(this.voucherId);
         })
       );
-    this.voucher$.subscribe((voucher: IVoucher) => {
+    /*this.voucher$.subscribe((voucher: IVoucher) => {
       this.redemptionType = voucher.redemptionType;
-    });
+    });*/
   }
 
   public pinInputSuccess(): void {

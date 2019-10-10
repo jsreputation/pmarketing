@@ -1,0 +1,72 @@
+mat-card {
+  margin: 1.2rem 0;
+  display: flex;
+  padding: 0 1.3rem 1.3rem;
+  // flex: 0 0 10.5rem;
+  height: 10.5rem;
+  justify-content: space-between;
+}
+
+.stamp-details {
+  padding: 0 1.6rem;
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: auto 0;
+
+  h1 {
+    font-size: 1.4rem;
+    color: #37474f;
+    line-height: 1.6rem;
+    font-weight: 500;
+    margin: 2px 0;
+    padding: 0;
+  }
+
+  p {
+    font-size: 1.1rem;
+    line-height: 1.3rem;
+    color: #858585;
+    margin: 2px 0;
+    padding: 0;
+  }
+}
+
+.stamp-details:nth-child(1) {
+  margin-top: 0;
+}
+
+.stamp-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .stamp-img__wrapper {
+    display: flex;
+    width: 100%;
+    height: 4rem;
+    flex: 2 2;
+    align-self: flex-start;
+    margin: 0 auto;
+    flex-direction: column;
+
+    img {
+      align-self: unsafe center;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      flex: 1;
+      // overflow: hidden;
+      // height: 4rem;
+    }
+  }
+
+  .stamp-details {
+    width: 100%;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    flex: 1 1;
+  }
+}

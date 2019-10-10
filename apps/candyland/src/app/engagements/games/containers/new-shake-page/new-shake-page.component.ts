@@ -143,7 +143,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
         Validators.minLength(1),
         Validators.maxLength(60)]
       ],
-      headlineMessage: ['Tap the tree and Win!', [Validators.required,
+      headlineMessage: ['Tap the Tree and Win!', [Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)]
       ],
@@ -155,7 +155,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
       treeType: [null, [Validators.required]],
       giftBox: [null, [Validators.required]],
       background: [null, [Validators.required]],
-      buttonText: ['start playing', [
+      buttonText: ['Start Playing', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(20)
@@ -170,9 +170,9 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
   private getDefaultValue(data: IGameDefaultData): IShakeTreeForm {
     return {
       name: 'Shake the Tree Template',
-      headlineMessage: 'Tap the tree and Win!',
+      headlineMessage: 'Tap the Tree and Win!',
       subHeadlineMessage: 'Tap the tree until you get a reward!',
-      buttonText: 'start playing',
+      buttonText: 'Start Playing',
       [ControlsName.background]: data.background[0],
       [ControlsName.giftBox]: data.giftBox[0],
       [ControlsName.treeType]: data.gamesTree[0],

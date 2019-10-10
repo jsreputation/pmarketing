@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
-import { ICampaignAttributes, ICampaign } from '@perx/whistler';
+import { ICampaignAttributes } from '@perx/whistler';
+import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 @Injectable({
   providedIn: 'root'
