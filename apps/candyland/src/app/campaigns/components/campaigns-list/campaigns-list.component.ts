@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatSort } from '@angular/material';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
-import { ICampaignTableData } from '@perx/whistler';
 import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
+import { ICampaignTableData } from '@cl-core/models/campaign/campaign.interface';
 
 @Component({
   selector: 'cl-campaigns-list',

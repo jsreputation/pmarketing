@@ -1,5 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Voucher, VoucherState, IVoucherService, PinInputComponent, NotificationService } from '@perx/core';
+import {
+  Voucher,
+  VoucherState,
+  IVoucherService,
+  PinInputComponent,
+  NotificationService,
+  ICategoryTags,
+} from '@perx/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
@@ -39,9 +46,10 @@ export class RedemptionComponent implements OnInit {
       )
       .subscribe((voucher: Voucher) => {
         this.voucher = voucher;
-        const category: string = voucher.categories && voucher.categories.length > 0 ? voucher.categories[0] : undefined;
+        const categories: ICategoryTags[] = voucher.reward.categoryTags;
+        const category: string = categories && categories.length > 0 ? categories[0].title : undefined;
         if (category !== undefined) {
-          const pageName: string = `rewards:vouchers:redemption:${category}:${voucher.name}`;
+          const pageName: string = `rewards:vouchers:redemption:${category}:${voucher.reward.name}`;
           this.analytics.addEvent({
             pageName,
             pageType: PageType.detailPage,
