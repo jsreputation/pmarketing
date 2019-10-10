@@ -36,7 +36,7 @@ const components = [
     CommonModule,
     MatDialogModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
     ...directives,
