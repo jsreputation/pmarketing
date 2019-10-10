@@ -58,6 +58,7 @@ import { TransactionHistoryComponent } from './account/transaction-history/trans
 import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.component';
 import { ConditionComponent } from './account/condition/condition.component';
 import { TransactionPipe } from './account/transaction-history/transaction.pipe';
+import {TransactionHistoryPipe} from './account/transaction-history/transaction-history.pipe';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -90,6 +91,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     PrivacyPolicyComponent,
     ConditionComponent,
     TransactionPipe,
+    TransactionHistoryPipe,
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
