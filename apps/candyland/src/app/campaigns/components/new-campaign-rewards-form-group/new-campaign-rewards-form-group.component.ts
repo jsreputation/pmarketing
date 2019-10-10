@@ -50,7 +50,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   // @ts-ignore
   private onTouched: any = noop;
   private isFirstInit: boolean;
-  private noOutComeProbability: number;
+  private noOutComeProbability: number = 0;
 
   public get enableProbability(): AbstractControl {
     return this.group.get('enableProbability');

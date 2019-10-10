@@ -135,7 +135,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       data => {
         if (data) {
           this.openDialog();
-          this.store.currentCampaign = null;
         }
       },
       (error: Error) => console.warn(error.message)
@@ -145,7 +144,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private getDialogData(campaign: ICampaign): Observable<NewCampaignDonePopupComponentData> {
     const type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
     const title: string = 'Yay! You just created a campaign';
-    if (type === 'weblink' && campaign.audience) {
+    if (type === 'weblink' && campaign.audience && campaign.audience.select) {
       return this.buildCampaignCsv(campaign)
         .pipe(
           map(csv => {
