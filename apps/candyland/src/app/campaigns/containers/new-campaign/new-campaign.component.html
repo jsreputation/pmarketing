@@ -19,7 +19,7 @@
 </header>
 
 <section class="content form-limiter">
-  <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
+  <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper (selectionChange)="goNext($event)">
     <mat-step [completed]="getStepCondition(0)">
       <ng-template matStepLabel>Select engagement</ng-template>
       <cl-new-campaign-select-engagement-page [tenantSettings]="tenantSettings"></cl-new-campaign-select-engagement-page>
