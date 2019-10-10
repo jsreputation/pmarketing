@@ -4,10 +4,9 @@
   </div>
 
   <form class="login-form"
-        [formGroup]="formLogin"
-        (ngSubmit)="onSubmit()"
-        id="login-form"
-  >
+    [formGroup]="formLogin"
+    (ngSubmit)="onSubmit()"
+    id="login-form">
     <div class="login-form-control">
       <mat-form-field>
         <input matInput formControlName="account_id" placeholder="Account ID">
@@ -18,7 +17,7 @@
     </div>
     <div class="login-form-control">
       <mat-form-field>
-        <input matInput formControlName="username" placeholder="Email Address">
+        <input matInput formControlName="username" placeholder="User Name">
         <mat-error *ngIf="username.hasError('required')">Required field</mat-error>
       </mat-form-field>
     </div>
@@ -32,10 +31,9 @@
 
     <div class="login-form-action">
       <cl-button [formId]="'login-form'"
-                 [classList]="'primary btn-block'"
-                 [disable]="formLogin.invalid"
-                 class="btn-block"
-      >
+        [classList]="'primary btn-block'"
+        [disable]="formLogin.invalid"
+        class="btn-block">
         <span>
           Log in
         </span>
