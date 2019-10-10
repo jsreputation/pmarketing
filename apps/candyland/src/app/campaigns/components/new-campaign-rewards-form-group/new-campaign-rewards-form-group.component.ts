@@ -128,9 +128,11 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       (rewards: Partial<IRewardEntity>[]) => {
         if (rewards[0].probability) {
           this.enableProbability.patchValue(true);
+          this.addReward(null);
         }
         rewards.map((reward: IRewardEntity) => this.addReward(reward));
       }
+
     );
   }
 
@@ -173,7 +175,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   private createRewardFormGroup(value: IRewardEntity, isEnableProbability: boolean = false): FormGroup {
     return this.fb.group({
       value: [value],
-      probability: { value: 0, disabled: !isEnableProbability }
+      probability: { value: value && value.probability || 0, disabled: !isEnableProbability }
     });
   }
 
