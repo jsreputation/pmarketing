@@ -5,7 +5,8 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { ICampaignTableData, ICampaignAttributes, ICampaign } from '@perx/whistler';
+import { ICampaignTableData, ICampaignAttributes } from '@perx/whistler';
+import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 @Injectable({
   providedIn: 'root'
