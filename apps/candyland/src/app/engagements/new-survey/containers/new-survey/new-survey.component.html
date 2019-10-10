@@ -224,7 +224,9 @@
               {{subHeadlineMessage?.value}}
             </p>
           </div>
-          <perx-core-survey [data]="getQuestionData()"></perx-core-survey>
+          <div [disableForm]="true">
+            <perx-core-survey [data]="getQuestionData()"></perx-core-survey>
+          </div>
         </div>
 
       </div>
