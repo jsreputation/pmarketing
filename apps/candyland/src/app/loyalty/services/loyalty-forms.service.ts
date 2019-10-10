@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoyaltyStepForm } from '../models/loyalty-stap-form';
 
 @Injectable({
@@ -7,6 +7,7 @@ import { LoyaltyStepForm } from '../models/loyalty-stap-form';
 })
 export class LoyaltyFormsService {
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
+
   // constructor() { }
   public getFormLoyalty(): FormGroup {
     return new FormGroup({
@@ -27,11 +28,11 @@ export class LoyaltyFormsService {
     return new FormGroup({
       pointsName: new FormControl(null, [Validators.required, Validators.minLength(1)]),
       mainImage: new FormControl(null, [Validators.required]),
-      joiningMethod: new FormGroup( {
+      joiningMethod: new FormGroup({
         transactionAmount: new FormControl(false),
         signUp: new FormControl(false),
         byInvite: new FormControl(false),
-        amount: new FormControl(null),
+        amount: new FormControl(null)
       }, [Validators.required]),
       selectAudience: new FormGroup({
         audienceType: new FormControl(null, [Validators.required]),
@@ -42,7 +43,7 @@ export class LoyaltyFormsService {
   }
 
   public getSecondaryStep(): FormGroup {
-    return  new FormGroup({
+    return new FormGroup({
       globalEarnRule: new FormGroup({
         amount: new FormControl(null, [Validators.required, Validators.min(1)]),
         points: new FormControl(null, [Validators.required, Validators.min(1)])
@@ -67,7 +68,7 @@ export class LoyaltyFormsService {
       qualification: new FormControl(null, [Validators.required]),
       earnBonus: new FormControl(null, [Validators.required]),
       burnDiscount: new FormControl(null, [Validators.required]),
-      pointsExpiry: new FormControl(null, [Validators.required]),
+      pointsExpiry: new FormControl(null, [Validators.required])
     });
   }
 
@@ -75,18 +76,19 @@ export class LoyaltyFormsService {
     return new FormGroup({
       name: new FormControl(null, [Validators.required]),
       qualification: new FormGroup({
-        type: new FormControl(null),
-        points:  new FormControl(null),
+        pointsThreshold: new FormControl(false),
+        inviteOnly: new FormControl(false),
+        points: new FormControl(null)
       }, [Validators.required]),
       imageUrl: new FormControl(null, [Validators.required]),
       earnForTier: new FormControl(null, [Validators.required, Validators.min(1)]),
       burnRule: new FormControl(null, [Validators.required, Validators.min(1)]),
       pointsExpiry: new FormGroup({
-      pointWasEarnedAmount: new FormControl(1, [Validators.required]),
-      pointWasEarnedPeriod: new FormControl('days', [Validators.required]),
-      userInactivityAmount: new FormControl(1, [Validators.required]),
-      userInactivityPeriod: new FormControl('days', [Validators.required])
-    })
+        pointWasEarnedAmount: new FormControl(1, [Validators.required]),
+        pointWasEarnedPeriod: new FormControl('days', [Validators.required]),
+        userInactivityAmount: new FormControl(1, [Validators.required]),
+        userInactivityPeriod: new FormControl('days', [Validators.required])
+      })
     });
   }
 

@@ -14,7 +14,7 @@ const routes: Routes = [
         component: LoyaltyListPageComponent
       },
       {
-        path: 'create',
+        path: 'new',
         component: NewLoyaltyComponent
       }
     ]

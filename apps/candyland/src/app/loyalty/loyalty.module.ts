@@ -7,7 +7,7 @@ import {
   MatInputModule,
   MatButtonModule,
   MatMenuModule,
-  MatIconModule
+  MatIconModule, MatDialogModule, MatOptionModule, MatSelectModule, MatTabsModule
 } from '@angular/material';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
@@ -28,7 +28,7 @@ import { LoyaltyFormStepFourComponent } from './components/loyalty-form-step-fou
 import { PointsInfoComponent } from './components/points-info/points-info.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProgramMainImageComponent } from './components/program-main-image/program-main-image.component';
-import { UploadGraphicModule } from '@cl-shared';
+import { DatePickerModule, UploadFileModule, UploadGraphicModule } from '@cl-shared';
 import { UserJoiningMethodComponent } from './components/user-joining-method/user-joining-method.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
@@ -64,13 +64,18 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     NoDataModule,
     MatStepperModule,
     MatExpansionModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatOptionModule,
+    MatSelectModule,
+    StatusLabelModule,
+    MatDialogModule,
+    UploadFileModule,
+    UploadGraphicModule,
+    MatTabsModule,
+    DatePickerModule
   ],
   providers: [
-    LoyaltyFormsService,
-    StatusLabelModule,
-    MatStepperModule,
-    MatExpansionModule
+    LoyaltyFormsService
   ],
   entryComponents: [
     TierSetupPopupComponent
