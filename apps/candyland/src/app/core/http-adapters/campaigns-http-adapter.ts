@@ -1,9 +1,11 @@
 import * as moment from 'moment';
 import {
   EngagementTypeAPIMapping,
-  EngagementTypeFromAPIMapping
+  EngagementTypeFromAPIMapping,
+  EngagementType
 } from '@cl-core/models/engagement/engagement-type.enum';
-import { ICampaignTableData, ICampaign, ICampaignAttributes } from '@perx/whistler';
+import { ICampaignAttributes, IOutcomeAttributes } from '@perx/whistler';
+import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 export class CampaignsHttpAdapter {
   public static transformToCampaign(data: any): ICampaignTableData {
@@ -41,7 +43,7 @@ export class CampaignsHttpAdapter {
       id: data.id,
       name: campaignData.name,
       engagement_id: campaignData.engagement_id,
-      engagement_type: campaignData.engagement_type,
+      engagement_type: EngagementTypeFromAPIMapping[campaignData.engagement_type],
       campaignInfo: {
         goal: campaignData.goal,
         startDate: campaignData.start_date_time ? new Date(campaignData.start_date_time) : null,
@@ -54,20 +56,45 @@ export class CampaignsHttpAdapter {
       channel: {
         type: campaignData.comm_channel
       },
-      audience: {type: 'select', select: campaignData.pool_id, file: null},
+      audience: { select: campaignData.pool_id },
       template: {},
       rewardsList: []
     };
   }
 
+  public static transformPossibleOutcomesFromCampaign(data: any[], slotNumber?: number): IOutcomeAttributes[] {
+    return data.map(
+      reward => {
+        let rewardData;
+        if (reward.value) {
+          rewardData = {
+            result_id: reward.value.id,
+            result_type: 'reward',
+            probability: reward.probability / 100 || null
+          };
+        } else {
+          rewardData = {
+            no_outcome: true,
+            probability: reward.probability / 100 || null
+          };
+        }
+
+        if (slotNumber) {
+          rewardData.loot_box_id = slotNumber;
+        }
+        return rewardData;
+      }
+    );
+  }
+
   public static transformFromCampaign(data: ICampaign): IJsonApiItem<ICampaignAttributes> {
-    const possibleOutcomes = data.rewardsOptions.rewards.map(
-      reward => ({
-        result_id: reward.value ? reward.value.id : '',
-        result_type: 'reward',
-        probability: reward.probability / 100
-      })
-    ).filter(outcomes => outcomes.result_id);
+    const possibleOutcomes = data.template.attributes_type === EngagementType.stamp ?
+      data.rewardsListCollection.map(
+        rewardsData =>
+          CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(rewardsData.rewardsOptions.rewards, rewardsData.stampSlotNumber)
+      ).flat(1) :
+      CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(data.rewardsOptions.rewards);
+
     const comm = data.channel.type === 'sms' ? {
       template: {
         content: data.channel.message
@@ -104,7 +131,4 @@ export class CampaignsHttpAdapter {
     return stringDate ? new Date(stringDate) : null;
   }
 
-  // private static formatDateTime(date: Date, time: Date): string {
-  //   return moment(moment(date).format('l') + ' ' +  time).format();
-  // }
 }

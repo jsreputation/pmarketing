@@ -139,6 +139,7 @@ describe('RedeemComponent', () => {
     const issuedVoucher = {
       id: 1,
       rewardId: 1,
+      reward: null,
       state: VoucherState.issued,
       name: 'test voucher',
       redemptionType: RedemptionType.none,
@@ -153,6 +154,7 @@ describe('RedeemComponent', () => {
     const redeemedVoucher = {
       id: 1,
       rewardId: 1,
+      reward: null,
       state: VoucherState.redeemed,
       name: 'test voucher',
       redemptionType: RedemptionType.none,
