@@ -19,18 +19,12 @@ export class AccountComponent implements OnInit {
 
   constructor(
     private profileService: ProfileService,
-    private themeService: ThemesService,
-    private router: Router
+    private themeService: ThemesService
   ) { }
 
   public ngOnInit(): void {
     this.themeService.getAccountSettings()
-      .subscribe((settings) => {
-        if (!settings.pages.length) {
-          this.router.navigate(['']);
-        }
-        this.pages = settings.pages ;
-      });
+      .subscribe((settings) => this.pages = settings.pages);
     this.profileService.whoAmI()
       .pipe(
         take(1)
