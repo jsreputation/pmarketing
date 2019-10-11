@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IProfile, ProfileService, ThemesService } from '@perx/core';
 import { take } from 'rxjs/operators';
-import { Router } from '@angular/router';
 
 interface AccountPageObject {
   title: string;

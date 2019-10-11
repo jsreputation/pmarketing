@@ -5,8 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import {
   map,
   switchMap,
-  retry,
-  // tap
+  retry
 } from 'rxjs/operators';
 import { EnvConfig } from './env.config';
 
@@ -33,19 +32,15 @@ export class DataService {
     if (id === undefined) {
       return throwError('card id cannot be undefined');
     }
-    return this.getToken(id)
-      .pipe(
-        switchMap((token: string) => {
-          const query: string = params ? Object.keys(params)
+    const query: string = params ? Object.keys(params)
             .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
             .join('&') : '';
-
-          return this.http.get<IMetabaseResponse>(
+    return this.getToken(id)
+      .pipe(
+        switchMap((token: string) => this.http.get<IMetabaseResponse>(
             `https://metabase-api.perxtech.io/api/embed/card/${token}/query?${query}`
-          );
-        }),
+          )),
         map((res: IMetabaseResponse) => res.data)
-        // tap((data) => { console.log(data); })
       );
   }
 
