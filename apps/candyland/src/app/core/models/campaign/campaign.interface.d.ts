@@ -21,6 +21,8 @@ export interface ICampaign {
         labels?: string[];
     };
     channel?: {
+        eventId?: string;
+        templateId?: string;
         type: string;
         message?: string;
         schedule?: ISchedule;

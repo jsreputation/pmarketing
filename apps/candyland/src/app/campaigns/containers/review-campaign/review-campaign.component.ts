@@ -33,6 +33,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.store.resetCampaign();
     this.getCampaignData();
   }
 
@@ -63,11 +64,11 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
             ([campaign, commTemplate, commEvent, outcomes]:
               [ICampaign, IComm, IComm, IOutcome[]]) => ({
                 ...campaign,
-                audience: { select: commEvent && parseInt(commEvent.pool_id, 10) || null },
+                audience: { select: commEvent && parseInt(commEvent.poolId, 10) || null },
                 channel: {
                   type: commEvent && commEvent.channel || 'weblink',
-                  ...commTemplate,
-                  ...commEvent
+                  message: commTemplate && commTemplate.message,
+                  schedule: commEvent && commEvent.schedule
                 },
                 rewardsList: outcomes
               })
@@ -103,14 +104,19 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getRewards(rewardsList: any[]): Observable<IRewardEntityForm[]> {
+  private getRewards(rewardsList: any[]): Observable<{ value: IRewardEntity | null }[]> {
     if (!rewardsList || !rewardsList.length) {
       return of([]);
     }
     return combineLatest(...rewardsList.map(
-      reward => this.rewardsService.getReward(reward.resultId).pipe(
-        map(rewardData => ({ value: { ...rewardData, probability: reward.probability } }))
-      )
+      reward => {
+        if (reward.resultId) {
+          return this.rewardsService.getReward(reward.resultId).pipe(
+            map(rewardData => ({ value: { ...rewardData, probability: reward.probability } }))
+          );
+        }
+        return of({ value: null });
+      }
     ));
   }
 }

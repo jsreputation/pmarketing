@@ -98,6 +98,7 @@ export class CampaignsHttpAdapter {
         content: data.channel.message
       },
       event: {
+        id: data.channel.templateId,
         pool_id: data.audience.select,
         provider_id: 1,
         send_at: data.channel.schedule ?
@@ -107,6 +108,7 @@ export class CampaignsHttpAdapter {
       }
     } : {
         event: {
+          id: data.channel.eventId,
           channel: data.channel.type
         }
       };

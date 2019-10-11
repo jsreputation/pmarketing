@@ -52,6 +52,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTenants();
     this.initForm();
+    this.store.currentCampaign$.subscribe(data => console.log(data));
     this.form.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(value => {
@@ -87,7 +88,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.stepper.previous();
   }
 
-  public goNext(value: MatStepper): void {
+  public goNext(value?: MatStepper): void {
     const stepIndex = this.stepper.selectedIndex;
     this.stepConditionService.nextEvent(stepIndex);
     this.store.updateCampaign(this.stepConditionService.getStepFormValue(stepIndex));
@@ -229,11 +230,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
             ([campaign, commTemplate, commEvent, outcomes]:
               [ICampaign, IComm, IComm, IOutcome[]]): ICampaign => ({
                 ...campaign,
-                audience: { select: commEvent && parseInt(commEvent.pool_id, 10) || null },
+                audience: { select: commEvent && parseInt(commEvent.poolId, 10) || null },
                 channel: {
                   type: commEvent && commEvent.channel || 'weblink',
-                  ...commTemplate,
-                  ...commEvent
+                  eventId: commEvent && commEvent.eventId,
+                  templateId: commTemplate && commTemplate.templateId,
+                  message: commTemplate && commTemplate.message,
+                  schedule: commEvent && commEvent.schedule
                 },
                 rewardsList: outcomes
               }))
