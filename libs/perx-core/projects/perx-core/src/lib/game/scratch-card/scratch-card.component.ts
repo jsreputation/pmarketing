@@ -106,8 +106,6 @@ export class ScratchCardComponent implements AfterViewInit {
   public getMouse(e: any, canvas: any): Coords {
     let offsetX: number = 0;
     let offsetY: number = 0;
-    let mx: number;
-    let my: number;
 
     if (canvas.offsetParent !== undefined) {
       do {
@@ -117,8 +115,8 @@ export class ScratchCardComponent implements AfterViewInit {
       } while ((canvas = canvas.offsetParent));
     }
 
-    mx = (e.pageX || e.touches[0].clientX) - offsetX;
-    my = (e.pageY || e.touches[0].clientY) - offsetY;
+    const mx = (e.pageX || e.touches[0].clientX) - offsetX;
+    const my = (e.pageY || e.touches[0].clientY) - offsetY;
 
     return {x: mx, y: my};
   }
