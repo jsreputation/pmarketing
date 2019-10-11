@@ -233,10 +233,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
                 audience: { select: commEvent && parseInt(commEvent.poolId, 10) || null },
                 channel: {
                   type: commEvent && commEvent.channel || 'weblink',
-                  eventId: commEvent && commEvent.eventId,
-                  templateId: commTemplate && commTemplate.templateId,
-                  message: commTemplate && commTemplate.message,
-                  schedule: commEvent && commEvent.schedule
+                  ...commTemplate,
+                  ...commEvent
                 },
                 rewardsList: outcomes
               }))

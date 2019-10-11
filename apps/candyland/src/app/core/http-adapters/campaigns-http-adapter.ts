@@ -92,7 +92,9 @@ export class CampaignsHttpAdapter {
           CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(rewardsData.rewardsOptions.rewards, rewardsData.stampSlotNumber)
       ).flat(1) :
       CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(data.rewardsOptions.rewards);
-
+    const sendAt = data.channel.schedule ?
+      moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + data.channel.schedule.sendTime || moment().format('LT')).format() :
+      '';
     const comm = data.channel.type === 'sms' ? {
       template: {
         content: data.channel.message
@@ -101,9 +103,7 @@ export class CampaignsHttpAdapter {
         id: data.channel.templateId,
         pool_id: data.audience.select,
         provider_id: 1,
-        send_at: data.channel.schedule ?
-          moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + data.channel.schedule.sendTime).format() :
-          '',
+        send_at: sendAt,
         channel: data.channel.type
       }
     } : {
@@ -120,8 +120,10 @@ export class CampaignsHttpAdapter {
         engagement_type: EngagementTypeAPIMapping[data.template.attributes_type],
         engagement_id: data.template.id,
         status: 'scheduled',
-        start_date_time: moment(moment(data.campaignInfo.startDate).format('l') + ' ' + data.campaignInfo.startTime).format(),
-        end_date_time: moment(moment(data.campaignInfo.endDate).format('l') + ' ' + data.campaignInfo.endTime).format(),
+        start_date_time:
+          moment(moment(data.campaignInfo.startDate).format('l') + ' ' + data.campaignInfo.startTime || moment().format('LT')).format(),
+        end_date_time:
+          moment(moment(data.campaignInfo.endDate).format('l') + ' ' + data.campaignInfo.endTime || moment().format('LT')).format(),
         goal: data.campaignInfo.goal,
         labels: data.campaignInfo.labels || [],
         possible_outcomes: possibleOutcomes,

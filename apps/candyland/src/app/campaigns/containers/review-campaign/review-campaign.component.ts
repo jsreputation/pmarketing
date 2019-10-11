@@ -68,7 +68,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
                 channel: {
                   type: commEvent && commEvent.channel || 'weblink',
                   message: commTemplate && commTemplate.message,
-                  schedule: commEvent && commEvent.schedule
+                  schedule: commEvent && { ...commEvent.schedule }
                 },
                 rewardsList: outcomes
               })
