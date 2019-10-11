@@ -1,9 +1,3 @@
-export interface ILimit {
-    id?: string;
-    times: number;
-    duration?: string;
-}
-
 export interface IInstantOutcomeLimitAttributes {
     engagement_id: number;
     campaign_entity_id: number;

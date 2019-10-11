@@ -41,7 +41,27 @@ describe('RewardComponent', () => {
 
   const mockVoucher: Voucher = {
     id: 1,
-    reward: null,
+    reward: {
+      id: 1,
+      name: '',
+      description: '',
+      subtitle: '',
+      validFrom: new Date(),
+      validTo: new Date(),
+      sellingFrom: new Date(),
+      rewardThumbnail: '',
+      rewardBanner: '',
+      merchantImg: '',
+      rewardPrice: [],
+      merchantId: 1,
+      merchantName: '',
+      merchantWebsite: '',
+      termsAndConditions: '',
+      howToRedeem: '',
+      redemptionType: null,
+      categoryTags: [],
+      inventory: null,
+    },
     state: VoucherState.issued,
     expiry: null,
   };
