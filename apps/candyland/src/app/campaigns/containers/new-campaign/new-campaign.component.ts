@@ -233,7 +233,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
             ([campaign, commTemplate, commEvent, outcomes]:
               [ICampaign, IComm, IComm, IOutcome[]]): ICampaign => ({
                 ...campaign,
-                audience: { select: commEvent && parseInt(commEvent.poolId, 10) || null },
+                audience: { select: commEvent && commEvent.poolId || null },
                 channel: {
                   type: commEvent && commEvent.channel || 'weblink',
                   ...commTemplate,
