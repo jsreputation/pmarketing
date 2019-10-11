@@ -1,1 +1,46 @@
-<button mat-flat-button (click)="pop()" color="primary">Pop</button>
+<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+  <mat-form-field class="fieldInput">
+    <mat-label>Title</mat-label>
+    <input matInput
+      formControlName="title"
+      type="text"
+    />
+    <mat-error *ngIf="title.hasError('required')">Required field</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="fieldInput">
+    <mat-label>Text</mat-label>
+    <input matInput
+      formControlName="text"
+      type="text"
+    />
+    <mat-error *ngIf="text.hasError('required')">Required field</mat-error>
+  </mat-form-field>
+
+  <div class="fieldInput">
+    <mat-checkbox formControlName="disableOverlay"></mat-checkbox>
+    Disable Overlay Close
+  </div>
+
+  <mat-form-field class="fieldInput">
+    <mat-label>Button Text</mat-label>
+    <input matInput
+      formControlName="btnTxt"
+      type="text"
+    />
+    <mat-error *ngIf="btnTxt.hasError('required')">Required field</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="fieldInput">
+    <mat-label>Confirm Button Text</mat-label>
+    <input matInput
+      formControlName="btnTxt2"
+      type="text"
+    />
+    <mat-error *ngIf="btnTxt2.hasError('required')">Required field</mat-error>
+  </mat-form-field>
+
+  <button [disabled]="form.invalid" mat-raised-button type="submit">
+    Submit
+  </button>
+</form>

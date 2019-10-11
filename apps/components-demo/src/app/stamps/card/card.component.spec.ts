@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CardComponent } from './card.component';
 import { PuzzlesModule } from '@perx/core';
-import { MatSliderModule, MatCheckboxModule } from '@angular/material';
+import { MatSliderModule, MatCheckboxModule, MatIconModule } from '@angular/material';
 
 describe('CardComponent', () => {
   let component: CardComponent;
@@ -13,7 +13,8 @@ describe('CardComponent', () => {
       imports: [
         PuzzlesModule,
         MatSliderModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatIconModule
       ]
     })
       .compileComponents();
