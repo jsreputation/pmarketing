@@ -122,7 +122,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     const noOutcome = this.campaign.rewardsList.find(outcome => !outcome.resultId);
     this.noOutCome = {
       probability: noOutcome && noOutcome.probability || 0,
-      outcomeId: noOutcome.id
+      outcomeId: noOutcome && noOutcome.id
     };
 
     const possibleOutcomes = this.campaign.rewardsList.filter(data => {

@@ -92,8 +92,9 @@ export class CampaignsHttpAdapter {
           CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(rewardsData.rewardsOptions.rewards, rewardsData.stampSlotNumber)
       ).flat(1) :
       CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(data.rewardsOptions.rewards);
+    const sendTime = data.channel.schedule.sendTime ? data.channel.schedule.sendTime : moment().format('LT');
     const sendAt = data.channel.schedule ?
-      moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + data.channel.schedule.sendTime || moment().format('LT')).format() :
+      moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + sendTime).format() :
       '';
     const comm = data.channel.type === 'sms' ? {
       template: {
@@ -113,6 +114,11 @@ export class CampaignsHttpAdapter {
         }
       };
 
+    const startTime = data.campaignInfo.startTime ? data.campaignInfo.startTime : moment().format('LT');
+    const endTime = data.campaignInfo.endTime ? data.campaignInfo.endTime : moment().format('LT');
+    const startDate = data.campaignInfo.startDate ?
+      moment(moment(data.campaignInfo.startDate).format('l') + ' ' + startTime).format() : null;
+    const endDate = data.campaignInfo.endDate ? moment(moment(data.campaignInfo.endDate).format('l') + ' ' + endTime).format() : null;
     return {
       type: 'entities',
       attributes: {
@@ -120,10 +126,8 @@ export class CampaignsHttpAdapter {
         engagement_type: EngagementTypeAPIMapping[data.template.attributes_type],
         engagement_id: data.template.id,
         status: 'scheduled',
-        start_date_time:
-          moment(moment(data.campaignInfo.startDate).format('l') + ' ' + data.campaignInfo.startTime || moment().format('LT')).format(),
-        end_date_time:
-          moment(moment(data.campaignInfo.endDate).format('l') + ' ' + data.campaignInfo.endTime || moment().format('LT')).format(),
+        start_date_time: startDate,
+        end_date_time: endDate,
         goal: data.campaignInfo.goal,
         labels: data.campaignInfo.labels || [],
         possible_outcomes: possibleOutcomes,
