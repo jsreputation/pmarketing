@@ -87,11 +87,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.stepper.previous();
   }
 
-  public goNext(): void {
+  public goNext(value: MatStepper): void {
     const stepIndex = this.stepper.selectedIndex;
     this.stepConditionService.nextEvent(stepIndex);
     this.store.updateCampaign(this.stepConditionService.getStepFormValue(stepIndex));
-    this.stepper.next();
+    if (!value) {
+      this.stepper.next();
+    }
   }
 
   public get isLastStep(): boolean {
@@ -152,6 +154,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
             return {
               title,
+              subTitle: 'Download your individual links',
               url,
               type: 'download'
             };
@@ -182,7 +185,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       );
     return combineLatest(getUsersPis, this.blackcombUrl)
       .pipe(map(([pis, url]: [string[], string]) => {
-        return pis.reduce((p: string, v: string) => `${p}${url}&pi=${v},\n`, 'urls,\n');
+        return pis.reduce((p: string, v: string) => `${p}${v},${url}&pi=${v},\n`, 'identifier,urls,\n');
       }));
   }
 
