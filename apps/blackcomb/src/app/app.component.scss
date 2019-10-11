@@ -38,7 +38,7 @@
 
   a {
     text-decoration: none;
-    color: #666666;
+    color: var(--accent);
 
     &.active {
       color: mat-color($primary);
@@ -55,3 +55,4 @@
 .logo {
   height: 100%;
 }
+
