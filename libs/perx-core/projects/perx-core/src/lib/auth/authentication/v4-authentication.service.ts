@@ -2,7 +2,7 @@ import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
 import { tap, mergeMap, catchError, map } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
-import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
 import { AuthenticationService } from './authentication.service';
 import { IProfile } from '../../profile/profile.model';

@@ -1,7 +1,7 @@
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ITheme, DARK, LIGHT } from './themes.model';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
 import { IJsonApiListPayload } from '../../jsonapi.payload';
 import { map, tap } from 'rxjs/operators';
