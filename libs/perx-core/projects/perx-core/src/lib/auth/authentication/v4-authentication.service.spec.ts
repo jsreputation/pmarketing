@@ -51,8 +51,8 @@ describe('V4AuthenticationService', () => {
         done();
       });
     const url = location.host;
-    const req = httpTestingController.expectOne(baseUrlForAppAccessToken + 'v2/oauth/token?url=' + url);
-
+    const req = httpTestingController.expectOne(baseUrlForAppAccessToken + 'v2/oauth/token');
+    expect(req.request.body).toEqual({ url });
     expect(req.request.method).toEqual('POST');
 
     req.flush({

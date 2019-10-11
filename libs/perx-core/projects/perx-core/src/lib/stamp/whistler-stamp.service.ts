@@ -60,6 +60,7 @@ interface AttbsObjStamp {
     reward_post_stamp_img_url: string;
     card_background_img_url: string;
     background_img_url: string;
+    display_campaign_as: string;
   };
 }
 
@@ -116,6 +117,7 @@ export class WhistlerStampService implements StampService {
         rewardPostStamp: attributesObj.display_properties.reward_post_stamp_img_url,
         bgImage: attributesObj.display_properties.background_img_url,
         cardBgImage: attributesObj.display_properties.card_background_img_url,
+        displayCampaignAs: attributesObj.display_properties.display_campaign_as,
       },
       collectionStamps: [
         // { id: 1, state: PuzzleCollectStampState.issued }
