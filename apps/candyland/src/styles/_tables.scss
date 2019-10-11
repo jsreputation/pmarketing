@@ -121,6 +121,14 @@ $fluid-cell-6: 21% !important;
       padding-top: ($vertical-padding * 0.375);
       padding-bottom: ($vertical-padding * 0.375);
     }
+
+    th.mat-header-cell:first-child {
+      border-radius: $border-radius-lg 0 0 0;
+    }
+
+    th.mat-header-cell:last-child {
+      border-radius: 0 $border-radius-lg 0 0;
+    }
   }
 
   // Horizontal Sticky Styling
