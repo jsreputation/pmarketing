@@ -21,7 +21,7 @@
   </div>
 
   <div class="upload-wrap-btn" *ngIf="!imgURL">
-    <button class="upload-btn" [ngClass]="btnStyleClass" (click)="fileInput.click()">
+    <button class="upload-btn" (click)="fileInput.click()">
         <ng-content></ng-content>
         <span>{{btnLabel}}</span>
     </button>

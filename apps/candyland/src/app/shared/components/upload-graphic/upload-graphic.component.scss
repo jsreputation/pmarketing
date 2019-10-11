@@ -185,23 +185,22 @@
     opacity: 1;
   }
 }
+.upload-full {
+  &-width {
+    .upload {
+      &-btn {
+        height: 4rem;
+        width: 100%;
+        padding: 0 1.6rem;
+      }
 
-.upload-full-btn {
-  height: 4rem;
-  width: 100%;
-  padding: 0 1.6rem;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  background: $white;
-  cursor: pointer;
-  font-size: $base-font-size;
-  font-weight: 500;
-  color: $primary-color;
-
-  &::after {
-    content: '';
-    opacity: 0;
-    transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+      &-input {
+        height: 4rem;
+        width: 100%;
+        padding: 0 1.6rem;
+        box-sizing: border-box;
+      }
+    }
   }
 }
+

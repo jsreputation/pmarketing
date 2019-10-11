@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import { LoyaltyStepForm } from '../models/loyalty-stap-form';
+import { ClValidators } from '@cl-helpers/cl-validators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoyaltyFormsService {
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
-  // constructor() { }
+
   public getFormLoyalty(): FormGroup {
     return new FormGroup({
       name: new FormControl(null, [Validators.required])
@@ -15,10 +16,20 @@ export class LoyaltyFormsService {
   }
 
   public getStep(step: any): FormGroup {
-    console.log('step', step);
     switch (step) {
       case this.loyaltyFormType.one: {
         return this.getFirsStep();
+      }
+      case this.loyaltyFormType.two: {
+        return this.getSecondaryStep();
+      }
+      case this.loyaltyFormType.three: {
+        // TODO: need implement
+        return null;
+      }
+      case this.loyaltyFormType.four: {
+        // TODO: need implement
+        return null;
       }
     }
   }
@@ -26,18 +37,18 @@ export class LoyaltyFormsService {
   public getFirsStep(): FormGroup {
     return new FormGroup({
       pointsName: new FormControl(null, [Validators.required, Validators.minLength(1)]),
-      mainImage: new FormControl(null, [Validators.required]),
+      mainImage: new FormControl(null, ),
       joiningMethod: new FormGroup( {
         transactionAmount: new FormControl(false),
         signUp: new FormControl(false),
         byInvite: new FormControl(false),
         amount: new FormControl(null),
-      }, [Validators.required]),
+      }, [Validators.required, ClValidators.requiredGroup]),
       selectAudience: new FormGroup({
         audienceType: new FormControl(null, [Validators.required]),
         allMyAudience: new FormControl(null),
         uploadFile: new FormControl(null)
-      }, [Validators.required])
+      }, ClValidators.requiredGroup)
     });
   }
 
@@ -94,6 +105,15 @@ export class LoyaltyFormsService {
     switch (index) {
       case this.loyaltyFormType.stepOne: {
         return this.loyaltyFormType.one;
+      }
+      case this.loyaltyFormType.stepTwo: {
+        return this.loyaltyFormType.two;
+      }
+      case this.loyaltyFormType.stepThree: {
+        return this.loyaltyFormType.three;
+      }
+      case this.loyaltyFormType.stepFour: {
+        return this.loyaltyFormType.four;
       }
     }
   }

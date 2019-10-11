@@ -15,5 +15,6 @@
     </mat-radio-group>
 
     <cl-upload-file *ngIf="audienceType.value === 'list-audience'" [formControlName]="'uploadFile'"></cl-upload-file>
+    <mat-error *ngIf="selectAudience.hasError('groupRequired') && selectAudience.touched">Required field</mat-error>
   </div>
 </mat-expansion-panel>

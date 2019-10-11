@@ -1,15 +1,20 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LoyaltyFormsService } from '../../services/loyalty-forms.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { LoyaltyStepForm } from '../../models/loyalty-stap-form';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-new-loyalty',
   templateUrl: './new-loyalty.component.html',
-  styleUrls: ['./new-loyalty.component.scss']
+  styleUrls: ['./new-loyalty.component.scss'],
+  providers: [{
+    provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
+  }]
 })
-export class NewLoyaltyComponent implements OnInit, AfterViewInit {
+export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   public form: FormGroup;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
@@ -20,6 +25,10 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit {
   }
 
   public goNext(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
     this.stepper.next();
   }
 
@@ -44,23 +53,20 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit {
   }
 
   private addStepForm(step: string): void {
-    // TODO: check if form contain the form step ignore it
     if (this.checkExistingStepForm(this.form, step)) {
       return;
     }
-    console.log(step);
+
     this.form.addControl(step, this.loyaltyFormsService.getStep(step));
-    console.log(this.form.value);
   }
 
   public ngAfterViewInit(): void {
-    console.log(this.stepper);
     this.addStepForm(this.getStepFormName(this.stepper.selectedIndex));
     if (this.stepper) {
-      console.log('asdfasdf', this.stepper);
       this.stepper.selectionChange
-        .subscribe(val => {
-          console.log('value selection', val);
+        .pipe(untilDestroyed(this))
+        .subscribe((val) => {
+          this.addStepForm(this.getStepFormName(val.selectedIndex));
         });
     }
   }
@@ -71,6 +77,9 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit {
 
   private getStepFormName(indexStep: number): string {
     return this.loyaltyFormsService.getStepName(indexStep);
+  }
+
+  public ngOnDestroy(): void {
   }
 
 }

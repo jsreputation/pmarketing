@@ -23,5 +23,6 @@
     <section class="list-checkbox flex align-items-center">
       <mat-checkbox [color]="'primary'" class="transaction-amount" [formControlName]="'byInvite'">By Invite</mat-checkbox>
     </section>
+    <mat-error *ngIf="joiningMethodGroup.hasError('groupRequired') && joiningMethodGroup.touched">Required field</mat-error>
   </div>
 </mat-expansion-panel>
