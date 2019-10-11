@@ -1,42 +1,42 @@
-<aside class="dialog" role="dialog" aria-labelledby="dialogTitle-addUser">
+<aside class="dialog tier-setup" role="dialog" aria-labelledby="dialogTitle-tierSetup">
   <header class="dialog-header-wrap">
-    <!--<h2 mat-dialog-title class="dialog-title" id="dialogTitle-addUser">Create Engagement</h2>-->
-    <h2 class="dialog-title" id="dialogTitle-addUser">Tier Setup</h2>
+    <h2 class="dialog-title" id="dialogTitle-tierSetup">Tier Setup</h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
   </header>
   <div class="dialog-content" [formGroup]="form">
+    <div class="tier-setup-row">
+      <mat-form-field>
+        <input type="text" matInput formControlName="name" placeholder="Silver Tier">
+      </mat-form-field>
+    </div>
 
-    <mat-form-field>
-      <input type="text" matInput formControlName="name" placeholder="Silver Tier">
-    </mat-form-field>
-
-    <label class="dialog-content-title">Qualification Criteria</label>
+    <label class="tier-setup-label">Qualification Criteria</label>
     <ng-container formGroupName="qualification">
-      <div class="row input-group">
+      <div class="tier-setup-row input-group">
         <mat-checkbox color="primary" formControlName="pointsThreshold">Points Threshold</mat-checkbox>
         <mat-form-field>
           <input matInput type="text" formControlName="points">
-          <span matSuffix>Points</span>
           <!--          <mat-error *ngIf="this.form.get('firstName').hasError('required')">Required field</mat-error>-->
         </mat-form-field>
+        <span>Points</span>
       </div>
-      <div class="row">
+      <div class="tier-setup-row">
         <mat-checkbox color="primary" formControlName="inviteOnly">Invite-only</mat-checkbox>
       </div>
     </ng-container>
 
-    <label class="dialog-content-title">Tier Image</label>
-    <div class="row">
+    <label class="tier-setup-label">Tier Image</label>
+    <div class="tier-setup-row tier-setup-row-uploader">
       <cl-upload-graphic formControlName="imageUrl"
                          [btnLabel]="'Upload photo'"
                          [btnStyleClass]="'upload-full-btn'"
       ></cl-upload-graphic>
     </div>
 
-    <label class="dialog-content-title">Accelerated Earn for Tier</label>
-    <div class="row input-group">
+    <label class="tier-setup-label">Accelerated Earn for Tier</label>
+    <div class="tier-setup-row input-group">
       <span>Users in this tier will earn</span>
       <mat-form-field floatLabel="never">
         <input type="text" matInput formControlName="earnForTier">
@@ -44,8 +44,8 @@
       <span>times more points.</span>
     </div>
 
-    <label class="dialog-content-title">Accelerated Burn Rule</label>
-    <div class="row input-group">
+    <label class="tier-setup-label">Accelerated Burn Rule</label>
+    <div class="tier-setup-row input-group">
       <span>Users in this tier get a discount of</span>
       <mat-form-field floatLabel="never">
         <input type="text" matInput formControlName="burnRule">
@@ -53,35 +53,37 @@
       <span>times more points.</span>
     </div>
 
-    <label class="dialog-content-title">Points Expiry</label>
+    <label class="tier-setup-label">Points Expiry</label>
     <ng-container formGroupName="pointsExpiry">
-      <div class="row input-group">
-        <span>Points expire</span>
-        <mat-form-field floatLabel="never">
-          <input type="text" matInput formControlName="pointWasEarnedAmount">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select formControlName="pointWasEarnedPeriod">
-            <mat-option value="day">Day</mat-option>
-            <mat-option value="week">Week</mat-option>
-            <mat-option value="month">Month</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <span>from when the point was earned.</span>
-      </div>
-      <div class="row input-group">
-        <span>Points expire</span>
-        <mat-form-field floatLabel="never">
-          <input type="text" matInput formControlName="userInactivityAmount">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select formControlName="userInactivityPeriod">
-            <mat-option value="day">Day</mat-option>
-            <mat-option value="week">Week</mat-option>
-            <mat-option value="month">Month</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <span>from user inactivity.</span>
+      <div>
+        <div class="tier-setup-row input-group">
+          <span>Points expire</span>
+          <mat-form-field floatLabel="never">
+            <input type="text" matInput formControlName="pointWasEarnedAmount">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select formControlName="pointWasEarnedPeriod">
+              <mat-option value="day">Day</mat-option>
+              <mat-option value="week">Week</mat-option>
+              <mat-option value="month">Month</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <span>from when the point was earned.</span>
+        </div>
+        <div class="tier-setup-row input-group">
+          <span>Points expire</span>
+          <mat-form-field floatLabel="never">
+            <input type="text" matInput formControlName="userInactivityAmount">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select formControlName="userInactivityPeriod">
+              <mat-option value="day">Day</mat-option>
+              <mat-option value="week">Week</mat-option>
+              <mat-option value="month">Month</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <span>from user inactivity.</span>
+        </div>
       </div>
     </ng-container>
   </div>

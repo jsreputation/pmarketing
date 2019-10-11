@@ -15,8 +15,9 @@ import { LoyaltyStepForm } from '../../models/loyalty-stap-form';
 })
 export class NewLoyaltyComponent implements OnInit, AfterViewInit {
   public form: FormGroup;
-  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
+  @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
+
   constructor(private loyaltyFormsService: LoyaltyFormsService,
               private dialog: MatDialog) {
   }
@@ -58,12 +59,12 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit {
   }
 
   public createNewTier(): void {
-    const dialogRef: MatDialogRef<TierSetupPopupComponent>  = this.dialog.open(TierSetupPopupComponent);
+    const dialogRef: MatDialogRef<TierSetupPopupComponent> = this.dialog.open(TierSetupPopupComponent, {panelClass: 'tier-setup-dialog'});
 
     dialogRef.afterClosed()
       .pipe(
         untilDestroyed(this),
-        filter(Boolean),
+        filter(Boolean)
       )
       .subscribe(() => {
         // this.form.get('merchantInfo').patchValue(id);

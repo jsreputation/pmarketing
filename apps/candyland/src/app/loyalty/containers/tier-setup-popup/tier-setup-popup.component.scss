@@ -1,5 +1,35 @@
 @import "variables";
 
-.dialog-content-title {
-  font-size: 1.6rem;
+.tier-setup {
+  white-space: nowrap;
+  font-size: 1.4rem;
+
+  &-label {
+    @include typo-subtitle2;
+    color: $secondary-color;
+    font-size: 1.6rem;
+    //margin: 1rem 0 0.5rem;
+    margin: 0;
+  }
+
+  &-row {
+    max-height: 4.5rem;
+    flex-flow: row nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .mat-form-field{
+      width: 6rem;
+    }
+
+    input {
+      text-align: center;
+    }
+
+    &-uploader{
+      padding: 0.5rem 0 3.5rem;
+    }
+  }
+
 }
