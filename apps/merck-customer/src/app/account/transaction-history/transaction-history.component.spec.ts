@@ -1,13 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TransactionHistoryComponent } from './transaction-history.component';
-import { TransactionPipe } from './transaction.pipe';
+import { TransactionHistoryPipe } from './transaction-history.pipe';
 import { MatIconModule, MatToolbarModule, MatTabsModule } from '@angular/material';
 import { Location } from '@angular/common';
 import { LoyaltyModule, LoyaltyService } from '@perx/core';
 import { of } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {mockLoyalty, mockTransactions} from './loyalty-mock';
+import {mockLoyalty, mockTransactions, mockTransactionsHistory} from './loyalty-mock';
 
 describe('TransactionHistoryComponent', () => {
   let component: TransactionHistoryComponent;
@@ -18,7 +18,7 @@ describe('TransactionHistoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TransactionHistoryComponent, TransactionPipe ],
+      declarations: [ TransactionHistoryComponent, TransactionHistoryPipe ],
       imports: [
         MatIconModule,
         MatToolbarModule,
@@ -31,7 +31,8 @@ describe('TransactionHistoryComponent', () => {
           provide: LoyaltyService,
           useValue: {
             getAllTransactions: () => of(mockTransactions),
-            getLoyalty: () => of(mockLoyalty)
+            getLoyalty: () => of(mockLoyalty),
+            getTransactionHistory: () => of(mockTransactionsHistory)
           }
         },
         {

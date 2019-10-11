@@ -1,4 +1,4 @@
-import { ILoyalty, ITransaction } from '@perx/core';
+import {ILoyalty, ITransaction, ITransactionHistory, TransactionDetailType} from '@perx/core';
 
 export const mockLoyalty: ILoyalty = {
     id: 1,
@@ -82,4 +82,54 @@ export const mockTransactions: ITransactionWithDescription[] = [
         currencyBalance: 1000,
         properties: {}
     }
+];
+export const mockTransactionsHistory: ITransactionHistory[] = [
+  {
+    id: 749,
+    name: 'Trigger',
+    identifier: 'Awarded Points',
+    transactedAt: new Date('2019-10-09T14:46:11.961Z'),
+    pointsAmount: 500,
+    properties: null,
+    transactionDetails: {}
+  },
+  {
+    id: 751,
+    name: 'Loyalty Earn Rule',
+    identifier: 'Awarded Points',
+    transactedAt: new Date('2019-10-09T16:43:33.649Z'),
+    pointsAmount: 100,
+    properties: {},
+    transactionDetails: {
+      type: TransactionDetailType.transaction,
+      data: {
+        id: 50,
+        productName: 'Le test Product',
+        pharmacyName: 'Ryane\'s Pharmacy',
+        transactionDate: new Date('2019-10-09T16:43:33.590Z'),
+        transactionRef: '10102019-108',
+        price: 0,
+        currency: 'HKD'
+      }
+    }
+  },
+  {
+    id: 752,
+    name: null,
+    identifier: null,
+    transactedAt: new Date('2019-10-09T16:50:57.530Z'),
+    pointsAmount: -300,
+    properties: {},
+    transactionDetails: {
+      type: TransactionDetailType.reward,
+      data: {
+        id: 43,
+        state: 'redeemed',
+        voucherExpiry: new Date('2020-09-22T16:00:00.000Z'),
+        userAccount: '10888905-1570617174',
+        rewardName: 'Clemens Diabetes Compact Wallet',
+        redemptionLocation: null
+      }
+    }
+  }
 ];

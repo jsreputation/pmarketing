@@ -9,9 +9,9 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { ILimit, ICampaign } from '@perx/whistler';
 import { ActivatedRoute } from '@angular/router';
-import { EngagementTypeFromAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
+import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ILimit } from '@cl-core/models/limit/limit.interface';
 
 @Component({
   selector: 'cl-new-campaign-select-engagement-page',
@@ -114,7 +114,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
           this.isFirstInit = false;
           const engagementId = campaignData.engagement_id.toString();
           const findTemplate = res.find(template =>
-            template.id === engagementId && template.attributes_type === EngagementTypeFromAPIMapping[campaignData.engagement_type]);
+            template.id === engagementId && template.attributes_type === campaignData.engagement_type);
           this.getLimits(campaignData, findTemplate);
           this.template.patchValue(findTemplate);
         }

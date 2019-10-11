@@ -1,7 +1,7 @@
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ITheme, DARK, LIGHT } from './themes.model';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
 import { IJsonApiListPayload } from '../../jsonapi.payload';
 import { map, tap } from 'rxjs/operators';
@@ -52,11 +52,11 @@ export class ThemesService {
     private http: HttpClient,
     config: Config,
   ) {
-      if (!config.production) {
-        this.themeSettingEndpoint = 'http://localhost:4000/themes';
-      } else {
-        this.themeSettingEndpoint = config.baseHref + 'themes';
-      }
+    if (!config.production) {
+      this.themeSettingEndpoint = 'http://localhost:4000/themes';
+    } else {
+      this.themeSettingEndpoint = config.baseHref + 'themes';
+    }
   }
 
   private static WThemeToTheme(setting: WhistlerISetting): ITheme {
@@ -101,28 +101,32 @@ export class ThemesService {
       document.documentElement.style.setProperty(
         property,
         this.active.properties[property]
-        );
-      });
+      );
+    });
   }
 
   public getThemeSetting(): Observable<ITheme> {
-    const params = new HttpParams().append('url', location.host);
-    return this.http.post<IJsonApiListPayload<WhistlerITenant>>(this.themeSettingEndpoint, null, { params }).pipe(
+    const themesRequest: { url: string } = {
+      url: location.host
+    };
+
+    return this.http.post<IJsonApiListPayload<WhistlerITenant>>(this.themeSettingEndpoint, themesRequest).pipe(
       map(res => res.data && res.data[0].attributes.display_properties),
       map((setting) => ThemesService.WThemeToTheme(setting)),
       tap((theme) => this.setActiveTheme(theme))
-      );
+    );
   }
 
   public getAccountSettings(): Observable<PagesObject> {
     if (this.settings) {
       return of(this.settings);
     }
-    const params = new HttpParams().append('url', location.host);
-
-    return this.http.post<IJsonApiListPayload<WhistlerITenant>>(this.themeSettingEndpoint, null, { params }).pipe(
+    const accountSettingRequest: { url: string } = {
+      url: location.host
+    };
+    return this.http.post<IJsonApiListPayload<WhistlerITenant>>(this.themeSettingEndpoint, accountSettingRequest).pipe(
       map(res => res.data && res.data[0].attributes.display_properties),
-      map((displayProps) => displayProps.account),
+      map((displayProps) => displayProps.account || {pages: []}),
       map((account) => this.settings = account)
     );
   }

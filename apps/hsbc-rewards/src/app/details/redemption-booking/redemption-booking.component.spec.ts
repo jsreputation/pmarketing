@@ -20,15 +20,12 @@ import {
 } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('RedemptionBookingComponent', () => {
   let component: RedemptionBookingComponent;
   let fixture: ComponentFixture<RedemptionBookingComponent>;
-  let debugElem: DebugElement;
 
   const locationsServiceStub = {};
 
@@ -85,7 +82,6 @@ describe('RedemptionBookingComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RedemptionBookingComponent);
     component = fixture.componentInstance;
-    debugElem = fixture.debugElement;
     fixture.detectChanges();
   });
 

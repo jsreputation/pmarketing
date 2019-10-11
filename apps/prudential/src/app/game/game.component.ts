@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { interval, forkJoin, Observable, of } from 'rxjs';
-import { bufferCount, tap, take, map, switchMap, catchError } from 'rxjs/operators';
+import { interval, forkJoin, Observable } from 'rxjs';
+import { bufferCount, tap, take, map, switchMap } from 'rxjs/operators';
 import {
   ICampaignService,
   CampaignType,
@@ -84,6 +84,7 @@ export class GameComponent implements OnInit {
     let numRewards = 0;
 
     forkJoin(r1, r2).subscribe(
+      // @ts-ignore
       ([resr1, resr2]) => {
         if (!this.isWhistler) {
           numRewards = resr1.vouchers.length;
