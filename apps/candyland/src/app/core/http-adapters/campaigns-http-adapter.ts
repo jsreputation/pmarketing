@@ -92,7 +92,7 @@ export class CampaignsHttpAdapter {
           CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(rewardsData.rewardsOptions.rewards, rewardsData.stampSlotNumber)
       ).flat(1) :
       CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(data.rewardsOptions.rewards);
-    const sendTime = data.channel.schedule.sendTime ? data.channel.schedule.sendTime : moment().format('LT');
+    const sendTime = data.channel.schedule && data.channel.schedule.sendTime ? data.channel.schedule.sendTime : moment().format('LT');
     const sendAt = data.channel.schedule ?
       moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + sendTime).format() :
       '';
