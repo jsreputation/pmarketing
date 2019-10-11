@@ -33,11 +33,11 @@ export class TabsFilterComponent implements ControlValueAccessor, DoCheck, After
   constructor(private cd: ChangeDetectorRef, private el: ElementRef) {
   }
 
-  public ngAfterViewInit(): any {
+  public ngAfterViewInit(): void {
     this.labelContainer.nativeElement.querySelector('.mat-tab-links').style.display = 'flex';
   }
 
-  public ngDoCheck(): any {
+  public ngDoCheck(): void {
     if (this.labelContainer) {
       if (
         this.labelContainer.nativeElement.clientWidth -
@@ -51,12 +51,12 @@ export class TabsFilterComponent implements ControlValueAccessor, DoCheck, After
     }
   }
 
-  public left(): any {
+  public left(): void {
     const el = this.el.nativeElement.querySelector('.mat-tab-label-container');
     el.scrollLeft -= 100;
   }
 
-  public right(): any {
+  public right(): void {
     const el = this.el.nativeElement.querySelector('.mat-tab-label-container');
     el.scrollLeft += 100;
   }
