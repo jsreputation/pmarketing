@@ -4,7 +4,8 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 import { OutcomesHttpsService } from '@cl-core/http-services/outcomes-https.service';
 import { map } from 'rxjs/operators';
 import { OutcomesHttpAdapter } from '@cl-core/http-adapters/outcomes-http-adapter';
-import { IOutcomeAttributes, IOutcome } from '@perx/whistler';
+import { IOutcomeAttributes } from '@perx/whistler';
+import { IOutcome } from '@cl-core/models/outcome/outcome';
 
 @Injectable({
   providedIn: 'root'
