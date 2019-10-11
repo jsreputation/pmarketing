@@ -72,3 +72,42 @@
     @extend .disable-btn;
   }
 }
+
+@media (max-width: $tablet-width) {
+  .cta {
+    min-width: initial;
+    width: 5.6rem;
+    height: 5.6rem;
+    border-radius: 100%;
+    position: fixed;
+    bottom: 1.6rem;
+    right: 1.6rem;
+
+    &::before {
+      content: "";
+      display: block;
+      width: $horizontal-padding;
+      height: $horizontal-padding;
+      padding: 0;
+      box-sizing: content-box;    
+      background-position: center;
+      background-color: $white;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &.cta-done::before {
+      mask: url("/assets/images/icons/cta-done.svg") no-repeat 50% 50%;
+    }
+
+    &.cta-next::before {
+      mask: url("/assets/images/icons/cta-next.svg") no-repeat 50% 50%;
+    }
+
+    &.cta-new::before {
+      mask: url("/assets/images/icons/cta-new.svg") no-repeat 50% 50%;
+    }
+  }
+}
