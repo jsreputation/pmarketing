@@ -7,8 +7,9 @@
   </header>
   <div class="dialog-content" [formGroup]="form">
     <div class="tier-setup-row">
-      <mat-form-field>
-        <input type="text" matInput formControlName="name" placeholder="Silver Tier">
+      <mat-form-field class="tier-setup-name-input">
+        <input type="text" matInput formControlName="name" placeholder="Tier's name">
+        <mat-error *ngIf="this.form.get('name').hasError('required') && this.form.get('name').touched">Required field</mat-error>
       </mat-form-field>
     </div>
 
@@ -16,7 +17,7 @@
     <ng-container formGroupName="qualification">
       <div class="tier-setup-row input-group">
         <mat-checkbox color="primary" formControlName="pointsThreshold">Points Threshold</mat-checkbox>
-        <mat-form-field>
+        <mat-form-field class="tier-setup-points-input">
           <input matInput type="text" formControlName="points">
           <!--          <mat-error *ngIf="this.form.get('firstName').hasError('required')">Required field</mat-error>-->
         </mat-form-field>
@@ -39,7 +40,7 @@
     <div class="tier-setup-row input-group">
       <span>Users in this tier will earn</span>
       <mat-form-field floatLabel="never">
-        <input type="text" matInput formControlName="earnForTier">
+        <input type="number" [min]="0" matInput formControlName="earnForTier">
       </mat-form-field>
       <span>times more points.</span>
     </div>
@@ -48,9 +49,9 @@
     <div class="tier-setup-row input-group">
       <span>Users in this tier get a discount of</span>
       <mat-form-field floatLabel="never">
-        <input type="text" matInput formControlName="burnRule">
+        <input type="number" [min]="0" [max]="100" matInput formControlName="burnRule">
       </mat-form-field>
-      <span>times more points.</span>
+      <span>% when spending points for rewards. </span>
     </div>
 
     <label class="tier-setup-label">Points Expiry</label>
@@ -59,7 +60,7 @@
         <div class="tier-setup-row input-group">
           <span>Points expire</span>
           <mat-form-field floatLabel="never">
-            <input type="text" matInput formControlName="pointWasEarnedAmount">
+            <input type="number" [min]="0" matInput formControlName="pointWasEarnedAmount">
           </mat-form-field>
           <mat-form-field>
             <mat-select formControlName="pointWasEarnedPeriod">
@@ -73,7 +74,7 @@
         <div class="tier-setup-row input-group">
           <span>Points expire</span>
           <mat-form-field floatLabel="never">
-            <input type="text" matInput formControlName="userInactivityAmount">
+            <input type="number" [min]="0" matInput formControlName="userInactivityAmount">
           </mat-form-field>
           <mat-form-field>
             <mat-select formControlName="userInactivityPeriod">

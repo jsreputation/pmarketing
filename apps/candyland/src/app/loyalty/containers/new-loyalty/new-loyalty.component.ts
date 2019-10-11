@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { filter } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { LoyaltyStepForm } from '../../models/loyalty-stap-form';
   templateUrl: './new-loyalty.component.html',
   styleUrls: ['./new-loyalty.component.scss']
 })
-export class NewLoyaltyComponent implements OnInit, AfterViewInit {
+export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   public form: FormGroup;
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
@@ -25,6 +25,9 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit {
   public ngOnInit(): void {
     this.initForm();
     // this.addStepForm('1');
+  }
+
+  public ngOnDestroy(): void {
   }
 
   public goNext(): void {
