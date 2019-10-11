@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RedemptionComponent } from './redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule, MatDividerModule } from '@angular/material';
-import { VouchersModule, IVoucherService, VoucherState, UtilsModule, RedemptionType } from '@perx/core';
+import { VouchersModule, IVoucherService, VoucherState, UtilsModule, Voucher } from '@perx/core';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
@@ -15,9 +15,8 @@ import { Location } from '@angular/common';
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
   let fixture: ComponentFixture<RedemptionComponent>;
-  const voucher = {
+  const voucher: Voucher = {
     id: 1,
-    rewardId: 1,
     reward: {
       id: 1,
       name: '',
@@ -25,23 +24,22 @@ describe('RedemptionComponent', () => {
       subtitle: '',
       validFrom: new Date(),
       validTo: new Date(),
+      sellingFrom: new Date(),
+      rewardThumbnail: '',
       rewardBanner: '',
       merchantImg: '',
+      rewardPrice: [],
+      merchantId: 1,
+      merchantName: '',
+      merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
+      redemptionType: null,
       categoryTags: [],
+      inventory: null,
     },
     state: VoucherState.expired,
-    name: '10% OFF Total Bill',
-    redemptionType: RedemptionType.pin,
-    thumbnailImg: 'https://picsum.photos/50/50?random=3',
-    rewardBanner: 'https://picsum.photos/400/200?random=20',
-    merchantImg: '',
-    merchantName: '',
     expiry: null,
-    description: [],
-    redemptionSuccessTxt: '',
-    redemptionSuccessImg: '',
   };
 
   const vouchersServiceStub = {

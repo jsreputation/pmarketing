@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'cl-download-link',
@@ -7,5 +8,11 @@ import { Component, Input } from '@angular/core';
 })
 export class DownloadLinkComponent {
   @Input() public file: string;
+  @Input() public link: string;
 
+  public constructor(private sanitizer: DomSanitizer) { }
+  public sanitizeLink(link: string): SafeUrl {
+    console.log(link);
+    return this.sanitizer.bypassSecurityTrustUrl(link);
+  }
 }
