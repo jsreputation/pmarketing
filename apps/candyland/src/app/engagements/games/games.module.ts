@@ -28,6 +28,8 @@ import { NewPinataPageComponent } from './containers/new-pinata-page/new-pinata-
 import { NewScratchPageComponent } from './containers/new-scratch-page/new-scratch-page.component';
 import { GameComponent } from './containers/game/game.component';
 
+import { SettingsMobilePreviewModule } from '../../settings/components/settings-mobile-preview/settings-mobile-preview.module';
+
 @NgModule({
   declarations: [
     NewShakePageComponent,
@@ -46,6 +48,7 @@ import { GameComponent } from './containers/game/game.component';
     SelectGraphicWrapModule,
     GameModule,
     SimpleMobileViewModule,
+    SettingsMobilePreviewModule,
 
     MatTabsModule,
     MatCardModule,
