@@ -12,11 +12,10 @@ import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wr
 import { SimpleMobileViewModule } from '@cl-shared';
 import { SurveyModule as PerxSurveyModule} from '@perx/core';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
-import { DisableFormComponent } from '@cl-helpers/disable-preview-form';
+
 @NgModule({
   declarations: [
-    NewSurveyComponent,
-    DisableFormComponent
+    NewSurveyComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +27,6 @@ import { DisableFormComponent } from '@cl-helpers/disable-preview-form';
     SelectGraphicWrapModule,
     SimpleMobileViewModule,
     PerxSurveyModule,
-
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
