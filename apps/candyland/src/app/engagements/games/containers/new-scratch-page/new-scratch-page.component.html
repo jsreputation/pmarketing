@@ -38,7 +38,7 @@
               <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
               <mat-hint align="end">{{headlineMessage.value?.length || 0}}/20</mat-hint>
               <mat-error *ngIf="headlineMessage.hasError('required')">Required field</mat-error>
-              <mat-error *ngIf="headlineMessage.hasError('minlength')">Max 5 characters</mat-error>
+              <mat-error *ngIf="headlineMessage.hasError('minlength')">Min 5 characters</mat-error>
               <mat-error *ngIf="headlineMessage.hasError('maxlength')">Max 20 characters</mat-error>
             </mat-form-field>
           </div>
@@ -47,7 +47,7 @@
               <input type="text" matInput [placeholder]="'Sub-Headline message'" formControlName="subHeadlineMessage">
               <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/30</mat-hint>
               <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
-              <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Max 5 characters</mat-error>
+              <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min 5 characters</mat-error>
               <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max 30 characters</mat-error>
             </mat-form-field>
           </div>

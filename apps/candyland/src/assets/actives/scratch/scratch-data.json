@@ -2,28 +2,19 @@
   "preScratchImage": [
     {
       "id": 1,
-      "type": "bg1",
+      "type": "preScratchImage1",
       "title": "icon",
-      "img": "global/assets/background/stamp-bg-7.png",
-      "fullImg": "global/assets/background/full_bg_7.jpg",
+      "img": "tenants/666666666/umaac1d1vaasqloxxt9ptzf76std",
+      "fullImg": "tenants/666666666/umaac1d1vaasqloxxt9ptzf76std",
       "format": ".png",
       "active": "false"
     },
     {
       "id": 2,
-      "type": "bg2",
+      "type": "preScratchImage2",
       "title": "icon",
-      "img": "global/assets/background/stamp-bg-8.png",
-      "fullImg": "global/assets/background/full_bg_8.jpg",
-      "format": ".png",
-      "active": "false"
-    },
-    {
-      "id": 3,
-      "type": "bg3",
-      "title": "icon",
-      "img": "global/assets/background/stamp-bg-9.png",
-      "fullImg": "global/assets/background/full_bg_9.jpg",
+      "img": "tenants/666666666/83gifz940zugqddc4u3etg8kx33x",
+      "fullImg": "tenants/666666666/83gifz940zugqddc4u3etg8kx33x",
       "format": ".png",
       "active": "false"
     }
@@ -31,88 +22,16 @@
   "postScratchSuccessImage": [
     {
       "id": 1,
-      "type": "bg1",
+      "type": "postScratchSuccessImage1",
       "title": "icon",
-      "img": "global/assets/background/stamp-bg-7.png",
-      "fullImg": "global/assets/background/full_bg_7.jpg",
-      "format": ".png",
-      "active": "false"
-    },
-    {
-      "id": 2,
-      "type": "bg2",
-      "title": "icon",
-      "img": "global/assets/background/stamp-bg-8.png",
-      "fullImg": "global/assets/background/full_bg_8.jpg",
-      "format": ".png",
-      "active": "false"
-    },
-    {
-      "id": 3,
-      "type": "bg3",
-      "title": "icon",
-      "img": "global/assets/background/stamp-bg-9.png",
-      "fullImg": "global/assets/background/full_bg_9.jpg",
+      "img": "tenants/666666666/wm99zyc21i9saj93flizvlt3ttvy",
+      "fullImg": "tenants/666666666/wm99zyc21i9saj93flizvlt3ttvy",
       "format": ".png",
       "active": "false"
     }
   ],
   "postScratchFailImage": [
-    {
-      "id": 1,
-      "type": "bg1",
-      "title": "icon",
-      "img": "global/assets/background/stamp-bg-7.png",
-      "fullImg": "global/assets/background/full_bg_7.jpg",
-      "format": ".png",
-      "active": "false"
-    },
-    {
-      "id": 2,
-      "type": "bg2",
-      "title": "icon",
-      "img": "global/assets/background/stamp-bg-8.png",
-      "fullImg": "global/assets/background/full_bg_8.jpg",
-      "format": ".png",
-      "active": "false"
-    },
-    {
-      "id": 3,
-      "type": "bg3",
-      "title": "icon",
-      "img": "global/assets/background/stamp-bg-9.png",
-      "fullImg": "global/assets/background/full_bg_9.jpg",
-      "format": ".png",
-      "active": "false"
-    }
   ],
   "background": [
-    {
-      "id": 1,
-      "type": "bg1",
-      "title": "icon",
-      "img": "global/assets/background/stamp-bg-7.png",
-      "fullImg": "global/assets/background/full_bg_7.jpg",
-      "format": ".png",
-      "active": "false"
-    },
-    {
-      "id": 2,
-      "type": "bg2",
-      "title": "icon",
-      "img": "global/assets/background/stamp-bg-8.png",
-      "fullImg": "global/assets/background/full_bg_8.jpg",
-      "format": ".png",
-      "active": "false"
-    },
-    {
-      "id": 3,
-      "type": "bg3",
-      "title": "icon",
-      "img": "global/assets/background/stamp-bg-9.png",
-      "fullImg": "global/assets/background/full_bg_9.jpg",
-      "format": ".png",
-      "active": "false"
-    }
   ]
 }
