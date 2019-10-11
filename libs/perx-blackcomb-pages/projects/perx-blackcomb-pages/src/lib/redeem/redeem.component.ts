@@ -6,7 +6,7 @@ import { filter, switchMap } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
-  selector: 'perx-blackcomb-pages-redeem',
+  selector: 'app-redeem',
   templateUrl: './redeem.component.html',
   styleUrls: ['./redeem.component.scss']
 })
@@ -33,7 +33,7 @@ export class RedeemComponent implements OnInit {
         })
       );
     this.voucher$.subscribe((voucher: Voucher) => {
-      this.redemptionType = voucher.redemptionType;
+      this.redemptionType = voucher.reward.redemptionType;
     });
   }
 
