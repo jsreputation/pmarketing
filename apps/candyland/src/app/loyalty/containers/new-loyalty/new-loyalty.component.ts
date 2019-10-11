@@ -17,7 +17,6 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit {
 
   public ngOnInit(): void {
     this.initForm();
-    // this.addStepForm('1');
   }
 
   public goNext(): void {
@@ -44,10 +43,13 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit {
     this.form = this.loyaltyFormsService.getFormLoyalty();
   }
 
-  private addStepForm(step: any): void {
+  private addStepForm(step: string): void {
     // TODO: check if form contain the form step ignore it
+    if (this.checkExistingStepForm(this.form, step)) {
+      return;
+    }
     console.log(step);
-    this.form.addControl('stepOne', this.loyaltyFormsService.getStep(step));
+    this.form.addControl(step, this.loyaltyFormsService.getStep(step));
     console.log(this.form.value);
   }
 
@@ -61,6 +63,10 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit {
           console.log('value selection', val);
         });
     }
+  }
+
+  private checkExistingStepForm(form: FormGroup, step: string): boolean {
+    return this.loyaltyFormsService.checkExistingStepForm(form, step);
   }
 
   private getStepFormName(indexStep: number): string {

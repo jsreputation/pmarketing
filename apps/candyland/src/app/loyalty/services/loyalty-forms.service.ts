@@ -97,4 +97,8 @@ export class LoyaltyFormsService {
       }
     }
   }
+
+  public checkExistingStepForm(form: FormGroup, step: string): boolean {
+    return !!form.get(step);
+  }
 }

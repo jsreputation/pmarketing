@@ -19,10 +19,9 @@
 </header>
 <section class="content form-limiter">
   <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0">
-    <mat-step ><!--[stepControl]="firstFormGroup"-->
+    <mat-step [stepControl]="stepOne"><!--[stepControl]="firstFormGroup"-->
       <ng-template matStepLabel>Loyalty Details</ng-template>
       <div class="loyalty-detail-content">
-        step 1
         <cl-loyalty-form-step-one *ngIf="form && stepOne" [group]="stepOne"></cl-loyalty-form-step-one>
       </div>
 

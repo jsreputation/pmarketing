@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,14 +6,11 @@ import { AbstractControl, FormGroup } from '@angular/forms';
   templateUrl: './points-info.component.html',
   styleUrls: ['./points-info.component.scss']
 })
-export class PointsInfoComponent implements OnInit {
+export class PointsInfoComponent {
   @Input() public group: FormGroup;
-  // constructor() { }
 
   public get pointsName(): AbstractControl {
     return this.group.get('pointsName');
-  }
-  ngOnInit() {
   }
 
 }
