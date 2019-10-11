@@ -165,12 +165,11 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   public getAppToken(): Observable<IAppAccessTokenResponse> {
-    const httpParams = new HttpParams()
-      .append('url', location.host);
+    const authenticateRequest: { url: string } = {
+      url: location.host,
+    };
 
-    return this.http.post<IAppAccessTokenResponse>(this.appAuthEndPoint + '/token', null, {
-      params: httpParams
-    }).pipe(
+    return this.http.post<IAppAccessTokenResponse>(this.appAuthEndPoint + '/token', authenticateRequest).pipe(
       tap((resp) => {
         this.saveAppAccessToken(resp.access_token);
       })
