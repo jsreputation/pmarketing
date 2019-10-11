@@ -50,6 +50,9 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       'filter[owner_id]': campaignId,
       'filter[owner_type]': 'Perx::Campaign::Entity',
     };
+    const paramsPO: HttpParamsOptions = {
+      'filter[campaign_entity_id]': campaignId
+    };
     if (campaignId) {
       combineLatest(
         this.campaignsService.getCampaign(campaignId),
@@ -59,7 +62,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         this.commsService.getCommsEvents(params).pipe(
           map((comms: IComm[]) => comms[0])
         ),
-        this.outcomesService.getOutcomes(params)).pipe(
+        this.outcomesService.getOutcomes(paramsPO)).pipe(
           untilDestroyed(this),
           map(
             ([campaign, commTemplate, commEvent, outcomes]:
