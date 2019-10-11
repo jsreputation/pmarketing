@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 import { map, switchMap, catchError, tap, } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-reward',
+  selector: 'perx-blackcomb-reward',
   templateUrl: './reward.component.html',
   styleUrls: ['./reward.component.scss']
 })

@@ -10,7 +10,7 @@ interface IAnswer {
 }
 
 @Component({
-  selector: 'app-survey',
+  selector: 'perx-blackcomb-survey',
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.scss']
 })
