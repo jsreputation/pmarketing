@@ -41,6 +41,7 @@ describe('PuzzleComponent', () => {
         }
       },
       totalSlots: 1,
+      displayCampaignAs: 'puzzle',
     },
   };
   const stampServiceStub = {
