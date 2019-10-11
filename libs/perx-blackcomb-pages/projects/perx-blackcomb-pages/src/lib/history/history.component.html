@@ -1,0 +1,20 @@
+<div class="tab-group__content">
+  <h1>My History</h1>
+  <mat-card>
+    <div>
+      <div class="voucher-img__wrapper">
+        <div class="img-placeholder ghost"></div>
+      </div>
+      <div class="voucher-details">
+        <h1 class="voucher-name ghost"></h1>
+        <div class="voucher-merchantName ghost"></div>
+        <div class="voucher-date-details ghost"></div>
+      </div>
+    </div>
+  </mat-card>
+  <perx-core-vouchers 
+        [filter]="filter"
+        [showRedeemedIcon]="false"
+        [data]="vouchers$">
+    </perx-core-vouchers>
+</div>
