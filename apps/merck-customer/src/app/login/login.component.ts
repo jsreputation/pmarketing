@@ -14,7 +14,7 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class LoginComponent implements OnInit, PageAppearence {
 
-  public selectedCountry: string = '+852';
+  public selectedCountry: string = '852';
 
   public loginForm: FormGroup;
 
