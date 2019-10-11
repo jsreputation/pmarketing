@@ -99,6 +99,12 @@ interface IV4StampCard {
       }
     };
     total_slots?: number;
+    display_campaign_as: string;
+    background_img?: {
+      value?: {
+        image_url?: string
+      }
+    };
   };
   stamps?: IV4Stamp[];
 }
@@ -173,6 +179,13 @@ export class V4StampService implements StampService {
           }
         },
         totalSlots: stampCard.display_properties.total_slots,
+        displayCampaignAs: stampCard.display_properties.display_campaign_as,
+        backgroundImg: {
+          value: {
+            imageUrl: stampCard.display_properties.background_img ?
+              stampCard.display_properties.background_img.value.image_url : null,
+          }
+        },
       },
       stamps: stampCard.stamps.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp))
     };
