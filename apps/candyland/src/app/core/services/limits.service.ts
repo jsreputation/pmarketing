@@ -4,7 +4,8 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 import { LimitsHttpsService } from '@cl-core/http-services/limits-https.service';
 import { map } from 'rxjs/operators';
 import { LimitsHttpAdapter } from '@cl-core/http-adapters/limits-http-adapter';
-import { ILimit, IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from '@perx/whistler';
+import { IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from '@perx/whistler';
+import { ILimit } from '@cl-core/models/limit/limit.interface';
 
 @Injectable({
   providedIn: 'root'
