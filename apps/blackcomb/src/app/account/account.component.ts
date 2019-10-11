@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IProfile, ProfileService, ThemesService } from '@perx/core';
 import { take } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 interface AccountPageObject {
   title: string;
@@ -18,12 +19,18 @@ export class AccountComponent implements OnInit {
 
   constructor(
     private profileService: ProfileService,
-    private themeService: ThemesService
+    private themeService: ThemesService,
+    private router: Router
   ) { }
 
   public ngOnInit(): void {
     this.themeService.getAccountSettings()
-      .subscribe((settings) => this.pages = settings.pages);
+      .subscribe((settings) => {
+        if (!settings.pages.length) {
+          this.router.navigate(['']);
+        }
+        this.pages = settings.pages ;
+      });
     this.profileService.whoAmI()
       .pipe(
         take(1)

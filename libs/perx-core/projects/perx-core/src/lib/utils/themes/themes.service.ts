@@ -122,7 +122,7 @@ export class ThemesService {
 
     return this.http.post<IJsonApiListPayload<WhistlerITenant>>(this.themeSettingEndpoint, null, { params }).pipe(
       map(res => res.data && res.data[0].attributes.display_properties),
-      map((displayProps) => displayProps.account),
+      map((displayProps) => displayProps.account || {pages: []}),
       map((account) => this.settings = account)
     );
   }
