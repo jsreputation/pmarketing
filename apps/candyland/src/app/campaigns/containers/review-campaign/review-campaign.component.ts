@@ -47,7 +47,8 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   private getCampaignData(): void {
     const campaignId = this.route.snapshot.params.id;
     const params: HttpParamsOptions = {
-      'filter[campaign_entity_id]': campaignId
+      'filter[owner_id]': campaignId,
+      'filter[owner_type]': 'Perx::Campaign::Entity',
     };
     if (campaignId) {
       combineLatest(

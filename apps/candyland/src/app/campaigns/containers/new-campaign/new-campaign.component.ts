@@ -213,7 +213,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private handleRouteParams(): void {
     const campaignId = this.route.snapshot.params.id;
     const params: HttpParamsOptions = {
-      'filter[campaign_entity_id]': campaignId
+      'filter[owner_id]': campaignId,
+      'filter[owner_type]': 'Perx::Campaign::Entity',
     };
     if (campaignId) {
       combineLatest(
