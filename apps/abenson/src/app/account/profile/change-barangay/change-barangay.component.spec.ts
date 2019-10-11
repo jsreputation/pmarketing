@@ -70,4 +70,12 @@ describe('ChangeBarangayComponent', () => {
     tick();
     expect(spyLog).toHaveBeenCalled();
   }));
+
+  it('should leave profileService', fakeAsync(()=>{
+    const spyProfile = spyOn(profileService, 'setCustomProperties');
+    component.barangayChangeForm.setValue({ newBarangay: null });
+    component.onSubmit();
+    tick();
+    expect(spyProfile).not.toHaveBeenCalled();
+  }));
 });

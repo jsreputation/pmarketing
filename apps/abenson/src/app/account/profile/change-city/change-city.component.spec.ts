@@ -76,4 +76,11 @@ describe('ChangeCityComponent', () => {
     fixture.detectChanges();
     expect(spyLog).toHaveBeenCalled();
   }));
+
+  it('should leave profileSerive', fakeAsync(()=>{
+    component.cityChangeForm.setValue({ newCity: null });
+    component.onSubmit();
+    tick();
+    expect(spyOnProfile).not.toHaveBeenCalled();
+  }));
 });
