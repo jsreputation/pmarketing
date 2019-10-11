@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Pipe({
-  name: 'transactionHistory'
+  name: 'transaction'
 })
 export class TransactionPipe implements PipeTransform {
 

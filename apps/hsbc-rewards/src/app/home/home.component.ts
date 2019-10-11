@@ -1,10 +1,10 @@
-import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {Router} from '@angular/router';
-import {IReward, RewardsService, LoyaltyService, ILoyalty, IProfile} from '@perx/core';
-import {ITabConfig, IPrice} from '@perx/core';
-import {Observable, of, Subject, forkJoin} from 'rxjs';
-import {flatMap, map, filter} from 'rxjs/operators';
-import {MatTabChangeEvent} from '@angular/material/tabs';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { IReward, RewardsService, LoyaltyService, ILoyalty, IProfile } from '@perx/core';
+import { ITabConfig, IPrice } from '@perx/core';
+import { Observable, of, Subject } from 'rxjs';
+import { flatMap, map, filter } from 'rxjs/operators';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 const tabs: ITabConfig[] = [
   {
@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit {
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
     private router: Router,
-    private cd: ChangeDetectorRef
+    // private cd: ChangeDetectorRef
   ) {
   }
 
@@ -103,12 +103,12 @@ export class HomeComponent implements OnInit {
   private loadCurrentTabRewards(tabName: string): void {
     this.rewardsService.getRewards(1, this.requestPageSize, null, [tabName])
       .pipe(map((res: IReward[]) => {
-        this.rewardMultiPageMetaTracker[tabName] = {page: 1, isLast: false};
-        return ({key: tabName, value: res});
+        this.rewardMultiPageMetaTracker[tabName] = { page: 1, isLast: false };
+        return ({ key: tabName, value: res });
       })).subscribe((rewards) => {
-      this.staticTab.find((elem) => rewards.key === elem.tabName).rewardsList = of(rewards.value);
-      this.tabs.next(this.staticTab);
-    });
+        this.staticTab.find((elem) => rewards.key === elem.tabName).rewardsList = of(rewards.value);
+        this.tabs.next(this.staticTab);
+      });
   }
 
   private getLoyalty(): void {
@@ -120,14 +120,14 @@ export class HomeComponent implements OnInit {
       .subscribe((loyalty: ILoyalty) => this.loyalty$ = this.loyaltyService.getLoyalty(loyalty.id));
   }
 
-  private getTags(): Observable<ITabConfig[]> {
-    // todo: service not implemented yet
-    // this.rewardsService.getTags();
-    this.staticTab = tabs;
-    this.tabs.next(this.staticTab);
-    this.cd.detectChanges();
-    return of(tabs);
-  }
+  // private getTags(): Observable<ITabConfig[]> {
+  //   // todo: service not implemented yet
+  //   // this.rewardsService.getTags();
+  //   this.staticTab = tabs;
+  //   this.tabs.next(this.staticTab);
+  //   this.cd.detectChanges();
+  //   return of(tabs);
+  // }
 
   public tabChanged(event: MatTabChangeEvent): void {
     this.currentTab = event.tab.textLabel;

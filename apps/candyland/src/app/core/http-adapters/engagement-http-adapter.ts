@@ -67,7 +67,7 @@ export class EngagementHttpAdapter {
       button: data.attributes.display_properties.button,
       sub_title: data.attributes.display_properties.sub_title,
       banner: data.attributes.display_properties.banner,
-      attributes_type: data.attributes.type || engagementType,
+      attributes_type: engagementType,
       background_img_url: data.attributes.display_properties.background_img_url,
       card_background_img_url: data.attributes.display_properties.card_background_img_url
     };
@@ -86,7 +86,7 @@ export class EngagementHttpAdapter {
       button: data.attributes.display_properties.button,
       sub_title: data.attributes.display_properties.sub_title,
       background_img_url: data.attributes.display_properties.background_img_url,
-      attributes_type: data.attributes.type || engagementType,
+      attributes_type: engagementType,
       progress_bar_color: data.attributes.display_properties.progress_bar_color,
       card_background_img_url: data.attributes.display_properties.card_background_img_url,
       questions: EngagementHttpAdapter.prepareQuestion(data.attributes.display_properties.questions)
@@ -115,7 +115,7 @@ export class EngagementHttpAdapter {
       post_stamp_img_url: data.attributes.display_properties.post_stamp_img_url,
       reward_pre_stamp_img_url: data.attributes.display_properties.reward_pre_stamp_img_url,
       reward_post_stamp_img_url: data.attributes.display_properties.reward_post_stamp_img_url,
-      attributes_type: data.attributes.type || engagementType,
+      attributes_type: engagementType,
       background_img_url: data.attributes.display_properties.background_img_url,
       card_background_img_url: data.attributes.display_properties.card_background_img_url
     };
@@ -145,7 +145,7 @@ export class EngagementHttpAdapter {
       nb_hanged_gifts: data.attributes.display_properties.nb_hanged_gifts,
       gift_box_img_url: data.attributes.display_properties.gift_box_img_url,
       background_img_url: data.attributes.display_properties.background_img_url,
-      attributes_type: data.attributes.type || engagementType,
+      attributes_type: engagementType,
       created_at: data.attributes.created_at,
       updated_at: data.attributes.updated_at
     };
@@ -162,7 +162,7 @@ export class EngagementHttpAdapter {
       title_display: data.attributes.display_properties.title,
       button: data.attributes.display_properties.button,
       sub_title: data.attributes.display_properties.sub_title,
-      attributes_type: data.attributes.type || engagementType,
+      attributes_type: engagementType,
       created_at: data.attributes.created_at,
       updated_at: data.attributes.updated_at,
       closed_pinata_img_url: data.attributes.display_properties.closed_pinata_img_url,

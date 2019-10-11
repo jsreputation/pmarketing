@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup, Validators } from '@angular/forms';
 import { AudiencesService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
@@ -9,6 +9,7 @@ import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-cam
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { ActivatedRoute } from '@angular/router';
+import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -33,6 +34,10 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     return this.form.get('channel');
   }
 
+  public get channelType(): AbstractControl | null {
+    return this.form.get('channel').get('type');
+  }
+
   public get schedule(): AbstractControl | null {
     return this.form.get('channel.schedule');
   }
@@ -43,6 +48,14 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
 
   public get audience(): AbstractControl | null {
     return this.form.get('audience');
+  }
+
+  public get pool(): AbstractControl | null {
+    return this.form.get('audience').get('select');
+  }
+
+  public get datenow(): Date {
+    return new Date();
   }
 
   constructor(
@@ -60,6 +73,17 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
 
   public ngOnInit(): void {
     super.ngOnInit();
+    this.channelType.valueChanges.subscribe(
+      value => {
+        if (value === 'sms') {
+          this.pool.setValidators([Validators.required]);
+        } else {
+          this.pool.setValidators(null);
+        }
+        this.pool.updateValueAndValidity();
+      }
+    );
+
     this.campaignId = this.route.snapshot.params.id;
     this.isFirstInit = true;
     this.initPools();
@@ -74,13 +98,16 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   }
 
   private initData(): void {
+    if (!this.form) {
+      return;
+    }
     this.form.valueChanges
       .pipe(
         untilDestroyed(this),
         distinctUntilChanged(),
         debounceTime(500)
       )
-      .subscribe((val) => {
+      .subscribe((val: ICampaign) => {
         this.store.updateCampaign(val);
         const toggleConfig = this.newCampaignDetailFormService.getToggleConfig(this.form);
         this.toggleControlService.updateFormStructure(toggleConfig);
@@ -93,9 +120,9 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
       this.store.currentCampaign$
         .asObservable()
         .pipe(untilDestroyed(this))
-        .subscribe(data => {
+        .subscribe((data: ICampaign) => {
           if (data && data.campaignInfo && this.isFirstInit) {
-            const select = data.audience.select.toString();
+            const select = data.audience.select;
             data.audience = { ...data.audience, select };
             this.form.patchValue(data);
             if (data.campaignInfo.labels) {

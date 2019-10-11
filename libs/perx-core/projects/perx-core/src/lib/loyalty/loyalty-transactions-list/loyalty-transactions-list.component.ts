@@ -26,6 +26,9 @@ export class LoyaltyTransactionsListComponent implements OnInit {
   public titleFn: (tr: ITransaction) => string;
 
   @Input()
+  public descFn: (tr: ITransaction) => string;
+
+  @Input()
   public subTitleFn: (tr: ITransaction) => string;
 
   @Input()
@@ -39,6 +42,9 @@ export class LoyaltyTransactionsListComponent implements OnInit {
   public ngOnInit(): void {
     if (!this.titleFn) {
       this.titleFn = (tr: ITransaction) => `${tr.name}`;
+    }
+    if (!this.descFn) {
+      this.descFn = () => '';
     }
     if (!this.subTitleFn) {
       this.subTitleFn = (tr: ITransaction) => `${this.datePipe.transform(tr.earnedDate, 'dd/MM/yyyy')}`;

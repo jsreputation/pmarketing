@@ -9,7 +9,7 @@ export class NewCampaignRewardsStampsFormService {
 
   public getForm(): FormGroup {
     return this.fb.group({
-      rewardsList: this.fb.array([]),
+      rewardsListCollection: this.fb.array([]),
       stampsRule: this.fb.group({
         sequence: [],
         rules: this.fb.array([

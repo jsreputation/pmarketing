@@ -8,8 +8,9 @@ import { Component, Input } from '@angular/core';
 export class CustomLineProgressComponent {
   @Input() public amount: number;
   @Input() public total: number;
+  @Input() public vertical: boolean = false;
 
-  public calcWidth(): string | null {
+  public calcSize(): string | null {
     if (!this.amount || !this.total) {
       return null;
     }
