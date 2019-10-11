@@ -12,7 +12,7 @@ export interface ICommEventAttributes {
     campaign_entity_id?: number;
     template_id?: number;
     channel: string;
-    target_id?: string;
+    target_id?: number;
     target_type?: string;
     name?: string;
 }

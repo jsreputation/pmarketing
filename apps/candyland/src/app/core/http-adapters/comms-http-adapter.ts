@@ -13,7 +13,7 @@ export class CommsHttpAdapter {
   public static transformEventAPIResponseToComm(data: IJsonApiItem<ICommEventAttributes>): IComm {
     return {
       eventId: data.id,
-      poolId: data.attributes.target_id,
+      poolId: data.attributes.target_id.toString(),
       channel: data.attributes.channel,
       schedule: {
         sendDate: new Date(data.attributes.send_at),
