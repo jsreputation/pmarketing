@@ -4,7 +4,7 @@
                 [mode]="mobileQuery.matches ? 'over' : 'side'"
                 [opened]="sideNavOpened"
                 [fixedInViewport]="mobileQuery.matches" 
-                fixedTopGap="56">
+                fixedTopGap="64">
     <mat-toolbar class="mat-toolbar-log" [class.center]="!isOpen">
       <cl-logo [sizeClass]="isOpen ? 'medium' : 'small'"></cl-logo>
     </mat-toolbar>
@@ -19,7 +19,7 @@
       <cl-sidenav-menu [isOpen]="isOpen"></cl-sidenav-menu>
     </div>
     <div class="sidenav-actions">
-      <button class="user-logout btn-transparent appear"
+      <button class="sidenav-logout user-logout btn-transparent appear"
               *ngIf="isOpen"
               [routerLink]="['/login']"
       >
@@ -28,7 +28,7 @@
           Log out
         </span>
       </button>
-      <button class="sidenav-action"
+      <button class="sidenav-compress"
               [class.center]="!isOpen"
               (click)="toggle()">
         <mat-icon aria-hidden="false" aria-label="Example home icon">{{isOpen ? 'keyboard_arrow_left': 'keyboard_arrow_right'}}</mat-icon>
@@ -37,7 +37,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content [@position]="isOpen ? 'open' : 'closed'">
-    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <button mat-icon-button (click)="snav.toggle()" class="side-nav-toggle"><mat-icon>menu</mat-icon></button>
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

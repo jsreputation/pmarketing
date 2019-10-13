@@ -1,9 +1,13 @@
 @import "variables";
 
+.container-sidenav,
+.mat-drawer-content {
+  overflow: initial; // required to make header sticky
+}
+
 .container-sidenav {
   position: relative;
   min-height: 100vh;
-  overflow: initial; // required to make header sticky
 }
 
 .sidenav {
@@ -16,17 +20,41 @@
     position: relative;
   }
 
-  &-action {
+  &-actions {
+    position: relative;
+    margin-top: auto;
+    margin-bottom: ($vertical-padding * 0.5);
+  }
+
+  &-logout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+
+    .btn-text {
+      font-size: $base-font-size;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.7);
+      padding-left: 0.8rem;
+    }
+
+    &.appear {
+      animation: changeWidth 0.4s cubic-bezier(0.35, 0, 0.25, 1);
+    }    
+  }
+
+  &-compress {
     display: flex;
     background: transparent;
     border: none;
     color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
-    position: absolute;
-    top: 93vh;
-    right: 0;
     outline: none;
     transition: 0.5s;
+    position: absolute;
+    top: 0;
+    right: 0;
 
     &.center {
       right: 1.6rem;
@@ -54,25 +82,6 @@
   min-height: 100vh;
 }
 
-.btn-text {
-  font-size: $base-font-size;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.user-logout {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 93vh;
-  left: 1rem;
-}
-
-.appear {
-  animation: changeWidth 0.4s cubic-bezier(0.35, 0, 0.25, 1);
-}
-
 @keyframes changeWidth {
   0% {
     width: 0;
@@ -85,6 +94,41 @@
   }
 }
 
-.mat-drawer-content {
-  overflow: initial; // required to make header sticky
+.side-nav-toggle {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 6.4rem;
+  padding: 0 $horizontal-padding;
+  border: none;
+  outline: none;
+  background: none;
+  color: $base-font-color;
+  cursor: pointer;
+}
+
+@media (max-width: $tablet-width) {
+  .side-nav-toggle {
+    display: block;
+  }
+
+  .mat-toolbar-log {
+    display: none;
+  }
+
+  .sidenav-compress {
+    display: none;
+  }
+
+  .mat-drawer-content {
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: $mobile-width) {
+  .side-nav-toggle {
+    padding: 0 ($horizontal-padding * 0.5);
+  }
 }
