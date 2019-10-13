@@ -60,6 +60,7 @@ export class HomeComponent implements OnInit {
   public displayPriceFn: (price: IPrice) => string;
   public titleFn: (profile: IProfile) => string;
   public subTitleFn: (loyalty: ILoyalty) => string;
+  public summaryExpiringFn: (loyalty: ILoyalty) => string;
   public currentTab: string;
   private rewardMultiPageMetaTracker: PageTracker = {};
   private requestPageSize: number = 10;
@@ -97,7 +98,7 @@ export class HomeComponent implements OnInit {
       return `Welcome`;
     };
     this.subTitleFn = () => `Your total points as of ${this.datePipe.transform(new Date(), 'ddMMMyy')}`;
-
+    this.summaryExpiringFn = (): string => '';
     this.loadCurrentTabRewards(this.staticTab[0].tabName);
   }
 
