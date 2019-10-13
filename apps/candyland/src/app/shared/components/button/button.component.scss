@@ -1,5 +1,6 @@
 @import '~@angular/material/theming';
 @import "variables";
+@import "buttons";
 
 :host {
   display: inline-flex;
@@ -76,30 +77,7 @@
 
 @media (max-width: $tablet-width) {
   .cta {
-    @include mat-elevation(5);
-
-    min-width: initial;
-    width: $fab-btn;
-    height: $fab-btn;
-    border-radius: 100%;
-    position: fixed;
-    bottom: ($vertical-padding * 0.5);
-    right: ($horizontal-padding * 0.5);
-
-    &::before {
-      content: "";
-      display: block;
-      width: ($horizontal-padding * 0.75);
-      height: ($horizontal-padding * 0.75);
-      padding: 0;
-      box-sizing: content-box;
-      background-position: center;
-      background-color: $white;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+    @include fab-btn();
 
     &.cta-done::before {
       mask: url("/assets/images/icons/cta-done.svg") no-repeat 50% 50%;
@@ -115,6 +93,10 @@
 
     &.cta-new::before {
       mask: url("/assets/images/icons/cta-new.svg") no-repeat 50% 50%;
+    }
+
+    &:hover {
+      width: 8rem;
     }
   }
 }

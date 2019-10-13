@@ -21,18 +21,17 @@ button {
   height: 4rem;
 }
 
-//WALKME FAB BUTTON RE-STYLE
-.walkme-player.walkme-css-reset.walkme-zambezi.walkme-california.walkme-theme-white-blue.walkme-position-major-bottom.walkme-position-minor-right_corner {
+//FAB BUTTON RE-STYLE
+@mixin fab-btn($icon-color: $white) {
   @include mat-elevation(5);
 
   min-width: initial !important;
   width: $fab-btn !important;
   height: $fab-btn !important;
-  border-radius: 100% !important;
+  border-radius: $fab-btn !important;
   position: fixed !important;
   bottom: $vertical-padding !important;
   right: $horizontal-padding !important;
-  background: $white !important;
 
   &::before {
     content: "";
@@ -42,11 +41,26 @@ button {
     padding: 0;
     box-sizing: content-box;
     background-position: center;
-    background-color: $secondary-font-color;
+    background-color: $icon-color;
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: ($fab-btn * 0.5);
     transform: translate(-50%, -50%);
+  }
+
+  @media (max-width: $tablet-width) {
+    bottom: ($vertical-padding * 0.5) !important;
+    right: ($horizontal-padding * 0.5) !important;
+  }
+}
+
+// WALKME FAB RE-STYLE
+.walkme-player.walkme-css-reset.walkme-zambezi.walkme-california.walkme-theme-white-blue.walkme-position-major-bottom.walkme-position-minor-right_corner {
+  @include fab-btn($secondary-font-color);
+
+  background: $white !important;
+
+  &::before {
     mask: url("/assets/images/icons/cta-help.svg") no-repeat 50% 50%;
   }
 
@@ -57,17 +71,21 @@ button {
 
 @media (max-width: $tablet-width) {
   // CTA MOBILE
-  .cta span.mat-button-wrapper {
-    opacity: 0 !important;
-    width: 1px;
-    overflow: hidden;
-    display: block;
-    font-size: 0;
+  .cta {
+    span.mat-button-wrapper {
+      display: block;
+      text-transform: uppercase;
+      transform: translateX(2.4rem);
+      opacity: 0;
+    }
+
+    &:hover span.mat-button-wrapper {
+      opacity: 1;
+    }
   }
 
   // WALKME RE-POSITION HELP
   .walkme-player.walkme-css-reset.walkme-zambezi.walkme-california.walkme-theme-white-blue.walkme-position-major-bottom.walkme-position-minor-right_corner {
     bottom: ($vertical-padding * 0.5) + $fab-btn + ($vertical-padding * 0.5) !important;
-    right: ($horizontal-padding * 0.5) !important;
   }
 }
