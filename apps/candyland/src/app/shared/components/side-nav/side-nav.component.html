@@ -18,9 +18,8 @@
     <div class="sidenav-menu-wrap">
       <cl-sidenav-menu [isOpen]="isOpen"></cl-sidenav-menu>
     </div>
-    <div class="sidenav-actions">
-      <button class="sidenav-logout user-logout btn-transparent appear"
-              *ngIf="isOpen"
+    <div class="sidenav-actions" [class.compressed]="!isOpen">
+      <button class="sidenav-logout btn-transparent"
               [routerLink]="['/login']"
       >
         <i class="icon logout" matListIcon></i>
@@ -29,7 +28,6 @@
         </span>
       </button>
       <button class="sidenav-compress"
-              [class.center]="!isOpen"
               (click)="toggle()">
         <mat-icon aria-hidden="false" aria-label="Example home icon">{{isOpen ? 'keyboard_arrow_left': 'keyboard_arrow_right'}}</mat-icon>
       </button>

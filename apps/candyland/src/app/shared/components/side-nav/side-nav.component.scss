@@ -22,26 +22,31 @@
 
   &-actions {
     position: relative;
+    padding: 0 0 0 1.4rem;
     margin-top: auto;
     margin-bottom: ($vertical-padding * 0.5);
+    display: flex;
+    justify-content: space-between;
   }
 
   &-logout {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    margin-left: 1rem;
+    width: 100%;
 
     .btn-text {
       font-size: $base-font-size;
-      font-weight: 500;
       color: rgba(255, 255, 255, 0.7);
       padding-left: 0.8rem;
+      overflow: hidden;
+      width: 100%;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: 0.4s cubic-bezier(0.35, 0, 0.25, 1);
     }
-
-    &.appear {
-      animation: changeWidth 0.4s cubic-bezier(0.35, 0, 0.25, 1);
-    }    
   }
 
   &-compress {
@@ -51,14 +56,9 @@
     color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
     outline: none;
-    transition: 0.5s;
     position: absolute;
     top: 0;
     right: 0;
-
-    &.center {
-      right: 1.6rem;
-    }
   }
 
   &-menu-wrap {
@@ -77,21 +77,22 @@
   height: $header-height-base;
 }
 
+.sidenav-actions.compressed {
+  .sidenav-compress {
+    right: 1.6rem;
+  }
+
+  .sidenav-logout {
+    transform: translateY(-3rem);
+    .btn-text {
+      width: 0;
+    }
+  }
+}
+
 .sidenav-content {
   position: relative;
   min-height: 100vh;
-}
-
-@keyframes changeWidth {
-  0% {
-    width: 0;
-    opacity: 0;
-  }
-
-  100% {
-    width: auto;
-    opacity: 1;
-  }
 }
 
 .side-nav-toggle {

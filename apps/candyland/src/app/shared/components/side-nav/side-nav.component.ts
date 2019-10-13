@@ -50,15 +50,15 @@ export class SideNavComponent implements OnInit, OnDestroy {
 
   public mobileQuery: MediaQueryList;
 
-  private _mobileQueryListener: () => void;
+  private myMobileQueryListener: () => void;
 
   constructor(private authService: AuthService,
               private userService: UserService,
-              changeDetectorRef: ChangeDetectorRef, 
+              changeDetectorRef: ChangeDetectorRef,
               media: MediaMatcher) {
                 this.mobileQuery = media.matchMedia('(max-width: 768px)');
-                this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-                this.mobileQuery.addListener(this._mobileQueryListener);            
+                this.myMobileQueryListener = () => changeDetectorRef.detectChanges();
+                this.mobileQuery.addListener(this.myMobileQueryListener);
   }
 
   public ngOnInit(): void {
@@ -74,6 +74,6 @@ export class SideNavComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
+    this.mobileQuery.removeListener(this.myMobileQueryListener);
   }
 }
