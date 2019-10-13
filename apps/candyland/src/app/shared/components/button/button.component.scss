@@ -1,3 +1,4 @@
+@import '~@angular/material/theming';
 @import "variables";
 
 :host {
@@ -75,6 +76,8 @@
 
 @media (max-width: $tablet-width) {
   .cta {
+    @include mat-elevation(5);
+
     min-width: initial;
     width: 5.6rem;
     height: 5.6rem;
@@ -86,8 +89,8 @@
     &::before {
       content: "";
       display: block;
-      width: $horizontal-padding;
-      height: $horizontal-padding;
+      width: ($horizontal-padding * 0.75);
+      height: ($horizontal-padding * 0.75);
       padding: 0;
       box-sizing: content-box;
       background-position: center;
@@ -100,6 +103,10 @@
 
     &.cta-done::before {
       mask: url("/assets/images/icons/cta-done.svg") no-repeat 50% 50%;
+    }
+
+    &.cta-edit::before {
+      mask: url("/assets/images/icons/cta-edit.svg") no-repeat 50% 50%;
     }
 
     &.cta-next::before {
