@@ -79,24 +79,56 @@
   .cta {
     @include fab-btn();
 
-    &.cta-done::before {
-      mask: url("/assets/images/icons/cta-done.svg") no-repeat 50% 50%;
+    &.cta-save {
+      &::before {
+        mask: url("/assets/images/icons/cta-save.svg") no-repeat 50% 50%;
+      }
+
+      &:hover {
+        width: 11rem !important;
+      }
+
+      &.cta-save-launch:hover {
+        width: 13rem !important;
+      }
     }
 
-    &.cta-edit::before {
-      mask: url("/assets/images/icons/cta-edit.svg") no-repeat 50% 50%;
+    &.cta-edit {
+      &::before {
+        mask: url("/assets/images/icons/cta-edit.svg") no-repeat 50% 50%;
+      }
+
+      &:hover {
+        width: 10.5rem !important;
+      }
+
+      &.cta-edit-comeback:hover {
+        width: 15.75rem !important;
+      }
     }
 
-    &.cta-next::before {
-      mask: url("/assets/images/icons/cta-next.svg") no-repeat 50% 50%;
+    &.cta-next {
+      &::before {
+        mask: url("/assets/images/icons/cta-next.svg") no-repeat 50% 50%;
+      }
+
+      &:hover {
+        width: 11rem !important;
+      }
     }
 
-    &.cta-new::before {
-      mask: url("/assets/images/icons/cta-new.svg") no-repeat 50% 50%;
-    }
+    &.cta-new {
+      &::before {
+        mask: url("/assets/images/icons/cta-new.svg") no-repeat 50% 50%;
+      }
 
-    &:hover {
-      width: 8rem;
+      &:hover {
+        width: 16.5rem !important;
+      }
+
+      &.cta-new-adduser:hover {
+        width: 14.5rem !important;
+      }
     }
   }
 }
