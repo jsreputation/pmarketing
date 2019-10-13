@@ -136,7 +136,7 @@ describe('CategoryComponent', () => {
 
   it('should get current selected sorting mode', () => {
     const sortingMode = component.getCurrentSelectedOrder();
-    expect(sortingMode).toBe('Latest');
+    expect(sortingMode).toBe('Ending Soon');
   });
 
   it('should create pipe', () => {
