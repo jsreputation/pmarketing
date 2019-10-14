@@ -33,6 +33,7 @@ declare interface IEngagementApi {
       post_stamp_img_url?: string;
       reward_post_stamp_img_url?: string;
       button?: string,
+      lastButtonText?: string,
       fontName?: string;
       fontColor?: string;
       headerColor?: string;
