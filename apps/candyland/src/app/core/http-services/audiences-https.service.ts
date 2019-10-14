@@ -31,7 +31,7 @@ export class AudiencesHttpsService {
     return this.http.get<IJsonApiListPayload<any>>(ApiConfig.getAllUsers, { params });
   }
 
-  public createUser(data: IJsonApiPayload<any>): Observable<IJsonApiPayload<IUserApi>> {
+  public createUser(data: IJsonApiItem<IUserApi>): Observable<IJsonApiPayload<IUserApi>> {
     return this.http.post<IJsonApiPayload<IUserApi>>(ApiConfig.getAllUsers, { data });
   }
 
