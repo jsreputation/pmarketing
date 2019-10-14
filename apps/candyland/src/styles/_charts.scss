@@ -145,7 +145,7 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
       border-bottom: 4px solid transparent;
 
       &.mat-radio-checked {
-        border-radius : 0 0 $border-radius $border-radius !important;
+        border-radius: 0 0 $border-radius $border-radius !important;
         border-color: $primary-color;
       }
 
