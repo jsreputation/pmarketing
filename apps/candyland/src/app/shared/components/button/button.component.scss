@@ -1,5 +1,6 @@
 @import '~@angular/material/theming';
 @import "variables";
+@import "buttons";
 
 :host {
   display: inline-flex;
@@ -75,46 +76,78 @@
 }
 
 @media (max-width: $tablet-width) {
+  @keyframes cta-btn-enter {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
   .cta {
-    @include mat-elevation(5);
+    @include fab-btn();
 
-    min-width: initial;
-    width: $fab-btn;
-    height: $fab-btn;
-    border-radius: 100%;
-    position: fixed;
-    bottom: ($vertical-padding * 0.5);
-    right: ($horizontal-padding * 0.5);
+    transform: scale(1);
+    opacity: 1;
+    animation-name: cta-btn-enter;
+    animation-duration: 0.4s;
+    animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
+    animation-fill-mode: forwards;
 
-    &::before {
-      content: "";
-      display: block;
-      width: ($horizontal-padding * 0.75);
-      height: ($horizontal-padding * 0.75);
-      padding: 0;
-      box-sizing: content-box;
-      background-position: center;
-      background-color: $white;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    &.cta-save {
+      &::before {
+        mask: url("/assets/images/icons/cta-save.svg") no-repeat 50% 50%;
+      }
+
+      &:hover {
+        width: 11rem !important;
+      }
+
+      &.cta-save-launch:hover {
+        width: 13rem !important;
+      }
     }
 
-    &.cta-done::before {
-      mask: url("/assets/images/icons/cta-done.svg") no-repeat 50% 50%;
+    &.cta-edit {
+      &::before {
+        mask: url("/assets/images/icons/cta-edit.svg") no-repeat 50% 50%;
+      }
+
+      &:hover {
+        width: 10.5rem !important;
+      }
+
+      &.cta-edit-comeback:hover {
+        width: 15.75rem !important;
+      }
     }
 
-    &.cta-edit::before {
-      mask: url("/assets/images/icons/cta-edit.svg") no-repeat 50% 50%;
+    &.cta-next {
+      &::before {
+        mask: url("/assets/images/icons/cta-next.svg") no-repeat 50% 50%;
+      }
+
+      &:hover {
+        width: 11rem !important;
+      }
     }
 
-    &.cta-next::before {
-      mask: url("/assets/images/icons/cta-next.svg") no-repeat 50% 50%;
-    }
+    &.cta-new {
+      &::before {
+        mask: url("/assets/images/icons/cta-new.svg") no-repeat 50% 50%;
+      }
 
-    &.cta-new::before {
-      mask: url("/assets/images/icons/cta-new.svg") no-repeat 50% 50%;
+      &:hover {
+        width: 16.5rem !important;
+      }
+
+      &.cta-new-adduser:hover {
+        width: 14.5rem !important;
+      }
     }
   }
 }
