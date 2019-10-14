@@ -183,7 +183,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
 
   private createRewardFormGroup(value: IRewardEntity, isEnableProbability: boolean = false): FormGroup {
     return this.fb.group({
-      value: value && [value] || [{ outcomeId: this.noOutCome && this.noOutCome.outcomeId }],
+      value: value && [value] || [{ ...this.noOutCome }],
       probability: {
         value: value ? value.probability || 0 : this.noOutCome && this.noOutCome.probability || 0, disabled: !isEnableProbability
       }
