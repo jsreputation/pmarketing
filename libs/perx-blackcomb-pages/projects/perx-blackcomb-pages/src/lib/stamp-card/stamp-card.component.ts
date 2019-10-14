@@ -5,7 +5,7 @@ import { filter, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-stamp-card',
+  selector: 'perx-blackcomb-stamp-card',
   templateUrl: './stamp-card.component.html',
   styleUrls: ['./stamp-card.component.scss']
 })
