@@ -11,7 +11,7 @@
 				<mat-label translate>STATIC_NAME</mat-label>
 				<input matInput placeholder="{{'STATIC_NAME' | translate}}" placeholder="Name" formControlName="name" required>
 				<mat-error *ngIf="signupForm.get('name').hasError('required')">
-					<span translate>STATIC_NAME_IS</span><strong translate>REQUIRED</strong>
+					<span translate>STATIC_NAME_IS </span><strong translate>REQUIRED</strong>
 				</mat-error>
 			</mat-form-field>
 			<mat-form-field class="full-width__input">
@@ -43,7 +43,7 @@
 				<mat-label translate>STATIC_CONFIRM_PASSWORD</mat-label>
 				<input matInput placeholder="{{'STATIC_CONFIRM_PASSWORD' | translate}}" placeholder="Confirm Password" formControlName="confirmPassword" type="password" required>
 				<mat-error *ngIf="signupForm.get('confirmPassword').hasError('required')">
-					<span translate>CONFIRM_PASSWORD_IS</span><strong translate>REQUIRED</strong>
+					<span translate>CONFIRM_PASSWORD_IS </span><strong translate>REQUIRED</strong>
 				</mat-error>
 				<mat-error *ngIf="signupForm.get('confirmPassword').hasError('minlength')">
 					<span translate>PASSWORD_SIX_CHARS</span>

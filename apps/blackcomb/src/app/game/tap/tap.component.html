@@ -14,8 +14,10 @@
       </perx-core-pinata>
     </div>
   </div>
-  <button mat-flat-button (click)="isEnabled = true"
-    [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}">
-    {{ game.texts.button }}
-  </button>
+  <div class="game-footer">
+    <button mat-flat-button (click)="isEnabled = true"
+      [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}">
+      {{ game.texts.button }}
+    </button>
+  </div>
 </div>

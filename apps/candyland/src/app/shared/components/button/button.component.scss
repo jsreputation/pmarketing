@@ -1,3 +1,4 @@
+@import '~@angular/material/theming';
 @import "variables";
 
 :host {
@@ -70,5 +71,50 @@
 
   &:hover {
     @extend .disable-btn;
+  }
+}
+
+@media (max-width: $tablet-width) {
+  .cta {
+    @include mat-elevation(5);
+
+    min-width: initial;
+    width: $fab-btn;
+    height: $fab-btn;
+    border-radius: 100%;
+    position: fixed;
+    bottom: ($vertical-padding * 0.5);
+    right: ($horizontal-padding * 0.5);
+
+    &::before {
+      content: "";
+      display: block;
+      width: ($horizontal-padding * 0.75);
+      height: ($horizontal-padding * 0.75);
+      padding: 0;
+      box-sizing: content-box;
+      background-position: center;
+      background-color: $white;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &.cta-done::before {
+      mask: url("/assets/images/icons/cta-done.svg") no-repeat 50% 50%;
+    }
+
+    &.cta-edit::before {
+      mask: url("/assets/images/icons/cta-edit.svg") no-repeat 50% 50%;
+    }
+
+    &.cta-next::before {
+      mask: url("/assets/images/icons/cta-next.svg") no-repeat 50% 50%;
+    }
+
+    &.cta-new::before {
+      mask: url("/assets/images/icons/cta-new.svg") no-repeat 50% 50%;
+    }
   }
 }
