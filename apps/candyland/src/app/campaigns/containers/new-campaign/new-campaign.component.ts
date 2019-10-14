@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap, catchError } from 'rxjs/operators';
 import { combineLatest, iif, of, Observable } from 'rxjs';
 import { ICampaignAttributes } from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
@@ -223,12 +223,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     };
     if (campaignId) {
       combineLatest(
-        this.campaignsService.getCampaign(campaignId),
-        this.commsService.getCommsEvent(paramsComm),
-        this.outcomesService.getOutcomes(paramsPO)).pipe(
+        this.campaignsService.getCampaign(campaignId).pipe(catchError(() => of(null))),
+        this.commsService.getCommsEvent(paramsComm).pipe(catchError(() => of(null))),
+        this.outcomesService.getOutcomes(paramsPO).pipe(catchError(() => of(null)))
+        ).pipe(
           map(
             ([campaign, commEvent, outcomes]:
-              [ICampaign, IComm, IOutcome[]]): ICampaign => ({
+              [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
                 ...campaign,
                 audience: { select: commEvent && commEvent.poolId || null },
                 channel: {

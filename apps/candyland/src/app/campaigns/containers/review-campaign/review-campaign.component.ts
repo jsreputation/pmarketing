@@ -9,6 +9,7 @@ import { combineLatest, of, Observable } from 'rxjs';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
+import { ILimit } from '@cl-core/models/limit/limit.interface';
 
 @Component({
   selector: 'cl-review-campaign',
@@ -56,13 +57,13 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     };
     if (campaignId) {
       combineLatest(
-        this.campaignsService.getCampaign(campaignId),
-        this.commsService.getCommsEvent(params),
-        this.outcomesService.getOutcomes(paramsPO)).pipe(
+        this.campaignsService.getCampaign(campaignId).pipe(catchError(() => of(null))),
+        this.commsService.getCommsEvent(params).pipe(catchError(() => of(null))),
+        this.outcomesService.getOutcomes(paramsPO).pipe(catchError(() => of(null)))).pipe(
           untilDestroyed(this),
           map(
             ([campaign, commEvent, outcomes]:
-              [ICampaign, IComm, IOutcome[]]) => ({
+              [ICampaign | null, IComm | null, IOutcome[] | null]) => ({
                 ...campaign,
                 audience: { select: commEvent && commEvent.poolId || null },
                 channel: {
@@ -73,7 +74,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
                 rewardsList: outcomes
               })
           ),
-          switchMap(campaign => {
+          switchMap((campaign: ICampaign) => {
             const limitParams: HttpParamsOptions = {
               'filter[campaign_entity_id]': campaign.id
             };
@@ -85,16 +86,15 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
               this.getRewards(campaign.rewardsList)
             );
           }),
-          map(([campaign, engagement, limits, rewards]) => {
-            return {
+          map(([campaign, engagement, limits, rewards]:
+            [ICampaign | null, IEngagement | null, ILimit | null, { value: IRewardEntity }[] | null]) => ({
               ...campaign,
               template: engagement,
               limits,
               rewardsOptions: {
                 rewards
               }
-            };
-          })
+            }))
         ).subscribe(
           campaign => {
             this.campaign = campaign;
@@ -115,7 +115,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         if (reward.resultId) {
           return this.rewardsService.getReward(reward.resultId).pipe(
             map(rewardData => ({ value: { ...rewardData, probability: reward.probability } })),
-            catchError(() => of({ value: null }))
+            catchError(() => of({ value: { probability: reward.probability } }))
           );
         }
         return of({ value: { probability: reward.probability } });
