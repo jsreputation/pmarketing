@@ -99,7 +99,7 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
 
   public get postScratchImage(): string {
     return this.currentPostScratchImageUrl ||
-           this.getImgLink(<FormControl>this.postScratchSuccessImage, 'assets/images/background/background1.png');
+           this.getImgLink(this.postScratchSuccessImage as FormControl, 'assets/images/background/background1.png');
   }
 
   constructor(

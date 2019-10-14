@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
-import { ScratchHttpService } from "@cl-core/http-services/scratch-http.service";
+import { ScratchHttpService } from '@cl-core/http-services/scratch-http.service';
 
 @Injectable({
   providedIn: 'root'
