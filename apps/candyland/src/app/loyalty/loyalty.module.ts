@@ -26,7 +26,7 @@ import {LoyaltyFormsService} from './services/loyalty-forms.service';
 import {NewLoyaltyComponent} from './containers/new-loyalty/new-loyalty.component';
 import {MatStepperModule} from '@angular/material/stepper';
 import {LoyaltyFormStepOneComponent} from './components/loyalty-form-step-one/loyalty-form-step-one.component';
-import {LoyaltyFormStepTwoComponent} from './components/loyalty-form-step-two/loyalty-form-step-two.component';
+import {LoyaltyFormStepTiersConversionsComponent} from './components/loyalty-form-step-tiers-conversions/loyalty-form-step-tiers-conversions.component';
 import {LoyaltyFormStepThreeComponent} from './components/loyalty-form-step-three/loyalty-form-step-three.component';
 import {LoyaltyFormStepFourComponent} from './components/loyalty-form-step-four/loyalty-form-step-four.component';
 import {PointsInfoComponent} from './components/points-info/points-info.component';
@@ -37,7 +37,10 @@ import {UserJoiningMethodComponent} from './components/user-joining-method/user-
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {SelectAudienceComponent} from './components/select-audience/select-audience.component';
 import {MatRadioModule} from '@angular/material/radio';
-import {GlobalEarnRuleComponent} from './components/global-earn-rule/global-earn-rule.component';
+import { GlobalEarnRuleGroupComponent } from './components/global-earn-rule-group/global-earn-rule-group.component';
+import { GlobalBurnRuleGroupComponent } from './components/global-burn-rule-group/global-burn-rule-group.component';
+import { PointsExpiryGroupComponent } from './components/points-expiry-group/points-expiry-group.component';
+import { TiersGroupComponent } from './components/tiers-group/tiers-group.component';
 
 @NgModule({
   declarations: [
@@ -47,16 +50,18 @@ import {GlobalEarnRuleComponent} from './components/global-earn-rule/global-earn
     LoyaltyItemComponent,
     NewLoyaltyComponent,
     LoyaltyFormStepOneComponent,
-    LoyaltyFormStepTwoComponent,
+    LoyaltyFormStepTiersConversionsComponent,
     LoyaltyFormStepThreeComponent,
     LoyaltyFormStepFourComponent,
     PointsInfoComponent,
     ProgramMainImageComponent,
     UserJoiningMethodComponent,
     SelectAudienceComponent,
-    GlobalEarnRuleComponent,
     TierSetupPopupComponent,
-    UserJoiningMethodComponent
+    GlobalEarnRuleGroupComponent,
+    GlobalBurnRuleGroupComponent,
+    PointsExpiryGroupComponent,
+    TiersGroupComponent
   ],
   imports: [
     CommonModule,

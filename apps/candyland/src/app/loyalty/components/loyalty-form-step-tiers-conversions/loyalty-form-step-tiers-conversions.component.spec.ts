@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoyaltyFormStepTwoComponent } from './loyalty-form-step-two.component';
+import { LoyaltyFormStepTiersConversionsComponent } from './loyalty-form-step-tiers-conversions.component';
 
 describe('LoyaltyFormStepTwoComponent', () => {
-  let component: LoyaltyFormStepTwoComponent;
-  let fixture: ComponentFixture<LoyaltyFormStepTwoComponent>;
+  let component: LoyaltyFormStepTiersConversionsComponent;
+  let fixture: ComponentFixture<LoyaltyFormStepTiersConversionsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoyaltyFormStepTwoComponent ]
+      declarations: [ LoyaltyFormStepTiersConversionsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoyaltyFormStepTwoComponent);
+    fixture = TestBed.createComponent(LoyaltyFormStepTiersConversionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

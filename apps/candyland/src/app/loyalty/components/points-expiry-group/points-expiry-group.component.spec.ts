@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GlobalEarnRuleComponent } from './global-earn-rule.component';
+import { PointsExpiryGroupComponent } from './points-expiry-group.component';
 
-describe('GlobalEarnRuleComponent', () => {
-  let component: GlobalEarnRuleComponent;
-  let fixture: ComponentFixture<GlobalEarnRuleComponent>;
+describe('PointsExpiryGroupComponent', () => {
+  let component: PointsExpiryGroupComponent;
+  let fixture: ComponentFixture<PointsExpiryGroupComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GlobalEarnRuleComponent ]
+      declarations: [ PointsExpiryGroupComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GlobalEarnRuleComponent);
+    fixture = TestBed.createComponent(PointsExpiryGroupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
