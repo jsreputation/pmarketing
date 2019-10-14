@@ -79,12 +79,12 @@
     @include mat-elevation(5);
 
     min-width: initial;
-    width: 5.6rem;
-    height: 5.6rem;
+    width: $fab-btn;
+    height: $fab-btn;
     border-radius: 100%;
     position: fixed;
-    bottom: 1.6rem;
-    right: 1.6rem;
+    bottom: ($vertical-padding * 0.5);
+    right: ($horizontal-padding * 0.5);
 
     &::before {
       content: "";
