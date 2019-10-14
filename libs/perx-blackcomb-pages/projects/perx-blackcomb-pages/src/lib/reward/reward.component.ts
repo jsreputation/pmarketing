@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 import { map, switchMap, catchError, tap, } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-reward',
+  selector: 'perx-blackcomb-reward',
   templateUrl: './reward.component.html',
   styleUrls: ['./reward.component.scss']
 })
@@ -24,7 +24,6 @@ export class RewardComponent implements OnInit {
   };
 
   constructor(
-    // private rewardsService: RewardsService,
     private outcomeService: InstantOutcomeService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
@@ -33,29 +32,10 @@ export class RewardComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.rewards$ = this.route.params
-      .pipe(
-        // filter((params: Params) => params.id),
-        map((params: Params) => params.id),
-        switchMap((id: string) => this.outcomeService.claim(+id)),
-        tap((rewards: IReward[]) => {
-          if (rewards.length) {
-            throw new Error('empty');
-          }
-        }),
-        catchError(() => {
-          this.dialog.open(PopupComponent, { data: this.dataPopEmpty });
-          /* todo display popup and redirect to wallet*/
-          this.router.navigate(['/wallet']);
-          return of<IReward[]>([]);
-        })
-      );
     this.route.params
       .pipe(
-        // filter((params: Params) => params.id),
         map((params: Params) => params.id),
         switchMap((id: string) => this.outcomeService.getFromCampaign(+id)),
-        // filter()
         catchError(() => this.router.navigate(['/wallet']))
       )
       .subscribe((eng: IOutcome) => {
@@ -65,6 +45,27 @@ export class RewardComponent implements OnInit {
         this.background = eng.background_img_url;
         this.cardBackground = eng.card_background_img_url;
       });
+
+    this.rewards$ =
+      this.route.params
+        .pipe(
+          // filter((params: Params) => params.id),
+          map((params: Params) => params.id),
+          switchMap((campaignId: string) => this.outcomeService.claim(+campaignId)),
+          tap((rewards: IReward[]) => {
+            // if reward list is empty make sure to throw, so that we end up in the catchError block
+            if (rewards.length === 0) {
+              throw new Error('empty');
+            }
+          }),
+          catchError(() => {
+            this.dialog.open(PopupComponent, { data: this.dataPopEmpty });
+            /* todo display popup and redirect to wallet*/
+            this.router.navigate(['/wallet']);
+            // next line is actually useless as we will redirected.
+            return of<IReward[]>([]);
+          })
+        );
   }
 
   public rewardClickedHandler(reward: IReward): void {

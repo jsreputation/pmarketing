@@ -56,7 +56,7 @@ export class ForgotPasswordComponent implements PageAppearence {
     try {
       this.authService.forgotPassword(cleanedMobileNo).subscribe(
         () => {
-          this.router.navigate(['enter-pin/password'], { state: { mobileNo: mobileNumber } });
+          this.router.navigate(['enter-pin/password'], { state: { mobileNo: cleanedMobileNo } });
         },
         err => {
           if (err instanceof HttpErrorResponse) {
@@ -65,7 +65,7 @@ export class ForgotPasswordComponent implements PageAppearence {
             } else if (err.status === 401) {
               this.notificationService.addSnack('Invalid mobile number.');
             } else {
-              this.notificationService.addSnack(err.statusText);
+              this.notificationService.addSnack(err.error.message);
             }
           }
         });

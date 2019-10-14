@@ -5,7 +5,7 @@ import { filter, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-voucher-detail',
+  selector: 'perx-blackcomb-voucher-detail',
   templateUrl: './voucher-detail.component.html',
   styleUrls: ['./voucher-detail.component.scss']
 })
