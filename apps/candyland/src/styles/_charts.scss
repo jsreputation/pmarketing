@@ -81,6 +81,16 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
     position: relative;
     height: 24rem;
     width: 100%;
+    overflow-x: auto;
+
+    pc-meta-card .wrapper {
+      justify-content: flex-start;
+  
+      > * {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
   }
 }
 
@@ -101,19 +111,6 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
 
 .chart-card:first-of-type {
   flex-basis: 100%;
-}
-
-.chart-card-content {
-  overflow-x: auto;
-
-  pc-meta-card .wrapper {
-    justify-content: flex-start;
-
-    > * {
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
 }
 
 @media (min-width: $desktop-width + 1) {
