@@ -80,6 +80,8 @@ describe('NewCampaignDetailPageComponent', () => {
                 labels: []
             }),
             channel: fb.group({
+                eventId: [],
+                templateId: [],
                 type: ['weblink', [Validators.required]],
                 message: [],
                 schedule: fb.group({
