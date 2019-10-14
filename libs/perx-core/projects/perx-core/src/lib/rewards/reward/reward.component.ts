@@ -18,6 +18,9 @@ export class RewardComponent implements OnInit {
   @Input()
   public showRewardIdentifier: boolean = false;
 
+  @Input()
+  public showExpiry: boolean = true;
+
   public ngOnInit(): void {
     if (!this.displayPriceFn) {
       this.displayPriceFn = (rewardPrice: IPrice) => {
