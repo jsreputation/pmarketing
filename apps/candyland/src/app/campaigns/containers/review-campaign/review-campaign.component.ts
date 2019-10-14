@@ -4,7 +4,7 @@ import { CampaignsService, EngagementsService, CommsService, OutcomesService, Li
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, catchError } from 'rxjs/operators';
 import { combineLatest, of, Observable } from 'rxjs';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { IComm } from '@cl-core/models/comm/schedule';
@@ -81,18 +81,20 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
             return combineLatest(
               of(campaign),
               this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
-              this.limitsService.getLimits(limitParams, eType).pipe(map(limits => limits[0])),
+              this.limitsService.getLimits(limitParams, eType).pipe(map(limits => limits[0]), catchError(() => of({ times: null }))),
               this.getRewards(campaign.rewardsList)
             );
           }),
-          map(([campaign, engagement, limits, rewards]) => ({
-            ...campaign,
-            template: engagement,
-            limits,
-            rewardsOptions: {
-              rewards
-            }
-          }))
+          map(([campaign, engagement, limits, rewards]) => {
+            return {
+              ...campaign,
+              template: engagement,
+              limits,
+              rewardsOptions: {
+                rewards
+              }
+            };
+          })
         ).subscribe(
           campaign => {
             this.campaign = campaign;
@@ -112,10 +114,11 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       reward => {
         if (reward.resultId) {
           return this.rewardsService.getReward(reward.resultId).pipe(
-            map(rewardData => ({ value: { ...rewardData, probability: reward.probability } }))
+            map(rewardData => ({ value: { ...rewardData, probability: reward.probability } })),
+            catchError(() => of({ value: null }))
           );
         }
-        return of({ value: null });
+        return of({ value: { probability: reward.probability } });
       }
     ));
   }
