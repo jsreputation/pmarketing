@@ -106,3 +106,24 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
 .tabs-list-wrap + .chart-card {
   flex-basis: calc(100% - #{$vertical-tabs-width} - (#{$horizontal-padding} * 2));
 }
+
+@media (max-width: $tablet-width) {
+  .tabs-list-wrap.business-insights-tabs-list-wrap {
+    box-sizing: border-box;
+    max-width: initial;
+    margin-top: 0;
+    margin-right: 0;
+    margin-left: 0;
+    padding-right: 1.2rem;
+    padding-left: 1.2rem;
+  }
+
+  .tabs-list.business-insights-tabs-list {
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    .mat-radio-label {
+      white-space: initial;
+    }
+  }
+}
