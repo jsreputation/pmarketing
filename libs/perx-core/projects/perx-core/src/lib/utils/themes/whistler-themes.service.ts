@@ -44,7 +44,7 @@ export class WhistlerThemesService implements ThemesService {
         '--font': setting['theme.font'],
         '--logo': setting['theme.logo'],
         '--title': setting['theme.title'],
-        // '--accent': setting['theme.accent'],
+        '--accent': setting['theme.accent'],
         '--primary': setting['theme.primary'],
         '--button_text_color': setting['theme.button_text_color'],
         '--button_background_color': setting['theme.button_background_color'],
