@@ -9,5 +9,5 @@ import {
   styleUrls: ['./settings-mobile-preview.component.scss']
 })
 export class SettingsMobilePreviewComponent {
-  @Input() public tabs: [];
+  @Input() public tabs: [string] = null;
 }

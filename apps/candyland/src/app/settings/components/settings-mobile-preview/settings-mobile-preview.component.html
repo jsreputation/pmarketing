@@ -1,4 +1,4 @@
-<mat-tab-group mat-align-tabs="center" class="mobile-settings-preview-tabs mobile-preview-tabs">
+<mat-tab-group *ngIf="tabs && tabs.length > 0" mat-align-tabs="center" class="mobile-settings-preview-tabs mobile-preview-tabs">
   <mat-tab *ngIf="tabs[0]" [label]="tabs[0]">
     <ng-content select=".firs-tab"></ng-content>
   </mat-tab>
