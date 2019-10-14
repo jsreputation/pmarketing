@@ -44,7 +44,7 @@ export class LoyaltyFormsService {
         amount: new FormControl(null),
       }, [Validators.required, ClValidators.requiredGroup]),
       selectAudience: new FormGroup({
-        audienceType: new FormControl(null, [Validators.required]),
+        audienceType: new FormControl('all-audience', [Validators.required]),
         allMyAudience: new FormControl(null),
         uploadFile: new FormControl(null)
       }, ClValidators.requiredGroup)
@@ -89,7 +89,7 @@ export class LoyaltyFormsService {
         points: new FormControl(null)
       }, [Validators.required]),
       imageUrl: new FormControl(null, [Validators.required]),
-      earnForTier: new FormControl(null, [Validators.required, Validators.min(1)]),
+      earnBonus: new FormControl(null, [Validators.required, Validators.min(1)]),
       burnRule: new FormControl(null, [Validators.required, Validators.min(1)]),
       pointsExpiry: new FormGroup({
         amount: new FormControl(1, [Validators.required]),

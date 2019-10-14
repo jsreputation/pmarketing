@@ -8,7 +8,9 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { LoyaltyStepForm } from '../../models/loyalty-stap-form';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-
+import { UserService } from '@cl-core/services/user.service';
+import { Observable } from 'rxjs';
+import { AudiencesService } from '@cl-core-services';
 
 @Component({
   selector: 'cl-new-loyalty',
@@ -20,18 +22,34 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 })
 export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   public form: FormGroup;
+  public pools: any;
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
 
   constructor(private loyaltyFormsService: LoyaltyFormsService,
+              private userService: UserService,
+              private audiencesService: AudiencesService,
               private dialog: MatDialog) {
   }
 
   public ngOnInit(): void {
+    this.initPools();
     this.initForm();
   }
 
   public ngOnDestroy(): void {
+  }
+
+  public get currency$(): Observable<string> {
+    return this.userService.currency$;
+  }
+
+  private initPools(): any {
+    this.audiencesService.getAudiencesList()
+      .pipe(untilDestroyed(this))
+      .subscribe((data: any) => {
+        this.pools = data;
+      });
   }
 
   public goNext(): void {

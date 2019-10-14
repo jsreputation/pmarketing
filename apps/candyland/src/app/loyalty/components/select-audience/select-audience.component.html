@@ -14,6 +14,13 @@
       <mat-radio-button value="list-audience">Upload an audience list</mat-radio-button>
     </mat-radio-group>
 
+    <mat-form-field *ngIf="audienceType.value === 'all-audience'">
+      <mat-select placeholder="Select audience" formControlName="allMyAudience">
+        <mat-option *ngFor="let pool of pools" [value]="pool?.value?.id">{{pool?.name}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="allMyAudience.hasError('required') && allMyAudience.touched">Required field.</mat-error>
+    </mat-form-field>
+
     <cl-upload-file *ngIf="audienceType.value === 'list-audience'" [formControlName]="'uploadFile'"></cl-upload-file>
     <mat-error *ngIf="selectAudience.hasError('groupRequired') && selectAudience.touched">Required field</mat-error>
   </div>

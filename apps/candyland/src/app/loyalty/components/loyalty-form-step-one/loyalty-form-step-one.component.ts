@@ -8,6 +8,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class LoyaltyFormStepOneComponent implements OnInit {
   @Input() public group: FormGroup;
+  @Input() public pools: any;
 
   public ngOnInit(): void {
   }

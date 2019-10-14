@@ -41,6 +41,7 @@ import { GlobalEarnRuleGroupComponent } from './components/global-earn-rule-grou
 import { GlobalBurnRuleGroupComponent } from './components/global-burn-rule-group/global-burn-rule-group.component';
 import { PointsExpiryGroupComponent } from './components/points-expiry-group/points-expiry-group.component';
 import { TiersGroupComponent } from './components/tiers-group/tiers-group.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { TiersGroupComponent } from './components/tiers-group/tiers-group.compon
     UploadFileModule,
     UploadGraphicModule,
     MatTabsModule,
+    MatTableModule,
     DatePickerModule
   ],
   providers: [

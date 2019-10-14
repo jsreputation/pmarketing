@@ -1,5 +1,5 @@
 <header class="page-header full-with" [formGroup]="form">
-  <mat-form-field class="pagetitle-input" floatLabel="never" >
+  <mat-form-field class="pagetitle-input" floatLabel="never">
     <input type="text" matInput formControlName="name" placeholder="Enter title here">
     <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
     <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
@@ -23,14 +23,15 @@
     <mat-step [stepControl]="stepOne">
       <ng-template matStepLabel>Loyalty Details</ng-template>
       <div class="loyalty-detail-content">
-        <cl-loyalty-form-step-one *ngIf="form && stepOne" [group]="stepOne"></cl-loyalty-form-step-one>
+        <cl-loyalty-form-step-one *ngIf="form && stepOne" [group]="stepOne" [pools]="pools"></cl-loyalty-form-step-one>
       </div>
 
     </mat-step>
-    <mat-step ><!--[stepControl]="secondFormGroup" optional-->
+    <mat-step><!--[stepControl]="secondFormGroup" optional-->
       <ng-template matStepLabel>Tiers & Conversions</ng-template>
       <div class="loyalty-detail-content">
-        <cl-loyalty-form-step-tiers-conversions *ngIf="form && stepTwo" [group]="stepTwo"></cl-loyalty-form-step-tiers-conversions>
+        <cl-loyalty-form-step-tiers-conversions *ngIf="form && stepTwo" [group]="stepTwo"
+                                                [currency]="currency$ | async"></cl-loyalty-form-step-tiers-conversions>
       </div>
 
     </mat-step>

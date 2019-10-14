@@ -8,6 +8,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class LoyaltyFormStepTiersConversionsComponent implements OnInit {
   @Input() public group: FormGroup;
+  @Input() public currency: string;
 
   public ngOnInit(): void {
   }
