@@ -101,13 +101,71 @@
   top: 0;
   left: 0;
   z-index: 1000;
-  height: 6.4rem;
-  padding: 0 $horizontal-padding;
+  width: ($modal-header-height + 1.6rem);
+  height: $modal-header-height;
+  padding: 0;
   border: none;
   outline: none;
   background: none;
   color: $base-font-color;
   cursor: pointer;
+
+  span,
+  span::before,
+  span::after {
+    width: 1.6rem;
+    height: 0.2rem;
+    margin: 0 auto;
+    display: block;
+    border-radius: 2px;
+    background: rgba(0, 0, 0, 1);
+    transition: all .25s ease;
+  }
+
+  span {
+    font-size: 1px;
+    color: rgba(0, 0, 0, 0);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  span::before,
+  span::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
+  span::before {
+    top: 225%;
+  }
+
+  span::after {
+    bottom: 225%;
+  }
+
+  &:hover span {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  &:focus span {
+    background: rgba(0, 0, 0, 0);
+    transform: translate(-50%, -50%) rotate(0);
+
+    &::before {
+      top: 50%;
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    &::after {
+      bottom: 50%;
+      transform: scaleX(1.5);
+      transform: translateY(50%) rotate(-45deg);
+    }
+  }
 }
 
 @media (max-width: $tablet-width) {
@@ -130,6 +188,6 @@
 
 @media (max-width: $mobile-width) {
   .side-nav-toggle {
-    padding: 0 ($horizontal-padding * 0.5);
+    width: $modal-header-height;
   }
 }
