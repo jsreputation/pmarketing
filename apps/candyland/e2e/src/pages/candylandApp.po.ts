@@ -80,6 +80,13 @@ export class CreateHitThePinataAppPage {
  }
 
 }
+export class CreateInstantRewardAppPage {
+
+  public navigateToCreateInstantReward(): Promise<string> {
+    return browser.get('engagements/new-instant-reward') as Promise<string> ;
+ }
+
+}
 
 export class RewardAppPage {
 

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DownloadLinkComponent } from './download-link.component';
 import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { PipesModule } from '@cl-shared/pipes/pipes.module';
 
 @NgModule({
   declarations: [DownloadLinkComponent],
@@ -13,6 +14,7 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    PipesModule,
     ButtonModule
   ]
 })
