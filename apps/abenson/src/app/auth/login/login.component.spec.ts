@@ -63,5 +63,5 @@ describe('LoginComponent', () => {
     spyAuth.and.returnValue(throwError(new HttpErrorResponse({status: 401})));
     component.onSubmit();
     expect(component.errorMessage).toBe('Invalid credentials');
-  }))
+  }));
 });

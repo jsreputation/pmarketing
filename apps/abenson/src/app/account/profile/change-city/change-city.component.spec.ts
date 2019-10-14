@@ -35,7 +35,7 @@ describe('ChangeCityComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        { provide: ProfileService, useValue: profileServiceStub}
+        { provide: ProfileService, useValue: profileServiceStub }
       ]
     })
       .compileComponents();
@@ -77,7 +77,7 @@ describe('ChangeCityComponent', () => {
     expect(spyLog).toHaveBeenCalled();
   }));
 
-  it('should leave profileSerive', fakeAsync(()=>{
+  it('should leave profileSerive', fakeAsync(() => {
     component.cityChangeForm.setValue({ newCity: null });
     component.onSubmit();
     tick();

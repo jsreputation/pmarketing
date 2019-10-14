@@ -76,7 +76,6 @@ describe('VerificationOtpComponent', () => {
     expect(component).toBeTruthy();
   });
 
-
   describe('phone flow', () => {
     beforeEach(() => {
       params.next({ type: 'phone' });
@@ -123,12 +122,12 @@ describe('VerificationOtpComponent', () => {
       tick();
       expect(authSpy).toHaveBeenCalledWith(testphone);
     }));
-  })
+  });
   describe('password flow', () => {
 
     beforeEach(() => {
       params.next({ type: 'password' });
-    })
+    });
 
     it('should handle passowrd flow', fakeAsync(() => {
       const spy = spyOn(profileService, 'whoAmI').and.returnValue(of({ phone: '18888' } as IProfile));
@@ -151,10 +150,10 @@ describe('VerificationOtpComponent', () => {
     });
 
     it('should not have call profile service', fakeAsync(() => {
-      const spy = spyOn(profileService, 'whoAmI')
+      const spy = spyOn(profileService, 'whoAmI');
       component.ngOnInit();
       tick();
       expect(spy).not.toHaveBeenCalled();
     }));
-  })
+  });
 });
