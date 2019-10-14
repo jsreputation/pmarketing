@@ -24,7 +24,7 @@ export class EnterPinComponent implements OnInit, PageAppearence {
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthenticationService,
-    private notificationService: NotificationService,
+    private notificationService: NotificationService
   ) {
       const currentNavigation = this.router.getCurrentNavigation();
       if (!currentNavigation) {
@@ -86,19 +86,21 @@ export class EnterPinComponent implements OnInit, PageAppearence {
   public resendOtp(): void {
     if (this.pinMode === PinMode.password) {
       this.authService.forgotPassword(this.mobileNo).subscribe(
-        () => {
-          console.log('Forgot password api called again');
+        (res: {message: string}) => {
+          this.notificationService.addSnack(res.message);
         },
         err => {
-          console.error('ForgotPassword: ' + err);
+          this.notificationService.addSnack(err.error.message);
         });
     } else {
       this.authService.resendOTP(this.mobileNo).subscribe(
         () => {
           console.log('Resend Otp request sent');
+          this.notificationService.addSnack('Resend Otp request sent');
         },
         err => {
           console.error('ResendOTP: ' + err);
+          this.notificationService.addSnack(err.error.message);
         });
     }
   }

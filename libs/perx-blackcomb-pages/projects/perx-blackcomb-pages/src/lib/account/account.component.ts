@@ -13,9 +13,8 @@ interface AccountPageObject {
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
-
   public profile: IProfile;
-  public pages!: AccountPageObject[];
+  public pages!: AccountPageObject[] ;
 
   constructor(
     private profileService: ProfileService,
@@ -26,7 +25,9 @@ export class AccountComponent implements OnInit {
     this.themeService.getAccountSettings()
       .subscribe((settings) => this.pages = settings.pages);
     this.profileService.whoAmI()
-      .pipe(take(1))
+      .pipe(
+        take(1)
+      )
       .subscribe(profile => {
         this.profile = profile;
       });
