@@ -116,6 +116,11 @@ h1, h2, h3, h4, h5, p {
     display: block;
     margin-top: ($vertical-padding * 0.5);
   }
+
+  @media (max-width: $mobile-width) {
+    padding-left: ($horizontal-padding * 0.5);
+    padding-right: ($horizontal-padding * 0.5);
+  }
 }
 
 .row {
@@ -266,6 +271,22 @@ h1, h2, h3, h4, h5, p {
 
     color: $base-font-color;
     margin-top: ($vertical-padding * 0.5);
+  }
+}
+
+// Sidebar Flex
+.mat-drawer-inner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+// Material Drawer Reset for Mobile Topbar Clearance
+@media (max-width: $tablet-width) {
+  .mat-drawer-backdrop {
+    top: $header-height-base !important;
+    position: fixed !important;
   }
 }
 
