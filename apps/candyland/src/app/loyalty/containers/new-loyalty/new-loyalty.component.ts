@@ -8,7 +8,7 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { LoyaltyStepForm } from '../../models/loyalty-stap-form';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { untilDestroyed } from 'ngx-take-until-destroy';
+
 
 @Component({
   selector: 'cl-new-loyalty',
@@ -105,9 +105,6 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private getStepFormName(indexStep: number): string {
     return this.loyaltyFormsService.getStepName(indexStep);
-  }
-
-  public ngOnDestroy(): void {
   }
 
 }
