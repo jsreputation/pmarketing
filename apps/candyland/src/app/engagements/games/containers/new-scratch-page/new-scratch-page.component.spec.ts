@@ -23,7 +23,6 @@ import { NewScratchPageComponent } from './new-scratch-page.component';
 import { GameModule } from '../../../../../../../../libs/perx-core/dist/perx-core';
 import { SettingsMobilePreviewModule } from '../../../../settings/components/settings-mobile-preview/settings-mobile-preview.module';
 
-
 describe('NewScratchComponent', () => {
   let component: NewScratchPageComponent;
   let fixture: ComponentFixture<NewScratchPageComponent>;
