@@ -1,10 +1,13 @@
+import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
   OnDestroy,
-  OnInit
+  OnInit,
+  Renderer2
 } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -37,18 +40,22 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     private router: Router,
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
-    private snack: MatSnackBar
+    private snack: MatSnackBar,
+    @Inject(DOCUMENT) private document: Document,
+    private renderer: Renderer2,
   ) {
   }
 
   public ngOnInit(): void {
     this.handleRouteParams();
+    this.renderer.addClass(this.document.body, 'no-cta');
   }
 
   public ngAfterViewInit(): void {
   }
 
   public ngOnDestroy(): void {
+    this.renderer.removeClass(this.document.body, 'no-cta');
   }
 
   public openChangeExpiryDateDialog(item: IJsonApiItem<Partial<IAssignedAttributes>>): void {
