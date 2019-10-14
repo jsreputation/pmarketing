@@ -31,6 +31,7 @@ import { UserJoiningMethodComponent } from './components/user-joining-method/use
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectAudienceComponent } from './components/select-audience/select-audience.component';
 import { MatRadioModule } from '@angular/material/radio';
+import { GlobalEarnRuleComponent } from './components/global-earn-rule/global-earn-rule.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { MatRadioModule } from '@angular/material/radio';
     PointsInfoComponent,
     ProgramMainImageComponent,
     UserJoiningMethodComponent,
-    SelectAudienceComponent
+    SelectAudienceComponent,
+    GlobalEarnRuleComponent
   ],
   imports: [
     CommonModule,

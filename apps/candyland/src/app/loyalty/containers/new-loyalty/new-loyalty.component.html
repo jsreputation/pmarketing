@@ -29,8 +29,7 @@
     <mat-step ><!--[stepControl]="secondFormGroup" optional-->
       <ng-template matStepLabel>Tiers & Conversions</ng-template>
       <div class="loyalty-detail-content">
-        step 2
-        <cl-loyalty-form-step-two></cl-loyalty-form-step-two>
+        <cl-loyalty-form-step-two *ngIf="form && stepTwo" [group]="stepTwo"></cl-loyalty-form-step-two>
       </div>
 
     </mat-step>

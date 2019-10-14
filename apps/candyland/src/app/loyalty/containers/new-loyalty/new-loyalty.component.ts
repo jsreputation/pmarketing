@@ -40,6 +40,10 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.form.get(this.loyaltyFormType.one);
   }
 
+  public get stepTwo(): AbstractControl {
+    return this.form.get(this.loyaltyFormType.two);
+  }
+
   public get name(): AbstractControl {
     return this.form.get('name');
   }
@@ -58,6 +62,7 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.form.addControl(step, this.loyaltyFormsService.getStep(step));
+    // console.log(this.form);
   }
 
   public ngAfterViewInit(): void {

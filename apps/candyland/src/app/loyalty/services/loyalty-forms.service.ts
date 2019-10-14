@@ -37,7 +37,7 @@ export class LoyaltyFormsService {
   public getFirsStep(): FormGroup {
     return new FormGroup({
       pointsName: new FormControl(null, [Validators.required, Validators.minLength(1)]),
-      mainImage: new FormControl(null, ),
+      mainImage: new FormControl(null),
       joiningMethod: new FormGroup( {
         transactionAmount: new FormControl(false),
         signUp: new FormControl(false),
