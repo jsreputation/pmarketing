@@ -35,11 +35,19 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   }
 
   public get channelType(): AbstractControl | null {
-    return this.form.get('channel').get('type');
+    return this.form.get('channel.type');
+  }
+
+  public get message(): AbstractControl | null {
+    return this.form.get('channel.message');
   }
 
   public get schedule(): AbstractControl | null {
     return this.form.get('channel.schedule');
+  }
+
+  public get scheduleSendDate(): AbstractControl | null {
+    return this.form.get('channel.schedule.sendDate');
   }
 
   public get recurrence(): AbstractControl | null {
@@ -51,7 +59,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   }
 
   public get pool(): AbstractControl | null {
-    return this.form.get('audience').get('select');
+    return this.form.get('audience.select');
   }
 
   public get datenow(): Date {
@@ -77,10 +85,16 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
       value => {
         if (value === 'sms') {
           this.pool.setValidators([Validators.required]);
+          this.message.setValidators([Validators.required]);
+          this.scheduleSendDate.setValidators([Validators.required]);
         } else {
           this.pool.setValidators(null);
+          this.message.setValidators(null);
+          this.scheduleSendDate.setValidators(null);
         }
         this.pool.updateValueAndValidity();
+        this.message.updateValueAndValidity();
+        this.scheduleSendDate.updateValueAndValidity();
       }
     );
 
