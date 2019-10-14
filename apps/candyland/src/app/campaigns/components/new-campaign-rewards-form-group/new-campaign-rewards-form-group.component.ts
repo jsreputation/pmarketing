@@ -50,7 +50,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   // @ts-ignore
   private onTouched: any = noop;
   private isFirstInit: boolean;
-  private noOutComeProbability: number = 0;
+  private noOutCome: { probability: 0, outcomeId: '' };
 
   public get enableProbability(): AbstractControl {
     return this.group.get('enableProbability');
@@ -120,7 +120,11 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   public initRewardsList(): void {
     this.rewards.reset();
     const noOutcome = this.campaign.rewardsList.find(outcome => !outcome.resultId);
-    this.noOutComeProbability = noOutcome && noOutcome.probability || 0;
+    this.noOutCome = {
+      probability: noOutcome && noOutcome.probability || 0,
+      outcomeId: noOutcome && noOutcome.id
+    };
+
     const possibleOutcomes = this.campaign.rewardsList.filter(data => {
       if (!this.slotNumber) {
         return true;
@@ -128,7 +132,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       return data.lootBoxId === this.slotNumber;
     }).filter(data => data.resultId)
       .map(data => this.rewardsService.getReward(data.resultId).pipe(
-        map(reward => ({ ...reward, probability: data.probability }))
+        map(reward => ({ ...reward, probability: data.probability, outcomeId: data.id }))
       ));
     combineLatest(...possibleOutcomes).subscribe(
       (rewards: Partial<IRewardEntity>[]) => {
@@ -179,8 +183,10 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
 
   private createRewardFormGroup(value: IRewardEntity, isEnableProbability: boolean = false): FormGroup {
     return this.fb.group({
-      value: [value],
-      probability: { value: value ? value.probability || 0 : this.noOutComeProbability, disabled: !isEnableProbability }
+      value: value && [value] || [{ outcomeId: this.noOutCome && this.noOutCome.outcomeId }],
+      probability: {
+        value: value ? value.probability || 0 : this.noOutCome && this.noOutCome.probability || 0, disabled: !isEnableProbability
+      }
     });
   }
 
