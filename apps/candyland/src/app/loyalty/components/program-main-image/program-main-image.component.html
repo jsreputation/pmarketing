@@ -11,7 +11,8 @@
     </p>
     <cl-upload-graphic [formControl]="mainImage"
                        [btnLabel]="'Upload photo'"
-                       [btnStyleClass]="'upload-full-btn'"
+                       [classList]="'upload-full-width'"
+                       [isRequired]="mainImage.hasError('required') && mainImage.touched"
     ></cl-upload-graphic>
   </div>
 </mat-expansion-panel>

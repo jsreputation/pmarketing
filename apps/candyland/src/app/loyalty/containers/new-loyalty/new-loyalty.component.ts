@@ -7,11 +7,16 @@ import { LoyaltyFormsService } from '../../services/loyalty-forms.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { LoyaltyStepForm } from '../../models/loyalty-stap-form';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-new-loyalty',
   templateUrl: './new-loyalty.component.html',
-  styleUrls: ['./new-loyalty.component.scss']
+  styleUrls: ['./new-loyalty.component.scss'],
+  providers: [{
+    provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
+  }]
 })
 export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   public form: FormGroup;
@@ -24,13 +29,16 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initForm();
-    // this.addStepForm('1');
   }
 
   public ngOnDestroy(): void {
   }
 
   public goNext(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
     this.stepper.next();
   }
 
@@ -40,6 +48,10 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public get stepOne(): AbstractControl {
     return this.form.get(this.loyaltyFormType.one);
+  }
+
+  public get stepTwo(): AbstractControl {
+    return this.form.get(this.loyaltyFormType.two);
   }
 
   public get name(): AbstractControl {
@@ -54,11 +66,13 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     this.form = this.loyaltyFormsService.getFormLoyalty();
   }
 
-  private addStepForm(step: any): void {
-    // TODO: check if form contain the form step ignore it
-    console.log(step);
-    this.form.addControl('stepOne', this.loyaltyFormsService.getStep(step));
-    console.log(this.form.value);
+  private addStepForm(step: string): void {
+    if (this.checkExistingStepForm(this.form, step)) {
+      return;
+    }
+
+    this.form.addControl(step, this.loyaltyFormsService.getStep(step));
+    // console.log(this.form);
   }
 
   public createNewTier(): void {
@@ -75,19 +89,25 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public ngAfterViewInit(): void {
-    console.log(this.stepper);
     this.addStepForm(this.getStepFormName(this.stepper.selectedIndex));
     if (this.stepper) {
-      console.log('asdfasdf', this.stepper);
       this.stepper.selectionChange
-        .subscribe(val => {
-          console.log('value selection', val);
+        .pipe(untilDestroyed(this))
+        .subscribe((val) => {
+          this.addStepForm(this.getStepFormName(val.selectedIndex));
         });
     }
   }
 
+  private checkExistingStepForm(form: FormGroup, step: string): boolean {
+    return this.loyaltyFormsService.checkExistingStepForm(form, step);
+  }
+
   private getStepFormName(indexStep: number): string {
     return this.loyaltyFormsService.getStepName(indexStep);
+  }
+
+  public ngOnDestroy(): void {
   }
 
 }

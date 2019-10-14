@@ -7,7 +7,11 @@ import {
   MatInputModule,
   MatButtonModule,
   MatMenuModule,
-  MatIconModule, MatDialogModule, MatOptionModule, MatSelectModule, MatTabsModule
+  MatIconModule,
+  MatDialogModule,
+  MatOptionModule,
+  MatSelectModule,
+  MatTabsModule
 } from '@angular/material';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
@@ -31,6 +35,9 @@ import { ProgramMainImageComponent } from './components/program-main-image/progr
 import { DatePickerModule, UploadFileModule, UploadGraphicModule } from '@cl-shared';
 import { UserJoiningMethodComponent } from './components/user-joining-method/user-joining-method.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { SelectAudienceComponent } from './components/select-audience/select-audience.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { GlobalEarnRuleComponent } from './components/global-earn-rule/global-earn-rule.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +52,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     LoyaltyFormStepFourComponent,
     PointsInfoComponent,
     ProgramMainImageComponent,
+    UserJoiningMethodComponent,
+    SelectAudienceComponent,
+    GlobalEarnRuleComponent
     TierSetupPopupComponent,
     UserJoiningMethodComponent
   ],
@@ -54,6 +64,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ReactiveFormsModule,
     ButtonModule,
     UploadGraphicModule,
+    UploadFileModule,
+
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
@@ -65,6 +77,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatStepperModule,
     MatExpansionModule,
     MatCheckboxModule,
+    MatRadioModule,
     MatOptionModule,
     MatSelectModule,
     StatusLabelModule,

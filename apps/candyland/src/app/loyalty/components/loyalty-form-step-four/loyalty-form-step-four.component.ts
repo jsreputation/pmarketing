@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,11 +6,7 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './loyalty-form-step-four.component.html',
   styleUrls: ['./loyalty-form-step-four.component.scss']
 })
-export class LoyaltyFormStepFourComponent implements OnInit {
+export class LoyaltyFormStepFourComponent {
   @Input() public group: FormGroup;
-  constructor() { }
-
-  ngOnInit() {
-  }
 
 }

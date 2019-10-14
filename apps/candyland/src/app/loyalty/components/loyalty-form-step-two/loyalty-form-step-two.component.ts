@@ -8,10 +8,8 @@ import { FormGroup } from '@angular/forms';
 })
 export class LoyaltyFormStepTwoComponent implements OnInit {
   @Input() public group: FormGroup;
-  constructor() { }
 
   public ngOnInit(): void {
-    console.log('step two');
   }
 
 }

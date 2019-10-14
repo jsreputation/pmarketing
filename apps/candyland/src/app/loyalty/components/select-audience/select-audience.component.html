@@ -1,0 +1,20 @@
+<mat-expansion-panel class="card" expanded>
+  <mat-expansion-panel-header class="card-header">
+    <h2 class="card-title">
+      Select Audience
+    </h2>
+  </mat-expansion-panel-header>
+
+  <div class="card-content" [formGroup]="selectAudience">
+    <mat-radio-group [formControlName]="'audienceType'"
+                     aria-label="Select an option"
+                     [color]="'primary'"
+    >
+      <mat-radio-button value="all-audience">All my audience</mat-radio-button>
+      <mat-radio-button value="list-audience">Upload an audience list</mat-radio-button>
+    </mat-radio-group>
+
+    <cl-upload-file *ngIf="audienceType.value === 'list-audience'" [formControlName]="'uploadFile'"></cl-upload-file>
+    <mat-error *ngIf="selectAudience.hasError('groupRequired') && selectAudience.touched">Required field</mat-error>
+  </div>
+</mat-expansion-panel>
