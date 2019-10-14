@@ -224,29 +224,32 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       combineLatest(
         this.campaignsService.getCampaign(campaignId).pipe(catchError(() => of(null))),
         this.commsService.getCommsEvent(paramsComm).pipe(catchError(() => of(null))),
-        this.outcomesService.getOutcomes(paramsPO).pipe(catchError(() => of(null)))
-        ).pipe(
-          map(
-            ([campaign, commEvent, outcomes]:
-              [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
-                ...campaign,
-                audience: { select: commEvent && commEvent.poolId || null },
-                channel: {
-                  type: commEvent && commEvent.channel || 'weblink',
-                  ...commEvent
-                },
-                rewardsList: outcomes
-              }))
-        ).subscribe(
-          campaign => {
-            this.campaign = Object.assign({}, campaign);
-            this.store.initCampaign(campaign);
-            this.form.patchValue({
-              name: this.campaign.name
-            });
-          },
-          () => this.router.navigateByUrl('/campaigns')
-        );
+        this.outcomesService.getOutcomes(paramsPO).pipe(
+          map(outcomes => outcomes.map(outcome => ({ ...outcome, probability: outcome.probability * 100 }))),
+          catchError(() => of(null)))
+      ).pipe(
+        map(
+          ([campaign, commEvent, outcomes]:
+            [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
+              ...campaign,
+              audience: { select: commEvent && commEvent.poolId || null },
+              channel: {
+                type: commEvent && commEvent.channel || 'weblink',
+                ...commEvent
+              },
+              rewardsList: outcomes
+            }))
+      ).subscribe(
+        campaign => {
+          console.log(campaign);
+          this.campaign = Object.assign({}, campaign);
+          this.store.initCampaign(campaign);
+          this.form.patchValue({
+            name: this.campaign.name
+          });
+        },
+        () => this.router.navigateByUrl('/campaigns')
+      );
     }
   }
 }
