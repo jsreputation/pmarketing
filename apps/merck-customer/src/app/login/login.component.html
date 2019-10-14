@@ -30,16 +30,16 @@
         <mat-label translate>STATIC_MOBILE_NO</mat-label>
         <input matInput placeholder="{{'STATIC_MOBILE_NO' | translate}}" placeholder="Mobile No"
           formControlName="mobileNo" required>
-        <mat-error *ngIf="loginForm.hasError('mobileNo')">
-          Mobile No is <strong>required</strong>
+        <mat-error *ngIf="loginForm.get('mobileNo').hasError('required')">
+          {{'STATIC_MOBILE_NO_IS' | translate}} <strong>{{'REQUIRED' | translate }}</strong>
         </mat-error>
       </mat-form-field>
       <mat-form-field color="primary" class="full-width__input">
         <mat-label translate>STATIC_PASSWORD</mat-label>
         <input matInput placeholder="{{'STATIC_PASSWORD' | translate }}" placeholder="Password"
           formControlName="password" type="password" required>
-        <mat-error *ngIf="loginForm.hasError('password')">
-          Password is <strong>required</strong>
+        <mat-error *ngIf="loginForm.get('password').hasError('required')">
+          {{'PASSWORD_IS' | translate }} <strong>{{'REQUIRED' | translate }}</strong>
         </mat-error>
       </mat-form-field>
       <div class="forgot-text" (click)="goToForgotPassword()" translate>STATIC_FORGOT_PASSWORD</div>

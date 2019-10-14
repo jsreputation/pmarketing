@@ -76,3 +76,15 @@
     }
   }
 }
+
+@media (max-width: $tablet-width) {
+  .page-header {
+    padding-left: 2.4rem + ($horizontal-padding * 1.5);
+  }
+}
+
+@media (max-width: $mobile-width) {
+  .page-header {
+    padding-left: 2.4rem + $horizontal-padding;
+  }
+}

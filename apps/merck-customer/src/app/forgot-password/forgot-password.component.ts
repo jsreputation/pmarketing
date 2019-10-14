@@ -65,7 +65,7 @@ export class ForgotPasswordComponent implements PageAppearence {
             } else if (err.status === 401) {
               this.notificationService.addSnack('Invalid mobile number.');
             } else {
-              this.notificationService.addSnack(err.statusText);
+              this.notificationService.addSnack(err.error.message);
             }
           }
         });
