@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   OnDestroy,
   ChangeDetectorRef,
-  ViewChild, AfterViewInit,
+  ViewChild,
 } from '@angular/core';
 import {
   AbstractControl,
