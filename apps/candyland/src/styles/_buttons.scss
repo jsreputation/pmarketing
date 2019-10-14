@@ -20,3 +20,23 @@ button {
   line-height: 4rem;
   height: 4rem;
 }
+
+@media (max-width: $tablet-width) {
+  // CTA MOBILE
+  .cta span.mat-button-wrapper {
+    opacity: 0 !important;
+    width: 1px;
+    overflow: hidden;
+    display: block;
+    font-size: 0;
+  }
+
+  // CTA MOBILE HELP
+  .walkme-player.walkme-zambezi.walkme-california.walkme-theme-white-blue.walkme-position-major-bottom.walkme-position-minor-right_corner {
+    background-size: 76px auto !important;
+    right: 12px !important;
+    width: 60px !important;
+    height: 60px !important;
+    bottom: 86px !important;
+  }
+}
