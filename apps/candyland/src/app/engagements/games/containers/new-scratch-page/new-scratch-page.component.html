@@ -84,6 +84,7 @@
               <cl-select-graphic-wrap
                 *ngIf="scratchData.postScratchSuccessImage"
                 formControlName="postScratchSuccessImage"
+                (selectGraphic)="selectPostGraphic($event)"
                 [isRequired]="form.get('postScratchSuccessImage').hasError('required') && form.get('postScratchSuccessImage').touched"
                 class="game-selected-graphic"
                 [graphicList]="scratchData.postScratchSuccessImage"
@@ -99,6 +100,7 @@
               <cl-select-graphic-wrap
                 *ngIf="scratchData.postScratchFailImage"
                 formControlName="postScratchFailImage"
+                (selectGraphic)="selectPostGraphic($event)"
                 [isRequired]="form.get('postScratchFailImage').hasError('required') && form.get('postScratchFailImage').touched"
                 class="game-selected-graphic"
                 [graphicList]="scratchData.postScratchFailImage"
@@ -209,7 +211,10 @@
           </p>
         </div>
         <div class="mobile-preview-feedback">
-          <img class="img" [src]="getImgLink(postScratchSuccessImage, 'assets/images/background/background1.png')">
+          <img
+            class="img"
+            [src]="postScratchImage"
+          >
         </div>
         <div class="mobile-preview-btn-wrap mobile-btn-block">
           <button class="mobile-preview-btn"

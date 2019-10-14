@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   OnDestroy,
   ChangeDetectorRef,
-  ViewChild,
+  ViewChild, AfterViewInit,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -58,6 +58,7 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public scratchData: IGameDefaultData;
   public tenantSettings: ITenantsProperties;
+  public currentPostScratchImageUrl: string = null;
   private destroy$: Subject<boolean> = new Subject();
 
   public get name(): AbstractControl {
@@ -94,6 +95,11 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
 
   public get background(): AbstractControl {
     return this.form.get(ControlsName.background);
+  }
+
+  public get postScratchImage(): string {
+    return this.currentPostScratchImageUrl ||
+           this.getImgLink(<FormControl>this.postScratchSuccessImage, 'assets/images/background/background1.png');
   }
 
   constructor(
@@ -160,6 +166,14 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
 
   public getImgLink(control: FormControl, defaultImg: string): string {
     return ImageControlValue.getImgLink(control, defaultImg);
+  }
+
+  public selectPostGraphic(graphic: IGraphic): void {
+    if (graphic.fullImg) {
+      this.currentPostScratchImageUrl = ImageControlValue.prepareImage(graphic.fullImg);
+    } else {
+      this.currentPostScratchImageUrl = ImageControlValue.prepareImage(graphic.img);
+    }
   }
 
   private initScratchForm(): void {
