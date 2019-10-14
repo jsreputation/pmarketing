@@ -3,18 +3,18 @@ import { ICategory } from './category.model';
 export const categories: ICategory[] = [
   {
     name: 'All',
-    icon: 'apps'
+    icon: 'all.svg'
   },
   {
     name: 'Eat',
-    icon: 'local_dining'
+    icon: 'eat.svg'
   },
   {
     name: 'Shop',
-    icon: 'shopping_cart'
+    icon: 'shop.svg'
   },
   {
     name: 'Play',
-    icon: 'gamepad'
+    icon: 'play.svg'
   }
 ];

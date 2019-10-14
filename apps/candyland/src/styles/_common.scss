@@ -218,7 +218,19 @@ h1, h2, h3, h4, h5, p {
     padding-right: ($horizontal-padding * 0.75) !important;
   }
 
+  &-page-size {
+    margin-right: $horizontal-padding !important;
+  }
+
   &-page-size-label {
+    margin-left: 0 !important;
+  }
+
+  &-range-actions {
+    min-height: ($horizontal-padding * 1.5);
+  }
+
+  &-range-label {
     margin-left: 0 !important;
   }
 }
