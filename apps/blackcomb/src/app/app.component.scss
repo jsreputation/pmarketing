@@ -38,10 +38,10 @@
 
   a {
     text-decoration: none;
-    color: var(--accent);
+    color: #666666;
 
     &.active {
-      color: mat-color($primary);
+      color: var(--accent);
     }
   }
 }
