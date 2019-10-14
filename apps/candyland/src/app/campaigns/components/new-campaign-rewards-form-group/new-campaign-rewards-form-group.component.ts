@@ -19,8 +19,8 @@ import { MatDialog } from '@angular/material';
 import { ClValidators } from '@cl-helpers/cl-validators';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { noop, combineLatest } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { noop, combineLatest, of } from 'rxjs';
+import { distinctUntilChanged, map, catchError } from 'rxjs/operators';
 import { RewardsService } from '@cl-core/services/rewards.service';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 
@@ -132,20 +132,20 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       return data.lootBoxId === this.slotNumber;
     }).filter(data => data.resultId)
       .map(data => this.rewardsService.getReward(data.resultId).pipe(
-        map(reward => ({ ...reward, probability: data.probability, outcomeId: data.id }))
+        map(reward => ({ ...reward, probability: data.probability, outcomeId: data.id })),
+        catchError(() => of(null))
       ));
     combineLatest(...possibleOutcomes).subscribe(
       (rewards: Partial<IRewardEntity>[]) => {
-        if (rewards[0].probability) {
-          this.enableProbability.patchValue(true);
-        }
-        rewards.map((reward: IRewardEntity) => this.addReward(reward));
+        rewards.filter(data => data).map((reward: IRewardEntity) => this.addReward(reward));
       }
-
     );
   }
 
   public addReward(value: IRewardEntity): void {
+    if (value.probability && !this.enableProbability.value) {
+      this.enableProbability.patchValue(true);
+    }
     this.rewards.push(this.createRewardFormGroup(value, this.enableProbability.value));
     this.cd.detectChanges();
   }
