@@ -70,7 +70,11 @@ export class EnterPinComponent implements OnInit, PageAppearence {
     if (this.pinMode === PinMode.register) {
       this.authService.verifyOTP(this.mobileNo, enteredPin).subscribe(
         (response) => {
-          console.log(`Response: ${response.message}`);
+          this.notificationService.addSnack(response.message);
+          this.router.navigate(['login']);
+        },
+        err => {
+          this.notificationService.addSnack(err.error.message);
         }
       );
     } else if (this.pinMode === PinMode.password) {
