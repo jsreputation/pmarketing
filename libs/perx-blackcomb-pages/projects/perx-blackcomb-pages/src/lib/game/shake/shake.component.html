@@ -1,19 +1,21 @@
 <div class="main-puzzle-container">
-  <div>
+  <div class="game-header">
     <h1>{{game.texts.title}}</h1>
     <h3>{{game.texts.subTitle}}</h3>
   </div>
   <div class="game-wrapper">
     <perx-core-shake-tree
-      [treeImg]="config.treeImg"
-      [giftImg]="config.giftImg"
-      [nbHangedGifts]="config.nbHangedGift"
-      [nbFallingGifts]="config.nbGiftsToDrop"
+      [treeImg]="game.config.treeImg"
+      [giftImg]="game.config.giftImg"
+      [nbHangedGifts]="game.config.nbHangedGift"
+      [nbFallingGifts]="game.config.nbGiftsToDrop"
       (completed)="gameCompleted()"
       [enabled]="isEnabled"
-      [nbShakes]="config.nbTaps">
+      [nbShakes]="game.config.nbTaps">
     </perx-core-shake-tree>
   </div>
+</div>
+<div class="game-footer">
   <button
     mat-flat-button
     color="primary"
@@ -21,5 +23,4 @@
     [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible', 'color': 'white'}">
     {{ game.texts.button }}
   </button>
-
 </div>

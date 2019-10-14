@@ -6,16 +6,18 @@
   <div class="game-wrapper">
     <div class="pinata-wrapper">
       <perx-core-pinata
-        [stillImg]="config.stillImg"
-        [openedImg]="config.openedImg" 
-        (broken)="gameCompleted()" 
+        [stillImg]="game.config.stillImg"
+        [openedImg]="game.config.openedImg"
+        (broken)="gameCompleted()"
         [enabled]="isEnabled"
-        [nbTaps]="config.nbTaps">
+        [nbTaps]="game.config.nbTaps">
       </perx-core-pinata>
     </div>
   </div>
-  <button mat-flat-button (click)="isEnabled = true"
-    [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}">
-    {{ game.texts.button }}
-  </button>
+  <div class="game-footer">
+    <button mat-flat-button (click)="isEnabled = true"
+      [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}">
+      {{ game.texts.button }}
+    </button>
+  </div>
 </div>

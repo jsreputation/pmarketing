@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ShakeComponent } from './shake.component';
-import { GameModule, IGameService, IGame} from '@perx/core';
+import { GameModule, IGameService, IGame } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('ShakeComponent', () => {
