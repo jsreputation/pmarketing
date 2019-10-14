@@ -12,7 +12,7 @@
   padding: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   box-sizing: border-box;
 
   .engagement-selector-img {
@@ -24,10 +24,13 @@
     }
 
     &-full {
-      margin: (-($vertical-padding * 0.5)) (-($horizontal-padding * 0.5)) auto;
+      margin: 0;
+      height: 80px;
 
       img {
+        height: 100%;
         width: 100%;
+        object-fit: cover;
       }
     }
   }
@@ -37,6 +40,14 @@
 
     color: $base-font-color;
     text-align: center;
+  }
+}
+
+.engagement-selector-game {
+  padding: 0;
+
+  .engagement-selector-name {
+    margin: auto 0;
   }
 }
 

@@ -3,6 +3,7 @@ export enum ControlsName {
   headlineMessage = 'headlineMessage',
   subHeadlineMessage = 'subHeadlineMessage',
   buttonText = 'buttonText',
+  lastButtonText = 'lastButtonText',
   background = 'background',
 
   pinata = 'pinata',

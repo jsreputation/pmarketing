@@ -6,4 +6,5 @@ declare interface IScratchForm extends ICommonGameForm {
   postScratchSuccessImage: IGraphic | string;
   postScratchFailImage: IGraphic | string;
   background: IGraphic | string;
+  lastButtonText: string;
 }

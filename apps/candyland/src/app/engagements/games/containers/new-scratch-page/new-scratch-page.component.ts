@@ -76,6 +76,10 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
     return this.form.get(ControlsName.buttonText);
   }
 
+  public get lastButtonText(): AbstractControl {
+    return this.form.get(ControlsName.lastButtonText);
+  }
+
   public get preScratchImage(): AbstractControl {
     return this.form.get(ControlsName.preScratchImage);
   }
@@ -167,13 +171,18 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
       headlineMessage: ['Scratch the Card and Win!', [
         Validators.required,
         Validators.minLength(5),
-        Validators.maxLength(20)
+        Validators.maxLength(60)
       ]],
       subHeadlineMessage: ['Scratch the Card until you get a reward!', [
         Validators.minLength(5),
-        Validators.maxLength(30)
+        Validators.maxLength(250)
       ]],
       buttonText: ['Start Playing', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(20)
+      ]],
+      lastButtonText: ['Back To Wallet', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(20)
@@ -188,9 +197,10 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
   private getDefaultValue(data: IGameDefaultData): IScratchForm {
     return {
       name: 'Scratch the Card Template',
-      headlineMessage: 'Scratch and Win!',
-      subHeadlineMessage: 'Scratch to get a reward!',
+      headlineMessage: 'Scratch it!',
+      subHeadlineMessage: 'Scratch it to get a reward!',
       buttonText: 'Start Playing',
+      lastButtonText: 'Back To Wallet',
       [ControlsName.preScratchImage]: data.preScratchImage[0],
       [ControlsName.postScratchSuccessImage]: data.postScratchSuccessImage[0],
       [ControlsName.postScratchFailImage]: data.postScratchFailImage[0],
