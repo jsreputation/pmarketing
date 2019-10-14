@@ -225,12 +225,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         this.campaignsService.getCampaign(campaignId),
         this.commsService.getCommsEvent(paramsComm),
         this.outcomesService.getOutcomes(paramsPO)).pipe(
-          tap(([campaign, commEvent, outcomes]:
-            [ICampaign, IComm, IOutcome[]]) => {
-              console.log(campaign);
-              console.log(commEvent);
-              console.log(outcomes);
-            }),
           map(
             ([campaign, commEvent, outcomes]:
               [ICampaign, IComm, IOutcome[]]): ICampaign => ({
