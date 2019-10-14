@@ -43,7 +43,7 @@
   }
 
   > *:last-child {
-      @include mat-elevation(1);
+    @include mat-elevation(1);
 
     position: sticky;
     top: $header-height-base + $vertical-padding;
