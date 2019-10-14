@@ -5,6 +5,8 @@ import { MatStepper } from '@angular/material/stepper';
 import { LoyaltyStepForm } from '../../models/loyalty-stap-form';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { MatDialog } from '@angular/material/dialog';
+import { AddRulePopupComponent } from '../../components/add-rule-popup/add-rule-popup.component';
 
 @Component({
   selector: 'cl-new-loyalty',
@@ -18,7 +20,8 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   public form: FormGroup;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
-  constructor(private loyaltyFormsService: LoyaltyFormsService) { }
+  constructor(private loyaltyFormsService: LoyaltyFormsService,
+              public dialog: MatDialog) { }
 
   public ngOnInit(): void {
     this.initForm();
@@ -85,6 +88,14 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+  }
+
+  addRule(): void {
+    const dialogRef = this.dialog.open(AddRulePopupComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
   }
 
 }

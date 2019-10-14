@@ -32,6 +32,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectAudienceComponent } from './components/select-audience/select-audience.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { GlobalEarnRuleComponent } from './components/global-earn-rule/global-earn-rule.component';
+import { AddRulePopupComponent } from './components/add-rule-popup/add-rule-popup.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { GlobalEarnRuleComponent } from './components/global-earn-rule/global-ea
     ProgramMainImageComponent,
     UserJoiningMethodComponent,
     SelectAudienceComponent,
-    GlobalEarnRuleComponent
+    GlobalEarnRuleComponent,
+    AddRulePopupComponent
   ],
   imports: [
     CommonModule,
@@ -73,6 +75,9 @@ import { GlobalEarnRuleComponent } from './components/global-earn-rule/global-ea
   ],
   providers: [
     LoyaltyFormsService
-  ]
+  ],
+  entryComponents: [
+    AddRulePopupComponent
+  ],
 })
 export class LoyaltyModule { }

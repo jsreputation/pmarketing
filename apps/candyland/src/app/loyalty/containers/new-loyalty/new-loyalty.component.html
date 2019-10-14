@@ -17,6 +17,7 @@
     <cl-button *ngIf="isLastStep" classList="primary" (click)="save()">Launch</cl-button>
   </div>
 </header>
+<button (click)="addRule()">add rule</button>
 <section class="content form-limiter">
   <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0">
     <mat-step [stepControl]="stepOne">

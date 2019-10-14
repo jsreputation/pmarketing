@@ -118,6 +118,21 @@ export class LoyaltyFormsService {
     }
   }
 
+  public getRuleForm(): FormGroup {
+    return new FormGroup({
+      name: new FormControl(null),
+      conditions: new FormArray([]),
+      result: new FormGroup({
+        bonus: new FormControl(null, [Validators.required]),
+        award: new FormControl(null),
+        points: new FormControl(null),
+        typeMultiplier: new FormControl(null, [Validators.required]),
+       applyMultiplier: new FormControl(null, [Validators.required]),
+        maximumPoints: new FormControl(null, [Validators.required]),
+      })
+    });
+  }
+
   public checkExistingStepForm(form: FormGroup, step: string): boolean {
     return !!form.get(step);
   }
