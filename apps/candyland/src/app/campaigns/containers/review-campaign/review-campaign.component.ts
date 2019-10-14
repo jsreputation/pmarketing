@@ -49,6 +49,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     const params: HttpParamsOptions = {
       'filter[owner_id]': campaignId,
       'filter[owner_type]': 'Perx::Campaign::Entity',
+      include: 'template',
     };
     const paramsPO: HttpParamsOptions = {
       'filter[campaign_entity_id]': campaignId
@@ -56,22 +57,17 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     if (campaignId) {
       combineLatest(
         this.campaignsService.getCampaign(campaignId),
-        this.commsService.getCommsTemplate(params).pipe(
-          map((comms: IComm[]) => comms[0])
-        ),
-        this.commsService.getCommsEvents(params).pipe(
-          map((comms: IComm[]) => comms[0])
-        ),
+        this.commsService.getCommsEvent(params),
         this.outcomesService.getOutcomes(paramsPO)).pipe(
           untilDestroyed(this),
           map(
-            ([campaign, commTemplate, commEvent, outcomes]:
-              [ICampaign, IComm, IComm, IOutcome[]]) => ({
+            ([campaign, commEvent, outcomes]:
+              [ICampaign, IComm, IOutcome[]]) => ({
                 ...campaign,
                 audience: { select: commEvent && commEvent.poolId || null },
                 channel: {
                   type: commEvent && commEvent.channel || 'weblink',
-                  message: commTemplate && commTemplate.message,
+                  message: commEvent && commEvent.message,
                   schedule: commEvent && { ...commEvent.schedule }
                 },
                 rewardsList: outcomes

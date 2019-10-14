@@ -212,9 +212,10 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private handleRouteParams(): void {
     const campaignId = this.route.snapshot.params.id;
-    const params: HttpParamsOptions = {
+    const paramsComm: HttpParamsOptions = {
       'filter[owner_id]': campaignId,
       'filter[owner_type]': 'Perx::Campaign::Entity',
+      include: 'template',
     };
     const paramsPO: HttpParamsOptions = {
       'filter[campaign_entity_id]': campaignId
@@ -222,21 +223,21 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     if (campaignId) {
       combineLatest(
         this.campaignsService.getCampaign(campaignId),
-        this.commsService.getCommsTemplate(params).pipe(
-          map((comms: IComm[]) => comms[0])
-        ),
-        this.commsService.getCommsEvents(params).pipe(
-          map((comms: IComm[]) => comms[0])
-        ),
+        this.commsService.getCommsEvent(paramsComm),
         this.outcomesService.getOutcomes(paramsPO)).pipe(
+          tap(([campaign, commEvent, outcomes]:
+            [ICampaign, IComm, IOutcome[]]) => {
+              console.log(campaign);
+              console.log(commEvent);
+              console.log(outcomes);
+            }),
           map(
-            ([campaign, commTemplate, commEvent, outcomes]:
-              [ICampaign, IComm, IComm, IOutcome[]]): ICampaign => ({
+            ([campaign, commEvent, outcomes]:
+              [ICampaign, IComm, IOutcome[]]): ICampaign => ({
                 ...campaign,
                 audience: { select: commEvent && commEvent.poolId || null },
                 channel: {
                   type: commEvent && commEvent.channel || 'weblink',
-                  ...commTemplate,
                   ...commEvent
                 },
                 rewardsList: outcomes
