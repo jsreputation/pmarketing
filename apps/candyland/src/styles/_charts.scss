@@ -5,6 +5,10 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
 
 .dashboard-group-graphics {
   padding: $vertical-padding $horizontal-padding;
+
+  @media (max-width: $mobile-width) {
+    padding: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
+  }
 }
 
 .chard-card-list {
@@ -29,6 +33,7 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
   box-sizing: border-box;
   border-radius: $border-radius;
   border: 1px solid $border-color;
+  min-width: 28rem;
 
   &.full-width {
     flex-basis: 100%;
@@ -104,5 +109,5 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
 }
 
 .tabs-list-wrap + .chart-card {
-  flex-basis: calc(100% - #{$vertical-tabs-width} - (#{$horizontal-padding} * 2));
+  flex-basis: calc(100% - 32rem);
 }
