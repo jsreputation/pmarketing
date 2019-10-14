@@ -17,6 +17,10 @@ class PerxCoreLoyaltySummaryMockComponent {
   public loyalty: Observable<ILoyalty> | undefined;
   @Input()
   public titleFn: (profile: IProfile) => string;
+  @Input()
+  public subTitleFn: (loyalty: ILoyalty) => string;
+  @Input()
+  public summaryExpiringFn: (loyalty: ILoyalty) => string;
 }
 
 @Component({

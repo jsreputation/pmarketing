@@ -33,6 +33,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.store.resetCampaign();
     this.getCampaignData();
   }
 
@@ -46,28 +47,28 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   private getCampaignData(): void {
     const campaignId = this.route.snapshot.params.id;
     const params: HttpParamsOptions = {
+      'filter[owner_id]': campaignId,
+      'filter[owner_type]': 'Perx::Campaign::Entity',
+      include: 'template',
+    };
+    const paramsPO: HttpParamsOptions = {
       'filter[campaign_entity_id]': campaignId
     };
     if (campaignId) {
       combineLatest(
         this.campaignsService.getCampaign(campaignId),
-        this.commsService.getCommsTemplate(params).pipe(
-          map((comms: IComm[]) => comms[0])
-        ),
-        this.commsService.getCommsEvents(params).pipe(
-          map((comms: IComm[]) => comms[0])
-        ),
-        this.outcomesService.getOutcomes(params)).pipe(
+        this.commsService.getCommsEvent(params),
+        this.outcomesService.getOutcomes(paramsPO)).pipe(
           untilDestroyed(this),
           map(
-            ([campaign, commTemplate, commEvent, outcomes]:
-              [ICampaign, IComm, IComm, IOutcome[]]) => ({
+            ([campaign, commEvent, outcomes]:
+              [ICampaign, IComm, IOutcome[]]) => ({
                 ...campaign,
-                audience: { select: commEvent && parseInt(commEvent.pool_id, 10) || null },
+                audience: { select: commEvent && commEvent.poolId || null },
                 channel: {
                   type: commEvent && commEvent.channel || 'weblink',
-                  ...commTemplate,
-                  ...commEvent
+                  message: commEvent && commEvent.message,
+                  schedule: commEvent && { ...commEvent.schedule }
                 },
                 rewardsList: outcomes
               })
@@ -103,14 +104,19 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getRewards(rewardsList: any[]): Observable<IRewardEntityForm[]> {
+  private getRewards(rewardsList: any[]): Observable<{ value: IRewardEntity | null }[]> {
     if (!rewardsList || !rewardsList.length) {
       return of([]);
     }
     return combineLatest(...rewardsList.map(
-      reward => this.rewardsService.getReward(reward.resultId).pipe(
-        map(rewardData => ({ value: { ...rewardData, probability: reward.probability } }))
-      )
+      reward => {
+        if (reward.resultId) {
+          return this.rewardsService.getReward(reward.resultId).pipe(
+            map(rewardData => ({ value: { ...rewardData, probability: reward.probability } }))
+          );
+        }
+        return of({ value: null });
+      }
     ));
   }
 }
