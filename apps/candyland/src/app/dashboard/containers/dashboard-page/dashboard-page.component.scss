@@ -21,7 +21,7 @@
   &-explore-cards {
     display: grid;
     grid-gap: ($horizontal-padding * 0.75);
-    grid-template-columns: repeat(auto-fit, minmax(32rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
     margin: ($vertical-padding * 0.75) 0;
   }
 
@@ -43,6 +43,7 @@
         border-color: $border-color;
         margin-bottom: -1px;
         flex-grow: 1;
+        width: 100%;
       }
 
       cl-range-date-picker-filter {
