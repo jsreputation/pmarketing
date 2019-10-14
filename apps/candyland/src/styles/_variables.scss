@@ -226,4 +226,8 @@ $modal-lg: 76.8rem;
   display: block;
   width: calc(100vw - #{$horizontal-padding} - #{$horizontal-padding});
   max-width: ($max-size) !important;
+
+  @media (max-width: $mobile-width) {
+    width: calc(100vw - #{$horizontal-padding * 0.5} - #{$horizontal-padding * 0.5});
+  }
 }
