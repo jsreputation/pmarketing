@@ -15,7 +15,6 @@ import {
   RewardsModule,
   MerchantsModule as PerxMerchantsModule,
   CampaignModule as PerxCampaignModule,
-  ThemesService
 } from '@perx/core';
 import {
   MatToolbarModule,
@@ -92,7 +91,6 @@ const profileServiceStub = {
   ],
   providers: [
     { provide: ProfileService, useValue: profileServiceStub },
-    ThemesService
   ],
   bootstrap: [AppComponent]
 })
