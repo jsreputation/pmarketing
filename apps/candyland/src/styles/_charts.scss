@@ -33,7 +33,6 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
   box-sizing: border-box;
   border-radius: $border-radius;
   border: 1px solid $border-color;
-  min-width: 28rem;
 
   &.full-width {
     flex-basis: 100%;
@@ -98,21 +97,32 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
   padding-top: 0;
   padding-right: 0;
   padding-left: 0;
-
-  & > .chart-card-content {
-    height: 35rem;
-  }
 }
 
 .chart-card:first-of-type {
   flex-basis: 100%;
 }
 
-.tabs-list-wrap + .chart-card {
-  flex-basis: calc(100% - 32rem);
+.chart-card-content {
+  overflow-x: auto;
+
+  pc-meta-card .wrapper {
+    justify-content: flex-start;
+
+    > * {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
 }
 
-@media (max-width: $tablet-width) {
+@media (min-width: $desktop-width + 1) {
+  .tabs-list-wrap + .chart-card {
+    flex-basis: calc(100% - 32rem);
+  }
+}
+
+@media (max-width: $desktop-width) {
   .tabs-list-wrap.business-insights-tabs-list-wrap {
     box-sizing: border-box;
     max-width: initial;
@@ -167,12 +177,11 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
 
 @media (max-width: $mobile-width) {
   .tabs-list.business-insights-tabs-list {
-    margin-bottom: $vertical-padding;
+    margin-bottom: ($vertical-padding * 1.5);
 
     > .mat-radio-button {
       display: flex;
       align-items: flex-end;
-      border-bottom: none;
       position: static;
       border-bottom-width: 2px;
     }

@@ -43,7 +43,6 @@
         border-color: $border-color;
         margin-bottom: -1px;
         flex-grow: 1;
-        width: 100%;
       }
 
       cl-range-date-picker-filter {
@@ -53,5 +52,21 @@
         margin: 1rem $horizontal-padding -0.75rem auto;
       }
     }
+  }
+}
+
+@media (max-width: $desktop-width) {
+  .dashboard-insights-card-header .mat-tab-link {
+    flex-grow: 1;
+  }
+}
+
+@media (max-width: $mobile-width) {
+  .dashboard-insights-card-header .mat-tab-link {
+    padding: 0 0.4rem;
+  }
+
+  .dashboard-insights-card-header cl-range-date-picker-filter {
+    margin-right: ($horizontal-padding * 0.5);
   }
 }
