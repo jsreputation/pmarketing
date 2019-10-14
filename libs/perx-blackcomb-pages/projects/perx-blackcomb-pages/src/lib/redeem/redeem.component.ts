@@ -6,7 +6,7 @@ import { filter, switchMap } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
-  selector: 'app-redeem',
+  selector: 'perx-blackcomb-redeem',
   templateUrl: './redeem.component.html',
   styleUrls: ['./redeem.component.scss']
 })
