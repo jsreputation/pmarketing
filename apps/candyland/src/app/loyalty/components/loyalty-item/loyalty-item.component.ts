@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { getEngagementRouterLink } from '@cl-helpers/get-engagement-router-link';
 
 export interface IEngagementItemMenuOption {
   action: string;
@@ -14,10 +13,9 @@ export interface IEngagementItemMenuOption {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoyaltyItemComponent {
-  @Input() public data: IEngagement;
+  @Input() public data: any;
   @Input() public menuOptions: IEngagementItemMenuOption[] = [];
   @Input() public linkable: boolean = false;
-
   @Output() public menuTapped: EventEmitter<{ engagement: IEngagement, action: string }> = new EventEmitter();
 
   constructor(private router: Router) {
@@ -27,12 +25,15 @@ export class LoyaltyItemComponent {
     this.menuTapped.emit({action: option.action, engagement: this.data});
   }
 
+  public navigateToReview(): void {
+    if (this.linkable) {
+      this.router.navigate(['loyalty/review/' + this.data.id]);
+    }
+  }
+
   public navigateToEdit(): void {
     if (this.linkable) {
-      const gameType = 'game_type' in this.data ? this.data.game_type : null;
-      let path = getEngagementRouterLink(this.data.attributes_type, gameType);
-      path += '/' + this.data.id;
-      this.router.navigate([path]);
+      this.router.navigate(['edit/' + this.data.id]);
     }
   }
 }

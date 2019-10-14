@@ -40,5 +40,10 @@ export const menus = [
     icon: 'settings',
     open: false,
   },
-
+  {
+    name: 'Loyalty',
+    link: '/loyalty',
+    icon: 'campaign',
+    open: false,
+  },
 ];

@@ -7,32 +7,42 @@ import {
   MatInputModule,
   MatButtonModule,
   MatMenuModule,
-  MatIconModule
+  MatIconModule,
+  MatDialogModule,
+  MatOptionModule,
+  MatSelectModule,
+  MatTabsModule
 } from '@angular/material';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
-import { NoDataModule, PaginationModule } from '@cl-shared/table';
-import { LoyaltyGridComponent } from 'src/app/loyalty/components/loyalty-grid/loyalty-grid.component';
-import { LoyaltyItemComponent } from 'src/app/loyalty/components/loyalty-item/loyalty-item.component';
-import { LoyaltyListPageComponent } from './containers/loyalty-list-page/loyalty-list-page.component';
-import { LoyaltyComponent } from './containers/loyalty/loyalty.component';
-import { LoyaltyRoutingModule } from './loyalty-routing.module';
+import {ButtonModule} from '@cl-shared/components/button/button.module';
+import {StatusLabelModule} from '@cl-shared/components/status-label/status-label.module';
+import {NoDataModule, PaginationModule} from '@cl-shared/table';
+import {LoyaltyGridComponent} from 'src/app/loyalty/components/loyalty-grid/loyalty-grid.component';
+import {LoyaltyItemComponent} from 'src/app/loyalty/components/loyalty-item/loyalty-item.component';
+import {TierSetupPopupComponent} from 'src/app/loyalty/containers/tier-setup-popup/tier-setup-popup.component';
+import {LoyaltyListPageComponent} from './containers/loyalty-list-page/loyalty-list-page.component';
+import {LoyaltyComponent} from './containers/loyalty/loyalty.component';
+import {LoyaltyRoutingModule} from './loyalty-routing.module';
 import {LoyaltyFormsService} from './services/loyalty-forms.service';
-import { NewLoyaltyComponent } from './containers/new-loyalty/new-loyalty.component';
-import { MatStepperModule } from '@angular/material/stepper';
-import { LoyaltyFormStepOneComponent } from './components/loyalty-form-step-one/loyalty-form-step-one.component';
-import { LoyaltyFormStepTwoComponent } from './components/loyalty-form-step-two/loyalty-form-step-two.component';
-import { LoyaltyFormStepThreeComponent } from './components/loyalty-form-step-three/loyalty-form-step-three.component';
-import { LoyaltyFormStepFourComponent } from './components/loyalty-form-step-four/loyalty-form-step-four.component';
-import { PointsInfoComponent } from './components/points-info/points-info.component';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { ProgramMainImageComponent } from './components/program-main-image/program-main-image.component';
-import { UploadFileModule, UploadGraphicModule } from '@cl-shared';
-import { UserJoiningMethodComponent } from './components/user-joining-method/user-joining-method.component';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { SelectAudienceComponent } from './components/select-audience/select-audience.component';
-import { MatRadioModule } from '@angular/material/radio';
-import { GlobalEarnRuleComponent } from './components/global-earn-rule/global-earn-rule.component';
+import {NewLoyaltyComponent} from './containers/new-loyalty/new-loyalty.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import {LoyaltyFormStepOneComponent} from './components/loyalty-form-step-one/loyalty-form-step-one.component';
+import {LoyaltyFormStepTwoComponent} from './components/loyalty-form-step-two/loyalty-form-step-two.component';
+import {LoyaltyFormStepThreeComponent} from './components/loyalty-form-step-three/loyalty-form-step-three.component';
+import {LoyaltyFormStepReviewComponent} from './components/loyalty-form-step-review/loyalty-form-step-review.component';
+import {PointsInfoComponent} from './components/points-info/points-info.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {ProgramMainImageComponent} from './components/program-main-image/program-main-image.component';
+import {DatePickerModule, UploadFileModule, UploadGraphicModule} from '@cl-shared';
+import {UserJoiningMethodComponent} from './components/user-joining-method/user-joining-method.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {SelectAudienceComponent} from './components/select-audience/select-audience.component';
+import {MatRadioModule} from '@angular/material/radio';
+import {GlobalEarnRuleComponent} from './components/global-earn-rule/global-earn-rule.component';
 import { AddRulePopupComponent } from './components/add-rule-popup/add-rule-popup.component';
+import { ViewSchemeInfoComponent } from './components/view-scheme-info/view-scheme-info.component';
+import { ViewLoyaltyComponent } from './components/view-loyalty/view-loyalty.component';
+import { ViewGlobalEarnBurnRulesComponent } from './components/view-global-earn-burn-rules/view-global-earn-burn-rules.component';
+import { LoyaltyReviewComponent } from './containers/loyalty-review/loyalty-review.component';
 
 @NgModule({
   declarations: [
@@ -44,13 +54,19 @@ import { AddRulePopupComponent } from './components/add-rule-popup/add-rule-popu
     LoyaltyFormStepOneComponent,
     LoyaltyFormStepTwoComponent,
     LoyaltyFormStepThreeComponent,
-    LoyaltyFormStepFourComponent,
+    LoyaltyFormStepReviewComponent,
     PointsInfoComponent,
     ProgramMainImageComponent,
     UserJoiningMethodComponent,
     SelectAudienceComponent,
     GlobalEarnRuleComponent,
-    AddRulePopupComponent
+    AddRulePopupComponent,
+    TierSetupPopupComponent,
+    UserJoiningMethodComponent,
+    ViewSchemeInfoComponent,
+    ViewLoyaltyComponent,
+    ViewGlobalEarnBurnRulesComponent,
+    LoyaltyReviewComponent,
   ],
   imports: [
     CommonModule,
@@ -72,12 +88,21 @@ import { AddRulePopupComponent } from './components/add-rule-popup/add-rule-popu
     MatExpansionModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatOptionModule,
+    MatSelectModule,
+    StatusLabelModule,
+    MatDialogModule,
+    UploadFileModule,
+    UploadGraphicModule,
+    MatTabsModule,
+    DatePickerModule
   ],
   providers: [
     LoyaltyFormsService
   ],
   entryComponents: [
-    AddRulePopupComponent
+    AddRulePopupComponent,
+    TierSetupPopupComponent
   ],
 })
 export class LoyaltyModule { }

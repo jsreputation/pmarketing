@@ -1,32 +1,32 @@
 <header class="page-header">
   <h1 class="title">Loyalty Program</h1>
-  <cl-button (click)="openDialogCreate()" classList="primary">Create New</cl-button>
+  <cl-button routerLink="new" classList="primary">Create New</cl-button>
 </header>
 
 <section class="content">
-  <ng-container *ngIf="hasData">
-    <cl-loyalty-grid [dataSource]="dataSource"
-                     [menuOptions]="options"
-                     (menuTapped)="menuOptionTapped($event)">
-    </cl-loyalty-grid>
-    <!--paginator-->
-    <div class="table-card">
-      <cl-paginator [dataSource]="dataSource"
-                    [pageSize]="5"
-                    [pageSizeOptions]="[5, 10, 20]"
-      ></cl-paginator>
-    </div>
-    <!--/ paginator-->
-  </ng-container>
+  <ng-container [ngSwitch]="dataSource.state$ | async">
+    <ng-container *ngSwitchCase="dataSourceStates.hasDataApi">
+      <cl-loyalty-grid [dataSource]="dataSource">
+      </cl-loyalty-grid>
+      <!--paginator-->
+      <div class="table-card">
+        <cl-paginator [dataSource]="dataSource"
+                      [pageSize]="5"
+                      [pageSizeOptions]="[5, 10, 20]"
+        ></cl-paginator>
+      </div>
+      <!--/ paginator-->
+    </ng-container>
 
-  <cl-no-data *ngIf="(dataSource.data).length === 0">
-    <img class="no-data-img" src="/assets/images/no-data/engagements-empty-illustration.svg" alt="">
-    <h2 class="no-data-title">
-      Build your customer experience, now!
-    </h2>
-    <p class="no-data-text">
-      Let&rsquo;s begin by creating your first Engagement
-    </p>
-  </cl-no-data>
+    <cl-no-data *ngSwitchCase="dataSourceStates.noDataApi">
+      <img class="no-data-img" src="/assets/images/no-data/engagements-empty-illustration.svg" alt="">
+      <h2 class="no-data-title">
+        Re-define your customer loyalty
+      </h2>
+      <p class="no-data-text">
+        Create your first program and reward points for user actions, transactions & more
+      </p>
+    </cl-no-data>
+  </ng-container>
 </section>
 

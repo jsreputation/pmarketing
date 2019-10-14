@@ -1,14 +1,13 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { LoyaltyGridComponent } from 'src/app/loyalty/components/loyalty-grid/loyalty-grid.component';
-// tslint:disable
+// tslint:disable-next-line:import-blacklist
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
+import { LoyaltyGridComponent } from 'src/app/loyalty/components/loyalty-grid/loyalty-grid.component';
 
-describe('EngagementsGridComponent', () => {
+describe('LoyaltyGridComponent', () => {
   let component: LoyaltyGridComponent;
-  let dataSource: MatTableDataSource<IEngagement>;
   let fixture: ComponentFixture<LoyaltyGridComponent>;
+  let dataSource: any;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -22,7 +21,9 @@ describe('EngagementsGridComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LoyaltyGridComponent);
-    dataSource = new MatTableDataSource<IEngagement>();
+    dataSource = {
+      data$: of([])
+    };
     component = fixture.componentInstance;
     component.dataSource = dataSource;
     fixture.detectChanges();

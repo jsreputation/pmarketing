@@ -1,10 +1,6 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  OnDestroy
-} from '@angular/core';
-import { CustomDataSource } from '@cl-shared/table';
-import { RewardsService } from '@cl-core/services';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { LoyaltyService } from '@cl-core/services/loyalty.service';
+import { CustomDataSource, DataSourceStates } from '@cl-shared/table';
 
 @Component({
   selector: 'cl-loyalty-list-page',
@@ -14,11 +10,10 @@ import { RewardsService } from '@cl-core/services';
 })
 export class LoyaltyListPageComponent implements OnDestroy {
   public dataSource: CustomDataSource<any>;
-  public hasData: boolean = true;
+  public dataSourceStates: typeof DataSourceStates = DataSourceStates;
 
   constructor(
-    private loyaltyService: RewardsService
-    // public cd: ChangeDetectorRef,
+    private loyaltyService: LoyaltyService
   ) {
     this.dataSource = new CustomDataSource<any>(this.loyaltyService);
   }

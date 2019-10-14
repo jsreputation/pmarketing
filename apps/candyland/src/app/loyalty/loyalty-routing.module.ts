@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoyaltyListPageComponent } from 'src/app/loyalty/containers/loyalty-list-page/loyalty-list-page.component';
 import { LoyaltyComponent } from 'src/app/loyalty/containers/loyalty/loyalty.component';
 import { NewLoyaltyComponent } from './containers/new-loyalty/new-loyalty.component';
+import { LoyaltyReviewComponent } from './containers/loyalty-review/loyalty-review.component';
 
 const routes: Routes = [
   {
@@ -14,8 +15,12 @@ const routes: Routes = [
         component: LoyaltyListPageComponent
       },
       {
-        path: 'create',
+        path: 'new',
         component: NewLoyaltyComponent
+      },
+      {
+        path: 'review/:id',
+        component: LoyaltyReviewComponent
       }
     ]
   },

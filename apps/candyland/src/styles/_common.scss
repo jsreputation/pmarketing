@@ -11,7 +11,7 @@ body {
 }
 
 body, input, button, select {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: $primary-font;
 }
 
 h1, h2, h3, h4, h5, p {
@@ -43,6 +43,10 @@ h1, h2, h3, h4, h5, p {
   -webkit-box-pack: justify !important;
   -ms-flex-pack: justify !important;
   justify-content: space-between !important;
+}
+
+.justify-content-center {
+  justify-content: center !important;
 }
 
 .flex-end {
@@ -126,7 +130,8 @@ h1, h2, h3, h4, h5, p {
 }
 
 .control-input {
-  font-size: $base-font-size !important;
+  @include typo-input;
+
   width: 100%;
 }
 
@@ -190,6 +195,8 @@ h1, h2, h3, h4, h5, p {
   border-radius: $border-radius;
 
   &::before {
+    @include typo-caption;
+
     content: '!';
     margin-right: 10px;
     min-width: 18px;
@@ -197,7 +204,6 @@ h1, h2, h3, h4, h5, p {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
     border-radius: 50%;
     background-color: $warning-color;
     color: $white;

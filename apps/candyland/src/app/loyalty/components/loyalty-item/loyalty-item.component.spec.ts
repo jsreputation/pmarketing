@@ -1,3 +1,5 @@
+// tslint:disable-next-line:import-blacklist
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoyaltyItemComponent } from 'src/app/loyalty/components/loyalty-item/loyalty-item.component';
@@ -5,7 +7,7 @@ import { PipesModule } from '@cl-shared/pipes/pipes.module';
 import { MatMenuModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe('EngagementItemComponent', () => {
+describe('LoyaltyItemComponent', () => {
   let component: LoyaltyItemComponent;
   let fixture: ComponentFixture<LoyaltyItemComponent>;
 
@@ -18,7 +20,7 @@ describe('EngagementItemComponent', () => {
         MatMenuModule,
         MatIconModule
       ],
-      schemas: []
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));

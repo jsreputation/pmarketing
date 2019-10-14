@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoyaltyStepForm } from '../models/loyalty-stap-form';
 import { ClValidators } from '@cl-helpers/cl-validators';
 
@@ -8,7 +8,6 @@ import { ClValidators } from '@cl-helpers/cl-validators';
 })
 export class LoyaltyFormsService {
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
-
   public getFormLoyalty(): FormGroup {
     return new FormGroup({
       name: new FormControl(null, [Validators.required])
@@ -17,27 +16,23 @@ export class LoyaltyFormsService {
 
   public getStep(step: any): FormGroup {
     switch (step) {
-      case this.loyaltyFormType.one: {
+      case this.loyaltyFormType.details: {
         return this.getFirsStep();
       }
-      case this.loyaltyFormType.two: {
+      case this.loyaltyFormType.tiers: {
         return this.getSecondaryStep();
       }
-      case this.loyaltyFormType.three: {
-        // TODO: need implement
-        return null;
-      }
-      case this.loyaltyFormType.four: {
-        // TODO: need implement
-        return null;
-      }
+      // case this.loyaltyFormType.four: {
+      //   // TODO: need implement
+      //   return null;
+      // }
     }
   }
 
   public getFirsStep(): FormGroup {
     return new FormGroup({
       pointsName: new FormControl(null, [Validators.required, Validators.minLength(1)]),
-      mainImage: new FormControl(null),
+      mainImage: new FormControl('https://www.gettyimages.co.uk/gi-resources/images/RoyaltyFree/Apr17Update/ColourSurge1.jpg'),
       joiningMethod: new FormGroup( {
         transactionAmount: new FormControl(false),
         signUp: new FormControl(false),
@@ -53,14 +48,14 @@ export class LoyaltyFormsService {
   }
 
   public getSecondaryStep(): FormGroup {
-    return  new FormGroup({
+    return new FormGroup({
       globalEarnRule: new FormGroup({
-        amount: new FormControl(null, [Validators.required, Validators.min(1)]),
-        points: new FormControl(null, [Validators.required, Validators.min(1)])
+        amount: new FormControl(2, [Validators.required, Validators.min(1)]),
+        points: new FormControl(10, [Validators.required, Validators.min(1)])
       }),
       globalBurnRule: new FormGroup({
-        amount: new FormControl(null, [Validators.required, Validators.min(1)]),
-        points: new FormControl(null, [Validators.required, Validators.min(1)])
+        amount: new FormControl(20, [Validators.required, Validators.min(1)]),
+        points: new FormControl(2, [Validators.required, Validators.min(1)])
       }),
       pointsExpiry: new FormGroup({
         pointWasEarnedAmount: new FormControl(1, [Validators.required]),
@@ -68,7 +63,7 @@ export class LoyaltyFormsService {
         userInactivityAmount: new FormControl(1, [Validators.required]),
         userInactivityPeriod: new FormControl('days', [Validators.required])
       }),
-      tiers: new FormArray([], [Validators.required])
+      tiers: new FormArray([])
     });
   }
 
@@ -78,7 +73,7 @@ export class LoyaltyFormsService {
       qualification: new FormControl(null, [Validators.required]),
       earnBonus: new FormControl(null, [Validators.required]),
       burnDiscount: new FormControl(null, [Validators.required]),
-      pointsExpiry: new FormControl(null, [Validators.required]),
+      pointsExpiry: new FormControl(null, [Validators.required])
     });
   }
 
@@ -86,31 +81,32 @@ export class LoyaltyFormsService {
     return new FormGroup({
       name: new FormControl(null, [Validators.required]),
       qualification: new FormGroup({
-        type: new FormControl(null),
-        points:  new FormControl(null),
+        pointsThreshold: new FormControl(false),
+        inviteOnly: new FormControl(false),
+        points: new FormControl(null)
       }, [Validators.required]),
       imageUrl: new FormControl(null, [Validators.required]),
       earnForTier: new FormControl(null, [Validators.required, Validators.min(1)]),
       burnRule: new FormControl(null, [Validators.required, Validators.min(1)]),
       pointsExpiry: new FormGroup({
-      pointWasEarnedAmount: new FormControl(1, [Validators.required]),
-      pointWasEarnedPeriod: new FormControl('days', [Validators.required]),
-      userInactivityAmount: new FormControl(1, [Validators.required]),
-      userInactivityPeriod: new FormControl('days', [Validators.required])
-    })
+        pointWasEarnedAmount: new FormControl(1, [Validators.required]),
+        pointWasEarnedPeriod: new FormControl('days', [Validators.required]),
+        userInactivityAmount: new FormControl(1, [Validators.required]),
+        userInactivityPeriod: new FormControl('days', [Validators.required])
+      })
     });
   }
 
   public getStepName(index: number): string {
     switch (index) {
-      case this.loyaltyFormType.stepOne: {
-        return this.loyaltyFormType.one;
+      case this.loyaltyFormType.stepDetails: {
+        return this.loyaltyFormType.details;
       }
-      case this.loyaltyFormType.stepTwo: {
-        return this.loyaltyFormType.two;
+      case this.loyaltyFormType.stepTiers: {
+        return this.loyaltyFormType.tiers;
       }
-      case this.loyaltyFormType.stepThree: {
-        return this.loyaltyFormType.three;
+      case this.loyaltyFormType.stepReview: {
+        return this.loyaltyFormType.review;
       }
       case this.loyaltyFormType.stepFour: {
         return this.loyaltyFormType.four;

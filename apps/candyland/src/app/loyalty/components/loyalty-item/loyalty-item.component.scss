@@ -1,6 +1,6 @@
 @import "variables";
 
-.engagement-item {
+.loyalty-item {
   display: flex;
   flex-flow: row nowrap;
   box-sizing: border-box;
@@ -34,28 +34,28 @@
     padding: 0;
   }
 
-  &-type {
-    @include typo-overline;
-
+  &-name {
+    @include typo-body1;
+    font-size: 1.4rem;
     color: $base-font-color;
-    text-transform: uppercase;
   }
 
-  &-name {
+  &-group {
     @include typo-body2;
 
     flex: 1;
-    margin-top: 0.4rem;
-    color: $base-font-color;
+    font-size: 1.4rem;
+    color: $secondary-color;
     overflow-wrap: break-word;
     word-wrap: break-word;
     hyphens: auto;
   }
 
-  &-date {
+  &-tiers {
     @include typo-caption;
 
-    color: $base-font-color;
+    color: rgba($base-font-color, 0.5);
+    padding-bottom: 0.7rem;
   }
 
   &-actions {

@@ -18,6 +18,7 @@
   </div>
 </header>
 <button (click)="addRule()">add rule</button>
+<button (click)="createNewTier()">create tire</button>
 <section class="content form-limiter">
   <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0">
     <mat-step [stepControl]="stepOne">
@@ -34,23 +35,22 @@
       </div>
 
     </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Point Earn Rules</ng-template>
-      <div class="loyalty-detail-content">
-        step three
-        <cl-loyalty-form-step-three></cl-loyalty-form-step-three>
-      </div>
+    <!--hide this step for now-->
+<!--    <mat-step>-->
+<!--      <ng-template matStepLabel>Point Earn Rules</ng-template>-->
+<!--      <div class="loyalty-detail-content">-->
+<!--        step three-->
+<!--        <cl-loyalty-form-step-three></cl-loyalty-form-step-three>-->
+<!--      </div>-->
 
-      <div>
-      </div>
-    </mat-step>
+<!--      <div>-->
+<!--      </div>-->
+<!--    </mat-step>-->
     <mat-step>
       <ng-template matStepLabel>Review</ng-template>
       <div class="loyalty-detail-content">
-        step 4
-        <cl-loyalty-form-step-four></cl-loyalty-form-step-four>
+        <cl-loyalty-form-step-review *ngIf="form && stepOne && stepTwo && indexStep === 2" [group]="form"></cl-loyalty-form-step-review>
       </div>
-
     </mat-step>
   </mat-horizontal-stepper>
 </section>

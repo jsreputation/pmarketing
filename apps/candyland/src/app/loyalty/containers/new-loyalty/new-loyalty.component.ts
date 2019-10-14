@@ -1,11 +1,13 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { filter } from 'rxjs/operators';
+import { TierSetupPopupComponent } from 'src/app/loyalty/containers/tier-setup-popup/tier-setup-popup.component';
 import { LoyaltyFormsService } from '../../services/loyalty-forms.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { LoyaltyStepForm } from '../../models/loyalty-stap-form';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { MatDialog } from '@angular/material/dialog';
 import { AddRulePopupComponent } from '../../components/add-rule-popup/add-rule-popup.component';
 
 @Component({
@@ -18,13 +20,19 @@ import { AddRulePopupComponent } from '../../components/add-rule-popup/add-rule-
 })
 export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   public form: FormGroup;
-  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
+  public indexStep: number = 2;
+  @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
+
   constructor(private loyaltyFormsService: LoyaltyFormsService,
-              public dialog: MatDialog) { }
+              private dialog: MatDialog) {
+  }
 
   public ngOnInit(): void {
     this.initForm();
+  }
+
+  public ngOnDestroy(): void {
   }
 
   public goNext(): void {
@@ -40,11 +48,11 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public get stepOne(): AbstractControl {
-    return this.form.get(this.loyaltyFormType.one);
+    return this.form.get(this.loyaltyFormType.details);
   }
 
   public get stepTwo(): AbstractControl {
-    return this.form.get(this.loyaltyFormType.two);
+    return this.form.get(this.loyaltyFormType.tiers);
   }
 
   public get name(): AbstractControl {
@@ -65,7 +73,19 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.form.addControl(step, this.loyaltyFormsService.getStep(step));
-    // console.log(this.form);
+  }
+
+  public createNewTier(): void {
+    const dialogRef: MatDialogRef<TierSetupPopupComponent> = this.dialog.open(TierSetupPopupComponent, {panelClass: 'tier-setup-dialog'});
+
+    dialogRef.afterClosed()
+      .pipe(
+        untilDestroyed(this),
+        filter(Boolean)
+      )
+      .subscribe(() => {
+        // this.form.get('merchantInfo').patchValue(id);
+      });
   }
 
   public ngAfterViewInit(): void {
@@ -74,7 +94,10 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
       this.stepper.selectionChange
         .pipe(untilDestroyed(this))
         .subscribe((val) => {
-          this.addStepForm(this.getStepFormName(val.selectedIndex));
+          this.indexStep = val.selectedIndex;
+          if (val.selectedIndex < 2) {
+            this.addStepForm(this.getStepFormName(val.selectedIndex));
+          }
         });
     }
   }
@@ -87,10 +110,7 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.loyaltyFormsService.getStepName(indexStep);
   }
 
-  public ngOnDestroy(): void {
-  }
-
-  addRule(): void {
+  public addRule(): void {
     const dialogRef = this.dialog.open(AddRulePopupComponent);
 
     dialogRef.afterClosed().subscribe(result => {

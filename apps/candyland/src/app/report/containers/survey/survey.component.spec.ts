@@ -16,7 +16,9 @@ describe('SurveyComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'dashboard/overview', redirectTo: '/' }
+        ]),
       ]
     })
     .compileComponents();

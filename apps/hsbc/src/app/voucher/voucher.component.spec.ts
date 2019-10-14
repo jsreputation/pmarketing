@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VoucherComponent } from './voucher.component';
-import { VouchersModule, CampaignModule, IVoucherService, Voucher, RedemptionType, VoucherState } from '@perx/core';
+import { VouchersModule, CampaignModule, IVoucherService, Voucher, VoucherState } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatProgressBarModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,20 +12,31 @@ describe('VoucherComponent', () => {
   let fixture: ComponentFixture<VoucherComponent>;
   const mockVoucher: Voucher = {
     id: 2,
-    rewardId: 2,
+    reward: {
+      id: 2,
+      name: '',
+      description: '',
+      subtitle: '',
+      validFrom: new Date(),
+      validTo: new Date(),
+      sellingFrom: new Date(),
+      rewardThumbnail: '',
+      rewardBanner: '',
+      merchantImg: '',
+      rewardPrice: [],
+      merchantId: 1,
+      merchantName: '',
+      merchantWebsite: '',
+      termsAndConditions: '',
+      howToRedeem: '',
+      redemptionType: null,
+      categoryTags: [],
+      inventory: null,
+    },
     state: VoucherState.issued,
-    name: 'string;',
     code: 'string;',
-    redemptionType: RedemptionType.none,
-    thumbnailImg: 'string;',
-    rewardBanner: 'string;',
-    merchantImg: 'string;',
-    merchantName: 'string;',
     expiry: null,
     redemptionDate: null,
-    description: [],
-    redemptionSuccessTxt: 'string;',
-    redemptionSuccessImg: 'string;',
   };
   const vouchersServiceStub = {
     get: () => of(mockVoucher)
