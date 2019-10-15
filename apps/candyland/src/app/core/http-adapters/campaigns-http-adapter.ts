@@ -96,24 +96,30 @@ export class CampaignsHttpAdapter {
     const sendAt = data.channel.schedule ?
       moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + sendTime).format() :
       '';
-    const comm = data.channel.type === 'sms' ? {
+    const comm: {
+      template?: { [k: string]: any },
+      event: { [k: string]: any }
+    } = data.channel.type === 'sms' ? {
       template: {
         content: data.channel.message
       },
       event: {
-        id: data.channel.templateId,
         pool_id: data.audience.select,
         provider_id: 1,
         send_at: sendAt,
         channel: data.channel.type
       }
     } : {
-        event: {
-          id: data.channel.eventId,
-          channel: data.channel.type
-        }
-      };
-
+          event: {
+            channel: data.channel.type
+          }
+        };
+    if (data.channel.type === 'sms' && data.channel.templateId) {
+      comm.template.id = data.channel.templateId;
+    }
+    if (data.channel.eventId) {
+      comm.event.id = data.channel.eventId;
+    }
     const startTime = data.campaignInfo.startTime ? data.campaignInfo.startTime : moment().format('LT');
     const endTime = data.campaignInfo.endTime ? data.campaignInfo.endTime : moment().format('LT');
     const startDate = data.campaignInfo.startDate ?
