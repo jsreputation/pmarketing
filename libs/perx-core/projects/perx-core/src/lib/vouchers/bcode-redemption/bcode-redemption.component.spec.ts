@@ -83,7 +83,7 @@ describe('BcodeRedemptionComponent', () => {
     expect(voucherServiceSpy).toHaveBeenCalled();
     expect(fixture.nativeElement.querySelector('h1').innerText).toEqual(mockVoucher.reward.name);
     expect(fixture.nativeElement.querySelector('.bcode').innerText).toEqual(mockVoucher.code);
-    expect(fixture.nativeElement.querySelector('.reward-image').src).toEqual(mockVoucher.reward.rewardBanner);    
-    
+    expect(fixture.nativeElement.querySelector('.reward-image').src).toEqual(mockVoucher.reward.rewardBanner);
+
   }));
 });
