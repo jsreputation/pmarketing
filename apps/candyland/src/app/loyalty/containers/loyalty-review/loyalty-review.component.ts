@@ -51,6 +51,11 @@ export class LoyaltyReviewComponent implements OnInit {
           type: 'days',
           trigger: ''
         },
+        pointsExpiry2: {
+          amount: 3,
+          type: 'day',
+          trigger: 'earned',
+        },
         tiers: []
       }
     };

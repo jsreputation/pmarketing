@@ -17,8 +17,6 @@
     <cl-button *ngIf="isLastStep" classList="primary" (click)="save()">Launch</cl-button>
   </div>
 </header>
-<button (click)="addRule()">add rule</button>
-<button (click)="createNewTier()">create tire</button>
 <section class="content form-limiter">
   <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0">
     <mat-step [stepControl]="stepOne">
@@ -32,7 +30,10 @@
       <ng-template matStepLabel>Tiers & Conversions</ng-template>
       <div class="loyalty-detail-content">
         <cl-loyalty-form-step-tiers-conversions *ngIf="form && stepTwo" [group]="stepTwo"
-                                                [currency]="currency$ | async"></cl-loyalty-form-step-tiers-conversions>
+                                                (tiersConversionsAction)="handleLoyaltyActions($event)"
+                                                [currency]="currency$ | async">
+
+        </cl-loyalty-form-step-tiers-conversions>
       </div>
 
     </mat-step>

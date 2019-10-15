@@ -85,11 +85,27 @@ export class LoyaltyFormsService {
       earnBonus: new FormControl(null, [Validators.required, Validators.min(1)]),
       burnRule: new FormControl(null, [Validators.required, Validators.min(1)]),
       pointsExpiry: new FormGroup({
-        amount: new FormControl(1, [Validators.required]),
-        type: new FormControl('days', [Validators.required]),
-        trigger: new FormControl('earned', [Validators.required]),
+        amount: new FormControl(null, [Validators.required]),
+        type: new FormControl(null, [Validators.required]),
+        trigger: new FormControl(null, [Validators.required]),
       })
     });
+  }
+
+  public getDefaultValueTireForm(): any {
+    return {
+      name: 'Gold',
+      qualification: {
+        inviteOnly: true,
+      },
+      earnBonus: 20,
+      burnRule: 10,
+      pointsExpiry: {
+        amount: 3,
+        type: 'day',
+        trigger: 'inactive',
+      }
+    };
   }
 
   public getStepName(index: number): string {
