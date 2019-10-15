@@ -43,6 +43,12 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/index.html",
+                  "with": "src/index.prod.html"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",

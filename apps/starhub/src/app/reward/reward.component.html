@@ -1,6 +1,6 @@
 <div class="main">
   <app-reward-detail
-    [rewardId]="rewardId"
+    [reward]="reward"
     (isButtonEnabled)="setButton($event)"
   ></app-reward-detail>
   <div *ngIf="isRewardsDetailsFetched" class="button-area">

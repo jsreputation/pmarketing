@@ -18,7 +18,6 @@ export class CardComponent implements OnInit {
   public isEnabled: boolean = false;
   public stampCard$: Observable<IStampCard>;
 
-  public congratsDetailText: string = 'You just won 2 rewards';
   constructor(
     private stampService: StampService,
     private route: ActivatedRoute,
@@ -39,7 +38,6 @@ export class CardComponent implements OnInit {
       );
     this.stampCard$.subscribe(
       (stampCard: IStampCard) => {
-        console.log(stampCard);
         this.title = stampCard.title;
         this.subTitle = stampCard.subTitle;
         this.background = stampCard.displayProperties.bgImage;

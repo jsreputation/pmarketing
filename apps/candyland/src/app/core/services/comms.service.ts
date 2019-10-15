@@ -33,4 +33,19 @@ export class CommsService {
     );
   }
 
+  public getCommsEvent(params: HttpParamsOptions): Observable<IComm> {
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.commsHttpsService.getCommsEvents(httpParams).pipe(
+      map((response: IJsonApiListPayload<ICommEventAttributes>) => [response.data[0], response.included[0]]),
+      map(([commsEventData, commsTemplateData]: [IJsonApiItem<ICommEventAttributes>, IJsonApiItem<ICommTemplateAttributes>]) => {
+        const eventData = commsEventData && CommsHttpAdapter.transformEventAPIResponseToComm(commsEventData);
+        const templateData = commsTemplateData && CommsHttpAdapter.transformTemplateAPIResponseToComm(commsTemplateData);
+        return {
+          ...eventData,
+          ...templateData
+        };
+      })
+    );
+  }
+
 }

@@ -64,7 +64,7 @@ app.post(BASE_HREF + 'v4/oauth/token', async (req, res, next) => {
   try {
     const url = req.body.url;
     if (url === undefined) {
-      throw new Error('No query parameter "url" specified');
+      throw new Error('No body parameter "url" specified');
     }
 
     const endpoint = apiConfig.endpoints[url];
@@ -111,9 +111,9 @@ app.post(BASE_HREF + 'v4/oauth/token', async (req, res, next) => {
 
 app.post(BASE_HREF + 'v2/oauth/token', async (req, res, next) => {
   try {
-    const url = req.query.url;
+    const url = req.body.url;
     if (url === undefined) {
-      throw new Error('No query parameter "url" specified');
+      throw new Error('No body parameter "url" specified');
     }
 
     const endpoint = apiConfig.endpoints[url];
@@ -144,12 +144,12 @@ app.post(BASE_HREF + 'v2/oauth/token', async (req, res, next) => {
 
 app.post(BASE_HREF + 'cognito/login', async (req, res, next) => {
   try {
-    // check query parameter 'url'
+    // check body parameter 'url'
     const url = req.body.url;
     const userId = req.body.identifier;
 
     if (url === undefined) {
-      throw new Error('No query parameter "url" specified');
+      throw new Error('No body parameter "url" specified');
     }
     const endpoint = apiConfig.endpoints[url];
     if (endpoint === undefined) {
@@ -193,12 +193,12 @@ app.post(BASE_HREF + 'cognito/login', async (req, res, next) => {
 
 app.post(BASE_HREF + 'cognito/users', async (req, res, next) => {
   try {
-    // check query parameter 'url'
-    const url = req.query.url;
-    const userId = req.query.identifier;
+    // check body parameter 'url'
+    const url = req.body.url;
+    const userId = req.body.identifier;
 
     if (url === undefined) {
-      throw new Error('No query parameter "url" specified');
+      throw new Error('No body parameter "url" specified');
     }
     const endpoint = apiConfig.endpoints[url];
     if (endpoint === undefined) {
@@ -234,7 +234,7 @@ app.post(BASE_HREF + 'cognito/users', async (req, res, next) => {
     endpointRequest.data = {
       ...endpointRequest.data, data: {
         attributes: {
-          jwt: endpointRequest.headers.authorization
+          jwt: endpointRequest.headers.authorization.split(' ')[1]
         }
       }
     };
@@ -250,11 +250,11 @@ app.post(BASE_HREF + 'cognito/users', async (req, res, next) => {
 
 app.post(BASE_HREF + 'themes', async (req, res, next) => {
   try {
-    // check query parameter 'url'
-    const url = req.query.url;
+    // check body parameter 'url'
+    const url = req.body.url;
 
     if (url === undefined) {
-      throw new Error('No query parameter "url" specified');
+      throw new Error('No body parameter "url" specified');
     }
     const endpoint = apiConfig.endpoints[url];
     if (endpoint === undefined) {

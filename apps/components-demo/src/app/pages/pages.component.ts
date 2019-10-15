@@ -12,23 +12,25 @@ import { NotificationService, PopupComponent } from '@perx/core';
 export class PagesComponent implements OnInit, OnDestroy {
   public navLinks: INavLink[] = [
     { path: 'account', label: 'Account' },
-    { path: 'contact-us', label: 'Cotact Us' },
-    { path: 'history', label: 'History'},
-    { path: 'home', label: 'Home'},
-    { path: 'reward', label: 'Reward'},
-    { path: 'loading', label: 'Loading'},
-    { path: 'login', label: 'Login'},
-    { path: 'redeem', label: 'Redeem'},
-    { path: 'reward-detail', label: 'Reward-detail'},
-    { path: 'stamp', label: 'Stamp'},
-    { path: 'survey', label: 'Survey'},
-    { path: 'tnc', label: 'Tnc'},
-    { path: 'voucher', label: 'Voucher'}
+    { path: 'content', label: 'Content' },
+    { path: 'game', label: 'Game' },
+    { path: 'history', label: 'History' },
+    { path: 'home', label: 'Home' },
+    { path: 'reward', label: 'Reward' },
+    { path: 'loading', label: 'Loading' },
+    { path: 'login', label: 'Login' },
+    { path: 'redeem', label: 'Redeem' },
+    { path: 'reward-detail', label: 'Reward-detail' },
+    { path: 'stamp', label: 'Stamp' },
+    { path: 'survey', label: 'Survey' },
+    { path: 'voucher', label: 'Voucher' }
   ];
   private popupSubscription: SubscriptionLike;
 
-  constructor(private dialog: MatDialog,
-              private notificationService: NotificationService) {
+  constructor(
+    private dialog: MatDialog,
+    private notificationService: NotificationService
+  ) {
   }
 
   public ngOnInit(): void {

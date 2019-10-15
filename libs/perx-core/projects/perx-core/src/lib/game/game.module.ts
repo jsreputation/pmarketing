@@ -8,6 +8,7 @@ import { Config } from '../config/config';
 import { IGameService } from './igame.service';
 import { WhistlerGameService } from './whist-game.service';
 import { IVoucherService } from '../vouchers/ivoucher.service';
+import { ScratchCardComponent } from './scratch-card/scratch-card.component';
 
 export function gameServiceFactory(http: HttpClient, config: Config, vouchSvc?: IVoucherService): IGameService {
   // Make decision on what to instantiate base on config
@@ -20,7 +21,8 @@ export function gameServiceFactory(http: HttpClient, config: Config, vouchSvc?: 
 @NgModule({
   declarations: [
     ShakeTreeComponent,
-    PinataComponent
+    PinataComponent,
+    ScratchCardComponent
   ],
   imports: [
     CommonModule
@@ -34,7 +36,8 @@ export function gameServiceFactory(http: HttpClient, config: Config, vouchSvc?: 
   ],
   exports: [
     ShakeTreeComponent,
-    PinataComponent
+    PinataComponent,
+    ScratchCardComponent
   ]
 })
 export class GameModule {

@@ -1,10 +1,8 @@
 <header class="page-header full-with">
   <h1 class="title" *ngIf="campaign">{{campaign.name}}</h1>
-  <div class="btn-group">
-    <cl-button classList="primary"
-               (click)="comeBack()"> Come Back
-    </cl-button>
-  </div>
+  <cl-button classList="primary cta cta-edit cta-edit-comeback"
+              (click)="comeBack()"> Come Back
+  </cl-button>
 </header>
 <section class="content form-limiter">
   <cl-new-campaign-review-page></cl-new-campaign-review-page>
