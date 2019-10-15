@@ -54,6 +54,7 @@ export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.cd.detach();
   }
 
   public showLaunchDialog(): void {
@@ -80,6 +81,7 @@ export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
   private getData(): void {
     this.engagementsService.getEngagements()
       .pipe(
+        untilDestroyed(this),
         tap(data => {
           const counterObject = PrepareTableFilers.countFieldValue(data, 'attributes_type');
           this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject, data);

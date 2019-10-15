@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, ChangeDetectionStrategy, ViewRef } from '@angular/core';
 import { switchMap, tap } from 'rxjs/operators';
 import { DashboardService } from '@cl-core/services';
 import { untilDestroyed } from 'ngx-take-until-destroy';
@@ -7,7 +7,8 @@ import { DashboardChartsParametersService } from '../../services/dashboard-chart
 @Component({
   selector: 'cl-dashboard-overview-page',
   templateUrl: './dashboard-overview-page.component.html',
-  styleUrls: ['./dashboard-overview-page.component.scss']
+  styleUrls: ['./dashboard-overview-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
   public params: { [key: string]: string };
@@ -18,7 +19,6 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
     {name: 'activeCampaigns', id: 153, title: 'Total Running Campaigns'}
   ];
   public tabsValue: any;
-
   public get tabsIds(): number[] {
     return this.tabs.map(tab => tab.id);
   }
@@ -37,6 +37,7 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.cd.detach();
   }
 
   private handelChartsParamsChanges(): void {
@@ -47,7 +48,13 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
         switchMap(params => this.dashboardService.getTabsValue(this.tabsIds, params)),
         tap(value => this.tabsValue = value)
       )
-      .subscribe(() => this.cd.detectChanges());
+      .subscribe(() => {
+        setTimeout(() => {
+          if (this.cd !== null && this.cd !== undefined && !(this.cd as ViewRef).destroyed) {
+            this.cd.detectChanges();
+          }
+        }, 250);
+      });
   }
 
   public selectedTab(value: string): void {

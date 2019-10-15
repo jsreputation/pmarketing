@@ -9,9 +9,9 @@ import {
   OnInit,
   SimpleChanges
 } from '@angular/core';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { AbstractControl, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { noop, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { noop } from 'rxjs';
 
 @Component({
   selector: 'cl-date-picker',
@@ -45,7 +45,6 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, Contro
     this.setDisabledState(value);
   }
 
-  private destroy$: Subject<any> = new Subject();
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;
@@ -56,7 +55,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, Contro
   public ngOnInit(): void {
     this.control.valueChanges
       .pipe(
-        takeUntil(this.destroy$)
+        untilDestroyed(this)
       )
       .subscribe((value: Date) => {
         this.onChange(value);
@@ -73,8 +72,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, Contro
   }
 
   public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.cd.detach();
   }
 
   public minMaxFilter(d: Date): boolean {
