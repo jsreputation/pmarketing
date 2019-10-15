@@ -10,5 +10,5 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 export class RewardItemPreviewComponent {
   @Input() public data: any;
   @Input() public probability: number;
-  @Input() public enableProbability: number;
+  @Input() public enableProbability: boolean;
  }
