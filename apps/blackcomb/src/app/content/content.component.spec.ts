@@ -3,6 +3,7 @@ import { of } from 'rxjs';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentComponent } from './content.component';
 import { ActivatedRoute } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material';
 
 describe('ContentComponent', () => {
   let component: ContentComponent;
@@ -16,6 +17,9 @@ describe('ContentComponent', () => {
       providers: [
         { provide: ThemesService, useValue: themeSvcStub },
         { provide: ActivatedRoute, useValue: { params: of()}}
+      ],
+      imports: [
+        MatProgressSpinnerModule
       ]
     })
     .compileComponents();
