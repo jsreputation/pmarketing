@@ -13,7 +13,7 @@
 <!--                   [total]="data?.total">-->
 
 <!--  </cl-progress-bar>-->
-  <div *ngIf="probability || data?.probability">
+  <div *ngIf="enableProbability && (probability || data?.probability)">
     <span class="reward-item-probability-label probability-preview">Probability {{probability || data?.probability }}%</span>
   </div>
 </div>
