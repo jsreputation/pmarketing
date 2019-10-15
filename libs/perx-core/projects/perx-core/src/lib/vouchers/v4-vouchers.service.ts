@@ -282,7 +282,7 @@ export class V4VouchersService implements IVoucherService {
     if (oc(rewardParams).priceId()) {
       params = params.set('price_id', rewardParams.priceId.toString());
     }
-    if(oc(rewardParams).sourceType()) {
+    if (oc(rewardParams).sourceType()) {
       params = params.set('source_type', rewardParams.sourceType);
     }
     return this.http.post<IV4ReserveRewardResponse>(
