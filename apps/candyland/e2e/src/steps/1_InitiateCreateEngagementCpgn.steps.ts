@@ -35,15 +35,6 @@ Given(/^1_I am on the dashboard page.$/, async () => {
   await browser.executeScript('WalkMeAPI.stopFlow()');
   await DashboardPage.navigateToDashboard();
   await browser.sleep(3000);
-  // await DashboardPage.navigateToDashboard();
-  // walk around for the walk me widget
-  // await browser.wait(ec.elementToBeClickable(element(by.className('trg-499259'))), 8000);
-  // await element(by.className('trg-499259')).click();
-  // await browser.sleep(3000);
-  // await DashboardPage.navigateToDashboard();
-  // await browser.wait(ec.elementToBeClickable(element(by.className('walkme-custom-balloon-button-text'))), 5000);
-  // await element(by.className('walkme-custom-balloon-button-text')).click();
-  // await browser.sleep(3000);
 
 });
 
