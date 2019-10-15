@@ -51,9 +51,6 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   @Input()
   public subTitle: string = null;
 
-  @Input()
-  public buttonText: string = null;
-
   @Output()
   private availableStampClicked: EventEmitter<PuzzleCollectStamp> = new EventEmitter<PuzzleCollectStamp>();
 
@@ -61,7 +58,6 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   public stampCardImage: string = null;
   public availableStampCount: number = 0;
   public availStamps: number = 0;
-  public isGameEnable: boolean = false;
 
   public ngOnInit(): void {
     const availableStamps = this.stamps.filter(stamp => stamp.state === 'issued');
@@ -115,7 +111,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
 
   public onAvailableStampClicked(index: number, rowNum: number): void {
     const itemIndex = this.getItemIndex(index, rowNum);
-    if (itemIndex < this.stamps.length && this.isGameEnable) {
+    if (itemIndex < this.stamps.length) {
       this.stamps[itemIndex].state = PuzzleCollectStampState.redeemed;
       this.availableStampClicked.emit(this.stamps[itemIndex]);
     }
@@ -129,9 +125,5 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
       }
     }
     return itemIndex;
-  }
-
-  public startGame(): void {
-    this.isGameEnable = true;
   }
 }
