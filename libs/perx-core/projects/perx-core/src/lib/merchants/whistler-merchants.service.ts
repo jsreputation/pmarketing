@@ -6,15 +6,7 @@ import { IMerchantsService } from './imerchants.service';
 import { IMeta, IMerchant } from './models/merchants.model';
 import { Config } from '../config/config';
 import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from './../jsonapi.payload';
-
-interface IWMerchant {
-  urn: string;
-  created_at: string;
-  updated_at: string;
-  name: string;
-  description: string;
-  properties: any;
-}
+import { IMerchant as IWMerchant } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +28,7 @@ export class WhistlerMerchantsService implements IMerchantsService {
       images: [
         {
           type: 'banner',
-          url: merchant.attributes.properties.img_url
+          url: merchant.attributes.properties.logo_image
         }
       ]
     };
