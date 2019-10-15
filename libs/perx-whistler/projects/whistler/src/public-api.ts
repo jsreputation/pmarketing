@@ -14,5 +14,4 @@ export { IInstantOutcomeTransactionAttributes, IInstantOutcomeTxnReq } from './l
 export { InstantOutcomeEngagementAttributes, IOutcomeDisplayProperties } from './lib/instant-outcome/engagement';
 export { IMerchant } from './lib/merchant/merchant';
 export { ITenantProperties } from './lib/settings/tenant';
-export { IBranding } from './lib/settings/branding';
 export { ITimeZone } from './lib/settings/time-zone';

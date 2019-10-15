@@ -14,7 +14,7 @@ import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { Role } from '@cl-helpers/role.enum';
 import { IamUser } from '@cl-core/http-adapters/iam-user';
-import { ITenantProperties, IBranding, ITimeZone } from '@perx/whistler';
+import { ITenantProperties, ITimeZone } from '@perx/whistler';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
 export enum DefaultSetting {
@@ -104,7 +104,7 @@ export class SettingsService implements ITableService {
     });
   }
 
-  public prepareDefaultValue(data: IBranding): { [key: string]: string } {
+  public prepareDefaultValue(data: IBrandingForm): { [key: string]: string } {
     const style = data['theme.style'] ? data['theme.style'] : DefaultSetting.style;
     const font = data['theme.font'] ? data['theme.font'] : DefaultSetting.font;
     const primary = data['theme.primary'] ? data['theme.primary'] : DefaultSetting.primaryColor;
