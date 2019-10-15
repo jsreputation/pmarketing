@@ -4,7 +4,6 @@ import { ICampaign, Voucher, IVoucherService, ICampaignService, CampaignType, Vo
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 
-
 @Component({
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',

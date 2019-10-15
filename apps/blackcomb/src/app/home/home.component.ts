@@ -24,7 +24,7 @@ const stubTabs: ITabConfigExtended[] = [
     rewardsList: null,
     rewardsType: 'HKBN'
   }
-]
+];
 
 @Component({
   selector: 'app-home',
@@ -32,8 +32,8 @@ const stubTabs: ITabConfigExtended[] = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  campaing$: Observable<ICampaign[]>;
-  rewards$: Observable<IReward[]>;
+  public campaing$: Observable<ICampaign[]>;
+  public rewards$: Observable<IReward[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
   constructor(
@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
     this.getTabedList();
   }
 
-  private getTabedList() {
+  private getTabedList(): void {
     this.tabs$.next(this.staticTab);
     forkJoin(this.staticTab.map((tab) =>
       this.rewardsService.getAllRewards(null, tab.rewardsType ? [tab.rewardsType] : null)
