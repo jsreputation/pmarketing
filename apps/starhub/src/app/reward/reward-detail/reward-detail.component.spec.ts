@@ -99,7 +99,7 @@ describe('RewardDetailComponent', () => {
     const spy = spyOn(location, 'back');
     component.back();
     expect(spy).toHaveBeenCalled();
-  })
+  });
   describe('ngOnInit', () => {
 
     it('should show macaron text and it should be Expiring', fakeAsync(() => {
