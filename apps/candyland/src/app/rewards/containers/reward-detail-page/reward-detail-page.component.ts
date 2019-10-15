@@ -99,7 +99,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
         (err) => { console.error(err); this.router.navigateByUrl('/rewards'); }
       );
     $id.pipe(switchMap(id => this.vouchersService.getStats(id)))
-      .subscribe((stats: IVoucherStatsResults) => {
+      .subscribe((stats: { [k: string]: number }) => {
         if (!this.data.vouchersStatistics) {
           this.data.vouchersStatistics = [];
         }
