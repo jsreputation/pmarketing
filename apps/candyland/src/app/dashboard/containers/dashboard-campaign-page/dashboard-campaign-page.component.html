@@ -4,8 +4,8 @@
 
     <h2 class="chart-card-info-title">Active Campaigns: {{activeCampaigns}}</h2>
 
-    <div class="tabs-list-wrap">
-      <mat-radio-group color="primary" class="tabs-list" [value]="activeTab" (change)="selectedTab($event.value)">
+    <div class="tabs-list-wrap business-insights-tabs-list-wrap">
+      <mat-radio-group color="primary" class="tabs-list business-insights-tabs-list" [value]="activeTab" (change)="selectedTab($event.value)">
         <ng-container *ngFor="let tab of tabs; let index = index">
           <mat-radio-button [value]="tab?.name">
             <cl-tab-item-view [data]="tab" [value]="getTabValue(index)"></cl-tab-item-view>
