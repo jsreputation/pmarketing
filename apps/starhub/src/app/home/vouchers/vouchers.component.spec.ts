@@ -61,7 +61,7 @@ describe('VouchersComponent', () => {
     component.seeMoreClicked();
     expect(component.hideSeeMore).toBe(true);
   });
-  
+
   it('should navigate to voucher detail', () => {
     const routerFixture: Router = fixture.debugElement.injector.get(Router);
     const routerSpy = spyOn(routerFixture, 'navigate');

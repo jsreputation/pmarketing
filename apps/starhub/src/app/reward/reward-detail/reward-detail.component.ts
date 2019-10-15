@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { IReward } from '@perx/core';
 import { Location } from '@angular/common';
 import { IMacaron } from '../../services/macaron.service';
@@ -30,7 +30,7 @@ export class RewardDetailComponent {
 
   @Input()
   public showMacaron: boolean = true;
-  
+
   @Input()
   public reward: IReward;
 
