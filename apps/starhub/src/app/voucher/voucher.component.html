@@ -1,6 +1,6 @@
 <div class="main" *ngIf="voucher">
   <app-reward-detail
-    [rewardId]="voucher.rewardId"
+    [reward]="voucher.reward"
     (isButtonEnabled)="setButton($event)"
     [showMacaron]="false"
   ></app-reward-detail>

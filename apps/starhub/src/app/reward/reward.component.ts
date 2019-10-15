@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { RewardsService, NotificationService, IVoucherService } from '@perx/core';
-import { filter, map, tap, switchMap } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { IReward } from '@perx/core';
 import { AnalyticsService, PageType } from '../analytics.service';
 
@@ -12,7 +12,7 @@ import { AnalyticsService, PageType } from '../analytics.service';
   styleUrls: ['./reward.component.scss']
 })
 export class RewardComponent implements OnInit {
-  public rewardId: number;
+  public reward: IReward;
   public isButtonEnable: boolean = true;
   public isRewardsDetailsFetched: boolean = false;
 
@@ -31,10 +31,10 @@ export class RewardComponent implements OnInit {
       .pipe(
         filter((params: Params) => params.id), // ignore anything not related to reward id
         map((params: Params) => params.id), // get reward id
-        tap((id: number) => this.rewardId = id), // save it
         switchMap((id: number) => this.rewardsService.getReward(id)) // get the full reward information
       )
       .subscribe((reward: IReward) => {
+        this.reward = reward;
         if (reward.categoryTags && reward.categoryTags.length > 0) {
           const category = reward.categoryTags[0].title;
           this.analyticsService.addEvent({
@@ -57,7 +57,7 @@ export class RewardComponent implements OnInit {
   }
 
   public save(): void {
-    this.vouchersService.issueReward(this.rewardId)
+    this.vouchersService.issueReward(this.reward.id)
       .subscribe(
         () => this.router.navigate(['/home/vouchers']),
         () => this.notificationService.addSnack('Sorry! Could not save reward.')
