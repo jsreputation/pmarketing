@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {
-  IGame
+  IGame, 
+  IPinata
 } from '@perx/core';
 
 @Component({
@@ -10,6 +11,9 @@ import {
 })
 export class TapComponent {
   @Output() public broken: EventEmitter<void> = new EventEmitter();
+  public get config(): IPinata {
+    return this.game.config as IPinata;
+  }
   @Input() public game: IGame;
   public isEnabled: boolean = false;
   public gameCompleted(): void {

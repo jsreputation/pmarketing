@@ -1,8 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { ICampaign, ICampaignService, IVoucherService, VoucherState, Voucher, CampaignType } from '@perx/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { ICampaignService, ICampaign, RewardsService, IReward, ITabConfigExtended } from '@perx/core';
+import { Observable, BehaviorSubject, forkJoin, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+const stubTabs: ITabConfigExtended[] = [
+  {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'ALL',
+    rewardsList: null,
+    rewardsType: null
+  }
+  , {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'HOME+',
+    rewardsList: null,
+    rewardsType: 'Home+'
+  }, {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'HKBN',
+    rewardsList: null,
+    rewardsType: 'HKBN'
+  }
+]
 
 @Component({
   selector: 'app-home',
@@ -10,25 +32,32 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public campaigns$: Observable<ICampaign[]>;
-  public vouchers$: Observable<Voucher[]>;
-
-  public filter: string[];
-
+  campaing$: Observable<ICampaign[]>;
+  rewards$: Observable<IReward[]>;
+  public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
+  public staticTab: ITabConfigExtended[];
   constructor(
-    private router: Router,
-    private vouchersService: IVoucherService,
-    private campaignService: ICampaignService
+    private campaingService: ICampaignService,
+    private rewardsService: RewardsService
   ) { }
 
   public ngOnInit(): void {
-    this.campaigns$ = this.campaignService.getCampaigns()
-      .pipe(map((campaigns: ICampaign[]) => campaigns.filter(c => c.type === CampaignType.stamp)));
-    this.vouchers$ = this.vouchersService.getAll();
-    this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
+    this.campaing$ = this.campaingService.getCampaigns();
+    this.rewards$ = this.rewardsService.getAllRewards(['featured']);
+    this.staticTab = stubTabs;
+    this.getTabedList();
   }
 
-  public voucherSelected(voucher: Voucher): void {
-    this.router.navigate([`/voucher-detail/${voucher.id}`]);
+  private getTabedList() {
+    this.tabs$.next(this.staticTab);
+    forkJoin(this.staticTab.map((tab) =>
+      this.rewardsService.getAllRewards(null, tab.rewardsType ? [tab.rewardsType] : null)
+        .pipe(tap((reward) => {
+          tab.rewardsList = of(reward);
+          this.tabs$.next(this.staticTab);
+        }))
+    )).subscribe(() => {
+      this.tabs$.next(this.staticTab);
+    });
   }
 }

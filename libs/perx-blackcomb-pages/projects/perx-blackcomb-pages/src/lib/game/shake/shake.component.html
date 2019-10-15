@@ -5,13 +5,13 @@
   </div>
   <div class="game-wrapper">
     <perx-core-shake-tree
-      [treeImg]="game.config.treeImg"
-      [giftImg]="game.config.giftImg"
-      [nbHangedGifts]="game.config.nbHangedGift"
-      [nbFallingGifts]="game.config.nbGiftsToDrop"
+      [treeImg]="config.treeImg"
+      [giftImg]="config.giftImg"
+      [nbHangedGifts]="config.nbHangedGift"
+      [nbFallingGifts]="config.nbGiftsToDrop"
       (completed)="gameCompleted()"
       [enabled]="isEnabled"
-      [nbShakes]="game.config.nbTaps">
+      [nbShakes]="config.nbTaps">
     </perx-core-shake-tree>
   </div>
 </div>
