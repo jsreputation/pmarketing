@@ -1,16 +1,11 @@
 @import "variables";
 
 .card {
+  @include typo-body2;
+
   width: 100%;
-  min-width: 40rem;
+  min-width: 100%;
   max-width: 84rem;
-  font-family: $primary-font;
-  font-size: $base-font-size;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.36;
-  letter-spacing: normal;
   color: $base-font-color;
   border-radius: $border-radius-lg !important;
   background-color: $white !important;
@@ -24,7 +19,7 @@
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
-    padding: 0 2rem;
+    padding: 0 ($horizontal-padding * 0.75);
   }
 
   &-title {
@@ -33,47 +28,91 @@
 
   &-content {
     position: relative;
-    padding: 0.4rem ($horizontal-padding * 0.75) 3rem !important;
+    padding: 0 ($horizontal-padding * 0.75) ($vertical-padding * 0.75) !important;
+
+    cl-reward-item-preview:not(:last-child) {
+      display: block;
+      margin-bottom: ($vertical-padding * 0.25);
+    }
   }
 
   &-item {
     margin-bottom: ($vertical-padding * 0.5);
   }
 
+  &-definitions {
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    div:not(.card-definitions-splitter) {
+      margin-bottom: 2.4rem;
+    }
+
+    > div:not(.card-definitions-splitter):last-child {
+      margin-bottom: 0;
+    }
+
+    dd {
+      margin-left: 0;
+    }
+  }
+
   &-label {
-    font-family: $primary-font;
-    font-size: 1.6rem;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.06;
-    letter-spacing: normal;
+    @include typo-input;
+
     color: $secondary-color;
   }
 
   &-value {
-    font-family: $primary-font;
-    font-size: 1.6rem;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.06;
-    letter-spacing: normal;
+    @include typo-input;
+
     color: $base-font-color;
-    margin: ($vertical-padding * 0.5) 0 1rem;
+
+    span {
+      display: inline-block;
+      margin-right: ($horizontal-padding * 0.75);
+    }
+
+    small {
+      @include typo-body1;
+
+      display: inline-block;
+      color: $secondary-font-color;
+      margin: 0 ($horizontal-padding * 0.75);
+    }
+
+    span + small {
+      margin-left: 0;
+    }
+  }
+
+  &-row.input-group > span {
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  &-value span:last-child {
+    margin-right: 0;
+  }
+
+  &-label + &-value {
+    margin-top: 0.8rem;
   }
 
   &-chip {
+    @include typo-overline;
+
     transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
     display: inline-flex;
-    padding: 0.7rem 0.8rem 0.7rem 1.2rem;
-    border-radius: 1.6rem;
+    padding: 0.4rem 1.6rem;
+    margin-right: 0.8rem !important;
+    border-radius: $border-radius;
     align-items: center;
     cursor: default;
-    min-height: $vertical-padding;
-    height: 1px;
-    background-color: #e0e0e0;
-    color: rgba(0, 0, 0, 0.87);
+    background-color: $secondary-color;
+    color: $white;
+    text-transform: uppercase;
   }
 
   &-row {
@@ -119,17 +158,11 @@
       flex: 1 1 ($horizontal-padding * 2);
       min-width: ($horizontal-padding * 2);
     }
-
-    > span {
-      width: auto;
-      flex-shrink: 0;
-    }
   }
 
   &-section {
     margin-top: 1.9rem;
-    background-color: $white;
-    // background-color: $background-color;
+    background-color: $background-color;
 
     .card-header {
       padding: 0 3rem;
@@ -164,5 +197,25 @@
     .card-title, .card-label {
       color: $white;
     }
+  }
+}
+
+@media (min-width: $mobile-width) {
+  .card-definitions-splitter {
+    display: flex;
+
+    div {
+      flex: 1 1 50%;
+    }
+  }
+
+  .card-definitions div:not(.card-definitions-splitter),
+  .card-definitions div.card-definitions-splitter {
+    margin-bottom: 2.4rem;
+  }
+
+  .card-definitions > div:last-child,
+  .card-definitions div.card-definitions-splitter div {
+    margin-bottom: 0;
   }
 }

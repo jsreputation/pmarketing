@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ToggleControlConfig} from 'src/app/core/models/toggle-control-config.interface';
+import { Injectable } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.interface';
 
 @Injectable()
 export class NewCampaignRewardsStampsFormService {
@@ -9,7 +9,7 @@ export class NewCampaignRewardsStampsFormService {
 
   public getForm(): FormGroup {
     return this.fb.group({
-      rewardsList: this.fb.array([]),
+      rewardsListCollection: this.fb.array([]),
       stampsRule: this.fb.group({
         sequence: [],
         rules: this.fb.array([
@@ -57,68 +57,68 @@ export class NewCampaignRewardsStampsFormService {
   public getDefaultValue(): { [key: string]: any } {
     return {
       rewardsList: [
-        {
-          stampSlotNumber: 2,
-          rewardsOptions: {
-            enableProbability: true,
-            rewards: [
-              {
-                value: null,
-                probability: 5
-              },
-              {
-                value: {
-                  id: 1,
-                  image: 'assets/images/placeholders/mask-group.png',
-                  name: 'Free Coffee',
-                  type: 'Starbucks',
-                  current: 500,
-                  total: 1000
-                },
-                probability: 20
-              },
-              {
-                value: {
-                  id: 2,
-                  image: 'assets/images/placeholders/mask-group.png',
-                  name: 'Free Coffee 2',
-                  type: 'Starbucks',
-                  current: 500,
-                  total: 800
-                },
-                probability: 43
-              }
-            ]
-          }
-        },
-        {
-          stampSlotNumber: 4,
-          rewardsOptions: {
-            enableProbability: false,
-            rewards: [
-              {
-                value: {
-                  id: 1,
-                  image: 'assets/images/placeholders/mask-group.png',
-                  name: 'Free Coffee',
-                  type: 'Starbucks',
-                  current: 500,
-                  total: 1000
-                }
-              },
-              {
-                value: {
-                  id: 2,
-                  image: 'assets/images/placeholders/mask-group.png',
-                  name: 'Free Coffee 2',
-                  type: 'Starbucks',
-                  current: 500,
-                  total: 800
-                }
-              }
-            ]
-          }
-        }
+        // {
+        //   stampSlotNumber: 2,
+        //   rewardsOptions: {
+        //     enableProbability: true,
+        //     rewards: [
+        //       {
+        //         value: null,
+        //         probability: 5
+        //       },
+        //       {
+        //         value: {
+        //           id: 1,
+        //           image: 'assets/images/placeholders/mask-group.png',
+        //           name: 'Free Coffee',
+        //           type: 'Starbucks',
+        //           current: 500,
+        //           total: 1000
+        //         },
+        //         probability: 20
+        //       },
+        //       {
+        //         value: {
+        //           id: 2,
+        //           image: 'assets/images/placeholders/mask-group.png',
+        //           name: 'Free Coffee 2',
+        //           type: 'Starbucks',
+        //           current: 500,
+        //           total: 800
+        //         },
+        //         probability: 43
+        //       }
+        //     ]
+        //   }
+        // },
+        // {
+        //   stampSlotNumber: 4,
+        //   rewardsOptions: {
+        //     enableProbability: false,
+        //     rewards: [
+        //       {
+        //         value: {
+        //           id: 1,
+        //           image: 'assets/images/placeholders/mask-group.png',
+        //           name: 'Free Coffee',
+        //           type: 'Starbucks',
+        //           current: 500,
+        //           total: 1000
+        //         }
+        //       },
+        //       {
+        //         value: {
+        //           id: 2,
+        //           image: 'assets/images/placeholders/mask-group.png',
+        //           name: 'Free Coffee 2',
+        //           type: 'Starbucks',
+        //           current: 500,
+        //           total: 800
+        //         }
+        //       }
+        //     ]
+        //   }
+        // }
       ],
       stampsRule: {
         sequence: true,

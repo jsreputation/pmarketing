@@ -12,7 +12,6 @@ import {
   ILoyalty,
   Voucher,
   VoucherState,
-  RedemptionType,
   IVoucherService,
   RewardsService
 } from '@perx/core';
@@ -42,18 +41,29 @@ describe('RewardComponent', () => {
 
   const mockVoucher: Voucher = {
     id: 1,
-    rewardId: 1,
+    reward: {
+      id: 1,
+      name: '',
+      description: '',
+      subtitle: '',
+      validFrom: new Date(),
+      validTo: new Date(),
+      sellingFrom: new Date(),
+      rewardThumbnail: '',
+      rewardBanner: '',
+      merchantImg: '',
+      rewardPrice: [],
+      merchantId: 1,
+      merchantName: '',
+      merchantWebsite: '',
+      termsAndConditions: '',
+      howToRedeem: '',
+      redemptionType: null,
+      categoryTags: [],
+      inventory: null,
+    },
     state: VoucherState.issued,
-    name: '',
-    redemptionType: RedemptionType.qr,
-    thumbnailImg: '',
-    rewardBanner: '',
-    merchantImg: '',
-    merchantName: '',
     expiry: null,
-    description: [],
-    redemptionSuccessTxt: '',
-    redemptionSuccessImg: '',
   };
 
   const vouchersServiceStub = {

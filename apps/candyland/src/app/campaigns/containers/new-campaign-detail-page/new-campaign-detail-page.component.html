@@ -1,10 +1,10 @@
-<div class="campaign-detail-content">
+<div class="campaign-detail-content" *ngIf="form">
   <!--Campaign Info-->
   <mat-expansion-panel class="card" expanded>
     <mat-expansion-panel-header class="card-header">
-      <p class="card-title">
+      <h2 class="card-title">
         Campaign Info
-      </p>
+      </h2>
     </mat-expansion-panel-header>
 
     <div class="card-content">
@@ -50,9 +50,9 @@
   <!--Select channel-->
   <mat-expansion-panel class="card" expanded>
     <mat-expansion-panel-header class="card-header">
-      <p class="card-title">
+      <h2 class="card-title">
         Select channel
-      </p>
+      </h2>
     </mat-expansion-panel-header>
     <!--channel type-->
     <div class="card-content">
@@ -66,9 +66,9 @@
       <!--Message-->
       <div class="card-section" *ngIf="channel.get('message').enabled">
         <div class="card-header">
-          <p class="card-title">
+          <h3 class="card-title">
             Message
-          </p>
+          </h3>
         </div>
         <div class="card-content">
           <cl-sms-editor [options]="config?.shortcodes" [control]="channel.get('message')"></cl-sms-editor>
@@ -78,22 +78,21 @@
       <div class="card-section" *ngIf="schedule.enabled">
 
         <div class="card-header">
-          <p class="card-title">
+          <h3 class="card-title">
             Schedule the sending date
-          </p>
+          </h3>
         </div>
-
         <div class="card-content">
           <!--send date-->
           <div class="card-row">
             <div class="input-group">
-              <cl-date-picker [control]="schedule.get('sendDate')" placeholder="Send date">
+              <cl-date-picker [control]="schedule.get('sendDate')" [min]="datenow" placeholder="Send date">
               </cl-date-picker>
               <cl-time-picker [control]="schedule.get('sendTime')">
               </cl-time-picker>
             </div>
           </div>
-          <!--recurrence Settings 
+          <!--recurrence Settings
           <div class="card-row form-field">
             <mat-checkbox color="primary" [formControl]="schedule.get('enableRecurrence')">Recurrence Settings
             </mat-checkbox>
@@ -127,7 +126,7 @@
                   </cl-checkbox-group>
                 </ng-container>
               </div>
-            </div> 
+            </div>
           </div>-->
         </div>
       </div>
@@ -136,9 +135,9 @@
   <!--Select audience-->
   <mat-expansion-panel class="card" expanded>
     <mat-expansion-panel-header class="card-header">
-      <p class="card-title">
+      <h2 class="card-title">
         Select audience
-      </p>
+      </h2>
     </mat-expansion-panel-header>
     <div class="card-content">
       <div class="card-row">
@@ -146,6 +145,7 @@
           <mat-select placeholder="Select audience" [formControl]="audience.get('select')">
             <mat-option *ngFor="let pool of pools" [value]="pool?.value?.id">{{pool?.name}}</mat-option>
           </mat-select>
+          <mat-error *ngIf="audience.get('select').hasError('required') && audience.get('select').touched">Required field.</mat-error>
         </mat-form-field>
       </div>
     </div>

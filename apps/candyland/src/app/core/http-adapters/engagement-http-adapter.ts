@@ -44,17 +44,17 @@ export class EngagementHttpAdapter {
 
     switch (engagementType) {
       case 'game':
-        return EngagementHttpAdapter.transformGameHandler(data);
+        return EngagementHttpAdapter.transformGameHandler(data, engagementType);
       case 'survey':
-        return EngagementHttpAdapter.transformToSurveyType(data);
+        return EngagementHttpAdapter.transformToSurveyType(data, engagementType);
       case 'stamps':
-        return EngagementHttpAdapter.transformToStampType(data);
+        return EngagementHttpAdapter.transformToStampType(data, engagementType);
       case 'instant_reward':
-        return EngagementHttpAdapter.transformToInstantReward(data);
+        return EngagementHttpAdapter.transformToInstantReward(data, engagementType);
     }
   }
 
-  public static transformToInstantReward(data: any): IEngagementInstantReward {
+  public static transformToInstantReward(data: any, engagementType?: string): IEngagementInstantReward {
     return {
       id: data.id,
       type: data.type,
@@ -67,13 +67,13 @@ export class EngagementHttpAdapter {
       button: data.attributes.display_properties.button,
       sub_title: data.attributes.display_properties.sub_title,
       banner: data.attributes.display_properties.banner,
-      attributes_type: data.attributes.type,
+      attributes_type: engagementType,
       background_img_url: data.attributes.display_properties.background_img_url,
       card_background_img_url: data.attributes.display_properties.card_background_img_url
     };
   }
 
-  public static transformToSurveyType(data: any): IEngagementSurvey {
+  public static transformToSurveyType(data: any, engagementType?: string): IEngagementSurvey {
     return {
       id: data.id,
       type: data.type,
@@ -86,7 +86,7 @@ export class EngagementHttpAdapter {
       button: data.attributes.display_properties.button,
       sub_title: data.attributes.display_properties.sub_title,
       background_img_url: data.attributes.display_properties.background_img_url,
-      attributes_type: data.attributes.type,
+      attributes_type: engagementType,
       progress_bar_color: data.attributes.display_properties.progress_bar_color,
       card_background_img_url: data.attributes.display_properties.card_background_img_url,
       questions: EngagementHttpAdapter.prepareQuestion(data.attributes.display_properties.questions)
@@ -97,7 +97,7 @@ export class EngagementHttpAdapter {
     return data[0];
   }
 
-  public static transformToStampType(data: any): IEngagementStamps {
+  public static transformToStampType(data: any, engagementType?: string): IEngagementStamps {
     return {
       id: data.id,
       type: data.type,
@@ -115,22 +115,22 @@ export class EngagementHttpAdapter {
       post_stamp_img_url: data.attributes.display_properties.post_stamp_img_url,
       reward_pre_stamp_img_url: data.attributes.display_properties.reward_pre_stamp_img_url,
       reward_post_stamp_img_url: data.attributes.display_properties.reward_post_stamp_img_url,
-      attributes_type: data.attributes.type,
+      attributes_type: engagementType,
       background_img_url: data.attributes.display_properties.background_img_url,
       card_background_img_url: data.attributes.display_properties.card_background_img_url
     };
   }
 
-  public static transformGameHandler(data: IEngagementApi): any {
+  public static transformGameHandler(data: IEngagementApi, engagementType?: string): any {
     switch (data.attributes.game_type) {
       case 'shake':
-        return EngagementHttpAdapter.transformToShackType(data);
+        return EngagementHttpAdapter.transformToShackType(data, engagementType);
       case 'tap':
-        return EngagementHttpAdapter.transformToPinataType(data);
+        return EngagementHttpAdapter.transformToPinataType(data, engagementType);
     }
   }
 
-  public static transformToShackType(data: any): IEngagementShakeType {
+  public static transformToShackType(data: any, engagementType?: string): IEngagementShakeType {
     return {
       id: data.id,
       type: data.type,
@@ -145,13 +145,13 @@ export class EngagementHttpAdapter {
       nb_hanged_gifts: data.attributes.display_properties.nb_hanged_gifts,
       gift_box_img_url: data.attributes.display_properties.gift_box_img_url,
       background_img_url: data.attributes.display_properties.background_img_url,
-      attributes_type: data.attributes.type,
+      attributes_type: engagementType,
       created_at: data.attributes.created_at,
       updated_at: data.attributes.updated_at
     };
   }
 
-  public static transformToPinataType(data: any): IEngagementTapType {
+  public static transformToPinataType(data: any, engagementType?: string): IEngagementTapType {
     return {
       id: data.id,
       type: data.type,
@@ -162,7 +162,7 @@ export class EngagementHttpAdapter {
       title_display: data.attributes.display_properties.title,
       button: data.attributes.display_properties.button,
       sub_title: data.attributes.display_properties.sub_title,
-      attributes_type: data.attributes.type,
+      attributes_type: engagementType,
       created_at: data.attributes.created_at,
       updated_at: data.attributes.updated_at,
       closed_pinata_img_url: data.attributes.display_properties.closed_pinata_img_url,

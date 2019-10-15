@@ -14,7 +14,7 @@ export interface SortBottomSheetClosedCallBack {
   styleUrls: ['./category-sort.component.scss']
 })
 export class CategorySortComponent {
-  public sortingCriterias: string[] = [SortingMode.latest, SortingMode.ending_soon];
+  public sortingCriterias: string[] = [SortingMode.ending_soon, SortingMode.latest];
   public selectedCriteria: string;
 
   constructor(

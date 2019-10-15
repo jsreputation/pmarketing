@@ -19,8 +19,8 @@ import { MatDialog } from '@angular/material';
 import { ClValidators } from '@cl-helpers/cl-validators';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { noop, combineLatest } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { noop, combineLatest, of } from 'rxjs';
+import { distinctUntilChanged, map, catchError } from 'rxjs/operators';
 import { RewardsService } from '@cl-core/services/rewards.service';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 
@@ -44,10 +44,13 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     rewards: this.fb.array([], [ClValidators.sumMoreThan({ fieldName: 'probability' })]
     )
   });
+  @Input() public slotNumber: number;
+
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;
-  public isFirstInit: boolean;
+  private isFirstInit: boolean;
+  private noOutCome: { probability: 0, outcomeId: '' };
 
   public get enableProbability(): AbstractControl {
     return this.group.get('enableProbability');
@@ -116,13 +119,33 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
   public initRewardsList(): void {
     this.rewards.reset();
-    const possibleOutcomes = this.campaign.rewardsList.map(data => this.rewardsService.getReward(data.resultId));
-    combineLatest(possibleOutcomes).subscribe(
-      rewards => rewards.map((reward: IRewardEntity) => this.addReward(reward))
+    const noOutcome = this.campaign.rewardsList.find(outcome => !outcome.resultId);
+    this.noOutCome = {
+      probability: noOutcome && noOutcome.probability || 0,
+      outcomeId: noOutcome && noOutcome.id
+    };
+
+    const possibleOutcomes = this.campaign.rewardsList.filter(data => {
+      if (!this.slotNumber) {
+        return true;
+      }
+      return data.lootBoxId === this.slotNumber;
+    }).filter(data => data.resultId)
+      .map(data => this.rewardsService.getReward(data.resultId).pipe(
+        map(reward => ({ ...reward, probability: data.probability || 0, outcomeId: data.id })),
+        catchError(() => of(null))
+      ));
+    combineLatest(...possibleOutcomes).subscribe(
+      (rewards: Partial<IRewardEntity>[]) => {
+        rewards.filter(data => data).map((reward: IRewardEntity) => this.addReward(reward));
+      }
     );
   }
 
   public addReward(value: IRewardEntity): void {
+    if (value.probability && !this.enableProbability.value) {
+      this.enableProbability.patchValue(true);
+    }
     this.rewards.push(this.createRewardFormGroup(value, this.enableProbability.value));
     this.cd.detectChanges();
   }
@@ -160,8 +183,10 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
 
   private createRewardFormGroup(value: IRewardEntity, isEnableProbability: boolean = false): FormGroup {
     return this.fb.group({
-      value: [value],
-      probability: { value: 0, disabled: !isEnableProbability }
+      value: value && [value] || [{ ...this.noOutCome }],
+      probability: {
+        value: value ? value.probability || 0 : this.noOutCome && this.noOutCome.probability || 0, disabled: !isEnableProbability
+      }
     });
   }
 
@@ -174,7 +199,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     } else {
       this.rewards.removeAt(0);
       for (let i = 0; i < this.rewards.length; i++) {
-        this.rewards.at(i).get('probability').reset(0, { emitEvent: false });
+        // this.rewards.at(i).get('probability').reset(0, { emitEvent: false });
         this.rewards.at(i).get('probability').disable({ emitEvent: false });
       }
     }

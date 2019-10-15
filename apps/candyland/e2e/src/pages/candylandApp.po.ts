@@ -55,8 +55,8 @@ export class LoginAppPage {
     return 'asdfjkl;';
   }
 
-  public getAccountId(): number {
-   return 222222222;
+  public getAccountId(): string {
+   return 'retail';
   }
 
   public getUserAccount(): string {
@@ -77,6 +77,13 @@ export class CreateHitThePinataAppPage {
 
   public navigateToHitThePinata(): Promise<string> {
     return browser.get('engagements/games/new-pinata') as Promise<string> ;
+ }
+
+}
+export class CreateInstantRewardAppPage {
+
+  public navigateToCreateInstantReward(): Promise<string> {
+    return browser.get('engagements/new-instant-reward') as Promise<string> ;
  }
 
 }

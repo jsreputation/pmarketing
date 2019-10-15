@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LoginComponent } from './login.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, ProfileService } from '@perx/core';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import {
@@ -23,6 +23,12 @@ describe('LoginComponent', () => {
     const routerStub = {
       navigateByUrl: () => ({}),
       navigate: () => ({})
+    };
+
+    const profileStub = {
+      getCustomProperties: () => of({
+        questionaire_answered: false
+      })
     };
 
     TestBed.configureTestingModule({
@@ -47,7 +53,8 @@ describe('LoginComponent', () => {
             getInterruptedUrl: () => null,
             getAppToken: () => of({})
           }
-        }
+        },
+        { provide: ProfileService, useValue: profileStub}
       ]
     })
     .compileComponents();
@@ -74,7 +81,7 @@ describe('LoginComponent', () => {
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     spyOn(routerStub, 'navigate').and.callThrough();
     component.goToForgotPassword();
-    expect(routerStub.navigate).toHaveBeenCalledWith(['forgot-password'], { state: { country: '+852', mobileNo: '' } });
+    expect(routerStub.navigate).toHaveBeenCalledWith(['forgot-password'], { state: { country: '852', mobileNo: '' } });
   });
 
   it('should navigate to user-info if authenticated', fakeAsync(() => {

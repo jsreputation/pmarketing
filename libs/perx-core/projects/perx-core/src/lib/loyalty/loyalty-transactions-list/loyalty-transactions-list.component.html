@@ -1,11 +1,11 @@
 <ng-container *ngIf="transactions$ | async as transactions">
   <div *ngFor="let transaction of transactions" class="transaction">
     <div class="transaction-info">
-      <div *ngIf="transaction.name" class="transaction-name">
+      <div class="transaction-name">
         {{titleFn(transaction)}}
       </div>
-      <div *ngIf="transaction.description" class="transaction-description">
-        {{transaction.description}}
+      <div class="transaction-description">
+        {{descFn(transaction)}}
       </div>
       <div class="transaction-point">
         {{transaction.points}} {{priceLabelFn(transaction)}}

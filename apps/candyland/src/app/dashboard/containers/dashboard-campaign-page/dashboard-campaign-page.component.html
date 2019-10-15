@@ -4,8 +4,8 @@
 
     <h2 class="chart-card-info-title">Active Campaigns: {{activeCampaigns}}</h2>
 
-    <div class="tabs-list-wrap">
-      <mat-radio-group color="primary" class="tabs-list" [value]="activeTab" (change)="selectedTab($event.value)">
+    <div class="tabs-list-wrap business-insights-tabs-list-wrap">
+      <mat-radio-group color="primary" class="tabs-list business-insights-tabs-list" [value]="activeTab" (change)="selectedTab($event.value)">
         <ng-container *ngFor="let tab of tabs; let index = index">
           <mat-radio-button [value]="tab?.name">
             <cl-tab-item-view [data]="tab" [value]="getTabValue(index)"></cl-tab-item-view>
@@ -126,7 +126,7 @@
       <ng-container *ngSwitchCase="'reward'">
 
         <article class="chart-card">
-          <h3 class="chart-card-title">Stamps Engagement Rate</h3>
+          <h3 class="chart-card-title">Instant Reward Engagement Rate</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'line'" [params]="params"></cl-chart-card>
           </div>

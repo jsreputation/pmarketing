@@ -3,14 +3,15 @@ import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
 
 import express from 'express';
-import { readFileSync } from 'fs';
+import {readFileSync} from 'fs';
 import axios from 'axios';
-import { join } from 'path';
+import {join} from 'path';
 
 // Express server
 const app = express();
 const cors = require('cors');
 app.use(cors());
+app.use(express.json());
 
 const PORT = process.env.PORT || 4000;
 const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
@@ -61,9 +62,9 @@ app.get('/preauth', async (req, res, next) => {
 
 app.post(BASE_HREF + 'v4/oauth/token', async (req, res, next) => {
   try {
-    const url = req.query.url;
+    const url = req.body.url;
     if (url === undefined) {
-      throw new Error('No query parameter "url" specified');
+      throw new Error('No body parameter "url" specified');
     }
 
     const endpoint = apiConfig.endpoints[url];
@@ -73,11 +74,12 @@ app.post(BASE_HREF + 'v4/oauth/token', async (req, res, next) => {
 
     const endpointCredential = apiConfig.credentials[endpoint.account_id];
 
-    const username = req.query.username;
-    const password = req.query.password;
-    const mechId = req.query.mech_id;
-    const campaignId = req.query.campaign_id;
-    const userId = req.query.identifier;
+    const username = req.body.username;
+    const password = req.body.password;
+    const mechId = req.body.mech_id;
+    const campaignId = req.body.campaign_id;
+    const userId = req.body.identifier;
+    const scope = req.body.scope;
 
     const endpointRequest = await axios.post(
       endpoint.target_url + '/v4/oauth/token',
@@ -85,7 +87,8 @@ app.post(BASE_HREF + 'v4/oauth/token', async (req, res, next) => {
         username,
         password,
         mech_id: mechId,
-        campaign_id: campaignId
+        campaign_id: campaignId,
+        scope
       },
       {
         params: {
@@ -108,9 +111,9 @@ app.post(BASE_HREF + 'v4/oauth/token', async (req, res, next) => {
 
 app.post(BASE_HREF + 'v2/oauth/token', async (req, res, next) => {
   try {
-    const url = req.query.url;
+    const url = req.body.url;
     if (url === undefined) {
-      throw new Error('No query parameter "url" specified');
+      throw new Error('No body parameter "url" specified');
     }
 
     const endpoint = apiConfig.endpoints[url];
@@ -141,12 +144,12 @@ app.post(BASE_HREF + 'v2/oauth/token', async (req, res, next) => {
 
 app.post(BASE_HREF + 'cognito/login', async (req, res, next) => {
   try {
-    // check query parameter 'url'
-    const url = req.query.url;
-    const userId = req.query.identifier;
+    // check body parameter 'url'
+    const url = req.body.url;
+    const userId = req.body.identifier;
 
     if (url === undefined) {
-      throw new Error('No query parameter "url" specified');
+      throw new Error('No body parameter "url" specified');
     }
     const endpoint = apiConfig.endpoints[url];
     if (endpoint === undefined) {
@@ -188,13 +191,70 @@ app.post(BASE_HREF + 'cognito/login', async (req, res, next) => {
   }
 });
 
-app.post(BASE_HREF + 'themes', async (req, res, next) => {
+app.post(BASE_HREF + 'cognito/users', async (req, res, next) => {
   try {
-    // check query parameter 'url'
-    const url = req.query.url;
+    // check body parameter 'url'
+    const url = req.body.url;
+    const userId = req.body.identifier;
 
     if (url === undefined) {
-      throw new Error('No query parameter "url" specified');
+      throw new Error('No body parameter "url" specified');
+    }
+    const endpoint = apiConfig.endpoints[url];
+    if (endpoint === undefined) {
+      throw new Error(`No endpoints found for ${url}`);
+    }
+
+    const endpointCredential = apiConfig.credentials[endpoint.account_id];
+    const endpointRequest = await axios.post(
+      endpoint.target_url + '/cognito/users',
+      {
+        data: {
+          type: 'users',
+          attributes: {
+            primary_identifier: userId
+          }
+        }
+      },
+      {
+        headers: {
+          Authorization: endpointCredential.basic_token,
+          'Content-Type': 'application/vnd.api+json'
+        }
+      }
+    );
+
+    res.set({
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+      'Access-Control-Expose-Headers': 'Authorization',
+      Authorization: endpointRequest.headers.authorization
+
+    });
+    endpointRequest.data = {
+      ...endpointRequest.data, data: {
+        attributes: {
+          jwt: endpointRequest.headers.authorization.split(' ')[1]
+        }
+      }
+    };
+    res.json(endpointRequest.data);
+  } catch (e) {
+    if (e.response && e.response.data && e.response.status) {
+      res.status(e.response.status).json(e.response.data);
+    } else {
+      next(e);
+    }
+  }
+});
+
+app.post(BASE_HREF + 'themes', async (req, res, next) => {
+  try {
+    // check body parameter 'url'
+    const url = req.body.url;
+
+    if (url === undefined) {
+      throw new Error('No body parameter "url" specified');
     }
     const endpoint = apiConfig.endpoints[url];
     if (endpoint === undefined) {
@@ -227,11 +287,11 @@ if (process.env.PRODUCTION) {
 
   // Serve static files from /../../perx-microsite
   app.use(BASE_HREF, express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite')));
-  app.get('*.*', express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite'), { maxAge: '1y' }));
+  app.get('*.*', express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite'), {maxAge: '1y'}));
 
   // All regular routes use the index.html
   app.get('*', (req, res) => {
-    res.sendFile(join(EXPRESS_DIST_FOLDER, '../../perx-microsite', 'index.html'), { req });
+    res.sendFile(join(EXPRESS_DIST_FOLDER, '../../perx-microsite', 'index.html'), {req});
   });
 }
 

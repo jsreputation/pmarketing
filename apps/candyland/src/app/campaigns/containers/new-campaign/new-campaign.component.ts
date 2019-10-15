@@ -3,15 +3,19 @@ import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/fo
 import { CampaignsService, SettingsService, OutcomesService, CommsService, LimitsService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
-import { NewCampaignDonePopupComponent } from '../new-campaign-done-popup/new-campaign-done-popup.component';
+import { NewCampaignDonePopupComponent, NewCampaignDonePopupComponentData } from '../new-campaign-done-popup/new-campaign-done-popup.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { map, switchMap } from 'rxjs/operators';
-import { combineLatest, iif, of } from 'rxjs';
-import { IComm, IOutcome, ICampaign } from '@perx/whistler';
+import { map, switchMap, tap, catchError } from 'rxjs/operators';
+import { combineLatest, iif, of, Observable } from 'rxjs';
+import { ICampaignAttributes } from '@perx/whistler';
+import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
+import { IComm } from '@cl-core/models/comm/schedule';
+import { IOutcome } from '@cl-core/models/outcome/outcome';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -20,14 +24,15 @@ import { IComm, IOutcome, ICampaign } from '@perx/whistler';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignComponent implements OnInit, OnDestroy {
-  public id: string;
+  // private id: string;
   public form: FormGroup;
-  public campaign: any;
+  private campaign: ICampaign;
+  private campaignBaseURL: string;
   public tenantSettings: ITenantsProperties;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
 
   constructor(
-    private store: CampaignCreationStoreService,
+    public store: CampaignCreationStoreService,
     private stepConditionService: StepConditionService,
     private campaignsService: CampaignsService,
     private router: Router,
@@ -38,7 +43,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService,
     private commsService: CommsService,
     private outcomesService: OutcomesService,
-    private limitsService: LimitsService
+    private limitsService: LimitsService,
+    private audienceService: AudiencesUserService,
   ) {
     store.resetCampaign();
   }
@@ -81,11 +87,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.stepper.previous();
   }
 
-  public goNext(): void {
+  public goNext(value?: MatStepper): void {
     const stepIndex = this.stepper.selectedIndex;
     this.stepConditionService.nextEvent(stepIndex);
     this.store.updateCampaign(this.stepConditionService.getStepFormValue(stepIndex));
-    this.stepper.next();
+    if (!value) {
+      this.stepper.next();
+    }
   }
 
   public get isLastStep(): boolean {
@@ -119,6 +127,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     }
     const hasLimitData = () => this.store.currentCampaign.limits && this.store.currentCampaign.limits.times;
     saveCampaign$.pipe(
+      tap((res: IJsonApiPayload<ICampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
       switchMap(
         (res) => iif(hasLimitData, updateLimitData$(res), of(res))
       )
@@ -126,90 +135,120 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       data => {
         if (data) {
           this.openDialog();
-          this.store.currentCampaign = null;
         }
       },
       (error: Error) => console.warn(error.message)
     );
   }
 
-  private getDialogData(campaign: any): { title: string, subTitle: string, type?: string } {
+  private getDialogData(campaign: ICampaign): Observable<NewCampaignDonePopupComponentData> {
     const type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
-    switch (type) {
-      case 'sms':
-        return {
-          title: 'Yay! You just created a campaign',
-          subTitle: '100  Weblinks are created fo you. Please download the files.',
-          type: 'download'
-        };
-      case 'weblink':
-        return {
-          title: 'Yay! You just created a campaign',
-          subTitle: 'Copy the link and share your campaign.',
-          type: 'weblink'
-        };
-      default:
-        return {
-          title: 'Yay! You just created a campaign',
-          subTitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.'
-        };
+    const title: string = 'Yay! You just created a campaign';
+    if (type === 'weblink' && campaign.audience && campaign.audience.select) {
+      return this.buildCampaignCsv(campaign)
+        .pipe(
+          map(csv => {
+            // const b = new Blob([csv], { type: 'application/csv;charset=utf-8;' });
+            //  const url = URL.createObjectURL(b);
+            const url = `data:application/octet-stream;charset=utf-16le;base64,${btoa(csv)}`;
+
+            return {
+              title,
+              subTitle: 'Download your individual links',
+              url,
+              type: 'download'
+            };
+          })
+        );
     }
+    if (type === 'weblink') {
+      return this.blackcombUrl
+        .pipe(map(url => ({
+          title,
+          subTitle: 'Copy the link and share your campaign.',
+          url,
+          type
+        })));
+    }
+
+    return of({
+      title,
+      type
+    });
+  }
+
+  private buildCampaignCsv(campaign: ICampaign): Observable<string> {
+    const getUsersPis: Observable<string[]> = this.audienceService
+      .getAllPoolUser(campaign.audience.select)
+      .pipe(
+        map((users: IJsonApiItem<IUserApi>[]) => users.map(u => u.attributes.primary_identifier)),
+      );
+    return combineLatest(getUsersPis, this.blackcombUrl)
+      .pipe(map(([pis, url]: [string[], string]) => {
+        return pis.reduce((p: string, v: string) => `${p}${v},${url}&pi=${v},\n`, 'identifier,urls,\n');
+      }));
+  }
+
+  private get blackcombUrl(): Observable<string> {
+    return of(this.campaignBaseURL);
   }
 
   private openDialog(): void {
-    const config = this.getDialogData(this.store.currentCampaign);
-    const dialogRef = this.dialog.open(NewCampaignDonePopupComponent, { data: config });
-
-    dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['/campaigns']);
-    });
+    this.getDialogData(this.store.currentCampaign)
+      .pipe(
+        switchMap((config) => this.dialog.open(NewCampaignDonePopupComponent, { data: config }).afterClosed())
+      )
+      .subscribe(() => this.router.navigate(['/campaigns']));
   }
 
   private getTenants(): void {
     this.settingsService.getTenants()
       .subscribe((res: Tenants) => {
         this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+        this.campaignBaseURL = res.display_properties.campaign_base_url;
         this.cdr.detectChanges();
       });
   }
 
   private handleRouteParams(): void {
     const campaignId = this.route.snapshot.params.id;
-    const params: HttpParamsOptions = {
+    const paramsComm: HttpParamsOptions = {
+      'filter[owner_id]': campaignId,
+      'filter[owner_type]': 'Perx::Campaign::Entity',
+      include: 'template',
+    };
+    const paramsPO: HttpParamsOptions = {
       'filter[campaign_entity_id]': campaignId
     };
     if (campaignId) {
       combineLatest(
-        this.campaignsService.getCampaign(campaignId),
-        this.commsService.getCommsTemplate(params).pipe(
-          map((comms: IComm[]) => comms[0])
-        ),
-        this.commsService.getCommsEvents(params).pipe(
-          map((comms: IComm[]) => comms[0])
-        ),
-        this.outcomesService.getOutcomes(params)).pipe(
-          map(
-            ([campaign, commTemplate, commEvent, outcomes]:
-              [ICampaign, IComm, IComm, IOutcome[]]) => ({
-                ...campaign,
-                channel: {
-                  type: campaign.channel.type,
-                  ...commTemplate,
-                  ...commEvent
-                },
-                rewardsList: outcomes
-              }))
-        ).subscribe(
-          campaign => {
-            this.campaign = Object.assign({}, campaign);
-            this.store.initCampaign(campaign);
-            this.form.patchValue({
-              name: this.campaign.name
-            });
-          },
-          () => this.router.navigateByUrl('/campaigns')
-        );
+        this.campaignsService.getCampaign(campaignId).pipe(catchError(() => of(null))),
+        this.commsService.getCommsEvent(paramsComm).pipe(catchError(() => of(null))),
+        this.outcomesService.getOutcomes(paramsPO).pipe(
+          map(outcomes => outcomes.map(outcome => ({ ...outcome, probability: outcome.probability * 100 }))),
+          catchError(() => of(null)))
+      ).pipe(
+        map(
+          ([campaign, commEvent, outcomes]:
+            [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
+              ...campaign,
+              audience: { select: commEvent && commEvent.poolId || null },
+              channel: {
+                type: commEvent && commEvent.channel || 'weblink',
+                ...commEvent
+              },
+              rewardsList: outcomes
+            }))
+      ).subscribe(
+        campaign => {
+          this.campaign = Object.assign({}, campaign);
+          this.store.initCampaign(campaign);
+          this.form.patchValue({
+            name: this.campaign.name
+          });
+        },
+        () => this.router.navigateByUrl('/campaigns')
+      );
     }
   }
-
 }

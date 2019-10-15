@@ -15,6 +15,7 @@ export class RedeemComponent implements OnInit, OnDestroy {
   public voucherId: number;
   public redemptionType: RedemptionType;
   private destroy$: Subject<void> = new Subject<void>();
+  public rt: typeof RedemptionType = RedemptionType;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,7 +37,7 @@ export class RedeemComponent implements OnInit, OnDestroy {
         })
       );
     this.voucher$.subscribe((voucher: Voucher) => {
-      this.redemptionType = voucher.redemptionType;
+      this.redemptionType = voucher.reward.redemptionType;
     });
   }
 
@@ -45,9 +46,9 @@ export class RedeemComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public pinInputSuccess(successText: string): void {
+  public pinInputSuccess(): void {
     this.popup({
-      title: successText || 'Redeem Successfully',
+      title: 'Redeem Successfully',
       text: 'ID: ' + this.voucherId
     });
   }
@@ -78,6 +79,6 @@ export class RedeemComponent implements OnInit, OnDestroy {
 
   public popup(data: IPopupConfig): MatDialogRef<PopupComponent> {
     return this.dialog
-      .open(PopupComponent, {data});
+      .open(PopupComponent, { data });
   }
 }

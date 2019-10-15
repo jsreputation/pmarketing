@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { PuzzleCollectStamp, PuzzleCollectStampState } from '../../../../../../../libs/perx-core/dist/perx-core';
+import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { filter } from 'rxjs/operators';

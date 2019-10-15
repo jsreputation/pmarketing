@@ -11,7 +11,7 @@ body {
 }
 
 body, input, button, select {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: $primary-font;
 }
 
 h1, h2, h3, h4, h5, p {
@@ -116,6 +116,11 @@ h1, h2, h3, h4, h5, p {
     display: block;
     margin-top: ($vertical-padding * 0.5);
   }
+
+  @media (max-width: $mobile-width) {
+    padding-left: ($horizontal-padding * 0.5);
+    padding-right: ($horizontal-padding * 0.5);
+  }
 }
 
 .row {
@@ -126,7 +131,8 @@ h1, h2, h3, h4, h5, p {
 }
 
 .control-input {
-  font-size: $base-font-size !important;
+  @include typo-input;
+
   width: 100%;
 }
 
@@ -190,6 +196,8 @@ h1, h2, h3, h4, h5, p {
   border-radius: $border-radius;
 
   &::before {
+    @include typo-caption;
+
     content: '!';
     margin-right: 10px;
     min-width: 18px;
@@ -197,7 +205,6 @@ h1, h2, h3, h4, h5, p {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
     border-radius: 50%;
     background-color: $warning-color;
     color: $white;
@@ -216,7 +223,19 @@ h1, h2, h3, h4, h5, p {
     padding-right: ($horizontal-padding * 0.75) !important;
   }
 
+  &-page-size {
+    margin-right: $horizontal-padding !important;
+  }
+
   &-page-size-label {
+    margin-left: 0 !important;
+  }
+
+  &-range-actions {
+    min-height: ($horizontal-padding * 1.5);
+  }
+
+  &-range-label {
     margin-left: 0 !important;
   }
 }
@@ -242,15 +261,32 @@ h1, h2, h3, h4, h5, p {
   }
 
   &-title {
-    @include typo-h6;
+    @include typo-h5;
 
     color: $base-font-color;
   }
 
   &-text {
-    @include typo-body2;
+    @include typo-body1;
 
     color: $base-font-color;
+    margin-top: ($vertical-padding * 0.5);
+  }
+}
+
+// Sidebar Flex
+.mat-drawer-inner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+// Material Drawer Reset for Mobile Topbar Clearance
+@media (max-width: $tablet-width) {
+  .mat-drawer-backdrop {
+    top: $header-height-base !important;
+    position: fixed !important;
   }
 }
 
@@ -273,5 +309,39 @@ h1, h2, h3, h4, h5, p {
 
   &:hover {
     opacity: 0.8;
+  }
+}
+
+.custom-scroll {
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+  }
+
+  &::-webkit-scrollbar-button {
+    background-color: #fcfcfc;
+    display: none;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #000;
+  }
+
+  &::-webkit-scrollbar-track-piece {
+    background-color: #ffffff;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 50px;
+    background-color: #172238;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: #fafafa;
+  }
+
+  &::-webkit-resizer {
+    background-color: #666;
   }
 }

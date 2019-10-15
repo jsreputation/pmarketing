@@ -6,6 +6,11 @@ import { Type } from '@angular/core';
 import { TokenStorage } from './token-storage.service';
 import { ProfileModule } from '../../profile/profile.module';
 import { ConfigModule } from '../../config/config.module';
+import { LocalTokenStorage } from './local-token-storage.service';
+
+function fakeFactory(): TokenStorage {
+  return new LocalTokenStorage({});
+}
 
 describe('V4AuthenticationService', () => {
   const environment = {
@@ -26,9 +31,9 @@ describe('V4AuthenticationService', () => {
       imports: [
         HttpClientTestingModule,
         ProfileModule,
-        ConfigModule.forRoot({...environment})
+        ConfigModule.forRoot({ ...environment })
       ],
-      providers: [TokenStorage]
+      providers: [{ provide: TokenStorage, useFactory: fakeFactory }]
     });
     httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
     service = TestBed.get(V4AuthenticationService);
@@ -46,8 +51,8 @@ describe('V4AuthenticationService', () => {
         done();
       });
     const url = location.host;
-    const req = httpTestingController.expectOne(baseUrlForAppAccessToken + 'v2/oauth/token?url=' + url);
-
+    const req = httpTestingController.expectOne(baseUrlForAppAccessToken + 'v2/oauth/token');
+    expect(req.request.body).toEqual({ url });
     expect(req.request.method).toEqual('POST');
 
     req.flush({

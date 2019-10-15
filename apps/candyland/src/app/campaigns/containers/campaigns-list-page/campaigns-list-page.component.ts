@@ -2,8 +2,8 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { CampaignsService } from '@cl-core/services';
 import { Router } from '@angular/router';
-import { ICampaignTableData } from '@perx/whistler';
 import { MatSnackBar } from '@angular/material';
+import { ICampaignTableData } from '@cl-core/models/campaign/campaign.interface';
 
 @Component({
   selector: 'cl-campaigns-list-page',
@@ -30,6 +30,10 @@ export class CampaignsListPageComponent {
         () => {
           this.snack.open('Duplication failed, please try again.', 'x', { duration: 2000 });
         });
+  }
+
+  public openReport(url: string): void {
+    this.router.navigateByUrl(url);
   }
 
 }

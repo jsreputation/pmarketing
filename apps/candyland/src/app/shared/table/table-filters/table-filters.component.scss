@@ -4,6 +4,10 @@ cl-table-filters {
   flex-grow: 1;
 }
 
+cl-table-filters + cl-button {
+  margin-left: ($horizontal-padding * 0.5);
+}
+
 .filters {
   display: flex;
   margin: 0 (-($horizontal-padding * 0.25)) ($vertical-padding * 0.5);
@@ -27,8 +31,22 @@ cl-table-filters {
 
     &.search-block {
       flex-grow: 1.5;
-      margin-right: auto;
+
+      + *:not(.type-block) {
+        margin-left: auto;
+      }
     }
+  }
+
+  cl-button {
+    flex-grow: 0;
+    width: auto;
+    flex-basis: auto;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    background-color: $white;
+    border-radius: $border-radius;
   }
 }
 
@@ -43,8 +61,4 @@ cl-table-filters {
       }
     }
   }
-}
-
-cl-table-filters + cl-button {
-  margin-left: ($horizontal-padding * 0.5);
 }

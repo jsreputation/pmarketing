@@ -31,6 +31,10 @@ export class AppComponent implements OnInit {
     if (this.preAuth && isPlatformBrowser(this.platformId) && !((window as any).primaryIdentifier)) {
       const param = location.search;
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
+      if ((window as any).primaryIdentifier) {
+        this.authService.logout();
+        this.router.navigate(['login']);
+      }
     }
     this.authService.$failedAuth.subscribe(
       (didFailAuth) => {

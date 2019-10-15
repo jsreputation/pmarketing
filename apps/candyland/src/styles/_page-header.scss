@@ -19,6 +19,7 @@
 
   .btn-group {
     flex-shrink: 0;
+    margin-left: auto;
   }
 
   .pagetitle-input {
@@ -73,5 +74,26 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: $tablet-width) {
+  .page-header {
+    padding-left: 2.4rem + ($horizontal-padding * 1.5);
+
+    .btn-group {
+      padding: 0;
+      margin: 0;
+
+      cl-button:first-child {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: $mobile-width) {
+  .page-header {
+    padding-left: 2.4rem + $horizontal-padding;
   }
 }
