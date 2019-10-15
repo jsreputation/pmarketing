@@ -168,7 +168,7 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
     return `https://www.google.com/maps/search/?api=1&query=${loc.latitude},${loc.longitude}`;
   }
 
-  public ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
