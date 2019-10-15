@@ -8,6 +8,7 @@ import { ClValidators } from '@cl-helpers/cl-validators';
 })
 export class LoyaltyFormsService {
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
+
   public getFormLoyalty(): FormGroup {
     return new FormGroup({
       name: new FormControl(null, [Validators.required])
@@ -33,17 +34,13 @@ export class LoyaltyFormsService {
     return new FormGroup({
       pointsName: new FormControl(null, [Validators.required, Validators.minLength(1)]),
       mainImage: new FormControl('https://www.gettyimages.co.uk/gi-resources/images/RoyaltyFree/Apr17Update/ColourSurge1.jpg'),
-      joiningMethod: new FormGroup( {
+      joiningMethod: new FormGroup({
         transactionAmount: new FormControl(false),
         signUp: new FormControl(false),
         byInvite: new FormControl(false),
         amount: new FormControl(null, [Validators.required, Validators.minLength(1)]),
       }, [Validators.required, ClValidators.requiredGroup]),
-      selectAudience: new FormGroup({
-        audienceType: new FormControl('all-audience', [Validators.required]),
-        allMyAudience: new FormControl(null),
-        uploadFile: new FormControl(null)
-      }, ClValidators.requiredGroup)
+      poolId: new FormControl(null, Validators.required)
     });
   }
 
@@ -121,7 +118,7 @@ export class LoyaltyFormsService {
         award: new FormControl(null),
         points: new FormControl(null),
         typeMultiplier: new FormControl(null, [Validators.required]),
-       applyMultiplier: new FormControl(null, [Validators.required]),
+        applyMultiplier: new FormControl(null, [Validators.required]),
         maximumPoints: new FormControl(null, [Validators.required]),
       })
     });
