@@ -15,11 +15,11 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   const notificationServiceStub = { $popup: { subscribe: () => ({}) } };
-  const routerSub = { navigateByUrl: (url) => { } };
+  const routerSub = { navigateByUrl: () => { } };
   const authenticationServiceStub = {
     $failedAuth: of(true),
     getInterruptedUrl: () => null,
-    login: of({bearer_token: 'SWWERW'})
+    login: of({ bearer_token: 'SWWERW' })
   };
   let debugElement: DebugElement;
   let authService: AuthenticationService;
@@ -58,20 +58,20 @@ describe('LoginComponent', () => {
   });
 
   beforeEach(() => {
-    authSpy = spyOn(authService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
+    authSpy = spyOn(authService, 'login').and.returnValue(of({ bearer_token: 'SWWERW' }));
   });
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
   it('should call authService', () => {
-    authSpy.and.returnValue(of({bearer_token: 'SWWERW'}));
+    authSpy.and.returnValue(of({ bearer_token: 'SWWERW' }));
     component.onSubmit();
     expect(authSpy).toHaveBeenCalled();
   });
 
   it('should redirect to home', fakeAsync(() => {
-    authSpy.and.returnValue(of({bearer_token: 'SWWERW'}));
+    authSpy.and.returnValue(of({ bearer_token: 'SWWERW' }));
     spyOn(router, 'navigateByUrl').and.stub();
     fixture.detectChanges();
     component.onSubmit();

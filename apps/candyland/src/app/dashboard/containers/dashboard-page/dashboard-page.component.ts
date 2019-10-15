@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, Inject, Renderer2 } from '@angular/core';
 import { DashboardService } from '@cl-core/services';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -34,7 +35,9 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   constructor(private dashboardService: DashboardService,
               private userService: UserService,
-              private chartsParametersService: DashboardChartsParametersService) {
+              private chartsParametersService: DashboardChartsParametersService,
+              @Inject(DOCUMENT) private document: Document,
+              private renderer: Renderer2) {
   }
 
   public ngOnInit(): void {
@@ -42,9 +45,11 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     this.getGameCard();
     this.handelDateRangeChanges();
     this.dateRange.patchValue(this.defaultDateRange);
+    this.renderer.addClass(this.document.body, 'no-cta');
   }
 
   public ngOnDestroy(): void {
+    this.renderer.removeClass(this.document.body, 'no-cta');
   }
 
   private handelDateRangeChanges(): void {

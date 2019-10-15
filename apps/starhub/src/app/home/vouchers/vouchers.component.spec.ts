@@ -18,6 +18,9 @@ describe('VouchersComponent', () => {
     getAll: () => of([])
   };
 
+  const today = new Date();
+  const tomorrow = new Date(today.getTime() + ((24 * 60 * 60 * 1000) * 1.1));
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [VouchersComponent],
@@ -58,4 +61,33 @@ describe('VouchersComponent', () => {
     component.seeMoreClicked();
     expect(component.hideSeeMore).toBe(true);
   });
+  
+  it('should navigate to voucher detail', () => {
+    const routerFixture: Router = fixture.debugElement.injector.get(Router);
+    const routerSpy = spyOn(routerFixture, 'navigate');
+    component.voucherSelected(vouchers[0]);
+    expect(routerSpy).toHaveBeenCalled();
+  });
+
+  it('should change hideMore flag value', () => {
+    component.seeMoreClicked();
+    expect(component.hideSeeMore).toBeTruthy();
+  });
+
+  it('difference should be 1 with next day', () => {
+    const mockVoucher = vouchers[0];
+    console.log('salman');
+    console.log(tomorrow);
+    mockVoucher.expiry = tomorrow;
+    const noOfDays = component.getNumberOfDays(mockVoucher);
+    expect(noOfDays).toBe('Expires in 1 days');
+  });
+
+  it('should apply less-three-days with next day', () => {
+    const mockVoucher = vouchers[0];
+    mockVoucher.expiry = tomorrow;
+    const textColorClass = component.getTextColorClass(mockVoucher);
+    expect(textColorClass).toBe('less-three-days');
+  });
+
 });

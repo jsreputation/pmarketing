@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { IReward } from '@perx/core';
 import { Location } from '@angular/common';
 import { IMacaron } from '../../services/macaron.service';
@@ -16,6 +16,9 @@ export class RewardDetailComponent {
   @Output()
   public hasExpired: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  @Output()
+  public isButtonEnabled: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   @Input()
   public showBackButton: boolean = true;
 
@@ -27,6 +30,7 @@ export class RewardDetailComponent {
 
   @Input()
   public showMacaron: boolean = true;
+  
   @Input()
   public reward: IReward;
 

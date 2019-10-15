@@ -1,15 +1,15 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileService, ProfileModule, AuthenticationService } from '@perx/core';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import {AccountComponent} from './account.component';
+import { AccountComponent } from './account.component';
 import { DebugElement, Component, Type } from '@angular/core';
-import {By} from '@angular/platform-browser';
-import {DynamicCreateService} from '../shared/service/dynamic-create.service';
-import {MatListModule} from '@angular/material/list';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
+import { DynamicCreateService } from '../shared/service/dynamic-create.service';
+import { MatListModule } from '@angular/material/list';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   template: '<div>test</div>'
@@ -19,7 +19,7 @@ class MockComponent {
 
 const userInfo = {
   birthDate: null,
-  customProperties: {fname: 'warren', lname: 'woo', last_4: '1234'},
+  customProperties: { fname: 'warren', lname: 'woo', last_4: '1234' },
   email: null,
   firstName: null,
   gender: null,
