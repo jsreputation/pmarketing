@@ -25,9 +25,9 @@ import {LoyaltyRoutingModule} from './loyalty-routing.module';
 import {LoyaltyFormsService} from './services/loyalty-forms.service';
 import {NewLoyaltyComponent} from './containers/new-loyalty/new-loyalty.component';
 import {MatStepperModule} from '@angular/material/stepper';
-import {LoyaltyFormStepOneComponent} from './components/loyalty-form-step-one/loyalty-form-step-one.component';
+import {LoyaltyFormStepDetailsComponent} from './components/loyalty-form-step-details/loyalty-form-step-details.component';
 import {LoyaltyFormStepTiersConversionsComponent} from './components/loyalty-form-step-tiers-conversions/loyalty-form-step-tiers-conversions.component';
-import {LoyaltyFormStepThreeComponent} from './components/loyalty-form-step-three/loyalty-form-step-three.component';
+import {LoyaltyFormStepEarnRulesComponent} from './components/loyalty-form-step-earn-rules/loyalty-form-step-earn-rules.component';
 import {LoyaltyFormStepReviewComponent} from './components/loyalty-form-step-review/loyalty-form-step-review.component';
 import {PointsInfoComponent} from './components/points-info/points-info.component';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -42,7 +42,6 @@ import { GlobalBurnRuleGroupComponent } from './components/global-burn-rule-grou
 import { PointsExpiryGroupComponent } from './components/points-expiry-group/points-expiry-group.component';
 import { TiersGroupComponent } from './components/tiers-group/tiers-group.component';
 import { MatTableModule } from '@angular/material/table';
-import {GlobalEarnRuleComponent} from './components/global-earn-rule/global-earn-rule.component';
 import { AddRulePopupComponent } from './components/add-rule-popup/add-rule-popup.component';
 import { ViewSchemeInfoComponent } from './components/view-scheme-info/view-scheme-info.component';
 import { ViewLoyaltyComponent } from './components/view-loyalty/view-loyalty.component';
@@ -56,15 +55,14 @@ import { LoyaltyReviewComponent } from './containers/loyalty-review/loyalty-revi
     LoyaltyGridComponent,
     LoyaltyItemComponent,
     NewLoyaltyComponent,
-    LoyaltyFormStepOneComponent,
+    LoyaltyFormStepDetailsComponent,
     LoyaltyFormStepTiersConversionsComponent,
-    LoyaltyFormStepThreeComponent,
+    LoyaltyFormStepEarnRulesComponent,
     LoyaltyFormStepReviewComponent,
     PointsInfoComponent,
     ProgramMainImageComponent,
     UserJoiningMethodComponent,
     SelectAudienceComponent,
-    GlobalEarnRuleComponent,
     AddRulePopupComponent,
     TierSetupPopupComponent,
     GlobalEarnRuleGroupComponent,

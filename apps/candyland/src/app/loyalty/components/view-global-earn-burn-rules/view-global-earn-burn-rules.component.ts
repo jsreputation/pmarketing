@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./view-global-earn-burn-rules.component.scss']
 })
 export class ViewGlobalEarnBurnRulesComponent {
-  @Input() public stepTiers: any;
+  @Input() public tiersConversions: any;
   @Input() public currency: any;
 
 }

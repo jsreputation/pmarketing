@@ -24,7 +24,7 @@
     <mat-step [stepControl]="stepOne">
       <ng-template matStepLabel>Loyalty Details</ng-template>
       <div class="loyalty-detail-content">
-        <cl-loyalty-form-step-one *ngIf="form && stepOne" [group]="stepOne" [pools]="pools"></cl-loyalty-form-step-one>
+        <cl-loyalty-form-step-details *ngIf="form && stepOne" [group]="stepOne" [pools]="pools"></cl-loyalty-form-step-details>
       </div>
 
     </mat-step>
@@ -41,7 +41,7 @@
 <!--      <ng-template matStepLabel>Point Earn Rules</ng-template>-->
 <!--      <div class="loyalty-detail-content">-->
 <!--        step three-->
-<!--        <cl-loyalty-form-step-three></cl-loyalty-form-step-three>-->
+<!--        <cl-loyalty-form-step-earn-rules></cl-loyalty-form-step-earn-rules>-->
 <!--      </div>-->
 
 <!--      <div>-->

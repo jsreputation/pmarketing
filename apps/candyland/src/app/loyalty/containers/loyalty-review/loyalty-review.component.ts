@@ -43,7 +43,7 @@ export class LoyaltyReviewComponent implements OnInit {
             allMyAudience: null,
             uploadFile: null}
       },
-      stepTiers: {
+      TiersConversions: {
         globalEarnRule: {amount: 2, points: 10},
         globalBurnRule: {amount: 20, points: 2},
         pointsExpiry: {

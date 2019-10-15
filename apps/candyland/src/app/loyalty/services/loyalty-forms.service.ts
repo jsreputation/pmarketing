@@ -17,10 +17,10 @@ export class LoyaltyFormsService {
   public getStep(step: any): FormGroup {
     switch (step) {
       case this.loyaltyFormType.details: {
-        return this.getFirsStep();
+        return this.getDetailsStep();
       }
       case this.loyaltyFormType.tiers: {
-        return this.getSecondaryStep();
+        return this.getTiersConversionsStep();
       }
       // case this.loyaltyFormType.four: {
       //   // TODO: need implement
@@ -29,7 +29,7 @@ export class LoyaltyFormsService {
     }
   }
 
-  public getFirsStep(): FormGroup {
+  public getDetailsStep(): FormGroup {
     return new FormGroup({
       pointsName: new FormControl(null, [Validators.required, Validators.minLength(1)]),
       mainImage: new FormControl('https://www.gettyimages.co.uk/gi-resources/images/RoyaltyFree/Apr17Update/ColourSurge1.jpg'),
@@ -47,7 +47,7 @@ export class LoyaltyFormsService {
     });
   }
 
-  public getSecondaryStep(): FormGroup {
+  public getTiersConversionsStep(): FormGroup {
     return new FormGroup({
       globalEarnRule: new FormGroup({
         amount: new FormControl(2, [Validators.required, Validators.min(1)]),
@@ -59,7 +59,7 @@ export class LoyaltyFormsService {
       }),
       pointsExpiry: new FormGroup({
         amount: new FormControl(1, [Validators.required]),
-        period: new FormControl('days', [Validators.required]),
+        period: new FormControl('day', [Validators.required]),
         type: new FormControl('earned', [Validators.required]),
       }),
       tiers: new FormArray([])
@@ -100,7 +100,7 @@ export class LoyaltyFormsService {
       case this.loyaltyFormType.stepDetails: {
         return this.loyaltyFormType.details;
       }
-      case this.loyaltyFormType.stepTiers: {
+      case this.loyaltyFormType.TiersConversions: {
         return this.loyaltyFormType.tiers;
       }
       case this.loyaltyFormType.stepReview: {

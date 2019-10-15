@@ -20,10 +20,10 @@ export class ViewLoyaltyComponent implements OnInit {
     }
   }
 
-  public get stepTiers(): any {
+  public get stepTiersConversions(): any {
     if (this.loyaltyData) {
       return {
-        ...this.loyaltyData.stepTiers
+        ...this.loyaltyData.TiersConversions
       };
     }
   }
