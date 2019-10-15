@@ -1,27 +1,25 @@
+<img class="background" [src]="background" *ngIf="background">
 <div class="main-puzzle-container" *ngIf="stampCard$ | async as stampCard">
-  <div class="game-wrapper" [ngStyle]="{'background-image': background? 'url(' + background + ')': '' }">
+  <div class="game-wrapper" [ngStyle]="{'background-image': cardBackground? 'url(' + cardBackground + ')': '' }">
     <div>
       <h1>{{this.title}}</h1>
       <h3>{{this.subTitle}}</h3>
     </div>
-    <div class="stamp-form" [ngStyle]="{'background-image': cardBackground? 'url(' + cardBackground + ')': '' }">
-      <div class="contain-child">
-        <perx-core-puzzle-collect-stamps
-          [nbSlots]="stampCard.campaignConfig.totalSlots" 
-          [stamps]="stampCard.collectionStamps" 
-          [rewards]="stampCard.campaignConfig.collectionRewards"
-          [preStampImg]="stampCard.displayProperties.preStampImg" 
-          [postStampImg]="stampCard.displayProperties.postStampImg"
-          [rewardPreStamp]="stampCard.displayProperties.rewardPreStamp" 
-          [rewardPostStamp]="stampCard.displayProperties.rewardPostStamp">
-        </perx-core-puzzle-collect-stamps>
-      </div>
+    <div class="stamp-form">
+      <perx-core-puzzle-collect-stamps
+        [nbSlots]="stampCard.campaignConfig.totalSlots"
+        [stamps]="stampCard.collectionStamps"
+        [rewards]="stampCard.campaignConfig.collectionRewards"
+        [preStampImg]="stampCard.displayProperties.preStampImg"
+        [postStampImg]="stampCard.displayProperties.postStampImg"
+        [rewardPreStamp]="stampCard.displayProperties.rewardPreStamp"
+        [rewardPostStamp]="stampCard.displayProperties.rewardPostStamp">
+      </perx-core-puzzle-collect-stamps>
     </div>
     <div class="button-Stamp">
-      <button mat-raised-button>
-          {{stampCard.buttonText}}
-      </button>
+      <a mat-raised-button [routerLink]="['/wallet']">
+        {{stampCard.buttonText}}
+      </a>
     </div>
   </div>
 </div>
-
