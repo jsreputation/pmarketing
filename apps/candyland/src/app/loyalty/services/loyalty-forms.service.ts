@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoyaltyStepForm } from '../models/loyalty-stap-form';
+import { LoyaltyStepForm } from '../models/loyalty-step-form.enum';
 import { ClValidators } from '@cl-helpers/cl-validators';
 
 @Injectable({

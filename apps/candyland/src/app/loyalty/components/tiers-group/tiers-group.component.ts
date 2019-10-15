@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 
 @Component({
   selector: 'cl-tiers-group',
@@ -37,7 +38,7 @@ export class TiersGroupComponent implements AfterViewInit {
       }
     }];
   @Input() public displayedColumns: string[] = ['name', 'qualification', 'earnBonus', 'burnRule', 'pointsExpiry'];
-  @Output() public itemAction: EventEmitter<number> = new EventEmitter();
+  @Output() public itemAction: EventEmitter<{ action: NewLoyaltyActions, data?: any }> = new EventEmitter();
 
   constructor() {
     this.dataSource = new MatTableDataSource();
@@ -47,19 +48,19 @@ export class TiersGroupComponent implements AfterViewInit {
     this.dataSource.data = this.data;
   }
 
-  public editItem(id: number): void {
-    this.itemAction.emit(id);
+  public editItem(tier: any): void {
+    this.itemAction.emit({action: NewLoyaltyActions.editTier, data: tier});
   }
 
-  public duplicateItem(id: number): void {
-    this.itemAction.emit(id);
+  public duplicateItem(tier: any): void {
+    this.itemAction.emit({action: NewLoyaltyActions.duplicateTier, data: tier});
   }
 
-  public deleteItem(id: number): void {
-    this.itemAction.emit(id);
+  public deleteItem(tier: any): void {
+    this.itemAction.emit({action: NewLoyaltyActions.duplicateTier, data: tier});
   }
 
   public createTier(): void {
-    console.log('create');
+    this.itemAction.emit({action: NewLoyaltyActions.createTier});
   }
 }

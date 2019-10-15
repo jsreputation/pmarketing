@@ -6,7 +6,7 @@ import { TierSetupPopupComponent } from 'src/app/loyalty/containers/tier-setup-p
 import { LoyaltyFormsService } from '../../services/loyalty-forms.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
-import { LoyaltyStepForm } from '../../models/loyalty-stap-form';
+import { LoyaltyStepForm } from '../../models/loyalty-step-form.enum';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from '@cl-core/services/user.service';
 import { Observable } from 'rxjs';
