@@ -23,6 +23,8 @@ import { CampaignState } from '@perx/core';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
+import { rewards } from './rewards.mock';
+import { game } from './game.mock';
 
 class MockNotificationService {
   get $popup(): Observable<any> {
@@ -37,6 +39,7 @@ class MockNotificationService {
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
+  let router: Router;
   const authenticationServiceStub = {
     saveUserAccessToken: () => { }
   };
@@ -164,6 +167,7 @@ describe('AppComponent', () => {
     // @ts-ignore
     global.dataLayerSH = {};
     fixture = TestBed.createComponent(AppComponent);
+    router = TestBed.get<Router>(Router as Type<Router>);
     component = fixture.debugElement.componentInstance;
   });
 
@@ -227,14 +231,28 @@ describe('AppComponent', () => {
         throwError({ code: 500, message: 'server failed' })
       );
 
-      const routerFixture: Router = fixture.debugElement.injector.get(Router);
-      const routerSpy = spyOn(routerFixture, 'navigateByUrl').and.callThrough();
+      const routerSpy = spyOn(router, 'navigateByUrl').and.callThrough();
       component.ngOnInit();
       tick();
       expect(campaignsServiceSpy).toHaveBeenCalled();
       expect(routerSpy).toHaveBeenCalledWith('error');
     }));
 
+    it('should navigate', () => {
+      const routerSpy = spyOn(router, 'navigate');
+      component.reward = rewards[0];
+      component.dialogClosed();
+      expect(routerSpy).toHaveBeenCalledWith([`/reward`], { queryParams: { id: component.reward.id } });
+      component.reward = null;
+      component.game = game[0];
+      component.dialogClosed();
+      expect(routerSpy).toHaveBeenCalledWith([`/game`], { queryParams: { id: 1 } });
+      component.reward = null;
+      component.game = null;
+      const spyLog = spyOn(console, 'error');
+      component.dialogClosed();
+      expect(spyLog).toHaveBeenCalledWith('Something fishy, we should not be here, without any reward or game');
+    });
   });
 
   // describe('dialogClosed', () => {
