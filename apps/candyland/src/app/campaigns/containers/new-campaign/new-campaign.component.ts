@@ -241,7 +241,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
             }))
       ).subscribe(
         campaign => {
-          console.log(campaign);
           this.campaign = Object.assign({}, campaign);
           this.store.initCampaign(campaign);
           this.form.patchValue({
