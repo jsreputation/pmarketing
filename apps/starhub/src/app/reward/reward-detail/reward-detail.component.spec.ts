@@ -3,41 +3,103 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RewardDetailComponent } from './reward-detail.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { RewardsService, LocationsService } from '@perx/core';
 import { LocationShortFormatComponent } from '../../location-short-format/location-short-format.component';
+import { of } from 'rxjs';
 import { ExpireTimerComponent } from '../expire-timer/expire-timer.component';
+import { rewards } from 'src/app/rewards.mock';
+import { Location } from '@angular/common';
+import { Type } from '@angular/core';
+
+const locationsServiceStub = {
+  getFromMerchant: () => of()
+};
 
 describe('RewardDetailComponent', () => {
   let component: RewardDetailComponent;
   let fixture: ComponentFixture<RewardDetailComponent>;
+  let location: Location;
+  const rewardsServiceStub = {
+    getReward: () => of()
+  };
 
   const locationStub = {
-    back: () => {}
+    back: () => { }
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardDetailComponent, LocationShortFormatComponent, ExpireTimerComponent ],
+      declarations: [RewardDetailComponent, LocationShortFormatComponent, ExpireTimerComponent],
       imports: [
         MatIconModule,
         RouterTestingModule
       ],
       providers: [
         { provide: Location, useValue: locationStub },
+        { provide: LocationsService, useValue: locationsServiceStub },
+        { provide: RewardsService, useValue: rewardsServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RewardDetailComponent);
     component = fixture.componentInstance;
+    component.reward = rewards[0];
     fixture.detectChanges();
+    location = TestBed.get<Location>(Location as Type<Location>);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should show macaron text and it should be Expiring', fakeAsync(() => {
+    const rewardValidTo = new Date();
+    component.macaron = {
+      label: '123',
+      isButtonEnabled: false,
+      class: ''
+    };
+    const expiringReward = {
+      id: 2,
+      name: 'Get a Free Coke',
+      description: '',
+      subtitle: '',
+      validFrom: new Date(),
+      validTo: new Date(rewardValidTo.setHours(rewardValidTo.getHours() + 35)),
+      rewardThumbnail: '',
+      rewardBanner: '',
+      merchantImg: '',
+      merchantName: 'Pizza Hut',
+      termsAndConditions: '',
+      howToRedeem: '',
+      merchantId: 2,
+      inventory: {
+        rewardTotalBalance: 5000,
+        rewardTotalLimit: 5000,
+      }
+    };
+    component.reward = expiringReward;
+    component.onExpiring();
+    tick();
+    expect(component.reward).toBe(expiringReward);
+    expect(component.macaron.label).toBe('Expiring');
+    expect(component.isExpired).toBe(false);
+    expect(component.showMacaron).toBe(true);
+
+    component.macaron = null;
+    component.onExpiring();
+    tick();
+    expect(component.macaron).toEqual({ label: 'Expiring', class: '', isButtonEnabled: false });
+  }));
+
+  it('should navigate back', () => {
+    const spy = spyOn(location, 'back');
+    component.back();
+    expect(spy).toHaveBeenCalled();
+  });
   describe('ngOnInit', () => {
 
     it('should show macaron text and it should be Expiring', fakeAsync(() => {
@@ -63,7 +125,6 @@ describe('RewardDetailComponent', () => {
       };
       component.reward = expiringReward;
 
-      component.ngOnInit();
       component.onExpiring();
       tick();
       expect(component.reward).toBe(expiringReward);
@@ -71,36 +132,12 @@ describe('RewardDetailComponent', () => {
       expect(component.isExpired).toBe(false);
       expect(component.showMacaron).toBe(true);
     }));
-
-    it('should show macaron text and it should be Expired, and should emit hasExpired to set button to disabled', fakeAsync(() => {
-      const expiringReward = {
-        id: 3,
-        name: 'Get a Free Coke',
-        description: '',
-        subtitle: '',
-        validFrom: new Date(),
-        validTo: new Date('Sun Aug 20 2019 22:09:08'),
-        rewardThumbnail: '',
-        rewardBanner: '',
-        merchantImg: '',
-        merchantName: 'Pizza Hut',
-        termsAndConditions: '',
-        howToRedeem: '',
-        merchantId: 2,
-        inventory: {
-          rewardTotalBalance: 5000,
-          rewardTotalLimit: 5000,
-        }
-      };
-      component.reward = expiringReward;
-      const emitSpy = spyOn(component.hasExpired, 'emit');
-      component.ngOnInit();
-      component.setToExpired();
-      tick();
-      expect(component.reward).toBe(expiringReward);
-      expect(component.macaron.label).toBe('Expired');
-      expect(component.isExpired).toBe(true);
-      expect(emitSpy).toHaveBeenCalledWith(true);
-    }));
   });
+
+  it('should setToExpired', fakeAsync(() => {
+    component.macaron = null;
+    component.setToExpired();
+    tick();
+    expect(component.macaron.label).toBe('Expiring');
+  }));
 });

@@ -5,6 +5,7 @@ import { RewardsService, NotificationService, IVoucherService } from '@perx/core
 import { filter, map, switchMap } from 'rxjs/operators';
 import { IReward } from '@perx/core';
 import { AnalyticsService, PageType } from '../analytics.service';
+import { IMacaron, MacaronService } from '../services/macaron.service';
 
 @Component({
   selector: 'app-reward',
@@ -15,7 +16,7 @@ export class RewardComponent implements OnInit {
   public reward: IReward;
   public isButtonEnable: boolean = true;
   public isRewardsDetailsFetched: boolean = false;
-
+  public macaron: IMacaron;
   constructor(
     private location: Location,
     private router: Router,
@@ -23,7 +24,8 @@ export class RewardComponent implements OnInit {
     private rewardsService: RewardsService,
     private vouchersService: IVoucherService,
     private notificationService: NotificationService,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private macaronService: MacaronService
   ) { }
 
   public ngOnInit(): void {
@@ -44,9 +46,10 @@ export class RewardComponent implements OnInit {
             siteSectionLevel3: `rewards:discover:${category.toLowerCase()}`
           });
         }
-        // this.analyticsService.addEvent({});
-        // if there is no more personnal inventory for this user disable the button
-        if (reward.inventory && reward.inventory.rewardLimitPerUserBalance === 0) {
+
+        this.macaron = this.macaronService.getMacaron(reward);
+        this.isRewardsDetailsFetched = true;
+        if (reward.inventory && reward.inventory.rewardLimitPerUserBalance === 0 || this.macaron !== null) {
           this.isButtonEnable = false;
         }
       });
@@ -62,10 +65,5 @@ export class RewardComponent implements OnInit {
         () => this.router.navigate(['/home/vouchers']),
         () => this.notificationService.addSnack('Sorry! Could not save reward.')
       );
-  }
-
-  public setButton(isEnable: boolean): void {
-    this.isRewardsDetailsFetched = true;
-    this.isButtonEnable = isEnable && this.isButtonEnable;
   }
 }
