@@ -47,9 +47,7 @@ export class SideNavComponent implements OnInit, OnDestroy {
   public isOpen: boolean = true;
   public visibility: string = 'shown';
   public sideNavOpened: boolean = true;
-
   public mobileQuery: MediaQueryList;
-
   private myMobileQueryListener: () => void;
 
   constructor(private authService: AuthService,
