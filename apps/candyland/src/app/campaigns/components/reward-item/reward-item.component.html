@@ -34,7 +34,7 @@
     <!--    <button mat-icon-button (click)="delete()">-->
     <!--      <i class="icon delete-action"></i>-->
     <!--    </button>-->
-    <button mat-icon-button *ngIf="data" (click)="delete()">
+    <button mat-icon-button *ngIf="data?.name" (click)="delete()">
       <i class="icon full-with delete-action"></i>
     </button>
   </div>

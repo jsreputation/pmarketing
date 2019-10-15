@@ -58,7 +58,7 @@ export class CampaignsHttpAdapter {
     };
   }
 
-  public static transformPossibleOutcomesFromCampaign(data: any[], slotNumber?: number): IOutcomeAttributes[] {
+  public static transformPossibleOutcomesFromCampaign(data: any[], enableProbability: boolean, slotNumber?: number): IOutcomeAttributes[] {
     return data.map(
       reward => {
         let rewardData;
@@ -67,13 +67,13 @@ export class CampaignsHttpAdapter {
             id: reward.value.outcomeId,
             result_id: reward.value.id,
             result_type: 'reward',
-            probability: reward.probability / 100 || null
+            probability: enableProbability ? reward.probability / 100 : null
           };
         } else {
           rewardData = {
             id: reward.value.outcomeId,
             no_outcome: true,
-            probability: reward.probability / 100 || null
+            probability: enableProbability ? reward.probability / 100 : null
           };
         }
 
@@ -89,9 +89,13 @@ export class CampaignsHttpAdapter {
     const possibleOutcomes = data.template.attributes_type === EngagementType.stamp ?
       data.rewardsListCollection.map(
         rewardsData =>
-          CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(rewardsData.rewardsOptions.rewards, rewardsData.stampSlotNumber)
+          CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(
+            rewardsData.rewardsOptions.rewards,
+            rewardsData.enableProbability,
+            rewardsData.stampSlotNumber
+          )
       ).flat(1) :
-      CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(data.rewardsOptions.rewards);
+      CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(data.rewardsOptions.rewards, data.rewardsOptions.enableProbability);
     const sendTime = data.channel.schedule && data.channel.schedule.sendTime ? data.channel.schedule.sendTime : moment().format('LT');
     const sendAt = data.channel.schedule ?
       moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + sendTime).format() :
