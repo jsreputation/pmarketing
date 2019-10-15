@@ -107,7 +107,7 @@
   border: none;
   outline: none;
   background: none;
-  color: $base-font-color;
+  color: $secondary-color;
   cursor: pointer;
 
   span,
@@ -118,13 +118,13 @@
     margin: 0 auto;
     display: block;
     border-radius: 2px;
-    background: rgba(0, 0, 0, 1);
+    background: rgba($secondary-color, 1);
     transition: all .25s ease;
   }
 
   span {
     font-size: 1px;
-    color: rgba(0, 0, 0, 0);
+    color: rgba($secondary-color, 0);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -150,21 +150,22 @@
   &:hover span {
     transform: translate(-50%, -50%) rotate(90deg);
   }
+}
 
-  &:focus span {
-    background: rgba(0, 0, 0, 0);
-    transform: translate(-50%, -50%) rotate(0);
+.side-nav-toggle:active span,
+.mat-drawer-opened .side-nav-toggle span {
+  background: rgba($secondary-color, 0);
+  transform: translate(-50%, -50%) rotate(0);
 
-    &::before {
-      top: 50%;
-      transform: translateY(-50%) rotate(45deg);
-    }
+  &::before {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
 
-    &::after {
-      bottom: 50%;
-      transform: scaleX(1.5);
-      transform: translateY(50%) rotate(-45deg);
-    }
+  &::after {
+    bottom: 50%;
+    transform: scaleX(1.5);
+    transform: translateY(50%) rotate(-45deg);
   }
 }
 
