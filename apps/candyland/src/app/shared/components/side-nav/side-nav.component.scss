@@ -152,7 +152,7 @@
   }
 }
 
-.side-nav-toggle:active span,
+.mat-drawer-opened .side-nav-toggle:focus span,
 .mat-drawer-opened .side-nav-toggle span {
   background: rgba($secondary-color, 0);
   transform: translate(-50%, -50%) rotate(0);
