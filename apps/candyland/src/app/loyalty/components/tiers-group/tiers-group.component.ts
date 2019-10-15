@@ -20,8 +20,8 @@ export class TiersGroupComponent implements AfterViewInit {
     burnRule: 10,
     pointsExpiry: {
       amount: 3,
-      period: 'days',
-      type: 'earned',
+      type: 'day',
+      trigger: 'earned',
     }
   },
     {
@@ -32,13 +32,13 @@ export class TiersGroupComponent implements AfterViewInit {
       earnBonus: 20,
       burnRule: 10,
       pointsExpiry: {
-        amount: 6,
-        period: 'months',
-        type: 'earned',
+        amount: 3,
+        type: 'day',
+        trigger: 'earned',
       }
     }];
-  @Input() public displayedColumns: string[] = ['name', 'qualification', 'earnBonus', 'burnRule', 'pointsExpiry'];
-  @Output() public itemAction: EventEmitter<{ action: NewLoyaltyActions, data?: any }> = new EventEmitter();
+  @Input() public displayedColumns: string[] = ['name', 'qualification', 'earnBonus', 'burnRule', 'pointsExpiry', 'actions'];
+  @Output() public tiersAction: EventEmitter<{ action: NewLoyaltyActions, data?: any }> = new EventEmitter();
 
   constructor() {
     this.dataSource = new MatTableDataSource();
@@ -49,18 +49,18 @@ export class TiersGroupComponent implements AfterViewInit {
   }
 
   public editItem(tier: any): void {
-    this.itemAction.emit({action: NewLoyaltyActions.editTier, data: tier});
+    this.tiersAction.emit({action: NewLoyaltyActions.editTier, data: tier});
   }
 
   public duplicateItem(tier: any): void {
-    this.itemAction.emit({action: NewLoyaltyActions.duplicateTier, data: tier});
+    this.tiersAction.emit({action: NewLoyaltyActions.duplicateTier, data: tier});
   }
 
   public deleteItem(tier: any): void {
-    this.itemAction.emit({action: NewLoyaltyActions.duplicateTier, data: tier});
+    this.tiersAction.emit({action: NewLoyaltyActions.duplicateTier, data: tier});
   }
 
   public createTier(): void {
-    this.itemAction.emit({action: NewLoyaltyActions.createTier});
+    this.tiersAction.emit({action: NewLoyaltyActions.createTier});
   }
 }

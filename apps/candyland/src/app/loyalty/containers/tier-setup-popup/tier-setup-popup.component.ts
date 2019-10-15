@@ -29,6 +29,7 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initForm();
+    this.fillForm();
     this.handlePointsThreshold();
   }
 
@@ -49,6 +50,11 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
 
   private initForm(): void {
     this.form = this.loyaltyFormsService.getTireForm();
+  }
+
+  private fillForm(): void {
+    const pathValue = this.data || this.loyaltyFormsService.getDefaultValueTireForm();
+    this.form.patchValue(pathValue);
   }
 
   private handlePointsThreshold(): void {

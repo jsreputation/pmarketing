@@ -12,6 +12,7 @@ import { UserService } from '@cl-core/services/user.service';
 import { Observable } from 'rxjs';
 import { AudiencesService } from '@cl-core-services';
 import { AddRulePopupComponent } from '../../components/add-rule-popup/add-rule-popup.component';
+import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 
 @Component({
   selector: 'cl-new-loyalty',
@@ -94,17 +95,25 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     this.form.addControl(step, this.loyaltyFormsService.getStep(step));
   }
 
-  public createNewTier(): void {
-    const dialogRef: MatDialogRef<TierSetupPopupComponent> = this.dialog.open(TierSetupPopupComponent, {panelClass: 'tier-setup-dialog'});
+  public getRefDialogSetupTier(data: any = null): Observable<MatDialogRef<TierSetupPopupComponent>> {
+    const dialogRef: MatDialogRef<TierSetupPopupComponent> = this.dialog.open(TierSetupPopupComponent, {
+      panelClass: 'tier-setup-dialog',
+      data
+    });
 
-    dialogRef.afterClosed()
+    return dialogRef.afterClosed()
       .pipe(
         untilDestroyed(this),
         filter(Boolean)
-      )
-      .subscribe(() => {
-        // this.form.get('merchantInfo').patchValue(id);
-      });
+      );
+  }
+
+  public createTire(): void {
+    this.getRefDialogSetupTier().subscribe( answer => console.log(answer));
+  }
+
+  public editTire(data: any): void {
+    this.getRefDialogSetupTier(data).subscribe( answer => console.log(answer));
   }
 
   public ngAfterViewInit(): void {
@@ -137,4 +146,17 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  public handleLoyaltyActions(data: { action: NewLoyaltyActions, data?: any }): void {
+    switch (data.action) {
+      case NewLoyaltyActions.createTier:
+        this.createTire();
+        break;
+      case NewLoyaltyActions.editTier:
+        this.editTire(data.data);
+        break;
+      case NewLoyaltyActions.deleteTier:
+        console.log(NewLoyaltyActions.createTier);
+        break;
+    }
+  }
 }

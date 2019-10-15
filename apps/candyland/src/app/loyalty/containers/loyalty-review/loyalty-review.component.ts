@@ -50,6 +50,11 @@ export class LoyaltyReviewComponent implements OnInit {
           userInactivityAmount: 1,
           userInactivityPeriod: 'days'
         },
+        pointsExpiry2: {
+          amount: 3,
+          type: 'day',
+          trigger: 'earned',
+        },
         tiers: []
       }
     };
