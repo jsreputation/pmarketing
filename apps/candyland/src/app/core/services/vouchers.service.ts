@@ -1,16 +1,17 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 import { VouchersHttpService } from '@cl-core/http-services/vouchers-https.service';
 import { VouchersHttpAdapter } from '@cl-core/http-adapters/vouchers-http-adapter';
+import { ApiConfig } from '@cl-core/api-config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VouchersService {
 
-  constructor(private vouchersHttp: VouchersHttpService) { }
+  constructor(private vouchersHttp: VouchersHttpService, private http: HttpClient) { }
 
   public getVouchers(params: HttpParams): Observable<any> {
     return this.vouchersHttp.getVouchers(params);
@@ -29,14 +30,26 @@ export class VouchersService {
     return this.vouchersHttp.createVoucher({ data: formattedVoucher });
   }
 
-  // This will be replaced with the new endpoint
-  // @ts-ignore
-  public getStats(rewardId: string): Observable<{ [k: string]: number }> {
-    return of({
-      available: Math.floor(Math.random() * 10000),
-      issued: Math.floor(Math.random() * 10000),
-      expired: Math.floor(Math.random() * 10000),
-      redeemed: Math.floor(Math.random() * 10000)
-    });
+  private transformToVoucherStatsObj(httpResp: IJsonApiPayload<IVoucherStatsApi>): IVoucherStatsResults {
+    const result: IVoucherStatsResults = { available: 0, issued: 0, expired: 0, redeemed: 0};
+    const {inventory, assigned} = httpResp.data.attributes;
+    for (let property in inventory) {
+      if (property !== 'issued') { // dont need to loop through it again //dw loop unnecessarily
+        result[property] += +inventory[property];
+      }
+    }
+    for (let property in assigned) {
+      if (property !== 'voided') {
+        result[property] += +assigned[property];
+      }
+    }
+    return result;
+  }
+
+  public getStats(rewardId: string): Observable<IVoucherStatsResults> {
+    return this.http.get(`${ApiConfig.basePath}/voucher/stats?source_id=${rewardId}&source_type=Perx::Reward::Entity`).pipe(
+      map((res) => this.transformToVoucherStatsObj(res as IJsonApiPayload<IVoucherStatsApi>))
+    )
   }
 }
+
