@@ -89,7 +89,11 @@ export class CampaignsHttpAdapter {
     const possibleOutcomes = data.template.attributes_type === EngagementType.stamp ?
       data.rewardsListCollection.map(
         rewardsData =>
-          CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(rewardsData.rewardsOptions.rewards, rewardsData.enableProbability, rewardsData.stampSlotNumber)
+          CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(
+            rewardsData.rewardsOptions.rewards,
+            rewardsData.enableProbability,
+            rewardsData.stampSlotNumber
+          )
       ).flat(1) :
       CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(data.rewardsOptions.rewards, data.rewardsOptions.enableProbability);
     const sendTime = data.channel.schedule && data.channel.schedule.sendTime ? data.channel.schedule.sendTime : moment().format('LT');
