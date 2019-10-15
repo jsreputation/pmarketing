@@ -14,7 +14,7 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class LoginComponent implements OnInit, PageAppearence {
 
-  public selectedCountry: string = '+852';
+  public selectedCountry: string = '852';
 
   public loginForm: FormGroup;
 
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit, PageAppearence {
     this.loginForm = this.fb.group({
       mobileNo: ['', Validators.required],
       password: ['', Validators.required],
-      countryCode: ['852', Validators.required]
+      countryCode: [this.selectedCountry, Validators.required]
     });
   }
 
@@ -99,10 +99,6 @@ export class LoginComponent implements OnInit, PageAppearence {
           if (err.status === 0) {
             this.notificationService.addSnack('We could not reach the server');
           } else if (err.status === 401) {
-            [this.loginForm.controls.mobileNo, this.loginForm.controls.password]
-              .forEach(c => c.setErrors({
-                invalid: true
-              }));
             this.notificationService.addSnack('Invalid credentials');
           }
         }
