@@ -1,5 +1,7 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { IAnswer } from '../../models/survey.model';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 interface IPayloadLongText {
   type: string;
@@ -11,7 +13,7 @@ interface IPayloadLongText {
   templateUrl: './long-text.component.html',
   styleUrls: ['./long-text.component.scss']
 })
-export class LongTextComponent implements OnChanges {
+export class LongTextComponent implements OnChanges, OnInit {
 
   @Input()
   public payload: IPayloadLongText;
@@ -23,6 +25,15 @@ export class LongTextComponent implements OnChanges {
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
 
   public answer: string;
+  private subject: Subject<string> = new Subject();
+
+  public ngOnInit(): void {
+    this.subject.pipe(
+      debounceTime(500)
+    ).subscribe(inputValue => {
+      this.updateAnswers.emit({ content: inputValue });
+    });
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.flush && changes.flush.currentValue !== undefined) {
@@ -32,6 +43,6 @@ export class LongTextComponent implements OnChanges {
 
   public updateInput(value: string): void {
     this.answer = value;
-    this.updateAnswers.emit({ content: value });
+    this.subject.next(value);
   }
 }
