@@ -1,9 +1,9 @@
 <div class="loyalty-item">
-  <div class="loyalty-item-img-container" [class.linkable]="linkable" (click)="navigateToEdit()">
+  <div class="loyalty-item-img-container" [class.linkable]="linkable" (click)="navigateToReview()">
     <img class="loyalty-item-img" *ngIf="data?.image" [src]="data?.image">
   </div>
   <div class="loyalty-item-info">
-    <p class="loyalty-item-name" [class.linkable]="linkable" (click)="navigateToEdit()">{{data?.name}}</p>
+    <p class="loyalty-item-name" [class.linkable]="linkable" (click)="navigateToReview()">{{data?.name}}</p>
     <p class="loyalty-item-group">{{data?.groupName}}</p>
     <p class="loyalty-item-tiers" *ngIf="data?.tiersCount > 0">{{data?.tiersCount}} tiers</p>
     <cl-status-label [status]="data?.status"></cl-status-label>

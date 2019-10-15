@@ -25,9 +25,9 @@ export class LoyaltyItemComponent {
     this.menuTapped.emit({action: option.action, engagement: this.data});
   }
 
-  public navigateTo(): void {
+  public navigateToReview(): void {
     if (this.linkable) {
-      this.router.navigate(['review/' + this.data.id]);
+      this.router.navigate(['loyalty/review/' + this.data.id]);
     }
   }
 

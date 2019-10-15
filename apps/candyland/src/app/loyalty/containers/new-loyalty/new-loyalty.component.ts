@@ -11,6 +11,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from '@cl-core/services/user.service';
 import { Observable } from 'rxjs';
 import { AudiencesService } from '@cl-core-services';
+import { AddRulePopupComponent } from '../../components/add-rule-popup/add-rule-popup.component';
 
 @Component({
   selector: 'cl-new-loyalty',
@@ -22,6 +23,7 @@ import { AudiencesService } from '@cl-core-services';
 })
 export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   public form: FormGroup;
+  public indexStep: number = 2;
   public pools: any;
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
@@ -65,11 +67,11 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public get stepOne(): AbstractControl {
-    return this.form.get(this.loyaltyFormType.one);
+    return this.form.get(this.loyaltyFormType.details);
   }
 
   public get stepTwo(): AbstractControl {
-    return this.form.get(this.loyaltyFormType.two);
+    return this.form.get(this.loyaltyFormType.tiers);
   }
 
   public get name(): AbstractControl {
@@ -90,7 +92,6 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.form.addControl(step, this.loyaltyFormsService.getStep(step));
-    // console.log(this.form);
   }
 
   public createNewTier(): void {
@@ -112,7 +113,10 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
       this.stepper.selectionChange
         .pipe(untilDestroyed(this))
         .subscribe((val) => {
-          this.addStepForm(this.getStepFormName(val.selectedIndex));
+          this.indexStep = val.selectedIndex;
+          if (val.selectedIndex < 2) {
+            this.addStepForm(this.getStepFormName(val.selectedIndex));
+          }
         });
     }
   }
@@ -123,6 +127,14 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private getStepFormName(indexStep: number): string {
     return this.loyaltyFormsService.getStepName(indexStep);
+  }
+
+  public addRule(): void {
+    const dialogRef = this.dialog.open(AddRulePopupComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
   }
 
 }

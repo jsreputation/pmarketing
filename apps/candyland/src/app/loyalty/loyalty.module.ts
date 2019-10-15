@@ -1,6 +1,6 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ReactiveFormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import {
   MatCardModule,
   MatFormFieldModule,
@@ -28,7 +28,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {LoyaltyFormStepOneComponent} from './components/loyalty-form-step-one/loyalty-form-step-one.component';
 import {LoyaltyFormStepTiersConversionsComponent} from './components/loyalty-form-step-tiers-conversions/loyalty-form-step-tiers-conversions.component';
 import {LoyaltyFormStepThreeComponent} from './components/loyalty-form-step-three/loyalty-form-step-three.component';
-import {LoyaltyFormStepFourComponent} from './components/loyalty-form-step-four/loyalty-form-step-four.component';
+import {LoyaltyFormStepReviewComponent} from './components/loyalty-form-step-review/loyalty-form-step-review.component';
 import {PointsInfoComponent} from './components/points-info/points-info.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {ProgramMainImageComponent} from './components/program-main-image/program-main-image.component';
@@ -42,6 +42,12 @@ import { GlobalBurnRuleGroupComponent } from './components/global-burn-rule-grou
 import { PointsExpiryGroupComponent } from './components/points-expiry-group/points-expiry-group.component';
 import { TiersGroupComponent } from './components/tiers-group/tiers-group.component';
 import { MatTableModule } from '@angular/material/table';
+import {GlobalEarnRuleComponent} from './components/global-earn-rule/global-earn-rule.component';
+import { AddRulePopupComponent } from './components/add-rule-popup/add-rule-popup.component';
+import { ViewSchemeInfoComponent } from './components/view-scheme-info/view-scheme-info.component';
+import { ViewLoyaltyComponent } from './components/view-loyalty/view-loyalty.component';
+import { ViewGlobalEarnBurnRulesComponent } from './components/view-global-earn-burn-rules/view-global-earn-burn-rules.component';
+import { LoyaltyReviewComponent } from './containers/loyalty-review/loyalty-review.component';
 
 @NgModule({
   declarations: [
@@ -53,16 +59,23 @@ import { MatTableModule } from '@angular/material/table';
     LoyaltyFormStepOneComponent,
     LoyaltyFormStepTiersConversionsComponent,
     LoyaltyFormStepThreeComponent,
-    LoyaltyFormStepFourComponent,
+    LoyaltyFormStepReviewComponent,
     PointsInfoComponent,
     ProgramMainImageComponent,
     UserJoiningMethodComponent,
     SelectAudienceComponent,
+    GlobalEarnRuleComponent,
+    AddRulePopupComponent,
     TierSetupPopupComponent,
     GlobalEarnRuleGroupComponent,
     GlobalBurnRuleGroupComponent,
     PointsExpiryGroupComponent,
-    TiersGroupComponent
+    TiersGroupComponent,
+    UserJoiningMethodComponent,
+    ViewSchemeInfoComponent,
+    ViewLoyaltyComponent,
+    ViewGlobalEarnBurnRulesComponent,
+    LoyaltyReviewComponent,
   ],
   imports: [
     CommonModule,
@@ -98,8 +111,8 @@ import { MatTableModule } from '@angular/material/table';
     LoyaltyFormsService
   ],
   entryComponents: [
+    AddRulePopupComponent,
     TierSetupPopupComponent
   ]
 })
-export class LoyaltyModule {
-}
+export class LoyaltyModule { }
