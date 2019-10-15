@@ -4,11 +4,12 @@ import { CampaignsService, EngagementsService, CommsService, OutcomesService, Li
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, catchError } from 'rxjs/operators';
 import { combineLatest, of, Observable } from 'rxjs';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
+import { ILimit } from '@cl-core/models/limit/limit.interface';
 
 @Component({
   selector: 'cl-review-campaign',
@@ -56,51 +57,54 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     };
     if (campaignId) {
       combineLatest(
-        this.campaignsService.getCampaign(campaignId),
-        this.commsService.getCommsEvent(params),
-        this.outcomesService.getOutcomes(paramsPO)).pipe(
-          untilDestroyed(this),
-          map(
-            ([campaign, commEvent, outcomes]:
-              [ICampaign, IComm, IOutcome[]]) => ({
+        this.campaignsService.getCampaign(campaignId).pipe(catchError(() => of(null))),
+        this.commsService.getCommsEvent(params).pipe(catchError(() => of(null))),
+        this.outcomesService.getOutcomes(paramsPO).pipe(
+          map(outcomes => outcomes.map(outcome => ({ ...outcome, probability: outcome.probability * 100 }))),
+          catchError(() => of(null)))).pipe(
+            untilDestroyed(this),
+            map(
+              ([campaign, commEvent, outcomes]:
+                [ICampaign | null, IComm | null, IOutcome[] | null]) => ({
+                  ...campaign,
+                  audience: { select: commEvent && commEvent.poolId || null },
+                  channel: {
+                    type: commEvent && commEvent.channel || 'weblink',
+                    message: commEvent && commEvent.message,
+                    schedule: commEvent && { ...commEvent.schedule }
+                  },
+                  rewardsList: outcomes
+                })
+            ),
+            switchMap((campaign: ICampaign) => {
+              const limitParams: HttpParamsOptions = {
+                'filter[campaign_entity_id]': campaign.id
+              };
+              const eType = campaign.engagement_type;
+              return combineLatest(
+                of(campaign),
+                this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
+                this.limitsService.getLimits(limitParams, eType).pipe(map(limits => limits[0]), catchError(() => of({ times: null }))),
+                this.getRewards(campaign.rewardsList)
+              );
+            }),
+            map(([campaign, engagement, limits, rewards]:
+              [ICampaign | null, IEngagement | null, ILimit | null, { value: IRewardEntity }[] | null]) => ({
                 ...campaign,
-                audience: { select: commEvent && commEvent.poolId || null },
-                channel: {
-                  type: commEvent && commEvent.channel || 'weblink',
-                  message: commEvent && commEvent.message,
-                  schedule: commEvent && { ...commEvent.schedule }
-                },
-                rewardsList: outcomes
-              })
-          ),
-          switchMap(campaign => {
-            const limitParams: HttpParamsOptions = {
-              'filter[campaign_entity_id]': campaign.id
-            };
-            const eType = campaign.engagement_type;
-            return combineLatest(
-              of(campaign),
-              this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
-              this.limitsService.getLimits(limitParams, eType).pipe(map(limits => limits[0])),
-              this.getRewards(campaign.rewardsList)
-            );
-          }),
-          map(([campaign, engagement, limits, rewards]) => ({
-            ...campaign,
-            template: engagement,
-            limits,
-            rewardsOptions: {
-              rewards
-            }
-          }))
-        ).subscribe(
-          campaign => {
-            this.campaign = campaign;
-            this.store.updateCampaign(this.campaign);
-            this.cd.detectChanges();
-          },
-          (err) => console.log(err)
-        );
+                template: engagement,
+                limits,
+                rewardsOptions: {
+                  rewards
+                }
+              }))
+          ).subscribe(
+            campaign => {
+              this.campaign = campaign;
+              this.store.updateCampaign(this.campaign);
+              this.cd.detectChanges();
+            },
+            (err) => console.log(err)
+          );
     }
   }
 
@@ -112,10 +116,11 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       reward => {
         if (reward.resultId) {
           return this.rewardsService.getReward(reward.resultId).pipe(
-            map(rewardData => ({ value: { ...rewardData, probability: reward.probability } }))
+            map(rewardData => ({ value: { ...rewardData, probability: reward.probability } })),
+            catchError(() => of({ value: { probability: reward.probability } }))
           );
         }
-        return of({ value: null });
+        return of({ value: { probability: reward.probability } });
       }
     ));
   }
