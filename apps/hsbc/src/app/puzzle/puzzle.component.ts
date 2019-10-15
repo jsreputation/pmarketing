@@ -31,7 +31,6 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   public image: string = '';
   private cardsCount: number = 0;
   private currentStampId: number = 0;
-  public buttonText: string = 'Start Playing';
   public title: string = 'Stamp Card';
   public subTitle: string = 'Earn rewards by collecting stamps';
 
