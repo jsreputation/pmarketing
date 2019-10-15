@@ -4,8 +4,8 @@ export interface IVoucherStatsApi {
   updated_at: string;
   inventory: {
     [key: string]: number;
-  },
+  };
   assigned: {
-    [key:string]: number
-  }
+    [key: string]: number
+  };
 }
