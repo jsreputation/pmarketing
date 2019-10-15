@@ -199,7 +199,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     } else {
       this.rewards.removeAt(0);
       for (let i = 0; i < this.rewards.length; i++) {
-        this.rewards.at(i).get('probability').reset(0, { emitEvent: false });
+        // this.rewards.at(i).get('probability').reset(0, { emitEvent: false });
         this.rewards.at(i).get('probability').disable({ emitEvent: false });
       }
     }
