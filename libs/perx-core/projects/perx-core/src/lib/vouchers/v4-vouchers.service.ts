@@ -282,7 +282,9 @@ export class V4VouchersService implements IVoucherService {
     if (oc(rewardParams).priceId()) {
       params = params.set('price_id', rewardParams.priceId.toString());
     }
-
+    if(oc(rewardParams).sourceType()) {
+      params = params.set('source_type', rewardParams.sourceType);
+    }
     return this.http.post<IV4ReserveRewardResponse>(
       `${this.config.apiHost}/v4/rewards/${rewardId}/reserve`, null, { params }
     ).pipe(
@@ -291,9 +293,13 @@ export class V4VouchersService implements IVoucherService {
     );
   }
 
-  public issueReward(rewardId: number): Observable<IVoucher> {
+  public issueReward(rewardId: number, sourceType?: string): Observable<IVoucher> {
+    let params = new HttpParams();
+    if (sourceType) {
+      params = params.set('source_type', sourceType);
+    }
     return this.http.post<IV4ReserveRewardResponse>(
-      `${this.config.apiHost}/v4/rewards/${rewardId}/issue`, {}
+      `${this.config.apiHost}/v4/rewards/${rewardId}/issue`, { params }
     ).pipe(
       map(res => res.data),
       switchMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id)),

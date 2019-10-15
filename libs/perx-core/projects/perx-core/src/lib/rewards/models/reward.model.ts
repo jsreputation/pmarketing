@@ -56,6 +56,7 @@ export interface ICategoryTags {
 export interface IRewardParams {
   priceId?: number;
   locationId?: number;
+  sourceType?: string;
 }
 
 export interface Inventory {

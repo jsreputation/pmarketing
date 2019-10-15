@@ -10,5 +10,5 @@ export abstract class IVoucherService {
   public abstract newVouchersCreatedForReward(rewardId: number, intervalPeriod?: number): Observable<IVoucher[]>;
   public abstract stateChangedForVoucher(voucherId: number, intervalPeriod?: number): Observable<IVoucher>;
   public abstract reserveReward(rewardId: number, rewardParams?: IRewardParams): Observable<IVoucher>;
-  public abstract issueReward(rewardId: number): Observable<IVoucher>;
+  public abstract issueReward(rewardId: number, sourceType?: string): Observable<IVoucher>;
 }
