@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, catchError } from 'rxjs/operators';
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { AvailableNewEngagementService, EngagementsService, LimitsService } from '@cl-core/services';
@@ -12,6 +12,7 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ActivatedRoute } from '@angular/router';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'cl-new-campaign-select-engagement-page',
@@ -127,13 +128,14 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
       'filter[campaign_entity_id]': campaignData.id
     };
     this.limitsService.getLimits(params, findTemplate.attributes_type).pipe(
-      map((limits: ILimit[]) => limits[0])
-    ).subscribe(
-      limits => {
-        const newCampaign = { ...campaignData, limits };
-        this.store.updateCampaign(newCampaign);
-      }
-    );
+      map((limits: ILimit[]) => limits[0]),
+      catchError(() => of({ times: null }))
+      ).subscribe(
+        limits => {
+          const newCampaign = { ...campaignData, limits };
+          this.store.updateCampaign(newCampaign);
+        }
+      );
   }
 
   private subscribeFormValueChange(): void {
