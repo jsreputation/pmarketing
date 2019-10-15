@@ -6,24 +6,25 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./view-loyalty.component.scss']
 })
 export class ViewLoyaltyComponent implements OnInit {
-  @Input() public loyaltyData: any;
+  @Input() public loyaltyData: ILoyaltyForm;
 
   public ngOnInit(): void {
   }
 
-  public get schemaInf(): any {
+  public get schemaInf(): ILoyaltySchemaInf {
     if (this.loyaltyData) {
       return {
-        ...this.loyaltyData.name,
+        name: this.loyaltyData.name,
+        status: this.loyaltyData.status,
         ...this.loyaltyData.stepDetails
       };
     }
   }
 
-  public get stepTiersConversions(): any {
+  public get stepTiersConversions(): ILoyaltyTiersConversions {
     if (this.loyaltyData) {
       return {
-        ...this.loyaltyData.TiersConversions
+        ...this.loyaltyData.tiersConversions
       };
     }
   }

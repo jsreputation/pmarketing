@@ -23,7 +23,6 @@ import { AddRulePopupComponent } from '../../components/add-rule-popup/add-rule-
 })
 export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   public form: FormGroup;
-  public indexStep: number = 2;
   public pools: any;
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
@@ -113,7 +112,6 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
       this.stepper.selectionChange
         .pipe(untilDestroyed(this))
         .subscribe((val) => {
-          this.indexStep = val.selectedIndex;
           if (val.selectedIndex < 2) {
             this.addStepForm(this.getStepFormName(val.selectedIndex));
           }

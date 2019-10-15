@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'cl-loyalty-form-step-review',
@@ -9,7 +9,7 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 export class LoyaltyFormStepReviewComponent {
   @Input() public group: FormGroup;
 
-  public get formValue(): AbstractControl {
+  public get formValue(): ILoyaltyForm {
     return this.group.value;
   }
 }

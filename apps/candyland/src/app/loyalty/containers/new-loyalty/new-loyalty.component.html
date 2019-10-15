@@ -50,7 +50,7 @@
     <mat-step>
       <ng-template matStepLabel>Review</ng-template>
       <div class="loyalty-detail-content">
-        <cl-loyalty-form-step-review *ngIf="form && stepOne && stepTwo && indexStep === 2" [group]="form"></cl-loyalty-form-step-review>
+        <cl-loyalty-form-step-review *ngIf="form && stepOne && stepTwo && isLastStep" [group]="form"></cl-loyalty-form-step-review>
       </div>
     </mat-step>
   </mat-horizontal-stepper>

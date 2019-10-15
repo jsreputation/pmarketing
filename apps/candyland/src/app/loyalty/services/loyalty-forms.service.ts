@@ -56,8 +56,8 @@ export class LoyaltyFormsService {
       }),
       pointsExpiry: new FormGroup({
         amount: new FormControl(1, [Validators.required]),
-        period: new FormControl('day', [Validators.required]),
-        type: new FormControl('earned', [Validators.required]),
+        type: new FormControl('day', [Validators.required]),
+        trigger: new FormControl('earned', [Validators.required]),
       }),
       tiers: new FormArray([])
     });
@@ -86,8 +86,8 @@ export class LoyaltyFormsService {
       burnRule: new FormControl(null, [Validators.required, Validators.min(1)]),
       pointsExpiry: new FormGroup({
         amount: new FormControl(1, [Validators.required]),
-        period: new FormControl('days', [Validators.required]),
-        type: new FormControl('earned', [Validators.required]),
+        type: new FormControl('days', [Validators.required]),
+        trigger: new FormControl('earned', [Validators.required]),
       })
     });
   }
