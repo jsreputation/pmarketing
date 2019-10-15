@@ -33,12 +33,12 @@ export class VouchersService {
   private transformToVoucherStatsObj(httpResp: IJsonApiPayload<IVoucherStatsApi>): IVoucherStatsResults {
     const result: IVoucherStatsResults = { available: 0, issued: 0, expired: 0, redeemed: 0};
     const {inventory, assigned} = httpResp.data.attributes;
-    for (let property in inventory) {
+    for (const property in inventory) {
       if (property !== 'issued') { // dont need to loop through it again //dw loop unnecessarily
         result[property] += +inventory[property];
       }
     }
-    for (let property in assigned) {
+    for (const property in assigned) {
       if (property !== 'voided') {
         result[property] += +assigned[property];
       }
@@ -49,7 +49,6 @@ export class VouchersService {
   public getStats(rewardId: string): Observable<IVoucherStatsResults> {
     return this.http.get(`${ApiConfig.basePath}/voucher/stats?source_id=${rewardId}&source_type=Perx::Reward::Entity`).pipe(
       map((res) => this.transformToVoucherStatsObj(res as IJsonApiPayload<IVoucherStatsApi>))
-    )
+    );
   }
 }
-
