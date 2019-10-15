@@ -8,8 +8,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class LoyaltyReviewComponent implements OnInit {
   public loyalty: any;
+
   constructor(private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   public ngOnInit(): void {
     const id = this.getIdLoyalty();
@@ -37,11 +39,7 @@ export class LoyaltyReviewComponent implements OnInit {
           signUp: true,
           byInvite: true
         },
-        selectAudience:
-          {
-            audienceType: 'all-audience',
-            allMyAudience: null,
-            uploadFile: null}
+        poolId: null
       },
       TiersConversions: {
         globalEarnRule: {amount: 2, points: 10},

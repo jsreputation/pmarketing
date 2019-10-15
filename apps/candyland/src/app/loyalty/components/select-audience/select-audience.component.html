@@ -5,23 +5,14 @@
     </h2>
   </mat-expansion-panel-header>
 
-  <div class="card-content" [formGroup]="selectAudience">
-    <mat-radio-group [formControlName]="'audienceType'"
-                     aria-label="Select an option"
-                     [color]="'primary'"
-    >
-      <mat-radio-button value="all-audience">All my audience</mat-radio-button>
-      <mat-radio-button value="list-audience">Upload an audience list</mat-radio-button>
-    </mat-radio-group>
-
-    <mat-form-field *ngIf="audienceType.value === 'all-audience'">
-      <mat-select placeholder="Select audience" formControlName="allMyAudience">
+  <div class="card-content">
+    <mat-form-field class="audience-input">
+      <mat-select placeholder="Select audience" [formControl]="poolId">
         <mat-option *ngFor="let pool of pools" [value]="pool?.value?.id">{{pool?.name}}</mat-option>
       </mat-select>
-      <mat-error *ngIf="allMyAudience.hasError('required') && allMyAudience.touched">Required field.</mat-error>
+      <mat-error *ngIf="poolId.hasError('required') && poolId.touched">Required field.</mat-error>
     </mat-form-field>
-
-    <cl-upload-file *ngIf="audienceType.value === 'list-audience'" [formControlName]="'uploadFile'"></cl-upload-file>
-    <mat-error *ngIf="selectAudience.hasError('groupRequired') && selectAudience.touched">Required field</mat-error>
+<!--    <cl-upload-file *ngIf="type.value === 'list-audience'" [formControlName]="'file'"></cl-upload-file>-->
+    <mat-error *ngIf="poolId.hasError('groupRequired') && poolId.touched">Required field</mat-error>
   </div>
 </mat-expansion-panel>
