@@ -52,6 +52,7 @@ interface AttbsObjStamp {
   display_properties: {
     slots: number[];
     title: string;
+    sub_title?: string;
     button: string;
     nb_of_slots: number;
     pre_stamp_img_url: string;
@@ -98,7 +99,7 @@ export class WhistlerStampService implements StampService {
     const attributesObj = stampCard.attributes as AttbsObjStamp;
     return {
       title: attributesObj.display_properties.title,
-      subTitle: attributesObj.description,
+      subTitle: attributesObj.display_properties.sub_title ? attributesObj.display_properties.sub_title : null,
       buttonText: attributesObj.display_properties.button,
       id: +stampCard.id,
       state: StampCardState.active,
@@ -106,7 +107,7 @@ export class WhistlerStampService implements StampService {
         totalSlots: attributesObj.display_properties.nb_of_slots,
         collectionRewards:
           attributesObj.display_properties.slots.map(position => (
-            { rewardPosition: position - 1}
+            { rewardPosition: position - 1 }
           )
           )
       },
