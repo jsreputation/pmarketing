@@ -18,7 +18,7 @@ export class VouchersService {
 
   public getVoucher(id: string): Observable<IRewardEntityForm> {
     return this.vouchersHttp
-      .getVoucher(id)
+      .getVoucher(id);
   }
 
   public createVoucher(data: any): Observable<any> {
