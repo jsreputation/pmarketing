@@ -3,7 +3,6 @@ import { Voucher, ILocation, IVoucherService, IReward, ICategoryTags } from '@pe
 import { ActivatedRoute, Params } from '@angular/router';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { AnalyticsService, PageType } from '../analytics.service';
-import { IMacaron, MacaronService } from '../services/macaron.service';
 
 @Component({
   selector: 'app-voucher',
@@ -15,12 +14,10 @@ export class VoucherComponent implements OnInit {
   public reward: IReward;
   public locations: ILocation[];
   public isButtonEnable: boolean = false;
-  public macaron: IMacaron;
   constructor(
     private vouchersService: IVoucherService,
     private activeRoute: ActivatedRoute,
-    private analytics: AnalyticsService,
-    private macaronService: MacaronService
+    private analytics: AnalyticsService
   ) {
   }
 
@@ -48,10 +45,6 @@ export class VoucherComponent implements OnInit {
       )
       .subscribe((reward: IReward) => {
         this.reward = reward;
-        this.macaron = this.macaronService.getMacaron(reward);
-        if (this.macaron === null) {
-          this.isButtonEnable = true;
-        }
       });
   }
 }
