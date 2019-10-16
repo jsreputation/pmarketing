@@ -27,4 +27,7 @@ export class ApiConfig {
   public static uploadFilePath: string = `${ApiConfig.basePath}/storage/documents`;
   public static apiCdnPath: string = `${environment.apiCdn || 'https://cdn.uat.whistler.perxtech.io/dev1/'}`;
   public static getReportPath: string = `${ApiConfig.basePath}/report`;
+  public static getLoyaltyPath: string = `${ApiConfig.basePath}/loyalty/programs`;
+  public static getLoyaltyBasicTierPath: string = `${ApiConfig.basePath}/loyalty/basic_tiers`;
+  public static getLoyaltyCustomTierPath: string = `${ApiConfig.basePath}/loyalty/custom_tiers`;
 }
