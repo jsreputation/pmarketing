@@ -94,7 +94,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
                 template: engagement,
                 limits,
                 rewardsOptions: {
-                  enableProbability: rewards.some(reward => reward.probability),
+                  enableProbability: rewards.some(reward => !!reward.probability),
                   rewards
                 }
               }))
