@@ -38,37 +38,34 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { profile } from './mock/profile.mock';
 import { HttpClientModule } from '@angular/common/http';
 import {
-  HomeComponent,
   HistoryComponent,
   RedeemComponent,
   LoginComponent,
   VoucherDetailComponent,
   RewardDetailsComponent,
   LoadingComponent,
-  ContentComponent
+  ContentComponent,
+  WalletComponent
 } from '@perx/blackcomb-pages';
-import { WalletComponent } from './wallet/wallet.component';
+import { HomeModule } from './home/home.module';
 const profileServiceStub = {
   whoAmI: () => of(profile)
 };
 
 const perxComponents = [
-  HomeComponent,
   HistoryComponent,
   RedeemComponent,
   LoginComponent,
   VoucherDetailComponent,
   RewardDetailsComponent,
   LoadingComponent,
-  ContentComponent
+  ContentComponent,
+  WalletComponent
 ];
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    LoadingComponent,
-    ...perxComponents,
-    WalletComponent
+    ...perxComponents
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -99,7 +96,8 @@ const perxComponents = [
     UtilsModule,
     PerxCampaignModule,
     HttpClientModule,
-    HomeModule
+    HomeModule,
+   
   ],
   providers: [
     { provide: ProfileService, useValue: profileServiceStub },
