@@ -1,0 +1,62 @@
+@import "~@angular/material/theming";
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+@font-face {
+  font-family: starhub;
+  src: url(assets/DINPro-Regular.otf);
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: starhub;
+  src: url(assets/DINPro-Bold.otf);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: starhub;
+  src: url(assets/DINPro-Medium.otf);
+  font-weight: 600;
+}
+
+// @font-face {
+//   font-family: starhub;
+//   src: url(assets/DINPro-Light.otf);
+//   font-weight: lighter;
+// }
+
+$custom-typography: mat-typography-config(
+  $font-family: "starhub, Roboto, Helvetica, Arial, sans-serif"
+);
+
+@include mat-base-typography($custom-typography);
+@include mat-core($custom-typography);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$custom-green: map-merge(
+  $mat-green,
+  (
+    500: #1862b8
+  )
+);
+
+$starhub-app-primary: mat-palette($custom-green);
+$starhub-app-accent: mat-palette($mat-lime, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$starhub-app-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$starhub-app-theme: mat-light-theme($starhub-app-primary, $starhub-app-accent, $starhub-app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($starhub-app-theme);
