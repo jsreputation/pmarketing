@@ -1,2 +1,2 @@
-export class MerchantHttpAdapter {
+export class LoyaltyHttpAdapter {
 }
