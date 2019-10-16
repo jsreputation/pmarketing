@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 import { RewardsService, MerchantsService } from '@cl-core/services';
@@ -22,6 +22,10 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public config: OptionConfig[];
   public selectedMerchant: Merchant;
 
+  public get merchantId(): AbstractControl {
+    return this.form.get('rewardInfo.merchantId');
+  }
+
   constructor(
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
@@ -38,10 +42,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.initConfig();
     this.initForm();
     this.handleFormValueChanges();
-    this.handleMerchantControleChanges();
-    if (!this.id) {
-      this.form.patchValue(this.newRewardFormService.getDefaultValue());
-    }
+    this.handleMerchantIdChanges();
     this.handleRouteParams();
   }
 
@@ -59,12 +60,12 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       return;
     }
     let request: Observable<any>;
-    const form: IRewardEntityForm = this.form.value;
-    form.rewardInfo.organizationId = this.selectedMerchant && this.selectedMerchant !== null ? this.selectedMerchant.id : null;
+    const rewardEntityForm: IRewardEntityForm = this.form.value;
     if (this.id) {
-      request = this.rewardsService.updateReward(this.id, form);
+      rewardEntityForm.displayProperties = this.reward.displayProperties;
+      request = this.rewardsService.updateReward(this.id, rewardEntityForm);
     } else {
-      request = this.rewardsService.createReward(form);
+      request = this.rewardsService.createReward(rewardEntityForm);
     }
     request.subscribe(
       res => {
@@ -85,10 +86,10 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
         untilDestroyed(this),
         filter(Boolean),
         switchMap((merchant: any) => this.merchantsService.createMerchant(merchant)),
-        filter(Boolean),
+        filter(Boolean)
       )
       .subscribe((id) => {
-        this.form.get('merchantInfo').patchValue(id);
+        this.merchantId.patchValue(id);
       });
   }
 
@@ -97,13 +98,13 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((merchant) => {
       if (merchant) {
-        this.form.get('merchantInfo').patchValue(merchant.id);
+        this.merchantId.patchValue(merchant.id);
       }
     });
   }
 
   public deleteMerchant(): void {
-    this.form.get('merchantInfo').patchValue(null);
+    this.merchantId.patchValue(null);
     this.selectedMerchant = null;
   }
 
@@ -132,8 +133,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       });
   }
 
-  private handleMerchantControleChanges(): void {
-    this.form.get('merchantInfo').valueChanges
+  private handleMerchantIdChanges(): void {
+    this.merchantId.valueChanges
       .pipe(
         untilDestroyed(this),
         distinctUntilChanged(),
@@ -156,26 +157,21 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.route.paramMap.pipe(
       untilDestroyed(this),
       map((params: ParamMap) => params.get('id')),
-      tap((id) => this.updateId(id)),
-      filter(Boolean),
-      switchMap((id: any) => this.rewardsService.getRewardToForm(id))
+      tap(id => this.id = id),
+      switchMap((id: string) => {
+        if (id) {
+          return this.rewardsService.getRewardToForm(id);
+        }
+        return of(null);
+      })
     )
       .subscribe(
         (reward: IRewardEntityForm) => {
           this.reward = reward;
-          this.form.patchValue(reward);
-          this.form.get('merchantInfo').patchValue(reward.rewardInfo.organizationId);
+          const patchData = reward || this.newRewardFormService.getDefaultValue();
+          this.form.patchValue(patchData);
         },
         () => this.router.navigateByUrl('/rewards')
       );
-  }
-
-  private updateId(id: string): void {
-    if (id) {
-      this.id = id;
-    } else {
-      this.id = null;
-      this.form.patchValue(this.newRewardFormService.getDefaultValue());
-    }
   }
 }
