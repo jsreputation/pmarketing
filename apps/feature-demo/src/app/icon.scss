@@ -1,0 +1,15 @@
+@mixin icon($diameter: 3.2rem, $background: #8db5e3, $color: #1862b8) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: $diameter;
+  height: $diameter;
+  border-radius: 50%;
+  background: $background;
+  color: $color;
+  min-width: $diameter;
+  border: 0;
+  outline: none;
+  z-index: 1;
+}

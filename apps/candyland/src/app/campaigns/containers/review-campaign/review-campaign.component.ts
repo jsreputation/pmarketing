@@ -89,15 +89,43 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
               );
             }),
             map(([campaign, engagement, limits, rewards]:
-              [ICampaign | null, IEngagement | null, ILimit | null, { value: IRewardEntity, probability?: number }[] | null]) => ({
+              [
+                ICampaign | null, IEngagement | null, ILimit | null,
+                { value: IRewardEntity, probability?: number, stampsSlotNumber?: number }[] | null
+              ]) => {
+              let rewardsOptions = null;
+              let rewardsListCollection = null;
+              if (campaign.engagement_type === 'stamps') {
+                const transformedRewards = {};
+                rewards.forEach(reward => {
+                  if (!transformedRewards[reward.stampsSlotNumber]) {
+                    transformedRewards[reward.stampsSlotNumber] = {
+                      stampSlotNumber: reward.stampsSlotNumber,
+                      rewardsOptions: {
+                        enableProbability: !!reward.probability,
+                        rewards: [reward]
+                      }
+                    };
+                  } else {
+                    transformedRewards[reward.stampsSlotNumber].rewardsOptions.rewards =
+                      [...transformedRewards[reward.stampsSlotNumber].rewardsOptions.rewards, reward];
+                  }
+                });
+                rewardsListCollection = [...Object.values(transformedRewards)];
+              } else {
+                rewardsOptions = {
+                  enableProbability: rewards.some(reward => !!reward.probability),
+                  rewards
+                };
+              }
+              return {
                 ...campaign,
                 template: engagement,
                 limits,
-                rewardsOptions: {
-                  enableProbability: rewards.some(reward => !!reward.probability),
-                  rewards
-                }
-              }))
+                rewardsOptions,
+                rewardsListCollection
+              };
+            })
           ).subscribe(
             campaign => {
               this.campaign = campaign;
@@ -109,7 +137,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getRewards(rewardsList: any[]): Observable<{ value: IRewardEntity | null, probability?: number }[]> {
+  private getRewards(rewardsList: any[]): Observable<{ value: IRewardEntity | null, probability?: number, stampsSlotNumber?: number }[]> {
     if (!rewardsList || !rewardsList.length) {
       return of([]);
     }
@@ -117,11 +145,11 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       reward => {
         if (reward.resultId) {
           return this.rewardsService.getReward(reward.resultId).pipe(
-            map(rewardData => ({ value: { ...rewardData }, probability: reward.probability })),
-            catchError(() => of({ value: null, probability: reward.probability }))
+            map(rewardData => ({ value: { ...rewardData }, probability: reward.probability, stampsSlotNumber: reward.lootBoxId })),
+            catchError(() => of({ value: null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId }))
           );
         }
-        return of({ value: null, probability: reward.probability });
+        return of({ value: null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId });
       }
     ));
   }

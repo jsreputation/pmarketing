@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { WalletComponent } from './wallet/wallet.component';
 
 @Component({
   selector: 'app-root',
@@ -75,7 +76,8 @@ export class AppComponent implements OnInit {
     this.showHeader = !(ref instanceof LoginComponent);
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
-      ref instanceof AccountComponent;
+      ref instanceof AccountComponent ||
+      ref instanceof WalletComponent;
   }
 
   public leftClick(): void {

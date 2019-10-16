@@ -11,12 +11,14 @@ import {
   LoadingComponent,
   ContentComponent
 } from '@perx/blackcomb-pages';
+import { WalletComponent } from './wallet/wallet.component';
 const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'loading' },
-      { path: 'wallet', component: HomeComponent, canActivate: [ProtectedGuard] },
+      { path: '', pathMatch: 'full', redirectTo: 'wallet' },
+      { path: 'home', component: HomeComponent, canActivate: [ProtectedGuard] },
+      { path: 'wallet', component: WalletComponent, canActivate: [ProtectedGuard] },
       { path: 'history', component: HistoryComponent, canActivate: [ProtectedGuard] },
       { path: 'redeem/:id', component: RedeemComponent, canActivate: [ProtectedGuard] },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent, canActivate: [ProtectedGuard] },

@@ -15,6 +15,7 @@ import {
   RewardsModule,
   MerchantsModule as PerxMerchantsModule,
   CampaignModule as PerxCampaignModule,
+  StampModule as PerxStampModule,
   ThemesService
 } from '@perx/core';
 import {
@@ -46,6 +47,7 @@ import {
   LoadingComponent,
   ContentComponent
 } from '@perx/blackcomb-pages';
+import { WalletComponent } from './wallet/wallet.component';
 const profileServiceStub = {
   whoAmI: () => of(profile)
 };
@@ -66,6 +68,7 @@ const perxComponents = [
     LoginComponent,
     LoadingComponent,
     ...perxComponents,
+    WalletComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -80,6 +83,7 @@ const perxComponents = [
     BrowserAnimationsModule,
     RewardsModule,
     PerxMerchantsModule,
+    PerxStampModule,
     MatToolbarModule,
     MatButtonModule,
     MatTabsModule,
@@ -94,7 +98,8 @@ const perxComponents = [
     FormsModule,
     UtilsModule,
     PerxCampaignModule,
-    HttpClientModule
+    HttpClientModule,
+    HomeModule
   ],
   providers: [
     { provide: ProfileService, useValue: profileServiceStub },
