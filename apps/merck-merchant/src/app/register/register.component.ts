@@ -35,7 +35,11 @@ export class RegisterComponent implements OnInit {
           this.notificationService.addSnack('Your password has been saved. Please login');
         },
         (err) => {
-          this.notificationService.addSnack(err.message);
+          let message = 'Something went wrong';
+          if (err.error) { // actual error response from API
+            message = err.error.message;
+          }
+          this.notificationService.addSnack(message);
         }
       );
     }
