@@ -15,6 +15,7 @@ import {
   RewardsModule,
   MerchantsModule as PerxMerchantsModule,
   CampaignModule as PerxCampaignModule,
+  StampModule as PerxStampModule,
   ThemesService
 } from '@perx/core';
 import {
@@ -74,6 +75,7 @@ const profileServiceStub = {
     BrowserAnimationsModule,
     RewardsModule,
     PerxMerchantsModule,
+    PerxStampModule,
     MatToolbarModule,
     MatButtonModule,
     MatTabsModule,
