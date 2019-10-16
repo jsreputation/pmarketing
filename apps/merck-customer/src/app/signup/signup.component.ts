@@ -30,7 +30,8 @@ export class SignupComponent implements PageAppearence {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
       accept_terms: [false, Validators.required],
-      accept_marketing: [false, Validators.required]
+      accept_marketing: [false, Validators.required],
+      countryCode: ['852', Validators.required]
     });
   }
 
@@ -68,14 +69,16 @@ export class SignupComponent implements PageAppearence {
       // const mobileNumber = this.selectedCountry + this.signupForm.get('mobileNo').value as string;
 
       const mobileNumber = this.signupForm.get('mobileNo').value.toString();
-
       const name = this.signupForm.get('name').value as string;
+      const countryCode = (this.signupForm.get('countryCode').value as string);
+      const codeAndMobile = countryCode + mobileNumber;
+      const cleanedMobileNo = codeAndMobile.replace(/[^0-9]/g, ''); // remove non numeric and special characters
 
       const signUpData = {
         firstName: '',
         lastName: name,
         middleName: '',
-        phone: mobileNumber,
+        phone: cleanedMobileNo,
         email: '',
         birthDay: '',
         gender: '',
@@ -85,10 +88,10 @@ export class SignupComponent implements PageAppearence {
 
       this.authService.signup(signUpData).subscribe(
         () => {
-          this.router.navigate(['enter-pin/register'], { state: { mobileNo: mobileNumber } } );
+          this.router.navigate(['enter-pin/register'], { state: { mobileNo: cleanedMobileNo } } );
         },
         err => {
-          console.error('Signup: ' + err);
+          this.notificationService.addSnack(err.error.message);
         });
     } catch (error) {
         console.log(error);

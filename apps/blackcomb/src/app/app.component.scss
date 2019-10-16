@@ -41,7 +41,7 @@
     color: #666666;
 
     &.active {
-      color: mat-color($primary);
+      color: var(--accent);
     }
   }
 }

@@ -53,6 +53,7 @@ $mobile-preview-width: 34.4rem;
 $border-radius: 0.4rem;
 $border-radius-lg: 0.8rem;
 
+$fab-btn: 5.6rem;
 $thumbnail-size: 6.4rem;
 
 $progressbar-min: 6.4rem;
@@ -225,4 +226,8 @@ $modal-lg: 76.8rem;
   display: block;
   width: calc(100vw - #{$horizontal-padding} - #{$horizontal-padding});
   max-width: ($max-size) !important;
+
+  @media (max-width: $mobile-width) {
+    width: calc(100vw - #{$horizontal-padding * 0.5} - #{$horizontal-padding * 0.5});
+  }
 }

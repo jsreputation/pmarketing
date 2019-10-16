@@ -1,4 +1,8 @@
 module.exports = {
+    "settings": {
+        "import/parsers": { "@typescript-eslint/parser": [".ts"] },
+        "import/resolver": { "eslint-import-resolver-typescript": true },
+    },
     "env": {
         "browser": true,
         "es6": true
@@ -10,9 +14,11 @@ module.exports = {
     },
     "plugins": [
         "@typescript-eslint",
-        "@typescript-eslint/tslint"
+        "@typescript-eslint/tslint",
+        "import",
     ],
     "rules": {
+        "import/no-deprecated": "warn",
         "@typescript-eslint/adjacent-overload-signatures": "error",
         "@typescript-eslint/array-type": "error",
         "@typescript-eslint/ban-types": "error",
@@ -36,7 +42,6 @@ module.exports = {
         "@typescript-eslint/no-non-null-assertion": "error",
         "@typescript-eslint/no-parameter-properties": "off",
         // "@typescript-eslint/no-triple-slash-reference": "error",
-        // "@typescript-eslint/no-use-before-declare": "error",
         "@typescript-eslint/no-var-requires": "off",
         // "@typescript-eslint/prefer-for-of": "error",
         "@typescript-eslint/prefer-function-type": "error",
@@ -132,7 +137,6 @@ module.exports = {
                         "kebab-case"
                     ],
                     "contextual-lifecycle": true,
-                    "deprecation": true,
                     "directive-class-suffix": true,
                     "directive-selector": [
                         true,

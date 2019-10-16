@@ -1,7 +1,6 @@
 /*
  * Public API Surface of perx-core
  */
-
 export { PerxCoreModule } from './lib/perx-core.module';
 
 /**
@@ -26,6 +25,9 @@ export { VouchersComponent } from './lib/vouchers/vouchers/vouchers.component';
 export { VoucherComponent } from './lib/vouchers/voucher/voucher.component';
 export { IVoucher as Voucher, RedemptionType, VoucherState, StatusLabelMapping } from './lib/vouchers/models/voucher.model';
 export { PinRedemptionComponent } from './lib/vouchers/pin-redemption/pin-redemption.component';
+export { BcodeRedemptionComponent } from './lib/vouchers/bcode-redemption/bcode-redemption.component';
+export { QrcodeRedemptionComponent } from './lib/vouchers/qrcode-redemption/qrcode-redemption.component';
+
 /**
  * Authentication
  */
@@ -55,7 +57,7 @@ export {
   StampCardState,
   StampState
 } from './lib/stamp/models/stamp.model';
-
+export { StampsCardsListComponent } from './lib/stamp/stamps-cards-list/stamps-cards-list.component';
 /**
  *  Games
  */
@@ -71,6 +73,8 @@ export {
 } from './lib/game/game.model';
 export { IGameService } from './lib/game/igame.service';
 export { IGameComponent } from './lib/game/igame.component';
+export { ShakeTreeComponent } from './lib/game/shake-tree/shake-tree.component';
+export { PinataComponent } from './lib/game/pinata/pinata.component';
 
 /**
  * Profile
@@ -91,8 +95,13 @@ export { LoyaltyService } from './lib/loyalty/loyalty.service';
 export {
   ILoyalty,
   ITransaction,
-  IExpiringPoints
+  IExpiringPoints,
+  ITransactionHistory,
+  IRewardTransactionHistory,
+  IPurchaseTransactionHistory,
+  TransactionDetailType
 } from './lib/loyalty/models/loyalty.model';
+export { TransactionPipe } from './lib/loyalty/loyalty-transactions-list/transaction.pipe';
 export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-summary.component';
 
 /**
@@ -102,7 +111,8 @@ export { RewardsModule } from './lib/rewards/rewards.module';
 export { RewardsService } from './lib/rewards/rewards.service';
 export { IReward, ICatalog, ICategoryTags, IPrice } from './lib/rewards/models/reward.model';
 export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
-
+export { RewardsCollectionComponent } from './lib/rewards/rewards-collection/rewards-collection.component';
+export { RewardComponent } from './lib/rewards/reward/reward.component';
 /**
  * Utils
  */
@@ -117,6 +127,7 @@ export { PinInputComponent } from './lib/utils/pin-input/pin-input.component';
 export { FeedReaderService, FeedItem } from './lib/utils/feed-reader.service';
 export { GeneralStaticDataService } from './lib/utils/general-static-data/general-static-data.service';
 export { ICountryCode } from './lib/utils/general-static-data/country-code';
+export { RepeatTimesDirective } from './lib/utils/directives/repeat-times.directive';
 /**
  * Puzzles
  */
@@ -126,6 +137,7 @@ export {
   PuzzleCollectReward,
   PuzzleCollectStampState
 } from './lib/puzzles/models/puzzle-stamp.model';
+export { PuzzleCollectStampsComponent } from './lib/puzzles/puzzle-collect-stamps/puzzle-collect-stamps.component';
 
 /**
  * Locations
@@ -143,6 +155,15 @@ export { GeoLocationService } from './lib/location/geolocation.service';
 export { SurveyModule } from './lib/survey/survey.module';
 export { SurveyService } from './lib/survey/survey.service';
 export { ISurvey, SurveyQuestionType, IQuestion } from './lib/survey/models/survey.model';
+export { SurveyComponent } from './lib/survey/survey/survey.component';
+export { QuestionComponent } from './lib/survey/question/question.component';
+export { SelectComponent } from './lib/survey/question/select/select.component';
+export { PictureSelectComponent } from './lib/survey/question/picture-select/picture-select.component';
+export { PhoneComponent } from './lib/survey/question/phone/phone.component';
+export { LongTextComponent } from './lib/survey/question/long-text/long-text.component';
+export { GroupComponent } from './lib/survey/question/group/group.component';
+export { RatingComponent } from './lib/survey/question/rating/rating.component';
+export { DateComponent } from './lib/survey/question/date/date.component';
 
 /**
  * Config
@@ -165,18 +186,3 @@ export { OutcomeModule } from './lib/outcome/outcome.module';
 /**
  * Outcome
  */
-export { PagesModule } from './lib/pages/pages.module';
-export { AccountComponent } from './lib/pages/account/account.component';
-export { ContactUsComponent } from './lib/pages/contact-us/contact-us.component';
-export { GameComponent } from './lib/pages/game/game.component';
-export { HistoryComponent } from './lib/pages/history/history.component';
-export { HomeComponent } from './lib/pages/home/home.component';
-export { RewardPageComponent } from './lib/pages/reward-page/reward-page.component';
-export { LoadingComponent } from './lib/pages/loading/loading.component';
-export { LoginComponent } from './lib/pages/login/login.component';
-export { RedeemComponent } from './lib/pages/redeem/redeem.component';
-export { RewardDetailPageComponent } from './lib/pages/reward-detail-page/reward-detail-page.component';
-export { StampCardComponent } from './lib/pages/stamp-card/stamp-card.component';
-export { SurveyPageComponent } from './lib/pages/survey-page/survey-page.component';
-export { TncComponent } from './lib/pages/tnc/tnc.component';
-export { VoucherDetailPageComponent } from './lib/pages/voucher-detail-page/voucher-detail-page.component';

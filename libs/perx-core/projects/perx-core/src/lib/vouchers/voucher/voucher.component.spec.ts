@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { VoucherComponent } from './voucher.component';
 import { MatCardModule } from '@angular/material/card';
@@ -8,12 +8,43 @@ import { of } from 'rxjs';
 import { IMerchantsService } from '../../merchants/imerchants.service';
 import { IVoucherService } from '../ivoucher.service';
 import { RewardsService } from '../../rewards/rewards.service';
+import { IVoucher, VoucherState } from '../models/voucher.model';
+import { Type, SimpleChange } from '@angular/core';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
   let fixture: ComponentFixture<VoucherComponent>;
+
+  const mockVoucher: IVoucher = {
+    id: 1,
+    reward: {
+        id: 1,
+        name: 'reward name',
+        description: 'reward descriptiomn',
+        subtitle: '',
+        validFrom: new Date(),
+        validTo: new Date(),
+        sellingFrom: new Date(),
+        rewardThumbnail: '',
+        rewardBanner: 'https://picsum.photos/50/50?random=1',
+        merchantImg: 'https://picsum.photos/50/50?random=1',
+        rewardPrice: [],
+        merchantId: 1,
+        merchantName: 'merchant name',
+        merchantWebsite: '',
+        termsAndConditions: '',
+        howToRedeem: '',
+        redemptionType: null,
+        categoryTags: [],
+        inventory: null,
+      },
+    state: VoucherState.issued,
+    code: 'yo',
+    expiry: null,
+  };
+
   const voucherServiceStub = {
-    get: () => of(''),
+    get: () => of(mockVoucher),
     getAll: () => of([])
   };
   const rewardsServiceStub = {
@@ -53,4 +84,24 @@ describe('VoucherComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display reward name in component', fakeAsync(() => {
+    component.voucherId = 1;
+    const voucherService: IVoucherService = fixture.debugElement.injector
+    .get<IVoucherService>(IVoucherService as Type<IVoucherService>);
+    const voucherServiceSpy = spyOn(voucherService, 'get').and.returnValue(
+      of(mockVoucher)
+    );
+    component.ngOnChanges({
+      voucherId: new SimpleChange(null, 1, true)
+    });
+    fixture.detectChanges();
+    tick();
+    expect(voucherServiceSpy).toHaveBeenCalled();
+    expect(fixture.nativeElement.querySelector('.reward-name').innerText).toEqual(mockVoucher.reward.name);
+    expect(fixture.nativeElement.querySelector('.merchant-name').innerText).toEqual(mockVoucher.reward.merchantName);
+    expect(fixture.nativeElement.querySelector('#rewardDescription').innerText).toEqual(mockVoucher.reward.description);
+    expect(fixture.nativeElement.querySelector('.merchant-image').src).toEqual(mockVoucher.reward.merchantImg);
+    expect(fixture.nativeElement.querySelector('.reward-image').src).toEqual(mockVoucher.reward.rewardBanner);
+  }));
 });

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { PuzzleCollectStamp, PuzzleCollectReward, PuzzleCollectStampState } from '../models/puzzle-stamp.model';
 
 @Component({
@@ -7,7 +7,7 @@ import { PuzzleCollectStamp, PuzzleCollectReward, PuzzleCollectStampState } from
   styleUrls: ['./puzzle-collect-stamps.component.css']
 })
 
-export class PuzzleCollectStampsComponent implements OnChanges {
+export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   // This dummy array is describing the slots templates
   private stampsOrientations: number[][] = [[1, 2],
   [2, 2],
@@ -20,6 +20,9 @@ export class PuzzleCollectStampsComponent implements OnChanges {
 
   @Input()
   private stamps: PuzzleCollectStamp[] | null = [];
+
+  @Input()
+  public showStampsCounter: boolean = false;
 
   @Input()
   private rewards: PuzzleCollectReward[] = [];
@@ -39,14 +42,35 @@ export class PuzzleCollectStampsComponent implements OnChanges {
   @Input()
   private rewardPostStamp: string = null;
 
+  @Input()
+  public backgroundImage: string = null;
+
+  @Input()
+  public title: string = null;
+
+  @Input()
+  public subTitle: string = null;
+
   @Output()
   private availableStampClicked: EventEmitter<PuzzleCollectStamp> = new EventEmitter<PuzzleCollectStamp>();
 
   public currentActiveOrientation: number[] = null;
+  public stampCardImage: string = null;
+  public availableStampCount: number = 0;
+  public availStamps: number = 0;
+
+  public ngOnInit(): void {
+    const availableStamps = this.stamps.filter(stamp => stamp.state === 'issued');
+    this.availableStampCount = availableStamps.length;
+    this.stampCardImage = this.postStampImg;
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.nbSlots) {
       this.currentActiveOrientation = this.stampsOrientations[this.nbSlots - 3];
+    }
+    if (changes.stamps) {
+      this.availStamps = this.stamps.filter(stamp => stamp.state === PuzzleCollectStampState.issued).length;
     }
   }
 

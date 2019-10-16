@@ -14,6 +14,7 @@ export class RedeemComponent implements OnInit {
   public voucher$: Observable<Voucher>;
   public voucherId: number;
   public redemptionType: RedemptionType;
+  public rt: typeof RedemptionType = RedemptionType;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,12 +29,12 @@ export class RedeemComponent implements OnInit {
         filter((params: ParamMap) => params.has('id')),
         switchMap((params: ParamMap) => {
           const id: string = params.get('id');
-          this.voucherId =  Number.parseInt(id, 10);
+          this.voucherId = Number.parseInt(id, 10);
           return this.vouchersService.get(this.voucherId);
         })
       );
     this.voucher$.subscribe((voucher: Voucher) => {
-      this.redemptionType = voucher.redemptionType;
+      this.redemptionType = voucher.reward.redemptionType;
     });
   }
 
