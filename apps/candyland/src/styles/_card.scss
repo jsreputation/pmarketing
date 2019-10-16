@@ -122,9 +122,14 @@
     margin-left: -($horizontal-padding * 0.25);
     margin-right: -($horizontal-padding * 0.25);
 
-    & > * {
+    > * {
       padding-left: ($horizontal-padding * 0.25);
       padding-right: ($horizontal-padding * 0.25);
+    }
+
+    > span {
+      padding-left: ($horizontal-padding * 0.5);
+      padding-right: ($horizontal-padding * 0.5);
     }
 
     &.stretch {
@@ -134,12 +139,6 @@
         flex: 1;
         flex-basis: 100%;
       }
-    }
-
-    &.form-field {
-      align-items: flex-end;
-      height: 5.66rem;
-      padding-bottom: 1.25em;
     }
   }
 

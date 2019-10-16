@@ -13,7 +13,7 @@ cl-table-filters {
     padding: 0 ($horizontal-padding * 0.25);
     flex-grow: 1;
     flex-shrink: 1;
-    flex-basis: ($horizontal-padding * 9);
+    flex-basis: ($horizontal-padding * 8);
 
     &.full-block {
       flex-basis: 100%;
@@ -21,7 +21,7 @@ cl-table-filters {
     }
 
     &.half-block {
-      flex-basis: ($horizontal-padding * 4.5);
+      flex-basis: ($horizontal-padding * 4);
     }
 
     &.search-block {
