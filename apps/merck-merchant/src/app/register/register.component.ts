@@ -33,8 +33,8 @@ export class RegisterComponent implements OnInit {
 
       this.merchantAdminService.validateInvite(this.invitationToken, this.clientId).subscribe(
         () => {
-          this.router.navigateByUrl('/login');
           this.notificationService.addSnack('Your password has been saved. Please login');
+          this.router.navigateByUrl('/login');
         },
         (err) => {
           let message = 'Something went wrong';
