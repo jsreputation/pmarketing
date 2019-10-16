@@ -4,9 +4,13 @@ import { WalletComponent } from './wallet.component';
 import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material';
-import { VouchersModule, IVoucherService, ICampaignService } from '@perx/core';
+import { IVoucherService, VouchersModule, ICampaignService, StampService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
+
+const stampServiceStub = {
+  getCurrentCard: () => of([])
+};
 
 describe('WalletComponent', () => {
   let component: WalletComponent;
@@ -36,6 +40,7 @@ describe('WalletComponent', () => {
         { provide: Router, useValue: router },
         { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: StampService, useValue: stampServiceStub }
       ]
     })
       .compileComponents();
