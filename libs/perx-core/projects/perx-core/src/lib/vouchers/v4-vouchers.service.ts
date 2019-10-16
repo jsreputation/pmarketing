@@ -133,6 +133,11 @@ export class V4VouchersService implements IVoucherService {
     if (oc(voucherParams).type()) {
       params = params.set('type', voucherParams.type);
     }
+
+    if (oc(voucherParams).sourceType()) {
+      params = params.set('source_type', voucherParams.sourceType);
+    }
+
     return this.http.get<IV4VouchersResponse>(this.vouchersUrl, { params })
       .pipe(
         // todo change to a combination of switchMap and combineLatest
