@@ -136,9 +136,13 @@ $fluid-cell-6: 21% !important;
     overflow: auto;
   }
 
+  .column-featured {
+    padding-left: ($vertical-padding * 0.5) !important;
+  }
+
   .mat-table-sticky {
-    background: inherit;
     position: relative;
+    background: $white;
 
     &::after {
       content: "";
@@ -147,7 +151,7 @@ $fluid-cell-6: 21% !important;
       top: 0;
       bottom: 0;
       left: 100%;
-      // background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+      background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
     }
 
     &:last-child::after {
@@ -157,8 +161,16 @@ $fluid-cell-6: 21% !important;
     }
   }
 
-  .column-featured {
-    padding-left: ($vertical-padding * 0.5) !important;
+  .table-row:hover .mat-table-sticky {
+    background: #f5f5f5;
+
+    &::after {
+      background: linear-gradient(to right, rgba(#f5f5f5, 1) 0%, rgba(#f5f5f5, 0) 100%);
+    }
+
+    &:last-child::after {
+      background: linear-gradient(to left, rgba(#f5f5f5, 1) 0%, rgba(#f5f5f5, 0) 100%);
+    }
   }
 }
 
