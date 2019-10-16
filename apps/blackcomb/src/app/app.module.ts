@@ -97,7 +97,6 @@ const perxComponents = [
     PerxCampaignModule,
     HttpClientModule,
     HomeModule,
-   
   ],
   providers: [
     { provide: ProfileService, useValue: profileServiceStub },
