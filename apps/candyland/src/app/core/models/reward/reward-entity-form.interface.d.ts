@@ -2,6 +2,7 @@ declare interface IRewardEntityForm {
   id?: string;
   name: string;
   currency?: string;
+  displayProperties?: any;
   rewardInfo: {
     image: string;
     rewardType: string;
@@ -10,7 +11,7 @@ declare interface IRewardEntityForm {
     cost: number;
     description: string;
     termsAndCondition: string;
-    organizationId: string | null;
+    merchantId: string | null;
   };
   vouchers?: {
     voucherCode?: {

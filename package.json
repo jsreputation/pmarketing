@@ -7,6 +7,7 @@
     "build:bpi:prod": "lerna run build:lib && lerna run build:bpi:prod --",
     "build:candyland:prod": "lerna run build:lib && lerna run build:candyland:prod --",
     "build:digi:prod": "lerna run build:lib && lerna run build:digi:prod --",
+    "build:feature-demo:prod": "lerna run build:lib && lerna run build:feature-demo:prod --",
     "build:hsbc:prod": "lerna run build:lib && lerna run build:hsbc:prod --",
     "build:hsbc-reward:prod": "lerna run build:lib && lerna run build:hsbc-reward:prod --",
     "build:prudential:prod": "lerna run build:lib && lerna run build:prudential:prod --",
