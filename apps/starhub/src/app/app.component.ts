@@ -54,8 +54,8 @@ declare const _satellite: {
 })
 export class AppComponent implements OnInit, PopUpClosedCallBack {
   // public selectedCampaign: ICampaign;
-  public reward: IReward = null;
-  public game: IGame = null;
+  private reward: IReward = null;
+  private game: IGame = null;
   private token: string;
 
   constructor(
