@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { SurveyService } from '@cl-core-services';
+import { RoutingStateService, SurveyService } from '@cl-core-services';
 
 @Component({
   selector: 'cl-survey',
@@ -12,13 +12,17 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public data: IBaseQuestionReport;
   constructor(private surveyService: SurveyService,
               private route: ActivatedRoute,
-              private router: Router) {}
+              private router: Router,
+              private routingState: RoutingStateService) {}
   public ngOnInit(): void {
     this.subscribeToRoute();
   }
 
+  public downloadReport(): void {
+    // TODO: download implement here
+  }
   public onClose(): void {
-    // TODO: close page;
+    this.routingState.comeBackPreviousUrl();
   }
 
   private getReportStamp(id: string): void {
