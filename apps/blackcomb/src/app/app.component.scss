@@ -15,10 +15,6 @@
   line-height: 1.9rem;
 }
 
-.mat-toolbar {
-  background-color: #ffffff !important;
-}
-
 .main-app-container {
   display: flex;
   flex-direction: column;
@@ -36,7 +32,7 @@
   justify-content: space-around;
   height: 7rem;
   z-index: 800;
-  background: #fff;
+  background: #fff !important;
   font-size: 1rem;
   line-height: 1.6rem;
 
