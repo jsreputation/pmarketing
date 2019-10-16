@@ -66,4 +66,9 @@ export class RewardComponent implements OnInit {
         () => this.notificationService.addSnack('Sorry! Could not save reward.')
       );
   }
+
+  public setButton(isEnable: boolean): void {
+    this.isRewardsDetailsFetched = true;
+    this.isButtonEnable = isEnable && this.isButtonEnable;
+  }
 }
