@@ -87,15 +87,6 @@
     }
   }
 
-  &-row.input-group > span {
-    width: auto;
-    flex-shrink: 0;
-  }
-
-  &-value span:last-child {
-    margin-right: 0;
-  }
-
   &-label + &-value {
     margin-top: 0.8rem;
   }
@@ -139,15 +130,6 @@
         flex: 1;
         flex-basis: 100%;
       }
-    }
-  }
-
-  &-row.input-group {
-    flex-wrap: wrap;
-
-    > .mat-form-field {
-      flex: 1 1 ($horizontal-padding * 2);
-      min-width: ($horizontal-padding * 2);
     }
   }
 

@@ -174,14 +174,23 @@ h1, h2, h3, h4, h5, p {
 
 .input-group {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
+  align-items: baseline;
+  margin-left: -($horizontal-padding * 0.25);
+  margin-right: -($horizontal-padding * 0.25);
 
-  & > * {
-    margin-right: 16px;
+  > * {
+    padding-left: ($horizontal-padding * 0.25);
+    padding-right: ($horizontal-padding * 0.25);
+  }
 
-    &:last-child {
-      margin-right: 0;
-    }
+  > .mat-form-field {
+    flex: 1 1 28rem;
+  }
+
+  > span {
+    width: auto;
+    flex-shrink: 0;
   }
 }
 
