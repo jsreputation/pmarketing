@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import { IRewardEntityApi } from '@perx/whistler';
 
 export class RewardHttpAdapter {
   // tslint:disable

@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiConfig } from '@cl-core/api-config';
+import { IRewardEntityApi } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'

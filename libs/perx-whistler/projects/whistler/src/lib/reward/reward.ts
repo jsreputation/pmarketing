@@ -29,3 +29,12 @@ export interface IRewardEntityAttributes {
     };
     organization_id?: string;
 }
+
+export interface IRewardEntityApi {
+    id?: string;
+    type: string;
+    links?: {
+        self?: string;
+    };
+    attributes: IRewardEntityAttributes;
+}
