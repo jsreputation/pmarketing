@@ -207,7 +207,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     const url = `${this.config.apiHost}/v4/merchant_user_account_invitations`;
 
     return this.http.put(url, body).pipe(
-      // response is always HTTP 200 in thisformat regardless if it is a error or success
+      // response is always HTTP 200 in this format regardless if it is a error or success and backend should resolve this
       // @ts-ignore
       map((res) => res.message)
     );
