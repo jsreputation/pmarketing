@@ -1,16 +1,17 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
-import { combineLatest, Observable, of } from 'rxjs';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { tap, map, switchMap } from 'rxjs/operators';
+
+import { combineLatest, Observable, of, Subject } from 'rxjs';
+import { tap, map, switchMap, takeUntil } from 'rxjs/operators';
+
 import { ControlsName } from '../../../../models/controls-name';
 import { IReward } from '@perx/core';
 import { MockRewardsMobilePreview } from '../../../../../assets/actives/reward/reward-mock';
 import {
   AvailableNewEngagementService, InstantRewardsService, RoutingStateService, SettingsService
 } from '@cl-core/services';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { CreateImageDirective } from '@cl-shared/directives/create-image.directive';
 
@@ -22,6 +23,9 @@ import { CreateImageDirective } from '@cl-shared/directives/create-image.directi
 })
 export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
   @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
+
+  private destroy$: Subject<any> = new Subject();
+
   public form: FormGroup;
   public rewardData: IRewardDefaultValue;
   public reward$: Observable<IReward[]>;
@@ -84,6 +88,8 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public getImgLink(control: FormControl, defaultImg: string): string {
@@ -105,7 +111,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
           map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
           tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
         );
-      })).pipe(untilDestroyed(this))
+      })).pipe(takeUntil(this.destroy$))
       .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
@@ -159,21 +165,21 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
 
   private initTenants(): void {
     this.settingsService.getTenantsSettings()
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(data => this.tenantSettings = data);
   }
 
   private getRewardData(): Observable<IRewardDefaultValue> {
     return this.instantRewardsService.getInstantRewardData()
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         tap(data => this.rewardData = data)
       );
   }
 
   private handleRouteParams(): Observable<IRewardForm | null> {
     return this.route.paramMap.pipe(
-      untilDestroyed(this),
+      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.id = id),
       switchMap(id => {

@@ -1,10 +1,13 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 @Component({
@@ -15,6 +18,9 @@ import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 })
 export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
+
+  private destroy$: Subject<any> = new Subject();
+
   public isFirstInit: boolean = true;
   public form: FormGroup;
   public defaultValue: any = {
@@ -46,6 +52,8 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
 
   public ngOnDestroy(): void {
     this.cd.detach();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private initForm(): void {
@@ -66,7 +74,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
     if (this.route.snapshot.params.id) {
       this.store.currentCampaign$
         .asObservable()
-        .pipe(untilDestroyed(this))
+        .pipe(takeUntil(this.destroy$))
         .subscribe((data: ICampaign) => {
           const isFirstTimeRenderFromAPIResponse = data && data.id && data.limits && data.limits.id && this.isFirstInit;
           if (isFirstTimeRenderFromAPIResponse) {
@@ -82,7 +90,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
 
   private subscribeFormValueChange(): void {
     this.form.valueChanges
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((val) => {
         this.store.updateCampaign(val);
       });

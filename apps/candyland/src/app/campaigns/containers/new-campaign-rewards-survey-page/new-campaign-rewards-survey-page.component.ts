@@ -1,10 +1,13 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input } from '@angular/core';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { AbstractStepWithForm } from '../../step-page-with-form';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { StepConditionService } from '../../services/step-condition.service';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-new-campaign-rewards-survey-page',
@@ -13,6 +16,9 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 })
 export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
+
+  private destroy$: Subject<any> = new Subject();
+
   public isFirstInit: boolean = true;
   public form: FormGroup;
   public defaultValue: {[key: string]: any} = {
@@ -43,6 +49,8 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
 
   public ngOnDestroy(): void {
     this.cd.detach();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private initForm(): void {
@@ -61,7 +69,7 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
     if (this.route.snapshot.params.id) {
       this.store.currentCampaign$
         .asObservable()
-        .pipe(untilDestroyed(this))
+        .pipe(takeUntil(this.destroy$))
         .subscribe(data => {
           const isFirstTimeRenderFromAPIResponse = data && data.id && data.limits && data.limits.id && this.isFirstInit;
           if (isFirstTimeRenderFromAPIResponse) {

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { NewCampaignRewardsStampsFormService } from 'src/app/campaigns/services/new-campaign-rewards-stamps-form.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
@@ -16,6 +16,9 @@ import { CampaignCreationStoreService } from '../../services/campaigns-creation-
 })
 export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
+
+  private destroy$: Subject<any> = new Subject();
+
   public form: FormGroup;
 
   constructor(
@@ -39,7 +42,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
       this.addReward(this.createRewardForm(slotNumber));
     }
     this.form.get('stampsRule.sequence').valueChanges
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
         if (value) {
           this.initSequenceRules(stampsNumber);
@@ -53,6 +56,8 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
 
   public ngOnDestroy(): void {
     this.cd.detach();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public get rewardsListCollection(): FormArray {
@@ -92,7 +97,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     }
     this.form.valueChanges
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         distinctUntilChanged(),
         debounceTime(500)
       )

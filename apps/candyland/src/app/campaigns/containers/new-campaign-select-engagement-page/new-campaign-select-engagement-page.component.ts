@@ -1,5 +1,8 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { tap, map, catchError } from 'rxjs/operators';
+
+import { Subject } from 'rxjs';
+import { tap, map, catchError, takeUntil } from 'rxjs/operators';
+
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { AvailableNewEngagementService, EngagementsService, LimitsService } from '@cl-core/services';
@@ -8,7 +11,6 @@ import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaig
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ActivatedRoute } from '@angular/router';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
@@ -21,6 +23,9 @@ import { of } from 'rxjs';
 })
 export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
+
+  private destroy$: Subject<any> = new Subject();
+
   public form: FormGroup;
   public dataSource: MatTableDataSource<IEngagement> = new MatTableDataSource<IEngagement>();
   public defaultSearchValue: any = null;
@@ -58,6 +63,8 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   public ngOnDestroy(): void {
     this.cd.detach();
     this.availableNewEngagementService.remove();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public createNewEngagement(): void {
@@ -109,7 +116,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   private initSelectedTemplateFromEdit(res: IEngagement[]): void {
     this.store.currentCampaign$
       .asObservable()
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(campaignData => {
         if (campaignData && campaignData.engagement_id && this.isFirstInit) {
           this.isFirstInit = false;
@@ -140,7 +147,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
 
   private subscribeFormValueChange(): void {
     this.form.valueChanges
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((val) => {
         this.store.updateCampaign(val);
       });
