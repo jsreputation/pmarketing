@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
         mergeMap((res) =>  combineLatest(
           ...res.map(c => this.stampService.getCurrentCard(c.id)
             .pipe(
-              map(res2 => ({...res2, campaignId: c.id})))
+              map(res2 => ({...res2, campaignId: c.id, campaignTitle: c.name, campaignDescription: c.description})))
           )
         )
       ));
