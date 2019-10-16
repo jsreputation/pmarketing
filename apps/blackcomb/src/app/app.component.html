@@ -1,5 +1,5 @@
 <div class="main-app-container" *ngIf="theme && theme.properties">
-  <mat-toolbar class="toolbar mat-elevation-z2" *ngIf="showHeader" color="primary">
+  <mat-toolbar class="toolbar mat-elevation-z2" *ngIf="showHeader">
     <mat-icon class="backArrow" (click)="leftClick()">{{leftIcon}}</mat-icon>
     <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
     <!-- ghost stuff-->
@@ -9,6 +9,12 @@
     <router-outlet (activate)="onActivate($event)"></router-outlet>
   </div>
   <mat-toolbar class="navbar mat-elevation-z2" *ngIf="showToolbar">
+    <a [routerLink]="[ '/home' ]" routerLinkActive="active">
+      <div class="nav-item">
+        <mat-icon aria-hidden="false">home</mat-icon>
+        <span>Home</span>
+      </div>
+    </a>
     <a [routerLink]="[ '/wallet' ]" routerLinkActive="active">
       <div class="nav-item">
         <mat-icon aria-hidden="false">account_balance_wallet</mat-icon>
