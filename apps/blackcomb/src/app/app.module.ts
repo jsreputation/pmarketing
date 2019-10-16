@@ -34,7 +34,6 @@ import {
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -45,6 +44,8 @@ import { profile } from './mock/profile.mock';
 import { RewardComponent } from './reward/reward.component';
 import { ContentComponent } from './content/content.component';
 import { HttpClientModule } from '@angular/common/http';
+import { WalletComponent } from './wallet/wallet.component';
+import { HomeModule } from './home/home.module';
 
 const profileServiceStub = {
   whoAmI: () => of(profile)
@@ -54,13 +55,13 @@ const profileServiceStub = {
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
     RedeemComponent,
     LoadingComponent,
     VoucherDetailComponent,
     HistoryComponent,
     RewardComponent,
-    ContentComponent
+    ContentComponent,
+    WalletComponent
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
@@ -90,7 +91,8 @@ const profileServiceStub = {
     FormsModule,
     UtilsModule,
     PerxCampaignModule,
-    HttpClientModule
+    HttpClientModule,
+    HomeModule
   ],
   providers: [
     { provide: ProfileService, useValue: profileServiceStub },
