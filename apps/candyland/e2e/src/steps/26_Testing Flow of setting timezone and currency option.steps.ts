@@ -93,8 +93,8 @@ Then(/^3_I should see that the settings remains unchanged.$/, async () => {
   // currency with vietnam currency
   await browser.wait(ec.presenceOf(element.all(by.css('div.mat-select-value')).get(1)), 6000);
   // doing an assertion on the text values of timezone and currency
-  expect(element(by.className('mat-select-value-text ng-tns-c47-22 ng-star-inserted')).getText()).to.contain('(GMT+7:00) Vietnam Standard Time');
-  expect(element(by.className('mat-select-value-text ng-tns-c16-5 ng-star-inserted')).getText()).to.contain('Vietnam VND');
+  expect(await element.all(by.css('div.mat-select-value')).get(0).getText()).to.contain('(GMT+7:00) Vietnam Standard Time');
+  expect(await element.all(by.css('div.mat-select-value')).get(1).getText()).to.contain('Vietnam VND');
 
 });
 
@@ -156,6 +156,6 @@ Then(/^4_I should see that the settings remains unchanged.$/, async () => {
   // currency with vietnam currency
   await browser.wait(ec.presenceOf(element.all(by.css('div.mat-select-value')).get(0)), 6000);
   // doing an assertion on the text values of timezone and currency
-  expect(element(by.className('mat-select-value-text ng-tns-c47-22 ng-star-inserted')).getText()).to.contain('(GMT+7:00) Vietnam Standard Time');
-  expect(element(by.className('mat-select-value-text ng-tns-c16-5 ng-star-inserted')).getText()).to.contain('Vietnam VND');
+  expect(await element.all(by.css('div.mat-select-value')).get(0).getText()).to.contain('(GMT+7:00) Vietnam Standard Time');
+  expect(await element.all(by.css('div.mat-select-value')).get(1).getText()).to.contain('Vietnam VND');
 });
