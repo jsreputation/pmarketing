@@ -7,3 +7,9 @@
 
   @include typo-input;
 }
+
+@media (min-width: $tablet-width + 1) {
+  cl-table-filters {
+    margin-right: ($horizontal-padding * 0.5);
+  }
+}
