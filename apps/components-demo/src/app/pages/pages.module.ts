@@ -11,7 +11,6 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 import {
-  PagesModule as PerxPagesModule,
   GameModule,
   VouchersModule,
   RewardsModule,
@@ -60,7 +59,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     CommonModule,
     PagesRoutingModule,
     MatTabsModule,
-    PerxPagesModule,
     MatInputModule,
     MatProgressBarModule,
     GameModule,
