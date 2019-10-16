@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
-import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { NewCampaignRewardsStampsFormService } from 'src/app/campaigns/services/new-campaign-rewards-stamps-form.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
@@ -14,11 +13,8 @@ import { CampaignCreationStoreService } from '../../services/campaigns-creation-
   styleUrls: ['./new-campaign-rewards-stamps-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
+export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm implements OnInit {
   @Input() public tenantSettings: ITenantsProperties;
-
-  private destroy$: Subject<any> = new Subject();
-
   public form: FormGroup;
 
   constructor(
@@ -55,9 +51,8 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   }
 
   public ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.cd.detach();
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   public get rewardsListCollection(): FormArray {

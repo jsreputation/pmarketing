@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Input } from '@angular/core';
 import { AbstractControl, FormGroup, Validators } from '@angular/forms';
 import { AudiencesService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
-import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
@@ -17,7 +16,7 @@ import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
   styleUrls: ['./new-campaign-detail-page.component.scss']
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
+export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit {
   public form: FormGroup;
   public config: any;
   public isFirstInit: boolean;
@@ -25,8 +24,6 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   public campaignId: string;
   @Input()
   public pools: any;
-
-  private destroy$: Subject<any> = new Subject();
 
   public get campaignInfo(): AbstractControl | null {
     return this.form.get('campaignInfo');
@@ -104,11 +101,6 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     this.isFirstInit = true;
     this.initPools();
     this.initData();
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   private initForm(): void {

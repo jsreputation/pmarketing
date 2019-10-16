@@ -2,7 +2,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
@@ -18,9 +17,6 @@ import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 })
 export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
-
-  private destroy$: Subject<any> = new Subject();
-
   public isFirstInit: boolean = true;
   public form: FormGroup;
   public defaultValue: any = {
@@ -51,9 +47,8 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
   }
 
   public ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.cd.detach();
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   private initForm(): void {

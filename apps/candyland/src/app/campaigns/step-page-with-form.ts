@@ -8,7 +8,7 @@ import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaig
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 
 export class AbstractStepWithForm implements OnInit, OnDestroy {
-  private destroy$: Subject<any> = new Subject();
+  public destroy$: Subject<any> = new Subject();
 
   public form: FormGroup;
   public config: any;

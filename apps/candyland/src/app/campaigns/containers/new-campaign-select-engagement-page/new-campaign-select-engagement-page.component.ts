@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { of, Subject } from 'rxjs';
+import { of } from 'rxjs';
 import { tap, map, catchError, takeUntil } from 'rxjs/operators';
 
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
@@ -22,9 +22,6 @@ import { ILimit } from '@cl-core/models/limit/limit.interface';
 })
 export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
-
-  private destroy$: Subject<any> = new Subject();
-
   public form: FormGroup;
   public dataSource: MatTableDataSource<IEngagement> = new MatTableDataSource<IEngagement>();
   public defaultSearchValue: any = null;
@@ -60,10 +57,9 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   }
 
   public ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.cd.detach();
     this.availableNewEngagementService.remove();
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   public createNewEngagement(): void {

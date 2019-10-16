@@ -1,7 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input } from '@angular/core';
 
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { AbstractStepWithForm } from '../../step-page-with-form';
@@ -16,9 +15,6 @@ import { StepConditionService } from '../../services/step-condition.service';
 })
 export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
-
-  private destroy$: Subject<any> = new Subject();
-
   public isFirstInit: boolean = true;
   public form: FormGroup;
   public defaultValue: {[key: string]: any} = {
@@ -48,9 +44,8 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
   }
 
   public ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.cd.detach();
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   private initForm(): void {
