@@ -2,7 +2,7 @@ import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
 import { tap, mergeMap, catchError, map } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
-import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
 import { AuthenticationService } from './authentication.service';
 import { IProfile } from '../../profile/profile.model';
@@ -150,6 +150,11 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     );
   }
 
+  // @ts-ignore
+  public createUserAndAutoLogin(pi: string): Observable<any> {
+    return throwError('Not implement yet');
+  }
+
   public authenticateUserWithPI(user: string): Observable<ILoginResponse> {
     const authenticatePiRequest: IV4AuthenticatePiRequest = {
       url: location.host,
@@ -160,12 +165,11 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   public getAppToken(): Observable<IAppAccessTokenResponse> {
-    const httpParams = new HttpParams()
-      .append('url', location.host);
+    const authenticateRequest: { url: string } = {
+      url: location.host,
+    };
 
-    return this.http.post<IAppAccessTokenResponse>(this.appAuthEndPoint + '/token', null, {
-      params: httpParams
-    }).pipe(
+    return this.http.post<IAppAccessTokenResponse>(this.appAuthEndPoint + '/token', authenticateRequest).pipe(
       tap((resp) => {
         this.saveAppAccessToken(resp.access_token);
       })
@@ -181,7 +185,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   public logout(): void {
-    this.tokenStorage.clearAppInfoProperty('userAccessToken');
+    this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'pi']);
   }
 
   // @ts-ignore
@@ -343,6 +347,14 @@ export class V4AuthenticationService extends AuthenticationService implements Au
    */
   public saveAppAccessToken(accessToken: string): void {
     this.tokenStorage.setAppInfoProperty(accessToken, 'appAccessToken');
+  }
+
+  public getPI(): string {
+    return this.tokenStorage.getAppInfoProperty('pi');
+  }
+
+  public savePI(pi: string): void {
+    this.tokenStorage.setAppInfoProperty(pi, 'pi');
   }
 
 }

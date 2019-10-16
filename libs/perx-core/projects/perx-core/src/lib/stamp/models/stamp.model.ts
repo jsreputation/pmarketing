@@ -70,6 +70,12 @@ export interface IStampCard {
     bgImage?: string;
     cardBgImage?: string;
     totalSlots?: number;
+    displayCampaignAs: string;
+    backgroundImg?: {
+      value?: {
+        imageUrl: string;
+      }
+    };
   };
   collectionStamps?: PuzzleCollectStamp[];
   stamps?: IStamp[];

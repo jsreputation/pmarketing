@@ -5,6 +5,7 @@ import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaig
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 @Component({
   selector: 'cl-new-campaign-rewards-page',
@@ -66,8 +67,8 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
       this.store.currentCampaign$
         .asObservable()
         .pipe(untilDestroyed(this))
-        .subscribe(data => {
-          const isFirstTimeRenderFromAPIResponse = data && data.id && data.limits && data.limits.times && this.isFirstInit;
+        .subscribe((data: ICampaign) => {
+          const isFirstTimeRenderFromAPIResponse = data && data.id && data.limits && data.limits.id && this.isFirstInit;
           if (isFirstTimeRenderFromAPIResponse) {
             this.isFirstInit = false;
             const limitsData = Object.assign({}, data);

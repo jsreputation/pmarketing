@@ -31,7 +31,7 @@ export class SignupComponent implements PageAppearence {
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
       accept_terms: [false, Validators.required],
       accept_marketing: [false, Validators.required],
-      countryCode: ['', Validators.required]
+      countryCode: ['852', Validators.required]
     });
   }
 
@@ -88,10 +88,10 @@ export class SignupComponent implements PageAppearence {
 
       this.authService.signup(signUpData).subscribe(
         () => {
-          this.router.navigate(['enter-pin/register'], { state: { mobileNo: mobileNumber } } );
+          this.router.navigate(['enter-pin/register'], { state: { mobileNo: cleanedMobileNo } } );
         },
         err => {
-          console.error('Signup: ' + err);
+          this.notificationService.addSnack(err.error.message);
         });
     } catch (error) {
         console.log(error);

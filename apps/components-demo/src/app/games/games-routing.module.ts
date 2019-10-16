@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { GamesComponent } from './games.component';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
+import { ScratchComponent } from './scratch/scratch.component';
 
 const routes: Routes = [
   {
@@ -10,7 +11,8 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'shake', pathMatch: 'full' },
       { path: 'shake', component: ShakeComponent },
-      { path: 'tap', component: TapComponent }
+      { path: 'tap', component: TapComponent },
+      { path: 'scratch', component: ScratchComponent },
     ],
   },
 ];

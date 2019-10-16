@@ -42,6 +42,7 @@ const routes: Routes = [
   {
     path: 'pages', loadChildren: () => import('./pages/pages.module').then(mod => mod.PagesModule)
   }
+
 ];
 
 @NgModule({

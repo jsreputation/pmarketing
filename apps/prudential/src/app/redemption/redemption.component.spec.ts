@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RedemptionComponent } from './redemption.component';
 import { MatCardModule } from '@angular/material';
 import {
-  Voucher, VoucherState, RedemptionType, VouchersModule, IVoucherService, RewardsService, IMerchantsService
+  Voucher, VoucherState, VouchersModule, IVoucherService, RewardsService, IMerchantsService
 } from '@perx/core';
 
 import { RouterTestingModule } from '@angular/router/testing';
@@ -15,21 +15,13 @@ describe('RedemptionComponent', () => {
   let fixture: ComponentFixture<RedemptionComponent>;
   const mockVoucher: Partial<Voucher> = {
     id: 2,
-    rewardId: 2,
     state: VoucherState.issued,
-    name: 'sir',
-    redemptionType: RedemptionType.offline,
-    thumbnailImg: 'nil',
-    rewardBanner: 'nil',
-    merchantImg: 'nil',
-    merchantName: 'nil',
-    expiry:  null,
-    description: []
+    expiry: null,
   };
 
   const voucherServiceStub = {
     get: () => {
-      return of('');
+      return of(mockVoucher);
     }
   };
   const rewardsServiceStub = {

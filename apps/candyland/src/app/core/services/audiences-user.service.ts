@@ -19,9 +19,15 @@ export class AudiencesUserService implements ITableService {
     return this.http.getUser(id, params).pipe(map((res: any) => AudiencesHttpAdapter.transformUserWithPools(res)));
   }
 
-  public getAllUsers(params: HttpParamsOptions): any {
+  public getAllUsers(params: HttpParamsOptions): Observable<IJsonApiListPayload<IUserApi>> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.http.getAllUsers(httpParams);
+  }
+
+  public getAllPoolUser(poolId: string): Observable<IJsonApiItem<IUserApi>[]> {
+    const httpParams = ClHttpParams.createHttpParams({ include: 'users' });
+    return this.http.getAudience(poolId, httpParams)
+      .pipe(map(res => res.included));
   }
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IUser>> {
@@ -33,7 +39,7 @@ export class AudiencesUserService implements ITableService {
 
   public createUser(user: IAudiencesUserForm): Observable<IJsonApiPayload<IUserApi>> {
     const formattedUser = AudiencesHttpAdapter.transformFromUserForm(user);
-    return this.http.createUser({data: formattedUser});
+    return this.http.createUser(formattedUser);
   }
 
   public updateUser(id: string, user: IAudiencesUserForm): Observable<IJsonApiPayload<IUserApi>> {

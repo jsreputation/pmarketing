@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { VoucherComponent } from './voucher.component';
-import { VouchersModule, IVoucherService, Voucher, VoucherState, RedemptionType, RewardsService, IMerchantsService } from '@perx/core';
+import { VouchersModule, IVoucherService, Voucher, VoucherState, RewardsService, IMerchantsService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -12,16 +12,29 @@ describe('VoucherComponent', () => {
 
   const mockVoucher: Voucher = {
     id: 1,
-    rewardId: 1,
+    reward: {
+      id: 1,
+      name: '',
+      description: '',
+      subtitle: '',
+      validFrom: new Date(),
+      validTo: new Date(),
+      sellingFrom: new Date(),
+      rewardThumbnail: '',
+      rewardBanner: '',
+      merchantImg: '',
+      rewardPrice: [],
+      merchantId: 1,
+      merchantName: '',
+      merchantWebsite: '',
+      termsAndConditions: '',
+      howToRedeem: '',
+      redemptionType: null,
+      categoryTags: [],
+      inventory: null,
+    },
     state: VoucherState.issued,
-    name: '',
-    redemptionType: RedemptionType.none,
-    thumbnailImg: '',
-    rewardBanner: '',
-    merchantImg: '',
-    merchantName: '',
-    expiry:  null,
-    description: []
+    expiry: null,
   };
   const vouchersServiceStub = {
     get: () => of(mockVoucher)

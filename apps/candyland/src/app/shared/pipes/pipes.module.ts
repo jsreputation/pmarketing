@@ -6,6 +6,7 @@ import { ProfilePhotoPipe } from './profile-photo.pipe';
 import { DaysOnGoingPipe } from './daysOnGoing.pipe';
 import { UppercaseSplitPipe } from '@cl-shared/pipes/uppercase-split.pipe';
 import { EngagementTypePipe } from './engagement-type.pipe';
+import { SafePipe } from './safe.pipe';
 
 const PIPES = [
   FullnamePipe,
@@ -13,7 +14,8 @@ const PIPES = [
   DaysOnGoingPipe,
   UppercaseSplitPipe,
   FieldsInArrayPipe,
-  EngagementTypePipe
+  EngagementTypePipe,
+  SafePipe
 ];
 
 @NgModule({

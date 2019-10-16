@@ -1,10 +1,11 @@
-import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {Router} from '@angular/router';
-import {IReward, RewardsService, LoyaltyService, ILoyalty, IProfile} from '@perx/core';
-import {ITabConfig, IPrice} from '@perx/core';
-import {Observable, of, Subject, forkJoin} from 'rxjs';
-import {flatMap, map, filter} from 'rxjs/operators';
-import {MatTabChangeEvent} from '@angular/material/tabs';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { IReward, RewardsService, LoyaltyService, ILoyalty, IProfile } from '@perx/core';
+import { ITabConfig, IPrice } from '@perx/core';
+import { Observable, of, Subject } from 'rxjs';
+import { flatMap, map, filter } from 'rxjs/operators';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+import {DatePipe} from '@angular/common';
 
 const tabs: ITabConfig[] = [
   {
@@ -58,6 +59,8 @@ export class HomeComponent implements OnInit {
   public rewardsCollection: Observable<IReward[]>;
   public displayPriceFn: (price: IPrice) => string;
   public titleFn: (profile: IProfile) => string;
+  public subTitleFn: (loyalty: ILoyalty) => string;
+  public summaryExpiringFn: (loyalty: ILoyalty) => string;
   public currentTab: string;
   private rewardMultiPageMetaTracker: PageTracker = {};
   private requestPageSize: number = 10;
@@ -66,7 +69,8 @@ export class HomeComponent implements OnInit {
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
     private router: Router,
-    private cd: ChangeDetectorRef
+    private datePipe: DatePipe
+    // private cd: ChangeDetectorRef
   ) {
   }
 
@@ -93,6 +97,8 @@ export class HomeComponent implements OnInit {
       }
       return `Welcome`;
     };
+    this.subTitleFn = () => `Your total points as of ${this.datePipe.transform(new Date(), 'ddMMMyy')}`;
+    this.summaryExpiringFn = (): string => '';
     this.loadCurrentTabRewards(this.staticTab[0].tabName);
   }
 
@@ -103,12 +109,12 @@ export class HomeComponent implements OnInit {
   private loadCurrentTabRewards(tabName: string): void {
     this.rewardsService.getRewards(1, this.requestPageSize, null, [tabName])
       .pipe(map((res: IReward[]) => {
-        this.rewardMultiPageMetaTracker[tabName] = {page: 1, isLast: false};
-        return ({key: tabName, value: res});
+        this.rewardMultiPageMetaTracker[tabName] = { page: 1, isLast: false };
+        return ({ key: tabName, value: res });
       })).subscribe((rewards) => {
-      this.staticTab.find((elem) => rewards.key === elem.tabName).rewardsList = of(rewards.value);
-      this.tabs.next(this.staticTab);
-    });
+        this.staticTab.find((elem) => rewards.key === elem.tabName).rewardsList = of(rewards.value);
+        this.tabs.next(this.staticTab);
+      });
   }
 
   private getLoyalty(): void {
@@ -120,14 +126,14 @@ export class HomeComponent implements OnInit {
       .subscribe((loyalty: ILoyalty) => this.loyalty$ = this.loyaltyService.getLoyalty(loyalty.id));
   }
 
-  private getTags(): Observable<ITabConfig[]> {
-    // todo: service not implemented yet
-    // this.rewardsService.getTags();
-    this.staticTab = tabs;
-    this.tabs.next(this.staticTab);
-    this.cd.detectChanges();
-    return of(tabs);
-  }
+  // private getTags(): Observable<ITabConfig[]> {
+  //   // todo: service not implemented yet
+  //   // this.rewardsService.getTags();
+  //   this.staticTab = tabs;
+  //   this.tabs.next(this.staticTab);
+  //   this.cd.detectChanges();
+  //   return of(tabs);
+  // }
 
   public tabChanged(event: MatTabChangeEvent): void {
     this.currentTab = event.tab.textLabel;

@@ -1,9 +1,30 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import { concatAll, map, mergeMap, reduce } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams,
+} from '@angular/common/http';
+
+import {
+  Observable,
+  of,
+} from 'rxjs';
+import {
+  concatAll,
+  map,
+  mergeMap,
+  reduce,
+} from 'rxjs/operators';
+
 import { RewardsService } from './rewards.service';
-import { IReward, ICatalog, IPrice, ICategoryTags } from './models/reward.model';
+import {
+  IReward,
+  ICatalog,
+  IPrice,
+  ICategoryTags,
+  RedemptionType,
+} from './models/reward.model';
+
 import { Config } from '../config/config';
 
 interface IV4Meta {
@@ -13,7 +34,7 @@ interface IV4Meta {
   page?: number;
 }
 
-interface IV4Tag {
+export interface IV4Tag {
   id: number;
   name: string;
 }
@@ -57,6 +78,7 @@ export interface IV4Reward {
   merchant_website?: string;
   terms_and_conditions?: string;
   how_to_redeem?: string;
+  redemption_type?: RedemptionType;
   tags?: IV4Tag[];
   category_tags?: ICategoryTags[];
   inventory?: IV4Inventory;
@@ -152,6 +174,7 @@ export class V4RewardsService extends RewardsService {
       name: reward.name,
       subtitle: reward.subtitle,
       description: reward.description,
+      redemptionType: reward.redemption_type,
       rewardPrice: reward.reward_price.map(price => ({
         id: price.id,
         currencyCode: price.currency_code,
