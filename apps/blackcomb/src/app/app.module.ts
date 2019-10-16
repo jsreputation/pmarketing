@@ -32,34 +32,40 @@ import {
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { RedeemComponent } from './redeem/redeem.component';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { LoadingComponent } from './loading/loading.component';
-import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
-import { HistoryComponent } from './history/history.component';
 import { profile } from './mock/profile.mock';
-import { RewardComponent } from './reward/reward.component';
-import { ContentComponent } from './content/content.component';
 import { HttpClientModule } from '@angular/common/http';
-
+import { 
+  HomeComponent,
+  HistoryComponent,
+  RedeemComponent,
+  LoginComponent,
+  VoucherDetailComponent,
+  RewardDetailsComponent,
+  LoadingComponent,
+  ContentComponent
+} from '@perx/blackcomb-pages';
 const profileServiceStub = {
   whoAmI: () => of(profile)
 };
 
+const perxComponents = [
+  HomeComponent,
+  HistoryComponent,
+  RedeemComponent,
+  LoginComponent,
+  VoucherDetailComponent,
+  RewardDetailsComponent,
+  LoadingComponent,
+  ContentComponent
+]
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
-    RedeemComponent,
     LoadingComponent,
-    VoucherDetailComponent,
-    HistoryComponent,
-    RewardComponent,
-    ContentComponent
+    ... perxComponents,
   ],
   imports: [
     ConfigModule.forRoot({...environment}),

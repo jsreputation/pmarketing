@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { RedeemComponent } from './redeem/redeem.component';
-import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
-import { LoginComponent } from './login/login.component';
-import { HistoryComponent } from './history/history.component';
-import { LoadingComponent } from './loading/loading.component';
-import { RewardComponent } from './reward/reward.component';
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
-import { ContentComponent } from './content/content.component';
-
+import { 
+  HomeComponent,
+  HistoryComponent,
+  RedeemComponent,
+  LoginComponent,
+  VoucherDetailComponent,
+  RewardDetailsComponent,
+  LoadingComponent,
+  ContentComponent
+} from '@perx/blackcomb-pages'
 const routes: Routes = [
   {
     path: '',
@@ -43,9 +44,9 @@ const routes: Routes = [
         loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule),
         canActivate: [ProtectedGuard]
       },
-      { path: 'reward-detail', component: RewardComponent, canActivate: [ProtectedGuard] },
+      { path: 'reward-detail', component: RewardDetailsComponent, canActivate: [ProtectedGuard] },
       { path: 'loading', component: LoadingComponent },
-      { path: 'c/:key', component: ContentComponent, canActivate: [ProtectedGuard]},
+      { path: 'c/:key', component: ContentComponent, canActivate: [ProtectedGuard] },
     ]
   },
   { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },
