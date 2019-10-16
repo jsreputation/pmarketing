@@ -3,7 +3,7 @@
  */
 
 export * from './lib/whistler.module';
-
+export { IVoucherStatsApi } from './lib/voucher/stats';
 export { AssignedStatus, IAssignedAttributes, IAssignRequestAttributes } from './lib/voucher/assigneds';
 export { IRewardEntityAttributes } from './lib/reward/reward';
 export { IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from './lib/limit/limit';
