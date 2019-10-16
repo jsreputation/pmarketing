@@ -13,5 +13,5 @@ export abstract class IMerchantAdminService {
 
   public abstract validateInvite(token: string, clientId: string): Observable<IMerchantProfile>;
 
-  public abstract setupNewMerchantsPassword(token: string, clientId: string, password: string): Observable<any>;
+  public abstract setupNewMerchantsPassword(token: string, clientId: string, password: string): Observable<string>;
 }

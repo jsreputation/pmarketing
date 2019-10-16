@@ -195,7 +195,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     );
   }
 
-  public setupNewMerchantsPassword(token: string, clientId: string, password: string): Observable<any> {
+  public setupNewMerchantsPassword(token: string, clientId: string, password: string): Observable<string> {
 
     const body = {
       invitation_token: token,

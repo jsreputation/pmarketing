@@ -34,7 +34,7 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   }
 
   // @ts-ignore
-  public setupNewMerchantsPassword(token: string, clientId: string, password: string): Observable<any> {
+  public setupNewMerchantsPassword(token: string, clientId: string, password: string): Observable<string> {
     throw new Error(`setupNewMerchantsPassword Method not implemented.`);
   }
 }
