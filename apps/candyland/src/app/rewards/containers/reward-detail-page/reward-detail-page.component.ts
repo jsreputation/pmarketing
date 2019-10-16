@@ -3,14 +3,13 @@ import { MatDialog, MatPaginator, MatTableDataSource, MatSnackBar } from '@angul
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import Utils from '@cl-helpers/utils';
 
-import { Subject } from 'rxjs';
+import { of, combineLatest, Subject } from 'rxjs';
 import { map, switchMap, filter, takeUntil } from 'rxjs/operators';
 
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
 import { RewardsService, MerchantsService } from '@cl-core/services';
 import { VouchersService } from '@cl-core/services/vouchers.service';
-import { of, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'cl-reward-detail-page',

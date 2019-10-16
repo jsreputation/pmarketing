@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { tap, map, catchError, takeUntil } from 'rxjs/operators';
 
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
@@ -14,7 +14,6 @@ import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-eng
 import { ActivatedRoute } from '@angular/router';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
-import { of } from 'rxjs';
 
 @Component({
   selector: 'cl-new-campaign-select-engagement-page',

@@ -13,7 +13,6 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
 
   private destroy$: Subject<any> = new Subject();
-  
   public stamps: PuzzleCollectStamp[] = [];
   public stampsSlotNumberData: {rewardPosition: number}[] = [];
   public questionData$: BehaviorSubject<any> = new BehaviorSubject(null);

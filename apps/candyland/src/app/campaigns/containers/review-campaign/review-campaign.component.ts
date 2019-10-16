@@ -49,7 +49,6 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-  
   // TODO: it need for get right data from back end in the future
   private getCampaignData(): void {
     const campaignId = this.route.snapshot.params.id;

@@ -2,10 +2,9 @@ import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRe
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { combineLatest, Observable, of, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { tap, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { tap, map, switchMap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import {
   AvailableNewEngagementService, PinataService, RoutingStateService, SettingsService
