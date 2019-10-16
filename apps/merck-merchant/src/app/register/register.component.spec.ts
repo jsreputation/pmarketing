@@ -10,12 +10,13 @@ import {MatRippleModule} from '@angular/material/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthenticationService, IMerchantAdminService} from '@perx/core';
 import {Router} from '@angular/router';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
   const merchantAdminServiceStub = {
-    validateInvite: () => ({ subscribe: () => ({}) })
+    validateInvite: () => ({ subscribe: () => ({ add: () => ({}) }) })
   };
   beforeEach(async(() => {
     const routerStub = { navigateByUrl: () => ({}) };
@@ -30,6 +31,7 @@ describe('RegisterComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatRippleModule,
+        MatProgressSpinnerModule,
         BrowserAnimationsModule
       ],
       providers: [
