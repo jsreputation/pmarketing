@@ -74,7 +74,7 @@ export class GameComponent implements OnInit {
           });
         }
       },
-      (_err) => {
+      (_) => {
         this.router.navigate(['/wallet']);
         this.dialog.open(PopupComponent, {
           data: {
