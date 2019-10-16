@@ -15,7 +15,8 @@ const campaignServiceStub = {
 };
 
 const rewardsServiceStub = {
-  getAllRewards: () => of(rewards)
+  getAllRewards: () => of(rewards),
+  getReward: () => of(rewards)
 };
 
 const loyaltyServiceStub = {

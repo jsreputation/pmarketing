@@ -14,15 +14,22 @@ const stubTabs: ITabConfigExtended[] = [
   , {
     filterKey: null,
     filterValue: null,
-    tabName: 'HOME+',
+    tabName: 'Category 1',
     rewardsList: null,
-    rewardsType: 'Home+'
+    rewardsType: 'CATEGORY_1'
   }, {
     filterKey: null,
     filterValue: null,
-    tabName: 'HKBN',
+    tabName: 'Category 2',
     rewardsList: null,
-    rewardsType: 'HKBN'
+    rewardsType: 'CATEGORY_2'
+  },
+  {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Category 3',
+    rewardsList: null,
+    rewardsType: 'CATEGORY_3'
   }
 ];
 
@@ -32,7 +39,7 @@ const stubTabs: ITabConfigExtended[] = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public campaing$: Observable<ICampaign[]>;
+  public campaign$: Observable<ICampaign[]>;
   public rewards$: Observable<IReward[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
@@ -42,7 +49,7 @@ export class HomeComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.campaing$ = this.campaingService.getCampaigns();
+    this.campaign$ = this.campaingService.getCampaigns();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.staticTab = stubTabs;
     this.getTabedList();

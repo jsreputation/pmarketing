@@ -8,6 +8,6 @@ import { ICampaign } from '@perx/core';
   styleUrls: ['./games-collection.component.scss']
 })
 export class GamesCollectionComponent {
-  @Input('campaing')
-  public campaing$: Observable<ICampaign[]>;
+  @Input('campaign')
+  public campaign$: Observable<ICampaign[]>;
 }
