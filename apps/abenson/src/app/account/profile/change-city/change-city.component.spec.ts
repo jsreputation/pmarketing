@@ -35,7 +35,7 @@ describe('ChangeCityComponent', () => {
         RouterTestingModule,
       ],
       providers: [
-        { provide: ProfileService, useValue: profileServiceStub}
+        { provide: ProfileService, useValue: profileServiceStub }
       ]
     })
       .compileComponents();
@@ -75,5 +75,12 @@ describe('ChangeCityComponent', () => {
     component.onSubmit();
     fixture.detectChanges();
     expect(spyLog).toHaveBeenCalled();
+  }));
+
+  it('should leave profileSerive', fakeAsync(() => {
+    component.cityChangeForm.setValue({ newCity: null });
+    component.onSubmit();
+    tick();
+    expect(spyOnProfile).not.toHaveBeenCalled();
   }));
 });

@@ -22,7 +22,7 @@ export class RewardsService implements ITableService {
     );
   }
 
-  public getRewards(params: HttpParamsOptions): Observable<any> {
+  public getRewards(params: HttpParamsOptions): Observable<IRewardEntity[]> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.rewardHttp.getRewards(httpParams);
   }

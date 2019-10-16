@@ -107,6 +107,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
         for (const k in stats) {
           this.data.vouchersStatistics.push({ type: k, value: stats[k] });
         }
+        this.cd.detectChanges();
       });
   }
 }
