@@ -26,7 +26,7 @@ export interface IReward {
   redemptionType?: RedemptionType;
   categoryTags?: ICategoryTags[];
   inventory?: Inventory;
-  redemptionSuccessTxt?: string;
+  redemptionText?: string;
 }
 
 export interface ICatalog {
