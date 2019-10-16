@@ -12,7 +12,7 @@ import {Router} from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   public loginForm: FormGroup;
-  public isMerchantNameLoading: boolean = true;
+  public isMerchantNameLoading: boolean;
   private invitationToken: string;
   private clientId: string;
 
@@ -23,6 +23,7 @@ export class RegisterComponent implements OnInit {
     private merchantAdminService: IMerchantAdminService,
     @Inject(PLATFORM_ID) private platformId: object
   ) {
+    this.isMerchantNameLoading = true;
     this.initForm();
   }
 
