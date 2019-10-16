@@ -140,13 +140,14 @@ $fluid-cell-6: 21% !important;
     padding-left: ($vertical-padding * 0.5) !important;
   }
 
-  .mat-table-sticky {
+  .mat-header-row .mat-table-sticky,
+  .mat-row:not(.table-row) .mat-table-sticky {
     position: relative;
     background: $white;
 
     &::after {
       content: "";
-      width: 8px;
+      width: ($horizontal-padding * 0.25);
       position: absolute;
       top: 0;
       bottom: 0;
@@ -158,18 +159,6 @@ $fluid-cell-6: 21% !important;
       left: auto;
       right: 100%;
       background: linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
-    }
-  }
-
-  .table-row:hover .mat-table-sticky {
-    background: #f5f5f5;
-
-    &::after {
-      background: linear-gradient(to right, rgba(#f5f5f5, 1) 0%, rgba(#f5f5f5, 0) 100%);
-    }
-
-    &:last-child::after {
-      background: linear-gradient(to left, rgba(#f5f5f5, 1) 0%, rgba(#f5f5f5, 0) 100%);
     }
   }
 }
