@@ -83,7 +83,7 @@ h1, h2, h3, h4, h5, p {
 }
 
 .sub-title {
-  @include typo-subtitle1-alt;
+  @include typo-h6;
 
   color: $secondary-color;
 }

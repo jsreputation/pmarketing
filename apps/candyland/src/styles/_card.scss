@@ -117,16 +117,14 @@
 
   &-row {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: baseline;
+    margin-left: -($horizontal-padding * 0.25);
+    margin-right: -($horizontal-padding * 0.25);
 
     & > * {
-      margin-right: 1.5rem;
-
-      &:last-of-type {
-        margin-right: 0;
-      }
+      padding-left: ($horizontal-padding * 0.25);
+      padding-right: ($horizontal-padding * 0.25);
     }
 
     &.stretch {
@@ -134,6 +132,7 @@
 
       & > * {
         flex: 1;
+        flex-basis: 100%;
       }
     }
 
@@ -147,14 +146,6 @@
   &-row.input-group {
     flex-wrap: wrap;
 
-    > * {
-      margin-right: ($horizontal-padding * 0.5);
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-
     > .mat-form-field {
       flex: 1 1 ($horizontal-padding * 2);
       min-width: ($horizontal-padding * 2);
@@ -164,17 +155,10 @@
   &-section {
     margin-top: 1.9rem;
     background-color: $background-color;
-
-    .card-header {
-      padding: 0 3rem;
-    }
+    border-radius: $border-radius;
 
     .card-title {
       @extend .card-label;
-    }
-
-    .card-content {
-      padding: 0.4rem 3rem 3rem !important;
     }
   }
 
