@@ -250,6 +250,12 @@ h1, h2, h3, h4, h5, p {
   border-radius: $border-radius-lg !important;
 }
 
+.temp-engagement-title {
+  flex: 1;
+  margin-right: 4rem;
+  margin-bottom: ($vertical-padding * 0.5);
+}
+
 // no-data graphics layout
 .no-data {
   &-img {

@@ -1,5 +1,9 @@
 @import "variables";
 
+:host {
+  @include typo-body2;
+}
+
 .info {
   &-wrap {
     cursor: pointer;
