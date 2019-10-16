@@ -1,10 +1,10 @@
 mat-card {
-  margin: 0.4rem 0;
+  margin: 1.2rem 0;
   display: flex;
   align-items: center;
   padding: 0;
-  height: 3.5rem;
-  flex: 0 0 7.5rem;
+  flex: 0 0 10.5rem;
+  height: 10.5rem;
   justify-content: space-between;
 }
 
@@ -40,23 +40,23 @@ h1 {
   justify-content: flex-start;
 
   .puzzle-img__wrapper {
-    flex: 0 0 7.5rem;
     height: 10.5rem;
-    display: flex;
-    justify-content: center;
+    width: 10.5rem;
   }
 
   .puzzle-img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
   }
 
   .puzzle-details {
+    padding: 0 1.6rem;
     font-size: 1.4rem;
     display: flex;
-    margin: auto 0;
-    margin-left: 1rem;
     flex-direction: column;
+    margin: auto 0;
+    flex: 1;
   }
 
   .puzzle-details:nth-child(1) {
@@ -64,14 +64,19 @@ h1 {
   }
 
   .main-reward-title {
-    font-size: 1.6rem;
-    line-height: 1.9rem;
-    color: #212b36;
+    font-size: 1.4rem;
+    color: #37474F;
+    line-height: 1.6rem;
+    font-weight: 500;
+    margin: 4px 0;
+    padding: 0;
   }
 
   .reward-subtitle {
-    font-size: 1.2rem;
-    line-height: 1.4rem;
-    color: #6b6b6b;
+    font-size: 1.1rem;
+    line-height: 1.3rem;
+    color: #858585;
+    margin: 4px 0;
+    padding: 0;
   }
 }
