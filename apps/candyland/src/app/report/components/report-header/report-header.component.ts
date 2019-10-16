@@ -12,5 +12,4 @@ export class ReportHeaderComponent {
   public onClose(): void {
     this.closePage.emit(true);
   }
-
 }
