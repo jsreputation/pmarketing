@@ -1,0 +1,37 @@
+@import "../../reward.scss";
+@import "../../macaron.scss";
+
+.macaron-container {
+  text-align: center;
+  padding: 1rem;
+}
+
+@include macaronStyles();
+
+app-expire-timer,
+.phone-contact,
+.email-contact {
+  font-size: 1.5rem;
+}
+
+.about {
+  display: none;
+}
+
+.reward-merchant {
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+}
+
+.description, .address, .terms-conditions {
+  font-size: 1.6rem;
+  color: #666666;
+  white-space: pre-line;
+  line-height: 2.5rem;
+}

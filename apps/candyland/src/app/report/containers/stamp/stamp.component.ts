@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { StampsService } from '@cl-core-services';
+import { RoutingStateService, StampsService } from '@cl-core-services';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 
@@ -15,14 +15,19 @@ export class StampComponent implements OnInit, OnDestroy {
   };
   public data: StampsGraphicData;
   constructor(private stampsService: StampsService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private routingState: RoutingStateService) { }
 
   public ngOnInit(): void {
     this.subscribeToRoute();
   }
 
+  public downloadReport(): void {
+    // TODO: download implement here
+  }
+
   public onClose(): void {
-    // TODO: close page;
+    this.routingState.comeBackPreviousUrl();
   }
 
   private getReportStamp(id: string): void {
