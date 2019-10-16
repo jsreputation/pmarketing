@@ -12,7 +12,7 @@ export class VoucherComponent implements OnInit {
   public id: number;
   public redeeming: boolean = false;
   public voucher: Voucher;
-  public btnTxt: string = 'Redeem now';
+  public btnTxt: string = 'View';
 
   constructor(
     private route: ActivatedRoute,

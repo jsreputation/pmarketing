@@ -68,7 +68,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
         .asObservable()
         .pipe(untilDestroyed(this))
         .subscribe((data: ICampaign) => {
-          const isFirstTimeRenderFromAPIResponse = data && data.id && data.limits && data.limits.times && this.isFirstInit;
+          const isFirstTimeRenderFromAPIResponse = data && data.id && data.limits && data.limits.id && this.isFirstInit;
           if (isFirstTimeRenderFromAPIResponse) {
             this.isFirstInit = false;
             const limitsData = Object.assign({}, data);

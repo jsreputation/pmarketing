@@ -15,12 +15,12 @@
         <p class="card-title">Rewards</p>
       </div>
       <div class="card-content">
-        <cl-reward-item-preview *ngFor="let reward of campaign?.rewardsOptions?.rewards" class="item" [data]="reward?.value">
+        <cl-reward-item-preview *ngFor="let reward of campaign?.rewardsOptions?.rewards" class="item" [data]="reward?.value" [probability]="reward?.probability" [enableProbability]="campaign?.rewardsOptions?.enableProbability">
         </cl-reward-item-preview>
       </div>
     </mat-card>
     <!--limits-->
-    <mat-card class="card" *ngIf="campaign?.limits">
+    <mat-card class="card" *ngIf="campaign?.limits?.times">
       <div class="card-header">
         <h2 class="card-title">Play Limits</h2>
       </div>

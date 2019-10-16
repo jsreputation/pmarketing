@@ -8,6 +8,6 @@
     </mat-select>
 </mat-form-field>
 <mat-form-field class="full-width">
-    <input matInput type="tel" [placeholder]="'Mobile number'" (change)="
+    <input matInput type="tel" [placeholder]="'Mobile number'" (keyup)="
         updateInput($event.target.value)">
 </mat-form-field>
