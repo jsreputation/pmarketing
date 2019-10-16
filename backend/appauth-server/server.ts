@@ -234,7 +234,7 @@ app.post(BASE_HREF + 'cognito/users', async (req, res, next) => {
     endpointRequest.data = {
       ...endpointRequest.data, data: {
         attributes: {
-          jwt: endpointRequest.headers.authorization
+          jwt: endpointRequest.headers.authorization.split(' ')[1]
         }
       }
     };
