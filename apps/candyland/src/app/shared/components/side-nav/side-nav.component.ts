@@ -47,9 +47,7 @@ export class SideNavComponent implements OnInit, OnDestroy {
   public isOpen: boolean = true;
   public visibility: string = 'shown';
   public sideNavOpened: boolean = true;
-
   public mobileQuery: MediaQueryList;
-
   private myMobileQueryListener: () => void;
 
   constructor(private authService: AuthService,
@@ -58,6 +56,7 @@ export class SideNavComponent implements OnInit, OnDestroy {
               media: MediaMatcher) {
                 this.mobileQuery = media.matchMedia('(max-width: 768px)');
                 this.myMobileQueryListener = () => changeDetectorRef.detectChanges();
+                // tslint:disable-next-line: deprecation
                 this.mobileQuery.addListener(this.myMobileQueryListener);
   }
 
@@ -74,6 +73,7 @@ export class SideNavComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    // tslint:disable-next-line: deprecation
     this.mobileQuery.removeListener(this.myMobileQueryListener);
   }
 }
