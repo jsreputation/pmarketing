@@ -38,7 +38,7 @@ export class LoyaltyFormsService {
         transactionAmount: new FormControl(false),
         signUp: new FormControl(false),
         byInvite: new FormControl(false),
-        amount: new FormControl(null),
+        amount: new FormControl(null, [Validators.required, Validators.minLength(1)]),
       }, [Validators.required, ClValidators.requiredGroup]),
       poolId: new FormControl(null, Validators.required)
     });

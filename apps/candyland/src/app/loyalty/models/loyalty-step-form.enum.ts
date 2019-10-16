@@ -4,7 +4,7 @@ export enum LoyaltyStepForm {
   stepReview,
   stepFour,
   details = 'stepDetails',
-  tiers = 'TiersConversions',
+  tiers = 'tiersConversions',
   review = 'stepReview',
   four = 'stepFour',
 }

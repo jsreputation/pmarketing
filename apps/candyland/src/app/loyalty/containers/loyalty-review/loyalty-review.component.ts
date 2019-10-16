@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./loyalty-review.component.scss']
 })
 export class LoyaltyReviewComponent implements OnInit {
-  public loyalty: any;
+  public loyalty: ILoyaltyForm;
 
   constructor(private route: ActivatedRoute,
               private router: Router) {
@@ -28,32 +28,28 @@ export class LoyaltyReviewComponent implements OnInit {
 
   private getLoyalty(loyaltyId: string): void {
     // TODO: get loyalty
+    console.log(loyaltyId);
     this.loyalty = {
       name: 'telco',
+      status: 'draft',
       stepDetails: {
         pointsName: 'All-IT Points',
         mainImage: 'https://www.gettyimages.co.uk/gi-resources/images/RoyaltyFree/Apr17Update/ColourSurge1.jpg',
         joiningMethod: {
           transactionAmount: true,
-          amount: loyaltyId,
+          amount: 555,
           signUp: true,
           byInvite: true
         },
         poolId: null
       },
-      TiersConversions: {
+      tiersConversions: {
         globalEarnRule: {amount: 2, points: 10},
         globalBurnRule: {amount: 20, points: 2},
         pointsExpiry: {
-          pointWasEarnedAmount: 1,
-          pointWasEarnedPeriod: 'days',
-          userInactivityAmount: 1,
-          userInactivityPeriod: 'days'
-        },
-        pointsExpiry2: {
-          amount: 3,
-          type: 'day',
-          trigger: 'earned',
+          amount: 55,
+          type: 'days',
+          trigger: ''
         },
         tiers: []
       }
