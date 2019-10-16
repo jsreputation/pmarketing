@@ -43,11 +43,11 @@ export class RegisterComponent implements OnInit {
             message = err.error.message;
           }
           this.notificationService.addSnack(message);
+          this.router.navigateByUrl('/login');
         }
       ).add(
         () => {
           this.isMerchantNameLoading = false;
-          this.router.navigateByUrl('/login');
         }
       );
     }
@@ -83,6 +83,7 @@ export class RegisterComponent implements OnInit {
 
     this.merchantAdminService.setupNewMerchantsPassword(this.invitationToken, this.clientId, password).subscribe(
       (message: string) => {
+        // this.notificationService.addSnack('Your password has been saved. Please login');
         this.notificationService.addSnack(message);
         this.router.navigateByUrl('/login');
       },
