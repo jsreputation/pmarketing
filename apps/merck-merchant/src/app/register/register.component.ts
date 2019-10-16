@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   public loginForm: FormGroup;
+  public isMerchantNameLoading: boolean = true;
   private invitationToken: string;
   private clientId: string;
 
@@ -34,7 +35,6 @@ export class RegisterComponent implements OnInit {
       this.merchantAdminService.validateInvite(this.invitationToken, this.clientId).subscribe(
         () => {
           this.notificationService.addSnack('Your password has been saved. Please login');
-          this.router.navigateByUrl('/login');
         },
         (err) => {
           let message = 'Something went wrong';
@@ -42,6 +42,11 @@ export class RegisterComponent implements OnInit {
             message = err.error.message;
           }
           this.notificationService.addSnack(message);
+        }
+      ).add(
+        () => {
+          this.isMerchantNameLoading = false;
+          this.router.navigateByUrl('/login');
         }
       );
     }

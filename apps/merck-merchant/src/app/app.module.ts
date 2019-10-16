@@ -39,6 +39,7 @@ import { OrderQuantityComponent } from './order/order-quantity/order-quantity.co
 import { RedeemComponent } from './redeem/redeem.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import { RegisterComponent } from './register/register.component';
     RegisterComponent
   ],
   imports: [
-    ConfigModule.forRoot({ ...environment }),
+    ConfigModule.forRoot({...environment}),
     BrowserModule,
     ProfileModule,
     AppRoutingModule,
@@ -67,6 +68,7 @@ import { RegisterComponent } from './register/register.component';
     MatRippleModule,
     MatIconModule,
     MatListModule,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,

@@ -16,6 +16,11 @@
 }
 
 .content {
+  min-height: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   .main-heading {
     font-weight: 900;
     font-size: 3.2rem;
@@ -24,5 +29,22 @@
 
   mat-form-field {
     font-size: 1.4rem;
+  }
+
+  .spinner-container {
+    align-self: center;
+    width: 60px;
+    margin: 0 auto;
+    background-color: white;
+    z-index: 2000;
+    flex-direction: column;
+
+    mat-progress-spinner {
+      position: absolute;
+      height: 60px;
+      width: 60px;
+      top: 50%;
+      left: calc(50% - 30px);
+    }
   }
 }
