@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { CampaignCreationStoreService } from '../../services/campaigns-creation-
   styleUrls: ['./new-campaign-rewards-stamps-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm implements OnInit {
+export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
   public form: FormGroup;
 
