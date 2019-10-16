@@ -162,6 +162,7 @@
     left: 50%;
     transform: translateX(-49%);
     transform-origin: top center;
+    overflow: hidden;
     width: 21.5rem;
     min-height: 31.7rem;
     background: $white;
