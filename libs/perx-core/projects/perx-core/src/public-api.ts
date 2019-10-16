@@ -73,8 +73,6 @@ export {
 } from './lib/game/game.model';
 export { IGameService } from './lib/game/igame.service';
 export { IGameComponent } from './lib/game/igame.component';
-export { ShakeComponent } from './lib/pages/game/shake/shake.component';
-export { TapComponent } from './lib/pages/game/tap/tap.component';
 export { ShakeTreeComponent } from './lib/game/shake-tree/shake-tree.component';
 export { PinataComponent } from './lib/game/pinata/pinata.component';
 
@@ -188,18 +186,3 @@ export { OutcomeModule } from './lib/outcome/outcome.module';
 /**
  * Outcome
  */
-export { PagesModule } from './lib/pages/pages.module';
-export { AccountComponent } from './lib/pages/account/account.component';
-export { ContactUsComponent } from './lib/pages/contact-us/contact-us.component';
-export { GameComponent } from './lib/pages/game/game.component';
-export { HistoryComponent } from './lib/pages/history/history.component';
-export { HomeComponent } from './lib/pages/home/home.component';
-export { RewardPageComponent } from './lib/pages/reward-page/reward-page.component';
-export { LoadingComponent } from './lib/pages/loading/loading.component';
-export { LoginComponent } from './lib/pages/login/login.component';
-export { RedeemComponent } from './lib/pages/redeem/redeem.component';
-export { RewardDetailPageComponent } from './lib/pages/reward-detail-page/reward-detail-page.component';
-export { StampCardComponent } from './lib/pages/stamp-card/stamp-card.component';
-export { SurveyPageComponent } from './lib/pages/survey-page/survey-page.component';
-export { TncComponent } from './lib/pages/tnc/tnc.component';
-export { VoucherDetailPageComponent } from './lib/pages/voucher-detail-page/voucher-detail-page.component';

@@ -9,3 +9,4 @@ declare interface IVouchersApi {
   length?: number;
   format_type?: string;
 }
+
