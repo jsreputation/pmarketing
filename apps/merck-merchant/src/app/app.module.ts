@@ -38,6 +38,7 @@ import { OrderComponent } from './order/order.component';
 import { OrderQuantityComponent } from './order/order-quantity/order-quantity.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { HttpClientModule } from '@angular/common/http';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { HttpClientModule } from '@angular/common/http';
     CustomSnackbarComponent,
     OrderComponent,
     OrderQuantityComponent,
-    RedeemComponent
+    RedeemComponent,
+    RegisterComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
