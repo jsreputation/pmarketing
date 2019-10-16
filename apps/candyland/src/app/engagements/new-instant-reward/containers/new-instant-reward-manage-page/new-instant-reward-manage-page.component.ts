@@ -1,4 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  OnDestroy,
+  ChangeDetectorRef,
+  ViewChildren, QueryList, ViewChild, AfterViewInit
+} from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { combineLatest, Observable, of } from 'rxjs';
@@ -13,6 +20,7 @@ import {
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { CreateImageDirective } from '@cl-shared/directives/create-image.directive';
+import { GameMobilePreviewComponent } from '@cl-shared/components/game-mobile-preview/game-mobile-preview.component';
 
 @Component({
   selector: 'cl-new-instant-reward-manage-page',
@@ -20,8 +28,10 @@ import { CreateImageDirective } from '@cl-shared/directives/create-image.directi
   styleUrls: ['./new-instant-reward-manage-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
-  @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
+export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChildren(CreateImageDirective) public createImagePreview: QueryList<CreateImageDirective>;
+  @ViewChild(GameMobilePreviewComponent, {static: false}) public gameMobilePreviewComponent: GameMobilePreviewComponent;
+  public currentSelectedMobileTab: number = 0;
   public form: FormGroup;
   public rewardData: IRewardDefaultValue;
   public reward$: Observable<IReward[]>;
@@ -83,6 +93,16 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
       );
   }
 
+  public ngAfterViewInit(): void {
+    if (this.gameMobilePreviewComponent) {
+      this.gameMobilePreviewComponent.currentIndexTab
+        .pipe(untilDestroyed(this))
+        .subscribe((indexTab) => {
+          this.currentSelectedMobileTab = indexTab;
+        });
+    }
+  }
+
   public ngOnDestroy(): void {
   }
 
@@ -95,7 +115,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
       this.form.markAllAsTouched();
       return;
     }
-    this.createImagePreview.getPreviewUrl()
+    this.getSelectedImagePreviewDirective().getPreviewUrl()
       .pipe(switchMap((imageUrl: IUploadedFile) => {
         if (this.id) {
           return this.instantRewardsService.updateInstantReward(this.id,
@@ -183,5 +203,9 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy {
         return of(null);
       })
     );
+  }
+
+  private getSelectedImagePreviewDirective(): CreateImageDirective {
+    return this.createImagePreview.toArray()[this.currentSelectedMobileTab];
   }
 }
