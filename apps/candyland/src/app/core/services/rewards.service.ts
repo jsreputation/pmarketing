@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RewardHttpAdapter } from '@cl-core/http-adapters/reward-http-adapter';
 import { ClHttpParams } from '@cl-helpers/http-params';
+import { IRewardEntityApi } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
