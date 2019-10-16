@@ -1,1 +1,31 @@
-<p>register works!</p>
+<div class="main-container">
+  <img class="logo" src="assets/logo.png">
+
+  <div class="logo-title">
+    Diabetes Loyality Program
+  </div>
+
+  <div class="container">
+    <div class="content">
+      <div class="main-heading">Welcome!</div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="full-width__input">
+          <mat-label>Password</mat-label>
+          <input type="password" matInput placeholder="Password" formControlName="password" required>
+          <mat-error *ngIf="loginForm.hasError('password')">
+            Password is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width__input">
+          <mat-label>Confirm Password</mat-label>
+          <input type="password" matInput placeholder="Confirm Password" formControlName="confirm-password" required>
+          <mat-error *ngIf="loginForm.hasError('confirm-password')">
+            Password is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <button mat-flat-button class="full-width__button btn-blue">Next</button>
+      </form>
+    </div>
+  </div>
+</div>
