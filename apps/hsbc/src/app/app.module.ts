@@ -21,6 +21,7 @@ import {
   UtilsModule,
   ConfigModule,
   RewardsModule,
+  StampService,
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -44,6 +45,15 @@ import { TncComponent } from './tnc/tnc.component';
 import { FaqComponent } from './faq/faq.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HttpClientModule } from '@angular/common/http';
+import { of } from 'rxjs';
+import { stampCard } from './mock/stamp.mock';
+// import { puzzle } from './mock/puzzle.mock';
+
+const stampServiceStub = {
+  getCurrentCard: () => of(stampCard),
+  getStamps: () => of(),
+  getCards: () => of()
+};
 
 @NgModule({
   declarations: [
@@ -92,7 +102,8 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   providers: [
     DatePipe,
-    {provide: APP_BASE_HREF, useValue: environment.baseHref }
+    {provide: APP_BASE_HREF, useValue: environment.baseHref },
+    { provide: StampService, useValue: stampServiceStub }
   ],
   bootstrap: [AppComponent],
 })
