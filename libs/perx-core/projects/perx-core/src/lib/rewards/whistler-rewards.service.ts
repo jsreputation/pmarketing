@@ -61,25 +61,33 @@ export class WhistlerRewardsService implements RewardsService {
   // @ts-ignore
   public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
     const pageSize = 10;
-    return this.getRewards(1, pageSize, tags, categories).pipe(
-      mergeMap((rewards: IReward[]) => {
-        const streams = [
-          of(rewards)
-        ];
-
-        for (let i = 2; i <= this.rewardMeta.page_count; i++) {
-          const stream = this.getRewards(i, pageSize, tags, categories);
-          streams.push(stream);
-        }
-
-        return streams;
-      }),
-      mergeAll(),
+    return this.merchantService.getAllMerchants().pipe(
+      switchMap(
+        (merchants: IMerchant[]) => this.getRewards(1, pageSize, tags, categories, merchants).pipe(
+          mergeMap((rewards: IReward[]) => {
+            const streams = [
+              of(rewards)
+            ];
+            for (let i = 2; i <= this.rewardMeta.page_count; i++) {
+              const stream = this.getRewards(i, pageSize, tags, categories);
+              streams.push(stream);
+            }
+            return streams;
+          }),
+          mergeAll(),
+        )
+      )
     );
   }
 
   // @ts-ignore
-  public getRewards(page: number, pageSize: number, tags?: string[], categories?: string[]): Observable<IReward[]> {
+  public getRewards(
+    page: number,
+    pageSize: number,
+    tags?: string[],
+    categories?: string[],
+    merchants?: IMerchant[]
+  ): Observable<IReward[]> {
     const tagsString = tags.join(',');
     const categeriesString = categories.join(',');
     return this.http.get<IJsonApiListPayload<IRewardEntityAttributes>>(`${this.baseUrl}`,
@@ -103,7 +111,8 @@ export class WhistlerRewardsService implements RewardsService {
         return res.data;
       }),
       map((rewards: IJsonApiItem<IRewardEntityAttributes>[]) => rewards.map(
-        res => WhistlerRewardsService.WRewardToReward(res, null)
+        res => WhistlerRewardsService.WRewardToReward(
+          res, merchants.find(merchant => merchant.id === Number.parseInt(res.attributes.organization_id, 10)))
       ))
     );
   }
