@@ -49,13 +49,32 @@ export class RegisterComponent implements OnInit {
 
   private initForm(): void {
     this.loginForm = this.fb.group({
-      password: ['', Validators.required],
-      'confirm-password': ['', Validators.required],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(20)
+      ]],
+      'confirm-password': ['', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(20)
+      ]],
     });
   }
 
   public onSubmit(): void {
     const password: string = this.loginForm.get('password').value;
+    const confirmPassword: string = this.loginForm.get('confirm-password').value;
+
+    if (password !== confirmPassword) {
+      this.notificationService.addSnack('Passwords do not match.');
+      return;
+    }
+
+    if (this.loginForm.invalid) {
+      return;
+    }
+
     this.merchantAdminService.setupNewMerchantsPassword(this.invitationToken, this.clientId, password).subscribe(
       (message: string) => {
         this.notificationService.addSnack(message);
