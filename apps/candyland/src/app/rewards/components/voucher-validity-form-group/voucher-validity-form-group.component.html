@@ -8,7 +8,7 @@
 </div>
 <!--/ Voucher Validity Type-->
 <!-- Voucher Validity Period-->
-<div class="card-row" *ngIf="formGroup.get('period').enabled && formGroup.get('issuanceDate').disabled">
+<div class="card-row card-row-date" *ngIf="formGroup.get('period').enabled && formGroup.get('issuanceDate').disabled">
   <div class="input-group">
     <cl-date-picker [formControl]="formGroup.get('period.startDate')"
                     [max]="formGroup.get('period.endDate').value"></cl-date-picker>

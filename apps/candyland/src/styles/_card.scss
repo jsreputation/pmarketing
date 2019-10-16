@@ -184,7 +184,7 @@
   }
 }
 
-@media (min-width: $mobile-width) {
+@media (min-width: $mobile-width + 1) {
   .card-definitions-splitter {
     display: flex;
 
@@ -201,5 +201,11 @@
   .card-definitions > div:last-child,
   .card-definitions div.card-definitions-splitter div {
     margin-bottom: 0;
+  }
+}
+
+@media (max-width: $tablet-width) {
+  .card-row-date {
+    flex-wrap: wrap;
   }
 }
