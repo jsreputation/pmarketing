@@ -1,7 +1,7 @@
 Feature: 25_End to End flow for successful creation of instant reward engagment
 
 This will be the test flow for all the features of instant reward engagement type.
-@runThis
+
 Scenario: Verifying successful creation of instant reward engagment
   Given 8_I am on engagement page
   And   8_I click on the create new button
