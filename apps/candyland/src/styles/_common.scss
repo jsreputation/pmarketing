@@ -131,7 +131,7 @@ h1, h2, h3, h4, h5, p {
 }
 
 .control-input {
-  @include typo-input;
+  @include typo-input-alt;
 
   width: 100%;
 }

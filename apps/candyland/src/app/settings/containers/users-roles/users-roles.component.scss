@@ -5,7 +5,7 @@
   width: 100%;
   max-width: ($horizontal-padding * 6);
 
-  @include typo-input;
+  @include typo-input-alt;
 }
 
 @media (min-width: $tablet-width + 1) {
