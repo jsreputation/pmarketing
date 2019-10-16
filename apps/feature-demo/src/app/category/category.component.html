@@ -1,0 +1,37 @@
+<mat-toolbar>
+  <button [routerLink]="[ '/home/discover']" class="icon">
+    <mat-icon>arrow_backward</mat-icon>
+  </button>
+  <div class="spacer"></div>
+  <span *ngIf="showToolbarTitle" class="toolbar-title">{{selectedCategory}}</span>
+  <button class="icon" (click)="selectCategory()">
+    <img src="assets/category.svg" alt="">
+  </button>
+  <button class="icon" (click)="selectSort()">
+    <img src="assets/sort.svg" alt="">
+  </button>
+</mat-toolbar>
+<div *ngIf="rewards" class="content" cdkScrollable>
+  <h1 class="catergory-title">{{selectedCategory}}</h1>
+  <mat-card *ngFor="let reward of rewards | rewardsSort: selectedSortingCraeteria | async" (click)="selected(reward)" matRipple>
+    <div class="featured-image">
+      <img mat-card-image [src]="reward.rewardBanner">
+        <div *ngIf="reward.merchantImg" class="badge">
+          <img [src]="reward.merchantImg">
+        </div>
+        <div *ngIf="getMacaron(reward) as macaron" class="macaron-container">
+          <span [ngClass]="macaron.class">{{macaron.label}}</span>
+        </div>
+    </div>
+    <mat-card-content>
+      <div class="details">
+        <h1>{{reward.name}}</h1>
+        <h2>{{reward.merchantName}}</h2>
+      </div>
+      <div class="icon">
+        <img src="assets/forward-arrow.svg" alt="">
+      </div>
+    </mat-card-content>
+    <mat-card-footer></mat-card-footer>
+  </mat-card>
+</div>
