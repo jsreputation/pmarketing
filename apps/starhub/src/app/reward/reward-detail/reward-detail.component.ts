@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { IReward, RewardsService } from '@perx/core';
+import { IReward } from '@perx/core';
 import { Location } from '@angular/common';
 import { MacaronService, IMacaron } from '../../services/macaron.service';
 
@@ -19,7 +19,7 @@ export class RewardDetailComponent implements OnInit {
   public isButtonEnabled: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input()
-  public rewardId: number;
+  public reward: IReward;
 
   @Input()
   public showBackButton: boolean = true;
@@ -33,31 +33,22 @@ export class RewardDetailComponent implements OnInit {
   @Input()
   public showMacaron: boolean = true;
 
-  public reward: IReward;
-
   constructor(
     private location: Location,
-    private rewardsService: RewardsService,
     private macaronService: MacaronService
   ) { }
 
   public ngOnInit(): void {
-    if (!this.rewardId) {
+    if (!this.reward) {
+      return;
+    }
+    this.macaron = this.macaronService.getMacaron(this.reward);
+    if (this.macaron === null) {
+      this.isButtonEnabled.emit(true);
       return;
     }
 
-    this.rewardsService.getReward(this.rewardId)
-      .subscribe((reward: IReward) => {
-        this.reward = reward;
-
-        this.macaron = this.macaronService.getMacaron(reward);
-        if (this.macaron === null) {
-          this.isButtonEnabled.emit(true);
-          return;
-        }
-
-        this.isButtonEnabled.emit(this.macaron.isButtonEnabled);
-      });
+    this.isButtonEnabled.emit(this.macaron.isButtonEnabled);
   }
 
   public setToExpired(): void {
