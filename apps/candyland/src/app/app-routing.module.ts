@@ -42,10 +42,6 @@ const routes: Routes = [
       {
         path: 'report',
         loadChildren: () => import('./report/report.module').then(mod => mod.ReportModule)
-      },
-      {
-        path: 'loyalty',
-        loadChildren: () => import('./loyalty/loyalty.module').then(mod => mod.LoyaltyModule)
       }
     ]
   },
