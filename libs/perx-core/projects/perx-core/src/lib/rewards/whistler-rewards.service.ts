@@ -4,8 +4,8 @@ import { RewardsService } from './rewards.service';
 import { Observable, combineLatest, of } from 'rxjs';
 import { IReward, ICatalog, IPrice, RedemptionType } from './models/reward.model';
 import { Config } from '../config/config';
-import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
-import { map, switchMap, catchError } from 'rxjs/operators';
+import { IJsonApiItemPayload, IJsonApiItem, IJsonApiListPayload, IMeta } from '../jsonapi.payload';
+import { map, switchMap, catchError, mergeMap, mergeAll } from 'rxjs/operators';
 import { IMerchant } from '../merchants/models/merchants.model';
 import { IMerchantsService } from '../merchants/imerchants.service';
 import { IRewardEntityAttributes } from '@perx/whistler';
@@ -15,6 +15,7 @@ import { IRewardEntityAttributes } from '@perx/whistler';
 })
 export class WhistlerRewardsService implements RewardsService {
   private baseUrl: string;
+  private rewardMeta: IMeta = {};
 
   constructor(private http: HttpClient, config: Config, private merchantService: IMerchantsService) {
     this.baseUrl = `${config.apiHost}/reward/entities/`;
@@ -57,18 +58,54 @@ export class WhistlerRewardsService implements RewardsService {
     };
   }
 
-  public getTags(): void {
-    throw new Error('Method not implemented.');
-  }
-
   // @ts-ignore
   public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
-    throw new Error('Method not implemented.');
+    const pageSize = 10;
+    return this.getRewards(1, pageSize, tags, categories).pipe(
+      mergeMap((rewards: IReward[]) => {
+        const streams = [
+          of(rewards)
+        ];
+
+        for (let i = 2; i <= this.rewardMeta.page_count; i++) {
+          const stream = this.getRewards(i, pageSize, tags, categories);
+          streams.push(stream);
+        }
+
+        return streams;
+      }),
+      mergeAll(),
+    );
   }
 
   // @ts-ignore
   public getRewards(page: number, pageSize: number, tags?: string[], categories?: string[]): Observable<IReward[]> {
-    throw new Error('Method not implemented.');
+    const tagsString = tags.join(',');
+    const categeriesString = categories.join(',');
+    return this.http.get<IJsonApiListPayload<IRewardEntityAttributes>>(`${this.baseUrl}`,
+      {
+        params: {
+          page_number: `${page}`,
+          page_size: `${pageSize}`,
+          'filter[tags]': tagsString,
+          'filter[categories]': categeriesString
+        }
+      }
+    ).pipe(
+      map((res: IJsonApiListPayload<IRewardEntityAttributes>) => {
+        if (res.meta) {
+          this.rewardMeta = {
+            ...this.rewardMeta,
+            ...res.meta
+          };
+        }
+
+        return res.data;
+      }),
+      map((rewards: IJsonApiItem<IRewardEntityAttributes>[]) => rewards.map(
+        res => WhistlerRewardsService.WRewardToReward(res, null)
+      ))
+    );
   }
 
   // @ts-ignore

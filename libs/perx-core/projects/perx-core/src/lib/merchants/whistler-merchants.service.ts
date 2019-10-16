@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, mergeMap, mergeAll } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
-import { IMeta, IMerchant } from './models/merchants.model';
+import { IMerchant } from './models/merchants.model';
 import { Config } from '../config/config';
-import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from './../jsonapi.payload';
+import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload, IMeta } from './../jsonapi.payload';
 import { IMerchant as IWMerchant } from '@perx/whistler';
 
 @Injectable({
@@ -42,7 +42,7 @@ export class WhistlerMerchantsService implements IMerchantsService {
           of(merchants)
         ];
 
-        for (let i = 2; i <= this.historyMeta.total_pages; i++) {
+        for (let i = 2; i <= this.historyMeta.page_count; i++) {
           const stream = this.getMerchants(i, pageSize);
           streams.push(stream);
         }

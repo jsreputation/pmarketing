@@ -1,9 +1,11 @@
 export interface IJsonApiListPayload<T> {
     data: IJsonApiItem<T>[];
-    meta?: {
-        record_count?: number;
-        page_count?: number;
-    };
+    meta?: IMeta;
+}
+
+export interface IMeta {
+  record_count?: number;
+  page_count?: number;
 }
 
 export interface IJsonApiItemPayload<T> {
