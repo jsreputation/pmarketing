@@ -45,8 +45,11 @@ import { TncComponent } from './tnc/tnc.component';
 import { FaqComponent } from './faq/faq.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NavigateToolbarComponent } from './navigate-toolbar/navigate-toolbar.component';
 import { of } from 'rxjs';
 import { stampCard } from './mock/stamp.mock';
+import { WalletComponent } from './wallet/wallet.component';
+import { AccountComponent } from './account/account.component';
 // import { puzzle } from './mock/puzzle.mock';
 
 const stampServiceStub = {
@@ -66,7 +69,10 @@ const stampServiceStub = {
     PuzzlesComponent,
     TncComponent,
     FaqComponent,
-    ProfileComponent
+    ProfileComponent,
+    NavigateToolbarComponent,
+    WalletComponent,
+    AccountComponent
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
