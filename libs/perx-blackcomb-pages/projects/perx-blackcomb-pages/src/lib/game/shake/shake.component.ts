@@ -1,6 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {
-  IGame, ITree
+  Component,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
+import {
+  IGame,
+  ITree
 } from '@perx/core';
 
 @Component({
@@ -10,10 +16,10 @@ import {
 })
 export class ShakeComponent {
   @Input() public game: IGame;
-  @Output() public broken: EventEmitter<void> = new EventEmitter();
   public get config(): ITree {
-    return this.game && this.game.config ? this.game.config as ITree : null;
+    return this.game.config as ITree;
   }
+  @Output() public broken: EventEmitter<void> = new EventEmitter();
   public isEnabled: boolean = false;
   public gameCompleted(): void {
     this.broken.emit();

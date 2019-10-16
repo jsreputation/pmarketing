@@ -9,13 +9,15 @@ import { LoadingComponent } from './loading/loading.component';
 import { RewardComponent } from './reward/reward.component';
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
 import { ContentComponent } from './content/content.component';
+import { WalletComponent } from './wallet/wallet.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'loading' },
-      { path: 'wallet', component: HomeComponent, canActivate: [ProtectedGuard] },
+      { path: '', pathMatch: 'full', redirectTo: 'wallet' },
+      { path: 'home', component: HomeComponent, canActivate: [ProtectedGuard] },
+      { path: 'wallet', component: WalletComponent, canActivate: [ProtectedGuard] },
       { path: 'history', component: HistoryComponent, canActivate: [ProtectedGuard] },
       { path: 'redeem/:id', component: RedeemComponent, canActivate: [ProtectedGuard] },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent, canActivate: [ProtectedGuard] },
@@ -45,7 +47,7 @@ const routes: Routes = [
       },
       { path: 'reward-detail', component: RewardComponent, canActivate: [ProtectedGuard] },
       { path: 'loading', component: LoadingComponent },
-      { path: 'c/:key', component: ContentComponent, canActivate: [ProtectedGuard]},
+      { path: 'c/:key', component: ContentComponent, canActivate: [ProtectedGuard] },
     ]
   },
   { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },
