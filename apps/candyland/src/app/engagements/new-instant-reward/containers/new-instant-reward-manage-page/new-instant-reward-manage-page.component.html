@@ -117,7 +117,7 @@
         </div>
       </mat-card>
     </div>
-    <cl-game-mobile-preview>
+    <cl-game-mobile-preview #mobilePreview>
       <cl-simple-mobile-view class="firs-tab" [background]="getImgLink(background, 'assets/images/background/background1.png')"
                              [mobileImageClass]="'mobile-non-header'"
                              [headerColor]="tenantSettings?.headerColor"
@@ -162,6 +162,7 @@
                              [logo]="tenantSettings?.logo"
                              [logoType]="tenantSettings?.logoType"
                              [fontFamily]="tenantSettings?.font"
+                             clCreateImage
       >
         <div class="plugin-block">
           <div class="mobile-preview-card"
@@ -176,6 +177,11 @@
               </p>
             </div>
             <perx-core-rewards-collection [rewardsList]="rewards$"
+                                          clScrollTo
+                                          [shiftTo]="100"
+                                          canRun="true"
+                                          classElement="card-collection-container"
+                                          [emit$]="mobilePreview.animationDone"
             ></perx-core-rewards-collection>
           </div>
         </div>
