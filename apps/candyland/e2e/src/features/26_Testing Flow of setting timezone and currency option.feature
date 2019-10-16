@@ -19,7 +19,7 @@ Scenario: Ensure that the settings for timezone and currency remain constant aft
   And   3_I click on the engagement tab
   When  3_I click on the setting tab
   Then  3_I should see that the settings remains unchanged.
-
+@runThis
 Scenario: Ensure that the settings for timezone and currency remain constant after re-login
   Given 4_I am on general setting page
   And   4_I select an option for timezone
