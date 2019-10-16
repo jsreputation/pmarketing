@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
-import { 
+import {
   HomeComponent,
   HistoryComponent,
   RedeemComponent,
@@ -10,7 +10,7 @@ import {
   RewardDetailsComponent,
   LoadingComponent,
   ContentComponent
-} from '@perx/blackcomb-pages'
+} from '@perx/blackcomb-pages';
 const routes: Routes = [
   {
     path: '',

@@ -36,7 +36,7 @@ import { environment } from '../environments/environment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { profile } from './mock/profile.mock';
 import { HttpClientModule } from '@angular/common/http';
-import { 
+import {
   HomeComponent,
   HistoryComponent,
   RedeemComponent,
@@ -59,16 +59,16 @@ const perxComponents = [
   RewardDetailsComponent,
   LoadingComponent,
   ContentComponent
-]
+];
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     LoadingComponent,
-    ... perxComponents,
+    ...perxComponents,
   ],
   imports: [
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
     BrowserModule,
     AppRoutingModule,
     PerxCoreModule,
