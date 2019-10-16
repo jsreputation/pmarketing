@@ -49,11 +49,9 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
         tap(value => this.tabsValue = value)
       )
       .subscribe(() => {
-        setTimeout(() => {
           if (this.cd !== null && this.cd !== undefined && !(this.cd as ViewRef).destroyed) {
             this.cd.detectChanges();
           }
-        }, 250);
       });
   }
 
