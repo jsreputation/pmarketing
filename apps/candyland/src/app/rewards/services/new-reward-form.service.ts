@@ -17,9 +17,9 @@ export class NewRewardFormService {
         redemptionType: [],
         cost: this.fb.control(null, [Validators.required]),
         description: [],
-        termsAndCondition: []
+        termsAndCondition: [],
+        merchantId: [null],
       }),
-      merchantInfo: [],
       vouchers: this.fb.group({
         voucherCode: this.fb.group({
           type: [],
