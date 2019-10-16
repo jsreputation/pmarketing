@@ -12,6 +12,8 @@ import {Router} from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   public loginForm: FormGroup;
+  private invitationToken: string;
+  private clientId: string;
 
   constructor(
     private fb: FormBuilder,
@@ -26,10 +28,10 @@ export class RegisterComponent implements OnInit {
   public ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const param = location.search;
-      const invitationToken = new URLSearchParams(param).get('invitation_token');
-      const clientId = new URLSearchParams(param).get('client_id');
+      this.invitationToken = new URLSearchParams(param).get('invitation_token');
+      this.clientId = new URLSearchParams(param).get('client_id');
 
-      this.merchantAdminService.validateInvite(invitationToken, clientId).subscribe(
+      this.merchantAdminService.validateInvite(this.invitationToken, this.clientId).subscribe(
         () => {
           this.router.navigateByUrl('/login');
           this.notificationService.addSnack('Your password has been saved. Please login');
@@ -53,7 +55,17 @@ export class RegisterComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    // const password: string = this.loginForm.get('password').value;
-    // const confirmPassword: string = this.loginForm.get('password').value;
+    const password: string = this.loginForm.get('password').value;
+    this.merchantAdminService.setupNewMerchantsPassword(this.invitationToken, this.clientId, password).subscribe(
+      (message: string) => {
+        this.notificationService.addSnack(message);
+        this.router.navigateByUrl('/login');
+      },
+      () => {
+        // service returns success unless http failure
+        this.notificationService.addSnack('Something went wrong');
+        this.router.navigateByUrl('/login');
+      }
+    );
   }
 }

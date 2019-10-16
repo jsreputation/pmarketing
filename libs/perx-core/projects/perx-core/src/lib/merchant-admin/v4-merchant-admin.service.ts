@@ -194,4 +194,22 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       map((res) => V4MerchantAdminService.v4MerchantProfileToMerchantProfile(res.data))
     );
   }
+
+  public setupNewMerchantsPassword(token: string, clientId: string, password: string): Observable<any> {
+
+    const body = {
+      invitation_token: token,
+      client_id: clientId,
+      password,
+      password_confirmation: password,
+    };
+
+    const url = `${this.config.apiHost}/v4/merchant_user_account_invitations`;
+
+    return this.http.put(url, body).pipe(
+      // response is always HTTP 200 in thisformat regardless if it is a error or success
+      // @ts-ignore
+      map((res) => res.message)
+    );
+  }
 }
