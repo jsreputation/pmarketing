@@ -188,9 +188,8 @@ export class WhistlerGameService implements IGameService {
         map((nestedObjs) => nestedObjs.reduce((acc, curr) =>
         ({...acc, vouchers: [...acc.vouchers, curr.voucher]}), {vouchers: [], rawPayload: nestedObjs[0].raw})
         )
-      )
+      );
   }
-
 
   public get(engagementId: number): Observable<IGame> {
     return this.http.get<IJsonApiItemPayload<AttbsObjGame>>(`${this.hostName}/game/engagements/${engagementId}`)
