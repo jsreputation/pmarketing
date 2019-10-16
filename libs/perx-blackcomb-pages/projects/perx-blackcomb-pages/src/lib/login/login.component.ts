@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
         if (!((window as any).primaryIdentifier)) {
           (window as any).primaryIdentifier = username;
         }
-        this.router.navigate([`loading`]);
+        this.redirectAfterLogin();
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {

@@ -1,8 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { ICampaign, ICampaignService, IVoucherService, VoucherState, Voucher, CampaignType, StampService} from '@perx/core';
-import { Router } from '@angular/router';
-import { Observable, combineLatest } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { ICampaignService, ICampaign, RewardsService, IReward, ITabConfigExtended } from '@perx/core';
+import { Observable, BehaviorSubject, forkJoin, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+const stubTabs: ITabConfigExtended[] = [
+  {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'ALL',
+    rewardsList: null,
+    rewardsType: null
+  }
+  , {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Category 1',
+    rewardsList: null,
+    rewardsType: 'CATEGORY_1'
+  }, {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Category 2',
+    rewardsList: null,
+    rewardsType: 'CATEGORY_2'
+  },
+  {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Category 3',
+    rewardsList: null,
+    rewardsType: 'CATEGORY_3'
+  }
+];
 
 @Component({
   selector: 'app-home',
@@ -10,34 +39,32 @@ import { map, mergeMap } from 'rxjs/operators';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public campaigns$: Observable<ICampaign[]>;
-  public vouchers$: Observable<Voucher[]>;
-  public filter: string[];
-
+  public campaign$: Observable<ICampaign[]>;
+  public rewards$: Observable<IReward[]>;
+  public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
+  public staticTab: ITabConfigExtended[];
   constructor(
-    private router: Router,
-    private vouchersService: IVoucherService,
-    private stampService: StampService,
-    private campaignService: ICampaignService
+    private campaingService: ICampaignService,
+    private rewardsService: RewardsService
   ) { }
 
   public ngOnInit(): void {
-    this.campaigns$ = this.campaignService.getCampaigns()
-      .pipe(
-        map((campaigns: ICampaign[]) => campaigns.filter(c => c.type === CampaignType.stamp)),
-        mergeMap((res) =>  combineLatest(
-          ...res.map(c => this.stampService.getCurrentCard(c.id)
-            .pipe(
-              map(res2 => ({...res2, campaignId: c.id, campaignTitle: c.name, campaignDescription: c.description})))
-          )
-        )
-      ));
-
-    this.vouchers$ = this.vouchersService.getAll();
-    this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
+    this.campaign$ = this.campaingService.getCampaigns();
+    this.rewards$ = this.rewardsService.getAllRewards(['featured']);
+    this.staticTab = stubTabs;
+    this.getTabedList();
   }
 
-  public voucherSelected(voucher: Voucher): void {
-    this.router.navigate([`/voucher-detail/${voucher.id}`]);
+  private getTabedList(): void {
+    this.tabs$.next(this.staticTab);
+    forkJoin(this.staticTab.map((tab) =>
+      this.rewardsService.getAllRewards(null, tab.rewardsType ? [tab.rewardsType] : null)
+        .pipe(tap((reward) => {
+          tab.rewardsList = of(reward);
+          this.tabs$.next(this.staticTab);
+        }))
+    )).subscribe(() => {
+      this.tabs$.next(this.staticTab);
+    });
   }
 }
