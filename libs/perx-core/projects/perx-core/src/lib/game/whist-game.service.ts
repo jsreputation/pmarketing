@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { map, switchMap, mergeMap } from 'rxjs/operators';
+import { map, switchMap, mergeMap, tap } from 'rxjs/operators';
 import {
   IGame,
   GameType as TYPE,
@@ -187,7 +187,8 @@ export class WhistlerGameService implements IGameService {
         )),
         map((nestedObjs) => nestedObjs.reduce((acc, curr) =>
         ({...acc, vouchers: [...acc.vouchers, curr.voucher]}), {vouchers: [], rawPayload: nestedObjs[0].raw})
-        )
+        ),
+        tap(res => console.log(res))
       );
   }
 
