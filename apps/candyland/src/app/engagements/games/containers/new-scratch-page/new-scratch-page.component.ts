@@ -5,6 +5,7 @@ import {
   OnDestroy,
   ChangeDetectorRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -50,7 +51,8 @@ import { ControlsName } from '../../../../models/controls-name';
   selector: 'cl-new-scratch-page',
   templateUrl: './new-scratch-page.component.html',
   styleUrls: ['./new-scratch-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewScratchPageComponent implements OnInit, OnDestroy {
   @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;

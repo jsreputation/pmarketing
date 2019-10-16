@@ -11,6 +11,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
+import { GameModule } from '@perx/core';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { ImagesPreviewModule } from '@cl-shared/components/images-preview/images-preview.module';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
@@ -20,7 +21,6 @@ import {SimpleMobileViewModule} from '@cl-shared/components/simple-mobile-view/s
 
 import { NewScratchPageComponent } from './new-scratch-page.component';
 
-import { GameModule } from '../../../../../../../../libs/perx-core/dist/perx-core';
 import { SettingsMobilePreviewModule } from '../../../../settings/components/settings-mobile-preview/settings-mobile-preview.module';
 
 describe('NewScratchComponent', () => {
