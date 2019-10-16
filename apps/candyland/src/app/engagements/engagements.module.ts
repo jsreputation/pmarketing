@@ -24,6 +24,7 @@ import { CreateEngagementPopupModule } from '../shared/containers/create-engagem
 import { EngagementItemModule } from '@cl-shared/components/engagement-item/engagement-item.module';
 import { EngagementsListComponent } from './components/engagements-list/engagements-list.component';
 import { EngagementsGridComponent } from './components/engagements-grid/engagements-grid.component';
+import { DirectivesModule } from '@cl-shared/directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { EngagementsGridComponent } from './components/engagements-grid/engageme
     CreateEngagementPopupModule,
     EngagementItemModule,
     ConfirmModalModule,
+    DirectivesModule,
   ],
   entryComponents: [
     EngagementsListPageComponent,
