@@ -1,11 +1,12 @@
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { RewardsService } from './../../../core/services/rewards.service';
 import { CampaignsService, EngagementsService, CommsService, OutcomesService, LimitsService } from '@cl-core/services';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, map, catchError } from 'rxjs/operators';
-import { combineLatest, of, Observable } from 'rxjs';
+
+import { switchMap, map, catchError, takeUntil } from 'rxjs/operators';
+import { combineLatest, of, Observable, Subject } from 'rxjs';
+
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
@@ -17,6 +18,8 @@ import { ILimit } from '@cl-core/models/limit/limit.interface';
   styleUrls: ['./review-campaign.component.scss']
 })
 export class ReviewCampaignComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<any> = new Subject();
+
   public campaign: any;
 
   constructor(
@@ -43,6 +46,8 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
   // TODO: it need for get right data from back end in the future
   private getCampaignData(): void {
@@ -62,7 +67,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         this.outcomesService.getOutcomes(paramsPO).pipe(
           map(outcomes => outcomes.map(outcome => ({ ...outcome, probability: outcome.probability * 100 }))),
           catchError(() => of(null)))).pipe(
-            untilDestroyed(this),
+            takeUntil(this.destroy$),
             map(
               ([campaign, commEvent, outcomes]:
                 [ICampaign | null, IComm | null, IOutcome[] | null]) => ({

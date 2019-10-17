@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
+
+import { takeUntil } from 'rxjs/operators';
+
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 @Component({
@@ -26,7 +28,7 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
     super.ngOnInit();
     this.store.currentCampaign$
       .asObservable()
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((data: ICampaign) => {
         this.checkStampsHasRewards(data);
       });
@@ -48,6 +50,7 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
   }
 
   public ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.cd.detach();
   }
 }

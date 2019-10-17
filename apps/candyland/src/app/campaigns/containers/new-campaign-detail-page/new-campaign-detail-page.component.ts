@@ -1,9 +1,8 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Input } from '@angular/core';
 import { AbstractControl, FormGroup, Validators } from '@angular/forms';
 import { AudiencesService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
@@ -17,7 +16,7 @@ import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
   styleUrls: ['./new-campaign-detail-page.component.scss']
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
+export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit {
   public form: FormGroup;
   public config: any;
   public isFirstInit: boolean;
@@ -104,9 +103,6 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     this.initData();
   }
 
-  public ngOnDestroy(): void {
-  }
-
   private initForm(): void {
     this.form = this.newCampaignDetailFormService.getForm();
   }
@@ -117,7 +113,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     }
     this.form.valueChanges
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         distinctUntilChanged(),
         debounceTime(500)
       )
@@ -133,7 +129,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     if (this.campaignId) {
       this.store.currentCampaign$
         .asObservable()
-        .pipe(untilDestroyed(this))
+        .pipe(takeUntil(this.destroy$))
         .subscribe((data: ICampaign) => {
           if (data && data.campaignInfo && this.isFirstInit) {
             const select = data.audience.select;

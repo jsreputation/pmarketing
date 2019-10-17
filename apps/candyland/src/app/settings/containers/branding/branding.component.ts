@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+
 import { Observable, of, Subject } from 'rxjs';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
+
 import { settingsFonts, SettingsService, settingsStyles } from '@cl-core/services';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 
 @Component({
@@ -151,7 +152,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
       .valueChanges
       .pipe(
         debounceTime(300),
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         switchMap((value => {
           if (this.formBranding.valid) {
             return this.settingsService.updateTenants(SettingsHttpAdapter.transformSettingsBrandingFormToAPI(value));
