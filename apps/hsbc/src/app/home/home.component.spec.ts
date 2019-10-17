@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatTabsModule, MatCardModule, MatIconModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
+import { NavigateToolbarComponent } from '../navigate-toolbar/navigate-toolbar.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -19,7 +20,10 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HomeComponent],
+      declarations: [
+        HomeComponent,
+        NavigateToolbarComponent,
+      ],
       imports: [
         RouterTestingModule,
         NoopAnimationsModule,
