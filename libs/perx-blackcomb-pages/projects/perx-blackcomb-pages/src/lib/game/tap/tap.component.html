@@ -16,8 +16,10 @@
   </div>
   <div class="game-footer">
     <button mat-flat-button (click)="isEnabled = true"
+    *ngIf="isEnabled; else emptyBlock"
       [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}">
       {{ game.texts.button }}
     </button>
+    <div class="emptyBlock" #emptyBlock></div>
   </div>
 </div>
