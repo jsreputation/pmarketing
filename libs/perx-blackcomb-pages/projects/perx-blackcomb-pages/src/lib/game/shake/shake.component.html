@@ -17,7 +17,7 @@
 </div>
 <div class="game-footer">
   <button
-    *ngIf="isEnabled"
+    [hidden]="isEnabled"
     mat-flat-button
     color="primary"
     (click)="isEnabled = true">
