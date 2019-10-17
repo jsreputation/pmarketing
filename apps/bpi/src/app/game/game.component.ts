@@ -91,7 +91,15 @@ export class GameComponent implements OnInit {
               card.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots;
           });
 
+          const completedCards = cards.filter(card => {
+            const totalSlots = card.displayProperties.totalSlots || 0;
+            return card.state === StampCardState.completed &&
+              card.stamps &&
+              card.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots;
+          });
+
           this.cards = [
+            ...completedCards,
             ...lockedCards,
             ...unlockedCards
           ];
