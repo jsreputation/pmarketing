@@ -6,7 +6,7 @@ import { IVoucherService } from '../ivoucher.service';
 @Component({
   selector: 'perx-core-qrcode-redemption',
   templateUrl: './qrcode-redemption.component.html',
-  styleUrls: ['./qrcode-redemption.component.css']
+  styleUrls: ['./qrcode-redemption.component.scss']
 })
 export class QrcodeRedemptionComponent implements OnChanges {
 

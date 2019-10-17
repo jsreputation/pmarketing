@@ -1,16 +1,16 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, of, Subject } from 'rxjs';
 import { InstantOutcomeService, IReward, PopupComponent, IOutcome } from '@perx/core';
 import { MatDialog } from '@angular/material';
-import { map, switchMap, catchError, tap, } from 'rxjs/operators';
+import { map, switchMap, catchError, tap, takeUntil, } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-reward',
   templateUrl: './reward.component.html',
   styleUrls: ['./reward.component.scss']
 })
-export class RewardComponent implements OnInit {
+export class RewardComponent implements OnInit, OnDestroy {
   public title: string; // = 'Headline'
   public subTitle: string; // = 'Sub-Headline'
   public button: string;
@@ -22,6 +22,7 @@ export class RewardComponent implements OnInit {
     text: 'NIL',
     buttonTxt: 'close'
   };
+  private destroy$: Subject<any> = new Subject();
 
   constructor(
     private outcomeService: InstantOutcomeService,
@@ -58,6 +59,7 @@ export class RewardComponent implements OnInit {
               throw new Error('empty');
             }
           }),
+          takeUntil(this.destroy$),
           catchError(() => {
             this.dialog.open(PopupComponent, { data: this.dataPopEmpty });
             /* todo display popup and redirect to wallet*/
@@ -67,4 +69,19 @@ export class RewardComponent implements OnInit {
           })
         );
   }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  public rewardClickedHandler(reward: IReward): void {
+    const data = {
+      title: 'Clicked!',
+      text: 'ID: ' + reward.id + '\n' +
+        'Reward Name: ' + reward.name,
+    };
+    this.dialog.open(PopupComponent, { data });
+  }
+
 }
