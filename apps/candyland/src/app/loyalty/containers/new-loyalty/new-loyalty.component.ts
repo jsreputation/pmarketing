@@ -13,6 +13,7 @@ import { Observable } from 'rxjs';
 import { AudiencesService } from '@cl-core-services';
 import { AddRulePopupComponent } from '../../components/add-rule-popup/add-rule-popup.component';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
+import { LoyaltyService } from '@cl-core/services/loyalty.service';
 
 @Component({
   selector: 'cl-new-loyalty',
@@ -29,6 +30,7 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
 
   constructor(private loyaltyFormsService: LoyaltyFormsService,
+              private loyaltyService: LoyaltyService,
               private userService: UserService,
               private audiencesService: AudiencesService,
               private dialog: MatDialog) {
@@ -59,7 +61,10 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
       this.form.markAllAsTouched();
       return;
     }
-    this.stepper.next();
+    this.loyaltyService.createLoyalty(this.form.value).subscribe(result => {
+      console.log('result', result);
+      this.stepper.next();
+    });
   }
 
   public save(): void {
@@ -143,6 +148,8 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log('The dialog was closed', result);
     });
   }
+
+
 
   public handleLoyaltyActions(data: { action: NewLoyaltyActions, data?: any }): void {
     switch (data.action) {

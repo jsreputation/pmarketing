@@ -28,7 +28,7 @@ export class SettingsHttpService {
   }
 
   public getAllCredential(params: any): Observable<any> {
-    return this.http.get(ApiConfig.getAllCredentialPath, params);
+    return this.http.get(ApiConfig.allCredentialPath, params);
   }
 
   public getAllIMAUsers(params: HttpParams): Observable<any> {

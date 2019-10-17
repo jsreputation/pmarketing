@@ -1,7 +1,8 @@
 import { environment } from '@cl-environments/environment';
 
 export class ApiConfig {
-  public static basePath: string = environment.apiHost;
+  // public static basePath: string = environment.apiHost;
+  public static basePath: string = 'http://7ed32faf.ngrok.io';
   public static baseAPIPath: string = `${ApiConfig.basePath}/iam`;
   public static engagementsPath: string = `${ApiConfig.basePath}/engagements`;
   public static campaignsPath: string = `${ApiConfig.basePath}/campaign/entities`;
@@ -9,7 +10,7 @@ export class ApiConfig {
   public static commsEventsPath: string = `${ApiConfig.basePath}/comm/events`;
   public static outcomesPath: string = `${ApiConfig.basePath}/outcome/possible_outcomes`;
   public static rewardsPath: string = `${ApiConfig.basePath}/reward/entities`;
-  public static getAllCredentialPath: string = `${ApiConfig.baseAPIPath}/credentials`;
+  public static allCredentialPath: string = `${ApiConfig.baseAPIPath}/credentials`;
   public static IAMUsersPath: string = `${ApiConfig.baseAPIPath}/users`;
   public static IAMGroupsPath: string = `${ApiConfig.baseAPIPath}/groups`;
   public static baseAPIUserPath: string = `${ApiConfig.basePath}/cognito`;
@@ -26,8 +27,8 @@ export class ApiConfig {
   public static uploadImagePath: string = `${ApiConfig.basePath}/storage/images`;
   public static uploadFilePath: string = `${ApiConfig.basePath}/storage/documents`;
   public static apiCdnPath: string = `${environment.apiCdn || 'https://cdn.uat.whistler.perxtech.io/dev1/'}`;
-  public static getReportPath: string = `${ApiConfig.basePath}/report`;
-  public static getLoyaltyPath: string = `${ApiConfig.basePath}/loyalty/programs`;
-  public static getLoyaltyBasicTierPath: string = `${ApiConfig.basePath}/loyalty/basic_tiers`;
+  public static reportPath: string = `${ApiConfig.basePath}/report`;
+  public static loyaltyPath: string = `${ApiConfig.basePath}/loyalty/programs`;
+  public static loyaltyBasicTierPath: string = `${ApiConfig.basePath}/loyalty/basic_tiers`;
   public static getLoyaltyCustomTierPath: string = `${ApiConfig.basePath}/loyalty/custom_tiers`;
 }

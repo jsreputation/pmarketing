@@ -35,28 +35,28 @@ export class LoyaltyFormsService {
       pointsName: new FormControl(null, [Validators.required, Validators.minLength(1)]),
       mainImage: new FormControl('https://www.gettyimages.co.uk/gi-resources/images/RoyaltyFree/Apr17Update/ColourSurge1.jpg'),
       joiningMethod: new FormGroup({
-        transactionAmount: new FormControl(false),
+        transactionAmount: new FormControl(true),
         signUp: new FormControl(false),
         byInvite: new FormControl(false),
         amount: new FormControl(null, [Validators.required, Validators.minLength(1)]),
       }, [Validators.required, ClValidators.requiredGroup]),
-      poolId: new FormControl(null, Validators.required)
+      poolId: new FormControl('1', Validators.required)
     });
   }
 
   public getTiersConversionsStep(): FormGroup {
     return new FormGroup({
       globalEarnRule: new FormGroup({
-        amount: new FormControl(2, [Validators.required, Validators.min(1)]),
-        points: new FormControl(10, [Validators.required, Validators.min(1)])
+        amount: new FormControl(1, [Validators.required, Validators.min(1)]),
+        points: new FormControl(1, [Validators.required, Validators.min(1)])
       }),
       globalBurnRule: new FormGroup({
-        amount: new FormControl(20, [Validators.required, Validators.min(1)]),
-        points: new FormControl(2, [Validators.required, Validators.min(1)])
+        amount: new FormControl(100, [Validators.required, Validators.min(1)]),
+        points: new FormControl(5, [Validators.required, Validators.min(1)])
       }),
       pointsExpiry: new FormGroup({
         amount: new FormControl(1, [Validators.required]),
-        type: new FormControl('day', [Validators.required]),
+        type: new FormControl('year', [Validators.required]),
         trigger: new FormControl('earned', [Validators.required]),
       }),
       tiers: new FormArray([])
@@ -118,9 +118,6 @@ export class LoyaltyFormsService {
       }
       case this.loyaltyFormType.stepReview: {
         return this.loyaltyFormType.review;
-      }
-      case this.loyaltyFormType.stepFour: {
-        return this.loyaltyFormType.four;
       }
     }
   }
