@@ -78,28 +78,28 @@ export class WhistlerRewardsService implements RewardsService {
           subject.complete();
         } else {
           // otherwise get next page
-          this.getRewards(meta.currentPage + 1, tags, categories)
+          this.getRewards(meta.currentPage + 1, null, tags, categories)
             .subscribe(process);
         }
       };
       // do the first query
-      this.getRewards(1, tags, categories).subscribe(process);
+      this.getRewards(1, null, tags, categories).subscribe(process);
     });
   }
 
   // @ts-ignore
   public getRewards(
     page: number,
+    pageSize: number = 10,
     tags?: string[],
     categories?: string[],
   ): Observable<IReward[]> {
     const tagsString = tags && tags.join(',');
     const categoriesString = categories && categories.join(',');
-    const pageSize = '10';
     let metaData: IWMetaData = {};
     const params = {
       'page[number]': page.toString(),
-      'page[size]': pageSize
+      'page[size]': pageSize.toString()
     };
     if (tagsString) {
       params['filter[tags]'] = tagsString;
@@ -137,7 +137,7 @@ export class WhistlerRewardsService implements RewardsService {
             metaData
           )
         )
-      )s
+      )
     );
   }
 

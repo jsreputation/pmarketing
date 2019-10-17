@@ -234,7 +234,7 @@ export class V4RewardsService extends RewardsService {
   public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
     return new Observable(subject => {
       let current: IReward[] = [];
-      // we do not want to get all pages in parallel, so we get pages one after the other in order not to ddos the server
+      // we do not want to get all pages in parallel, so we get pages one after the other in order not to dos the server
       const process = (res: IReward[]) => {
         current = current.concat(res);
         subject.next(current);
@@ -243,18 +243,17 @@ export class V4RewardsService extends RewardsService {
           subject.complete();
         } else {
           // otherwise get next page
-          this.getRewards(this.rewardMeta.page + 1, tags, categories)
+          this.getRewards(this.rewardMeta.page + 1, null, tags, categories)
             .subscribe(process);
         }
       };
       // do the first query
-      this.getRewards(1, tags, categories)
+      this.getRewards(1, null, tags, categories)
         .subscribe(process);
     });
   }
 
-  public getRewards(page: number = 1, tags?: string[], categories?: string[]): Observable<IReward[]> {
-    const pageSize = 10;
+  public getRewards(page: number = 1, pageSize: number = 10, tags?: string[], categories?: string[]): Observable<IReward[]> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', pageSize.toString());
