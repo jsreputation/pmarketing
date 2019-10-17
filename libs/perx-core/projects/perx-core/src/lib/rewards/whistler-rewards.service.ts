@@ -5,7 +5,7 @@ import { Observable, combineLatest, of } from 'rxjs';
 import { IReward, ICatalog, IPrice, RedemptionType } from './models/reward.model';
 import { Config } from '../config/config';
 import { IJsonApiItemPayload, IJsonApiItem, IJsonApiListPayload } from '../jsonapi.payload';
-import { map, switchMap, catchError, tap, mergeMap } from 'rxjs/operators';
+import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { IMerchant } from '../merchants/models/merchants.model';
 import { IMerchantsService } from '../merchants/imerchants.service';
 import { IRewardEntityAttributes } from '@perx/whistler';
@@ -83,9 +83,7 @@ export class WhistlerRewardsService implements RewardsService {
         }
       };
       // do the first query
-      this.merchantService.getAllMerchants().pipe(
-        mergeMap((merchants: IMerchant[]) => this.getRewards(1, tags, categories, merchants))
-      ).subscribe(process);
+      this.getRewards(1, tags, categories).subscribe(process);
     });
   }
 
@@ -94,10 +92,9 @@ export class WhistlerRewardsService implements RewardsService {
     page: number,
     tags?: string[],
     categories?: string[],
-    merchants?: IMerchant[],
   ): Observable<IReward[]> {
     const tagsString = tags && tags.join(',');
-    const categeriesString = categories && categories.join(',');
+    const categoriesString = categories && categories.join(',');
     const pageSize = '10';
     let metaData: IWMetaData = {};
     const params = {
@@ -107,8 +104,8 @@ export class WhistlerRewardsService implements RewardsService {
     if (tagsString) {
       params['filter[tags]'] = tagsString;
     }
-    if (categeriesString) {
-      params['filter[category]'] = categeriesString;
+    if (categoriesString) {
+      params['filter[category]'] = categoriesString;
     }
 
     return this.http.get<IJsonApiListPayload<IRewardEntityAttributes>>(`${this.baseUrl}`,
@@ -122,13 +119,26 @@ export class WhistlerRewardsService implements RewardsService {
           totalPages: res.meta && res.meta.page_count
         };
       }),
-      map(res => res.data),
-      map((rewards: IJsonApiItem<IRewardEntityAttributes>[]) => rewards.map(
-        res => WhistlerRewardsService.WRewardToReward(
-          res,
-          merchants.find(merchant => merchant.id === Number.parseInt(res.attributes.organization_id, 10)),
-          metaData)
-      ))
+      map(res => {
+        const merchantIds: { [k: number]: boolean } = {};
+        res.data.forEach((r) => !!r.attributes.organization_id && (merchantIds[r.attributes.organization_id] = true));
+        return { rewards: res.data, mIds: Object.keys(merchantIds) };
+      }),
+      switchMap(
+        (obj) => combineLatest(
+          of(obj.rewards),
+          combineLatest(...obj.mIds.map(id => this.merchantService.getMerchant(Number.parseInt(id, 10))))
+        )
+      ),
+      map(([rewards, merchants]: [IJsonApiItem<IRewardEntityAttributes>[], IMerchant[]]) => {
+        return rewards.map(
+          r => WhistlerRewardsService.WRewardToReward(
+            r,
+            merchants.find(m => m.id === Number.parseInt(r.attributes.organization_id, 10)),
+            metaData
+          )
+        );
+      })
     );
   }
 
