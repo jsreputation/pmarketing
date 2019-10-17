@@ -73,6 +73,8 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, Contro
 
   public ngOnDestroy(): void {
     this.cd.detach();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public minMaxFilter(d: Date): boolean {

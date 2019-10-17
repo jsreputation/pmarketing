@@ -86,8 +86,8 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
       .pipe(
         switchMap(id => this.rewardsService.getRewardToForm(id)),
         switchMap(reward => {
-          const merchantQuery = reward.rewardInfo.organizationId !== null ?
-            this.merchantsService.getMerchant(reward.rewardInfo.organizationId) : of(null);
+          const merchantQuery = reward.rewardInfo.merchantId !== null ?
+            this.merchantsService.getMerchant(reward.rewardInfo.merchantId) : of(null);
           return combineLatest(of(reward), merchantQuery);
         }),
       ).subscribe(
@@ -107,6 +107,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
         for (const k in stats) {
           this.data.vouchersStatistics.push({ type: k, value: stats[k] });
         }
+        this.cd.detectChanges();
       });
   }
 }
