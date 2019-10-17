@@ -1,0 +1,178 @@
+:root {
+  --red: #da4742;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  color: #666;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background: #f4f4f4;
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+h1,
+h2 {
+  font-weight: 500;
+  color: #212121;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+h2 small {
+  display: block;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  letter-spacing: 0.04rem;
+  font-weight: 400;
+  color: #666;
+}
+
+h1 + h2 {
+  margin-top: -1.5rem;
+}
+
+p {
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  letter-spacing: 0.04rem;
+  margin: 1.6rem 0;
+}
+
+header {
+  background: var(--red);
+  color: #fff;
+  text-align: center;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+}
+
+header img {
+  max-width: 100px;
+}
+
+main {
+  text-align: center;
+}
+
+.mast {
+  position: relative;
+  margin-bottom: 7rem;
+}
+
+.mast__img {
+  position: relative;
+  overflow: hidden;
+  z-index: -1;
+
+  > img {
+    max-width: 96rem;
+    margin: 0 auto;
+  }
+
+  &::before {
+    content: "";
+    background: url(img/mastimg.jpg);
+    filter: blur(1rem);
+    background-size: cover;
+    background-position: 50% 15%;
+    background-color: #222;
+    position: absolute;
+    top: -2rem;
+    left: -2rem;
+    right: -2rem;
+    bottom: -2rem;
+    z-index: -1;
+  }
+}
+
+.mast__profile {
+  background: #fff;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 10rem;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%);
+  overflow: hidden;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > img {
+    width: 70%;
+    transform: translateY(-10%);
+  }
+
+  &.mast__profile--user {
+    > img {
+      width: 100%;
+      transform: none;
+    }
+  }
+}
+
+.container,
+footer {
+  display: block;
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.container {
+  padding: 0 3rem;
+}
+
+footer {
+  margin-top: auto;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.btn {
+  display: block;
+  padding: 1rem 9rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: #fff;
+  background: var(--red);
+  border-radius: 0.4rem;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-left a {
+  color: #2665ee;
+  text-decoration: underline;
+}

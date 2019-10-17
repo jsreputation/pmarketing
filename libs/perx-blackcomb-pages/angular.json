@@ -21,7 +21,8 @@
           "options": {
             "main": "projects/perx-blackcomb-pages/src/test.ts",
             "tsConfig": "projects/perx-blackcomb-pages/tsconfig.spec.json",
-            "karmaConfig": "projects/perx-blackcomb-pages/karma.conf.js"
+            "karmaConfig": "projects/perx-blackcomb-pages/karma.conf.js",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -37,7 +38,8 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "perx-blackcomb-pages",
   "schematics": {
     "@schematics/angular:component": {

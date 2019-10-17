@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SettingsService } from '@cl-core/services';
-import { Observable } from 'rxjs';
+
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
+
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { debounceTime, switchMap } from 'rxjs/operators';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-general',
@@ -12,6 +13,8 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
   styleUrls: ['./general.component.scss']
 })
 export class GeneralComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<any> = new Subject();
+
   public timeZones$: Observable<ITimeZone[]>;
   public currency$: Observable<Currency[]>;
   public formGeneral: FormGroup;
@@ -38,7 +41,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
       .valueChanges
       .pipe(
         debounceTime(300),
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         switchMap((value => this.settingsService.updateTenants(value))
         )
       )
@@ -68,6 +71,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

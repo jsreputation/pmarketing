@@ -1,9 +1,11 @@
 @import '~@angular/material/theming';
 @import "variables";
+
 :host {
   display: block;
   width: 100%;
 }
+
 .upload {
   &-wrap {
     position: relative;
@@ -94,14 +96,6 @@
     bottom: -($vertical-padding * 0.75);
     left: 0;
     width: max-content;
-  }
-}
-
-::ng-deep {
-  .upload-btn {
-    span ~ span {
-      display: none;
-    }
   }
 }
 

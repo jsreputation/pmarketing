@@ -1,9 +1,14 @@
+@import '~@angular/material/theming';
 @import "variables";
 
+:host {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+  grid-gap: ($horizontal-padding * 0.5);
+}
+
 .merchant-btn {
-  margin-right: 1.55rem;
-  margin-bottom: 3.2rem;
-  padding: 0;
+  @include mat-elevation(1);
 }
 
 .merchant-card {
