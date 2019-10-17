@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StampRoutingModule } from './stamp-routing.module';
-import { CardComponent } from './card/card.component';
 import { PuzzlesModule, StampModule as PerxStampsModule } from '@perx/core';
 import { MatButtonModule } from '@angular/material';
+import { StampCardComponent } from '@perx/blackcomb-pages';
 
 @NgModule({
-  declarations: [CardComponent],
+  declarations: [StampCardComponent],
   imports: [
     CommonModule,
     PuzzlesModule,
