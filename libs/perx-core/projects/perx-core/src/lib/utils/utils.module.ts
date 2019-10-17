@@ -15,9 +15,13 @@ import { GeneralStaticDataService } from './general-static-data/general-static-d
 import { ThemesService } from './themes/themes.service';
 import { WhistlerThemesService } from './themes/whistler-themes.service';
 import { Config } from '../config/config';
+import { V4ThemesService } from './themes/v4-themes.service';
 
 export function themesServiceFactory(http: HttpClient, config: Config): ThemesService {
-  return new WhistlerThemesService(http, config);
+  if (config.isWhistler) {
+    return new WhistlerThemesService(http, config);
+  }
+  return new V4ThemesService(http, config);
 }
 
 const directives = [

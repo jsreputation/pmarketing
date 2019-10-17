@@ -3,9 +3,11 @@ import { MerchantHttpAdapter } from '@cl-core/http-adapters/merchant-http-adapte
 import { Merchant } from '@cl-core/http-adapters/merchant';
 import { MatDialog } from '@angular/material';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { CreateMerchantPopupComponent } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.component';
-import { filter, switchMap } from 'rxjs/operators';
+
+import { Subject } from 'rxjs';
+import { filter, switchMap, takeUntil } from 'rxjs/operators';
+
 import { MerchantsService } from '@cl-core-services';
 
 @Component({
@@ -14,6 +16,8 @@ import { MerchantsService } from '@cl-core-services';
   styleUrls: ['./list-merchant.component.scss']
 })
 export class ListMerchantComponent implements OnDestroy {
+  private destroy$: Subject<any> = new Subject();
+
   public dataSource: CustomDataSource<Merchant>;
 
   constructor(
@@ -24,6 +28,8 @@ export class ListMerchantComponent implements OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public openDialogCreate(merchant?: Merchant): void {
@@ -33,7 +39,7 @@ export class ListMerchantComponent implements OnDestroy {
 
     dialogRef.afterClosed()
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         filter(Boolean),
         switchMap((updatedMerchant: IMerchantForm) => {
           if (merchant) {

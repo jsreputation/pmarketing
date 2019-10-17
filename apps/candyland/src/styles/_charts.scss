@@ -29,7 +29,7 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
 .chart-card {
   position: relative;
   padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75);
-  flex: 1 1 calc(50% - #{$horizontal-padding});
+  flex: 1 1 28rem;
   box-sizing: border-box;
   border-radius: $border-radius;
   border: 1px solid $border-color;
@@ -55,33 +55,42 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
 
   &-header-with-control {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: ($vertical-padding * 0.75);
 
-    &-title {
+    .chart-card-title {
       flex-shrink: 0;
+      margin-right: $horizontal-padding;
     }
 
-    > * {
+    > *:not(.chart-card-title) {
+      @include typo-input-alt;
+
       margin-top: -($vertical-padding * 0.375);
-
-      &:not(.chart-card-title) {
-        @include typo-body2;
-
-        flex-grow: 1;
-        margin-left: $horizontal-padding;
-        max-width: ($horizontal-padding * 10);
-      }
+      flex-grow: 1;
+      flex-basis: 24rem;
+      max-width: ($horizontal-padding * 10);
     }
   }
 
   &-content {
     display: flex;
     position: relative;
-    height: 24rem;
+    min-height: 24rem;
+    padding-bottom: 2rem;
     width: 100%;
-    overflow-x: auto;
+    overflow: visible;
+    margin-bottom: ($vertical-padding * 0.5);
+
+    &.overflow-all {
+      overflow: auto;
+    }
+
+    &.overflow-x {
+      overflow-y: hidden;
+      overflow-x: auto;
+    }
 
     pc-meta-card .wrapper {
       justify-content: flex-start;

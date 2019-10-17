@@ -8,16 +8,17 @@ import {
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
-import { combineLatest, Observable, of } from 'rxjs';
+
+import { combineLatest, Observable, of, Subject } from 'rxjs';
+import { tap, map, switchMap, takeUntil } from 'rxjs/operators';
+
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { tap, map, switchMap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import { IReward } from '@perx/core';
 import { MockRewardsMobilePreview } from '../../../../../assets/actives/reward/reward-mock';
 import {
   AvailableNewEngagementService, InstantRewardsService, RoutingStateService, SettingsService
 } from '@cl-core/services';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { CreateImageDirective } from '@cl-shared/directives/create-image.directive';
 import { GameMobilePreviewComponent } from '@cl-shared/components/game-mobile-preview/game-mobile-preview.component';
@@ -31,6 +32,9 @@ import { GameMobilePreviewComponent } from '@cl-shared/components/game-mobile-pr
 export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChildren(CreateImageDirective) public createImagePreview: QueryList<CreateImageDirective>;
   @ViewChild(GameMobilePreviewComponent, {static: false}) public gameMobilePreviewComponent: GameMobilePreviewComponent;
+
+  private destroy$: Subject<any> = new Subject();
+
   public currentSelectedMobileTab: number = 0;
   public form: FormGroup;
   public rewardData: IRewardDefaultValue;
@@ -96,7 +100,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
   public ngAfterViewInit(): void {
     if (this.gameMobilePreviewComponent) {
       this.gameMobilePreviewComponent.currentIndexTab
-        .pipe(untilDestroyed(this))
+        .pipe(takeUntil(this.destroy$))
         .subscribe((indexTab) => {
           this.currentSelectedMobileTab = indexTab;
         });
@@ -104,6 +108,8 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public getImgLink(control: FormControl, defaultImg: string): string {
@@ -125,7 +131,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
           map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
           tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
         );
-      })).pipe(untilDestroyed(this))
+      })).pipe(takeUntil(this.destroy$))
       .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
@@ -179,21 +185,21 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
 
   private initTenants(): void {
     this.settingsService.getTenantsSettings()
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(data => this.tenantSettings = data);
   }
 
   private getRewardData(): Observable<IRewardDefaultValue> {
     return this.instantRewardsService.getInstantRewardData()
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         tap(data => this.rewardData = data)
       );
   }
 
   private handleRouteParams(): Observable<IRewardForm | null> {
     return this.route.paramMap.pipe(
-      untilDestroyed(this),
+      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.id = id),
       switchMap(id => {

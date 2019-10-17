@@ -16,7 +16,7 @@ import {
   MatRadioModule,
   MatCheckboxModule,
   MatSelectModule,
-  MatDatepickerModule
+  MatDatepickerModule,
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';

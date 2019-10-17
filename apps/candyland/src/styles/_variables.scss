@@ -141,6 +141,12 @@ $icon-font-size: 1.6rem;
 //Input Fields
 @mixin typo-input {
   font-weight: 400;
+  font-size: 1.6rem;
+  letter-spacing: 0.015rem;
+}
+
+@mixin typo-input-alt {
+  font-weight: 400;
   font-size: $base-font-size;
   letter-spacing: 0.015rem;
 }

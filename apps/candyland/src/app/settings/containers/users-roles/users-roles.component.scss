@@ -5,5 +5,11 @@
   width: 100%;
   max-width: ($horizontal-padding * 6);
 
-  @include typo-input;
+  @include typo-input-alt;
+}
+
+@media (min-width: $tablet-width + 1) {
+  cl-table-filters {
+    margin-right: ($horizontal-padding * 0.5);
+  }
 }
