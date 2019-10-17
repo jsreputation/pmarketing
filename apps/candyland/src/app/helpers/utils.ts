@@ -107,9 +107,23 @@ export default class Utils {
     return item && Array.isArray(item);
   }
 
+  static isFunction(fun): boolean {
+    return fun && {}.toString.call(fun) === '[object Function]';
+  }
+
   static isEmptyObject(object): boolean {
     return this.isObject(object) && _isEmpty(object);
   }
+
+  static createMapIncludes(arr: any, propKey: string, fieldType: string): {[key: string]: any} {
+    return arr.reduce((map, obj) => {
+      if (obj.type === fieldType) {
+        map[obj[propKey]] = obj;
+      }
+      return map;
+    }, {});
+  }
+
 
   static getChanges(changedObject, base) {
     return _transform(changedObject, (result, value, key) => {
