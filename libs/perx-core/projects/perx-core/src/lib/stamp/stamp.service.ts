@@ -9,7 +9,7 @@ export abstract class StampService {
 
   public abstract getStamps(campaignId: number): Observable<IStamp[]>;
 
-  public abstract putStamp(stampId: number): Observable<IStamp>;
+  public abstract putStamp(stampId: number, sourceType?: string): Observable<IStamp>;
 
   public abstract stampAll(cardId: number): Observable<IStamp[]>;
 
