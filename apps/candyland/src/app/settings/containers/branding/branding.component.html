@@ -1,24 +1,22 @@
 <section class="phonepreview-wrapper">
   <div class="branding-form" [formGroup]="formBranding">
     <mat-card>
-      <div class="reward-wrap">
+      <div class="temp-engagement-title">
         <h2 class="sub-title">
           Theme
         </h2>
       </div>
-      <div class="flex">
-        <div class="control-input">
-          <mat-form-field class="branding-select">
-            <mat-select formControlName="font" placeholder="Font Type">
-              <mat-option *ngFor="let font of fonts" [value]="font.value">
-                {{ font.value }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+      <div class="control-input">
+        <mat-form-field class="branding-select">
+          <mat-select formControlName="font" placeholder="Font Type">
+            <mat-option *ngFor="let font of fonts" [value]="font.value">
+              {{ font.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-      <div class="flex">
-        <div class="control-input select-outcome">
+      <div class="control-input-splitter">
+        <div class="control-input">
           <label class="game-title">
             <span>Primary Color</span>
           </label>
@@ -36,70 +34,68 @@
     </mat-card>
 
     <mat-card>
-      <div class="reward-wrap">
+      <div class="temp-engagement-title">
         <h2 class="sub-title">
           Header & Navbar
         </h2>
       </div>
-      <div class="flex">
-        <div class="control-input select-outcome">
-          <label class="game-title">
-            <span>Color</span>
-          </label>
-          <mat-form-field color="primary" appearance="outline">
-            <mat-select [formControlName]="'headerNavbarColor'">
-              <mat-select-trigger>
-                <div class="select-color">
-                  <div
-                    class="select-color-preview"
-                    [ngStyle]="{
-                      'background-color': headerNavbarColor.value?.color
-                    }"
-                  ></div>
-                  <p class="select-color-text">
-                    {{ headerNavbarColor.value?.labelView }}
-                  </p>
-                </div>
-              </mat-select-trigger>
-              <mat-option *ngFor="let color of listColors" [value]="color">
-                <div class="select-color">
-                  <div
-                    class="select-color-preview"
-                    [ngStyle]="{ 'background-color': color.color }"
-                  ></div>
-                  <span class="select-color-text">
-                    {{ color.labelView }}
-                  </span>
-                </div>
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="flex">
+      <div class="control-input">
         <label class="game-title">
-          <span>Image Logo</span>
+          <span>Color</span>
         </label>
+        <mat-form-field color="primary" appearance="outline">
+          <mat-select [formControlName]="'headerNavbarColor'">
+            <mat-select-trigger>
+              <div class="select-color">
+                <div
+                  class="select-color-preview"
+                  [ngStyle]="{
+                    'background-color': headerNavbarColor.value?.color
+                  }"
+                ></div>
+                <p class="select-color-text">
+                  {{ headerNavbarColor.value?.labelView }}
+                </p>
+              </div>
+            </mat-select-trigger>
+            <mat-option *ngFor="let color of listColors" [value]="color">
+              <div class="select-color">
+                <div
+                  class="select-color-preview"
+                  [ngStyle]="{ 'background-color': color.color }"
+                ></div>
+                <span class="select-color-text">
+                  {{ color.labelView }}
+                </span>
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-      <div class="flex">
-        <div class="logo-header-wrap">
-          <cl-upload-graphic
-            classList="stretch"
-            placeholder="Recommended size: 250px by 50px"
-            formControlName="logo"
-            [isRequired]="logo.hasError('required') && logo.touched">
-          </cl-upload-graphic>
+      <div class="control-input-splitter">
+        <div class="control-input">
+          <label class="game-title">
+            <span>Image Logo</span>
+          </label>
+          <div class="logo-header-wrap">
+            <cl-upload-graphic
+              classList="stretch"
+              placeholder="Recommended size: 250px by 50px"
+              formControlName="logo"
+              [isRequired]="logo.hasError('required') && logo.touched">
+            </cl-upload-graphic>
+          </div>
         </div>
       </div>
     </mat-card>
     <mat-card>
-      <div class="reward-wrap">
+      <div class="temp-engagement-title">
         <h2 class="sub-title">
           Button
         </h2>
       </div>
-      <div class="flex">
-        <div class="control-input select-outcome">
+      <div class="control-input-splitter">
+        <div class="control-input">
           <label class="game-title">
             <span>Background Color</span>
           </label>
@@ -131,7 +127,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
+        </div>          
         <div class="control-input">
           <label class="game-title">
               <span>Text Color</span>
@@ -164,7 +160,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
+        </div>          
       </div>
     </mat-card>
   </div>
