@@ -5,6 +5,9 @@ import { map, tap, first, filter, switchMap, bufferCount } from 'rxjs/operators'
 import { Observable, interval, combineLatest } from 'rxjs';
 import { MatDialog } from '@angular/material';
 
+/**
+ * @deprecated prefer using libs/perx-blackcomb-pages/projects/perx-blackcomb-pages/src/lib/game/game.component.ts
+ */
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',

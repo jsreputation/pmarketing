@@ -4,6 +4,9 @@ import { ICampaign, Voucher, IVoucherService, ICampaignService, CampaignType, Vo
 import { Router } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
 
+/**
+ * @deprecated
+ */
 @Component({
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
@@ -25,13 +28,13 @@ export class WalletComponent implements OnInit {
     this.campaigns$ = this.campaignService.getCampaigns()
       .pipe(
         map((campaigns: ICampaign[]) => campaigns.filter(c => c.type === CampaignType.stamp)),
-        mergeMap((res) =>  combineLatest(
+        mergeMap((res) => combineLatest(
           ...res.map(c => this.stampService.getCurrentCard(c.id)
             .pipe(
-              map(res2 => ({...res2, campaignId: c.id, campaignTitle: c.name, campaignDescription: c.description})))
+              map(res2 => ({ ...res2, campaignId: c.id, campaignTitle: c.name, campaignDescription: c.description })))
           )
         )
-      ));
+        ));
 
     this.vouchers$ = this.vouchersService.getAll();
     this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];

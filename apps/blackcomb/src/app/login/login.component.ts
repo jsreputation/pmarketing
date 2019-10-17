@@ -5,6 +5,9 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
+/**
+ * @deprecated
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

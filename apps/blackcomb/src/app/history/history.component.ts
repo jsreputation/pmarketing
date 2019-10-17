@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Voucher, IVoucherService, VoucherState } from '@perx/core';
 import { Observable } from 'rxjs';
 
+/**
+ * @deprecated use libs/perx-blackcomb-pages/projects/perx-blackcomb-pages/src/lib/history/history.component.ts
+ */
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',

@@ -4,6 +4,9 @@ import { from, of, combineLatest, Observable, throwError } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ThemesService } from '@perx/core';
 
+/**
+ * @deprecated use libs/perx-blackcomb-pages/projects/perx-blackcomb-pages/src/lib/content/content.component.ts
+ */
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',

@@ -7,6 +7,9 @@ import { of, iif } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import * as uuid from 'uuid';
 
+/**
+ * @deprecated
+ */
 @Component({
   selector: 'app-loading',
   templateUrl: './loading.component.html',

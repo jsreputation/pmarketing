@@ -2,11 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { IProfile, ProfileService, ThemesService } from '@perx/core';
 import { take } from 'rxjs/operators';
 
+/**
+ * @deprecated use libs/perx-blackcomb-pages/projects/perx-blackcomb-pages/src/lib/account/account.component.ts
+ */
 interface AccountPageObject {
   title: string;
   content_url: string;
   key: string;
 }
+
+/**
+ * @deprecated use libs/perx-blackcomb-pages/projects/perx-blackcomb-pages/src/lib/account/account.component.ts
+ */
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -14,7 +21,7 @@ interface AccountPageObject {
 })
 export class AccountComponent implements OnInit {
   public profile: IProfile;
-  public pages!: AccountPageObject[] ;
+  public pages!: AccountPageObject[];
 
   constructor(
     private profileService: ProfileService,

@@ -5,6 +5,9 @@ import { Observable, Subject } from 'rxjs';
 import { filter, switchMap, takeUntil } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
+/**
+ * @deprecated
+ */
 @Component({
   selector: 'app-redeem',
   templateUrl: './redeem.component.html',

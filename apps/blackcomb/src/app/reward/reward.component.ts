@@ -4,6 +4,9 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
+/**
+ * @deprecated
+ */
 @Component({
   selector: 'app-reward',
   templateUrl: './reward.component.html',

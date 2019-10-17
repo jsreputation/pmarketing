@@ -4,6 +4,9 @@ import { IVoucherService, Voucher } from '@perx/core';
 import { filter, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
+/**
+ * @deprecated
+ */
 @Component({
   selector: 'app-voucher-detail',
   templateUrl: './voucher-detail.component.html',
