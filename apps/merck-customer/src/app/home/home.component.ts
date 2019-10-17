@@ -10,7 +10,7 @@ const tabs: ITabConfig[] = [
   {
     filterKey: null,
     filterValue: null,
-    tabName: 'Category 1',
+    tabName: 'Diabetes',
     rewardsList: null
   },
   {
