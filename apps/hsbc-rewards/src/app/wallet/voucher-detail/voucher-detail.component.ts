@@ -23,13 +23,16 @@ export class VoucherDetailComponent implements OnInit {
   };
 
   constructor(
-    private voucherServe: IVoucherService,
+    private voucherService: IVoucherService,
     private route: ActivatedRoute
   ) { }
 
   public ngOnInit(): void {
     this.voucher = this.route.params.pipe(switchMap((param) => {
-      return this.voucherServe.get(param.id);
+      return this.voucherService.get(param.id, null, {
+        type: null,
+        sourceType: 'hsbc-rewards'
+      });
     })).pipe(catchError(() => {
       return of(voucher[0]);
     }));

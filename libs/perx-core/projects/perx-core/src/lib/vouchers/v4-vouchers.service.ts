@@ -168,7 +168,9 @@ export class V4VouchersService implements IVoucherService {
     if (oc(voucherParams).type()) {
       params = params.set('type', voucherParams.type);
     }
-
+    if (oc(voucherParams).sourceType()) {
+      params = params.set('source_type', voucherParams.sourceType);
+    }
     return this.http.get<IV4VouchersResponse>(this.vouchersUrl, { params })
       .pipe(
         map(res => res.data)
@@ -179,15 +181,19 @@ export class V4VouchersService implements IVoucherService {
     return `${this.config.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
   }
 
-  public get(id: number, useCache: boolean = true): Observable<IVoucher> {
+  public get(id: number, useCache: boolean = true, voucherParams?: IGetVoucherParams): Observable<IVoucher> {
     if (useCache) {
       const found = this.vouchers.find(v => `${v.id}` === `${id}`);
       if (found) {
         return of(found);
       }
     }
+    let params = new HttpParams();
+    if (voucherParams && oc(voucherParams).sourceType) {
+      params = params.set('source_type', voucherParams.sourceType);
+    }
     const url = `${this.config.apiHost}/v4/vouchers/${id}`;
-    return this.http.get<IV4VoucherResponse>(url).pipe(
+    return this.http.get<IV4VoucherResponse>(url, { params }).pipe(
       map(resp => resp.data),
       map((v: IV4Voucher) => V4VouchersService.v4VoucherToVoucher(v)),
       // if the vouchers list was not empty but we are here, it means it is a new voucher, so let's add it.
