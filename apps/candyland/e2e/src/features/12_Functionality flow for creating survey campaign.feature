@@ -33,6 +33,7 @@ Scenario: Verifying that functionality of add rewards button.
 @runThis
 Scenario: Verifiying functionality of include probablity box
   Given 10_that I am on the campaign creation page.
+  And   10_I added a reward to the reward list.
   When  10_I click on the include probability box
   Then  10_I should be able to input interger string in the probability field
 @runThis

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationService, ISurvey, SurveyService } from '@perx/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { filter, switchMap, takeUntil } from 'rxjs/operators';
 
 interface IAnswer {
   question_id: string;
@@ -14,12 +14,13 @@ interface IAnswer {
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.scss']
 })
-export class SurveyComponent implements OnInit {
+export class SurveyComponent implements OnInit, OnDestroy {
   public data$: Observable<ISurvey>;
   public survey: ISurvey;
   public answers: IAnswer[];
   public totalLength: number;
   public currentPointer: number;
+  private destroy$: Subject<any> = new Subject();
 
   constructor(
     private notificationService: NotificationService,
@@ -36,7 +37,8 @@ export class SurveyComponent implements OnInit {
           const id: string = params.get('id');
           const idN = Number.parseInt(id, 10);
           return this.surveyService.getSurveyFromCampaign(idN);
-        })
+        }),
+        takeUntil(this.destroy$)
       );
     this.data$.subscribe(
       (survey: ISurvey) => {
@@ -48,6 +50,11 @@ export class SurveyComponent implements OnInit {
     );
   }
 
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   public get progressBarValue(): number {
     return Math.round(this.currentPointer / this.totalLength * 100) || 0;
   }
@@ -56,7 +63,8 @@ export class SurveyComponent implements OnInit {
     return this.currentPointer === this.totalLength;
   }
   public onSubmit(): void {
-    this.surveyService.postSurveyAnswer(this.answers, this.survey, this.route.snapshot.params.id).subscribe(
+    this.surveyService.postSurveyAnswer(this.answers, this.survey, this.route.snapshot.params.id)
+    .subscribe(
       (res) => {
         let text: string;
         let title: string;
