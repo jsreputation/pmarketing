@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home.component';
 import { RouterModule } from '@angular/router';
 import { MatCardModule, MatButtonModule } from '@angular/material';
 import { LoyaltyModule, ICampaignService, RewardsModule, RewardsService, LoyaltyService } from '@perx/core';
-import { GamesCollectionComponent } from './games-collection/games-collection.component';
 import { campaigns } from '../mock/campaigns.mock';
 import { of } from 'rxjs';
 import { rewards } from '../mock/rewards.mock';
 import { loyalty } from '../mock/loyalty.mock';
+import { HomeComponent, GamesCollectionComponent } from '@perx/blackcomb-pages';
 
 const campaignServiceStub = {
   getCampaigns: () => of(campaigns)
@@ -43,7 +42,8 @@ const loyaltyServiceStub = {
     { provide: LoyaltyService, useValue: loyaltyServiceStub }
   ],
   exports: [
-    HomeComponent
+    HomeComponent,
+    GamesCollectionComponent
   ]
 })
 export class HomeModule { }
