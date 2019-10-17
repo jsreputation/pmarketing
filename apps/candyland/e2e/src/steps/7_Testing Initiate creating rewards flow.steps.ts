@@ -65,7 +65,7 @@ Given(/^4_I am on the reward page$/, async () => {
 
 When(/^4_I click on the create new button$/, async () => {
     const ec = protractor.ExpectedConditions;
-    await browser.wait(ec.presenceOf(element(by.css('cl-button'))), 5000);
+    await browser.wait(ec.elementToBeClickable(element(by.css('cl-button'))), 5000);
     await element(by.css('cl-button')).click();
     await browser.sleep(3000);
 });
