@@ -9,8 +9,8 @@ import { Observable, Subject } from 'rxjs';
   templateUrl: './stamp-card.component.html',
   styleUrls: ['./stamp-card.component.scss']
 })
-export class StampCardComponent implements OnInit, OnDestroy {
 
+export class StampCardComponent implements OnInit, OnDestroy {
   public title: string; // = 'Scratch & Win!'
   public subTitle: string; //  = 'Collect all 10 stickers and win a reward!'
   public background: string;
@@ -19,13 +19,11 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public stampCard$: Observable<IStampCard>;
   private destroy$: Subject<any> = new Subject();
 
-  public congratsDetailText: string = 'You just won 2 rewards';
   constructor(
     private stampService: StampService,
     private route: ActivatedRoute,
     private router: Router
   ) {
-
   }
 
   public ngOnInit(): void {
@@ -41,7 +39,6 @@ export class StampCardComponent implements OnInit, OnDestroy {
       );
     this.stampCard$.subscribe(
       (stampCard: IStampCard) => {
-        console.log(stampCard);
         this.title = stampCard.title;
         this.subTitle = stampCard.subTitle;
         this.background = stampCard.displayProperties.bgImage;
