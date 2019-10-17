@@ -5,7 +5,7 @@
     </h2>
   </mat-expansion-panel-header>
 
-  <div class="card-content" [formGroup]="joiningMethodGroup">
+  <div class="card-content" [formGroup]="joinMethodGroup">
     <section class="list-checkbox flex align-items-center">
       <mat-checkbox [color]="'primary'" class="transaction-amount" [formControlName]="'transactionAmount'">Transaction Amount</mat-checkbox>
       <div class="flex align-items-center">
@@ -23,8 +23,8 @@
       <mat-checkbox [color]="'primary'" class="transaction-amount" [formControlName]="'signUp'">Sign-up</mat-checkbox>
     </section>
     <section class="list-checkbox flex align-items-center">
-      <mat-checkbox [color]="'primary'" class="transaction-amount" [formControlName]="'byInvite'">By Invite</mat-checkbox>
+      <mat-checkbox [color]="'primary'" class="transaction-amount" [formControlName]="'inviteOnly'">By Invite</mat-checkbox>
     </section>
-    <mat-error *ngIf="joiningMethodGroup.hasError('groupRequired') && joiningMethodGroup.touched">Required field</mat-error>
+    <mat-error *ngIf="joinMethodGroup.hasError('groupRequired') && joinMethodGroup.touched">Required field</mat-error>
   </div>
 </mat-expansion-panel>

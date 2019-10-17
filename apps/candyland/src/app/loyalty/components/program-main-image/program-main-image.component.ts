@@ -9,7 +9,7 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 export class ProgramMainImageComponent {
   @Input() public group: FormGroup;
 
-  public get mainImage(): AbstractControl {
-    return this.group.get('mainImage');
+  public get imageUrl(): AbstractControl {
+    return this.group.get('imageUrl');
   }
 }

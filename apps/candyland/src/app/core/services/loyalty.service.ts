@@ -32,4 +32,29 @@ export class LoyaltyService implements ITableService {
     sendData.id = id;
     return this.loyaltyHttpService.updateLoyalty(id, {data: sendData});
   }
+
+  public updateLoyaltyStatus(id: string, status: string): Observable<IResponseApi<any>> {
+    const sendData: any = LoyaltyHttpAdapter.transformLoyaltyStatus(status);
+    sendData.id = id;
+    return this.loyaltyHttpService.updateLoyalty(id, {data: sendData});
+  }
+
+  public deleteLoyalty(id: string): Observable<IResponseApi<any>> {
+    return this.loyaltyHttpService.deleteLoyalty(id);
+  }
+
+  public createLoyaltyBasicTier(data: any, loyaltyId: string): Observable<IResponseApi<any>> {
+    const sendData: any = LoyaltyHttpAdapter.transformFromLoyaltyBasicTierForm(data, loyaltyId);
+    return this.loyaltyHttpService.createLoyaltyBasicTier({data: sendData});
+  }
+
+  public updateLoyaltyBasicTier(loyaltyBasicTierId: string, data: any, loyaltyId: string): Observable<IResponseApi<any>> {
+    const sendData: any = LoyaltyHttpAdapter.transformFromLoyaltyBasicTierForm(data, loyaltyId);
+    sendData.id = loyaltyBasicTierId;
+    return this.loyaltyHttpService.updateLoyaltyBasicTier(loyaltyBasicTierId, {data: sendData});
+  }
+
+  public deleteLoyaltyBasicTier(id: string): Observable<IResponseApi<any>> {
+    return this.loyaltyHttpService.deleteLoyaltyBasicTier(id);
+  }
 }

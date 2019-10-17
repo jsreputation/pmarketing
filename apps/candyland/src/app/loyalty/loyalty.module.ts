@@ -33,7 +33,7 @@ import {PointsInfoComponent} from './components/points-info/points-info.componen
 import {MatExpansionModule} from '@angular/material/expansion';
 import {ProgramMainImageComponent} from './components/program-main-image/program-main-image.component';
 import {DatePickerModule, UploadFileModule, UploadGraphicModule} from '@cl-shared';
-import {UserJoiningMethodComponent} from './components/user-joining-method/user-joining-method.component';
+import {UserJoinMethodComponent} from './components/user-joining-method/user-joining-method.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {SelectAudienceComponent} from './components/select-audience/select-audience.component';
 import {MatRadioModule} from '@angular/material/radio';
@@ -61,7 +61,7 @@ import { LoyaltyReviewComponent } from './containers/loyalty-review/loyalty-revi
     LoyaltyFormStepReviewComponent,
     PointsInfoComponent,
     ProgramMainImageComponent,
-    UserJoiningMethodComponent,
+    UserJoinMethodComponent,
     SelectAudienceComponent,
     AddRulePopupComponent,
     TierSetupPopupComponent,
@@ -69,7 +69,7 @@ import { LoyaltyReviewComponent } from './containers/loyalty-review/loyalty-revi
     GlobalBurnRuleGroupComponent,
     PointsExpiryGroupComponent,
     TiersGroupComponent,
-    UserJoiningMethodComponent,
+    UserJoinMethodComponent,
     ViewSchemeInfoComponent,
     ViewLoyaltyComponent,
     ViewGlobalEarnBurnRulesComponent,

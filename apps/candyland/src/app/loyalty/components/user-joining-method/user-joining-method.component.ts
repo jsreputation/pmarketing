@@ -7,23 +7,23 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
   templateUrl: './user-joining-method.component.html',
   styleUrls: ['./user-joining-method.component.scss']
 })
-export class UserJoiningMethodComponent implements OnInit, OnDestroy {
+export class UserJoinMethodComponent implements OnInit, OnDestroy {
   @Input() public group: FormGroup;
 
-  public get joiningMethodGroup(): AbstractControl {
-    return this.group.get('joiningMethod');
+  public get joinMethodGroup(): AbstractControl {
+    return this.group.get('joinMethod');
   }
 
   public get transactionAmount(): AbstractControl {
-    return this.group.get('joiningMethod.transactionAmount');
+    return this.group.get('joinMethod.transactionAmount');
   }
 
   public get amount(): AbstractControl {
-    return this.joiningMethodGroup.get('amount');
+    return this.joinMethodGroup.get('amount');
   }
 
   public subscribeGroupValueChanges(): void {
-    this.joiningMethodGroup.valueChanges
+    this.joinMethodGroup.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(value => {
         this.switchStatusAmount(value.transactionAmount);

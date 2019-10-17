@@ -13,9 +13,9 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     this.authService.initAuth();
-    this.authService.updateUser()
-      .subscribe(() => {
-      });
+    // this.authService.updateUser()
+    //   .subscribe(() => {
+    //   });
     this.routingState.loadRouting()
       .subscribe(() => {
       });

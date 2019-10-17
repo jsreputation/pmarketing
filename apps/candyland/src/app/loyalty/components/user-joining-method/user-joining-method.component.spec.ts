@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserJoiningMethodComponent } from './user-joining-method.component';
+import { UserJoinMethodComponent } from './user-joining-method.component';
 
-describe('UserJoiningMethodComponent', () => {
-  let component: UserJoiningMethodComponent;
-  let fixture: ComponentFixture<UserJoiningMethodComponent>;
+describe('UserJoinMethodComponent', () => {
+  let component: UserJoinMethodComponent;
+  let fixture: ComponentFixture<UserJoinMethodComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserJoiningMethodComponent ]
+      declarations: [ UserJoinMethodComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserJoiningMethodComponent);
+    fixture = TestBed.createComponent(UserJoinMethodComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

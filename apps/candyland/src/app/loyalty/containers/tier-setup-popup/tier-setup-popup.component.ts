@@ -4,6 +4,7 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { LoyaltyFormsService } from 'src/app/loyalty/services/loyalty-forms.service';
+import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
 
 @Component({
   selector: 'cl-tier-setup-popup',
@@ -16,15 +17,16 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
 
   constructor(public dialogRef: MatDialogRef<TierSetupPopupComponent>,
               private loyaltyFormsService: LoyaltyFormsService,
+              private loyaltyCustomTierService: LoyaltyCustomTierService,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
   public get pointsThreshold(): AbstractControl {
-    return this.form.get('qualification.pointsThreshold') || null;
+    return this.form.get('joinMethod.pointsThreshold') || null;
   }
 
   public get points(): AbstractControl {
-    return this.form.get('qualification.points') || null;
+    return this.form.get('joinMethod.points') || null;
   }
 
   public ngOnInit(): void {
@@ -40,12 +42,19 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 
-  public add(): void {
+  public apply(): void {
+    console.log(this.form.invalid, this.form.value, this.data);
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
-    this.dialogRef.close(this.form.value);
+    let request;
+    if (this.data.tier) {
+      request = this.loyaltyCustomTierService.updateLoyaltyCustomTier(this.data.tier.id, this.form.value, this.data.loyaltyBasicTierId);
+    } else {
+      request = this.loyaltyCustomTierService.createLoyaltyCustomTier(this.form.value, this.data.loyaltyBasicTierId);
+    }
+    request.subscribe(data => this.dialogRef.close(data));
   }
 
   private initForm(): void {
@@ -53,7 +62,7 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
   }
 
   private fillForm(): void {
-    const pathValue = this.data || this.loyaltyFormsService.getDefaultValueTireForm();
+    const pathValue = this.data.tier || this.loyaltyFormsService.getDefaultValueTireForm();
     this.form.patchValue(pathValue);
   }
 

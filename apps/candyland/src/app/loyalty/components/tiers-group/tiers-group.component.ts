@@ -12,32 +12,32 @@ export class TiersGroupComponent implements AfterViewInit {
   public dataSource: MatTableDataSource<any>;
   @Input() public data: any = [{
     name: 'Silver',
-    qualification: {
+    joinMethod: {
       pointsThreshold: true,
       points: 500
     },
     earnBonus: 20,
-    burnRule: 10,
+    burnDiscount: 10,
     pointsExpiry: {
       amount: 3,
       type: 'day',
-      trigger: 'earned',
+      trigger: 'accural',
     }
   },
     {
       name: 'Gold',
-      qualification: {
+      joinMethod: {
         inviteOnly: true,
       },
       earnBonus: 20,
-      burnRule: 10,
+      burnDiscount: 10,
       pointsExpiry: {
         amount: 3,
         type: 'day',
-        trigger: 'earned',
+        trigger: 'accural',
       }
     }];
-  @Input() public displayedColumns: string[] = ['name', 'qualification', 'earnBonus', 'burnRule', 'pointsExpiry', 'actions'];
+  @Input() public displayedColumns: string[] = ['name', 'joinMethod', 'earnBonus', 'burnDiscount', 'pointsExpiry', 'actions'];
   @Output() public tiersAction: EventEmitter<{ action: NewLoyaltyActions, data?: any }> = new EventEmitter();
 
   constructor() {

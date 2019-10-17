@@ -1,3 +1,5 @@
+import Utils from '@cl-helpers/utils';
+
 export class LoyaltyHttpAdapter {
   public static transformToTableData(data: any): ITableData<any> {
     const formatData = data.data.map((item) => {
@@ -13,37 +15,111 @@ export class LoyaltyHttpAdapter {
       // }
       return {...item};
     });
-    return { data: formatData, meta: data.meta};
+    return {data: formatData, meta: data.meta};
   }
 
   public static transformFromLoyaltyForm(data: any): any {
-      return {
-      type: 'entities',
+    return {
+      type: 'programs',
       attributes: {
         name: data.name,
-        img_url: data.details.image,
+        unit: data.details.pointsName,
+        pool_id: data.details.poolId
+      }
+    };
+  }
+
+  public static transformLoyaltyStatus(status: string): any {
+    return {
+      type: 'programs',
+      attributes: {
+        status,
+      }
+    };
+  }
+
+  public static transformFromLoyaltyBasicTierForm(data: any, loyaltyId: string): any {
+    return {
+      type: 'basic_tiers',
+      attributes: {
+        image_url: data.details.imageUrl,
         earn_ratio_money: data.tiersConversions.globalEarnRule.amount,
         earn_ratio_point: data.tiersConversions.globalEarnRule.points,
         burn_ratio_money: data.tiersConversions.globalBurnRule.amount,
         burn_ratio_point: data.tiersConversions.globalBurnRule.points,
+        expiry_period: data.tiersConversions.pointsExpiry.amount,
+        expiry_period_type: data.tiersConversions.pointsExpiry.type,
+        expiry_period_trigger: data.tiersConversions.pointsExpiry.trigger,
+        join_method: LoyaltyHttpAdapter.getJoinMethod(data.details.joinMethod),
+      },
+      relationships: {
+        program: {
+          data: {
+            type: 'programs',
+            id: loyaltyId
+          }
+        }
+      }
+    };
+  }
+
+  public static transformFromLoyaltyCustomTierForm(data: any, loyaltyBasicTierId: string): any {
+    return {
+      type: 'custom_tiers',
+      attributes: {
+        name: data.name,
+        image_url: data.imageUrl || 'assets/images/icons/engagement.svg',
+        bonus_ratio: data.earnBonus,
+        discount_ratio: data.burnDiscount,
+        expiry_period: data.pointsExpiry.amount,
+        expiry_period_type: data.pointsExpiry.type,
+        expiry_period_trigger: data.pointsExpiry.trigger,
+        join_method: LoyaltyHttpAdapter.getJoinMethod(data.joinMethod),
+      },
+      relationships: {
+        basic_tier: {
+          data: {
+            type: 'basic_tiers',
+            id: loyaltyBasicTierId
+          }
+        }
+      }
+    };
+  }
+
+  public static transformToLoyaltyCustomTierForm(data: any, loyaltyId: string): any {
+    return {
+      type: 'custom_tiers',
+      attributes: {
+        name: data.name,
+        image_url: data.details.image,
         bonus_ratio: 50,
         discount_ratio: 20,
         expiry_period_type: data.tiersConversions.pointsExpiry.amount,
         expiry_period: data.tiersConversions.pointsExpiry.type,
         expiry_period_trigger: data.tiersConversions.pointsExpiry.trigger,
-        join_method: LoyaltyHttpAdapter.getJoinMethod(data.details.joiningMethod),
-        pool_id: data.details.poolId
+        join_method: LoyaltyHttpAdapter.getJoinMethod(data.joinMethod),
+      },
+      relationships: {
+        program: {
+          data: {
+            type: 'programs',
+            id: loyaltyId
+          }
+        }
       }
     };
   }
 
   private static getJoinMethod(data: any): any {
     const formatData = {
-      invite_only: data.byInvite,
+      invite_only: data.inviteOnly,
       sign_up: data.signUp,
       amount: data.amount,
       transaction_amount: data.transactionAmount,
+      points_threshold: data.pointsThreshold,
+      points: data.points
     };
-    return {invite_only: true, ...(!!formatData ? formatData : {})};
+    return Utils.filterObj(formatData, (item) => !!item);
   }
 }

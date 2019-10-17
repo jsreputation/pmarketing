@@ -6,7 +6,7 @@ import _isEmpty from 'lodash.isempty';
 
 export default class Utils {
 
-  static convertArrToObj(arr: any, propKey: string): {[key: string]: any} {
+  static convertArrToObj(arr: any, propKey: string): { [key: string]: any } {
     return arr.reduce((map, obj) => {
       map[obj[propKey]] = obj;
       return map;
@@ -15,7 +15,7 @@ export default class Utils {
 
   static convertObjToArr(obj: any): any[] {
     return Object.keys(obj).map((key) => {
-      return { name: key, ...obj[key] };
+      return {name: key, ...obj[key]};
     });
   }
 
@@ -23,15 +23,21 @@ export default class Utils {
     return arr.filter((item, pos, array) => array.indexOf(item) === pos);
   }
 
-  static nestedObjectAssign(target, ...sources) {
-    if (!sources.length)
-      return target;
+  static filterObj(obj: object, predicate): object {
+    return Object.keys(obj)
+      .filter(key => predicate(obj[key]))
+      .reduce((res, key) => (res[key] = obj[key], res), {});
+  }
 
+  static nestedObjectAssign(target, ...sources) {
+    if (!sources.length) {
+      return target;
+    }
     const source = sources.shift();
 
-    if (this.isObject(target) && this.isObject(source)){
+    if (this.isObject(target) && this.isObject(source)) {
       for (const key in source) {
-        if (this.isObject(source[key])){
+        if (this.isObject(source[key])) {
           if (!target[key]) {
             Object.assign(target, {[key]: {}});
           }
@@ -114,7 +120,7 @@ export default class Utils {
   static getChanges(changedObject, base) {
     return _transform(changedObject, (result, value, key) => {
       if (!_isEqual(value, base[key])) {
-          result[key] = value;
+        result[key] = value;
       }
     });
   }

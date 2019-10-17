@@ -34,12 +34,12 @@ export class LoyaltyReviewComponent implements OnInit {
       status: 'draft',
       stepDetails: {
         pointsName: 'All-IT Points',
-        mainImage: 'https://www.gettyimages.co.uk/gi-resources/images/RoyaltyFree/Apr17Update/ColourSurge1.jpg',
-        joiningMethod: {
+        imageUrl: 'https://www.gettyimages.co.uk/gi-resources/images/RoyaltyFree/Apr17Update/ColourSurge1.jpg',
+        joinMethod: {
           transactionAmount: true,
           amount: 555,
           signUp: true,
-          byInvite: true
+          inviteOnly: true
         },
         poolId: null
       },
