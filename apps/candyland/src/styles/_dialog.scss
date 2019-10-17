@@ -38,6 +38,9 @@
 
     margin: 0;
     color: $secondary-color;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   &-input-group {

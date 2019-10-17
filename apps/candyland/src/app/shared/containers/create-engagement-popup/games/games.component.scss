@@ -1,11 +1,6 @@
 @import "variables";
 
 :host {
-  max-width: 100%;
-  display: grid;
-  grid-gap: ($horizontal-padding * 0.5);
-  grid-template-columns: repeat(auto-fill, minmax(11.2rem, 12.8rem));
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: ($vertical-padding * 0.5);
+  width: 100%;
+  padding-top: ($vertical-padding * 0.25);
 }

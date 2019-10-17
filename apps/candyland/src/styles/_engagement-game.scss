@@ -1,5 +1,21 @@
 @import "variables";
 
+.engagement-flex {
+  display: flex;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  margin-left: -($horizontal-padding * 0.25);
+  margin-right: -($horizontal-padding * 0.25);
+
+  > * {
+    flex: 1 1 12.8rem;
+    padding: ($horizontal-padding * 0.25);
+    max-width: 16rem;
+  }
+}
+
 .engagement-selector {
   @include check-select;
 
@@ -28,8 +44,9 @@
       margin: (-($vertical-padding * 0.5)) (-($horizontal-padding * 0.5)) auto;
 
       img {
-        max-width: 100%;
         width: 100%;
+        display: block;
+        max-width: initial;
       }
     }
   }
