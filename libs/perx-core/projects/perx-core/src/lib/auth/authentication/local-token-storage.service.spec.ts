@@ -13,7 +13,7 @@ interface IAppInfo {
 const appInfo: IAppInfo = {
   appAccessToken: null,
   userAccessToken: 'test'
-}
+};
 describe('WhistlerAuthenticationService', () => {
   describe('WhistlerAuthenticationService with config', () => {
     let service: LocalTokenStorage;
@@ -32,7 +32,7 @@ describe('WhistlerAuthenticationService', () => {
     });
 
     it('should call getappinfo', inject([LocalTokenStorage], (localTokenStorage: LocalTokenStorage) => {
-      localStorage.setItem('appInfo', JSON.stringify(appInfo))
+      localStorage.setItem('appInfo', JSON.stringify(appInfo));
       localTokenStorage.getAppInfo();
       expect(localTokenStorage.appInfo).toEqual(appInfo);
       localStorage.removeItem('appInfo');
@@ -41,7 +41,7 @@ describe('WhistlerAuthenticationService', () => {
     }));
 
     it('should get appinfo key', inject([LocalTokenStorage], (localTokenStorage: LocalTokenStorage) => {
-      localStorage.setItem('appInfo', JSON.stringify(appInfo))
+      localStorage.setItem('appInfo', JSON.stringify(appInfo));
       const value = localTokenStorage.getAppInfoProperty('userAccessToken');
       expect(value).toBe(appInfo.userAccessToken);
     }));
@@ -66,8 +66,6 @@ describe('WhistlerAuthenticationService', () => {
       const service = new LocalTokenStorage(null);
       expect(service).toBeTruthy();
     });
-  })
+  });
 
 });
-
-

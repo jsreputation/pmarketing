@@ -147,6 +147,13 @@ describe('V4AuthenticationService', () => {
     expect(spy).toHaveBeenCalled();
   })));
 
+  it('should check authenticateUser', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      const spy = spyOn(http, 'post');
+      authService.authenticateUser('test', 'test', 'test', 'test', 'test');
+      expect(spy).toHaveBeenCalled();
+
+    })));
   it('should authenticate user', inject([V4AuthenticationService, HttpClient],
     (authService: V4AuthenticationService, http: HttpClient) => {
       const spyHttp = spyOn(http, 'post');
@@ -154,13 +161,13 @@ describe('V4AuthenticationService', () => {
       expect(spyHttp).toHaveBeenCalled();
     }));
 
-  it('shsould handle error', fakeAsync(inject([V4AuthenticationService], (authService: V4AuthenticationService) => {
-    const spyAuth = spyOn(authService, 'authenticateUser')
+  it('should handle error', fakeAsync(inject([V4AuthenticationService], (authService: V4AuthenticationService) => {
+    const spyAuth = spyOn(authService, 'authenticateUser');
     spyAuth.and.returnValue(of(null));
     let error = null;
     authService.login('user', 'pass').subscribe(() => { }, (err: Error) => {
       error = err;
-    })
+    });
     tick();
     expect(error).toBeTruthy();
     spyAuth.and.returnValue(throwError(null));
@@ -168,4 +175,40 @@ describe('V4AuthenticationService', () => {
     tick();
     expect(authService.$failedAuthObservable instanceof Observable).toBeTruthy();
   })));
+
+  it('should throw err', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      spyOn(http, 'post').and.returnValue(of(null));
+      (window as any).primaryIdentifier = 'user';
+      const fun = { err: () => { } };
+      const spy = spyOn(fun, 'err');
+      authService.autoLogin().subscribe(() => { }, fun.err);
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })));
+
+  it('should autoLogin', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      spyOn(http, 'post').and.returnValue(of({ bearer_token: 'token' }));
+      (window as any).primaryIdentifier = 'user';
+      const spy = spyOn(authService, 'saveUserAccessToken');
+      authService.autoLogin().subscribe(() => { });
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })));
+
+  it('should handle error response', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      authService.$failedAuthObservable = null;
+      spyOn(http, 'post').and.returnValue(throwError(null));
+      authService.autoLogin().subscribe(() => { });
+      tick();
+      expect(authService.$failedAuthObservable).toBeTruthy();
+    })));
+
+  it('sheck set and get InterruptedUrl', inject([V4AuthenticationService], (authService: V4AuthenticationService) => {
+    const url = 'http://test';
+    authService.setInterruptedUrl(url);
+    expect(authService.getInterruptedUrl()).toBe(url);
+  }));
 });
