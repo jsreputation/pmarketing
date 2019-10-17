@@ -11,9 +11,9 @@ import { AudiencesService } from '@cl-core/services';
 import { AddUserPopupComponent } from '../add-user-popup/add-user-popup.component';
 import { FormControl } from '@angular/forms';
 import { ManageListPopupComponent } from '../manage-list-popup/manage-list-popup.component';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { SettingsService } from '@cl-core-services';
-import { filter, switchMap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { filter, switchMap, takeUntil } from 'rxjs/operators';
 
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
@@ -25,6 +25,8 @@ import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-sourc
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy {
+  private destroy$: Subject<any> = new Subject();
+
   public currentTab: string;
   public tabs: FormControl;
   public search: FormControl;
@@ -54,7 +56,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
 
   public ngOnInit(): void {
     this.tabs.valueChanges
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(tab => this.changeList(tab));
   }
 
@@ -63,8 +65,10 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
       .subscribe(config => this.config = config);
   }
 
-  /** necessary as we are using untilDestroyed on observables */
-  public ngOnDestroy(): void { }
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   public openAddUserDialog(): void {
     const dialogRef = this.dialog.open(AddUserPopupComponent, { panelClass: 'audience-dialog' });
