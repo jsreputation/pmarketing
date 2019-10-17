@@ -1,10 +1,12 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { takeUntil } from 'rxjs/operators';
+
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 @Component({
@@ -45,6 +47,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
   }
 
   public ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.cd.detach();
   }
 
@@ -66,7 +69,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
     if (this.route.snapshot.params.id) {
       this.store.currentCampaign$
         .asObservable()
-        .pipe(untilDestroyed(this))
+        .pipe(takeUntil(this.destroy$))
         .subscribe((data: ICampaign) => {
           const isFirstTimeRenderFromAPIResponse = data && data.id && data.limits && data.limits.id && this.isFirstInit;
           if (isFirstTimeRenderFromAPIResponse) {
@@ -82,7 +85,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
 
   private subscribeFormValueChange(): void {
     this.form.valueChanges
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((val) => {
         this.store.updateCampaign(val);
       });

@@ -2,9 +2,10 @@ import { DOCUMENT } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, Inject, Renderer2 } from '@angular/core';
 import { DashboardService } from '@cl-core/services';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { untilDestroyed } from 'ngx-take-until-destroy';
+
+import { Observable, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
+
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
 import { UserService } from '@cl-core/services/user.service';
 
@@ -15,6 +16,8 @@ import { UserService } from '@cl-core/services/user.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardPageComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<any> = new Subject();
+
   public dateRange: FormControl = new FormControl();
   public gameCard$: Observable<DashboardGameCard[]>;
   public userName$: string;
@@ -50,11 +53,13 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.renderer.removeClass(this.document.body, 'no-cta');
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private handelDateRangeChanges(): void {
     this.dateRange.valueChanges.pipe(
-      untilDestroyed(this),
+      takeUntil(this.destroy$),
       map((data: DatepickerRangeValue<Date>) => new Object({
           start_date: this.dateToString(data.begin),
           end_date: this.dateToString(data.end)

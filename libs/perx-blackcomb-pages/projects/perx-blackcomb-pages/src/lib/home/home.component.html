@@ -1,24 +1,22 @@
-<div class="tab-group__content">
-  <div *ngIf="campaigns$ && campaigns$ | async as campaigns">
-    <h1 *ngIf="campaigns.length>0">My Stamp Card</h1>
-    <a *ngFor="let campaign of campaigns" [routerLink]="['/stamp/' + campaign.id]">
-      <mat-card matRipple>
-        <div class="puzzle-content">
-          <div class="puzzle-img__wrapper">
-            <img class="puzzle-img" src="assets/static_image.png">
-          </div>
-          <div class="puzzle-details">
-            <span class='main-reward-title'>
-              {{campaign.name}}
-            </span>
-            <span class="reward-subtitle">{{campaign.description}}</span>
-          </div>
-        </div>
-      </mat-card>
-    </a>
+<div class="page">
+  <div class="loyalty-block">
+    <perx-core-loyalty-summary></perx-core-loyalty-summary>
+    <div class="loyalty-item loyalty-item-qr">
+      <a mat-raised-button class="enlarge" routerLink="qr" class="home-qr-button">
+        My QR
+      </a>
+    </div>
   </div>
-  <h1>My Wallet</h1>
-  <perx-core-vouchers (tapped)="voucherSelected($event)" [data]="vouchers$" [filter]="filter"
-    [showRedeemedIcon]="false">
-  </perx-core-vouchers>
+  <div class="games">
+    <div class="title">Games</div>
+    <perx-blackcomb-games-collection [campaign]="campaign$"></perx-blackcomb-games-collection>
+    <button mat-flat-button class="add-more">See more</button>
+  </div>
+  <div class="rewars-collection">
+    <div class="title">Featured Rewards</div>
+    <perx-core-rewards-collection [rewardsList]="rewards$"></perx-core-rewards-collection>
+  </div>
+  <div class="rewars-collection">
+    <perx-core-rewards-list-tabbed [tabs$]="tabs$"></perx-core-rewards-list-tabbed>
+  </div>
 </div>
