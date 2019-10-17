@@ -1,7 +1,11 @@
 @import "variables";
 
-mat-card {
+.mat-card {
   margin-top: 1.6rem;
+
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 label.game-title {
