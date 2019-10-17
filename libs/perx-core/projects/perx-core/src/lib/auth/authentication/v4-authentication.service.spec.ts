@@ -7,6 +7,8 @@ import { TokenStorage } from './token-storage.service';
 import { ProfileModule } from '../../profile/profile.module';
 import { ConfigModule } from '../../config/config.module';
 import { LocalTokenStorage } from './local-token-storage.service';
+import { Observable } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 function fakeFactory(): TokenStorage {
   return new LocalTokenStorage({});
@@ -81,23 +83,6 @@ describe('V4AuthenticationService', () => {
     httpTestingController.verify();
   });
 
-  // it('should verify forgot password OTP', (done: DoneFn) => {
-  //   service.verifyOTP('6398898888', '8888')
-  //     .subscribe((res: { message: string, code: number }) => {
-  //       expect(res.message).toBe('OTP is correct');
-  //       expect(res.code).toBe(20);
-  //       done();
-  //     });
-
-  //   const req = httpTestingController.expectOne(baseUrl + 'v4/customers/confirm');
-
-  //   expect(req.request.method).toEqual('PATCH');
-
-  //   req.flush({ message: 'OTP is correct', code: 20 });
-
-  //   httpTestingController.verify();
-  // });
-
   it('should reset password', (done: DoneFn) => {
     service.resetPassword({ phone: '6398898888', newPassword: '1237', otp: '8888', passwordConfirmation: '1237' })
       .subscribe((res: { message: string }) => {
@@ -114,20 +99,42 @@ describe('V4AuthenticationService', () => {
     httpTestingController.verify();
   });
 
-  // it('should resend OTP', (done: DoneFn) => {
-  //   service.resendOTP('6398898888')
-  //     .subscribe((res: { message: string }) => {
-  //       expect(res.message).toBe('Verification code has been resent');
-  //       done();
-  //     });
+  it('should return observable', () => {
+    const observable = service.$failedAuth;
+    expect(observable instanceof Observable).toBeTruthy();
+  });
 
-  //   const req = httpTestingController.expectOne(baseUrl + 'v4/customers/resend_confirmation?phone=6398898888');
+  it('should create service with config production', () => {
+    const serviceWithConfig = new V4AuthenticationService({ baseHref: 'test', production: true }, null, null, null);
+    expect(serviceWithConfig).toBeTruthy();
+  });
 
-  //   expect(req.request.method).toEqual('GET');
+  it('should check isAuthorized', () => {
+    const isAuthorized = service.isAuthorized();
+    expect(isAuthorized instanceof Observable).toBeTruthy();
+  });
 
-  //   req.flush({ message: 'Verification code has been resent' });
+  it('should call refreshToken', () => {
+    const refreshToken = service.refreshToken();
+    expect(refreshToken instanceof Observable).toBeTruthy();
+  });
 
-  //   httpTestingController.verify();
-  // });
+  it('refresh should happen', () => {
+    const refresh = service.refreshShouldHappen({
+      name: 'HttpErrorResponse',
+      message: 'test',
+      status: 401,
+      ok: false,
+    } as HttpErrorResponse);
+    expect(refresh).toBeTruthy();
+  });
 
+  it('should verify token request', () => {
+    let result = service.verifyTokenRequest('url/preauth');
+    expect(result).toBeTruthy();
+    result = service.verifyTokenRequest('url/v4/oauth/token');
+    expect(result).toBeTruthy();
+    result = service.verifyTokenRequest('url/v2/oauth/token');
+    expect(result).toBeTruthy();
+  });
 });
