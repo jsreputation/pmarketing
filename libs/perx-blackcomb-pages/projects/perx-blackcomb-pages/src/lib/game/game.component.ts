@@ -37,7 +37,6 @@ export class GameComponent implements OnInit {
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => this.engagementId = game.id)
     );
-
   }
 
   public gameCompleted(): void {
