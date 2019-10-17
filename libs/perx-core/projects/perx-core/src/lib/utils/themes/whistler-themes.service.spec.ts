@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ThemesService } from './themes.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ConfigModule } from '../../config/config.module';
+import { WhistlerThemesService } from './whistler-themes.service';
 
 describe('ThemesService', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -13,7 +13,7 @@ describe('ThemesService', () => {
   }));
 
   it('should be created', () => {
-    const service: ThemesService = TestBed.get(ThemesService);
+    const service: WhistlerThemesService = TestBed.get(WhistlerThemesService);
     expect(service).toBeTruthy();
   });
 });

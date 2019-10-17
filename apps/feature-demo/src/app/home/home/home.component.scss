@@ -11,40 +11,6 @@ mat-toolbar {
   height: 100;
   color: #666666;
   border-bottom: 1px solid #979797;
-
-  .top-row {
-    height: 10rem;
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-
-    .badge {
-      width: 7.1rem;
-      height: 7.1rem;
-      margin-right: 1rem;
-    }
-
-    .reward {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      h2 {
-        font-size: 2rem;
-      }
-
-      span.tier {
-        font-size: 3rem;
-        font-weight: bold;
-      }
-
-      .subtitle {
-        font-size: 1.2rem;
-        color: #1862b8;
-      }
-    }
-  }
 }
 
 .content {

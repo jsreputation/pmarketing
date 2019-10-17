@@ -8,13 +8,13 @@
 </div>
 <!--/ Voucher Validity Type-->
 <!-- Voucher Validity Period-->
-<div class="card-row" *ngIf="formGroup.get('period').enabled && formGroup.get('issuanceDate').disabled">
+<div class="card-row card-row-date" *ngIf="formGroup.get('period').enabled && formGroup.get('issuanceDate').disabled">
   <div class="input-group">
     <cl-date-picker [formControl]="formGroup.get('period.startDate')"
                     [max]="formGroup.get('period.endDate').value"></cl-date-picker>
     <cl-time-picker [formControl]="formGroup.get('period.startTime')"></cl-time-picker>
   </div>
-  to
+  <span>to</span>
   <div class="input-group">
     <cl-date-picker [formControl]="formGroup.get('period.endDate')"
                     [min]="formGroup.get('period.startDate').value"></cl-date-picker>
@@ -25,7 +25,7 @@
 <!--/ Voucher Validity Period-->
 <!-- Voucher Validity Isuance date-->
 <div class="input-group" *ngIf="formGroup.get('issuanceDate').enabled">
-  <span class="nowrap-text">Valid for</span>
+  <span>Valid for</span>
   <!--input number-->
   <mat-form-field class="validate-input">
     <input
@@ -46,6 +46,6 @@
     </mat-select>
   </mat-form-field>
   <!--/ duration Limits-->
-  <span class="nowrap-text">After issuance</span>
+  <span>After issuance</span>
 </div>
 <!--/ Voucher Validity Issuance date-->

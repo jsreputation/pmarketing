@@ -1,8 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { filter } from 'rxjs/operators';
+import { BehaviorSubject, Subject, Observable } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-campaigns-mobile-preview',
@@ -12,6 +11,8 @@ import { filter } from 'rxjs/operators';
 export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
   @Input() public storeTemplate$: Observable<any>;
   @Input() public tenantSettings: ITenantsProperties;
+
+  private destroy$: Subject<any> = new Subject();
   public stamps: PuzzleCollectStamp[] = [];
   public stampsSlotNumberData: {rewardPosition: number}[] = [];
   public questionData$: BehaviorSubject<any> = new BehaviorSubject(null);
@@ -27,6 +28,8 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public getReward$(): Observable<any[]> {
@@ -46,7 +49,7 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
   private subscribeToStore(): void {
     if (this.storeTemplate$) {
       this.storeTemplate$
-        .pipe(untilDestroyed(this))
+        .pipe(takeUntil(this.destroy$))
         .subscribe((value => {
           this.engagement = value;
           this.prepareStampsData();
