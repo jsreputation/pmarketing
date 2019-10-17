@@ -18,7 +18,7 @@
   &-label {
     @include typo-input;
 
-    display: block;
+    display: flex;
     color: $secondary-color;
     margin: ($vertical-padding * 0.5) 0 ($vertical-padding * 0.25);
   }

@@ -341,10 +341,42 @@ h1, h2, h3, h4, h5, p {
   }
 }
 
+::-webkit-scrollbar {
+  width: ($horizontal-padding * 0.125);
+  height: ($vertical-padding * 0.125);
+}
+
+::-webkit-scrollbar-button {
+  background-color: $light-gray;
+  display: none;
+}
+
+::-webkit-scrollbar-track {
+  background-color: $light-gray;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: $light-gray;
+}
+
+::-webkit-scrollbar-thumb {
+  height: $vertical-padding;
+  background-color: rgba($secondary-color, 0.85);
+  border-radius: ($vertical-padding * 0.125);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: $light-gray;
+}
+
+::-webkit-resizer {
+  background-color: $secondary-color;
+}
+
 .custom-scroll {
   &::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
+    width: ($horizontal-padding * 0.25);
+    height: ($vertical-padding * 0.25);
   }
 
   &::-webkit-scrollbar-button {
@@ -363,7 +395,7 @@ h1, h2, h3, h4, h5, p {
   &::-webkit-scrollbar-thumb {
     height: 50px;
     background-color: #172238;
-    border-radius: 3px;
+    border-radius: ($horizontal-padding * 0.25);
   }
 
   &::-webkit-scrollbar-corner {
