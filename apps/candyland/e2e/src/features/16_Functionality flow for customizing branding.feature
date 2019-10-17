@@ -1,17 +1,17 @@
 Feature: 16_Functionality flow for customizing branding.
 
 This will be the test flow for all the features for customizing microsite branding.
-@runThis
+
 Scenario: Ensure functionality of the branding tab
   Given 4_I am on the general settings page.
   When  4_I click on the branding tab
   Then  4_I should be on the branding setting tab.
-@runThis
+
 Scenario: Verifying that the relevant fields are present.
   Given 5_that I am on the branding settings page.
   When  5_I do nothing.
   Then  5_The relevant fields are present for branding settings page.
-@runThis
+
 Scenario: Verifying the presence of the preview element.
   Given 6_that I am on the settings branding page.
   When  6_I do nothing.
