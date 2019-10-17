@@ -28,12 +28,12 @@ export class RedeemComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.voucher$ = this.route.paramMap
       .pipe(
-        takeUntil(this.destroy$),
         filter((params: ParamMap) => params.has('id')),
         map((params: ParamMap) => Number.parseInt(params.get('id'), 10)),
         tap((id: number) => this.voucherId = id),
         switchMap((id: number) => this.vouchersService.get(id)),
         tap((voucher: Voucher) => this.redemptionType = voucher.reward.redemptionType),
+        takeUntil(this.destroy$)
       );
   }
 
