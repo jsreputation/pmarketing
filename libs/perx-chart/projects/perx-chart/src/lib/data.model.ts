@@ -35,7 +35,7 @@ export interface SingleChartData {
 export type ChartData = MultipleChartData | SingleChartData;
 
 export class DataSerializer {
-  static from(dataDto: IData): IData {
+  public static from(dataDto: IData): IData {
     if (!(dataDto && dataDto.cols)) {
       return null;
     }
