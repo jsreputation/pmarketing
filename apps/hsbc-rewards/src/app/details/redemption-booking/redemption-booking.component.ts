@@ -138,7 +138,11 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
 
     forkJoin([...new Array(parseInt(this.bookingForm.value.quantity, 10))].map(() => {
       return this.vouchersService.reserveReward(this.rewardId,
-        { priceId: this.bookingForm.value.priceId, locationId: this.bookingForm.value.location });
+        {
+          priceId: this.bookingForm.value.priceId,
+          locationId: this.bookingForm.value.location,
+          sourceType: 'hsbc-rewards'
+        });
     })).subscribe(() => {
       this.router.navigate(['detail/success']);
     }, (err) => {
