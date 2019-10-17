@@ -1,14 +1,11 @@
 @import "variables";
 
 :host {
-  display: flex;
-  padding: ($vertical-padding * 0.5) 0 0;
-  margin: 0 (-($horizontal-padding * 0.25));
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-cl-game {
-  display: flex;
-  margin: ($vertical-padding * 0.25) ($horizontal-padding * 0.25);
+  max-width: 100%;
+  display: grid;
+  grid-gap: ($horizontal-padding * 0.5);
+  grid-template-columns: repeat(auto-fill, minmax(11.2rem, 12.8rem));
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: ($vertical-padding * 0.5);
 }

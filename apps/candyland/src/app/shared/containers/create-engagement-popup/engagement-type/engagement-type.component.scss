@@ -1,16 +1,13 @@
 @import "variables";
 
 :host {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 0 ($vertical-padding * 0.5);
-  margin: 0 (-($horizontal-padding * 0.25));
-  justify-content: center;
-}
-
-cl-type-item {
-  display: flex;
-  margin: ($vertical-padding * 0.25) ($horizontal-padding * 0.25);
+  max-width: 100%;
+  display: grid;
+  grid-gap: ($horizontal-padding * 0.5);
+  grid-template-columns: repeat(auto-fill, minmax(11.2rem, 12.8rem));
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: ($vertical-padding * 0.5);
 }
 
 @import "resize";

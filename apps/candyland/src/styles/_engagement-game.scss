@@ -6,7 +6,7 @@
   border-radius: $border-radius-lg;
   cursor: pointer;
   position: relative;
-  width: ($horizontal-padding * 5);
+  width: 100%;
   min-height: ($vertical-padding * 4);
   background-color: $lightest-gray;
   padding: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
@@ -21,6 +21,7 @@
     img {
       max-width: 80%;
       height: auto;
+      margin-bottom: 1.2rem;
     }
 
     &-full {
