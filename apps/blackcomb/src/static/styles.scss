@@ -90,7 +90,7 @@ main {
   overflow: hidden;
   z-index: -1;
 
-  >img {
+  > img {
     max-width: 96rem;
     margin: 0 auto;
   }
@@ -131,14 +131,13 @@ main {
     transform: translateY(-10%);
   }
 
-  &.mast__profile--user  {
+  &.mast__profile--user {
     > img {
       width: 100%;
       transform: none;
     }
   }
 }
-
 
 .container,
 footer {
