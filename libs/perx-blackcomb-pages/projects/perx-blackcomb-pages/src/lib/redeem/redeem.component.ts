@@ -42,11 +42,6 @@ export class RedeemComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   public pinInputSuccess(): void {
     this.popup({
       title: 'Redeem Successfully',
