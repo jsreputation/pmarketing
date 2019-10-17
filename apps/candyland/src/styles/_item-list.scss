@@ -16,7 +16,7 @@
   margin-bottom: $vertical-padding;
   display: grid;
   grid-gap: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
-  grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
   justify-content: start;
   align-items: start;
   // position: relative;

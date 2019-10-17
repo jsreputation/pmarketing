@@ -4,7 +4,7 @@ mat-icon {
   color: $secondary-font-color;
 }
 
-@media (min-width: $lg-width) {
+@media (min-width: $lg-width + 1) {
   .search-filter {
     max-width: ($horizontal-padding * 17.5);
   }

@@ -1,14 +1,15 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+
 import { combineLatest, Observable, of, Subject } from 'rxjs';
-import { debounceTime, tap, map, switchMap } from 'rxjs/operators';
+import { debounceTime, tap, map, switchMap, takeUntil } from 'rxjs/operators';
+
 import { NewSurveyForm } from 'src/app/engagements/new-survey/new-survey-form';
 import { ControlsName } from '../../../../models/controls-name';
 import { AvailableNewEngagementService, RoutingStateService, SettingsService, SurveyService } from '@cl-core/services';
 import { QuestionFormFieldService } from '@cl-shared';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
@@ -24,6 +25,9 @@ import { CreateImageDirective } from '@cl-shared/directives/create-image.directi
 })
 export class NewSurveyComponent implements OnInit, OnDestroy {
   @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
+
+  private destroy$: Subject<any> = new Subject();
+
   public id: string;
   public form: FormGroup;
   public surveyQuestionType: IEngagementType[];
@@ -97,7 +101,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
     this.initForm();
     this.subscribeFormValueChanges();
     combineLatest([this.getSurveyData(), this.handleRouteParams()])
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(([surveyData, question]) => {
         this.surveyData = surveyData;
         // remove default value if we edit the existing question
@@ -113,6 +117,8 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public patchForm(data?): void {
@@ -181,7 +187,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
           );
         })
       )
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
@@ -228,7 +234,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
 
   private subscribeFormValueChanges(): void {
     this.form.valueChanges
-      .pipe(debounceTime(500), untilDestroyed(this))
+      .pipe(debounceTime(500), takeUntil(this.destroy$))
       .subscribe((val) => {
         this.questionData$.next({questions: [val.questions[0]]});
         this.cd.detectChanges();
@@ -246,7 +252,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   private handleRouteParams(): Observable<any> {
     return this.route.paramMap
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         map((params: ParamMap) => params.get('id')
         ),
         tap(id => this.id = id),

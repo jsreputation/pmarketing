@@ -113,6 +113,8 @@ export { IReward, ICatalog, ICategoryTags, IPrice } from './lib/rewards/models/r
 export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 export { RewardsCollectionComponent } from './lib/rewards/rewards-collection/rewards-collection.component';
 export { RewardComponent } from './lib/rewards/reward/reward.component';
+export { RewardsListTabbedComponent } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
+export { RewardsListComponent } from './lib/rewards/rewards-list/rewards-list.component';
 /**
  * Utils
  */
