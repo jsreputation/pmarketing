@@ -243,12 +243,12 @@ export class V4RewardsService extends RewardsService {
           subject.complete();
         } else {
           // otherwise get next page
-          this.getRewards(this.rewardMeta.page + 1, null, tags, categories)
+          this.getRewards(this.rewardMeta.page + 1, undefined, tags, categories)
             .subscribe(process);
         }
       };
       // do the first query
-      this.getRewards(1, null, tags, categories)
+      this.getRewards(1, undefined, tags, categories)
         .subscribe(process);
     });
   }

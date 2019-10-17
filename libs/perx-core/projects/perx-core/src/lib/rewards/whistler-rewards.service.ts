@@ -78,12 +78,12 @@ export class WhistlerRewardsService implements RewardsService {
           subject.complete();
         } else {
           // otherwise get next page
-          this.getRewards(meta.currentPage + 1, null, tags, categories)
+          this.getRewards(meta.currentPage + 1, undefined, tags, categories)
             .subscribe(process);
         }
       };
       // do the first query
-      this.getRewards(1, null, tags, categories).subscribe(process);
+      this.getRewards(1, undefined, tags, categories).subscribe(process);
     });
   }
 
