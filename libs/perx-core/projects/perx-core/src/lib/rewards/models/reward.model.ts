@@ -27,6 +27,7 @@ export interface IReward {
   categoryTags?: ICategoryTags[];
   inventory?: Inventory;
   redemptionText?: string;
+  rawPayload?: any;
 }
 
 export interface ICatalog {
