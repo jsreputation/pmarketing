@@ -40,11 +40,11 @@ describe('WhistlerAuthenticationService', () => {
       expect(localTokenStorage.appInfo).toEqual({ appAccessToken: '', userAccessToken: '' });
     }));
 
-    it('should get appinfo key', () => {
+    it('should get appinfo key', inject([LocalTokenStorage], (localTokenStorage: LocalTokenStorage) => {
       localStorage.setItem('appInfo', JSON.stringify(appInfo))
-      const value = service.getAppInfoProperty('userAccessToken');
+      const value = localTokenStorage.getAppInfoProperty('userAccessToken');
       expect(value).toBe(appInfo.userAccessToken);
-    });
+    }));
 
     it('should set appinfo', inject([LocalTokenStorage], (localTokenStorage: LocalTokenStorage) => {
       const prop = { value: 'test', key: 'test' };
