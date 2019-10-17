@@ -1,14 +1,15 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { combineLatest, Observable, of } from 'rxjs';
 import { AvailableNewEngagementService, RoutingStateService, SettingsService, StampsService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { tap, map, switchMap } from 'rxjs/operators';
+
+import { combineLatest, Observable, of, Subject } from 'rxjs';
+import { tap, map, switchMap, takeUntil } from 'rxjs/operators';
+
 import { StampDataService } from '../../shared/stamp-data.service';
 import { ControlsName } from '../../../../models/controls-name';
 import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { CreateImageDirective } from '@cl-shared/directives/create-image.directive';
 
@@ -20,6 +21,9 @@ import { CreateImageDirective } from '@cl-shared/directives/create-image.directi
 })
 export class NewStampComponent implements OnInit, OnDestroy {
   @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
+
+  private destroy$: Subject<any> = new Subject();
+
   public id: string;
   public formStamp: FormGroup;
   public stampSlotNumbers: CommonSelect[];
@@ -112,6 +116,8 @@ export class NewStampComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public getImgLink(control: FormControl, defaultImg: string): string {
@@ -135,7 +141,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
           );
         })
       )
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
@@ -184,7 +190,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
     this.formStamp.get('stampsNumber')
       .valueChanges
       .pipe(
-        untilDestroyed(this)
+        takeUntil(this.destroy$)
       )
       .subscribe(
         value => {
@@ -204,7 +210,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
     this.formStamp.get(ControlsName.stampsSlotNumber)
       .valueChanges
       .pipe(
-        untilDestroyed(this)
+        takeUntil(this.destroy$)
       )
       .subscribe((value: number[]) => {
         this.stampsSlotNumberData = value.map((item: number) => {
@@ -232,13 +238,13 @@ export class NewStampComponent implements OnInit, OnDestroy {
 
   private initTenants(): void {
     this.settingsService.getTenantsSettings()
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(data => this.tenantSettings = data);
   }
 
   private handleRouteParams(): Observable<Partial<IStampsEntityForm> | null> {
     return this.route.paramMap.pipe(
-      untilDestroyed(this),
+      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.id = id),
       switchMap(id => {

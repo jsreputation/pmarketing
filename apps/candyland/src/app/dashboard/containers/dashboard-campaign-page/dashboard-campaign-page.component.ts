@@ -1,8 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { switchMap, tap } from 'rxjs/operators';
+
+import { Subject } from 'rxjs';
+import { switchMap, tap, takeUntil } from 'rxjs/operators';
+
 import { DashboardService } from '@cl-core/services';
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 
 export enum DictionaryTotal {
   activeCustomers = 'activeCustomers',
@@ -16,6 +18,8 @@ export enum DictionaryTotal {
   styleUrls: ['./dashboard-campaign-page.component.scss']
 })
 export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<any> = new Subject();
+
   public params: { [key: string]: string };
   public activeTab: string = 'survey';
   public tabs: ITotal[] = [
@@ -46,6 +50,8 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public selectedTab(tab: any): void {
@@ -55,7 +61,7 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
   private handelChartsParamsChanges(): void {
     this.chartsParametersService.params$
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         tap(value => this.params = value),
         switchMap(params => this.dashboardService.getTabsValue(this.tabsIds, params)),
         tap(value => this.tabsValue = value)
@@ -66,7 +72,7 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
   private handelActiveCampaigns(): void {
     this.chartsParametersService.params$
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         switchMap(params => this.dashboardService.getTabValue(176, params)),
         tap(value => this.activeCampaigns = value)
       )

@@ -8,7 +8,17 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: flex-start;
+  margin-left: -($horizontal-padding * 0.25);
+  margin-right: -($horizontal-padding * 0.25);
+
+  > * {
+    padding: 0 ($horizontal-padding * 0.25);
+  }
+
+  cl-button {
+    margin-bottom: ($horizontal-padding * 0.5);
+  }
 
   + .item-list {
     margin-top: 0;
