@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { map, switchMap, mergeMap, tap } from 'rxjs/operators';
+import { map, switchMap, mergeMap } from 'rxjs/operators';
 import {
   IGame,
   GameType as TYPE,
