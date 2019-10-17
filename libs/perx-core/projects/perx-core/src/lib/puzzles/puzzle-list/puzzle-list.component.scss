@@ -12,7 +12,6 @@ mat-card {
 mat-card.disabled {
   background-color: #ebebeb;
   pointer-events: none;
-  opacity: 0.5;
 }
 
 mat-icon {
@@ -34,19 +33,24 @@ mat-icon {
   height: 10.5rem;
   display: flex;
   justify-content: center;
+  width: 10.5rem;
 }
 
 .puzzle-img {
   margin: auto;
-  max-height: 6rem;
-  max-width: 6rem;
+  width: 100%;
+}
+
+.grayscale {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
 }
 
 .puzzle-details {
   font-size: 1.4rem;
   display: flex;
   margin: auto 0;
-  padding-left: 0;
+  padding-left: 1.6rem;
   flex-direction: column;
 }
 
@@ -59,11 +63,15 @@ mat-icon {
 }
 
 .puzzle-details p {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   line-height: 1.6rem;
-  color: #e42713;
+  color: #666666;
   margin: 4px 0;
   padding: 0;
+}
+
+.puzzle-details .play-now {
+  margin-top: 1rem;
 }
 
 .puzzle-details:nth-child(1) {
@@ -73,7 +81,8 @@ mat-icon {
 .badge-warn {
   background-color: rgba(228, 39, 19, 0.1);
   color: #e42713;
-  padding: 2px 4px;
+  padding: 0.2rem 0.6rem;
   font-size: 1.2rem;
-  border-radius: 8px;
+  border-radius: 0.8rem;
+  margin-left: 0.5rem;
 }
