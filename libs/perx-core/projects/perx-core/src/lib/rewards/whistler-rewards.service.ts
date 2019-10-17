@@ -48,6 +48,7 @@ export class WhistlerRewardsService implements RewardsService {
       rewardPrice: [],
       termsAndConditions: r.attributes.terms_conditions,
       // howToRedeem: r.attributes.redemption_type,
+      redemptionText: ('redemption_text' in r.attributes.display_properties) ? r.attributes.display_properties.redemption_text : null,
       categoryTags: [
         {
           id: 0,
@@ -132,7 +133,7 @@ export class WhistlerRewardsService implements RewardsService {
           );
         }),
         map(([reward, merchant]: [IJsonApiItemPayload<IRewardEntityAttributes>, IMerchant | null]) =>
-          WhistlerRewardsService.WRewardToReward(reward.data, merchant)),
+          WhistlerRewardsService.WRewardToReward(reward.data, merchant))
       );
   }
 
