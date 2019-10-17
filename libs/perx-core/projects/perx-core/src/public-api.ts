@@ -14,7 +14,7 @@ export { IMerchantsService } from './lib/merchants/imerchants.service';
  */
 export { MerchantAdminModule } from './lib/merchant-admin/merchant-admin.module';
 export { IMerchantAdminService } from './lib/merchant-admin/imerchant-admin.service';
-export { IMerchantAdminTransaction } from './lib/merchant-admin/models/merchants-admin.model';
+export { IMerchantAdminTransaction, IMerchantProfile } from './lib/merchant-admin/models/merchants-admin.model';
 /**
  * Vouchers
  */

@@ -7,6 +7,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { OrderComponent } from './order/order.component';
 import { RedeemComponent } from './redeem/redeem.component';
+import {RegisterComponent} from './register/register.component';
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     canActivate: [ProtectedGuard]
   },
   { path: 'login', component: LoginComponent },
-  { path: 'reset', component: ResetPasswordComponent }
+  { path: 'reset', component: ResetPasswordComponent },
+  { path: 'dashboard/merchant_user_account_invitations/accept', component: RegisterComponent }
 ];
 
 @NgModule({

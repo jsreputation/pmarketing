@@ -4,13 +4,14 @@ import { CampaignsService, SettingsService, OutcomesService, CommsService, Limit
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
 import { NewCampaignDonePopupComponent, NewCampaignDonePopupComponentData } from '../new-campaign-done-popup/new-campaign-done-popup.component';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { map, switchMap, tap, catchError } from 'rxjs/operators';
-import { combineLatest, iif, of, Observable } from 'rxjs';
+
+import { map, switchMap, tap, catchError, takeUntil } from 'rxjs/operators';
+import { combineLatest, iif, of, Observable, Subject } from 'rxjs';
+
 import { ICampaignAttributes } from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
@@ -30,6 +31,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private campaignBaseURL: string;
   public tenantSettings: ITenantsProperties;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
+
+  private destroy$: Subject<any> = new Subject();
 
   constructor(
     public store: CampaignCreationStoreService,
@@ -53,7 +56,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.getTenants();
     this.initForm();
     this.form.valueChanges
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
         this.store.updateCampaign(value);
       });
@@ -62,6 +65,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.cdr.detach();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private initForm(): void {

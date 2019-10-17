@@ -1,14 +1,6 @@
 @import '~@angular/material/theming';
 @import "variables";
 
-::ng-deep {
-  .upload-btn {
-    span ~ span {
-      display: none;
-    }
-  }
-}
-
 :host {
   display: block;
   width: 100%;

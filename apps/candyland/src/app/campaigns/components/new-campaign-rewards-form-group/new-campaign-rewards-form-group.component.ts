@@ -18,9 +18,8 @@ import {
 import { MatDialog } from '@angular/material';
 import { ClValidators } from '@cl-helpers/cl-validators';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { noop, combineLatest, of } from 'rxjs';
-import { distinctUntilChanged, map, catchError } from 'rxjs/operators';
+import { noop, combineLatest, of, Subject } from 'rxjs';
+import { distinctUntilChanged, map, catchError, takeUntil } from 'rxjs/operators';
 import { RewardsService } from '@cl-core/services/rewards.service';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 
@@ -51,6 +50,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   private onTouched: any = noop;
   private isFirstInit: boolean;
   private noOutCome: { probability: 0, outcomeId: '' };
+  private destroy$: Subject<any> = new Subject();
 
   public get enableProbability(): AbstractControl {
     return this.group.get('enableProbability');
@@ -81,7 +81,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     this.isFirstInit = true;
     this.store.currentCampaign$
       .asObservable()
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
         const isFirstTimeRenderFromAPIResponse = data && data.id && data.rewardsList && this.isFirstInit;
         if (isFirstTimeRenderFromAPIResponse) {
@@ -91,20 +91,22 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       });
     this.enableProbability.valueChanges
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         distinctUntilChanged()
       )
       .subscribe((value: boolean) => {
         this.updateRewards(value);
       });
     this.group.valueChanges
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((reward) => {
         this.onChange(reward);
       });
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public openDialogSelectReward(): void {

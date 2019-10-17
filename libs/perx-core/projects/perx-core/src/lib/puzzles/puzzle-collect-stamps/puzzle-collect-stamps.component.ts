@@ -4,7 +4,7 @@ import { PuzzleCollectStamp, PuzzleCollectReward, PuzzleCollectStampState } from
 @Component({
   selector: 'perx-core-puzzle-collect-stamps',
   templateUrl: './puzzle-collect-stamps.component.html',
-  styleUrls: ['./puzzle-collect-stamps.component.css']
+  styleUrls: ['./puzzle-collect-stamps.component.scss']
 })
 
 export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
