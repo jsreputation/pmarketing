@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
+import { CustomDataSource, DataSourceStates } from '@cl-shared/table/data-source/custom-data-source';
 import { Router } from '@angular/router';
 import { RewardsService } from '@cl-core/services';
 import { switchMap } from 'rxjs/operators';
@@ -14,6 +14,7 @@ import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-men
 })
 export class RewardsListPageComponent {
   public dataSource: CustomDataSource<IRewardEntity>;
+  public dataSourceStates: typeof DataSourceStates = DataSourceStates;
   public displayedColumns: string[] = [
     'image',
     'name',
@@ -23,7 +24,6 @@ export class RewardsListPageComponent {
     // 'balance',
     'actions'
   ];
-  public hasData: boolean = true;
 
   constructor(
     private rewardsService: RewardsService,

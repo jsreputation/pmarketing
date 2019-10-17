@@ -1,0 +1,33 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "image": "https://robohash.org/loyalty-card-1.png",
+      "name": "Loyalty Scheme 1",
+      "groupName": "Retail Customers",
+      "tiersCount": null,
+      "status": "active"
+    },
+    {
+      "id": "2",
+      "image": "https://robohash.org/loyalty-card-1.png",
+      "name": "Loyalty Scheme 2",
+      "groupName": "Retail Customers",
+      "tiersCount": "4",
+      "status": "draft"
+    },
+    {
+      "id": "3",
+      "image": "https://robohash.org/loyalty-card-1.png",
+      "name": "Loyalty Scheme 3",
+      "groupName": "Retail Customers",
+      "tiersCount": "3",
+      "status": "paused"
+    }
+  ],
+  "meta": {
+    "page_count": 1,
+    "record_count": 3
+  }
+
+}

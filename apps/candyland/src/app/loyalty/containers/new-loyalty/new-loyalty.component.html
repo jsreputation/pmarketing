@@ -1,0 +1,59 @@
+<header class="page-header full-with" [formGroup]="form">
+  <mat-form-field class="pagetitle-input" floatLabel="never">
+    <input type="text" matInput formControlName="name" placeholder="Enter title here">
+    <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
+    <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
+    <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+  </mat-form-field>
+  <div class="btn-group">
+    <cl-button classList="tertiary" routerLink="..">Cancel</cl-button>
+    <!--    <cl-button classList="secondary" routerLink="..">Save as a draft</cl-button>-->
+    <cl-button *ngIf="!isLastStep"
+               classList="primary"
+               (click)="goNext()">
+      Next
+    </cl-button>
+    <!--    [disable]="getStepCondition(stepper.selectedIndex)"-->
+    <cl-button *ngIf="isLastStep" classList="primary" (click)="save()">Launch</cl-button>
+  </div>
+</header>
+<section class="content form-limiter">
+  <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0">
+    <mat-step [stepControl]="stepOne">
+      <ng-template matStepLabel>Loyalty Details</ng-template>
+      <div class="loyalty-detail-content">
+        <cl-loyalty-form-step-details *ngIf="form && stepOne" [group]="stepOne" [pools]="pools"></cl-loyalty-form-step-details>
+      </div>
+
+    </mat-step>
+    <mat-step><!--[stepControl]="secondFormGroup" optional-->
+      <ng-template matStepLabel>Tiers & Conversions</ng-template>
+      <div class="loyalty-detail-content">
+        <cl-loyalty-form-step-tiers-conversions *ngIf="form && stepTwo" [group]="stepTwo"
+                                                (tiersConversionsAction)="handleLoyaltyActions($event)"
+                                                [currency]="currency$ | async">
+
+        </cl-loyalty-form-step-tiers-conversions>
+      </div>
+
+    </mat-step>
+    <!--hide this step for now-->
+<!--    <mat-step>-->
+<!--      <ng-template matStepLabel>Point Earn Rules</ng-template>-->
+<!--      <div class="loyalty-detail-content">-->
+<!--        step three-->
+<!--        <cl-loyalty-form-step-earn-rules></cl-loyalty-form-step-earn-rules>-->
+<!--      </div>-->
+
+<!--      <div>-->
+<!--      </div>-->
+<!--    </mat-step>-->
+    <mat-step>
+      <ng-template matStepLabel>Review</ng-template>
+      <div class="loyalty-detail-content">
+        <cl-loyalty-form-step-review *ngIf="form && stepOne && stepTwo && isLastStep" [group]="form"></cl-loyalty-form-step-review>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</section>
+

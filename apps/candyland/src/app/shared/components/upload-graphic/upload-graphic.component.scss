@@ -1,6 +1,9 @@
 @import '~@angular/material/theming';
 @import "variables";
-
+:host {
+  display: block;
+  width: 100%;
+}
 .upload {
   &-wrap {
     position: relative;
@@ -182,3 +185,22 @@
     opacity: 1;
   }
 }
+.upload-full {
+  &-width {
+    .upload {
+      &-btn {
+        height: 4rem;
+        width: 100%;
+        padding: 0 1.6rem;
+      }
+
+      &-input {
+        height: 4rem;
+        width: 100%;
+        padding: 0 1.6rem;
+        box-sizing: border-box;
+      }
+    }
+  }
+}
+
