@@ -5,7 +5,7 @@ import { Observable, combineLatest, of } from 'rxjs';
 import { IReward, ICatalog, IPrice, RedemptionType } from './models/reward.model';
 import { Config } from '../config/config';
 import { IJsonApiItemPayload, IJsonApiItem, IJsonApiListPayload } from '../jsonapi.payload';
-import { map, switchMap, catchError, tap } from 'rxjs/operators';
+import { map, switchMap, catchError, tap, mergeMap } from 'rxjs/operators';
 import { IMerchant } from '../merchants/models/merchants.model';
 import { IMerchantsService } from '../merchants/imerchants.service';
 import { IRewardEntityAttributes } from '@perx/whistler';
@@ -21,7 +21,7 @@ export class WhistlerRewardsService implements RewardsService {
   private baseUrl: string;
 
   constructor(private http: HttpClient, config: Config, private merchantService: IMerchantsService) {
-    this.baseUrl = `${config.apiHost}/reward/entities/`;
+    this.baseUrl = `${config.apiHost}/reward/entities`;
   }
 
   private static WRedemptionToRT(rt: string): RedemptionType {
@@ -83,8 +83,9 @@ export class WhistlerRewardsService implements RewardsService {
         }
       };
       // do the first query
-      this.getRewards(1, tags, categories)
-        .subscribe(process);
+      this.merchantService.getAllMerchants().pipe(
+        mergeMap((merchants: IMerchant[]) => this.getRewards(1, tags, categories, merchants))
+      ).subscribe(process);
     });
   }
 
@@ -95,18 +96,24 @@ export class WhistlerRewardsService implements RewardsService {
     categories?: string[],
     merchants?: IMerchant[],
   ): Observable<IReward[]> {
-    const tagsString = tags.join(',');
-    const categeriesString = categories.join(',');
+    const tagsString = tags && tags.join(',');
+    const categeriesString = categories && categories.join(',');
     const pageSize = '10';
     let metaData: IWMetaData = {};
+    const params = {
+      'page[number]': page.toString(),
+      'page[size]': pageSize
+    };
+    if (tagsString) {
+      params['filter[tags]'] = tagsString;
+    }
+    if (categeriesString) {
+      params['filter[category]'] = categeriesString;
+    }
+
     return this.http.get<IJsonApiListPayload<IRewardEntityAttributes>>(`${this.baseUrl}`,
       {
-        params: {
-          'page[number]': page.toString(),
-          'page[size]': pageSize,
-          'filter[tags]': tagsString,
-          'filter[categories]': categeriesString
-        }
+        params
       }
     ).pipe(
       tap((res: IJsonApiListPayload<IRewardEntityAttributes>) => {
@@ -127,7 +134,7 @@ export class WhistlerRewardsService implements RewardsService {
 
   // @ts-ignore
   public getReward(id: number, userId?: string): Observable<IReward> {
-    return this.http.get<IJsonApiItemPayload<IRewardEntityAttributes>>(`${this.baseUrl}${id}`)
+    return this.http.get<IJsonApiItemPayload<IRewardEntityAttributes>>(`${this.baseUrl}/${id}`)
       .pipe(
         switchMap((reward: IJsonApiItemPayload<IRewardEntityAttributes>) => {
           if (reward.data.attributes.organization_id === null) {
