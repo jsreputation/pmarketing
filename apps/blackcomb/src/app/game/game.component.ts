@@ -6,7 +6,7 @@ import { Observable, interval, combineLatest, throwError } from 'rxjs';
 import { MatDialog } from '@angular/material';
 
 @Component({
-  selector: 'perx-blackcomb-pages-game',
+  selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
@@ -37,7 +37,6 @@ export class GameComponent implements OnInit {
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => this.engagementId = game.id)
     );
-
   }
 
   public gameCompleted(): void {
@@ -52,7 +51,7 @@ export class GameComponent implements OnInit {
         first()
       );
     combineLatest(r1, r2)
-      .pipe(catchError(err => throwError(err)))
+    .pipe(catchError(err => throwError(err)))
       // @ts-ignore
       .subscribe(([outcome, c]: [IPlayOutcome, any]) => {
         this.router.navigate(['/wallet']);
@@ -85,6 +84,6 @@ export class GameComponent implements OnInit {
           }
         });
       }
-    );
+      );
   }
 }
