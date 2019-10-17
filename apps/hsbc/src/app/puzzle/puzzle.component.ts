@@ -147,7 +147,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   }
 
   private stampCard(stampId: number): void {
-    this.stampService.putStamp(stampId)
+    this.stampService.putStamp(stampId, 'hsbc-collect2')
     .subscribe(
       (stamp: IStamp) => {
         if (stamp.state === StampState.redeemed) {
