@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RedemptionComponent } from './redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule, MatDividerModule } from '@angular/material';
-import { VouchersModule, IVoucherService, VoucherState, UtilsModule, Voucher } from '@perx/core';
+import { VouchersModule, IVoucherService, VoucherState, UtilsModule, RewardsService, Voucher } from '@perx/core';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
@@ -11,10 +11,18 @@ import { vouchers } from '../vouchers.mock';
 import { Type } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { rewards } from '../rewards.mock';
+import { AnalyticsService } from '../analytics.service';
+
+const rewardsServiceStub = {
+  getReward: () => of(rewards[0])
+};
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
   let fixture: ComponentFixture<RedemptionComponent>;
+  let analyticsService: AnalyticsService;
+  let voucherService: IVoucherService;
   const voucher: Voucher = {
     id: 1,
     reward: {
@@ -35,7 +43,10 @@ describe('RedemptionComponent', () => {
       termsAndConditions: '',
       howToRedeem: '',
       redemptionType: null,
-      categoryTags: [],
+      categoryTags: [{
+        id: 1,
+        title: 'test'
+      }],
       inventory: null,
     },
     state: VoucherState.expired,
@@ -43,12 +54,12 @@ describe('RedemptionComponent', () => {
   };
 
   const vouchersServiceStub = {
-    redeemVoucher: () => {},
+    redeemVoucher: () => { },
     get: () => of(voucher)
   };
 
   const locationStub = {
-    back: () => {}
+    back: () => { }
   };
 
   let params: Subject<Params>;
@@ -79,6 +90,7 @@ describe('RedemptionComponent', () => {
         },
         { provide: Location, useValue: locationStub },
         { provide: Router, useValue: routerStub },
+        { provide: RewardsService, useValue: rewardsServiceStub }
       ]
     })
       .compileComponents();
@@ -87,6 +99,8 @@ describe('RedemptionComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RedemptionComponent);
     component = fixture.componentInstance;
+    voucherService = fixture.debugElement.injector.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
+    analyticsService = TestBed.get<AnalyticsService>(AnalyticsService as Type<AnalyticsService>);
     fixture.detectChanges();
   });
 
@@ -95,9 +109,10 @@ describe('RedemptionComponent', () => {
   });
 
   it('should redeemVoucher', fakeAsync(() => {
-    const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
-    const voucherServiceSpy = spyOn(voucherService, 'redeemVoucher').and.returnValue(of(vouchers[0]));
-    component.voucher = vouchers[0];
+    const voucherCustom = { ...vouchers[0], ...{ reward: voucher.reward } };
+    const voucherServiceSpy = spyOn(voucherService, 'redeemVoucher')
+      .and.returnValue(of(voucherCustom));
+    component.voucher = voucherCustom;
     component.full('2222');
     tick(3500);
     expect(voucherServiceSpy).toHaveBeenCalled();
@@ -111,13 +126,13 @@ describe('RedemptionComponent', () => {
 
   describe('onInit', () => {
     it('should NOT get voucher based if queryParams id is NOT present', () => {
-      params.next({id: null});
+      params.next({ id: null });
       component.ngOnInit();
       expect(component.voucher).toBe(undefined);
     });
 
     it('should get voucher based if queryParams id is present', () => {
-      params.next({id: 1});
+      params.next({ id: 1 });
       component.ngOnInit();
       expect(component.voucher).toBe(voucher);
     });
@@ -144,4 +159,12 @@ describe('RedemptionComponent', () => {
     expect(router.navigateByUrl).toHaveBeenCalledWith('home/vouchers');
   });
 
+  it('should', fakeAsync(() => {
+    const spy = spyOn(analyticsService, 'addEvent');
+    params.next({ id: 1 });
+    spyOn(voucherService, 'get').and.returnValue(of(voucher));
+    component.ngOnInit();
+    tick();
+    expect(spy).toHaveBeenCalled();
+  }));
 });
