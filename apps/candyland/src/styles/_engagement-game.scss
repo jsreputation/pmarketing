@@ -52,12 +52,6 @@
 }
 
 .game {
-  &-title-wrap {
-    flex: 1;
-    margin-right: 4rem;
-    margin-bottom: ($vertical-padding * 0.5);
-  }
-
   &-title {
     @include typo-input;
 
@@ -72,7 +66,7 @@
 }
 
 mat-card.game-graphic {
-  padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75) 4.7rem;
+  padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75) $vertical-padding;
 
   &:first-child {
     margin-top: 0;
@@ -112,8 +106,4 @@ mat-card.game-graphic {
 
     background-image: url("/assets/images/mobile-phone/mobile_multiple.png");
   }
-}
-
-.messages-wrap .sub-title {
-  margin-bottom: 2rem;
 }

@@ -1,17 +1,17 @@
 Feature: 26_Testing Flow of setting timezone and currency option
 
 This will be the test flow for setting up timezone and currency option.
-@runThis
+
 Scenario: Ensure the options for timezone is correct
   Given 1_I am on general setting page
   When  1_I click on the timezone dropdown list
   Then  1_The number of options should be correct for timezone.
-@runThis
+
 Scenario: Ensure the options for currency field is correct
   Given 2_I am on general setting page
   When  2_I click on the currency dropdown list
   Then  2_The number of options should be correct for currency.
-@runThis
+
 Scenario: Ensure that the settings for timezone and currency remain constant after navigating to another tab
   Given 3_I am on general setting page
   And   3_I select an option for timezone

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { RewardComponent } from './reward/reward.component';
+import { RewardComponent } from '@perx/blackcomb-pages';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: RewardComponent },

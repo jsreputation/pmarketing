@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -11,7 +12,6 @@ import {
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-date-picker',
@@ -45,10 +45,10 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, Contro
     this.setDisabledState(value);
   }
 
-  private destroy$: Subject<any> = new Subject();
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;
+  private destroy$: Subject<any> = new Subject();
 
   constructor(private cd: ChangeDetectorRef) {
   }
@@ -75,6 +75,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, Contro
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    this.cd.detach();
   }
 
   public minMaxFilter(d: Date): boolean {

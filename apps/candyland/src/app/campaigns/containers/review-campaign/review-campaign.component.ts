@@ -1,11 +1,12 @@
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { RewardsService } from './../../../core/services/rewards.service';
 import { CampaignsService, EngagementsService, CommsService, OutcomesService, LimitsService } from '@cl-core/services';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, map, catchError } from 'rxjs/operators';
-import { combineLatest, of, Observable } from 'rxjs';
+
+import { switchMap, map, catchError, takeUntil } from 'rxjs/operators';
+import { combineLatest, of, Observable, Subject } from 'rxjs';
+
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
@@ -17,6 +18,8 @@ import { ILimit } from '@cl-core/models/limit/limit.interface';
   styleUrls: ['./review-campaign.component.scss']
 })
 export class ReviewCampaignComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<any> = new Subject();
+
   public campaign: any;
 
   constructor(
@@ -43,6 +46,8 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
   // TODO: it need for get right data from back end in the future
   private getCampaignData(): void {
@@ -62,7 +67,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         this.outcomesService.getOutcomes(paramsPO).pipe(
           map(outcomes => outcomes.map(outcome => ({ ...outcome, probability: outcome.probability * 100 }))),
           catchError(() => of(null)))).pipe(
-            untilDestroyed(this),
+            takeUntil(this.destroy$),
             map(
               ([campaign, commEvent, outcomes]:
                 [ICampaign | null, IComm | null, IOutcome[] | null]) => ({
@@ -89,14 +94,43 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
               );
             }),
             map(([campaign, engagement, limits, rewards]:
-              [ICampaign | null, IEngagement | null, ILimit | null, { value: IRewardEntity }[] | null]) => ({
+              [
+                ICampaign | null, IEngagement | null, ILimit | null,
+                { value: IRewardEntity, probability?: number, stampsSlotNumber?: number }[] | null
+              ]) => {
+              let rewardsOptions = null;
+              let rewardsListCollection = null;
+              if (campaign.engagement_type === 'stamps') {
+                const transformedRewards = {};
+                rewards.forEach(reward => {
+                  if (!transformedRewards[reward.stampsSlotNumber]) {
+                    transformedRewards[reward.stampsSlotNumber] = {
+                      stampSlotNumber: reward.stampsSlotNumber,
+                      rewardsOptions: {
+                        enableProbability: !!reward.probability,
+                        rewards: [reward]
+                      }
+                    };
+                  } else {
+                    transformedRewards[reward.stampsSlotNumber].rewardsOptions.rewards =
+                      [...transformedRewards[reward.stampsSlotNumber].rewardsOptions.rewards, reward];
+                  }
+                });
+                rewardsListCollection = [...Object.values(transformedRewards)];
+              } else {
+                rewardsOptions = {
+                  enableProbability: rewards.some(reward => !!reward.probability),
+                  rewards
+                };
+              }
+              return {
                 ...campaign,
                 template: engagement,
                 limits,
-                rewardsOptions: {
-                  rewards
-                }
-              }))
+                rewardsOptions,
+                rewardsListCollection
+              };
+            })
           ).subscribe(
             campaign => {
               this.campaign = campaign;
@@ -108,7 +142,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getRewards(rewardsList: any[]): Observable<{ value: IRewardEntity | null }[]> {
+  private getRewards(rewardsList: any[]): Observable<{ value: IRewardEntity | null, probability?: number, stampsSlotNumber?: number }[]> {
     if (!rewardsList || !rewardsList.length) {
       return of([]);
     }
@@ -116,11 +150,11 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       reward => {
         if (reward.resultId) {
           return this.rewardsService.getReward(reward.resultId).pipe(
-            map(rewardData => ({ value: { ...rewardData, probability: reward.probability } })),
-            catchError(() => of({ value: { probability: reward.probability } }))
+            map(rewardData => ({ value: { ...rewardData }, probability: reward.probability, stampsSlotNumber: reward.lootBoxId })),
+            catchError(() => of({ value: null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId }))
           );
         }
-        return of({ value: { probability: reward.probability } });
+        return of({ value: null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId });
       }
     ));
   }
