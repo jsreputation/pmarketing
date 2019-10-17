@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { IGameService, IGame, GameType, IPlayOutcome, PopupComponent } from '@perx/core';
-import { map, tap, first, filter, switchMap, bufferCount } from 'rxjs/operators';
-import { Observable, interval, combineLatest } from 'rxjs';
+import { map, tap, first, filter, switchMap, bufferCount, catchError } from 'rxjs/operators';
+import { Observable, interval, combineLatest, throwError } from 'rxjs';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -37,7 +37,6 @@ export class GameComponent implements OnInit {
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => this.engagementId = game.id)
     );
-
   }
 
   public gameCompleted(): void {
@@ -52,6 +51,7 @@ export class GameComponent implements OnInit {
         first()
       );
     combineLatest(r1, r2)
+      .pipe(catchError(err => throwError(err)))
       // @ts-ignore
       .subscribe(([outcome, c]: [IPlayOutcome, any]) => {
         this.router.navigate(['/wallet']);
@@ -73,6 +73,17 @@ export class GameComponent implements OnInit {
             }
           });
         }
-      });
+      },
+      () => {
+        this.router.navigate(['/wallet']);
+        this.dialog.open(PopupComponent, {
+          data: {
+            title: 'Thanks for playing',
+            text: 'Unfortunately, you did not win anything this time',
+            buttonTxt: 'Go to Wallet',
+          }
+        });
+      }
+    );
   }
 }
