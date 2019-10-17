@@ -21,7 +21,6 @@ const authenticationServiceStub = {
   resendOTP: () => of(),
   changePassword: () => of()
 };
-
 describe('VerificationOtpComponent', () => {
   let component: VerificationOtpComponent;
   let fixture: ComponentFixture<VerificationOtpComponent>;
@@ -141,6 +140,8 @@ describe('VerificationOtpComponent', () => {
       spyOn(auth, 'changePassword').and.returnValue(of(null));
       const spyRouter = spyOn(router, 'navigate');
       component.onSubmit();
+      tick();
+      fixture.detectChanges();
       expect(spyRouter).toHaveBeenCalled();
     }));
   });
