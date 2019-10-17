@@ -1,9 +1,10 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import { Observable, of } from 'rxjs';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
+
+import { Observable, of, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap, takeUntil } from 'rxjs/operators';
+
 import { RewardsService, MerchantsService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { NewRewardFormService } from '../../services/new-reward-form.service';
@@ -16,6 +17,8 @@ import { Merchant } from '@cl-core/http-adapters/merchant';
   styleUrls: ['./manage-rewards.component.scss']
 })
 export class ManageRewardsComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<any> = new Subject();
+
   public id: string;
   public reward: IRewardEntityForm;
   public form: FormGroup;
@@ -48,6 +51,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.cd.detach();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public cancel(): void {
@@ -83,7 +88,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed()
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         filter(Boolean),
         switchMap((merchant: any) => this.merchantsService.createMerchant(merchant)),
         filter(Boolean)
@@ -120,7 +125,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   private handleFormValueChanges(): void {
     this.form.valueChanges
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         distinctUntilChanged(),
         debounceTime(500)
       )
@@ -136,7 +141,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   private handleMerchantIdChanges(): void {
     this.merchantId.valueChanges
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         distinctUntilChanged(),
         debounceTime(500),
         filter(Boolean),
@@ -155,7 +160,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
 
   private handleRouteParams(): void {
     this.route.paramMap.pipe(
-      untilDestroyed(this),
+      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.id = id),
       switchMap((id: string) => {
