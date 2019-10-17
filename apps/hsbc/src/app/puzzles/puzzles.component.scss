@@ -6,15 +6,17 @@
   padding: 0 1.2rem;
   display: flex;
   flex-direction: column;
-  background-color: #e5e5e5;
+  background-color: #fff3f3;
   min-height: calc(100% - 6rem);
   position: relative;
   top: 6rem;
+  margin-bottom: 5rem;
 }
 
 h1 {
-  padding: 1.6rem 0 0;
-  margin: 0;
-  display: flex;
-  font-size: 1.6rem;
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.3rem;
+  letter-spacing: 0.015rem;
+  margin: 2rem 0 0.8rem 0;
 }

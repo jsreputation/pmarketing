@@ -15,7 +15,7 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
   @Input()
   public campaignId: number = null;
   @Input()
-  public iconDisplay: string = 'arrow_forward_ios';
+  public iconDisplay: string;
 
   public total: number = 6;
 
