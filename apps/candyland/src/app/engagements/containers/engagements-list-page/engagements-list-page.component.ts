@@ -86,7 +86,7 @@ export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
   private getData(): void {
     this.engagementsService.getEngagements()
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         tap(data => {
           const counterObject = PrepareTableFilers.countFieldValue(data, 'attributes_type');
           this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject, data);

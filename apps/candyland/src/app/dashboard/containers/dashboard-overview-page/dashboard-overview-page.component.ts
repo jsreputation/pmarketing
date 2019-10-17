@@ -1,7 +1,4 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy, ChangeDetectionStrategy, ViewRef } from '@angular/core';
-import { switchMap, tap } from 'rxjs/operators';
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-
 import { Subject } from 'rxjs';
 import { switchMap, tap, takeUntil } from 'rxjs/operators';
 
