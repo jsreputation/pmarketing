@@ -75,6 +75,10 @@
       }
     }
   }
+
+  > cl-button:first-child {
+    margin-left: auto;
+  }
 }
 
 @media (max-width: $tablet-width) {

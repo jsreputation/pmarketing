@@ -40,13 +40,6 @@
     color: $secondary-color;
   }
 
-  &-sub-title {
-    @include typo-subtitle1;
-
-    margin-top: 1.5rem;
-    color: $secondary-color;
-  }
-
   &-input-group {
     width: 100%;
     position: relative;

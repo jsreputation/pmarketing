@@ -40,28 +40,6 @@
   }
 }
 
-.game {
-  &-title {
-    @include typo-input;
-
-    color: $secondary-color;
-    margin: ($vertical-padding * 0.5) 0;
-  }
-
-  &-graphic, &-button {
-    display: block;
-    margin-top: ($vertical-padding * 0.5);
-  }
-}
-
-mat-card.game-graphic {
-  padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75) $vertical-padding;
-
-  &:first-child {
-    margin-top: 0;
-  }
-}
-
 .mobile-preview-tabs {
   .mat-tab-label {
     min-width: 0;
