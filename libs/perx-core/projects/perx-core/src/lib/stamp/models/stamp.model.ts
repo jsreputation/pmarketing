@@ -26,6 +26,7 @@ export enum StampState {
 }
 
 export enum StampCardState {
+  completed = 'completed',
   active = 'active',
   inactive = 'inactive'
 }
