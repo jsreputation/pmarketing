@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
 import { Injectable } from '@angular/core';
-import { IVoucherStatsApi } from '@perx/whistler';
+import { IVoucherStatsApi, IVouchersApi } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'

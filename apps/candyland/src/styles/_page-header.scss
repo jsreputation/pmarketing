@@ -95,5 +95,6 @@
 @media (max-width: $mobile-width) {
   .page-header {
     padding-left: 2.4rem + $horizontal-padding;
+    padding-right: ($horizontal-padding * 0.5);
   }
 }
