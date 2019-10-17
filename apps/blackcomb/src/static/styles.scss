@@ -89,26 +89,26 @@ main {
   position: relative;
   overflow: hidden;
   z-index: -1;
-}
 
-.mast__img > img {
-  max-width: 96rem;
-  margin: 0 auto;
-}
+  > img {
+    max-width: 96rem;
+    margin: 0 auto;
+  }
 
-.mast__img::before {
-  content: "";
-  background: url(img/mastimg.jpg);
-  filter: blur(1rem);
-  background-size: cover;
-  background-position: 50% 15%;
-  background-color: #222;
-  position: absolute;
-  top: -2rem;
-  left: -2rem;
-  right: -2rem;
-  bottom: -2rem;
-  z-index: -1;
+  &::before {
+    content: "";
+    background: url(img/mastimg.jpg);
+    filter: blur(1rem);
+    background-size: cover;
+    background-position: 50% 15%;
+    background-color: #222;
+    position: absolute;
+    top: -2rem;
+    left: -2rem;
+    right: -2rem;
+    bottom: -2rem;
+    z-index: -1;
+  }
 }
 
 .mast__profile {
@@ -125,16 +125,18 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
-.mast__profile > img {
-  width: 70%;
-  transform: translateY(-10%);
-}
+  > img {
+    width: 70%;
+    transform: translateY(-10%);
+  }
 
-.mast__profile.mast__profile--user > img {
-  width: 100%;
-  transform: none;
+  &.mast__profile--user {
+    > img {
+      width: 100%;
+      transform: none;
+    }
+  }
 }
 
 .container,
