@@ -3,22 +3,24 @@ import { of } from 'rxjs';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentComponent } from './content.component';
 import { ActivatedRoute } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material';
 
 describe('ContentComponent', () => {
   let component: ContentComponent;
   let fixture: ComponentFixture<ContentComponent>;
-  const themeSvcStub = {
+  const themeSvcStub: Partial<ThemesService> = {
     getAccountSettings: () => of()
   };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContentComponent ],
+      declarations: [ContentComponent],
+      imports: [MatProgressSpinnerModule],
       providers: [
         { provide: ThemesService, useValue: themeSvcStub },
-        { provide: ActivatedRoute, useValue: { params: of()}}
+        { provide: ActivatedRoute, useValue: { params: of() } }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
