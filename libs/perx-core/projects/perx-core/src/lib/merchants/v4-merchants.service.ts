@@ -37,7 +37,7 @@ export class V4MerchantsService implements IMerchantsService {
         current = current.concat(res);
         subject.next(current);
         // if finished close the stream
-        if (this.merchantsWithoutId.length < pageSize) {
+        if (res.length < pageSize) {
           subject.complete();
         } else {
           // otherwise get next page

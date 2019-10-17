@@ -124,8 +124,6 @@ interface IV4CatalogResults {
 })
 export class V4RewardsService extends RewardsService {
   private apiHost: string;
-  private rewardsOnPage: number;
-  private catalogsOnPage: number;
 
   constructor(
     private http: HttpClient,
@@ -226,7 +224,7 @@ export class V4RewardsService extends RewardsService {
         current = current.concat(res);
         subject.next(current);
         // if finished close the stream
-        if (this.rewardsOnPage < pageSize) {
+        if (res.length < pageSize) {
           subject.complete();
         } else {
           // otherwise get next page
@@ -256,10 +254,7 @@ export class V4RewardsService extends RewardsService {
 
     return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards`, { params })
       .pipe(
-        map((res: IV4GetRewardsResponse) => {
-          this.rewardsOnPage = res.data.length;
-          return res.data;
-        }),
+        map((res: IV4GetRewardsResponse) => res.data),
         map((rewards: IV4Reward[]) => rewards.map(
           (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
         ))
@@ -287,7 +282,7 @@ export class V4RewardsService extends RewardsService {
         current = current.concat(res);
         subject.next(current);
         // if finished close the stream
-        if (this.catalogsOnPage < pageSize) {
+        if (res.length < pageSize) {
           subject.complete();
         } else {
           // otherwise get next page
@@ -312,10 +307,7 @@ export class V4RewardsService extends RewardsService {
         }
       }
     ).pipe(
-      map((res: IV4GetCatalogsResponse) => {
-        this.catalogsOnPage = res.data.length;
-        return res.data;
-      }),
+      map((res: IV4GetCatalogsResponse) => res.data),
       map((catalogs: IV4Catalog[]) => catalogs.map(
         (catalog: IV4Catalog) => V4RewardsService.v4CatalogToCatalog(catalog)
       ))
