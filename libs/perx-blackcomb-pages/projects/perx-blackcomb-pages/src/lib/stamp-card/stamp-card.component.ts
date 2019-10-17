@@ -1,15 +1,15 @@
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { StampService, IStampCard } from '@perx/core';
-import { Component, OnInit } from '@angular/core';
-import { filter, switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { filter, switchMap, takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'perx-blackcomb-stamp-card',
   templateUrl: './stamp-card.component.html',
   styleUrls: ['./stamp-card.component.scss']
 })
-export class StampCardComponent implements OnInit {
+export class StampCardComponent implements OnInit, OnDestroy {
 
   public title: string; // = 'Scratch & Win!'
   public subTitle: string; //  = 'Collect all 10 stickers and win a reward!'
@@ -17,6 +17,7 @@ export class StampCardComponent implements OnInit {
   public cardBackground: string;
   public isEnabled: boolean = false;
   public stampCard$: Observable<IStampCard>;
+  private destroy$: Subject<any> = new Subject();
 
   public congratsDetailText: string = 'You just won 2 rewards';
   constructor(
@@ -36,6 +37,7 @@ export class StampCardComponent implements OnInit {
           const idN = Number.parseInt(id, 10);
           return this.stampService.getCurrentCard(idN);
         }),
+        takeUntil(this.destroy$)
       );
     this.stampCard$.subscribe(
       (stampCard: IStampCard) => {
@@ -49,5 +51,10 @@ export class StampCardComponent implements OnInit {
         this.router.navigate(['/wallet']);
       }
     );
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

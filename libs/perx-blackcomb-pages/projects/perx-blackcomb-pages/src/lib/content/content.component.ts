@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { map, switchMap, filter, catchError } from 'rxjs/operators';
-import { from, of, combineLatest, Observable, throwError } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { map, switchMap, filter, catchError, takeUntil } from 'rxjs/operators';
+import { from, of, combineLatest, Observable, throwError, Subject } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ThemesService } from '@perx/core';
 
@@ -9,10 +9,11 @@ import { ThemesService } from '@perx/core';
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss']
 })
-export class ContentComponent implements OnInit {
+export class ContentComponent implements OnInit, OnDestroy {
   public content$: Observable<any>;
   public isLoading: boolean = true;
   public errorFlag: boolean = false;
+  private destroy$: Subject<any> = new Subject();
   constructor(private themeService: ThemesService, private route: ActivatedRoute) { }
 
   public ngOnInit(): void {
@@ -26,7 +27,8 @@ export class ContentComponent implements OnInit {
         catchError(err => throwError(err)),
         switchMap(url => fetch(url)),
         map(stuff => from(stuff.text())),
-        switchMap(content => content)
+        switchMap(content => content),
+        takeUntil(this.destroy$)
       );
 
     this.content$.subscribe(
@@ -37,4 +39,10 @@ export class ContentComponent implements OnInit {
       }
     );
   }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
 }

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Voucher, IVoucherService, RedemptionType, IPopupConfig, PopupComponent } from '@perx/core';
-import { Observable } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { filter, switchMap, takeUntil } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
@@ -10,10 +10,11 @@ import { MatDialog, MatDialogRef } from '@angular/material';
   templateUrl: './redeem.component.html',
   styleUrls: ['./redeem.component.scss']
 })
-export class RedeemComponent implements OnInit {
+export class RedeemComponent implements OnInit, OnDestroy {
   public voucher$: Observable<Voucher>;
   public voucherId: number;
   public redemptionType: RedemptionType;
+  private destroy$: Subject<any> = new Subject();
 
   constructor(
     private route: ActivatedRoute,
@@ -30,11 +31,17 @@ export class RedeemComponent implements OnInit {
           const id: string = params.get('id');
           this.voucherId =  Number.parseInt(id, 10);
           return this.vouchersService.get(this.voucherId);
-        })
+        }),
+        takeUntil(this.destroy$)
       );
     this.voucher$.subscribe((voucher: Voucher) => {
       this.redemptionType = voucher.reward.redemptionType;
     });
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public pinInputSuccess(): void {

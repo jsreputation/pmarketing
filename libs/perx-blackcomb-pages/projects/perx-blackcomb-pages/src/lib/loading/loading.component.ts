@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService, ICampaignService, Config } from '@perx/core';
 import { isPlatformBrowser } from '@angular/common';
-import { switchMap, tap } from 'rxjs/operators';
-import { of, iif } from 'rxjs';
+import { switchMap, tap, takeUntil } from 'rxjs/operators';
+import { of, iif, Subject } from 'rxjs';
 import * as uuid from 'uuid';
 
 // @dynamic
@@ -12,8 +12,10 @@ import * as uuid from 'uuid';
   templateUrl: './loading.component.html',
   styleUrls: ['./loading.component.scss']
 })
-export class LoadingComponent implements OnInit {
+export class LoadingComponent implements OnInit, OnDestroy {
   public preAuth: boolean;
+  private destroy$: Subject<any> = new Subject();
+
   constructor(
     private router: Router,
     private authService: AuthenticationService,
@@ -39,32 +41,44 @@ export class LoadingComponent implements OnInit {
       const PIHandler$ = pi => getUserToken$.pipe(tap(() => this.authService.savePI(pi)));
       const createUserAndAutoLogin$ = pi => this.authService.createUserAndAutoLogin(pi);
       const autoLoginWithoutPI$ = of(uuid.v4()).pipe(
-        switchMap(newPI => createUserAndAutoLogin$(newPI))
+        switchMap(newPI => createUserAndAutoLogin$(newPI)),
+        takeUntil(this.destroy$)
       );
       const getLocalToken$ = this.authService.getAccessToken();
       const noPIHandler$ = getLocalToken$.pipe(
         switchMap(
           localToken => iif(() => !!localToken, of(localToken), autoLoginWithoutPI$)
-        )
+        ),
+        takeUntil(this.destroy$)
       );
       const getPI$ = of(new URLSearchParams(param).get('pi'));
 
       getPI$.pipe(
         switchMap(
           pi => iif(() => !!pi, PIHandler$(pi), noPIHandler$)
-        )
+        ),
+        takeUntil(this.destroy$)
       ).subscribe(
         () => this.redirectAfterLogin(),
         () => this.router.navigate(['/login'])
       );
     }
   }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   public redirectAfterLogin(): void {
     const campaignId = (window as any).campaignId;
     // get from game service check what engagement type to route accordingly
     // engagement router - i should put it in its own service
     if (campaignId) {
       this.campaignSvc.getCampaign(campaignId)
+        .pipe(
+          takeUntil(this.destroy$)
+        )
         .subscribe(({ type }) => {
           this.router.navigateByUrl(
             this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${campaignId}`

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ICampaignService, ICampaign, RewardsService, IReward, ITabConfigExtended } from '@perx/core';
-import { Observable, BehaviorSubject, forkJoin, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, BehaviorSubject, forkJoin, of, Subject } from 'rxjs';
+import { tap, takeUntil } from 'rxjs/operators';
 
 const stubTabs: ITabConfigExtended[] = [
   {
@@ -38,11 +38,13 @@ const stubTabs: ITabConfigExtended[] = [
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   public campaign$: Observable<ICampaign[]>;
   public rewards$: Observable<IReward[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
+  private destroy$: Subject<any> = new Subject();
+
   constructor(
     private campaingService: ICampaignService,
     private rewardsService: RewardsService
@@ -55,6 +57,11 @@ export class HomeComponent implements OnInit {
     this.getTabedList();
   }
 
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   private getTabedList(): void {
     this.tabs$.next(this.staticTab);
     forkJoin(this.staticTab.map((tab) =>
@@ -62,6 +69,7 @@ export class HomeComponent implements OnInit {
         .pipe(tap((reward) => {
           tab.rewardsList = of(reward);
           this.tabs$.next(this.staticTab);
+          takeUntil(this.destroy$);
         }))
     )).subscribe(() => {
       this.tabs$.next(this.staticTab);

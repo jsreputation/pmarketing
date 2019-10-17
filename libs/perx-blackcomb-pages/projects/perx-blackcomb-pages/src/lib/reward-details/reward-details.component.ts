@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RewardsService, IReward } from '@perx/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { filter, map, switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'perx-blackcomb-reward-details',
   templateUrl: './reward-details.component.html',
   styleUrls: ['./reward-details.component.scss']
 })
-export class RewardDetailsComponent implements OnInit {
+export class RewardDetailsComponent implements OnInit, OnDestroy {
   public reward$: Observable<IReward>;
+  private destroy$: Subject<any> = new Subject();
 
   constructor(
     private rewardsService: RewardsService,
@@ -22,7 +23,13 @@ export class RewardDetailsComponent implements OnInit {
       .pipe(
         filter((ps: Params) => ps.id),
         map((ps: Params) => Number.parseInt(ps.id, 10)),
-        switchMap((id: number) => this.rewardsService.getReward(id))
+        switchMap((id: number) => this.rewardsService.getReward(id)),
+        takeUntil(this.destroy$)
       );
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
