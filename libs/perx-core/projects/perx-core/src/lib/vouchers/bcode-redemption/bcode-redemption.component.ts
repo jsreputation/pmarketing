@@ -12,6 +12,9 @@ export class BcodeRedemptionComponent implements OnChanges {
   @Input()
   public voucherId: number = null;
 
+  @Input()
+  public instructions: string = 'Present this code to the cashier to complete your transaction.';
+
   public bCode: string = ``;
 
   @Input('voucher')

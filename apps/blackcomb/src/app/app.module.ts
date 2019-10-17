@@ -47,6 +47,7 @@ import {
   WalletComponent
 } from '@perx/blackcomb-pages';
 import { HomeModule } from './home/home.module';
+
 const profileServiceStub = {
   whoAmI: () => of(profile)
 };

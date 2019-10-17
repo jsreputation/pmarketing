@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Voucher, IVoucherService, RedemptionType, IPopupConfig, PopupComponent } from '@perx/core';
-import { Observable } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { filter, switchMap, takeUntil, map, tap } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
@@ -10,31 +10,36 @@ import { MatDialog, MatDialogRef } from '@angular/material';
   templateUrl: './redeem.component.html',
   styleUrls: ['./redeem.component.scss']
 })
-export class RedeemComponent implements OnInit {
+export class RedeemComponent implements OnInit, OnDestroy {
   public voucher$: Observable<Voucher>;
   public voucherId: number;
   public redemptionType: RedemptionType;
+  private destroy$: Subject<void> = new Subject<void>();
+  public rt: typeof RedemptionType = RedemptionType;
 
   constructor(
     private route: ActivatedRoute,
     private vouchersService: IVoucherService,
     private dialog: MatDialog,
     private router: Router
-  ) { }
+  ) {
+  }
 
   public ngOnInit(): void {
     this.voucher$ = this.route.paramMap
       .pipe(
+        takeUntil(this.destroy$),
         filter((params: ParamMap) => params.has('id')),
-        switchMap((params: ParamMap) => {
-          const id: string = params.get('id');
-          this.voucherId =  Number.parseInt(id, 10);
-          return this.vouchersService.get(this.voucherId);
-        })
+        map((params: ParamMap) => Number.parseInt(params.get('id'), 10)),
+        tap((id: number) => this.voucherId = id),
+        switchMap((id: number) => this.vouchersService.get(id)),
+        tap((voucher: Voucher) => this.redemptionType = voucher.reward.redemptionType),
       );
-    this.voucher$.subscribe((voucher: Voucher) => {
-      this.redemptionType = voucher.reward.redemptionType;
-    });
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public pinInputSuccess(): void {
@@ -53,11 +58,12 @@ export class RedeemComponent implements OnInit {
   }
 
   public needLoginPopup(): void {
-    const goToLoginDialog = this.popup({
+    this.popup({
       title: 'You need to login to redeem the voucher',
       buttonTxt: 'Go to login'
-    });
-    goToLoginDialog.afterClosed().subscribe(() => { this.router.navigate(['/login']); });
+    })
+      .afterClosed()
+      .subscribe(() => this.router.navigate(['/login']));
   }
 
   public errorPopup(): void {
@@ -67,7 +73,6 @@ export class RedeemComponent implements OnInit {
   }
 
   public popup(data: IPopupConfig): MatDialogRef<PopupComponent> {
-    return this.dialog
-      .open(PopupComponent, { data });
+    return this.dialog.open(PopupComponent, { data });
   }
 }
