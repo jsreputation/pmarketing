@@ -67,7 +67,6 @@
                 <cl-select-graphic
                   *ngIf="pinataData.pinata"
                   formControlName="pinata"
-                  class="game-selected-graphic"
                   [graphicList]="pinataData.pinata"
                 >
                 </cl-select-graphic>
@@ -83,7 +82,6 @@
                   *ngIf="pinataData.background"
                   formControlName="background"
                   [isRequired]="form.get('background').hasError('required') && form.get('background').touched"
-                  class="game-selected-graphic"
                   [graphicList]="pinataData.background"
                 >
                 </cl-select-graphic-wrap>

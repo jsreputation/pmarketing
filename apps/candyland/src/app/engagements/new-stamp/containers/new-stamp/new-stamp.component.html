@@ -86,7 +86,6 @@
                 <cl-select-graphic-wrap *ngIf="stampData?.preStamp"
                                         formControlName="preStamp"
                                         [isRequired]="preStamp.hasError('required') && preStamp.touched"
-                                        class="game-selected-graphic"
                                         [graphicList]="stampData?.preStamp">
                 </cl-select-graphic-wrap>
               </div>
@@ -103,7 +102,6 @@
                 <cl-select-graphic-wrap *ngIf="stampData?.rewardPreStamp"
                                         formControlName="rewardPreStamps"
                                         [isRequired]="rewardPreStamps.hasError('required') && rewardPreStamps.touched"
-                                        class="game-selected-graphic"
                                         [graphicList]="stampData?.rewardPreStamp">
                 </cl-select-graphic-wrap>
               </div>
@@ -116,7 +114,6 @@
                 <cl-select-graphic-wrap *ngIf="stampData?.stampsPost"
                                         formControlName="postStamps"
                                         [isRequired]="postStamps.hasError('required') && postStamps.touched"
-                                        class="game-selected-graphic"
                                         [graphicList]="stampData?.stampsPost">
                 </cl-select-graphic-wrap>
               </div>
@@ -133,7 +130,6 @@
                 <cl-select-graphic-wrap *ngIf="stampData?.rewardPost"
                                         formControlName="rewardPostStamps"
                                         [isRequired]="rewardPostStamps.hasError('required') && rewardPostStamps.touched"
-                                        class="game-selected-graphic"
                                         [graphicList]="stampData?.rewardPost">
                 </cl-select-graphic-wrap>
               </div>
@@ -146,7 +142,6 @@
                 <cl-select-graphic-wrap *ngIf="stampData?.cardBackground"
                                         formControlName="cardBackground"
                                         [isRequired]="cardBackground.hasError('required') && cardBackground.touched"
-                                        class="game-selected-graphic"
                                         [graphicList]="stampData?.cardBackground">
                 </cl-select-graphic-wrap>
               </div>
@@ -160,7 +155,6 @@
                 <cl-select-graphic-wrap *ngIf="stampData?.backgroundStamp"
                                         formControlName="background"
                                         [isRequired]="background.hasError('required') && background.touched"
-                                        class="game-selected-graphic"
                                         [graphicList]="stampData?.backgroundStamp">
                 </cl-select-graphic-wrap>
               </div>
