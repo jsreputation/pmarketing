@@ -2,13 +2,14 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChi
 import { MatDialog, MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import Utils from '@cl-helpers/utils';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { map, switchMap, filter } from 'rxjs/operators';
+
+import { of, combineLatest, Subject } from 'rxjs';
+import { map, switchMap, filter, takeUntil } from 'rxjs/operators';
+
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
 import { RewardsService, MerchantsService } from '@cl-core/services';
 import { VouchersService } from '@cl-core/services/vouchers.service';
-import { of, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'cl-reward-detail-page',
@@ -16,6 +17,8 @@ import { of, combineLatest } from 'rxjs';
   styleUrls: ['./reward-detail-page.component.scss']
 })
 export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestroy {
+  private destroy$: Subject<any> = new Subject();
+
   public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   public id: string;
   public data: {
@@ -53,6 +56,8 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public openDialogReplenish(): void {
@@ -78,7 +83,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
 
   private handleRouteParams(): void {
     const $id = this.route.paramMap.pipe(
-      untilDestroyed(this),
+      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id'))
     );
     $id.subscribe(id => this.id = id);
