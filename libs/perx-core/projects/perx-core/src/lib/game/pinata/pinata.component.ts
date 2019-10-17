@@ -4,7 +4,7 @@ import { IGameComponent } from '../igame.component';
 @Component({
   selector: 'perx-core-pinata',
   templateUrl: './pinata.component.html',
-  styleUrls: ['./pinata.component.css']
+  styleUrls: ['./pinata.component.scss']
 })
 export class PinataComponent implements OnInit, OnDestroy, IGameComponent, OnChanges {
   @Input()

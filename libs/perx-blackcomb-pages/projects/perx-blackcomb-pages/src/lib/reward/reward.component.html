@@ -1,12 +1,11 @@
-<div class="main-puzzle-container">
-  <div [ngStyle]="{'background-image': background? 'url(' + background + ')': '' }" class="instantReward-wrapper">
+<div class="main-puzzle-container" [ngStyle]="{'background-image': background? 'url(' + background + ')': '' }">
+  <div class="instantReward-wrapper" [ngStyle]="{'background-image': background? 'url(' + cardBackground + ')': '' }">
     <div class="textContents">
       <h1>{{this.title}}</h1>
       <h3>{{this.subTitle}}</h3>
     </div>
     <div class="letMeFlow">
-      <perx-core-rewards-collection (tapped)="rewardClickedHandler($event)" [defaultImg]="cardBackground"
-        [rewardsList]="rewards$">
+      <perx-core-rewards-collection [rewardsList]="rewards$">
       </perx-core-rewards-collection>
     </div>
   </div>
