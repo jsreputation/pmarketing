@@ -7,7 +7,7 @@
   cursor: pointer;
   position: relative;
   width: ($horizontal-padding * 5);
-  height: ($vertical-padding * 5);
+  min-height: ($vertical-padding * 4);
   background-color: $lightest-gray;
   padding: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
   display: flex;
@@ -19,7 +19,7 @@
     margin: auto 0;
 
     img {
-      max-width: 100%;
+      max-width: 80%;
       height: auto;
     }
 
@@ -27,6 +27,7 @@
       margin: (-($vertical-padding * 0.5)) (-($horizontal-padding * 0.5)) auto;
 
       img {
+        max-width: 100%;
         width: 100%;
       }
     }
@@ -37,6 +38,9 @@
 
     color: $base-font-color;
     text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
