@@ -21,49 +21,49 @@ button {
     padding-left: 0 !important;
     padding-right: 0 !important;
     transition: padding 0.15s ease;
-  
+
     &:active,
     &:focus {
       padding-left: ($horizontal-padding * 0.75) !important;
       padding-right: ($horizontal-padding * 0.75) !important;
     }
   }
-  
+
   &.primary {
     background-color: $primary-color;
-  
+
     &:hover {
       background-color: $primary-hover;
     }
   }
-  
+
   &.secondary {
     background-color: $white;
     border: 1px solid $light-gray;
     color: $primary-color;
-  
+
     &:hover {
       background-color: $light-gray;
     }
   }
-  
+
   &.tertiary {
     background-color: transparent;
     color: $primary-color;
-  
+
     &.opaque {
       background-color: $white;
     }
-  
+
     &:hover {
       color: $primary-hover;
     }
   }
-  
+
   &.disable {
     color: $disable-color !important;
     background-color: $light-gray !important;
-  
+
     &:hover {
       color: $disable-color !important;
       background-color: $light-gray !important;
