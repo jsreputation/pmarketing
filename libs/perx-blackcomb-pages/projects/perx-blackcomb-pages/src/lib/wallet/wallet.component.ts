@@ -23,7 +23,9 @@ export class WalletComponent implements OnInit {
 
   public ngOnInit(): void {
     this.campaigns$ = this.campaignService.getCampaigns()
-      .pipe(map((campaigns: ICampaign[]) => campaigns.filter(c => c.type === CampaignType.stamp)));
+      .pipe(
+        map((campaigns: ICampaign[]) => campaigns.filter(c => c.type === CampaignType.stamp))
+      );
     this.vouchers$ = this.vouchersService.getAll();
     this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
   }
