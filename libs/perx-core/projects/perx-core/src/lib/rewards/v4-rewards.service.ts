@@ -233,9 +233,8 @@ export class V4RewardsService extends RewardsService {
 
   public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
     return new Observable(subject => {
-      const pageSize = 10;
       let current: IReward[] = [];
-      // we do not want to get all pages in parallel, so we get pages one after the other in order not to ddos the server
+      // we do not want to get all pages in parallel, so we get pages one after the other in order not to dos the server
       const process = (res: IReward[]) => {
         current = current.concat(res);
         subject.next(current);
@@ -244,12 +243,12 @@ export class V4RewardsService extends RewardsService {
           subject.complete();
         } else {
           // otherwise get next page
-          this.getRewards(this.rewardMeta.page + 1, pageSize, tags, categories)
+          this.getRewards(this.rewardMeta.page + 1, undefined, tags, categories)
             .subscribe(process);
         }
       };
       // do the first query
-      this.getRewards(1, pageSize, tags, categories)
+      this.getRewards(1, undefined, tags, categories)
         .subscribe(process);
     });
   }
@@ -258,7 +257,6 @@ export class V4RewardsService extends RewardsService {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', pageSize.toString());
-
     if (tags) {
       params = params.set('tags', tags.join());
     }
@@ -286,7 +284,7 @@ export class V4RewardsService extends RewardsService {
 
   public getReward(id: number, userId: string = ''): Observable<IReward> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json')
-    .set('user-id', userId);
+      .set('user-id', userId);
 
     return this.http.get<IV4GetRewardResponse>(
       `${this.apiHost}/v4/rewards/${id}`, { headers }

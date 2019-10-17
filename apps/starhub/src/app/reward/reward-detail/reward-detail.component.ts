@@ -1,15 +1,16 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { IReward } from '@perx/core';
 import { Location } from '@angular/common';
-import { MacaronService, IMacaron } from '../../services/macaron.service';
+import { IMacaron } from '../../services/macaron.service';
 
 @Component({
   selector: 'app-reward-detail',
   templateUrl: './reward-detail.component.html',
   styleUrls: ['./reward-detail.component.scss']
 })
-export class RewardDetailComponent implements OnInit {
+export class RewardDetailComponent {
   public isExpired: boolean = false;
+  @Input()
   public macaron: IMacaron;
 
   @Output()
@@ -17,9 +18,6 @@ export class RewardDetailComponent implements OnInit {
 
   @Output()
   public isButtonEnabled: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  @Input()
-  public reward: IReward;
 
   @Input()
   public showBackButton: boolean = true;
@@ -33,23 +31,12 @@ export class RewardDetailComponent implements OnInit {
   @Input()
   public showMacaron: boolean = true;
 
+  @Input()
+  public reward: IReward;
+
   constructor(
-    private location: Location,
-    private macaronService: MacaronService
+    private location: Location
   ) { }
-
-  public ngOnInit(): void {
-    if (!this.reward) {
-      return;
-    }
-    this.macaron = this.macaronService.getMacaron(this.reward);
-    if (this.macaron === null) {
-      this.isButtonEnabled.emit(true);
-      return;
-    }
-
-    this.isButtonEnabled.emit(this.macaron.isButtonEnabled);
-  }
 
   public setToExpired(): void {
     setTimeout(
@@ -57,10 +44,10 @@ export class RewardDetailComponent implements OnInit {
         this.showMacaron = true;
         this.hasExpired.emit(true);
         this.isExpired = true;
-        if (this.macaron === null) {
+        if (!this.macaron) {
           this.macaron = { label: '', class: '', isButtonEnabled: false };
         }
-        this.macaron.label = 'Expired';
+        this.macaron.label = 'Expiring';
       }
     );
   }
@@ -69,7 +56,7 @@ export class RewardDetailComponent implements OnInit {
     setTimeout(
       () => {
         this.showMacaron = true;
-        if (this.macaron === null) {
+        if (!this.macaron) {
           this.macaron = { label: '', class: '', isButtonEnabled: false };
         }
         this.macaron.label = 'Expiring';
