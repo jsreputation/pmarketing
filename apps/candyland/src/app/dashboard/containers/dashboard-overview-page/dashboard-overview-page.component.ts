@@ -1,5 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, ChangeDetectionStrategy, ViewRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { switchMap, tap, takeUntil } from 'rxjs/operators';
 
@@ -9,7 +8,8 @@ import { DashboardChartsParametersService } from '../../services/dashboard-chart
 @Component({
   selector: 'cl-dashboard-overview-page',
   templateUrl: './dashboard-overview-page.component.html',
-  styleUrls: ['./dashboard-overview-page.component.scss']
+  styleUrls: ['./dashboard-overview-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
   private destroy$: Subject<any> = new Subject();
@@ -22,7 +22,6 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
     {name: 'activeCampaigns', id: 153, title: 'Total Running Campaigns'}
   ];
   public tabsValue: any;
-
   public get tabsIds(): number[] {
     return this.tabs.map(tab => tab.id);
   }
@@ -41,6 +40,7 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.cd.detach();
     this.destroy$.next();
     this.destroy$.complete();
   }
@@ -53,7 +53,11 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
         switchMap(params => this.dashboardService.getTabsValue(this.tabsIds, params)),
         tap(value => this.tabsValue = value)
       )
-      .subscribe(() => this.cd.detectChanges());
+      .subscribe(() => {
+          if (this.cd !== null && this.cd !== undefined && !(this.cd as ViewRef).destroyed) {
+            this.cd.detectChanges();
+          }
+      });
   }
 
   public selectedTab(value: string): void {
