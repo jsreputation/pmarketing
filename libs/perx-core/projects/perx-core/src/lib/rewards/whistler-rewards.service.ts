@@ -4,18 +4,21 @@ import { RewardsService } from './rewards.service';
 import { Observable, combineLatest, of } from 'rxjs';
 import { IReward, ICatalog, IPrice, RedemptionType } from './models/reward.model';
 import { Config } from '../config/config';
-import { IJsonApiItemPayload, IJsonApiItem, IJsonApiListPayload, IMeta } from '../jsonapi.payload';
-import { map, switchMap, catchError, mergeMap, mergeAll } from 'rxjs/operators';
+import { IJsonApiItemPayload, IJsonApiItem, IJsonApiListPayload } from '../jsonapi.payload';
+import { map, switchMap, catchError, mergeMap, mergeAll, tap } from 'rxjs/operators';
 import { IMerchant } from '../merchants/models/merchants.model';
 import { IMerchantsService } from '../merchants/imerchants.service';
 import { IRewardEntityAttributes } from '@perx/whistler';
 
+interface IWMetaData {
+  totalPages?: number;
+  currentPage?: number;
+}
 @Injectable({
   providedIn: 'root'
 })
 export class WhistlerRewardsService implements RewardsService {
   private baseUrl: string;
-  private rewardMeta: IMeta = {};
 
   constructor(private http: HttpClient, config: Config, private merchantService: IMerchantsService) {
     this.baseUrl = `${config.apiHost}/reward/entities/`;
@@ -31,7 +34,7 @@ export class WhistlerRewardsService implements RewardsService {
     return RedemptionType.none;
   }
 
-  private static WRewardToReward(r: IJsonApiItem<IRewardEntityAttributes>, merchant: IMerchant | null): IReward {
+  private static WRewardToReward(r: IJsonApiItem<IRewardEntityAttributes>, merchant: IMerchant | null, metaData?: IWMetaData): IReward {
     return {
       // @ts-ignore
       id: (typeof r.id) === 'string' ? Number.parseInt(r.id, 10) : r.id,
@@ -55,65 +58,69 @@ export class WhistlerRewardsService implements RewardsService {
           title: r.attributes.category
         }
       ],
-      redemptionType: WhistlerRewardsService.WRedemptionToRT(r.attributes.redemption_type)
+      redemptionType: WhistlerRewardsService.WRedemptionToRT(r.attributes.redemption_type),
+      rawPayload: metaData
     };
   }
 
   // @ts-ignore
   public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
-    const pageSize = 10;
-    return this.merchantService.getAllMerchants().pipe(
-      switchMap(
-        (merchants: IMerchant[]) => this.getRewards(1, pageSize, tags, categories, merchants).pipe(
-          mergeMap((rewards: IReward[]) => {
-            const streams = [
-              of(rewards)
-            ];
-            for (let i = 2; i <= this.rewardMeta.page_count; i++) {
-              const stream = this.getRewards(i, pageSize, tags, categories);
-              streams.push(stream);
-            }
-            return streams;
-          }),
-          mergeAll(),
-        )
-      )
-    );
+    return new Observable(subject => {
+      let current: IReward[] = [];
+      let meta: IWMetaData = { currentPage: 1 };
+      // we do not want to get all pages in parallel, so we get pages one after the other in order not to dos the server
+      const process = (res: IReward[]) => {
+        meta = res[0].rawPayload;
+        current = current.concat(res);
+        subject.next(current);
+        // if finished close the stream
+        if (meta.currentPage >= meta.totalPages) {
+          subject.complete();
+        } else {
+          // otherwise get next page
+          this.getRewards(meta.currentPage + 1, tags, categories)
+            .subscribe(process);
+        }
+      };
+      // do the first query
+      this.getRewards(1, tags, categories)
+        .subscribe(process);
+    });
   }
 
   // @ts-ignore
   public getRewards(
     page: number,
-    pageSize: number,
     tags?: string[],
     categories?: string[],
-    merchants?: IMerchant[]
+    merchants?: IMerchant[],
   ): Observable<IReward[]> {
     const tagsString = tags.join(',');
     const categeriesString = categories.join(',');
+    const pageSize = '10';
+    let metaData: IWMetaData = {};
     return this.http.get<IJsonApiListPayload<IRewardEntityAttributes>>(`${this.baseUrl}`,
       {
         params: {
-          page_number: `${page}`,
-          page_size: `${pageSize}`,
+          'page[number]': page.toString(),
+          'page[size]': pageSize,
           'filter[tags]': tagsString,
           'filter[categories]': categeriesString
         }
       }
     ).pipe(
-      map((res: IJsonApiListPayload<IRewardEntityAttributes>) => {
-        if (res.meta) {
-          this.rewardMeta = {
-            ...this.rewardMeta,
-            ...res.meta
-          };
-        }
-
-        return res.data;
+      tap((res: IJsonApiListPayload<IRewardEntityAttributes>) => {
+        metaData = {
+          currentPage: page,
+          totalPages: res.meta && res.meta.page_count
+        };
       }),
+      map(res => res.data),
       map((rewards: IJsonApiItem<IRewardEntityAttributes>[]) => rewards.map(
         res => WhistlerRewardsService.WRewardToReward(
-          res, merchants.find(merchant => merchant.id === Number.parseInt(res.attributes.organization_id, 10)))
+          res,
+          merchants.find(merchant => merchant.id === Number.parseInt(res.attributes.organization_id, 10)),
+          metaData)
       ))
     );
   }
