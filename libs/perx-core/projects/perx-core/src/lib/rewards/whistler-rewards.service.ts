@@ -130,15 +130,14 @@ export class WhistlerRewardsService implements RewardsService {
           combineLatest(...obj.mIds.map(id => this.merchantService.getMerchant(Number.parseInt(id, 10))))
         )
       ),
-      map(([rewards, merchants]: [IJsonApiItem<IRewardEntityAttributes>[], IMerchant[]]) => {
-        return rewards.map(
+      map(([rewards, merchants]: [IJsonApiItem<IRewardEntityAttributes>[], IMerchant[]]) => rewards.map(
           r => WhistlerRewardsService.WRewardToReward(
             r,
             merchants.find(m => m.id === Number.parseInt(r.attributes.organization_id, 10)),
             metaData
           )
-        );
-      })
+        )
+      )s
     );
   }
 
