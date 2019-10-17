@@ -23,7 +23,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'reset', component: ResetPasswordComponent },
-  { path: 'register', component: RegisterComponent }
+  { path: 'dashboard/merchant_user_account_invitations/accept', component: RegisterComponent }
 ];
 
 @NgModule({
