@@ -39,7 +39,7 @@ export class LoyaltySummaryComponent implements OnInit {
 
   public ngOnInit(): void {
     if (!this.subTitleFn) {
-      this.subTitleFn = () => `Your total points as of ${this.datePipe.transform(new Date(), 'ddMMMyy').toUpperCase()}`;
+      this.subTitleFn = () => `Your total points as of ${this.datePipe.transform(new Date(), 'mediumDate')}`;
     }
 
     if (!this.titleFn) {
@@ -58,7 +58,7 @@ export class LoyaltySummaryComponent implements OnInit {
       this.summaryExpiringFn = (loyalty: ILoyalty): string => {
         const expiringPoints = loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length ? loyalty.expiringPoints[0] : null;
         return expiringPoints && expiringPoints.expireDate && expiringPoints.points !== 0 ?
-          `${expiringPoints.points} points will expire on ${this.datePipe.transform(expiringPoints.expireDate, 'd MMM y')}` : '';
+          `${expiringPoints.points} points will expire on ${this.datePipe.transform(expiringPoints.expireDate, 'mediumDate')}` : '';
       };
     }
     if (!this.profile$) {
