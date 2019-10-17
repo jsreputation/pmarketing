@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {IMerchantAdminService} from './imerchant-admin.service';
 import {Observable} from 'rxjs';
-import {IMerchantAdminTransaction} from './models/merchants-admin.model';
+import {IMerchantAdminTransaction, IMerchantProfile} from './models/merchants-admin.model';
 import {IVoucher} from '../vouchers/models/voucher.model';
 
 @Injectable({
@@ -26,5 +26,15 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   // @ts-ignore
   public issueVoucher(id: number, userId: string): Observable<IVoucher> {
     throw new Error(`issueVoucher Method not implemented.`);
+  }
+
+  // @ts-ignore
+  public validateInvite(token: string, clientId: string): Observable<IMerchantProfile> {
+    throw new Error(`validateInvite Method not implemented.`);
+  }
+
+  // @ts-ignore
+  public setupNewMerchantsPassword(token: string, clientId: string, password: string): Observable<string> {
+    throw new Error(`setupNewMerchantsPassword Method not implemented.`);
   }
 }

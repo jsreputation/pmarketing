@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import {
   HttpClient,
-  HttpHeaders,
+  HttpHeaders, HttpParams,
 } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IMerchantAdminService } from './imerchant-admin.service';
-import { IMerchantAdminTransaction } from './models/merchants-admin.model';
+import {IMerchantAdminTransaction, IMerchantProfile} from './models/merchants-admin.model';
 
 import { Config } from '../config/config';
 import {
@@ -72,6 +72,23 @@ interface IV4RedeemVoucherResponse {
   };
 }
 
+interface IV4MerchantUserInvitationResponse {
+  data: IV4MerchantProfile;
+}
+
+interface IV4MerchantProfile {
+  id: number;
+  email: string;
+  username: string;
+  mobile: string;
+  location_id: number;
+  merchant_account_id: number;
+  created_at: Date;
+  updated_at: Date;
+  password_changed_at: Date;
+  state: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -107,6 +124,22 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       redemptionDate: v.redemption_date !== null ? new Date(v.redemption_date) : null,
     };
   }
+
+  public static v4MerchantProfileToMerchantProfile(profile: IV4MerchantProfile): IMerchantProfile {
+    return {
+      id: profile.id,
+      email: profile.email,
+      username: profile.username,
+      mobile: profile.mobile,
+      locationId: profile.location_id,
+      merchantAccountId: profile.merchant_account_id,
+      createdAt: new Date(profile.created_at),
+      updatedAt: new Date(profile.updated_at),
+      passwordChangedAt: new Date(profile.password_changed_at),
+      state: profile.state
+    };
+  }
+
   public createTransaction(userId: number, merchantUsername: string, amount: number, currency: string,
                            type: string, reference: string, pharmacy: string, productName: string): Observable<IMerchantAdminTransaction> {
 
@@ -150,4 +183,33 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       );
   }
 
+  public validateInvite(token: string, clientId: string): Observable<IMerchantProfile> {
+    const params = new HttpParams()
+      .set('invitation_token', token)
+      .set('client_id', clientId);
+
+    const url = `${this.config.apiHost}/v4/merchant_user_account_invitations/accept`;
+
+    return this.http.get<IV4MerchantUserInvitationResponse>(url, {params}).pipe(
+      map((res) => V4MerchantAdminService.v4MerchantProfileToMerchantProfile(res.data))
+    );
+  }
+
+  public setupNewMerchantsPassword(token: string, clientId: string, password: string): Observable<string> {
+
+    const body = {
+      invitation_token: token,
+      client_id: clientId,
+      password,
+      password_confirmation: password,
+    };
+
+    const url = `${this.config.apiHost}/v4/merchant_user_account_invitations`;
+
+    return this.http.put(url, body).pipe(
+      // response is always HTTP 200 in this format regardless if it is a error or success and backend should resolve this
+      // @ts-ignore
+      map((res) => res.message)
+    );
+  }
 }
