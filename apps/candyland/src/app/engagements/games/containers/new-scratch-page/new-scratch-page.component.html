@@ -177,7 +177,12 @@
           </p>
         </div>
         <div class="mobile-preview-feedback">
-          <img class="img" [src]="getImgLink(preScratchImage, 'assets/images/background/background1.png')">
+          <div class="feedback-img-wrapper">
+            <img
+              class="img"
+              [src]="getImgLink(preScratchImage, 'assets/images/background/background1.png')"
+            >
+          </div>
         </div>
         <div class="mobile-preview-btn-wrap mobile-btn-block">
           <button class="mobile-preview-btn"
@@ -211,10 +216,12 @@
           </p>
         </div>
         <div class="mobile-preview-feedback">
-          <img
-            class="img"
-            [src]="postScratchImage"
-          >
+          <div class="feedback-img-wrapper">
+            <img
+              class="img"
+              [src]="postScratchImage"
+            >
+          </div>
         </div>
         <div class="mobile-preview-btn-wrap mobile-btn-block">
           <button class="mobile-preview-btn"

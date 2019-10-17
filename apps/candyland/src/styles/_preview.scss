@@ -82,16 +82,22 @@
 
   &-preview-feedback {
     position: absolute;
+    display: flex;
+    justify-content: center;
     z-index: 5;
     top: 23rem;
-    left: 6.5rem;
-    width: 22rem;
-    height: 22rem;
+    left: 3px;
+    width: 100%;
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .feedback-img-wrapper {
+      width: 21.5rem;
+      height: 21.5rem;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
   }
 
