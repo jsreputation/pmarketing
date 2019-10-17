@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RewardHttpAdapter } from '@cl-core/http-adapters/reward-http-adapter';
 import { ClHttpParams } from '@cl-helpers/http-params';
+import { IRewardEntityAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -49,18 +50,18 @@ export class RewardsService implements ITableService {
     );
   }
 
-  public createReward(data: IRewardEntityForm): Observable<IResponseApi<IRewardEntityApi>> {
-    const sendData: IRewardEntityApi = RewardHttpAdapter.transformFromRewardForm(data);
+  public createReward(data: IRewardEntityForm): Observable<IJsonApiPayload<IRewardEntityAttributes>> {
+    const sendData: IJsonApiItem<IRewardEntityAttributes> = RewardHttpAdapter.transformFromRewardForm(data);
     return this.rewardHttp.createReward({data: sendData});
   }
 
-  public duplicateReward(data: IRewardEntity): Observable<IResponseApi<IRewardEntityApi>> {
-    const sendData: IRewardEntityApi = RewardHttpAdapter.transformFromReward(data);
+  public duplicateReward(data: IRewardEntity): Observable<IJsonApiPayload<IRewardEntityAttributes>> {
+    const sendData: IJsonApiItem<IRewardEntityAttributes> = RewardHttpAdapter.transformFromReward(data);
     return this.rewardHttp.createReward({data: sendData});
   }
 
-  public updateReward(id: string, data: IRewardEntityForm): Observable<IResponseApi<IRewardEntityApi>> {
-    const sendData: IRewardEntityApi = RewardHttpAdapter.transformFromRewardForm(data);
+  public updateReward(id: string, data: IRewardEntityForm): Observable<IJsonApiPayload<IRewardEntityAttributes>> {
+    const sendData: IJsonApiItem<IRewardEntityAttributes> = RewardHttpAdapter.transformFromRewardForm(data);
     sendData.id = id;
     return this.rewardHttp.updateReward(id, {data: sendData});
   }
