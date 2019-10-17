@@ -73,16 +73,18 @@
         </mat-form-field>
       </div>
       <div class="control-input-splitter">
-        <label class="game-title">
-          <span>Image Logo</span>
-        </label>
-        <div class="logo-header-wrap">
-          <cl-upload-graphic
-            classList="stretch"
-            placeholder="Recommended size: 250px by 50px"
-            formControlName="logo"
-            [isRequired]="logo.hasError('required') && logo.touched">
-          </cl-upload-graphic>
+        <div class="control-input">
+          <label class="game-title">
+            <span>Image Logo</span>
+          </label>
+          <div class="logo-header-wrap">
+            <cl-upload-graphic
+              classList="stretch"
+              placeholder="Recommended size: 250px by 50px"
+              formControlName="logo"
+              [isRequired]="logo.hasError('required') && logo.touched">
+            </cl-upload-graphic>
+          </div>
         </div>
       </div>
     </mat-card>
