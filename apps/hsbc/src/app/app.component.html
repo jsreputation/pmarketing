@@ -3,10 +3,10 @@
   <mat-sidenav #drawer class="sidenav" position="end" fixedInViewport="true" [fixedTopGap]="0" [fixedBottomGap]="0" autofocus="true" disableClose="false"
     mode="over">
     <mat-nav-list>
-      <app-profile 
-        *ngIf="currentPage && 
-               currentPage !== 'Login' && 
-               currentPage !== 'Terms and Conditions' && 
+      <app-profile
+        *ngIf="currentPage &&
+               currentPage !== 'Login' &&
+               currentPage !== 'Terms and Conditions' &&
                currentPage !== 'FAQ'"
       ></app-profile>
       <!-- <a mat-list-item routerLinkActive="router-link-active" [routerLink]="['/tnc']"
@@ -18,17 +18,7 @@
 
   <mat-sidenav-content>
     <mat-toolbar *ngIf="showHeader" class="toolbar">
-      <button [disabled]="leftIconToShow === ''" mat-icon-button (click)="onLeftActionClick()">
-        <mat-icon *ngIf="leftIconToShow !== ''">
-          {{leftIconToShow}}
-        </mat-icon>
-      </button>
       <div class="toolbar__label">{{currentPage}}</div>
-      <button [disabled]="rightIconToShow === ''" mat-icon-button (click)="onRightActionClick()">
-        <mat-icon *ngIf="rightIconToShow !== ''">
-          {{rightIconToShow}}
-        </mat-icon>
-      </button>
     </mat-toolbar>
     <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate($event)"></router-outlet>
   </mat-sidenav-content>
