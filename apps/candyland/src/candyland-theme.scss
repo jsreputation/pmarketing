@@ -36,7 +36,7 @@ $candyland-blue: (
 );
 
 $candyland-theme-primary: mat-palette($candyland-blue, 800, 300, 900);
-$candyland-theme-accent:  mat-palette($candyland-blue);
+$candyland-theme-accent: mat-palette($candyland-blue);
 
 $candyland-theme: mat-light-theme($candyland-theme-primary, $candyland-theme-accent);
 
