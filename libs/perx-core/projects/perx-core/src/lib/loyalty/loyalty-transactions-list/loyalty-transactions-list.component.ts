@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ITransaction} from '../models/loyalty.model';
+import { ITransaction } from '../models/loyalty.model';
 import { DatePipe } from '@angular/common';
 import { TransactionPipe } from './transaction.pipe';
 
@@ -34,8 +34,9 @@ export class LoyaltyTransactionsListComponent implements OnInit {
   @Input()
   public priceLabelFn: (tr: ITransaction) => string;
 
-  constructor( private datePipe: DatePipe,
-               private transactionPipe: TransactionPipe
+  constructor(
+    private datePipe: DatePipe,
+    private transactionPipe: TransactionPipe
   ) {
   }
 
@@ -47,7 +48,7 @@ export class LoyaltyTransactionsListComponent implements OnInit {
       this.descFn = () => '';
     }
     if (!this.subTitleFn) {
-      this.subTitleFn = (tr: ITransaction) => `${this.datePipe.transform(tr.earnedDate, 'dd/MM/yyyy')}`;
+      this.subTitleFn = (tr: ITransaction) => `${this.datePipe.transform(tr.earnedDate, 'shortDate')}`;
     }
     if (!this.priceLabelFn) {
       this.priceLabelFn = (tr: ITransaction) => `${this.transactionPipe.transform(tr.points)}`;
