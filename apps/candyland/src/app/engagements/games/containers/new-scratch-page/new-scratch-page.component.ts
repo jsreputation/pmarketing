@@ -20,11 +20,11 @@ import {
   Router,
 } from '@angular/router';
 
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import {
   tap,
   map,
   switchMap,
+  takeUntil,
 } from 'rxjs/operators';
 import {
   combineLatest,
@@ -56,12 +56,14 @@ import { ControlsName } from '../../../../models/controls-name';
 })
 export class NewScratchPageComponent implements OnInit, OnDestroy {
   @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
+
+  private destroy$: Subject<any> = new Subject();
+
   public id: string;
   public form: FormGroup;
   public scratchData: IGameDefaultData;
   public tenantSettings: ITenantsProperties;
   public currentPostScratchImageUrl: string = null;
-  private destroy$: Subject<boolean> = new Subject();
 
   public get name(): AbstractControl {
     return this.form.get(ControlsName.name);
@@ -158,7 +160,7 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
             );
         })
       )
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
@@ -239,7 +241,7 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
 
   private handleRouteParams(): Observable<null | IScratchForm> {
     return this.route.paramMap.pipe(
-      untilDestroyed(this),
+      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.id = id),
       switchMap(id => {
