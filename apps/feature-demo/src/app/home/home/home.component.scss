@@ -1,0 +1,45 @@
+.app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-toolbar {
+  background-color: white;
+  width: 100%;
+  height: 100;
+  color: #666666;
+  border-bottom: 1px solid #979797;
+}
+
+.content {
+  flex: 1;
+  overflow-y: scroll;
+  height: 100%;
+  width: 100%;
+  // padding: 1.2rem;
+}
+
+.mat-tab-nav-bar {
+  height: 4.9rem;
+  border-bottom: 0;
+
+  a {
+    height: 1.6rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 0.89;
+    letter-spacing: normal;
+    text-align: center;
+    color: #666666;
+    align-items: center;
+    justify-content: center;
+    margin: 0 2.4rem;
+    min-width: 0;
+    padding: 2.4rem 1rem;
+    width: auto;
+  }
+}
