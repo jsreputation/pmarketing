@@ -1,7 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy, ChangeDetectionStrategy, ViewRef } from '@angular/core';
 import { switchMap, tap } from 'rxjs/operators';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+
+import { Subject } from 'rxjs';
+import { switchMap, tap, takeUntil } from 'rxjs/operators';
+
 import { DashboardService } from '@cl-core/services';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
 
 @Component({
@@ -11,6 +15,8 @@ import { DashboardChartsParametersService } from '../../services/dashboard-chart
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<any> = new Subject();
+
   public params: { [key: string]: string };
   public activeTab: any = 'activeCustomers';
   public tabs: ITotal[] = [
@@ -38,12 +44,14 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.cd.detach();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private handelChartsParamsChanges(): void {
     this.chartsParametersService.params$
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         tap(value => this.params = value),
         switchMap(params => this.dashboardService.getTabsValue(this.tabsIds, params)),
         tap(value => this.tabsValue = value)

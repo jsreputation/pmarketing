@@ -1,9 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { untilDestroyed } from 'ngx-take-until-destroy';
+
 import { combineLatest, Observable, of, Subject } from 'rxjs';
+import { tap, map, switchMap, takeUntil } from 'rxjs/operators';
+
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { tap, map, switchMap } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import {
   AvailableNewEngagementService, PinataService, RoutingStateService, SettingsService
@@ -22,11 +23,13 @@ import { CreateImageDirective } from '@cl-shared/directives/create-image.directi
 })
 export class NewPinataPageComponent implements OnInit, OnDestroy {
   @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
+
+  private destroy$: Subject<any> = new Subject();
+
   public id: string;
   public form: FormGroup;
   public pinataData: IGameDefaultData;
   public tenantSettings: ITenantsProperties;
-  private destroy$: Subject<boolean> = new Subject();
 
   public get name(): AbstractControl {
     return this.form.get(ControlsName.name);
@@ -104,7 +107,7 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
             tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
           );
         })
-      ).pipe(untilDestroyed(this))
+      ).pipe(takeUntil(this.destroy$))
       .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
@@ -168,7 +171,7 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
 
   private handleRouteParams(): Observable<null | IPinataForm> {
     return this.route.paramMap.pipe(
-      untilDestroyed(this),
+      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.id = id),
       switchMap(id => {
