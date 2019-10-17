@@ -16,7 +16,7 @@ import { themes } from './ctrl/themes';
 
 // Express server
 const app = express();
-app.use(compression);
+app.use(compression());
 const cors = require('cors');
 app.use(cors());
 app.use(express.json());
@@ -32,15 +32,15 @@ app.options('*', cors());
 
 app.get('/preauth', preauth(apiConfig));
 
-app.post(BASE_HREF + 'v4/oauth/token', v4Token(apiConfig));
+app.post(`${BASE_HREF}v4/oauth/token`, v4Token(apiConfig));
 
-app.post(BASE_HREF + 'v2/oauth/token', v2Token(apiConfig));
+app.post(`${BASE_HREF}v2/oauth/token`, v2Token(apiConfig));
 
-app.post(BASE_HREF + 'cognito/login', login(apiConfig));
+app.post(`${BASE_HREF}cognito/login`, login(apiConfig));
 
-app.post(BASE_HREF + 'cognito/users', users(apiConfig));
+app.post(`${BASE_HREF}cognito/users`, users(apiConfig));
 
-app.post(BASE_HREF + 'themes', themes(apiConfig));
+app.post(`${BASE_HREF}themes`, themes(apiConfig));
 
 if (process.env.PRODUCTION) {
   console.log('production mode ON');
@@ -62,14 +62,11 @@ const server = app.listen(PORT, () => {
   console.log(`Node server listening on http://localhost:${PORT}`);
 });
 
-process.on('SIGTERM', () => {
-  server.close(() => {
-    console.log('Server terminated');
+const processInterruption = (signals: NodeJS.Signals) => {
+  server.close((err) => {
+    console.log('Server terminated', err, signals);
   });
-});
+};
 
-process.on('SIGINT', () => {
-  server.close(() => {
-    console.log('Server terminated');
-  });
-});
+process.on('SIGTERM', processInterruption);
+process.on('SIGINT', processInterruption);
