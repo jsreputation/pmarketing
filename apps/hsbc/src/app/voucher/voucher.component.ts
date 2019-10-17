@@ -23,7 +23,7 @@ export class VoucherComponent implements OnInit {
   public ngOnInit(): void {
     this.firstTime = this.route.snapshot.paramMap.get('win') === 'true';
     this.id = this.route.snapshot.params.id;
-    this.voucherService.get(this.id)
+    this.voucherService.get(this.id, null, {sourceType: 'hsbc-collect2', type: null})
       .subscribe(voucher => {
         this.voucher = voucher;
         if (voucher.state !== 'issued') {

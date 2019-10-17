@@ -32,7 +32,7 @@ export class ListComponent implements OnInit {
       this.paramId = param.id;
       this.filter = this.paramId === 'history' ? [VoucherState.redeemed, VoucherState.expired] :
         [VoucherState.issued, VoucherState.reserved, VoucherState.released];
-      this.vouchers = this.vouchersService.getAll({ type: 'all' });
+      this.vouchers = this.vouchersService.getAll({ type: 'all', sourceType: 'hsbc-rewards' });
     });
   }
 
