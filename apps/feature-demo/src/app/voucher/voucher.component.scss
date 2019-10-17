@@ -1,6 +1,20 @@
 @import '../reward.scss';
 
-app-reward-detail {
-  flex-grow: 1;
-  overflow: scroll;
+.icon {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+}
+
+.main {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+
+  .voucher-container {
+    height: 100%;
+    flex: 1;
+    overflow-y: scroll;
+  }
 }

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { VoucherComponent } from './voucher.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IVoucherService, VoucherState, RedemptionType } from '@perx/core';
+import { IVoucherService, VoucherState, RedemptionType, VouchersModule } from '@perx/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
@@ -64,7 +64,8 @@ describe('VoucherComponent', () => {
       declarations: [VoucherComponent, LocationShortFormatComponent, RewardDetailComponent, ExpireTimerComponent],
       imports: [
         MatIconModule,
-        RouterTestingModule
+        RouterTestingModule,
+        VouchersModule
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub },
@@ -92,24 +93,19 @@ describe('VoucherComponent', () => {
       params.next({id: '1'});
       component.ngOnInit();
       tick();
-      expect(component.voucher).toBe(voucher);
+      expect(component.voucher$).toBeTruthy();
     }));
-
-    it('should voucher be undefined if param id is not present', () => {
-      params.next({id: null});
-      expect(component.voucher).toBe(undefined);
-    });
   });
 
   describe('setButton', () => {
     it('should set isButtonEnable to true', () => {
       component.setButton(true);
-      expect(component.isButtonEnable).toBe(true);
+      expect(component.isButtonEnabled).toBe(true);
     });
 
     it('should set isButtonEnable to false', () => {
       component.setButton(false);
-      expect(component.isButtonEnable).toBe(false);
+      expect(component.isButtonEnabled).toBe(false);
     });
   });
 });

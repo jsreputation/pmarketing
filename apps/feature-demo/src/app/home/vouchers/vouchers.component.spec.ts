@@ -59,8 +59,6 @@ describe('VouchersComponent', () => {
 
   it('difference should be 1 with next day', () => {
     const mockVoucher = vouchers[0];
-    console.log('salman');
-    console.log(tomorrow);
     mockVoucher.expiry = tomorrow;
     const noOfDays = component.getNumberOfDays(mockVoucher);
     expect(noOfDays).toBe('Expires in 1 days');

@@ -110,17 +110,19 @@ describe('RedemptionComponent', () => {
   });
 
   describe('onInit', () => {
-    it('should NOT get voucher based if queryParams id is NOT present', () => {
+    it('should NOT get voucher based if queryParams id is NOT present', fakeAsync(() => {
       params.next({id: null});
       component.ngOnInit();
+      tick();
       expect(component.voucher).toBe(undefined);
-    });
+    }));
 
-    it('should get voucher based if queryParams id is present', () => {
+    it('should get voucher based if queryParams id is present', fakeAsync(() => {
       params.next({id: 1});
       component.ngOnInit();
+      tick();
       expect(component.voucher).toBe(voucher);
-    });
+    }));
   });
 
   it('should navigate back on back()', () => {

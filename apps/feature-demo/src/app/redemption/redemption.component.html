@@ -43,13 +43,12 @@
         </div>
         <div class="lower-section mat-elevation-z2">
           <div [ngClass]="'lower-section ' + voucher.state">
-            <app-reward-detail
-              [reward]="voucher.reward"
-              [showBackButton]="false"
-              [showBannerImage]="false"
-              [showMacaron]="false"
-              [className]="'voucher'"
-            ></app-reward-detail>
+            <perx-core-voucher 
+              [hideMerchantImg]="false"
+              [hideMerchantName]="false"
+              [hideActions]="true"
+              [voucher]="voucher$">
+            </perx-core-voucher>
           </div>
           <mat-divider></mat-divider>
           <div class="action">
