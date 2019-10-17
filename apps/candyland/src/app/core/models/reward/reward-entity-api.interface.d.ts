@@ -17,6 +17,7 @@ declare interface IRewardEntityApi {
     currency?: string;
     description?: string;
     terms_conditions?: string;
+    tags: string[];
     display_properties: {
       voucher_properties?: {
         code_type?: string,
