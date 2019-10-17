@@ -1,6 +1,19 @@
 @import '~@angular/material/theming';
 @import "variables";
 
+::ng-deep {
+  .upload-btn {
+    span ~ span {
+      display: none;
+    }
+  }
+}
+
+:host {
+  display: block;
+  width: 100%;
+}
+
 .upload {
   &-wrap {
     position: relative;
@@ -94,14 +107,6 @@
   }
 }
 
-::ng-deep {
-  .upload-btn {
-    span ~ span {
-      display: none;
-    }
-  }
-}
-
 .image {
   max-height: 100%;
   max-width: 100%;
@@ -180,5 +185,25 @@
 
   .image-wrap:hover ~ .upload-type-wrap, .upload-input:hover ~ .upload-type-wrap {
     opacity: 1;
+  }
+}
+
+.upload-full-btn {
+  height: 4rem;
+  width: 100%;
+  padding: 0 1.6rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: $white;
+  cursor: pointer;
+  font-size: $base-font-size;
+  font-weight: 500;
+  color: $primary-color;
+
+  &::after {
+    content: '';
+    opacity: 0;
+    transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
   }
 }
