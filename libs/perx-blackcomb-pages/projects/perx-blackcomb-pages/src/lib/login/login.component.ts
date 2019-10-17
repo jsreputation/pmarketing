@@ -1,19 +1,22 @@
 import { AuthenticationService, NotificationService, Config } from '@perx/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-pages-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
   public errorMessage: string;
   public preAuth: boolean;
   public failedAuth: boolean;
+  private destroy$: Subject<any> = new Subject();
 
   constructor(
     private router: Router,
@@ -27,6 +30,11 @@ export class LoginComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initForm();
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public redirectAfterLogin(): void {
@@ -44,7 +52,11 @@ export class LoginComponent implements OnInit {
     const username = (this.loginForm.get('customerID').value as string);
     const password: string = this.loginForm.get('password').value;
     this.errorMessage = null;
-    this.authService.login(username, password, '2').subscribe(
+    this.authService.login(username, password, '2')
+    .pipe(
+      takeUntil(this.destroy$)
+    )
+    .subscribe(
       () => {
         // set global userID var for GA tracking
         if (!((window as any).primaryIdentifier)) {
