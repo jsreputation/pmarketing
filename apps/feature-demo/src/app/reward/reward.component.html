@@ -1,9 +1,11 @@
 <div class="main">
-  <app-reward-detail
-    [reward]="reward"
-    (isButtonEnabled)="setButton($event)"
-  ></app-reward-detail>
-  <div *ngIf="isRewardsDetailsFetched" class="button-area">
-    <button [disabled]="!isButtonEnable" class="full-width" mat-flat-button color="primary" (click)="save()">Save to My Rewards</button>
+  <div class="reward-container">
+    <perx-core-reward [reward]="reward$"></perx-core-reward>
+  </div>
+  <div *ngIf="isButtonEnable && (reward$ | async) as reward" class="button-area">
+    <button [disabled]="!isButtonEnable" class="full-width" mat-flat-button color="primary" (click)="save(reward)">Save to My Rewards</button>
   </div>
 </div>
+<button class="icon" (click)="back()">
+  <mat-icon>arrow_backward</mat-icon>
+</button>

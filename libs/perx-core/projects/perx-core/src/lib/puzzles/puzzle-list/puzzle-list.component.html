@@ -3,7 +3,7 @@
           *ngFor="let puzzle of puzzles; let i=index">
   <div class="puzzle-content">
     <div class="puzzle-img__wrapper">
-      <img class="puzzle-img" src="{{puzzle.displayProperties.cardImage.value.imageUrl}}">
+      <img [ngClass]="isActive(puzzle) ? 'puzzle-img' : 'puzzle-img grayscale' " src="{{puzzle.displayProperties.cardImage.value.imageUrl}}">
     </div>
     <div class="puzzle-details">
       <h1>Puzzle #{{indexToLetter(i)}}
@@ -12,6 +12,7 @@
         </span>
       </h1>
       <p *ngIf="puzzle.stamps && puzzle.stamps.length > 0">{{nbAvailableStamps(puzzle)}} new pieces</p>
+      <p class="play-now">Play Now!</p>
     </div>
   </div>
   <mat-icon *ngIf="iconDisplay">
