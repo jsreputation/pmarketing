@@ -3,7 +3,6 @@ import { LoyaltyHttpService } from '@cl-core/http-services/loyalty-http.service'
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { Observable } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { LoyaltyTierHttpAdapter } from '@cl-core/http-adapters/loyalty-tiers-http-adapter';
 import { map } from 'rxjs/operators';
 import { LoyaltyHttpAdapter } from '@cl-core/http-adapters/loyalty-http-adapter';
 
@@ -18,7 +17,14 @@ export class LoyaltyCustomTierService implements ITableService {
   public getTableData(params: HttpParamsOptions): Observable<ITableData<any>> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyHttpService.getLoyaltyCustomTiers(httpParams).pipe(
-      map(response => LoyaltyTierHttpAdapter.transformToTableData(response))
+      map(response => LoyaltyHttpAdapter.transformToTableDataCustomTierForm(response))
+    );
+  }
+
+  public getLoyaltyCustomTier(id: string, params: HttpParamsOptions): Observable<IShakeTree> {
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.loyaltyHttpService.getLoyaltyCustomTier(id, httpParams).pipe(
+      map((response: any) => LoyaltyHttpAdapter.transformToLoyaltyCustomTierForm(response.data))
     );
   }
 

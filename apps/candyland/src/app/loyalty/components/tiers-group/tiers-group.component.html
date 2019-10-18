@@ -6,7 +6,7 @@
   </mat-expansion-panel-header>
 
   <div class="card-content">
-    <div class="table-wrap" *ngIf="dataSource?.data">
+    <div class="table-wrap" *ngIf="dataSource">
       <table class="table" mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="name" sticky>
           <th mat-header-cell *matHeaderCellDef class="column-featured">Name</th>

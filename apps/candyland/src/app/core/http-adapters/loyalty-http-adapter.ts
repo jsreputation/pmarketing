@@ -1,4 +1,5 @@
 import Utils from '@cl-helpers/utils';
+import { LoyaltyJoinMethodType } from '@cl-core/models/loyalty/loyalty-joing-method-type.enum';
 
 export class LoyaltyHttpAdapter {
   public static transformToTableData(data: any): ITableData<any> {
@@ -50,7 +51,7 @@ export class LoyaltyHttpAdapter {
         expiry_period: data.tiersConversions.pointsExpiry.amount,
         expiry_period_type: data.tiersConversions.pointsExpiry.type,
         expiry_period_trigger: data.tiersConversions.pointsExpiry.trigger,
-        join_method: LoyaltyHttpAdapter.getJoinMethod(data.details.joinMethod),
+        join_method: LoyaltyHttpAdapter.transformJoinMethodToApi(data.details.joinMethod),
       },
       relationships: {
         program: {
@@ -74,7 +75,7 @@ export class LoyaltyHttpAdapter {
         expiry_period: data.pointsExpiry.amount,
         expiry_period_type: data.pointsExpiry.type,
         expiry_period_trigger: data.pointsExpiry.trigger,
-        join_method: LoyaltyHttpAdapter.getJoinMethod(data.joinMethod),
+        join_method: LoyaltyHttpAdapter.transformJoinMethodToApi(data.joinMethod),
       },
       relationships: {
         basic_tier: {
@@ -87,39 +88,46 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformToLoyaltyCustomTierForm(data: any, loyaltyId: string): any {
+  public static transformToTableDataCustomTierForm(data: any): ITableData<any> {
+    const formatData = data.data.map((item) => LoyaltyHttpAdapter.transformToLoyaltyCustomTierForm(item));
+    return { data: formatData, meta: data.meta};
+  }
+
+  public static transformToLoyaltyCustomTierForm(data: any): any {
     return {
-      type: 'custom_tiers',
-      attributes: {
-        name: data.name,
-        image_url: data.details.image,
-        bonus_ratio: 50,
-        discount_ratio: 20,
-        expiry_period_type: data.tiersConversions.pointsExpiry.amount,
-        expiry_period: data.tiersConversions.pointsExpiry.type,
-        expiry_period_trigger: data.tiersConversions.pointsExpiry.trigger,
-        join_method: LoyaltyHttpAdapter.getJoinMethod(data.joinMethod),
-      },
-      relationships: {
-        program: {
-          data: {
-            type: 'programs',
-            id: loyaltyId
-          }
-        }
+      id: data.id,
+      name: data.attributes.name,
+      joinMethod: LoyaltyHttpAdapter.transformJoinMethodFromApi(data.attributes.join_method),
+      imageUrl: data.attributes.image_url,
+      earnBonus: data.attributes.bonus_ratio,
+      burnDiscount: data.attributes.discount_ratio,
+      pointsExpiry: {
+        amount: data.attributes.expiry_period,
+        type: data.attributes.expiry_period_type,
+        trigger: data.attributes.expiry_period_trigger,
       }
     };
   }
 
-  private static getJoinMethod(data: any): any {
-    const formatData = {
-      invite_only: data.inviteOnly,
-      sign_up: data.signUp,
-      amount: data.amount,
-      transaction_amount: data.transactionAmount,
-      points_threshold: data.pointsThreshold,
-      points: data.points
-    };
-    return Utils.filterObj(formatData, (item) => !!item);
+  private static transformJoinMethodToApi(joinMethod: any): any {
+    // const formatData = {
+    //   invite_only: data.inviteOnly,
+    //   sign_up: data.signUp,
+    //   amount: data.amount,
+    //   transaction_amount: data.transactionAmount,
+    //   points_threshold: data.pointsThreshold,
+    //   points: data.points
+    // };
+    // return Utils.filterObj(formatData, (item) => !!item);
+    const chosenMethods = Utils.filterObj(joinMethod, (item) => !!item);
+    const apiJoinMethod = {};
+    Object.keys(chosenMethods).forEach(key => apiJoinMethod[LoyaltyJoinMethodType[key]] = chosenMethods[key]);
+    return apiJoinMethod;
+  }
+
+  private static transformJoinMethodFromApi(apiJoinMethod: any): any {
+    const joinMethod = {};
+    Object.keys(apiJoinMethod).forEach(key => joinMethod[LoyaltyJoinMethodType[LoyaltyJoinMethodType[key]]] = apiJoinMethod[key]);
+    return joinMethod;
   }
 }
