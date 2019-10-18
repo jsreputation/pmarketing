@@ -1,6 +1,5 @@
 <cl-global-earn-rule-group [group]="group" [currency]="currency"></cl-global-earn-rule-group>
-<cl-global-burn-rule-group [group]="group" [curren($event)"></cl-tiers-group>
-<!--@Input() public customTierDataSource: CustomDataSource<any>;-->
-ncy]="currency"></cl-global-burn-rule-group>
+<cl-global-burn-rule-group [group]="group" [currency]="currency"></cl-global-burn-rule-group>
 <cl-points-expiry-group [group]="group"></cl-points-expiry-group>
-<cl-tiers-group [dataSource]="customTierDataSource" (tiersAction)="handleTiersActio
+<cl-tiers-group [dataSource]="customTierDataSource" (tiersAction)="handleTiersAction($event)"></cl-tiers-group>
+

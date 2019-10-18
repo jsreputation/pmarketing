@@ -83,7 +83,6 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private getLoyaltyRequest(): Observable<any> {
-    console.log('getLoyaltyRequest', this.loyaltyId);
     if (this.loyaltyId) {
       return this.loyaltyService.updateLoyalty(this.loyaltyId, this.form.value);
     }
@@ -94,7 +93,6 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private getLoyaltyBasicTierRequest(): Observable<any> {
-    console.log('getLoyaltyBasicTierRequest', this.loyaltyId, this.loyaltyBasicTierId);
     if (this.loyaltyBasicTierId) {
       return this.loyaltyService.updateLoyaltyBasicTier(this.loyaltyBasicTierId, this.form.value, this.loyaltyId);
     }

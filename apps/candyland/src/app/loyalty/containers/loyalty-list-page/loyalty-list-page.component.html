@@ -6,7 +6,10 @@
 <section class="content">
   <ng-container [ngSwitch]="dataSource.state$ | async">
     <ng-container *ngSwitchCase="dataSourceStates.hasDataApi">
-      <cl-loyalty-grid [dataSource]="dataSource">
+      <cl-loyalty-grid [dataSource]="dataSource"
+                       [menuOptions]="menuOptions"
+                       (menuTapped)="menuOptTapped($event)"
+      >
       </cl-loyalty-grid>
       <!--paginator-->
       <div class="table-card">

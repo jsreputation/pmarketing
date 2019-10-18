@@ -1,10 +1,10 @@
 <div class="loyalty-item">
   <div class="loyalty-item-img-container" [class.linkable]="linkable" (click)="navigateToReview()">
-    <img class="loyalty-item-img" *ngIf="data?.image" [src]="data?.image">
+    <img class="loyalty-item-img" *ngIf="data?.details?.imageUrl" [src]="data?.image">
   </div>
   <div class="loyalty-item-info">
     <p class="loyalty-item-name" [class.linkable]="linkable" (click)="navigateToReview()">{{data?.name}}</p>
-    <p class="loyalty-item-group">{{data?.groupName}}</p>
+    <p class="loyalty-item-group">{{data?.details?.pointsName}}</p>
     <p class="loyalty-item-tiers" *ngIf="data?.tiersCount > 0">{{data?.tiersCount}} tiers</p>
     <cl-status-label [status]="data?.status"></cl-status-label>
   </div>
@@ -13,7 +13,6 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="navigateToEdit()">Edit</button>
       <button mat-menu-item *ngFor="let action of menuOptions" (click)="tapped(action)">{{action.label}}</button>
     </mat-menu>
   </div>

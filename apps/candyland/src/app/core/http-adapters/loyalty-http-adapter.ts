@@ -1,30 +1,15 @@
 import Utils from '@cl-helpers/utils';
 import { LoyaltyJoinMethodType } from '@cl-core/models/loyalty/loyalty-joing-method-type.enum';
-import { ParseIncluded } from '@cl-helpers/parse-included';
 
 export class LoyaltyHttpAdapter {
 
-  // TODO: need add point name and poolId to form
+  // TODO: need add poolId to form
   public static transformToTableData(data: any): ITableData<any> {
     const formatData = data.data.map((item) => {
-      console.log(item);
 
-      const formLoyalty = LoyaltyHttpAdapter.transformToLoyaltyForm(item);
-      // formLoyalty['details'] = LoyaltyHttpAdapter.getLoyaltyPointsName(item);
-
-      console.log('formLoyalty', formLoyalty);
+      let formLoyalty = LoyaltyHttpAdapter.transformToLoyaltyForm(item);
+      formLoyalty = LoyaltyHttpAdapter.setIncludedToLoyaltyForm(data, item, formLoyalty);
       return formLoyalty;
-      // const user = SettingsHttpAdapter.transformToIAMUser(item);
-      // const user = {};
-      // if (data.included && data.included.length) {
-      //   for (let i = 0; i <= data.included.length - 1; i++) {
-      //     if (user.relationships_groups_id === data.included[i].id) {
-      //       user.role = data.included[i].attributes.name;
-      //       break;
-      //     }
-      //   }
-      // }
-      // return {...item};
     });
     return {data: formatData, meta: data.meta};
   }
@@ -35,7 +20,7 @@ export class LoyaltyHttpAdapter {
       attributes: {
         name: data.name,
         unit: data.details.pointsName,
-        pool_id: data.details.poolId
+        pool_id: data.details.poolId || 1
       }
     };
   }
@@ -119,15 +104,24 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static addIncludedToLoyaltyForm(source: any, target: any, type: string, fieldName: string | null = null, adapterFunction?: (data: any) => any): any {
-    const adapter = (item: any): any => {
-      console.log('adapter', item);
-      return item;
-    };
-
-    const adapter2 = LoyaltyHttpAdapter.getDetailsAndCanversionsFormGroup;
-
-    ParseIncluded.setInclude(source, target, type, fieldName, adapter);
+  private static setIncludedToLoyaltyForm(data: any, item: any, formLoyalty: any): any {
+    console.log(data, item);
+    if (data.included && data.included.length) {
+      for (let i = 0; i <= data.included.length - 1; i++) {
+        if (item.relationships.basic_tier
+          && item.relationships.basic_tier.data
+          && item.relationships.basic_tier.data.id === data.included[i].id) {
+          const detailsAndConversionsFormGroup =
+            LoyaltyHttpAdapter.getDetailsAndConversionsFormGroup(data.included[i].attributes, item.attributes);
+          formLoyalty = {
+            ...formLoyalty,
+            ...detailsAndConversionsFormGroup
+          };
+          break;
+        }
+      }
+    }
+    return formLoyalty;
   }
 
   private static transformJoinMethodToApi(joinMethod: any): any {
@@ -161,70 +155,42 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  private static getLoyaltyPointsName(data: any): any {
+  private static getDetailsAndConversionsFormGroup(data: any, currentLoyalty: any): any {
     return {
-      pointsName: data.attributes.unit
-    };
-  }
-
-  private static transformBasicTier(data: any): any {
-    // {'urn':'urn:perx:loyalty::222222222:basic_tier/10',
-    //   'created_at':'2019-10-17T08:58:24.377Z','updated_at':'2019-10-17T08:58:24.377Z',
-    //   'image_url':'https:som_image.com.url',
-    //   'earn_ratio_money':100,
-    //   'earn_ratio_point':2,
-    //   'burn_ratio_money':1,
-    //   'burn_ratio_point':50,
-    //   'expiry_period_type':'month',
-    //   'expiry_period':3,
-    //   'expiry_period_trigger':'inactivity',
-    //   'join_method':
-    //   {
-    //     'invite_only':true
-    //   }
-    // }
-    return {
-      imageUrl: data.attributes.image_url,
-      joinMethod: {
-        inviteOnly: data.attributes.invite_only,
-        sign_up: data.signUp,
-        amount: data.amount,
-        transaction_amount: data.transactionAmount,
-        points_threshold: data.pointsThreshold,
-        // points:
-      }
-    };
-  }
-
-  private static getDetailsAndCanversionsFormGroup(data: any): any {
-    return {
-      details: LoyaltyHttpAdapter.formatToDetailFormGroup(data),
+      details: LoyaltyHttpAdapter.formatToDetailFormGroup(data, currentLoyalty),
       tiersConversions: LoyaltyHttpAdapter.transformToTiersConversionsFormGroup(data),
     };
   }
 
-  private static formatToDetailFormGroup(data: any): any {
+  private static formatToDetailFormGroup(data: any, currentLoyalty: any): any {
+    // console.log({
+    //   pointsName: currentLoyalty.unit,
+    //   imageUrl: data.image_url,
+    //   poolId: currentLoyalty.poolId,
+    //   joinMethod: LoyaltyHttpAdapter.transformJoinMethodFromApi(data.join_method)
+    // });
     return {
-      imageUrl: data.attributes.image_url,
-      poolId: data.attributes,
-      joinMethod: ''
+      pointsName: currentLoyalty.unit,
+      imageUrl: data.image_url,
+      poolId: currentLoyalty.poolId,
+      joinMethod: LoyaltyHttpAdapter.transformJoinMethodFromApi(data.join_method)
     };
   }
 
   private static transformToTiersConversionsFormGroup(data: any): any {
     return {
       globalEarnRule: {
-        amount: data.attributes.earn_ratio_money,
-        points: data.attributes.earn_ratio_point
+        amount: data.earn_ratio_money,
+        points: data.earn_ratio_point
       },
       globalBurnRule: {
-        amount: data.attributes.burn_ratio_money,
-        points: data.attributes.burn_ratio_point
+        amount: data.burn_ratio_money,
+        points: data.burn_ratio_point
       },
       pointsExpiry: {
-        amount: data.attributes.expiry_period_type ,
-        type: data.attributes.expiry_period ,
-        trigger: data.attributes.expiry_period_trigger
+        amount: data.expiry_period_type ,
+        type: data.expiry_period ,
+        trigger: data.expiry_period_trigger
       }
     };
   }

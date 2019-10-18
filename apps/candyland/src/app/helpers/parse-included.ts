@@ -2,14 +2,20 @@ import Utils from '@cl-helpers/utils';
 // tslint:disable
 export class ParseIncluded {
   public static setInclude(source: any, target: any, type: string, fieldName: string | null = null, adapterFunction?: (data: any) => any): any {
-    const mapIncludes = Utils.createMapIncludes(source.includedd, 'id', type);
+    console.log('mapIncludes source', source);
+    debugger;
+    const mapIncludes = Utils.createMapIncludes(source.included, 'id', type);
+    console.log('mapIncludes', mapIncludes);
+    type = type.slice(0, -1);
+    console.log('type', type);
+    debugger;
     if (!Utils.isEmptyObject(mapIncludes)) {
       if (Utils.isObject(source.data)) {
         // implement set includes to object
         if (source.relationships && Utils.isObject(source.relationships[type].data)) {
           // handler as object for relations
           const relation = source.relationships[type].data;
-          ParseIncluded.setRelations(relation, target, type, mapIncludes, adapterFunction, fieldName, null);
+          ParseIncluded.setRelations(relation, target, mapIncludes, adapterFunction, fieldName, null);
         }
 
         if (source.relationships && Utils.isArray(source.relationships[type].data)) {
@@ -17,16 +23,16 @@ export class ParseIncluded {
           if (source.relationships[type].data.lengh === 1) {
             // create relation sa object
             const relation = source.relationships[type].data[0];
-            ParseIncluded.setRelations(relation, target, type, mapIncludes, adapterFunction, fieldName, null);
+            ParseIncluded.setRelations(relation, target, mapIncludes, adapterFunction, fieldName, null);
             return;
           }
 
           source.relationships[type].data.forEach((relationsData: any) => {
-            if (relationsData.type === type) {
+            // if (relationsData.type === type) {
               let included = mapIncludes[relationsData.id];
               included = ParseIncluded.setAdapter(included, adapterFunction);
               ParseIncluded.addRelationAsArray(target, included, adapterFunction, fieldName);
-            }
+            // }
           });
         }
       }
@@ -36,14 +42,14 @@ export class ParseIncluded {
           if (item.relationships && Utils.isObject(item.relationships[type].data)) {
             // handler as object for relations
             const relation = item.relationships[type].data;
-            ParseIncluded.setRelations(relation, target, type, mapIncludes, adapterFunction, fieldName, i);
+            ParseIncluded.setRelations(relation, target, mapIncludes, adapterFunction, fieldName, i);
           }
           if (item.relationships && Utils.isArray(item.relationships[type].data)) {
             // handler as array for relations
             if (item.relationships[type].data.lengh === 1) {
               // create relation sa object
               const relation = item.relationships[type].data[0];
-              ParseIncluded.setRelations(relation, target, type, mapIncludes, adapterFunction, fieldName, i);
+              ParseIncluded.setRelations(relation, target, mapIncludes, adapterFunction, fieldName, i);
               return;
             }
             item.relationships[type].data.forEach((relationsData: any) => {
@@ -59,9 +65,9 @@ export class ParseIncluded {
     return target;
   }
 
-  private static setRelations(relation: any, target: any, type: string, mapIncludes: any, adapterFunction: (data: any) => any, fieldName, i?: any): void {
+  private static setRelations(relation: any, target: any, mapIncludes: any, adapterFunction: (data: any) => any, fieldName, i?: any): void {
     // check relation type matches or not
-    if (relation.type === type) {
+    // if (relation.type === type) {
       // get included from existing includeds
       let included = mapIncludes[relation.id];
       if (included) {
@@ -82,7 +88,7 @@ export class ParseIncluded {
           target[fieldName] = included;
         }
       }
-    }
+    // }
   }
 
   private static setAdapter(included: any, adapterFunction: (data: any) => any): void {

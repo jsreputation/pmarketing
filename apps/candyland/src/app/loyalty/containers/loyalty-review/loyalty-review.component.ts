@@ -32,7 +32,7 @@ export class LoyaltyReviewComponent implements OnInit {
     this.loyalty = {
       name: 'telco',
       status: 'draft',
-      stepDetails: {
+      details: {
         pointsName: 'All-IT Points',
         imageUrl: 'https://www.gettyimages.co.uk/gi-resources/images/RoyaltyFree/Apr17Update/ColourSurge1.jpg',
         joinMethod: {
