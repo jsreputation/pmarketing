@@ -27,12 +27,10 @@
   <section class="content form-limiter">
     <div class="phonepreview-wrapper">
       <div class="pinata-form">
-        <mat-card class="game-graphic">
-          <div class="temp-engagement-title">
-            <h2 class="sub-title">
-              Messages
-            </h2>
-          </div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Messages
+          </h2>
           <div class="pinata-form">
             <div class="control-input">
               <mat-form-field class="mat-form-field">
@@ -55,29 +53,28 @@
           </div>
         </mat-card>
 
-        <mat-card class="game-graphic">
-          <div class="temp-engagement-title">
-            <h2 class="sub-title">
-              Game graphic
-            </h2>
-          </div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Game graphic
+          </h2>
           <div class="game-form">
-            <h3 class="game-title">
-              Pinata
-            </h3>
 
-            <div class="game-tree-wrap">
-              <cl-select-graphic
-                *ngIf="pinataData.pinata"
-                formControlName="pinata"
-                class="game-selected-graphic"
-                [graphicList]="pinataData.pinata"
-              >
-              </cl-select-graphic>
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
+                Pinata
+              </h3>
+              <div class="game-tree-wrap">
+                <cl-select-graphic
+                  *ngIf="pinataData.pinata"
+                  formControlName="pinata"
+                  [graphicList]="pinataData.pinata"
+                >
+                </cl-select-graphic>
+              </div>
             </div>
 
-            <div class="game-background-box">
-              <h3 class="game-title">
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
                 Background
               </h3>
               <div class="game-gift-box_field">
@@ -85,7 +82,6 @@
                   *ngIf="pinataData.background"
                   formControlName="background"
                   [isRequired]="form.get('background').hasError('required') && form.get('background').touched"
-                  class="game-selected-graphic"
                   [graphicList]="pinataData.background"
                 >
                 </cl-select-graphic-wrap>
@@ -94,12 +90,10 @@
           </div>
         </mat-card>
 
-        <mat-card class="game-graphic">
-          <div class="temp-engagement-title">
-            <h2 class="sub-title">
-              Button
-            </h2>
-          </div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Button
+          </h2>
           <div class="messages-form">
             <div class="control-input">
               <mat-form-field class="messages-input">
