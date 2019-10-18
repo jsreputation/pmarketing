@@ -70,3 +70,7 @@ cdk-virtual-scroll-viewport {
 ol, ul {
   margin-top: 0;
 }
+
+.mat-card:not([class*=mat-elevation-z]) {
+  box-shadow: 0px 4px 4px #D2D8E2;
+}
