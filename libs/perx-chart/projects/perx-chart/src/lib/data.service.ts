@@ -55,7 +55,7 @@ export class DataService {
           );
         }),
         map((res: IMetabaseResponse) => DataSerializer.from(res.data)),
-        tap((data) => {
+        tap((data: IData) => {
           data.cols.map(col => {
             if (col.base_type.indexOf(BaseType.date) === -1) {
               return;
