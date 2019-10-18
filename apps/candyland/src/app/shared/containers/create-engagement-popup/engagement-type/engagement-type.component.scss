@@ -1,16 +1,6 @@
 @import "variables";
 
 :host {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 0 ($vertical-padding * 0.5);
-  margin: 0 (-($horizontal-padding * 0.25));
-  justify-content: center;
+  width: 100%;
+  padding-bottom: ($vertical-padding * 0.25);
 }
-
-cl-type-item {
-  display: flex;
-  margin: ($vertical-padding * 0.25) ($horizontal-padding * 0.25);
-}
-
-@import "resize";

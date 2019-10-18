@@ -22,12 +22,10 @@
   <section class="content form-limiter">
     <div class="phonepreview-wrapper">
       <div class="stamp-form">
-        <mat-card class="game-graphic">
-          <div class="temp-engagement-title">
-            <h2 class="sub-title">
-              Messages
-            </h2>
-          </div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Messages
+          </h2>
           <div class="stamp-form">
             <div class="control-input">
               <mat-form-field class="mat-form-field">
@@ -50,12 +48,10 @@
           </div>
         </mat-card>
 
-        <mat-card class="game-graphic">
-          <div class="temp-engagement-title">
-            <h2 class="sub-title">
-              Game graphic
-            </h2>
-          </div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Game graphic
+          </h2>
           <div class="game-form">
             <div class="game-number">
               <div class="control-input" *ngIf="stampData?.number">
@@ -82,21 +78,20 @@
               </div>
             </div>
 
-            <div class="game-background-box">
-              <h3 class="game-title">
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
                 Pre-stamp
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap *ngIf="stampData?.preStamp"
                                         formControlName="preStamp"
                                         [isRequired]="preStamp.hasError('required') && preStamp.touched"
-                                        class="game-selected-graphic"
                                         [graphicList]="stampData?.preStamp">
                 </cl-select-graphic-wrap>
               </div>
             </div>
-            <div class="game-background-box">
-              <h3 class="game-title">
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
                 Reward Pre-stamp
                 <cl-info-hint>
                   <span class="info-text">You can set the rewards when&nbsp;</span>
@@ -107,26 +102,24 @@
                 <cl-select-graphic-wrap *ngIf="stampData?.rewardPreStamp"
                                         formControlName="rewardPreStamps"
                                         [isRequired]="rewardPreStamps.hasError('required') && rewardPreStamps.touched"
-                                        class="game-selected-graphic"
                                         [graphicList]="stampData?.rewardPreStamp">
                 </cl-select-graphic-wrap>
               </div>
             </div>
-            <div class="game-background-box">
-              <h3 class="game-title">
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
                 Post-stamp
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap *ngIf="stampData?.stampsPost"
                                         formControlName="postStamps"
                                         [isRequired]="postStamps.hasError('required') && postStamps.touched"
-                                        class="game-selected-graphic"
                                         [graphicList]="stampData?.stampsPost">
                 </cl-select-graphic-wrap>
               </div>
             </div>
-            <div class="game-background-box">
-              <h3 class="game-title">
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
                 Reward Post-stamp
                 <cl-info-hint>
                   <span class="info-text">You can set the rewards when&nbsp;</span>
@@ -137,46 +130,41 @@
                 <cl-select-graphic-wrap *ngIf="stampData?.rewardPost"
                                         formControlName="rewardPostStamps"
                                         [isRequired]="rewardPostStamps.hasError('required') && rewardPostStamps.touched"
-                                        class="game-selected-graphic"
                                         [graphicList]="stampData?.rewardPost">
                 </cl-select-graphic-wrap>
               </div>
             </div>
-            <div class="game-background-box">
-              <h3 class="game-title">
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
                 Card Background
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap *ngIf="stampData?.cardBackground"
                                         formControlName="cardBackground"
                                         [isRequired]="cardBackground.hasError('required') && cardBackground.touched"
-                                        class="game-selected-graphic"
                                         [graphicList]="stampData?.cardBackground">
                 </cl-select-graphic-wrap>
               </div>
             </div>
 
-            <div class="game-background-box">
-              <h3 class="game-title">
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
                 Background
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap *ngIf="stampData?.backgroundStamp"
                                         formControlName="background"
                                         [isRequired]="background.hasError('required') && background.touched"
-                                        class="game-selected-graphic"
                                         [graphicList]="stampData?.backgroundStamp">
                 </cl-select-graphic-wrap>
               </div>
             </div>
           </div>
         </mat-card>
-        <mat-card class="game-graphic">
-          <div class="temp-engagement-title">
-            <h2 class="sub-title">
-              Button
-            </h2>
-          </div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Button
+          </h2>
           <div class="messages-form">
             <div class="control-input">
               <mat-form-field class="messages-input">

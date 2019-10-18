@@ -1,6 +1,4 @@
-<mat-card *ngFor="let category of categories" (click)="selected(category)" matRipple>
-    <div class="icon">
-        <img [src]="'assets/category-icons/' + category.icon" alt="">
-    </div>
-    <span class="category-title">{{category.name}}</span>
-</mat-card>
+<div class="main-container">
+    <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="rewardClickedHandler($event)">
+    </perx-core-rewards-list-tabbed>
+</div>
