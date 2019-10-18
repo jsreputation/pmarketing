@@ -68,12 +68,12 @@ export class WhistlerRewardsService implements RewardsService {
   public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
     return new Observable(subject => {
       let current: IReward[] = [];
-      let meta: IWMetaData = { currentPage: 1 };
+      let meta: IWMetaData = { currentPage: 1, totalPages: 1 };
       // we do not want to get all pages in parallel, so we get pages one after the other in order not to dos the server
       const process = (res: IReward[]) => {
         // save each reward in local cache
         res.forEach(r => this.rewards[r.id] = r);
-        meta = res[0].rawPayload;
+        meta = res[0] && res[0].rawPayload || { ...meta };
         current = current.concat(res);
         subject.next(current);
         // if finished close the stream
@@ -129,7 +129,7 @@ export class WhistlerRewardsService implements RewardsService {
       switchMap(
         (obj) => combineLatest(
           of(obj.rewards),
-          combineLatest(...obj.mIds.map(id => this.merchantService.getMerchant(Number.parseInt(id, 10))))
+          obj.mIds.length > 0 ? combineLatest(...obj.mIds.map(id => this.merchantService.getMerchant(Number.parseInt(id, 10)))) : of([])
         )
       ),
       map(([rewards, merchants]: [IJsonApiItem<IRewardEntityAttributes>[], IMerchant[]]) => rewards.map(
