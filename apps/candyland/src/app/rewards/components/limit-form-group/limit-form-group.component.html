@@ -60,7 +60,7 @@
       <span>per campaign, per</span>
 
       <!-- duration Limits-->
-      <mat-form-fiel class="half-on-mobile">
+      <mat-form-field class="half-on-mobile">
         <mat-select [formControl]="formGroup.get('issuancePerUser.duration')">
           <ng-container *ngFor="let option of config?.durationLimits">
             <mat-option [value]="option?.value">{{option?.title}}</mat-option>
