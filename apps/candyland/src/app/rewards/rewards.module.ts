@@ -50,6 +50,7 @@ import {
   TimePickerModule,
   UploadFileModule, UploadGraphicModule, VouchersProgressBarModule
 } from '@cl-shared';
+import { TagListModule } from '@cl-shared/components/tag-list/tag-list.module';
 
 @NgModule({
   providers: [
@@ -108,7 +109,8 @@ import {
     SelectMerchantPopupModule,
     VouchersProgressBarModule,
     PaginationModule,
-    PipesModule
+    PipesModule,
+    TagListModule
   ],
   entryComponents: [
     RewardReplenishPopupComponent
