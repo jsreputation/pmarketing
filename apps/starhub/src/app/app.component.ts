@@ -90,7 +90,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
 
   public ngOnInit(): void {
     this.notificationService.$popup
-      .subscribe((data: IPopupConfig) => 
+      .subscribe((data: IPopupConfig) =>
       this.dialog.open(PopupComponent, { data, ... data.panelClass && {panelClass: data.panelClass }
       }));
 
