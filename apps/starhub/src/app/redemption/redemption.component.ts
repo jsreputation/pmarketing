@@ -6,11 +6,13 @@ import {
   PinInputComponent,
   NotificationService,
   ICategoryTags,
+  IReward
 } from '@perx/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { AnalyticsService, PageType } from '../analytics.service';
+import { MacaronService, IMacaron } from '../services/macaron.service';
 
 @Component({
   selector: 'app-redemption',
@@ -18,12 +20,12 @@ import { AnalyticsService, PageType } from '../analytics.service';
   styleUrls: ['./redemption.component.scss']
 })
 export class RedemptionComponent implements OnInit {
-
+  public reward: IReward;
   public voucher: Voucher;
   public showEnterPinComponent: boolean = false;
   public isPinEntered: boolean = false;
   public isPinCorrect: boolean;
-
+  public macaron: IMacaron;
   @ViewChild('pinInput', { static: false })
   private pinInputComponent: PinInputComponent;
 
@@ -33,7 +35,8 @@ export class RedemptionComponent implements OnInit {
     private location: Location,
     private router: Router,
     private notficationService: NotificationService,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    private macaronService: MacaronService
   ) {
   }
 
@@ -42,21 +45,26 @@ export class RedemptionComponent implements OnInit {
       .pipe(
         filter((params: Params) => params.id ? true : false),
         map((params: Params) => params.id),
-        switchMap((id: number) => this.vouchersService.get(id))
+        switchMap((id: number) => this.vouchersService.get(id)),
+        tap((voucher: Voucher) => {
+          this.voucher = voucher;
+          const categories: ICategoryTags[] = voucher.reward.categoryTags;
+          const category: string = categories && categories.length > 0 ? categories[0].title : undefined;
+          if (category !== undefined) {
+            const pageName: string = `rewards:vouchers:redemption:${category}:${voucher.reward.name}`;
+            this.analytics.addEvent({
+              pageName,
+              pageType: PageType.detailPage,
+              siteSectionLevel2: 'rewards:vouchers',
+              siteSectionLevel3: 'rewards:vouchers:redemption'
+            });
+          }
+        }),
+        map((voucher: Voucher) => voucher.reward)
       )
-      .subscribe((voucher: Voucher) => {
-        this.voucher = voucher;
-        const categories: ICategoryTags[] = voucher.reward.categoryTags;
-        const category: string = categories && categories.length > 0 ? categories[0].title : undefined;
-        if (category !== undefined) {
-          const pageName: string = `rewards:vouchers:redemption:${category}:${voucher.reward.name}`;
-          this.analytics.addEvent({
-            pageName,
-            pageType: PageType.detailPage,
-            siteSectionLevel2: 'rewards:vouchers',
-            siteSectionLevel3: 'rewards:vouchers:redemption'
-          });
-        }
+      .subscribe((reward: IReward) => {
+        this.reward = reward;
+        this.macaron = this.macaronService.getMacaron(reward);
       });
   }
 

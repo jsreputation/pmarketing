@@ -1,17 +1,5 @@
 <div class="app">
   <mat-toolbar>
-    <mat-toolbar-row class="top-row">
-      <a class="badge" href="https://www.starhub.com/personal/rewards/membership.html" target="_blank">
-        <img *ngIf="loyalty" [src]="getBadge(loyalty.membershipTierName)" [alt]="loyalty.membershipTierName">
-      </a>
-      <div class="reward">
-        <h2>Explore your rewards,</h2>
-        <span class="tier" *ngIf="loyalty">{{loyalty.membershipTierName | noRenewaleInName | titlecase}} Member!</span>
-        <div>
-          <span class="subtitle" *ngIf="profile && profile.customProperties && profile.customProperties.membership === 'Hub Club'">+ Hub Club</span>
-        </div>
-      </div>
-    </mat-toolbar-row>
     <mat-toolbar-row mat-tab-nav-bar>
       <a mat-tab-link routerLink="discover" routerLinkActive #disco="routerLinkActive"
         [active]="disco.isActive">Discover</a>

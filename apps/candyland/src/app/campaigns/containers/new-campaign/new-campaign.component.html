@@ -6,7 +6,7 @@
     <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
   </mat-form-field>
   <div class="btn-group">
-    <cl-button classList="tertiary" routerLink="..">Cancel</cl-button>
+    <cl-button classList="secondary" routerLink="..">Cancel</cl-button>
     <!--    <cl-button classList="secondary" routerLink="..">Save as a draft</cl-button>-->
     <cl-button *ngIf="!isLastStep"
                classList="primary cta cta-next"

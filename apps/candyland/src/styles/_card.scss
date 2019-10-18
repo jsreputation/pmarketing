@@ -65,7 +65,7 @@
   }
 
   &-value {
-    @include typo-input;
+    @include typo-input-alt;
 
     color: $base-font-color;
 
@@ -85,15 +85,6 @@
     span + small {
       margin-left: 0;
     }
-  }
-
-  &-row.input-group > span {
-    width: auto;
-    flex-shrink: 0;
-  }
-
-  &-value span:last-child {
-    margin-right: 0;
   }
 
   &-label + &-value {
@@ -117,15 +108,19 @@
 
   &-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: baseline;
+    margin-left: -($horizontal-padding * 0.25);
+    margin-right: -($horizontal-padding * 0.25);
 
-    & > * {
-      margin-right: 1.5rem;
+    > * {
+      padding-left: ($horizontal-padding * 0.25);
+      padding-right: ($horizontal-padding * 0.25);
+    }
 
-      &:last-of-type {
-        margin-right: 0;
-      }
+    > span {
+      padding-left: ($horizontal-padding * 0.5);
+      padding-right: ($horizontal-padding * 0.5);
     }
 
     &.stretch {
@@ -133,47 +128,18 @@
 
       & > * {
         flex: 1;
+        flex-basis: 100%;
       }
-    }
-
-    &.form-field {
-      align-items: flex-end;
-      height: 5.66rem;
-      padding-bottom: 1.25em;
-    }
-  }
-
-  &-row.input-group {
-    flex-wrap: wrap;
-
-    > * {
-      margin-right: ($horizontal-padding * 0.5);
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-
-    > .mat-form-field {
-      flex: 1 1 ($horizontal-padding * 2);
-      min-width: ($horizontal-padding * 2);
     }
   }
 
   &-section {
     margin-top: 1.9rem;
     background-color: $background-color;
-
-    .card-header {
-      padding: 0 3rem;
-    }
+    border-radius: $border-radius;
 
     .card-title {
       @extend .card-label;
-    }
-
-    .card-content {
-      padding: 0.4rem 3rem 3rem !important;
     }
   }
 
@@ -200,7 +166,7 @@
   }
 }
 
-@media (min-width: $mobile-width) {
+@media (min-width: $mobile-width + 1) {
   .card-definitions-splitter {
     display: flex;
 
@@ -217,5 +183,11 @@
   .card-definitions > div:last-child,
   .card-definitions div.card-definitions-splitter div {
     margin-bottom: 0;
+  }
+}
+
+@media (max-width: $tablet-width) {
+  .card-row-date {
+    flex-wrap: wrap;
   }
 }

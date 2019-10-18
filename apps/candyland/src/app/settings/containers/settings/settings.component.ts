@@ -26,6 +26,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       label: 'Users & Roles'
     },
   ];
+
   constructor(private cd: ChangeDetectorRef,
               @Inject(DOCUMENT) private document: Document,
               private renderer: Renderer2) {
@@ -38,5 +39,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.renderer.removeClass(this.document.body, 'no-cta');
+    this.cd.detach();
   }
 }

@@ -1,77 +1,47 @@
-mat-card {
-  margin: 0.4rem 0;
+.loyalty-block {
+  background-color: #fff;
   display: flex;
-  align-items: center;
-  padding: 0;
-  height: 3.5rem;
-  flex: 0 0 7.5rem;
+  width: 100%;
+  align-items: flex-end;
   justify-content: space-between;
 }
 
-h1 {
-  padding: 0.8rem 0 0;
-  margin: 0;
+.home-qr-button {
+  background-color: #4E4E4E;
+  color: #fff;
+  margin-right: 1.6rem;
+  margin-bottom: 1.6rem;
+}
+
+.page {
+  background-color: #E8E8E8;
+  min-height: 100%;
+}
+
+.add-more {
+  margin: 0.8rem 1.6rem;
+  flex-grow: 1;
+}
+
+.games {
   display: flex;
+  flex-direction: column;
+}
+
+.title {
   font-size: 2rem;
-  font-style: normal;
+  margin: 2.4rem 1.5rem 1.6rem;
+  line-height: 2.3rem;
+  color: #212121;
   font-weight: 500;
 }
 
-.tab-group__content {
-  padding: 0 1.6rem;
-  flex-direction: column;
-  box-sizing: border-box;
-  display: flex;
-  min-height: calc(100vh - 108px);
+.rewars-collection {
+  padding: 0 1.5rem;
+  margin-bottom: 2rem;
 
-  > h1:first-child {
-    padding-top: 2rem;
-  }
-
-  a {
-    text-decoration: none;
-  }
-}
-
-.puzzle-content {
-  display: flex;
-  flex-basis: auto;
-  flex-grow: 1;
-  justify-content: flex-start;
-
-  .puzzle-img__wrapper {
-    flex: 0 0 7.5rem;
-    height: 10.5rem;
-    display: flex;
-    justify-content: center;
-  }
-
-  .puzzle-img {
-    width: 100%;
-    height: 100%;
-  }
-
-  .puzzle-details {
-    font-size: 1.4rem;
-    display: flex;
-    margin: auto 0;
-    margin-left: 1rem;
-    flex-direction: column;
-  }
-
-  .puzzle-details:nth-child(1) {
-    margin-top: 0;
-  }
-
-  .main-reward-title {
-    font-size: 1.6rem;
-    line-height: 1.9rem;
-    color: #212b36;
-  }
-
-  .reward-subtitle {
-    font-size: 1.2rem;
-    line-height: 1.4rem;
-    color: #6b6b6b;
+  .title {
+    margin-left: 0;
+    margin-right: 0;
   }
 }
