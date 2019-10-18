@@ -73,9 +73,10 @@ jobs:
         run: |
           for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
             echo "Wait for tekton task: ${TASKRUN_NAME}"
-            NEXT_WAIT_TIME=0
-            until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" = "Running" ] || [ $NEXT_WAIT_TIME -eq 300 ]; do
-              sleep $(( NEXT_WAIT_TIME+=5 ))
+            WAIT_TIME=0
+            until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" = "Running" ] || [ $WAIT_TIME -gt 180 ]; do
+              (( WAIT_TIME+=5 ))
+              sleep 5
             done
           done
       - name: Stream tekton logs
@@ -84,9 +85,15 @@ jobs:
       - name: Check task result
         run: |
           for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
+            WAIT_TIME=0
+            until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" != "Running" ] || [ $WAIT_TIME -gt 10 ]; do
+              (( WAIT_TIME+=1 ))
+              echo "Task ${TASKRUN_NAME} is still running, wait for 1 second"
+              sleep 1
+            done
             REASON=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath={.status.conditions[0].reason})
             if [ "$REASON" != "Succeeded" ]; then
-              echo "Taskrun not succeeded, fail the job"
+              echo "Taskrun status is ${REASON}, fail the job"
               exit 1
             fi
           done
