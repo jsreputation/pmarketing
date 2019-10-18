@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit {
       )
       .subscribe(
         campaigns => {
-          console.log(campaigns);
           this.campaignId = campaigns[0].id;
         },
         () => {
