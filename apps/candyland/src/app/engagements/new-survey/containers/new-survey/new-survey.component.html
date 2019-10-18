@@ -26,13 +26,11 @@
   </header>
   <section class="content form-limiter">
     <div class="phonepreview-wrapper">
-      <div class="survey-form">
-        <mat-card class="game-graphic">
-          <div class="temp-engagement-title">
-            <h2 class="sub-title">
-              Messages
-            </h2>
-          </div>
+      <div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Messages
+          </h2>
           <div class="messages-form" >
             <div class="control-input">
               <mat-form-field class="messages-input">
@@ -54,12 +52,10 @@
             </div>
           </div>
         </mat-card>
-        <mat-card class="game-graphic">
-          <div class="temp-engagement-title">
-            <h2 class="sub-title">
-              Questions
-            </h2>
-          </div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Questions
+          </h2>
 
           <!--questions form array-->
           <div cdkDropList
@@ -97,60 +93,56 @@
           </cl-question-type>
         </mat-card>
 
-        <mat-card class="game-graphic">
-          <div class="temp-engagement-title">
-            <h2 class="sub-title">
-              Graphics
-            </h2>
-          </div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Graphics
+          </h2>
           <div class="game-form" *ngIf="color">
-            <div class="survey-select-color">
-              <div class="control-input">
-                <mat-form-field color="primary">
-                  <mat-label>Progress Bar Color</mat-label>
-                  <mat-select [formControlName]="'color'">
-                    <mat-select-trigger>
-                      <div class="select-color">
-                        <div class="select-color-preview" [ngClass]="color?.value + '-material'">
-                        </div>
-                        <p class="select-color-text">
-                          {{color.value}}
-                        </p>
+            <div class="control-input">
+              <mat-form-field color="primary">
+                <mat-label>Progress Bar Color</mat-label>
+                <mat-select [formControlName]="'color'">
+                  <mat-select-trigger>
+                    <div class="select-color">
+                      <div class="select-color-preview" [ngClass]="color?.value + '-material'">
                       </div>
-                    </mat-select-trigger>
-                    <mat-option [value]="'primary'">
-                      <div class="select-color">
-                        <div class="select-color-preview primary-material">
-                        </div>
-                        <span class="select-color-text">
-                        Primary
-                      </span>
+                      <p class="select-color-text">
+                        {{color.value}}
+                      </p>
+                    </div>
+                  </mat-select-trigger>
+                  <mat-option [value]="'primary'">
+                    <div class="select-color">
+                      <div class="select-color-preview primary-material">
                       </div>
-                    </mat-option>
-                    <mat-option [value]="'accent'">
-                      <div class="select-color">
-                        <div class="select-color-preview accent-material">
-                        </div>
-                        <span class="select-color-text">
-                        Accent
-                      </span>
+                      <span class="select-color-text">
+                      Primary
+                    </span>
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'accent'">
+                    <div class="select-color">
+                      <div class="select-color-preview accent-material">
                       </div>
-                    </mat-option>
-                    <mat-option [value]="'warn'">
-                      <div class="select-color">
-                        <div class="select-color-preview warn-material">
-                        </div>
-                        <span class="select-color-text">
-                        Warn
-                      </span>
+                      <span class="select-color-text">
+                      Accent
+                    </span>
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'warn'">
+                    <div class="select-color">
+                      <div class="select-color-preview warn-material">
                       </div>
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
+                      <span class="select-color-text">
+                      Warn
+                    </span>
+                    </div>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
-            <div class="survey-background-box">
-              <h3 class="game-title">
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
                 Card Background
               </h3>
               <div class="game-gift-box_field">
@@ -158,15 +150,14 @@
                   *ngIf="surveyData.cardBackground"
                   formControlName="cardBackground"
                   [isRequired]="cardBackground.hasError('required') && cardBackground.touched"
-                  class="game-selected-graphic"
                   [graphicList]="surveyData.cardBackground"
                 >
                 </cl-select-graphic-wrap>
               </div>
             </div>
 
-            <div class="survey-background">
-              <h3 class="game-title">
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
                 Background
               </h3>
               <div class="game-gift-box_field">
@@ -174,7 +165,6 @@
                   *ngIf="surveyData.background"
                   formControlName="background"
                   [isRequired]="background.hasError('required') && background.touched"
-                  class="game-selected-graphic"
                   [graphicList]="surveyData.background"
                 >
                 </cl-select-graphic-wrap>
@@ -182,12 +172,10 @@
             </div>
           </div>
         </mat-card>
-        <mat-card class="game-graphic">
-          <div class="temp-engagement-title">
-            <h2 class="sub-title">
-              Button
-            </h2>
-          </div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Button
+          </h2>
           <div class="messages-form">
             <div class="control-input">
               <mat-form-field class="messages-input">

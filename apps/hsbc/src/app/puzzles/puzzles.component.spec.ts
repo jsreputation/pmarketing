@@ -5,6 +5,7 @@ import { MatListModule } from '@angular/material';
 import { CampaignModule, VouchersModule, PuzzlesModule, StampModule, StampService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
+import { NavigateToolbarComponent } from '../navigate-toolbar/navigate-toolbar.component';
 
 describe('PuzzlesComponent', () => {
   let component: PuzzlesComponent;
@@ -15,7 +16,10 @@ describe('PuzzlesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PuzzlesComponent],
+      declarations: [
+        PuzzlesComponent,
+        NavigateToolbarComponent
+      ],
       imports: [
         MatListModule,
         PuzzlesModule,

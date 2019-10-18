@@ -1,51 +1,22 @@
-<mat-tab-group mat-stretch-tabs class="tab-group wallet-tabs" [selectedIndex]="selectedTab">
-    <mat-tab label="My Wallet">
-        <div class="tab-group__content">
-            <h1>My Puzzles</h1>
-            <mat-card *ngFor="let campaign of campaigns" routerLink="/puzzles/{{campaign.id}}" matRipple>
-                <div class="puzzle-content">
-                    <div class="puzzle-img__wrapper">
-                        <img class="puzzle-img" src="assets/logo-small.png">
-                    </div>
-                    <div class="puzzle-details">
-                        <h1>
-                            {{campaign.name}}
-                        </h1>
-                    </div>
-                </div>
-                <mat-icon>
-                    arrow_forward_ios
-                </mat-icon>
-            </mat-card>
-            <h1>My Rewards</h1>
-            <perx-core-vouchers
-                (route)="onRoute($event)"
-                [filter]="'issued'"
-                [iconDisplay]="'arrow_forward_ios'"
-                [showTitle]="true"
-                [showMerchant]="false"
-                [showExpireDate]="false"
-                [showRedeemedDate]="false"
-                [showRedeemedIcon]="false"
-            ></perx-core-vouchers>
-        </div>
-    </mat-tab>
-    <mat-tab label="History">
-        <div class="tab-group__content">
-            <h1>Redeemed Rewards</h1>
-            <perx-core-vouchers
-                (route)="onRoute($event)"
-                [canSelectRedeemed]="true"
-                [filter]="'redeemed'"
-                [iconDisplay]="'arrow_forward_ios'"
-                [showTitle]="true"
-                [showMerchant]="false"
-                [showExpireDate]="false"
-                [showRedeemedDate]="true"
-                [showRedeemedIcon]="false"
-            ></perx-core-vouchers>
-        </div>
-    </mat-tab>
-</mat-tab-group>
+<div class="puzzle-list">
+    <h1>My Games</h1>
+    <perx-core-puzzle-list *ngIf="campaignId"
+        (selected)="selected($event)"
+        [campaignId]="campaignId"
+        (completed)="completed()">
+    </perx-core-puzzle-list>
+
+    <h1>My Rewards</h1>
+    <perx-core-vouchers
+        (route)="onRoute($event)"
+        [filter]="'issued'"
+        [iconDisplay]="'arrow_forward_ios'"
+        [showTitle]="true"
+        [showMerchant]="false"
+        [showExpireDate]="false"
+        [showRedeemedDate]="false"
+        [showRedeemedIcon]="false"
+    ></perx-core-vouchers>
+</div>
 
 <app-navigate-toolbar></app-navigate-toolbar>
