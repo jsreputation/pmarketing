@@ -15,23 +15,58 @@ const stubTabs: ITabConfigExtended[] = [
   , {
     filterKey: null,
     filterValue: null,
-    tabName: 'Category 1',
+    tabName: 'Food & Beverage',
     rewardsList: null,
-    rewardsType: 'CATEGORY_1'
+    rewardsType: 'Food & Beverage'
   }, {
     filterKey: null,
     filterValue: null,
-    tabName: 'Category 2',
+    tabName: 'Travel',
     rewardsList: null,
-    rewardsType: 'CATEGORY_2'
+    rewardsType: 'Travel'
   },
   {
     filterKey: null,
     filterValue: null,
-    tabName: 'Category 3',
+    tabName: 'Electronics',
     rewardsList: null,
-    rewardsType: 'CATEGORY_3'
-  }
+    rewardsType: 'Electronics'
+  },
+  {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Wellness',
+    rewardsList: null,
+    rewardsType: 'Wellness'
+  },
+  {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Entertainment',
+    rewardsList: null,
+    rewardsType: 'Entertainment'
+  },
+  {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Shopping',
+    rewardsList: null,
+    rewardsType: 'Shopping'
+  },
+  {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Merchant Self',
+    rewardsList: null,
+    rewardsType: 'Merchant Self'
+  },
+  {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Others',
+    rewardsList: null,
+    rewardsType: 'Others'
+  },
 ];
 
 @Component({
