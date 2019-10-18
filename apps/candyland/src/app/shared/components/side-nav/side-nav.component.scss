@@ -23,7 +23,7 @@
   &-actions {
     position: relative;
     padding: 0 0 0 1.4rem;
-    margin-top: auto;
+    margin-top: ($vertical-padding * 0.25);
     margin-bottom: ($vertical-padding * 0.5);
     display: flex;
     justify-content: space-between;
@@ -64,6 +64,7 @@
     max-height: 60vh;
     overflow: auto;
     padding: 1.6rem 0 0 0;
+    margin-bottom: auto;
   }
 }
 

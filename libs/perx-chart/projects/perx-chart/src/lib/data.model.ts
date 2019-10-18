@@ -33,3 +33,22 @@ export interface SingleChartData {
 }
 
 export type ChartData = MultipleChartData | SingleChartData;
+
+export class DataSerializer {
+  public static from(dataDto: IData): IData {
+    if (!(dataDto && dataDto.cols)) {
+      return null;
+    }
+
+    const cols = dataDto.cols.map( col => {
+      col.display_name = col.display_name
+        .charAt(0)
+        .toUpperCase() + col.display_name
+        .slice(1)
+        .replace(/_/g, ' ');
+      return col;
+    });
+    dataDto.cols = cols;
+    return dataDto;
+  }
+}

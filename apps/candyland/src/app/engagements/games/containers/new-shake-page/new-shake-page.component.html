@@ -22,12 +22,10 @@
   <section class="content form-limiter">
     <div class="phonepreview-wrapper">
       <div class="tree-wrap-fields">
-        <mat-card class="game-graphic">
-          <div class="temp-engagement-title">
-            <h2 class="sub-title">
-              Messages
-            </h2>
-          </div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Messages
+          </h2>
           <div class="messages-form">
             <div class="control-input">
               <mat-form-field class="messages-input">
@@ -50,21 +48,21 @@
           </div>
         </mat-card>
 
-        <mat-card class="game-graphic">
-          <div class="temp-engagement-title">
-            <h2 class="sub-title">
-              Game graphic
-            </h2>
-          </div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Game graphic
+          </h2>
           <div class="game-form">
-            <h3 class="game-title">
-              Tree
-            </h3>
 
-            <div class="game-tree-wrap">
-              <cl-select-graphic *ngIf="shakeTreeData.gamesTree" formControlName="treeType"
-                [graphicList]="shakeTreeData.gamesTree">
-              </cl-select-graphic>
+            <div class="control-img_asset">              
+              <h3 class="card-fieldset-label">
+                Tree
+              </h3>
+              <div class="game-tree-wrap">
+                <cl-select-graphic *ngIf="shakeTreeData.gamesTree" formControlName="treeType"
+                  [graphicList]="shakeTreeData.gamesTree">
+                </cl-select-graphic>
+              </div>
             </div>
 
             <div class="game-number-gifts">
@@ -80,13 +78,12 @@
               </div>
             </div>
 
-            <div class="game-gift-box">
-              <h3 class="game-title">
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
                 Gift box
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap *ngIf="shakeTreeData.giftBox"
-                                        class="game-selected-graphic"
                                         formControlName="giftBox"
                                         [isRequired]="giftBox.hasError('required') && giftBox.touched"
                                         [graphicList]="shakeTreeData.giftBox"
@@ -95,15 +92,14 @@
               </div>
             </div>
 
-            <div class="game-background-box">
-              <h3 class="game-title">
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
                 Background
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap *ngIf="shakeTreeData.background"
                                         formControlName="background"
                                         [isRequired]="background.hasError('required') && background.touched"
-                                        class="game-selected-graphic"
                                         [graphicList]="shakeTreeData.background"
                                         (selectGraphic)="setSelectGiftBox($event)">
                 </cl-select-graphic-wrap>
@@ -113,12 +109,10 @@
 
         </mat-card>
 
-        <mat-card class="game-button game-graphic">
-          <div class="temp-engagement-title">
-            <h2 class="sub-title">
-              Button
-            </h2>
-          </div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Button
+          </h2>
           <div class="messages-form">
             <div class="control-input">
               <mat-form-field class="messages-input">

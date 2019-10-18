@@ -17,6 +17,6 @@
     <perx-core-rewards-collection [rewardsList]="rewards$"></perx-core-rewards-collection>
   </div>
   <div class="rewars-collection">
-    <perx-core-rewards-list-tabbed [tabs$]="tabs$"></perx-core-rewards-list-tabbed>
+    <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)"></perx-core-rewards-list-tabbed>
   </div>
 </div>
