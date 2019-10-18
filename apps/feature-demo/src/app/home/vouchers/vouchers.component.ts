@@ -3,7 +3,6 @@ import { Voucher, VoucherState, IVoucherService } from '@perx/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { PageType, AnalyticsService } from 'src/app/analytics.service';
 
 @Component({
   selector: 'app-vouchers',
@@ -22,15 +21,9 @@ export class VouchersComponent implements OnInit {
   @Output()
   public tapped: EventEmitter<Voucher> = new EventEmitter();
 
-  constructor(private router: Router, private vouchersService: IVoucherService, private analytics: AnalyticsService) { }
+  constructor(private router: Router, private vouchersService: IVoucherService) { }
 
   public ngOnInit(): void {
-    this.analytics.addEvent({
-      pageName: 'rewards:vouchers',
-      pageType: PageType.landingPage,
-      siteSectionLevel2: 'rewards:vouchers',
-      siteSectionLevel3: 'rewards:vouchers'
-    });
     const feed = this.vouchersService.getAll();
     this.savedVouchers = feed
       .pipe(
