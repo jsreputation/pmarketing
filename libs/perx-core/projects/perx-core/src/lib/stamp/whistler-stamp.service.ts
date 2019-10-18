@@ -138,7 +138,7 @@ export class WhistlerStampService implements StampService {
         switchMap(correctEntityAttribute => this.http.get<IJsonApiItemPayload<AttbsObjStamp>>(
           `${this.baseUrl}/loyalty/engagements/${correctEntityAttribute.engagement_id}`
         )),
-        map((res) => WhistlerStampService.WStampCardToStampCard(res.data))
+        map((res) => ({...WhistlerStampService.WStampCardToStampCard(res.data), campaignId: campaignId} ))
       );
   }
 

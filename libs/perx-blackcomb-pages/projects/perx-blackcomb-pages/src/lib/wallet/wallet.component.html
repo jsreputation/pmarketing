@@ -1,17 +1,17 @@
 <div class="tab-group__content">
-    <div *ngIf="campaigns$ && (campaigns$ | async) as campaigns">
-        <h1 *ngIf="campaigns.length>0">My Stamp Card</h1>
-        <a *ngFor="let campaign of campaigns" [routerLink]="['/stamp/' + campaign.campaignId]">
+    <div *ngIf="stampCards$ && (stampCards$ | async) as stampCards">
+        <h1 *ngIf="stampCards.length>0">My Stamp Card</h1>
+        <a *ngFor="let stampCard of stampCards" [routerLink]="['/stamp/' + stampCard.campaignId]">
             <mat-card matRipple>
                 <div class="puzzle-content">
                     <div class="puzzle-img__wrapper">
-                      <img class="puzzle-img" src="{{campaign.displayProperties.bgImage}}">
+                      <img class="puzzle-img" src="{{stampCard.displayProperties.bgImage}}">
                     </div>
                     <div class="puzzle-details">
                         <span class='main-reward-title'>
-                            {{campaign.campaignTitle}}
+                            {{stampCard.title}}
                         </span>
-                        <span class="reward-subtitle">{{campaign.campaignDescription}}</span>
+                        <span class="reward-subtitle">{{stampCard.subTitle}}</span>
                     </div>
                 </div>
             </mat-card>

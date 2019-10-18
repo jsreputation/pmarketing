@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ICampaign, ICampaignService, IVoucherService, VoucherState, Voucher, CampaignType, StampService } from '@perx/core';
+import { ICampaign, ICampaignService, IVoucherService, VoucherState, Voucher, CampaignType, StampService, IStampCard } from '@perx/core';
 import { Router } from '@angular/router';
 import { Observable, combineLatest, Subject } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
@@ -10,9 +10,9 @@ import { map, mergeMap } from 'rxjs/operators';
   styleUrls: ['./wallet.component.scss']
 })
 export class WalletComponent implements OnInit, OnDestroy {
-  public campaigns$: Observable<ICampaign[]>;
+  public stampCards$: Observable<IStampCard[]>;
   public vouchers$: Observable<Voucher[]>;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   public filter: string[];
 
   constructor(
@@ -23,14 +23,11 @@ export class WalletComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.campaigns$ = this.campaignService.getCampaigns()
+    this.stampCards$ = this.campaignService.getCampaigns()
       .pipe(
         map((campaigns: ICampaign[]) => campaigns.filter(c => c.type === CampaignType.stamp)),
         mergeMap((res) =>  combineLatest(
-          ...res.map(c => this.stampService.getCurrentCard(c.id)
-            .pipe(
-              map(res2 => ({...res2, campaignId: c.id, campaignTitle: c.name, campaignDescription: c.description})))
-          )
+          ...res.map(c => this.stampService.getCurrentCard(c.id))
         )
       ));
     this.vouchers$ = this.vouchersService.getAll();
