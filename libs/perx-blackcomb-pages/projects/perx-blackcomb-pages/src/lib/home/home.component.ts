@@ -128,21 +128,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  private chunkArr(array: any, size: number) {
-    const chunked_arr = [];
+  private chunkArr(array: any, size: number): any {
+    const chunkedArr = [];
     let index = 0;
     while (index < array.length) {
-      chunked_arr.push(array.slice(index, size + index));
+      chunkedArr.push(array.slice(index, size + index));
       index += size;
     }
-    return chunked_arr;
+    return chunkedArr;
   }
 
-  private initCampaign$() {
+  private initCampaign$(): void {
     this.campaign$ = this.campaign.asObservable().pipe(
-      scan((acc, curr) => {
-        return [...acc, ...curr ? curr : []];
-      }, [])
+      scan((acc, curr) => [...acc, ...curr ? curr : []]
+      , [])
     );
   }
 
