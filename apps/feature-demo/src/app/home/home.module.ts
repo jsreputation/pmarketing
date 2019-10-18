@@ -12,7 +12,7 @@ import { RewardsCardsComponent } from './rewards-cards/rewards-cards.component';
 import { CatalogsComponent } from './catalogs/catalogs.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-import { UtilsModule, LoyaltyModule, ConfigModule } from '@perx/core';
+import { UtilsModule, LoyaltyModule, ConfigModule, RewardsModule as PerxRewardsModule} from '@perx/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NoRenewaleInNamePipe } from './no-renewale-in-name.pipe';
 import { environment } from 'src/environments/environment';
@@ -45,7 +45,8 @@ import { PopupComponent } from './news-feed/popup/popup.component';
     NgxMultiLineEllipsisModule,
     UtilsModule,
     ScrollingModule,
-    LoyaltyModule
+    LoyaltyModule,
+    PerxRewardsModule
   ],
   bootstrap: [
   ],

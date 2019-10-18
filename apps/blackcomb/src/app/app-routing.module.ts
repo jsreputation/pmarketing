@@ -46,7 +46,7 @@ const routes: Routes = [
         loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule),
         canActivate: [ProtectedGuard]
       },
-      { path: 'reward-detail', component: RewardDetailsComponent, canActivate: [ProtectedGuard] },
+      { path: 'reward-detail/:id', component: RewardDetailsComponent, canActivate: [ProtectedGuard] },
       { path: 'loading', component: LoadingComponent },
       { path: 'c/:key', component: ContentComponent, canActivate: [ProtectedGuard] },
     ]

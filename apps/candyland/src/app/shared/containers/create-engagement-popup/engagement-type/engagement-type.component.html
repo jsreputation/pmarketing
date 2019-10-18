@@ -1,7 +1,9 @@
-<cl-type-item *ngFor="let typeItem of graphicList"
-              [typeItem]="typeItem"
-              [checkedType]="selectedType"
-              (selectType)="setTypeEngagement($event)"
-              clInkListener
->
-</cl-type-item>
+<div class="engagement-flex">
+  <cl-type-item *ngFor="let typeItem of graphicList"
+                [typeItem]="typeItem"
+                [checkedType]="selectedType"
+                (selectType)="setTypeEngagement($event)"
+                clInkListener
+  >
+  </cl-type-item>
+</div>
