@@ -19,6 +19,7 @@ interface IWMetaData {
 })
 export class WhistlerRewardsService implements RewardsService {
   private baseUrl: string;
+  // basic local cache
   private rewards: { [k: number]: IReward } = {};
 
   constructor(private http: HttpClient, config: Config, private merchantService: IMerchantsService) {
@@ -70,6 +71,8 @@ export class WhistlerRewardsService implements RewardsService {
       let meta: IWMetaData = { currentPage: 1 };
       // we do not want to get all pages in parallel, so we get pages one after the other in order not to dos the server
       const process = (res: IReward[]) => {
+        // save each reward in local cache
+        res.forEach(r => this.rewards[r.id] = r);
         meta = res[0].rawPayload;
         current = current.concat(res);
         subject.next(current);
@@ -136,7 +139,9 @@ export class WhistlerRewardsService implements RewardsService {
           metaData
         )
       )
-      )
+      ),
+      // save each reward in local cache
+      tap((rewards: IReward[]) => rewards.forEach(r => this.rewards[r.id] = r))
     );
   }
 
@@ -160,6 +165,7 @@ export class WhistlerRewardsService implements RewardsService {
         }),
         map(([reward, merchant]: [IJsonApiItemPayload<IRewardEntityAttributes>, IMerchant | null]) =>
           WhistlerRewardsService.WRewardToReward(reward.data, merchant)),
+        // save reward in local cache
         tap((reward: IReward) => this.rewards[id] = reward)
       );
   }
