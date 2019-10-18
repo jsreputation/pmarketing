@@ -1,7 +1,9 @@
 <!-- Template stuff aimed at being replaced by real components -->
 <div class="background-padding-offset">
     <div class="puzzles-list-container">
-        <h1>My Puzzles</h1>
+        <h1>My Games</h1>
         <perx-core-puzzle-list (selected)="selected($event)" [campaignId]="campaignId" (completed)="completed()"></perx-core-puzzle-list>
     </div>
 </div>
+
+<app-navigate-toolbar></app-navigate-toolbar>
