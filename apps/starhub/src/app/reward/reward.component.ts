@@ -50,7 +50,7 @@ export class RewardComponent implements OnInit {
         this.macaron = this.macaronService.getMacaron(reward);
         this.isRewardsDetailsFetched = true;
         if (reward.inventory && reward.inventory.rewardLimitPerUserBalance === 0 || this.macaron !== null) {
-          this.isButtonEnable = this.macaron.isButtonEnabled;
+          this.isButtonEnable = false;
         }
       });
   }
