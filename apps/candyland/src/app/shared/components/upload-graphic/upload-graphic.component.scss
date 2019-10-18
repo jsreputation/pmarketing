@@ -1,6 +1,12 @@
 @import '~@angular/material/theming';
 @import "variables";
 
+::ng-deep {
+  .upload-btn span ~ span {
+    display: none;
+  }
+}
+
 :host {
   display: block;
   width: 100%;
@@ -112,6 +118,7 @@
     background: $gray;
     position: relative;
     cursor: pointer;
+    box-sizing: border-box;
 
     @include check-select;
   }
@@ -166,7 +173,7 @@
     height: 3rem;
   }
 
-  .image-wrap {
+  .image-wrap::after {
     border-width: 1px;
   }
 

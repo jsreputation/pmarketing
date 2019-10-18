@@ -16,7 +16,7 @@
     <div class="title">Featured Rewards</div>
     <perx-core-rewards-collection [rewardsList]="rewards$"></perx-core-rewards-collection>
   </div>
-  <div class="rewards-collection">
-    <perx-core-rewards-list-tabbed [tabs$]="tabs$"></perx-core-rewards-list-tabbed>
+  <div class="rewars-collection">
+    <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)"></perx-core-rewards-list-tabbed>
   </div>
 </div>
