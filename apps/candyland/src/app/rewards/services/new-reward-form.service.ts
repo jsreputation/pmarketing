@@ -18,6 +18,7 @@ export class NewRewardFormService {
         cost: this.fb.control(null, [Validators.required]),
         description: [],
         termsAndCondition: [],
+        tags: [],
         merchantId: [null],
       }),
       vouchers: this.fb.group({

@@ -11,6 +11,7 @@ declare interface IRewardEntityForm {
     cost: number;
     description: string;
     termsAndCondition: string;
+    tags?: string[];
     merchantId: string | null;
   };
   vouchers?: {
