@@ -211,4 +211,64 @@ describe('V4AuthenticationService', () => {
     authService.setInterruptedUrl(url);
     expect(authService.getInterruptedUrl()).toBe(url);
   }));
+
+  it('should clear token', inject([V4AuthenticationService, TokenStorage],
+    (authService: V4AuthenticationService, tokenSotrage: TokenStorage) => {
+      const spy = spyOn(tokenSotrage, 'clearAppInfoProperty');
+      authService.logout();
+      expect(spy).toHaveBeenCalled();
+    }));
+  it('should get token', inject([V4AuthenticationService, TokenStorage],
+    (authService: V4AuthenticationService, tokenSotrage: TokenStorage) => {
+      const spy = spyOn(tokenSotrage, 'getAppInfoProperty');
+      authService.getAppAccessToken();
+      expect(spy).toHaveBeenCalled();
+    }));
+  it('should get AccessToken', inject([V4AuthenticationService],
+    (authService: V4AuthenticationService) => {
+      const spyUser = spyOn(authService, 'getUserAccessToken');
+      const spyApp = spyOn(authService, 'getAppAccessToken');
+      authService.getAccessToken();
+      expect(spyUser).toHaveBeenCalled();
+      spyUser.and.returnValue('test');
+      authService.getAccessToken();
+      expect(spyApp).toHaveBeenCalled();
+    }));
+  it('should handle error then we call forgotPassword', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      const spy = spyOn(console, 'log');
+      spyOn(http, 'get').and.returnValue(throwError('error'));
+      try {
+        authService.forgotPassword('').subscribe(() => { });
+        tick();
+      } catch {
+        expect(spy).toHaveBeenCalledWith('error');
+      }
+    })));
+  it('should handle error then we call forgotPassword', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      const spy = spyOn(console, 'log');
+      spyOn(http, 'patch').and.returnValue(throwError('error'));
+      try {
+        authService.resetPassword({
+          phone: '1',
+          newPassword: '2',
+          otp: '3',
+          passwordConfirmation: '4'
+        }).subscribe(() => { });
+        tick();
+      } catch {
+        expect(spy).toHaveBeenCalledWith('error');
+      }
+    })));
+
+  it('should handle getUserAccessToken', inject([V4AuthenticationService, TokenStorage],
+    (authService: V4AuthenticationService, tokenSotrage: TokenStorage) => {
+      const spyGet = spyOn(tokenSotrage, 'getAppInfoProperty');
+      const spySet = spyOn(tokenSotrage, 'setAppInfoProperty');
+      authService.getUserAccessToken();
+      authService.saveUserAccessToken('token');
+      expect(spyGet).toHaveBeenCalledWith('userAccessToken');
+      expect(spySet).toHaveBeenCalledWith('token', 'userAccessToken');
+    }));
 });
