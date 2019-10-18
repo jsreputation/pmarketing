@@ -12,7 +12,6 @@ import { map, mergeMap } from 'rxjs/operators';
 export class WalletComponent implements OnInit, OnDestroy {
   public campaigns$: Observable<ICampaign[]>;
   public vouchers$: Observable<Voucher[]>;
-  public
   private destroy$: Subject<any> = new Subject();
   public filter: string[];
 
@@ -34,8 +33,8 @@ export class WalletComponent implements OnInit, OnDestroy {
           )
         )
       ));
-      this.vouchers$ = this.vouchersService.getAll();
-      this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
+    this.vouchers$ = this.vouchersService.getAll();
+    this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
   }
 
   public voucherSelected(voucher: Voucher): void {
@@ -47,4 +46,3 @@ export class WalletComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 }
-
