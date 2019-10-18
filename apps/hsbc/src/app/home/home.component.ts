@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ICampaignService, ICampaign, CampaignType, NotificationService } from '@perx/core';
+import { ICampaignService, CampaignType, NotificationService, IStampCard } from '@perx/core';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public campaigns: ICampaign[];
+  public campaignId: number;
   public selectedTab: number = 0;
 
   constructor(
@@ -26,7 +26,8 @@ export class HomeComponent implements OnInit {
       )
       .subscribe(
         campaigns => {
-          this.campaigns = campaigns;
+          console.log(campaigns);
+          this.campaignId = campaigns[0].id;
         },
         () => {
           this.notificationService.addPopup(
@@ -47,5 +48,16 @@ export class HomeComponent implements OnInit {
 
   public onRoute(id: string): void {
     this.router.navigate([`/voucher/${id}`]);
+  }
+
+  public selected(puzzle: IStampCard): void {
+    this.router.navigate([`/puzzle/${this.campaignId}/${puzzle.id}`]);
+  }
+
+  public completed(): void {
+    this.notificationService.addPopup({
+      // tslint:disable-next-line: max-line-length
+      text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of puzzle pieces. Don\'t forget to redeem your earned rewards!'
+    });
   }
 }
