@@ -5,7 +5,7 @@ import {
   IProfile,
   ICustomProperties,
 } from './profile.model';
-import { IWhistlerProfileAttributes } from '@perx/whistler'
+import { IWhistlerProfileAttributes } from '@perx/whistler';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -43,13 +43,13 @@ export class WhistlerProfileService extends ProfileService {
     const url = `${this.apiHost}/cognito/users`;
     return this.http.get<IJsonApiListPayload<IWhistlerProfileAttributes>>(url)
       .pipe(
-        map((arrayOfJsonApiUsers:  IJsonApiListPayload<IWhistlerProfileAttributes>) => (
+        map((arrayOfJsonApiUsers: IJsonApiListPayload<IWhistlerProfileAttributes>) => (
             arrayOfJsonApiUsers.data
-              .filter(JsonApiUser => JsonApiUser.attributes['primary_identifier'] === localStorePrimaryIdentifier)[0]
+              .filter(JsonApiUser => JsonApiUser.attributes.primary_identifier === localStorePrimaryIdentifier)[0]
         )),
         map((JsonApiUser: IJsonApiItem<IWhistlerProfileAttributes>) =>
           WhistlerProfileService.WhistlerProfileToProfile(JsonApiUser))
-      )
+      );
   }
 
   public setCustomProperties(): Observable<void> {
@@ -69,4 +69,3 @@ export class WhistlerProfileService extends ProfileService {
   }
 
 }
-
