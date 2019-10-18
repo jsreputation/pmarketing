@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RewardComponent } from './reward.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RewardsService, NotificationService, IVoucherService } from '@perx/core';
+import { RewardsService, NotificationService, IVoucherService, RewardsModule } from '@perx/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward-detail/reward-detail.component';
 import { ExpireTimerComponent } from './expire-timer/expire-timer.component';
@@ -33,7 +33,8 @@ describe('RewardComponent', () => {
       declarations: [RewardComponent, LocationShortFormatComponent, RewardDetailComponent, ExpireTimerComponent],
       imports: [
         MatIconModule,
-        RouterTestingModule
+        RouterTestingModule,
+        RewardsModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
@@ -87,7 +88,6 @@ describe('RewardComponent', () => {
       component.ngOnInit();
       tick();
       expect(rewardsServiceSpy).toHaveBeenCalled();
-      expect(component.isButtonEnable).toBe(false);
     }));
 
     it('should call rewards service and isButtonEnable should be true', fakeAsync(() => {
@@ -124,7 +124,7 @@ describe('RewardComponent', () => {
   });
 
   it('should save reward', () => {
-    component.reward = {
+    component.reward$ = of({
       id: 1,
       name: 'Get a Free Coke',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
@@ -138,7 +138,7 @@ describe('RewardComponent', () => {
       termsAndConditions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       howToRedeem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       merchantId: 2
-    };
+    });
     const vouchersService: IVoucherService = fixture.debugElement.injector
       .get<IVoucherService>(IVoucherService as Type<IVoucherService>);
     const vouchersServiceSpy = spyOn(vouchersService, 'issueReward').and.returnValue(
@@ -146,7 +146,21 @@ describe('RewardComponent', () => {
     );
     const router: Router = fixture.debugElement.injector.get(Router);
     spyOn(router, 'navigate');
-    component.save();
+    component.save({
+      id: 1,
+      name: 'Get a Free Coke',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      subtitle: 'string',
+      validFrom: new Date('2018-12-16T03:24:00'),
+      validTo: new Date('2019-11-17T03:24:00'),
+      rewardThumbnail: 'https://picsum.photos/300/200?random=1',
+      rewardBanner: 'https://picsum.photos/300/200?random=2',
+      merchantImg: 'https://picsum.photos/300/200?random=3',
+      merchantName: 'Pizza Hut',
+      termsAndConditions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      howToRedeem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      merchantId: 2
+    });
     expect(vouchersServiceSpy).toHaveBeenCalled();
   });
 
