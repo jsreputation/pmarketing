@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ICampaignService, ICampaign, RewardsService, IReward, ITabConfigExtended } from '@perx/core';
 import { Observable, BehaviorSubject, forkJoin, of, Subject } from 'rxjs';
 import { tap, takeUntil } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 const stubTabs: ITabConfigExtended[] = [
   {
@@ -82,7 +83,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private campaingService: ICampaignService,
-    private rewardsService: RewardsService
+    private rewardsService: RewardsService,
+    private router: Router
   ) { }
 
   public ngOnInit(): void {
@@ -109,5 +111,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     )).subscribe(() => {
       this.tabs$.next(this.staticTab);
     });
+  }
+
+  public goToReward(reward: IReward): void {
+    this.router.navigate([`/reward-detail/${reward.id}`]);
   }
 }
