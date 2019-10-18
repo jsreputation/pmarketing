@@ -38,13 +38,9 @@
 
     margin: 0;
     color: $secondary-color;
-  }
-
-  &-sub-title {
-    @include typo-subtitle1;
-
-    margin-top: 1.5rem;
-    color: $secondary-color;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   &-input-group {
@@ -139,11 +135,6 @@
       max-width: 26em; //used ems because this has to do with character length / readability
     }
   }
-}
-
-.nested-type {
-  padding: 0 ($horizontal-padding * 0.75);
-  transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
 }
 
 .actions-close {

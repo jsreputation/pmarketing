@@ -1,13 +1,29 @@
 @import "variables";
 
+.engagement-flex {
+  display: flex;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  margin-left: -($horizontal-padding * 0.25);
+  margin-right: -($horizontal-padding * 0.25);
+
+  > * {
+    flex: 1 1 12.8rem;
+    padding: ($horizontal-padding * 0.25);
+    max-width: 16rem;
+  }
+}
+
 .engagement-selector {
   @include check-select;
 
   border-radius: $border-radius-lg;
   cursor: pointer;
   position: relative;
-  width: ($horizontal-padding * 5);
-  height: ($vertical-padding * 5);
+  width: 100%;
+  min-height: ($vertical-padding * 4);
   background-color: $lightest-gray;
   padding: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
   display: flex;
@@ -19,8 +35,9 @@
     margin: auto 0;
 
     img {
-      max-width: 100%;
+      max-width: 80%;
       height: auto;
+      margin-bottom: 1.2rem;
     }
 
     &-full {
@@ -28,6 +45,8 @@
 
       img {
         width: 100%;
+        display: block;
+        max-width: initial;
       }
     }
   }
@@ -37,28 +56,9 @@
 
     color: $base-font-color;
     text-align: center;
-  }
-}
-
-.game {
-  &-title {
-    @include typo-input;
-
-    color: $secondary-color;
-    margin: ($vertical-padding * 0.5) 0;
-  }
-
-  &-graphic, &-button {
-    display: block;
-    margin-top: ($vertical-padding * 0.5);
-  }
-}
-
-mat-card.game-graphic {
-  padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75) $vertical-padding;
-
-  &:first-child {
-    margin-top: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
