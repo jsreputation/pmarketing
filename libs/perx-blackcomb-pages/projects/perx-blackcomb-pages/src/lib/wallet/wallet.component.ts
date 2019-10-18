@@ -12,6 +12,7 @@ import { map, mergeMap } from 'rxjs/operators';
 export class WalletComponent implements OnInit, OnDestroy {
   public campaigns$: Observable<ICampaign[]>;
   public vouchers$: Observable<Voucher[]>;
+  public
   private destroy$: Subject<any> = new Subject();
   public filter: string[];
 
@@ -23,27 +24,18 @@ export class WalletComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.stampCard$ = this.route.paramMap
+    this.campaigns$ = this.campaignService.getCampaigns()
       .pipe(
-        filter((params: ParamMap) => params.has('id')),
-        switchMap((params: ParamMap) => {
-          const id: string = params.get('id');
-          const idN = Number.parseInt(id, 10);
-          return this.stampService.getCurrentCard(idN);
-        }),
-        takeUntil(this.destroy$)
-      );
-    this.stampCard$.subscribe(
-      (stampCard: IStampCard) => {
-        this.title = stampCard.title;
-        this.subTitle = stampCard.subTitle;
-        this.background = stampCard.displayProperties.bgImage;
-        this.cardBackground = stampCard.displayProperties.cardBgImage;
-      },
-      () => {
-        this.router.navigate(['/wallet']);
-      }
-    );
+        map((campaigns: ICampaign[]) => campaigns.filter(c => c.type === CampaignType.stamp)),
+        mergeMap((res) =>  combineLatest(
+          ...res.map(c => this.stampService.getCurrentCard(c.id)
+            .pipe(
+              map(res2 => ({...res2, campaignId: c.id, campaignTitle: c.name, campaignDescription: c.description})))
+          )
+        )
+      ));
+      this.vouchers$ = this.vouchersService.getAll();
+      this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
   }
 
   public voucherSelected(voucher: Voucher): void {
@@ -55,3 +47,4 @@ export class WalletComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 }
+
