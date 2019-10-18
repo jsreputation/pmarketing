@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
+import { CustomDataSource } from '@cl-shared/table';
 
 @Component({
   selector: 'cl-loyalty-form-step-tiers-conversions',
@@ -10,6 +11,7 @@ import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 export class LoyaltyFormStepTiersConversionsComponent implements OnInit {
   @Input() public group: FormGroup;
   @Input() public currency: string;
+  @Input() public customTierDataSource: CustomDataSource<any>;
   @Output() public tiersConversionsAction: EventEmitter<{ action: NewLoyaltyActions, data?: any }> = new EventEmitter();
 
   public ngOnInit(): void {

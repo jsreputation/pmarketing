@@ -15,6 +15,8 @@ import { AddRulePopupComponent } from '../../components/add-rule-popup/add-rule-
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { Router } from '@angular/router';
+import { CustomDataSource } from '@cl-shared/table';
+import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
 
 @Component({
   selector: 'cl-new-loyalty',
@@ -28,12 +30,14 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   public loyaltyId: string;
   public loyaltyBasicTierId: string;
   public form: FormGroup;
+  public customTierDataSource: CustomDataSource<any>;
   public pools: any;
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
 
   constructor(private loyaltyFormsService: LoyaltyFormsService,
               private loyaltyService: LoyaltyService,
+              private loyaltyCustomTierService: LoyaltyCustomTierService,
               private userService: UserService,
               private audiencesService: AudiencesService,
               private router: Router,
@@ -67,7 +71,10 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.getLoyaltyRequest()
-      .pipe(switchMap(() => this.getLoyaltyBasicTierRequest()))
+      .pipe(
+        untilDestroyed(this),
+        switchMap(() => this.getLoyaltyBasicTierRequest())
+      )
       .subscribe(result => {
         if (result) {
           this.stepper.next();
@@ -93,8 +100,14 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     return this.loyaltyService.createLoyaltyBasicTier(this.form.value, this.loyaltyId)
       .pipe(
-        tap(loyaltyBasicTier => this.loyaltyBasicTierId = loyaltyBasicTier.data.id)
+        tap(loyaltyBasicTier => this.setBasicTierId(loyaltyBasicTier.data.id))
       );
+  }
+
+  private setBasicTierId(basicTierId: string): void {
+    this.loyaltyBasicTierId = basicTierId;
+    this.initCustomTiersDataSource();
+    this.setBasicTierIdToCustomTiersDataSourceFilter(basicTierId);
   }
 
   public save(): void {
@@ -144,7 +157,7 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.form.addControl(step, this.loyaltyFormsService.getStep(step));
   }
 
-  public getRefDialogSetupTier(data: any = null): Observable<MatDialogRef<TierSetupPopupComponent>> {
+  private getRefDialogSetupTier(data: any = null): Observable<MatDialogRef<TierSetupPopupComponent>> {
     const dialogRef: MatDialogRef<TierSetupPopupComponent> = this.dialog.open(TierSetupPopupComponent, {
       panelClass: 'tier-setup-dialog',
       data: {
@@ -160,12 +173,22 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
       );
   }
 
-  public createTire(): void {
-    this.getRefDialogSetupTier().subscribe(answer => console.log(answer));
+  private createCustomTire(): void {
+    this.getRefDialogSetupTier()
+      .pipe(untilDestroyed(this))
+      .subscribe(() => this.customTierDataSource.updateData());
   }
 
-  public editTire(data: any): void {
-    this.getRefDialogSetupTier(data).subscribe(answer => console.log(answer));
+  private editCustomTire(data: any): void {
+    this.getRefDialogSetupTier(data)
+      .pipe(untilDestroyed(this))
+      .subscribe(() => this.customTierDataSource.updateData());
+  }
+
+  private deleteCustomTier(id: any): void {
+    this.loyaltyCustomTierService.deleteLoyaltyCustomTier(id)
+      .pipe(untilDestroyed(this))
+      .subscribe(() => this.customTierDataSource.updateData());
   }
 
   public ngAfterViewInit(): void {
@@ -200,14 +223,24 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   public handleLoyaltyActions(data: { action: NewLoyaltyActions, data?: any }): void {
     switch (data.action) {
       case NewLoyaltyActions.createTier:
-        this.createTire();
+        this.createCustomTire();
         break;
       case NewLoyaltyActions.editTier:
-        this.editTire(data.data);
+        this.editCustomTire(data.data);
         break;
       case NewLoyaltyActions.deleteTier:
-        console.log(NewLoyaltyActions.createTier);
+        this.deleteCustomTier(data.data.id);
         break;
     }
+  }
+
+  private initCustomTiersDataSource(): void {
+    if (!this.customTierDataSource) {
+      this.customTierDataSource = new CustomDataSource<any>(this.loyaltyCustomTierService);
+    }
+  }
+
+  private setBasicTierIdToCustomTiersDataSourceFilter(basicTierId: string): void {
+    this.customTierDataSource.filter = {'filter[program_id]': basicTierId};
   }
 }
