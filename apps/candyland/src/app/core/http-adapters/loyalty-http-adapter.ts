@@ -149,6 +149,7 @@ export class LoyaltyHttpAdapter {
   private static transformToLoyaltyForm(data: any): any {
     return {
       id: data.id,
+      customTiersCount: data.attributes.custom_tiers_count,
       name: data.attributes.name,
       status: data.attributes.status,
       pointsName: data.attributes.unit
