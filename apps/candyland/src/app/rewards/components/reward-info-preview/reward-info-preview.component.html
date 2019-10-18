@@ -27,14 +27,22 @@
       <dd class="card-value">{{data?.rewardType || '-'}}</dd>
     </div>
   </div>
-  <!--Description-->
-  <div *ngIf="data?.description">
-    <dt class="card-label">Description</dt>
-    <dd class="card-value">{{data?.description}}</dd>
+  <div class="card-definitions-splitter">
+    <!--Description-->
+    <div *ngIf="data?.description">
+      <dt class="card-label">Description</dt>
+      <dd class="card-value">{{data?.description}}</dd>
+    </div>
+    <!--Terms & Condition-->
+    <div *ngIf="data?.termsAndCondition">
+      <dt class="card-label">Terms & Condition</dt>
+      <dd class="card-value">{{data?.termsAndCondition}}</dd>
+    </div>
   </div>
-  <!--Terms & Condition-->
-  <div *ngIf="data?.termsAndCondition">
-    <dt class="card-label">Terms & Condition</dt>
-    <dd class="card-value">{{data?.termsAndCondition}}</dd>
+  <div *ngIf="data?.tags">
+    <dt class="card-label">Tags</dt>
+    <dd class="card-value">
+      <span class="card-chip" *ngFor="let tag of data?.tags">{{tag}}</span>
+    </dd>
   </div>
 </dl>

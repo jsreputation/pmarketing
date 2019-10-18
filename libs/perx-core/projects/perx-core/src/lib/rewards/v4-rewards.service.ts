@@ -7,13 +7,9 @@ import {
 
 import {
   Observable,
-  of,
 } from 'rxjs';
 import {
-  concatAll,
   map,
-  mergeMap,
-  reduce,
 } from 'rxjs/operators';
 
 import { RewardsService } from './rewards.service';
@@ -26,13 +22,6 @@ import {
 } from './models/reward.model';
 
 import { Config } from '../config/config';
-
-interface IV4Meta {
-  count?: number;
-  size?: number;
-  total_pages?: number;
-  page?: number;
-}
 
 export interface IV4Tag {
   id: number;
@@ -97,7 +86,6 @@ interface IV4Price {
 
 interface IV4GetRewardsResponse {
   data: IV4Reward[];
-  meta?: IV4Meta;
 }
 
 interface IV4GetRewardResponse {
@@ -106,12 +94,10 @@ interface IV4GetRewardResponse {
 
 interface IV4GetRewardPricesResponse {
   data: IV4Price[];
-  meta?: IV4Meta;
 }
 
 interface IV4GetCatalogsResponse {
   data: IV4Catalog[];
-  meta?: IV4Meta;
 }
 
 interface IV4GetCatalogResponse {
@@ -138,9 +124,6 @@ interface IV4CatalogResults {
 })
 export class V4RewardsService extends RewardsService {
   private apiHost: string;
-  // private rewardMeta: IV4Meta = {};
-  private catalogMeta: IV4Meta = {};
-  private rewardMeta: IV4Meta = {};
 
   constructor(
     private http: HttpClient,
@@ -233,17 +216,20 @@ export class V4RewardsService extends RewardsService {
 
   public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
     return new Observable(subject => {
+      const pageSize = 10;
       let current: IReward[] = [];
+      let page: number = 1;
       // we do not want to get all pages in parallel, so we get pages one after the other in order not to dos the server
       const process = (res: IReward[]) => {
         current = current.concat(res);
         subject.next(current);
         // if finished close the stream
-        if (this.rewardMeta.page >= this.rewardMeta.total_pages) {
+        if (res.length < pageSize) {
           subject.complete();
         } else {
           // otherwise get next page
-          this.getRewards(this.rewardMeta.page + 1, undefined, tags, categories)
+          page ++;
+          this.getRewards(page, undefined, tags, categories)
             .subscribe(process);
         }
       };
@@ -267,15 +253,7 @@ export class V4RewardsService extends RewardsService {
 
     return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards`, { params })
       .pipe(
-        map((res: IV4GetRewardsResponse) => {
-          if (res.meta) {
-            this.rewardMeta = {
-              ...this.rewardMeta,
-              ...res.meta
-            };
-          }
-          return res.data;
-        }),
+        map((res: IV4GetRewardsResponse) => res.data),
         map((rewards: IV4Reward[]) => rewards.map(
           (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
         ))
@@ -295,21 +273,27 @@ export class V4RewardsService extends RewardsService {
   }
 
   public getAllCatalogs(): Observable<ICatalog[]> {
-    const pageSize = 100;
-    return this.getCatalogs(1, pageSize).pipe(
-      mergeMap(catalog => {
-        const streams = [
-          of(catalog)
-        ];
-        for (let i = 2; i <= this.catalogMeta.total_pages; i++) {
-          const stream = this.getCatalogs(i, pageSize);
-          streams.push(stream);
+    return new Observable(subject => {
+      const pageSize = 100;
+      let current: ICatalog[] = [];
+      let page: number = 1;
+      const process = (res: ICatalog[]) => {
+        current = current.concat(res);
+        subject.next(current);
+        // if finished close the stream
+        if (res.length < pageSize) {
+          subject.complete();
+        } else {
+          // otherwise get next page
+          page ++;
+          this.getCatalogs(page + 1, pageSize)
+            .subscribe(process);
         }
-        return streams;
-      }),
-      concatAll(),
-      reduce((acc: ICatalog[], curr: ICatalog[]) => acc.concat(curr), [])
-    );
+      };
+      // do the first query
+      this.getCatalogs(1, pageSize)
+        .subscribe(process);
+    });
   }
 
   private getCatalogs(page: number = 1, pageSize: number = 10): Observable<ICatalog[]> {
@@ -322,15 +306,7 @@ export class V4RewardsService extends RewardsService {
         }
       }
     ).pipe(
-      map((res: IV4GetCatalogsResponse) => {
-        if (res.meta) {
-          this.catalogMeta = {
-            ...this.catalogMeta,
-            ...res.meta
-          };
-        }
-        return res.data;
-      }),
+      map((res: IV4GetCatalogsResponse) => res.data),
       map((catalogs: IV4Catalog[]) => catalogs.map(
         (catalog: IV4Catalog) => V4RewardsService.v4CatalogToCatalog(catalog)
       ))
