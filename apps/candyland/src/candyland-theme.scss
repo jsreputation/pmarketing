@@ -1,0 +1,43 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$candyland-blue: (
+  50: #e3f3ff,
+  100: #bce1ff,
+  200: #8dcfff,
+  300: #58bbff,
+  400: #27abff,
+  500: #009bff,
+  600: #0a8cff,
+  700: #1e78ff,
+  800: #2665ee,
+  900: #2e42cf,
+  A100: #c6deee,
+  A200: #a6cbe3,
+  A400: #4e6a94,
+  A700: #3e4e73,
+  contrast: (
+    50: #333333,
+    100: #333333,
+    200: #333333,
+    300: #333333,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: #333333,
+    A200: #333333,
+    A400: white,
+    A700: white,
+  )
+);
+
+$candyland-theme-primary: mat-palette($candyland-blue, 800, 300, 900);
+$candyland-theme-accent: mat-palette($candyland-blue);
+
+$candyland-theme: mat-light-theme($candyland-theme-primary, $candyland-theme-accent);
+
+@include angular-material-theme($candyland-theme);
