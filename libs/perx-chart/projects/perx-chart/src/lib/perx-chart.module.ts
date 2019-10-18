@@ -1,4 +1,5 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { VerticalBarComponent } from './vertical-bar/vertical-bar.component';
 import { HorizontalBarComponent } from './horizontal-bar/horizontal-bar.component';
 import { PieComponent } from './pie/pie.component';
@@ -44,7 +45,8 @@ const comps: any[] = [
     ...comps,
   ],
   providers: [
-    DataService
+    DataService,
+    DatePipe
   ]
 })
 export class PerxChartModule {
