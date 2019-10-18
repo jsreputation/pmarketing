@@ -20,6 +20,7 @@ import { MacaronService, IMacaron } from '../services/macaron.service';
   styleUrls: ['./redemption.component.scss']
 })
 export class RedemptionComponent implements OnInit {
+  public pinInputError = false;
   public reward: IReward;
   public voucher: Voucher;
   public showEnterPinComponent: boolean = false;
@@ -81,7 +82,7 @@ export class RedemptionComponent implements OnInit {
       .subscribe(
         () => this.voucher.state = VoucherState.redeemed,
         () => {
-          this.pinInputComponent.error = true;
+          this.pinInputError = true;
           this.notficationService.addSnack('Sorry! Voucher redemption failed.');
         }
       );

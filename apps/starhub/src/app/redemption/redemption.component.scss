@@ -87,7 +87,9 @@
 }
 
 .inner.no-code {
-  .upper-section, .middle-section {
+
+  .upper-section,
+  .middle-section {
     display: none;
   }
 
@@ -104,7 +106,8 @@
   align-items: center;
   justify-content: center;
 
-  h1, p {
+  h1,
+  p {
     font-size: 2rem;
     color: #666666;
   }
@@ -183,4 +186,21 @@
 
 ::ng-deep .error :focus {
   outline-color: #eb202f;
+}
+
+:host ::ng-deep .activation-code {
+  .activation-code__inputs input {
+    color: #666666;
+  }
+
+  .activation-code__inputs input:focus {
+    outline-color: #73c20e;
+  }
+
+  .error-label {
+    color: #D8127D;
+    font-family: DINPro;
+    font-size: 16px;
+    line-height: 21px;
+  }
 }

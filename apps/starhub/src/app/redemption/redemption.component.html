@@ -29,6 +29,8 @@
               <ng-template #pinComponent>
                 <div class="pin-input-container">
                   <perx-core-pin-input #pinInput
+                  [errorMessage]="'Incorrect PIN'"
+                  [error]="pinInputError"
                   [length]="4"
                   (full)="full($event)"
                   (update)="updatePin()">
