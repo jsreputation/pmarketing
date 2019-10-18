@@ -1,5 +1,3 @@
-import { ICustomProperties } from '@perx/core';
-
 export interface IWhistlerProfileAttributes {
   urn: string;
   created_at: string;
