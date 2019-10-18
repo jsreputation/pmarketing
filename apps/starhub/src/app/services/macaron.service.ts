@@ -56,7 +56,7 @@ export class MacaronService {
     // Low inventory (<10%)
     if (ratio !== null && ratio <= 0.1) {
       return {
-        label: 'Running Out',
+        label: 'Running out',
         class: 'running-out',
         rewardBalance: reward.inventory.rewardTotalBalance,
         isButtonEnabled: true
@@ -75,7 +75,7 @@ export class MacaronService {
     const seventyTwoHours = 72 * 60 * 60 * 1000;
     if (reward.sellingFrom && (nowTime - sellingFrom.getTime()) < seventyTwoHours) {
       return {
-        label: 'Just Added',
+        label: 'Just added',
         class: 'just-added',
         isButtonEnabled: true
       };
