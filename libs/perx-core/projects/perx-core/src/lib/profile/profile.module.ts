@@ -7,9 +7,13 @@ import { MicroProfileComponent } from './micro-profile/micro-profile.component';
 import { MatIconModule } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
+import { WhistlerProfileService } from './whistler-profile.service';
 
 export function profileServiceFactory(http: HttpClient, config: Config): ProfileService {
   // Make decision on what to instantiate base on config
+  if (config.isWhistler) {
+    return new WhistlerProfileService(http, config);
+  }
   return new V4ProfileService(http, config);
 }
 
