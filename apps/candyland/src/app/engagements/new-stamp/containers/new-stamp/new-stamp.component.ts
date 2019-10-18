@@ -12,6 +12,8 @@ import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { CreateImageDirective } from '@cl-shared/directives/create-image.directive';
+import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
+import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 
 @Component({
   selector: 'cl-new-stamp',
@@ -237,9 +239,12 @@ export class NewStampComponent implements OnInit, OnDestroy {
   }
 
   private initTenants(): void {
-    this.settingsService.getTenantsSettings()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(data => this.tenantSettings = data);
+    this.settingsService.getTenants()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((res: Tenants) => {
+      this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+      this.cd.detectChanges();
+    });
   }
 
   private handleRouteParams(): Observable<Partial<IStampsEntityForm> | null> {
