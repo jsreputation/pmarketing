@@ -1,8 +1,31 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ICampaignService, ICampaign, RewardsService, IReward, ITabConfigExtended } from '@perx/core';
-import { Observable, BehaviorSubject, forkJoin, of, Subject } from 'rxjs';
-import { tap, takeUntil } from 'rxjs/operators';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { Router } from '@angular/router';
+
+import {
+  Observable,
+  BehaviorSubject,
+  forkJoin,
+  of,
+  Subject,
+} from 'rxjs';
+import {
+  tap,
+  takeUntil,
+  map,
+  scan,
+} from 'rxjs/operators';
+
+import {
+  ICampaignService,
+  ICampaign,
+  RewardsService,
+  IReward,
+  ITabConfigExtended,
+} from '@perx/core';
 
 const stubTabs: ITabConfigExtended[] = [
   {
@@ -69,26 +92,70 @@ const stubTabs: ITabConfigExtended[] = [
   },
 ];
 
+const CAMPAIGN_CHUNK_SIZE = 2;
+
 @Component({
   selector: 'perx-blackcomb-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<any> = new Subject();
+  private campaign: BehaviorSubject<ICampaign[]> = new BehaviorSubject<ICampaign[]>([]);
+  private dataCampaigns: ICampaign[] = null;
+  private chunkCampaignsId: number = 0;
+  private chunkCampaigns: any[] = null;
+
+  public originCampaign$: Observable<ICampaign[]>;
   public campaign$: Observable<ICampaign[]>;
   public rewards$: Observable<IReward[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
-  private destroy$: Subject<any> = new Subject();
+
+  public get chunkCampaignsEnded(): boolean {
+    return this.chunkCampaigns ? this.chunkCampaignsId >= this.chunkCampaigns.length : false;
+  }
+
+  private downloadCampaigns(): void {
+    this.originCampaign$ = forkJoin(this.campaingService.getCampaigns())
+      .pipe(
+        map((arrCampaigns: ICampaign[][]) => arrCampaigns[0])
+      );
+    this.originCampaign$.subscribe((campaigns: ICampaign[]) => {
+      this.dataCampaigns = campaigns;
+      this.chunkCampaigns = this.chunkArr(this.dataCampaigns, CAMPAIGN_CHUNK_SIZE);
+      this.nextCampaigns();
+    });
+  }
+
+  private chunkArr(array: any, size: number) {
+    const chunked_arr = [];
+    let index = 0;
+    while (index < array.length) {
+      chunked_arr.push(array.slice(index, size + index));
+      index += size;
+    }
+    return chunked_arr;
+  }
+
+  private initCampaign$() {
+    this.campaign$ = this.campaign.asObservable().pipe(
+      scan((acc, curr) => {
+        return [...acc, ...curr ? curr : []];
+      }, [])
+    );
+  }
 
   constructor(
     private campaingService: ICampaignService,
     private rewardsService: RewardsService,
     private router: Router
-  ) { }
+  ) {
+    this.initCampaign$();
+  }
 
   public ngOnInit(): void {
-    this.campaign$ = this.campaingService.getCampaigns();
+    this.downloadCampaigns();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.staticTab = stubTabs;
     this.getTabedList();
@@ -115,5 +182,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public goToReward(reward: IReward): void {
     this.router.navigate([`/reward-detail/${reward.id}`]);
+  }
+
+  public nextCampaigns(): void {
+    if (this.chunkCampaignsEnded) {
+      return;
+    }
+
+    this.campaign.next(this.chunkCampaigns[this.chunkCampaignsId]);
+    ++this.chunkCampaignsId;
   }
 }
