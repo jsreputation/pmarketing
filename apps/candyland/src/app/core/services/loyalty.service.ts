@@ -18,7 +18,13 @@ export class LoyaltyService implements ITableService {
     params.include = 'pool,basic_tier';
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyHttpService.getLoyalties(httpParams).pipe(
-      map(response => LoyaltyHttpAdapter.transformToTableData(response))
+      map(response => {
+        console.log(response);
+        const transformToTableData = LoyaltyHttpAdapter.transformToTableData(response);
+        const test = LoyaltyHttpAdapter.addIncludedToLoyaltyForm(response, transformToTableData, 'basic_tiers', null);
+        console.log('test', test);
+        return transformToTableData;
+      })
     );
   }
 

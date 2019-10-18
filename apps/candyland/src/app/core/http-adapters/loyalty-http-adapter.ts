@@ -1,8 +1,18 @@
 import Utils from '@cl-helpers/utils';
+import { ParseIncluded } from '@cl-helpers/parse-included';
 
 export class LoyaltyHttpAdapter {
+
+  // TODO: need add point name and poolId to form
   public static transformToTableData(data: any): ITableData<any> {
     const formatData = data.data.map((item) => {
+      console.log(item);
+
+      const formLoyalty = LoyaltyHttpAdapter.transformToLoyaltyForm(item);
+      // formLoyalty['details'] = LoyaltyHttpAdapter.getLoyaltyPointsName(item);
+
+      console.log('formLoyalty', formLoyalty);
+      return formLoyalty;
       // const user = SettingsHttpAdapter.transformToIAMUser(item);
       // const user = {};
       // if (data.included && data.included.length) {
@@ -13,7 +23,7 @@ export class LoyaltyHttpAdapter {
       //     }
       //   }
       // }
-      return {...item};
+      // return {...item};
     });
     return {data: formatData, meta: data.meta};
   }
@@ -111,6 +121,17 @@ export class LoyaltyHttpAdapter {
     };
   }
 
+  public static addIncludedToLoyaltyForm(source: any, target: any, type: string, fieldName: string | null = null, adapterFunction?: (data: any) => any): any {
+    const adapter = (item: any): any => {
+      console.log('adapter', item);
+      return item;
+    };
+
+    const adapter2 = LoyaltyHttpAdapter.getDetailsAndCanversionsFormGroup;
+
+    ParseIncluded.setInclude(source, target, type, fieldName, adapter);
+  }
+
   private static getJoinMethod(data: any): any {
     const formatData = {
       invite_only: data.inviteOnly,
@@ -121,5 +142,82 @@ export class LoyaltyHttpAdapter {
       points: data.points
     };
     return Utils.filterObj(formatData, (item) => !!item);
+  }
+
+  private static transformToLoyaltyForm(data: any): any {
+    return {
+      id: data.id,
+      name: data.attributes.name,
+      status: data.attributes.status,
+      pointsName: data.attributes.unit
+    };
+  }
+
+  private static getLoyaltyPointsName(data: any): any {
+    return {
+      pointsName: data.attributes.unit
+    };
+  }
+
+  private static transformBasicTier(data: any): any {
+    // {'urn':'urn:perx:loyalty::222222222:basic_tier/10',
+    //   'created_at':'2019-10-17T08:58:24.377Z','updated_at':'2019-10-17T08:58:24.377Z',
+    //   'image_url':'https:som_image.com.url',
+    //   'earn_ratio_money':100,
+    //   'earn_ratio_point':2,
+    //   'burn_ratio_money':1,
+    //   'burn_ratio_point':50,
+    //   'expiry_period_type':'month',
+    //   'expiry_period':3,
+    //   'expiry_period_trigger':'inactivity',
+    //   'join_method':
+    //   {
+    //     'invite_only':true
+    //   }
+    // }
+    return {
+      imageUrl: data.attributes.image_url,
+      joinMethod: {
+        inviteOnly: data.attributes.invite_only,
+        sign_up: data.signUp,
+        amount: data.amount,
+        transaction_amount: data.transactionAmount,
+        points_threshold: data.pointsThreshold,
+        // points:
+      }
+    };
+  }
+
+  private static getDetailsAndCanversionsFormGroup(data: any): any {
+    return {
+      details: LoyaltyHttpAdapter.formatToDetailFormGroup(data),
+      tiersConversions: LoyaltyHttpAdapter.transformToTiersConversionsFormGroup(data),
+    };
+  }
+
+  private static formatToDetailFormGroup(data: any): any {
+    return {
+      imageUrl: data.attributes.image_url,
+      poolId: data.attributes,
+      joinMethod: ''
+    };
+  }
+
+  private static transformToTiersConversionsFormGroup(data: any): any {
+    return {
+      globalEarnRule: {
+        amount: data.attributes.earn_ratio_money,
+        points: data.attributes.earn_ratio_point
+      },
+      globalBurnRule: {
+        amount: data.attributes.burn_ratio_money,
+        points: data.attributes.burn_ratio_point
+      },
+      pointsExpiry: {
+        amount: data.attributes.expiry_period_type ,
+        type: data.attributes.expiry_period ,
+        trigger: data.attributes.expiry_period_trigger
+      }
+    };
   }
 }
