@@ -1,0 +1,30 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: microsite-apps-ng-build-prod
+  namespace: build
+spec:
+  inputs:
+    resources:
+      - name: workspace
+        type: git
+        targetPath: project
+    params:
+      - name: app-name
+        type: string
+        description: The application name to build
+  stepTemplate:
+    image: circleci/node:10-browsers
+    resources: &resources
+      requests:
+        cpu: 8
+        memory: "8Gi"
+  steps:
+    - name: yarn-install
+      workingDir: "/workspace/project"
+      command: ["yarn", "install"]
+      resources: *resources
+    - name: build
+      workingDir: "/workspace/project"
+      command: ["yarn", "build:$(inputs.params.app-name):prod"]
+      resources: *resources
