@@ -6,7 +6,7 @@ import { ICampaignService, LoyaltyModule, RewardsModule, RewardsService, Loyalty
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material';
 import { GamesCollectionComponent } from './games-collection/games-collection.component';
-import { Directive } from '@angular/core';
+import { Directive, NO_ERRORS_SCHEMA } from '@angular/core';
 
 @Directive({
   selector: '[routerLink]'
@@ -51,7 +51,8 @@ describe('HomeComponent', () => {
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: ProfileService, useValue: profileService }
-      ]
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
       .compileComponents();
   }));
