@@ -1,12 +1,11 @@
 import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
-import { StampService } from '../../stamp/stamp.service';
-import { IStampCard , StampCardState, StampState } from '../../stamp/models/stamp.model';
+import { StampService } from '@perx/core';
+import { IStampCard , StampCardState, StampState, PuzzleCollectStampState } from '@perx/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { PuzzleCollectStampState } from '../models/puzzle-stamp.model';
 
 @Component({
-  selector: 'perx-core-puzzle-list',
+  selector: 'mock-puzzle-list',
   templateUrl: './puzzle-list.component.html',
   styleUrls: ['./puzzle-list.component.scss']
 })
@@ -71,14 +70,17 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
   public isActive(puzzle: IStampCard): boolean {
     // if there is no puzzle in list, it should never happen but return false
     if (!Array.isArray(this.puzzles)) {
+      console.log('no card', puzzle.id);
       return false;
     }
     // if we have no information on stamps then it should not be active
     if (!puzzle.stamps && puzzle.displayProperties.displayCampaignAs === 'puzzle') {
+      console.log('no puzzle', puzzle.id);
       return false;
     }
 
     if (!puzzle.collectionStamps && puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
+      console.log('no stamp_card', puzzle.id);
       return false;
     }
 
@@ -88,6 +90,7 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
     if (puzzle.displayProperties.displayCampaignAs === 'puzzle') {
 
       if (puzzle.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots) {
+        console.log('no available puzzle', puzzle.id);
         return false;
       }
 
@@ -98,11 +101,13 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
 
       // if there is no active puzzle, this one should not be active
       if (activePuzzles.length === 0) {
+        console.log('no active puzzle', puzzle.id);
         return false;
       }
 
       // if it is the first active puzzle then make it visible
       if (puzzle.id === activePuzzles[0].id) {
+        console.log('first active puzzle', puzzle.id);
         return true;
       }
     }
@@ -110,6 +115,7 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
     if (puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
 
       if (puzzle.collectionStamps.filter(st => st.state === PuzzleCollectStampState.redeemed).length >= totalSlots) {
+        console.log('no available stamps', puzzle.id);
         return false;
       }
 
@@ -120,11 +126,13 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
 
       // if there is no active puzzle, this one should not be active
       if (activePuzzles.length === 0) {
+        console.log('no active puzzle', puzzle.id);
         return false;
       }
 
       // if it is the first active puzzle then make it visible
       if (puzzle.id === activePuzzles[0].id) {
+        console.log('first active puzzle', puzzle.id);
         return true;
       }
     }
@@ -139,10 +147,20 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
   }
 
   public nbAvailableStamps(puzzle: IStampCard): number {
-    if (puzzle.stamps === undefined) {
-      return 0;
+    if (puzzle.displayProperties.displayCampaignAs === 'puzzle') {
+      if (puzzle.stamps === undefined) {
+        return 0;
+      }
+      return puzzle.stamps.filter(st => st.state === StampState.issued).length;
     }
-    return puzzle.stamps.filter(st => st.state === StampState.issued).length;
+
+    if (puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
+      if (puzzle.collectionStamps === undefined) {
+        return 0;
+      }
+      return puzzle.collectionStamps.filter(st => st.state === PuzzleCollectStampState.issued).length;
+    }
+
   }
 
   public nbPlacedStamps(puzzle: IStampCard): number {

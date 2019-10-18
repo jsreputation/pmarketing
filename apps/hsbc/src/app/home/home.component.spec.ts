@@ -3,10 +3,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { VouchersModule, ICampaignService, IVoucherService, PuzzlesModule, StampService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatTabsModule, MatCardModule, MatIconModule } from '@angular/material';
+import { MatTabsModule, MatCardModule, MatIconModule, MatRippleModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { NavigateToolbarComponent } from '../navigate-toolbar/navigate-toolbar.component';
+
+import { PuzzleListComponent } from '../mock/service/puzzle-list/puzzle-list.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -35,6 +37,8 @@ describe('HomeComponent', () => {
       declarations: [
         HomeComponent,
         NavigateToolbarComponent,
+
+        PuzzleListComponent
       ],
       imports: [
         RouterTestingModule,
@@ -44,6 +48,8 @@ describe('HomeComponent', () => {
         MatCardModule,
         VouchersModule,
         PuzzlesModule,
+
+        MatRippleModule
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
