@@ -10,5 +10,4 @@ export interface IWhistlerProfileAttributes {
   phone_number: string | null;
   email_address: string | null;
   primary_identifier: string;
-  properties?: ICustomProperties | null;
 }

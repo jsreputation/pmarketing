@@ -33,8 +33,7 @@ export class WhistlerProfileService extends ProfileService {
       lastName: profile.attributes.last_name,
       phone: profile.attributes.phone_number,
       email: profile.attributes.email_address,
-      joinedDate: profile.attributes.created_at, // not sure correct?
-      customProperties: profile.attributes.properties
+      joinedDate: profile.attributes.created_at // not sure correct?
     };
   }
 
