@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ICampaignService, ICampaign, RewardsService, IReward, ITabConfigExtended } from '@perx/core';
 import { Observable, BehaviorSubject, forkJoin, of, Subject } from 'rxjs';
 import { tap, takeUntil } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 const stubTabs: ITabConfigExtended[] = [
   {
@@ -14,23 +15,58 @@ const stubTabs: ITabConfigExtended[] = [
   , {
     filterKey: null,
     filterValue: null,
-    tabName: 'Category 1',
+    tabName: 'Food & Beverage',
     rewardsList: null,
-    rewardsType: 'CATEGORY_1'
+    rewardsType: 'Food & Beverage'
   }, {
     filterKey: null,
     filterValue: null,
-    tabName: 'Category 2',
+    tabName: 'Travel',
     rewardsList: null,
-    rewardsType: 'CATEGORY_2'
+    rewardsType: 'Travel'
   },
   {
     filterKey: null,
     filterValue: null,
-    tabName: 'Category 3',
+    tabName: 'Electronics',
     rewardsList: null,
-    rewardsType: 'CATEGORY_3'
-  }
+    rewardsType: 'Electronics'
+  },
+  {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Wellness',
+    rewardsList: null,
+    rewardsType: 'Wellness'
+  },
+  {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Entertainment',
+    rewardsList: null,
+    rewardsType: 'Entertainment'
+  },
+  {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Shopping',
+    rewardsList: null,
+    rewardsType: 'Shopping'
+  },
+  {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Merchant Self',
+    rewardsList: null,
+    rewardsType: 'Merchant Self'
+  },
+  {
+    filterKey: null,
+    filterValue: null,
+    tabName: 'Others',
+    rewardsList: null,
+    rewardsType: 'Others'
+  },
 ];
 
 @Component({
@@ -47,7 +83,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private campaingService: ICampaignService,
-    private rewardsService: RewardsService
+    private rewardsService: RewardsService,
+    private router: Router
   ) { }
 
   public ngOnInit(): void {
@@ -74,5 +111,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     )).subscribe(() => {
       this.tabs$.next(this.staticTab);
     });
+  }
+
+  public goToReward(reward: IReward): void {
+    this.router.navigate([`/reward-detail/${reward.id}`]);
   }
 }
