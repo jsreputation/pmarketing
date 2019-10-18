@@ -17,7 +17,7 @@ export class PinInputComponent implements OnInit, OnDestroy {
 
   @Input()
   public errorMessage: string = 'Incorrect Code';
-  
+
   @Output()
   public full: EventEmitter<string> = new EventEmitter<string>();
 
