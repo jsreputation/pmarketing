@@ -240,6 +240,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
 
   private initTenants(): void {
     this.settingsService.getTenants()
+    .pipe(takeUntil(this.destroy$))
     .subscribe((res: Tenants) => {
       this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
       this.cd.detectChanges();
