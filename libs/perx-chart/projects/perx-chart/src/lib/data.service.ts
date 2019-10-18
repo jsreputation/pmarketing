@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
-import { IData } from './data.model';
 import { HttpClient } from '@angular/common/http';
+
 import { Observable, throwError } from 'rxjs';
 import {
   map,
   switchMap,
   retry,
-  // tap
 } from 'rxjs/operators';
+
 import { EnvConfig } from './env.config';
+import {
+  DataSerializer,
+  IData,
+} from './data.model';
 
 interface ITokenResponse {
   token: string;
@@ -44,8 +48,7 @@ export class DataService {
             `https://metabase-api.perxtech.io/api/embed/card/${token}/query?${query}`
           );
         }),
-        map((res: IMetabaseResponse) => res.data)
-        // tap((data) => { console.log(data); })
+        map((res: IMetabaseResponse) => DataSerializer.from(res.data))
       );
   }
 
