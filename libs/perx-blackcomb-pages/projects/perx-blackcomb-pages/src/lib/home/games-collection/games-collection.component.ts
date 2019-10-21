@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ICampaign } from '@perx/core';
+import { IGame } from '@perx/core';
 
 @Component({
   selector: 'perx-blackcomb-games-collection',
@@ -8,6 +8,6 @@ import { ICampaign } from '@perx/core';
   styleUrls: ['./games-collection.component.scss']
 })
 export class GamesCollectionComponent {
-  @Input('campaign')
-  public campaign$: Observable<ICampaign[]>;
+  @Input('games')
+  public games$: Observable<IGame[]>;
 }

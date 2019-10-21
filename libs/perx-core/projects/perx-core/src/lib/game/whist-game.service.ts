@@ -148,6 +148,9 @@ export class WhistlerGameService implements IGameService {
     if (attributes.display_properties.button) {
       texts.button = attributes.display_properties.button;
     }
+
+    const imgUrl: string = attributes.image_url;
+
     const backgroundImg: string | undefined = attributes.display_properties.background_img_url ?
       attributes.display_properties.background_img_url : undefined;
 
@@ -158,11 +161,10 @@ export class WhistlerGameService implements IGameService {
       config,
       texts,
       backgroundImg,
+      imgUrl,
       results: {}
     };
-
   }
-
   // @ts-ignore
   public play(campaignId: number, gameId: number): Observable<IPlayOutcome> {
     const body = {
@@ -203,7 +205,7 @@ export class WhistlerGameService implements IGameService {
         map((res: IJsonApiItemPayload<AttbsObjEntity>) => res.data.attributes),
         map((entity: AttbsObjEntity) => entity.engagement_id),
         switchMap((correctId: number) => this.get(correctId)),
-        map((game: IGame) => [game])
+        map((game: IGame) => [Object.assign(game, {campaignId: campaignId})])
       );
   }
 
