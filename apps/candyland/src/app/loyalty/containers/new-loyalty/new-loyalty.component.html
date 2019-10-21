@@ -5,18 +5,15 @@
     <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
     <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
   </mat-form-field>
+  <!--  buttons-->
   <div class="btn-group">
     <cl-button classList="tertiary" *ngIf="!isEditPage" (click)="cancel()">Cancel</cl-button>
     <cl-button classList="tertiary" *ngIf="isEditPage" (click)="navigateToList()">Back</cl-button>
-    <cl-button classList="secondary" *ngIf="!isLastStep" (click)="saveAsDraft()">Save as a draft</cl-button>
-    <cl-button *ngIf="!isLastStep"
-               classList="primary"
-               (click)="goNext()">
-      Next
-    </cl-button>
-    <!--    [disable]="getStepCondition(stepper.selectedIndex)"-->
+    <cl-button classList="secondary" *ngIf="!isLastStep && showDraftButton" (click)="saveAsDraft()">Save as a draft</cl-button>
+    <cl-button classList="primary" *ngIf="!isLastStep" (click)="goNext()">Next</cl-button>
     <cl-button *ngIf="isLastStep" classList="primary" (click)="launch()">Launch</cl-button>
   </div>
+  <!--/  buttons-->
 </header>
 <section class="content form-limiter">
   <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0">

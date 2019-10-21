@@ -12,133 +12,107 @@ export class LoyaltyFormsService {
   public getFormLoyalty(): FormGroup {
     return new FormGroup({
       name: new FormControl(null, [Validators.required]),
+      status: new FormControl(null),
       tiersCount: new FormControl(0),
       details: new FormGroup({
         pointsName: new FormControl(null,
           [Validators.required, Validators.minLength(1)]),
-        imageUrl: new FormControl('https://www.gettyimages.co.uk/gi-resources/images/RoyaltyFree/Apr17Update/ColourSurge1.jpg'),
+        imageUrl: new FormControl(null, [Validators.required]),
         joinMethod: new FormGroup({
-          transactionAmount: new FormControl(true),
+          transactionAmount: new FormControl(false),
           signUp: new FormControl(false),
           inviteOnly: new FormControl(false),
-          amount: new FormControl(null, [Validators.required, Validators.minLength(1)]),
-        }, [Validators.required, ClValidators.requiredGroup]),
-        poolId: new FormControl('1', Validators.required)
+          amount: new FormControl({value: null, disabled: true}, [Validators.required, Validators.min(1)]),
+        }, [ClValidators.requiredGroup]),
+        poolId: new FormControl(null,
+          // [ Validators.required]
+        )
       }),
       tiersConversions: new FormGroup({
         globalEarnRule: new FormGroup({
-          amount: new FormControl(1, [Validators.required, Validators.min(1)]),
-          points: new FormControl(1, [Validators.required, Validators.min(1)])
+          amount: new FormControl(null, [Validators.required, Validators.min(1)]),
+          points: new FormControl(null, [Validators.required, Validators.min(1)])
         }),
         globalBurnRule: new FormGroup({
-          amount: new FormControl(100, [Validators.required, Validators.min(1)]),
-          points: new FormControl(5, [Validators.required, Validators.min(1)])
+          amount: new FormControl(null, [Validators.required, Validators.min(1)]),
+          points: new FormControl(null, [Validators.required, Validators.min(1)])
         }),
         pointsExpiry: new FormGroup({
-          amount: new FormControl(1, [Validators.required]),
-          type: new FormControl('year', [Validators.required]),
-          trigger: new FormControl('accural', [Validators.required]),
-        }),
-        // tiers: new FormArray([])
-      })
-    });
-  }
-
-  // public getStep(step: any): FormGroup {
-  //   switch (step) {
-  //     case this.loyaltyFormType.details: {
-  //       return this.getDetailsStep();
-  //     }
-  //     case this.loyaltyFormType.tiers: {
-  //       return this.getTiersConversionsStep();
-  //     }
-  //     // case this.loyaltyFormType.four: {
-  //     //   // TODO: need implement
-  //     //   return null;
-  //     // }
-  //   }
-  // }
-
-  // public getDetailsStep(): FormGroup {
-  //   return new FormGroup({
-  //     pointsName: new FormControl(null, [Validators.required, Validators.minLength(1)]),
-  //     imageUrl: new FormControl('https://www.gettyimages.co.uk/gi-resources/images/RoyaltyFree/Apr17Update/ColourSurge1.jpg'),
-  //     joinMethod: new FormGroup({
-  //       transactionAmount: new FormControl(true),
-  //       signUp: new FormControl(false),
-  //       inviteOnly: new FormControl(false),
-  //       amount: new FormControl(null, [Validators.required, Validators.minLength(1)]),
-  //     }, [Validators.required, ClValidators.requiredGroup]),
-  //     poolId: new FormControl('1', Validators.required)
-  //   });
-  // }
-  //
-  // public getTiersConversionsStep(): FormGroup {
-  //   return new FormGroup({
-  //     globalEarnRule: new FormGroup({
-  //       amount: new FormControl(1, [Validators.required, Validators.min(1)]),
-  //       points: new FormControl(1, [Validators.required, Validators.min(1)])
-  //     }),
-  //     globalburnRule: new FormGroup({
-  //       amount: new FormControl(100, [Validators.required, Validators.min(1)]),
-  //       points: new FormControl(5, [Validators.required, Validators.min(1)])
-  //     }),
-  //     pointsExpiry: new FormGroup({
-  //       amount: new FormControl(1, [Validators.required]),
-  //       type: new FormControl('year', [Validators.required]),
-  //       trigger: new FormControl('earned', [Validators.required]),
-  //     }),
-  //     tiers: new FormArray([])
-  //   });
-  // }
-
-  // public getTierField(): FormGroup {
-  //   return new FormGroup({
-  //     tier: new FormControl(null, [Validators.required]),
-  //     joinMethod: new FormControl(null, [Validators.required]),
-  //     earnBonus: new FormControl(null, [Validators.required]),
-  //     burnDiscount: new FormControl(null, [Validators.required]),
-  //     pointsExpiry: new FormControl(null, [Validators.required])
-  //   });
-  // }
-
-  public getTireForm(): FormGroup {
-    return new FormGroup({
-      name: new FormControl(null, [Validators.required]),
-      joinMethod: new FormGroup({
-        pointsThreshold: new FormControl(false),
-        inviteOnly: new FormControl(false),
-        points: new FormControl(null)
-      }, [Validators.required]),
-      imageUrl: new FormControl(null,
-        // [Validators.required]
-      ),
-      earnBonus: new FormControl(null, [Validators.required, Validators.min(1)]),
-      burnDiscount: new FormControl(null, [Validators.required, Validators.min(1)]),
-      pointsExpiry: new FormGroup({
-        amount: new FormControl(null, [Validators.required]),
-        type: new FormControl(null, [Validators.required]),
-        trigger: new FormControl(null, [Validators.required]),
+          amount: new FormControl(null, [Validators.required, Validators.min(1)]),
+          type: new FormControl(null, [Validators.required]),
+          trigger: new FormControl(null, [Validators.required]),
+        })
       })
     });
   }
 
   public getDefaultValueForm(): any {
     return {
+      name: null,
+      tiersCount: 0,
+      status: 'draft',
+      details: {
+        pointsName: 'Point as default',
+        imageUrl: 'https://www.gettyimages.co.uk/gi-resources/images/RoyaltyFree/Apr17Update/ColourSurge1.jpg',
+        joinMethod: {
+          inviteOnly: true,
+        },
+        poolId: null
+      },
+      tiersConversions: {
+        globalEarnRule: {
+          amount: 1,
+          points: 1,
+        },
+        globalBurnRule: {
+          amount: 100,
+          points: 5,
+        },
+        pointsExpiry: {
+          amount: 1,
+          type: 'year',
+          trigger: 'accural',
+        }
+      }
     };
+  }
+
+  public getTireForm(): FormGroup {
+    return new FormGroup({
+      name: new FormControl(null,
+        [Validators.required, Validators.minLength(1), Validators.maxLength(60)]),
+      joinMethod: new FormGroup({
+        pointsThreshold: new FormControl(false),
+        inviteOnly: new FormControl(false),
+        points: new FormControl({value: null, disabled: true},
+          [Validators.required, Validators.min(1)])
+      }, [ClValidators.requiredGroup]),
+      imageUrl: new FormControl(null,
+        [Validators.required]),
+      earnBonus: new FormControl(null,
+        [Validators.required, Validators.min(0), Validators.max(100)]),
+      burnDiscount: new FormControl(null,
+        [Validators.required, Validators.min(0), Validators.max(100)]),
+      pointsExpiry: new FormGroup({
+        amount: new FormControl(null, [Validators.required, Validators.min(1)]),
+        type: new FormControl(null, [Validators.required]),
+        trigger: new FormControl(null, [Validators.required]),
+      })
+    });
   }
 
   public getDefaultValueTireForm(): any {
     return {
-      name: 'Gold',
+      name: null,
       joinMethod: {
         inviteOnly: true,
       },
-      earnBonus: 20,
-      burnDiscount: 10,
+      imageUrl: 'https://www.gettyimages.co.uk/gi-resources/images/RoyaltyFree/Apr17Update/ColourSurge1.jpg',
+      earnBonus: 0,
+      burnDiscount: 0,
       pointsExpiry: {
-        amount: 3,
-        type: 'day',
+        amount: 1,
+        type: 'year',
         trigger: 'accural',
       }
     };

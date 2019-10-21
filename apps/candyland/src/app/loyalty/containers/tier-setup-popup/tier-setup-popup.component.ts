@@ -29,6 +29,30 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
     return this.form.get('joinMethod.points') || null;
   }
 
+  public get name(): AbstractControl {
+    return this.form.get('name') || null;
+  }
+
+  public get imageUrl(): AbstractControl {
+    return this.form.get('imageUrl') || null;
+  }
+
+  public get earnBonus(): AbstractControl {
+    return this.form.get('earnBonus') || null;
+  }
+
+  public get burnDiscount(): AbstractControl {
+    return this.form.get('burnDiscount') || null;
+  }
+
+  public get joinMethod(): AbstractControl {
+    return this.form.get('joinMethod') || null;
+  }
+
+  public get amount(): AbstractControl {
+    return this.form.get('pointsExpiry.amount') || null;
+  }
+
   public ngOnInit(): void {
     this.initForm();
     this.fillForm();
@@ -72,10 +96,12 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
       distinctUntilChanged()
     ).subscribe((value: boolean) => {
       if (value) {
-        this.points.enable();
+        this.points.enable({onlySelf: true, emitEvent: false});
       } else {
-        this.points.disable();
+        this.points.reset(null, {onlySelf: true, emitEvent: false});
+        this.points.disable({onlySelf: true, emitEvent: false});
       }
+      this.points.updateValueAndValidity({onlySelf: true, emitEvent: false});
     });
   }
 }

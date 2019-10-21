@@ -12,6 +12,7 @@ export class LoyaltyFormStepReviewComponent {
   @Input() public dataSource: CustomDataSource<any>;
 
   public get formValue(): ILoyaltyForm {
+    console.log('formValue', this.group.value);
     return this.group.value;
   }
 }

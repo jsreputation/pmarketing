@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
@@ -27,13 +27,14 @@ import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.
   }]
 })
 
-export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
+export class NewLoyaltyComponent implements OnInit, OnDestroy {
   public loyaltyId: string;
   public basicTierId: string;
   public form: FormGroup;
   public customTierDataSource: CustomDataSource<any>;
   public pools: any;
   public isEditPage: boolean = false;
+  public showDraftButton: boolean = true;
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
 
@@ -107,6 +108,7 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public goNext(): void {
+    console.log(this.form.invalid, this.form.errors, this.form.value);
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -218,27 +220,6 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(() => this.updateCustomTiersDataSource());
   }
 
-  public ngAfterViewInit(): void {
-    // this.addStepForm(this.getStepFormName(this.stepper.selectedIndex));
-    // if (this.stepper) {
-    //   this.stepper.selectionChange
-    //     .pipe(untilDestroyed(this))
-    //     .subscribe((val) => {
-    //       if (val.selectedIndex < 2) {
-    //         this.addStepForm(this.getStepFormName(val.selectedIndex));
-    //       }
-    //     });
-    // }
-  }
-
-  // private checkExistingStepForm(form: FormGroup, step: string): boolean {
-  //   return this.loyaltyFormsService.checkExistingStepForm(form, step);
-  // }
-
-  // private getStepFormName(indexStep: number): string {
-  //   return this.loyaltyFormsService.getStepName(indexStep);
-  // }
-
   public addRule(): void {
     const dialogRef = this.dialog.open(AddRulePopupComponent);
 
@@ -288,13 +269,17 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
       }),
     ).subscribe(data => {
         if (data) {
+          console.log('status', data.status);
+          this.showDraftButton = data.status === 'draft';
           this.basicTierId = data.basicTierId || null;
           if (this.basicTierId) {
             this.setBasicTierId(this.basicTierId);
           }
           this.form.patchValue(data);
         } else {
+          console.log('1', this.form.value);
           this.form.patchValue(this.getDefaultValue());
+          console.log('2', this.form.value);
         }
         console.log('data', data, 'form', this.form.value, 'id', this.basicTierId);
       },

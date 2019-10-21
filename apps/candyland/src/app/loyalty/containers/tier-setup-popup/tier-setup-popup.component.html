@@ -6,32 +6,36 @@
     </button>
   </header>
   <div class="dialog-content" [formGroup]="form">
-    <!--    <div class="loyalty-row input-group">-->
     <mat-form-field class="loyalty-name-input">
       <input type="text" matInput formControlName="name" placeholder="Tier's name">
-      <mat-error *ngIf="this.form.get('name').hasError('required') && this.form.get('name').touched">Required field
-      </mat-error>
+      <mat-error *ngIf="name.hasError('required') && name.touched">Required field</mat-error>
+      <mat-error *ngIf="name.hasError('minlength') && name.touched">Min length 1</mat-error>
+      <mat-error *ngIf="name.hasError('maxlength') && name.touched">Max length 60</mat-error>
     </mat-form-field>
-    <!--    </div>-->
 
     <label class="loyalty-label">Qualification Criteria</label>
     <ng-container formGroupName="joinMethod">
       <div class="loyalty-row input-group">
         <mat-checkbox color="primary" formControlName="pointsThreshold">Points Threshold</mat-checkbox>
         <mat-form-field class="loyalty-points-input">
-          <input matInput type="text" formControlName="points">
-          <!--          <mat-error *ngIf="this.form.get('firstName').hasError('required')">Required field</mat-error>-->
+          <input matInput type="number" formControlName="points">
+          <mat-error *ngIf="points.hasError('required') && points.touched">Required field</mat-error>
+          <mat-error *ngIf="points.hasError('min') && points.touched">Min value 1</mat-error>
         </mat-form-field>
         <span>Points</span>
       </div>
       <div class="loyalty-row">
         <mat-checkbox color="primary" formControlName="inviteOnly">Invite-only</mat-checkbox>
       </div>
+      <mat-error *ngIf="joinMethod.hasError('requiredGroup')">
+        At least one option must be selected.
+      </mat-error>
     </ng-container>
 
     <label class="loyalty-label">Tier Image</label>
     <div class="loyalty-row loyalty-row-uploader">
-      <cl-upload-graphic formControlName="imageUrl"
+      <cl-upload-graphic [isRequired]="imageUrl.hasError('required') && imageUrl.touched"
+                         formControlName="imageUrl"
                          [btnLabel]="'Upload photo'"
       ></cl-upload-graphic>
     </div>
@@ -40,9 +44,12 @@
     <div class="loyalty-row input-group">
       <span>Users in this tier will earn</span>
       <mat-form-field floatLabel="never">
-        <input type="number" [min]="0" matInput formControlName="earnBonus">
+        <input type="number" [min]="1" [max]="100" [step]="0" matInput formControlName="earnBonus">
+        <mat-error *ngIf="earnBonus.hasError('required') && earnBonus.touched">Required field</mat-error>
+        <mat-error *ngIf="earnBonus.hasError('min') && earnBonus.touched">Min value 1</mat-error>
+        <mat-error *ngIf="earnBonus.hasError('max') && earnBonus.touched">Max value 100</mat-error>
       </mat-form-field>
-      <span>times more points.</span>
+      <span>% more points.</span>
     </div>
 
     <label class="loyalty-label">Accelerated Burn Rule</label>
@@ -50,6 +57,9 @@
       <span>Users in this tier get a discount of</span>
       <mat-form-field floatLabel="never">
         <input type="number" [min]="0" [max]="100" matInput formControlName="burnDiscount">
+        <mat-error *ngIf="burnDiscount.hasError('required') && burnDiscount.touched">Required field</mat-error>
+        <mat-error *ngIf="burnDiscount.hasError('min') && burnDiscount.touched">Min value 1</mat-error>
+        <mat-error *ngIf="burnDiscount.hasError('max') && burnDiscount.touched">Max value 100</mat-error>
       </mat-form-field>
       <span>% when spending points for rewards.</span>
     </div>
@@ -60,7 +70,9 @@
         <div class="loyalty-row input-group">
           <span>Points expire</span>
           <mat-form-field floatLabel="never">
-            <input type="number" [min]="0" matInput formControlName="amount">
+            <input type="number" [min]="1" matInput formControlName="amount">
+            <mat-error *ngIf="amount.hasError('required') && amount.touched">Required field</mat-error>
+            <mat-error *ngIf="amount.hasError('min') && amount.touched">Min value 1</mat-error>
           </mat-form-field>
           <mat-form-field>
             <mat-select formControlName="type">

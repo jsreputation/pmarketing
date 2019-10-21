@@ -25,18 +25,21 @@
           <p class="info-points-value">{{schemaInfo?.pointsName}}</p>
           <p class="info-points-title">Joining Method</p>
           <div class="info-points-value">
-            <p  class="info-points-value" *ngIf="schemaInfo?.joinMethod?.transactionAmount">
-              Transaction Amount
-              <span class="info-points-value">
-                ({{schemaInfo?.joinMethod?.amount}} {{'SGD' || currency}})
-              </span>
-            </p>
-            <p class="info-points-value" *ngIf="schemaInfo?.joinMethod?.signUp">
-              Sign-up
-            </p>
-            <p class="info-points-value" *ngIf="schemaInfo?.joinMethod?.inviteOnly">
-              By invite
-            </p>
+<!--            <p  class="info-points-value">-->
+              {{schemaInfo?.joinMethod | JoinMethod}}
+<!--            </p>-->
+<!--            <p  class="info-points-value" *ngIf="schemaInfo?.joinMethod?.transactionAmount">-->
+<!--              Transaction Amount-->
+<!--              <span class="info-points-value">-->
+<!--                ({{schemaInfo?.joinMethod?.amount}} {{'SGD' || currency}})-->
+<!--              </span>-->
+<!--            </p>-->
+<!--            <p class="info-points-value" *ngIf="schemaInfo?.joinMethod?.signUp">-->
+<!--              Sign-up-->
+<!--            </p>-->
+<!--            <p class="info-points-value" *ngIf="schemaInfo?.joinMethod?.inviteOnly">-->
+<!--              By invite-->
+<!--            </p>-->
           </div>
         </div>
       </div>
