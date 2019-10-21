@@ -1,9 +1,19 @@
 @import '~@angular/material/theming';
 @import "variables";
+
+::ng-deep {
+  .upload-btn {
+    span ~ span {
+      display: none;
+    }
+  }
+}
+
 :host {
   display: block;
   width: 100%;
 }
+
 .upload {
   &-wrap {
     position: relative;
@@ -97,14 +107,6 @@
   }
 }
 
-::ng-deep {
-  .upload-btn {
-    span ~ span {
-      display: none;
-    }
-  }
-}
-
 .image {
   max-height: 100%;
   max-width: 100%;
@@ -185,6 +187,7 @@
     opacity: 1;
   }
 }
+
 .upload-full {
   &-width {
     .upload {
@@ -203,4 +206,3 @@
     }
   }
 }
-
