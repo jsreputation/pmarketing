@@ -5,18 +5,6 @@
         [campaignId]="campaignId"
         (completed)="completed()">
     </perx-core-puzzle-list>
-
-    <h1>My Rewards</h1>
-    <perx-core-vouchers
-        (route)="onRoute($event)"
-        [filter]="'issued'"
-        [iconDisplay]="'arrow_forward_ios'"
-        [showTitle]="true"
-        [showMerchant]="false"
-        [showExpireDate]="false"
-        [showRedeemedDate]="false"
-        [showRedeemedIcon]="false"
-    ></perx-core-vouchers>
 </div>
 
 <app-navigate-toolbar></app-navigate-toolbar>
