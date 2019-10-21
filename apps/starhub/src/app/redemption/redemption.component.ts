@@ -20,7 +20,7 @@ import { MacaronService, IMacaron } from '../services/macaron.service';
   styleUrls: ['./redemption.component.scss']
 })
 export class RedemptionComponent implements OnInit {
-  public pinInputError = false;
+  public pinInputError: boolean = false;
   public reward: IReward;
   public voucher: Voucher;
   public showEnterPinComponent: boolean = false;
