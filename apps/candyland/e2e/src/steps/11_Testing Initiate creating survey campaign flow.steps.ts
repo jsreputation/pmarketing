@@ -25,7 +25,7 @@ When(/^2_I click on the campaign tab$/, async () => {
   await browser.wait(ec.elementToBeClickable(element.all(by.css('h3')).get(3)), 5000);
   // clicking on the campaign tab
   await element.all(by.css('h3')).get(3).click();
-  browser.sleep(3000);
+  await browser.sleep(3000);
   // disabling walkme script
   await browser.executeScript('WalkMeAPI.stopFlow()');
   await browser.sleep(3000);
