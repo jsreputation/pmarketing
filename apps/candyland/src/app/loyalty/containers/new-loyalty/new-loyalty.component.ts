@@ -33,6 +33,7 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   public form: FormGroup;
   public customTierDataSource: CustomDataSource<any>;
   public pools: any;
+  public isEditPage: boolean = false;
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
 
@@ -64,21 +65,6 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
       .pipe(untilDestroyed(this))
       .subscribe((data: any) => {
         this.pools = data;
-      });
-  }
-
-  public goNext(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
-    this.getLoyaltyWithBasicTierRequest()
-      .subscribe(() => {
-        // complete the current step
-        this.stepper.selected.completed = true;
-        // move to next step
-        this.stepper.next();
       });
   }
 
@@ -120,14 +106,40 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     this.setBasicTierIdToCustomTiersDataSourceFilter(this.loyaltyId);
   }
 
-  public save(): void {
-    console.log('save');
-    this.loyaltyService.updateLoyaltyStatus(this.loyaltyId, 'active').subscribe(() => this.navigateToList());
+  public goNext(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    this.getLoyaltyWithBasicTierRequest()
+      .subscribe(() => {
+        // complete the current step
+        this.stepper.selected.completed = true;
+        // move to next step
+        this.stepper.next();
+      });
   }
 
   public saveAsDraft(): void {
+    console.log('saveAsDraft');
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
-    this.navigateToList();
+    this.getLoyaltyWithBasicTierRequest()
+      .subscribe(() => {
+        this.navigateToList();
+      });
+  }
+
+  public launch(): void {
+    console.log('save');
+    this.loyaltyService.updateLoyaltyStatus(this.loyaltyId, 'active')
+      .subscribe(() => {
+        this.navigateToList();
+      });
   }
 
   public cancel(): void {
@@ -264,7 +276,10 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     this.route.paramMap.pipe(
       untilDestroyed(this),
       map((params: ParamMap) => params.get('id')),
-      tap(id => this.loyaltyId = id),
+      tap(id => {
+        this.isEditPage = !!id;
+        this.loyaltyId = id;
+      }),
       switchMap(id => {
         if (id) {
           return this.loyaltyService.getLoyalty(id);
