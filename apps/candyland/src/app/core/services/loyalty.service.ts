@@ -64,7 +64,7 @@ export class LoyaltyService implements ITableService {
     return this.createLoyalty(loyalty)
       .pipe(
         map(newLoyalty => newLoyalty.data.id),
-        switchMap((newLoyaltyId) => this.createLoyaltyBasicTier(loyalty, newLoyaltyId))
+        switchMap((newLoyaltyId) => this.createBasicTier(loyalty, newLoyaltyId))
       );
   }
 }
