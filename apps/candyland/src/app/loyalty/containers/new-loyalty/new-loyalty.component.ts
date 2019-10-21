@@ -28,7 +28,7 @@ import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.
 })
 export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   public loyaltyId: string;
-  public loyaltyBasicTierId: string;
+  public basicTierId: string;
   public form: FormGroup;
   public customTierDataSource: CustomDataSource<any>;
   public pools: any;
@@ -37,7 +37,7 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private loyaltyFormsService: LoyaltyFormsService,
               private loyaltyService: LoyaltyService,
-              private loyaltyCustomTierService: LoyaltyCustomTierService,
+              private customTierService: LoyaltyCustomTierService,
               private userService: UserService,
               private audiencesService: AudiencesService,
               private router: Router,
@@ -73,7 +73,7 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getLoyaltyRequest()
       .pipe(
         untilDestroyed(this),
-        switchMap(() => this.getLoyaltyBasicTierRequest())
+        switchMap(() => this.getBasicTierRequest())
       )
       .subscribe(result => {
         if (result) {
@@ -83,7 +83,6 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private getLoyaltyRequest(): Observable<any> {
-    console.log('getLoyaltyRequest', this.loyaltyId);
     if (this.loyaltyId) {
       return this.loyaltyService.updateLoyalty(this.loyaltyId, this.form.value);
     }
@@ -93,21 +92,22 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
       );
   }
 
-  private getLoyaltyBasicTierRequest(): Observable<any> {
-    console.log('getLoyaltyBasicTierRequest', this.loyaltyId, this.loyaltyBasicTierId);
-    if (this.loyaltyBasicTierId) {
-      return this.loyaltyService.updateLoyaltyBasicTier(this.loyaltyBasicTierId, this.form.value, this.loyaltyId);
+  private getBasicTierRequest(): Observable<any> {
+    if (this.basicTierId) {
+      return this.loyaltyService.updateBasicTier(this.basicTierId, this.form.value, this.loyaltyId);
     }
-    return this.loyaltyService.createLoyaltyBasicTier(this.form.value, this.loyaltyId)
+    return this.loyaltyService.createBasicTier(this.form.value, this.loyaltyId)
       .pipe(
-        tap(loyaltyBasicTier => this.setBasicTierId(loyaltyBasicTier.data.id))
+        tap(basicTier => this.setBasicTierId(basicTier.data.id))
       );
   }
 
   private setBasicTierId(basicTierId: string): void {
-    this.loyaltyBasicTierId = basicTierId;
+    this.basicTierId = basicTierId;
+    console.log('setBasicTierId', this.basicTierId, this.customTierDataSource);
     this.initCustomTiersDataSource();
-    this.setBasicTierIdToCustomTiersDataSourceFilter(basicTierId);
+    console.log('setBasicTierId2', this.basicTierId, this.customTierDataSource);
+    this.setBasicTierIdToCustomTiersDataSourceFilter(this.loyaltyId);
   }
 
   public save(): void {
@@ -139,29 +139,23 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.form.get('name');
   }
 
+  public get tiersCount(): AbstractControl {
+    return this.form.get('tiersCount');
+  }
+
   public get isLastStep(): boolean {
     return this.stepper && this.stepper.selectedIndex === this.stepper._steps.length - 1;
   }
 
   private initForm(): void {
     this.form = this.loyaltyFormsService.getFormLoyalty();
-    // this.addStepForm(this.loyaltyFormType.details);
-    // this.addStepForm(this.loyaltyFormType.tiers);
-    // }
-
-    // private addStepForm(step: string): void {
-    //   if (this.checkExistingStepForm(this.form, step)) {
-    //     return;
-    //   }
-
-    // this.form.addControl(step, this.loyaltyFormsService.getStep(step));
   }
 
   private getRefDialogSetupTier(data: any = null): Observable<MatDialogRef<TierSetupPopupComponent>> {
     const dialogRef: MatDialogRef<TierSetupPopupComponent> = this.dialog.open(TierSetupPopupComponent, {
       panelClass: 'tier-setup-dialog',
       data: {
-        loyaltyBasicTierId: this.loyaltyBasicTierId,
+        basicTierId: this.basicTierId,
         tier: data
       }
     });
@@ -176,19 +170,25 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   private createCustomTire(): void {
     this.getRefDialogSetupTier()
       .pipe(untilDestroyed(this))
-      .subscribe(() => this.customTierDataSource.updateData());
+      .subscribe(() => this.updateCustomTiersDataSource());
+  }
+
+  private updateCustomTiersDataSource(): void {
+    this.customTierDataSource.updateData();
+    console.log('updateCustomTiersDataSource', this.tiersCount, this.customTierDataSource.length);
+    this.tiersCount.patchValue(this.customTierDataSource.length || 0);
   }
 
   private editCustomTire(data: any): void {
     this.getRefDialogSetupTier(data)
       .pipe(untilDestroyed(this))
-      .subscribe(() => this.customTierDataSource.updateData());
+      .subscribe(() => this.updateCustomTiersDataSource());
   }
 
   private deleteCustomTier(id: any): void {
-    this.loyaltyCustomTierService.deleteLoyaltyCustomTier(id)
+    this.customTierService.deleteCustomTier(id)
       .pipe(untilDestroyed(this))
-      .subscribe(() => this.customTierDataSource.updateData());
+      .subscribe(() => this.updateCustomTiersDataSource());
   }
 
   public ngAfterViewInit(): void {
@@ -236,11 +236,12 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private initCustomTiersDataSource(): void {
     if (!this.customTierDataSource) {
-      this.customTierDataSource = new CustomDataSource<any>(this.loyaltyCustomTierService);
+      this.customTierDataSource = new CustomDataSource<any>(this.customTierService);
     }
   }
 
   private setBasicTierIdToCustomTiersDataSourceFilter(basicTierId: string): void {
-    this.customTierDataSource.filter = {'filter[program_id]': basicTierId};
+    console.log('setBasicTierIdToCustomTiersDataSourceFilter', basicTierId);
+    this.customTierDataSource.filter = {program_id: basicTierId};
   }
 }

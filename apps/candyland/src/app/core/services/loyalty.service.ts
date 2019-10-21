@@ -43,18 +43,18 @@ export class LoyaltyService implements ITableService {
     return this.loyaltyHttpService.deleteLoyalty(id);
   }
 
-  public createLoyaltyBasicTier(data: any, loyaltyId: string): Observable<IResponseApi<any>> {
-    const sendData: any = LoyaltyHttpAdapter.transformFromLoyaltyBasicTierForm(data, loyaltyId);
-    return this.loyaltyHttpService.createLoyaltyBasicTier({data: sendData});
+  public createBasicTier(data: any, loyaltyId: string): Observable<IResponseApi<any>> {
+    const sendData: any = LoyaltyHttpAdapter.transformFromBasicTierForm(data, loyaltyId);
+    return this.loyaltyHttpService.createBasicTier({data: sendData});
   }
 
-  public updateLoyaltyBasicTier(loyaltyBasicTierId: string, data: any, loyaltyId: string): Observable<IResponseApi<any>> {
-    const sendData: any = LoyaltyHttpAdapter.transformFromLoyaltyBasicTierForm(data, loyaltyId);
-    sendData.id = loyaltyBasicTierId;
-    return this.loyaltyHttpService.updateLoyaltyBasicTier(loyaltyBasicTierId, {data: sendData});
+  public updateBasicTier(basicTierId: string, data: any, loyaltyId: string): Observable<IResponseApi<any>> {
+    const sendData: any = LoyaltyHttpAdapter.transformFromBasicTierForm(data, loyaltyId);
+    sendData.id = basicTierId;
+    return this.loyaltyHttpService.updateBasicTier(basicTierId, {data: sendData});
   }
 
-  public deleteLoyaltyBasicTier(id: string): Observable<IResponseApi<any>> {
-    return this.loyaltyHttpService.deleteLoyaltyBasicTier(id);
+  public deleteBasicTier(id: string): Observable<IResponseApi<any>> {
+    return this.loyaltyHttpService.deleteBasicTier(id);
   }
 }

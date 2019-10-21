@@ -31,35 +31,35 @@ export class LoyaltyHttpService {
     return this.http.delete<IResponseApi<any>>(ApiConfig.loyaltyPath + '/' + id);
   }
 
-  public createLoyaltyBasicTier(data: IJsonApiPayload<any>): Observable<IResponseApi<any>> {
+  public createBasicTier(data: IJsonApiPayload<any>): Observable<IResponseApi<any>> {
     return this.http.post<IResponseApi<any>>(ApiConfig.loyaltyBasicTierPath, data);
   }
 
-  public updateLoyaltyBasicTier(id: string, data: IJsonApiPayload<any>): Observable<IResponseApi<any>> {
+  public updateBasicTier(id: string, data: IJsonApiPayload<any>): Observable<IResponseApi<any>> {
     return this.http.patch<IResponseApi<any>>(ApiConfig.loyaltyBasicTierPath + '/' + id, data);
   }
 
-  public deleteLoyaltyBasicTier(id: string): Observable<IResponseApi<any>> {
+  public deleteBasicTier(id: string): Observable<IResponseApi<any>> {
     return this.http.delete<IResponseApi<any>>(ApiConfig.loyaltyBasicTierPath + '/' + id);
   }
 
-  public getLoyaltyCustomTier(id: string, params: HttpParams): Observable<IJsonApiPayload<any>> {
+  public getCustomTier(id: string, params: HttpParams): Observable<IJsonApiPayload<any>> {
     return this.http.get<IJsonApiPayload<any>>(`${ApiConfig.getLoyaltyCustomTierPath}/${id}`, {params});
   }
 
-  public getLoyaltyCustomTiers(params: HttpParams): Observable<IJsonApiPayload<any>> {
+  public getCustomTiers(params: HttpParams): Observable<IJsonApiPayload<any>> {
     return this.http.get<IJsonApiPayload<any>>(ApiConfig.getLoyaltyCustomTierPath, {params});
   }
 
-  public createLoyaltyCustomTier(data: IJsonApiPayload<any>): Observable<IResponseApi<any>> {
+  public createCustomTier(data: IJsonApiPayload<any>): Observable<IResponseApi<any>> {
     return this.http.post<IResponseApi<any>>(ApiConfig.getLoyaltyCustomTierPath, data);
   }
 
-  public updateLoyaltyCustomTier(id: string, data: IJsonApiPayload<any>): Observable<IResponseApi<any>> {
+  public updateCustomTier(id: string, data: IJsonApiPayload<any>): Observable<IResponseApi<any>> {
     return this.http.patch<IResponseApi<any>>(ApiConfig.getLoyaltyCustomTierPath + '/' + id, data);
   }
 
-  public deleteLoyaltyCustomTier(id: string): Observable<IResponseApi<any>> {
+  public deleteCustomTier(id: string): Observable<IResponseApi<any>> {
     return this.http.delete<IResponseApi<any>>(ApiConfig.getLoyaltyCustomTierPath + '/' + id);
   }
 }

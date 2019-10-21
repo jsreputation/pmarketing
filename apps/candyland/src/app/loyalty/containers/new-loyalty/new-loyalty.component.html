@@ -31,7 +31,7 @@
       <ng-template matStepLabel>Tiers & Conversions</ng-template>
       <div class="loyalty-detail-content">
         <cl-loyalty-form-step-tiers-conversions *ngIf="form && stepTwo" [group]="stepTwo"
-                                                (customTierDataSource)="customTierDataSource"
+                                                [customTierDataSource]="customTierDataSource"
                                                 (tiersConversionsAction)="handleLoyaltyActions($event)"
                                                 [currency]="currency$ | async">
 
@@ -54,6 +54,7 @@
       <ng-template matStepLabel>Review</ng-template>
       <div class="loyalty-detail-content">
         <cl-loyalty-form-step-review *ngIf="form && stepOne && stepTwo && isLastStep"
+                                     [dataSource]="customTierDataSource"
                                      [group]="form"></cl-loyalty-form-step-review>
       </div>
     </mat-step>

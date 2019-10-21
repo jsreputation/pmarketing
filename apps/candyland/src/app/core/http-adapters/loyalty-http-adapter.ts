@@ -1,5 +1,5 @@
 import Utils from '@cl-helpers/utils';
-import { LoyaltyJoinMethodType } from '@cl-core/models/loyalty/loyalty-joing-method-type.enum';
+import { LoyaltyJoinMethodMap } from '@cl-core/models/loyalty/loyalty-joing-method-map';
 
 export class LoyaltyHttpAdapter {
   public static transformToTableData(data: any): ITableData<any> {
@@ -25,7 +25,10 @@ export class LoyaltyHttpAdapter {
       attributes: {
         name: data.name,
         unit: data.details.pointsName,
-        pool_id: data.details.poolId
+        pool_id: data.details.poolId,
+        // display_properties: {
+        //   tiers_count: data.tiersCount
+        // }
       }
     };
   }
@@ -39,7 +42,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformFromLoyaltyBasicTierForm(data: any, loyaltyId: string): any {
+  public static transformFromBasicTierForm(data: any, loyaltyId: string): any {
     return {
       type: 'basic_tiers',
       attributes: {
@@ -64,7 +67,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformFromLoyaltyCustomTierForm(data: any, loyaltyBasicTierId: string): any {
+  public static transformFromCustomTierForm(data: any, basicTierId: string): any {
     return {
       type: 'custom_tiers',
       attributes: {
@@ -81,7 +84,7 @@ export class LoyaltyHttpAdapter {
         basic_tier: {
           data: {
             type: 'basic_tiers',
-            id: loyaltyBasicTierId
+            id: basicTierId
           }
         }
       }
@@ -89,11 +92,11 @@ export class LoyaltyHttpAdapter {
   }
 
   public static transformToTableDataCustomTierForm(data: any): ITableData<any> {
-    const formatData = data.data.map((item) => LoyaltyHttpAdapter.transformToLoyaltyCustomTierForm(item));
-    return { data: formatData, meta: data.meta};
+    const formatData = data.data.map((item) => LoyaltyHttpAdapter.transformToCustomTierForm(item));
+    return {data: formatData, meta: data.meta};
   }
 
-  public static transformToLoyaltyCustomTierForm(data: any): any {
+  public static transformToCustomTierForm(data: any): any {
     return {
       id: data.id,
       name: data.attributes.name,
@@ -121,13 +124,21 @@ export class LoyaltyHttpAdapter {
     // return Utils.filterObj(formatData, (item) => !!item);
     const chosenMethods = Utils.filterObj(joinMethod, (item) => !!item);
     const apiJoinMethod = {};
-    Object.keys(chosenMethods).forEach(key => apiJoinMethod[LoyaltyJoinMethodType[key]] = chosenMethods[key]);
+    // Object.keys(chosenMethods).forEach(key => apiJoinMethod[LoyaltyJoinMethodType[key]] = chosenMethods[key]);
+    Object.keys(chosenMethods).forEach(key => apiJoinMethod[LoyaltyJoinMethodMap[key].apiName] = chosenMethods[key]);
     return apiJoinMethod;
   }
 
   private static transformJoinMethodFromApi(apiJoinMethod: any): any {
-    const joinMethod = {};
-    Object.keys(apiJoinMethod).forEach(key => joinMethod[LoyaltyJoinMethodType[LoyaltyJoinMethodType[key]]] = apiJoinMethod[key]);
-    return joinMethod;
+    return Object.entries(apiJoinMethod).map(([apiKey, apiValue]) => {
+      const result = {};
+      Object.entries(LoyaltyJoinMethodMap).forEach(([key, value]) => {
+        if (apiKey === value.apiName) {
+          result[key] = apiValue;
+          return;
+        }
+      });
+      return result;
+    });
   }
 }

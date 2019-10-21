@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CustomDataSource } from '@cl-shared/table';
+import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
 
 @Component({
   selector: 'cl-loyalty-review',
@@ -8,9 +10,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class LoyaltyReviewComponent implements OnInit {
   public loyalty: ILoyaltyForm;
+  public customTierDataSource: CustomDataSource<any>;
 
   constructor(private route: ActivatedRoute,
+              private customTierService: LoyaltyCustomTierService,
               private router: Router) {
+    this.customTierDataSource = new CustomDataSource<any>(this.customTierService);
   }
 
   public ngOnInit(): void {

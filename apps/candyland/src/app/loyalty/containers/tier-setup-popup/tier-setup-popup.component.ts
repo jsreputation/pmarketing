@@ -17,7 +17,7 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
 
   constructor(public dialogRef: MatDialogRef<TierSetupPopupComponent>,
               private loyaltyFormsService: LoyaltyFormsService,
-              private loyaltyCustomTierService: LoyaltyCustomTierService,
+              private customTierService: LoyaltyCustomTierService,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
@@ -50,9 +50,9 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
     }
     let request;
     if (this.data.tier) {
-      request = this.loyaltyCustomTierService.updateLoyaltyCustomTier(this.data.tier.id, this.form.value, this.data.loyaltyBasicTierId);
+      request = this.customTierService.updateCustomTier(this.data.tier.id, this.form.value, this.data.basicTierId);
     } else {
-      request = this.loyaltyCustomTierService.createLoyaltyCustomTier(this.form.value, this.data.loyaltyBasicTierId);
+      request = this.customTierService.createCustomTier(this.form.value, this.data.basicTierId);
     }
     request.subscribe(data => this.dialogRef.close(data));
   }

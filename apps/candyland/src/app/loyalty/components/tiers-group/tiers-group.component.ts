@@ -9,36 +9,17 @@ import { CustomDataSource } from '@cl-shared/table';
 })
 export class TiersGroupComponent {
 
+  @Input() public editable: boolean = false;
   @Input() public dataSource: CustomDataSource<any>;
-  // @Input() public data: any = [{
-  //   name: 'Silver',
-  //   joinMethod: {
-  //     pointsThreshold: true,
-  //     points: 500
-  //   },
-  //   earnBonus: 20,
-  //   burnDiscount: 10,
-  //   pointsExpiry: {
-  //     amount: 3,
-  //     type: 'day',
-  //     trigger: 'accural',
-  //   }
-  // },
-  //   {
-  //     name: 'Gold',
-  //     joinMethod: {
-  //       inviteOnly: true,
-  //     },
-  //     earnBonus: 20,
-  //     burnDiscount: 10,
-  //     pointsExpiry: {
-  //       amount: 3,
-  //       type: 'day',
-  //       trigger: 'accural',
-  //     }
-  //   }];
-  @Input() public displayedColumns: string[] = ['name', 'joinMethod', 'earnBonus', 'burnDiscount', 'pointsExpiry', 'actions'];
+  @Input() public displayedColumns: string[] = ['name', 'joinMethod', 'earnBonus', 'burnDiscount', 'pointsExpiry'];
   @Output() public tiersAction: EventEmitter<{ action: NewLoyaltyActions, data?: any }> = new EventEmitter();
+
+  public get displayedColumnsWithEdit(): string[] {
+    if (this.editable) {
+      return [...this.displayedColumns, 'actions'];
+    }
+    return this.displayedColumns;
+  }
 
   public editItem(tier: any): void {
     this.tiersAction.emit({action: NewLoyaltyActions.editTier, data: tier});
@@ -49,7 +30,7 @@ export class TiersGroupComponent {
   }
 
   public deleteItem(tier: any): void {
-    this.tiersAction.emit({action: NewLoyaltyActions.duplicateTier, data: tier});
+    this.tiersAction.emit({action: NewLoyaltyActions.deleteTier, data: tier});
   }
 
   public createTier(): void {

@@ -12,6 +12,7 @@ export class LoyaltyFormsService {
   public getFormLoyalty(): FormGroup {
     return new FormGroup({
       name: new FormControl(null, [Validators.required]),
+      tiersCount: new FormControl(0),
       details: new FormGroup({
         pointsName: new FormControl(null,
           [Validators.required, Validators.minLength(1)]),

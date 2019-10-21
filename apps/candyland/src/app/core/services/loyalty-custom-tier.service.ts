@@ -16,30 +16,30 @@ export class LoyaltyCustomTierService implements ITableService {
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<any>> {
     const httpParams = ClHttpParams.createHttpParams(params);
-    return this.loyaltyHttpService.getLoyaltyCustomTiers(httpParams).pipe(
+    return this.loyaltyHttpService.getCustomTiers(httpParams).pipe(
       map(response => LoyaltyHttpAdapter.transformToTableDataCustomTierForm(response))
     );
   }
 
-  public getLoyaltyCustomTier(id: string, params: HttpParamsOptions): Observable<IShakeTree> {
+  public getCustomTier(id: string, params: HttpParamsOptions): Observable<IShakeTree> {
     const httpParams = ClHttpParams.createHttpParams(params);
-    return this.loyaltyHttpService.getLoyaltyCustomTier(id, httpParams).pipe(
-      map((response: any) => LoyaltyHttpAdapter.transformToLoyaltyCustomTierForm(response.data))
+    return this.loyaltyHttpService.getCustomTier(id, httpParams).pipe(
+      map((response: any) => LoyaltyHttpAdapter.transformToCustomTierForm(response.data))
     );
   }
 
-  public createLoyaltyCustomTier(data: any, loyaltyBasicTierId: string): Observable<IResponseApi<any>> {
-    const sendData: any = LoyaltyHttpAdapter.transformFromLoyaltyCustomTierForm(data, loyaltyBasicTierId);
-    return this.loyaltyHttpService.createLoyaltyCustomTier({data: sendData});
+  public createCustomTier(data: any, basicTierId: string): Observable<IResponseApi<any>> {
+    const sendData: any = LoyaltyHttpAdapter.transformFromCustomTierForm(data, basicTierId);
+    return this.loyaltyHttpService.createCustomTier({data: sendData});
   }
 
-  public updateLoyaltyCustomTier(loyaltyCustomTierId: string, data: any, loyaltyBasicTierId: string): Observable<IResponseApi<any>> {
-    const sendData: any = LoyaltyHttpAdapter.transformFromLoyaltyCustomTierForm(data, loyaltyBasicTierId);
-    sendData.id = loyaltyCustomTierId;
-    return this.loyaltyHttpService.updateLoyaltyCustomTier(loyaltyCustomTierId, {data: sendData});
+  public updateCustomTier(customTierId: string, data: any, basicTierId: string): Observable<IResponseApi<any>> {
+    const sendData: any = LoyaltyHttpAdapter.transformFromCustomTierForm(data, basicTierId);
+    sendData.id = customTierId;
+    return this.loyaltyHttpService.updateCustomTier(customTierId, {data: sendData});
   }
 
-  public deleteLoyaltyCustomTier(id: string): Observable<IResponseApi<any>> {
-    return this.loyaltyHttpService.deleteLoyaltyCustomTier(id);
+  public deleteCustomTier(id: string): Observable<IResponseApi<any>> {
+    return this.loyaltyHttpService.deleteCustomTier(id);
   }
 }

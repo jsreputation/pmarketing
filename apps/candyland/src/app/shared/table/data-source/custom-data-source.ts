@@ -4,6 +4,7 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { SortModel } from '@cl-shared/table/data-source/sort.model';
 import { debounceTime, map, takeUntil } from 'rxjs/operators';
 import { IPagination } from './ipagination';
+import { DataSource } from '@angular/cdk/collections';
 
 // enum of states for manage view in pages where used data source
 export enum DataSourceStates {
@@ -13,7 +14,7 @@ export enum DataSourceStates {
   errorApi = 3 // get first response from data service with error (use for showing error)
 }
 
-export class CustomDataSource<T> {
+export class CustomDataSource<T> extends DataSource<T> {
   private dataSubject: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
   private loadingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   // used for toggle spinner loading
@@ -25,6 +26,11 @@ export class CustomDataSource<T> {
   private lengthData: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   // used for set all length items the pagination component
   public length$: Observable<number> = this.lengthData.asObservable();
+
+  public get length(): number {
+    return this.lengthData.value;
+  }
+
   // use for set included params
   private privateParams: HttpParamsOptions;
   private destroy$: Subject<void> = new Subject();
@@ -55,6 +61,7 @@ export class CustomDataSource<T> {
 
   // default items on the page set up pageSize
   constructor(public dataService: ITableService, public pageSize: number = 5, params?: HttpParamsOptions) {
+    super();
     if (params) {
       this.params = params;
     }
@@ -75,14 +82,13 @@ export class CustomDataSource<T> {
 
   private privateFilter: any;
 
-  public get filter(): { [key: string]: string } {
-    return this.privateFilter;
-  }
-
-  public set filter(value: { [key: string]: string }) {
-    this.privateFilter = JSON.parse((value as any));
+  public set filter(value: { [key: string]: string } | string) { // { [key: string]: string }
+    if (typeof value === 'string') {
+      this.privateFilter = JSON.parse((value));
+    } else {
+      this.privateFilter = value;
+    }
     this.changeFilterSearch.next(0);
-
     this.loadingData();
   }
 
@@ -138,6 +144,7 @@ export class CustomDataSource<T> {
     this.loadingSubject.next(true);
     this.request = this.dataService.getTableData(params)
       .subscribe((res: ITableData<T>) => {
+        console.log('res', res);
         this.dataSubject.next(res.data);
         this.lengthData.next(res.meta.record_count);
         this.loadingSubject.next(false);
@@ -174,8 +181,8 @@ export class CustomDataSource<T> {
     const result = {};
     Object.keys(this.privateFilter)
       .forEach((item) => {
-        if (this.filter[item]) {
-          result[`filter[${item}]`] = this.filter[item];
+        if (this.privateFilter[item]) {
+          result[`filter[${item}]`] = this.privateFilter[item];
         }
       });
     return result;
