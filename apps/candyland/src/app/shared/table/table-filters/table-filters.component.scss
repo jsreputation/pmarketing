@@ -4,21 +4,16 @@ cl-table-filters {
   flex-grow: 1;
 }
 
-cl-table-filters + cl-button {
-  margin-left: ($horizontal-padding * 0.5);
-}
-
 .filters {
   display: flex;
-  margin: 0 (-($horizontal-padding * 0.25)) ($vertical-padding * 0.5);
   flex-wrap: wrap;
+  margin: 0 (-($horizontal-padding * 0.25)) ($vertical-padding * 0.5);
 
   & > * {
     padding: 0 ($horizontal-padding * 0.25);
     flex-grow: 1;
     flex-shrink: 1;
-    flex-basis: ($horizontal-padding * 10);
-    width: 100%;
+    flex-basis: ($horizontal-padding * 8);
 
     &.full-block {
       flex-basis: 100%;
@@ -26,7 +21,7 @@ cl-table-filters + cl-button {
     }
 
     &.half-block {
-      flex-basis: ($horizontal-padding * 5);
+      flex-basis: ($horizontal-padding * 4);
     }
 
     &.search-block {
@@ -50,7 +45,7 @@ cl-table-filters + cl-button {
   }
 }
 
-@media (min-width: $lg-width) {
+@media (min-width: $lg-width + 1) {
   .filters {
     & > * {
       max-width: ($horizontal-padding * 17.5);

@@ -15,8 +15,8 @@ import {
 import { MatDialog } from '@angular/material';
 import { ToggleControlConfig } from '@cl-core/models/toggle-control-config.interface';
 import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { noop } from 'rxjs';
+import { noop, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-new-campaign-stamp-rule-form-group',
@@ -61,6 +61,8 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
   // @ts-ignore
   private onTouched: any = noop;
 
+  private destroy$: Subject<any> = new Subject();
+
   constructor(public cd: ChangeDetectorRef,
               public dialog: MatDialog,
               private toggleControlService: ToggleControlService,
@@ -70,7 +72,7 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
 
   public ngAfterViewInit(): void {
     this.group.valueChanges
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((value) => {
         this.onChange(value);
         const toggleConfig = this.getToggleConfig(this.group);
@@ -83,6 +85,8 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public writeValue(data: any): void {

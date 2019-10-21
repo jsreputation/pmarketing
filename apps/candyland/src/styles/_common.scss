@@ -106,7 +106,7 @@ h1, h2, h3, h4, h5, p {
   }
 
   &.form-limiter {
-    max-width: 113.2rem;
+    max-width: 113.6rem;
     margin-left: auto;
     margin-right: auto;
   }
@@ -120,6 +120,10 @@ h1, h2, h3, h4, h5, p {
     display: block;
     margin-top: ($vertical-padding * 0.5);
   }
+
+  @media (max-width: $mobile-width) {
+    padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.5);
+  }
 }
 
 .row {
@@ -130,9 +134,25 @@ h1, h2, h3, h4, h5, p {
 }
 
 .control-input {
-  @include typo-input;
+  @include typo-input-alt;
 
   width: 100%;
+}
+
+.control-img_asset {
+  padding-bottom: $vertical-padding;
+  overflow-x: auto;
+
+  .card-fieldset-label {
+    position: sticky;
+    left: 0;
+  }
+}
+
+// INVALID FORM NEXT FIELD CLEAR GAP
+.mat-form-field-invalid {
+  transition: 0.3s cubic-bezier(0.35, 0, 0.25, 1);
+  margin-bottom: ($vertical-padding * 0.25);
 }
 
 //BOX OUTLINED FIELDS OVERRIDES
@@ -173,14 +193,27 @@ h1, h2, h3, h4, h5, p {
 
 .input-group {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
+  align-items: baseline;
+  margin-left: -($horizontal-padding * 0.25);
+  margin-right: -($horizontal-padding * 0.25);
 
-  & > * {
-    margin-right: 16px;
+  > * {
+    padding-left: ($horizontal-padding * 0.25);
+    padding-right: ($horizontal-padding * 0.25);
+  }
 
-    &:last-child {
-      margin-right: 0;
-    }
+  > .mat-form-field {
+    flex: 1 1 28rem;
+  }
+
+  > .half-on-mobile {
+    flex-basis: 14rem;
+  }
+
+  > span {
+    width: auto;
+    flex-shrink: 0;
   }
 }
 
@@ -222,7 +255,19 @@ h1, h2, h3, h4, h5, p {
     padding-right: ($horizontal-padding * 0.75) !important;
   }
 
+  &-page-size {
+    margin-right: $horizontal-padding !important;
+  }
+
   &-page-size-label {
+    margin-left: 0 !important;
+  }
+
+  &-range-actions {
+    min-height: ($horizontal-padding * 1.5);
+  }
+
+  &-range-label {
     margin-left: 0 !important;
   }
 }
@@ -261,6 +306,22 @@ h1, h2, h3, h4, h5, p {
   }
 }
 
+// Sidebar Flex
+.mat-drawer-inner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+// Material Drawer Reset for Mobile Topbar Clearance
+@media (max-width: $tablet-width) {
+  .mat-drawer-backdrop {
+    top: $header-height-base !important;
+    position: fixed !important;
+  }
+}
+
 // UTILITIES
 .sr-only {
   border: 0 !important;
@@ -283,10 +344,42 @@ h1, h2, h3, h4, h5, p {
   }
 }
 
+::-webkit-scrollbar {
+  width: ($horizontal-padding * 0.125);
+  height: ($vertical-padding * 0.125);
+}
+
+::-webkit-scrollbar-button {
+  background-color: $light-gray;
+  display: none;
+}
+
+::-webkit-scrollbar-track {
+  background-color: $light-gray;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: $light-gray;
+}
+
+::-webkit-scrollbar-thumb {
+  height: $vertical-padding;
+  background-color: $gray;
+  border-radius: ($vertical-padding * 0.125);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: $light-gray;
+}
+
+::-webkit-resizer {
+  background-color: $secondary-color;
+}
+
 .custom-scroll {
   &::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
+    width: ($horizontal-padding * 0.25);
+    height: ($vertical-padding * 0.25);
   }
 
   &::-webkit-scrollbar-button {
@@ -305,7 +398,7 @@ h1, h2, h3, h4, h5, p {
   &::-webkit-scrollbar-thumb {
     height: 50px;
     background-color: #172238;
-    border-radius: 3px;
+    border-radius: ($horizontal-padding * 0.25);
   }
 
   &::-webkit-scrollbar-corner {

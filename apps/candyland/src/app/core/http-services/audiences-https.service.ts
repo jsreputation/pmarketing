@@ -23,7 +23,7 @@ export class AudiencesHttpsService {
     return this.http.get<IJsonApiListPayload<any>>(ApiConfig.getAudiences, { params });
   }
 
-  public getAudience(id: number, params: HttpParams): Observable<IJsonApiPayload<any>> {
+  public getAudience(id: string, params: HttpParams): Observable<IJsonApiPayload<any>> {
     return this.http.get<IJsonApiPayload<any>>(`${ApiConfig.getAudiences}/${id}`, { params });
   }
 
@@ -31,7 +31,7 @@ export class AudiencesHttpsService {
     return this.http.get<IJsonApiListPayload<any>>(ApiConfig.getAllUsers, { params });
   }
 
-  public createUser(data: IJsonApiPayload<any>): Observable<IJsonApiPayload<IUserApi>> {
+  public createUser(data: IJsonApiItem<IUserApi>): Observable<IJsonApiPayload<IUserApi>> {
     return this.http.post<IJsonApiPayload<IUserApi>>(ApiConfig.getAllUsers, { data });
   }
 

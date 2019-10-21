@@ -1,5 +1,6 @@
 <div class="main-container" *ngIf="voucher$ | async as voucher">
- <qrcode [qrdata]="voucher.code" [size]="150" [level]="'M'"></qrcode>
- <div class="title">Present this QR code to the cashier to complete your redemption</div>
- <div class="voucher-name">{{voucher.name}}</div>
+  <qrcode [qrdata]="voucher.code" [size]="150" [level]="'M'"></qrcode>
+  <div
+    class="title">{{voucher?.reward?.redemptionText || 'Present this QR code to the cashier to complete your redemption'}}</div>
+  <div class="voucher-name">{{voucher.reward.name}}</div>
 </div>

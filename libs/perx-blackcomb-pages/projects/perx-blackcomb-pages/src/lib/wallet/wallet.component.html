@@ -1,0 +1,24 @@
+<div class="tab-group__content">
+    <div *ngIf="stampCards$ && (stampCards$ | async) as stampCards">
+        <h1 *ngIf="stampCards.length>0">My Stamp Cards</h1>
+        <a *ngFor="let stampCard of stampCards" [routerLink]="['/stamp/' + stampCard.campaignId]">
+            <mat-card matRipple>
+                <div class="puzzle-content">
+                    <div class="puzzle-img__wrapper">
+                      <img class="puzzle-img" src="{{stampCard.displayProperties.rewardPostStamp}}">
+                    </div>
+                    <div class="puzzle-details">
+                        <span class='main-reward-title'>
+                            {{stampCard.title}}
+                        </span>
+                        <span class="reward-subtitle">{{stampCard.subTitle}}</span>
+                    </div>
+                </div>
+            </mat-card>
+        </a>
+    </div>
+    <h1>My Wallet</h1>
+    <perx-core-vouchers (tapped)="voucherSelected($event)" [data]="vouchers$" [filter]="filter"
+        [showRedeemedIcon]="false">
+    </perx-core-vouchers>
+</div>

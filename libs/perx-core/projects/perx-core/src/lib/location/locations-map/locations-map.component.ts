@@ -8,6 +8,7 @@ import {
   ElementRef,
   OnChanges,
   SimpleChanges,
+  OnDestroy,
 } from '@angular/core';
 
 import {
@@ -18,13 +19,14 @@ import {
 
 import { ILocation } from '../ilocation';
 import { GeoLocationService } from '../geolocation.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-locations-map',
   templateUrl: './locations-map.component.html',
   styleUrls: ['./locations-map.component.scss']
 })
-export class LocationsMapComponent implements OnInit, OnChanges {
+export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   public locations: Observable<ILocation[]>;
 
@@ -33,7 +35,7 @@ export class LocationsMapComponent implements OnInit, OnChanges {
   public userMarker: google.maps.Marker;
   public markersArray: google.maps.Marker[] = [];
   public userLocation: Subject<Position> = new Subject();
-
+  private destroy$: Subject<any> = new Subject();
   @Input()
   public key: string = null;
 
@@ -43,9 +45,11 @@ export class LocationsMapComponent implements OnInit, OnChanges {
   public constructor(private geoLocationService: GeoLocationService) { }
 
   public ngOnInit(): void {
-    this.userLocation.subscribe(() => {
-      this.updateLocations();
-    });
+    this.userLocation
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.updateLocations();
+      });
     // load google map script
     this.loadScript()
       .then(() => {
@@ -55,7 +59,9 @@ export class LocationsMapComponent implements OnInit, OnChanges {
         this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
         // any click on the map should dismiss the current location
         this.map.addListener('click', () => this.current = null);
-        this.geoLocationService.positions().subscribe((position: Position) => this.updateUserPosition(position));
+        this.geoLocationService.positions()
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((position: Position) => this.updateUserPosition(position));
         this.updateLocations();
       });
   }
@@ -120,28 +126,30 @@ export class LocationsMapComponent implements OnInit, OnChanges {
 
   private updateLocations(): void {
     if (this.locations && this.map) {
-      forkJoin(this.locations).subscribe(
-        (locationsArr: ILocation[][]) => {
-          const locations: ILocation[] = locationsArr[0];
-          this.clearMarkers();
-          locations.map((location: ILocation) => {
-            const latLng: google.maps.LatLng = new google.maps.LatLng({ lat: location.latitude, lng: location.longitude });
-            const marker = new google.maps.Marker({
-              position: latLng,
-              map: this.map,
-              title: location.name
+      forkJoin(this.locations)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          (locationsArr: ILocation[][]) => {
+            const locations: ILocation[] = locationsArr[0];
+            this.clearMarkers();
+            locations.map((location: ILocation) => {
+              const latLng: google.maps.LatLng = new google.maps.LatLng({ lat: location.latitude, lng: location.longitude });
+              const marker = new google.maps.Marker({
+                position: latLng,
+                map: this.map,
+                title: location.name
+              });
+              marker.addListener('click', () => {
+                this.current = location;
+              });
+              marker.setClickable(true);
+              marker.setCursor('pointer');
+              this.markersArray.push(marker);
+              return marker;
             });
-            marker.addListener('click', () => {
-              this.current = location;
-            });
-            marker.setClickable(true);
-            marker.setCursor('pointer');
-            this.markersArray.push(marker);
-            return marker;
-          });
-          this.updateBoundingBox();
-        }
-      );
+            this.updateBoundingBox();
+          }
+        );
     }
   }
 
@@ -158,5 +166,10 @@ export class LocationsMapComponent implements OnInit, OnChanges {
 
   public gMapUrl(loc: ILocation): string {
     return `https://www.google.com/maps/search/?api=1&query=${loc.latitude},${loc.longitude}`;
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

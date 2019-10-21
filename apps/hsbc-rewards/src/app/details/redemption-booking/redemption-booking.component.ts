@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   LocationsService,
   RewardsService,
@@ -11,11 +11,11 @@ import {
   IPrice,
   IVoucherService
 } from '@perx/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {switchMap, map, flatMap} from 'rxjs/operators';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {forkJoin, Observable, of, SubscriptionLike} from 'rxjs';
-import {MatDialog} from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap, flatMap } from 'rxjs/operators';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { forkJoin, Observable, of, SubscriptionLike } from 'rxjs';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-redemption-booking',
@@ -53,7 +53,7 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.popupSubscription = this.notificationService.$popup.subscribe(data => {
-      this.dialog.open(PopupComponent, {data});
+      this.dialog.open(PopupComponent, { data });
     });
     this.getData();
     this.getLoyalty();
@@ -68,7 +68,7 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
     this.route.params.pipe(switchMap((param) => {
       this.rewardId = param.id;
       return forkJoin([this.rewardsService.getReward(this.rewardId),
-        this.rewardsService.getRewardPricesOptions(this.rewardId)]);
+      this.rewardsService.getRewardPricesOptions(this.rewardId)]);
     })).pipe(flatMap((result) => {
       [this.reward, this.prices] = result;
       this.merchantId = this.reward.merchantId;
@@ -78,7 +78,7 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
       (merchantLocations: ILocation[]) => {
         this.updateMerchantData(merchantLocations);
       },
-      (err) => {
+      () => {
         // validators will prevent form submission
         this.notificationService.addPopup({
           title: 'Sorry',
@@ -98,7 +98,7 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
       (merchantLocations: ILocation[]) => {
         this.updateMerchantData(merchantLocations);
       },
-      (err) => {
+      () => {
         // validators will prevent form submission
         this.notificationService.addPopup({
           title: 'Sorry',
@@ -118,7 +118,7 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
   public buildForm(): void {
     this.bookingForm = this.build.group({
       quantity: [null, [Validators.required]],
-      merchant: [{value: null, disabled: true}, [Validators.required]],
+      merchant: [{ value: null, disabled: true }, [Validators.required]],
       location: [null, [Validators.required]],
       priceId: [null, [Validators.required]],
       agreement: [false, [Validators.requiredTrue]]
@@ -138,8 +138,12 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
 
     forkJoin([...new Array(parseInt(this.bookingForm.value.quantity, 10))].map(() => {
       return this.vouchersService.reserveReward(this.rewardId,
-        {priceId: this.bookingForm.value.priceId, locationId: this.bookingForm.value.location});
-    })).subscribe((result) => {
+        {
+          priceId: this.bookingForm.value.priceId,
+          locationId: this.bookingForm.value.location,
+          sourceType: 'hsbc-rewards'
+        });
+    })).subscribe(() => {
       this.router.navigate(['detail/success']);
     }, (err) => {
       if (err.code === 40) {

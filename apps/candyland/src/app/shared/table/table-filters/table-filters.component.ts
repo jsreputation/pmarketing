@@ -53,7 +53,7 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
           const res = {};
           Object.keys(values).forEach( (key: string) => {
             const newKey = key.replace(/-/gi, '.');
-            res[newKey] = values[key];
+            res[newKey] = values[key] ? values[key].trim() : values[key];
           });
           return JSON.stringify(res);
         }),

@@ -1,0 +1,51 @@
+@import '../icon.scss';
+
+.main-container {
+  .icon {
+    @include icon(3.2rem, transparent);
+  }
+
+  .popup-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      color: #1862b8;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+  }
+
+  button {
+    width: 100%;
+    height: 6rem;
+    color: white;
+    margin: 1rem 0;
+  }
+
+  label {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: #666666;
+    padding: 1.5rem;
+    border: 1px solid #F1F2F4;
+    border-radius: 0.5rem;
+    margin: 0.5rem;
+
+    mat-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: auto;
+      width: auto;
+    }
+  }
+
+  .label-selected {
+    color: #1862b8;
+    background: #8db5e3;
+  }
+}

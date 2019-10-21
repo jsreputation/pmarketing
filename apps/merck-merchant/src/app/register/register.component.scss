@@ -1,0 +1,50 @@
+.mat-form-field {
+  display: block;
+}
+
+.main-container {
+  background-color: #0f69af;
+
+  .logo {
+    padding-top: 7rem;
+  }
+
+  .container {
+    background-color: #0f69af;
+    padding: 0 1.5rem 1.5rem;
+  }
+}
+
+.content {
+  min-height: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .main-heading {
+    font-weight: 900;
+    font-size: 3.2rem;
+    margin-bottom: 1rem;
+  }
+
+  mat-form-field {
+    font-size: 1.4rem;
+  }
+
+  .spinner-container {
+    align-self: center;
+    width: 60px;
+    margin: 0 auto;
+    background-color: white;
+    z-index: 2000;
+    flex-direction: column;
+
+    mat-progress-spinner {
+      position: absolute;
+      height: 60px;
+      width: 60px;
+      top: 50%;
+      left: calc(50% - 30px);
+    }
+  }
+}

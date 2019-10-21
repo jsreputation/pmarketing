@@ -1,9 +1,13 @@
 @import "variables";
 
+.container-sidenav,
+.mat-drawer-content {
+  overflow: initial; // required to make header sticky
+}
+
 .container-sidenav {
   position: relative;
   min-height: 100vh;
-  overflow: initial; // required to make header sticky
 }
 
 .sidenav {
@@ -16,27 +20,51 @@
     position: relative;
   }
 
-  &-action {
+  &-actions {
+    position: relative;
+    padding: 0 0 0 1.4rem;
+    margin-top: ($vertical-padding * 0.25);
+    margin-bottom: ($vertical-padding * 0.5);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-logout {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+
+    .btn-text {
+      font-size: $base-font-size;
+      color: rgba(255, 255, 255, 0.7);
+      padding-left: 0.8rem;
+      overflow: hidden;
+      width: 100%;
+      text-align: left;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      transition: 0.4s cubic-bezier(0.35, 0, 0.25, 1);
+    }
+  }
+
+  &-compress {
     display: flex;
     background: transparent;
     border: none;
     color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
-    position: absolute;
-    top: 93vh;
-    right: 0;
     outline: none;
-    transition: 0.5s;
-
-    &.center {
-      right: 1.6rem;
-    }
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 
   &-menu-wrap {
     max-height: 60vh;
     overflow: auto;
     padding: 1.6rem 0 0 0;
+    margin-bottom: auto;
   }
 }
 
@@ -49,42 +77,120 @@
   height: $header-height-base;
 }
 
+.sidenav-actions.compressed {
+  .sidenav-compress {
+    right: 1.6rem;
+  }
+
+  .sidenav-logout {
+    transform: translateY(-3rem);
+
+    .btn-text {
+      width: 0;
+    }
+  }
+}
+
 .sidenav-content {
   position: relative;
   min-height: 100vh;
 }
 
-.btn-text {
-  font-size: $base-font-size;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
-}
+.side-nav-toggle {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 5.6rem;
+  height: $modal-header-height;
+  padding: 0;
+  margin-left: 1.2rem;
+  border: none;
+  outline: none;
+  background: none;
+  color: $secondary-color;
+  cursor: pointer;
 
-.user-logout {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 93vh;
-  left: 1rem;
-}
-
-.appear {
-  animation: changeWidth 0.4s cubic-bezier(0.35, 0, 0.25, 1);
-}
-
-@keyframes changeWidth {
-  0% {
-    width: 0;
-    opacity: 0;
+  span,
+  span::before,
+  span::after {
+    width: 1.6rem;
+    height: 0.2rem;
+    margin: 0 auto;
+    display: block;
+    border-radius: 2px;
+    background: rgba($secondary-color, 1);
+    transition: all 0.25s ease;
   }
 
-  100% {
-    width: auto;
-    opacity: 1;
+  span {
+    font-size: 1px;
+    color: rgba($secondary-color, 0);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  span::before,
+  span::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
+  span::before {
+    top: 225%;
+  }
+
+  span::after {
+    bottom: 225%;
+  }
+
+  &:hover span {
+    transform: translate(-50%, -50%) rotate(90deg);
   }
 }
 
-.mat-drawer-content {
-  overflow: initial; // required to make header sticky
+.mat-drawer-opened .side-nav-toggle span,
+.mat-drawer-opened .side-nav-toggle:focus span {
+  background: rgba($secondary-color, 0);
+  transform: translate(-50%, -50%) rotate(0);
+
+  &::before {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  &::after {
+    bottom: 50%;
+    transform: scaleX(1.5);
+    transform: translateY(50%) rotate(-45deg);
+  }
+}
+
+@media (max-width: $tablet-width) {
+  .side-nav-toggle {
+    display: block;
+  }
+
+  .mat-toolbar-log {
+    display: none;
+  }
+
+  .sidenav-compress {
+    display: none;
+  }
+
+  .mat-drawer-content {
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: $mobile-width) {
+  .side-nav-toggle {
+    margin-left: 0;
+  }
 }

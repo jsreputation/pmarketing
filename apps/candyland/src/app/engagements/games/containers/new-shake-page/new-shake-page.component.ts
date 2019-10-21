@@ -1,8 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { untilDestroyed } from 'ngx-take-until-destroy';
+
 import { combineLatest, Observable, of, Subject } from 'rxjs';
-import { tap, map, switchMap } from 'rxjs/operators';
+import { tap, map, switchMap, takeUntil } from 'rxjs/operators';
+
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ControlsName } from '../../../../models/controls-name';
 import {
@@ -22,6 +23,9 @@ import { CreateImageDirective } from '@cl-shared/directives/create-image.directi
 })
 export class NewShakePageComponent implements OnInit, OnDestroy {
   @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
+
+  private destroy$: Subject<any> = new Subject();
+
   public id: string;
   public form: FormGroup;
   public shakeTreeData: IGameDefaultData;
@@ -29,7 +33,6 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
 
   public selectGiftBox: IGraphic;
   public gameGift: AbstractControl;
-  private destroy$: Subject<boolean> = new Subject();
 
   public get name(): AbstractControl {
     return this.form.get(ControlsName.name);
@@ -121,7 +124,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
             );
           })
       )
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
@@ -191,7 +194,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
 
   private handleRouteParams(): Observable<IShakeTree | null> {
     return this.route.paramMap.pipe(
-      untilDestroyed(this),
+      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.id = id),
       switchMap(id => {

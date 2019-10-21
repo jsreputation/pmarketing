@@ -31,6 +31,8 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   public image: string = '';
   private cardsCount: number = 0;
   private currentStampId: number = 0;
+  public title: string = 'Stamp Card';
+  public subTitle: string = 'Earn rewards by collecting stamps';
 
   constructor(
     private campaignService: ICampaignService,
@@ -136,44 +138,53 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       return;
     }
     const firstAvailableStamp = stamps[this.currentStampId];
-    this.stampService.putStamp(firstAvailableStamp.id)
-      .subscribe(
-        (stamp: IStamp) => {
-          if (stamp.state === StampState.redeemed) {
-            if (this.card.cardNumber === this.cardsCount) { // we are on the last card
-              const redeemedTransactionsCount = this.card.stamps.filter(s => s.state === StampState.redeemed).length;
-              if (redeemedTransactionsCount === this.rows * this.cols) { // we also were on the last stamp
-                this.notificationService.addPopup({
-                  // tslint:disable-next-line: max-line-length
-                  text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of puzzle pieces. Don\'t forget to redeem your earned rewards!'
-                });
-              }
-            }
+    this.stampCard(firstAvailableStamp.id);
 
-            if (stamp.vouchers && stamp.vouchers.length > 0) {
-              const voucherId = stamp.vouchers[0].id;
-              this.router.navigate([`/voucher/${voucherId}`, { win: true }]);
-            }
-          } else {
-            const issuedLeft = this.card.stamps.filter(s => s.state === StampState.issued);
-            if (issuedLeft.length === 0) {
-              // all redeemed but no voucher
+  }
+
+  public stampClicked(stamp: {id: number, state: string}): void {
+    this.stampCard(stamp.id);
+  }
+
+  private stampCard(stampId: number): void {
+    this.stampService.putStamp(stampId, 'hsbc-collect2')
+    .subscribe(
+      (stamp: IStamp) => {
+        if (stamp.state === StampState.redeemed) {
+          if (this.card.cardNumber === this.cardsCount) { // we are on the last card
+            const redeemedTransactionsCount = this.card.stamps.filter(s => s.state === StampState.redeemed).length;
+            if (redeemedTransactionsCount === this.rows * this.cols) { // we also were on the last stamp
               this.notificationService.addPopup({
-                title: 'Something went wrong, with our server',
-                text: 'We notified our team. Sorry about the inconvenience.'
+                // tslint:disable-next-line: max-line-length
+                text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of puzzle pieces. Don\'t forget to redeem your earned rewards!'
               });
-              this.router.navigateByUrl('/home');
             }
           }
-          this.currentStampId++;
-        },
-        () => {
-          this.notificationService.addPopup({
-            title: 'Something went wrong, with our server',
-            text: 'We notified our team. Sorry about the inconvenience.'
-          });
-          this.router.navigateByUrl('/home');
+
+          if (stamp.vouchers && stamp.vouchers.length > 0) {
+            const voucherId = stamp.vouchers[0].id;
+            this.router.navigate([`/voucher/${voucherId}`, { win: true }]);
+          }
+        } else {
+          const issuedLeft = this.card.stamps.filter(s => s.state === StampState.issued);
+          if (issuedLeft.length === 0) {
+            // all redeemed but no voucher
+            this.notificationService.addPopup({
+              title: 'Something went wrong, with our server',
+              text: 'We notified our team. Sorry about the inconvenience.'
+            });
+            this.router.navigateByUrl('/home');
+          }
         }
-      );
+        this.currentStampId++;
+      },
+      () => {
+        this.notificationService.addPopup({
+          title: 'Something went wrong, with our server',
+          text: 'We notified our team. Sorry about the inconvenience.'
+        });
+        this.router.navigateByUrl('/home');
+      }
+    );
   }
 }

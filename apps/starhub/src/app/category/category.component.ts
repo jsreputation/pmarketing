@@ -21,7 +21,7 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
   public rewards: Observable<IReward[]>;
 
   public selectedCategory: string;
-  public selectedSortingCraeteria: SortingMode = SortingMode.latest;
+  public selectedSortingCraeteria: SortingMode = SortingMode.ending_soon;
   public showToolbarTitle: boolean = false;
 
   constructor(

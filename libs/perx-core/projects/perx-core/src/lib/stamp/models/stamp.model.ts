@@ -26,6 +26,7 @@ export enum StampState {
 }
 
 export enum StampCardState {
+  completed = 'completed',
   active = 'active',
   inactive = 'inactive'
 }
@@ -70,6 +71,12 @@ export interface IStampCard {
     bgImage?: string;
     cardBgImage?: string;
     totalSlots?: number;
+    displayCampaignAs: string;
+    backgroundImg?: {
+      value?: {
+        imageUrl: string;
+      }
+    };
   };
   collectionStamps?: PuzzleCollectStamp[];
   stamps?: IStamp[];

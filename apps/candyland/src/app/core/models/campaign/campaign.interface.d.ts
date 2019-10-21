@@ -6,7 +6,7 @@ export interface ICampaign {
     status?: string;
     audience?: {
         // type: string;
-        select: number;
+        select: string;
         // file: string;
     };
     engagement_type?: string;
@@ -21,6 +21,8 @@ export interface ICampaign {
         labels?: string[];
     };
     channel?: {
+        eventId?: string;
+        templateId?: string;
         type: string;
         message?: string;
         schedule?: ISchedule;

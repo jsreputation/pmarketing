@@ -1,8 +1,7 @@
+<cl-report-header (closePage)="onClose()"
+                  [title]="data?.title"
+></cl-report-header>
 <article class="report-page">
-  <cl-report-header (closePage)="onClose()"
-                    [title]="data?.title"
-  ></cl-report-header>
-
   <mat-card class="card full-width report-info-block">
     <div class="height-line"></div>
     <div class="card-content">
@@ -16,7 +15,7 @@
           </p>
         </div>
 
-        <cl-button (click)="onClose()"
+        <cl-button (click)="downloadReport()"
                    classList="primary"
         >
       <span>

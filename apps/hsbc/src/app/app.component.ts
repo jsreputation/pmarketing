@@ -14,6 +14,8 @@ import { SoundService } from './sound/sound.service';
 import { FaqComponent } from './faq/faq.component';
 import { TncComponent } from './tnc/tnc.component';
 import { environment } from '../environments/environment';
+import { AccountComponent } from './account/account.component';
+import { WalletComponent } from './wallet/wallet.component';
 
 @Component({
   selector: 'app-root',
@@ -85,7 +87,9 @@ export class AppComponent implements OnInit {
       ref instanceof VoucherComponent ||
       ref instanceof HomeComponent ||
       ref instanceof FaqComponent ||
-      ref instanceof TncComponent;
+      ref instanceof TncComponent ||
+      ref instanceof AccountComponent ||
+      ref instanceof WalletComponent;
 
     this.currentPage =
       ref instanceof LoginComponent ? 'Login' :
@@ -95,7 +99,9 @@ export class AppComponent implements OnInit {
               ref instanceof VoucherComponent ? 'Reward' :
                 ref instanceof HomeComponent ? 'Home' :
                   ref instanceof TncComponent ? 'Terms and Conditions' :
-                    ref instanceof FaqComponent ? 'FAQ' : '';
+                    ref instanceof FaqComponent ? 'FAQ' :
+                      ref instanceof AccountComponent ? 'Account' :
+                        ref instanceof WalletComponent ? 'Wallet' : '';
 
     this.leftIconToShow =
       ref instanceof PuzzlesComponent ? 'home' :
@@ -103,14 +109,18 @@ export class AppComponent implements OnInit {
           ref instanceof RedemptionComponent ? 'arrow_back_ios' :
             ref instanceof VoucherComponent ? 'arrow_back_ios' :
               ref instanceof FaqComponent ? 'arrow_back_ios' :
-                ref instanceof TncComponent ? 'arrow_back_ios' : '';
+                ref instanceof TncComponent ? 'arrow_back_ios' :
+                  ref instanceof AccountComponent ? 'arrow_back_ios' :
+                    ref instanceof WalletComponent ? 'arrow_back_ios' : '';
 
     this.onLeftActionClick = ref instanceof PuzzlesComponent ? this.goHome :
       ref instanceof PuzzleComponent ? this.goHome :
         ref instanceof RedemptionComponent ? this.goBack :
           ref instanceof VoucherComponent ? this.goBack :
             ref instanceof FaqComponent ? this.goBack :
-              ref instanceof TncComponent ? this.goBack : dummy;
+              ref instanceof TncComponent ? this.goBack :
+                ref instanceof AccountComponent ? this.goBack :
+                  ref instanceof WalletComponent ? this.goBack : dummy;
 
     if (ref instanceof PuzzleComponent) {
       this.soundToggleSubscription = this.soundService.onToggle.subscribe(() => {

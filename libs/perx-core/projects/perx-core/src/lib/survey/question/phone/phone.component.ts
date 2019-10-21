@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { IAnswer } from '../../models/survey.model';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { GeneralStaticDataService } from '../../../utils/general-static-data/general-static-data.service';
+import { debounceTime } from 'rxjs/operators';
 
 interface IPayloadPhone {
   type: string;
@@ -26,11 +27,17 @@ export class PhoneComponent implements OnChanges, OnInit {
   public countriesList$: Observable<any[]>;
   public answer: number;
   public countryCode: string;
+  private subject: Subject<number> = new Subject();
 
   constructor(private generalStaticDataService: GeneralStaticDataService) { }
 
   public ngOnInit(): void {
     this.countriesList$ = this.generalStaticDataService.getCountriesList();
+    this.subject.pipe(
+      debounceTime(500)
+    ).subscribe(inputValue => {
+      this.updateAnswers.emit({ content: this.countryCode + ' ' + inputValue });
+    });
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -41,7 +48,7 @@ export class PhoneComponent implements OnChanges, OnInit {
 
   public updateInput(value: number): void {
     this.answer = value;
-    this.updateAnswers.emit({ content: this.countryCode + ' ' + value });
+    this.subject.next(value);
   }
 
   public updateCoutryCode(value: string): void {

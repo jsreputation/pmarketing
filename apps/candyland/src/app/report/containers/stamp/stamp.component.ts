@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { StampsService } from '@cl-core-services';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { RoutingStateService, StampsService } from '@cl-core-services';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'cl-stamp',
@@ -9,20 +12,27 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
   styleUrls: ['./stamp.component.scss']
 })
 export class StampComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<any> = new Subject();
+
   public params: {start_date: string, end_date: string} = {
     start_date: '2019-07-01',
     end_date: '2019-08-31'
   };
   public data: StampsGraphicData;
   constructor(private stampsService: StampsService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private routingState: RoutingStateService) { }
 
   public ngOnInit(): void {
     this.subscribeToRoute();
   }
 
+  public downloadReport(): void {
+    // TODO: download implement here
+  }
+
   public onClose(): void {
-    // TODO: close page;
+    this.routingState.comeBackPreviousUrl();
   }
 
   private getReportStamp(id: string): void {
@@ -32,7 +42,7 @@ export class StampComponent implements OnInit, OnDestroy {
 
   private subscribeToRoute(): void {
     this.route.paramMap
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((params: ParamMap) => {
         const id = params.get('id');
         this.getReportStamp(id);
@@ -40,6 +50,8 @@ export class StampComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

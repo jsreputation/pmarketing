@@ -1,0 +1,26 @@
+<div class="main-puzzle-container">
+  <div class="game-header">
+    <h1>{{game.texts.title}}</h1>
+    <h3>{{game.texts.subTitle}}</h3>
+  </div>
+  <div class="game-wrapper">
+    <perx-core-shake-tree
+      [treeImg]="config.treeImg"
+      [giftImg]="config.giftImg"
+      [nbHangedGifts]="config.nbHangedGift"
+      [nbFallingGifts]="config.nbGiftsToDrop"
+      (completed)="gameCompleted()"
+      [enabled]="isEnabled"
+      [nbShakes]="config.nbTaps">
+    </perx-core-shake-tree>
+  </div>
+</div>
+<div class="game-footer">
+  <button
+    [hidden]="isEnabled"
+    mat-flat-button
+    color="primary"
+    (click)="isEnabled = true">
+    {{ game.texts.button }}
+  </button>
+</div>

@@ -1,11 +1,29 @@
 <!-- Template stuff aimed at being replaced by real components -->
 
 <div class="main-puzzle-container">
-    <h1 [ngPlural]="totalAvailablePieces">
-        <ng-template ngPluralCase="=1">You have 1 puzzle piece</ng-template>
-        <ng-template ngPluralCase="other">You have a total of {{totalAvailablePieces}} puzzle pieces</ng-template>
-    </h1>
-    <perx-core-puzzle-play [img]="image" [rows]="rows" [cols]="cols" [showHint]="true" [nbPlayedPieces]="playedPieces"
-        [nbAvailablePieces]="availablePieces" (moved)="onMoved()">
-    </perx-core-puzzle-play>
+    <ng-container *ngIf="card">
+        <ng-container *ngIf="card.displayProperties.displayCampaignAs === 'puzzle'">
+            <h1 [ngPlural]="totalAvailablePieces">
+                <ng-template ngPluralCase="=1">You have 1 puzzle piece</ng-template>
+                <ng-template ngPluralCase="other">You have a total of {{totalAvailablePieces}} puzzle pieces</ng-template>
+            </h1>
+            <perx-core-puzzle-play [img]="image" [rows]="rows" [cols]="cols" [showHint]="true" [nbPlayedPieces]="playedPieces"
+                [nbAvailablePieces]="availablePieces" (moved)="onMoved()">
+            </perx-core-puzzle-play>
+        </ng-container>
+
+        <perx-core-puzzle-collect-stamps *ngIf="card.displayProperties.displayCampaignAs === 'stamp_card'"
+            [nbSlots]="card.campaignConfig.totalSlots"
+            [stamps]="card.collectionStamps"
+            [rewards]="card.campaignConfig.collectionRewards"
+            [preStampImg]="card.displayProperties.preStampImg"
+            [postStampImg]="card.displayProperties.postStampImg"
+            [rewardPreStamp]="card.displayProperties.rewardPreStamp"
+            [rewardPostStamp]="card.displayProperties.rewardPostStamp"
+            [backgroundImage]="card.displayProperties.cardImage.value.imageUrl"
+            [title]="card.title || title"
+            [subTitle]="card.subTitle || subTitle"
+            (availableStampClicked)="stampClicked($event)">
+        </perx-core-puzzle-collect-stamps>
+    </ng-container>
 </div>

@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Inject, OnDestroy, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'cl-settings',
@@ -6,7 +7,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
   styleUrls: ['./settings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
   public navLinks: {path: string, label: string}[] = [
     {
       path: 'general',
@@ -25,10 +26,19 @@ export class SettingsComponent implements OnInit {
       label: 'Users & Roles'
     },
   ];
-  constructor(private cd: ChangeDetectorRef) { }
+
+  constructor(private cd: ChangeDetectorRef,
+              @Inject(DOCUMENT) private document: Document,
+              private renderer: Renderer2) {
+  }
 
   public ngOnInit(): void {
     setTimeout(() => this.cd.detectChanges());
+    this.renderer.addClass(this.document.body, 'no-cta');
   }
 
+  public ngOnDestroy(): void {
+    this.renderer.removeClass(this.document.body, 'no-cta');
+    this.cd.detach();
+  }
 }

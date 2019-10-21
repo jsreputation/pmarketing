@@ -1,6 +1,6 @@
-<mat-card *ngFor="let categorie of categories" (click)="selected(categorie)" matRipple>
+<mat-card *ngFor="let category of categories" (click)="selected(category)" matRipple>
     <div class="icon">
-        <mat-icon>{{categorie.icon}}</mat-icon>
+        <img [src]="'assets/category-icons/' + category.icon" alt="">
     </div>
-    <span class="category-title">{{categorie.name}}</span>
+    <span class="category-title">{{category.name}}</span>
 </mat-card>

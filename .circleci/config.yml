@@ -13,47 +13,49 @@ executors:
         type: boolean
 commands:
   get_app_name:
-    description: cuts app name out of git tag
+    description: Sets app name, environment, namespace out of git tag
     steps:
       - run:
-          name: Setup app var
+          name: Setup app, environment, namespace variables
           command: |
-            SEM_VER=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n1 | head -n1)
-            TARGET_ENV=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n2 | head -n1)
-            CUT=-$TARGET_ENV-$SEM_VER
-            APP=${CIRCLE_TAG%"$CUT"}
-            echo "export APP=$APP" >> $BASH_ENV
-            echo $APP
-  get_env_from_tag:
-    description: cuts destination environment out of git tag
-    steps:
-      - run:
-          name: Setup env var
-          command: |
-            TARGET_ENV=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n2 | head -n1)
-            echo "export TARGET_ENV=$TARGET_ENV" >> $BASH_ENV
-            echo $TARGET_ENV
+            REGEX="([[:alnum:]-]+)-(uat|staging|production)-?([[:alnum:]-]*)-([0-9]+\.[0-9]+\.[0-9]+-?[0-9]*)"
+            if [[ "${CIRCLE_TAG}" =~ $REGEX ]]; then
+              echo "export APP=${BASH_REMATCH[1]}" >> $BASH_ENV
+              echo "export TARGET_ENV=${BASH_REMATCH[2]}" >> $BASH_ENV
+              echo "export TARGET_NAMESPACE=${BASH_REMATCH[3]}" >> $BASH_ENV
+              echo "export SEM_VER=${BASH_REMATCH[4]}" >> $BASH_ENV
+            else
+              echo "Error! Unrecognized tag"
+            fi
+            source $BASH_ENV
+            echo "APP: $APP"
+            echo "TARGET_ENV: $TARGET_ENV"
+            echo "TARGET_NAMESPACE: $TARGET_NAMESPACE"
+            echo "SEM_VER: $SEM_VER"
   set_apihost:
     description: based on environment set the APIHOST
     steps:
       - run:
           name: Setup APIHOST var
           command: |
-            if [ $TARGET_ENV == 'staging' ]
-            then
-              if [ $APP == 'blackcomb' ] || [ $APP == 'candyland-uat' ]
-              then
-                APIHOST="https://api-dev1.uat.whistler.perxtech.io"
-              else
-                APIHOST="https://api.perxtech.io"
+            if [ $APP == 'blackcomb' ] || [ $APP == 'candyland' ]; then
+              if [ ${TARGET_ENV} == 'uat' ]; then
+                APIHOST="https://api-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
+              elif [ ${TARGET_ENV} == 'staging' ]; then
+                APIHOST="https://api.${TARGET_ENV}.whistler.perxtech.io"
+              elif [ ${TARGET_ENV} == 'production' ]; then
+                APIHOST="https://api.whistler.perxtech.io"
               fi
-            elif [ $TARGET_ENV == 'production' ]
-            then
-              if [ $APP == 'hsbc' ] || [ $APP == 'hsbc-rewards' ]
-              then
-                APIHOST="https://api-hsbc.perxtech.net"
-              else
-                APIHOST="https://api.perxtech.net"
+            else
+              if [ ${TARGET_ENV} == 'staging' ]; then
+                APIHOST="https://api.perxtech.io"
+              elif [ ${TARGET_ENV} == 'production' ]; then
+                if [ $APP == 'hsbc' ] || [ $APP == 'hsbc-rewards' ]
+                then
+                  APIHOST="https://api-hsbc.perxtech.net"
+                else
+                  APIHOST="https://api.perxtech.net"
+                fi
               fi
             fi
             echo "export APIHOST=$APIHOST" >> $BASH_ENV
@@ -64,7 +66,7 @@ commands:
       - run:
           name: Setup PREAUTH var
           command: |
-            if [ $APP == 'prudential' ] || [ $APP == 'digi' ] || [ $APP == 'blackcomb' || [ $APP == 'bpi' ]
+            if [ $APP == 'prudential' ] || [ $APP == 'digi' ] || [ $APP == 'blackcomb' ] || [ $APP == 'bpi' ]
             then
               PREAUTH="true"
             else
@@ -89,7 +91,6 @@ commands:
             fi
             echo "export BASE_HREF=$BASE_HREF" >> $BASH_ENV
             echo $BASE_HREF
-
   set_iswhistler:
     description: based on client deploy endpoint base href
     steps:
@@ -141,7 +142,6 @@ jobs:
     steps:
       - checkout
       - docker_login
-      - get_env_from_tag
       - get_app_name
       - set_apihost
       - set_preauth
@@ -156,7 +156,7 @@ jobs:
             echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
             echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
             echo "IS_WHISTLER: ${IS_WHISTLER}"
-            if [ $APP == 'candyland-uat' ]
+            if [ $APP == 'candyland' ]
             then
               export APP="candyland"
             fi
@@ -238,6 +238,49 @@ jobs:
           helm_chart: perx/perx-general-app
           helm_values: image.tag="${DOCKER_TAG}"
           helm_extra_args: --reuse-values --timeout 600
+  deploy-whistler:
+    executor: helm-deploy/default
+    parameters:
+      docker_tag:
+        type: string
+        description: The docker tag to deploy
+        default: "${CIRCLE_SHA1:0:7}"
+      kube_host:
+        type: env_var_name
+        description: host for kubeconfig
+      kube_bearer_token:
+        type: env_var_name
+        description: breaker token for kubeconfig
+      kube_cluster_ca_cert_data:
+        type: env_var_name
+        description: certificate data for kubeconfig
+    steps:
+      - checkout
+      - get_app_name
+      - run:
+          name: Set environments
+          command: |
+            echo 'export DOCKER_TAG="<< parameters.docker_tag >>"' >> $BASH_ENV
+            echo 'export TILLER_NAMESPACE="${TARGET_NAMESPACE}"-whistler' >> $BASH_ENV
+            echo 'export SKAFFOLD_NAMESPACE="${TARGET_NAMESPACE}"-whistler' >> $BASH_ENV
+            echo 'export SKAFFOLD_DEFAULT_REPO=perxtech' >> $BASH_ENV
+            echo 'export HELM_REPO_URL=https://rails-on-services.github.io/helm-charts' >> $BASH_ENV
+            echo 'export HELM_APP="$APP"' >> $BASH_ENV
+      - helm-deploy/add-helm-repo:
+          helm_repo_name: ros
+      - helm-deploy/configure-kubectl:
+          kube_host: "<< parameters.kube_host >>"
+          kube_bearer_token: "<< parameters.kube_bearer_token >>"
+          kube_cluster_ca_cert_data: "<< parameters.kube_cluster_ca_cert_data >>"
+      - run:
+          name: Install skaffold
+          command: |
+            curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+            chmod +x skaffold
+      - run:
+          name: Deploy microsite app and ingress
+          command:
+            ./skaffold deploy -f .circleci/skaffold/microsites-app-ng-${APP}.yaml --images perxtech/microsite-apps-ng
   test-e2e-protractor:
     docker:
       - image: circleci/node:10-browsers
@@ -251,23 +294,14 @@ jobs:
   test:
     docker:
       - image: circleci/node:10-browsers
-    resource_class: xlarge
+    resource_class: 2xlarge
     steps:
       - checkout
       - run: yarn install
       - run: yarn run lerna run build:lib
       - run: yarn run lerna run config
       - run: yarn run test-ci
- 
-#      - run: yarn run e2e-ci
-  lint:
-    docker:
-      - image: circleci/node:10-browsers
-    resource_class: xlarge
-    steps:
-      - checkout
-      - run: yarn install
-      - run: yarn run lint-ci
+      # - run: yarn run e2e-ci
   build:
     machine:
       image: ubuntu-1604:201903-01
@@ -289,26 +323,9 @@ jobs:
       - checkout
       - run: yarn install
       - run: yarn run build
-  build-prod:
-    docker:
-      - image: circleci/node:10-browsers
-    resource_class: xlarge
-    parallelism: 13
-    steps:
-      - checkout
-      - run: yarn install
-    #      - run: yarn run e2e-ci
-      - run:
-          command: |
-            (cd apps; ls -d *) | circleci tests split | xargs -n 1 -I {} yarn build:{}:prod
 workflows:
   build_and_deploy:
     jobs:
-      - lint:
-          filters:
-            tags:
-              # this enables circleci to trigger on tags
-              only: /.*/
       - test:
           filters:
             tags:
@@ -319,18 +336,56 @@ workflows:
       #       tags:
       #         # this enables circleci to trigger on tags
       #         only: /.*/
-      - build-prod:
-          filters:
-            tags:
-              # this enables circleci to trigger on tags
-              only: /.*/
       - build_docker_image:
           filters:
             tags:
               # this enables circleci to trigger on tags
-              only: /^[\w-]+-(production|staging)-\d+\.\d+\.\d+.*/
+              only: /^[\w-]+-(production|staging|uat)-(\w+-)?\d+\.\d+\.\d+.*/
             branches:
               ignore: /.*/
+      - deploy-whistler:
+          name: deploy_to_whistler_uat
+          docker_tag: "${CIRCLE_TAG}"
+          kube_host: WHISTLER_UAT_KUBE_HOST
+          kube_cluster_ca_cert_data: WHISTLER_UAT_KUBE_CLUSTER_CA_CERT_DATA
+          kube_bearer_token: WHISTLER_UAT_KUBE_BEARER_TOKEN
+          requires:
+            - build_docker_image
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /(\w+-)+uat-(\w+)-\d+\.\d+\.\d+.*/
+      - deploy-whistler:
+          name: deploy_to_whistler_staging
+          docker_tag: "${CIRCLE_TAG}"
+          kube_host: WHISTLER_STAGING_KUBE_HOST
+          kube_cluster_ca_cert_data: WHISTLER_STAGING_KUBE_CLUSTER_CA_CERT_DATA
+          kube_bearer_token: WHISTLER_STAGING_KUBE_BEARER_TOKEN
+          requires:
+            - build_docker_image
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /(\w+-)+staging-(\w+)-\d+\.\d+\.\d+.*/
+      - deploy-whistler:
+          name: deploy_to_whistler_production
+          docker_tag: "${CIRCLE_TAG}"
+          kube_host: WHISTLER_PRODUCTION_KUBE_HOST
+          kube_bearer_token: WHISTLER_PRODUCTION_KUBE_BEARER_TOKEN
+          kube_cluster_ca_cert_data: WHISTLER_PRODUCTION_KUBE_CLUSTER_CA_CERT_DATA
+          requires:
+            - build_docker_image
+            # - build
+            - test
+          filters:
+            # need to sepcify this otherwise the job will run even if there's no tag
+            branches:
+              ignore: /.*/
+            tags:
+              # semver v2
+              only: /(\w+-)+production-(\w+)-\d+\.\d+\.\d+.*/
       - deploy:
           name: deploy_to_staging
           docker_tag: "${CIRCLE_TAG}"
@@ -354,8 +409,6 @@ workflows:
             - build_docker_image
             # - build
             - test
-            - lint
-            - build-prod
           filters:
             # need to sepcify this otherwise the job will run even if there's no tag
             branches:

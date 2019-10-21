@@ -1,8 +1,10 @@
 export interface IComm {
     message?: string;
     schedule?: ISchedule;
-    pool_id?: string;
+    poolId?: string;
     channel?: string;
+    eventId?: string;
+    templateId?: string;
 }
 
 export interface ISchedule {

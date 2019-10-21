@@ -1,0 +1,11 @@
+<div class="main">
+  <div class="reward-container">
+    <perx-core-reward [reward]="reward$"></perx-core-reward>
+  </div>
+  <div *ngIf="isButtonEnable && (reward$ | async) as reward" class="button-area">
+    <button [disabled]="!isButtonEnable" class="full-width" mat-flat-button color="primary" (click)="save(reward)">Save to My Rewards</button>
+  </div>
+</div>
+<button class="icon" (click)="back()">
+  <mat-icon>arrow_backward</mat-icon>
+</button>

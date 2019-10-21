@@ -5,7 +5,7 @@ import { Merchant, MerchantBranch } from '@cl-core/http-adapters/merchant';
 import { MerchantHttpService } from '@cl-core/http-services/merchant-http.service';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { combineLatest, Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,23 +15,27 @@ export class MerchantsService implements ITableService {
   constructor(
     private merchantHttpService: MerchantHttpService,
     private datastore: DataStore
-  ) { }
+  ) {
+  }
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<Merchant>> {
     params.include = 'branches';
     return this.datastore.findAll<Merchant>(Merchant, params)
       .pipe(
-        map(response => ({ data: response.getModels(), meta: response.getMeta().meta })),
+        map(response => ({data: response.getModels(), meta: response.getMeta().meta}))
       );
   }
 
   public getMerchant(id: string): Observable<Merchant | null> {
-    return id !== null ? this.datastore.findRecord<Merchant>(Merchant, id, { include: 'branches' }) : of(null);
+    return id !== null ? this.datastore.findRecord<Merchant>(Merchant, id, {include: 'branches'}) : of(null);
   }
 
   public createMerchant(data: IMerchantForm): Observable<number> {
     const sendData = MerchantHttpAdapter.transformFromMerchantForm(data);
-    let request = this.merchantHttpService.createMerchant({ data: sendData });
+    let merchantId;
+    let request = this.merchantHttpService.createMerchant({data: sendData}).pipe(
+      tap((merchant) => merchantId = merchant.data.id)
+    );
     if ('branches' in data && data.branches && data.branches.length > 0) {
       request = request.pipe(
         switchMap((merchant: any) => {
@@ -41,24 +45,24 @@ export class MerchantsService implements ITableService {
         })
       );
     }
-    return request.pipe(map((merchant) => merchant.data.id));
+    return request.pipe(map(() => merchantId));
   }
 
   public createMerchantBranch(merchantId: string, data: MerchantBranch): Observable<any> {
     const sendData = MerchantHttpAdapter.transformFromMerchantBranchForm(data, merchantId);
-    return this.merchantHttpService.createMerchantBranch({ data: sendData });
+    return this.merchantHttpService.createMerchantBranch({data: sendData});
   }
 
   public updateMerchantBranch(id: string, data: MerchantBranch): Observable<any> {
     const sendData = MerchantHttpAdapter.transformFromMerchantBranchForm(data, id);
     sendData.id = data.id;
-    return this.merchantHttpService.updateMerchantBranch(data.id, { data: sendData });
+    return this.merchantHttpService.updateMerchantBranch(data.id, {data: sendData});
   }
 
   public updateMerchant(id: string, data: IMerchantForm): Observable<any> {
     const sendData = MerchantHttpAdapter.transformFromMerchantForm(data);
     sendData.id = id;
-    let request$ = this.merchantHttpService.updateMerchant(id, { data: sendData });
+    let request$ = this.merchantHttpService.updateMerchant(id, {data: sendData});
     if ('branches' in data && data.branches && data.branches.length > 0) {
       request$ = request$.pipe(
         switchMap((merchant: any) => {

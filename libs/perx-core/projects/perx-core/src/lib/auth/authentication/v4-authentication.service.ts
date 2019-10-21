@@ -2,7 +2,7 @@ import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
 import { tap, mergeMap, catchError, map } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
-import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
 import { AuthenticationService } from './authentication.service';
 import { IProfile } from '../../profile/profile.model';
@@ -127,7 +127,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       ...campaignId && { campaign_id: campaignId },
       ...scope && { scope }
     };
-
     return this.http.post<ILoginResponse>(this.userAuthEndPoint + '/token', authenticateBody);
   }
 
@@ -165,12 +164,11 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   public getAppToken(): Observable<IAppAccessTokenResponse> {
-    const httpParams = new HttpParams()
-      .append('url', location.host);
+    const authenticateRequest: { url: string } = {
+      url: location.host,
+    };
 
-    return this.http.post<IAppAccessTokenResponse>(this.appAuthEndPoint + '/token', null, {
-      params: httpParams
-    }).pipe(
+    return this.http.post<IAppAccessTokenResponse>(this.appAuthEndPoint + '/token', authenticateRequest).pipe(
       tap((resp) => {
         this.saveAppAccessToken(resp.access_token);
       })

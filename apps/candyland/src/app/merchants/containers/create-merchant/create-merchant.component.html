@@ -15,7 +15,7 @@
           Cancel
         </span>
       </cl-button>
-      <cl-button [classList]="'primary'"
+      <cl-button [classList]="'primary cta cta-save'"
                  (click)="save()"
       >
         <span>
@@ -24,16 +24,18 @@
       </cl-button>
     </div>
   </header>
-  <section class="content phonepreview-wrapper form-limiter">
-    <div class="merchant-main-block">
-      <mat-card class="game-graphic">
-        <div class="merchant-wrap">
-          <p class="merchant-title">
-            Merchant Info
-          </p>
-        </div>
-        <cl-create-merchant-form [formMerchant]="formMerchant"></cl-create-merchant-form>
-      </mat-card>
+  <section class="content form-limiter">
+    <div class="phonepreview-wrapper">
+      <div class="merchant-main-block">
+        <mat-card class="card-fieldset">
+          <div class="merchant-wrap">
+            <p class="merchant-title">
+              Merchant Info
+            </p>
+          </div>
+          <cl-create-merchant-form [formMerchant]="formMerchant"></cl-create-merchant-form>
+        </mat-card>
+      </div>
     </div>
   </section>
 </article>

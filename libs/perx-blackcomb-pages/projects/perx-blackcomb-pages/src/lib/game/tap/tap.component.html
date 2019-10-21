@@ -1,0 +1,23 @@
+<div class="main-puzzle-container">
+  <div class="game-header">
+    <h1>{{game.texts.title}}</h1>
+    <h3>{{game.texts.subTitle}}</h3>
+  </div>
+  <div class="game-wrapper">
+    <div class="pinata-wrapper">
+      <perx-core-pinata
+        [stillImg]="config.stillImg"
+        [openedImg]="config.openedImg"
+        (broken)="gameCompleted()"
+        [enabled]="isEnabled"
+        [nbTaps]="config.nbTaps">
+      </perx-core-pinata>
+    </div>
+  </div>
+  <div class="game-footer">
+    <button mat-flat-button (click)="isEnabled = true"
+    [hidden]="isEnabled" color="primary">
+      {{ game.texts.button }}
+    </button>
+  </div>
+</div>

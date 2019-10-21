@@ -5,13 +5,15 @@ import { IComm } from '@cl-core/models/comm/schedule';
 export class CommsHttpAdapter {
   public static transformTemplateAPIResponseToComm(data: IJsonApiItem<ICommTemplateAttributes>): IComm {
     return {
+      templateId: data.id,
       message: data.attributes.content
     };
   }
 
   public static transformEventAPIResponseToComm(data: IJsonApiItem<ICommEventAttributes>): IComm {
     return {
-      pool_id: data.attributes.pool_id,
+      eventId: data.id,
+      poolId: data.attributes.target_id.toString(),
       channel: data.attributes.channel,
       schedule: {
         sendDate: new Date(data.attributes.send_at),

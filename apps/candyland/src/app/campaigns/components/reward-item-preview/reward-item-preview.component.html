@@ -13,8 +13,8 @@
 <!--                   [total]="data?.total">-->
 
 <!--  </cl-progress-bar>-->
-  <div *ngIf="data?.probability">
-    <span class="reward-item-probability-label probability-preview">Probability {{data?.probability * 100}}%</span>
+  <div *ngIf="enableProbability && probability">
+    <span class="reward-item-probability-label probability-preview">Probability {{probability}}%</span>
   </div>
 </div>
 

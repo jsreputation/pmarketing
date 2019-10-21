@@ -37,7 +37,7 @@ export class ChangeBarangayComponent implements OnInit {
       this.profileService.setCustomProperties(this.customProperties).subscribe(() => {
           this.location.back();
         },
-        (err) => {console.log(err); });
+        (err) => {console.error(err); });
     }
     return;
   }

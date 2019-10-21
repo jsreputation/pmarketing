@@ -1,12 +1,21 @@
-<div class="main-container">
-  <div class="stampsLeft">
-    <span *ngIf="showStampsCounter">{{availStamps}} stamps<mat-icon>local_activity</mat-icon> left</span>
-    <span *ngIf="!showStampsCounter"> &#x200b; </span>
-  </div>
-  <div class="row" *ngFor="let rowItemsCount of currentActiveOrientation; let rowNum = index">
-    <div class="dummy-container" *ngFor="let box of counter(rowItemsCount); let i = index">
-      <img (click)="onAvailableStampClicked(i, rowNum)" [src]="getStampImage(i, rowNum)"/>
-      <div *ngIf="isIssued(i, rowNum)" class="add">+</div>
+<div class="main-container" [ngStyle]="{'background-image': backgroundImage? 'url(' + backgroundImage + ')': '' }">
+
+  <div class="content">
+    <div class="stamps">
+      <h1 *ngIf="title">{{title}}</h1>
+      <p class="subtitle" *ngIf="subTitle">{{subTitle}}</p>
+      <p class="available-stamp" *ngIf="showStampsCounter">
+        <img *ngIf="stampCardImage" class="stampCountImage" [src]="stampCardImage" alt="">
+        <span>X {{availableStampCount}}</span>
+      </p>
+      <div class="row" *ngFor="let rowItemsCount of currentActiveOrientation; let rowNum = index">
+        <div class="dummy-container" *ngFor="let box of counter(rowItemsCount); let i = index">
+          <img [src]="getStampImage(i, rowNum)" />
+          <div (click)="onAvailableStampClicked(i, rowNum)" *ngIf="isIssued(i, rowNum)" class="add">
+            <span>+</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

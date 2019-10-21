@@ -52,6 +52,7 @@ interface AttbsObjStamp {
   display_properties: {
     slots: number[];
     title: string;
+    sub_title?: string;
     button: string;
     nb_of_slots: number;
     pre_stamp_img_url: string;
@@ -60,6 +61,7 @@ interface AttbsObjStamp {
     reward_post_stamp_img_url: string;
     card_background_img_url: string;
     background_img_url: string;
+    display_campaign_as: string;
   };
 }
 
@@ -97,7 +99,7 @@ export class WhistlerStampService implements StampService {
     const attributesObj = stampCard.attributes as AttbsObjStamp;
     return {
       title: attributesObj.display_properties.title,
-      subTitle: attributesObj.description,
+      subTitle: attributesObj.display_properties.sub_title ? attributesObj.display_properties.sub_title : null,
       buttonText: attributesObj.display_properties.button,
       id: +stampCard.id,
       state: StampCardState.active,
@@ -105,7 +107,7 @@ export class WhistlerStampService implements StampService {
         totalSlots: attributesObj.display_properties.nb_of_slots,
         collectionRewards:
           attributesObj.display_properties.slots.map(position => (
-            { rewardPosition: position - 1}
+            { rewardPosition: position - 1 }
           )
           )
       },
@@ -116,6 +118,7 @@ export class WhistlerStampService implements StampService {
         rewardPostStamp: attributesObj.display_properties.reward_post_stamp_img_url,
         bgImage: attributesObj.display_properties.background_img_url,
         cardBgImage: attributesObj.display_properties.card_background_img_url,
+        displayCampaignAs: attributesObj.display_properties.display_campaign_as,
       },
       collectionStamps: [
         // { id: 1, state: PuzzleCollectStampState.issued }
@@ -135,7 +138,7 @@ export class WhistlerStampService implements StampService {
         switchMap(correctEntityAttribute => this.http.get<IJsonApiItemPayload<AttbsObjStamp>>(
           `${this.baseUrl}/loyalty/engagements/${correctEntityAttribute.engagement_id}`
         )),
-        map((res) => WhistlerStampService.WStampCardToStampCard(res.data))
+        map((res) => ({...WhistlerStampService.WStampCardToStampCard(res.data), campaignId} ))
       );
   }
 

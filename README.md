@@ -121,9 +121,9 @@ docker build -t microsite-apps-ng . --build-arg app=prudential
 ```
 
 
-we expose port 8000 in the dockerfile 
+we expose port 8000 in the dockerfile
 ```
-docker run -p 8000:8000 --name microsite-apps-ng microsite-apps-ng 
+docker run -p 8000:8000 --name microsite-apps-ng microsite-apps-ng
 ```
 
 you should have the server now listening on `http://localhost:8000
@@ -139,3 +139,7 @@ to kill the process
 docker rm processname
 
 ```
+
+# TAG Deployment
+
+See the [wiki](../../wiki/Tag-Deployment) page.

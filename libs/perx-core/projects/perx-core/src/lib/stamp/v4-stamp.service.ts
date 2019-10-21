@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { oc } from 'ts-optchain';
 import { Observable, of } from 'rxjs';
 import {
@@ -99,6 +99,12 @@ interface IV4StampCard {
       }
     };
     total_slots?: number;
+    display_campaign_as: string;
+    background_img?: {
+      value?: {
+        image_url?: string
+      }
+    };
   };
   stamps?: IV4Stamp[];
 }
@@ -173,6 +179,13 @@ export class V4StampService implements StampService {
           }
         },
         totalSlots: stampCard.display_properties.total_slots,
+        displayCampaignAs: stampCard.display_properties.display_campaign_as,
+        backgroundImg: {
+          value: {
+            imageUrl: stampCard.display_properties.background_img ?
+              stampCard.display_properties.background_img.value.image_url : null,
+          }
+        },
       },
       stamps: stampCard.stamps.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp))
     };
@@ -242,10 +255,14 @@ export class V4StampService implements StampService {
       );
   }
 
-  public putStamp(stampId: number): Observable<IStamp> {
+  public putStamp(stampId: number, sourceType?: string ): Observable<IStamp> {
+    let params = new HttpParams();
+    if (sourceType) {
+      params = params.set('source_type', sourceType);
+    }
     return this.http.put<IV4PutStampTransactionResponse>(
       `${this.baseUrl}/v4/stamp_transactions/${stampId}`,
-      null
+      sourceType ? params : null
     ).pipe(
       tap((res: IV4PutStampTransactionResponse) => {
         if (res.data.vouchers && res.data.vouchers.length > 0) {

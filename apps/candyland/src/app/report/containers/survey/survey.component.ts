@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { SurveyService } from '@cl-core-services';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { RoutingStateService, SurveyService } from '@cl-core-services';
 
 @Component({
   selector: 'cl-survey',
@@ -9,16 +12,22 @@ import { SurveyService } from '@cl-core-services';
   styleUrls: ['./survey.component.scss']
 })
 export class SurveyComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<any> = new Subject();
+
   public data: IBaseQuestionReport;
   constructor(private surveyService: SurveyService,
               private route: ActivatedRoute,
-              private router: Router) {}
+              private router: Router,
+              private routingState: RoutingStateService) {}
   public ngOnInit(): void {
     this.subscribeToRoute();
   }
 
+  public downloadReport(): void {
+    // TODO: download implement here
+  }
   public onClose(): void {
-    // TODO: close page;
+    this.routingState.comeBackPreviousUrl();
   }
 
   private getReportStamp(id: string): void {
@@ -30,7 +39,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
 
   private subscribeToRoute(): void {
     this.route.paramMap
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((params: ParamMap) => {
         const id = params.get('id');
         if (!id) {
@@ -41,5 +50,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -5,6 +5,10 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
 
 .dashboard-group-graphics {
   padding: $vertical-padding $horizontal-padding;
+
+  @media (max-width: $mobile-width) {
+    padding: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
+  }
 }
 
 .chard-card-list {
@@ -25,7 +29,7 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
 .chart-card {
   position: relative;
   padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75);
-  flex: 1 1 calc(50% - #{$horizontal-padding});
+  flex: 1 1 28rem;
   box-sizing: border-box;
   border-radius: $border-radius;
   border: 1px solid $border-color;
@@ -51,32 +55,51 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
 
   &-header-with-control {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: ($vertical-padding * 0.75);
 
-    &-title {
+    .chart-card-title {
       flex-shrink: 0;
+      margin-right: $horizontal-padding;
     }
 
-    > * {
+    > *:not(.chart-card-title) {
+      @include typo-input-alt;
+
       margin-top: -($vertical-padding * 0.375);
-
-      &:not(.chart-card-title) {
-        @include typo-body2;
-
-        flex-grow: 1;
-        margin-left: $horizontal-padding;
-        max-width: ($horizontal-padding * 10);
-      }
+      flex-grow: 1;
+      flex-basis: 24rem;
+      max-width: ($horizontal-padding * 10);
     }
   }
 
   &-content {
     display: flex;
     position: relative;
-    height: 24rem;
+    min-height: 24rem;
+    padding-bottom: 2rem;
     width: 100%;
+    overflow: visible;
+    margin-bottom: ($vertical-padding * 0.5);
+
+    &.overflow-all {
+      overflow: auto;
+    }
+
+    &.overflow-x {
+      overflow-y: hidden;
+      overflow-x: auto;
+    }
+
+    pc-meta-card .wrapper {
+      justify-content: flex-start;
+
+      > * {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
   }
 }
 
@@ -93,16 +116,107 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
   padding-top: 0;
   padding-right: 0;
   padding-left: 0;
-
-  & > .chart-card-content {
-    height: 35rem;
-  }
 }
 
 .chart-card:first-of-type {
   flex-basis: 100%;
 }
 
-.tabs-list-wrap + .chart-card {
-  flex-basis: calc(100% - #{$vertical-tabs-width} - (#{$horizontal-padding} * 2));
+@media (min-width: $desktop-width + 1) {
+  .tabs-list-wrap + .chart-card {
+    flex-basis: calc(100% - 32rem);
+  }
+}
+
+@media (max-width: $desktop-width) {
+  .tabs-list-wrap.business-insights-tabs-list-wrap {
+    box-sizing: border-box;
+    max-width: initial;
+    margin-top: 0;
+    margin-right: 0;
+    margin-left: 0;
+    padding-right: 1.2rem;
+    padding-left: 1.2rem;
+  }
+
+  .tabs-list.business-insights-tabs-list {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    position: relative;
+    box-sizing: border-box;
+
+    > .mat-radio-button {
+      display: flex;
+      align-items: stretch;
+      border-bottom: 4px solid transparent;
+
+      &.mat-radio-checked {
+        border-radius: 0 0 $border-radius $border-radius !important;
+        border-color: $primary-color;
+      }
+
+      .mat-radio-label-content {
+        height: 100%;
+      }
+    }
+
+    .mat-radio-label {
+      white-space: initial;
+    }
+
+    .tab-item {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    .tab-item-title {
+      @include typo-body2;
+    }
+  }
+}
+
+@media (max-width: $mobile-width) {
+  .tabs-list.business-insights-tabs-list {
+    margin-bottom: ($vertical-padding * 1.5);
+
+    > .mat-radio-button {
+      display: flex;
+      align-items: flex-end;
+      position: static;
+      border-bottom-width: 2px;
+    }
+
+    .tab-item {
+      padding: 1.2rem 0.8rem;
+      min-height: initial;
+      position: static;
+    }
+
+    .tab-item-title {
+      @include typo-caption;
+
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .tab-item-value {
+      position: absolute;
+      bottom: initial;
+      top: calc(100% + #{$vertical-padding * 0.25});
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+    }
+
+    > .mat-radio-button.mat-radio-checked .tab-item-value {
+      opacity: 1;
+    }
+  }
 }

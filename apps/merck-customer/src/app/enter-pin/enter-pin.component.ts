@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, NotificationService } from '@perx/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 
 export enum PinMode {
@@ -23,7 +23,8 @@ export class EnterPinComponent implements OnInit, PageAppearence {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private notificationService: NotificationService
   ) {
       const currentNavigation = this.router.getCurrentNavigation();
       if (!currentNavigation) {
@@ -69,7 +70,11 @@ export class EnterPinComponent implements OnInit, PageAppearence {
     if (this.pinMode === PinMode.register) {
       this.authService.verifyOTP(this.mobileNo, enteredPin).subscribe(
         (response) => {
-          console.log(`Response: ${response.message}`);
+          this.notificationService.addSnack(response.message);
+          this.router.navigate(['login']);
+        },
+        err => {
+          this.notificationService.addSnack(err.error.message);
         }
       );
     } else if (this.pinMode === PinMode.password) {
@@ -81,19 +86,21 @@ export class EnterPinComponent implements OnInit, PageAppearence {
   public resendOtp(): void {
     if (this.pinMode === PinMode.password) {
       this.authService.forgotPassword(this.mobileNo).subscribe(
-        () => {
-          console.log('Forgot password api called again');
+        (res: {message: string}) => {
+          this.notificationService.addSnack(res.message);
         },
         err => {
-          console.error('ForgotPassword: ' + err);
+          this.notificationService.addSnack(err.error.message);
         });
     } else {
       this.authService.resendOTP(this.mobileNo).subscribe(
         () => {
           console.log('Resend Otp request sent');
+          this.notificationService.addSnack('Resend Otp request sent');
         },
         err => {
           console.error('ResendOTP: ' + err);
+          this.notificationService.addSnack(err.error.message);
         });
     }
   }

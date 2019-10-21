@@ -9,6 +9,7 @@ import { INavLink } from '../navlink.model';
 export class GamesComponent {
   public navLinks: INavLink[] = [
     { path: 'shake', label: 'Shake' },
-    { path: 'tap', label: 'Tap' }
+    { path: 'tap', label: 'Tap' },
+    { path: 'scratch', label: 'Scratch'}
   ];
 }
