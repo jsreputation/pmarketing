@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { DatePipe } from '@angular/common';
 
 import { DataService } from './data.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -8,6 +9,7 @@ describe('DataService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [HttpClientTestingModule],
     providers: [
+      DatePipe,
       { provide: EnvConfig, useValue: {} }
     ]
   }));
