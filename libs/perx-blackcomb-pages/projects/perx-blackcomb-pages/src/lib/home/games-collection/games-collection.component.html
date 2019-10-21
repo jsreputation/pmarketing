@@ -1,4 +1,9 @@
-<mat-card routerLink="" matRipple class="games-card" *ngFor="let campaign of campaign$ | async">
+<mat-card
+  *ngFor="let campaign of campaign$ | async"
+  [routerLink]="[ '/game', campaign.id ]"
+  matRipple
+  class="games-card"
+>
   <div class="img-wrapper">
     <img class="puzzle-img" src="assets/pinata/opened-img.png">
   </div>

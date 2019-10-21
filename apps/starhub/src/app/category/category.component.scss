@@ -104,7 +104,15 @@ mat-toolbar {
     border-radius: 5rem;
     padding: 0.5rem 1rem;
     font-size: 1.2rem;
-    text-transform: capitalize;
+    text-transform: lowercase;
+
+    span {
+      display: inline-block;
+    }
+
+    span::first-letter {
+      text-transform: uppercase;
+    }
 
     @include macaronStyles();
   }

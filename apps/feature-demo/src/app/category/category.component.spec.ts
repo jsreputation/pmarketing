@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { CategoryComponent } from './category.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule, MatToolbarModule, MatCardModule, MatBottomSheetModule } from '@angular/material';
-import { RewardsService } from '@perx/core';
+import { RewardsService, RewardsModule } from '@perx/core';
 import { of } from 'rxjs';
 import { rewards } from '../rewards.mock';
 import { catalogs } from '../catalogs.mock';
@@ -40,7 +40,8 @@ describe('CategoryComponent', () => {
         MatIconModule,
         MatToolbarModule,
         MatBottomSheetModule,
-        MatCardModule
+        MatCardModule,
+        RewardsModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
