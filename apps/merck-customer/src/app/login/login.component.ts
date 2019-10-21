@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 import { environment } from '../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mc-login',
@@ -19,6 +20,9 @@ export class LoginComponent implements OnInit, PageAppearence {
   public loginForm: FormGroup;
 
   private appAccessTokenFetched: boolean = false;
+
+  public currentSelectedLanguage: string = 'en';
+
   public preAuth: boolean;
 
   constructor(
@@ -27,7 +31,8 @@ export class LoginComponent implements OnInit, PageAppearence {
     @Inject(PLATFORM_ID) private platformId: object,
     private authService: AuthenticationService,
     private notificationService: NotificationService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private translateService: TranslateService
   ) {
     this.initForm();
     this.preAuth = environment.preAuth;
@@ -131,6 +136,11 @@ export class LoginComponent implements OnInit, PageAppearence {
     }
     const mobileNumber = (this.loginForm.get('mobileNo').value as string);
     this.router.navigate(['forgot-password'], { state: { country: this.selectedCountry, mobileNo: mobileNumber } });
+  }
+
+  public switchLanguage(): void {
+    console.log('salman');
+    this.translateService.setDefaultLang(this.currentSelectedLanguage);
   }
 
 }
