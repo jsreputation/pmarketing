@@ -169,11 +169,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.tabs$.next(this.staticTab);
     forkJoin(this.staticTab.map((tab) =>
       this.rewardsService.getAllRewards(null, tab.rewardsType ? [tab.rewardsType] : null)
-        .pipe(tap((reward) => {
-          tab.rewardsList = of(reward);
-          this.tabs$.next(this.staticTab);
-          takeUntil(this.destroy$);
-        }))
+        .pipe(
+          tap((reward) => {
+            tab.rewardsList = of(reward);
+            this.tabs$.next(this.staticTab);
+          }),
+          takeUntil(this.destroy$)
+        )
     )).subscribe(() => {
       this.tabs$.next(this.staticTab);
     });

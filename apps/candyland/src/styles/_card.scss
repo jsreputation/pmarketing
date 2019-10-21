@@ -1,6 +1,31 @@
+@import '~@angular/material/theming';
 @import "variables";
 
+.card-fieldset {
+  @include mat-elevation(1);
+  @include typo-body2;
+
+  & ~ & {
+    margin-top: ($vertical-padding * 0.5);
+  }
+
+  &-title {
+    flex: 1;
+    margin-right: 4rem;
+    margin-bottom: ($vertical-padding * 0.5);
+  }
+
+  &-label {
+    @include typo-input;
+
+    display: flex;
+    color: $secondary-color;
+    margin: ($vertical-padding * 0.5) 0 ($vertical-padding * 0.25);
+  }
+}
+
 .card {
+  @include mat-elevation(1);
   @include typo-body2;
 
   width: 100%;
@@ -10,8 +35,10 @@
   border-radius: $border-radius-lg !important;
   background-color: $white !important;
   padding: 0 !important;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15) !important;
-  margin-bottom: ($vertical-padding * 0.5) !important;
+
+  & ~ & {
+    margin-top: ($vertical-padding * 0.5);
+  }
 
   &-header {
     height: 5.7rem;
@@ -19,7 +46,6 @@
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
-    padding: 0 ($horizontal-padding * 0.75);
   }
 
   &-title {
@@ -28,7 +54,6 @@
 
   &-content {
     position: relative;
-    padding: 0 ($horizontal-padding * 0.75) ($vertical-padding * 0.75) !important;
 
     cl-reward-item-preview:not(:last-child) {
       display: block;
@@ -147,8 +172,9 @@
     padding: 0;
   }
 
-  .mat-radio-button ~ .mat-radio-button {
-    margin-left: ($horizontal-padding * 0.5);
+  .mat-radio-group .mat-radio-button:not(:last-child) {
+    margin-right: ($horizontal-padding * 0.5);
+    margin-bottom: ($vertical-padding * 0.25);
   }
 
   .mat-horizontal-content-container {
