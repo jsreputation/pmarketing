@@ -64,8 +64,8 @@ export class LoyaltyHttpAdapter {
         name: data.name,
         image_url: data.imageUrl || 'assets/images/icons/engagement.svg',
         bonus_ratio: data.earnBonus,
-        discount_ratio: data.burnDiscount,
-        expiry_period: data.pointsExpiry.amount,
+        discount_ratio: (data.burnDiscount / 100).toFixed(3),
+        expiry_period: (data.pointsExpiry.amount / 100).toFixed(3),
         expiry_period_type: data.pointsExpiry.type,
         expiry_period_trigger: data.pointsExpiry.trigger,
         join_method: LoyaltyHttpAdapter.transformJoinMethodToApi(data.joinMethod),
@@ -92,8 +92,8 @@ export class LoyaltyHttpAdapter {
       name: data.attributes.name,
       joinMethod: LoyaltyHttpAdapter.transformJoinMethodFromApi(data.attributes.join_method),
       imageUrl: data.attributes.image_url,
-      earnBonus: data.attributes.bonus_ratio,
-      burnDiscount: data.attributes.discount_ratio,
+      earnBonus: data.attributes.bonus_ratio * 100,
+      burnDiscount: data.attributes.discount_ratio * 100,
       pointsExpiry: {
         amount: data.attributes.expiry_period,
         type: data.attributes.expiry_period_type,
@@ -133,10 +133,10 @@ export class LoyaltyHttpAdapter {
 
   private static setPoolIdToLoyalty(included: any, item: any, index: number): any {
     if (item.relationships.pool
-    && item.relationships.pool.data
-    && item.relationships.pool.data.id
-    && item.relationships.pool.data.id === included[index].id
-    && item.relationships.pool.data.type === included[index].type) {
+      && item.relationships.pool.data
+      && item.relationships.pool.data.id
+      && item.relationships.pool.data.id === included[index].id
+      && item.relationships.pool.data.type === included[index].type) {
       return included[index].id;
     }
   }
@@ -159,16 +159,16 @@ export class LoyaltyHttpAdapter {
   }
 
   private static transformJoinMethodFromApi(apiJoinMethod: any): any {
-    return Object.entries(apiJoinMethod).map(([apiKey, apiValue]) => {
-      const result = {};
+    const result = {};
+    Object.entries(apiJoinMethod).map(([apiKey, apiValue]) => {
       Object.entries(LoyaltyJoinMethodMap).forEach(([key, value]) => {
         if (apiKey === value.apiName) {
           result[key] = apiValue;
           return;
         }
       });
-      return result;
     });
+    return result;
   }
 
   public static transformToLoyaltyForm(data: any): any {
@@ -214,8 +214,8 @@ export class LoyaltyHttpAdapter {
         points: data.burn_ratio_point
       },
       pointsExpiry: {
-        amount: data.expiry_period_type ,
-        type: data.expiry_period ,
+        amount: data.expiry_period_type,
+        type: data.expiry_period,
         trigger: data.expiry_period_trigger
       }
     };

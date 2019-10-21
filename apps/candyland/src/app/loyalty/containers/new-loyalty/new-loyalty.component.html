@@ -7,7 +7,7 @@
   </mat-form-field>
   <div class="btn-group">
     <cl-button classList="tertiary" (click)="cancel()">Cancel</cl-button>
-    <cl-button classList="secondary" *ngIf="!isLastStep" routerLink="..">Save as a draft</cl-button>
+    <cl-button classList="secondary" *ngIf="!isLastStep" (click)="saveAsDraft()">Save as a draft</cl-button>
     <cl-button *ngIf="!isLastStep"
                classList="primary"
                (click)="goNext()">

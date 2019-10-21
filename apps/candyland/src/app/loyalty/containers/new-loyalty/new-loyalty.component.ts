@@ -73,16 +73,19 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    this.getLoyaltyRequest()
+    this.getLoyaltyWithBasicTierRequest()
+      .subscribe(() => {
+        this.stepper.next();
+      });
+  }
+
+  private getLoyaltyWithBasicTierRequest(): Observable<any> {
+    return this.getLoyaltyRequest()
       .pipe(
         untilDestroyed(this),
-        switchMap(() => this.getBasicTierRequest())
-      )
-      .subscribe(result => {
-        if (result) {
-          this.stepper.next();
-        }
-      });
+        switchMap(() => this.getBasicTierRequest()),
+        filter(Boolean)
+      );
   }
 
   private getLoyaltyRequest(): Observable<any> {
@@ -117,6 +120,11 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   public save(): void {
     console.log('save');
     this.loyaltyService.updateLoyaltyStatus(this.loyaltyId, 'active').subscribe(() => this.navigateToList());
+  }
+
+  public saveAsDraft(): void {
+
+    this.navigateToList();
   }
 
   public cancel(): void {
@@ -263,6 +271,9 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     ).subscribe(data => {
         if (data) {
           this.basicTierId = data.basicTierId || null;
+          if (this.basicTierId) {
+            this.setBasicTierId(this.basicTierId);
+          }
           this.form.patchValue(data);
         } else {
           this.form.patchValue(this.getDefaultValue());
