@@ -21,7 +21,7 @@ import {from, Observable} from 'rxjs';
   styleUrls: ['./puzzle.component.scss']
 })
 export class PuzzleComponent implements OnInit, OnDestroy {
-  public campaignId: number = null;
+  public campaignId: number = 0;
   private cardId: number = null;
   private card: IStampCard = null;
   public availablePieces: number = 0;
