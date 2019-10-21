@@ -1,4 +1,5 @@
 import { MerchantBranch } from './merchant';
+import { IMerchantApi, IMerchantBranchApi} from '@perx/whistler';
 
 export class MerchantHttpAdapter {
   public static transformToMerchantForm(data: IMerchantApi): IMerchantForm {
