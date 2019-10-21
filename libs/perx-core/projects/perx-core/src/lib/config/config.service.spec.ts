@@ -4,7 +4,7 @@ import { ConfigService } from './config.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {AuthenticationService} from '../auth/authentication/authentication.service';
 
-const authenticationServiceStub = { getAppToken: { subscribe: () => ({}) } }
+const authenticationServiceStub = { getAppToken: { subscribe: () => ({}) } };
 
 describe('ConfigService', () => {
   beforeEach(() => TestBed.configureTestingModule({
