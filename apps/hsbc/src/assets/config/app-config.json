@@ -3,5 +3,6 @@
   "production": false,
   "preAuth": false,
   "isWhistler": false,
-  "baseHref": "/"
+  "baseHref": "/",
+  "sourceType": "hsbc-xmas"
 }
