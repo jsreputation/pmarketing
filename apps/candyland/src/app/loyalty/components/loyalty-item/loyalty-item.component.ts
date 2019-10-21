@@ -13,27 +13,21 @@ export interface IEngagementItemMenuOption {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoyaltyItemComponent {
-  @Input() public data: any;
+  @Input() public data: ILoyaltyForm;
   @Input() public menuOptions: IEngagementItemMenuOption[] = [];
   @Input() public linkable: boolean = false;
-  @Output() public menuTapped: EventEmitter<{ engagement: IEngagement, action: string }> = new EventEmitter();
+  @Output() public menuTapped: EventEmitter<{ loyalty: ILoyaltyForm, action: string }> = new EventEmitter();
 
   constructor(private router: Router) {
   }
 
   public tapped(option: IEngagementItemMenuOption): void {
-    this.menuTapped.emit({action: option.action, engagement: this.data});
+    this.menuTapped.emit({action: option.action, loyalty: this.data});
   }
 
   public navigateToReview(): void {
     if (this.linkable) {
       this.router.navigate(['loyalty/review/' + this.data.id]);
-    }
-  }
-
-  public navigateToEdit(): void {
-    if (this.linkable) {
-      this.router.navigate(['edit/' + this.data.id]);
     }
   }
 }

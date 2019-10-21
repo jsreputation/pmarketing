@@ -4,7 +4,7 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { Observable } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { LoyaltyHttpAdapter } from '@cl-core/http-adapters/loyalty-http-adapter';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,9 @@ export class LoyaltyService implements ITableService {
     params.include = 'pool,basic_tier';
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyHttpService.getLoyalties(httpParams).pipe(
-      map(response => LoyaltyHttpAdapter.transformToTableData(response))
+      map(response => {
+        return LoyaltyHttpAdapter.transformToTableData(response);
+      })
     );
   }
 
@@ -56,5 +58,13 @@ export class LoyaltyService implements ITableService {
 
   public deleteBasicTier(id: string): Observable<IResponseApi<any>> {
     return this.loyaltyHttpService.deleteBasicTier(id);
+  }
+
+  public duplicateLoyalty(loyalty: ILoyaltyForm): Observable<any> {
+    return this.createLoyalty(loyalty)
+      .pipe(
+        map(newLoyalty => newLoyalty.data.id),
+        switchMap((newLoyaltyId) => this.createLoyaltyBasicTier(loyalty, newLoyaltyId))
+      );
   }
 }

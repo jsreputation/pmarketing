@@ -15,7 +15,7 @@ export class ViewLoyaltyComponent {
       return {
         name: this.loyaltyData.name,
         status: this.loyaltyData.status,
-        ...this.loyaltyData.stepDetails
+        ...this.loyaltyData.details
       };
     }
   }

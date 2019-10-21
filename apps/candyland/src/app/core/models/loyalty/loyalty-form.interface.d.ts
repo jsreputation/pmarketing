@@ -1,7 +1,9 @@
 declare interface ILoyaltyForm {
+  id?: string;
+  customTiersCount?: number;
   name: string;
   status?: string;
-  stepDetails?: ILoyaltyDetails;
+  details?: ILoyaltyDetails;
   tiersConversions?: ILoyaltyTiersConversions;
 }
 
