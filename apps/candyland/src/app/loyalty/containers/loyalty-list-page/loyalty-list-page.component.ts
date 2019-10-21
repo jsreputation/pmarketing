@@ -35,7 +35,6 @@ export class LoyaltyListPageComponent implements OnDestroy {
    * Forward events
    */
   public menuOptTapped(event: { loyalty: ILoyaltyForm, action: string }): void {
-      console.log(event);
       this.handlerMenuEvents(event);
     }
 

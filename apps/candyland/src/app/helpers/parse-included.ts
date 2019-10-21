@@ -2,13 +2,8 @@ import Utils from '@cl-helpers/utils';
 // tslint:disable
 export class ParseIncluded {
   public static setInclude(source: any, target: any, type: string, fieldName: string | null = null, adapterFunction?: (data: any) => any): any {
-    console.log('mapIncludes source', source);
-    debugger;
     const mapIncludes = Utils.createMapIncludes(source.included, 'id', type);
-    console.log('mapIncludes', mapIncludes);
     type = type.slice(0, -1);
-    console.log('type', type);
-    debugger;
     if (!Utils.isEmptyObject(mapIncludes)) {
       if (Utils.isObject(source.data)) {
         // implement set includes to object

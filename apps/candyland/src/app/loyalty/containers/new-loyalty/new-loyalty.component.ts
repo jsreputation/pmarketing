@@ -11,7 +11,6 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from '@cl-core/services/user.service';
 import { Observable, of } from 'rxjs';
 import { AudiencesService } from '@cl-core-services';
-import { AddRulePopupComponent } from '../../components/add-rule-popup/add-rule-popup.component';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -79,7 +78,6 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   private getLoyaltyRequest(): Observable<any> {
-    console.log('getLoyaltyRequest', this.loyaltyId);
     if (this.loyaltyId) {
       return this.loyaltyService.updateLoyalty(this.loyaltyId, this.form.value);
     }
@@ -101,14 +99,11 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
 
   private setBasicTierId(basicTierId: string): void {
     this.basicTierId = basicTierId;
-    console.log('setBasicTierId', this.basicTierId, this.customTierDataSource);
     this.initCustomTiersDataSource();
-    console.log('setBasicTierId2', this.basicTierId, this.customTierDataSource);
     this.setBasicTierIdToCustomTiersDataSourceFilter(this.loyaltyId);
   }
 
   public goNext(): void {
-    console.log(this.form.invalid, this.form.errors, this.form.value);
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -124,7 +119,6 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   public saveAsDraft(): void {
-    console.log('saveAsDraft');
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -137,7 +131,6 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   public launch(): void {
-    console.log('save');
     this.loyaltyService.updateLoyaltyStatus(this.loyaltyId, 'active')
       .subscribe(() => {
         this.navigateToList();
@@ -204,7 +197,6 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
 
   private updateCustomTiersDataSource(): void {
     this.customTierDataSource.updateData();
-    console.log('updateCustomTiersDataSource', this.tiersCount, this.customTierDataSource.length);
     this.tiersCount.patchValue(this.customTierDataSource.length || 0);
   }
 
@@ -220,13 +212,12 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
       .subscribe(() => this.updateCustomTiersDataSource());
   }
 
-  public addRule(): void {
-    const dialogRef = this.dialog.open(AddRulePopupComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-    });
-  }
+  // public addRule(): void {
+  //   const dialogRef = this.dialog.open(AddRulePopupComponent);
+  //
+  //   dialogRef.afterClosed().subscribe(() => {
+  //   });
+  // }
 
   public handleLoyaltyActions(data: { action: NewLoyaltyActions, data?: any }): void {
     switch (data.action) {
@@ -249,7 +240,6 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   private setBasicTierIdToCustomTiersDataSourceFilter(basicTierId: string): void {
-    console.log('setBasicTierIdToCustomTiersDataSourceFilter', basicTierId);
     this.customTierDataSource.filter = {program_id: basicTierId};
   }
 
@@ -269,7 +259,6 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
       }),
     ).subscribe(data => {
         if (data) {
-          console.log('status', data.status);
           this.showDraftButton = data.status === 'draft';
           this.basicTierId = data.basicTierId || null;
           if (this.basicTierId) {
@@ -277,11 +266,8 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
           }
           this.form.patchValue(data);
         } else {
-          console.log('1', this.form.value);
           this.form.patchValue(this.getDefaultValue());
-          console.log('2', this.form.value);
         }
-        console.log('data', data, 'form', this.form.value, 'id', this.basicTierId);
       },
       (error: Error) => {
         console.warn(error.message);

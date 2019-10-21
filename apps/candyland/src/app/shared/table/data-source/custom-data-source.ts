@@ -144,7 +144,6 @@ export class CustomDataSource<T> extends DataSource<T> {
     this.loadingSubject.next(true);
     this.request = this.dataService.getTableData(params)
       .subscribe((res: ITableData<T>) => {
-        console.log('res', res);
         this.dataSubject.next(res.data);
         this.lengthData.next(res.meta.record_count);
         this.loadingSubject.next(false);

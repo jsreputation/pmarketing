@@ -67,7 +67,6 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
   }
 
   public apply(): void {
-    console.log(this.form.invalid, this.form.value, this.data);
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
