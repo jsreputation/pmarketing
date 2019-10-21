@@ -63,9 +63,9 @@ export class LoyaltyHttpAdapter {
       attributes: {
         name: data.name,
         image_url: data.imageUrl || 'assets/images/icons/engagement.svg',
-        bonus_ratio: data.earnBonus,
+        bonus_ratio: (data.earnBonus / 100).toFixed(3),
         discount_ratio: (data.burnDiscount / 100).toFixed(3),
-        expiry_period: (data.pointsExpiry.amount / 100).toFixed(3),
+        expiry_period: data.pointsExpiry.amount,
         expiry_period_type: data.pointsExpiry.type,
         expiry_period_trigger: data.pointsExpiry.trigger,
         join_method: LoyaltyHttpAdapter.transformJoinMethodToApi(data.joinMethod),
@@ -214,8 +214,8 @@ export class LoyaltyHttpAdapter {
         points: data.burn_ratio_point
       },
       pointsExpiry: {
-        amount: data.expiry_period_type,
-        type: data.expiry_period,
+        amount: data.expiry_period,
+        type: data.expiry_period_type,
         trigger: data.expiry_period_trigger
       }
     };

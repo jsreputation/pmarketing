@@ -139,7 +139,7 @@ export class LoyaltyFormsService {
       pointsExpiry: {
         amount: 3,
         type: 'day',
-        trigger: 'inactive',
+        trigger: 'accural',
       }
     };
   }
