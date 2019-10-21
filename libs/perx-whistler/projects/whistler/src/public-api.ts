@@ -13,6 +13,7 @@ export { ICommTemplateAttributes, ICommEventAttributes } from './lib/comm/comm';
 export { ICampaignAttributes } from './lib/campaign/campaign';
 export { IInstantOutcomeTransactionAttributes, IInstantOutcomeTxnReq } from './lib/instant-outcome/transaction';
 export { InstantOutcomeEngagementAttributes, IOutcomeDisplayProperties } from './lib/instant-outcome/engagement';
+export { IWhistlerProfileAttributes } from './lib/profile/profile';
 export { IMerchant } from './lib/merchant/merchant';
 export { ITenantProperties } from './lib/settings/tenant';
 export { ITimeZone } from './lib/settings/time-zone';
