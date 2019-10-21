@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 
 import { V4AuthenticationService } from './v4-authentication.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -7,6 +7,8 @@ import { TokenStorage } from './token-storage.service';
 import { ProfileModule } from '../../profile/profile.module';
 import { ConfigModule } from '../../config/config.module';
 import { LocalTokenStorage } from './local-token-storage.service';
+import { Observable, of, throwError } from 'rxjs';
+import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 
 function fakeFactory(): TokenStorage {
   return new LocalTokenStorage({});
@@ -81,23 +83,6 @@ describe('V4AuthenticationService', () => {
     httpTestingController.verify();
   });
 
-  // it('should verify forgot password OTP', (done: DoneFn) => {
-  //   service.verifyOTP('6398898888', '8888')
-  //     .subscribe((res: { message: string, code: number }) => {
-  //       expect(res.message).toBe('OTP is correct');
-  //       expect(res.code).toBe(20);
-  //       done();
-  //     });
-
-  //   const req = httpTestingController.expectOne(baseUrl + 'v4/customers/confirm');
-
-  //   expect(req.request.method).toEqual('PATCH');
-
-  //   req.flush({ message: 'OTP is correct', code: 20 });
-
-  //   httpTestingController.verify();
-  // });
-
   it('should reset password', (done: DoneFn) => {
     service.resetPassword({ phone: '6398898888', newPassword: '1237', otp: '8888', passwordConfirmation: '1237' })
       .subscribe((res: { message: string }) => {
@@ -114,20 +99,116 @@ describe('V4AuthenticationService', () => {
     httpTestingController.verify();
   });
 
-  // it('should resend OTP', (done: DoneFn) => {
-  //   service.resendOTP('6398898888')
-  //     .subscribe((res: { message: string }) => {
-  //       expect(res.message).toBe('Verification code has been resent');
-  //       done();
-  //     });
+  it('should return observable', () => {
+    const observable = service.$failedAuth;
+    expect(observable instanceof Observable).toBeTruthy();
+  });
 
-  //   const req = httpTestingController.expectOne(baseUrl + 'v4/customers/resend_confirmation?phone=6398898888');
+  it('should create service with config production', () => {
+    const serviceWithConfig = new V4AuthenticationService({ baseHref: 'test', production: true }, null, null, null);
+    expect(serviceWithConfig).toBeTruthy();
+  });
 
-  //   expect(req.request.method).toEqual('GET');
+  it('should check isAuthorized', () => {
+    const isAuthorized = service.isAuthorized();
+    expect(isAuthorized instanceof Observable).toBeTruthy();
+  });
 
-  //   req.flush({ message: 'Verification code has been resent' });
+  it('should call refreshToken', () => {
+    const refreshToken = service.refreshToken();
+    expect(refreshToken instanceof Observable).toBeTruthy();
+  });
 
-  //   httpTestingController.verify();
-  // });
+  it('refresh should happen', () => {
+    const refresh = service.refreshShouldHappen({
+      name: 'HttpErrorResponse',
+      message: 'test',
+      status: 401,
+      ok: false,
+    } as HttpErrorResponse);
+    expect(refresh).toBeTruthy();
+  });
 
+  it('should verify token request', () => {
+    let result = service.verifyTokenRequest('url/preauth');
+    expect(result).toBeTruthy();
+    result = service.verifyTokenRequest('url/v4/oauth/token');
+    expect(result).toBeTruthy();
+    result = service.verifyTokenRequest('url/v2/oauth/token');
+    expect(result).toBeTruthy();
+  });
+
+  it('should login', fakeAsync(inject([V4AuthenticationService], (authService: V4AuthenticationService) => {
+    const spy = spyOn(authService, 'saveUserAccessToken');
+    const spyAuth = spyOn(authService, 'authenticateUser').and.returnValue(of({ bearer_token: 'token' }));
+    authService.login('user', 'pass').subscribe(() => { });
+    tick();
+    expect(spyAuth).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
+  })));
+
+  it('should check authenticateUser', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      const spy = spyOn(http, 'post');
+      authService.authenticateUser('test', 'test', 'test', 'test', 'test');
+      expect(spy).toHaveBeenCalled();
+
+    })));
+  it('should authenticate user', inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      const spyHttp = spyOn(http, 'post');
+      authService.authenticateUser('user', 'password');
+      expect(spyHttp).toHaveBeenCalled();
+    }));
+
+  it('should handle error', fakeAsync(inject([V4AuthenticationService], (authService: V4AuthenticationService) => {
+    const spyAuth = spyOn(authService, 'authenticateUser');
+    spyAuth.and.returnValue(of(null));
+    let error = null;
+    authService.login('user', 'pass').subscribe(() => { }, (err: Error) => {
+      error = err;
+    });
+    tick();
+    expect(error).toBeTruthy();
+    spyAuth.and.returnValue(throwError(null));
+    authService.login('user', 'pass').subscribe(() => { }, () => { });
+    tick();
+    expect(authService.$failedAuthObservable instanceof Observable).toBeTruthy();
+  })));
+
+  it('should throw err', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      spyOn(http, 'post').and.returnValue(of(null));
+      (window as any).primaryIdentifier = 'user';
+      const fun = { err: () => { } };
+      const spy = spyOn(fun, 'err');
+      authService.autoLogin().subscribe(() => { }, fun.err);
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })));
+
+  it('should autoLogin', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      spyOn(http, 'post').and.returnValue(of({ bearer_token: 'token' }));
+      (window as any).primaryIdentifier = 'user';
+      const spy = spyOn(authService, 'saveUserAccessToken');
+      authService.autoLogin().subscribe(() => { });
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })));
+
+  it('should handle error response', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      authService.$failedAuthObservable = null;
+      spyOn(http, 'post').and.returnValue(throwError(null));
+      authService.autoLogin().subscribe(() => { });
+      tick();
+      expect(authService.$failedAuthObservable).toBeTruthy();
+    })));
+
+  it('sheck set and get InterruptedUrl', inject([V4AuthenticationService], (authService: V4AuthenticationService) => {
+    const url = 'http://test';
+    authService.setInterruptedUrl(url);
+    expect(authService.getInterruptedUrl()).toBe(url);
+  }));
 });
