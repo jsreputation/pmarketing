@@ -1,13 +1,25 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { QRCodeModule } from 'angularx-qrcode';
-import { ProfileService } from '@perx/core';
-import { QRComponent } from "./qr.component";
-import { of } from 'rxjs';
-import { Type } from '@angular/core';
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import {
+  ActivatedRoute,
+  convertToParamMap,
+} from '@angular/router';
 import { Location } from '@angular/common';
+import { Type } from '@angular/core';
+
+import { of } from 'rxjs';
+import { QRCodeModule } from 'angularx-qrcode';
 import { TranslateModule } from '@ngx-translate/core';
+
+import { ProfileService } from '@perx/core';
+
+import { QRComponent } from './qr.component';
 
 describe('RedeemComponent', () => {
   let component: QRComponent;
