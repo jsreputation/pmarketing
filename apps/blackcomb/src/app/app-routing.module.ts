@@ -10,7 +10,7 @@ import {
   RewardDetailsComponent,
   LoadingComponent,
   ContentComponent,
-  WalletComponent
+  WalletComponent,
 } from '@perx/blackcomb-pages';
 const routes: Routes = [
   {
@@ -22,6 +22,10 @@ const routes: Routes = [
       { path: 'history', component: HistoryComponent, canActivate: [ProtectedGuard] },
       { path: 'redeem/:id', component: RedeemComponent, canActivate: [ProtectedGuard] },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent, canActivate: [ProtectedGuard] },
+      {
+        path: 'qr', loadChildren: (): any => import('./qr/qr.module').then((mod: any) => mod.QRModule)
+        , canActivate: [ProtectedGuard]
+      },
       {
         path: 'account', loadChildren: (): any => import('./account/account.module').then((mod: any) => mod.AccountModule)
         , canActivate: [ProtectedGuard]

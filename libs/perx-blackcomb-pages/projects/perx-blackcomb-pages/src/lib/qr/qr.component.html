@@ -1,0 +1,13 @@
+<div class="main-container">
+  <div class="top-section" *ngIf="rewardDetails">
+    <qrcode [qrdata]="rewardDetails" [size]="150"></qrcode>
+    <h4>Present this QR code to the cashier to copmlete your transaction</h4>
+  </div>
+  <button
+    mat-stroked-button
+    color="primary"
+    (click)="onCancel()"
+  >
+    Cancel
+  </button>
+</div>
