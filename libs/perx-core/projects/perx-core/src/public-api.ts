@@ -173,7 +173,7 @@ export { DateComponent } from './lib/survey/question/date/date.component';
 export { ConfigModule } from './lib/config/config.module';
 export { Config } from './lib/config/config';
 export { ConfigService } from './lib/config/config.service';
-export { IConfig } from './lib/config/models/config.model';
+export { IConfig, IMicrositeSettings } from './lib/config/models/config.model';
 
 /**
  * Theme
