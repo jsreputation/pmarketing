@@ -6,6 +6,7 @@ export interface NewCampaignDonePopupComponentData {
   subTitle?: string;
   type?: string;
   url?: string;
+  img?: string;
 }
 
 @Component({
