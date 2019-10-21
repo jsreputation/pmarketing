@@ -3,10 +3,8 @@ import { LoyaltyJoinMethodMap } from '@cl-core/models/loyalty/loyalty-joing-meth
 
 export class LoyaltyHttpAdapter {
 
-  // TODO: need add poolId to form
   public static transformToTableData(data: any): ITableData<any> {
     const formatData = data.data.map((item) => {
-
       let formLoyalty = LoyaltyHttpAdapter.transformToLoyaltyForm(item);
       formLoyalty = LoyaltyHttpAdapter.setIncludedToLoyaltyForm(data, item, formLoyalty);
       return formLoyalty;
@@ -105,23 +103,42 @@ export class LoyaltyHttpAdapter {
   }
 
   public static setIncludedToLoyaltyForm(data: any, item: any, formLoyalty: any): any {
-    console.log(data, item);
     if (data.included && data.included.length) {
       for (let i = 0; i <= data.included.length - 1; i++) {
         if (item.relationships.basic_tier
           && item.relationships.basic_tier.data
-          && item.relationships.basic_tier.data.id === data.included[i].id) {
+          && item.relationships.basic_tier.data.id === data.included[i].id
+          && item.relationships.basic_tier.data.type === data.included[i].type) {
           const detailsAndConversionsFormGroup =
             LoyaltyHttpAdapter.getDetailsAndConversionsFormGroup(data.included[i].attributes, item.attributes);
           formLoyalty = {
+            basicTierId: data.included[i].id,
             ...formLoyalty,
             ...detailsAndConversionsFormGroup
           };
-          break;
         }
+        const poolId =
+          LoyaltyHttpAdapter.setPoolIdToLoyalty(data.included, item, i);
+        formLoyalty = {
+          ...formLoyalty,
+          details: {
+            ...formLoyalty.details,
+            poolId
+          }
+        };
       }
     }
     return formLoyalty;
+  }
+
+  private static setPoolIdToLoyalty(included: any, item: any, index: number): any {
+    if (item.relationships.pool
+    && item.relationships.pool.data
+    && item.relationships.pool.data.id
+    && item.relationships.pool.data.id === included[index].id
+    && item.relationships.pool.data.type === included[index].type) {
+      return included[index].id;
+    }
   }
 
   private static transformJoinMethodToApi(joinMethod: any): any {
