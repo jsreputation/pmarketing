@@ -1,25 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ICategory } from '../../category.model';
 import { Router } from '@angular/router';
 import { IReward, ICatalog } from '@perx/core';
-import { AnalyticsService, PageType } from 'src/app/analytics.service';
 
 @Component({
   selector: 'app-discover',
   templateUrl: './discover.component.html',
   styleUrls: ['./discover.component.scss']
 })
-export class DiscoverComponent implements OnInit {
-  constructor(private router: Router, private analytics: AnalyticsService) { }
+export class DiscoverComponent {
 
-  public ngOnInit(): void {
-    this.analytics.addEvent({
-      pageName: 'rewards:discover',
-      pageType: PageType.landingPage,
-      siteSectionLevel2: 'rewards:discover',
-      siteSectionLevel3: 'rewards:discover'
-    });
-  }
+  constructor(private router: Router) { }
 
   public categorySelected(category: ICategory): void {
     this.router.navigate(['/category'], { queryParams: { category: category.name } });
