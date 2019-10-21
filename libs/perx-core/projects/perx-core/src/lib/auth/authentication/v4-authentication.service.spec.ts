@@ -271,4 +271,27 @@ describe('V4AuthenticationService', () => {
       expect(spyGet).toHaveBeenCalledWith('userAccessToken');
       expect(spySet).toHaveBeenCalledWith('token', 'userAccessToken');
     }));
+
+  it('should resend otp', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      const spy = spyOn(http, 'get').and.returnValue(of(null));
+      authService.resendOTP('999');
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })));
+
+  it('should signup', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      const spyLog = spyOn(console, 'log');
+      const spy = spyOn(http, 'post');
+      spy.and.returnValue(of({ data: {} }));
+      authService.signup({
+        lastName: 'name',
+        password: '1234',
+        phone: '1234',
+        password_confirmation: '1234'
+      }).subscribe(() => { });
+      tick();
+      expect(spyLog).toHaveBeenCalled();
+    })));
 });
