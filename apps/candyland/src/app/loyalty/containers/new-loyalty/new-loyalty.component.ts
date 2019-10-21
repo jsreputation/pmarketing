@@ -75,6 +75,9 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.getLoyaltyWithBasicTierRequest()
       .subscribe(() => {
+        // complete the current step
+        this.stepper.selected.completed = true;
+        // move to next step
         this.stepper.next();
       });
   }
