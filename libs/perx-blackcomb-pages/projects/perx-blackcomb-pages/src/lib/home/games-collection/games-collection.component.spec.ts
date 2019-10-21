@@ -1,4 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { GamesCollectionComponent } from './games-collection.component';
 import { MatCardModule } from '@angular/material';
@@ -11,7 +16,8 @@ describe('GamesCollectionComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ GamesCollectionComponent ],
       imports: [
-        MatCardModule
+        MatCardModule,
+        RouterTestingModule,
       ]
     })
     .compileComponents();
