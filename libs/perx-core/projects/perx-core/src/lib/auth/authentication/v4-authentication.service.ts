@@ -127,7 +127,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       ...campaignId && { campaign_id: campaignId },
       ...scope && { scope }
     };
-
     return this.http.post<ILoginResponse>(this.userAuthEndPoint + '/token', authenticateBody);
   }
 

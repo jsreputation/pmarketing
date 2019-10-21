@@ -1,14 +1,21 @@
 import { Injectable } from '@angular/core';
-import { IData } from './data.model';
 import { HttpClient } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+
 import { Observable, throwError } from 'rxjs';
 import {
   map,
   switchMap,
   retry,
-  // tap
+  tap,
 } from 'rxjs/operators';
+
 import { EnvConfig } from './env.config';
+import {
+  DataSerializer,
+  IData,
+  BaseType,
+} from './data.model';
 
 interface ITokenResponse {
   token: string;
@@ -23,7 +30,10 @@ interface IMetabaseResponse {
 })
 export class DataService {
   public tokenBasePath: string = null; // 'https://api-dev1.uat.whistler.perxtech.io';
-  constructor(private http: HttpClient, config?: EnvConfig) {
+  constructor(
+    private datePipe: DatePipe,
+    private http: HttpClient, config?: EnvConfig
+  ) {
     if (config && config.tokenBasePath) {
       this.tokenBasePath = config.tokenBasePath;
     }
@@ -44,9 +54,18 @@ export class DataService {
             `https://metabase-api.perxtech.io/api/embed/card/${token}/query?${query}`
           );
         }),
-        map((res: IMetabaseResponse) => res.data)
-        // tap((data) => { console.log(data); })
-      );
+        map((res: IMetabaseResponse) => DataSerializer.from(res.data)),
+        tap((data: IData) => {
+          data.cols.map(col => {
+            if (col.base_type.indexOf(BaseType.date) === -1) {
+              return;
+            }
+            const i: number = col.base_type.indexOf(BaseType.date);
+            data.rows.map(row => {
+              row[i] = this.datePipe.transform(row[i], 'mediumDate');
+            });
+          });
+        }));
   }
 
   private getToken(id: number): Observable<string> {

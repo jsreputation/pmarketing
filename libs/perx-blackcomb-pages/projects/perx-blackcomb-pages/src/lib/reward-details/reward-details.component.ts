@@ -19,7 +19,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.reward$ = this.activeRoute.queryParams
+    this.reward$ = this.activeRoute.params
       .pipe(
         filter((ps: Params) => ps.id),
         map((ps: Params) => Number.parseInt(ps.id, 10)),

@@ -1,11 +1,11 @@
 <div class="main" *ngIf="voucher">
   <app-reward-detail
     [reward]="voucher.reward"
-    (isButtonEnabled)="setButton($event)"
     [showMacaron]="false"
+    [macaron]="macaron"
   ></app-reward-detail>
-  <div *ngIf="isButtonEnable" class="button-area">
-    <button [disabled]="!isButtonEnable" class="full-width" mat-flat-button color="primary" [routerLink]="[ '/redemption' ]"
+  <div class="button-area">
+    <button class="full-width" mat-flat-button color="primary" [routerLink]="[ '/redemption' ]"
       [queryParams]="{id:voucher.id}">Redeem now</button>
   </div>
 </div>
