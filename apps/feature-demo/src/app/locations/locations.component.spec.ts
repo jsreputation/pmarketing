@@ -8,7 +8,6 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { of, Subject } from 'rxjs';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';
-import { AnalyticsService } from '../analytics.service';
 
 describe('LocationsComponent', () => {
   let component: LocationsComponent;
@@ -82,10 +81,6 @@ describe('LocationsComponent', () => {
     })
   };
 
-  const analyticsServiceStub = {
-    addEvent: () => { }
-  };
-
   beforeEach(async(() => {
     params = new Subject<Params>();
 
@@ -107,8 +102,7 @@ describe('LocationsComponent', () => {
         { provide: LocationsService, useValue: locationsServiceStub },
         { provide: GeoLocationService, useValue: geoLocationServiceStub },
         { provide: Location, useValue: locationStub },
-        { provide: RewardsService, useValue: rewardsServiceStub },
-        { provide: AnalyticsService, useValue: analyticsServiceStub }
+        { provide: RewardsService, useValue: rewardsServiceStub }
       ]
     })
       .compileComponents();
