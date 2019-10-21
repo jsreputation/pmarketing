@@ -111,10 +111,10 @@ export class RewardHttpAdapter {
         display_properties: {
           voucher_properties: {
             ...RewardHttpAdapter.getVoucherProperties(data),
+            validity: {
+              type: data.vouchers.voucherValidity.type
+            },
             loyalties: loyalties,
-          },
-          validity: {
-            type: data.vouchers.voucherValidity.type
           }
         }
       }
