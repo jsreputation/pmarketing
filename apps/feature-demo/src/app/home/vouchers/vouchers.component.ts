@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { Voucher, VoucherState, IVoucherService } from '@perx/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { PageType, AnalyticsService } from 'src/app/analytics.service';
@@ -11,7 +11,8 @@ import { PageType, AnalyticsService } from 'src/app/analytics.service';
   styleUrls: ['./vouchers.component.scss']
 })
 export class VouchersComponent implements OnInit {
-  public savedVouchers: Observable<Voucher[]>;
+
+  public savedVouchers: Voucher[];
 
   public redeemedVouchers: Observable<Voucher[]>;
 
@@ -32,17 +33,29 @@ export class VouchersComponent implements OnInit {
       siteSectionLevel3: 'rewards:vouchers'
     });
     const feed = this.vouchersService.getAll();
-    this.savedVouchers = feed
-      .pipe(
-        map((vouchs: Voucher[]) => {
-          return vouchs.filter(voucher => voucher.state === VoucherState.issued);
-        }));
+    feed.pipe(
+          map((vouchs: Voucher[]) => {
+            return vouchs.filter(voucher => voucher.state === VoucherState.issued);
+          }))
+        .subscribe(
+          (vouchs: Voucher[]) => {
+            this.savedVouchers = vouchs;
+          }
+      );
 
     this.redeemedVouchers = feed
       .pipe(
         map((vouchers: Voucher[]) => vouchers.filter(voucher => voucher.state !== VoucherState.issued)),
         map((vouchers: Voucher[]) => vouchers.filter(voucher => this.daysSince(voucher.redemptionDate)))
       );
+  }
+
+  public getObservableSavedVouchers(): Observable<Voucher[]> {
+    if (!this.hideSeeMore && this.savedVouchers.length > this.defaultNbVouchers) {
+      return of(this.savedVouchers.slice(0, this.defaultNbVouchers));
+    }
+
+    return of(this.savedVouchers);
   }
 
   public voucherSelected(voucher: Voucher): void {
