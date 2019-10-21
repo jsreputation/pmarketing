@@ -24,6 +24,18 @@ export class LoyaltyService implements ITableService {
     );
   }
 
+  public getLoyalty(id: string, params: HttpParamsOptions = {}): Observable<any> {
+    params.include = 'pool,basic_tier';
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.loyaltyHttpService.getLoyalty(id, httpParams).pipe(
+      map(response => {
+        let formLoyalty = LoyaltyHttpAdapter.transformToLoyaltyForm(response.data);
+        formLoyalty = LoyaltyHttpAdapter.setIncludedToLoyaltyForm(response, response.data, formLoyalty);
+        return formLoyalty;
+      })
+    );
+  }
+
   public createLoyalty(data: any): Observable<IResponseApi<any>> {
     const sendData: any = LoyaltyHttpAdapter.transformFromLoyaltyForm(data);
     return this.loyaltyHttpService.createLoyalty({data: sendData});
@@ -64,7 +76,7 @@ export class LoyaltyService implements ITableService {
     return this.createLoyalty(loyalty)
       .pipe(
         map(newLoyalty => newLoyalty.data.id),
-        switchMap((newLoyaltyId) => this.createLoyaltyBasicTier(loyalty, newLoyaltyId))
+        switchMap((newLoyaltyId) => this.createBasicTier(loyalty, newLoyaltyId))
       );
   }
 }

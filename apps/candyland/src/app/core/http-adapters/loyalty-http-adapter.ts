@@ -104,7 +104,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  private static setIncludedToLoyaltyForm(data: any, item: any, formLoyalty: any): any {
+  public static setIncludedToLoyaltyForm(data: any, item: any, formLoyalty: any): any {
     console.log(data, item);
     if (data.included && data.included.length) {
       for (let i = 0; i <= data.included.length - 1; i++) {
@@ -154,7 +154,7 @@ export class LoyaltyHttpAdapter {
     });
   }
 
-  private static transformToLoyaltyForm(data: any): any {
+  public static transformToLoyaltyForm(data: any): any {
     return {
       id: data.id,
       customTiersCount: data.attributes.custom_tiers_count,
@@ -164,7 +164,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  private static getDetailsAndConversionsFormGroup(data: any, currentLoyalty: any): any {
+  public static getDetailsAndConversionsFormGroup(data: any, currentLoyalty: any): any {
     return {
       details: LoyaltyHttpAdapter.formatToDetailFormGroup(data, currentLoyalty),
       tiersConversions: LoyaltyHttpAdapter.transformToTiersConversionsFormGroup(data),

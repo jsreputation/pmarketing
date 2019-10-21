@@ -123,6 +123,11 @@ export class LoyaltyFormsService {
     });
   }
 
+  public getDefaultValueForm(): any {
+    return {
+    };
+  }
+
   public getDefaultValueTireForm(): any {
     return {
       name: 'Gold',

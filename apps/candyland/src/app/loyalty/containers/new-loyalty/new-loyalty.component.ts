@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { TierSetupPopupComponent } from 'src/app/loyalty/containers/tier-setup-popup/tier-setup-popup.component';
 import { LoyaltyFormsService } from '../../services/loyalty-forms.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
@@ -9,12 +9,12 @@ import { MatStepper } from '@angular/material/stepper';
 import { LoyaltyStepForm } from '../../models/loyalty-step-form.enum';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from '@cl-core/services/user.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AudiencesService } from '@cl-core-services';
 import { AddRulePopupComponent } from '../../components/add-rule-popup/add-rule-popup.component';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CustomDataSource } from '@cl-shared/table';
 import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
 
@@ -26,6 +26,7 @@ import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.
     provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
   }]
 })
+
 export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   public loyaltyId: string;
   public basicTierId: string;
@@ -41,12 +42,22 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
               private userService: UserService,
               private audiencesService: AudiencesService,
               private router: Router,
+              private route: ActivatedRoute,
               private dialog: MatDialog) {
   }
 
   public ngOnInit(): void {
     this.initPools();
     this.initForm();
+    this.handleRouteParams().subscribe(data => {
+        const patchData = data || this.getDefaultValue();
+        this.form.patchValue(patchData);
+      },
+      (error: Error) => {
+        console.warn(error.message);
+        this.router.navigateByUrl('/loyalty');
+      }
+    );
   }
 
   public ngOnDestroy(): void {
@@ -244,5 +255,24 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   private setBasicTierIdToCustomTiersDataSourceFilter(basicTierId: string): void {
     console.log('setBasicTierIdToCustomTiersDataSourceFilter', basicTierId);
     this.customTierDataSource.filter = {program_id: basicTierId};
+  }
+
+  private handleRouteParams(): Observable<Partial<IStampsEntityForm> | null> {
+    return this.route.paramMap.pipe(
+      untilDestroyed(this),
+      map((params: ParamMap) => params.get('id')),
+      tap(id => this.loyaltyId = id),
+      switchMap(id => {
+        if (id) {
+          return this.loyaltyService.getLoyalty(id);
+        }
+        return of(null);
+      }),
+      tap(id => this.loyaltyId = id),
+    );
+  }
+
+  private getDefaultValue(): any {
+    return this.loyaltyFormsService.getDefaultValueForm();
   }
 }
