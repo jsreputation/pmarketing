@@ -44,10 +44,10 @@ export class ConfigService {
     );
   }
 
-  public getTenantAppSettings(): Observable<IMicrositeSettings> {
+  public getTenantAppSettings(key: string): Observable<IMicrositeSettings> {
     return this.authenticationService.getAppToken().pipe(
       // todo: remove this.appConfig usage and use readAppConfig directly
-      switchMap(() => this.http.get(`${this.appConfig.apiHost}/v4/settings/microsite`)),
+      switchMap(() => this.http.get(`${this.appConfig.apiHost}/v4/settings/${key}`)),
       map((res: IV4MicrositeSettingsResponse) => res.data),
       map((data: IV4MicrositeSettings) => ConfigService.v4MicrositeSettingsToMicrositeSettings(data))
     );
