@@ -1,6 +1,6 @@
 <div class="tab-group__content">
     <div *ngIf="stampCards$ && (stampCards$ | async) as stampCards">
-        <h1 *ngIf="stampCards.length>0">My Stamp Card</h1>
+        <h1 *ngIf="stampCards.length>0">My Stamp Cards</h1>
         <a *ngFor="let stampCard of stampCards" [routerLink]="['/stamp/' + stampCard.campaignId]">
             <mat-card matRipple>
                 <div class="puzzle-content">
