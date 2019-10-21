@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { V4ConfigService } from './v4-config.service';
+import { ConfigService } from './config.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {AuthenticationService} from '../auth/authentication/authentication.service';
 
 const authenticationServiceStub = { getAppToken: { subscribe: () => ({}) } };
 
-describe('V4ConfigService', () => {
+describe('ConfigService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [HttpClientTestingModule],
     providers: [{
@@ -16,7 +16,7 @@ describe('V4ConfigService', () => {
   }));
 
   it('should be created', () => {
-    const service: V4ConfigService = TestBed.get(V4ConfigService);
+    const service: ConfigService = TestBed.get(ConfigService);
     expect(service).toBeTruthy();
   });
 });
