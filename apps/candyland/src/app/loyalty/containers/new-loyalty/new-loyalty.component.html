@@ -19,7 +19,7 @@
 </header>
 <section class="content form-limiter">
   <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0">
-    <mat-step [stepControl]="stepOne">
+    <mat-step completed="false">
       <ng-template matStepLabel>Loyalty Details</ng-template>
       <div class="loyalty-detail-content">
         <cl-loyalty-form-step-details *ngIf="form && stepOne" [group]="stepOne"
@@ -27,7 +27,7 @@
       </div>
 
     </mat-step>
-    <mat-step><!--[stepControl]="secondFormGroup" optional-->
+    <mat-step completed="false">
       <ng-template matStepLabel>Tiers & Conversions</ng-template>
       <div class="loyalty-detail-content">
         <cl-loyalty-form-step-tiers-conversions *ngIf="form && stepTwo" [group]="stepTwo"
