@@ -91,7 +91,8 @@ export class RewardHttpAdapter {
         termsAndCondition: data.attributes.terms_conditions,
         organizationId: data.attributes.organization_id
       },
-      vouchers
+      vouchers,
+      loyalties: data.attributes.display_properties.loyalties
     };
   };
 
@@ -113,9 +114,9 @@ export class RewardHttpAdapter {
             ...RewardHttpAdapter.getVoucherProperties(data),
             validity: {
               type: data.vouchers.voucherValidity.type
-            },
-            loyalties: loyalties,
-          }
+            }
+          },
+          loyalties: loyalties,
         }
       }
     };

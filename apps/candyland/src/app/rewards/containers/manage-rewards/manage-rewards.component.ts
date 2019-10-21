@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 import { RewardsService, MerchantsService } from '@cl-core/services';
@@ -24,6 +24,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public selectedMerchant: Merchant;
   public loyalties: any;
   public rewardLoyaltyForm: FormArray;
+  public getRewardLoyaltyData$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   constructor(
     public cd: ChangeDetectorRef,
@@ -167,6 +168,11 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     )
       .subscribe(
         (reward: IRewardEntityForm) => {
+          // TODO: need handle the loyalties to patch form
+          if (reward.loyalties) {
+            this.getRewardLoyaltyData$.next(reward.loyalties);
+          }
+          console.log('reward', reward);
           this.reward = reward;
           this.form.patchValue(reward);
           this.form.get('merchantInfo').patchValue(reward.rewardInfo.organizationId);

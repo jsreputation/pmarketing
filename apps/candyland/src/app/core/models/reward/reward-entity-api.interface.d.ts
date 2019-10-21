@@ -31,7 +31,8 @@ declare interface IRewardEntityApi {
           times?: string;
           duration?: string;
         }
-      }
+      },
+      loyalties: any;
     }
     organization_id?: string;
   };
