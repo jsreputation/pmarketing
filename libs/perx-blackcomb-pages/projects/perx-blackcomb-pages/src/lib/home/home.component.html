@@ -21,7 +21,7 @@
   </div>
   <div class="rewards-collection" *ngIf="(rewards$ | async)?.length > 0">
     <div class="title">Featured Rewards</div>
-    <perx-core-rewards-collection [rewardsList]="rewards$"></perx-core-rewards-collection>
+    <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>
   <div class="rewars-collection">
     <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)"></perx-core-rewards-list-tabbed>
