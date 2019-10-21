@@ -87,11 +87,6 @@
     }
   }
 
-  &-row.input-group > span {
-    width: auto;
-    flex-shrink: 0;
-  }
-
   &-value span:last-child {
     margin-right: 0;
   }
@@ -141,6 +136,11 @@
       height: 5.66rem;
       padding-bottom: 1.25em;
     }
+  }
+
+  &-row.input-group > span {
+    width: auto;
+    flex-shrink: 0;
   }
 
   &-row.input-group {
@@ -226,6 +226,7 @@
 
   &-label {
     @include typo-subtitle2;
+
     display: flex;
     color: $secondary-color;
     font-size: 1.6rem;
