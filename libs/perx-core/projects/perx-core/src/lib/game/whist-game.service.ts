@@ -205,7 +205,7 @@ export class WhistlerGameService implements IGameService {
         map((res: IJsonApiItemPayload<AttbsObjEntity>) => res.data.attributes),
         map((entity: AttbsObjEntity) => entity.engagement_id),
         switchMap((correctId: number) => this.get(correctId)),
-        map((game: IGame) => [Object.assign(game, {campaignId: campaignId})])
+        map((game: IGame) => [Object.assign(game, {campaignId})])
       );
   }
 

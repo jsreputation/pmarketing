@@ -140,7 +140,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           }),
           tap(() => subject.complete())
           // map((arrofArrofGames: IGame[][]) => arrofArrofGames.reduce((acc, val) => acc.concat(val), []))
-        ).subscribe();
+        ).subscribe(() => console.log('yes'));
     });
   }
 
