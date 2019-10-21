@@ -19,149 +19,145 @@
       </cl-button>
     </div>
   </header>
-  <section class="content phonepreview-wrapper form-limiter">
-    <div class="tree-wrap-fields">
-      <mat-card class="game-graphic">
-        <div class="messages-wrap">
-          <p class="sub-title">
+  <section class="content form-limiter">
+    <div class="phonepreview-wrapper">
+      <div class="tree-wrap-fields">
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
             Messages
-          </p>
-        </div>
-        <div class="messages-form">
-          <div class="control-input">
-            <mat-form-field class="messages-input">
-              <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
-              <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
-              <mat-error *ngIf="headlineMessage.hasError('required')">Required field</mat-error>
-              <mat-error *ngIf="headlineMessage.hasError('minlength')">Min length 5</mat-error>
-              <mat-error *ngIf="headlineMessage.hasError('maxlength')">Max length 60</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="control-input">
-            <mat-form-field class="messages-input">
-              <input type="text" matInput [placeholder]="'Sub-headline message'" formControlName="subHeadlineMessage">
-              <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>
-              <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
-              <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>
-              <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-      </mat-card>
-
-      <mat-card class="game-graphic">
-        <div class="game-title-wrap">
-          <p class="sub-title">
-            Game graphic
-          </p>
-        </div>
-        <div class="game-form">
-          <p class="game-title">
-            Tree
-          </p>
-
-          <div class="game-tree-wrap">
-            <cl-select-graphic *ngIf="shakeTreeData.gamesTree" formControlName="treeType"
-              [graphicList]="shakeTreeData.gamesTree">
-            </cl-select-graphic>
-          </div>
-
-          <div class="game-number-gifts">
-            <div class="control-input" *ngIf="shakeTreeData.gameNumberGift">
-              <mat-form-field class="game-gift-select">
-                <mat-label>Total number of gifts in tree</mat-label>
-                <mat-select formControlName="gameGift">
-                  <mat-option *ngFor="let gift of shakeTreeData.gameNumberGift" [value]="gift.value">
-                    {{gift.viewValue}}
-                  </mat-option>
-                </mat-select>
+          </h2>
+          <div class="messages-form">
+            <div class="control-input">
+              <mat-form-field class="messages-input">
+                <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
+                <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
+                <mat-error *ngIf="headlineMessage.hasError('required')">Required field</mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('minlength')">Min length 5</mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('maxlength')">Max length 60</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="control-input">
+              <mat-form-field class="messages-input">
+                <input type="text" matInput [placeholder]="'Sub-headline message'" formControlName="subHeadlineMessage">
+                <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>
+                <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>
               </mat-form-field>
             </div>
           </div>
+        </mat-card>
 
-          <div class="game-gift-box">
-            <p class="game-title">
-              Gift box
-            </p>
-            <div class="game-gift-box_field">
-              <cl-select-graphic-wrap *ngIf="shakeTreeData.giftBox"
-                                      class="game-selected-graphic"
-                                      formControlName="giftBox"
-                                      [isRequired]="giftBox.hasError('required') && giftBox.touched"
-                                      [graphicList]="shakeTreeData.giftBox"
-                                      (selectGraphic)="setSelectGiftBox($event)">
-              </cl-select-graphic-wrap>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Game graphic
+          </h2>
+          <div class="game-form">
+
+            <div class="control-img_asset">              
+              <h3 class="card-fieldset-label">
+                Tree
+              </h3>
+              <div class="game-tree-wrap">
+                <cl-select-graphic *ngIf="shakeTreeData.gamesTree" formControlName="treeType"
+                  [graphicList]="shakeTreeData.gamesTree">
+                </cl-select-graphic>
+              </div>
+            </div>
+
+            <div class="game-number-gifts">
+              <div class="control-input" *ngIf="shakeTreeData.gameNumberGift">
+                <mat-form-field class="game-gift-select">
+                  <mat-label>Total number of gifts in tree</mat-label>
+                  <mat-select formControlName="gameGift">
+                    <mat-option *ngFor="let gift of shakeTreeData.gameNumberGift" [value]="gift.value">
+                      {{gift.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
+                Gift box
+              </h3>
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap *ngIf="shakeTreeData.giftBox"
+                                        formControlName="giftBox"
+                                        [isRequired]="giftBox.hasError('required') && giftBox.touched"
+                                        [graphicList]="shakeTreeData.giftBox"
+                                        (selectGraphic)="setSelectGiftBox($event)">
+                </cl-select-graphic-wrap>
+              </div>
+            </div>
+
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
+                Background
+              </h3>
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap *ngIf="shakeTreeData.background"
+                                        formControlName="background"
+                                        [isRequired]="background.hasError('required') && background.touched"
+                                        [graphicList]="shakeTreeData.background"
+                                        (selectGraphic)="setSelectGiftBox($event)">
+                </cl-select-graphic-wrap>
+              </div>
             </div>
           </div>
 
-          <div class="game-background-box">
-            <p class="game-title">
-              Background
-            </p>
-            <div class="game-gift-box_field">
-              <cl-select-graphic-wrap *ngIf="shakeTreeData.background"
-                                      formControlName="background"
-                                      [isRequired]="background.hasError('required') && background.touched"
-                                      class="game-selected-graphic"
-                                      [graphicList]="shakeTreeData.background"
-                                      (selectGraphic)="setSelectGiftBox($event)">
-              </cl-select-graphic-wrap>
-            </div>
-          </div>
-        </div>
+        </mat-card>
 
-      </mat-card>
-
-      <mat-card class="game-button game-graphic">
-        <div class="messages-wrap">
-          <p class="sub-title">
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
             Button
+          </h2>
+          <div class="messages-form">
+            <div class="control-input">
+              <mat-form-field class="messages-input">
+                <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
+                <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
+                <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
+                <mat-error *ngIf="buttonText.hasError('minlength')">Min length 2</mat-error>
+                <mat-error *ngIf="buttonText.hasError('maxlength')">Max length 20</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      <cl-simple-mobile-view class="second-tab" clCreateImage
+        [background]="getImgLink(background, 'assets/images/background/background1.png')"
+        [mobileImageClass]="'mobile-non-header'" [headerColor]="tenantSettings?.headerColor" [logo]="tenantSettings?.logo"
+        [logoType]="tenantSettings?.logoType" [fontFamily]="tenantSettings?.font"
+      >
+        <div class="mobile-preview-header">
+          <p class="mobile-preview-headline">
+            {{headlineMessage.value}}
+          </p>
+          <p class="mobile-preview-sub-headline">
+            {{subHeadlineMessage.value}}
           </p>
         </div>
-        <div class="messages-form">
-          <div class="control-input">
-            <mat-form-field class="messages-input">
-              <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
-              <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
-              <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
-              <mat-error *ngIf="buttonText.hasError('minlength')">Min length 2</mat-error>
-              <mat-error *ngIf="buttonText.hasError('maxlength')">Max length 20</mat-error>
-            </mat-form-field>
-          </div>
+        <div class="plugin-block">
+          <perx-core-shake-tree class="mobile-preview-plugin"
+            [treeImg]="getImgLink(treeType, 'assets/images/games/tree/full_tree_1.png')"
+            [giftImg]="getImgLink(giftBox, 'assets/images/gifts/state1.png')" [waitingManImg]="''"
+            [waitingManCelebrateImg]="''" [nbHangedGifts]="gameGiftView.value" [nbFallingGifts]="gameGiftView.value"
+            [nbShakes]="5" [distanceFromTree]="26" [bottomDistance]="1" [enabled]="false">
+          </perx-core-shake-tree>
         </div>
-      </mat-card>
+        <div class="mobile-preview-btn-wrap mobile-btn-block">
+          <button class="mobile-preview-btn" [ngStyle]="{
+                    backgroundColor: tenantSettings?.buttonColor,
+                    'color': tenantSettings?.buttonTextColor,
+                    'font-family': tenantSettings?.font
+                  }">
+            {{buttonText.value}}
+          </button>
+        </div>
+      </cl-simple-mobile-view>
     </div>
-
-    <cl-simple-mobile-view class="second-tab" clCreateImage
-      [background]="getImgLink(background, 'assets/images/background/background1.png')"
-      [mobileImageClass]="'mobile-non-header'" [headerColor]="tenantSettings?.headerColor" [logo]="tenantSettings?.logo"
-      [logoType]="tenantSettings?.logoType" [fontFamily]="tenantSettings?.font"
-    >
-      <div class="mobile-preview-header">
-        <p class="mobile-preview-headline">
-          {{headlineMessage.value}}
-        </p>
-        <p class="mobile-preview-sub-headline">
-          {{subHeadlineMessage.value}}
-        </p>
-      </div>
-      <div class="plugin-block">
-        <perx-core-shake-tree class="mobile-preview-plugin"
-          [treeImg]="getImgLink(treeType, 'assets/images/games/tree/full_tree_1.png')"
-          [giftImg]="getImgLink(giftBox, 'assets/images/gifts/state1.png')" [waitingManImg]="''"
-          [waitingManCelebrateImg]="''" [nbHangedGifts]="gameGiftView.value" [nbFallingGifts]="gameGiftView.value"
-          [nbShakes]="5" [distanceFromTree]="26" [bottomDistance]="1" [enabled]="false">
-        </perx-core-shake-tree>
-      </div>
-      <div class="mobile-preview-btn-wrap mobile-btn-block">
-        <button class="mobile-preview-btn" [ngStyle]="{
-                  backgroundColor: tenantSettings?.buttonColor,
-                  'color': tenantSettings?.buttonTextColor,
-                  'font-family': tenantSettings?.font
-                }">
-          {{buttonText.value}}
-        </button>
-      </div>
-    </cl-simple-mobile-view>
   </section>
 </article>

@@ -23,7 +23,7 @@
   &-actions {
     position: relative;
     padding: 0 0 0 1.4rem;
-    margin-top: auto;
+    margin-top: ($vertical-padding * 0.25);
     margin-bottom: ($vertical-padding * 0.5);
     display: flex;
     justify-content: space-between;
@@ -64,6 +64,7 @@
     max-height: 60vh;
     overflow: auto;
     padding: 1.6rem 0 0 0;
+    margin-bottom: auto;
   }
 }
 
@@ -101,9 +102,10 @@
   top: 0;
   left: 0;
   z-index: 1000;
-  width: ($modal-header-height + 1.6rem);
+  width: 5.6rem;
   height: $modal-header-height;
   padding: 0;
+  margin-left: 1.2rem;
   border: none;
   outline: none;
   background: none;
@@ -189,6 +191,6 @@
 
 @media (max-width: $mobile-width) {
   .side-nav-toggle {
-    width: $modal-header-height;
+    margin-left: 0;
   }
 }

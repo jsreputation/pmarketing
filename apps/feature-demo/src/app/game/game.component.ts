@@ -3,7 +3,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { IGameService, NotificationService, IGame, GameType, IPlayOutcome, Voucher } from '@perx/core';
 import { Location } from '@angular/common';
 import { filter, map, switchMap } from 'rxjs/operators';
-import { AnalyticsService, PageType } from '../analytics.service';
 import { GameOutcomeService } from '../congrats/game-outcome/game-outcome.service';
 
 @Component({
@@ -30,7 +29,6 @@ export class GameComponent implements OnInit {
     private location: Location,
     private notificationService: NotificationService,
     private router: Router,
-    private analytics: AnalyticsService,
     private gameOutcomeService: GameOutcomeService
   ) { }
 
@@ -68,13 +66,6 @@ export class GameComponent implements OnInit {
               afterClosedCallBack: this
             });
           }
-
-          this.analytics.addEvent({
-            pageName: `rewards:game:${this.title}`,
-            pageType: PageType.static,
-            siteSectionLevel2: 'rewards:game',
-            siteSectionLevel3: 'rewards:game'
-          });
         },
         (err: any) => {
           console.log(err);

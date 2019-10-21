@@ -1,4 +1,4 @@
-import { FormControl } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 import { ApiConfig } from '@cl-core/api-config';
 
 export class ImageControlValue {
@@ -7,7 +7,7 @@ export class ImageControlValue {
     return ApiConfig.apiCdnPath;
   }
 
-  public static getImgLink(control: FormControl, defaultImg?: string): string {
+  public static getImgLink(control: AbstractControl, defaultImg?: string): string {
     if (!(control && control.value)) {
       return defaultImg;
     }

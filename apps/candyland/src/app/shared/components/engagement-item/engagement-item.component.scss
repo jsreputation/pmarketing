@@ -20,8 +20,9 @@
 
   &-img {
     height: 100%;
-    width: auto;
+    width: 100%;
     object-fit: cover;
+    object-position: top center;
   }
 
   &-info {
@@ -47,9 +48,7 @@
     flex: 1;
     margin-top: 0.4rem;
     color: $base-font-color;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    hyphens: auto;
+    white-space: initial;
   }
 
   &-date {

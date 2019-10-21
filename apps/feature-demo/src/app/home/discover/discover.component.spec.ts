@@ -9,7 +9,7 @@ import { CampaignsComponent } from '../campaigns/campaigns.component';
 import { MatCardModule, MatIconModule, MatDialogModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-import { GameModule, RewardsService, ICampaignService, FeedReaderService, IGameService } from '@perx/core';
+import { GameModule, RewardsService, ICampaignService, FeedReaderService, IGameService, RewardsModule } from '@perx/core';
 import { of } from 'rxjs';
 import { rewards } from 'src/app/rewards.mock';
 import { catalogs } from 'src/app/catalogs.mock';
@@ -55,7 +55,8 @@ describe('DiscoverComponent', () => {
         RouterTestingModule,
         NgxMultiLineEllipsisModule,
         ScrollingModule,
-        GameModule
+        GameModule,
+        RewardsModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },

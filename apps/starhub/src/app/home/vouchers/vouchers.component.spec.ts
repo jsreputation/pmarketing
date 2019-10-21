@@ -6,14 +6,16 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { IVoucherService } from '@perx/core';
 import { of } from 'rxjs';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-import { vouchers } from '../../vouchers.mock';
 import { Router } from '@angular/router';
+import { Type } from '@angular/core';
+import { vouchers } from 'src/app/vouchers.mock';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
   let fixture: ComponentFixture<VouchersComponent>;
+  let router: Router;
   const vouchersServiceStub = {
-    getAll: () => of()
+    getAll: () => of([])
   };
 
   const today = new Date();
@@ -25,7 +27,10 @@ describe('VouchersComponent', () => {
       imports: [
         MatCardModule,
         MatIconModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([{
+          path: 'voucher',
+          component: VouchersComponent
+        }]),
         NgxMultiLineEllipsisModule
       ],
       providers: [
@@ -38,11 +43,23 @@ describe('VouchersComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(VouchersComponent);
     component = fixture.componentInstance;
+    router = TestBed.get<Router>(Router as Type<Router>);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should navigate', () => {
+    const spyRouter = spyOn(router, 'navigate');
+    component.voucherSelected(vouchers[0]);
+    expect(spyRouter).toHaveBeenCalled();
+  });
+
+  it('should change status of hideSeeMore', () => {
+    component.seeMoreClicked();
+    expect(component.hideSeeMore).toBe(true);
   });
 
   it('should navigate to voucher detail', () => {
@@ -59,8 +76,6 @@ describe('VouchersComponent', () => {
 
   it('difference should be 1 with next day', () => {
     const mockVoucher = vouchers[0];
-    console.log('salman');
-    console.log(tomorrow);
     mockVoucher.expiry = tomorrow;
     const noOfDays = component.getNumberOfDays(mockVoucher);
     expect(noOfDays).toBe('Expires in 1 days');

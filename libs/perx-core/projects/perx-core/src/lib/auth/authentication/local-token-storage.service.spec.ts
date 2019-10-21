@@ -14,8 +14,8 @@ const appInfo: IAppInfo = {
   appAccessToken: null,
   userAccessToken: 'test'
 };
-describe('WhistlerAuthenticationService', () => {
-  describe('WhistlerAuthenticationService with config', () => {
+describe('LocalStorageService', () => {
+  describe('LocalStorageService with config', () => {
     let service: LocalTokenStorage;
     beforeEach(() => TestBed.configureTestingModule({
       imports: [

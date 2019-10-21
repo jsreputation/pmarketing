@@ -1,0 +1,27 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: microsite-apps-ng-lint
+  namespace: build
+spec:
+  inputs:
+    resources:
+      - name: workspace
+        type: git
+        targetPath: project
+  stepTemplate:
+    image: circleci/node:10
+    resources: &resources
+      requests:
+        cpu: 2
+        memory: "4Gi"
+  steps:
+    - name: yarn-install
+      workingDir: "/workspace/project"
+      command: ["yarn", "install"]
+      resources: *resources
+    - name: run-lint
+      workingDir: "/workspace/project"
+      command: ["yarn", "run", "lint-ci"]
+      resources: *resources
+

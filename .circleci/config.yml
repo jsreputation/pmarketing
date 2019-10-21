@@ -18,29 +18,20 @@ commands:
       - run:
           name: Setup app, environment, namespace variables
           command: |
-            COUNT=$(echo ${CIRCLE_TAG} | tr "-" "\n" | wc -l)
-            if [ ${COUNT} -eq 3 ]
-            then
-              SEM_VER=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n1 | head -n1)
-              TARGET_ENV=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n2 | head -n1)
-              CUT=-${TARGET_ENV}-${SEM_VER}
-              APP=${CIRCLE_TAG%"$CUT"}
-            elif [ ${COUNT} -eq 4 ]
-            then
-              SEM_VER=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n1 | head -n1)
-              TARGET_NAMESPACE=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n2 | head -n1)
-              TARGET_ENV=$(echo ${CIRCLE_TAG} | tr "-" "\n" | tail -n3 | head -n1)
-              CUT=-${TARGET_ENV}-${TARGET_NAMESPACE}-${SEM_VER}
-              APP=${CIRCLE_TAG%"$CUT"}
+            REGEX="([[:alnum:]-]+)-(uat|staging|production)-?([[:alnum:]-]*)-([0-9]+\.[0-9]+\.[0-9]+-?[0-9]*)"
+            if [[ "${CIRCLE_TAG}" =~ $REGEX ]]; then
+              echo "export APP=${BASH_REMATCH[1]}" >> $BASH_ENV
+              echo "export TARGET_ENV=${BASH_REMATCH[2]}" >> $BASH_ENV
+              echo "export TARGET_NAMESPACE=${BASH_REMATCH[3]}" >> $BASH_ENV
+              echo "export SEM_VER=${BASH_REMATCH[4]}" >> $BASH_ENV
             else
               echo "Error! Unrecognized tag"
             fi
-            echo "export APP=${APP}" >> $BASH_ENV
-            echo "export TARGET_ENV=${TARGET_ENV}" >> $BASH_ENV
-            echo "export TARGET_NAMESPACE=${TARGET_NAMESPACE}" >> $BASH_ENV
-            echo $APP
-            echo $TARGET_ENV
-            echo $TARGET_NAMESPACE
+            source $BASH_ENV
+            echo "APP: $APP"
+            echo "TARGET_ENV: $TARGET_ENV"
+            echo "TARGET_NAMESPACE: $TARGET_NAMESPACE"
+            echo "SEM_VER: $SEM_VER"
   set_apihost:
     description: based on environment set the APIHOST
     steps:
@@ -100,7 +91,6 @@ commands:
             fi
             echo "export BASE_HREF=$BASE_HREF" >> $BASH_ENV
             echo $BASE_HREF
-
   set_iswhistler:
     description: based on client deploy endpoint base href
     steps:
@@ -311,16 +301,7 @@ jobs:
       - run: yarn run lerna run build:lib
       - run: yarn run lerna run config
       - run: yarn run test-ci
- 
-#      - run: yarn run e2e-ci
-  lint:
-    docker:
-      - image: circleci/node:10-browsers
-    resource_class: xlarge
-    steps:
-      - checkout
-      - run: yarn install
-      - run: yarn run lint-ci
+      # - run: yarn run e2e-ci
   build:
     machine:
       image: ubuntu-1604:201903-01
@@ -342,26 +323,9 @@ jobs:
       - checkout
       - run: yarn install
       - run: yarn run build
-  build-prod:
-    docker:
-      - image: circleci/node:10-browsers
-    resource_class: xlarge
-    parallelism: 13
-    steps:
-      - checkout
-      - run: yarn install
-    #      - run: yarn run e2e-ci
-      - run:
-          command: |
-            (cd apps; ls -d *) | circleci tests split | xargs -n 1 -I {} yarn build:{}:prod
 workflows:
   build_and_deploy:
     jobs:
-      - lint:
-          filters:
-            tags:
-              # this enables circleci to trigger on tags
-              only: /.*/
       - test:
           filters:
             tags:
@@ -372,11 +336,6 @@ workflows:
       #       tags:
       #         # this enables circleci to trigger on tags
       #         only: /.*/
-      - build-prod:
-          filters:
-            tags:
-              # this enables circleci to trigger on tags
-              only: /.*/
       - build_docker_image:
           filters:
             tags:
@@ -450,8 +409,6 @@ workflows:
             - build_docker_image
             # - build
             - test
-            - lint
-            - build-prod
           filters:
             # need to sepcify this otherwise the job will run even if there's no tag
             branches:

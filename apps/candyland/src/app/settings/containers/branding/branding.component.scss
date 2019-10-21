@@ -1,37 +1,25 @@
 @import "variables";
 
-mat-card {
-  margin-top: 1.6rem;
+.control-input-splitter {
+  display: flex;
+  margin-top: -($horizontal-padding * 0.5);
+  margin-left: -($horizontal-padding * 0.25);
+  margin-right: -($horizontal-padding * 0.25);
 
-  &:first-child {
-    margin-top: 0;
+  > * {
+    padding-left: ($horizontal-padding * 0.25);
+    padding-right: ($horizontal-padding * 0.25);
   }
-}
-
-.reward-wrap {
-  margin-bottom: 2.4rem;
-}
-
-label.game-title {
-  display: block;
-}
-
-.select-outcome {
-  &:first-child {
-    margin-right: 1.5rem;
-  }
-}
-
-.card-section {
-  margin-top: ($vertical-padding * 0.5);
-}
-
-.w-50 {
-  width: 50%;
 }
 
 .logo-header-wrap {
-  width: 39rem;
+  width: 100%;
+  max-width: 40rem;
   height: 6.4rem;
-  margin-bottom: $vertical-padding;
+  padding-bottom: $vertical-padding;
+
+  cl-upload-graphic {
+    height: 100%;
+    width: 100%;
+  }
 }

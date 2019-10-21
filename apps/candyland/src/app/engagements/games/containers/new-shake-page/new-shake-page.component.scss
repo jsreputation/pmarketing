@@ -1,59 +1,11 @@
 @import "./variables";
 
-.tree {
-  &-wrap {
-    min-height: 100vh;
-    background-color: $background-color;
-  }
-
-  &-page-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 3rem 0 4.3rem;
-    background: $white;
-    align-items: center;
-    height: 6.6rem;
-  }
-
-  &-btn-cancel {
-    padding-right: 0.8rem;
-  }
-
-  &-main-block {
-    display: flex;
-  }
-}
-
-.messages {
-  &-input {
-    width: 100%;
-  }
-}
-
 .game {
-  &-tree-wrap {
-    display: flex;
-  }
-
-  &-image-preview {
-    display: block;
-    margin-right: 1rem;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
   &-number-gifts {
     padding-top: 4rem;
   }
 
   &-gift-select {
-    width: $mobile-preview-width;
-  }
-
-  &-selected-graphic {
-    margin-bottom: 4rem;
-    display: flex;
+    max-width: $mobile-preview-width;
   }
 }

@@ -11,10 +11,10 @@ import {
 } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { map, switchMap, tap, filter, distinct } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { map, switchMap, tap, filter, distinct, takeUntil } from 'rxjs/operators';
 import { IAssignedAttributes } from '@perx/whistler';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { CustomDataSource } from '@cl-shared';
@@ -28,6 +28,8 @@ import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, OnDestroy {
+  private destroy$: Subject<any> = new Subject();
+
   public userId: string;
   public user: any;
   public tabsFilterConfig: OptionConfig[];
@@ -56,6 +58,8 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
 
   public ngOnDestroy(): void {
     this.renderer.removeClass(this.document.body, 'no-cta');
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public openChangeExpiryDateDialog(item: IJsonApiItem<Partial<IAssignedAttributes>>): void {
@@ -64,7 +68,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       data: item
     });
 
-    dialogRef.afterClosed().pipe(untilDestroyed(this))
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy$))
       .pipe(
         filter(Boolean),
         switchMap((entity: string) => {
@@ -102,7 +106,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
 
   private handleRouteParams(): void {
     this.route.paramMap.pipe(
-      untilDestroyed(this),
+      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap((id: string) => this.userId = id),
       distinct(),
@@ -125,7 +129,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     const params = this.userId ? {'filter[assigned_to_id]': this.userId} : {};
     this.dataSource = new CustomDataSource<any>(this.vouchersService, undefined, params);
     this.dataSource.data$.pipe(
-      untilDestroyed(this)
+      takeUntil(this.destroy$)
     ).subscribe((data: any) => {
       const counterObject = PrepareTableFilers.countFieldValue(data, 'status');
       this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject);

@@ -14,7 +14,7 @@ export { IMerchantsService } from './lib/merchants/imerchants.service';
  */
 export { MerchantAdminModule } from './lib/merchant-admin/merchant-admin.module';
 export { IMerchantAdminService } from './lib/merchant-admin/imerchant-admin.service';
-export { IMerchantAdminTransaction } from './lib/merchant-admin/models/merchants-admin.model';
+export { IMerchantAdminTransaction, IMerchantProfile } from './lib/merchant-admin/models/merchants-admin.model';
 /**
  * Vouchers
  */
@@ -113,6 +113,8 @@ export { IReward, ICatalog, ICategoryTags, IPrice } from './lib/rewards/models/r
 export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 export { RewardsCollectionComponent } from './lib/rewards/rewards-collection/rewards-collection.component';
 export { RewardComponent } from './lib/rewards/reward/reward.component';
+export { RewardsListTabbedComponent } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
+export { RewardsListComponent } from './lib/rewards/rewards-list/rewards-list.component';
 /**
  * Utils
  */

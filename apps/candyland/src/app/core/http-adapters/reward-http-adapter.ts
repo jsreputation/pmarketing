@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import { IRewardEntityAttributes } from '@perx/whistler';
 
 export class RewardHttpAdapter {
 
@@ -22,7 +23,7 @@ export class RewardHttpAdapter {
     }
   }
 
-  public static transformToReward(data: IRewardEntityApi): IRewardEntity {
+  public static transformToReward(data: IJsonApiItem<IRewardEntityAttributes>): IRewardEntity {
     return {
       id: data.id,
       image: data.attributes.image_url,
@@ -34,11 +35,12 @@ export class RewardHttpAdapter {
       current: data.attributes.cost_of_reward,
       total: 100,
       probability: null,
-      category: data.attributes.category
+      category: data.attributes.category,
+      tags: data.attributes.tags || []
     };
   }
 
-  public static transformToRewardForm(data: IRewardEntityApi): IRewardEntityForm {
+  public static transformToRewardForm(data: IJsonApiItem<IRewardEntityAttributes>): IRewardEntityForm {
     let vouchers;
     if (data.attributes.display_properties.voucher_properties) {
       const voucher_properties = data.attributes.display_properties.voucher_properties;
@@ -89,6 +91,7 @@ export class RewardHttpAdapter {
         cost: data.attributes.cost_of_reward,
         description: data.attributes.description,
         termsAndCondition: data.attributes.terms_conditions,
+        tags: data.attributes.tags,
         merchantId: data.attributes.organization_id
       },
       vouchers,
@@ -96,7 +99,7 @@ export class RewardHttpAdapter {
     };
   }
 
-  public static transformFromRewardForm(data: IRewardEntityForm): IRewardEntityApi {
+  public static transformFromRewardForm(data: IRewardEntityForm): IJsonApiItem<IRewardEntityAttributes> {
     return {
       type: 'entities',
       attributes: {
@@ -108,6 +111,7 @@ export class RewardHttpAdapter {
         cost_of_reward: data.rewardInfo.cost,
         description: data.rewardInfo.description,
         terms_conditions: data.rewardInfo.termsAndCondition,
+        tags: data.rewardInfo.tags || [],
         organization_id: data.rewardInfo.merchantId,
         display_properties: {
           ...(data.displayProperties || {}),
@@ -171,7 +175,7 @@ export class RewardHttpAdapter {
     return moment(date).set({hours, minutes}).utc().toDate();
   }
 
-  public static transformFromReward(data: IRewardEntity): IRewardEntityApi {
+  public static transformFromReward(data: IRewardEntity): IJsonApiItem<IRewardEntityAttributes> {
     return {
       type: 'entities',
       attributes: {
@@ -181,6 +185,7 @@ export class RewardHttpAdapter {
         category: data.category,
         redemption_type: data.redemptionType,
         cost_of_reward: data.current,
+        tags: data.tags,
         display_properties: {
           voucher_properties: {
             code_type: data.voucherInfo.type,

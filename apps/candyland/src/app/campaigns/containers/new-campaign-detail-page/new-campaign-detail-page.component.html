@@ -17,13 +17,13 @@
         </mat-select>
       </mat-form-field>
       <!--duration-->
-      <div class="card-row">
+      <div class="card-row card-row-date">
         <div class="input-group">
           <cl-date-picker [formControl]="campaignInfo.get('startDate')" [max]="campaignInfo.get('endDate').value">
           </cl-date-picker>
           <cl-time-picker [formControl]="campaignInfo.get('startTime')"></cl-time-picker>
         </div>
-        to
+        <span>to</span>
         <div class="input-group">
           <div class="date-field">
             <cl-date-picker [control]="campaignInfo.get('endDate')" [min]="campaignInfo.get('startDate').value">
