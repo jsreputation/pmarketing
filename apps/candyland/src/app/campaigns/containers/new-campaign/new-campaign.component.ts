@@ -135,7 +135,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       tap((res: IJsonApiPayload<ICampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
       switchMap(
         (res) => iif(hasLimitData, updateLimitData$(res), of(res))
-      )
+      ),
+      takeUntil(this.destroy$)
     ).subscribe(
       data => {
         if (data) {
@@ -187,11 +188,14 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       .getAllPoolUser(campaign.audience.select)
       .pipe(
         map((users: IJsonApiItem<IUserApi>[]) => users.map(u => u.attributes.primary_identifier)),
+        takeUntil(this.destroy$)
       );
     return combineLatest(getUsersPis, this.blackcombUrl)
       .pipe(map(([pis, url]: [string[], string]) => {
         return pis.reduce((p: string, v: string) => `${p}${v},${url}&pi=${v},\n`, 'identifier,urls,\n');
-      }));
+      }),
+      takeUntil(this.destroy$)
+      );
   }
 
   private get blackcombUrl(): Observable<string> {
@@ -208,6 +212,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private getTenants(): void {
     this.settingsService.getTenants()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
       .subscribe((res: Tenants) => {
         this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
         this.campaignBaseURL = res.display_properties.campaign_base_url;
