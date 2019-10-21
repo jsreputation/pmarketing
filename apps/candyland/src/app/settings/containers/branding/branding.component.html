@@ -1,11 +1,9 @@
 <section class="phonepreview-wrapper">
   <div class="branding-form" [formGroup]="formBranding">
-    <mat-card>
-      <div class="temp-engagement-title">
-        <h2 class="sub-title">
-          Theme
-        </h2>
-      </div>
+    <mat-card class="card-fieldset">
+      <h2 class="card-fieldset-title sub-title">
+        Theme
+      </h2>
       <div class="control-input">
         <mat-form-field class="branding-select">
           <mat-select formControlName="font" placeholder="Font Type">
@@ -17,13 +15,13 @@
       </div>
       <div class="control-input-splitter">
         <div class="control-input">
-          <label class="game-title">
+          <label class="card-fieldset-label">
             <span>Primary Color</span>
           </label>
           <cl-color-picker [formControlName]="'primaryColor'"></cl-color-picker>
         </div>
         <div class="control-input">
-          <label class="game-title">
+          <label class="card-fieldset-label">
             <span>Secondary Color</span>
           </label>
           <cl-color-picker
@@ -33,14 +31,12 @@
       </div>
     </mat-card>
 
-    <mat-card>
-      <div class="temp-engagement-title">
-        <h2 class="sub-title">
-          Header & Navbar
-        </h2>
-      </div>
+    <mat-card class="card-fieldset">
+      <h2 class="card-fieldset-title sub-title">
+        Header & Navbar
+      </h2>
       <div class="control-input">
-        <label class="game-title">
+        <label class="card-fieldset-label">
           <span>Color</span>
         </label>
         <mat-form-field color="primary" appearance="outline">
@@ -74,7 +70,7 @@
       </div>
       <div class="control-input-splitter">
         <div class="control-input">
-          <label class="game-title">
+          <label class="card-fieldset-label">
             <span>Image Logo</span>
           </label>
           <div class="logo-header-wrap">
@@ -88,15 +84,13 @@
         </div>
       </div>
     </mat-card>
-    <mat-card>
-      <div class="temp-engagement-title">
-        <h2 class="sub-title">
-          Button
-        </h2>
-      </div>
+    <mat-card class="card-fieldset">
+      <h2 class="card-fieldset-title sub-title">
+        Button
+      </h2>
       <div class="control-input-splitter">
         <div class="control-input">
-          <label class="game-title">
+          <label class="card-fieldset-label">
             <span>Background Color</span>
           </label>
           <mat-form-field color="primary" appearance="outline">
@@ -129,7 +123,7 @@
           </mat-form-field>
         </div>          
         <div class="control-input">
-          <label class="game-title">
+          <label class="card-fieldset-label">
               <span>Text Color</span>
           </label>
           <mat-form-field color="primary" appearance="outline">
@@ -168,7 +162,6 @@
     <cl-simple-mobile-view
       class="firs-tab"
       [mobileImageClass]="'mobile-non-header'"
-      [background]="'assets/images/reward/background/full_bg_3.jpg'"
       [headerColor]="headerNavbarColor.value.color"
       [logo]="logo.value"
       [logoType]="logoType.value === 'image'"
@@ -190,7 +183,6 @@
     <cl-simple-mobile-view
       class="second-tab"
       [mobileImageClass]="'mobile-non-header'"
-      [background]="'assets/images/reward/background/full_bg_3.jpg'"
       [headerColor]="headerNavbarColor.value.color"
       [logo]="logo.value"
       [logoType]="logoType.value === 'image'"
@@ -212,7 +204,6 @@
     <cl-simple-mobile-view
       class="three-tab"
       [mobileImageClass]="'mobile-non-header'"
-      [background]="'assets/images/reward/background/full_bg_3.jpg'"
       [headerColor]="headerNavbarColor.value.color"
       [logo]="logo.value"
       [logoType]="logoType.value === 'image'"

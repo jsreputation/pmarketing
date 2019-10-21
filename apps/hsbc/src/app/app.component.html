@@ -26,11 +26,6 @@
       <div class="toolbar__label">
         <img src="assets/hsbc-logo.svg" alt="">
       </div>
-      <button [disabled]="rightIconToShow === ''" mat-icon-button (click)="onRightActionClick()">
-        <mat-icon *ngIf="rightIconToShow !== ''">
-          {{rightIconToShow}}
-        </mat-icon>
-      </button>
     </mat-toolbar>
     <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate($event)"></router-outlet>
   </mat-sidenav-content>

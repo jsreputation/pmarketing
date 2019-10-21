@@ -35,7 +35,8 @@ export class RewardHttpAdapter {
       current: data.attributes.cost_of_reward,
       total: 100,
       probability: null,
-      category: data.attributes.category
+      category: data.attributes.category,
+      tags: data.attributes.tags || []
     };
   }
 
@@ -90,6 +91,7 @@ export class RewardHttpAdapter {
         cost: data.attributes.cost_of_reward,
         description: data.attributes.description,
         termsAndCondition: data.attributes.terms_conditions,
+        tags: data.attributes.tags,
         merchantId: data.attributes.organization_id
       },
       vouchers,
@@ -109,6 +111,7 @@ export class RewardHttpAdapter {
         cost_of_reward: data.rewardInfo.cost,
         description: data.rewardInfo.description,
         terms_conditions: data.rewardInfo.termsAndCondition,
+        tags: data.rewardInfo.tags || [],
         organization_id: data.rewardInfo.merchantId,
         display_properties: {
           ...(data.displayProperties || {}),
@@ -182,6 +185,7 @@ export class RewardHttpAdapter {
         category: data.category,
         redemption_type: data.redemptionType,
         cost_of_reward: data.current,
+        tags: data.tags,
         display_properties: {
           voucher_properties: {
             code_type: data.voucherInfo.type,

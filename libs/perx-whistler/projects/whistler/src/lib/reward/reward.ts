@@ -8,6 +8,7 @@ export interface IRewardEntityAttributes {
   category: string;
   redemption_type: string;
   cost_of_reward: number;
+  tags: string[];
   currency?: string;
   description?: string;
   terms_conditions?: string;

@@ -2,7 +2,6 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { FeedItem, FeedReaderService } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { PopupComponent } from './popup/popup.component';
-import { AnalyticsService, PageType } from 'src/app/analytics.service';
 
 @Component({
   selector: 'app-news-feed',
@@ -17,8 +16,7 @@ export class NewsFeedComponent implements OnInit {
 
   constructor(
     private reader: FeedReaderService,
-    private dialog: MatDialog,
-    private analytics: AnalyticsService
+    private dialog: MatDialog
   ) { }
 
   public ngOnInit(): void {
@@ -42,10 +40,6 @@ export class NewsFeedComponent implements OnInit {
   }
 
   public readMore(item: FeedItem): void {
-    this.analytics.addEvent({
-      pageType: PageType.overlay,
-      pageName: 'The All New Starhub Rewards'
-    });
     this.dialog.open(PopupComponent, { panelClass: 'app-full-bleed-dialog', data: item, height: '85vh' });
   }
 

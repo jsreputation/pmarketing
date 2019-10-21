@@ -11,6 +11,7 @@ import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';
+import {IMacaron, MacaronService} from '../services/macaron.service';
 
 const rewardStub = {
   id: 1,
@@ -31,6 +32,18 @@ const rewardStub = {
   }
 };
 
+const macaronFalseStub: IMacaron = {
+  label: '',
+  class: '',
+  isButtonEnabled: false
+};
+
+const macaronTrueStub: IMacaron = {
+  label: '',
+  class: '',
+  isButtonEnabled: true
+};
+
 describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
@@ -46,6 +59,7 @@ describe('RewardComponent', () => {
   };
   const routerStub = { navigate: () => ({}) };
   const notificationServiceStub = { addSnack: () => ({}) };
+  const macaronServiceStub = { getMacaron: () => ({}) };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -65,6 +79,7 @@ describe('RewardComponent', () => {
         { provide: Location, useValue: locationStub },
         { provide: Router, useValue: routerStub },
         { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: MacaronService, useValue: macaronServiceStub },
       ]
     })
       .compileComponents();
@@ -86,9 +101,14 @@ describe('RewardComponent', () => {
       const rewardsServiceSpy = spyOn(rewardsService, 'getReward').and.returnValue(
         of(rewardStub)
       );
+      const macaronService: MacaronService = fixture.debugElement.injector.get<MacaronService>(MacaronService as Type<MacaronService>);
+      const macaronServiceSpy = spyOn(macaronService, 'getMacaron').and.returnValue(
+        macaronFalseStub
+      );
       component.ngOnInit();
       tick();
       expect(rewardsServiceSpy).toHaveBeenCalled();
+      expect(macaronServiceSpy).toHaveBeenCalled();
       expect(component.isButtonEnable).toBe(false);
     }));
 
@@ -111,9 +131,14 @@ describe('RewardComponent', () => {
           merchantId: 2,
         })
       );
+      const macaronService: MacaronService = fixture.debugElement.injector.get<MacaronService>(MacaronService as Type<MacaronService>);
+      const macaronServiceSpy = spyOn(macaronService, 'getMacaron').and.returnValue(
+        macaronTrueStub
+      );
       component.ngOnInit();
       tick();
       expect(rewardsServiceSpy).toHaveBeenCalled();
+      expect(macaronServiceSpy).toHaveBeenCalled();
       expect(component.isButtonEnable).toBe(true);
     }));
   });
