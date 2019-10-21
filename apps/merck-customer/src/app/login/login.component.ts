@@ -139,8 +139,6 @@ export class LoginComponent implements OnInit, PageAppearence {
   }
 
   public switchLanguage(): void {
-    console.log('salman');
     this.translateService.setDefaultLang(this.currentSelectedLanguage);
   }
-
 }
