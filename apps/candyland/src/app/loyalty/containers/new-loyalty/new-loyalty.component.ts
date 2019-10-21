@@ -49,15 +49,7 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
   public ngOnInit(): void {
     this.initPools();
     this.initForm();
-    this.handleRouteParams().subscribe(data => {
-        const patchData = data || this.getDefaultValue();
-        this.form.patchValue(patchData);
-      },
-      (error: Error) => {
-        console.warn(error.message);
-        this.router.navigateByUrl('/loyalty');
-      }
-    );
+    this.handleRouteParams();
   }
 
   public ngOnDestroy(): void {
@@ -257,8 +249,8 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
     this.customTierDataSource.filter = {program_id: basicTierId};
   }
 
-  private handleRouteParams(): Observable<Partial<IStampsEntityForm> | null> {
-    return this.route.paramMap.pipe(
+  private handleRouteParams(): void {
+    this.route.paramMap.pipe(
       untilDestroyed(this),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.loyaltyId = id),
@@ -268,7 +260,19 @@ export class NewLoyaltyComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         return of(null);
       }),
-      tap(id => this.loyaltyId = id),
+    ).subscribe(data => {
+        if (data) {
+          this.basicTierId = data.basicTierId || null;
+          this.form.patchValue(data);
+        } else {
+          this.form.patchValue(this.getDefaultValue());
+        }
+        console.log('data', data, 'form', this.form.value, 'id', this.basicTierId);
+      },
+      (error: Error) => {
+        console.warn(error.message);
+        this.router.navigateByUrl('/loyalty');
+      }
     );
   }
 
