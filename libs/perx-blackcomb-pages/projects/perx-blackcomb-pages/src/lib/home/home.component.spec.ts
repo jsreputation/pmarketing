@@ -1,17 +1,11 @@
+import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Router } from '@angular/router';
 import { ICampaignService, LoyaltyModule, RewardsModule, RewardsService, LoyaltyService, ProfileService } from '@perx/core';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material';
 import { GamesCollectionComponent } from './games-collection/games-collection.component';
-import { Directive } from '@angular/core';
-
-@Directive({
-  selector: '[routerLink]'
-})
-class DummyRouterLinkDirective { }
 
 const rewardsServiceStub = {
   getAllRewards: () => of([])
@@ -28,9 +22,6 @@ const loyaltyServiceStub = {
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  const router = {
-    navigate: jasmine.createSpy('navigate')
-  };
 
   const campaignServiceStub = {
     getCampaigns: () => of([])
@@ -38,15 +29,15 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HomeComponent, GamesCollectionComponent, DummyRouterLinkDirective],
+      declarations: [HomeComponent, GamesCollectionComponent],
       imports: [
         NoopAnimationsModule,
         MatCardModule,
         LoyaltyModule,
-        RewardsModule
+        RewardsModule,
+        RouterTestingModule.withRoutes([])
       ],
       providers: [
-        { provide: Router, useValue: router },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },

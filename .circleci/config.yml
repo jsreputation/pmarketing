@@ -91,7 +91,6 @@ commands:
             fi
             echo "export BASE_HREF=$BASE_HREF" >> $BASH_ENV
             echo $BASE_HREF
-
   set_iswhistler:
     description: based on client deploy endpoint base href
     steps:
@@ -302,16 +301,7 @@ jobs:
       - run: yarn run lerna run build:lib
       - run: yarn run lerna run config
       - run: yarn run test-ci
-
-#      - run: yarn run e2e-ci
-  lint:
-    docker:
-      - image: circleci/node:10-browsers
-    resource_class: xlarge
-    steps:
-      - checkout
-      - run: yarn install
-      - run: yarn run lint-ci
+      # - run: yarn run e2e-ci
   build:
     machine:
       image: ubuntu-1604:201903-01
@@ -333,26 +323,9 @@ jobs:
       - checkout
       - run: yarn install
       - run: yarn run build
-  build-prod:
-    docker:
-      - image: circleci/node:10-browsers
-    resource_class: xlarge
-    parallelism: 13
-    steps:
-      - checkout
-      - run: yarn install
-    #      - run: yarn run e2e-ci
-      - run:
-          command: |
-            (cd apps; ls -d *) | circleci tests split | xargs -n 1 -I {} yarn build:{}:prod
 workflows:
   build_and_deploy:
     jobs:
-      - lint:
-          filters:
-            tags:
-              # this enables circleci to trigger on tags
-              only: /.*/
       - test:
           filters:
             tags:
@@ -363,11 +336,6 @@ workflows:
       #       tags:
       #         # this enables circleci to trigger on tags
       #         only: /.*/
-      - build-prod:
-          filters:
-            tags:
-              # this enables circleci to trigger on tags
-              only: /.*/
       - build_docker_image:
           filters:
             tags:
@@ -441,8 +409,6 @@ workflows:
             - build_docker_image
             # - build
             - test
-            - lint
-            - build-prod
           filters:
             # need to sepcify this otherwise the job will run even if there's no tag
             branches:
