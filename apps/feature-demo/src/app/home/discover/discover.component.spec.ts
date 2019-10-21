@@ -9,7 +9,15 @@ import { CampaignsComponent } from '../campaigns/campaigns.component';
 import { MatCardModule, MatIconModule, MatDialogModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-import { GameModule, RewardsService, ICampaignService, FeedReaderService, IGameService, RewardsModule } from '@perx/core';
+import {
+  GameModule,
+  RewardsService,
+  ICampaignService,
+  FeedReaderService,
+  IGameService,
+  RewardsModule,
+  IProfile, ProfileModule as PerxProfileModule, LoyaltyModule as PerxLoyaltyModule, LoyaltyService, ProfileService
+} from '@perx/core';
 import { of } from 'rxjs';
 import { rewards } from 'src/app/rewards.mock';
 import { catalogs } from 'src/app/catalogs.mock';
@@ -38,6 +46,19 @@ describe('DiscoverComponent', () => {
     getGamesFromCampaign: () => of()
   };
 
+  const loyaltyServiceStub = {
+    getLoyalties: () => of([])
+  };
+  const mockProfile: IProfile = {
+    id: 1,
+    state: 'active',
+    firstName: '',
+    lastName: ''
+  };
+  const profileServiceStub = {
+    whoAmI: () => of(mockProfile)
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -56,14 +77,18 @@ describe('DiscoverComponent', () => {
         NgxMultiLineEllipsisModule,
         ScrollingModule,
         GameModule,
-        RewardsModule
+        RewardsModule,
+        PerxProfileModule,
+        PerxLoyaltyModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
         { provide: Router, useValue: routerStub },
-        { provide: IGameService, useValue: gameServiceStub }
+        { provide: IGameService, useValue: gameServiceStub },
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: ProfileService, useValue: profileServiceStub }
       ]
     })
       .compileComponents();
