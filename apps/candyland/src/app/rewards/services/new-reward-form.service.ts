@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.interface';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class NewRewardFormService {
     return this.fb.group({
       name: ['', [Validators.required]],
       rewardInfo: this.fb.group({
-        image: [null, [Validators.required]],
+        image: ['http://www.transparentpng.com/thumb/free-images/-badge-icon-free-commerce-icons-10.png', [Validators.required]],
         rewardType: this.fb.control(null, [Validators.required]),
         category: this.fb.control(null, [Validators.required]),
         redemptionType: [],
@@ -136,5 +136,32 @@ export class NewRewardFormService {
         }
       }
     };
+  }
+
+  public getRewardLoyaltyForm(): FormArray {
+    return new FormArray([]);
+  }
+
+  public getLoyaltyFormGroup(): FormGroup {
+    return new FormGroup({
+      programId: new FormControl(null),
+      costReward: new FormControl(15, [Validators.min(1)]),
+      tiers: new FormArray([])
+    });
+  }
+
+  // public getRewardLoyaltyGroup(): FormGroup {
+  //   return new FormGroup({
+  //     costReward: new FormControl(null, [Validators.min(1)]),
+  //     tiers: new FormArray([])
+  //   });
+  // }
+
+  public getRewardLoyaltyTiersGroup(): FormGroup {
+    return new FormGroup({
+      name: new FormControl(null),
+      statusTiers: new FormControl(null),
+      statusDiscount: new FormControl(null)
+    });
   }
 }

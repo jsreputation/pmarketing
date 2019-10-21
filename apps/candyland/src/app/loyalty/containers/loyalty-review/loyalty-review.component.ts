@@ -46,6 +46,7 @@ export class LoyaltyReviewComponent implements OnInit, OnDestroy {
     ).subscribe(data => {
         if (data) {
           this.loyalty = data;
+          console.log(this.loyalty);
         } else {
           this.router.navigateByUrl('/loyalty');
         }

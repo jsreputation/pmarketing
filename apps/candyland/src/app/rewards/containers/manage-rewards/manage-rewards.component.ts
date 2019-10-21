@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormArray, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { untilDestroyed } from 'ngx-take-until-destroy';
@@ -9,6 +9,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { NewRewardFormService } from '../../services/new-reward-form.service';
 import { CreateMerchantPopupComponent, SelectMerchantPopupComponent, ToggleControlService } from '@cl-shared';
 import { Merchant } from '@cl-core/http-adapters/merchant';
+import { LoyaltyService } from '@cl-core/services/loyalty.service';
 
 @Component({
   selector: 'cl-manage-rewards',
@@ -21,6 +22,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public config: OptionConfig[];
   public selectedMerchant: Merchant;
+  public loyalties: any;
+  public rewardLoyaltyForm: FormArray;
 
   constructor(
     public cd: ChangeDetectorRef,
@@ -30,7 +33,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     private rewardsService: RewardsService,
     private merchantsService: MerchantsService,
     private newRewardFormService: NewRewardFormService,
-    private toggleControlService: ToggleControlService
+    private toggleControlService: ToggleControlService,
+    private loyaltyService: LoyaltyService,
   ) {
   }
 
@@ -43,6 +47,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       this.form.patchValue(this.newRewardFormService.getDefaultValue());
     }
     this.handleRouteParams();
+    this.getLoyalties();
   }
 
   public ngOnDestroy(): void {
@@ -62,9 +67,9 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     const form: IRewardEntityForm = this.form.value;
     form.rewardInfo.organizationId = this.selectedMerchant && this.selectedMerchant !== null ? this.selectedMerchant.id : null;
     if (this.id) {
-      request = this.rewardsService.updateReward(this.id, form);
+      request = this.rewardsService.updateReward(this.id, form, this.rewardLoyaltyForm.value);
     } else {
-      request = this.rewardsService.createReward(form);
+      request = this.rewardsService.createReward(form, this.rewardLoyaltyForm.value);
     }
     request.subscribe(
       res => {
@@ -176,6 +181,52 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     } else {
       this.id = null;
       this.form.patchValue(this.newRewardFormService.getDefaultValue());
+    }
+  }
+
+  private getLoyalties(): void {
+    const params: any = {
+      'page[number]': 1,
+      'page[size]': 20
+    };
+    this.loyaltyService.getLoyalties(params)
+      .subscribe(((loyalties) => {
+        console.log('data in the component', loyalties);
+
+        this.rewardLoyaltyForm = this.newRewardFormService.getRewardLoyaltyForm();
+        loyalties.data.forEach((loyalty) => {
+          const loyaltyFormGroup = this.newRewardFormService.getLoyaltyFormGroup();
+          console.log(loyalty);
+
+          // handler of custom tears
+          this.setCustomTiers(loyalty, loyaltyFormGroup);
+
+          loyaltyFormGroup.patchValue({
+            programId: loyalty.id,
+          });
+
+          this.rewardLoyaltyForm.push(loyaltyFormGroup);
+        });
+
+        console.log('form value', this.rewardLoyaltyForm.value);
+
+        this.loyalties = loyalties.data;
+        this.cd.detectChanges();
+      }));
+  }
+
+  private setCustomTiers(loyalty: any, loyaltyFormGroup: FormGroup): void {
+    // handler of custom tears
+    if (loyalty.customTiers) {
+      loyalty.customTiers.forEach((item: any) => {
+        const loyaltyTiersGroup =
+          this.newRewardFormService.getRewardLoyaltyTiersGroup();
+        loyaltyTiersGroup.patchValue({
+          name: item.name,
+        });
+        (loyaltyFormGroup.get('tiers') as FormArray)
+          .push(loyaltyTiersGroup);
+      });
     }
   }
 }

@@ -30,10 +30,10 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private handle401(err: any): Observable<any> {
-    if (err instanceof HttpErrorResponse && err.status === 401) {
-      this.authService.logout();
-      return throwError('error 401');
-    }
-    return throwError(err);
+    // if (err instanceof HttpErrorResponse && err.status === 401) {
+    //   this.authService.logout();
+    //   return throwError('error 401');
+    // }
+    // return throwError(err);
   }
 }

@@ -49,8 +49,8 @@ export class RewardsService implements ITableService {
     );
   }
 
-  public createReward(data: IRewardEntityForm): Observable<IResponseApi<IRewardEntityApi>> {
-    const sendData: IRewardEntityApi = RewardHttpAdapter.transformFromRewardForm(data);
+  public createReward(data: IRewardEntityForm, loyalties?: any): Observable<IResponseApi<IRewardEntityApi>> {
+    const sendData: IRewardEntityApi = RewardHttpAdapter.transformFromRewardForm(data, loyalties);
     return this.rewardHttp.createReward({data: sendData});
   }
 
@@ -59,8 +59,8 @@ export class RewardsService implements ITableService {
     return this.rewardHttp.createReward({data: sendData});
   }
 
-  public updateReward(id: string, data: IRewardEntityForm): Observable<IResponseApi<IRewardEntityApi>> {
-    const sendData: IRewardEntityApi = RewardHttpAdapter.transformFromRewardForm(data);
+  public updateReward(id: string, data: IRewardEntityForm, loyalties?: any): Observable<IResponseApi<IRewardEntityApi>> {
+    const sendData: IRewardEntityApi = RewardHttpAdapter.transformFromRewardForm(data, loyalties);
     sendData.id = id;
     return this.rewardHttp.updateReward(id, {data: sendData});
   }

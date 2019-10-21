@@ -95,7 +95,7 @@ export class RewardHttpAdapter {
     };
   };
 
-  public static transformFromRewardForm(data: IRewardEntityForm): IRewardEntityApi {
+  public static transformFromRewardForm(data: IRewardEntityForm, loyalties?: any): IRewardEntityApi {
     const result = {
       type: 'entities',
       attributes: {
@@ -111,9 +111,10 @@ export class RewardHttpAdapter {
         display_properties: {
           voucher_properties: {
             ...RewardHttpAdapter.getVoucherProperties(data),
-            validity: {
-              type: data.vouchers.voucherValidity.type
-            }
+            loyalties: loyalties,
+          },
+          validity: {
+            type: data.vouchers.voucherValidity.type
           }
         }
       }
