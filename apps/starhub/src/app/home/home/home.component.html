@@ -1,13 +1,10 @@
 <div class="app">
-  <!-- <mat-toolbar  [ngStyle]="{'top': top+'px'}"> -->
-   
-  <mat-toolbar [@optionalDisplay]="{ value: value, params: { pixels: '-300px'}}">
+  <mat-toolbar>
     <mat-toolbar-row class="top-row">
       <a class="badge" href="https://www.starhub.com/personal/rewards/membership.html" target="_blank">
         <img *ngIf="loyalty" [src]="getBadge(loyalty.membershipTierName)" [alt]="loyalty.membershipTierName">
       </a>
       <div class="reward">
-          <button (click)="value = value === 'on' ?  'off': 'on'">click</button>
         <h2>Explore your rewards,</h2>
         <span class="tier" *ngIf="loyalty">{{loyalty.membershipTierName | noRenewaleInName | titlecase}} Member!</span>
         <div>
