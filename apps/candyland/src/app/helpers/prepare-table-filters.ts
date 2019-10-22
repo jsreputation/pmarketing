@@ -72,7 +72,10 @@ export class PrepareTableFilters {
       return Object.keys(filters)
         .filter((key) => !!filters[key])
         .every((key) => {
-          if (item === undefined || item[key] as string) {
+          if (item === undefined) {
+            return false;
+          }
+          if (item[key] as string) {
             return item[key].toLocaleLowerCase().includes(filters[key].toLocaleLowerCase());
           }
           // if ('begin' in filters[key] && 'end' in filters[key]) {

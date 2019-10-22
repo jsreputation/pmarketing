@@ -11,12 +11,15 @@ import {
   forkJoin,
   of,
   Subject,
+  combineLatest,
+  Subscriber,
 } from 'rxjs';
 import {
   tap,
   takeUntil,
   map,
-  scan,
+  mergeMap,
+  retry,
 } from 'rxjs/operators';
 
 import {
@@ -25,6 +28,9 @@ import {
   RewardsService,
   IReward,
   ITabConfigExtended,
+  IGameService,
+  IGame,
+  CampaignType,
 } from '@perx/core';
 
 const stubTabs: ITabConfigExtended[] = [
@@ -92,69 +98,56 @@ const stubTabs: ITabConfigExtended[] = [
   },
 ];
 
-const CAMPAIGN_CHUNK_SIZE = 2;
-
 @Component({
   selector: 'perx-blackcomb-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  private destroy$: Subject<any> = new Subject();
-  private campaign: BehaviorSubject<ICampaign[]> = new BehaviorSubject<ICampaign[]>([]);
-  private dataCampaigns: ICampaign[] = null;
-  private chunkCampaignsId: number = 0;
-  private chunkCampaigns: any[] = null;
+  private destroy$: Subject<void> = new Subject();
 
-  public originCampaign$: Observable<ICampaign[]>;
-  public campaign$: Observable<ICampaign[]>;
   public rewards$: Observable<IReward[]>;
+  public games$: Observable<IGame[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
 
-  public get chunkCampaignsEnded(): boolean {
-    return this.chunkCampaigns ? this.chunkCampaignsId >= this.chunkCampaigns.length : false;
-  }
-
-  private downloadCampaigns(): void {
-    this.originCampaign$ = forkJoin(this.campaingService.getCampaigns())
-      .pipe(
-        map((arrCampaigns: ICampaign[][]) => arrCampaigns[0])
-      );
-    this.originCampaign$.subscribe((campaigns: ICampaign[]) => {
-      this.dataCampaigns = campaigns;
-      this.chunkCampaigns = this.chunkArr(this.dataCampaigns, CAMPAIGN_CHUNK_SIZE);
-      this.nextCampaigns();
+  private initCampaign(): void {
+    this.games$ = new Observable((subject: Subscriber<IGame[]>) => {
+      const gameByCid: { [cid: number]: IGame } = {};
+      this.campaingService.getCampaigns()
+        .pipe(
+          map((cs: ICampaign[]) => cs.filter(c => c.type === CampaignType.game)),
+          map((cs: ICampaign[]) => cs.filter(c => gameByCid[c.id] === undefined)),
+          mergeMap((arrOfCampaigns: ICampaign[]) => {
+            let gameIds = arrOfCampaigns.map(c => c.engagementId);
+            gameIds = gameIds.filter((item, index) => gameIds.indexOf(item) === index);
+            return combineLatest(
+              ...gameIds.map(id => this.gamesService.get(id)
+                .pipe(
+                  retry(1),
+                  tap((g: IGame) => {
+                    const matchingCampaigns = arrOfCampaigns.filter(c => c.engagementId === g.id);
+                    matchingCampaigns.forEach(c => gameByCid[c.id] = g);
+                    subject.next(Object.values(gameByCid).sort((a, b) => a.campaignId - b.campaignId));
+                  })
+                ))
+            );
+          })
+          // complete the observable once all have been completed
+        ).subscribe(() => subject.complete());
     });
-  }
-
-  private chunkArr(array: any, size: number): any {
-    const chunkedArr = [];
-    let index = 0;
-    while (index < array.length) {
-      chunkedArr.push(array.slice(index, size + index));
-      index += size;
-    }
-    return chunkedArr;
-  }
-
-  private initCampaign$(): void {
-    this.campaign$ = this.campaign.asObservable().pipe(
-      scan((acc, curr) => [...acc, ...curr ? curr : []]
-      , [])
-    );
   }
 
   constructor(
     private campaingService: ICampaignService,
     private rewardsService: RewardsService,
+    private gamesService: IGameService,
     private router: Router
   ) {
-    this.initCampaign$();
   }
 
   public ngOnInit(): void {
-    this.downloadCampaigns();
+    this.initCampaign();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.staticTab = stubTabs;
     this.getTabedList();
@@ -183,14 +176,5 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public goToReward(reward: IReward): void {
     this.router.navigate([`/reward-detail/${reward.id}`]);
-  }
-
-  public nextCampaigns(): void {
-    if (this.chunkCampaignsEnded) {
-      return;
-    }
-
-    this.campaign.next(this.chunkCampaigns[this.chunkCampaignsId]);
-    ++this.chunkCampaignsId;
   }
 }

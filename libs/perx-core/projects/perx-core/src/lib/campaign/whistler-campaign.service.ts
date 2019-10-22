@@ -47,6 +47,7 @@ export class WhistlerCampaignService implements ICampaignService {
       type: WhistlerCampaignService.WhistlerTypeToType(cAttributes.engagement_type),
       state: cAttributes.status,
       endsAt: new Date(cAttributes.end_date_time),
+      engagementId: cAttributes.engagement_id,
       rawPayload: cAttributes
     };
   }

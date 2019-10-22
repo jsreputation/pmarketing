@@ -1,0 +1,115 @@
+<aside class="dialog loyalty" role="dialog" aria-labelledby="dialogTitle-tierSetup">
+  <header class="dialog-header-wrap">
+    <h2 class="dialog-title" id="dialogTitle-tierSetup">Tier Setup</h2>
+    <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+  <div class="dialog-content" [formGroup]="form">
+    <mat-form-field class="loyalty-name-input">
+      <input type="text" matInput formControlName="name" placeholder="Tier's name">
+      <mat-error *ngIf="name.hasError('required') && name.touched">Required field</mat-error>
+      <mat-error *ngIf="name.hasError('minlength') && name.touched">Min length 1</mat-error>
+      <mat-error *ngIf="name.hasError('maxlength') && name.touched">Max length 60</mat-error>
+    </mat-form-field>
+
+    <label class="loyalty-label">Qualification Criteria</label>
+    <ng-container formGroupName="joinMethod">
+      <div class="loyalty-row input-group">
+        <mat-checkbox color="primary" formControlName="pointsThreshold">Points Threshold</mat-checkbox>
+        <mat-form-field class="loyalty-points-input">
+          <input matInput type="number" formControlName="points">
+          <mat-error *ngIf="points.hasError('required') && points.touched">Required field</mat-error>
+          <mat-error *ngIf="points.hasError('min') && points.touched">Min value 1</mat-error>
+        </mat-form-field>
+        <span>Points</span>
+      </div>
+      <div class="loyalty-row">
+        <mat-checkbox color="primary" formControlName="inviteOnly">Invite-only</mat-checkbox>
+      </div>
+      <mat-error *ngIf="joinMethod.hasError('requiredGroup')">
+        At least one option must be selected.
+      </mat-error>
+    </ng-container>
+
+    <label class="loyalty-label">Tier Image</label>
+    <div class="loyalty-row loyalty-row-uploader">
+      <cl-upload-graphic [isRequired]="imageUrl.hasError('required') && imageUrl.touched"
+                         formControlName="imageUrl"
+                         [btnLabel]="'Upload photo'"
+      ></cl-upload-graphic>
+    </div>
+
+    <label class="loyalty-label">Accelerated Earn for Tier</label>
+    <div class="loyalty-row input-group">
+      <span>Users in this tier will earn</span>
+      <mat-form-field floatLabel="never">
+        <input type="number" [min]="1" [max]="100" [step]="0" matInput formControlName="earnBonus">
+        <mat-error *ngIf="earnBonus.hasError('required') && earnBonus.touched">Required field</mat-error>
+        <mat-error *ngIf="earnBonus.hasError('min') && earnBonus.touched">Min value 1</mat-error>
+        <mat-error *ngIf="earnBonus.hasError('max') && earnBonus.touched">Max value 100</mat-error>
+      </mat-form-field>
+      <span>% more points.</span>
+    </div>
+
+    <label class="loyalty-label">Accelerated Burn Rule</label>
+    <div class="loyalty-row input-group">
+      <span>Users in this tier get a discount of</span>
+      <mat-form-field floatLabel="never">
+        <input type="number" [min]="0" [max]="100" matInput formControlName="burnDiscount">
+        <mat-error *ngIf="burnDiscount.hasError('required') && burnDiscount.touched">Required field</mat-error>
+        <mat-error *ngIf="burnDiscount.hasError('min') && burnDiscount.touched">Min value 1</mat-error>
+        <mat-error *ngIf="burnDiscount.hasError('max') && burnDiscount.touched">Max value 100</mat-error>
+      </mat-form-field>
+      <span>% when spending points for rewards.</span>
+    </div>
+
+    <label class="loyalty-label">Points Expiry</label>
+    <ng-container formGroupName="pointsExpiry">
+      <div>
+        <div class="loyalty-row input-group">
+          <span>Points expire</span>
+          <mat-form-field floatLabel="never">
+            <input type="number" [min]="1" matInput formControlName="amount">
+            <mat-error *ngIf="amount.hasError('required') && amount.touched">Required field</mat-error>
+            <mat-error *ngIf="amount.hasError('min') && amount.touched">Min value 1</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select formControlName="type">
+              <mat-option value="day">Day</mat-option>
+              <mat-option value="week">Week</mat-option>
+              <mat-option value="month">Month</mat-option>
+              <mat-option value="year">Year</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="loyalty-points-expiry-type-input">
+            <mat-select formControlName="trigger">
+              <mat-option value="accrual">from when the point was earned.</mat-option>
+              <mat-option value="inactivity">from user inactivity.</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <footer class="dialog-actions">
+    <cl-button classList="tertiary"
+               class="actions-close"
+               (click)="close()"
+               [disableRipple]="true">
+        <span>
+          Cancel
+        </span>
+    </cl-button>
+
+    <cl-button classList="primary"
+               (click)="apply()">
+        <span>
+         {{data?.tier ? 'Apply' : 'Save'}}
+        </span>
+    </cl-button>
+  </footer>
+</aside>
+
+

@@ -4,7 +4,8 @@
 </header>
 
 <section class="content">
-  <ng-container *ngIf="dataSource.hasData">
+  <ng-container [ngSwitch]="dataSource.state$ | async">
+  <ng-container *ngSwitchCase="dataSourceStates.hasDataApi">
     <!--    filters-->
     <cl-table-filters [dataSource]="dataSource">
       <ng-container *clTableFilter="'name'; let filter">
@@ -50,7 +51,7 @@
     </div>
   </ng-container>
 
-  <cl-no-data *ngIf="(dataSource.data).length === 0">
+  <cl-no-data *ngSwitchCase="dataSourceStates.noDataApi">
     <img class="no-data-img" src="/assets/images/no-data/campaign-empty-illustration.svg" alt="">
     <h2 class="no-data-title">
       Engaging with your customers is easy!
@@ -59,4 +60,5 @@
       Let&rsquo;s begin by creating your first campaign
     </p>
   </cl-no-data>
+  </ng-container>
 </section>

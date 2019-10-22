@@ -1,7 +1,7 @@
 Feature: 18_Functionality flow for adding audience.
 
 This will be the test flow for all the features for creation of audience.
-@runThis
+
 Scenario: Ensure functionality of the add user button.
   Given 4_I am on the audience page.
   When  4_I click on the add user button.
