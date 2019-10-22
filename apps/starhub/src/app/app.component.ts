@@ -123,6 +123,9 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
 
         this.token = this.authenticationService.getUserAccessToken();
         this.data.perxID = this.token;
+        if (typeof _satellite === 'undefined') {
+          return;
+        }
         _satellite.track('msa-rewards-virtual-page');
       }
     );

@@ -11,7 +11,7 @@ import { MatToolbar } from '@angular/material';
 })
 
 export class HomeComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatToolbar, { static: false}) 
+  @ViewChild(MatToolbar, { static: false })
   private toolBar: MatToolbar;
   public top: number = 0;
   public lastOffset: number = 0;
@@ -52,9 +52,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.scollService.scrolled().subscribe((data: CdkScrollable) => this.onWindowScroll(data));
   }
 
-  private onWindowScroll(data: CdkScrollable) {
+  private onWindowScroll(data: CdkScrollable): void {
     const scrollTop = data.getElementRef().nativeElement.scrollTop || 0;
-    requestAnimationFrame(()=>{
+    requestAnimationFrame(() => {
       const delta = this.lastOffset - scrollTop;
       if (this.top + delta <= 0 && this.top + delta >= -170) {
         this.top = this.top + delta;
@@ -65,6 +65,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       }
       this.lastOffset = scrollTop;
       this.toolBar._elementRef.nativeElement.style.transform = `translateY(${this.top}px)`;
-    })
+    });
   }
 }
