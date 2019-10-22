@@ -1,0 +1,63 @@
+<mat-expansion-panel class="card" expanded>
+  <mat-expansion-panel-header class="card-header">
+    <h2 class="card-title">
+      Tiers
+    </h2>
+  </mat-expansion-panel-header>
+  <div class="card-content">
+    <div class="table-wrap">
+      <table class="table" mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="name" sticky>
+          <th mat-header-cell *matHeaderCellDef class="column-featured">Name</th>
+          <td mat-cell *matCellDef="let element" class="column-featured">
+            <div class="name-cell">
+              {{element?.name}}
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="joinMethod">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="joinMethod" class="column-status">Qualification</th>
+          <td mat-cell *matCellDef="let element" class="column-status">
+            {{element.joinMethod | JoinMethod}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="earnBonus">
+          <th mat-header-cell *matHeaderCellDef>Earn Bonus</th>
+          <td mat-cell *matCellDef="let element"> {{element?.earnBonus}}%</td>
+        </ng-container>
+
+        <ng-container matColumnDef="burnDiscount">
+          <th mat-header-cell *matHeaderCellDef>Burn Discount</th>
+          <td mat-cell *matCellDef="let element"> {{element?.burnDiscount}}%</td>
+        </ng-container>
+
+        <ng-container matColumnDef="pointsExpiry">
+          <th mat-header-cell *matHeaderCellDef>Points Expiry</th>
+          <td mat-cell *matCellDef="let element"> {{element?.pointsExpiry?.amount}} {{element?.pointsExpiry?.type}} from
+            {{'earning'}}
+          </td>
+        </ng-container>
+
+          <ng-container matColumnDef="actions" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef class="column-menu"></th>
+            <td mat-cell *matCellDef="let element" class="column-menu">
+              <button mat-icon-button [matMenuTriggerFor]="itemMenu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #itemMenu="matMenu">
+                <button mat-menu-item (click)="editItem(element)">Edit</button>
+                <!--              <button mat-menu-item (click)="duplicateItem(element?.id)">Duplicate</button>-->
+                <button mat-menu-item (click)="deleteItem(element)">Delete</button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsWithEdit"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsWithEdit;"></tr>
+      </table>
+      <cl-button *ngIf="editable" classList="tertiary ph-0" (click)="createTier()">+ Create New Tier</cl-button>
+    </div>
+  </div>
+</mat-expansion-panel>
