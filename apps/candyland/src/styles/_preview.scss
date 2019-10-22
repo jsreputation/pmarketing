@@ -72,7 +72,8 @@
   &-preview-header {
     text-align: center;
     position: absolute;
-    top: 14rem;
+    top: 3rem;
+    //top: 14rem;
     left: 50%;
     z-index: 5;
     transform: translateX(-50%);
@@ -80,12 +81,14 @@
   }
 
   &-preview-headline {
+    font-family: $primary-font;
     @include typo-subtitle1-alt;
 
     color: #091816;
   }
 
   &-preview-sub-headline {
+    font-family: $primary-font;
     @include typo-body2;
 
     margin-top: 0.8rem;
@@ -95,7 +98,8 @@
   &-preview-btn-wrap {
     position: absolute;
     left: 3px;
-    bottom: 90px;
+    //bottom: 90px;
+    bottom: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -120,7 +124,6 @@
     width: 24.1rem;
     height: 45.7rem;
     display: block;
-    margin: 0 auto;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -144,8 +147,10 @@
 
   &-preview-plugin {
     position: absolute;
-    top: 19rem;
-    left: 5.4rem;
+    //top: 19rem;
+    //left: 5.4rem;
+    top: 5rem;
+    left: 0;
     width: 24.1rem;
     height: 32rem;
     display: block;
@@ -157,7 +162,8 @@
     position: absolute;
     padding: 1.6rem;
     box-sizing: border-box;
-    top: 13rem;
+    //top: 13rem;
+    top: 5rem;
     left: 50%;
     transform: translateX(-49%);
     transform-origin: top center;
