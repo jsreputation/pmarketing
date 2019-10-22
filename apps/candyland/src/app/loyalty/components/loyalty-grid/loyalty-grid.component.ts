@@ -9,9 +9,7 @@ import { CustomDataSource } from '@cl-shared/table';
 })
 export class LoyaltyGridComponent {
   @Input() public dataSource: CustomDataSource<any>;
-
   @Input() public menuOptions: IEngagementItemMenuOption[] = [];
-
   @Output() public menuTapped: EventEmitter<{ loyalty: ILoyaltyForm, action: string }> = new EventEmitter();
 
   /**

@@ -2,9 +2,9 @@ import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { LoyaltyFormsService } from 'src/app/loyalty/services/loyalty-forms.service';
 import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
 import { Subject } from 'rxjs';
+import { LoyaltyCustomTierFormsService } from '../../services/loyalty-custom-tier-forms.service';
 
 @Component({
   selector: 'cl-tier-setup-popup',
@@ -17,7 +17,7 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
   protected destroy$: Subject<void> = new Subject();
 
   constructor(public dialogRef: MatDialogRef<TierSetupPopupComponent>,
-              private loyaltyFormsService: LoyaltyFormsService,
+              private customTierFormsService: LoyaltyCustomTierFormsService,
               private customTierService: LoyaltyCustomTierService,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
@@ -84,11 +84,11 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
   }
 
   private initForm(): void {
-    this.form = this.loyaltyFormsService.getTireForm();
+    this.form = this.customTierFormsService.getTireForm();
   }
 
   private fillForm(): void {
-    const pathValue = this.data.tier || this.loyaltyFormsService.getDefaultValueTireForm();
+    const pathValue = this.data.tier || this.customTierFormsService.getDefaultValueTireForm();
     this.form.patchValue(pathValue);
   }
 

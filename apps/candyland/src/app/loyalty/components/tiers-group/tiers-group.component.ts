@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { CustomDataSource } from '@cl-shared/table';
+import { LoyaltyPointsExpireTrigger } from '../../models/loyalty-points-expire-trigger.enum';
 
 @Component({
   selector: 'cl-tiers-group',
@@ -8,11 +9,12 @@ import { CustomDataSource } from '@cl-shared/table';
   styleUrls: ['./tiers-group.component.scss']
 })
 export class TiersGroupComponent {
-
   @Input() public editable: boolean = false;
   @Input() public dataSource: CustomDataSource<any>;
   @Input() public displayedColumns: string[] = ['name', 'joinMethod', 'earnBonus', 'burnDiscount', 'pointsExpiry'];
   @Output() public tiersAction: EventEmitter<{ action: NewLoyaltyActions, data?: any }> = new EventEmitter();
+
+  public pointsExpireTrigger: typeof LoyaltyPointsExpireTrigger = LoyaltyPointsExpireTrigger;
 
   public get displayedColumnsWithEdit(): string[] {
     if (this.editable) {

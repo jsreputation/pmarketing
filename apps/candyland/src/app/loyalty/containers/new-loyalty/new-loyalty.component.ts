@@ -15,6 +15,7 @@ import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CustomDataSource } from '@cl-shared/table';
 import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
+import Utils from '@cl-helpers/utils';
 
 @Component({
   selector: 'cl-new-loyalty',
@@ -33,6 +34,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   public pools: any;
   public isEditPage: boolean = false;
   public showDraftButton: boolean = true;
+  public prevFormValue: ILoyaltyForm;
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
   protected destroy$: Subject<void> = new Subject();
@@ -50,7 +52,15 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.initPools();
     this.initForm();
-    this.handleRouteParams();
+    this.initCustomTiersDataSource();
+    this.handleRouteParams().subscribe((loyalty: ILoyaltyForm) => {
+        this.initLoyaltyData(loyalty);
+      },
+      (error: Error) => {
+        console.warn(error.message);
+        this.router.navigateByUrl('/loyalty');
+      }
+    );
   }
 
   public ngOnDestroy(): void {
@@ -103,14 +113,23 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   private setBasicTierId(basicTierId: string): void {
-    this.basicTierId = basicTierId;
-    this.initCustomTiersDataSource();
-    this.setBasicTierIdToCustomTiersDataSourceFilter(this.loyaltyId);
+    if (basicTierId && basicTierId !== this.basicTierId) {
+      this.basicTierId = basicTierId;
+      this.setBasicTierIdToCustomTiersDataSourceFilter(this.loyaltyId);
+    }
   }
 
   public goNext(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      return;
+    }
+
+    if (this.isChangedFormValue()) {
+      // complete the current step
+      this.stepper.selected.completed = true;
+      // move to next step
+      this.stepper.next();
       return;
     }
 
@@ -129,6 +148,11 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (this.isChangedFormValue()) {
+      this.navigateToList();
+      return;
+    }
+
     this.getLoyaltyWithBasicTierRequest()
       .subscribe(() => {
         this.navigateToList();
@@ -143,11 +167,14 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   public cancel(): void {
-    if (this.loyaltyId) {
-      this.loyaltyService.deleteLoyalty(this.loyaltyId).subscribe(() => this.navigateToList());
+    if (!this.loyaltyId) {
+      this.navigateToList();
       return;
     }
-    this.navigateToList();
+
+    this.loyaltyService.deleteLoyalty(this.loyaltyId)
+      .subscribe(() => this.navigateToList());
+
   }
 
   public navigateToList(): void {
@@ -172,6 +199,20 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
 
   public get isLastStep(): boolean {
     return this.stepper && this.stepper.selectedIndex === this.stepper._steps.length - 1;
+  }
+
+  public handleLoyaltyActions(data: { action: NewLoyaltyActions, data?: any }): void {
+    switch (data.action) {
+      case NewLoyaltyActions.createTier:
+        this.createCustomTire();
+        break;
+      case NewLoyaltyActions.editTier:
+        this.editCustomTire(data.data);
+        break;
+      case NewLoyaltyActions.deleteTier:
+        this.deleteCustomTier(data.data.id);
+        break;
+    }
   }
 
   private initForm(): void {
@@ -224,20 +265,6 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   //   });
   // }
 
-  public handleLoyaltyActions(data: { action: NewLoyaltyActions, data?: any }): void {
-    switch (data.action) {
-      case NewLoyaltyActions.createTier:
-        this.createCustomTire();
-        break;
-      case NewLoyaltyActions.editTier:
-        this.editCustomTire(data.data);
-        break;
-      case NewLoyaltyActions.deleteTier:
-        this.deleteCustomTier(data.data.id);
-        break;
-    }
-  }
-
   private initCustomTiersDataSource(): void {
     if (!this.customTierDataSource) {
       this.customTierDataSource = new CustomDataSource<any>(this.customTierService);
@@ -248,40 +275,43 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
     this.customTierDataSource.filter = {program_id: basicTierId};
   }
 
-  private handleRouteParams(): void {
-    this.route.paramMap.pipe(
-      takeUntil(this.destroy$),
-      map((params: ParamMap) => params.get('id')),
-      tap(id => {
-        this.isEditPage = !!id;
-        this.loyaltyId = id;
-      }),
-      switchMap(id => {
-        if (id) {
-          return this.loyaltyService.getLoyalty(id);
-        }
-        return of(null);
-      }),
-    ).subscribe(data => {
-        if (data) {
-          this.showDraftButton = data.status === 'draft';
-          this.basicTierId = data.basicTierId || null;
-          if (this.basicTierId) {
-            this.setBasicTierId(this.basicTierId);
+  private handleRouteParams(): Observable<ILoyaltyForm | null> {
+    return this.route.paramMap
+      .pipe(
+        takeUntil(this.destroy$),
+        map((params: ParamMap) => params.get('id')),
+        switchMap(id => {
+          if (id) {
+            return this.loyaltyService.getLoyalty(id);
           }
-          this.form.patchValue(data);
-        } else {
-          this.form.patchValue(this.getDefaultValue());
-        }
-      },
-      (error: Error) => {
-        console.warn(error.message);
-        this.router.navigateByUrl('/loyalty');
-      }
-    );
+          return of(null);
+        }),
+      );
+  }
+
+  private initLoyaltyData(loyalty: ILoyaltyForm): void {
+    if (loyalty) {
+      this.loyaltyId = loyalty.id;
+      this.setBasicTierId(loyalty.basicTierId || null);
+      this.prevFormValue = loyalty;
+    }
+    this.showDraftButton = !loyalty || loyalty.status === 'draft';
+    this.isEditPage = !!this.loyaltyId;
+    const patchData = loyalty || this.getDefaultValue();
+    this.form.patchValue(patchData);
   }
 
   private getDefaultValue(): any {
     return this.loyaltyFormsService.getDefaultValueForm();
+  }
+
+  private isChangedFormValue(): boolean {
+    const isEqual = Utils.isEqual(this.form.value, this.prevFormValue);
+    console.log('equsal', this.form.value, this.prevFormValue, isEqual);
+    if (isEqual) {
+      return true;
+    }
+    this.prevFormValue = this.form.value;
+    return false;
   }
 }

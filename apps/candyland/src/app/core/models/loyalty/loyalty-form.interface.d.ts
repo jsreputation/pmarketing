@@ -1,6 +1,7 @@
 declare interface ILoyaltyForm {
   id?: string;
   customTiersCount?: number;
+  basicTierId?: string;
   name: string;
   createdAt: string;
   status?: string;
