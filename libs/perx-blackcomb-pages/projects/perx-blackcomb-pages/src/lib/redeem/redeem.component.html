@@ -17,8 +17,11 @@
     <div *ngIf="redemptionType === rt.txtCode || redemptionType === rt.offline">
       <perx-core-bcode-redemption [voucherId]="voucherId"></perx-core-bcode-redemption>
     </div>
-    <div *ngIf="redemptionType === rt.qr" class="qrcode-container">
+    <div *ngIf="redemptionType === rt.qr" class="code-container">
       <perx-core-qrcode-redemption [voucherId]="voucherId"></perx-core-qrcode-redemption>
+      <div class="action ">
+        <button mat-button color="default" (click)="goBack()">Cancel</button>
+      </div>
     </div>
   </div>
 </div>
