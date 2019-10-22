@@ -10,21 +10,6 @@
   <div class="games">
     <div class="title">Games</div>
     <perx-blackcomb-games-collection [games]="games$"></perx-blackcomb-games-collection>
-    <button
-      mat-flat-button
-      class="add-more"
-      *ngIf="!showAllGames"
-      (click)="showAllGames = !showAllGames"
-    >
-      See more
-    </button>
-    <button *ngIf="showAllGames"
-    (click)="showAllGames = !showAllGames"
-      mat-flat-button
-      class="see-less"
-    >
-      See Less
-    </button>
   </div>
   <div class="rewards-collection" *ngIf="(rewards$ | async)?.length > 0">
     <div class="title">Featured Rewards</div>

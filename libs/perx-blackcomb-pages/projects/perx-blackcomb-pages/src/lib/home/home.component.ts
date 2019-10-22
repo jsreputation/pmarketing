@@ -110,22 +110,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   public games$: Observable<IGame[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
-  public showAllGames: boolean = false;
 
   private initCampaign(): void {
     this.games$ = new Observable((subject: Subscriber<IGame[]>) => {
-      console.log('getting games...');
       const gameByCid: { [cid: number]: IGame } = {};
-      // const loadingGameIds: { [gid: number]: boolean } = {};
       this.campaingService.getCampaigns()
         .pipe(
           map((cs: ICampaign[]) => cs.filter(c => c.type === CampaignType.game)),
           map((cs: ICampaign[]) => cs.filter(c => gameByCid[c.id] === undefined)),
-          tap((stuff) => console.log(stuff)),
           mergeMap((arrOfCampaigns: ICampaign[]) => {
             let gameIds = arrOfCampaigns.map(c => c.engagementId);
             gameIds = gameIds.filter((item, index) => gameIds.indexOf(item) === index);
-            // arrOfCampaigns.forEach(c => loadingGameIds[c.engagementId] = true);
             return combineLatest(
               ...gameIds.map(id => this.gamesService.get(id)
                 .pipe(
@@ -138,9 +133,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                 ))
             );
           }),
-          tap(() => subject.complete())
-          // map((arrofArrofGames: IGame[][]) => arrofArrofGames.reduce((acc, val) => acc.concat(val), []))
-        ).subscribe(() => console.log('yes'));
+        ).subscribe(() => subject.complete());
     });
   }
 

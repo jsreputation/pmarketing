@@ -39,3 +39,12 @@ mat-card {
   margin: 0.8rem 1.6rem;
   background-color: #fff;
 }
+
+.flex-for-button {
+  display: flex;
+}
+
+.see-button {
+  margin: 0.8rem 1.6rem;
+  flex-grow: 1;
+}
