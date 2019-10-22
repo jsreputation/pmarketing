@@ -12,7 +12,6 @@ export class DownloadLinkComponent {
 
   public constructor(private sanitizer: DomSanitizer) { }
   public sanitizeLink(link: string): SafeUrl {
-    console.log(link);
     return this.sanitizer.bypassSecurityTrustUrl(link);
   }
 }

@@ -1,3 +1,14 @@
-<p>account works!</p>
+<div class="profile-container">
+  <perx-core-user-profile [profile]="profile"></perx-core-user-profile>
+
+  <div class="button-group">
+    <a mat-list-item (click)="onClick('/tnc')">Terms and Conditions</a>
+    <a mat-list-item (click)="onClick('/faq')">FAQ</a>
+  </div>
+
+  <div class="button-group">
+    <a mat-list-item class="sign-out" (click)="onSignout()">Log Out</a>
+  </div>
+</div>
 
 <app-navigate-toolbar></app-navigate-toolbar>

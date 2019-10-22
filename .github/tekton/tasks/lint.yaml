@@ -13,8 +13,8 @@ spec:
     image: circleci/node:10
     resources: &resources
       requests:
-        cpu: 8
-        memory: "8Gi"
+        cpu: 2
+        memory: "4Gi"
   steps:
     - name: yarn-install
       workingDir: "/workspace/project"

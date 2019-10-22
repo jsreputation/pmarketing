@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular
 import { of } from 'rxjs';
 import { tap, map, catchError, takeUntil } from 'rxjs/operators';
 
-import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
+import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { AvailableNewEngagementService, EngagementsService, LimitsService } from '@cl-core/services';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -52,7 +52,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   public ngOnInit(): void {
     super.ngOnInit();
     this.initData();
-    this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
+    this.dataSource.filterPredicate = PrepareTableFilters.getClientSideFilterFunction();
     this.subscribeFormValueChange();
   }
 
@@ -84,8 +84,8 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     this.engagementsService.getEngagements()
       .pipe(
         tap(data => {
-          const counterObject = PrepareTableFilers.countFieldValue(data, 'attributes_type');
-          this.typeFilterConfig = PrepareTableFilers.prepareOptionsConfig(counterObject);
+          const counterObject = PrepareTableFilters.countFieldValue(data, 'attributes_type');
+          this.typeFilterConfig = PrepareTableFilters.prepareOptionsConfig(counterObject);
         })
       )
       .subscribe((res: IEngagement[]) => {
@@ -132,12 +132,12 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     this.limitsService.getLimits(params, findTemplate.attributes_type).pipe(
       map((limits: ILimit[]) => limits[0]),
       catchError(() => of({ times: null }))
-      ).subscribe(
-        limits => {
-          const newCampaign = { ...campaignData, limits };
-          this.store.updateCampaign(newCampaign);
-        }
-      );
+    ).subscribe(
+      limits => {
+        const newCampaign = { ...campaignData, limits };
+        this.store.updateCampaign(newCampaign);
+      }
+    );
   }
 
   private subscribeFormValueChange(): void {

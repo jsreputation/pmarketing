@@ -2,6 +2,7 @@ export enum BaseType {
   text = 'type/Text',
   integer = 'type/Integer',
   float = 'type/Float',
+  date = 'type/Date'
 }
 
 export interface IData {

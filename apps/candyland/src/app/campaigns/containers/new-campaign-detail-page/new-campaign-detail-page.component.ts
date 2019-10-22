@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { AbstractControl, FormGroup, Validators } from '@angular/forms';
 import { AudiencesService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
@@ -9,6 +9,7 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { ActivatedRoute } from '@angular/router';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -16,12 +17,14 @@ import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
   styleUrls: ['./new-campaign-detail-page.component.scss']
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit {
+export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
   public config: any;
   public isFirstInit: boolean;
   public triggerLabelsChip: boolean;
   public campaignId: string;
+  protected destroy$: Subject<void> = new Subject();
+
   @Input()
   public pools: any;
 
@@ -80,7 +83,8 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
 
   public ngOnInit(): void {
     super.ngOnInit();
-    this.channelType.valueChanges.subscribe(
+    this.channelType.valueChanges
+      .pipe(takeUntil(this.destroy$)).subscribe(
       value => {
         if (value === 'sms') {
           this.pool.setValidators([Validators.required]);
@@ -103,6 +107,13 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     this.initData();
   }
 
+  public ngOnDestroy(): void {
+    super.ngOnDestroy();
+    this.cd.detach();
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   private initForm(): void {
     this.form = this.newCampaignDetailFormService.getForm();
   }
@@ -113,9 +124,9 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     }
     this.form.valueChanges
       .pipe(
-        takeUntil(this.destroy$),
         distinctUntilChanged(),
-        debounceTime(500)
+        debounceTime(500),
+        takeUntil(this.destroy$)
       )
       .subscribe((val: ICampaign) => {
         this.store.updateCampaign(val);

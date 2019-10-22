@@ -1,5 +1,4 @@
 import { AccountModule } from './account/account.module';
-import { of } from 'rxjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,7 +9,6 @@ import {
   GameModule,
   UtilsModule,
   ProfileModule,
-  ProfileService,
   ConfigModule,
   RewardsModule,
   MerchantsModule as PerxMerchantsModule,
@@ -34,7 +32,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { profile } from './mock/profile.mock';
 import { HttpClientModule } from '@angular/common/http';
 import {
   HistoryComponent,
@@ -48,10 +45,6 @@ import {
 } from '@perx/blackcomb-pages';
 import { HomeModule } from './home/home.module';
 
-const profileServiceStub = {
-  whoAmI: () => of(profile)
-};
-
 const perxComponents = [
   HistoryComponent,
   RedeemComponent,
@@ -60,7 +53,7 @@ const perxComponents = [
   RewardDetailsComponent,
   LoadingComponent,
   ContentComponent,
-  WalletComponent
+  WalletComponent,
 ];
 @NgModule({
   declarations: [
@@ -97,9 +90,6 @@ const perxComponents = [
     PerxCampaignModule,
     HttpClientModule,
     HomeModule,
-  ],
-  providers: [
-    { provide: ProfileService, useValue: profileServiceStub },
   ],
   bootstrap: [AppComponent]
 })
