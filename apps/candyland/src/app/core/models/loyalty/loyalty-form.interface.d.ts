@@ -6,6 +6,7 @@ declare interface ILoyaltyForm {
   status?: string;
   details?: ILoyaltyDetails;
   tiersConversions?: ILoyaltyTiersConversions;
+  customTiers: any;
 }
 
 declare interface ILoyaltySchemaInf extends ILoyaltyDetails {
