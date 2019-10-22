@@ -4,39 +4,41 @@
 </header>
 
 <section class="content">
-  <ng-container *ngIf="hasData">
-    <!--filters-->
-    <cl-table-filters [dataSource]="dataSource" classList="block">
-      <ng-container *clTableFilter="'name'; let filter">
-        <cl-search-filter class="search-block" [control]="filter" placeholder="Search for rewards"></cl-search-filter>
-      </ng-container>
-    </cl-table-filters>
-    <div class="table-card">
-      <!--table-->
-      <cl-rewards-list [dataSource]="dataSource"
-                      [displayedColumns] = "displayedColumns"
-                      [selectable] = "false"
-                      (clickDetailReward)="detailReward($event)"
-                      (itemAction)="actionHandler($event)"
-      ></cl-rewards-list>
-      <!--/ table-->
-      <!--paginator-->
-      <cl-paginator [dataSource]="dataSource"
-                    [pageSize]="5"
-                    [pageSizeOptions]="[5, 10, 20]"
-      ></cl-paginator>
-      <!--/ paginator-->
-    </div>
-  </ng-container>
+  <ng-container [ngSwitch]="dataSource.state$ | async">
+    <ng-container *ngSwitchCase="dataSourceStates.hasDataApi">
+      <!--filters-->
+      <cl-table-filters [dataSource]="dataSource" classList="block">
+        <ng-container *clTableFilter="'name'; let filter">
+          <cl-search-filter class="search-block" [control]="filter" placeholder="Search for rewards"></cl-search-filter>
+        </ng-container>
+      </cl-table-filters>
+      <div class="table-card">
+        <!--table-->
+        <cl-rewards-list [dataSource]="dataSource"
+                         [displayedColumns]="displayedColumns"
+                         [selectable]="false"
+                         (clickDetailReward)="detailReward($event)"
+                         (itemAction)="actionHandler($event)"
+        ></cl-rewards-list>
+        <!--/ table-->
+        <!--paginator-->
+        <cl-paginator [dataSource]="dataSource"
+                      [pageSize]="5"
+                      [pageSizeOptions]="[5, 10, 20]"
+        ></cl-paginator>
+        <!--/ paginator-->
+      </div>
+    </ng-container>
 
-  <cl-no-data *ngIf="(dataSource.data).length === 0">
-    <img class="no-data-img" src="/assets/images/no-data/reward-empty-illustration.svg" alt="">
-    <h2 class="no-data-title">
-      Your reward bag is empty <span style="display: inline-block;">:(</span>
-    </h2>
-    <p class="no-data-text">
-      Let&rsquo;s begin by creating your first Reward
-    </p>
-  </cl-no-data>
+    <cl-no-data *ngSwitchCase="dataSourceStates.noDataApi">
+      <img class="no-data-img" src="/assets/images/no-data/reward-empty-illustration.svg" alt="">
+      <h2 class="no-data-title">
+        Your reward bag is empty <span style="display: inline-block;">:(</span>
+      </h2>
+      <p class="no-data-text">
+        Let&rsquo;s begin by creating your first Reward
+      </p>
+    </cl-no-data>
+  </ng-container>
 </section>
 

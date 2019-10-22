@@ -13,15 +13,7 @@
   </div>
   <div class="games">
     <div class="title">Games</div>
-    <perx-blackcomb-games-collection [campaign]="campaign$"></perx-blackcomb-games-collection>
-    <button
-      mat-flat-button
-      class="add-more"
-      [ngClass]="{'display-none':  chunkCampaignsEnded}"
-      (click)="nextCampaigns()"
-    >
-      See more
-    </button>
+    <perx-blackcomb-games-collection [games]="games$"></perx-blackcomb-games-collection>
   </div>
   <div class="rewards-collection" *ngIf="(rewards$ | async)?.length > 0">
     <div class="title">Featured Rewards</div>

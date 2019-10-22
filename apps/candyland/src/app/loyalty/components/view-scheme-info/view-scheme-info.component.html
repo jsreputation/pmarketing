@@ -1,0 +1,34 @@
+<mat-expansion-panel class="card" expanded>
+  <mat-expansion-panel-header class="card-header">
+    <h2 class="card-title">
+      Loyalty Scheme Info
+    </h2>
+  </mat-expansion-panel-header>
+
+  <div class="card-content" *ngIf="schemaInfo">
+    <div class="flex">
+      <div class="info-image-wrap flex align-items-center">
+        <img [src]="schemaInfo?.imageUrl" alt="schemaInfo" class="info-image">
+      </div>
+      <div class="info-schema-description">
+        <div class="info-created-by">
+          <span>{{'Created by [Name] on 03/03/2018 10:09am SGT'}}</span>
+        </div>
+        <div class="info-type-status">
+          <cl-status-label [status]="schemaInfo?.status"></cl-status-label>
+        </div>
+        <div>
+          <p class="info-name">
+            ALL IT Loyalty Scheme
+          </p>
+          <p class="info-points-title">Points Name</p>
+          <p class="info-points-value">{{schemaInfo?.pointsName}}</p>
+          <p class="info-points-title">Joining Method</p>
+          <div class="info-points-value">
+              {{schemaInfo?.joinMethod | JoinMethod}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-expansion-panel>

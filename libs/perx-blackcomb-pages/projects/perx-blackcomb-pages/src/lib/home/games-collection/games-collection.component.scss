@@ -1,13 +1,24 @@
+mat-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+}
+
 .img-wrapper {
   width: 100%;
   height: 10rem;
-  overflow: hidden;
 
   img {
     bottom: 15rem;
+    height: 100%;
     width: 100%;
-    position: relative;
+    object-fit: cover;
+    border-radius: 4px 4px 0 0;
   }
+}
+
+.card-content {
+  padding: 16px;
 }
 
 .main-reward-title {
@@ -27,4 +38,13 @@
 .games-card {
   margin: 0.8rem 1.6rem;
   background-color: #fff;
+}
+
+.flex-for-button {
+  display: flex;
+}
+
+.see-button {
+  margin: 0.8rem 1.6rem;
+  flex-grow: 1;
 }
