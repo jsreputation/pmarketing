@@ -1,5 +1,13 @@
 <div class="main-container">
   <img src="assets/logo.png">
+  <div class="translate-switch">
+    <mat-form-field>
+      <mat-select [(value)]="currentSelectedLanguage" (selectionChange)="switchLanguage()">
+        <mat-option value="en" selected>En</mat-option>
+        <mat-option value="zh">Zh</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <div class="logo-title">
     <ng-container>{{"LOGIN_SUBTITLE"|translate}}</ng-container>
   </div>

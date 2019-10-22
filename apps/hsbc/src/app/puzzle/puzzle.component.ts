@@ -35,6 +35,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   public title: string = 'Stamp Card';
   public subTitle: string = 'Earn rewards by collecting stamps';
   private displayCampaignAs: string = 'puzzle';
+  public sourceType: string;
 
   constructor(
     private campaignService: ICampaignService,
@@ -60,10 +61,12 @@ export class PuzzleComponent implements OnInit, OnDestroy {
 
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => {
+        this.sourceType = config.sourceType as string;
         if (config.sourceType === 'hsbc-xmas') {
           this.displayCampaignAs = 'stamp_card';
         }
-      });
+      }
+    );
 
     if (this.campaignId === null) {
       this.fetchCampaign();
@@ -167,7 +170,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   }
 
   private stampCard(stampId: number): void {
-    this.stampService.putStamp(stampId, 'hsbc-collect2')
+    this.stampService.putStamp(stampId, this.sourceType)
     .subscribe(
       (stamp: IStamp) => {
         if (stamp.state === StampState.redeemed) {

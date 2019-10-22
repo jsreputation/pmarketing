@@ -46,8 +46,6 @@ export class StampComponent implements OnInit, OnDestroy {
       .subscribe((params: ParamMap) => {
         const id = params.get('id');
         this.getReportStamp(id);
-
-        console.log(id);
     });
   }
 
