@@ -27,7 +27,8 @@ export interface IRewardEntityAttributes {
         duration?: string;
       }
     },
-    redemption_text?: string
+    redemption_text?: string;
+    loyalties: any;
   };
   organization_id?: string;
 }

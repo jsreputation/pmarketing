@@ -2,9 +2,11 @@ declare interface ILoyaltyForm {
   id?: string;
   customTiersCount?: number;
   name: string;
+  createdAt: string;
   status?: string;
   details?: ILoyaltyDetails;
   tiersConversions?: ILoyaltyTiersConversions;
+  customTiers: any;
 }
 
 declare interface ILoyaltySchemaInf extends ILoyaltyDetails {
@@ -38,7 +40,6 @@ declare interface ILoyaltyTiersConversions {
     type: string;
     trigger: string;
   };
-  tiers: ILoyaltyTire[];
 }
 
 declare interface ILoyaltyTire {

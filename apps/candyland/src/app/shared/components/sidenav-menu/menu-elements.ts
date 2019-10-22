@@ -23,7 +23,7 @@ export const menus = [
     open: false,
   },
   {
-    name: 'Loyalty',
+    name: 'Loyalty (β)',
     link: '/loyalty',
     icon: 'loyalty',
     open: false,
