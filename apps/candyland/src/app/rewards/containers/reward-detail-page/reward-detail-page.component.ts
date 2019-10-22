@@ -6,7 +6,7 @@ import Utils from '@cl-helpers/utils';
 import { of, combineLatest, Subject } from 'rxjs';
 import { map, switchMap, filter, takeUntil } from 'rxjs/operators';
 
-import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
+import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
 import { RewardsService, MerchantsService } from '@cl-core/services';
 import { VouchersService } from '@cl-core/services/vouchers.service';
@@ -51,7 +51,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   public ngAfterViewInit(): void {
-    this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
+    this.dataSource.filterPredicate = PrepareTableFilters.getClientSideFilterFunction();
     this.dataSource.paginator = this.paginator;
   }
 
