@@ -51,6 +51,9 @@ import {
   UploadFileModule, UploadGraphicModule, VouchersProgressBarModule
 } from '@cl-shared';
 import { TagListModule } from '@cl-shared/components/tag-list/tag-list.module';
+import { RewardLoyaltyFormGroupComponent } from './components/reward-loyalty-form-group/reward-loyalty-form-group.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { RewardLoyaltySetupGroupComponent } from './components/reward-loyalty-setup-group/reward-loyalty-setup-group.component';
 
 @NgModule({
   providers: [
@@ -71,6 +74,8 @@ import { TagListModule } from '@cl-shared/components/tag-list/tag-list.module';
     RewardReplenishPopupComponent,
     RewardVoucherCodeFormGroupComponent,
     ManageRewardsComponent,
+    RewardLoyaltyFormGroupComponent,
+    RewardLoyaltySetupGroupComponent,
   ],
   imports: [
     CommonModule,
@@ -110,7 +115,8 @@ import { TagListModule } from '@cl-shared/components/tag-list/tag-list.module';
     VouchersProgressBarModule,
     PaginationModule,
     PipesModule,
-    TagListModule
+    TagListModule,
+    MatTabsModule
   ],
   entryComponents: [
     RewardReplenishPopupComponent

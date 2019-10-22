@@ -18,8 +18,8 @@ import {
   tap,
   takeUntil,
   map,
-  mergeMap,
   retry,
+  switchMap,
 } from 'rxjs/operators';
 
 import {
@@ -112,30 +112,33 @@ export class HomeComponent implements OnInit, OnDestroy {
   public staticTab: ITabConfigExtended[];
 
   private initCampaign(): void {
-    this.games$ = new Observable((subject: Subscriber<IGame[]>) => {
+    this.games$ = (new Observable((subject: Subscriber<IGame[]>) => {
       const gameByCid: { [cid: number]: IGame } = {};
       this.campaingService.getCampaigns()
         .pipe(
           map((cs: ICampaign[]) => cs.filter(c => c.type === CampaignType.game)),
           map((cs: ICampaign[]) => cs.filter(c => gameByCid[c.id] === undefined)),
-          mergeMap((arrOfCampaigns: ICampaign[]) => {
+          switchMap((arrOfCampaigns: ICampaign[]) => {
             let gameIds = arrOfCampaigns.map(c => c.engagementId);
             gameIds = gameIds.filter((item, index) => gameIds.indexOf(item) === index);
             return combineLatest(
               ...gameIds.map(id => this.gamesService.get(id)
                 .pipe(
                   retry(1),
+                  map((g: IGame) => ({ ...g, campaignId: (arrOfCampaigns.find(c => c.engagementId === g.id).id) })),
                   tap((g: IGame) => {
                     const matchingCampaigns = arrOfCampaigns.filter(c => c.engagementId === g.id);
-                    matchingCampaigns.forEach(c => gameByCid[c.id] = g);
+                    matchingCampaigns.forEach(c => {
+                      const campaignId = c.id;
+                      gameByCid[c.id] = { ...g, campaignId };
+                    });
                     subject.next(Object.values(gameByCid).sort((a, b) => a.campaignId - b.campaignId));
                   })
                 ))
             );
           })
-          // complete the observable once all have been completed
         ).subscribe(() => subject.complete());
-    });
+    }));
   }
 
   constructor(
