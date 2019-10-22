@@ -3,13 +3,13 @@ import { LoyaltyJoinMethodMap } from '@cl-core/models/loyalty/loyalty-joing-meth
 
 export class LoyaltyHttpAdapter {
 
-  public static transformToLoyalties(data: any): ITableData<any> {
+  public static transformToLoyalties(data: any): { data: ILoyaltyForm[] } {
     const formatData = data.data.map((item) => {
       let formLoyalty = LoyaltyHttpAdapter.transformToLoyaltyForm(item);
       formLoyalty = LoyaltyHttpAdapter.setIncludedToLoyaltyForm(data, item, formLoyalty);
       return formLoyalty;
     });
-    return {data: formatData, meta: data.meta};
+    return {data: formatData};
   }
 
   public static transformToTableData(data: any): ITableData<any> {

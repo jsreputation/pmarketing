@@ -2,7 +2,7 @@ declare interface IRewardEntityForm {
   id?: string;
   name: string;
   currency?: string;
-  loyalties?: any;
+  loyalties?: ILoyaltyFormGroup[];
   displayProperties?: any;
   rewardInfo: {
     image: string;

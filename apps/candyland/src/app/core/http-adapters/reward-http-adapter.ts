@@ -95,7 +95,7 @@ export class RewardHttpAdapter {
         merchantId: data.attributes.organization_id
       },
       vouchers,
-      displayProperties: data.attributes.display_properties
+      displayProperties: data.attributes.display_properties,
       loyalties: data.attributes.display_properties.loyalties
     };
   }
@@ -122,7 +122,7 @@ export class RewardHttpAdapter {
               ...RewardHttpAdapter.getRewardValidity(data)
             }
           },
-          loyalties: loyalties,
+          loyalties,
         }
       }
     };
