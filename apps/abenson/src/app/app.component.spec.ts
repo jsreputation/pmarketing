@@ -17,6 +17,7 @@ import { Location } from '@angular/common';
 import { Type } from '@angular/core';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/signup/signup.component';
+import { CustomerSupportComponent } from './account/customer-support/customer-support.component';
 
 describe('AppComponent', () => {
   let app: AppComponent;
@@ -89,6 +90,8 @@ describe('AppComponent', () => {
     expect(app.headerTitle).toBe('FAQ');
     app.onActivate(new PrivacyPolicyComponent());
     expect(app.headerTitle).toBe('Privacy Policy');
+    app.onActivate(new CustomerSupportComponent(null));
+    expect(app.headerTitle).toBe('Customer Support');
   });
 
   it('should navigate back', () => {

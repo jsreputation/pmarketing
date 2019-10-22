@@ -1,0 +1,29 @@
+<div class="page">
+  <div class="loyalty-block">
+    <perx-core-loyalty-summary></perx-core-loyalty-summary>
+    <div class="loyalty-item loyalty-item-qr">
+      <a mat-raised-button class="enlarge" routerLink="qr" class="home-qr-button">
+        My QR
+      </a>
+    </div>
+  </div>
+  <div class="games">
+    <div class="title">Games</div>
+    <perx-blackcomb-games-collection [campaign]="campaign$"></perx-blackcomb-games-collection>
+    <button
+      mat-flat-button
+      class="add-more"
+      [ngClass]="{'display-none':  chunkCampaignsEnded}"
+      (click)="nextCampaigns()"
+    >
+      See more
+    </button>
+  </div>
+  <div class="rewards-collection" *ngIf="(rewards$ | async)?.length > 0">
+    <div class="title">Featured Rewards</div>
+    <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
+  </div>
+  <div class="rewars-collection">
+    <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)"></perx-core-rewards-list-tabbed>
+  </div>
+</div>

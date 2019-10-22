@@ -15,7 +15,7 @@
           Cancel
         </span>
       </cl-button>
-      <cl-button [classList]="'primary'"
+      <cl-button [classList]="'primary cta cta-save'"
                  (click)="save()"
       >
         <span>
@@ -24,133 +24,128 @@
       </cl-button>
     </div>
   </header>
-  <section class="content phonepreview-wrapper form-limiter">
-    <div class="pinata-form">
-      <mat-card class="game-graphic">
-        <div class="messages-wrap">
-          <p class="sub-title">
+  <section class="content form-limiter">
+    <div class="phonepreview-wrapper">
+      <div class="pinata-form">
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
             Messages
-          </p>
-        </div>
-        <div class="pinata-form">
-          <div class="control-input">
-            <mat-form-field class="mat-form-field">
-              <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
-              <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
-              <mat-error *ngIf="headlineMessage.hasError('required')">Required field</mat-error>
-              <mat-error *ngIf="headlineMessage.hasError('minlength')">Min length 5</mat-error>
-              <mat-error *ngIf="headlineMessage.hasError('maxlength')">Max length 60</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="control-input">
-            <mat-form-field class="mat-form-field">
-              <input type="text" matInput [placeholder]="'Sub-headline message'" formControlName="subHeadlineMessage">
-              <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>
-              <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
-              <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>
-              <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-      </mat-card>
-
-      <mat-card class="game-graphic">
-        <div class="game-title-wrap">
-          <p class="sub-title">
-            Game graphic
-          </p>
-        </div>
-        <div class="game-form">
-          <p class="game-title">
-            Pinata
-          </p>
-
-          <div class="game-tree-wrap">
-            <cl-select-graphic
-              *ngIf="pinataData.pinata"
-              formControlName="pinata"
-              class="game-selected-graphic"
-              [graphicList]="pinataData.pinata"
-            >
-            </cl-select-graphic>
-          </div>
-
-          <div class="game-background-box">
-            <p class="game-title">
-              Background
-            </p>
-            <div class="game-gift-box_field">
-              <cl-select-graphic-wrap
-                *ngIf="pinataData.background"
-                formControlName="background"
-                [isRequired]="form.get('background').hasError('required') && form.get('background').touched"
-                class="game-selected-graphic"
-                [graphicList]="pinataData.background"
-              >
-              </cl-select-graphic-wrap>
+          </h2>
+          <div class="pinata-form">
+            <div class="control-input">
+              <mat-form-field class="mat-form-field">
+                <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
+                <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
+                <mat-error *ngIf="headlineMessage.hasError('required')">Required field</mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('minlength')">Min length 5</mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('maxlength')">Max length 60</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="control-input">
+              <mat-form-field class="mat-form-field">
+                <input type="text" matInput [placeholder]="'Sub-headline message'" formControlName="subHeadlineMessage">
+                <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>
+                <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>
+              </mat-form-field>
             </div>
           </div>
-        </div>
-      </mat-card>
+        </mat-card>
 
-      <mat-card class="game-graphic">
-        <div class="messages-wrap">
-          <p class="sub-title">
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Game graphic
+          </h2>
+          <div class="game-form">
+
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
+                Pinata
+              </h3>
+              <div class="game-tree-wrap">
+                <cl-select-graphic
+                  *ngIf="pinataData.pinata"
+                  formControlName="pinata"
+                  [graphicList]="pinataData.pinata"
+                >
+                </cl-select-graphic>
+              </div>
+            </div>
+
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
+                Background
+              </h3>
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap
+                  *ngIf="pinataData.background"
+                  formControlName="background"
+                  [isRequired]="form.get('background').hasError('required') && form.get('background').touched"
+                  [graphicList]="pinataData.background"
+                >
+                </cl-select-graphic-wrap>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
             Button
+          </h2>
+          <div class="messages-form">
+            <div class="control-input">
+              <mat-form-field class="messages-input">
+                <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
+                <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
+                <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
+                <mat-error *ngIf="buttonText.hasError('minlength')">Min length 2</mat-error>
+                <mat-error *ngIf="buttonText.hasError('maxlength')">Max length 20</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      <cl-simple-mobile-view class="second-tab"
+                            [background]="getImgLink(background, 'assets/images/background/background1.png')"
+                            [mobileImageClass]="'mobile-non-header'"
+                            [headerColor]="tenantSettings?.headerColor"
+                            [logo]="tenantSettings?.logo"
+                            [logoType]="tenantSettings?.logoType"
+                            [fontFamily]="tenantSettings?.font"
+                            clCreateImage
+      >
+        <div class="mobile-preview-header">
+          <p class="mobile-preview-headline">
+            {{headlineMessage.value}}
+          </p>
+          <p class="mobile-preview-sub-headline">
+            {{subHeadlineMessage.value}}
           </p>
         </div>
-        <div class="messages-form">
-          <div class="control-input">
-            <mat-form-field class="messages-input">
-              <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
-              <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
-              <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
-              <mat-error *ngIf="buttonText.hasError('minlength')">Min length 2</mat-error>
-              <mat-error *ngIf="buttonText.hasError('maxlength')">Max length 20</mat-error>
-            </mat-form-field>
-          </div>
+        <div class="plugin-block">
+          <perx-core-pinata class="mobile-preview-plugin"
+                            [enabled]="false"
+                            [stillImg]="getImgLink(pinata, 'assets/images/pinata/pinata1.png')"
+                            [openedImg]="'assets/images/games/pinata/opened-pinata.png'"
+                            [nbTaps]="5"
+          >
+          </perx-core-pinata>
         </div>
-      </mat-card>
+        <div class="mobile-preview-btn-wrap mobile-btn-block">
+          <button class="mobile-preview-btn"
+                  [ngStyle]="{
+                    backgroundColor: tenantSettings?.buttonColor,
+                    'color': tenantSettings?.buttonTextColor,
+                    'font-family': tenantSettings?.font
+                  }"
+          >
+            {{buttonText.value}}
+          </button>
+        </div>
+      </cl-simple-mobile-view>
     </div>
-
-    <cl-simple-mobile-view class="second-tab"
-                           [background]="getImgLink(background, 'assets/images/background/background1.png')"
-                           [mobileImageClass]="'mobile-non-header'"
-                           [headerColor]="tenantSettings?.headerColor"
-                           [logo]="tenantSettings?.logo"
-                           [logoType]="tenantSettings?.logoType"
-                           [fontFamily]="tenantSettings?.font"
-                           clCreateImage
-    >
-      <div class="mobile-preview-header">
-        <p class="mobile-preview-headline">
-          {{headlineMessage.value}}
-        </p>
-        <p class="mobile-preview-sub-headline">
-          {{subHeadlineMessage.value}}
-        </p>
-      </div>
-      <div class="plugin-block">
-        <perx-core-pinata class="mobile-preview-plugin"
-                          [enabled]="false"
-                          [stillImg]="getImgLink(pinata, 'assets/images/pinata/pinata1.png')"
-                          [openedImg]="'assets/images/games/pinata/opened-pinata.png'"
-                          [nbTaps]="5"
-        >
-        </perx-core-pinata>
-      </div>
-      <div class="mobile-preview-btn-wrap mobile-btn-block">
-        <button class="mobile-preview-btn"
-                [ngStyle]="{
-                  backgroundColor: tenantSettings?.buttonColor,
-                  'color': tenantSettings?.buttonTextColor,
-                  'font-family': tenantSettings?.font
-                }"
-        >
-          {{buttonText.value}}
-        </button>
-      </div>
-    </cl-simple-mobile-view>
-
   </section>
 </article>

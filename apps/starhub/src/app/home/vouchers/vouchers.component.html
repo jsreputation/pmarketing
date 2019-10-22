@@ -2,9 +2,9 @@
   <div class="saved-rewards" *ngIf="(savedVouchers | async) as vouchers">
     <h1 *ngIf="vouchers.length > 0">Saved rewards</h1>
     <mat-card *ngFor="let voucher of ((hideSeeMore || (vouchers.length <= defaultNbVouchers)) ? vouchers : (vouchers | slice:0:defaultNbVouchers))" (click)="voucherSelected(voucher)" matRipple>
-      <img mat-card-avatar [src]="voucher.merchantImg" *ngIf="voucher.merchantImg">
+      <img mat-card-avatar [src]="voucher.reward.merchantImg" *ngIf="voucher.reward.merchantImg">
       <mat-card-header>
-        <mat-card-title>{{(voucher.name.length > 35) ? (voucher.name | slice:0:35)+'...' : (voucher.name)}}</mat-card-title>
+        <mat-card-title *ngIf="voucher.reward.name">{{(voucher.reward.name.length > 35) ? (voucher.reward.name | slice:0:35)+'...' : (voucher.reward.name)}}</mat-card-title>
         <mat-card-subtitle [ngClass]="getTextColorClass(voucher)">{{getNumberOfDays(voucher)}}</mat-card-subtitle>
       </mat-card-header>
       <div class="icon">
@@ -17,9 +17,9 @@
   <div class="past-rewards" *ngIf="(redeemedVouchers | async) as vouchers">
     <h1 *ngIf="vouchers.length > 0">Past rewards</h1>
     <mat-card *ngFor="let voucher of vouchers" (click)="voucherSelected(voucher)" matRipple>
-      <img mat-card-avatar [src]="voucher.merchantImg" *ngIf="voucher.merchantImg">
+      <img mat-card-avatar [src]="voucher.reward.merchantImg" *ngIf="voucher.reward.merchantImg">
       <mat-card-header>
-        <mat-card-title>{{(voucher.name.length > 35) ? (voucher.name | slice:0:35)+'...' : (voucher.name)}}</mat-card-title>
+        <mat-card-title *ngIf="voucher.reward.name">{{(voucher.reward.name.length > 35) ? (voucher.reward.name | slice:0:35)+'...' : (voucher.reward.name)}}</mat-card-title>
         <mat-card-subtitle>{{voucher.state | titlecase}}</mat-card-subtitle>
       </mat-card-header>
       <div class="disabled-icon">

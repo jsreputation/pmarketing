@@ -71,7 +71,7 @@ export class LoyaltyHttpAdapter {
       type: 'custom_tiers',
       attributes: {
         name: data.name,
-        image_url: data.imageUrl || 'assets/images/icons/engagement.svg',
+        image_url: data.imageUrl,
         bonus_ratio: (data.earnBonus / 100).toFixed(3),
         discount_ratio: (data.burnDiscount / 100).toFixed(3),
         expiry_period: data.pointsExpiry.amount,
@@ -182,18 +182,8 @@ export class LoyaltyHttpAdapter {
   }
 
   private static transformJoinMethodToApi(joinMethod: any): any {
-    // const formatData = {
-    //   invite_only: data.inviteOnly,
-    //   sign_up: data.signUp,
-    //   amount: data.amount,
-    //   transaction_amount: data.transactionAmount,
-    //   points_threshold: data.pointsThreshold,
-    //   points: data.points
-    // };
-    // return Utils.filterObj(formatData, (item) => !!item);
     const chosenMethods = Utils.filterObj(joinMethod, (item) => !!item);
     const apiJoinMethod = {};
-    // Object.keys(chosenMethods).forEach(key => apiJoinMethod[LoyaltyJoinMethodType[key]] = chosenMethods[key]);
     Object.keys(chosenMethods).forEach(key => apiJoinMethod[LoyaltyJoinMethodMap[key].apiName] = chosenMethods[key]);
     return apiJoinMethod;
   }
@@ -229,12 +219,6 @@ export class LoyaltyHttpAdapter {
   }
 
   private static formatToDetailFormGroup(data: any, currentLoyalty: any): any {
-    // console.log({
-    //   pointsName: currentLoyalty.unit,
-    //   imageUrl: data.image_url,
-    //   poolId: currentLoyalty.poolId,
-    //   joinMethod: LoyaltyHttpAdapter.transformJoinMethodFromApi(data.join_method)
-    // });
     return {
       pointsName: currentLoyalty.unit,
       imageUrl: data.image_url,

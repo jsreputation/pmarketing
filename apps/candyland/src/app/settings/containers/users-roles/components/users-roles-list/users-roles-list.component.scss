@@ -22,13 +22,13 @@
 .role-info {
   height: auto;
   max-width: 100%;
-  padding: ($vertical-padding * 0.75) ($horizontal-padding);
+  padding: ($vertical-padding * 0.5) ($horizontal-padding * 0.75);
   box-sizing: border-box;
 
   &-title {
     @include typo-subtitle1-alt;
 
-    margin-bottom: $vertical-padding;
+    margin-bottom: ($vertical-padding * 0.5);
   }
 
   &-label-block {
@@ -45,15 +45,15 @@
     width: 100%;
     align-items: flex-start;
     justify-content: flex-start;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
   }
 
   &-name,
   &-description {
     @include typo-body2;
+  }
+
+  &-name {
+    margin-bottom: ($vertical-padding * 0.25);
   }
 
   &-description {

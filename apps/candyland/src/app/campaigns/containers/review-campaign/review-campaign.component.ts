@@ -1,14 +1,16 @@
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { RewardsService } from './../../../core/services/rewards.service';
 import { CampaignsService, EngagementsService, CommsService, OutcomesService, LimitsService } from '@cl-core/services';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, map } from 'rxjs/operators';
-import { combineLatest, of, Observable } from 'rxjs';
+
+import { switchMap, map, catchError, takeUntil } from 'rxjs/operators';
+import { combineLatest, of, Observable, Subject } from 'rxjs';
+
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
+import { ILimit } from '@cl-core/models/limit/limit.interface';
 
 @Component({
   selector: 'cl-review-campaign',
@@ -16,6 +18,8 @@ import { IOutcome } from '@cl-core/models/outcome/outcome';
   styleUrls: ['./review-campaign.component.scss']
 })
 export class ReviewCampaignComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<any> = new Subject();
+
   public campaign: any;
 
   constructor(
@@ -33,6 +37,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.store.resetCampaign();
     this.getCampaignData();
   }
 
@@ -41,76 +46,116 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
   // TODO: it need for get right data from back end in the future
   private getCampaignData(): void {
     const campaignId = this.route.snapshot.params.id;
     const params: HttpParamsOptions = {
+      'filter[owner_id]': campaignId,
+      'filter[owner_type]': 'Perx::Campaign::Entity',
+      include: 'template',
+    };
+    const paramsPO: HttpParamsOptions = {
       'filter[campaign_entity_id]': campaignId
     };
     if (campaignId) {
       combineLatest(
-        this.campaignsService.getCampaign(campaignId),
-        this.commsService.getCommsTemplate(params).pipe(
-          map((comms: IComm[]) => comms[0])
-        ),
-        this.commsService.getCommsEvents(params).pipe(
-          map((comms: IComm[]) => comms[0])
-        ),
-        this.outcomesService.getOutcomes(params)).pipe(
-          untilDestroyed(this),
-          map(
-            ([campaign, commTemplate, commEvent, outcomes]:
-              [ICampaign, IComm, IComm, IOutcome[]]) => ({
+        this.campaignsService.getCampaign(campaignId).pipe(catchError(() => of(null))),
+        this.commsService.getCommsEvent(params).pipe(catchError(() => of(null))),
+        this.outcomesService.getOutcomes(paramsPO).pipe(
+          map(outcomes => outcomes.map(outcome => ({ ...outcome, probability: outcome.probability * 100 }))),
+          catchError(() => of(null)))).pipe(
+            takeUntil(this.destroy$),
+            map(
+              ([campaign, commEvent, outcomes]:
+                [ICampaign | null, IComm | null, IOutcome[] | null]) => ({
+                  ...campaign,
+                  audience: { select: commEvent && commEvent.poolId || null },
+                  channel: {
+                    type: commEvent && commEvent.channel || 'weblink',
+                    message: commEvent && commEvent.message,
+                    schedule: commEvent && { ...commEvent.schedule }
+                  },
+                  rewardsList: outcomes
+                })
+            ),
+            switchMap((campaign: ICampaign) => {
+              const limitParams: HttpParamsOptions = {
+                'filter[campaign_entity_id]': campaign.id
+              };
+              const eType = campaign.engagement_type;
+              return combineLatest(
+                of(campaign),
+                this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
+                this.limitsService.getLimits(limitParams, eType).pipe(map(limits => limits[0]), catchError(() => of({ times: null }))),
+                this.getRewards(campaign.rewardsList)
+              );
+            }),
+            map(([campaign, engagement, limits, rewards]:
+              [
+                ICampaign | null, IEngagement | null, ILimit | null,
+                { value: IRewardEntity, probability?: number, stampsSlotNumber?: number }[] | null
+              ]) => {
+              let rewardsOptions = null;
+              let rewardsListCollection = null;
+              if (campaign.engagement_type === 'stamps') {
+                const transformedRewards = {};
+                rewards.forEach(reward => {
+                  if (!transformedRewards[reward.stampsSlotNumber]) {
+                    transformedRewards[reward.stampsSlotNumber] = {
+                      stampSlotNumber: reward.stampsSlotNumber,
+                      rewardsOptions: {
+                        enableProbability: !!reward.probability,
+                        rewards: [reward]
+                      }
+                    };
+                  } else {
+                    transformedRewards[reward.stampsSlotNumber].rewardsOptions.rewards =
+                      [...transformedRewards[reward.stampsSlotNumber].rewardsOptions.rewards, reward];
+                  }
+                });
+                rewardsListCollection = [...Object.values(transformedRewards)];
+              } else {
+                rewardsOptions = {
+                  enableProbability: rewards.some(reward => !!reward.probability),
+                  rewards
+                };
+              }
+              return {
                 ...campaign,
-                audience: { select: commEvent && parseInt(commEvent.pool_id, 10) || null },
-                channel: {
-                  type: commEvent && commEvent.channel || 'weblink',
-                  ...commTemplate,
-                  ...commEvent
-                },
-                rewardsList: outcomes
-              })
-          ),
-          switchMap(campaign => {
-            const limitParams: HttpParamsOptions = {
-              'filter[campaign_entity_id]': campaign.id
-            };
-            const eType = campaign.engagement_type;
-            return combineLatest(
-              of(campaign),
-              this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
-              this.limitsService.getLimits(limitParams, eType).pipe(map(limits => limits[0])),
-              this.getRewards(campaign.rewardsList)
-            );
-          }),
-          map(([campaign, engagement, limits, rewards]) => ({
-            ...campaign,
-            template: engagement,
-            limits,
-            rewardsOptions: {
-              rewards
-            }
-          }))
-        ).subscribe(
-          campaign => {
-            this.campaign = campaign;
-            this.store.updateCampaign(this.campaign);
-            this.cd.detectChanges();
-          },
-          (err) => console.log(err)
-        );
+                template: engagement,
+                limits,
+                rewardsOptions,
+                rewardsListCollection
+              };
+            })
+          ).subscribe(
+            campaign => {
+              this.campaign = campaign;
+              this.store.updateCampaign(this.campaign);
+              this.cd.detectChanges();
+            },
+            (err) => console.log(err)
+          );
     }
   }
 
-  private getRewards(rewardsList: any[]): Observable<IRewardEntityForm[]> {
+  private getRewards(rewardsList: any[]): Observable<{ value: IRewardEntity | null, probability?: number, stampsSlotNumber?: number }[]> {
     if (!rewardsList || !rewardsList.length) {
       return of([]);
     }
     return combineLatest(...rewardsList.map(
-      reward => this.rewardsService.getReward(reward.resultId).pipe(
-        map(rewardData => ({ value: { ...rewardData, probability: reward.probability } }))
-      )
+      reward => {
+        if (reward.resultId) {
+          return this.rewardsService.getReward(reward.resultId).pipe(
+            map(rewardData => ({ value: { ...rewardData }, probability: reward.probability, stampsSlotNumber: reward.lootBoxId })),
+            catchError(() => of({ value: null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId }))
+          );
+        }
+        return of({ value: null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId });
+      }
     ));
   }
 }

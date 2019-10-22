@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+// tslint:disable-next-line:import-blacklist
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { PointsInfoComponent } from './points-info.component';
 
 describe('PointsInfoComponent', () => {
@@ -8,9 +9,10 @@ describe('PointsInfoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PointsInfoComponent ]
+      declarations: [ PointsInfoComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

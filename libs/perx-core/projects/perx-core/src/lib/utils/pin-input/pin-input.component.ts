@@ -1,12 +1,14 @@
-import { Component, OnInit, Input, Output, ElementRef, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, ElementRef, EventEmitter, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-pin-input',
   templateUrl: './pin-input.component.html',
   styleUrls: ['./pin-input.component.scss']
 })
-export class PinInputComponent implements OnInit {
+export class PinInputComponent implements OnInit, OnDestroy {
   @Input()
   public length: number = 4;
 
@@ -23,7 +25,7 @@ export class PinInputComponent implements OnInit {
   public pinFocused: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public controls: FormControl[] = [];
-
+  private destroy$: Subject<any> = new Subject();
   constructor(
     private element: ElementRef,
   ) {
@@ -45,7 +47,9 @@ export class PinInputComponent implements OnInit {
       this.controls.push(ctrl);
     }
     // listen to each FormControl
-    this.controls.forEach(ctrl => ctrl.valueChanges.subscribe(() => this.onUpdate()));
+    this.controls.forEach(ctrl => ctrl.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.onUpdate()));
   }
 
   public onUpdate(): void {
@@ -90,5 +94,10 @@ export class PinInputComponent implements OnInit {
     this.controls.forEach(ctrl => {
       ctrl.setValue('');
     });
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -3,17 +3,19 @@ import { IAssignedAttributes, IAssignRequestAttributes } from '@perx/whistler';
 export class AudiencesHttpAdapter {
 
   public static transformFromUserForm(data: IAudiencesUserForm): IJsonApiItem<IUserApi> {
-    return {
-      type: 'users', attributes: {
-        title: data.firstName + ' ' + data.lastName, first_name: data.firstName, last_name: data.lastName,
-        phone_number: data.phone, email_address: data.email, primary_identifier: data.firstName + 'identifier',
-        properties: ''
-      }, relationships: {
-        pools: {
-          data: data.audienceList
-        }
-      }
-    };
+    const optionalPool = data.audienceList ? { relationships: { pools: {data: data.audienceList}}} : {};
+    const mainUserApiObject = {
+        type: 'users',
+        attributes: {
+        title: data.firstName + ' ' + data.lastName,
+        first_name: data.firstName,
+        last_name: data.lastName,
+        phone_number: data.phone,
+        email_address: data.email,
+        primary_identifier: data.firstName + 'identifier',
+    }};
+    return Object.assign(mainUserApiObject, optionalPool);
+
   }
 
   public static transformUpdateUserPools(data: IUser): IJsonApiItem<any> {

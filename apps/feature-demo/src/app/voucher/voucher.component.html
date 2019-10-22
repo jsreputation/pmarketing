@@ -1,0 +1,17 @@
+<div class="main">
+  <div class="voucher-container">
+    <perx-core-voucher 
+      [hideMerchantImg]="false"
+      [hideMerchantName]="false"
+      [hideActions]="true"
+      [voucher]="voucher$">
+    </perx-core-voucher>
+  </div>
+  <div *ngIf="isButtonEnabled && (voucher$ | async) as voucher" class="button-area">
+    <button mat-flat-button class="full-width" color="primary" [routerLink]="[ '/redemption' ]"
+      [queryParams]="{id:voucher.id}">Redeem now</button>
+  </div>
+</div>
+<button class="icon" (click)="back()">
+  <mat-icon>arrow_backward</mat-icon>
+</button>

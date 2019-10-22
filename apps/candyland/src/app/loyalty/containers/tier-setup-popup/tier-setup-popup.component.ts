@@ -1,10 +1,10 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { LoyaltyFormsService } from 'src/app/loyalty/services/loyalty-forms.service';
 import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'cl-tier-setup-popup',
@@ -14,6 +14,7 @@ import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.
 })
 export class TierSetupPopupComponent implements OnInit, OnDestroy {
   public form: FormGroup;
+  protected destroy$: Subject<void> = new Subject();
 
   constructor(public dialogRef: MatDialogRef<TierSetupPopupComponent>,
               private loyaltyFormsService: LoyaltyFormsService,
@@ -29,6 +30,30 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
     return this.form.get('joinMethod.points') || null;
   }
 
+  public get name(): AbstractControl {
+    return this.form.get('name') || null;
+  }
+
+  public get imageUrl(): AbstractControl {
+    return this.form.get('imageUrl') || null;
+  }
+
+  public get earnBonus(): AbstractControl {
+    return this.form.get('earnBonus') || null;
+  }
+
+  public get burnDiscount(): AbstractControl {
+    return this.form.get('burnDiscount') || null;
+  }
+
+  public get joinMethod(): AbstractControl {
+    return this.form.get('joinMethod') || null;
+  }
+
+  public get amount(): AbstractControl {
+    return this.form.get('pointsExpiry.amount') || null;
+  }
+
   public ngOnInit(): void {
     this.initForm();
     this.fillForm();
@@ -36,6 +61,8 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public close(): void {
@@ -43,7 +70,6 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
   }
 
   public apply(): void {
-    console.log(this.form.invalid, this.form.value, this.data);
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -68,14 +94,16 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
 
   private handlePointsThreshold(): void {
     this.pointsThreshold.valueChanges.pipe(
-      untilDestroyed(this),
+      takeUntil(this.destroy$),
       distinctUntilChanged()
     ).subscribe((value: boolean) => {
       if (value) {
-        this.points.enable();
+        this.points.enable({onlySelf: true, emitEvent: false});
       } else {
-        this.points.disable();
+        this.points.reset(null, {onlySelf: true, emitEvent: false});
+        this.points.disable({onlySelf: true, emitEvent: false});
       }
+      this.points.updateValueAndValidity({onlySelf: true, emitEvent: false});
     });
   }
 }

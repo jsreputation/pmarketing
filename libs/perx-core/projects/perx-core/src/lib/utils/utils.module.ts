@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PopupComponent } from './popup/popup.component';
 import { MatButtonModule, MatDialogModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NotificationService } from './notification/notification.service';
 import { NumericCharacterDirective } from './directives/numeric-character.directive';
@@ -12,6 +13,17 @@ import { FeedReaderService } from './feed-reader.service';
 import { DistancePipe } from './directives/distance-pipe';
 import { GeneralStaticDataService } from './general-static-data/general-static-data.service';
 import { ThemesService } from './themes/themes.service';
+import { WhistlerThemesService } from './themes/whistler-themes.service';
+import { Config } from '../config/config';
+import { V4ThemesService } from './themes/v4-themes.service';
+
+export function themesServiceFactory(http: HttpClient, config: Config): ThemesService {
+  if (config.isWhistler) {
+    return new WhistlerThemesService(http, config);
+  }
+  return new V4ThemesService(http, config);
+}
+
 const directives = [
   NumericCharacterDirective,
   DebounceClickDirective,
@@ -47,7 +59,10 @@ const components = [
     NotificationService,
     FeedReaderService,
     GeneralStaticDataService,
-    ThemesService
+    { provide: ThemesService,
+      useFactory: themesServiceFactory,
+      deps: [HttpClient, Config]
+    }
   ]
 })
 export class UtilsModule {

@@ -1,0 +1,24 @@
+<div class="parent-container" *ngIf="voucher$ | async as voucher">
+  <div class="full-page-container-white">
+    <div *ngIf="redemptionType === rt.pin">
+      <p>
+        The merchant will enter the redemption code when you are ready to redeem at the venue.
+      </p>
+      <h1>
+        Merchant to enter the code
+      </h1>
+      <perx-core-pin-redemption
+        length="4"
+        [voucherId]="voucherId"
+        (full)="pinInputSuccess()"
+        (hasErrorEmit)="errorHandler($event)">
+      </perx-core-pin-redemption>
+    </div>
+    <div *ngIf="redemptionType === rt.txtCode || redemptionType === rt.offline">
+      <perx-core-bcode-redemption [voucherId]="voucherId"></perx-core-bcode-redemption>
+    </div>
+    <div *ngIf="redemptionType === rt.qr" class="qrcode-container">
+      <perx-core-qrcode-redemption [voucherId]="voucherId"></perx-core-qrcode-redemption>
+    </div>
+  </div>
+</div>

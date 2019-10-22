@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { untilDestroyed } from 'ngx-take-until-destroy';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-user-joining-method',
@@ -9,9 +10,10 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 })
 export class UserJoinMethodComponent implements OnInit, OnDestroy {
   @Input() public group: FormGroup;
+  protected destroy$: Subject<void> = new Subject();
 
-  public get joinMethodGroup(): AbstractControl {
-    return this.group.get('joinMethod');
+  public get joinMethod(): FormGroup {
+    return this.group.get('joinMethod') as FormGroup;
   }
 
   public get transactionAmount(): AbstractControl {
@@ -19,12 +21,12 @@ export class UserJoinMethodComponent implements OnInit, OnDestroy {
   }
 
   public get amount(): AbstractControl {
-    return this.joinMethodGroup.get('amount');
+    return this.joinMethod.get('amount');
   }
 
   public subscribeGroupValueChanges(): void {
-    this.joinMethodGroup.valueChanges
-      .pipe(untilDestroyed(this))
+    this.joinMethod.valueChanges
+      .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
         this.switchStatusAmount(value.transactionAmount);
       });
@@ -32,10 +34,12 @@ export class UserJoinMethodComponent implements OnInit, OnDestroy {
 
   public switchStatusAmount(status: boolean): void {
     if (!status) {
+      this.amount.reset(null, {onlySelf: true, emitEvent: false});
       this.amount.disable({onlySelf: true, emitEvent: false});
-      return;
+    } else {
+      this.amount.enable({onlySelf: true, emitEvent: false});
     }
-    this.amount.enable({onlySelf: true, emitEvent: false});
+    this.amount.updateValueAndValidity({onlySelf: true, emitEvent: false});
   }
 
   public ngOnInit(): void {
@@ -44,5 +48,7 @@ export class UserJoinMethodComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -1,0 +1,5 @@
+<div *ngIf="!isLoading" class="content" [innerHtml]="content$ | async"></div>
+<div class="loading">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <div *ngIf="errorFlag">Content Page Not Found</div>
+</div>

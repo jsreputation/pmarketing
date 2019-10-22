@@ -1,27 +1,46 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { QrcodeRedemptionComponent } from './qrcode-redemption.component';
 import { VouchersModule } from '../vouchers.module';
 import { ConfigModule } from './../../config/config.module';
 import { IVoucherService } from '../ivoucher.service';
-import { RewardsService } from '../../rewards/rewards.service';
 import { of } from 'rxjs';
-import { IMerchantsService } from '../../merchants/imerchants.service';
+import { IVoucher, VoucherState } from '../models/voucher.model';
+import { Type, SimpleChange } from '@angular/core';
 
 describe('QrcodeRedemptionComponent', () => {
   let component: QrcodeRedemptionComponent;
   let fixture: ComponentFixture<QrcodeRedemptionComponent>;
+  const mockVoucher: IVoucher = {
+    id: 1,
+    reward: {
+      id: 1,
+      name: 'reward name',
+      description: 'reward description',
+      subtitle: 'sub title',
+      validFrom: new Date(),
+      validTo: new Date(),
+      sellingFrom: new Date(),
+      rewardThumbnail: '',
+      rewardBanner: 'https://picsum.photos/50/50?random=1',
+      merchantImg: '',
+      rewardPrice: [],
+      merchantId: 1,
+      merchantName: '',
+      merchantWebsite: '',
+      termsAndConditions: '',
+      howToRedeem: '',
+      redemptionType: null,
+      categoryTags: [],
+      inventory: null,
+    },
+    state: VoucherState.issued,
+    code: 'GFY2019',
+    expiry: new Date('2019-09-05T03:24:00'),
+  };
+
   const voucherServiceStub = {
-    get: () => of(''),
-    getAll: () => of([])
-  };
-
-  const rewardsServiceStub = {
-    getReward: () => of()
-  };
-
-  const merchantsServiceStub = {
-    getMerchant: () => of()
+    get: () => of(mockVoucher)
   };
 
   beforeEach(async(() => {
@@ -31,13 +50,7 @@ describe('QrcodeRedemptionComponent', () => {
         ConfigModule.forRoot({})
         ],
       providers: [
-        { provide: IVoucherService, useValue: voucherServiceStub },
-        {
-          provide: RewardsService, useValue: rewardsServiceStub
-        },
-        {
-          provide: IMerchantsService, useValue: merchantsServiceStub
-        }
+        { provide: IVoucherService, useValue: voucherServiceStub }
       ]
     })
       .compileComponents();
@@ -52,4 +65,20 @@ describe('QrcodeRedemptionComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('reward name should be displayed', fakeAsync(() => {
+    component.voucherId = 1;
+    const voucherService: IVoucherService = fixture.debugElement.injector
+    .get<IVoucherService>(IVoucherService as Type<IVoucherService>);
+    const voucherServiceSpy = spyOn(voucherService, 'get').and.returnValue(
+      of(mockVoucher)
+    );
+    component.ngOnChanges({
+      voucherId: new SimpleChange(null, 1, true)
+    });
+    fixture.detectChanges();
+    tick();
+    expect(voucherServiceSpy).toHaveBeenCalled();
+    expect(fixture.nativeElement.querySelector('.voucher-name').innerText).toEqual(mockVoucher.reward.name);
+  }));
 });

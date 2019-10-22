@@ -1,3 +1,10 @@
-mat-tab-group {
+.main-container {
+  overflow: scroll;
   height: calc(100% - 6rem);
+}
+
+perx-core-loyalty-transactions-list ::ng-deep {
+  .transaction-point {
+    color: #ddac27;
+  }
 }

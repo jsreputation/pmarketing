@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardDetailComponent } from './reward-detail.component';
 import { RewardsModule, RewardsService, IReward } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DebugElement, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { of } from 'rxjs';
 
 @Component({
@@ -15,7 +15,6 @@ class MockDetailHeaderComponent { }
 describe('RewardDetailComponent', () => {
   let component: RewardDetailComponent;
   let fixture: ComponentFixture<RewardDetailComponent>;
-  let debugElement: DebugElement;
   const mockReward: IReward = {
     id: 1,
     name: '',
@@ -49,7 +48,6 @@ describe('RewardDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RewardDetailComponent);
     component = fixture.componentInstance;
-    debugElement = fixture.debugElement;
     fixture.detectChanges();
   });
 

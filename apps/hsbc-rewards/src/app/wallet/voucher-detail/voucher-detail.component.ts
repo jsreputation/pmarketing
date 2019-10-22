@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { voucher } from 'src/assets/mock/vouchers';
 import { of, Observable } from 'rxjs';
-import { Location } from '@angular/common';
 import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.model';
 
 @Component({
@@ -24,14 +23,16 @@ export class VoucherDetailComponent implements OnInit {
   };
 
   constructor(
-    private voucherServe: IVoucherService,
-    private route: ActivatedRoute,
-    private location: Location
+    private voucherService: IVoucherService,
+    private route: ActivatedRoute
   ) { }
 
   public ngOnInit(): void {
     this.voucher = this.route.params.pipe(switchMap((param) => {
-      return this.voucherServe.get(param.id);
+      return this.voucherService.get(param.id, null, {
+        type: null,
+        sourceType: 'hsbc-rewards'
+      });
     })).pipe(catchError(() => {
       return of(voucher[0]);
     }));

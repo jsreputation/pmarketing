@@ -18,9 +18,8 @@ import {
 import { MatDialog } from '@angular/material';
 import { ClValidators } from '@cl-helpers/cl-validators';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { noop, combineLatest } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { noop, combineLatest, of, Subject } from 'rxjs';
+import { distinctUntilChanged, map, catchError, takeUntil } from 'rxjs/operators';
 import { RewardsService } from '@cl-core/services/rewards.service';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 
@@ -50,7 +49,8 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   // @ts-ignore
   private onTouched: any = noop;
   private isFirstInit: boolean;
-  private noOutComeProbability: number = 0;
+  private noOutCome: { probability: 0, outcomeId: '' };
+  private destroy$: Subject<any> = new Subject();
 
   public get enableProbability(): AbstractControl {
     return this.group.get('enableProbability');
@@ -81,7 +81,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     this.isFirstInit = true;
     this.store.currentCampaign$
       .asObservable()
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
         const isFirstTimeRenderFromAPIResponse = data && data.id && data.rewardsList && this.isFirstInit;
         if (isFirstTimeRenderFromAPIResponse) {
@@ -91,20 +91,22 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       });
     this.enableProbability.valueChanges
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         distinctUntilChanged()
       )
       .subscribe((value: boolean) => {
         this.updateRewards(value);
       });
     this.group.valueChanges
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((reward) => {
         this.onChange(reward);
       });
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public openDialogSelectReward(): void {
@@ -120,7 +122,11 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   public initRewardsList(): void {
     this.rewards.reset();
     const noOutcome = this.campaign.rewardsList.find(outcome => !outcome.resultId);
-    this.noOutComeProbability = noOutcome && noOutcome.probability || 0;
+    this.noOutCome = {
+      probability: noOutcome && noOutcome.probability || 0,
+      outcomeId: noOutcome && noOutcome.id
+    };
+
     const possibleOutcomes = this.campaign.rewardsList.filter(data => {
       if (!this.slotNumber) {
         return true;
@@ -128,20 +134,20 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       return data.lootBoxId === this.slotNumber;
     }).filter(data => data.resultId)
       .map(data => this.rewardsService.getReward(data.resultId).pipe(
-        map(reward => ({ ...reward, probability: data.probability }))
+        map(reward => ({ ...reward, probability: data.probability || 0, outcomeId: data.id })),
+        catchError(() => of(null))
       ));
     combineLatest(...possibleOutcomes).subscribe(
       (rewards: Partial<IRewardEntity>[]) => {
-        if (rewards[0].probability) {
-          this.enableProbability.patchValue(true);
-        }
-        rewards.map((reward: IRewardEntity) => this.addReward(reward));
+        rewards.filter(data => data).map((reward: IRewardEntity) => this.addReward(reward));
       }
-
     );
   }
 
   public addReward(value: IRewardEntity): void {
+    if (value.probability && !this.enableProbability.value) {
+      this.enableProbability.patchValue(true);
+    }
     this.rewards.push(this.createRewardFormGroup(value, this.enableProbability.value));
     this.cd.detectChanges();
   }
@@ -179,8 +185,10 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
 
   private createRewardFormGroup(value: IRewardEntity, isEnableProbability: boolean = false): FormGroup {
     return this.fb.group({
-      value: [value],
-      probability: { value: value ? value.probability || 0 : this.noOutComeProbability, disabled: !isEnableProbability }
+      value: value && [value] || [{ ...this.noOutCome }],
+      probability: {
+        value: value ? value.probability || 0 : this.noOutCome && this.noOutCome.probability || 0, disabled: !isEnableProbability
+      }
     });
   }
 
@@ -193,7 +201,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     } else {
       this.rewards.removeAt(0);
       for (let i = 0; i < this.rewards.length; i++) {
-        this.rewards.at(i).get('probability').reset(0, { emitEvent: false });
+        // this.rewards.at(i).get('probability').reset(0, { emitEvent: false });
         this.rewards.at(i).get('probability').disable({ emitEvent: false });
       }
     }

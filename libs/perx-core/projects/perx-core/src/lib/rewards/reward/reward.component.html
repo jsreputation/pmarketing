@@ -22,7 +22,7 @@
           <span>{{displayPriceFn(rewardPrice)}}</span><span class="points-code" *ngIf="showRewardIdentifier && rewardPrice.identifier"> (code: {{rewardPrice.identifier}})</span>
         </div>
       </div>
-      <div class="reward-expiry" *ngIf="reward.validTo !== null">
+      <div class="reward-expiry" *ngIf="showExpiry && reward.validTo !== null">
         Expiry: {{reward.validTo | date: 'dd/MM/yyyy'}}
       </div>
       <div class="section-heading" *ngIf="reward.description">

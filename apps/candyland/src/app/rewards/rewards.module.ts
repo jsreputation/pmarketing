@@ -50,6 +50,7 @@ import {
   TimePickerModule,
   UploadFileModule, UploadGraphicModule, VouchersProgressBarModule
 } from '@cl-shared';
+import { TagListModule } from '@cl-shared/components/tag-list/tag-list.module';
 import { RewardLoyaltyFormGroupComponent } from './components/reward-loyalty-form-group/reward-loyalty-form-group.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RewardLoyaltySetupGroupComponent } from './components/reward-loyalty-setup-group/reward-loyalty-setup-group.component';
@@ -114,6 +115,7 @@ import { RewardLoyaltySetupGroupComponent } from './components/reward-loyalty-se
     VouchersProgressBarModule,
     PaginationModule,
     PipesModule,
+    TagListModule,
     MatTabsModule
   ],
   entryComponents: [

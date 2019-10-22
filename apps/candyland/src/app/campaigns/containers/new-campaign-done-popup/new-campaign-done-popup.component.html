@@ -6,7 +6,7 @@
     <img class="confirm-img" [src]="data?.img || 'assets/images/campaigns/new-campaign-figure.png'">
     <h2 class="confirm-header" id="dialogTitle-campaignConfirm">{{data?.title || 'Yay! You just created a campaign'}}
     </h2>
-    <p class="confirm-copy">{{data?.subTitle || 'Copy the link and share your campaign.'}}</p>
+    <p class="confirm-copy">{{data?.subTitle}}</p>
   </div>
   <div class="dialog-actions" [ngSwitch]="data?.type">
     <cl-copy-link *ngSwitchCase="'weblink'" [link]="data.url"></cl-copy-link>

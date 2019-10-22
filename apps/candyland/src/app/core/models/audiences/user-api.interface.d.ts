@@ -8,5 +8,6 @@ declare interface IUserApi {
   phone_number: string;
   email_address: string;
   primary_identifier: string;
-  properties: {};
+  properties?: {};
 }
+

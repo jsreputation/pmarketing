@@ -1,6 +1,6 @@
 <header class="page-header">
   <h1 class="title">Audiences</h1>
-  <cl-button (click)="openAddUserDialog()" classList="primary">Add User</cl-button>
+  <cl-button (click)="openAddUserDialog()" classList="primary cta cta-new cta-new-adduser">Add User</cl-button>
 </header>
 
 <section class="content">
@@ -10,13 +10,13 @@
 
     <!--filters-->
     <ng-container [ngSwitch]="currentTab">
-      <cl-table-filters *ngSwitchDefault [dataSource]="dataSource" classList="row input-group">
+      <cl-table-filters *ngSwitchDefault [dataSource]="dataSource">
         <ng-container *clTableFilter="searchKey ; let filter">
           <cl-search-filter class="search-block" [control]="filter" placeholder="Search for users"></cl-search-filter>
         </ng-container>
       </cl-table-filters>
 
-      <cl-table-filters *ngSwitchCase="'audience'" [dataSource]="audiencesDataSource" classList="row input-group">
+      <cl-table-filters *ngSwitchCase="'audience'" [dataSource]="audiencesDataSource">
         <ng-container *clTableFilter="searchKey ; let filter">
           <cl-search-filter class="search-block" [control]="filter" placeholder="Search for audience">
           </cl-search-filter>

@@ -1,15 +1,5 @@
 @import "variables";
 
-.survey {
-  &-title-wrap {
-    margin-bottom: 3.5rem;
-  }
-
-  &-background {
-    margin-top: 6rem;
-  }
-}
-
 .btn-add-question {
   display: block;
   margin-top: ($vertical-padding * 0.5);
@@ -58,40 +48,8 @@ perx-core-survey {
       margin-bottom: 2rem;
     }
 
-    perx-core-survey {
-      pointer-events: all;
-    }
+    // perx-core-survey {
+    //   pointer-events: all;
+    // }
   }
-}
-
-::-webkit-scrollbar {
-  width: 3px;
-  height: 3px;
-}
-
-::-webkit-scrollbar-button {
-  background-color: #fcfcfc;
-  display: none;
-}
-
-::-webkit-scrollbar-track {
-  background-color: #000;
-}
-
-::-webkit-scrollbar-track-piece {
-  background-color: #ffffff;
-}
-
-::-webkit-scrollbar-thumb {
-  height: 50px;
-  background-color: #172238;
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-corner {
-  background-color: #fafafa;
-}
-
-::-webkit-resizer {
-  background-color: #666;
 }

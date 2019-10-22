@@ -21,6 +21,8 @@ export class NewCampaignDetailFormService {
         labels: []
       }),
       channel: this.fb.group({
+        eventId: [],
+        templateId: [],
         type: ['weblink', [Validators.required]],
         message: [],
         schedule: this.fb.group({

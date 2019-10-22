@@ -4,7 +4,7 @@
       Points Expiry
     </h2>
   </mat-expansion-panel-header>
-  <div class="card-content" [formGroup]="pointsExpiry">
+  <div class="card-content" *ngIf="group" [formGroup]="pointsExpiry">
     <div class="loyalty">
       <div class="loyalty-row input-group">
         <span>Points expire</span>
@@ -21,7 +21,7 @@
         </mat-form-field>
         <mat-form-field class="loyalty-points-expiry-type-input">
           <mat-select formControlName="trigger">
-            <mat-option value="accural">from when accural the point was earned.</mat-option>
+            <mat-option value="accrual">from when accrual the point was earned.</mat-option>
             <mat-option value="inactivity">from user inactivity.</mat-option>
           </mat-select>
         </mat-form-field>

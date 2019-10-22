@@ -9,8 +9,10 @@ import {
 import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ConfirmModalComponent } from '@cl-shared/containers/confirm-modal/confirm-modal.component';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { tap } from 'rxjs/operators';
+
+import { Subject } from 'rxjs';
+import { tap, takeUntil } from 'rxjs/operators';
+
 import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
 import { AvailableNewEngagementService, EngagementsService } from '@cl-core/services';
 import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
@@ -24,6 +26,7 @@ import { IEngagementItemMenuOption } from '@cl-shared/components/engagement-item
 })
 export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
   private static CAMPAIGN_ACTION: string = 'campaign';
+  private destroy$: Subject<any> = new Subject();
 
   public dataSource: MatTableDataSource<IEngagement> = new MatTableDataSource<IEngagement>();
   public tabsFilterConfig: OptionConfig[];
@@ -54,13 +57,16 @@ export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.cd.detach();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public showLaunchDialog(): void {
     const dialogRef = this.dialog.open(ConfirmModalComponent, {});
 
     dialogRef.afterClosed()
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(result => {
         if (result && result !== 'isCloseButtonTrigger') {
           this.launchCampaign();
@@ -80,6 +86,7 @@ export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
   private getData(): void {
     this.engagementsService.getEngagements()
       .pipe(
+        takeUntil(this.destroy$),
         tap(data => {
           const counterObject = PrepareTableFilers.countFieldValue(data, 'attributes_type');
           this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject, data);

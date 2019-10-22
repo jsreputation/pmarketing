@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, mergeMap } from 'rxjs/operators';
 import {
   IGame,
   GameType as TYPE,
@@ -9,12 +9,11 @@ import {
   defaultPinata,
   IPlayOutcome
 } from './game.model';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { IGameService } from './igame.service';
 import { Config } from '../config/config';
 import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
-import { IVoucher } from '../vouchers/models/voucher.model';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 
 const enum GameType {
@@ -164,14 +163,6 @@ export class WhistlerGameService implements IGameService {
 
   }
 
-  private static subscribeAndRevealVouch(voucher$: Observable<IVoucher>): IVoucher {
-    let voucher: IVoucher;
-    voucher$.subscribe(v => {
-      voucher = v;
-    });
-    return voucher;
-  }
-
   // @ts-ignore
   public play(campaignId: number, gameId: number): Observable<IPlayOutcome> {
     const body = {
@@ -187,13 +178,14 @@ export class WhistlerGameService implements IGameService {
       (`${this.hostName}/game/transactions`, body, {
         headers: { 'Content-Type': 'application/vnd.api+json' }
       }).pipe(
-        map(res => ({
-          vouchers:
-            res.data.attributes.results.attributes.results
-              .map(v => WhistlerGameService.subscribeAndRevealVouch(this.whistVouchSvc.get(Number.parseInt(v.id, 10)))),
-          rawPayload: res
-        })
-        )
+        mergeMap(res => (
+          combineLatest(...res.data.attributes.results.attributes.results.map(
+            (outcome: IJsonApiItem<Outcome>) => this.whistVouchSvc.get(Number.parseInt(outcome.id, 10))
+          )).pipe(
+            map((vouchArr) => vouchArr.reduce((acc, currVouch) =>
+            ({...acc, vouchers: [...acc.vouchers, currVouch]}), {vouchers: [], rawPayload: res})
+            ))
+        ))
       );
   }
 

@@ -15,7 +15,7 @@
         Cancel
       </span>
       </cl-button>
-      <cl-button [classList]="'primary'"
+      <cl-button [classList]="'primary cta cta-save'"
                  (click)="save()"
       >
       <span>
@@ -24,86 +24,80 @@
       </cl-button>
     </div>
   </header>
-  <section class="content phonepreview-wrapper form-limiter">
-    <div class="survey-form">
-      <mat-card class="game-graphic">
-        <div class="messages-wrap">
-          <p class="sub-title">
+  <section class="content form-limiter">
+    <div class="phonepreview-wrapper">
+      <div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
             Messages
-          </p>
-        </div>
-        <div class="messages-form" >
-          <div class="control-input">
-            <mat-form-field class="messages-input">
-              <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
-              <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
-              <mat-error *ngIf="headlineMessage.hasError('required')">Required field</mat-error>
-              <mat-error *ngIf="headlineMessage.hasError('minlength')">Min length 5</mat-error>
-              <mat-error *ngIf="headlineMessage.hasError('maxlength')">Max length 60</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="control-input">
-            <mat-form-field class="messages-input">
-              <input type="text" matInput [placeholder]="'Sub-headline message'" formControlName="subHeadlineMessage">
-              <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/{{subHeadlineMaxLength}}</mat-hint>
-              <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
-              <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>
-              <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length {{subHeadlineMaxLength}}</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-      </mat-card>
-      <mat-card class="game-graphic">
-        <div class="messages-wrap">
-          <p class="sub-title">
-            Questions
-          </p>
-        </div>
-
-        <!--questions form array-->
-        <div cdkDropList
-             (cdkDropListDropped)="drop($event)"
-             class="drag-list"
-             [cdkDropListData]="surveyQuestion.controls"
-        >
-          <cl-question-form-field *ngFor="let item of surveyQuestion.controls; let i = index;"
-                                  cdkDrag
-                                  [cdkDragData]="item"
-                                  [group]="item"
-                                  [formGroup]="surveyQuestion"
-                                  [currentIndex]="i"
-                                  [clOpenClose]="i"
-                                  [level]="level"
-                                  (removed)="deleteQuestion($event)"
-                                  (changeControl)="updateQuestionType($event)"
-          >
-            <div class="example-handle" cdkDragHandle>
-              <i class="icon drag-icon"></i>
+          </h2>
+          <div class="messages-form" >
+            <div class="control-input">
+              <mat-form-field class="messages-input">
+                <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
+                <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
+                <mat-error *ngIf="headlineMessage.hasError('required')">Required field</mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('minlength')">Min length 5</mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('maxlength')">Max length 60</mat-error>
+              </mat-form-field>
             </div>
-          </cl-question-form-field>
-        </div>
-        <!--end questions form array-->
+            <div class="control-input">
+              <mat-form-field class="messages-input">
+                <input type="text" matInput [placeholder]="'Sub-headline message'" formControlName="subHeadlineMessage">
+                <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/{{subHeadlineMaxLength}}</mat-hint>
+                <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length {{subHeadlineMaxLength}}</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Questions
+          </h2>
 
-        <cl-question-type class="btn-add-question"
-                          [addQuestionType]="true"
-                          (selectTypeQuestion)="choseTypeQuestion($event)"
-        >
-          <cl-button [classList]="'primary'">
-          <span>
-           + Add Question
-          </span>
-          </cl-button>
-        </cl-question-type>
-      </mat-card>
+          <!--questions form array-->
+          <div cdkDropList
+              (cdkDropListDropped)="drop($event)"
+              class="drag-list"
+              [cdkDropListData]="surveyQuestion.controls"
+          >
+            <cl-question-form-field *ngFor="let item of surveyQuestion.controls; let i = index;"
+                                    cdkDrag
+                                    [cdkDragData]="item"
+                                    [group]="item"
+                                    [formGroup]="surveyQuestion"
+                                    [currentIndex]="i"
+                                    [clOpenClose]="i"
+                                    [level]="level"
+                                    (removed)="deleteQuestion($event)"
+                                    (changeControl)="updateQuestionType($event)"
+            >
+              <div class="example-handle" cdkDragHandle>
+                <i class="icon drag-icon"></i>
+              </div>
+            </cl-question-form-field>
+          </div>
+          <!--end questions form array-->
 
-      <mat-card class="game-graphic">
-        <div class="survey-title-wrap">
-          <p class="sub-title">
+          <cl-question-type class="btn-add-question"
+                            [addQuestionType]="true"
+                            (selectTypeQuestion)="choseTypeQuestion($event)"
+          >
+            <cl-button [classList]="'primary'">
+            <span>
+            + Add Question
+            </span>
+            </cl-button>
+          </cl-question-type>
+        </mat-card>
+
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
             Graphics
-          </p>
-        </div>
-        <div class="game-form" *ngIf="color">
-          <div class="survey-select-color">
+          </h2>
+          <div class="game-form" *ngIf="color">
             <div class="control-input">
               <mat-form-field color="primary">
                 <mat-label>Progress Bar Color</mat-label>
@@ -147,99 +141,95 @@
                 </mat-select>
               </mat-form-field>
             </div>
-          </div>
-          <div class="survey-background-box">
-            <p class="game-title">
-              Card Background
-            </p>
-            <div class="game-gift-box_field">
-              <cl-select-graphic-wrap
-                *ngIf="surveyData.cardBackground"
-                formControlName="cardBackground"
-                [isRequired]="cardBackground.hasError('required') && cardBackground.touched"
-                class="game-selected-graphic"
-                [graphicList]="surveyData.cardBackground"
-              >
-              </cl-select-graphic-wrap>
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
+                Card Background
+              </h3>
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap
+                  *ngIf="surveyData.cardBackground"
+                  formControlName="cardBackground"
+                  [isRequired]="cardBackground.hasError('required') && cardBackground.touched"
+                  [graphicList]="surveyData.cardBackground"
+                >
+                </cl-select-graphic-wrap>
+              </div>
             </div>
-          </div>
 
-          <div class="survey-background">
-            <p class="game-title">
-              Background
-            </p>
-            <div class="game-gift-box_field">
-              <cl-select-graphic-wrap
-                *ngIf="surveyData.background"
-                formControlName="background"
-                [isRequired]="background.hasError('required') && background.touched"
-                class="game-selected-graphic"
-                [graphicList]="surveyData.background"
-              >
-              </cl-select-graphic-wrap>
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
+                Background
+              </h3>
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap
+                  *ngIf="surveyData.background"
+                  formControlName="background"
+                  [isRequired]="background.hasError('required') && background.touched"
+                  [graphicList]="surveyData.background"
+                >
+                </cl-select-graphic-wrap>
+              </div>
             </div>
           </div>
-        </div>
-      </mat-card>
-      <mat-card class="game-graphic">
-        <div class="messages-wrap">
-          <p class="sub-title">
+        </mat-card>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
             Button
-          </p>
-        </div>
-        <div class="messages-form">
-          <div class="control-input">
-            <mat-form-field class="messages-input">
-              <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
-              <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
-              <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
-              <mat-error *ngIf="buttonText.hasError('minlength')">Min length 2</mat-error>
-              <mat-error *ngIf="buttonText.hasError('maxlength')">Max length 20</mat-error>
-            </mat-form-field>
+          </h2>
+          <div class="messages-form">
+            <div class="control-input">
+              <mat-form-field class="messages-input">
+                <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
+                <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
+                <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
+                <mat-error *ngIf="buttonText.hasError('minlength')">Min length 2</mat-error>
+                <mat-error *ngIf="buttonText.hasError('maxlength')">Max length 20</mat-error>
+              </mat-form-field>
+            </div>
           </div>
-        </div>
-      </mat-card>
-    </div>
-    <cl-simple-mobile-view class="second-tab"
-                           [background]=" getImgLink(background, '/assets/images/stamps/card-background/card-bg-1.png')"
-                           [mobileImageClass]="'mobile-non-header'"
-                           [headerColor]="tenantSettings?.headerColor"
-                           [logo]="tenantSettings?.logo"
-                           [logoType]="tenantSettings?.logoType"
-                           [fontFamily]="tenantSettings?.font"
-                           clCreateImage
-    >
-      <div class="plugin-block">
-        <div class="mobile-preview-card"
-             [ngStyle]="{
-             'background-image': 'url(' + getImgLink(cardBackground, '/assets/images/stamps/card-background/card-bg-1.png') + ')',
-             'font-family': tenantSettings?.font
-             }"
-        >
-          <div class="mobile-preview-header">
-            <p class="mobile-preview-headline">
-              {{headlineMessage?.value}}
-            </p>
-            <p class="mobile-preview-sub-headline">
-              {{subHeadlineMessage?.value}}
-            </p>
+        </mat-card>
+      </div>
+      <cl-simple-mobile-view class="second-tab"
+                            [background]=" getImgLink(background, '/assets/images/stamps/card-background/card-bg-1.png')"
+                            [mobileImageClass]="'mobile-non-header'"
+                            [headerColor]="tenantSettings?.headerColor"
+                            [logo]="tenantSettings?.logo"
+                            [logoType]="tenantSettings?.logoType"
+                            [fontFamily]="tenantSettings?.font"
+                            clCreateImage
+      >
+        <div class="plugin-block">
+          <div class="mobile-preview-card"
+              [ngStyle]="{
+              'background-image': 'url(' + getImgLink(cardBackground, '/assets/images/stamps/card-background/card-bg-1.png') + ')',
+              'font-family': tenantSettings?.font
+              }"
+          >
+            <div class="mobile-preview-header">
+              <p class="mobile-preview-headline">
+                {{headlineMessage?.value}}
+              </p>
+              <p class="mobile-preview-sub-headline">
+                {{subHeadlineMessage?.value}}
+              </p>
+            </div>
+            <perx-core-survey [data]="getQuestionData()"></perx-core-survey>
           </div>
-          <perx-core-survey [data]="getQuestionData()"></perx-core-survey>
-        </div>
 
-      </div>
-      <div class="mobile-preview-btn-wrap mobile-btn-block">
-        <button class="mobile-preview-btn"
-                [ngStyle]="{
-                  backgroundColor: tenantSettings?.buttonColor,
-                  'color': tenantSettings?.buttonTextColor,
-                  'font-family': tenantSettings?.font
-                }"
-        >
-          {{buttonText?.value}}
-        </button>
-      </div>
-    </cl-simple-mobile-view>
+        </div>
+        <div class="mobile-preview-btn-wrap mobile-btn-block">
+          <button class="mobile-preview-btn"
+                  [ngStyle]="{
+                    backgroundColor: tenantSettings?.buttonColor,
+                    'color': tenantSettings?.buttonTextColor,
+                    'font-family': tenantSettings?.font
+                  }"
+          >
+            {{buttonText?.value}}
+          </button>
+        </div>
+      </cl-simple-mobile-view>
+    </div>
   </section>
 </article>
 

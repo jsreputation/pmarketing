@@ -14,9 +14,13 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 })
 class PerxCoreLoyaltySummaryMockComponent {
   @Input()
-  public loyalty: Observable<ILoyalty>|undefined;
+  public loyalty: Observable<ILoyalty> | undefined;
   @Input()
   public titleFn: (profile: IProfile) => string;
+  @Input()
+  public subTitleFn: (loyalty: ILoyalty) => string;
+  @Input()
+  public summaryExpiringFn: (loyalty: ILoyalty) => string;
 }
 
 @Component({
@@ -51,7 +55,6 @@ class MockHostComponent {
 }
 
 describe('HomeComponent', () => {
-  let component: HomeComponent;
   let mockHostFixture: ComponentFixture<MockHostComponent>;
   let mockHostComponent: MockHostComponent;
 
@@ -87,7 +90,6 @@ describe('HomeComponent', () => {
   beforeEach(() => {
     mockHostFixture = TestBed.createComponent(MockHostComponent);
     mockHostComponent = mockHostFixture.componentInstance;
-    component = mockHostComponent.component;
 
     mockHostFixture.detectChanges();
   });

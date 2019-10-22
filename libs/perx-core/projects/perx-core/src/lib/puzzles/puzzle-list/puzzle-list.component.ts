@@ -1,19 +1,21 @@
-import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { StampService } from '../../stamp/stamp.service';
 import { IStampCard , StampCardState, StampState } from '../../stamp/models/stamp.model';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-puzzle-list',
   templateUrl: './puzzle-list.component.html',
-  styleUrls: ['./puzzle-list.component.css']
+  styleUrls: ['./puzzle-list.component.scss']
 })
-export class PuzzleListComponent implements OnChanges {
+export class PuzzleListComponent implements OnChanges, OnDestroy {
   public puzzles: IStampCard[];
 
   @Input()
   public campaignId: number = null;
   @Input()
-  public iconDisplay: string = 'arrow_forward_ios';
+  public iconDisplay: string;
 
   public total: number = 6;
 
@@ -22,6 +24,7 @@ export class PuzzleListComponent implements OnChanges {
 
   @Output()
   public completed: EventEmitter<void> = new EventEmitter<void>();
+  private destroy$: Subject<any> = new Subject();
 
   constructor(private stampService: StampService) { }
 
@@ -30,6 +33,7 @@ export class PuzzleListComponent implements OnChanges {
       this.puzzles = null;
       if (this.campaignId !== null) {
         this.stampService.getCards(this.campaignId)
+          .pipe(takeUntil(this.destroy$))
           .subscribe((res: IStampCard[]) => {
             this.puzzles = res;
             // assume all is completed
@@ -116,5 +120,10 @@ export class PuzzleListComponent implements OnChanges {
       return 0;
     }
     return puzzle.stamps.filter(st => st.state === StampState.redeemed).length;
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

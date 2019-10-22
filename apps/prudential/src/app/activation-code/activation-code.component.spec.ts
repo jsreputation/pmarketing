@@ -4,7 +4,7 @@ import { ActivationCodeComponent } from './activation-code.component';
 import { Router } from '@angular/router';
 import { MatCardModule, MatDialogModule } from '@angular/material';
 import { Location } from '@angular/common';
-import { MatDialog } from '@angular/material';
+// import { MatDialog } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import {
@@ -27,7 +27,7 @@ describe('ActivationCodeComponent', () => {
   let fixture: ComponentFixture<ActivationCodeComponent>;
   let location: Location;
   let router: Router;
-  let dialog: MatDialog;
+  // let dialog: MatDialog;
   let overlayContainerElement: HTMLElement;
   const authenticationServiceStub = {};
   const profileServiceStub = {
@@ -75,8 +75,8 @@ describe('ActivationCodeComponent', () => {
           provide: IMerchantsService, useValue: merchantsServiceStub
         },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
-        { provide: AUTH_SERVICE, useValue: ''},
-        { provide: ProfileService, useValue: profileServiceStub},
+        { provide: AUTH_SERVICE, useValue: '' },
+        { provide: ProfileService, useValue: profileServiceStub },
         { provide: IVoucherService, useValue: voucherServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub }
       ]
@@ -84,7 +84,7 @@ describe('ActivationCodeComponent', () => {
       .compileComponents();
     location = TestBed.get(Location);
     router = TestBed.get(Router);
-    dialog = TestBed.get(MatDialog);
+    // dialog = TestBed.get(MatDialog);
   }));
 
   beforeEach(() => {

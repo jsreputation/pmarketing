@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+// tslint:disable-next-line:import-blacklist
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LoyaltyFormStepTiersConversionsComponent } from './loyalty-form-step-tiers-conversions.component';
 
 describe('LoyaltyFormStepTwoComponent', () => {
@@ -8,9 +9,10 @@ describe('LoyaltyFormStepTwoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoyaltyFormStepTiersConversionsComponent ]
+      declarations: [ LoyaltyFormStepTiersConversionsComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

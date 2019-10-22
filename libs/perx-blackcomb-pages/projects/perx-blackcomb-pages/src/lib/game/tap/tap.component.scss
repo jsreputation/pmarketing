@@ -1,0 +1,51 @@
+.main-puzzle-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+
+  h1 {
+    color: white;
+    text-align: center;
+    font-family: Roboto, sans-serif;
+    padding: 2rem 0 0 0;
+  }
+
+  h3 {
+    color: white;
+    text-align: center;
+    margin: 0;
+  }
+}
+
+.game-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+
+  .pinata-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+.game-footer {
+  bottom: 0;
+  padding: 1.6rem;
+  width: 100%;
+  box-sizing: border-box;
+
+  button {
+    width: 100%;
+    min-width: 50%;
+    font-size: 1.5rem;
+    padding: 1.6rem;
+    margin: 0;
+  }
+}

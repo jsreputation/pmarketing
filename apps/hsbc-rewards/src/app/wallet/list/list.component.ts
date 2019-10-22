@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Voucher, IVoucherService, VoucherComponent, VoucherState, StatusLabelMapping } from '@perx/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list',
@@ -33,7 +32,7 @@ export class ListComponent implements OnInit {
       this.paramId = param.id;
       this.filter = this.paramId === 'history' ? [VoucherState.redeemed, VoucherState.expired] :
         [VoucherState.issued, VoucherState.reserved, VoucherState.released];
-      this.vouchers = this.vouchersService.getAll({ type: 'all' });
+      this.vouchers = this.vouchersService.getAll({ type: 'all', sourceType: 'hsbc-rewards' });
     });
   }
 

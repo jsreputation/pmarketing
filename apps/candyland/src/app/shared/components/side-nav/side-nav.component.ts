@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { ChangeDetectorRef, Component, OnDestroy, Input, OnInit } from '@angular/core';
 import {
   trigger, state, style, animate, transition
 } from '@angular/animations';
@@ -40,16 +41,23 @@ export function fnTransition(stateChangeExpr: string, time: string): any {
     ])
   ]
 })
-export class SideNavComponent implements OnInit {
+export class SideNavComponent implements OnInit, OnDestroy {
   @Input() public isVisible: boolean = true;
   public user$: Observable<IamUser>;
   public isOpen: boolean = true;
   public visibility: string = 'shown';
   public sideNavOpened: boolean = true;
-  public sideNavMode: string = 'side';
+  public mobileQuery: MediaQueryList;
+  private myMobileQueryListener: () => void;
 
   constructor(private authService: AuthService,
-              private userService: UserService) {
+              private userService: UserService,
+              changeDetectorRef: ChangeDetectorRef,
+              media: MediaMatcher) {
+                this.mobileQuery = media.matchMedia('(max-width: 768px)');
+                this.myMobileQueryListener = () => changeDetectorRef.detectChanges();
+                // tslint:disable-next-line: deprecation
+                this.mobileQuery.addListener(this.myMobileQueryListener);
   }
 
   public ngOnInit(): void {
@@ -62,5 +70,10 @@ export class SideNavComponent implements OnInit {
 
   public logout(): void {
     this.authService.logout();
+  }
+
+  public ngOnDestroy(): void {
+    // tslint:disable-next-line: deprecation
+    this.mobileQuery.removeListener(this.myMobileQueryListener);
   }
 }

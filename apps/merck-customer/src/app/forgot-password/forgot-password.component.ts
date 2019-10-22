@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ForgotPasswordComponent implements PageAppearence {
 
-  public selectedCountry: string = '+852';
+  public selectedCountry: string = '852';
   public resetPasswordForm: FormGroup;
 
   constructor(
@@ -33,7 +33,8 @@ export class ForgotPasswordComponent implements PageAppearence {
       this.selectedCountry = this.router.getCurrentNavigation().extras.state.country;
     }
     this.resetPasswordForm = this.fb.group({
-      mobileNo: [receivedMobileNo, Validators.required]
+      mobileNo: [receivedMobileNo, Validators.required],
+      countryCode: [this.selectedCountry, Validators.required]
     });
   }
 
@@ -47,14 +48,15 @@ export class ForgotPasswordComponent implements PageAppearence {
   }
 
   public onSubmit(): void {
-    // TODO: Country code append disbaled for now. Uncomment following line if API supports it.
-    // const mobileNumber = this.selectedCountry + (this.resetPasswordForm.get('mobileNo').value as string);
     const mobileNumber = (this.resetPasswordForm.get('mobileNo').value as string);
+    const countryCode = (this.resetPasswordForm.get('countryCode').value as string);
+    const codeAndMobile = countryCode + mobileNumber;
+    const cleanedMobileNo = codeAndMobile.replace(/[^0-9]/g, ''); // remove non numeric and special characters
 
     try {
-      this.authService.forgotPassword(mobileNumber).subscribe(
+      this.authService.forgotPassword(cleanedMobileNo).subscribe(
         () => {
-          this.router.navigate(['enter-pin/password'], { state: { mobileNo: mobileNumber } });
+          this.router.navigate(['enter-pin/password'], { state: { mobileNo: cleanedMobileNo } });
         },
         err => {
           if (err instanceof HttpErrorResponse) {
@@ -63,7 +65,7 @@ export class ForgotPasswordComponent implements PageAppearence {
             } else if (err.status === 401) {
               this.notificationService.addSnack('Invalid mobile number.');
             } else {
-              this.notificationService.addSnack(err.statusText);
+              this.notificationService.addSnack(err.error.message);
             }
           }
         });

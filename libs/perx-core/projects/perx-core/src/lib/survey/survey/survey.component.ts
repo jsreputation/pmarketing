@@ -1,13 +1,14 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { IAnswer, ISurvey, ITracker, IPoints } from '../models/survey.model';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-survey',
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.scss']
 })
-export class SurveyComponent implements OnInit {
+export class SurveyComponent implements OnInit, OnDestroy {
   @Input('data')
   public data$: Observable<ISurvey>;
 
@@ -28,15 +29,19 @@ export class SurveyComponent implements OnInit {
 
   public questionPointer: number = 0;
 
+  private destroy$: Subject<any> = new Subject();
+
   public ngOnInit(): void {
     if (this.data$) {
-      this.data$.subscribe(data => {
-        this.data = data;
-        if (this.data) {
-          this.totalLength.emit(this.data.questions.length);
-          this.currentPointer.emit(0);
-        }
-      });
+      this.data$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(data => {
+          this.data = data;
+          if (this.data) {
+            this.totalLength.emit(this.data.questions.length);
+            this.currentPointer.emit(0);
+          }
+        });
     }
   }
 
@@ -58,9 +63,9 @@ export class SurveyComponent implements OnInit {
     }
     if (currentPoint >= totalQuestion) {
       const answers = Object.entries(this.answersTracker).map(([id, answer]) => ({
-          question_id: id,
-          content: answer.content
-        }));
+        question_id: id,
+        content: answer.content
+      }));
       this.surveyDone.emit(answers);
     }
   }
@@ -75,5 +80,10 @@ export class SurveyComponent implements OnInit {
 
   public calculatePoints(): number {
     return Object.values(this.pointsTracker).reduce((sum, point) => sum + point, 0);
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

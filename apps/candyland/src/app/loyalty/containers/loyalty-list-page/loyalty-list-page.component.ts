@@ -63,7 +63,7 @@ export class LoyaltyListPageComponent implements OnDestroy {
     this.loyaltyService.deleteLoyalty(id)
       .subscribe(() => {
         this.dataSource.updateData();
-        this.cd.markForCheck();
+        this.cd.detectChanges();
       });
   }
 
@@ -72,7 +72,7 @@ export class LoyaltyListPageComponent implements OnDestroy {
       .subscribe(result => {
         if (result) {
           this.dataSource.updateData();
-          this.cd.markForCheck();
+          this.cd.detectChanges();
         }
       });
   }

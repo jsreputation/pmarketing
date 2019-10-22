@@ -59,11 +59,11 @@ export class ClValidators extends Validators {
       return null;
     }
     for (const controlKey in control.controls) {
-      if (control.controls[controlKey].value) {
+      if (control.controls[controlKey].value === true) {
         return null;
       }
     }
-    return {groupRequired: true};
+    return {requiredGroup: true};
   }
 
 }

@@ -13,7 +13,7 @@ import { IVoucher } from '../models/voucher.model';
 @Component({
   selector: 'perx-core-pin-redemption',
   templateUrl: './pin-redemption.component.html',
-  styleUrls: ['./pin-redemption.component.css']
+  styleUrls: ['./pin-redemption.component.scss']
 })
 export class PinRedemptionComponent implements OnInit, OnChanges {
   @Input()

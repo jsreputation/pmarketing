@@ -91,7 +91,7 @@ export class SignupComponent implements PageAppearence {
           this.router.navigate(['enter-pin/register'], { state: { mobileNo: cleanedMobileNo } } );
         },
         err => {
-          console.error('Signup: ' + err);
+          this.notificationService.addSnack(err.error.message);
         });
     } catch (error) {
         console.log(error);
