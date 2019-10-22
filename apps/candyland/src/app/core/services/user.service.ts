@@ -30,4 +30,10 @@ export class UserService {
     );
   }
 
+  public get currency$(): any {
+    return this.userSubject$.pipe(
+      map(user => user ? user.currency : null)
+    );
+  }
+
 }

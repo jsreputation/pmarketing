@@ -7,6 +7,7 @@ import { DaysOnGoingPipe } from './daysOnGoing.pipe';
 import { UppercaseSplitPipe } from '@cl-shared/pipes/uppercase-split.pipe';
 import { EngagementTypePipe } from './engagement-type.pipe';
 import { SafePipe } from './safe.pipe';
+import { JoinMethodPipePipe } from '@cl-shared/pipes/join-method.pipe';
 
 const PIPES = [
   FullnamePipe,
@@ -15,7 +16,8 @@ const PIPES = [
   UppercaseSplitPipe,
   FieldsInArrayPipe,
   EngagementTypePipe,
-  SafePipe
+  SafePipe,
+  JoinMethodPipePipe
 ];
 
 @NgModule({
