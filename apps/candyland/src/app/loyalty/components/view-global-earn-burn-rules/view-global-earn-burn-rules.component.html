@@ -8,17 +8,18 @@
   <div class="card-content">
     <p class="info-points-title">Points Earning Conversion Rate</p>
     <p class="info-points-value">
-      {{tiersConversions?.globalEarnRule.amount}}
+      {{loyalty?.tiersConversions?.globalEarnRule.amount}}
       {{currency || 'SGD'}}
       spending =
-      {{tiersConversions?.globalEarnRule.points}}
-      AllIT Points
+      {{loyalty?.tiersConversions?.globalEarnRule.points}}
+      {{loyalty?.details?.pointsName}}
     </p>
     <p class="info-points-title">Points Burning Conversion Rate</p>
     <p class="info-points-value">
-      {{tiersConversions?.globalBurnRule.amount}}
-      AllIT Points =
-      {{tiersConversions?.globalBurnRule.points}}
+      {{loyalty?.tiersConversions?.globalBurnRule.amount}}
+      {{loyalty?.details?.pointsName}}
+      =
+      {{loyalty?.tiersConversions?.globalBurnRule.points}}
       {{currency || 'SGD'}} in reward value
     </p>
   </div>
