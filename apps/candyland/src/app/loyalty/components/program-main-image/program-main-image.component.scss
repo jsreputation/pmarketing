@@ -1,0 +1,15 @@
+@import "variables";
+
+.upload {
+  &-img-title {
+    font-size: 1.4rem;
+    line-height: 1.43;
+    letter-spacing: 0.25px;
+    color: $base-font-color;
+    padding-bottom: 0.8rem;
+  }
+}
+
+cl-upload-graphic {
+  padding-bottom: 24px;
+}
