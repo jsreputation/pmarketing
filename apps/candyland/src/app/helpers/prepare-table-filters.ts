@@ -37,7 +37,7 @@ export class PrepareTableFilters {
   public static countFieldValue(array: object[], fieldName: string): { [key: string]: number } {
     const counterObject = {};
     array.forEach(item => {
-      if (item && !(fieldName in item)) {
+      if (item === undefined || !(fieldName in item)) {
         return;
       }
       const value = item[fieldName];
@@ -72,7 +72,7 @@ export class PrepareTableFilters {
       return Object.keys(filters)
         .filter((key) => !!filters[key])
         .every((key) => {
-          if (item[key] as string) {
+          if (item === undefined || item[key] as string) {
             return item[key].toLocaleLowerCase().includes(filters[key].toLocaleLowerCase());
           }
           // if ('begin' in filters[key] && 'end' in filters[key]) {

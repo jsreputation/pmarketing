@@ -19,4 +19,19 @@ describe('PrepareTableFilter', () => {
         expect(res.plait).toBeDefined();
         expect(res.plait).toBe(1);
     });
+
+    it('should count Field Value on an array with undefined fields', () => {
+        const res = PrepareTableFilters.countFieldValue([
+            { yo: 'plait' },
+            { yo: 'bo' },
+            undefined,
+            { yo: 'bo' },
+            {}
+        ], 'yo');
+        expect(Object.keys(res).length).toBe(2);
+        expect(res.bo).toBeDefined();
+        expect(res.bo).toBe(2);
+        expect(res.plait).toBeDefined();
+        expect(res.plait).toBe(1);
+    });
 });
