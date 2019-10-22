@@ -1,0 +1,32 @@
+@import "variables";
+
+:host {
+  font-size: $base-font-size;
+  background-color: $background-color;
+}
+
+.loyalty-detail-content {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  & > .card {
+    margin-top: 1.6rem !important;
+  }
+}
+
+.date-field {
+  position: relative;
+
+  &-error {
+    @include typo-caption;
+
+    display: flex;
+    width: max-content;
+    flex-flow: row nowrap;
+    position: absolute;
+    bottom: -0.5rem;
+  }
+}

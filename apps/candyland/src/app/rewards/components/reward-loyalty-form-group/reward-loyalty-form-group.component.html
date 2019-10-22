@@ -1,0 +1,7 @@
+<mat-tab-group>
+  <mat-tab [label]="loyalty.name" *ngFor="let loyalty of loyalties; let index = index;">
+    <cl-reward-loyalty-setup-group [loyalty]="loyalty"
+                                   [group]="getRewardLoyaltyFormItem(index)"
+    ></cl-reward-loyalty-setup-group>
+  </mat-tab>
+</mat-tab-group>
