@@ -1,0 +1,40 @@
+<div class="form-group" [formGroup]="group">
+  <div class="loyalty-row input-group">
+    <span>Cost of Reward</span>
+    <mat-form-field floatLabel="never">
+      <input type="number" [min]="0" matInput formControlName="costReward">
+    </mat-form-field>
+    <span>points (Burn rule: {{loyalty?.tiersConversions?.globalBurnRule.points}} points to {{loyalty?.tiersConversions?.globalBurnRule.amount}} {{currency || "SGD"}})</span>
+  </div>
+
+  <p class="loyalty-label tier-label">Eligible Tiers</p>
+
+  <section class="list-checkbox flex align-items-center tier-form-group" *ngFor="let item of tiers; let index = index;" [formGroup]="item">
+    <mat-checkbox [color]="'primary'" class="tier-name" [formControl]="item.get('statusTiers')" >{{item.get('name').value}}</mat-checkbox>
+
+    <p class="tier-points">
+      {{getPercentCalculate(group.get('costReward').value, item.get('statusDiscount').value, index)}} points
+    </p>
+    <div class="flex align-items-center">
+      <mat-checkbox [color]="'primary'" class="transaction-amount" [formControl]="item.get('statusDiscount')" >{{'Apply tier discount (' + calculateDiscount(index)  +'%)'}}</mat-checkbox>
+
+      <!--      <mat-form-field>-->
+<!--        <input matInput  type="number" >[formControlName]="'amount'"-->
+<!--        <mat-error *ngIf="amount.hasError('required') && amount.touched">Required field</mat-error>-->
+<!--        <mat-error *ngIf="amount.hasError('minlength') && amount.touched">Min value is 1</mat-error>-->
+<!--      </mat-form-field>-->
+<!--      <p>-->
+<!--        SGD-->
+<!--      </p>-->
+    </div>
+  </section>
+
+<!--  <div class="loyalty-row input-group">-->
+<!--    <span>Cost of Reward</span>-->
+<!--    <mat-form-field floatLabel="never">-->
+<!--      <input type="number" [min]="0" matInput formControlName="costReward">-->
+<!--    </mat-form-field>-->
+<!--    <span>points (Burn rule: {{loyalty?.tiersConversions?.globalBurnRule.points}} points to {{loyalty?.tiersConversions?.globalBurnRule.amount}} {{currency || "SGD"}})</span>-->
+<!--  </div>-->
+</div>
+
