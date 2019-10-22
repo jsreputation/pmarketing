@@ -54,11 +54,11 @@ export class WhistlerLoyaltyService {
         }
       }
     ).pipe(
-      map((loyalty: IJsonApiListPayload<IWLoyalty, IWLoyaltyCard>) => {
-        return loyalty.data.map(
+      map((loyalty: IJsonApiListPayload<IWLoyalty, IWLoyaltyCard>) =>
+        loyalty.data.map(
           res => WhistlerLoyaltyService.WLoyaltyToLoyalty(res, loyalty.included)
-        );
-      })
+        )
+      )
     );
   }
 
