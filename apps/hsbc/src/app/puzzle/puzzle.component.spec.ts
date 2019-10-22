@@ -10,11 +10,12 @@ import {
   ICampaignService,
   StampService,
   IStampCard,
-  StampCardState
+  StampCardState, AuthenticationService
 } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SoundModule } from '../sound/sound.module';
 import { of } from 'rxjs';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('PuzzleComponent', () => {
   let component: PuzzleComponent;
@@ -50,6 +51,7 @@ describe('PuzzleComponent', () => {
     getCards: () => of([mockCard])
   };
 
+  const authenticationServiceStub = {};
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PuzzleComponent],
@@ -61,10 +63,12 @@ describe('PuzzleComponent', () => {
         VouchersModule,
         CampaignModule,
         StampModule,
+        HttpClientTestingModule,
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
-        { provide: StampService, useValue: stampServiceStub }
+        { provide: StampService, useValue: stampServiceStub },
+        { provide: AuthenticationService, useValue: authenticationServiceStub}
       ]
     })
       .compileComponents();
