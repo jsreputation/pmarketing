@@ -39,7 +39,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformEngagementHandler(data: IEngagementApi, type?: string): any {
+  public static transformEngagementHandler(data: IEngagementApi, type?: string): any | undefined {
     const engagementType = type ? type : data.attributes.type;
 
     switch (engagementType) {
@@ -121,7 +121,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformGameHandler(data: IEngagementApi, engagementType?: string): any {
+  public static transformGameHandler(data: IEngagementApi, engagementType?: string): IEngagementShakeType | IEngagementTapType | undefined {
     switch (data.attributes.game_type) {
       case 'shake':
         return EngagementHttpAdapter.transformToShackType(data, engagementType);
