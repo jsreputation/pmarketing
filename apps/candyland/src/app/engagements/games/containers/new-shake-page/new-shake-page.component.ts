@@ -13,7 +13,7 @@ import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
-import { CreateImageDirective } from '@cl-shared/directives/create-image.directive';
+import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 
 @Component({
   selector: 'cl-new-shake-page',
@@ -22,7 +22,7 @@ import { CreateImageDirective } from '@cl-shared/directives/create-image.directi
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewShakePageComponent implements OnInit, OnDestroy {
-  @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
+  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<any> = new Subject();
 
@@ -111,7 +111,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
       this.form.markAllAsTouched();
       return;
     }
-    this.createImagePreview.getPreviewUrl()
+    this.simpleMobileViewComponent.createPreview()
       .pipe(
         switchMap((imageUrl: IUploadedFile) => {
           if (this.id) {
