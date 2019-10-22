@@ -218,7 +218,8 @@ export class RewardHttpAdapter {
               times: data.vouchers.voucherValidity.issuanceDate.times,
               duration: data.vouchers.voucherValidity.issuanceDate.duration
             }
-          }
+          },
+          loyalties: null,
         }
       }
     };
@@ -227,6 +228,7 @@ export class RewardHttpAdapter {
   }
 
   public static transformFromReward(data: IRewardEntity): IRewardEntityApi {
+    console.log('transformFromReward', data);
     return {
       type: 'entities',
       attributes: {
@@ -250,7 +252,8 @@ export class RewardHttpAdapter {
               times: data.voucherValidity.times,
               duration: data.voucherValidity.duration
             }
-          }
+          },
+          loyalties: null,
         }
       }
     };

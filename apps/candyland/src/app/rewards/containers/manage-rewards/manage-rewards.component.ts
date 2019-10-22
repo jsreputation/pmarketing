@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 import { RewardsService, MerchantsService } from '@cl-core/services';
@@ -48,7 +48,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       this.form.patchValue(this.newRewardFormService.getDefaultValue());
     }
     this.handleRouteParams();
-    this.getLoyalties();
+    // this.getLoyalties();
+    this.handlerLoyalty();
   }
 
   public ngOnDestroy(): void {
@@ -169,10 +170,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       .subscribe(
         (reward: IRewardEntityForm) => {
           // TODO: need handle the loyalties to patch form
-          if (reward.loyalties) {
-            this.getRewardLoyaltyData$.next(reward.loyalties);
-          }
-          console.log('reward', reward);
+          this.getRewardLoyaltyData$.next(reward.loyalties);
+
           this.reward = reward;
           this.form.patchValue(reward);
           this.form.get('merchantInfo').patchValue(reward.rewardInfo.organizationId);
@@ -190,19 +189,21 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getLoyalties(): void {
-    const params: any = {
-      'page[number]': 1,
-      'page[size]': 20
-    };
-    this.loyaltyService.getLoyalties(params)
-      .subscribe(((loyalties) => {
-        console.log('data in the component', loyalties);
+  private handlerLoyalty(): void {
+    combineLatest([this.getLoyalties(), this.getRewardLoyaltyData$])
+      .subscribe((([loyalties, savedLoyalty]) => {
+        let saveLoyaltiesMap: any;
+
+        // if exist saved loyalties cleans it
+        if (savedLoyalty && savedLoyalty.length) {
+          const poolExistingIdLoyalties = this.setPoolIdExistingLoyalty(loyalties.data);
+          const cleanSavedLoyalties = this.filterSavedLoyalties(savedLoyalty, poolExistingIdLoyalties);
+          saveLoyaltiesMap = this.createMapSaveLoyalties(cleanSavedLoyalties);
+        }
 
         this.rewardLoyaltyForm = this.newRewardFormService.getRewardLoyaltyForm();
         loyalties.data.forEach((loyalty) => {
           const loyaltyFormGroup = this.newRewardFormService.getLoyaltyFormGroup();
-          console.log(loyalty);
 
           // handler of custom tears
           this.setCustomTiers(loyalty, loyaltyFormGroup);
@@ -213,12 +214,22 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
 
           this.rewardLoyaltyForm.push(loyaltyFormGroup);
         });
-
-        console.log('form value', this.rewardLoyaltyForm.value);
+        // patch with if exist savedLoyalties
+        if (savedLoyalty && savedLoyalty.length) {
+          this.patchWithSavedLoyalties(saveLoyaltiesMap, this.rewardLoyaltyForm);
+        }
 
         this.loyalties = loyalties.data;
         this.cd.detectChanges();
       }));
+  }
+
+  private getLoyalties(): Observable<any> {
+    const params: any = {
+      'page[number]': 1,
+      'page[size]': 20
+    };
+    return this.loyaltyService.getLoyalties(params);
   }
 
   private setCustomTiers(loyalty: any, loyaltyFormGroup: FormGroup): void {
@@ -229,10 +240,56 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
           this.newRewardFormService.getRewardLoyaltyTiersGroup();
         loyaltyTiersGroup.patchValue({
           name: item.name,
+          customTierId: item.id
         });
         (loyaltyFormGroup.get('tiers') as FormArray)
           .push(loyaltyTiersGroup);
       });
     }
+  }
+
+  private setPoolIdExistingLoyalty(data: any): string[] {
+    return data.map((item: any) => item.id);
+  }
+
+  private filterSavedLoyalties(savedLoyalties: any, poolLoyaltiesId: string[]): any[] {
+    return savedLoyalties.filter((loyalty) => poolLoyaltiesId.includes(loyalty.programId));
+  }
+
+  private patchWithSavedLoyalties(savedLoyalties: any[], form: FormArray): void {
+    for (let index = 0; index < form.controls.length - 1; index++) {
+      const loyaltyGroup = form.at(index);
+      if (savedLoyalties[loyaltyGroup.value.programId]) {
+        const currentSavedLoyalty = savedLoyalties[loyaltyGroup.value.programId];
+        loyaltyGroup.patchValue({
+          costReward: currentSavedLoyalty.costReward,
+        });
+        // clean custom tear and patch value
+        loyaltyGroup.value.tiers.forEach((tier, indexTier: number) => {
+          if (savedLoyalties[loyaltyGroup.value.programId].tiers[tier.customTierId]) {
+            const savedTier = savedLoyalties[loyaltyGroup.value.programId].tiers[tier.customTierId];
+            // get control tiers and patch it
+            const controlTier = (loyaltyGroup.get('tiers') as FormArray).at(indexTier);
+            controlTier.patchValue({
+              statusDiscount: savedTier.statusDiscount,
+              statusTiers: savedTier.statusTiers
+            });
+          }
+        });
+      }
+    }
+  }
+
+  private createMapSaveLoyalties(saveLoyalties: any[]): any {
+    const result = {};
+    saveLoyalties.forEach((loyalty) => {
+      const tiersMap = {};
+      loyalty.tiers.forEach((tier) => tiersMap[tier.customTierId] = tier);
+      result[loyalty.programId] = {
+        ...loyalty,
+        tiers: tiersMap
+      };
+    });
+    return result;
   }
 }

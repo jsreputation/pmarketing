@@ -145,20 +145,14 @@ export class NewRewardFormService {
   public getLoyaltyFormGroup(): FormGroup {
     return new FormGroup({
       programId: new FormControl(null),
-      costReward: new FormControl(15, [Validators.min(1)]),
+      costReward: new FormControl(null, [Validators.min(1)]),
       tiers: new FormArray([])
     });
   }
 
-  // public getRewardLoyaltyGroup(): FormGroup {
-  //   return new FormGroup({
-  //     costReward: new FormControl(null, [Validators.min(1)]),
-  //     tiers: new FormArray([])
-  //   });
-  // }
-
   public getRewardLoyaltyTiersGroup(): FormGroup {
     return new FormGroup({
+      customTierId: new FormControl(null),
       name: new FormControl(null),
       statusTiers: new FormControl(null),
       statusDiscount: new FormControl(null)
