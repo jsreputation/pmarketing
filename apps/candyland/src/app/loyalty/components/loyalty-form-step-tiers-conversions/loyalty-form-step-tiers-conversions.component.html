@@ -1,0 +1,7 @@
+<cl-global-earn-rule-group [group]="group" [currency]="currency"></cl-global-earn-rule-group>
+<cl-global-burn-rule-group [group]="group" [currency]="currency"></cl-global-burn-rule-group>
+<cl-points-expiry-group [group]="group"></cl-points-expiry-group>
+<cl-tiers-group [editable]="true"
+                [dataSource]="customTierDataSource"
+                (tiersAction)="handleTiersAction($event)">
+</cl-tiers-group>

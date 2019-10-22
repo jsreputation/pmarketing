@@ -19,7 +19,7 @@ import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { CustomDataSource } from '@cl-shared';
 import { AudiencesVouchersService } from '@cl-core/services/audiences-vouchers.service';
-import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
+import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -77,10 +77,10 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       )
       .subscribe(
         () => {
-          this.snack.open('Expiry voucher date successfully changed.', 'x', {duration: 2000});
+          this.snack.open('Expiry voucher date successfully changed.', 'x', { duration: 2000 });
           this.dataSource.updateData();
         },
-        () => this.snack.open('Failed to update voucher expiration date.', 'x', {duration: 2000})
+        () => this.snack.open('Failed to update voucher expiration date.', 'x', { duration: 2000 })
       );
   }
 
@@ -97,10 +97,10 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       )
       .subscribe(
         () => {
-          this.snack.open('Voucher assigned to user.', 'x', {duration: 2000});
+          this.snack.open('Voucher assigned to user.', 'x', { duration: 2000 });
           this.dataSource.updateData();
         },
-        () => this.snack.open('Could not assign voucher to user. Make sure that the reward has enough stock.', 'x', {duration: 2000})
+        () => this.snack.open('Could not assign voucher to user. Make sure that the reward has enough stock.', 'x', { duration: 2000 })
       );
   }
 
@@ -126,13 +126,13 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   }
 
   private initDataSource(): void {
-    const params = this.userId ? {'filter[assigned_to_id]': this.userId} : {};
+    const params = this.userId ? { 'filter[assigned_to_id]': this.userId } : {};
     this.dataSource = new CustomDataSource<any>(this.vouchersService, undefined, params);
     this.dataSource.data$.pipe(
       takeUntil(this.destroy$)
     ).subscribe((data: any) => {
-      const counterObject = PrepareTableFilers.countFieldValue(data, 'status');
-      this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject);
+      const counterObject = PrepareTableFilters.countFieldValue(data, 'status');
+      this.tabsFilterConfig = PrepareTableFilters.prepareTabsFilterConfig(counterObject);
     });
   }
 }

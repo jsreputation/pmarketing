@@ -28,6 +28,7 @@ export interface IGame {
         outcome?: IGameOutcome;
         noOutcome?: IGameOutcome;
     };
+    imgUrl?: string;
 }
 
 export function defaultTree(): ITree {
