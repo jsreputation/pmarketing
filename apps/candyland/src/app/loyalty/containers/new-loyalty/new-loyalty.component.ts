@@ -85,7 +85,10 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
     }
     return this.loyaltyService.createLoyalty(this.form.value)
       .pipe(
-        tap(loyalty => this.loyaltyId = loyalty.data.id)
+        tap(loyalty => {
+          this.loyaltyId = loyalty.id;
+          this.form.get('createdAt').patchValue(loyalty.createdAt);
+        })
       );
   }
 

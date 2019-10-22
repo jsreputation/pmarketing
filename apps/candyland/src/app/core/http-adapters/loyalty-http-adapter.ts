@@ -207,7 +207,8 @@ export class LoyaltyHttpAdapter {
       customTiersCount: data.attributes.custom_tiers_count,
       name: data.attributes.name,
       status: data.attributes.status,
-      pointsName: data.attributes.unit
+      pointsName: data.attributes.unit,
+      createdAt: data.attributes.created_at || null
     };
   }
 
