@@ -25,7 +25,7 @@ export class WhistlerLoyaltyService {
   public static WLoyaltyToLoyalty(loyalty: IJsonApiItem<IWLoyalty>, cards: IJsonApiItem<ILoyaltyCard>[]): ILoyalty {
     const card = cards && cards.find(cardTemp =>
       cardTemp.type === 'cards' &&
-      loyalty.relationships.source.data.filter(rCard => rCard.type === 'cards' && rCard.id === cardTemp.id).length > 0
+      loyalty.relationships.cards.data.filter(rCard => rCard.type === 'cards' && rCard.id === cardTemp.id).length > 0
     );
     return {
       id: Number.parseInt(loyalty.id, 10),

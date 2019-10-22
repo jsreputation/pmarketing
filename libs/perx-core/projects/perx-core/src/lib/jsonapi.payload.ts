@@ -23,7 +23,7 @@ export interface IJsonApiItem<T> {
   };
   attributes: T;
   relationships?: {
-    source: {
+    [source: string]: {
       links: {
         self: string;
         related: string;
