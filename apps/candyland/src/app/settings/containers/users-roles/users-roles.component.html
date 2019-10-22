@@ -8,7 +8,7 @@
             <cl-search-filter class="search-block" [control]="filter" placeholder="Search for users"></cl-search-filter>
           </ng-container>
           <ng-container *clTableFilter="'name'; value: ''; let filter">
-            <mat-form-field appearance="outline" class="type-block">
+            <mat-form-field appearance="outline" class="type-block half-block">
               <mat-select [formControl]="filter" placeholder="All">
                 <mat-option value="">All</mat-option>
                 <ng-container *ngFor="let option of config?.roleTypes">
@@ -18,7 +18,7 @@
             </mat-form-field>
           </ng-container>
         </cl-table-filters>
-        <cl-button classList="primary" (click)="openDialogInviteNewUsers()">Invite new user</cl-button>
+        <cl-button classList="primary cta cta-new cta-invitenew" (click)="openDialogInviteNewUsers()">Invite New User</cl-button>
       </div>
       <div class="table-card">
         <!--table-->

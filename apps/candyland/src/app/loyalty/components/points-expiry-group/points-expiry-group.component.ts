@@ -8,4 +8,8 @@ import { FormGroup } from '@angular/forms';
 })
 export class PointsExpiryGroupComponent {
   @Input() public group: FormGroup;
+
+  public get pointsExpiry(): FormGroup {
+    return this.group.get('pointsExpiry') as FormGroup;
+  }
 }

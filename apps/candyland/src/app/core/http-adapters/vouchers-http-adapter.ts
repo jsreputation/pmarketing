@@ -1,4 +1,4 @@
-import { IVoucherStatsApi } from '@perx/whistler';
+import { IVoucherStatsApi, IVouchersApi } from '@perx/whistler';
 
 export class VouchersHttpAdapter {
   // tslint:disable

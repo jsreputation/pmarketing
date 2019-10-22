@@ -1,0 +1,36 @@
+.main-container {
+  width: 100%;
+
+  .loc {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #666666;
+
+    address {
+      flex: 1;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      font-weight: normal;
+    }
+
+    .title {
+      font-size: 1.6rem;
+      color: #3A3A3A;
+      font-weight: normal;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin: 0;
+    }
+  }
+
+  .mat-button {
+    padding: 0;
+    margin-top: 0.5rem;
+    font-size: 1.6rem;
+  }
+}

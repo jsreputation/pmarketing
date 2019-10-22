@@ -1,22 +1,21 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CustomDataSource } from '@cl-shared/table';
 
 @Component({
   selector: 'cl-view-loyalty',
   templateUrl: './view-loyalty.component.html',
   styleUrls: ['./view-loyalty.component.scss']
 })
-export class ViewLoyaltyComponent implements OnInit {
+export class ViewLoyaltyComponent {
   @Input() public loyaltyData: ILoyaltyForm;
-
-  public ngOnInit(): void {
-  }
+  @Input() public dataSource: CustomDataSource<any>;
 
   public get schemaInf(): ILoyaltySchemaInf {
     if (this.loyaltyData) {
       return {
         name: this.loyaltyData.name,
         status: this.loyaltyData.status,
-        ...this.loyaltyData.stepDetails
+        ...this.loyaltyData.details
       };
     }
   }

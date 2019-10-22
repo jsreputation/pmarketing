@@ -9,9 +9,9 @@
     <p class="upload-img-title">
       Loyalty Program Main Image
     </p>
-    <cl-upload-graphic [formControl]="mainImage"
+    <cl-upload-graphic [formControl]="imageUrl"
                        [btnLabel]="'Upload photo'"
-                       [isRequired]="mainImage.hasError('required') && mainImage.touched"
+                       [isRequired]="imageUrl.hasError('required') && imageUrl.touched"
     ></cl-upload-graphic>
   </div>
 </mat-expansion-panel>

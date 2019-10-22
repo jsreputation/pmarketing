@@ -1,51 +1,24 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
+import { CustomDataSource } from '@cl-shared/table';
 
 @Component({
   selector: 'cl-tiers-group',
   templateUrl: './tiers-group.component.html',
   styleUrls: ['./tiers-group.component.scss']
 })
-export class TiersGroupComponent implements AfterViewInit {
+export class TiersGroupComponent {
 
-  public dataSource: MatTableDataSource<any>;
-  @Input() public data: any = [{
-    name: 'Silver',
-    qualification: {
-      pointsThreshold: true,
-      points: 500
-    },
-    earnBonus: 20,
-    burnRule: 10,
-    pointsExpiry: {
-      amount: 3,
-      type: 'day',
-      trigger: 'earned',
-    }
-  },
-    {
-      name: 'Gold',
-      qualification: {
-        inviteOnly: true,
-      },
-      earnBonus: 20,
-      burnRule: 10,
-      pointsExpiry: {
-        amount: 3,
-        type: 'day',
-        trigger: 'earned',
-      }
-    }];
-  @Input() public displayedColumns: string[] = ['name', 'qualification', 'earnBonus', 'burnRule', 'pointsExpiry', 'actions'];
+  @Input() public editable: boolean = false;
+  @Input() public dataSource: CustomDataSource<any>;
+  @Input() public displayedColumns: string[] = ['name', 'joinMethod', 'earnBonus', 'burnDiscount', 'pointsExpiry'];
   @Output() public tiersAction: EventEmitter<{ action: NewLoyaltyActions, data?: any }> = new EventEmitter();
 
-  constructor() {
-    this.dataSource = new MatTableDataSource();
-  }
-
-  public ngAfterViewInit(): void {
-    this.dataSource.data = this.data;
+  public get displayedColumnsWithEdit(): string[] {
+    if (this.editable) {
+      return [...this.displayedColumns, 'actions'];
+    }
+    return this.displayedColumns;
   }
 
   public editItem(tier: any): void {
@@ -57,7 +30,7 @@ export class TiersGroupComponent implements AfterViewInit {
   }
 
   public deleteItem(tier: any): void {
-    this.tiersAction.emit({action: NewLoyaltyActions.duplicateTier, data: tier});
+    this.tiersAction.emit({action: NewLoyaltyActions.deleteTier, data: tier});
   }
 
   public createTier(): void {

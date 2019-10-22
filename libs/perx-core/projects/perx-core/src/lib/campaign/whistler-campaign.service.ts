@@ -34,38 +34,52 @@ export class WhistlerCampaignService implements ICampaignService {
     this.baseUrl = config.apiHost as string;
   }
 
-  private WhistlerTypeToType(ty: WhistlerCampaignType): CampaignType {
+  private static WhistlerTypeToType(ty: WhistlerCampaignType): CampaignType {
     return WhistlerCampaignType[ty];
   }
 
-  public WhistlerCampaignToCampaign(campaign: IJsonApiItem<IWhistlerCampaignAttributes>): ICampaign {
+  public static WhistlerCampaignToCampaign(campaign: IJsonApiItem<IWhistlerCampaignAttributes>): ICampaign {
     const cAttributes = campaign.attributes;
     return {
       id: Number.parseInt(campaign.id, 10),
       name: cAttributes.name,
       description: cAttributes.goal,
-      type: this.WhistlerTypeToType(cAttributes.engagement_type),
+      type: WhistlerCampaignService.WhistlerTypeToType(cAttributes.engagement_type),
       state: cAttributes.status,
       endsAt: new Date(cAttributes.end_date_time),
+      engagementId: cAttributes.engagement_id,
       rawPayload: cAttributes
     };
   }
+
   public getCampaigns(): Observable<ICampaign[]> {
-    return this.http.get<IJsonApiListPayload<IWhistlerCampaignAttributes>>(this.baseUrl + '/campaign/entities')
-      .pipe(
-        map((campaigns: IJsonApiListPayload<IWhistlerCampaignAttributes>) => campaigns.data),
-        map(
-          (campaigns: IJsonApiItem<IWhistlerCampaignAttributes>[]) =>
-            campaigns.map((campaign: IJsonApiItem<IWhistlerCampaignAttributes>) => this.WhistlerCampaignToCampaign(campaign)))
-      );
+    return new Observable(subject => {
+      let current: ICampaign[] = [];
+      const process = (p: number, cs: IJsonApiListPayload<IWhistlerCampaignAttributes>) => {
+        const newCampaigns = cs.data.map(WhistlerCampaignService.WhistlerCampaignToCampaign);
+        current = current.concat(newCampaigns);
+        subject.next(current);
+        if (p >= cs.meta.page_count) {
+          subject.complete();
+        } else {
+          this.getPage(p + 1)
+            .subscribe(res => process(p + 1, res));
+        }
+      };
+      this.getPage(1)
+        .subscribe(cs => process(1, cs));
+    });
   }
 
-  // @ts-ignore
+  private getPage(n: number): Observable<IJsonApiListPayload<IWhistlerCampaignAttributes>> {
+    return this.http.get<IJsonApiListPayload<IWhistlerCampaignAttributes>>(`${this.baseUrl}/campaign/entities?page[number]=${n}`);
+  }
+
   public getCampaign(id: number): Observable<ICampaign> {
-    return this.http.get<IJsonApiItemPayload<IWhistlerCampaignAttributes>>(this.baseUrl + '/campaign/entities/' + id)
+    return this.http.get<IJsonApiItemPayload<IWhistlerCampaignAttributes>>(`${this.baseUrl}/campaign/entities/${id}`)
       .pipe(
         map((campaigns: IJsonApiItemPayload<IWhistlerCampaignAttributes>) => campaigns.data),
-        map((campaign: IJsonApiItem<IWhistlerCampaignAttributes>) => this.WhistlerCampaignToCampaign(campaign)),
+        map((campaign: IJsonApiItem<IWhistlerCampaignAttributes>) => WhistlerCampaignService.WhistlerCampaignToCampaign(campaign)),
       );
   }
 }

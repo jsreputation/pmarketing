@@ -22,7 +22,7 @@ Scenario: Verifying that functionality of audience upload form
   Given 16_that I am on the campaign info page.
   When  16_I upload a csv file
   Then  16_I should see file successfully updated.
-
+@runThis
 Scenario: Verifying that functionality of launch button
   Given 17_that I am on the campaign review page.
   When  17_I click on the launch button.

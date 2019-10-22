@@ -12,6 +12,10 @@ import { DataStore } from '@cl-core/http-adapters/datastore';
 import { Groups } from '@cl-core/http-adapters/iam-groups';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { ClHttpParams } from '@cl-helpers/http-params';
+import { Role } from '@cl-helpers/role.enum';
+import { IamUser } from '@cl-core/http-adapters/iam-user';
+import { ITenantProperties, ITimeZone } from '@perx/whistler';
+import { JsonApiQueryData } from 'angular2-jsonapi';
 
 export enum DefaultSetting {
   style = 'Light',
@@ -70,11 +74,11 @@ export class SettingsService implements ITableService {
       );
   }
 
-  public getRoles(): Observable<any[]> {
+  public getRoles(): Observable<Role[]> {
     return this.settingsHttpService.getRoles();
   }
 
-  public getRolesOptions(): Observable<any[]> {
+  public getRolesOptions(): Observable<Role[]> {
     return this.settingsHttpService.getRolesOptions();
   }
 
@@ -100,7 +104,7 @@ export class SettingsService implements ITableService {
     });
   }
 
-  public prepareDefaultValue(data: any): any {
+  public prepareDefaultValue(data: IBrandingForm): { [key: string]: string } {
     const style = data['theme.style'] ? data['theme.style'] : DefaultSetting.style;
     const font = data['theme.font'] ? data['theme.font'] : DefaultSetting.font;
     const primary = data['theme.primary'] ? data['theme.primary'] : DefaultSetting.primaryColor;
@@ -128,27 +132,27 @@ export class SettingsService implements ITableService {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.settingsHttpService.getAllIMAUsers(httpParams)
       .pipe(
-        map((res: any) => SettingsHttpAdapter.transformToTableData(res))
+        map(res => SettingsHttpAdapter.transformToTableData(res))
       );
   }
 
-  public inviteNewUser(newUser: any): Observable<any> {
+  public inviteNewUser(newUser: FormGroup): Observable<IAMUser> {
     const formattedNewUser = SettingsHttpAdapter.transformInviteUser(newUser);
     return this.settingsHttpService.inviteNewUser(formattedNewUser);
   }
 
-  public patchUser(currentUser: any, updatedUser: any): Observable<any> {
+  public patchUser(currentUser: IAMUser, updatedUser: FormGroup): Observable<IAMUser> {
     const id = currentUser.id;
     const userChanges = Utils.nestedObjectAssign(currentUser, updatedUser);
     const formattedUserChanges = SettingsHttpAdapter.transformInviteUser(userChanges);
     return this.settingsHttpService.patchUser(id, formattedUserChanges);
   }
 
-  public deleteUser(id: string): Observable<any> {
+  public deleteUser(id: string): Observable<IAMUser> {
     return this.settingsHttpService.deleteUser(id);
   }
 
-  public getAllGroups(): Observable<any> {
+  public getAllGroups(): Observable<JsonApiQueryData<Groups>> {
     return this.dataStore.findAll(Groups, { page: { size: 10, number: 1 } });
   }
 
@@ -160,14 +164,14 @@ export class SettingsService implements ITableService {
       );
   }
 
-  public getTenantsSettings(): Observable<any> {
+  public getTenantsSettings(): Observable<ITenantProperties> {
     return this.dataStore.findAll(Tenants, { page: { size: 10, number: 1 } })
       .pipe(
         map(response => SettingsHttpAdapter.getTenantsSettings(response)),
       );
   }
 
-  public updateTenants(value: any): any {
+  public updateTenants(value: ITenantProperties): Observable<IamUser> {
     const newProperties = { ...this.tenants.display_properties, ...value };
     this.tenants.display_properties = { ...newProperties };
     return this.tenants.save().pipe(

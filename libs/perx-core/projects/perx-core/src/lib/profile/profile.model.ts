@@ -1,7 +1,7 @@
 export interface IProfile {
   id: number;
   identifier?: string;
-  state: string;
+  state?: string; // changed to optional cz whistler api dn have
   firstName: string;
   lastName: string;
   middleName?: string;

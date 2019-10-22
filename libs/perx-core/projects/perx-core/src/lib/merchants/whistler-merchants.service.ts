@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { map, mergeMap, mergeAll } from 'rxjs/operators';
+import { map, mergeMap, mergeAll, tap } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
-import { IMeta, IMerchant } from './models/merchants.model';
+import { IMerchant } from './models/merchants.model';
 import { Config } from '../config/config';
-import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from './../jsonapi.payload';
+import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload, IMeta } from './../jsonapi.payload';
 import { IMerchant as IWMerchant } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WhistlerMerchantsService implements IMerchantsService {
+  private merchants: { [k: number]: IMerchant } = {};
   private historyMeta: IMeta = {};
 
   constructor(
@@ -42,7 +43,7 @@ export class WhistlerMerchantsService implements IMerchantsService {
           of(merchants)
         ];
 
-        for (let i = 2; i <= this.historyMeta.total_pages; i++) {
+        for (let i = 2; i <= this.historyMeta.page_count; i++) {
           const stream = this.getMerchants(i, pageSize);
           streams.push(stream);
         }
@@ -80,11 +81,15 @@ export class WhistlerMerchantsService implements IMerchantsService {
   }
 
   public getMerchant(merchantId: number): Observable<IMerchant> {
+    if (this.merchants[merchantId]) {
+      return of(this.merchants[merchantId]);
+    }
+
     return this.http.get<IJsonApiItemPayload<IWMerchant>>(
       `${this.config.apiHost}/organization/orgs/${merchantId}`
     ).pipe(
-      map((res: IJsonApiItemPayload<IWMerchant>) => WhistlerMerchantsService.WMerchantToMerchant(res.data))
+      map((res: IJsonApiItemPayload<IWMerchant>) => WhistlerMerchantsService.WMerchantToMerchant(res.data)),
+      tap((merchant: IMerchant) => this.merchants[merchantId] = merchant)
     );
   }
-
 }

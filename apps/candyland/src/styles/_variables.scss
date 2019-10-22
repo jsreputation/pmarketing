@@ -1,6 +1,7 @@
 //brand palette
-$blue: #2664ED;
-$blue-hover: #2E41CE;
+$blue-800: #2664EE;
+$blue-900: #2e42cf;
+$navy-900: #3e4e73;
 $orange: #FFA641;
 $red: #B00020;
 $green: #10D994;
@@ -12,9 +13,9 @@ $light-gray: #E8E8E8; //#F2F8FB
 $gray: #A4B0C3;
 
 //app colors
-$primary-color: $blue;
-$primary-hover: $blue-hover;
-$secondary-color: #3E4E73;
+$primary-color: $blue-800;
+$primary-hover: $blue-900;
+$secondary-color: $navy-900;
 
 $base-font-color: #333333;
 $secondary-font-color: #7B7B7B;
@@ -140,6 +141,12 @@ $icon-font-size: 1.6rem;
 
 //Input Fields
 @mixin typo-input {
+  font-weight: 400;
+  font-size: 1.6rem;
+  letter-spacing: 0.015rem;
+}
+
+@mixin typo-input-alt {
   font-weight: 400;
   font-size: $base-font-size;
   letter-spacing: 0.015rem;

@@ -1,22 +1,30 @@
+import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Router } from '@angular/router';
-import { IVoucherService, VouchersModule, ICampaignService } from '@perx/core';
+import { ICampaignService, LoyaltyModule, RewardsModule, RewardsService, LoyaltyService, ProfileService, IGameService } from '@perx/core';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material';
-import { RouterTestingModule } from '@angular/router/testing';
+import { GamesCollectionComponent } from './games-collection/games-collection.component';
+
+const rewardsServiceStub = {
+  getAllRewards: () => of([])
+};
+
+const profileService = {
+  whoAmI: () => of({})
+};
+
+const loyaltyServiceStub = {
+  getLoyalties: () => of([])
+};
+
+const gameSvcStub = {
+};
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  const router = {
-    navigate: jasmine.createSpy('navigate')
-  };
-
-  const vouchersServiceStub = {
-    getAll: () => of([])
-  };
 
   const campaignServiceStub = {
     getCampaigns: () => of([])
@@ -24,17 +32,20 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HomeComponent],
+      declarations: [HomeComponent, GamesCollectionComponent],
       imports: [
         NoopAnimationsModule,
         MatCardModule,
-        VouchersModule,
-        RouterTestingModule
+        LoyaltyModule,
+        RewardsModule,
+        RouterTestingModule.withRoutes([])
       ],
       providers: [
-        { provide: Router, useValue: router },
-        { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: ProfileService, useValue: profileService },
+        { provide: IGameService, useValue: gameSvcStub }
       ]
     })
       .compileComponents();

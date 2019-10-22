@@ -7,7 +7,7 @@
 
   <div class="card-content">
     <div class="card-row">
-      <mat-form-field [formGroup]="group">
+      <mat-form-field *ngIf="group" [formGroup]="group">
         <input matInput [formControl]="pointsName" placeholder="Points Name">
         <mat-error *ngIf="pointsName.hasError('required')">Required field</mat-error>
         <mat-error *ngIf="pointsName.hasError('minlength')">Min length 1</mat-error>

@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationService, Config } from '@perx/core';
+import { of } from 'rxjs';
 
 const configStub = {
   preAuth: false
@@ -14,7 +15,9 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
-  const authenticationServiceStub = {};
+  const authenticationServiceStub = {
+    getUserAccessToken: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

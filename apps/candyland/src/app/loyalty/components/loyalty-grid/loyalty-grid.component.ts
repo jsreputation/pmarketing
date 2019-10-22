@@ -12,12 +12,12 @@ export class LoyaltyGridComponent {
 
   @Input() public menuOptions: IEngagementItemMenuOption[] = [];
 
-  @Output() public menuTapped: EventEmitter<{ engagement: IEngagement, action: string }> = new EventEmitter();
+  @Output() public menuTapped: EventEmitter<{ loyalty: ILoyaltyForm, action: string }> = new EventEmitter();
 
   /**
    * Forward events
    */
-  public menuOptTapped(event: { engagement: IEngagement, action: string }): void {
+  public menuOptTapped(event: { loyalty: ILoyaltyForm, action: string }): void {
     this.menuTapped.emit(event);
   }
 }

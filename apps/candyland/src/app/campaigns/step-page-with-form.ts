@@ -1,10 +1,15 @@
 import { ChangeDetectorRef, OnDestroy, OnInit, Optional } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 
 export class AbstractStepWithForm implements OnInit, OnDestroy {
+  protected destroy$: Subject<void> = new Subject();
+
   public form: FormGroup;
   public config: any;
   public campaign: any;
@@ -21,7 +26,7 @@ export class AbstractStepWithForm implements OnInit, OnDestroy {
     this.config = this.store.config;
     this.store.currentCampaign$
       .asObservable()
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
         this.campaign = data;
         this.cd.detectChanges();
@@ -33,5 +38,7 @@ export class AbstractStepWithForm implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -1,9 +1,10 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
-import { browser, element, by , protractor } from 'protractor';
+import { browser, element, by , protractor, ProtractorExpectedConditions } from 'protractor';
 import { CreateCampaignAppPage } from '../pages/candylandApp.po';
 
 let  CreateCampaignPage: CreateCampaignAppPage;
+const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 
 Before( () => {
   // initializing page objects instance
@@ -15,7 +16,6 @@ Given(/^5_I am on the campaign creation page$/, async () => {
 });
 
 When(/^5_I search for survey template in the search bar$/, async () => {
-  const ec = protractor.ExpectedConditions;
   // waiting for search bar to load
   await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=text]')).get(1)), 6000);
   // entering search criteria for survey in search bar
@@ -25,16 +25,14 @@ When(/^5_I search for survey template in the search bar$/, async () => {
 
 Then(/^5_I should see the survey template.$/, async () => {
   // wait for cards to load
-  const ec = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(element.all(by.css('div.engagement-item')).first()), 5000);
   // asserting the presence of the card and title of the card
   expect(await element.all(by.css('div.engagement-item')).first().isDisplayed()).to.be.equal(true);
-  expect(await  element.all(by.css('p.engagement-item-type')).first().getText()).to.contain('Survey');
+  expect(await element.all(by.css('p.engagement-item-type')).first().getText()).to.contain('SURVEY');
 });
 
 // Verifying that the relevant input text fields are present.
 Given(/^6_that I am on the campaign creation page$/, async () => {
-  const ec = protractor.ExpectedConditions;
   await CreateCampaignPage.navigateToCreateCampaign();
   // selecting survey engagement
   await browser.wait(ec.elementToBeClickable(element.all(by.css('div.engagement-item')).first()), 5000);
@@ -49,7 +47,6 @@ Given(/^6_that I am on the campaign creation page$/, async () => {
 When(/^6_I do nothing.$/, () => {});
 
 Then(/^6_The relevant text input fields are present for campaign rewards and limits page.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   // waiting for campaign header field to load
   await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=text]')).get(0)), 6000);
   // asserting the presence of the text input fields
@@ -67,7 +64,6 @@ Given(/^7_that I am on the campaign creation page.$/, () => {
 When(/^7_I do nothing.$/, () => {});
 
 Given(/^7_I should see the add rewards button on campaign creation page.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   // waiting for add reward button to load
   await browser.wait(ec.presenceOf(element.all(by.css('cl-button')).get(3)), 6000);
   // asserting for the presence of the button
@@ -85,18 +81,16 @@ When(/^8_I click on add rewards.$/, async () => {
 });
 
 Then(/^8_I should see the necessary elements present like the search bar and appropriate title.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   // waiting for search bar for select rewards to load
   await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=text]')).get(2)), 6000);
   // asserting for the presence of the search bar
   expect(await element.all(by.css('input[type=text]')).get(2).isPresent()).to.equal(true);
   // asserting the title of the the rewards dialog box
-  expect(await element(by.css('p.dialog-content-title')).getText()).to.contain('Select Rewards');
+  expect(await element(by.id('dialogTitle-selectRewards')).getText()).to.contain('Select Rewards');
 });
 
 // Verifying that functionality of add rewards button.
 Given(/^9_that I am on the campaign creation page.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   await CreateCampaignPage.navigateToCreateCampaign();
   // waiting for the search bar to load
   await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=text]')).get(1)), 6000);
@@ -111,7 +105,6 @@ Given(/^9_that I am on the campaign creation page.$/, async () => {
 });
 
 Given(/^9_I select add rewards button$/, async () => {
-  const ec = protractor.ExpectedConditions;
   // waiting for add reward button to load
   await browser.wait(ec.elementToBeClickable(element.all(by.css('button.btn.mat-flat-button')).get(3)), 6000);
   // clicking on the add reward button
@@ -119,32 +112,30 @@ Given(/^9_I select add rewards button$/, async () => {
 });
 Given(/^9_I select a reward./, async () => {
   // waiting for the row to load
-  const ec = protractor.ExpectedConditions;
   await browser.wait(ec.presenceOf(element(by.className('table mat-table'))), 6000);
   // selecting the reward
   await element.all(by.css('td[role=gridcell]')).get(0).click();
 });
 When(/^9_I select the add reward button$/, async () => {
-  // selecting the add reward button
-  const ec = protractor.ExpectedConditions;
   // waiting for button to load
   await browser.wait(ec.elementToBeClickable(element.all(by.css('cl-button')).last()), 5000);
+  // selecting the add reward button
   await element.all(by.css('cl-button')).last().click();
   await browser.sleep(3000);
 });
 
 Then(/^9_I should see reward added to rewards list.$/, async () => {
   // wait for rows to load
-  const ec = protractor.ExpectedConditions;
   // waiting for add reward button to load
   await browser.wait(ec.presenceOf(element.all(by.css('p.reward-item-name')).get(0)), 6000);
   // doing an assertion based on the rows
-  expect(await element.all(by.css('p.reward-item-name')).count()).to.equal(4);
+  // making number of rewards shown on page dynamic
+  const rewardCount: number = await element.all(by.css('p.reward-item-name')).count();
+  expect(await element.all(by.css('p.reward-item-name')).count()).to.equal(rewardCount);
 });
 
 // Verifiying functionality of include probablity box
 Given(/^10_that I am on the campaign creation page.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   await CreateCampaignPage.navigateToCreateCampaign();
   // waiting for the search bar to load
   await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=text]')).get(1)), 6000);
@@ -158,23 +149,42 @@ Given(/^10_that I am on the campaign creation page.$/, async () => {
   await element.all(by.css('cl-button')).get(1).click();
 });
 
-When(/^10_I click on the include probability box$/, () => {
-  // do nothing since this is by default ticked.
+Given(/^10_I added a reward to the reward list.$/, async () => {
+  // waiting for add reward button to load
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('button.btn.mat-flat-button')).get(3)), 6000);
+  // clicking on the add reward button
+  await element.all(by.css('button.btn.mat-flat-button')).get(3).click();
+  // waiting for the row to load
+  await browser.wait(ec.presenceOf(element(by.className('table mat-table'))), 6000);
+  // selecting the reward
+  await element.all(by.css('td[role=gridcell]')).get(0).click();
+   // waiting for button to load
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('cl-button')).last()), 5000);
+   // selecting the add reward button
+  await element.all(by.css('cl-button')).last().click();
+  await browser.sleep(3000);
+});
+
+When(/^10_I click on the include probability box$/, async () => {
+  // waiting for include probability box to be loaded
+  await browser.executeScript('document.getElementById("walkme-player").remove();');
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.mat-checkbox-frame')).get(0)), 6000);
+  // clicking on the probability box
+  await element.all(by.css('div.mat-checkbox-inner-container')).get(0).click();
 });
 
 Then(/^10_I should be able to input interger string in the probability field$/, async () => {
   // waiting for the number fields to be loaded
-  const ec = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=number]')).get(0)), 8000);
   // asserting the presence of the interger fields
+  // no reward field
   expect(await element.all(by.css('input[type=number]')).get(0).isPresent()).to.be.equal(true);
-  expect(await element.all(by.css('input[type=number]')).get(1).isPresent()).to.be.equal(true);
-  expect(await element.all(by.css('input[type=number]')).get(2).isPresent()).to.be.equal(true);
+  // expect(await element.all(by.css('input[type=number]')).get(1).isPresent()).to.be.equal(true);
+  // expect(await element.all(by.css('input[type=number]')).get(2).isPresent()).to.be.equal(true);
 });
 
 // Verifiying that the presence of include probablity box
 Given(/^11_that I am on the campaign creation page.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   await CreateCampaignPage.navigateToCreateCampaign();
   // waiting for the search bar to load
   await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=text]')).get(1)), 6000);
@@ -191,7 +201,6 @@ Given(/^11_that I am on the campaign creation page.$/, async () => {
 When(/^11_I do nothing .$/, () => {});
 
 Then(/^11_I should see include probablity box.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   // waiting for the probabilty box to load
   await browser.wait(ec.presenceOf(element.all(by.css('div.mat-checkbox-inner-container')).get(0)), 8000);
   // doing an assertion on the presence of the probability checkbox
@@ -200,7 +209,6 @@ Then(/^11_I should see include probablity box.$/, async () => {
 
 // Verifiying that the functionality of the next button
 Given(/^12_that I am on the campaign creation page.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   await CreateCampaignPage.navigateToCreateCampaign();
   // waiting for the search bar to load
   await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=text]')).get(1)), 6000);
@@ -220,7 +228,6 @@ When(/^12_I click on the next button on campaign creation page$/, async () => {
 });
 
 Then(/^12_I should see be in the campaign info card.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   // waiting for campaign info card to load
   await browser.wait(ec.presenceOf(element.all(by.css('mat-expansion-panel')).get(0)), 5000);
   await browser.wait(ec.presenceOf(element.all(by.css('mat-expansion-panel-header')).get(0)), 5000);

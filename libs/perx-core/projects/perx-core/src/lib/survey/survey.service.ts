@@ -69,7 +69,7 @@ export class SurveyService {
     this.baseUrl = config.apiHost as string;
   }
 
-  public WhistlerCampaignToCampaign(survey: IWhistlerSurvey): ISurvey {
+  public static WhistlerSurveyService(survey: IWhistlerSurvey): ISurvey {
     const dp = survey.data.attributes.display_properties;
     return {
       id: survey.data.id,
@@ -90,7 +90,7 @@ export class SurveyService {
             this.baseUrl + '/survey/engagements/' + campaign.rawPayload.engagement_id + '?campaign_id=' + id
           )
         ),
-        map((res: IWhistlerSurvey) => this.WhistlerCampaignToCampaign(res))
+        map((res: IWhistlerSurvey) => SurveyService.WhistlerSurveyService(res))
       );
   }
 

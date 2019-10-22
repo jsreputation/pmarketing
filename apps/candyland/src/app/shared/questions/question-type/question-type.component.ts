@@ -53,7 +53,6 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
 
   public openSelect(): void {
     if (!this.onlyView) {
-      console.log('view');
       this.matSelect.open();
     }
   }

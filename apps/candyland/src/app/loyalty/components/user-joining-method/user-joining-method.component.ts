@@ -1,30 +1,32 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { untilDestroyed } from 'ngx-take-until-destroy';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-user-joining-method',
   templateUrl: './user-joining-method.component.html',
   styleUrls: ['./user-joining-method.component.scss']
 })
-export class UserJoiningMethodComponent implements OnInit, OnDestroy {
+export class UserJoinMethodComponent implements OnInit, OnDestroy {
   @Input() public group: FormGroup;
+  protected destroy$: Subject<void> = new Subject();
 
-  public get joiningMethodGroup(): AbstractControl {
-    return this.group.get('joiningMethod');
+  public get joinMethod(): FormGroup {
+    return this.group.get('joinMethod') as FormGroup;
   }
 
   public get transactionAmount(): AbstractControl {
-    return this.group.get('joiningMethod.transactionAmount');
+    return this.group.get('joinMethod.transactionAmount');
   }
 
   public get amount(): AbstractControl {
-    return this.joiningMethodGroup.get('amount');
+    return this.joinMethod.get('amount');
   }
 
   public subscribeGroupValueChanges(): void {
-    this.joiningMethodGroup.valueChanges
-      .pipe(untilDestroyed(this))
+    this.joinMethod.valueChanges
+      .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
         this.switchStatusAmount(value.transactionAmount);
       });
@@ -32,10 +34,12 @@ export class UserJoiningMethodComponent implements OnInit, OnDestroy {
 
   public switchStatusAmount(status: boolean): void {
     if (!status) {
+      this.amount.reset(null, {onlySelf: true, emitEvent: false});
       this.amount.disable({onlySelf: true, emitEvent: false});
-      return;
+    } else {
+      this.amount.enable({onlySelf: true, emitEvent: false});
     }
-    this.amount.enable({onlySelf: true, emitEvent: false});
+    this.amount.updateValueAndValidity({onlySelf: true, emitEvent: false});
   }
 
   public ngOnInit(): void {
@@ -44,5 +48,7 @@ export class UserJoiningMethodComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

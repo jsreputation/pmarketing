@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { CustomDataSource } from '@cl-shared/table';
 
 @Component({
   selector: 'cl-loyalty-form-step-review',
@@ -8,6 +9,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class LoyaltyFormStepReviewComponent {
   @Input() public group: FormGroup;
+  @Input() public dataSource: CustomDataSource<any>;
 
   public get formValue(): ILoyaltyForm {
     return this.group.value;

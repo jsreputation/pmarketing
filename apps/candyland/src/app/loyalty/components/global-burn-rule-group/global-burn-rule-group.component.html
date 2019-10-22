@@ -5,7 +5,7 @@
     </h2>
   </mat-expansion-panel-header>
 
-  <div class="card-content loyalty" [formGroup]="group.get('globalBurnRule')">
+  <div class="card-content loyalty" *ngIf="group" [formGroup]="group.get('globalBurnRule')">
     <div class="loyalty-row input-group">
       <span>To redeem rewards, users will spend</span>
       <mat-form-field floatLabel="never">

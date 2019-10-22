@@ -23,7 +23,6 @@ Scenario: Verifying the elements present when clicking add rewards.
   When  8_I click on add rewards.
   Then  8_I should see the necessary elements present like the search bar and appropriate title.
 
-
 Scenario: Verifying that functionality of add rewards button.
   Given 9_that I am on the campaign creation page.
   And   9_I select add rewards button
@@ -33,6 +32,7 @@ Scenario: Verifying that functionality of add rewards button.
 
 Scenario: Verifiying functionality of include probablity box
   Given 10_that I am on the campaign creation page.
+  And   10_I added a reward to the reward list.
   When  10_I click on the include probability box
   Then  10_I should be able to input interger string in the probability field
 

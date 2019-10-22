@@ -4,7 +4,7 @@
       Global Burn Rule
     </h2>
   </mat-expansion-panel-header>
-  <div class="card-content loyalty" [formGroup]="group.get('globalEarnRule')">
+  <div class="card-content loyalty" *ngIf="group" [formGroup]="group.get('globalEarnRule')">
     <div class="loyalty-row input-group">
       <span>For every transaction amount equal to</span>
       <mat-form-field floatLabel="never">
@@ -15,7 +15,7 @@
       <mat-form-field floatLabel="never">
         <input type="number" [min]="0" matInput formControlName="points">
       </mat-form-field>
-      <span>points..</span>
+      <span>points.</span>
     </div>
   </div>
 </mat-expansion-panel>

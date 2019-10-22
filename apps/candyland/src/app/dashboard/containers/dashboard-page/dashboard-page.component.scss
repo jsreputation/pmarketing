@@ -48,7 +48,7 @@
       .mat-tab-link {
         height: 5.8rem;
       }
-    
+
       cl-range-date-picker-filter {
         flex-shrink: 0;
         font-size: 1.2rem;
@@ -62,11 +62,6 @@
 @media (max-width: $desktop-width) {
   .dashboard-insights-card-header .mat-tab-link {
     flex-grow: 1;
-  }
-}
-
-@media (max-width: $mobile-width) {
-  .dashboard-insights-card-header .mat-tab-link {
     padding: 0 0.4rem;
   }
 

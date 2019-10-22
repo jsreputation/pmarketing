@@ -4,8 +4,8 @@
       <img class="reward-image" src="{{voucher.reward.rewardBanner}}">
     </div>
     <h1>{{voucher.reward.name}}</h1>
-    <pre class="bcode">{{voucher.code}}</pre>
-    <p class="instruction">Present this code to the cashier to complete your transaction.</p>
+    <pre class="bcode" *ngIf="voucher?.code">{{voucher.code}}</pre>
+    <p class="instruction">{{voucher?.reward?.redemptionText || instructions}}</p>
   </div>
   <p class="tnc">Terms & Conditions applies.</p>
 </div>

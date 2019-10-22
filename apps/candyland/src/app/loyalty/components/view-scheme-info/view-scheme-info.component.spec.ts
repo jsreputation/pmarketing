@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+// tslint:disable-next-line:import-blacklist
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ViewSchemeInfoComponent } from './view-scheme-info.component';
+import { PipesModule } from '@cl-shared/pipes/pipes.module';
 
 describe('ViewSchemeInfoComponent', () => {
   let component: ViewSchemeInfoComponent;
@@ -8,9 +10,11 @@ describe('ViewSchemeInfoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewSchemeInfoComponent ]
+      imports: [PipesModule],
+      declarations: [ ViewSchemeInfoComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

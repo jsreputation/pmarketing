@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+// tslint:disable-next-line:import-blacklist
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { GlobalBurnRuleGroupComponent } from './global-burn-rule-group.component';
 
 describe('GlobalBurnRuleGroupComponent', () => {
@@ -8,9 +9,10 @@ describe('GlobalBurnRuleGroupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GlobalBurnRuleGroupComponent ]
+      declarations: [ GlobalBurnRuleGroupComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

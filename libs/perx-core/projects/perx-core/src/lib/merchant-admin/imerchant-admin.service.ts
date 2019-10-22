@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs';
-import {IMerchantAdminTransaction} from './models/merchants-admin.model';
+import {IMerchantAdminTransaction, IMerchantProfile} from './models/merchants-admin.model';
 import {IVoucher} from '../vouchers/models/voucher.model';
 
 export abstract class IMerchantAdminService {
@@ -10,4 +10,8 @@ export abstract class IMerchantAdminService {
   public abstract redeemVoucher(id: number): Observable<IVoucher>;
 
   public abstract issueVoucher(id: number, userId?: string): Observable<IVoucher>;
+
+  public abstract validateInvite(token: string, clientId: string): Observable<IMerchantProfile>;
+
+  public abstract setupNewMerchantsPassword(token: string, clientId: string, password: string): Observable<string>;
 }

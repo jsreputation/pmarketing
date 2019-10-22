@@ -1,4 +1,9 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import {
   IGame,
   IPinata
@@ -11,10 +16,10 @@ import {
 })
 export class TapComponent {
   @Output() public broken: EventEmitter<void> = new EventEmitter();
-  @Input() public game: IGame;
   public get config(): IPinata {
-    return this.game && this.game.config ? this.game.config as IPinata : null;
+    return this.game.config as IPinata;
   }
+  @Input() public game: IGame;
   public isEnabled: boolean = false;
   public gameCompleted(): void {
     this.broken.emit();

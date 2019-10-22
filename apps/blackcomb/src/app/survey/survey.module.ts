@@ -9,7 +9,6 @@ import {
 } from '@perx/core';
 
 import { SurveyRoutingModule } from './survey-routing.module';
-import { SurveyComponent } from './survey/survey.component';
 import {
   MatCardModule,
   MatButtonModule,
@@ -19,6 +18,7 @@ import {
   MatCheckboxModule
 } from '@angular/material';
 import { environment } from 'src/environments/environment';
+import { SurveyComponent } from '@perx/blackcomb-pages';
 // import { of } from 'rxjs';
 // import { survey } from '../mock/survey.mock';
 

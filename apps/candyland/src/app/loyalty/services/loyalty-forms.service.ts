@@ -11,81 +11,90 @@ export class LoyaltyFormsService {
 
   public getFormLoyalty(): FormGroup {
     return new FormGroup({
-      name: new FormControl(null, [Validators.required])
+      name: new FormControl(null, [Validators.required]),
+      status: new FormControl(null),
+      tiersCount: new FormControl(0),
+      details: new FormGroup({
+        pointsName: new FormControl(null,
+          [Validators.required, Validators.minLength(1)]),
+        imageUrl: new FormControl(null, [Validators.required]),
+        joinMethod: new FormGroup({
+          transactionAmount: new FormControl(false),
+          signUp: new FormControl(false),
+          inviteOnly: new FormControl(false),
+          amount: new FormControl({value: null, disabled: true}, [Validators.required, Validators.min(1)]),
+        }, [ClValidators.requiredGroup]),
+        poolId: new FormControl(null,
+          // [ Validators.required]
+        )
+      }),
+      tiersConversions: new FormGroup({
+        globalEarnRule: new FormGroup({
+          amount: new FormControl(null, [Validators.required, Validators.min(1)]),
+          points: new FormControl(null, [Validators.required, Validators.min(1)])
+        }),
+        globalBurnRule: new FormGroup({
+          amount: new FormControl(null, [Validators.required, Validators.min(1)]),
+          points: new FormControl(null, [Validators.required, Validators.min(1)])
+        }),
+        pointsExpiry: new FormGroup({
+          amount: new FormControl(null, [Validators.required, Validators.min(1)]),
+          type: new FormControl(null, [Validators.required]),
+          trigger: new FormControl(null, [Validators.required]),
+        })
+      })
     });
   }
 
-  public getStep(step: any): FormGroup {
-    switch (step) {
-      case this.loyaltyFormType.details: {
-        return this.getDetailsStep();
+  public getDefaultValueForm(): any {
+    return {
+      name: null,
+      tiersCount: 0,
+      status: 'draft',
+      details: {
+        pointsName: 'Point as default',
+        imageUrl: null,
+        joinMethod: {
+          inviteOnly: true,
+        },
+        poolId: null
+      },
+      tiersConversions: {
+        globalEarnRule: {
+          amount: 1,
+          points: 1,
+        },
+        globalBurnRule: {
+          amount: 100,
+          points: 5,
+        },
+        pointsExpiry: {
+          amount: 1,
+          type: 'year',
+          trigger: 'accrual',
+        }
       }
-      case this.loyaltyFormType.tiers: {
-        return this.getTiersConversionsStep();
-      }
-      // case this.loyaltyFormType.four: {
-      //   // TODO: need implement
-      //   return null;
-      // }
-    }
-  }
-
-  public getDetailsStep(): FormGroup {
-    return new FormGroup({
-      pointsName: new FormControl(null, [Validators.required, Validators.minLength(1)]),
-      mainImage: new FormControl('https://www.gettyimages.co.uk/gi-resources/images/RoyaltyFree/Apr17Update/ColourSurge1.jpg'),
-      joiningMethod: new FormGroup({
-        transactionAmount: new FormControl(false),
-        signUp: new FormControl(false),
-        byInvite: new FormControl(false),
-        amount: new FormControl(null, [Validators.required, Validators.minLength(1)]),
-      }, [Validators.required, ClValidators.requiredGroup]),
-      poolId: new FormControl(null, Validators.required)
-    });
-  }
-
-  public getTiersConversionsStep(): FormGroup {
-    return new FormGroup({
-      globalEarnRule: new FormGroup({
-        amount: new FormControl(2, [Validators.required, Validators.min(1)]),
-        points: new FormControl(10, [Validators.required, Validators.min(1)])
-      }),
-      globalBurnRule: new FormGroup({
-        amount: new FormControl(20, [Validators.required, Validators.min(1)]),
-        points: new FormControl(2, [Validators.required, Validators.min(1)])
-      }),
-      pointsExpiry: new FormGroup({
-        amount: new FormControl(1, [Validators.required]),
-        type: new FormControl('day', [Validators.required]),
-        trigger: new FormControl('earned', [Validators.required]),
-      }),
-      tiers: new FormArray([])
-    });
-  }
-
-  public getTierField(): FormGroup {
-    return new FormGroup({
-      tier: new FormControl(null, [Validators.required]),
-      qualification: new FormControl(null, [Validators.required]),
-      earnBonus: new FormControl(null, [Validators.required]),
-      burnDiscount: new FormControl(null, [Validators.required]),
-      pointsExpiry: new FormControl(null, [Validators.required])
-    });
+    };
   }
 
   public getTireForm(): FormGroup {
     return new FormGroup({
-      name: new FormControl(null, [Validators.required]),
-      qualification: new FormGroup({
+      name: new FormControl(null,
+        [Validators.required, Validators.minLength(1), Validators.maxLength(60)]),
+      joinMethod: new FormGroup({
         pointsThreshold: new FormControl(false),
         inviteOnly: new FormControl(false),
-        points: new FormControl(null)
-      }, [Validators.required]),
-      imageUrl: new FormControl(null, [Validators.required]),
-      earnBonus: new FormControl(null, [Validators.required, Validators.min(1)]),
-      burnRule: new FormControl(null, [Validators.required, Validators.min(1)]),
+        points: new FormControl({value: null, disabled: true},
+          [Validators.required, Validators.min(1)])
+      }, [ClValidators.requiredGroup]),
+      imageUrl: new FormControl(null,
+        [Validators.required]),
+      earnBonus: new FormControl(null,
+        [Validators.required, Validators.min(0), Validators.max(100)]),
+      burnDiscount: new FormControl(null,
+        [Validators.required, Validators.min(0), Validators.max(100)]),
       pointsExpiry: new FormGroup({
-        amount: new FormControl(null, [Validators.required]),
+        amount: new FormControl(null, [Validators.required, Validators.min(1)]),
         type: new FormControl(null, [Validators.required]),
         trigger: new FormControl(null, [Validators.required]),
       })
@@ -94,16 +103,17 @@ export class LoyaltyFormsService {
 
   public getDefaultValueTireForm(): any {
     return {
-      name: 'Gold',
-      qualification: {
+      name: null,
+      joinMethod: {
         inviteOnly: true,
       },
-      earnBonus: 20,
-      burnRule: 10,
+      imageUrl: null,
+      earnBonus: 0,
+      burnDiscount: 0,
       pointsExpiry: {
-        amount: 3,
-        type: 'day',
-        trigger: 'inactive',
+        amount: 1,
+        type: 'year',
+        trigger: 'accrual',
       }
     };
   }
@@ -118,9 +128,6 @@ export class LoyaltyFormsService {
       }
       case this.loyaltyFormType.stepReview: {
         return this.loyaltyFormType.review;
-      }
-      case this.loyaltyFormType.stepFour: {
-        return this.loyaltyFormType.four;
       }
     }
   }

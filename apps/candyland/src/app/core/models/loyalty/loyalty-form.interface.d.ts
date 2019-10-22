@@ -1,7 +1,9 @@
 declare interface ILoyaltyForm {
+  id?: string;
+  customTiersCount?: number;
   name: string;
   status?: string;
-  stepDetails?: ILoyaltyDetails;
+  details?: ILoyaltyDetails;
   tiersConversions?: ILoyaltyTiersConversions;
 }
 
@@ -12,11 +14,11 @@ declare interface ILoyaltySchemaInf extends ILoyaltyDetails {
 
 declare interface ILoyaltyDetails {
   pointsName: string;
-  mainImage: string;
-  joiningMethod: {
+  imageUrl: string;
+  joinMethod: {
     transactionAmount?: boolean;
     signUp: boolean;
-    byInvite: boolean;
+    inviteOnly: boolean;
     amount?: number;
   };
   poolId: string | null;
@@ -41,14 +43,14 @@ declare interface ILoyaltyTiersConversions {
 
 declare interface ILoyaltyTire {
   name: string;
-  qualification: {
+  joinMethod: {
     pointsThreshold: boolean;
     inviteOnly: boolean;
     points?: number;
   };
   imageUrl: string;
   earnBonus: number;
-  burnRule: number;
+  burnDiscount: number;
   pointsExpiry: {
     amount: number;
     type: string;

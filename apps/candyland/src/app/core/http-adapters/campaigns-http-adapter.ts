@@ -91,7 +91,7 @@ export class CampaignsHttpAdapter {
         rewardsData =>
           CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(
             rewardsData.rewardsOptions.rewards,
-            rewardsData.enableProbability,
+            rewardsData.rewardsOptions.enableProbability,
             rewardsData.stampSlotNumber
           )
       ).flat(1) :

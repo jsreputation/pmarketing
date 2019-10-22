@@ -1,15 +1,15 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { AbstractControl, FormGroup, Validators } from '@angular/forms';
 import { AudiencesService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { ActivatedRoute } from '@angular/router';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -23,6 +23,8 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   public isFirstInit: boolean;
   public triggerLabelsChip: boolean;
   public campaignId: string;
+  protected destroy$: Subject<void> = new Subject();
+
   @Input()
   public pools: any;
 
@@ -81,7 +83,8 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
 
   public ngOnInit(): void {
     super.ngOnInit();
-    this.channelType.valueChanges.subscribe(
+    this.channelType.valueChanges
+      .pipe(takeUntil(this.destroy$)).subscribe(
       value => {
         if (value === 'sms') {
           this.pool.setValidators([Validators.required]);
@@ -105,6 +108,10 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   }
 
   public ngOnDestroy(): void {
+    super.ngOnDestroy();
+    this.cd.detach();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private initForm(): void {
@@ -117,9 +124,9 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     }
     this.form.valueChanges
       .pipe(
-        untilDestroyed(this),
         distinctUntilChanged(),
-        debounceTime(500)
+        debounceTime(500),
+        takeUntil(this.destroy$)
       )
       .subscribe((val: ICampaign) => {
         this.store.updateCampaign(val);
@@ -133,7 +140,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     if (this.campaignId) {
       this.store.currentCampaign$
         .asObservable()
-        .pipe(untilDestroyed(this))
+        .pipe(takeUntil(this.destroy$))
         .subscribe((data: ICampaign) => {
           if (data && data.campaignInfo && this.isFirstInit) {
             const select = data.audience.select;

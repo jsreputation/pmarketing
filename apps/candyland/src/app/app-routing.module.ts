@@ -8,8 +8,7 @@ import { LoginComponent } from './auth/containers/login/login.component';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/dashboard/overview'},
   { path: '',
-    component: MainContainerComponent,
-    canActivate: [AuthGuard],
+    component: MainContainerComponent, canActivate: [AuthGuard],
     children: [
       {
         path: 'dashboard',

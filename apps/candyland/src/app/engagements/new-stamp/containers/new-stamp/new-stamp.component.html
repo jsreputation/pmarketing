@@ -19,255 +19,245 @@
       </cl-button>
     </div>
   </header>
-  <section class="content phonepreview-wrapper form-limiter">
-    <div class="stamp-form">
-      <mat-card class="game-graphic">
-        <div class="game-title-wrap">
-          <p class="sub-title">
+  <section class="content form-limiter">
+    <div class="phonepreview-wrapper">
+      <div class="stamp-form">
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
             Messages
-          </p>
-        </div>
-        <div class="stamp-form">
-          <div class="control-input">
-            <mat-form-field class="mat-form-field">
-              <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
-              <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
-              <mat-error *ngIf="headlineMessage.hasError('required')">Required field</mat-error>
-              <mat-error *ngIf="headlineMessage.hasError('minlength')">Min length 5</mat-error>
-              <mat-error *ngIf="headlineMessage.hasError('maxlength')">Max length 60</mat-error>
-            </mat-form-field>
+          </h2>
+          <div class="stamp-form">
+            <div class="control-input">
+              <mat-form-field class="mat-form-field">
+                <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
+                <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
+                <mat-error *ngIf="headlineMessage.hasError('required')">Required field</mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('minlength')">Min length 5</mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('maxlength')">Max length 60</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="control-input">
+              <mat-form-field class="mat-form-field">
+                <input type="text" matInput [placeholder]="'Sub-headline message'" formControlName="subHeadlineMessage">
+                <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>
+                <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>
+              </mat-form-field>
+            </div>
           </div>
-          <div class="control-input">
-            <mat-form-field class="mat-form-field">
-              <input type="text" matInput [placeholder]="'Sub-headline message'" formControlName="subHeadlineMessage">
-              <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>
-              <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
-              <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>
-              <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-      </mat-card>
+        </mat-card>
 
-      <mat-card class="game-graphic">
-        <div class="game-title-wrap">
-          <p class="sub-title">
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
             Game graphic
-          </p>
-        </div>
-        <div class="game-form">
-          <div class="game-number">
-            <div class="control-input" *ngIf="stampData?.number">
-              <mat-form-field class="game-stamp-select">
-                <mat-label>Total number of stamps on a card</mat-label>
-                <mat-select formControlName="stampsNumber">
-                  <mat-option *ngFor="let stamp of stampData?.number" [value]="stamp.value">
-                    {{stamp.viewValue}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+          </h2>
+          <div class="game-form">
+            <div class="game-number">
+              <div class="control-input" *ngIf="stampData?.number">
+                <mat-form-field class="game-stamp-select">
+                  <mat-label>Total number of stamps on a card</mat-label>
+                  <mat-select formControlName="stampsNumber">
+                    <mat-option *ngFor="let stamp of stampData?.number" [value]="stamp.value">
+                      {{stamp.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
             </div>
-          </div>
-          <div class="game-number game-number-slot">
-            <div class="control-input" *ngIf="stampSlotNumbers">
-              <mat-form-field class="game-stamp-select">
-                <mat-label>Reward slot</mat-label>
-                <mat-select formControlName="stampsSlotNumber" [multiple]="true">
-                  <mat-option *ngFor="let stampSlot of stampSlotNumbers" [value]="stampSlot?.value">
-                    {{stampSlot?.viewValue}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+            <div class="game-number game-number-slot">
+              <div class="control-input" *ngIf="stampSlotNumbers">
+                <mat-form-field class="game-stamp-select">
+                  <mat-label>Reward slot</mat-label>
+                  <mat-select formControlName="stampsSlotNumber" [multiple]="true">
+                    <mat-option *ngFor="let stampSlot of stampSlotNumbers" [value]="stampSlot?.value">
+                      {{stampSlot?.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
             </div>
-          </div>
 
-          <div class="game-background-box">
-            <p class="game-title">
-              Pre-stamp
-            </p>
-            <div class="game-gift-box_field">
-              <cl-select-graphic-wrap *ngIf="stampData?.preStamp"
-                                      formControlName="preStamp"
-                                      [isRequired]="preStamp.hasError('required') && preStamp.touched"
-                                      class="game-selected-graphic"
-                                      [graphicList]="stampData?.preStamp">
-              </cl-select-graphic-wrap>
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
+                Pre-stamp
+              </h3>
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap *ngIf="stampData?.preStamp"
+                                        formControlName="preStamp"
+                                        [isRequired]="preStamp.hasError('required') && preStamp.touched"
+                                        [graphicList]="stampData?.preStamp">
+                </cl-select-graphic-wrap>
+              </div>
             </div>
-          </div>
-          <div class="game-background-box">
-            <p class="game-title">
-              Reward Pre-stamp
-              <cl-info-hint>
-                <span class="info-text">You can set the rewards when&nbsp;</span>
-                <span class="info-text">you create a campaign</span>
-              </cl-info-hint>
-            </p>
-            <div class="game-gift-box_field">
-              <cl-select-graphic-wrap *ngIf="stampData?.rewardPreStamp"
-                                      formControlName="rewardPreStamps"
-                                      [isRequired]="rewardPreStamps.hasError('required') && rewardPreStamps.touched"
-                                      class="game-selected-graphic"
-                                      [graphicList]="stampData?.rewardPreStamp">
-              </cl-select-graphic-wrap>
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
+                Reward Pre-stamp
+                <cl-info-hint>
+                  <span class="info-text">You can set the rewards when&nbsp;</span>
+                  <span class="info-text">you create a campaign</span>
+                </cl-info-hint>
+              </h3>
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap *ngIf="stampData?.rewardPreStamp"
+                                        formControlName="rewardPreStamps"
+                                        [isRequired]="rewardPreStamps.hasError('required') && rewardPreStamps.touched"
+                                        [graphicList]="stampData?.rewardPreStamp">
+                </cl-select-graphic-wrap>
+              </div>
             </div>
-          </div>
-          <div class="game-background-box">
-            <p class="game-title">
-              Post-stamp
-            </p>
-            <div class="game-gift-box_field">
-              <cl-select-graphic-wrap *ngIf="stampData?.stampsPost"
-                                      formControlName="postStamps"
-                                      [isRequired]="postStamps.hasError('required') && postStamps.touched"
-                                      class="game-selected-graphic"
-                                      [graphicList]="stampData?.stampsPost">
-              </cl-select-graphic-wrap>
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
+                Post-stamp
+              </h3>
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap *ngIf="stampData?.stampsPost"
+                                        formControlName="postStamps"
+                                        [isRequired]="postStamps.hasError('required') && postStamps.touched"
+                                        [graphicList]="stampData?.stampsPost">
+                </cl-select-graphic-wrap>
+              </div>
             </div>
-          </div>
-          <div class="game-background-box">
-            <p class="game-title">
-              Reward Post-stamp
-              <cl-info-hint>
-                <span class="info-text">You can set the rewards when&nbsp;</span>
-                <span class="info-text">you create a campaign</span>
-              </cl-info-hint>
-            </p>
-            <div class="game-gift-box_field">
-              <cl-select-graphic-wrap *ngIf="stampData?.rewardPost"
-                                      formControlName="rewardPostStamps"
-                                      [isRequired]="rewardPostStamps.hasError('required') && rewardPostStamps.touched"
-                                      class="game-selected-graphic"
-                                      [graphicList]="stampData?.rewardPost">
-              </cl-select-graphic-wrap>
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
+                Reward Post-stamp
+                <cl-info-hint>
+                  <span class="info-text">You can set the rewards when&nbsp;</span>
+                  <span class="info-text">you create a campaign</span>
+                </cl-info-hint>
+              </h3>
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap *ngIf="stampData?.rewardPost"
+                                        formControlName="rewardPostStamps"
+                                        [isRequired]="rewardPostStamps.hasError('required') && rewardPostStamps.touched"
+                                        [graphicList]="stampData?.rewardPost">
+                </cl-select-graphic-wrap>
+              </div>
             </div>
-          </div>
-          <div class="game-background-box">
-            <p class="game-title">
-              Card Background
-            </p>
-            <div class="game-gift-box_field">
-              <cl-select-graphic-wrap *ngIf="stampData?.cardBackground"
-                                      formControlName="cardBackground"
-                                      [isRequired]="cardBackground.hasError('required') && cardBackground.touched"
-                                      class="game-selected-graphic"
-                                      [graphicList]="stampData?.cardBackground">
-              </cl-select-graphic-wrap>
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
+                Card Background
+              </h3>
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap *ngIf="stampData?.cardBackground"
+                                        formControlName="cardBackground"
+                                        [isRequired]="cardBackground.hasError('required') && cardBackground.touched"
+                                        [graphicList]="stampData?.cardBackground">
+                </cl-select-graphic-wrap>
+              </div>
             </div>
-          </div>
 
-          <div class="game-background-box">
-            <p class="game-title">
-              Background
-            </p>
-            <div class="game-gift-box_field">
-              <cl-select-graphic-wrap *ngIf="stampData?.backgroundStamp"
-                                      formControlName="background"
-                                      [isRequired]="background.hasError('required') && background.touched"
-                                      class="game-selected-graphic"
-                                      [graphicList]="stampData?.backgroundStamp">
-              </cl-select-graphic-wrap>
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
+                Background
+              </h3>
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap *ngIf="stampData?.backgroundStamp"
+                                        formControlName="background"
+                                        [isRequired]="background.hasError('required') && background.touched"
+                                        [graphicList]="stampData?.backgroundStamp">
+                </cl-select-graphic-wrap>
+              </div>
             </div>
           </div>
-        </div>
-      </mat-card>
-      <mat-card class="game-graphic">
-        <div class="messages-wrap">
-          <p class="sub-title">
+        </mat-card>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
             Button
-          </p>
-        </div>
-        <div class="messages-form">
-          <div class="control-input">
-            <mat-form-field class="messages-input">
-              <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
-              <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
-              <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
-              <mat-error *ngIf="buttonText.hasError('minlength')">Min length 2</mat-error>
-              <mat-error *ngIf="buttonText.hasError('maxlength')">Max length 20</mat-error>
-            </mat-form-field>
+          </h2>
+          <div class="messages-form">
+            <div class="control-input">
+              <mat-form-field class="messages-input">
+                <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
+                <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
+                <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
+                <mat-error *ngIf="buttonText.hasError('minlength')">Min length 2</mat-error>
+                <mat-error *ngIf="buttonText.hasError('maxlength')">Max length 20</mat-error>
+              </mat-form-field>
+            </div>
           </div>
-        </div>
-      </mat-card>
+        </mat-card>
+      </div>
+
+      <cl-game-mobile-preview-stamp class="tabs-component">
+        <cl-simple-mobile-view class="firs-tab"
+                              [background]="getImgLink(background, 'assets/images/background/background1.png')"
+                              [mobileImageClass]="'mobile-non-header'" [headerColor]="tenantSettings?.headerColor"
+                              [logo]="tenantSettings?.logo"
+                              [logoType]="tenantSettings?.logoType"
+                              [fontFamily]="tenantSettings?.font"
+                              clCreateImage
+        >
+          <div class="plugin-block">
+            <div class="mobile-preview-card"
+              [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}">
+              <div class="mobile-preview-header-nested">
+                <p class="mobile-preview-headline">
+                  {{headlineMessage.value}}
+                </p>
+                <p class="mobile-preview-sub-headline">
+                  {{subHeadlineMessage.value}}
+                </p>
+              </div>
+              <!--use change background image-->
+              <perx-core-puzzle-collect-stamps [nbSlots]="stampsNumber.value" [stamps]="stamps"
+                [rewards]="stampsSlotNumberData"
+                [preStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
+                [postStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
+                [rewardPreStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')"
+                [rewardPostStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')">
+              </perx-core-puzzle-collect-stamps>
+            </div>
+          </div>
+
+          <div class="mobile-preview-btn-wrap mobile-btn-block">
+            <button class="mobile-preview-btn" [ngStyle]="{
+                      backgroundColor: tenantSettings?.buttonColor,
+                      'color': tenantSettings?.buttonTextColor,
+                      'font-family': tenantSettings?.font
+                    }">
+              {{buttonText.value}}
+            </button>
+          </div>
+        </cl-simple-mobile-view>
+
+        <cl-simple-mobile-view class="second-tab"
+          [background]="getImgLink(background, 'assets/images/background/background1.png')"
+          [mobileImageClass]="'mobile-non-header'" [headerColor]="tenantSettings?.headerColor"
+          [logo]="tenantSettings?.logo" [logoType]="tenantSettings?.logoType" [fontFamily]="tenantSettings?.font">
+          <div class="plugin-block">
+            <div class="mobile-preview-card"
+              [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}">
+              <div class="mobile-preview-header-nested">
+                <p class="mobile-preview-headline">
+                  {{headlineMessage.value}}
+                </p>
+                <p class="mobile-preview-sub-headline">
+                  {{subHeadlineMessage.value}}
+                </p>
+              </div>
+              <perx-core-puzzle-collect-stamps [nbSlots]="stampsNumber.value" [stamps]="stamps"
+                [rewards]="stampsSlotNumberData"
+                [preStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
+                [postStampImg]="getImgLink(postStamps, 'assets/images/stamps/post-stamps/post-stamp-1.png')"
+                [rewardPreStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')"
+                [rewardPostStamp]="getImgLink(rewardPostStamps, 'assets/images/stamps/reward-post-stamps/reward-post-stamp-1.png')">
+              </perx-core-puzzle-collect-stamps>
+            </div>
+          </div>
+
+          <div class="mobile-preview-btn-wrap mobile-btn-block">
+            <button class="mobile-preview-btn"
+                    [ngStyle]="{
+                      'color': tenantSettings?.buttonTextColor,
+                      backgroundColor: tenantSettings?.buttonColor,
+                      'font-family': tenantSettings?.font
+                    }">
+              {{buttonText.value}}
+            </button>
+          </div>
+        </cl-simple-mobile-view>
+      </cl-game-mobile-preview-stamp>
     </div>
-
-    <cl-game-mobile-preview-stamp class="tabs-component">
-      <cl-simple-mobile-view class="firs-tab"
-                             [background]="getImgLink(background, 'assets/images/background/background1.png')"
-                             [mobileImageClass]="'mobile-non-header'" [headerColor]="tenantSettings?.headerColor"
-                             [logo]="tenantSettings?.logo"
-                             [logoType]="tenantSettings?.logoType"
-                             [fontFamily]="tenantSettings?.font"
-                             clCreateImage
-      >
-        <div class="plugin-block">
-          <div class="mobile-preview-card"
-            [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}">
-            <div class="mobile-preview-header-nested">
-              <p class="mobile-preview-headline">
-                {{headlineMessage.value}}
-              </p>
-              <p class="mobile-preview-sub-headline">
-                {{subHeadlineMessage.value}}
-              </p>
-            </div>
-            <!--use change background image-->
-            <perx-core-puzzle-collect-stamps [nbSlots]="stampsNumber.value" [stamps]="stamps"
-              [rewards]="stampsSlotNumberData"
-              [preStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
-              [postStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
-              [rewardPreStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')"
-              [rewardPostStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')">
-            </perx-core-puzzle-collect-stamps>
-          </div>
-        </div>
-
-        <div class="mobile-preview-btn-wrap mobile-btn-block">
-          <button class="mobile-preview-btn" [ngStyle]="{
-                    backgroundColor: tenantSettings?.buttonColor,
-                    'color': tenantSettings?.buttonTextColor,
-                    'font-family': tenantSettings?.font
-                  }">
-            {{buttonText.value}}
-          </button>
-        </div>
-      </cl-simple-mobile-view>
-
-      <cl-simple-mobile-view class="second-tab"
-        [background]="getImgLink(background, 'assets/images/background/background1.png')"
-        [mobileImageClass]="'mobile-non-header'" [headerColor]="tenantSettings?.headerColor"
-        [logo]="tenantSettings?.logo" [logoType]="tenantSettings?.logoType" [fontFamily]="tenantSettings?.font">
-        <div class="plugin-block">
-          <div class="mobile-preview-card"
-            [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}">
-            <div class="mobile-preview-header-nested">
-              <p class="mobile-preview-headline">
-                {{headlineMessage.value}}
-              </p>
-              <p class="mobile-preview-sub-headline">
-                {{subHeadlineMessage.value}}
-              </p>
-            </div>
-            <perx-core-puzzle-collect-stamps [nbSlots]="stampsNumber.value" [stamps]="stamps"
-              [rewards]="stampsSlotNumberData"
-              [preStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
-              [postStampImg]="getImgLink(postStamps, 'assets/images/stamps/post-stamps/post-stamp-1.png')"
-              [rewardPreStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')"
-              [rewardPostStamp]="getImgLink(rewardPostStamps, 'assets/images/stamps/reward-post-stamps/reward-post-stamp-1.png')">
-            </perx-core-puzzle-collect-stamps>
-          </div>
-        </div>
-
-        <div class="mobile-preview-btn-wrap mobile-btn-block">
-          <button class="mobile-preview-btn"
-                  [ngStyle]="{
-                    'color': tenantSettings?.buttonTextColor,
-                    backgroundColor: tenantSettings?.buttonColor,
-                    'font-family': tenantSettings?.font
-                  }">
-            {{buttonText.value}}
-          </button>
-        </div>
-      </cl-simple-mobile-view>
-    </cl-game-mobile-preview-stamp>
   </section>
 </article>

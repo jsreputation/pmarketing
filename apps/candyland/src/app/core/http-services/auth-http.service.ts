@@ -11,7 +11,8 @@ export class AuthHttpService {
   }
 
   public signIn(data: IJsonApiItem<ILogin>): Observable<HttpResponse<IJsonApiPayload<ILoginApi>>> {
-    return this.http.post<IJsonApiPayload<ILoginApi>>(ApiConfig.signIn, {data}, {observe: 'response', params: {include: 'groups,credentials'}});
+    return this.http.post<IJsonApiPayload<ILoginApi>>(
+      ApiConfig.signIn, {data}, {observe: 'response', params: {include: 'groups,credentials'}});
   }
 
   public getUser(id: string): Observable<any> {

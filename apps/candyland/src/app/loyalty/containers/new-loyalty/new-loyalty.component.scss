@@ -5,14 +5,16 @@
   background-color: $background-color;
 }
 
-@import "variables";
-
 .loyalty-detail-content {
   width: 100%;
   display: flex;
   flex-flow: column;
   align-items: center;
   justify-content: flex-start;
+
+  & > .card {
+    margin-top: 1.6rem !important;
+  }
 }
 
 .date-field {

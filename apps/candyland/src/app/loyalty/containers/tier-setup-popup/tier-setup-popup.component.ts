@@ -1,9 +1,10 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { LoyaltyFormsService } from 'src/app/loyalty/services/loyalty-forms.service';
+import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'cl-tier-setup-popup',
@@ -13,18 +14,44 @@ import { LoyaltyFormsService } from 'src/app/loyalty/services/loyalty-forms.serv
 })
 export class TierSetupPopupComponent implements OnInit, OnDestroy {
   public form: FormGroup;
+  protected destroy$: Subject<void> = new Subject();
 
   constructor(public dialogRef: MatDialogRef<TierSetupPopupComponent>,
               private loyaltyFormsService: LoyaltyFormsService,
+              private customTierService: LoyaltyCustomTierService,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
   public get pointsThreshold(): AbstractControl {
-    return this.form.get('qualification.pointsThreshold') || null;
+    return this.form.get('joinMethod.pointsThreshold') || null;
   }
 
   public get points(): AbstractControl {
-    return this.form.get('qualification.points') || null;
+    return this.form.get('joinMethod.points') || null;
+  }
+
+  public get name(): AbstractControl {
+    return this.form.get('name') || null;
+  }
+
+  public get imageUrl(): AbstractControl {
+    return this.form.get('imageUrl') || null;
+  }
+
+  public get earnBonus(): AbstractControl {
+    return this.form.get('earnBonus') || null;
+  }
+
+  public get burnDiscount(): AbstractControl {
+    return this.form.get('burnDiscount') || null;
+  }
+
+  public get joinMethod(): AbstractControl {
+    return this.form.get('joinMethod') || null;
+  }
+
+  public get amount(): AbstractControl {
+    return this.form.get('pointsExpiry.amount') || null;
   }
 
   public ngOnInit(): void {
@@ -34,18 +61,26 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public close(): void {
     this.dialogRef.close();
   }
 
-  public add(): void {
+  public apply(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
-    this.dialogRef.close(this.form.value);
+    let request;
+    if (this.data.tier) {
+      request = this.customTierService.updateCustomTier(this.data.tier.id, this.form.value, this.data.basicTierId);
+    } else {
+      request = this.customTierService.createCustomTier(this.form.value, this.data.basicTierId);
+    }
+    request.subscribe(data => this.dialogRef.close(data));
   }
 
   private initForm(): void {
@@ -53,20 +88,22 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
   }
 
   private fillForm(): void {
-    const pathValue = this.data || this.loyaltyFormsService.getDefaultValueTireForm();
+    const pathValue = this.data.tier || this.loyaltyFormsService.getDefaultValueTireForm();
     this.form.patchValue(pathValue);
   }
 
   private handlePointsThreshold(): void {
     this.pointsThreshold.valueChanges.pipe(
-      untilDestroyed(this),
+      takeUntil(this.destroy$),
       distinctUntilChanged()
     ).subscribe((value: boolean) => {
       if (value) {
-        this.points.enable();
+        this.points.enable({onlySelf: true, emitEvent: false});
       } else {
-        this.points.disable();
+        this.points.reset(null, {onlySelf: true, emitEvent: false});
+        this.points.disable({onlySelf: true, emitEvent: false});
       }
+      this.points.updateValueAndValidity({onlySelf: true, emitEvent: false});
     });
   }
 }

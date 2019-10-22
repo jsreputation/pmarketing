@@ -7,7 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'perx-core-puzzle-list',
   templateUrl: './puzzle-list.component.html',
-  styleUrls: ['./puzzle-list.component.css']
+  styleUrls: ['./puzzle-list.component.scss']
 })
 export class PuzzleListComponent implements OnChanges, OnDestroy {
   public puzzles: IStampCard[];
@@ -15,7 +15,7 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
   @Input()
   public campaignId: number = null;
   @Input()
-  public iconDisplay: string = 'arrow_forward_ios';
+  public iconDisplay: string;
 
   public total: number = 6;
 

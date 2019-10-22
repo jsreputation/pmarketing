@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+// tslint:disable-next-line:import-blacklist
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { PointsExpiryGroupComponent } from './points-expiry-group.component';
 
 describe('PointsExpiryGroupComponent', () => {
@@ -8,9 +9,10 @@ describe('PointsExpiryGroupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PointsExpiryGroupComponent ]
+      declarations: [ PointsExpiryGroupComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

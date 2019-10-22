@@ -1,6 +1,31 @@
+@import '~@angular/material/theming';
 @import "variables";
 
+.card-fieldset {
+  @include mat-elevation(1);
+  @include typo-body2;
+
+  & ~ & {
+    margin-top: ($vertical-padding * 0.5);
+  }
+
+  &-title {
+    flex: 1;
+    margin-right: 4rem;
+    margin-bottom: ($vertical-padding * 0.5);
+  }
+
+  &-label {
+    @include typo-input;
+
+    display: flex;
+    color: $secondary-color;
+    margin: ($vertical-padding * 0.5) 0 ($vertical-padding * 0.25);
+  }
+}
+
 .card {
+  @include mat-elevation(1);
   @include typo-body2;
 
   width: 100%;
@@ -10,8 +35,10 @@
   border-radius: $border-radius-lg !important;
   background-color: $white !important;
   padding: 0 !important;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15) !important;
-  margin-bottom: ($vertical-padding * 0.5) !important;
+
+  & ~ & {
+    margin-top: ($vertical-padding * 0.5);
+  }
 
   &-header {
     height: 5.7rem;
@@ -19,7 +46,6 @@
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
-    padding: 0 ($horizontal-padding * 0.75);
   }
 
   &-title {
@@ -28,7 +54,6 @@
 
   &-content {
     position: relative;
-    padding: 0 ($horizontal-padding * 0.75) ($vertical-padding * 0.75) !important;
 
     cl-reward-item-preview:not(:last-child) {
       display: block;
@@ -65,7 +90,7 @@
   }
 
   &-value {
-    @include typo-input;
+    @include typo-input-alt;
 
     color: $base-font-color;
 
@@ -85,15 +110,6 @@
     span + small {
       margin-left: 0;
     }
-  }
-
-  &-row.input-group > span {
-    width: auto;
-    flex-shrink: 0;
-  }
-
-  &-value span:last-child {
-    margin-right: 0;
   }
 
   &-label + &-value {
@@ -117,15 +133,19 @@
 
   &-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: baseline;
+    margin-left: -($horizontal-padding * 0.25);
+    margin-right: -($horizontal-padding * 0.25);
 
-    & > * {
-      margin-right: 1.5rem;
+    > * {
+      padding-left: ($horizontal-padding * 0.25);
+      padding-right: ($horizontal-padding * 0.25);
+    }
 
-      &:last-of-type {
-        margin-right: 0;
-      }
+    > span {
+      padding-left: ($horizontal-padding * 0.5);
+      padding-right: ($horizontal-padding * 0.5);
     }
 
     &.stretch {
@@ -133,47 +153,18 @@
 
       & > * {
         flex: 1;
+        flex-basis: 100%;
       }
-    }
-
-    &.form-field {
-      align-items: flex-end;
-      height: 5.66rem;
-      padding-bottom: 1.25em;
-    }
-  }
-
-  &-row.input-group {
-    flex-wrap: wrap;
-
-    > * {
-      margin-right: ($horizontal-padding * 0.5);
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-
-    > .mat-form-field {
-      flex: 1 1 ($horizontal-padding * 2);
-      min-width: ($horizontal-padding * 2);
     }
   }
 
   &-section {
     margin-top: 1.9rem;
     background-color: $background-color;
-
-    .card-header {
-      padding: 0 3rem;
-    }
+    border-radius: $border-radius;
 
     .card-title {
       @extend .card-label;
-    }
-
-    .card-content {
-      padding: 0.4rem 3rem 3rem !important;
     }
   }
 
@@ -181,8 +172,9 @@
     padding: 0;
   }
 
-  .mat-radio-button ~ .mat-radio-button {
-    margin-left: ($horizontal-padding * 0.5);
+  .mat-radio-group .mat-radio-button:not(:last-child) {
+    margin-right: ($horizontal-padding * 0.5);
+    margin-bottom: ($vertical-padding * 0.25);
   }
 
   .mat-horizontal-content-container {
@@ -200,7 +192,7 @@
   }
 }
 
-@media (min-width: $mobile-width) {
+@media (min-width: $mobile-width + 1) {
   .card-definitions-splitter {
     display: flex;
 
@@ -220,12 +212,19 @@
   }
 }
 
+@media (max-width: $tablet-width) {
+  .card-row-date {
+    flex-wrap: wrap;
+  }
+}
+
 .loyalty {
   white-space: nowrap;
   font-size: 1.4rem;
 
   &-label {
     @include typo-subtitle2;
+
     display: flex;
     color: $secondary-color;
     font-size: 1.6rem;
@@ -241,7 +240,7 @@
     justify-content: flex-start;
 
     .mat-form-field {
-      max-width: 6rem;
+      max-width: 7rem;
     }
 
     input {
@@ -269,5 +268,13 @@
 
   &-points-expiry-type-input {
     max-width: 24rem !important;
+  }
+
+  * > .card {
+    margin-bottom: 1.6rem !important;
+
+    &:first-of-type {
+      margin-bottom: 0;
+    }
   }
 }

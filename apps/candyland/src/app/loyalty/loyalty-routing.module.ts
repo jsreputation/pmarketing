@@ -21,7 +21,11 @@ const routes: Routes = [
       {
         path: 'review/:id',
         component: LoyaltyReviewComponent
-      }
+      },
+      {
+        path: 'edit/:id',
+        component: NewLoyaltyComponent
+      },
     ]
   },
 ];

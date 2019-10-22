@@ -6,7 +6,10 @@
 <section class="content">
   <ng-container [ngSwitch]="dataSource.state$ | async">
     <ng-container *ngSwitchCase="dataSourceStates.hasDataApi">
-      <cl-loyalty-grid [dataSource]="dataSource">
+      <cl-loyalty-grid [dataSource]="dataSource"
+                       [menuOptions]="menuOptions"
+                       (menuTapped)="menuOptTapped($event)"
+      >
       </cl-loyalty-grid>
       <!--paginator-->
       <div class="table-card">
@@ -19,7 +22,7 @@
     </ng-container>
 
     <cl-no-data *ngSwitchCase="dataSourceStates.noDataApi">
-      <img class="no-data-img" src="/assets/images/no-data/engagements-empty-illustration.svg" alt="">
+      <img class="no-data-img" src="/assets/images/no-data/loyalty-empty-illustration.svg" alt="">
       <h2 class="no-data-title">
         Re-define your customer loyalty
       </h2>

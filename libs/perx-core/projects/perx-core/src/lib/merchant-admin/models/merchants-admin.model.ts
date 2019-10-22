@@ -11,3 +11,16 @@ export interface IMerchantAdminTransaction {
     properties?: string | null;
     transaction_reference: string;
 }
+
+export interface IMerchantProfile {
+  id: number;
+  email: string;
+  username: string;
+  mobile: string;
+  locationId: number;
+  merchantAccountId: number;
+  createdAt: Date;
+  updatedAt: Date;
+  passwordChangedAt: Date;
+  state: string;
+}

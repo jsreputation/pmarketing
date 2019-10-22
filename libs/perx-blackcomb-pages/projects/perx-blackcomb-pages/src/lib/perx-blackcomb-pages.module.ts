@@ -16,7 +16,7 @@ import {
   MatRadioModule,
   MatCheckboxModule,
   MatSelectModule,
-  MatDatepickerModule
+  MatDatepickerModule,
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
@@ -38,7 +38,10 @@ import {
   PictureSelectComponent,
   LongTextComponent,
   DateComponent,
-  VoucherComponent
+  VoucherComponent,
+  RewardsListTabbedComponent,
+  RewardsListComponent,
+  LoyaltySummaryComponent
 } from '@perx/core';
 
 import { HomeComponent } from './home/home.component';
@@ -48,11 +51,14 @@ import { LoadingComponent } from './loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { LoginComponent } from './login/login.component';
+import { QRComponent } from './qr/qr.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { RewardDetailsComponent } from './reward-details/reward-details.component';
 import { StampCardComponent } from './stamp-card/stamp-card.component';
 import { SurveyComponent } from './survey/survey.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
+import { WalletComponent } from './wallet/wallet.component';
+import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
 const comps: any[] = [
   AccountComponent,
   ContentComponent,
@@ -68,6 +74,7 @@ const comps: any[] = [
   LoadingComponent,
   RedeemComponent,
   LoginComponent,
+  QRComponent,
   RewardDetailsComponent,
   PerxRewardComponent,
   StampCardComponent,
@@ -83,7 +90,12 @@ const comps: any[] = [
   LongTextComponent,
   DateComponent,
   VoucherDetailComponent,
-  VoucherComponent
+  VoucherComponent,
+  WalletComponent,
+  RewardsListTabbedComponent,
+  LoyaltySummaryComponent,
+  GamesCollectionComponent,
+  RewardsListComponent
 ];
 
 @NgModule({

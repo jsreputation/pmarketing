@@ -8,14 +8,12 @@ import {
 } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AudiencesService } from '@cl-core/services';
-import { combineLatest, Observable } from 'rxjs';
 import { AddUserPopupComponent } from '../add-user-popup/add-user-popup.component';
 import { FormControl } from '@angular/forms';
 import { ManageListPopupComponent } from '../manage-list-popup/manage-list-popup.component';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { SettingsService } from '@cl-core-services';
-import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
-
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { distinctUntilChanged, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { CustomDataSource, DataSourceStates } from '@cl-shared/table/data-source/custom-data-source';
 
@@ -26,6 +24,8 @@ import { CustomDataSource, DataSourceStates } from '@cl-shared/table/data-source
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy {
+  private destroy$: Subject<any> = new Subject();
+
   public currentTab: string;
   public tabs: FormControl;
   public search: FormControl;
@@ -56,7 +56,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
 
   public ngOnInit(): void {
     this.tabs.valueChanges
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(tab => this.changeList(tab));
   }
 
@@ -64,9 +64,9 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     this.settingsService.getRolesOptions()
       .subscribe(config => this.config = config);
   }
-
-  /** necessary as we are using untilDestroyed on observables */
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public openAddUserDialog(): void {

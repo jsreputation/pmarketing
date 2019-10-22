@@ -35,9 +35,17 @@
   }
 }
 
-button {
-  max-width: 31.5rem;
-  min-width: 50%;
-  font-size: 1.5rem;
-  padding: 1.2rem;
+.game-footer {
+  bottom: 0;
+  padding: 1.6rem;
+  width: 100%;
+  box-sizing: border-box;
+
+  button {
+    width: 100%;
+    min-width: 50%;
+    font-size: 1.5rem;
+    padding: 1.6rem;
+    margin: 0;
+  }
 }
