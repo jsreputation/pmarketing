@@ -1,4 +1,4 @@
-import { browser, by, element, ElementFinder } from 'protractor';
+import { browser, by, element, ElementFinder, ElementArrayFinder } from 'protractor';
 
 export class DashboardAppPage {
   public navigateToDashboard(): Promise<string> {
@@ -25,6 +25,18 @@ export class EngagementAppPage {
   public engagementTabOption(): ElementFinder {
    return element.all(by.css('h3')).get(2);
   }
+  public engagementCreateNewButton(): ElementFinder {
+    return element(by.css('cl-button'));
+   }
+  public selectEngagementTypeDialog(): ElementFinder {
+    return element(by.css('mat-dialog-content'));
+   }
+  public engagementTypeOptions(): ElementArrayFinder {
+    return element.all(by.css('cl-type-item'));
+   }
+   public activeEngagementTypeOption(): ElementFinder {
+    return element(by.css('button.engagement-selector.active'));
+   }
 }
 
 export class CreateShakeTheTreeAppPage {

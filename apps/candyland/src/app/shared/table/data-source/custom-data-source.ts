@@ -1,35 +1,48 @@
 import { MatSort } from '@angular/material';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { SortModel } from '@cl-shared/table/data-source/sort.model';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, map, takeUntil } from 'rxjs/operators';
 import { IPagination } from './ipagination';
+import { DataSource } from '@angular/cdk/collections';
 
-// tslint:disable
-export class CustomDataSource<T> {
-  private dataSubject = new BehaviorSubject<T[]>([]);
-  private loadingSubject = new BehaviorSubject<boolean>(false);
+// enum of states for manage view in pages where used data source
+export enum DataSourceStates {
+  firstLoading = 0, // between init dataSource to get first response from data service (use for showing page preloader)
+  hasDataApi = 1, // get response from data service with data (use for showing table/grid card)
+  noDataApi = 2, // get first response from data service without data (use for showing no data)
+  errorApi = 3 // get first response from data service with error (use for showing error)
+}
+
+export class CustomDataSource<T> extends DataSource<T> {
+  private dataSubject: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
+  private loadingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   // used for toggle spinner loading
-  public loading$ = this.loadingSubject.asObservable();
-  private changeFilterSearch = new BehaviorSubject<number>(0);
+  public loading$: Observable<boolean> = this.loadingSubject.asObservable();
+  private changeFilterSearch: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   // used for setUp pagination index page to 0 when searching
-  public changeSearch$ = this.changeFilterSearch.asObservable();
-  private lengthData = new BehaviorSubject<number>(0);
+  public changeSearch$: Observable<number> = this.changeFilterSearch.asObservable();
+  public state$: BehaviorSubject<DataSourceStates> = new BehaviorSubject<DataSourceStates>(DataSourceStates.firstLoading);
+  private lengthData: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   // used for set all length items the pagination component
-  public length$ = this.lengthData.asObservable();
-  // use for set included params
-  private _params: HttpParamsOptions;
-  private destroy$: Subject<void> = new Subject();
+  public length$: Observable<number> = this.lengthData.asObservable();
 
-  public hasData = true;
+  public get length(): number {
+    return this.lengthData.value;
+  }
+
+  // use for set included params
+  private privateParams: HttpParamsOptions;
+  private destroy$: Subject<void> = new Subject();
+  private request: Subscription;
 
   public set params(value: HttpParamsOptions) {
-    this._params = value;
+    this.privateParams = value;
     this.loadingData();
   }
 
   public get params(): HttpParamsOptions {
-    return this._params || {};
+    return this.privateParams || {};
   }
 
   public get data(): T[] {
@@ -40,37 +53,42 @@ export class CustomDataSource<T> {
     return this.dataSubject.asObservable();
   }
 
+  public get hasData$(): Observable<boolean> {
+    return this.dataSubject.pipe(
+      map(data => data.length > 0)
+    );
+  }
+
   // default items on the page set up pageSize
   constructor(public dataService: ITableService, public pageSize: number = 5, params?: HttpParamsOptions) {
+    super();
     if (params) {
       this.params = params;
     }
     this.loadingData();
   }
 
-  private _sort: any;
+  private privateSort: SortModel;
 
   public get sort(): SortModel {
-    return this._sort;
+    return this.privateSort;
   }
 
   public set sort(val: SortModel) {
-    this._sort = val;
+    this.privateSort = val;
     this.changeFilterSearch.next(0);
     this.loadingData();
   }
 
-  private _filter: any;
+  private privateFilter: any;
 
-  public get filter(): { [key: string]: string } {
-    return this._filter;
-  }
-
-  public set filter(value: { [key: string]: string }) {
-    const filter = JSON.parse((value as any));
-    this._filter = filter;
+  public set filter(value: { [key: string]: string } | string) { // { [key: string]: string }
+    if (typeof value === 'string') {
+      this.privateFilter = JSON.parse((value));
+    } else {
+      this.privateFilter = value;
+    }
     this.changeFilterSearch.next(0);
-
     this.loadingData();
   }
 
@@ -87,6 +105,7 @@ export class CustomDataSource<T> {
   }
 
   public disconnect(): void {
+    this.request.unsubscribe();
     this.destroy$.next(null);
     this.destroy$.complete();
     this.dataSubject.complete();
@@ -95,12 +114,11 @@ export class CustomDataSource<T> {
     this.lengthData.complete();
   }
 
-
   public updateData(): void {
-    this.loadingData({ pageIndex: 0, pageSize: this.pageSize });
+    this.loadingData({pageIndex: 0, pageSize: this.pageSize});
   }
 
-  public registerSort(sort: MatSort) {
+  public registerSort(sort: MatSort): void {
     if (!sort) {
       throw new Error('Sort is undefined');
     }
@@ -112,7 +130,7 @@ export class CustomDataSource<T> {
       .subscribe(newSort => this.sort = newSort);
   }
 
-  private loadingData(pagination?: IPagination) {
+  private loadingData(pagination?: IPagination): void {
     const params: HttpParamsOptions = {
       ...this.params,
       ...this.prepareFilters(),
@@ -120,40 +138,50 @@ export class CustomDataSource<T> {
       'page[number]': pagination ? pagination.pageIndex + 1 : 1,
       'page[size]': pagination ? pagination.pageSize : this.pageSize
     };
+    if (this.request) {
+      this.request.unsubscribe();
+    }
     this.loadingSubject.next(true);
-    this.dataService.getTableData(params)
+    this.request = this.dataService.getTableData(params)
       .subscribe((res: ITableData<T>) => {
         this.dataSubject.next(res.data);
         this.lengthData.next(res.meta.record_count);
         this.loadingSubject.next(false);
+        const status = (res.data.length > 0 && res.meta.record_count > 0) ? DataSourceStates.hasDataApi : DataSourceStates.noDataApi;
+        this.setState(status);
       }, () => {
         this.dataSubject.next([]);
         this.lengthData.next(0);
         this.loadingSubject.next(false);
+        this.setState(DataSourceStates.errorApi);
       });
   }
 
-  private sortPrepare(sortData: SortModel) {
+  private setState(state: DataSourceStates): void {
+    if (this.state$.value === DataSourceStates.firstLoading || this.state$.value === DataSourceStates.noDataApi) {
+      this.state$.next(state);
+    }
+  }
+
+  private sortPrepare(sortData: SortModel): SortModel | {} {
     if (sortData && sortData.direction !== '') {
       const sort = sortData.direction === 'asc'
         ? `${sortData.active}`
         : `-${sortData.active}`;
-      return {
-        sort
-      };
+      return {sort};
     }
     return {};
   }
 
   private prepareFilters(): any {
-    if (!this._filter) {
+    if (!this.privateFilter) {
       return {};
     }
     const result = {};
-    Object.keys(this._filter)
+    Object.keys(this.privateFilter)
       .forEach((item) => {
-        if (this.filter[item]) {
-          result[`filter[${item}]`] = this.filter[item];
+        if (this.privateFilter[item]) {
+          result[`filter[${item}]`] = this.privateFilter[item];
         }
       });
     return result;
