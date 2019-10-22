@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { map, switchMap, mergeMap } from 'rxjs/operators';
+import { map, switchMap, mergeMap, tap } from 'rxjs/operators';
 import {
   IGame,
   GameType as TYPE,
@@ -9,7 +9,7 @@ import {
   defaultPinata,
   IPlayOutcome
 } from './game.model';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, combineLatest, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { IGameService } from './igame.service';
 import { Config } from '../config/config';
@@ -109,10 +109,14 @@ interface WPinataDisplayProperties extends WGameDisplayProperties {
 })
 export class WhistlerGameService implements IGameService {
   private hostName: string;
+  // basic cache
+  private cache: { [gId: number]: IGame } = {};
+
   constructor(
     private http: HttpClient,
     config: Config,
-    private whistVouchSvc: IVoucherService ) {
+    private whistVouchSvc: IVoucherService
+  ) {
     this.hostName = config.apiHost as string;
   }
 
@@ -148,6 +152,9 @@ export class WhistlerGameService implements IGameService {
     if (attributes.display_properties.button) {
       texts.button = attributes.display_properties.button;
     }
+
+    const imgUrl: string = attributes.image_url;
+
     const backgroundImg: string | undefined = attributes.display_properties.background_img_url ?
       attributes.display_properties.background_img_url : undefined;
 
@@ -158,11 +165,10 @@ export class WhistlerGameService implements IGameService {
       config,
       texts,
       backgroundImg,
+      imgUrl,
       results: {}
     };
-
   }
-
   // @ts-ignore
   public play(campaignId: number, gameId: number): Observable<IPlayOutcome> {
     const body = {
@@ -183,17 +189,21 @@ export class WhistlerGameService implements IGameService {
             (outcome: IJsonApiItem<Outcome>) => this.whistVouchSvc.get(Number.parseInt(outcome.id, 10))
           )).pipe(
             map((vouchArr) => vouchArr.reduce((acc, currVouch) =>
-            ({...acc, vouchers: [...acc.vouchers, currVouch]}), {vouchers: [], rawPayload: res})
+              ({ ...acc, vouchers: [...acc.vouchers, currVouch] }), { vouchers: [], rawPayload: res })
             ))
         ))
       );
   }
 
   public get(engagementId: number): Observable<IGame> {
+    if (this.cache[engagementId]) {
+      return of(this.cache[engagementId]);
+    }
     return this.http.get<IJsonApiItemPayload<AttbsObjGame>>(`${this.hostName}/game/engagements/${engagementId}`)
       .pipe(
         map(res => res.data),
-        map(game => WhistlerGameService.WGameToGame(game))
+        map(game => WhistlerGameService.WGameToGame(game)),
+        tap(game => this.cache[engagementId] = game)
       );
   }
 
@@ -203,8 +213,7 @@ export class WhistlerGameService implements IGameService {
         map((res: IJsonApiItemPayload<AttbsObjEntity>) => res.data.attributes),
         map((entity: AttbsObjEntity) => entity.engagement_id),
         switchMap((correctId: number) => this.get(correctId)),
-        map((game: IGame) => [game])
+        map((game: IGame) => [{ ...game, campaignId }])
       );
   }
-
 }

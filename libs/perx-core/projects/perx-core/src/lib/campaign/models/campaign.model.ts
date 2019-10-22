@@ -22,6 +22,7 @@ export interface ICampaign {
   endsAt: Date;
   rewards?: IReward[];
   thumbnailUrl?: string;
+  engagementId?: number;
   rawPayload?: any;
 }
 

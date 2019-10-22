@@ -43,7 +43,7 @@ cdk-virtual-scroll-viewport {
   &::-webkit-scrollbar {
     display: none;
     scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE 10+ */
+    -ms-overflow-style: none; /* IE 10+ */
   }
 }
 
@@ -103,4 +103,8 @@ ul {
       border-radius: 0.5rem;
     }
   }
+}
+
+.mat-card:not([class*=mat-elevation-z]) {
+  box-shadow: 0 0.4rem 0.4rem #D2D8E2;
 }

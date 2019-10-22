@@ -10,7 +10,7 @@
   <div class="card-content">
     <div class="input-group">
       <!--input number-->
-      <mat-form-field>
+      <mat-form-field class="half-on-mobile">
         <input
           type="number"
           min="0"
@@ -22,7 +22,7 @@
       <!--/ input number-->
       <span>per campaign, per</span>
       <!-- duration Limits-->
-      <mat-form-field>
+      <mat-form-field class="half-on-mobile">
         <mat-select [formControl]="formGroup.get('voucherPerCampaign.duration')">
           <ng-container *ngFor="let option of config?.durationLimits">
             <mat-option [value]="option?.value">{{option?.title}}</mat-option>
@@ -46,7 +46,7 @@
   <div class="card-content">
     <div class="input-group">
       <!--input number-->
-      <mat-form-field>
+      <mat-form-field class="half-on-mobile">
         <input
           type="number"
           min="0"
@@ -60,7 +60,7 @@
       <span>per campaign, per</span>
 
       <!-- duration Limits-->
-      <mat-form-field>
+      <mat-form-field class="half-on-mobile">
         <mat-select [formControl]="formGroup.get('issuancePerUser.duration')">
           <ng-container *ngFor="let option of config?.durationLimits">
             <mat-option [value]="option?.value">{{option?.title}}</mat-option>
@@ -84,7 +84,7 @@
   <div class="card-content">
     <div class="input-group">
       <!--input number-->
-      <mat-form-field>
+      <mat-form-field class="half-on-mobile">
         <input
           type="number"
           min="0"
@@ -96,7 +96,7 @@
       <!--/ input number-->
       <span>per campaign, per</span>
       <!-- duration Limits-->
-      <mat-form-field>
+      <mat-form-field class="half-on-mobile">
         <mat-select [formControl]="formGroup.get('redemptionPerUser.duration')">
           <ng-container *ngFor="let option of config?.durationLimits">
             <mat-option [value]="option?.value">{{option?.title}}</mat-option>

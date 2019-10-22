@@ -15,15 +15,17 @@ export class EngagementsService {
   public getEngagements(): Observable<IEngagement[]> {
     return this.http.getEngagements()
       .pipe(
-        map((res: any) => res.data.map(item => EngagementHttpAdapter.transformEngagementHandler(item)))
+        map((res: IResponseApi<IEngagementApi[]>) => res.data.map(item => EngagementHttpAdapter.transformEngagementHandler(item))
+          .filter(e => e !== undefined)
+        ),
       );
   }
 
   public getEngagement(id: string, type: string): Observable<IEngagement> {
     const eType = EngagementTypeAPIMapping[type];
     return this.http.getEngagement(id, eType).pipe(
-        map((res: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagementHandler(res.data, type)),
-      );
+      map((res: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagementHandler(res.data, type)),
+    );
   }
 
   public getEngagementType(): Observable<IGraphic[]> {

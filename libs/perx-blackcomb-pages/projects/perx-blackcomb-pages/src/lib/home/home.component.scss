@@ -18,11 +18,6 @@
   min-height: 100%;
 }
 
-.add-more {
-  margin: 0.8rem 1.6rem;
-  flex-grow: 1;
-}
-
 .games {
   display: flex;
   flex-direction: column;
@@ -36,6 +31,12 @@
   font-weight: 500;
 }
 
-.rewars-collection {
+.rewards-collection {
   padding: 0 1.5rem;
+  margin-bottom: 2rem;
+
+  .title {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }

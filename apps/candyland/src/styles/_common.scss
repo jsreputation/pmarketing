@@ -45,6 +45,10 @@ h1, h2, h3, h4, h5, p {
   justify-content: space-between !important;
 }
 
+.justify-content-center {
+  justify-content: center !important;
+}
+
 .flex-end {
   justify-content: flex-end;
 }
@@ -83,7 +87,7 @@ h1, h2, h3, h4, h5, p {
 }
 
 .sub-title {
-  @include typo-h6;
+  @include typo-subtitle1-alt;
 
   color: $secondary-color;
 }
@@ -118,8 +122,7 @@ h1, h2, h3, h4, h5, p {
   }
 
   @media (max-width: $mobile-width) {
-    padding-left: ($horizontal-padding * 0.5);
-    padding-right: ($horizontal-padding * 0.5);
+    padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.5);
   }
 }
 
@@ -134,6 +137,16 @@ h1, h2, h3, h4, h5, p {
   @include typo-input-alt;
 
   width: 100%;
+}
+
+.control-img_asset {
+  padding-bottom: $vertical-padding;
+  overflow-x: auto;
+
+  .card-fieldset-label {
+    position: sticky;
+    left: 0;
+  }
 }
 
 // INVALID FORM NEXT FIELD CLEAR GAP
@@ -192,6 +205,10 @@ h1, h2, h3, h4, h5, p {
 
   > .mat-form-field {
     flex: 1 1 28rem;
+  }
+
+  > .half-on-mobile {
+    flex-basis: 14rem;
   }
 
   > span {
@@ -265,12 +282,6 @@ h1, h2, h3, h4, h5, p {
   border-radius: $border-radius-lg !important;
 }
 
-.temp-engagement-title {
-  flex: 1;
-  margin-right: 4rem;
-  margin-bottom: ($vertical-padding * 0.5);
-}
-
 // no-data graphics layout
 .no-data {
   &-img {
@@ -333,10 +344,42 @@ h1, h2, h3, h4, h5, p {
   }
 }
 
+::-webkit-scrollbar {
+  width: ($horizontal-padding * 0.125);
+  height: ($vertical-padding * 0.125);
+}
+
+::-webkit-scrollbar-button {
+  background-color: $light-gray;
+  display: none;
+}
+
+::-webkit-scrollbar-track {
+  background-color: $light-gray;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: $light-gray;
+}
+
+::-webkit-scrollbar-thumb {
+  height: $vertical-padding;
+  background-color: $gray;
+  border-radius: ($vertical-padding * 0.125);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: $light-gray;
+}
+
+::-webkit-resizer {
+  background-color: $secondary-color;
+}
+
 .custom-scroll {
   &::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
+    width: ($horizontal-padding * 0.25);
+    height: ($vertical-padding * 0.25);
   }
 
   &::-webkit-scrollbar-button {
@@ -355,7 +398,7 @@ h1, h2, h3, h4, h5, p {
   &::-webkit-scrollbar-thumb {
     height: 50px;
     background-color: #172238;
-    border-radius: 3px;
+    border-radius: ($horizontal-padding * 0.25);
   }
 
   &::-webkit-scrollbar-corner {
@@ -364,5 +407,11 @@ h1, h2, h3, h4, h5, p {
 
   &::-webkit-resizer {
     background-color: #666;
+  }
+}
+
+.upload-btn {
+  span ~ span {
+    display: none;
   }
 }
