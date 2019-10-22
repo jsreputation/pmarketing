@@ -51,6 +51,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { LoginComponent } from './login/login.component';
+import { QRComponent } from './qr/qr.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { RewardDetailsComponent } from './reward-details/reward-details.component';
 import { StampCardComponent } from './stamp-card/stamp-card.component';
@@ -73,6 +74,7 @@ const comps: any[] = [
   LoadingComponent,
   RedeemComponent,
   LoginComponent,
+  QRComponent,
   RewardDetailsComponent,
   PerxRewardComponent,
   StampCardComponent,

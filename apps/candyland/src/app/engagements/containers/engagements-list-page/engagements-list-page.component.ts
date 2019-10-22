@@ -13,7 +13,7 @@ import { ConfirmModalComponent } from '@cl-shared/containers/confirm-modal/confi
 import { Subject } from 'rxjs';
 import { tap, takeUntil } from 'rxjs/operators';
 
-import { PrepareTableFilers } from '@cl-helpers/prepare-table-filers';
+import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { AvailableNewEngagementService, EngagementsService } from '@cl-core/services';
 import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 import { IEngagementItemMenuOption } from '@cl-shared/components/engagement-item/engagement-item.component';
@@ -52,7 +52,7 @@ export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
       this.showLaunchDialog();
     }
     this.getData();
-    this.dataSource.filterPredicate = PrepareTableFilers.getClientSideFilterFunction();
+    this.dataSource.filterPredicate = PrepareTableFilters.getClientSideFilterFunction();
     this.dataSource.paginator = this.paginator;
   }
 
@@ -88,8 +88,8 @@ export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
         tap(data => {
-          const counterObject = PrepareTableFilers.countFieldValue(data, 'attributes_type');
-          this.tabsFilterConfig = PrepareTableFilers.prepareTabsFilterConfig(counterObject, data);
+          const counterObject = PrepareTableFilters.countFieldValue(data, 'attributes_type');
+          this.tabsFilterConfig = PrepareTableFilters.prepareTabsFilterConfig(counterObject, data);
         })
       )
       .subscribe((res: IEngagement[]) => {
