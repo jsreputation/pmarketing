@@ -1,0 +1,17 @@
+<mat-expansion-panel class="card" expanded>
+  <mat-expansion-panel-header class="card-header">
+    <h2 class="card-title">
+      Upload Image
+    </h2>
+  </mat-expansion-panel-header>
+
+  <div class="card-content" [formGroup]="group">
+    <p class="upload-img-title">
+      Loyalty Program Main Image
+    </p>
+    <cl-upload-graphic [formControl]="imageUrl"
+                       [btnLabel]="'Upload photo'"
+                       [isRequired]="imageUrl.hasError('required') && imageUrl.touched"
+    ></cl-upload-graphic>
+  </div>
+</mat-expansion-panel>

@@ -23,6 +23,12 @@ export const menus = [
     open: false,
   },
   {
+    name: 'Loyalty (β)',
+    link: '/loyalty',
+    icon: 'loyalty',
+    open: false,
+  },
+  {
     name: 'Merchants',
     link: '/merchants',
     icon: 'merchant',
@@ -39,6 +45,5 @@ export const menus = [
     link: '/settings',
     icon: 'settings',
     open: false,
-  },
-
+  }
 ];

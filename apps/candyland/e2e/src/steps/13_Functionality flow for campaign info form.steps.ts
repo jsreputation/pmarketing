@@ -167,7 +167,7 @@ Given(/^17_that I am on the campaign review page.$/, async () => {
   // clicking the next button on the campaign details package
   await browser.wait(ec.elementToBeClickable(element.all(by.css('cl-button')).get(1)), 6000);
   // await element.all(by.css('cl-button')).get(1).click();
-  browser.sleep(3000);
+  await browser.sleep(3000);
 });
 
 When(/^17_I click on the launch button.$/, async () => {
