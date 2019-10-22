@@ -56,7 +56,18 @@ export class WhistlerCampaignService implements ICampaignService {
     return new Observable(subject => {
       let current: ICampaign[] = [];
       const process = (p: number, cs: IJsonApiListPayload<IWhistlerCampaignAttributes>) => {
-        const newCampaigns = cs.data.map(WhistlerCampaignService.WhistlerCampaignToCampaign);
+        // can safely parse bcz we didnt change from original format
+        const currentDate = new Date().getTime();
+        const toBeKeptNullCampaigns = cs.data.filter(singleCampaign => singleCampaign.attributes.start_date_time === null);
+        const tobeComparedCampaigns = cs.data.filter(singleCampaign => singleCampaign.attributes.start_date_time !== null);
+        // convert to number for easy comparison
+        const filteredDatesOfNotFutureCampaigns = tobeComparedCampaigns
+        .filter(singleCampaign => new Date(singleCampaign.attributes.start_date_time).getTime() <= currentDate );
+        // check against end date time not implemented api returns null for all end date time(s)
+
+        const transFormToICampaign =  [...toBeKeptNullCampaigns, ...filteredDatesOfNotFutureCampaigns];
+
+        const newCampaigns = transFormToICampaign.map(WhistlerCampaignService.WhistlerCampaignToCampaign);
         current = current.concat(newCampaigns);
         subject.next(current);
         if (p >= cs.meta.page_count) {
