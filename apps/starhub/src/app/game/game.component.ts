@@ -65,7 +65,8 @@ export class GameComponent implements OnInit {
               title: game.results.noOutcome.title,
               text: game.results.noOutcome.subTitle,
               buttonTxt: game.results.noOutcome.button,
-              afterClosedCallBack: this
+              afterClosedCallBack: this,
+              panelClass: 'custom-class'
             });
           }
 
@@ -81,7 +82,8 @@ export class GameComponent implements OnInit {
           this.isEnabled = false;
           this.notificationService.addPopup({
             title: 'Oooops!',
-            text: 'Something is wrong, game cannot be played at the moment!'
+            text: 'Something is wrong, game cannot be played at the moment!',
+            panelClass: 'custom-class'
           });
         }
       );
@@ -95,6 +97,7 @@ export class GameComponent implements OnInit {
         buttonTxt2: 'Keep playing',
         buttonTxt: 'Quit game',
         afterClosedCallBack: this,
+        panelClass: 'custom-class'
       });
     } else {
       this.location.back();
@@ -106,7 +109,6 @@ export class GameComponent implements OnInit {
   }
 
   public gameCompleted(): void {
-
     this.gameService.play(this.game.id)
     .pipe(
       map((game: IPlayOutcome) => game.vouchers)
@@ -129,7 +131,8 @@ export class GameComponent implements OnInit {
       title: this.game.results.noOutcome.title,
       text: this.game.results.noOutcome.subTitle,
       buttonTxt: this.game.results.noOutcome.button,
-      afterClosedCallBack: this
+      afterClosedCallBack: this,
+      panelClass: 'custom-class'
     });
   }
 }
