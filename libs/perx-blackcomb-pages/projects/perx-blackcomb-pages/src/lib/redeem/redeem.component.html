@@ -19,7 +19,7 @@
     </div>
     <div *ngIf="redemptionType === rt.qr" class="code-container">
       <perx-core-qrcode-redemption [voucherId]="voucherId"></perx-core-qrcode-redemption>
-      <div class="action ">
+      <div class="button-container">
         <button mat-button color="default" (click)="goBack()">Cancel</button>
       </div>
     </div>
