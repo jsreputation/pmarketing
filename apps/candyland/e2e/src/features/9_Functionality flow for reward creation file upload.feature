@@ -23,7 +23,7 @@ Scenario: Verifiying file upload functionality for user upload codes
   And   17_I select user upload option for unique codes
   When  17_I upload a file
   Then  17_File uploaded successfully.
-@runThis
+
 Scenario: Verifiying file upload assertion for user upload codes
   Given 18_that I am on reward creation page
   And   18_I select user upload option for unique codes
