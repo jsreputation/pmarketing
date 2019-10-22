@@ -52,12 +52,32 @@ export class WhistlerCampaignService implements ICampaignService {
     };
   }
 
+  private static startsAfter(c: IJsonApiItem<IWhistlerCampaignAttributes>, ts: number): boolean {
+    if (c.attributes.start_date_time === null) {
+      return true;
+    }
+    const start = (new Date(c.attributes.start_date_time)).getTime();
+    return start < ts;
+  }
+
+  private static expiresBefore(c: IJsonApiItem<IWhistlerCampaignAttributes>, ts: number): boolean {
+    if (!c.attributes.end_date_time || c.attributes.end_date_time === null) {
+      return true;
+    }
+    const end = (new Date(c.attributes.end_date_time)).getTime();
+    return end > ts;
+  }
+
   public getCampaigns(): Observable<ICampaign[]> {
     return new Observable(subject => {
       let current: ICampaign[] = [];
+      const now: number = (new Date()).getTime();
       const process = (p: number, cs: IJsonApiListPayload<IWhistlerCampaignAttributes>) => {
-        const newCampaigns = cs.data.map(WhistlerCampaignService.WhistlerCampaignToCampaign);
-        current = current.concat(newCampaigns);
+        const campaigns = cs.data
+          // filter out by campaign date
+          .filter(c => WhistlerCampaignService.startsAfter(c, now) && WhistlerCampaignService.expiresBefore(c, now))
+          .map(WhistlerCampaignService.WhistlerCampaignToCampaign);
+        current = current.concat(campaigns);
         subject.next(current);
         if (p >= cs.meta.page_count) {
           subject.complete();
