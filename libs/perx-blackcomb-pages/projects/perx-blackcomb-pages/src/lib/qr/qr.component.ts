@@ -21,30 +21,20 @@ export class QRComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private profileService: ProfileService
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this.rewardId = +this.route.snapshot.paramMap.get('rewardId');
 
     this.profileService.whoAmI().subscribe(
-        (profile) => {
-          if (this.rewardId) {
-            this.rewardDetails = JSON.stringify(
-              {
-                id: profile.id,
-                name: profile.lastName,
-                identifier: profile.identifier,
-                rewardId: this.rewardId
-              });
-          } else {
-            this.rewardDetails = JSON.stringify(
-            {
-              id: profile.id,
-              name: profile.lastName,
-              identifier: profile.identifier
-            });
-          }
-        }
+      (profile) => {
+        this.rewardDetails = JSON.stringify(
+          {
+            id: profile.id,
+            name: profile.lastName,
+            identifier: profile.identifier
+          });
+      }
     );
   }
 
