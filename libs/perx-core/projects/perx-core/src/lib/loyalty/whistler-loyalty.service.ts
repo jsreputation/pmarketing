@@ -35,7 +35,6 @@ export class WhistlerLoyaltyService {
   }
 
   public getLoyalties(page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT): Observable<ILoyalty[]> {
-    debugger
     return this.http.get<IJsonApiListPayload<IWLoyalty>>(
       `${this.hostName}/loyalty/programs`,
       {
