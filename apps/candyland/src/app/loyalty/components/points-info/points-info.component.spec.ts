@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 // tslint:disable-next-line:import-blacklist
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ViewGlobalEarnBurnRulesComponent } from './view-global-earn-burn-rules.component';
+import { PointsInfoComponent } from './points-info.component';
 
-describe('ViewGlobalEarnBurnRulesComponent', () => {
-  let component: ViewGlobalEarnBurnRulesComponent;
-  let fixture: ComponentFixture<ViewGlobalEarnBurnRulesComponent>;
+describe('PointsInfoComponent', () => {
+  let component: PointsInfoComponent;
+  let fixture: ComponentFixture<PointsInfoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewGlobalEarnBurnRulesComponent ],
+      declarations: [ PointsInfoComponent ],
       schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ViewGlobalEarnBurnRulesComponent);
+    fixture = TestBed.createComponent(PointsInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

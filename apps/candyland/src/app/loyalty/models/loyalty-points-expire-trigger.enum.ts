@@ -1,4 +1,4 @@
 export enum LoyaltyPointsExpireTrigger {
-  accural = 'accural',
+  accrual = 'accrual',
   inactivity = 'inactivity'
 }

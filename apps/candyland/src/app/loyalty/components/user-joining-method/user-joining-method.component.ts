@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { untilDestroyed } from 'ngx-take-until-destroy';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-user-joining-method',
@@ -9,6 +10,7 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 })
 export class UserJoinMethodComponent implements OnInit, OnDestroy {
   @Input() public group: FormGroup;
+  protected destroy$: Subject<void> = new Subject();
 
   public get joinMethod(): FormGroup {
     return this.group.get('joinMethod') as FormGroup;
@@ -24,7 +26,7 @@ export class UserJoinMethodComponent implements OnInit, OnDestroy {
 
   public subscribeGroupValueChanges(): void {
     this.joinMethod.valueChanges
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
         this.switchStatusAmount(value.transactionAmount);
       });
@@ -46,5 +48,7 @@ export class UserJoinMethodComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

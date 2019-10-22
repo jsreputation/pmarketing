@@ -20,9 +20,6 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header="joinMethod" class="column-status">Qualification</th>
           <td mat-cell *matCellDef="let element" class="column-status">
             {{element.joinMethod | JoinMethod}}
-<!--            <span *ngFor="let item of element.joinMethod">{{item}}</span>-->
-<!--            {{element.joinMethod?.pointsThreshold ? element.joinMethod?.points + ' Points' : ''}}-->
-<!--            {{element.joinMethod?.inviteOnly ? 'Invite Only' : ''}}-->
           </td>
         </ng-container>
 

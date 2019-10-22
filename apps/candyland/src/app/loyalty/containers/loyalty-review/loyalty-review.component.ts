@@ -1,10 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CustomDataSource } from '@cl-shared/table';
 import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { map, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 
 @Component({
@@ -15,10 +14,12 @@ import { LoyaltyService } from '@cl-core/services/loyalty.service';
 export class LoyaltyReviewComponent implements OnInit, OnDestroy {
   public loyalty: ILoyaltyForm;
   public customTierDataSource: CustomDataSource<any>;
+  protected destroy$: Subject<void> = new Subject();
 
   constructor(private route: ActivatedRoute,
               private customTierService: LoyaltyCustomTierService,
               private router: Router,
+              private cd: ChangeDetectorRef,
               private loyaltyService: LoyaltyService) {
     this.customTierDataSource = new CustomDataSource<any>(this.customTierService);
   }
@@ -26,7 +27,10 @@ export class LoyaltyReviewComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.handleRouteParams();
   }
+
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public comeBack(): void {
@@ -35,17 +39,14 @@ export class LoyaltyReviewComponent implements OnInit, OnDestroy {
 
   private handleRouteParams(): void {
     this.route.paramMap.pipe(
-      untilDestroyed(this),
+      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
-      switchMap(id => {
-        if (id) {
-          return this.loyaltyService.getLoyalty(id);
-        }
-        return of(null);
-      }),
+      tap(id => this.setBasicTierId(id)),
+      switchMap(id => this.loyaltyService.getLoyalty(id)),
     ).subscribe(data => {
         if (data) {
           this.loyalty = data;
+          this.cd.detectChanges();
         } else {
           this.router.navigateByUrl('/loyalty');
         }
@@ -55,5 +56,20 @@ export class LoyaltyReviewComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl('/loyalty');
       }
     );
+  }
+
+  private setBasicTierId(loyaltyId: string): void {
+    this.initCustomTiersDataSource();
+    this.setBasicTierIdToCustomTiersDataSourceFilter(loyaltyId);
+  }
+
+  private initCustomTiersDataSource(): void {
+    if (!this.customTierDataSource) {
+      this.customTierDataSource = new CustomDataSource<any>(this.customTierService);
+    }
+  }
+
+  private setBasicTierIdToCustomTiersDataSourceFilter(basicTierId: string): void {
+    this.customTierDataSource.filter = {program_id: basicTierId};
   }
 }

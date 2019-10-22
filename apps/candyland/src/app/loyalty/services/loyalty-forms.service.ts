@@ -53,7 +53,7 @@ export class LoyaltyFormsService {
       status: 'draft',
       details: {
         pointsName: 'Point as default',
-        imageUrl: 'https://www.gettyimages.co.uk/gi-resources/images/RoyaltyFree/Apr17Update/ColourSurge1.jpg',
+        imageUrl: null,
         joinMethod: {
           inviteOnly: true,
         },
@@ -71,7 +71,7 @@ export class LoyaltyFormsService {
         pointsExpiry: {
           amount: 1,
           type: 'year',
-          trigger: 'accural',
+          trigger: 'accrual',
         }
       }
     };
@@ -107,13 +107,13 @@ export class LoyaltyFormsService {
       joinMethod: {
         inviteOnly: true,
       },
-      imageUrl: 'https://www.gettyimages.co.uk/gi-resources/images/RoyaltyFree/Apr17Update/ColourSurge1.jpg',
+      imageUrl: null,
       earnBonus: 0,
       burnDiscount: 0,
       pointsExpiry: {
         amount: 1,
         type: 'year',
-        trigger: 'accural',
+        trigger: 'accrual',
       }
     };
   }

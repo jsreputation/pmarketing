@@ -1,10 +1,10 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { LoyaltyFormsService } from 'src/app/loyalty/services/loyalty-forms.service';
 import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'cl-tier-setup-popup',
@@ -14,6 +14,7 @@ import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.
 })
 export class TierSetupPopupComponent implements OnInit, OnDestroy {
   public form: FormGroup;
+  protected destroy$: Subject<void> = new Subject();
 
   constructor(public dialogRef: MatDialogRef<TierSetupPopupComponent>,
               private loyaltyFormsService: LoyaltyFormsService,
@@ -60,6 +61,8 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public close(): void {
@@ -91,7 +94,7 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
 
   private handlePointsThreshold(): void {
     this.pointsThreshold.valueChanges.pipe(
-      untilDestroyed(this),
+      takeUntil(this.destroy$),
       distinctUntilChanged()
     ).subscribe((value: boolean) => {
       if (value) {

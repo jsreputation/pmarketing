@@ -11,6 +11,10 @@
   flex-flow: column;
   align-items: center;
   justify-content: flex-start;
+
+  & > .card {
+    margin-top: 1.6rem !important;
+  }
 }
 
 .date-field {

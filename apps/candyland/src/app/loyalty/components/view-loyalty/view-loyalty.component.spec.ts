@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewLoyaltyComponent } from './view-loyalty.component';
+// tslint:disable-next-line:import-blacklist
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ViewLoyaltyComponent', () => {
   let component: ViewLoyaltyComponent;
@@ -8,9 +10,10 @@ describe('ViewLoyaltyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewLoyaltyComponent ]
+      declarations: [ ViewLoyaltyComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

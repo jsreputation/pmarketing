@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TierSetupPopupComponent } from 'src/app/loyalty/containers/tier-setup-popup/tier-setup-popup.component';
 import { LoyaltyFormsService } from '../../services/loyalty-forms.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
@@ -9,7 +8,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { LoyaltyStepForm } from '../../models/loyalty-step-form.enum';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from '@cl-core/services/user.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { AudiencesService } from '@cl-core-services';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
@@ -36,6 +35,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   public showDraftButton: boolean = true;
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
+  protected destroy$: Subject<void> = new Subject();
 
   constructor(private loyaltyFormsService: LoyaltyFormsService,
               private loyaltyService: LoyaltyService,
@@ -54,6 +54,8 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public get currency$(): Observable<string> {
@@ -62,7 +64,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
 
   private initPools(): any {
     this.audiencesService.getAudiencesList()
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.pools = data;
       });
@@ -71,7 +73,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   private getLoyaltyWithBasicTierRequest(): Observable<any> {
     return this.getLoyaltyRequest()
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         switchMap(() => this.getBasicTierRequest()),
         filter(Boolean)
       );
@@ -184,14 +186,14 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
 
     return dialogRef.afterClosed()
       .pipe(
-        untilDestroyed(this),
+        takeUntil(this.destroy$),
         filter(Boolean)
       );
   }
 
   private createCustomTire(): void {
     this.getRefDialogSetupTier()
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.updateCustomTiersDataSource());
   }
 
@@ -202,13 +204,13 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
 
   private editCustomTire(data: any): void {
     this.getRefDialogSetupTier(data)
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.updateCustomTiersDataSource());
   }
 
   private deleteCustomTier(id: any): void {
     this.customTierService.deleteCustomTier(id)
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.updateCustomTiersDataSource());
   }
 
@@ -245,7 +247,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
 
   private handleRouteParams(): void {
     this.route.paramMap.pipe(
-      untilDestroyed(this),
+      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap(id => {
         this.isEditPage = !!id;

@@ -5,7 +5,7 @@
     </h2>
   </mat-expansion-panel-header>
 
-  <div class="card-content">
+  <div class="card-content" *ngIf="schemaInfo">
     <div class="flex">
       <div class="info-image-wrap flex align-items-center">
         <img [src]="schemaInfo?.imageUrl" alt="schemaInfo" class="info-image">
@@ -25,21 +25,7 @@
           <p class="info-points-value">{{schemaInfo?.pointsName}}</p>
           <p class="info-points-title">Joining Method</p>
           <div class="info-points-value">
-<!--            <p  class="info-points-value">-->
               {{schemaInfo?.joinMethod | JoinMethod}}
-<!--            </p>-->
-<!--            <p  class="info-points-value" *ngIf="schemaInfo?.joinMethod?.transactionAmount">-->
-<!--              Transaction Amount-->
-<!--              <span class="info-points-value">-->
-<!--                ({{schemaInfo?.joinMethod?.amount}} {{'SGD' || currency}})-->
-<!--              </span>-->
-<!--            </p>-->
-<!--            <p class="info-points-value" *ngIf="schemaInfo?.joinMethod?.signUp">-->
-<!--              Sign-up-->
-<!--            </p>-->
-<!--            <p class="info-points-value" *ngIf="schemaInfo?.joinMethod?.inviteOnly">-->
-<!--              By invite-->
-<!--            </p>-->
           </div>
         </div>
       </div>

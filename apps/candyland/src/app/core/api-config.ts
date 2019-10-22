@@ -1,8 +1,7 @@
 import { environment } from '@cl-environments/environment';
 
 export class ApiConfig {
-  // public static basePath: string = environment.apiHost;
-  public static basePath: string = 'http://7ed32faf.ngrok.io';
+  public static basePath: string = environment.apiHost;
   public static baseAPIPath: string = `${ApiConfig.basePath}/iam`;
   public static engagementsPath: string = `${ApiConfig.basePath}/engagements`;
   public static campaignsPath: string = `${ApiConfig.basePath}/campaign/entities`;

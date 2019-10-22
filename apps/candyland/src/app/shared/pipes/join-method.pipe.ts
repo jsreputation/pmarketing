@@ -7,7 +7,6 @@ import { LoyaltyJoinMethodMap } from '@cl-core/models/loyalty/loyalty-joing-meth
 export class JoinMethodPipePipe implements PipeTransform {
 
   public transform(JoinMethods: any): string {
-    console.log('joinMethod', JoinMethods);
     const result: string[] = [];
     Object.keys(JoinMethods).forEach(
       (key) => {

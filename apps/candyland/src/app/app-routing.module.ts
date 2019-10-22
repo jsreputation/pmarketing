@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-// import { AuthGuard } from '@cl-core/guards/auth.guard';
-// import { NoAuthGuard } from '@cl-core/guards/no-auth.guard';
+import { AuthGuard } from '@cl-core/guards/auth.guard';
+import { NoAuthGuard } from '@cl-core/guards/no-auth.guard';
 import { MainContainerComponent } from './main-container/main-container.component';
 import { LoginComponent } from './auth/containers/login/login.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/dashboard/overview'},
   { path: '',
-    component: MainContainerComponent,
-    // canActivate: [AuthGuard],
+    component: MainContainerComponent, canActivate: [AuthGuard],
     children: [
       {
         path: 'dashboard',
@@ -42,12 +41,14 @@ const routes: Routes = [
       {
         path: 'report',
         loadChildren: () => import('./report/report.module').then(mod => mod.ReportModule)
+      },
+      {
+        path: 'loyalty',
+        loadChildren: () => import('./loyalty/loyalty.module').then(mod => mod.LoyaltyModule)
       }
     ]
   },
-  { path: 'login', component: LoginComponent,
-    // canActivate: [NoAuthGuard]
-  },
+  { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
   { path: '**', redirectTo: '/dashboard'}
 ];
 

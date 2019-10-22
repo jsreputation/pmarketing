@@ -1,10 +1,11 @@
 <header class="page-header full-with">
+  <h1 class="title">{{loyalty?.name}}</h1>
   <div class="btn-group">
     <cl-button classList="primary"
                (click)="comeBack()"> Come Back
     </cl-button>
   </div>
 </header>
-<section class="content form-limiter">
-  <cl-view-loyalty [loyaltyData]="loyalty" [dataSource]="customTierDataSource"></cl-view-loyalty>
+<section class="content form-limiter loyalty">
+  <cl-view-loyalty *ngIf="loyalty" [loyaltyData]="loyalty" [dataSource]="customTierDataSource"></cl-view-loyalty>
 </section>

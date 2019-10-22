@@ -62,7 +62,7 @@ export class LoyaltyHttpAdapter {
       type: 'custom_tiers',
       attributes: {
         name: data.name,
-        image_url: data.imageUrl || 'assets/images/icons/engagement.svg',
+        image_url: data.imageUrl,
         bonus_ratio: (data.earnBonus / 100).toFixed(3),
         discount_ratio: (data.burnDiscount / 100).toFixed(3),
         expiry_period: data.pointsExpiry.amount,
