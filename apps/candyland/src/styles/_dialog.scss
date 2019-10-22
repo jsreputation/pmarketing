@@ -173,6 +173,10 @@
   @include modal-size($modal-md);
 }
 
+.tier-setup-dialog {
+  @include modal-size($modal-lg);
+}
+
 .invite-new-users-dialog .mat-dialog-container {
   @include modal-size($modal-lg);
 }

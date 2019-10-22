@@ -4,7 +4,7 @@
 </header>
 
 <section class="content">
-  <ng-container *ngIf="hasData">
+  <ng-container *ngIf="(hasData$ | async); else noData">
     <!--tabs-->
     <cl-tabs-filter [tabs]="tabsFilterConfig" [formControl]="tabs"></cl-tabs-filter>
 
@@ -28,30 +28,32 @@
       <!-- table-->
       <ng-container [ngSwitch]="currentTab">
         <cl-audiences-users-list *ngSwitchDefault (clickManageList)="openManageListDialog($event)"
-          [dataSource]="dataSource">
+                                 [dataSource]="dataSource">
         </cl-audiences-users-list>
         <cl-audiences-list *ngSwitchCase="'audience'"
-          [dataSource]="audiencesDataSource">
+                           [dataSource]="audiencesDataSource">
         </cl-audiences-list>
       </ng-container>
       <!-- /table-->
       <!-- paginator-->
       <ng-container [ngSwitch]="currentTab">
         <cl-paginator *ngSwitchDefault [dataSource]="dataSource" [pageSize]="5"
-          [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
+                      [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
         <span *ngSwitchCase="'audience'"></span>
       </ng-container>
       <!-- /paginator-->
     </div>
   </ng-container>
 
-  <cl-no-data *ngIf="(dataSource.data).length === 0">
-    <img class="no-data-img" src="/assets/images/no-data/audience-empty-illustration.svg" alt="">
-    <h2 class="no-data-title">
-      Slice and dice your target audience
-    </h2>
-    <p class="no-data-text">
-      Let&rsquo;s begin by creating your first Audience List
-    </p>
-  </cl-no-data>
+  <ng-template #noData>
+    <cl-no-data>
+      <img class="no-data-img" src="/assets/images/no-data/audience-empty-illustration.svg" alt="">
+      <h2 class="no-data-title">
+        Slice and dice your target audience
+      </h2>
+      <p class="no-data-text">
+        Let&rsquo;s begin by creating your first Audience List
+      </p>
+    </cl-no-data>
+  </ng-template>
 </section>

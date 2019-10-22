@@ -1,0 +1,22 @@
+@import "variables";
+
+.info {
+  &-points-title {
+    padding-top: 2.4rem;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    letter-spacing: 0.15px;
+    color: $secondary-color;
+
+    &:first-child {
+      padding-top: 0;
+    }
+  }
+
+  &-points-value {
+    font-size: 1.4rem;
+    line-height: 1.43;
+    letter-spacing: 0.25px;
+    color: rgba($base-font-color, 0.87);
+  }
+}

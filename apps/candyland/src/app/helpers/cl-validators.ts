@@ -1,4 +1,4 @@
-import { AbstractControl, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { sum } from './total-sum';
 
 export class ClValidators extends Validators {
@@ -52,6 +52,18 @@ export class ClValidators extends Validators {
       return null;
     }
     return !ClValidators.url.test(control.value) ? {patternUrl: true} : null;
+  }
+
+  public static requiredGroup(control: FormGroup): { [key: string]: boolean } | null {
+    if (!control) {
+      return null;
+    }
+    for (const controlKey in control.controls) {
+      if (control.controls[controlKey].value === true) {
+        return null;
+      }
+    }
+    return {requiredGroup: true};
   }
 
 }
