@@ -56,7 +56,7 @@ export class LoginAppPage {
   }
 
   public getAccountId(): string {
-   return 'retail';
+   return 'generic';
   }
 
   public getUserAccount(): string {
