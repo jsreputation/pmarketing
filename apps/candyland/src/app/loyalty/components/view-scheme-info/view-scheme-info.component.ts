@@ -6,6 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./view-scheme-info.component.scss']
 })
 export class ViewSchemeInfoComponent {
-  @Input() public schemaInfo: ILoyaltySchemaInf;
+  @Input() public loyalty: ILoyaltyForm;
   @Input() public currency: any;
 }
