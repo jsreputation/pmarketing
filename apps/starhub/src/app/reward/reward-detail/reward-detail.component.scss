@@ -4,6 +4,15 @@
 .macaron-container {
   text-align: center;
   padding: 1rem;
+  text-transform: lowercase;
+
+  span {
+    display: inline-block;
+  }
+
+  span::first-letter {
+    text-transform: uppercase;
+  }
 }
 
 @include macaronStyles();
@@ -29,7 +38,9 @@ app-expire-timer,
   }
 }
 
-.description, .address, .terms-conditions {
+.description,
+.address,
+.terms-conditions {
   font-size: 1.6rem;
   color: #666666;
   white-space: pre-line;

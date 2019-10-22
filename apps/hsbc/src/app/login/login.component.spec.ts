@@ -6,6 +6,7 @@ import { LoginComponent } from './login.component';
 import { MatCardModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService, UtilsModule } from '@perx/core';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -26,7 +27,8 @@ describe('LoginComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         NoopAnimationsModule,
-        UtilsModule
+        UtilsModule,
+        HttpClientTestingModule
       ],
       declarations: [LoginComponent],
     })
