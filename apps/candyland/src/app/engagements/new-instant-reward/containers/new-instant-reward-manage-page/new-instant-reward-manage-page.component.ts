@@ -6,7 +6,7 @@ import {
   ChangeDetectorRef,
   ViewChildren, QueryList, ViewChild, AfterViewInit
 } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 
 import { combineLatest, Observable, of, Subject } from 'rxjs';
@@ -22,6 +22,8 @@ import {
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { CreateImageDirective } from '@cl-shared/directives/create-image.directive';
 import { GameMobilePreviewComponent } from '@cl-shared/components/game-mobile-preview/game-mobile-preview.component';
+import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 
 @Component({
   selector: 'cl-new-instant-reward-manage-page',
@@ -112,7 +114,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
     this.destroy$.complete();
   }
 
-  public getImgLink(control: FormControl, defaultImg: string): string {
+  public getImgLink(control: AbstractControl, defaultImg: string): string {
     return ImageControlValue.getImgLink(control, defaultImg);
   }
 
@@ -184,9 +186,12 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
   }
 
   private initTenants(): void {
-    this.settingsService.getTenantsSettings()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(data => this.tenantSettings = data);
+    this.settingsService.getTenants()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((res: Tenants) => {
+      this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+      this.cd.detectChanges();
+    });
   }
 
   private getRewardData(): Observable<IRewardDefaultValue> {
