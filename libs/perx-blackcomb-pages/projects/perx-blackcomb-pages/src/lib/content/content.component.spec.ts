@@ -112,11 +112,13 @@ describe('ContentComponent', () => {
       component.ngOnInit();
       tick();
       expect(themesServiceSpy).toHaveBeenCalled();
-      const spinner = fixture.debugElement.queryAll(By.css('.loading .mat-spinner'));
+      let spinner = fixture.debugElement.queryAll(By.css('.loading .mat-spinner'));
       expect(spinner.length).toBe(1);
       component.content$.subscribe(
         () => {
           fixture.detectChanges();
+          spinner = fixture.debugElement.queryAll(By.css('.loading .mat-spinner'));
+          expect(component.isLoading).toBe(false);
           expect(spinner.length).toBe(0);
         },
         () => {}
