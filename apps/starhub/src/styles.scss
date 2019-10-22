@@ -67,8 +67,42 @@ cdk-virtual-scroll-viewport {
   background-color: #f6f7f9;
 }
 
-ol, ul {
+ol,
+ul {
   margin-top: 0;
+}
+
+.custom-class {
+  width: 35.5rem;
+
+  .mat-dialog-container {
+    padding: 3.2rem;
+    border-radius: 0.9rem;
+  }
+
+  h1 {
+    font-weight: bold;
+    line-height: 3.1rem;
+    margin-bottom: 2.4rem;
+  }
+
+  .mat-dialog-content {
+    overflow: initial;
+    font-size: 1.8rem;
+    color: #777776;
+    line-height: 2.3rem;
+  }
+
+  .button-group {
+    margin-top: 3.2rem;
+
+    button {
+      height: 6rem;
+      text-transform: capitalize;
+      font-size: 1.6rem;
+      border-radius: 0.5rem;
+    }
+  }
 }
 
 .mat-card:not([class*=mat-elevation-z]) {
