@@ -1,4 +1,4 @@
-export class PrepareTableFilers {
+export class PrepareTableFilters {
 
   public static prepareTabsFilterConfig(counterObject: { [key: string]: number }, data: any[] = null): OptionConfig[] {
 
@@ -37,7 +37,7 @@ export class PrepareTableFilers {
   public static countFieldValue(array: object[], fieldName: string): { [key: string]: number } {
     const counterObject = {};
     array.forEach(item => {
-      if (!(fieldName in item)) {
+      if (item && !(fieldName in item)) {
         return;
       }
       const value = item[fieldName];
