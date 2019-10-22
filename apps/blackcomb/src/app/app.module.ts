@@ -53,7 +53,7 @@ const perxComponents = [
   RewardDetailsComponent,
   LoadingComponent,
   ContentComponent,
-  WalletComponent
+  WalletComponent,
 ];
 @NgModule({
   declarations: [
