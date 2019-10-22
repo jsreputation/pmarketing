@@ -132,7 +132,8 @@ export class HomeComponent implements OnInit, OnDestroy {
                   })
                 ))
             );
-          }),
+          })
+          // complete the observable once all have been completed
         ).subscribe(() => subject.complete());
     });
   }
