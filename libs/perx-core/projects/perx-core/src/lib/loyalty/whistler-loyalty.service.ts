@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ILoyalty } from './models/loyalty.model';
+import { ILoyalty, ITransaction, ITransactionHistory } from './models/loyalty.model';
 import { Observable } from 'rxjs';
 import { Config } from '../config/config';
 import { map } from 'rxjs/operators';
@@ -14,6 +14,10 @@ interface IWLoyalty {
   custom_tiers_count: number;
 }
 
+interface IWLoyaltyCard {
+  balance: number;
+  user_id: number;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -27,35 +31,42 @@ export class WhistlerLoyaltyService {
     this.hostName = config.apiHost as string;
   }
 
-  public static WLoyaltyToLoyalty(loyalty: IJsonApiItem<IWLoyalty>): ILoyalty {
+  public static WLoyaltyToLoyalty(loyalty: IJsonApiItem<IWLoyalty>, cards: IJsonApiItem<IWLoyaltyCard>[]): ILoyalty {
+    const card = cards && cards.find(cardTemp =>
+      cardTemp.type === 'cards' &&
+      loyalty.relationships.source.data.filter(rCard => rCard.type === 'cards' && rCard.id === cardTemp.id).length > 0
+    );
     return {
       id: Number.parseInt(loyalty.id, 10),
       name: loyalty.attributes.name,
+      pointsBalance: card && card.attributes.balance || 0
     };
   }
 
   public getLoyalties(page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT): Observable<ILoyalty[]> {
-    return this.http.get<IJsonApiListPayload<IWLoyalty>>(
+    return this.http.get<IJsonApiListPayload<IWLoyalty, IWLoyaltyCard>>(
       `${this.hostName}/loyalty/programs`,
       {
         params: {
-          page_number: `${page}`,
-          page_size: `${pageSize}`
+          'page[number]': page.toString(),
+          'page[size]': pageSize.toString(),
+          include: 'cards'
         }
       }
     ).pipe(
-      map((res: IJsonApiListPayload<IWLoyalty>) => res.data),
-      map((Loyalty: IJsonApiItem<IWLoyalty>[]) => Loyalty.map(
-        res => WhistlerLoyaltyService.WLoyaltyToLoyalty(res)
-      ))
+      map((loyalty: IJsonApiListPayload<IWLoyalty, IWLoyaltyCard>) => {
+        return loyalty.data.map(
+          res => WhistlerLoyaltyService.WLoyaltyToLoyalty(res, loyalty.included)
+        );
+      })
     );
   }
 
   public getLoyalty(id?: number): Observable<ILoyalty> {
-    return this.http.get<IJsonApiItemPayload<IWLoyalty>>(
-      `${this.hostName}/loyalty/programs/${id}`
+    return this.http.get<IJsonApiItemPayload<IWLoyalty, IWLoyaltyCard>>(
+      `${this.hostName}/loyalty/programs/${id}?include=cards`
     ).pipe(
-      map((res: IJsonApiItemPayload<IWLoyalty>) => WhistlerLoyaltyService.WLoyaltyToLoyalty(res.data))
+      map((res: IJsonApiItemPayload<IWLoyalty>) => WhistlerLoyaltyService.WLoyaltyToLoyalty(res.data, res.included))
     );
   }
 

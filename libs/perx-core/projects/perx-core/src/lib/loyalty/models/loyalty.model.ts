@@ -18,7 +18,7 @@ export interface ILoyalty {
   endDate?: string;
   membershipTierName?: string;
   membershipIdentifier?: string;
-  pointsBalance?: number;
+  pointsBalance: number;
   currencyBalance?: number;
   currency?: string;
   expiringPoints?: IExpiringPoints[];
