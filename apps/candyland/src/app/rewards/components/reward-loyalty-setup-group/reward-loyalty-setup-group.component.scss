@@ -1,0 +1,29 @@
+
+:host {
+  display: flex;
+  min-height: 16rem;
+}
+
+.tier {
+  &-name {
+    padding-right: 6rem;
+    min-width: 25%;
+  }
+
+  &-points {
+    padding-right: 5rem;
+    min-width: 15%;
+  }
+
+  &-label {
+    padding-bottom: 2.4rem;
+  }
+
+  &-form-group {
+    padding-bottom: 1rem;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+}
