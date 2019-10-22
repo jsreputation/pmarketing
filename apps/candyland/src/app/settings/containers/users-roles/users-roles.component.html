@@ -1,47 +1,49 @@
 <section>
-  <ng-container *ngIf="hasData">
-    <!--filters-->
-    <div class="row">
-      <cl-table-filters [dataSource]="dataSource">
-        <ng-container *clTableFilter="'username'; let filter">
-          <cl-search-filter class="search-block" [control]="filter" placeholder="Search for users"></cl-search-filter>
-        </ng-container>
-        <ng-container *clTableFilter="'name'; value: ''; let filter">
-          <mat-form-field appearance="outline" class="type-block half-block">
-            <mat-select [formControl]="filter" placeholder="All">
-              <mat-option value="">All</mat-option>
-              <ng-container *ngFor="let option of config?.roleTypes">
-                <mat-option [value]="option.value">{{option.title}}</mat-option>
-              </ng-container>
-            </mat-select>
-          </mat-form-field>
-        </ng-container>
-      </cl-table-filters>
-      <cl-button classList="primary cta cta-new cta-invitenew" (click)="openDialogInviteNewUsers()">Invite New User</cl-button>
-    </div>
-    <div class="table-card">
-      <!--table-->
-      <cl-users-roles-list [dataSource]="dataSource"
-                          [config]="config"
-                          (edit)="openDialogEditUsers($event)"
-                          (delete)="deleteUser($event)"
-      ></cl-users-roles-list>
-      <!--paginator-->
-      <cl-paginator [dataSource]="dataSource"
-                    [pageSize]="5"
-                    [pageSizeOptions]="[5, 10, 20]"
-      ></cl-paginator>
-    </div>
-  </ng-container>
+  <ng-container [ngSwitch]="dataSource.state$ | async">
+    <ng-container *ngSwitchCase="dataSourceStates.hasDataApi">
+      <!--filters-->
+      <div class="row">
+        <cl-table-filters [dataSource]="dataSource">
+          <ng-container *clTableFilter="'username'; let filter">
+            <cl-search-filter class="search-block" [control]="filter" placeholder="Search for users"></cl-search-filter>
+          </ng-container>
+          <ng-container *clTableFilter="'name'; value: ''; let filter">
+            <mat-form-field appearance="outline" class="type-block half-block">
+              <mat-select [formControl]="filter" placeholder="All">
+                <mat-option value="">All</mat-option>
+                <ng-container *ngFor="let option of config?.roleTypes">
+                  <mat-option [value]="option.value">{{option.title}}</mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
+          </ng-container>
+        </cl-table-filters>
+        <cl-button classList="primary cta cta-new cta-invitenew" (click)="openDialogInviteNewUsers()">Invite New User</cl-button>
+      </div>
+      <div class="table-card">
+        <!--table-->
+        <cl-users-roles-list [dataSource]="dataSource"
+                             [config]="config"
+                             (edit)="openDialogEditUsers($event)"
+                             (delete)="deleteUser($event)"
+        ></cl-users-roles-list>
+        <!--paginator-->
+        <cl-paginator [dataSource]="dataSource"
+                      [pageSize]="5"
+                      [pageSizeOptions]="[5, 10, 20]"
+        ></cl-paginator>
+      </div>
+    </ng-container>
 
-  <cl-no-data *ngIf="(dataSource.data).length === 0">
-    <img class="no-data-img" src="/assets/images/no-data/merchants-empty-illustration.svg" alt="">
-    <h2 class="no-data-title">
-      You need Merchants to build your eco-system!
-    </h2>
-    <p class="no-data-text">
-      Let&rsquo;s begin by creating your first Merchant
-    </p>
-  </cl-no-data>
+    <cl-no-data *ngSwitchCase="dataSourceStates.noDataApi">
+      <img class="no-data-img" src="/assets/images/no-data/merchants-empty-illustration.svg" alt="">
+      <h2 class="no-data-title">
+        You need Merchants to build your eco-system!
+      </h2>
+      <p class="no-data-text">
+        Let&rsquo;s begin by creating your first Merchant
+      </p>
+    </cl-no-data>
+  </ng-container>
 </section>
 
