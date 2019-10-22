@@ -1,14 +1,19 @@
 <div class="app">
-  <mat-toolbar>
+  <!-- <mat-toolbar  [ngStyle]="{'top': top+'px'}"> -->
+   
+  <mat-toolbar [@optionalDisplay]="{ value: value, params: { pixels: '-300px'}}">
     <mat-toolbar-row class="top-row">
       <a class="badge" href="https://www.starhub.com/personal/rewards/membership.html" target="_blank">
         <img *ngIf="loyalty" [src]="getBadge(loyalty.membershipTierName)" [alt]="loyalty.membershipTierName">
       </a>
       <div class="reward">
+          <button (click)="value = value === 'on' ?  'off': 'on'">click</button>
         <h2>Explore your rewards,</h2>
         <span class="tier" *ngIf="loyalty">{{loyalty.membershipTierName | noRenewaleInName | titlecase}} Member!</span>
         <div>
-          <span class="subtitle" *ngIf="profile && profile.customProperties && profile.customProperties.membership === 'Hub Club'">+ Hub Club</span>
+          <span class="subtitle"
+            *ngIf="profile && profile.customProperties && profile.customProperties.membership === 'Hub Club'">+ Hub
+            Club</span>
         </div>
       </div>
     </mat-toolbar-row>
@@ -19,7 +24,7 @@
         Rewards</a>
     </mat-toolbar-row>
   </mat-toolbar>
-  <div class="content">
+  <div class="content" #contentScrolled cdkScrollable>
     <router-outlet></router-outlet>
   </div>
 </div>
