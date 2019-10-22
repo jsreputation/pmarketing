@@ -52,23 +52,32 @@ export class WhistlerCampaignService implements ICampaignService {
     };
   }
 
+  private static startsAfter(c: IJsonApiItem<IWhistlerCampaignAttributes>, ts: number): boolean {
+    if (c.attributes.start_date_time === null) {
+      return true;
+    }
+    const start = (new Date(c.attributes.start_date_time)).getTime();
+    return start < ts;
+  }
+
+  private static expiresBefore(c: IJsonApiItem<IWhistlerCampaignAttributes>, ts: number): boolean {
+    if (!c.attributes.end_date_time || c.attributes.end_date_time === null) {
+      return true;
+    }
+    const end = (new Date(c.attributes.end_date_time)).getTime();
+    return end > ts;
+  }
+
   public getCampaigns(): Observable<ICampaign[]> {
     return new Observable(subject => {
       let current: ICampaign[] = [];
+      const now: number = (new Date()).getTime();
       const process = (p: number, cs: IJsonApiListPayload<IWhistlerCampaignAttributes>) => {
-        // can safely parse bcz we didnt change from original format
-        const currentDate = new Date().getTime();
-        const toBeKeptNullCampaigns = cs.data.filter(singleCampaign => singleCampaign.attributes.start_date_time === null);
-        const tobeComparedCampaigns = cs.data.filter(singleCampaign => singleCampaign.attributes.start_date_time !== null);
-        // convert to number for easy comparison
-        const filteredDatesOfNotFutureCampaigns = tobeComparedCampaigns
-        .filter(singleCampaign => new Date(singleCampaign.attributes.start_date_time).getTime() <= currentDate );
-        // check against end date time not implemented api returns null for all end date time(s)
-
-        const transFormToICampaign =  [...toBeKeptNullCampaigns, ...filteredDatesOfNotFutureCampaigns];
-
-        const newCampaigns = transFormToICampaign.map(WhistlerCampaignService.WhistlerCampaignToCampaign);
-        current = current.concat(newCampaigns);
+        const campaigns = cs.data
+          // filter out by campaign date
+          .filter(c => WhistlerCampaignService.startsAfter(c, now) && WhistlerCampaignService.expiresBefore(c, now))
+          .map(WhistlerCampaignService.WhistlerCampaignToCampaign);
+        current = current.concat(campaigns);
         subject.next(current);
         if (p >= cs.meta.page_count) {
           subject.complete();
