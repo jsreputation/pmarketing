@@ -14,6 +14,16 @@ export class LoyaltyService implements ITableService {
   constructor(private loyaltyHttpService: LoyaltyHttpService) {
   }
 
+  public getLoyalties(params: HttpParamsOptions): Observable<{ data: ILoyaltyForm[] }> {
+    params.include = 'pool,basic_tier,custom_tiers';
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.loyaltyHttpService.getLoyalties(httpParams).pipe(
+      map(response => {
+        return LoyaltyHttpAdapter.transformToLoyalties(response);
+      })
+    );
+  }
+
   public getTableData(params: HttpParamsOptions): Observable<ITableData<any>> {
     params.include = 'pool,basic_tier';
     const httpParams = ClHttpParams.createHttpParams(params);
