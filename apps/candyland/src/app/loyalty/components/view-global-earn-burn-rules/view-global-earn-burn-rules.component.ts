@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./view-global-earn-burn-rules.component.scss']
 })
 export class ViewGlobalEarnBurnRulesComponent {
-  @Input() public tiersConversions: ILoyaltyTiersConversions;
+  @Input() public loyalty: ILoyaltyForm;
   @Input() public currency: any;
 
 }
