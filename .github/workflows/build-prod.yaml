@@ -93,7 +93,7 @@ jobs:
             done
             REASON=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath={.status.conditions[0].reason})
             if [ "$REASON" != "Succeeded" ]; then
-              echo "Taskrun status is ${REASON}, fail the job"
+              echo "Taskrun ${TASKRUN_NAME} status is ${REASON}, fail the job"
               exit 1
             fi
           done
