@@ -291,17 +291,6 @@ jobs:
       - run: yarn run build:candyland:prod
       - run: yarn run pree2e-ci ## need to run webdriver-manager update before protractor e2e runs
       - run: yarn run e2e-ci-pro
-  test:
-    docker:
-      - image: circleci/node:10-browsers
-    resource_class: 2xlarge
-    steps:
-      - checkout
-      - run: yarn install
-      - run: yarn run lerna run build:lib
-      - run: yarn run lerna run config
-      - run: yarn run test-ci
-      # - run: yarn run e2e-ci
   build:
     machine:
       image: ubuntu-1604:201903-01
@@ -326,11 +315,6 @@ jobs:
 workflows:
   build_and_deploy:
     jobs:
-      - test:
-          filters:
-            tags:
-              # this enables circleci to trigger on tags
-              only: /.*/
       # - build:
       #     filters:
       #       tags:
@@ -378,7 +362,6 @@ workflows:
           requires:
             - build_docker_image
             # - build
-            - test
           filters:
             # need to sepcify this otherwise the job will run even if there's no tag
             branches:
@@ -408,7 +391,6 @@ workflows:
           requires:
             - build_docker_image
             # - build
-            - test
           filters:
             # need to sepcify this otherwise the job will run even if there's no tag
             branches:
