@@ -12,6 +12,7 @@
         (completed)="completed()">
     </mock-puzzle-list> -->
 
+  <div *ngIf="displayCampaignAs === 'puzzle'">
     <h1>My Rewards</h1>
     <perx-core-vouchers
         (route)="onRoute($event)"
@@ -23,6 +24,7 @@
         [showRedeemedDate]="false"
         [showRedeemedIcon]="false"
     ></perx-core-vouchers>
+  </div>
 </div>
 
 <app-navigate-toolbar></app-navigate-toolbar>
