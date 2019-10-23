@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IVoucherService, Voucher } from '@perx/core';
+import { IVoucherService, Voucher, IConfig, ConfigService } from '@perx/core';
 
 @Component({
   selector: 'app-voucher',
@@ -18,12 +18,22 @@ export class VoucherComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private voucherService: IVoucherService,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
     this.firstTime = this.route.snapshot.paramMap.get('win') === 'true';
     this.id = this.route.snapshot.params.id;
-    this.voucherService.get(this.id, null, {sourceType: 'hsbc-collect2', type: null})
+
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig) => {
+         this.fetchVouchers(config.sourceType.toString());
+      }
+    );
+  }
+
+  private fetchVouchers(srcType: string): void {
+    this.voucherService.get(this.id, null, {sourceType: srcType, type: null})
       .subscribe(voucher => {
         this.voucher = voucher;
         if (voucher.state !== 'issued') {

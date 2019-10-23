@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
   CampaignType,
   ICampaignService,
@@ -8,11 +8,12 @@ import {
   StampCardState,
   StampState,
   NotificationService,
-  IStamp
+  IStamp, IConfig, ConfigService
 } from '@perx/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs/operators';
-import { SoundService } from '../sound/sound.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {map, mergeMap, tap, toArray} from 'rxjs/operators';
+import {SoundService} from '../sound/sound.service';
+import {from, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-puzzle',
@@ -20,7 +21,7 @@ import { SoundService } from '../sound/sound.service';
   styleUrls: ['./puzzle.component.scss']
 })
 export class PuzzleComponent implements OnInit, OnDestroy {
-  public campaignId: number = null;
+  public campaignId: number = 0;
   private cardId: number = null;
   private card: IStampCard = null;
   public availablePieces: number = 0;
@@ -33,6 +34,8 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   private currentStampId: number = 0;
   public title: string = 'Stamp Card';
   public subTitle: string = 'Earn rewards by collecting stamps';
+  private displayCampaignAs: string = 'puzzle';
+  public sourceType: string;
 
   constructor(
     private campaignService: ICampaignService,
@@ -40,7 +43,8 @@ export class PuzzleComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService,
-    private soundService: SoundService
+    private soundService: SoundService,
+    private configService: ConfigService
   ) {
   }
 
@@ -55,12 +59,21 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       this.cardId = Number.parseInt(cardIdStr, 10);
     }
 
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig) => {
+        this.sourceType = config.sourceType as string;
+        if (config.sourceType === 'hsbc-xmas') {
+          this.displayCampaignAs = 'stamp_card';
+        }
+      }
+    );
+
     if (this.campaignId === null) {
       this.fetchCampaign();
     } else if (this.cardId === null || this.card === null) {
-      this.fetchCard();
-      this.fetchStampTransactionCount();
-      this.fetchCardsCount();
+      this.fetchCard(this.campaignId);
+      this.fetchStampTransactionCount(this.campaignId);
+      this.fetchCardsCount(this.campaignId);
     }
 
     if (!localStorage.getItem('enableSound')) {
@@ -81,19 +94,24 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   private fetchCampaign(): void {
     this.campaignService.getCampaigns()
       .pipe(
-        map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp))
+        map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp)),
+        mergeMap(
+          (campaigns: ICampaign[]) => from(campaigns).pipe(
+            mergeMap((campaign: ICampaign) => this.fetchCard(campaign.id)),
+            toArray(),
+            map((stampCards: IStampCard[]) => {
+              return stampCards.filter(
+                card => card.displayProperties.displayCampaignAs &&
+                  card.displayProperties.displayCampaignAs === this.displayCampaignAs);
+            }),
+            tap((res) => console.log(res)),
+            map((cards: IStampCard[]) => cards[0]),
+            tap((card: IStampCard) => this.campaignId = card.campaignId)
+          )
+        ),
       )
-      .subscribe((campaigns: ICampaign[]) => {
-        this.campaignId = campaigns && campaigns.length > 0 && campaigns[0].id;
-        this.fetchStampTransactionCount();
-        this.fetchCard();
-        this.fetchCardsCount();
-      });
-  }
-
-  private fetchCard(): void {
-    this.stampService.getCurrentCard(this.campaignId)
       .subscribe((card: IStampCard) => {
+        this.fetchStampTransactionCount(card.campaignId);
         this.cardId = card.id;
         this.card = card;
         this.cols = card.displayProperties.numberOfCols;
@@ -110,22 +128,27 @@ export class PuzzleComponent implements OnInit, OnDestroy {
           this.router.navigate(['/home']);
         }
 
+        this.fetchCardsCount(card.campaignId);
       });
   }
 
-  private fetchCardsCount(): void {
-    if (this.campaignId === null) {
+  private fetchCard(id: number): Observable<IStampCard> {
+    return this.stampService.getCurrentCard(id);
+  }
+
+  private fetchCardsCount(campaignId: number): void {
+    if (campaignId === null) {
       return;
     }
-    this.stampService.getCards(this.campaignId)
+    this.stampService.getCards(campaignId)
       .subscribe(
         (cards: IStampCard[]) => { this.cardsCount = cards.length; },
         () => { }
       );
   }
 
-  private fetchStampTransactionCount(): void {
-    this.stampService.getStamps(this.campaignId)
+  private fetchStampTransactionCount(campaignId: number): void {
+    this.stampService.getStamps(campaignId)
       .subscribe((stamps: IStamp[]) => {
         this.totalAvailablePieces = stamps.filter(stamp => stamp.state === StampState.issued).length;
       });
@@ -147,7 +170,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   }
 
   private stampCard(stampId: number): void {
-    this.stampService.putStamp(stampId, 'hsbc-collect2')
+    this.stampService.putStamp(stampId, this.sourceType)
     .subscribe(
       (stamp: IStamp) => {
         if (stamp.state === StampState.redeemed) {

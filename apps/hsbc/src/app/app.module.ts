@@ -21,7 +21,9 @@ import {
   UtilsModule,
   ConfigModule,
   RewardsModule,
-  // StampService,
+
+  StampService,
+  ICampaignService
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -46,17 +48,40 @@ import { FaqComponent } from './faq/faq.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavigateToolbarComponent } from './navigate-toolbar/navigate-toolbar.component';
-// import { of } from 'rxjs';
-// import { stampCard } from './mock/stamp.mock';
 import { WalletComponent } from './wallet/wallet.component';
 import { AccountComponent } from './account/account.component';
-// import { puzzle } from './mock/puzzle.mock';
 
-// const stampServiceStub = {
-//   getCurrentCard: () => of(stampCard),
-//   getStamps: () => of(),
-//   getCards: () => of()
-// };
+import { PuzzleListComponent } from './mock/service/puzzle-list/puzzle-list.component';
+import { of } from 'rxjs';
+import { stampCard } from './mock/stamp.mock';
+import { puzzle } from './mock/puzzle.mock';
+import { campaigns } from './mock/campaigns.mock';
+
+const stampServiceStub = {
+  getCurrentCard: (id: number) => {
+    if (id === 100) {
+      return of(puzzle[0]);
+    }
+
+    if (id === 265) {
+      return of(stampCard[0]);
+    }
+  },
+  getStamps: () => of(),
+  getCards: (id: number) => {
+    if (id === 100) {
+      return of(puzzle);
+    }
+
+    if (id === 265) {
+      return of(stampCard);
+    }
+  }
+};
+
+const campaignServiceStub = {
+  getCampaigns: () => of(campaigns)
+};
 
 @NgModule({
   declarations: [
@@ -72,7 +97,9 @@ import { AccountComponent } from './account/account.component';
     ProfileComponent,
     NavigateToolbarComponent,
     WalletComponent,
-    AccountComponent
+    AccountComponent,
+
+    PuzzleListComponent, // mock service/component
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
@@ -109,7 +136,8 @@ import { AccountComponent } from './account/account.component';
   providers: [
     DatePipe,
     {provide: APP_BASE_HREF, useValue: environment.baseHref },
-    // { provide: StampService, useValue: stampServiceStub }
+    { provide: StampService, useValue: stampServiceStub },
+    { provide: ICampaignService, useValue: campaignServiceStub },
   ],
   bootstrap: [AppComponent],
 })
