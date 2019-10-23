@@ -1,10 +1,28 @@
 <div class="puzzle-list">
     <h1>My Games</h1>
-    <perx-core-puzzle-list *ngIf="campaignId"
+    <!-- <perx-core-puzzle-list *ngIf="campaignId"
         (selected)="selected($event)"
         [campaignId]="campaignId"
         (completed)="completed()">
-    </perx-core-puzzle-list>
+    </perx-core-puzzle-list> -->
+
+    <mock-puzzle-list *ngIf="campaignId"
+        (selected)="selected($event)"
+        [campaignId]="campaignId"
+        (completed)="completed()">
+    </mock-puzzle-list>
+
+    <h1>My Rewards</h1>
+    <perx-core-vouchers
+        (route)="onRoute($event)"
+        [filter]="'issued'"
+        [iconDisplay]="'arrow_forward_ios'"
+        [showTitle]="true"
+        [showMerchant]="false"
+        [showExpireDate]="false"
+        [showRedeemedDate]="false"
+        [showRedeemedIcon]="false"
+    ></perx-core-vouchers>
 </div>
 
 <app-navigate-toolbar></app-navigate-toolbar>
