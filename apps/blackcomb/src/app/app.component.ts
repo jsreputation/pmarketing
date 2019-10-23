@@ -19,8 +19,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  public showHeader: boolean = true;
-  public showToolbar: boolean = true;
+  public showHeader: boolean;
+  public showToolbar: boolean;
   public leftIcon: string = '';
   public preAuth: boolean;
   public theme: ITheme;
@@ -73,6 +73,7 @@ export class AppComponent implements OnInit {
   }
 
   public onActivate(ref: any): void {
+    console.log(ref instanceof LoginComponent);
     this.showHeader = !(ref instanceof LoginComponent);
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
