@@ -33,7 +33,7 @@ export class RedeemComponent implements OnInit {
         })
       );
     this.voucher$.subscribe((voucher: Voucher) => {
-      this.redemptionType = voucher.reward.redemptionType;
+      this.redemptionType = voucher.redemptionType;
     });
   }
 
