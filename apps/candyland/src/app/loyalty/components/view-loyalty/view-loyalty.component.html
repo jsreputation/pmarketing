@@ -1,5 +1,5 @@
-<cl-view-scheme-info [schemaInfo]="schemaInf"></cl-view-scheme-info>
-<cl-view-global-earn-burn-rules [tiersConversions]="stepTiersConversions"></cl-view-global-earn-burn-rules>
+<cl-view-scheme-info [loyalty]="loyaltyData"></cl-view-scheme-info>
+<cl-view-global-earn-burn-rules [loyalty]="loyaltyData"></cl-view-global-earn-burn-rules>
 <cl-tiers-group *ngIf="dataSource && (dataSource?.hasData$ | async)"
                 [editable]="false"
                 [dataSource]="dataSource">

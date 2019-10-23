@@ -3,6 +3,15 @@ import { LoyaltyJoinMethodMap } from '@cl-core/models/loyalty/loyalty-joing-meth
 
 export class LoyaltyHttpAdapter {
 
+  public static transformToLoyalties(data: any): { data: ILoyaltyForm[] } {
+    const formatData = data.data.map((item) => {
+      let formLoyalty = LoyaltyHttpAdapter.transformToLoyaltyForm(item);
+      formLoyalty = LoyaltyHttpAdapter.setIncludedToLoyaltyForm(data, item, formLoyalty);
+      return formLoyalty;
+    });
+    return {data: formatData};
+  }
+
   public static transformToTableData(data: any): ITableData<any> {
     const formatData = data.data.map((item) => {
       let formLoyalty = LoyaltyHttpAdapter.transformToLoyaltyForm(item);
@@ -126,18 +135,49 @@ export class LoyaltyHttpAdapter {
             poolId
           }
         };
+        formLoyalty = LoyaltyHttpAdapter.updateCustomTears(data, item, i, formLoyalty);
       }
     }
     return formLoyalty;
   }
 
-  private static setPoolIdToLoyalty(included: any, item: any, index: number): any {
+  public static updateCustomTears(data: any, item: any, index: number, formLoyalty: any): any {
+    const customTiers = LoyaltyHttpAdapter.setCustomTiers(data.included, item, index);
+    if (customTiers) {
+      let tiers = [];
+      if (formLoyalty.customTiers && formLoyalty.customTiers.length) {
+        tiers = [...formLoyalty.customTiers];
+      }
+      formLoyalty = {
+        ...formLoyalty,
+        customTiers: [...customTiers, ...tiers]
+      };
+    }
+    return formLoyalty;
+  }
+
+  public static setPoolIdToLoyalty(included: any, item: any, index: number): any {
     if (item.relationships.pool
       && item.relationships.pool.data
       && item.relationships.pool.data.id
       && item.relationships.pool.data.id === included[index].id
       && item.relationships.pool.data.type === included[index].type) {
       return included[index].id;
+    }
+  }
+
+  public static setCustomTiers(included: any, item: any, index: number): any {
+    if (item.relationships.custom_tiers
+      && item.relationships.custom_tiers.data
+      && item.relationships.custom_tiers.data.length > 0
+     ) {
+      const result = [];
+      item.relationships.custom_tiers.data.map((customTier) => {
+        if (customTier.id === included[index].id && customTier.type === included[index].type) {
+          result.push(LoyaltyHttpAdapter.transformToCustomTierForm(included[index]));
+        }
+      });
+      return result;
     }
   }
 
@@ -167,7 +207,8 @@ export class LoyaltyHttpAdapter {
       customTiersCount: data.attributes.custom_tiers_count,
       name: data.attributes.name,
       status: data.attributes.status,
-      pointsName: data.attributes.unit
+      pointsName: data.attributes.unit,
+      createdAt: data.attributes.created_at || null
     };
   }
 
