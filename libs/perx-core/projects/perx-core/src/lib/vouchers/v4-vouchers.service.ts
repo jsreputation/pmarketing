@@ -111,7 +111,7 @@ export class V4VouchersService implements IVoucherService {
 
   public static v4VoucherToVoucher(v: IV4Voucher): IVoucher {
     const reward: IV4Reward = v.reward;
-
+    
     return {
       id: v.id,
       reward: V4RewardsService.v4RewardToReward(reward),
@@ -119,6 +119,7 @@ export class V4VouchersService implements IVoucherService {
       code: v.voucher_code,
       expiry: reward.valid_to !== null ? new Date(reward.valid_to) : null,
       redemptionDate: v.redemption_date !== null ? new Date(v.redemption_date) : null,
+      redemptionType: v.redemption_type !== null ? v.redemption_type: null
     };
   }
 

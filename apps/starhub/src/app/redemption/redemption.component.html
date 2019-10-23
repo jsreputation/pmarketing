@@ -23,8 +23,7 @@
                 </ng-template>
               </div>
             </div>
-            <!-- <div *ngIf="voucher.reward.redemptionType === 'pin'" class="code-redemption"> -->
-            <div class="code-redemption">
+            <div *ngIf="voucher.redemptionType === 'pin'" class="code-redemption">
               <p>Please ask cashier to enter PIN</p>
               <button *ngIf="!showEnterPinComponent else pinComponent" class="enter-pin" mat-flat-button color="primary" (click)="showPinComponent()">Enter PIN</button>
               <ng-template #pinComponent>

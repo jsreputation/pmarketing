@@ -31,6 +31,7 @@ export interface IVoucher {
   code?: string;
   expiry: Date | null;
   redemptionDate?: Date | null;
+  redemptionType?: string | Object | null
 }
 
 export interface IGetVoucherParams {
