@@ -8,6 +8,7 @@ declare interface ILoyaltyForm {
   basicTierId?: string;
   details?: ILoyaltyDetails;
   tiersConversions?: ILoyaltyTiersConversions;
+  customTiers: any;
 }
 
 declare interface ILoyaltySchemaInf extends ILoyaltyDetails {
