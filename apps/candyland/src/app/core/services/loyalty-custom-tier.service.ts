@@ -14,14 +14,14 @@ export class LoyaltyCustomTierService implements ITableService {
   constructor(private loyaltyHttpService: LoyaltyHttpService) {
   }
 
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<any>> {
+  public getTableData(params: HttpParamsOptions): Observable<ITableData<ICustomTireForm>> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyHttpService.getCustomTiers(httpParams).pipe(
       map(response => LoyaltyHttpAdapter.transformToTableDataCustomTierForm(response))
     );
   }
 
-  public getCustomTier(id: string, params: HttpParamsOptions): Observable<IShakeTree> {
+  public getCustomTier(id: string, params: HttpParamsOptions): Observable<ICustomTireForm> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyHttpService.getCustomTier(id, httpParams).pipe(
       map((response: any) => LoyaltyHttpAdapter.transformToCustomTierForm(response.data))

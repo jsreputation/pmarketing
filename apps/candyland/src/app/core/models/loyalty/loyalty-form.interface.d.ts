@@ -1,6 +1,7 @@
 declare interface ILoyaltyForm {
   id?: string;
   customTiersCount?: number;
+  pointsName?: string;
   basicTierId?: string;
   name: string;
   createdAt: string;
@@ -17,13 +18,17 @@ declare interface ILoyaltySchemaInf extends ILoyaltyDetails {
 declare interface ILoyaltyDetails {
   pointsName: string;
   imageUrl: string;
-  joinMethod: {
-    transactionAmount?: boolean;
-    signUp: boolean;
-    inviteOnly: boolean;
-    amount?: number;
-  };
-  poolId: string | null;
+  joinMethod: IJoinMethod;
+  poolId?: string;
+}
+
+declare interface IJoinMethod {
+  transactionAmount?: boolean;
+  signUp?: boolean;
+  inviteOnly?: boolean;
+  amount?: number;
+  pointsThreshold?: boolean;
+  points?: number;
 }
 
 declare interface ILoyaltyTiersConversions {
@@ -42,19 +47,18 @@ declare interface ILoyaltyTiersConversions {
   };
 }
 
-declare interface ILoyaltyTire {
+declare interface ICustomTireForm {
+  id: string;
   name: string;
-  joinMethod: {
-    pointsThreshold: boolean;
-    inviteOnly: boolean;
-    points?: number;
-  };
+  joinMethod: IJoinMethod;
   imageUrl: string;
   earnBonus: number;
   burnDiscount: number;
-  pointsExpiry: {
-    amount: number;
-    type: string;
-    trigger: string;
-  };
+  pointsExpiry: IPointsExpiry;
+}
+
+declare interface IPointsExpiry {
+  amount: number;
+  type: string;
+  trigger: string;
 }
