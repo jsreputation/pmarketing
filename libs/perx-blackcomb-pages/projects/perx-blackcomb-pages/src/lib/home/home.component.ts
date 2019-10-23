@@ -1,8 +1,37 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ICampaignService, ICampaign, RewardsService, IReward, ITabConfigExtended } from '@perx/core';
-import { Observable, BehaviorSubject, forkJoin, of, Subject } from 'rxjs';
-import { tap, takeUntil } from 'rxjs/operators';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { Router } from '@angular/router';
+
+import {
+  Observable,
+  BehaviorSubject,
+  forkJoin,
+  of,
+  Subject,
+  combineLatest,
+  Subscriber,
+} from 'rxjs';
+import {
+  tap,
+  takeUntil,
+  map,
+  retry,
+  switchMap,
+} from 'rxjs/operators';
+
+import {
+  ICampaignService,
+  ICampaign,
+  RewardsService,
+  IReward,
+  ITabConfigExtended,
+  IGameService,
+  IGame,
+  CampaignType,
+} from '@perx/core';
 
 const stubTabs: ITabConfigExtended[] = [
   {
@@ -75,20 +104,53 @@ const stubTabs: ITabConfigExtended[] = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  public campaign$: Observable<ICampaign[]>;
+  private destroy$: Subject<void> = new Subject();
+
   public rewards$: Observable<IReward[]>;
+  public games$: Observable<IGame[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
-  private destroy$: Subject<any> = new Subject();
+
+  private initCampaign(): void {
+    this.games$ = (new Observable((subject: Subscriber<IGame[]>) => {
+      const gameByCid: { [cid: number]: IGame } = {};
+      this.campaingService.getCampaigns()
+        .pipe(
+          map((cs: ICampaign[]) => cs.filter(c => c.type === CampaignType.game)),
+          map((cs: ICampaign[]) => cs.filter(c => gameByCid[c.id] === undefined)),
+          switchMap((arrOfCampaigns: ICampaign[]) => {
+            let gameIds = arrOfCampaigns.map(c => c.engagementId);
+            gameIds = gameIds.filter((item, index) => gameIds.indexOf(item) === index);
+            return combineLatest(
+              ...gameIds.map(id => this.gamesService.get(id)
+                .pipe(
+                  retry(1),
+                  map((g: IGame) => ({ ...g, campaignId: (arrOfCampaigns.find(c => c.engagementId === g.id).id) })),
+                  tap((g: IGame) => {
+                    const matchingCampaigns = arrOfCampaigns.filter(c => c.engagementId === g.id);
+                    matchingCampaigns.forEach(c => {
+                      const campaignId = c.id;
+                      gameByCid[c.id] = { ...g, campaignId };
+                    });
+                    subject.next(Object.values(gameByCid).sort((a, b) => a.campaignId - b.campaignId));
+                  })
+                ))
+            );
+          })
+        ).subscribe(() => subject.complete());
+    }));
+  }
 
   constructor(
     private campaingService: ICampaignService,
     private rewardsService: RewardsService,
+    private gamesService: IGameService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   public ngOnInit(): void {
-    this.campaign$ = this.campaingService.getCampaigns();
+    this.initCampaign();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.staticTab = stubTabs;
     this.getTabedList();

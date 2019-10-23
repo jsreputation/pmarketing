@@ -1,6 +1,6 @@
 /*
- * Public API Surface of whistler
- */
+* Public API Surface of whistler
+*/
 
 export * from './lib/whistler.module';
 export { IVoucherStatsApi } from './lib/voucher/stats';
@@ -13,6 +13,8 @@ export { ICommTemplateAttributes, ICommEventAttributes } from './lib/comm/comm';
 export { ICampaignAttributes } from './lib/campaign/campaign';
 export { IInstantOutcomeTransactionAttributes, IInstantOutcomeTxnReq } from './lib/instant-outcome/transaction';
 export { InstantOutcomeEngagementAttributes, IOutcomeDisplayProperties } from './lib/instant-outcome/engagement';
+export { IWhistlerProfileAttributes } from './lib/profile/profile';
 export { IMerchant } from './lib/merchant/merchant';
 export { ITenantProperties } from './lib/settings/tenant';
 export { ITimeZone } from './lib/settings/time-zone';
+export { ILoyalty, ILoyaltyCard } from './lib/loyalty/loyalty';

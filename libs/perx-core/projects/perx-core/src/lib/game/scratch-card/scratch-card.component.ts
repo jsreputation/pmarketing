@@ -91,7 +91,7 @@ export class ScratchCardComponent implements AfterViewInit {
     const pixels = this.canvas.getContext('2d').getImageData(0, 0, this.canvas.width, this.canvas.height);
     const pdata = pixels.data;
     const l = pdata.length;
-    const total    = (l / stride);
+    const total = (l / stride);
     let count = 0;
 
     // Iterate over all pixels
@@ -103,16 +103,14 @@ export class ScratchCardComponent implements AfterViewInit {
     return Math.round((count / total) * 100);
   }
 
-  public getMouse(e: any, canvas: any): Coords {
+  public getMouse(e: any, canvas: HTMLElement): Coords {
     let offsetX: number = 0;
     let offsetY: number = 0;
 
-    if (canvas.offsetParent !== undefined) {
-      do {
-        offsetX += canvas.offsetLeft;
-        offsetY += canvas.offsetTop;
-        // tslint:disable-next-line:no-conditional-assignment
-      } while ((canvas = canvas.offsetParent));
+    while (canvas) {
+      offsetY += canvas.offsetTop;
+      offsetX += canvas.offsetLeft;
+      canvas = canvas.offsetParent as HTMLElement;
     }
 
     const mx = (e.pageX || e.touches[0].clientX) - offsetX;
@@ -151,19 +149,8 @@ export class ScratchCardComponent implements AfterViewInit {
     let y: number;
 
     for (let i = 0; i < dist; i++) {
-      if (window.screen.width < 500 && window.screen.height < 720) {
-        x = this.lastPoint.x + (Math.sin(angle) * i) - 25;
-        y = this.lastPoint.y + (Math.cos(angle) * i) - 25;
-      } else if (window.screen.height < 720) {
-        x = this.lastPoint.x + (Math.sin(angle) * i) + 140;
-        y = this.lastPoint.y + (Math.cos(angle) * i) + 40;
-      } else if (window.screen.width < 500) {
-        x = this.lastPoint.x + (Math.sin(angle) * i) + 35;
-        y = this.lastPoint.y + (Math.cos(angle) * i) + 35;
-      } else {
-        x = this.lastPoint.x + (Math.sin(angle) * i) - 25;
-        y = this.lastPoint.y + (Math.cos(angle) * i) - 25;
-      }
+      x = this.lastPoint.x + (Math.sin(angle) * i) - 25;
+      y = this.lastPoint.y + (Math.cos(angle) * i) - 25;
 
       this.canvas.getContext('2d').globalCompositeOperation = 'destination-out';
       this.canvas.getContext('2d').drawImage(this.brush, x, y);

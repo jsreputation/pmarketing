@@ -12,10 +12,34 @@
   align-items: center;
 
   img {
-    float: none;
-    margin: 5.2rem auto;
+    margin-top: 7.2rem;
     margin-bottom: 0.8rem;
-    display: block;
+  }
+
+  .translate-switch {
+    color: white;
+    position: fixed;
+    top: 3rem;
+    right: 2rem;
+
+    ::ng-deep {
+      mat-form-field {
+        width: 4rem;
+      }
+
+      .mat-select-value {
+        font-size: 1.5rem;
+        color: white;
+      }
+
+      .mat-select-arrow {
+        color: white;
+      }
+
+      .mat-form-field-underline {
+        display: none;
+      }
+    }
   }
 
   .logo-title {

@@ -45,8 +45,8 @@ export class UploadImageComponent implements OnInit, ControlValueAccessor  {
     }
 
     const mimeName = files[0].name;
-    if (!(/\.(jpg|jpeg|png)$/i).test(mimeName)) {
-      this.message = 'Only .JPG or .PNG are supported.';
+    if (!(/\.(jpg|jpeg|png|gif)$/i).test(mimeName)) {
+      this.message = 'Only .JPG,.PNG or .GIF are supported.';
       return;
     }
 
