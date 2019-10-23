@@ -1,0 +1,22 @@
+<mat-expansion-panel class="card" expanded>
+  <mat-expansion-panel-header class="card-header">
+    <h2 class="card-title">
+      Global Burn Rule
+    </h2>
+  </mat-expansion-panel-header>
+
+  <div class="card-content loyalty" *ngIf="group" [formGroup]="group.get('globalBurnRule')">
+    <div class="loyalty-row input-group">
+      <span>To redeem rewards, users will spend</span>
+      <mat-form-field floatLabel="never">
+        <input type="number" [min]="0" matInput formControlName="amount">
+      </mat-form-field>
+      <span>points for every</span>
+      <mat-form-field floatLabel="never">
+        <input type="number" [min]="0" matInput formControlName="points">
+      </mat-form-field>
+      <span class="loyalty-currency">{{currency}}</span>
+      <span>in reward value.</span>
+    </div>
+  </div>
+</mat-expansion-panel>

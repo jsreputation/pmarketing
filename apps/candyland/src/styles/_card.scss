@@ -217,3 +217,64 @@
     flex-wrap: wrap;
   }
 }
+
+.loyalty {
+  white-space: nowrap;
+  font-size: 1.4rem;
+
+  &-label {
+    @include typo-subtitle2;
+
+    display: flex;
+    color: $secondary-color;
+    font-size: 1.6rem;
+    padding-top: 1rem;
+    //margin: 0;
+  }
+
+  &-row {
+    max-height: 4.5rem;
+    flex-flow: row nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .mat-form-field {
+      max-width: 7rem;
+    }
+
+    input {
+      text-align: center;
+    }
+
+    &-uploader {
+      max-height: none;
+      padding: 1rem 0 3.5rem;
+    }
+  }
+
+  &-currency {
+    color: $secondary-color;
+    text-transform: uppercase;
+  }
+
+  &-name-input {
+    max-width: 17rem !important;
+  }
+
+  &-points-input {
+    margin-left: 6rem;
+  }
+
+  &-points-expiry-type-input {
+    max-width: 24rem !important;
+  }
+
+  * > .card {
+    margin-bottom: 1.6rem !important;
+
+    &:first-of-type {
+      margin-bottom: 0;
+    }
+  }
+}

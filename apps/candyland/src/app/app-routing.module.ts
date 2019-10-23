@@ -8,8 +8,7 @@ import { LoginComponent } from './auth/containers/login/login.component';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/dashboard/overview'},
   { path: '',
-    component: MainContainerComponent,
-    canActivate: [AuthGuard],
+    component: MainContainerComponent, canActivate: [AuthGuard],
     children: [
       {
         path: 'dashboard',
@@ -42,6 +41,10 @@ const routes: Routes = [
       {
         path: 'report',
         loadChildren: () => import('./report/report.module').then(mod => mod.ReportModule)
+      },
+      {
+        path: 'loyalty',
+        loadChildren: () => import('./loyalty/loyalty.module').then(mod => mod.LoyaltyModule)
       }
     ]
   },
