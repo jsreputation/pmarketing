@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
-import { CustomDataSource, DataSourceStates } from '@cl-shared/table';
+import { CustomDataSource, DataSourceStates, DataSourceUpdateSchema } from '@cl-shared/table';
 import { LoyaltyAction } from '../../models/loyalty-action.enum';
 import { IEngagementItemMenuOption } from '../../components/loyalty-item/loyalty-item.component';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'cl-loyalty-list-page',
   templateUrl: './loyalty-list-page.component.html',
@@ -21,6 +20,7 @@ export class LoyaltyListPageComponent implements OnDestroy {
     {action: this.loyaltyAction.duplicate, label: 'Duplicate'},
     {action: this.loyaltyAction.delete, label: 'Delete'},
   ];
+
   constructor(
     private loyaltyService: LoyaltyService,
     private router: Router,
@@ -29,27 +29,33 @@ export class LoyaltyListPageComponent implements OnDestroy {
     this.dataSource = new CustomDataSource<any>(this.loyaltyService);
   }
 
-  public ngOnDestroy(): void {}
+  public ngOnDestroy(): void {
+  }
 
   /**
    * Forward events
    */
   public menuOptTapped(event: { loyalty: ILoyaltyForm, action: string }): void {
-      this.handlerMenuEvents(event);
-    }
+    this.handlerMenuEvents(event);
+  }
 
   private handlerMenuEvents(event: { loyalty: ILoyaltyForm, action: string }): void {
     switch (event.action) {
       case this.loyaltyAction.edit:
         this.navigateToEdit(event.loyalty.id);
         break;
-        case this.loyaltyAction.delete:
+      case this.loyaltyAction.delete:
         this.deleteLoyalty(event.loyalty.id);
         break;
-        case this.loyaltyAction.duplicate:
+      case this.loyaltyAction.duplicate:
         this.duplicateLoyalty(event.loyalty);
         break;
-
+      case this.loyaltyAction.activate:
+        this.updateLoyaltyStatus(event.loyalty.id, this.loyaltyAction.activate);
+        break;
+      case this.loyaltyAction.pause:
+        this.updateLoyaltyStatus(event.loyalty.id,  this.loyaltyAction.pause);
+        break;
     }
   }
 
@@ -74,6 +80,14 @@ export class LoyaltyListPageComponent implements OnDestroy {
           this.dataSource.updateData();
           this.cd.detectChanges();
         }
+      });
+  }
+
+  private updateLoyaltyStatus(loyaltyId: string, newStatus: LoyaltyAction): void {
+    this.loyaltyService.updateLoyaltyStatus(loyaltyId, newStatus)
+      .subscribe(() => {
+        this.dataSource.updateData(DataSourceUpdateSchema.currentPage);
+        this.cd.detectChanges();
       });
   }
 }

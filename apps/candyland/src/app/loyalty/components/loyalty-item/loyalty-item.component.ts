@@ -1,9 +1,11 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { StatusLabel } from '@cl-helpers/status-label.enum';
+import { LoyaltyAction } from '../../models/loyalty-action.enum';
 
 export interface IEngagementItemMenuOption {
   action: string;
-  label: string;
+  label?: string;
 }
 
 @Component({
@@ -17,6 +19,8 @@ export class LoyaltyItemComponent {
   @Input() public menuOptions: IEngagementItemMenuOption[] = [];
   @Input() public linkable: boolean = false;
   @Output() public menuTapped: EventEmitter<{ loyalty: ILoyaltyForm, action: string }> = new EventEmitter();
+  public statusType: typeof StatusLabel = StatusLabel;
+  public loyaltyAction: typeof LoyaltyAction = LoyaltyAction;
 
   constructor(private router: Router) {
   }
