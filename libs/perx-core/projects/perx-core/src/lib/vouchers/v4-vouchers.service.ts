@@ -119,7 +119,7 @@ export class V4VouchersService implements IVoucherService {
       code: v.voucher_code,
       expiry: reward.valid_to !== null ? new Date(reward.valid_to) : null,
       redemptionDate: v.redemption_date !== null ? new Date(v.redemption_date) : null,
-      redemptionType: v.redemption_type !== null ? v.redemption_type.type: null
+      redemptionType: v.redemption_type !== null ? v.redemption_type.type : null
     };
   }
 
