@@ -15,21 +15,10 @@ import {
   IChangePhoneData
 } from './models/authentication.model';
 import { Config } from '../../config/config';
-import { IJsonApiListPayload, IJsonApiItemPayload } from '../../jsonapi.payload';
+import { IJsonApiListPayload } from '../../jsonapi.payload';
 
 interface ICognitoLogin {
   jwt: string;
-}
-interface ICognitoCreateAndLogin {
-  jwt: string;
-  email_address: string;
-  first_name: string;
-  last_name: string;
-  phone_number: string;
-  primary_identifier: string;
-  properties: any;
-  title: string;
-  urn: string;
 }
 
 interface IUserJWTRequest {
@@ -118,8 +107,8 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public createUserAndAutoLogin(pi: string): Observable<any> {
     return this.createUserWithPI(pi).pipe(
       tap(
-        (res: IJsonApiItemPayload<ICognitoCreateAndLogin>) => {
-          const userBearer = res.data.attributes.jwt;
+        (res: IJsonApiListPayload<ICognitoLogin>) => {
+          const userBearer = res.data[0].attributes.jwt;
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
           }
@@ -140,13 +129,13 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
-  private createUserWithPI(pi: string): Observable<IJsonApiItemPayload<ICognitoCreateAndLogin>> {
+  private createUserWithPI(pi: string): Observable<IJsonApiListPayload<ICognitoLogin>> {
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: pi
     };
 
-    return this.http.post<IJsonApiItemPayload<ICognitoCreateAndLogin>>(this.createUsersEndPoint, userJWTRequest);
+    return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.createUsersEndPoint, userJWTRequest);
   }
 
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
