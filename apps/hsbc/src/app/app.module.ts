@@ -77,9 +77,7 @@ const stampServiceStub = {
       return of(stampCard);
     }
   },
-  putStamp:  () => {
-    return of(stampCard);
-  }
+  putStamp: () => of(stampCard)
 };
 
 const campaignServiceStub = {
