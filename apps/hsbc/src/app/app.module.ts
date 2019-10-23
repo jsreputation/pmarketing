@@ -76,7 +76,8 @@ const stampServiceStub = {
     if (id === 265) {
       return of(stampCard);
     }
-  }
+  },
+  putStamp: () => of(stampCard)
 };
 
 const campaignServiceStub = {
