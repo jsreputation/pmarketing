@@ -46,7 +46,13 @@ export class NewsFeedComponent implements OnInit {
       pageType: PageType.overlay,
       pageName: 'The All New Starhub Rewards'
     });
-    this.dialog.open(PopupComponent, { panelClass: 'app-full-bleed-dialog', data: item, height: '85vh' });
+    this.dialog.open(PopupComponent, {
+      panelClass: 'app-full-bleed-dialog',
+      data: item,
+      height: '85vh',
+      minWidth: '35.5rem',
+      maxWidth: '85vh'
+    });
   }
 
   public getFirstLine(text: string): string {

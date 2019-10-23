@@ -13,14 +13,14 @@ export interface IExpiringPoints {
 export interface ILoyalty {
   id: number;
   name: string;
-  description: string;
-  beginDate: string;
+  description?: string;
+  beginDate?: string;
   endDate?: string;
-  membershipTierName: string;
-  membershipIdentifier: string;
+  membershipTierName?: string;
+  membershipIdentifier?: string;
   pointsBalance: number;
-  currencyBalance: number;
-  currency: string;
+  currencyBalance?: number;
+  currency?: string;
   expiringPoints?: IExpiringPoints[];
 }
 

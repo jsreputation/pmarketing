@@ -13,6 +13,7 @@ export class LoyaltyFormsService {
     return new FormGroup({
       name: new FormControl(null, [Validators.required]),
       status: new FormControl(null),
+      createdAt: new FormControl(null),
       tiersCount: new FormControl(0),
       details: new FormGroup({
         pointsName: new FormControl(null,
@@ -52,7 +53,7 @@ export class LoyaltyFormsService {
       tiersCount: 0,
       status: 'draft',
       details: {
-        pointsName: 'Point as default',
+        pointsName: 'Point',
         imageUrl: null,
         joinMethod: {
           inviteOnly: true,
