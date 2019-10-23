@@ -104,6 +104,7 @@ commands:
             then
               SOURCE_TYPE="hsbc-rewards"
             elif [ $APP == 'hsbc-xmas' ]
+            then
               SOURCE_TYPE="hsbc-xmas"
             fi
             echo "export SOURCE_TYPE=$SOURCE_TYPE" >> $BASH_ENV
