@@ -3,7 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { WalletComponent } from './wallet.component';
 import { NavigateToolbarComponent } from '../navigate-toolbar/navigate-toolbar.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { VouchersModule, IVoucherService, ICampaignService } from '@perx/core';
+
+import { VouchersModule, IVoucherService, ICampaignService, ConfigService } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('WalletComponent', () => {
@@ -12,6 +13,10 @@ describe('WalletComponent', () => {
 
   const vouchersServiceStub = {
     getAll: () => of([])
+  };
+
+  const configServiceStub = {
+    readAppConfig: () => of()
   };
 
   const campaignServiceStub = {
@@ -30,6 +35,7 @@ describe('WalletComponent', () => {
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub },
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub }
       ]
     })
