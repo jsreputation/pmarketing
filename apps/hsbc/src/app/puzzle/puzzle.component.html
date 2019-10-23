@@ -23,7 +23,8 @@
             [backgroundImage]="card.displayProperties.cardImage.value.imageUrl"
             [title]="card.title || title"
             [subTitle]="card.subTitle || subTitle"
-            (availableStampClicked)="stampClicked($event)">
+            (availableStampClicked)="stampClicked($event)"
+            [showStampsCounter]="true">
         </perx-core-puzzle-collect-stamps>
     </ng-container>
 </div>
