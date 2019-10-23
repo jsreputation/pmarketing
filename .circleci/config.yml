@@ -194,7 +194,7 @@ jobs:
             --build-arg apihost=$APIHOST \
             --build-arg basehref=$BASE_HREF \
             --build-arg preauth=$PREAUTH \
-            --build-arg iswhistler=$IS_WHISTLER
+            --build-arg iswhistler=$IS_WHISTLER \
             --build-arg sourcetype=$SOURCE_TYPE
       - run:
           name: Push docker
