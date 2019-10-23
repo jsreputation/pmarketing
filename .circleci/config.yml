@@ -86,6 +86,9 @@ commands:
             elif [ $APP == 'hsbc-rewards' ]
             then
               BASE_HREF="/site/hsbc/rewardscatalogue/"
+            elif [ $APP == 'hsbc-xmas' ]
+            then
+              BASE_HREF="/site/hsbc/xmas/"
             else
               BASE_HREF="/"
             fi
