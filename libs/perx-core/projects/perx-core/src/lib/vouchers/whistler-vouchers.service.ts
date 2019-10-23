@@ -64,7 +64,18 @@ export class WhistlerVouchersService implements IVoucherService {
     return this.http.get<IJsonApiListPayload<IWhistlerVoucher>>(this.vouchersUrl)
       .pipe(
         map((res) => res.data),
-        mergeMap((vouchers: IJsonApiItem<IWhistlerVoucher>[]) => combineLatest(...vouchers.map(v => this.getFullVoucher(v))))
+        mergeMap((vouchers: IJsonApiItem<IWhistlerVoucher>[]) => combineLatest(...vouchers.map(v => this.getFullVoucher(v)))),
+        map(vouchers => {
+          return vouchers.sort((elA, elB) => {
+            const merchantIdA: number = elA.reward.merchantId;
+            const merchantIdB: number = elB.reward.merchantId;
+
+            // tslint:disable-next-line:no-bitwise
+            if (merchantIdA ^ merchantIdB) {
+              return !merchantIdA ? 1 : -1;
+            }
+          });
+        })
       );
   }
 
