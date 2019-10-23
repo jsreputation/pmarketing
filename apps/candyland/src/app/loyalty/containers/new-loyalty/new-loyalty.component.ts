@@ -16,6 +16,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CustomDataSource } from '@cl-shared/table';
 import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
 import Utils from '@cl-helpers/utils';
+import { StatusLabel } from '@cl-helpers/status-label.enum';
 
 @Component({
   selector: 'cl-new-loyalty',
@@ -38,6 +39,30 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
   protected destroy$: Subject<void> = new Subject();
+
+  public get stepOne(): FormGroup {
+    return this.form.get(this.loyaltyFormType.details) as FormGroup;
+  }
+
+  public get stepTwo(): FormGroup {
+    return this.form.get(this.loyaltyFormType.tiers) as FormGroup;
+  }
+
+  public get name(): AbstractControl {
+    return this.form.get('name');
+  }
+
+  public get tiersCount(): AbstractControl {
+    return this.form.get('tiersCount');
+  }
+
+  public get isLastStep(): boolean {
+    return this.stepper && this.stepper.selectedIndex === this.stepper._steps.length - 1;
+  }
+
+  public get currency$(): Observable<string> {
+    return this.userService.currency$;
+  }
 
   constructor(private loyaltyFormsService: LoyaltyFormsService,
               private loyaltyService: LoyaltyService,
@@ -68,64 +93,13 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public get currency$(): Observable<string> {
-    return this.userService.currency$;
-  }
-
-  private initPools(): any {
-    this.audiencesService.getAudiencesList()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        this.pools = data;
-      });
-  }
-
-  private getLoyaltyWithBasicTierRequest(): Observable<any> {
-    return this.getLoyaltyRequest()
-      .pipe(
-        takeUntil(this.destroy$),
-        switchMap(() => this.getBasicTierRequest()),
-        filter(Boolean)
-      );
-  }
-
-  private getLoyaltyRequest(): Observable<any> {
-    if (this.loyaltyId) {
-      return this.loyaltyService.updateLoyalty(this.loyaltyId, this.form.value);
-    }
-    return this.loyaltyService.createLoyalty(this.form.value)
-      .pipe(
-        tap(loyalty => {
-          this.loyaltyId = loyalty.id;
-          this.form.get('createdAt').patchValue(loyalty.createdAt);
-        })
-      );
-  }
-
-  private getBasicTierRequest(): Observable<any> {
-    if (this.basicTierId) {
-      return this.loyaltyService.updateBasicTier(this.basicTierId, this.form.value, this.loyaltyId);
-    }
-    return this.loyaltyService.createBasicTier(this.form.value, this.loyaltyId)
-      .pipe(
-        tap(basicTier => this.setBasicTierId(basicTier.data.id))
-      );
-  }
-
-  private setBasicTierId(basicTierId: string): void {
-    if (basicTierId && basicTierId !== this.basicTierId) {
-      this.basicTierId = basicTierId;
-      this.setBasicTierIdToCustomTiersDataSourceFilter(this.loyaltyId);
-    }
-  }
-
   public goNext(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
-    if (this.isChangedFormValue()) {
+    if (this.isNotChangedFormValue()) {
       // complete the current step
       this.stepper.selected.completed = true;
       // move to next step
@@ -148,7 +122,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.isChangedFormValue()) {
+    if (this.isNotChangedFormValue()) {
       this.navigateToList();
       return;
     }
@@ -160,7 +134,13 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   public launch(): void {
-    this.loyaltyService.updateLoyaltyStatus(this.loyaltyId, 'active')
+    const currentStatus = this.form.get('status').value;
+    if (currentStatus && currentStatus !== StatusLabel.DRAFT) {
+      this.navigateToList();
+      return;
+    }
+
+    this.loyaltyService.updateLoyaltyStatus(this.loyaltyId, StatusLabel.ACTIVE)
       .subscribe(() => {
         this.navigateToList();
       });
@@ -179,26 +159,6 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
 
   public navigateToList(): void {
     this.router.navigate(['/loyalty']);
-  }
-
-  public get stepOne(): FormGroup {
-    return this.form.get(this.loyaltyFormType.details) as FormGroup;
-  }
-
-  public get stepTwo(): FormGroup {
-    return this.form.get(this.loyaltyFormType.tiers) as FormGroup;
-  }
-
-  public get name(): AbstractControl {
-    return this.form.get('name');
-  }
-
-  public get tiersCount(): AbstractControl {
-    return this.form.get('tiersCount');
-  }
-
-  public get isLastStep(): boolean {
-    return this.stepper && this.stepper.selectedIndex === this.stepper._steps.length - 1;
   }
 
   public handleLoyaltyActions(data: { action: NewLoyaltyActions, data?: any }): void {
@@ -275,6 +235,53 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
     this.customTierDataSource.filter = {program_id: basicTierId};
   }
 
+  private initPools(): any {
+    this.audiencesService.getAudiencesList()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.pools = data;
+      });
+  }
+
+  private getLoyaltyWithBasicTierRequest(): Observable<any> {
+    return this.getLoyaltyRequest()
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(() => this.getBasicTierRequest()),
+        filter(Boolean)
+      );
+  }
+
+  private getLoyaltyRequest(): Observable<any> {
+    if (this.loyaltyId) {
+      return this.loyaltyService.updateLoyalty(this.loyaltyId, this.form.value);
+    }
+    return this.loyaltyService.createLoyalty(this.form.value)
+      .pipe(
+        tap(loyalty => {
+          this.loyaltyId = loyalty.id;
+          this.form.get('createdAt').patchValue(loyalty.createdAt);
+        })
+      );
+  }
+
+  private getBasicTierRequest(): Observable<any> {
+    if (this.basicTierId) {
+      return this.loyaltyService.updateBasicTier(this.basicTierId, this.form.value, this.loyaltyId);
+    }
+    return this.loyaltyService.createBasicTier(this.form.value, this.loyaltyId)
+      .pipe(
+        tap(basicTier => this.setBasicTierId(basicTier.data.id))
+      );
+  }
+
+  private setBasicTierId(basicTierId: string): void {
+    if (basicTierId && basicTierId !== this.basicTierId) {
+      this.basicTierId = basicTierId;
+      this.setBasicTierIdToCustomTiersDataSourceFilter(this.loyaltyId);
+    }
+  }
+
   private handleRouteParams(): Observable<ILoyaltyForm | null> {
     return this.route.paramMap
       .pipe(
@@ -295,7 +302,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
       this.setBasicTierId(loyalty.basicTierId || null);
       this.prevFormValue = loyalty;
     }
-    this.showDraftButton = !loyalty || loyalty.status === 'draft';
+    this.showDraftButton = !loyalty || loyalty.status === StatusLabel.DRAFT;
     this.isEditPage = !!this.loyaltyId;
     const patchData = loyalty || this.getDefaultValue();
     this.form.patchValue(patchData);
@@ -305,13 +312,11 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
     return this.loyaltyFormsService.getDefaultValueForm();
   }
 
-  private isChangedFormValue(): boolean {
-    const isEqual = Utils.isEqual(this.form.value, this.prevFormValue);
-    console.log('equsal', this.form.value, this.prevFormValue, isEqual);
-    if (isEqual) {
-      return true;
+  private isNotChangedFormValue(): boolean {
+    const isNotChanged = Utils.isEqual(this.form.value, this.prevFormValue);
+    if (!isNotChanged) {
+      this.prevFormValue = this.form.value;
     }
-    this.prevFormValue = this.form.value;
-    return false;
+    return isNotChanged;
   }
 }

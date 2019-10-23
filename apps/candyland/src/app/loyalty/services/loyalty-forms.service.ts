@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClValidators } from '@cl-helpers/cl-validators';
 import { LoyaltyPointsExpireTrigger } from '../models/loyalty-points-expire-trigger.enum';
+import { StatusLabel } from '@cl-helpers/status-label.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +51,7 @@ export class LoyaltyFormsService {
     return {
       name: null,
       tiersCount: 0,
-      status: 'draft',
+      status: StatusLabel.DRAFT,
       details: {
         pointsName: 'Point',
         imageUrl: null,
