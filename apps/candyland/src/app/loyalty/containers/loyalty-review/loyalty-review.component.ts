@@ -13,7 +13,7 @@ import { LoyaltyService } from '@cl-core/services/loyalty.service';
 })
 export class LoyaltyReviewComponent implements OnInit, OnDestroy {
   public loyalty: ILoyaltyForm;
-  public customTierDataSource: CustomDataSource<any>;
+  public customTierDataSource: CustomDataSource<ICustomTireForm>;
   protected destroy$: Subject<void> = new Subject();
 
   constructor(private route: ActivatedRoute,
@@ -21,7 +21,6 @@ export class LoyaltyReviewComponent implements OnInit, OnDestroy {
               private router: Router,
               private cd: ChangeDetectorRef,
               private loyaltyService: LoyaltyService) {
-    this.customTierDataSource = new CustomDataSource<any>(this.customTierService);
   }
 
   public ngOnInit(): void {
@@ -65,7 +64,7 @@ export class LoyaltyReviewComponent implements OnInit, OnDestroy {
 
   private initCustomTiersDataSource(): void {
     if (!this.customTierDataSource) {
-      this.customTierDataSource = new CustomDataSource<any>(this.customTierService);
+      this.customTierDataSource = new CustomDataSource<ICustomTireForm>(this.customTierService);
     }
   }
 

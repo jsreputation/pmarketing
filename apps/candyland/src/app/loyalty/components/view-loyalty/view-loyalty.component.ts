@@ -8,7 +8,7 @@ import { CustomDataSource } from '@cl-shared/table';
 })
 export class ViewLoyaltyComponent {
   @Input() public loyaltyData: ILoyaltyForm;
-  @Input() public dataSource: CustomDataSource<any>;
+  @Input() public dataSource: CustomDataSource<ICustomTireForm>;
 
   public get schemaInf(): ILoyaltySchemaInf {
     if (this.loyaltyData) {

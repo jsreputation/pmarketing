@@ -5,6 +5,7 @@ import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
 import { Subject } from 'rxjs';
 import { LoyaltyCustomTierFormsService } from '../../services/loyalty-custom-tier-forms.service';
+import { PeriodType } from '@cl-core/models/period-type.enum';
 
 @Component({
   selector: 'cl-tier-setup-popup',
@@ -15,11 +16,12 @@ import { LoyaltyCustomTierFormsService } from '../../services/loyalty-custom-tie
 export class TierSetupPopupComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   protected destroy$: Subject<void> = new Subject();
+  public pointsExpirePeriodType: typeof PeriodType = PeriodType;
 
   constructor(public dialogRef: MatDialogRef<TierSetupPopupComponent>,
               private customTierFormsService: LoyaltyCustomTierFormsService,
               private customTierService: LoyaltyCustomTierService,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+              @Inject(MAT_DIALOG_DATA) public data: { basicTierId: string, tier: ICustomTireForm | null }) {
   }
 
   public get pointsThreshold(): AbstractControl {

@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class LoyaltyListPageComponent implements OnDestroy {
   public loyaltyId: string;
   public loyaltyAction: typeof LoyaltyAction = LoyaltyAction;
-  public dataSource: CustomDataSource<any>;
+  public dataSource: CustomDataSource<ILoyaltyForm>;
   public dataSourceStates: typeof DataSourceStates = DataSourceStates;
   public menuOptions: IEngagementItemMenuOption[] = [
     {action: this.loyaltyAction.edit, label: 'Edit'},
@@ -26,7 +26,7 @@ export class LoyaltyListPageComponent implements OnDestroy {
     private router: Router,
     private cd: ChangeDetectorRef
   ) {
-    this.dataSource = new CustomDataSource<any>(this.loyaltyService);
+    this.dataSource = new CustomDataSource<ILoyaltyForm>(this.loyaltyService);
   }
 
   public ngOnDestroy(): void {

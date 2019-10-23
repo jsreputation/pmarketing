@@ -14,7 +14,7 @@ export class LoyaltyFormsService {
       name: new FormControl(null, [Validators.required]),
       status: new FormControl(null),
       createdAt: new FormControl(null),
-      tiersCount: new FormControl(0),
+      customTiersCount: new FormControl(0),
       details: new FormGroup({
         pointsName: new FormControl(null,
           [Validators.required, Validators.minLength(1)]),
@@ -47,10 +47,10 @@ export class LoyaltyFormsService {
     });
   }
 
-  public getDefaultValueForm(): any {
+  public getDefaultValueForm(): ILoyaltyForm {
     return {
       name: null,
-      tiersCount: 0,
+      customTiersCount: 0,
       status: StatusLabel.DRAFT,
       details: {
         pointsName: 'Point',

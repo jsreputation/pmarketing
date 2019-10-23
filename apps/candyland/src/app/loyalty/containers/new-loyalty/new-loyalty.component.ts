@@ -31,8 +31,8 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   public loyaltyId: string;
   public basicTierId: string;
   public form: FormGroup;
-  public customTierDataSource: CustomDataSource<any>;
-  public pools: any;
+  public customTierDataSource: CustomDataSource<ICustomTireForm>;
+  public pools: IPools;
   public isEditPage: boolean = false;
   public showDraftButton: boolean = true;
   public prevFormValue: ILoyaltyForm;
@@ -52,8 +52,8 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
     return this.form.get('name');
   }
 
-  public get tiersCount(): AbstractControl {
-    return this.form.get('tiersCount');
+  public get customTiersCount(): AbstractControl {
+    return this.form.get('customTiersCount');
   }
 
   public get isLastStep(): boolean {
@@ -161,7 +161,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
     this.router.navigate(['/loyalty']);
   }
 
-  public handleLoyaltyActions(data: { action: NewLoyaltyActions, data?: any }): void {
+  public handleLoyaltyActions(data: { action: NewLoyaltyActions, data?: ICustomTireForm }): void {
     switch (data.action) {
       case NewLoyaltyActions.createTier:
         this.createCustomTire();
@@ -179,7 +179,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
     this.form = this.loyaltyFormsService.getFormLoyalty();
   }
 
-  private getRefDialogSetupTier(data: any = null): Observable<MatDialogRef<TierSetupPopupComponent>> {
+  private getRefDialogSetupTier(data: ICustomTireForm = null): Observable<MatDialogRef<TierSetupPopupComponent>> {
     const dialogRef: MatDialogRef<TierSetupPopupComponent> = this.dialog.open(TierSetupPopupComponent, {
       panelClass: 'tier-setup-dialog',
       data: {
@@ -203,16 +203,16 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
 
   private updateCustomTiersDataSource(): void {
     this.customTierDataSource.updateData();
-    this.tiersCount.patchValue(this.customTierDataSource.length || 0);
+    this.customTiersCount.patchValue(this.customTierDataSource.length || 0);
   }
 
-  private editCustomTire(data: any): void {
+  private editCustomTire(data: ICustomTireForm): void {
     this.getRefDialogSetupTier(data)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.updateCustomTiersDataSource());
   }
 
-  private deleteCustomTier(id: any): void {
+  private deleteCustomTier(id: string): void {
     this.customTierService.deleteCustomTier(id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.updateCustomTiersDataSource());
@@ -227,7 +227,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
 
   private initCustomTiersDataSource(): void {
     if (!this.customTierDataSource) {
-      this.customTierDataSource = new CustomDataSource<any>(this.customTierService);
+      this.customTierDataSource = new CustomDataSource<ICustomTireForm>(this.customTierService);
     }
   }
 
@@ -235,15 +235,15 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
     this.customTierDataSource.filter = {program_id: basicTierId};
   }
 
-  private initPools(): any {
+  private initPools(): void {
     this.audiencesService.getAudiencesList()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
+      .subscribe((data: IPools) => {
         this.pools = data;
       });
   }
 
-  private getLoyaltyWithBasicTierRequest(): Observable<any> {
+  private getLoyaltyWithBasicTierRequest(): Observable<ILoyaltyForm> {
     return this.getLoyaltyRequest()
       .pipe(
         takeUntil(this.destroy$),
@@ -252,7 +252,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
       );
   }
 
-  private getLoyaltyRequest(): Observable<any> {
+  private getLoyaltyRequest(): Observable<ILoyaltyForm> {
     if (this.loyaltyId) {
       return this.loyaltyService.updateLoyalty(this.loyaltyId, this.form.value);
     }
@@ -265,7 +265,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
       );
   }
 
-  private getBasicTierRequest(): Observable<any> {
+  private getBasicTierRequest(): Observable<IJsonApiPayload<IBasicTierApi>> {
     if (this.basicTierId) {
       return this.loyaltyService.updateBasicTier(this.basicTierId, this.form.value, this.loyaltyId);
     }
@@ -308,7 +308,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
     this.form.patchValue(patchData);
   }
 
-  private getDefaultValue(): any {
+  private getDefaultValue(): ILoyaltyForm {
     return this.loyaltyFormsService.getDefaultValueForm();
   }
 

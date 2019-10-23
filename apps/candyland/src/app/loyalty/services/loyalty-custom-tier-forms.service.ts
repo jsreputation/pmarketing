@@ -32,7 +32,7 @@ export class LoyaltyCustomTierFormsService {
     });
   }
 
-  public getDefaultValueTireForm(): any {
+  public getDefaultValueTireForm(): ICustomTireForm {
     return {
       name: null,
       joinMethod: {

@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class ViewGlobalEarnBurnRulesComponent {
   @Input() public loyalty: ILoyaltyForm;
-  @Input() public currency: any;
+  @Input() public currency: string;
 
 }

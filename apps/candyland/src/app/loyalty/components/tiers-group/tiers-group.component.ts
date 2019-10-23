@@ -10,9 +10,9 @@ import { LoyaltyPointsExpireTrigger } from '../../models/loyalty-points-expire-t
 })
 export class TiersGroupComponent {
   @Input() public editable: boolean = false;
-  @Input() public dataSource: CustomDataSource<any>;
+  @Input() public dataSource: CustomDataSource<ICustomTireForm>;
   @Input() public displayedColumns: string[] = ['name', 'joinMethod', 'earnBonus', 'burnDiscount', 'pointsExpiry'];
-  @Output() public tiersAction: EventEmitter<{ action: NewLoyaltyActions, data?: any }> = new EventEmitter();
+  @Output() public tiersAction: EventEmitter<{ action: NewLoyaltyActions, data?: ICustomTireForm }> = new EventEmitter();
 
   public pointsExpireTrigger: typeof LoyaltyPointsExpireTrigger = LoyaltyPointsExpireTrigger;
 
@@ -23,15 +23,15 @@ export class TiersGroupComponent {
     return this.displayedColumns;
   }
 
-  public editItem(tier: any): void {
+  public editItem(tier: ICustomTireForm): void {
     this.tiersAction.emit({action: NewLoyaltyActions.editTier, data: tier});
   }
 
-  public duplicateItem(tier: any): void {
+  public duplicateItem(tier: ICustomTireForm): void {
     this.tiersAction.emit({action: NewLoyaltyActions.duplicateTier, data: tier});
   }
 
-  public deleteItem(tier: any): void {
+  public deleteItem(tier: ICustomTireForm): void {
     this.tiersAction.emit({action: NewLoyaltyActions.deleteTier, data: tier});
   }
 

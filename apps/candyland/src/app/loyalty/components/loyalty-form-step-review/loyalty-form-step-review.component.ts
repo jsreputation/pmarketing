@@ -9,7 +9,7 @@ import { CustomDataSource } from '@cl-shared/table';
 })
 export class LoyaltyFormStepReviewComponent {
   @Input() public group: FormGroup;
-  @Input() public dataSource: CustomDataSource<any>;
+  @Input() public dataSource: CustomDataSource<ICustomTireForm>;
 
   public get formValue(): ILoyaltyForm {
     return this.group.value;

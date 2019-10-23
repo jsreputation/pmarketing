@@ -1,7 +1,7 @@
 declare interface ILoyaltyForm {
   id?: string;
   name: string;
-  createdAt: string;
+  createdAt?: string;
   status?: string;
   customTiersCount?: number;
   pointsName?: string;
@@ -48,7 +48,7 @@ declare interface ILoyaltyTiersConversions {
 }
 
 declare interface ICustomTireForm {
-  id: string;
+  id?: string;
   name: string;
   joinMethod: IJoinMethod;
   imageUrl: string;

@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class ViewSchemeInfoComponent {
   @Input() public loyalty: ILoyaltyForm;
-  @Input() public currency: any;
+  @Input() public currency: string;
 }
