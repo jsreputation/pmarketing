@@ -14,7 +14,7 @@ export class GameComponent implements OnInit, OnDestroy {
   public gameData$: Observable<IGame>;
   public gt: typeof GameType = GameType;
   private campaignId: number;
-  private engagementId: number;
+  private engagementId: number | null;
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
 
@@ -36,7 +36,7 @@ export class GameComponent implements OnInit, OnDestroy {
       first(),
       tap((games: IGame[]) => !games || !games.length && this.router.navigate(['/wallet'])),
       map((games: IGame[]) => games[0]),
-      tap((game: IGame) => this.engagementId = game.id)
+      tap((game: IGame) => game ? this.engagementId = game.id : null)
     );
   }
 

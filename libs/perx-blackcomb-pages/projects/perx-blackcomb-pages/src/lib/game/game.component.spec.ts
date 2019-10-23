@@ -4,7 +4,7 @@ import { GameComponent } from './game.component';
 import { of } from 'rxjs';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
-import { GameModule, IGameService, PopupComponent, VoucherState, GameType, IGame } from '@perx/core';
+import { GameModule, IGameService, PopupComponent, GameType, IGame, VoucherState } from '@perx/core';
 import { MatDialogModule, MatProgressBarModule, MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
@@ -64,25 +64,25 @@ describe('GameComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // describe('ngOnInit', () => {
+  describe('ngOnInit', () => {
+    it('should redirect to /wallet if the route param id is not a valid campaign id.', fakeAsync(() => {
+      const router: Router = fixture.debugElement.injector.get<Router>(
+        Router as Type<Router>);
+      const routerSpy = spyOn(router, 'navigate');
+      const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(
+        IGameService as Type<IGameService>);
 
-  //   it('should redirect to /wallet if the route param id is not a valid campaign id.', fakeAsync(() => {
-  //     const router: Router = fixture.debugElement.injector.get<Router>(
-  //       Router as Type<Router>);
-  //     const routerSpy = spyOn(router, 'navigate');
-  //     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(
-  //       IGameService as Type<IGameService>);
+      const getGamesFromCampaignSpy = spyOn(gameService, 'getGamesFromCampaign')
+        .and.returnValue(of([]));
 
-  //     const getGamesFromCampaignSpy = spyOn(gameService, 'getGamesFromCampaign')
-  //       .and.returnValue(of([game]));
-
-  //     component.ngOnInit();
-  //     tick(1000);
-  //     expect(routerSpy).toHaveBeenCalledWith([ '/wallet' ]);
-  //     expect(getGamesFromCampaignSpy).toHaveBeenCalled();
-  //   }));
-
-  // });
+      component.ngOnInit();
+      tick(1000);
+      fixture.detectChanges();
+      tick();
+      expect(routerSpy).toHaveBeenCalledWith([ '/wallet' ]);
+      expect(getGamesFromCampaignSpy).toHaveBeenCalled();
+    }));
+  });
 
   describe('gameCompleted', () => {
     let dialog;
@@ -128,7 +128,15 @@ describe('GameComponent', () => {
       tick(10000);
       fixture.detectChanges();
       expect(gameServiceSpy).toHaveBeenCalled();
-      expect(dialogSpy).toHaveBeenCalledWith(PopupComponent, { data: Object({ title: 'Congratulations!', text: 'You earned 1 rewards', buttonTxt: 'View Rewards', imageUrl: 'assets/congrats_image.png' }) });
+      expect(dialogSpy).toHaveBeenCalledWith(PopupComponent,
+        { data:
+          { title: 'Congratulations!',
+            text: 'You earned 1 rewards',
+            buttonTxt: 'View Rewards',
+            imageUrl: 'assets/congrats_image.png'
+          }
+        }
+      );
     }));
 
     it('should query gameService/play when the game completes', fakeAsync(() => {
