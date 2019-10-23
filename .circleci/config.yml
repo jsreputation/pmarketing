@@ -50,11 +50,11 @@ commands:
               if [ ${TARGET_ENV} == 'staging' ]; then
                 APIHOST="https://api.perxtech.io"
               elif [ ${TARGET_ENV} == 'production' ]; then
-                if [ $APP == 'hsbc' ] || [ $APP == 'hsbc-rewards' ]
+                if [ $APP == 'hsbc' ] || [ $APP == 'hsbc-rewards' ] || [ $APP == 'hsbc-xmas' ]
                 then
                   APIHOST="https://api-hsbc.perxtech.net"
                 else
-                  APIHOST="https://api.perxtech.net"
+                  APIHOST="https://api.getperx.net"
                 fi
               fi
             fi
@@ -91,6 +91,23 @@ commands:
             fi
             echo "export BASE_HREF=$BASE_HREF" >> $BASH_ENV
             echo $BASE_HREF
+  set_sourcetype:
+    description: based on client set source type for app
+    steps:
+      - run:
+          name: Setup SOURCE_TYPE var
+          command: |
+            if [ $APP == 'hsbc' ]
+            then
+              SOURCE_TYPE="hsbc-collect2"
+            elif [ $APP == 'hsbc-rewards' ]
+            then
+              SOURCE_TYPE="hsbc-rewards"
+            elif [ $APP == 'hsbc-xmas' ]
+              SOURCE_TYPE="hsbc-xmas"
+            fi
+            echo "export SOURCE_TYPE=$SOURCE_TYPE" >> $BASH_ENV
+            echo $SOURCE_TYPE
   set_iswhistler:
     description: based on client deploy endpoint base href
     steps:
@@ -147,6 +164,7 @@ jobs:
       - set_preauth
       - set_basehref
       - set_iswhistler
+      - set_sourcetype
       - run:
           name: Build docker image
           command: |
@@ -156,9 +174,13 @@ jobs:
             echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
             echo "Docker Tag: ${CIRCLE_SHA1:0:7}"
             echo "IS_WHISTLER: ${IS_WHISTLER}"
+            echo "SOURCE_TYPE: ${SOURCE_TYPE}"
             if [ $APP == 'candyland' ]
             then
               export APP="candyland"
+            elif [ $APP == 'hsbc-xmas' ]
+            then
+              export APP="hsbc"
             fi
             echo "after second set APP: ${APP}"
 
@@ -169,6 +191,7 @@ jobs:
             --build-arg basehref=$BASE_HREF \
             --build-arg preauth=$PREAUTH \
             --build-arg iswhistler=$IS_WHISTLER
+            --build-arg sourcetype=$SOURCE_TYPE
       - run:
           name: Push docker
           command: |
