@@ -5,10 +5,11 @@ export interface IPopupConfig {
   title?: string;
   text?: string;
   imageUrl?: string;
-  buttonTxt?: string|null;
+  buttonTxt?: string | null;
   afterClosedCallBack?: PopUpClosedCallBack;
   disableOverlayClose?: boolean;
-  buttonTxt2?: string|null;
+  buttonTxt2?: string | null;
+  panelClass?: string[] | string;
 }
 
 export interface PopUpClosedCallBack {

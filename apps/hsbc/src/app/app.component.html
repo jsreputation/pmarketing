@@ -3,10 +3,10 @@
   <mat-sidenav #drawer class="sidenav" position="end" fixedInViewport="true" [fixedTopGap]="0" [fixedBottomGap]="0" autofocus="true" disableClose="false"
     mode="over">
     <mat-nav-list>
-      <app-profile 
-        *ngIf="currentPage && 
-               currentPage !== 'Login' && 
-               currentPage !== 'Terms and Conditions' && 
+      <app-profile
+        *ngIf="currentPage &&
+               currentPage !== 'Login' &&
+               currentPage !== 'Terms and Conditions' &&
                currentPage !== 'FAQ'"
       ></app-profile>
       <!-- <a mat-list-item routerLinkActive="router-link-active" [routerLink]="['/tnc']"
@@ -23,12 +23,9 @@
           {{leftIconToShow}}
         </mat-icon>
       </button>
-      <div class="toolbar__label">{{currentPage}}</div>
-      <button [disabled]="rightIconToShow === ''" mat-icon-button (click)="onRightActionClick()">
-        <mat-icon *ngIf="rightIconToShow !== ''">
-          {{rightIconToShow}}
-        </mat-icon>
-      </button>
+      <div class="toolbar__label">
+        <img src="assets/hsbc-logo.svg" alt="">
+      </div>
     </mat-toolbar>
     <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate($event)"></router-outlet>
   </mat-sidenav-content>

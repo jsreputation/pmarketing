@@ -8,6 +8,7 @@ export interface IRewardEntityAttributes {
   category: string;
   redemption_type: string;
   cost_of_reward: number;
+  tags: string[];
   currency?: string;
   description?: string;
   terms_conditions?: string;
@@ -26,7 +27,8 @@ export interface IRewardEntityAttributes {
         duration?: string;
       }
     },
-    redemption_text?: string
+    redemption_text?: string;
+    loyalties: any;
   };
   organization_id?: string;
 }

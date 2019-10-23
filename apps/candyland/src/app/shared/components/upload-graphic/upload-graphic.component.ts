@@ -16,10 +16,9 @@ import { UploadFileService } from '@cl-core-services';
   ]
 })
 export class UploadGraphicComponent implements ControlValueAccessor {
-  @Input() public placeholder: string = 'Recommended format: .JPG or .PNG';
+  @Input() public placeholder: string = 'Recommended format: .JPG, .PNG or .GIF';
   @Input() public btnLabel: string = '+ Add New';
   @Input() public classList: string = '';
-  @Input() public btnStyleClass: string = '';
   @Input() public isRequired: boolean;
 
   @Input()
@@ -65,8 +64,8 @@ export class UploadGraphicComponent implements ControlValueAccessor {
     }
 
     const mimeName = files[0].name;
-    if (!(/\.(jpg|jpeg|png)$/i).test(mimeName)) {
-      this.setError('Only .JPG or .PNG are supported.');
+    if (!(/\.(jpg|jpeg|png|gif)$/i).test(mimeName)) {
+      this.setError('Only .JPG, .PNG or .GIF are supported.');
       return;
     }
     this.imagePath = files;

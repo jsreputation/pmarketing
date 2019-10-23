@@ -25,7 +25,10 @@ When(/^2_I click on the campaign tab$/, async () => {
   await browser.wait(ec.elementToBeClickable(element.all(by.css('h3')).get(3)), 5000);
   // clicking on the campaign tab
   await element.all(by.css('h3')).get(3).click();
-  browser.sleep(3000);
+  await browser.sleep(3000);
+  // disabling walkme script
+  await browser.executeScript('WalkMeAPI.stopFlow()');
+  await browser.sleep(3000);
 });
 
 Then(/^2_I should be navigated to the campaign page.$/, async () => {
@@ -63,6 +66,8 @@ Then(/^3_I should see the relevant elements.$/, async () => {
 // Ensure that create new campaign button is functional
 Given(/^4_I am on the campaign page$/, async () => {
   await CampaignPage.navigateToCampaign();
+  await browser.executeScript('WalkMeAPI.stopFlow()');
+  await browser.sleep(3000);
 });
 
 Then(/^4_I should be on the create new campaign page.$/, async () => {

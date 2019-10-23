@@ -4,7 +4,7 @@ import { HomeComponent } from './home.component';
 import { MatToolbarModule, MatTabsModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
-import { LoyaltyService, IProfile, ProfileService, FeedReaderService } from '@perx/core';
+import { LoyaltyService, IProfile, ProfileService, FeedReaderService, RewardsModule } from '@perx/core';
 import { of } from 'rxjs';
 import { loyalty } from 'src/app/loyalty.mock';
 import { Type } from '@angular/core';
@@ -34,7 +34,8 @@ describe('HomeComponent', () => {
       imports: [
         MatToolbarModule,
         MatTabsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        RewardsModule
       ],
       providers: [
         NoRenewaleInNamePipe,

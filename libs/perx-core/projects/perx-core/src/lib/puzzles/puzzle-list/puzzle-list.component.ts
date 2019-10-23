@@ -3,6 +3,7 @@ import { StampService } from '../../stamp/stamp.service';
 import { IStampCard , StampCardState, StampState } from '../../stamp/models/stamp.model';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { PuzzleCollectStampState } from '../models/puzzle-stamp.model';
 
 @Component({
   selector: 'perx-core-puzzle-list',
@@ -15,7 +16,7 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
   @Input()
   public campaignId: number = null;
   @Input()
-  public iconDisplay: string = 'arrow_forward_ios';
+  public iconDisplay: string;
 
   public total: number = 6;
 
@@ -73,30 +74,59 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
       return false;
     }
     // if we have no information on stamps then it should not be active
-    if (!puzzle.stamps) {
+    if (!puzzle.stamps && puzzle.displayProperties.displayCampaignAs === 'puzzle') {
+      return false;
+    }
+
+    if (!puzzle.collectionStamps && puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
       return false;
     }
 
     const totalSlots = puzzle.displayProperties.totalSlots;
 
     // if there is no more available stamp return false
-    if (puzzle.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots) {
-      return false;
-    }
+    if (puzzle.displayProperties.displayCampaignAs === 'puzzle') {
 
-    // get list of active puzzles
-    const activePuzzles = this.puzzles.filter(p => p.state === StampCardState.active &&
+      if (puzzle.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots) {
+        return false;
+      }
+
+      // get list of active puzzles
+      const activePuzzles = this.puzzles.filter(p => p.state === StampCardState.active &&
         p.stamps &&
         p.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots);
 
-    // if there is no active puzzle, this one should not be active
-    if (activePuzzles.length === 0) {
-      return false;
+      // if there is no active puzzle, this one should not be active
+      if (activePuzzles.length === 0) {
+        return false;
+      }
+
+      // if it is the first active puzzle then make it visible
+      if (puzzle.id === activePuzzles[0].id) {
+        return true;
+      }
     }
 
-    // if it is the first active puzzle then make it visible
-    if (puzzle.id === activePuzzles[0].id) {
-      return true;
+    if (puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
+
+      if (puzzle.collectionStamps.filter(st => st.state === PuzzleCollectStampState.redeemed).length >= totalSlots) {
+        return false;
+      }
+
+      // get list of active puzzles
+      const activePuzzles = this.puzzles.filter(p => p.state === StampCardState.active &&
+        p.collectionStamps &&
+        p.collectionStamps.filter(st => st.state === PuzzleCollectStampState.redeemed).length < totalSlots);
+
+      // if there is no active puzzle, this one should not be active
+      if (activePuzzles.length === 0) {
+        return false;
+      }
+
+      // if it is the first active puzzle then make it visible
+      if (puzzle.id === activePuzzles[0].id) {
+        return true;
+      }
     }
   }
 

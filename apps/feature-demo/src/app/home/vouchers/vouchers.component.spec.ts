@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { VouchersComponent } from './vouchers.component';
 import { MatCardModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IVoucherService } from '@perx/core';
+import { VouchersModule, IVoucherService } from '@perx/core';
 import { of } from 'rxjs';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { vouchers } from '../../vouchers.mock';
@@ -26,7 +26,8 @@ describe('VouchersComponent', () => {
         MatCardModule,
         MatIconModule,
         RouterTestingModule,
-        NgxMultiLineEllipsisModule
+        NgxMultiLineEllipsisModule,
+        VouchersModule
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub }
@@ -59,8 +60,6 @@ describe('VouchersComponent', () => {
 
   it('difference should be 1 with next day', () => {
     const mockVoucher = vouchers[0];
-    console.log('salman');
-    console.log(tomorrow);
     mockVoucher.expiry = tomorrow;
     const noOfDays = component.getNumberOfDays(mockVoucher);
     expect(noOfDays).toBe('Expires in 1 days');

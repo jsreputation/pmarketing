@@ -54,8 +54,8 @@ declare const _satellite: {
 })
 export class AppComponent implements OnInit, PopUpClosedCallBack {
   // public selectedCampaign: ICampaign;
-  private reward: IReward = null;
-  private game: IGame = null;
+  public reward: IReward = null;
+  public game: IGame = null;
   private token: string;
 
   constructor(
@@ -89,7 +89,10 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   }
 
   public ngOnInit(): void {
-    this.notificationService.$popup.subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
+    this.notificationService.$popup
+      .subscribe((data: IPopupConfig) =>
+      this.dialog.open(PopupComponent, { data, ... data.panelClass && {panelClass: data.panelClass }
+      }));
 
     this.notificationService.$snack.subscribe((msg: string) => this.snackBar.open(msg, 'x', { duration: 2000 }));
 

@@ -1,3 +1,16 @@
-<p>wallet works!</p>
+<div class="rewards-list">
+  <h1>My Rewards</h1>
+  <perx-core-vouchers
+    (route)="onRoute($event)"
+    [filter]="'issued'"
+    [iconDisplay]="'arrow_forward_ios'"
+    [showTitle]="true"
+    [showMerchant]="true"
+    [showExpireDate]="true"
+    [showRedeemedDate]="false"
+    [showRedeemedIcon]="false"
+    [sourceType]="sourceType"
+    ></perx-core-vouchers>
+</div>
 
 <app-navigate-toolbar></app-navigate-toolbar>

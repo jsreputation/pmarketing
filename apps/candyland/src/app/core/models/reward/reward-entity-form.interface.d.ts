@@ -2,6 +2,7 @@ declare interface IRewardEntityForm {
   id?: string;
   name: string;
   currency?: string;
+  loyalties?: ILoyaltyFormGroup[];
   displayProperties?: any;
   rewardInfo: {
     image: string;
@@ -11,6 +12,7 @@ declare interface IRewardEntityForm {
     cost: number;
     description: string;
     termsAndCondition: string;
+    tags?: string[];
     merchantId: string | null;
   };
   vouchers?: {

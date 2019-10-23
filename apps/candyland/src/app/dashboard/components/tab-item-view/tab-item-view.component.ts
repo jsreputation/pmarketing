@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 export class TabItemViewComponent {
   @Input() public data: ITotal;
   @Input() public value: number;
+  public fractionSize: any;
 }

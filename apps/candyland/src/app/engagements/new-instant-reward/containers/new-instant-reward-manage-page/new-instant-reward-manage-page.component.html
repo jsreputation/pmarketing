@@ -1,4 +1,4 @@
-<article class="temp-engagement-title" [formGroup]="form">
+<article [formGroup]="form">
   <header class="page-header full-with">
     <mat-form-field class="pagetitle-input" floatLabel="never">
       <input type="text"  matInput formControlName="name" placeholder="Enter title here">
@@ -30,12 +30,10 @@
   <section class="content form-limiter">
     <div class="phonepreview-wrapper">
       <div class="reward-form">
-        <mat-card class="game-graphic">
-          <div class="temp-engagement-title">
-            <h2 class="sub-title">
-              Messages
-            </h2>
-          </div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Messages
+          </h2>
           <div class="reward-form" >
             <div class="control-input">
               <mat-form-field class="mat-form-field">
@@ -58,15 +56,13 @@
           </div>
         </mat-card>
 
-        <mat-card class="game-graphic">
-          <div class="temp-engagement-title">
-            <h2 class="sub-title">
-              Game graphic
-            </h2>
-          </div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Game graphic
+          </h2>
           <div class="game-form">
-            <div class="game-background-box">
-              <h3 class="game-title">
+            <div class="control-img_asset">              
+              <h3 class="card-fieldset-label">
                 Card Background
               </h3>
               <div class="game-gift-box_field">
@@ -74,15 +70,14 @@
                   *ngIf="rewardData?.cardBackground"
                   formControlName="cardBackground"
                   [isRequired]="cardBackground.hasError('required') && cardBackground.touched"
-                  class="game-selected-graphic"
                   [graphicList]="rewardData?.cardBackground"
                 >
                 </cl-select-graphic-wrap>
               </div>
             </div>
 
-            <div class="game-background-box">
-              <h3 class="game-title">
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label">
                 Background
               </h3>
               <div class="game-gift-box_field">
@@ -90,7 +85,6 @@
                   *ngIf="rewardData?.background"
                   formControlName="background"
                   [isRequired]="background.hasError('required') && background.touched"
-                  class="game-selected-graphic"
                   [graphicList]="rewardData?.background"
                 >
                 </cl-select-graphic-wrap>
@@ -99,12 +93,10 @@
           </div>
         </mat-card>
 
-        <mat-card class="game-graphic">
-          <div class="temp-engagement-title">
-            <h2 class="sub-title">
-              Button
-            </h2>
-          </div>
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title">
+            Button
+          </h2>
           <div class="messages-form">
             <div class="control-input">
               <mat-form-field class="messages-input">

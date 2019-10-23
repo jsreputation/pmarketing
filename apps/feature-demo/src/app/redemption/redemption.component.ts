@@ -4,13 +4,12 @@ import {
   VoucherState,
   IVoucherService,
   PinInputComponent,
-  NotificationService,
-  ICategoryTags,
+  NotificationService
 } from '@perx/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
-import { AnalyticsService, PageType } from '../analytics.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-redemption',
@@ -20,6 +19,7 @@ import { AnalyticsService, PageType } from '../analytics.service';
 export class RedemptionComponent implements OnInit {
 
   public voucher: Voucher;
+  public voucher$: Observable<Voucher>;
   public showEnterPinComponent: boolean = false;
   public isPinEntered: boolean = false;
   public isPinCorrect: boolean;
@@ -32,32 +32,21 @@ export class RedemptionComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private location: Location,
     private router: Router,
-    private notficationService: NotificationService,
-    private analytics: AnalyticsService
-  ) {
+    private notficationService: NotificationService
+    ) {
   }
 
   public ngOnInit(): void {
-    this.activeRoute.queryParams
+    this.voucher$ = this.activeRoute.queryParams
       .pipe(
         filter((params: Params) => params.id ? true : false),
         map((params: Params) => params.id),
         switchMap((id: number) => this.vouchersService.get(id))
-      )
-      .subscribe((voucher: Voucher) => {
-        this.voucher = voucher;
-        const categories: ICategoryTags[] = voucher.reward.categoryTags;
-        const category: string = categories && categories.length > 0 ? categories[0].title : undefined;
-        if (category !== undefined) {
-          const pageName: string = `rewards:vouchers:redemption:${category}:${voucher.reward.name}`;
-          this.analytics.addEvent({
-            pageName,
-            pageType: PageType.detailPage,
-            siteSectionLevel2: 'rewards:vouchers',
-            siteSectionLevel3: 'rewards:vouchers:redemption'
-          });
-        }
-      });
+      );
+
+    this.voucher$.subscribe((voucher: Voucher) => {
+      this.voucher = voucher;
+    });
   }
 
   public back(): void {

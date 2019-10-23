@@ -38,13 +38,9 @@
 
     margin: 0;
     color: $secondary-color;
-  }
-
-  &-sub-title {
-    @include typo-subtitle1;
-
-    margin-top: 1.5rem;
-    color: $secondary-color;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   &-input-group {
@@ -141,11 +137,6 @@
   }
 }
 
-.nested-type {
-  padding: 0 ($horizontal-padding * 0.75);
-  transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
-}
-
 .actions-close {
   display: block;
   margin-right: 1.2rem;
@@ -180,6 +171,10 @@
 
 .reward-replenish-dialog {
   @include modal-size($modal-md);
+}
+
+.tier-setup-dialog {
+  @include modal-size($modal-lg);
 }
 
 .invite-new-users-dialog .mat-dialog-container {
