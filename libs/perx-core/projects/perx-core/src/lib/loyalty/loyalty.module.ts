@@ -8,9 +8,13 @@ import { LoyaltyTransactionsListComponent } from './loyalty-transactions-list/lo
 import { TransactionPipe } from './loyalty-transactions-list/transaction.pipe';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
+import { WhistlerLoyaltyService } from './whistler-loyalty.service';
 
 export function loyaltyServiceFactory(http: HttpClient, config: Config): LoyaltyService {
   // Make decision on what to instantiate base on config
+  if (config.isWhistler) {
+    return new WhistlerLoyaltyService(http, config);
+  }
   return new V4LoyaltyService(http, config);
 }
 
