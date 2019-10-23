@@ -54,8 +54,8 @@ button.mat-accent {
 }
 
 button.mat-default {
-  background-color: var(--button_text_color) !important;
-  color: var(--button_background_color) !important;
+  background-color: #fff !important;
+  color: var(--font_color) !important;
 }
 
 .mat-toolbar {
