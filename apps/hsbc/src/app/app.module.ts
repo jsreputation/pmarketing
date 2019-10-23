@@ -51,7 +51,7 @@ import { NavigateToolbarComponent } from './navigate-toolbar/navigate-toolbar.co
 import { WalletComponent } from './wallet/wallet.component';
 import { AccountComponent } from './account/account.component';
 
-import { PuzzleListComponent } from './mock/service/puzzle-list/puzzle-list.component';
+// import { PuzzleListComponent } from './mock/service/puzzle-list/puzzle-list.component';
 // import { of } from 'rxjs';
 // import { stampCard } from './mock/stamp.mock';
 // import { puzzle } from './mock/puzzle.mock';
@@ -100,7 +100,7 @@ import { PuzzleListComponent } from './mock/service/puzzle-list/puzzle-list.comp
     WalletComponent,
     AccountComponent,
 
-    PuzzleListComponent, // mock service/component
+    // PuzzleListComponent, // mock service/component
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
