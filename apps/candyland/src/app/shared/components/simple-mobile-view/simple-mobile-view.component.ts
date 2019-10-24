@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { CreateImageDirective } from '@cl-shared/directives/create-image.directive';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'cl-simple-mobile-view',
@@ -6,10 +8,15 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./simple-mobile-view.component.scss']
 })
 export class SimpleMobileViewComponent {
+  @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
   @Input() public background: string = 'assets/images/reward/card-background/card-bg-1.png';
   @Input() public mobileImageClass: string = 'mobile-preview-mobile';
   @Input() public headerColor: string = '#ffffff';
   @Input() public logo: string;
   @Input() public logoType: boolean;
   @Input() public fontFamily: string;
+
+  public createPreview(): Observable<IUploadedFile> {
+    return this.createImagePreview.getPreviewUrl();
+  }
 }
