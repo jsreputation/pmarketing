@@ -19,6 +19,8 @@ import { ShakeTreeService } from '@cl-core/services';
 import { ConfirmModalModule } from '@cl-shared';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
+import { DirectivesModule } from '@cl-shared/directives/directives.module';
+import { WINDOW } from '@cl-core/services/window.service';
 
 describe('NewShakePageComponent', () => {
   let component: NewShakePageComponent;
@@ -44,6 +46,7 @@ describe('NewShakePageComponent', () => {
         HttpClientTestingModule,
         MatDialogModule,
         ConfirmModalModule,
+        DirectivesModule,
       ],
       declarations: [ NewShakePageComponent ],
       providers: [
@@ -86,7 +89,11 @@ describe('NewShakePageComponent', () => {
           provide: EngagementHttpAdapter,
           useValue: {}
         },
-        {provide: LocalStorageService, useValue: {}}
+        {provide: LocalStorageService, useValue: {}},
+        { provide: WINDOW, useValue: {
+            scrollTo(a: any, b: any): any { return {a, b}; }
+          }
+        }
       ]
     })
     .compileComponents();

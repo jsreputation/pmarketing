@@ -6,6 +6,11 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
 import { NewCampaignReviewPageComponent } from './new-campaign-review-page.component';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LocalStorageService } from '@cl-core/services/local-storage.service';
+import { RouterModule } from '@angular/router';
 
 describe('NewCampaignReviewPageComponent', () => {
   let component: NewCampaignReviewPageComponent;
@@ -13,12 +18,19 @@ describe('NewCampaignReviewPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ 
+        BrowserDynamicTestingModule,
+        HttpClientTestingModule,
+        ReactiveFormsModule,
+        RouterModule.forRoot([]),
+      ],
       declarations: [ NewCampaignReviewPageComponent ],
       providers: [
         {provide: CampaignCreationStoreService, useValue: {
             updateCampaign: (data: any) => data,
             currentCampaign$: new Subject()}},
         {provide: StepConditionService, useValue: {registerStepCondition: () => ({}) }},
+        {provide: LocalStorageService, useValue: {}}
       ],
       schemas: [ NO_ERRORS_SCHEMA ]
     })

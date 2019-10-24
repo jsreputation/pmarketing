@@ -2,9 +2,9 @@
   <ng-container *ngIf="(dataSource.data$ | async) as items">
     <div class="item shadow" *ngFor="let item of items">
       <cl-loyalty-item [data]="item"
-                          [menuOptions]="menuOptions"
-                          [linkable]="true"
-                          (menuTapped)="menuOptTapped($event)">
+                       [menuOptions]="menuOptions"
+                       [linkable]="true"
+                       (menuTapped)="menuOptTapped($event)">
       </cl-loyalty-item>
     </div>
   </ng-container>
