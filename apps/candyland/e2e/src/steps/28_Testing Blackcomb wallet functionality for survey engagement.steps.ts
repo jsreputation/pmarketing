@@ -7,14 +7,12 @@ const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 let BlackcombWalletApp: BlackcombWalletAppPage;
 
 // Ensuring wallet has the relevant elements
-Given(/^5_I am  at the wallet blackcomb page$/, async () => {
+Given(/^6_I am  at the wallet blackcomb page$/, async () => {
   BlackcombWalletApp = new BlackcombWalletAppPage();
   await BlackcombWalletApp.navigateBlackcombWalletApp();
 });
 
-When(/^5_I do nothing$/, () => {});
-
-Then(/^5_I see the navigation bar$/, async () => {
+Then(/^6_I see the navigation bar$/, async () => {
   // waiting for the nav bar to load
   await browser.wait(ec.presenceOf(element.all(by.css('mat-toolbar')).get(1)), 6000);
   // waiting for the card for stamp cards
@@ -28,12 +26,12 @@ Then(/^5_I see the navigation bar$/, async () => {
 });
 
 //  Ensuring functionality of stamp card
-Given(/^6_I am  at the wallet blackcomb page$/, async () => {
+Given(/^7_I am  at the wallet blackcomb page$/, async () => {
   BlackcombWalletApp = new BlackcombWalletAppPage();
   await BlackcombWalletApp.navigateBlackcombWalletApp();
 });
 
-When(/^6_I click on the stamp card$/, async () => {
+When(/^7_I click on the stamp card$/, async () => {
   // waiting for the card for stamp cards
   await browser.wait(ec.presenceOf(element.all(by.css('mat-card')).get(0)), 6000);
   // clicking on the stamp card
@@ -41,18 +39,18 @@ When(/^6_I click on the stamp card$/, async () => {
   await browser.sleep(3000);
 });
 
-Then(/^6_I should be navigated to the stamp card page.$/, async () => {
+Then(/^7_I should be navigated to the stamp card page.$/, async () => {
   expect(await browser.getCurrentUrl()).to.contain('stamp');
 
 });
 
 // Ensuring functionality of voucher wallet
-Given(/^7_I am  at the wallet blackcomb page$/, async () => {
+Given(/^8_I am  at the wallet blackcomb page$/, async () => {
   BlackcombWalletApp = new BlackcombWalletAppPage();
   await BlackcombWalletApp.navigateBlackcombWalletApp();
 });
 
-When(/^7_I click on a voucher$/, async () => {
+When(/^8_I click on a voucher$/, async () => {
   // waiting for voucher field to load
   await browser.wait(ec.presenceOf(element.all(by.css('mat-card')).get(1)), 6000);
   // clicking on the voucher field
@@ -60,6 +58,6 @@ When(/^7_I click on a voucher$/, async () => {
   await browser.sleep(3000);
 });
 
-Then(/^7_I should be navigated to voucher details page.$/, async () => {
+Then(/^8_I should be navigated to voucher details page.$/, async () => {
   expect(await browser.getCurrentUrl()).to.contain('voucher-detail');
 });
