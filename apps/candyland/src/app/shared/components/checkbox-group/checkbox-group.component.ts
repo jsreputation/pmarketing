@@ -31,7 +31,7 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
   @Input() set value(setValue: string[]) {
     this.writeValue(setValue);
   }
-
+  @Input() public clearState: boolean;
   private data: string[] = [];
   private destroy$: Subject<any> = new Subject();
   private onChange: any = noop;
@@ -46,6 +46,7 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
 
   public ngAfterViewInit(): void {
     this.handlCheckboxList();
+    this.resetState();
   }
 
   public ngOnDestroy(): void {
@@ -108,6 +109,19 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
           checkbox.setDisabledState(isDisabled);
         }
       });
+    }
+  }
+
+  private resetState(): void {
+    if (this.clearState) {
+      this.checkboxList.changes
+        .subscribe((() => {
+          if (this.checkboxList && this.data.length > 0) {
+            this.checkboxList.forEach((checkbox: MatCheckbox) => {
+              checkbox.checked = false;
+            });
+          }
+        }));
     }
   }
 }
