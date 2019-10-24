@@ -1,0 +1,36 @@
+import { Injectable } from '@angular/core';
+
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
+import { ScratchHttpService } from '@cl-core/http-services/scratch-http.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ScratchService {
+
+  constructor(private scratchHttpService: ScratchHttpService) { }
+
+  public getScratchData(): Observable<IGameDefaultData> {
+    return this.scratchHttpService.getScratchData();
+  }
+
+  public getScratch(id: string): Observable<IScratchForm> {
+    return this.scratchHttpService.getScratch(id).pipe(
+      map(response => EngagementHttpAdapter.transformScratchForm(response.data))
+    );
+  }
+
+  public createScratch(data: any): Observable<IResponseApi<IEngagementApi>> {
+    const sendData = EngagementHttpAdapter.transformScratch(data);
+    return this.scratchHttpService.createScratch({ data: sendData });
+  }
+
+  public updateScratch(id: string, data: any): Observable<IResponseApi<IEngagementApi>> {
+    const sendData = EngagementHttpAdapter.transformScratch(data);
+    sendData.id = id;
+    return this.scratchHttpService.updateScratch(id, {data: sendData});
+  }
+}

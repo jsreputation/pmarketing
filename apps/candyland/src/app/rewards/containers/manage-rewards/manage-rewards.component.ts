@@ -10,6 +10,7 @@ import { NewRewardFormService } from '../../services/new-reward-form.service';
 import { CreateMerchantPopupComponent, SelectMerchantPopupComponent, ToggleControlService } from '@cl-shared';
 import { Merchant } from '@cl-core/http-adapters/merchant';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
+import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Component({
   selector: 'cl-manage-rewards',
@@ -223,7 +224,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       }));
   }
 
-  private getLoyalties(): Observable<{ data: ILoyaltyForm[] }> {
+  private getLoyalties(): Observable<{data: ILoyaltyForm[]}> {
     const params: any = {
       'page[number]': 1,
       'page[size]': 20
