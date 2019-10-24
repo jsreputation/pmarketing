@@ -3,7 +3,6 @@ import { StampService } from '../../stamp/stamp.service';
 import { IStampCard , StampCardState, StampState } from '../../stamp/models/stamp.model';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { PuzzleCollectStampState } from '../models/puzzle-stamp.model';
 
 @Component({
   selector: 'perx-core-puzzle-list',
@@ -78,7 +77,7 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
       return false;
     }
 
-    if (!puzzle.collectionStamps && puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
+    if (!puzzle.stamps && puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
       return false;
     }
 
@@ -109,14 +108,14 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
 
     if (puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
 
-      if (puzzle.collectionStamps.filter(st => st.state === PuzzleCollectStampState.redeemed).length >= totalSlots) {
+      if (puzzle.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots) {
         return false;
       }
 
       // get list of active puzzles
       const activePuzzles = this.puzzles.filter(p => p.state === StampCardState.active &&
-        p.collectionStamps &&
-        p.collectionStamps.filter(st => st.state === PuzzleCollectStampState.redeemed).length < totalSlots);
+        p.stamps &&
+        p.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots);
 
       // if there is no active puzzle, this one should not be active
       if (activePuzzles.length === 0) {
@@ -136,6 +135,13 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
       return '';
     }
     return base[index % base.length];
+  }
+
+  public puzzleIndex(index: number): string {
+    if (index < 0) {
+      return '';
+    }
+    return String(++index);
   }
 
   public nbAvailableStamps(puzzle: IStampCard): number {
