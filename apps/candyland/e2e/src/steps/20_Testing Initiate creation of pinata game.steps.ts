@@ -11,7 +11,7 @@ Given(/^1_I am on engagement page$/, async () => {
   PageEngagement = new EngagementAppPage();
   await PageEngagement.navigateToEngagement();
   await browser.sleep(3000);
-  await browser.executeScript('WalkMeAPI.stopFlow()');
+  // await browser.executeScript('WalkMeAPI.stopFlow()');
 });
 
 Given(/^1_I click on the create new button$/, async () => {
