@@ -13,6 +13,8 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
+      <button mat-menu-item *ngIf="data?.status === statusType.ACTIVE" (click)="tapped({action: loyaltyAction.pause})">Pause</button>
+      <button mat-menu-item *ngIf="data?.status === statusType.PAUSED" (click)="tapped({action: loyaltyAction.activate})">Active</button>
       <button mat-menu-item *ngFor="let action of menuOptions" (click)="tapped(action)">{{action.label}}</button>
     </mat-menu>
   </div>

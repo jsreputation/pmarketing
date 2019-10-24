@@ -121,7 +121,7 @@ export default class Utils {
     return this.isObject(object) && _isEmpty(object);
   }
 
-  static createMapIncludes(arr: any, propKey: string, fieldType: string): {[key: string]: any} {
+  static createMapIncludes(arr: any, propKey: string, fieldType: string): { [key: string]: any } {
     return arr.reduce((map, obj) => {
       if (obj.type === fieldType) {
         map[obj[propKey]] = obj;
@@ -137,6 +137,10 @@ export default class Utils {
         result[key] = value;
       }
     });
+  }
+
+  static isEqual(value: any, other: any): boolean {
+    return _isEqual(value, other);
   }
 
   static getFormData(data): FormData {
