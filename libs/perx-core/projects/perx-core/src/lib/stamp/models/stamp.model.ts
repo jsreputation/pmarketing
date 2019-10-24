@@ -77,6 +77,7 @@ export interface IStampCard {
         imageUrl: string;
       }
     };
+    rewardPositions?: number[]
   };
   collectionStamps?: PuzzleCollectStamp[];
   stamps?: IStamp[];
