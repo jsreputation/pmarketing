@@ -57,9 +57,31 @@ const perxComponents = [
   ContentComponent,
   WalletComponent,
 ];
+import { HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
+
+@Injectable()
+export class CustomTranslateLoader implements TranslateLoader  {
+    contentHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    });
+
+    constructor(private httpClient: HttpClient) {}
+    getTranslation(lang: string): Observable<any> {
+      console.log(lang)
+        const apiAddress = 'http://localhost:4000/' + `assets/en-json.json`;
+        return this.httpClient.get(apiAddress, { headers: this.contentHeader })
+          .pipe(
+            catchError(() => this.httpClient.get(`/assets/i18n/en.json`))
+          );
+    }
+}
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, 'http://localhost:4000/translation/en-json.json', '');
 }
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
@@ -104,8 +126,8 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
+        deps: [HttpClient],
+        useClass: CustomTranslateLoader
       }
     })
     

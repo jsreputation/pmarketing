@@ -13,7 +13,6 @@ import { v4Token } from './ctrl/v4-token';
 import { ApiConfig } from './types/apiConfig';
 import { v2Token } from './ctrl/v2-token';
 import { themes } from './ctrl/themes';
-
 // Express server
 const app = express();
 app.use(compression());
@@ -56,7 +55,7 @@ if (process.env.PRODUCTION) {
     res.sendFile(join(EXPRESS_DIST_FOLDER, '../../perx-microsite', 'index.html'), { req });
   });
 }
-
+app.use('/assets', express.static( 'assets'))
 // Start up the Node server
 const server = app.listen(PORT, () => {
   console.log(`Node server listening on http://localhost:${PORT}`);
