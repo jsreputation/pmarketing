@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { Voucher, IVoucherService, RedemptionType, IPopupConfig, PopupComponent } from '@perx/core';
 import { Observable, Subject } from 'rxjs';
 import { filter, switchMap, takeUntil, map, tap } from 'rxjs/operators';
@@ -19,6 +20,7 @@ export class RedeemComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private location: Location,
     private vouchersService: IVoucherService,
     private dialog: MatDialog,
     private router: Router
@@ -74,5 +76,9 @@ export class RedeemComponent implements OnInit, OnDestroy {
 
   public popup(data: IPopupConfig): MatDialogRef<PopupComponent> {
     return this.dialog.open(PopupComponent, { data });
+  }
+
+  public goBack(): void {
+    this.location.back();
   }
 }
