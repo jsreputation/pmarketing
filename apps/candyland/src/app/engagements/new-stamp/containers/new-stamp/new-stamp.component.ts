@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AvailableNewEngagementService, RoutingStateService, SettingsService, StampsService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
@@ -77,10 +77,6 @@ export class NewStampComponent implements OnInit, OnDestroy {
 
   public get rewardPostStamps(): AbstractControl {
     return this.formStamp.get(ControlsName.rewardPostStamps);
-  }
-
-  public get stampsSlotNumber(): any[] {
-    return (this.formStamp.get(ControlsName.stampsSlotNumber) as FormArray).value;
   }
 
   constructor(
@@ -203,6 +199,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
             });
           }
           this.stampSlotNumbers = this.stampDataService.filterStampSlot(this.allStampSlotNumbers, value);
+          this.formStamp.get('stampsSlotNumber').patchValue([]);
           // selected last slot
           this.patchForm('stampsSlotNumber', [this.stampSlotNumbers[this.stampSlotNumbers.length - 1].value]);
         }
