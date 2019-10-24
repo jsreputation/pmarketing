@@ -12,14 +12,15 @@ export class OutcomesHttpAdapter {
     };
   }
 
-  public static transformFromOutcomes(data: IOutcome): IJsonApiItem<IOutcomeAttributes> {
+  public static transformFromOutcomes(data: IOutcome, enableProbability: boolean): IJsonApiItem<IOutcomeAttributes> {
     return {
       type: 'possible_outcomes',
       attributes: {
         result_id: data.resultId,
         result_type: data.resultType,
-        probability: data.probability,
+        probability: enableProbability ? data.probability / 100 : null,
         loot_box_id: data.lootBoxId,
+        no_outcome: !data.resultId,
       }
     };
   }

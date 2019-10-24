@@ -14,7 +14,7 @@ export class CommsHttpAdapter {
   public static transformEventAPIResponseToComm(data: IJsonApiItem<ICommEventAttributes>): IComm {
     return {
       eventId: data.id,
-      poolId: data.attributes.target_id.toString(),
+      poolId: data.attributes.target_id && data.attributes.target_id.toString(),
       channel: data.attributes.channel,
       schedule: {
         sendDate: new Date(data.attributes.send_at),
@@ -28,13 +28,14 @@ export class CommsHttpAdapter {
     const sendAt = data.channel.schedule ?
       moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + sendTime).format() :
       '';
+
     return {
       type: 'events',
       attributes: {
         send_at: sendAt,
-        provider_id: parseInt(data.audience.select, 10),
-        campaign_entity_id: parseInt(data.id, 10),
-        template_id: parseInt(templateId, 10),
+        provider_id: data.audience.select && parseInt(data.audience.select, 10) || null,
+        campaign_entity_id: data.id && parseInt(data.id, 10) || null,
+        template_id: templateId && parseInt(templateId, 10) || null,
         channel: data.channel.type
       }
     };

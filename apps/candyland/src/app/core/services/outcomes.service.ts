@@ -24,13 +24,13 @@ export class OutcomesService {
     );
   }
 
-  public updateOutcome(id: string, data: IOutcome): Observable<any> {
-    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data);
+  public updateOutcome(id: string, data: IOutcome, enableProbability: boolean): Observable<any> {
+    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data, enableProbability);
     return this.outcomesHttpsService.updateOutcome(id, { data: { id, ...sendData } });
   }
 
-  public createOutcome(data: IOutcome): Observable<any> {
-    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data);
+  public createOutcome(data: IOutcome, enableProbability: boolean): Observable<any> {
+    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data, enableProbability);
     return this.outcomesHttpsService.createOutcome({ data: sendData });
   }
 

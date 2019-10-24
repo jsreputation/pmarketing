@@ -140,8 +140,6 @@ export class CampaignsHttpAdapter {
         end_date_time: endDate,
         goal: data.campaignInfo.goal,
         labels: data.campaignInfo.labels || [],
-        possible_outcomes: possibleOutcomes,
-        comm
       }
     };
   }
