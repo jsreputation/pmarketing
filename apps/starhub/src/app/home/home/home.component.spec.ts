@@ -27,7 +27,7 @@ describe('HomeComponent', () => {
   };
 
   const newsFeedServiceStub = {};
-  
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent, NoRenewaleInNamePipe],
@@ -101,7 +101,7 @@ describe('HomeComponent', () => {
       expect(badge).toBe('assets/plat-icon.svg');
     });
   });
-  it('should handle scroll', fakeAsync(()=>{
+  it('should handle scroll', fakeAsync(() => {
     component.previousDelta = -10;
     const spy = spyOn(window, 'requestAnimationFrame').and.callThrough();
     component.onScrollCall();
@@ -116,5 +116,5 @@ describe('HomeComponent', () => {
     component.onScrollCall();
     tick(100);
     expect(component.top).toBe(-170);
-  }))
+  }));
 });
