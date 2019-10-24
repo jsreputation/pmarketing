@@ -3,6 +3,7 @@ export enum ControlsName {
   headlineMessage = 'headlineMessage',
   subHeadlineMessage = 'subHeadlineMessage',
   buttonText = 'buttonText',
+  lastButtonText = 'lastButtonText',
   background = 'background',
 
   pinata = 'pinata',
@@ -11,6 +12,10 @@ export enum ControlsName {
   treeType = 'treeType',
   giftBox = 'giftBox',
   gameGift = 'gameGift',
+
+  preScratchImage = 'preScratchImage',
+  postScratchSuccessImage = 'postScratchSuccessImage',
+  postScratchFailImage = 'postScratchFailImage',
 
   stampsNumber = 'stampsNumber',
   preStamp = 'preStamp',
