@@ -21,7 +21,7 @@
         Rewards</a>
     </mat-toolbar-row>
   </mat-toolbar>
-  <div class="content" #contentScrolled cdkScrollable>
+  <div class="content" (scroll)="onScrollCall($event)" #contentScrolled>
     <router-outlet></router-outlet>
   </div>
 </div>
