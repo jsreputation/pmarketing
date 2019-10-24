@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { CustomDataSource } from '@cl-shared/table';
+import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Component({
   selector: 'cl-loyalty-form-step-tiers-conversions',

@@ -99,8 +99,15 @@ export {
   ITransactionHistory,
   IRewardTransactionHistory,
   IPurchaseTransactionHistory,
-  TransactionDetailType
+  TransactionDetailType,
+  IJoinMethod
 } from './lib/loyalty/models/loyalty.model';
+export {
+  ILoyaltyApi,
+  IBasicTierApi,
+  ICustomTierApi,
+  IJoinMethodApi
+} from './lib/loyalty/models/loyalty-api.model';
 export { TransactionPipe } from './lib/loyalty/loyalty-transactions-list/transaction.pipe';
 export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-summary.component';
 

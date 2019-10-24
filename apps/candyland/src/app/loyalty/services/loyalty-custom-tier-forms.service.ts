@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClValidators } from '@cl-helpers/cl-validators';
 import { LoyaltyPointsExpireTrigger } from '../models/loyalty-points-expire-trigger.enum';
+import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Injectable({
   providedIn: 'root'

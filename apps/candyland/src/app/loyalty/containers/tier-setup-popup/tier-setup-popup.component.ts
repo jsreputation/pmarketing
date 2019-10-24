@@ -6,6 +6,7 @@ import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.
 import { Subject } from 'rxjs';
 import { LoyaltyCustomTierFormsService } from '../../services/loyalty-custom-tier-forms.service';
 import { PeriodType } from '@cl-core/models/period-type.enum';
+import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Component({
   selector: 'cl-tier-setup-popup',

@@ -66,3 +66,12 @@ export interface ITransactionHistory {
     data?: IPurchaseTransactionHistory | IRewardTransactionHistory
   };
 }
+
+export interface IJoinMethod {
+  transactionAmount?: boolean;
+  signUp?: boolean;
+  inviteOnly?: boolean;
+  amount?: number;
+  pointsThreshold?: boolean;
+  points?: number;
+}

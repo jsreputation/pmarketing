@@ -4,6 +4,8 @@ import { CustomDataSource, DataSourceStates, DataSourceUpdateSchema } from '@cl-
 import { LoyaltyAction } from '../../models/loyalty-action.enum';
 import { IEngagementItemMenuOption } from '../../components/loyalty-item/loyalty-item.component';
 import { Router } from '@angular/router';
+import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
+
 @Component({
   selector: 'cl-loyalty-list-page',
   templateUrl: './loyalty-list-page.component.html',
