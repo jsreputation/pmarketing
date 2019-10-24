@@ -6,14 +6,15 @@
       </div>
     </ng-container>
   </div>
-  <div [ngClass]="mobileImageClass">
-    <ng-content select=".mobile-preview-header"></ng-content>
-    <ng-content select=".plugin-block"></ng-content>
-    <ng-content select=".mobile-preview-feedback"></ng-content>
-    <ng-content select=".mobile-btn-block"></ng-content>
+  <div [ngClass]="mobileImageClass" class="test">
     <div class="mobile-preview-background"
+         clCreateImage
          [ngStyle]="{'background-image': 'url(' + background + ')'}"
     >
+      <ng-content select=".mobile-preview-header"></ng-content>
+      <ng-content select=".plugin-block"></ng-content>
+      <ng-content select=".mobile-preview-feedback"></ng-content>
+      <ng-content select=".mobile-btn-block"></ng-content>
     </div>
   </div>
 </div>
