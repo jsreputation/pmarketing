@@ -8,11 +8,12 @@ import { MatIconModule } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { WhistlerProfileService } from './whistler-profile.service';
+import { TokenStorage } from '../auth/authentication/token-storage.service';
 
-export function profileServiceFactory(http: HttpClient, config: Config): ProfileService {
+export function profileServiceFactory(http: HttpClient, config: Config, tokenStorage: TokenStorage): ProfileService {
   // Make decision on what to instantiate base on config
   if (config.isWhistler) {
-    return new WhistlerProfileService(http, config);
+    return new WhistlerProfileService(http, config, tokenStorage);
   }
   return new V4ProfileService(http, config);
 }
@@ -26,7 +27,7 @@ export function profileServiceFactory(http: HttpClient, config: Config): Profile
     {
       provide: ProfileService,
       useFactory: profileServiceFactory,
-      deps: [HttpClient, Config]
+      deps: [HttpClient, Config, TokenStorage]
     }
   ],
   declarations: [UserProfileComponent, MicroProfileComponent],
