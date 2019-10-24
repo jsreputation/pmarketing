@@ -12,5 +12,12 @@
     "title": "Hit the pinata",
     "img": "assets/images/games/tap.png",
     "active": "false"
+  },
+  {
+    "id": 5,
+    "type": "scratch",
+    "title": "Scratch the Card (β)",
+    "img": "assets/images/games/scratch.png",
+    "active": "false"
   }
 ]

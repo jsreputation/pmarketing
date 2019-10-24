@@ -8,21 +8,25 @@ import { SessionService } from '@cl-core/services/session.service';
 import { UserService } from '@cl-core/services/user.service';
 import { Observable, of } from 'rxjs';
 import { AuthHttpAdapter } from '@cl-core/http-adapters/auth-http-adapter';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, tap, filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: AuthHttpService,
-              private localStorage: LocalStorageService,
-              private sessionService: SessionService,
-              private dataStore: DataStore,
-              private userService: UserService,
-              private router: Router
+  constructor(
+    private http: AuthHttpService,
+    private localStorage: LocalStorageService,
+    private sessionService: SessionService,
+    private dataStore: DataStore,
+    private userService: UserService,
+    private router: Router
   ) {
   }
 
+  public get userId(): string {
+    return this.userService.userId || this.localStorage.get('userId');
+  }
   public initAuth(): void {
     const localToken = this.localStorage.get('authToken');
     const localUserId = this.localStorage.get('userId');
@@ -34,9 +38,9 @@ export class AuthService {
   }
 
   public updateUser(): Observable<IamUser> {
-    const userId = this.userService.userId || this.localStorage.get('userId');
-    return this.dataStore.findRecord(IamUser, userId)
+    return this.dataStore.findRecord(IamUser, this.userId)
       .pipe(
+        filter(Boolean),
         tap(user => this.userService.user = user),
         catchError(error => {
           this.logout();

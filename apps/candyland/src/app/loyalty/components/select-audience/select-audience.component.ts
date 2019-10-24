@@ -8,7 +8,7 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 })
 export class SelectAudienceComponent implements OnInit {
   @Input() public group: FormGroup;
-  @Input() public pools: any;
+  @Input() public pools: IPools;
 
   public get poolId(): AbstractControl {
     return this.group.get('poolId');

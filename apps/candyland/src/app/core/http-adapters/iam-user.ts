@@ -2,7 +2,7 @@ import { JsonApiModelConfig, JsonApiModel, Attribute, /* HasMany, BelongsTo*/ } 
 import { ApiConfig } from '@cl-core/api-config';
 // tslint:disable
 @JsonApiModelConfig({
-  type: ApiConfig.getAllUsers
+  type: ApiConfig.IAMUsersPath
 })
 export class IamUser extends JsonApiModel {
 

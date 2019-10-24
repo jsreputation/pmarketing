@@ -8,14 +8,13 @@ import { debounceTime, tap, map, switchMap, takeUntil } from 'rxjs/operators';
 import { NewSurveyForm } from 'src/app/engagements/new-survey/new-survey-form';
 import { ControlsName } from '../../../../models/controls-name';
 import { AvailableNewEngagementService, RoutingStateService, SettingsService, SurveyService } from '@cl-core/services';
-import { QuestionFormFieldService } from '@cl-shared';
+import { QuestionFormFieldService, SimpleMobileViewComponent } from '@cl-shared';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { IQuestion, SurveyQuestionType } from '@perx/core';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
-import { CreateImageDirective } from '@cl-shared/directives/create-image.directive';
 
 @Component({
   selector: 'cl-new-survey',
@@ -24,7 +23,7 @@ import { CreateImageDirective } from '@cl-shared/directives/create-image.directi
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewSurveyComponent implements OnInit, OnDestroy {
-  @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
+  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<any> = new Subject();
 
@@ -175,7 +174,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
       this.form.markAllAsTouched();
       return;
     }
-    this.createImagePreview.getPreviewUrl()
+    this.simpleMobileViewComponent.createPreview()
       .pipe(
         switchMap((imageUrl: IUploadedFile) => {
           if (this.id) {

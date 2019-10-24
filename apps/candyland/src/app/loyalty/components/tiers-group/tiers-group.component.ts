@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { CustomDataSource } from '@cl-shared/table';
+import { LoyaltyPointsExpireTrigger } from '../../models/loyalty-points-expire-trigger.enum';
+import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Component({
   selector: 'cl-tiers-group',
@@ -8,11 +10,12 @@ import { CustomDataSource } from '@cl-shared/table';
   styleUrls: ['./tiers-group.component.scss']
 })
 export class TiersGroupComponent {
-
   @Input() public editable: boolean = false;
-  @Input() public dataSource: CustomDataSource<any>;
+  @Input() public dataSource: CustomDataSource<ICustomTireForm>;
   @Input() public displayedColumns: string[] = ['name', 'joinMethod', 'earnBonus', 'burnDiscount', 'pointsExpiry'];
-  @Output() public tiersAction: EventEmitter<{ action: NewLoyaltyActions, data?: any }> = new EventEmitter();
+  @Output() public tiersAction: EventEmitter<{ action: NewLoyaltyActions, data?: ICustomTireForm }> = new EventEmitter();
+
+  public pointsExpireTrigger: typeof LoyaltyPointsExpireTrigger = LoyaltyPointsExpireTrigger;
 
   public get displayedColumnsWithEdit(): string[] {
     if (this.editable) {
@@ -21,15 +24,15 @@ export class TiersGroupComponent {
     return this.displayedColumns;
   }
 
-  public editItem(tier: any): void {
+  public editItem(tier: ICustomTireForm): void {
     this.tiersAction.emit({action: NewLoyaltyActions.editTier, data: tier});
   }
 
-  public duplicateItem(tier: any): void {
+  public duplicateItem(tier: ICustomTireForm): void {
     this.tiersAction.emit({action: NewLoyaltyActions.duplicateTier, data: tier});
   }
 
-  public deleteItem(tier: any): void {
+  public deleteItem(tier: ICustomTireForm): void {
     this.tiersAction.emit({action: NewLoyaltyActions.deleteTier, data: tier});
   }
 
