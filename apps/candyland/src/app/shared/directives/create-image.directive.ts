@@ -2,10 +2,10 @@ import { Directive, ElementRef, Inject } from '@angular/core';
 import * as html2canvas from 'html2canvas';
 import { Options } from 'html2canvas';
 import { WINDOW } from '@cl-core/services/window.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { UploadFileService } from '@cl-core-services';
 import { fromPromise } from 'rxjs/internal-compatibility';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 @Directive({
   selector: '[clCreateImage]'
 })
@@ -28,7 +28,12 @@ export class CreateImageDirective {
                 this.switchBodyClass(false);
               })
             );
-        })
+        }),
+        catchError((error => {
+          this.hideShowScroll(false);
+          this.switchBodyClass(false);
+          return of(error);
+        }))
       );
   }
 
