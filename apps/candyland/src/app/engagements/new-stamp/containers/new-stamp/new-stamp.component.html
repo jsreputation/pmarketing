@@ -77,7 +77,7 @@
                 <h3 class="card-fieldset-label">
                   Reward slot
                 </h3>
-                <cl-checkbox-group [clearState]="true" class="btn-list btn-medium-list" formControlName="stampsSlotNumber">
+                <cl-checkbox-group class="btn-list btn-medium-list" formControlName="stampsSlotNumber">
                   <ng-container *ngFor="let stampSlot of stampSlotNumbers">
                     <mat-checkbox color="primary" [value]="stampSlot?.value">
                       <div>{{stampSlot?.viewValue}}</div>
