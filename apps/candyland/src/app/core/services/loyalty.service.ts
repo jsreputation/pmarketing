@@ -18,9 +18,7 @@ export class LoyaltyService implements ITableService {
     params.include = 'pool,basic_tier,custom_tiers';
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyHttpService.getLoyalties(httpParams).pipe(
-      map(response => {
-        return LoyaltyHttpAdapter.transformToLoyalties(response);
-      })
+      map(response => LoyaltyHttpAdapter.transformToLoyalties(response))
     );
   }
 
@@ -95,4 +93,23 @@ export class LoyaltyService implements ITableService {
         switchMap((newLoyaltyId) => this.createBasicTier(loyalty, newLoyaltyId))
       );
   }
+
+  public getLoyaltyRequest(loyalty: ILoyaltyForm, loyaltyId: string = null): Observable<ILoyaltyForm> {
+    if (loyaltyId) {
+      return this.updateLoyalty(loyaltyId, loyalty);
+    }
+    return this.createLoyalty(loyalty);
+  }
+
+  public getBasicTierRequest(
+    loyalty: ILoyaltyForm,
+    loyaltyId: string,
+    basicTierId: string = null
+  ): Observable<IJsonApiPayload<IBasicTierApi>> {
+    if (basicTierId) {
+      return this.updateBasicTier(basicTierId, loyalty, loyaltyId);
+    }
+    return this.createBasicTier(loyalty, loyaltyId);
+  }
+
 }
