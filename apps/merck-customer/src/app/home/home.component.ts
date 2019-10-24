@@ -48,7 +48,17 @@ export class HomeComponent implements OnInit, PageAppearence {
   }
 
   public ngOnInit(): void {
-    this.translate.get('WELCOME').subscribe((msg) => this.titleFn = (profile) => msg + ', ' + profile.firstName);
+    this.translate.get('WELCOME').subscribe(
+      (msg) => this.titleFn = (profile) => {
+        let returnString = msg;
+        if (profile && profile.firstName && profile.firstName !== '') {
+          returnString =  returnString + ', ' + profile.firstName;
+        } else if (profile && profile.lastName && profile.lastName !== '') {
+          returnString =  returnString + ', ' + profile.lastName;
+        }
+        return returnString;
+      }
+    );
     this.rewardsService
       .getAllRewards()
       .subscribe((rewards) => this.rewards = of(rewards));
