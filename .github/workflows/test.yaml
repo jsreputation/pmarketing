@@ -1,8 +1,8 @@
-name: build-prod
+name: test
 on: [pull_request]
 jobs:
   build:
-    name: build-prod
+    name: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -11,21 +11,27 @@ jobs:
           kubeconfig: ${{ secrets.BUILDER_KUBE_CONFIG }}
       - name: Get list of apps
         run: |
-          APPS=$(cd apps; ls -d *)
-          echo ::set-env name=APPS::${APPS[@]}
+          APP_FOLDERS=$(ls -d apps/*)
+          LIBS_FOLDERS=$(ls -d libs/*)
+          BACKEND_FOLDERS=$(ls -d backend/*)
+
+          echo ::set-env name=APP_FOLDERS::${APP_FOLDERS[@]}
+          echo ::set-env name=LIBS_FOLDERS::${LIBS_FOLDERS[@]}
+          echo ::set-env name=BACKEND_FOLDERS::${BACKEND_FOLDERS[@]}
       - name: Create tekton tasks
         run: |
           declare -a TEKTON_TASKS
-          for app in ${APPS[@]}; do
+          FOLDERS=("${APP_FOLDERS[@]}" "${LIBS_FOLDERS[@]}" "${BACKEND_FOLDERS[@]}")
+          for f in ${FOLDERS[@]}; do
           TEKTON_TASK=$(cat <<EOT | kubectl -n build create -f - --output=jsonpath={.metadata.name}
           apiVersion: tekton.dev/v1alpha1
           kind: TaskRun
           metadata:
-            generateName: microsite-apps-ng-build-prod-${app}-
+            generateName: microsite-apps-ng-test-${f//[^0-9a-zA-Z-]/-}-
           spec:
             serviceAccount: tekton
             taskRef:
-              name: microsite-apps-ng-build-prod
+              name: microsite-apps-ng-test
             inputs:
               resources:
                 - name: workspace
@@ -37,8 +43,8 @@ jobs:
                       - name: revision
                         value: ${{ github.sha }}
               params:
-                - name: app-name
-                  value: ${app}
+                - name: folder
+                  value: ${f}
             podTemplate:
               securityContext:
                 runAsUser: 0
@@ -58,7 +64,7 @@ jobs:
                         - key: machine-type
                           operator: In
                           values:
-                          - highcpu
+                          - standard
           EOT
           )
           TEKTON_TASKS+=(${TEKTON_TASK})

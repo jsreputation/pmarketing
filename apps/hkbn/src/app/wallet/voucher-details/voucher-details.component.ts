@@ -43,7 +43,7 @@ export class VoucherDetailsComponent implements OnInit, OnDestroy {
   public onRedeem(id: number): void {
     this.vouchersService.get(id).subscribe((voucher: Voucher) => {
       let url = `/wallet/${id}`;
-      if (voucher.reward.redemptionType === RedemptionType.qr) {
+      if (voucher.redemptionType === RedemptionType.qr) {
         url = `${url}/qrcode`;
       } else {
         url = `${url}/code`;
