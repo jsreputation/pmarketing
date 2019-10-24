@@ -1,4 +1,24 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
+
+import {
+  map,
+  mergeMap,
+  tap,
+  toArray,
+} from 'rxjs/operators';
+import {
+  from,
+  Observable,
+} from 'rxjs';
+
 import {
   CampaignType,
   ICampaignService,
@@ -8,12 +28,13 @@ import {
   StampCardState,
   StampState,
   NotificationService,
-  IStamp, IConfig, ConfigService
+  IStamp,
+  IConfig,
+  ConfigService,
+  PuzzleCollectReward,
 } from '@perx/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {map, mergeMap, tap, toArray} from 'rxjs/operators';
-import {SoundService} from '../sound/sound.service';
-import {from, Observable} from 'rxjs';
+
+import { SoundService } from '../sound/sound.service';
 
 @Component({
   selector: 'app-puzzle',
@@ -36,6 +57,10 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   public subTitle: string = 'Earn rewards by collecting stamps';
   private displayCampaignAs: string = 'puzzle';
   public sourceType: string;
+
+  public get rewards(): PuzzleCollectReward[] {
+    return this.card.displayProperties.rewardPositions.map((el: number) => ({rewardPosition: --el}));
+  }
 
   constructor(
     private campaignService: ICampaignService,

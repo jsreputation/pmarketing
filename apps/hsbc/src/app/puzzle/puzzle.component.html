@@ -15,7 +15,7 @@
         <perx-core-puzzle-collect-stamps *ngIf="card.displayProperties.displayCampaignAs === 'stamp_card'"
             [nbSlots]="card.displayProperties.totalSlots"
             [stamps]="card.stamps ? card.stamps : []"
-            [rewards]="card.displayProperties.rewardPositions"
+            [rewards]="rewards"
             [preStampImg]="'assets/hsbc-prestamp.png'"
             [postStampImg]="'assets/hsbc-stamped.png'"
             [rewardPreStamp]="'assets/pre-reward.png'"
