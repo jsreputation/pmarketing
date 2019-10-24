@@ -23,7 +23,8 @@ import {
   RewardsModule,
 
   StampService,
-  ICampaignService
+  ICampaignService,
+  // ConfigService
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -83,6 +84,22 @@ const campaignServiceStub = {
   getCampaigns: () => of(campaigns)
 };
 
+// const configServiceStub = {
+//   getTenantAppSettings: () => of({
+//     id: 1,
+//     key: 'hsbc-xmas',
+//     stringValue: '',
+//     jsonValue: {
+//       background: 'assets/xmas_background.jpg',
+//       source_type: 'hsbc-xmas',
+//     },
+//   }),
+//   readAppConfig: () => of({
+//     preAuth: false,
+//     sourceType: 'hsbc-xmas'
+//   })
+// };
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -138,6 +155,7 @@ const campaignServiceStub = {
     {provide: APP_BASE_HREF, useValue: environment.baseHref },
     { provide: StampService, useValue: stampServiceStub },
     { provide: ICampaignService, useValue: campaignServiceStub },
+    // { provide: ConfigService, useValue: configServiceStub },
   ],
   bootstrap: [AppComponent],
 })

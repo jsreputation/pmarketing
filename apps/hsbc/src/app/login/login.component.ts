@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   public preAuth: boolean;
   public loginBackgroundUrl: string;
   public errorMessage: string;
+  public sourceType: string;
 
   constructor(
     private router: Router,
@@ -49,9 +50,10 @@ export class LoginComponent implements OnInit {
         }
       }),
       switchMap((config: IConfig) => this.configService.getTenantAppSettings(config.sourceType as string))
-    ).subscribe((settings: IMicrositeSettings) =>
-      this.loginBackgroundUrl = settings.jsonValue.background as string
-    );
+    ).subscribe((settings: IMicrositeSettings) => {
+      this.loginBackgroundUrl = settings.jsonValue.background as string;
+      this.sourceType = settings.jsonValue.source_type as string;
+    });
   }
 
   public onSubmit(): void {
