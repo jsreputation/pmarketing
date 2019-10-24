@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { CommsHttpAdapter } from '@cl-core/http-adapters/comms-http-adapter';
 import { ICommTemplateAttributes, ICommEventAttributes } from '@perx/whistler';
 import { IComm } from '@cl-core/models/comm/schedule';
+import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -48,4 +49,31 @@ export class CommsService {
     );
   }
 
+  public updateCommsEvent(id: string, data: ICampaign, templateId: string): Observable<any> {
+    const sendData = CommsHttpAdapter.transformFromCommsEvents(data, templateId);
+    return this.commsHttpsService.updateCommsEvent(id, { data: { id, ...sendData } });
+  }
+
+  public createCommsEvent(data: ICampaign, templateId: string): Observable<any> {
+    const sendData = CommsHttpAdapter.transformFromCommsEvents(data, templateId);
+    return this.commsHttpsService.createCommsEvent({ data: sendData });
+  }
+
+  public deleteCommsEvent(id: string): Observable<any> {
+    return this.commsHttpsService.deleteCommsEvent(id);
+  }
+
+  public updateCommsTemplate(id: string, data: IComm): Observable<any> {
+    const sendData = CommsHttpAdapter.transformFromCommsTemplates(data);
+    return this.commsHttpsService.updateCommsTemplate(id, { data: { id, ...sendData } });
+  }
+
+  public createCommsTemplate(data: IComm): Observable<any> {
+    const sendData = CommsHttpAdapter.transformFromCommsTemplates(data);
+    return this.commsHttpsService.createCommsTemplate({ data: sendData });
+  }
+
+  public deleteCommsTemplate(id: string): Observable<any> {
+    return this.commsHttpsService.deleteCommsTemplate(id);
+  }
 }

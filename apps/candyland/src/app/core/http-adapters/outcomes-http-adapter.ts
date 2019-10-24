@@ -11,4 +11,16 @@ export class OutcomesHttpAdapter {
       lootBoxId: data.attributes.loot_box_id,
     };
   }
+
+  public static transformFromOutcomes(data: IOutcome): IJsonApiItem<IOutcomeAttributes> {
+    return {
+      type: 'possible_outcomes',
+      attributes: {
+        result_id: data.resultId,
+        result_type: data.resultType,
+        probability: data.probability,
+        loot_box_id: data.lootBoxId,
+      }
+    };
+  }
 }

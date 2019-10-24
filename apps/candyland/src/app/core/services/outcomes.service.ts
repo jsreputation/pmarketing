@@ -23,4 +23,19 @@ export class OutcomesService {
         response.map((outcome: IJsonApiItem<IOutcomeAttributes>) => OutcomesHttpAdapter.transformAPIResponseToOutcome(outcome)))
     );
   }
+
+  public updateOutcome(id: string, data: IOutcome): Observable<any> {
+    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data);
+    return this.outcomesHttpsService.updateOutcome(id, { data: { id, ...sendData } });
+  }
+
+  public createOutcome(data: IOutcome): Observable<any> {
+    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data);
+    return this.outcomesHttpsService.createOutcome({ data: sendData });
+  }
+
+  public deleteOutcome(id: string): Observable<any> {
+    return this.outcomesHttpsService.deleteOutcome(id);
+  }
+
 }
