@@ -103,3 +103,11 @@ jobs:
               exit 1
             fi
           done
+      - name: Output Errors
+        if: failure()
+        run: |
+          for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
+            if [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" != "Succeeded" ]; then
+              tkn -n build taskrun logs ${TASKRUN_NAME}
+            fi
+          done
