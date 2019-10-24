@@ -28,7 +28,7 @@ export class LoyaltyCustomTierFormsService {
       pointsExpiry: new FormGroup({
         amount: new FormControl(null, [Validators.required, Validators.min(1)]),
         type: new FormControl(null, [Validators.required]),
-        trigger: new FormControl(null, [Validators.required]),
+        trigger: new FormControl(null, [Validators.required])
       })
     });
   }
@@ -37,7 +37,7 @@ export class LoyaltyCustomTierFormsService {
     return {
       name: null,
       joinMethod: {
-        inviteOnly: true,
+        inviteOnly: true
       },
       imageUrl: null,
       earnBonus: 0,
@@ -45,7 +45,7 @@ export class LoyaltyCustomTierFormsService {
       pointsExpiry: {
         amount: 1,
         type: 'year',
-        trigger: LoyaltyPointsExpireTrigger.accrual,
+        trigger: LoyaltyPointsExpireTrigger.accrual
       }
     };
   }
