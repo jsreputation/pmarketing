@@ -77,9 +77,11 @@ export class HomeComponent implements OnInit {
   }
 
   public completed(): void {
-    this.notificationService.addPopup({
-      // tslint:disable-next-line: max-line-length
-      text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of puzzle pieces. Don\'t forget to redeem your earned rewards!'
-    });
+    if (this.displayCampaignAs === 'puzzle') {
+      this.notificationService.addPopup({
+        // tslint:disable-next-line: max-line-length
+        text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of puzzle pieces. Don\'t forget to redeem your earned rewards!'
+      });
+    }
   }
 }
