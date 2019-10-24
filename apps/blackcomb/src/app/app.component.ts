@@ -73,7 +73,6 @@ export class AppComponent implements OnInit {
   }
 
   public onActivate(ref: any): void {
-    console.log(ref instanceof LoginComponent);
     this.showHeader = !(ref instanceof LoginComponent);
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
