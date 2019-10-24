@@ -32,7 +32,7 @@ Given(/^1_I am on the dashboard page.$/, async () => {
    // pressing the enter key on the accountID field to log in
   await LoginApp.accountIDField().sendKeys(protractor.Key.ENTER);
   await browser.sleep(3000);
-  await browser.executeScript('WalkMeAPI.stopFlow()');
+  // await browser.executeScript('WalkMeAPI.stopFlow()');
   await DashboardPage.navigateToDashboard();
   await browser.sleep(3000);
 

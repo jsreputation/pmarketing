@@ -158,7 +158,9 @@
       </div>
     </mat-card>
   </div>
-  <cl-settings-mobile-preview>
+  <cl-settings-mobile-preview
+    [tabs]="['Login', 'Home', 'Reward Detail']"
+  >
     <cl-simple-mobile-view
       class="firs-tab"
       [mobileImageClass]="'mobile-non-header'"
