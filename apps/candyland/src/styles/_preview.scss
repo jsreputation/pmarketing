@@ -81,6 +81,7 @@
 
   &-preview-headline {
     font-family: $primary-font;
+
     @include typo-subtitle1-alt;
 
     color: #091816;
@@ -88,6 +89,7 @@
 
   &-preview-sub-headline {
     font-family: $primary-font;
+
     @include typo-body2;
 
     margin-top: 0.8rem;
@@ -171,6 +173,7 @@
     background-position: center;
     border-radius: $border-radius;
     z-index: 3;
+
     @include mat-elevation(2);
   }
 
