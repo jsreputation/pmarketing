@@ -1,4 +1,4 @@
-export enum LoyaltyPointsExpireType {
+export enum PeriodType {
   day = 'day',
   week = 'week',
   month = 'month',
