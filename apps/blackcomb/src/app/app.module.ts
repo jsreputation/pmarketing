@@ -1,6 +1,8 @@
 import { AccountModule } from './account/account.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   PerxCoreModule,
@@ -32,7 +34,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import {
   HistoryComponent,
   RedeemComponent,
@@ -55,6 +57,15 @@ const perxComponents = [
   ContentComponent,
   WalletComponent,
 ];
+
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
+}
+
+export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
+  translateService.setDefaultLang(environment.defaultLang);
+  resolve();
+});
 @NgModule({
   declarations: [
     AppComponent,
@@ -90,7 +101,18 @@ const perxComponents = [
     PerxCampaignModule,
     HttpClientModule,
     HomeModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
+    
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [
+    { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true }
+  ],
 })
 export class AppModule { }

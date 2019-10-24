@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run config && ng serve --host 0.0.0.0",
+    "start-zh": "DEFAULT_LANG=zh npm run config && ng serve",
     "build": "npm run config && ng build",
     "build:blackcomb:prod": "PRODUCTION=true npm run config && ng build --prod",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
@@ -22,7 +23,8 @@
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
-    "@perx/core": "^0.0.0",
+    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/http-loader": "^4.0.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"

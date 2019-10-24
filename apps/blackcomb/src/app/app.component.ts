@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { PopupComponent, NotificationService, IPopupConfig, ThemesService, ITheme, AuthenticationService } from '@perx/core';
 import {
@@ -12,13 +12,14 @@ import { Location } from '@angular/common';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   public showHeader: boolean = true;
   public showToolbar: boolean = true;
   public leftIcon: string = '';
@@ -31,12 +32,23 @@ export class AppComponent implements OnInit {
     private location: Location,
     private router: Router,
     private themesService: ThemesService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private translateService: TranslateService
   ) {
+    translateService.setTranslation('en', {
+      ITU: 'hello {{value}}'}, true)
     this.preAuth = environment.preAuth;
   }
 
   public ngOnInit(): void {
+    this.translateService.setTranslation('en', {
+      ITU: 'hello {{value}}'
+  }, true);
+    this.translateService.setTranslation('en', {
+      'hola': 'hellooooooo'
+    }, true);
+    this.translateService.onTranslationChange.subscribe((val)=>console.log(val, '555'));
+    this.translateService.reloadLang('en').subscribe(()=>console.log('reload', this.translateService));
     this.themesService.getThemeSetting().subscribe(
       theme => this.theme = theme
     );
@@ -71,7 +83,10 @@ export class AppComponent implements OnInit {
       });
 
   }
-
+  public ngAfterViewInit(): void {
+    console.log(this.translateService)
+    this.translateService.get(['hola', 'ITU']).subscribe((val)=>console.log(val));
+  }
   public onActivate(ref: any): void {
     this.showHeader = !(ref instanceof LoginComponent);
     this.showToolbar = ref instanceof HomeComponent ||

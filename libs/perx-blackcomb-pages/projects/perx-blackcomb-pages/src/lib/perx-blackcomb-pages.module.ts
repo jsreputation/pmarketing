@@ -59,6 +59,7 @@ import { SurveyComponent } from './survey/survey.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
+import { TranslateModule } from '@ngx-translate/core';
 const comps: any[] = [
   AccountComponent,
   ContentComponent,
@@ -119,7 +120,8 @@ const comps: any[] = [
     MatRadioModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    TranslateModule.forChild()
   ],
   exports: [
     ...comps

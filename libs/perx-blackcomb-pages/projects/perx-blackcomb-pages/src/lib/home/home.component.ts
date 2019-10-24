@@ -31,7 +31,9 @@ import {
   IGameService,
   IGame,
   CampaignType,
+  IProfile,
 } from '@perx/core';
+import { TranslateService } from '@ngx-translate/core';
 
 const stubTabs: ITabConfigExtended[] = [
   {
@@ -110,7 +112,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public games$: Observable<IGame[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
-
+  public titleFn: (profile: IProfile) => string;
   private initCampaign(): void {
     this.games$ = (new Observable((subject: Subscriber<IGame[]>) => {
       const gameByCid: { [cid: number]: IGame } = {};
@@ -145,11 +147,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     private campaingService: ICampaignService,
     private rewardsService: RewardsService,
     private gamesService: IGameService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
   }
 
   public ngOnInit(): void {
+    this.translate.get(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING'])
+      .subscribe((res: any) => {
+        this.titleFn = (profile: IProfile) => res.HELLO + ` ${profile.lastName},`;
+      });
     this.initCampaign();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.staticTab = stubTabs;
