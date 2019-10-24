@@ -59,14 +59,14 @@ describe('VoucherDetailsComponent', () => {
   });
 
   it('should redirect to qrCode page when call onRedeem, when redemption type equal qrcode', () => {
-    spyOn(vouchersService, 'get').and.returnValue(of({ reward: {redemptionType: 'qrcode'}} as any));
+    spyOn(vouchersService, 'get').and.returnValue(of({ redemptionType: 'qrcode'} as any));
     const routerSpy = spyOn(router, 'navigate');
     component.onRedeem(1);
     expect(routerSpy).toHaveBeenCalledWith(['/wallet/1/qrcode']);
   });
 
   it('should redirect to code page when call onRedeem, when redemption type not equal qrcode', () => {
-    spyOn(vouchersService, 'get').and.returnValue(of({ reward: {redemptionType: 'code'}} as any));
+    spyOn(vouchersService, 'get').and.returnValue(of({redemptionType: 'code'} as any));
     const routerSpy = spyOn(router, 'navigate');
     component.onRedeem(1);
     expect(routerSpy).toHaveBeenCalledWith(['/wallet/1/code']);
