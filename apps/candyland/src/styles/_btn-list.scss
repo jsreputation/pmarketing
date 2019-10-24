@@ -22,6 +22,20 @@
   }
 }
 
+.btn-medium-list {
+  flex-flow: row wrap;
+
+  .mat-checkbox-label {
+    & > * {
+      font-weight: 500;
+      font-size: 20px;
+      width: 4.8rem;
+      height: 4.8rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
 .btn-list {
   display: flex;
   flex-flow: row nowrap;
