@@ -42,6 +42,7 @@ export const login = (apiConfig: ApiConfig) => async (req: Request, res: Respons
       Authorization: endpointRequest.headers.authorization
 
     });
+
     res.json(endpointRequest.data);
   } catch (e) {
     if (e.response && e.response.data && e.response.status) {
@@ -67,7 +68,7 @@ export const users = (apiConfig: ApiConfig) => async (req: Request, res: Respons
     }
 
     const endpointCredential = apiConfig.credentials[endpoint.account_id];
-    const endpointRequest = await axios.post(
+    const endpointCreateUserRequest = await axios.post(
       `${endpoint.target_url}/cognito/users`,
       {
         data: {
@@ -84,22 +85,35 @@ export const users = (apiConfig: ApiConfig) => async (req: Request, res: Respons
         }
       }
     );
-
-    res.set({
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-      'Access-Control-Expose-Headers': 'Authorization',
-      Authorization: endpointRequest.headers.authorization
-
-    });
-    endpointRequest.data = {
-      ...endpointRequest.data, data: {
-        attributes: {
-          jwt: endpointRequest.headers.authorization.split(' ')[1]
+    if (endpointCreateUserRequest.data) {
+      const endpointLoginRequest = await axios.post(
+        `${endpoint.target_url}/cognito/login`,
+        {
+          data: {
+            attributes: {
+              primary_identifier: userId
+            }
+          }
+        },
+        {
+          headers: {
+            Authorization: endpointCredential.basic_token,
+            'Content-Type': 'text/plain'
+          }
         }
-      }
-    };
-    res.json(endpointRequest.data);
+      );
+
+      res.set({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+        'Access-Control-Expose-Headers': 'Authorization',
+        Authorization: endpointLoginRequest.headers.authorization
+
+      });
+
+      res.json(endpointLoginRequest.data);
+    }
+
   } catch (e) {
     if (e.response && e.response.data && e.response.status) {
       res.status(e.response.status).json(e.response.data);

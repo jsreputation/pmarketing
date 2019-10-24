@@ -11,7 +11,7 @@ let LoginApp: LoginAppPage;
 Given(/^1_I am on the launch page with the url generated$/, async () => {
   CreateCampaignPage = new CreateCampaignAppPage();
   await CreateCampaignPage.navigateToCreateCampaign();
-  await browser.executeScript('WalkMeAPI.stopFlow()');
+  // await browser.executeScript('WalkMeAPI.stopFlow()');
   // waiting for the search bar to load
   await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=text]')).get(1)), 6000);
   // entering search criteria for survey in search bar
@@ -51,7 +51,7 @@ Then(/^1_I should get a http 200 response$/, async () =>  {
 Given(/^2_I am on the launch page with the url generated$/, async () => {
   CreateCampaignPage = new CreateCampaignAppPage();
   await CreateCampaignPage.navigateToCreateCampaign();
-  await browser.executeScript('WalkMeAPI.stopFlow()');
+  // await browser.executeScript('WalkMeAPI.stopFlow()');
   // waiting for the search bar to load
   await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=text]')).get(1)), 6000);
   // entering search criteria for survey in search bar
@@ -87,7 +87,7 @@ Then(/^2_I should see the tenant id in the url link generated.$/, async () => {
 Given(/^3_I am on the blackcomb page$/, async () => {
   CreateCampaignPage = new CreateCampaignAppPage();
   await CreateCampaignPage.navigateToCreateCampaign();
-  await browser.executeScript('WalkMeAPI.stopFlow()');
+  // await browser.executeScript('WalkMeAPI.stopFlow()');
   // waiting for the search bar to load
   await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=text]')).get(1)), 6000);
   // entering search criteria for survey in search bar
@@ -124,11 +124,11 @@ Then(/^3_I should see the relevant elements of the blackcomb$/, async () => {
 Given(/^4_I am on the blackcomb page$/, async () => {
   CreateCampaignPage = new CreateCampaignAppPage();
   await CreateCampaignPage.navigateToCreateCampaign();
-  await browser.executeScript('WalkMeAPI.stopFlow()');
+  // await browser.executeScript('WalkMeAPI.stopFlow()');
   // waiting for the search bar to load
   await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=text]')).get(1)), 6000);
   // entering search criteria for survey in search bar
-  await element.all(by.css('input[type=text]')).get(1).sendKeys('Survey');
+  await element.all(by.css('input[type=text]')).get(1).sendKeys('Survey 1');
   // selecting first element
   await browser.wait(ec.elementToBeClickable(element.all(by.css('div.engagement-item')).first()), 5000);
   // asserting the presence of the card and title of the card
