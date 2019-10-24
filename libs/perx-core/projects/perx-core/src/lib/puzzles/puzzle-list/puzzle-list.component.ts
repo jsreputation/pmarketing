@@ -137,6 +137,13 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
     return base[index % base.length];
   }
 
+  public puzzleIndex(index: number): string {
+    if (index < 0) {
+      return '';
+    }
+    return String(++index);
+  }
+
   public nbAvailableStamps(puzzle: IStampCard): number {
     if (puzzle.stamps === undefined) {
       return 0;
