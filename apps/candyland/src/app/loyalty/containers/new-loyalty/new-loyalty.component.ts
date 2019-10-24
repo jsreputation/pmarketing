@@ -287,12 +287,13 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
     if (loyalty) {
       this.loyaltyId = loyalty.id;
       this.setBasicTierId(loyalty.basicTierId);
-      this.prevFormValue = loyalty;
+      this.form.patchValue(loyalty);
+      this.prevFormValue = this.form.value;
+    } else {
+      this.form.patchValue(this.getDefaultValue());
     }
-    this.showDraftButton = !loyalty || loyalty.status === StatusLabel.DRAFT;
     this.isEditPage = !!this.loyaltyId;
-    const patchData = loyalty || this.getDefaultValue();
-    this.form.patchValue(patchData);
+    this.showDraftButton = !loyalty || loyalty.status === StatusLabel.DRAFT;
   }
 
   private getDefaultValue(): ILoyaltyForm {
