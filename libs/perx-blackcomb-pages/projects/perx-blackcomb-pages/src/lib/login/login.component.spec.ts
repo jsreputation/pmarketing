@@ -4,7 +4,7 @@ import { LoginComponent } from './login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationService, Config } from '@perx/core';
+import { AuthenticationService, Config, ThemesService } from '@perx/core';
 import { of } from 'rxjs';
 
 const configStub = {
@@ -17,6 +17,10 @@ describe('LoginComponent', () => {
 
   const authenticationServiceStub = {
     getUserAccessToken: () => of()
+  };
+
+  const themeServiceStub = {
+    getActiveTheme: () => { }
   };
 
   beforeEach(async(() => {
@@ -34,6 +38,7 @@ describe('LoginComponent', () => {
       ],
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: ThemesService, useValue: themeServiceStub },
         { provide: Config, useValue: configStub }
       ]
     })
