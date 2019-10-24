@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +18,7 @@ import { environment } from '../environments/environment';
 import { JsonApiModule } from 'angular2-jsonapi';
 import { PerxChartModule } from '@perx/chart';
 import { WINDOW_PROVIDERS } from '@cl-core/services/window.service';
+import { GestureConfig } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { WINDOW_PROVIDERS } from '@cl-core/services/window.service';
     SessionService,
     WINDOW_PROVIDERS,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig },
   ],
   bootstrap: [AppComponent]
 })
