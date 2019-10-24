@@ -19,7 +19,9 @@ describe('LoginComponent', () => {
     getUserAccessToken: () => of()
   };
 
-  const themeServiceStub = {};
+  const themeServiceStub = {
+    getActiveTheme: () => { }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
