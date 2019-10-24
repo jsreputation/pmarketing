@@ -193,7 +193,7 @@ Then(/^5_I access blackcomb with the url generated.$/, async () => {
   await element.all(by.css('cl-button')).get(1).click();
   await browser.wait(ec.presenceOf(element.all(by.css('input[type=text]')).get(2)), 6000);
   const urlString = await element.all(by.css('input[type=text]')).get(2).getAttribute('value');
-  // await browser.close();
+  await browser.restart();
   await browser.get(urlString);
   await browser.sleep(3000);
   // waiting for the survey card to load
