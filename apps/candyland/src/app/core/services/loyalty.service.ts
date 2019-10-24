@@ -95,4 +95,23 @@ export class LoyaltyService implements ITableService {
         switchMap((newLoyaltyId) => this.createBasicTier(loyalty, newLoyaltyId))
       );
   }
+
+  public getLoyaltyRequest(loyalty: ILoyaltyForm, loyaltyId: string = null): Observable<ILoyaltyForm> {
+    if (loyaltyId) {
+      return this.updateLoyalty(loyaltyId, loyalty);
+    }
+    return this.createLoyalty(loyalty);
+  }
+
+  public getBasicTierRequest(
+    loyalty: ILoyaltyForm,
+    loyaltyId: string,
+    basicTierId: string = null
+  ): Observable<IJsonApiPayload<IBasicTierApi>> {
+    if (basicTierId) {
+      return this.updateBasicTier(basicTierId, loyalty, loyaltyId);
+    }
+    return this.createBasicTier(loyalty, loyaltyId);
+  }
+
 }

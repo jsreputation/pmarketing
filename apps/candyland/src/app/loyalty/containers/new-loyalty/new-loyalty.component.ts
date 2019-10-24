@@ -111,6 +111,8 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
 
     this.getLoyaltyWithBasicTierRequest()
       .subscribe(() => {
+        // save current form value for checking changes in next step
+        this.prevFormValue = this.form.value;
         // complete the current step
         this.stepper.selected.completed = true;
         // move to next step
@@ -245,35 +247,18 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
       });
   }
 
-  private getLoyaltyWithBasicTierRequest(): Observable<ILoyaltyForm> {
-    return this.getLoyaltyRequest()
+  private getLoyaltyWithBasicTierRequest(): Observable<IJsonApiPayload<IBasicTierApi>> {
+    const newLoyalty = this.form.value;
+    return this.loyaltyService.getLoyaltyRequest(newLoyalty, this.loyaltyId)
       .pipe(
         takeUntil(this.destroy$),
-        switchMap(() => this.getBasicTierRequest()),
-        filter(Boolean)
-      );
-  }
-
-  private getLoyaltyRequest(): Observable<ILoyaltyForm> {
-    if (this.loyaltyId) {
-      return this.loyaltyService.updateLoyalty(this.loyaltyId, this.form.value);
-    }
-    return this.loyaltyService.createLoyalty(this.form.value)
-      .pipe(
         tap(loyalty => {
           this.loyaltyId = loyalty.id;
           this.form.get('createdAt').patchValue(loyalty.createdAt);
-        })
-      );
-  }
-
-  private getBasicTierRequest(): Observable<IJsonApiPayload<IBasicTierApi>> {
-    if (this.basicTierId) {
-      return this.loyaltyService.updateBasicTier(this.basicTierId, this.form.value, this.loyaltyId);
-    }
-    return this.loyaltyService.createBasicTier(this.form.value, this.loyaltyId)
-      .pipe(
-        tap(basicTier => this.setBasicTierId(basicTier.data.id))
+        }),
+        switchMap(() => this.loyaltyService.getBasicTierRequest(newLoyalty, this.loyaltyId, this.basicTierId)),
+        filter(Boolean),
+        tap(basicTier => this.setBasicTierId(basicTier.data.id)),
       );
   }
 
@@ -301,13 +286,14 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   private initLoyaltyData(loyalty: ILoyaltyForm): void {
     if (loyalty) {
       this.loyaltyId = loyalty.id;
-      this.setBasicTierId(loyalty.basicTierId || null);
-      this.prevFormValue = loyalty;
+      this.setBasicTierId(loyalty.basicTierId);
+      this.form.patchValue(loyalty);
+      this.prevFormValue = this.form.value;
+    } else {
+      this.form.patchValue(this.getDefaultValue());
     }
-    this.showDraftButton = !loyalty || loyalty.status === StatusLabel.DRAFT;
     this.isEditPage = !!this.loyaltyId;
-    const patchData = loyalty || this.getDefaultValue();
-    this.form.patchValue(patchData);
+    this.showDraftButton = !loyalty || loyalty.status === StatusLabel.DRAFT;
   }
 
   private getDefaultValue(): ILoyaltyForm {
@@ -315,10 +301,6 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   private isNotChangedFormValue(): boolean {
-    const isNotChanged = Utils.isEqual(this.form.value, this.prevFormValue);
-    if (!isNotChanged) {
-      this.prevFormValue = this.form.value;
-    }
-    return isNotChanged;
+    return Utils.isEqual(this.form.value, this.prevFormValue);
   }
 }
