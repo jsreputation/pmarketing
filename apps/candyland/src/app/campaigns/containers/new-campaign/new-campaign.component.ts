@@ -106,9 +106,36 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    this.store.updateCampaign(this.form.value);
     let saveCampaign$;
-    let updateLimitData$;
+    this.store.updateCampaign(this.form.value);
+    if (this.campaign) {
+      saveCampaign$ = this.campaignsService.updateCampaign(this.campaign.id, this.store.currentCampaign);
+    } else {
+      saveCampaign$ = this.campaignsService.createCampaign(this.store.currentCampaign);
+    }
+
+    const hasLimitData = () => this.store.currentCampaign.limits && this.store.currentCampaign.limits.times;
+    const generateLimitData$ = this.updateLimitFn();
+
+    saveCampaign$.pipe(
+      tap((res: IJsonApiPayload<ICampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
+      switchMap(
+        (res) => iif(hasLimitData, generateLimitData$(res), of(res))
+      ),
+      takeUntil(this.destroy$)
+    ).subscribe(
+      data => {
+        if (data) {
+          this.openDialog();
+        }
+      },
+      (error: Error) => console.warn(error.message)
+    );
+  }
+
+  private updateLimitFn(): (campaign: ICampaign) => Observable<any> {
+    let generateLimitData$;
+
     const updateLimit$ = campaign => this.limitsService.updateLimits(
       this.store.currentCampaign.limits.id,
       this.store.currentCampaign.limits,
@@ -124,27 +151,42 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     );
 
     if (this.campaign) {
-      saveCampaign$ = this.campaignsService.updateCampaign(this.campaign.id, this.store.currentCampaign);
-      updateLimitData$ = this.store.currentCampaign.limits.id ? updateLimit$ : createLimit$;
+      generateLimitData$ = this.store.currentCampaign.limits.id ? updateLimit$ : createLimit$;
     } else {
-      saveCampaign$ = this.campaignsService.createCampaign(this.store.currentCampaign);
-      updateLimitData$ = createLimit$;
+      generateLimitData$ = createLimit$;
     }
-    const hasLimitData = () => this.store.currentCampaign.limits && this.store.currentCampaign.limits.times;
-    saveCampaign$.pipe(
-      tap((res: IJsonApiPayload<ICampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
-      switchMap(
-        (res) => iif(hasLimitData, updateLimitData$(res), of(res))
-      ),
-      takeUntil(this.destroy$)
-    ).subscribe(
-      data => {
-        if (data) {
-          this.openDialog();
-        }
-      },
-      (error: Error) => console.warn(error.message)
-    );
+    return generateLimitData$;
+  }
+
+  private updateCommFn(): (campaign: ICampaign) => Observable<any> {
+    let generateCommsData$;
+
+    const deleteCommsFn$ = campaign => this.commsService.deleteComms();
+    const updateCommsFn$ = campaign => this.commsService.updateComms();
+    const createCommsFn$ = campaign => this.commsService.createComms();
+
+    //If has id and choose weblink delete comms, else has id update comms, else create comms
+  }
+
+  private updateOutcomesFn(): (campaign: ICampaign) => Observable<any> {
+    let generateCommsData$;
+
+    const possibleOutcomes = data.template.attributes_type === EngagementType.stamp ?
+      data.rewardsListCollection.map(
+        rewardsData =>
+          CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(
+            rewardsData.rewardsOptions.rewards,
+            rewardsData.rewardsOptions.enableProbability,
+            rewardsData.stampSlotNumber
+          )
+      ).flat(1) :
+      CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(data.rewardsOptions.rewards, data.rewardsOptions.enableProbability);
+
+    const deleteOutcomesFn$ = campaign => this.outcomesService.deleteOutcomes();
+    const updateOutcomesFn$ = campaign => this.outcomesService.updateOutcomes();
+    const createOutcomesFn$ = campaign => this.outcomesService.createOutcomes();
+
+    //If has id and choose weblink delete outcomes, else has id update outcomes, else create outcomes
   }
 
   private getDialogData(campaign: ICampaign): Observable<NewCampaignDonePopupComponentData> {
@@ -194,7 +236,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       .pipe(map(([pis, url]: [string[], string]) => {
         return pis.reduce((p: string, v: string) => `${p}${v},${url}&pi=${v},\n`, 'identifier,urls,\n');
       }),
-      takeUntil(this.destroy$)
+        takeUntil(this.destroy$)
       );
   }
 
