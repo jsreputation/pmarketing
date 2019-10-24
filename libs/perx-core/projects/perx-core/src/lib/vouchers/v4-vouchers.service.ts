@@ -80,7 +80,7 @@ export interface IV4Voucher {
   issued_date: string;
   name: string;
   redemption_date: any;
-  redemption_type: RedemptionType | {
+  redemption_type: {
     call_to_action: any;
     timer: any;
     type: RedemptionType | null;
@@ -119,6 +119,7 @@ export class V4VouchersService implements IVoucherService {
       code: v.voucher_code,
       expiry: reward.valid_to !== null ? new Date(reward.valid_to) : null,
       redemptionDate: v.redemption_date !== null ? new Date(v.redemption_date) : null,
+      redemptionType: v.redemption_type !== null ? v.redemption_type.type : null
     };
   }
 

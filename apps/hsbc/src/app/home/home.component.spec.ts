@@ -13,11 +13,13 @@ import {
   ProfileService
 } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatTabsModule, MatCardModule, MatIconModule } from '@angular/material';
+import { MatTabsModule, MatCardModule, MatIconModule, MatRippleModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { NavigateToolbarComponent } from '../navigate-toolbar/navigate-toolbar.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+
+import { PuzzleListComponent } from '../mock/service/puzzle-list/puzzle-list.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -122,6 +124,8 @@ describe('HomeComponent', () => {
       declarations: [
         HomeComponent,
         NavigateToolbarComponent,
+
+        PuzzleListComponent
       ],
       imports: [
         RouterTestingModule,
@@ -132,6 +136,8 @@ describe('HomeComponent', () => {
         MatCardModule,
         VouchersModule,
         PuzzlesModule,
+
+        MatRippleModule
       ],
       providers: [
         { provide: ThemesService, useValue: themesServiceStub },
