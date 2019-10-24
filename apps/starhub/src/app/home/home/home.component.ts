@@ -1,7 +1,7 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ILoyalty, LoyaltyService, ProfileService, IProfile } from '@perx/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
-import { ScrollDispatcher, CdkScrollable } from '@angular/cdk/overlay';
+import { CdkScrollable } from '@angular/cdk/overlay';
 import { MatToolbar } from '@angular/material';
 
 @Component({
@@ -10,10 +10,11 @@ import { MatToolbar } from '@angular/material';
   styleUrls: ['./home.component.scss']
 })
 
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit {
   @ViewChild(MatToolbar, { static: false })
   private toolBar: MatToolbar;
   public top: number = 0;
+  private previousDelta: 0;
   public lastOffset: number = 0;
   @ViewChild('contentScrolled', { static: false })
   public contentScrolled: ElementRef;
@@ -24,7 +25,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private noRenewalePipe: NoRenewaleInNamePipe,
     private loyaltyService: LoyaltyService,
     private profileService: ProfileService,
-    private scollService: ScrollDispatcher,
   ) { }
 
   public ngOnInit(): void {
@@ -47,12 +47,22 @@ export class HomeComponent implements OnInit, AfterViewInit {
         return 'assets/green-icon.svg';
     }
   }
-
-  public ngAfterViewInit(): void {
-    this.scollService.scrolled().subscribe((data: CdkScrollable) => this.onWindowScroll(data));
+  public onScrollCall(): void {
+    requestAnimationFrame(() => {
+      const delta = this.previousDelta - this.contentScrolled.nativeElement.scrollTop;
+      this.previousDelta = this.contentScrolled.nativeElement.scrollTop;
+      if (this.top + delta <= 0 && this.top + delta >= -170) {
+        this.top = this.top + delta;
+      } else if (this.top + delta > 0) {
+        this.top = 0;
+      } else if (this.top + delta <= -170) {
+        this.top = - 170;
+      }
+      this.toolBar._elementRef.nativeElement.style.transform = `translateY(${this.top}px)`;
+    });
   }
 
-  private onWindowScroll(data: CdkScrollable): void {
+  public onWindowScroll(data: CdkScrollable): void {
     const scrollTop = data.getElementRef().nativeElement.scrollTop || 0;
     requestAnimationFrame(() => {
       const delta = this.lastOffset - scrollTop;
