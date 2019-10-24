@@ -1,8 +1,8 @@
 import { MerchantBranch } from './merchant';
-import { IMerchantApi, IMerchantBranchApi} from '@perx/whistler';
+import { IMerchant, IMerchantBranchApi} from '@perx/whistler';
 
 export class MerchantHttpAdapter {
-  public static transformToMerchantForm(data: IMerchantApi): IMerchantForm {
+  public static transformToMerchantForm(data: IMerchant): IMerchantForm {
     return {
       name: data.name,
       type: data.type,
@@ -27,7 +27,7 @@ export class MerchantHttpAdapter {
     };
   }
 
-  public static transformFromMerchantForm(data: IMerchantForm): IJsonApiItem<IMerchantApi> {
+  public static transformFromMerchantForm(data: IMerchantForm): IJsonApiItem<IMerchant> {
     return {
       type: 'orgs',
       attributes: {

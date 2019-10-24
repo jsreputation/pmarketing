@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
 import { MerchantBranch, Merchant } from '@cl-core/http-adapters/merchant';
-import { IMerchantApi, IMerchantBranchApi} from '@perx/whistler';
+import { IMerchant, IMerchantBranchApi} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,11 @@ export class MerchantHttpService {
   constructor(private http: HttpClient) {
   }
 
-  public createMerchant(data: IJsonApiPayload<IMerchantApi>): Observable<any> {
+  public createMerchant(data: IJsonApiPayload<IMerchant>): Observable<any> {
     return this.http.post<IJsonApiPayload<Merchant>>(ApiConfig.merchantsPath + '/orgs', data);
   }
 
-  public updateMerchant(id: string, data: IJsonApiPayload<IMerchantApi>): Observable<any> {
+  public updateMerchant(id: string, data: IJsonApiPayload<IMerchant>): Observable<any> {
     return this.http.patch<IJsonApiPayload<Merchant>>(ApiConfig.merchantsPath + '/orgs/' + id, data);
   }
 
