@@ -24,5 +24,11 @@ export const GamesType: IGame[] = [
     type: 'tapTapChallenge',
     title: 'Tap tap challenge',
     active: false
+  },
+  {
+    id: 5,
+    type: 'scratch',
+    title: 'Scratch the Card',
+    active: false
   }
 ];

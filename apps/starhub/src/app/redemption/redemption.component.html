@@ -7,14 +7,14 @@
       <img [src]="voucher.reward.rewardBanner" class="banner">
     </div>
     <div class="redeem-block">
-      <div [ngClass]="(voucher.reward.redemptionType === 'txtCode' && !voucher.code)?'inner no-code':'inner'">
+      <div [ngClass]="(voucher.redemptionType === 'txtCode' && !voucher.code)?'inner no-code':'inner'">
         <div class="upper-section">
           <div class="code-redemption unavailable" *ngIf="voucher.state === 'redeemed' || voucher.state === 'expired'; else available">
             <p>Your reward is</p>
             <span class="code">{{voucher.state}}</span>
           </div>
           <ng-template #available>
-            <div *ngIf="voucher.reward.redemptionType === 'txtCode'">
+            <div *ngIf="voucher.redemptionType === 'txtCode'">
               <div class="code-redemption">
                 <ng-template [ngIf]="voucher.code">
                   <h1>Promo code</h1>
@@ -23,12 +23,14 @@
                 </ng-template>
               </div>
             </div>
-            <div *ngIf="voucher.reward.redemptionType === 'pin'" class="code-redemption">
+            <div *ngIf="voucher.redemptionType === 'pin'" class="code-redemption">
               <p>Please ask cashier to enter PIN</p>
               <button *ngIf="!showEnterPinComponent else pinComponent" class="enter-pin" mat-flat-button color="primary" (click)="showPinComponent()">Enter PIN</button>
               <ng-template #pinComponent>
                 <div class="pin-input-container">
                   <perx-core-pin-input #pinInput
+                  [errorMessage]="'Incorrect code'"
+                  [error]="pinInputError"
                   [length]="4"
                   (full)="full($event)"
                   (update)="updatePin()">

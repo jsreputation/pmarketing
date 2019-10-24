@@ -21,7 +21,7 @@ import {from, Observable} from 'rxjs';
   styleUrls: ['./puzzle.component.scss']
 })
 export class PuzzleComponent implements OnInit, OnDestroy {
-  public campaignId: number = 0;
+  public campaignId: number = null;
   private cardId: number = null;
   private card: IStampCard = null;
   public availablePieces: number = 0;
@@ -35,6 +35,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   public title: string = 'Stamp Card';
   public subTitle: string = 'Earn rewards by collecting stamps';
   private displayCampaignAs: string = 'puzzle';
+  public sourceType: string;
 
   constructor(
     private campaignService: ICampaignService,
@@ -60,18 +61,20 @@ export class PuzzleComponent implements OnInit, OnDestroy {
 
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => {
+        this.sourceType = config.sourceType as string;
         if (config.sourceType === 'hsbc-xmas') {
           this.displayCampaignAs = 'stamp_card';
         }
-      });
 
-    if (this.campaignId === null) {
-      this.fetchCampaign();
-    } else if (this.cardId === null || this.card === null) {
-      this.fetchCard(this.campaignId);
-      this.fetchStampTransactionCount(this.campaignId);
-      this.fetchCardsCount(this.campaignId);
-    }
+        if (this.campaignId === null) {
+          this.fetchCampaign();
+        } else if (this.cardId === null || this.card === null) {
+          this.fetchCard(this.campaignId);
+          this.fetchStampTransactionCount(this.campaignId);
+          this.fetchCardsCount(this.campaignId);
+        }
+      }
+    );
 
     if (!localStorage.getItem('enableSound')) {
       setTimeout(() => {
@@ -167,13 +170,20 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   }
 
   private stampCard(stampId: number): void {
-    this.stampService.putStamp(stampId, 'hsbc-collect2')
+    this.stampService.putStamp(stampId, this.sourceType)
     .subscribe(
       (stamp: IStamp) => {
         if (stamp.state === StampState.redeemed) {
           if (this.card.cardNumber === this.cardsCount) { // we are on the last card
             const redeemedTransactionsCount = this.card.stamps.filter(s => s.state === StampState.redeemed).length;
-            if (redeemedTransactionsCount === this.rows * this.cols) { // we also were on the last stamp
+            if (this.card.displayProperties.displayCampaignAs === 'stamp_card'
+                && redeemedTransactionsCount === this.card.campaignConfig.totalSlots) {
+              this.notificationService.addPopup({
+                // tslint:disable-next-line: max-line-length
+                text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of stamps. Don\'t forget to redeem your earned rewards!'
+              });
+            } else if (this.card.displayProperties.displayCampaignAs === 'puzzle'
+                      && redeemedTransactionsCount === this.rows * this.cols) { // we also were on the last stamp
               this.notificationService.addPopup({
                 // tslint:disable-next-line: max-line-length
                 text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of puzzle pieces. Don\'t forget to redeem your earned rewards!'

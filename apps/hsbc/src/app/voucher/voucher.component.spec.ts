@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VoucherComponent } from './voucher.component';
-import { VouchersModule, CampaignModule, IVoucherService, Voucher, VoucherState } from '@perx/core';
+import { VouchersModule, CampaignModule, IVoucherService, Voucher, VoucherState, ConfigService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatProgressBarModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -42,6 +42,10 @@ describe('VoucherComponent', () => {
     get: () => of(mockVoucher)
   };
 
+  const configServiceStub = {
+    readAppConfig: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [VoucherComponent],
@@ -53,7 +57,8 @@ describe('VoucherComponent', () => {
         NoopAnimationsModule
       ],
       providers: [
-        { provide: IVoucherService, useValue: vouchersServiceStub }
+        { provide: IVoucherService, useValue: vouchersServiceStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();
