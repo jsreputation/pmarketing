@@ -233,6 +233,26 @@ export class EngagementHttpAdapter {
     };
   }
 
+  public static transformScratch(data: IScratchForm): IEngagementApi {
+    return {
+      type: 'engagements', attributes: {
+        type: 'game',
+        title: data.name,
+        game_type: 'scratch',
+        image_url: data.image_url,
+        display_properties: {
+          title: data.headlineMessage,
+          button: data.buttonText,
+          sub_title: data.subHeadlineMessage,
+          pre_scratch_img_url: ImageControlValue.getImagePath(data.preScratchImage),
+          post_scratch_success_img_url: ImageControlValue.getImagePath(data.postScratchSuccessImage),
+          post_scratch_fail_img_url: ImageControlValue.getImagePath(data.postScratchFailImage),
+          background_img_url: ImageControlValue.getImagePath(data.background),
+        }
+      }
+    };
+  }
+
   public static transformStamp(data: any): IEngagementApi {
     return {
       type: 'engagements', attributes: {
@@ -314,6 +334,24 @@ export class EngagementHttpAdapter {
       image_url: data.attributes.image_url,
       // opened_pinata_img_url: data.attributes.display_properties.opened_pinata_img_url,
       // cracking_pinata_img_url: data.attributes.display_properties.cracking_pinata_img_url
+    };
+  }
+
+  public static transformScratchForm(data: IEngagementApi): IScratchForm {
+    return {
+      id: data.id,
+      type: data.type,
+      gameType: data.attributes.game_type,
+      name: data.attributes.title,
+      headlineMessage: data.attributes.display_properties.title,
+      subHeadlineMessage: data.attributes.display_properties.sub_title,
+      buttonText: data.attributes.display_properties.button,
+      lastButtonText: data.attributes.display_properties.lastButtonText,
+      background: data.attributes.display_properties.background_img_url,
+      preScratchImage: data.attributes.display_properties.pre_scratch_img_url,
+      postScratchSuccessImage: data.attributes.display_properties.post_scratch_success_img_url,
+      postScratchFailImage: data.attributes.display_properties.post_scratch_fail_img_url,
+      image_url: data.attributes.image_url,
     };
   }
 }

@@ -55,26 +55,35 @@
           <div class="game-form">
             <div class="game-number">
               <div class="control-input" *ngIf="stampData?.number">
-                <mat-form-field class="game-stamp-select">
-                  <mat-label>Total number of stamps on a card</mat-label>
-                  <mat-select formControlName="stampsNumber">
-                    <mat-option *ngFor="let stamp of stampData?.number" [value]="stamp.value">
-                      {{stamp.viewValue}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
+                <h3 class="card-fieldset-label">
+                  Total number of stamps on a card
+                </h3>
+                <div class="slider">
+                  <mat-slider
+                    class="slider-stamps-number"
+                    color="primary"
+                    [max]="10"
+                    [min]="3"
+                    [step]="1"
+                    [thumbLabel]="true"
+                    formControlName="stampsNumber"
+                  >
+                  </mat-slider>
+                </div>
               </div>
             </div>
             <div class="game-number game-number-slot">
-              <div class="control-input" *ngIf="stampSlotNumbers">
-                <mat-form-field class="game-stamp-select">
-                  <mat-label>Reward slot</mat-label>
-                  <mat-select formControlName="stampsSlotNumber" [multiple]="true">
-                    <mat-option *ngFor="let stampSlot of stampSlotNumbers" [value]="stampSlot?.value">
-                      {{stampSlot?.viewValue}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
+              <div class="control-input reward-slot" *ngIf="stampSlotNumbers">
+                <h3 class="card-fieldset-label">
+                  Reward slot
+                </h3>
+                <cl-checkbox-group class="btn-list btn-medium-list" formControlName="stampsSlotNumber">
+                  <ng-container *ngFor="let stampSlot of stampSlotNumbers">
+                    <mat-checkbox color="primary" [value]="stampSlot?.value">
+                      <div>{{stampSlot?.viewValue}}</div>
+                    </mat-checkbox>
+                  </ng-container>
+                </cl-checkbox-group>
               </div>
             </div>
 
