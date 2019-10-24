@@ -152,13 +152,11 @@ export class V4RewardsService extends RewardsService {
       rewardLimitPerUserBalance: v4Invent.reward_limit_per_user_balance !== undefined && v4Invent.reward_limit_per_user_balance !== null ?
         v4Invent.reward_limit_per_user_balance.available_amount : null
     };
-
     return {
       id: reward.id,
       name: reward.name,
       subtitle: reward.subtitle,
       description: reward.description,
-      redemptionType: reward.redemption_type,
       rewardPrice: reward.reward_price.map(price => ({
         id: price.id,
         currencyCode: price.currency_code,
