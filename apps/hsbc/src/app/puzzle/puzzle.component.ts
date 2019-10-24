@@ -163,8 +163,8 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       });
   }
 
-  private fetchCard(id: number): Observable<IStampCard> {
-    return this.stampService.getCurrentCard(id);
+  private fetchCard(campaignId: number): Observable<IStampCard> {
+    return this.stampService.getCurrentCard(campaignId);
   }
 
   private fetchCardsCount(campaignId: number): void {
