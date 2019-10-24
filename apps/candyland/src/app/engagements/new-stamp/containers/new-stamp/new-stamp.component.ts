@@ -19,7 +19,7 @@ import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-v
   selector: 'cl-new-stamp',
   templateUrl: './new-stamp.component.html',
   styleUrls: ['./new-stamp.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewStampComponent implements OnInit, OnDestroy {
   @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
@@ -80,7 +80,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
   }
 
   public get stampsSlotNumber(): any[] {
-    return (this.formStamp.get(ControlsName.stampsSlotNumber) as FormArray).value.map((item: string) => ({id: +item}));
+    return (this.formStamp.get(ControlsName.stampsSlotNumber) as FormArray).value;
   }
 
   constructor(
@@ -203,6 +203,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
             });
           }
           this.stampSlotNumbers = this.stampDataService.filterStampSlot(this.allStampSlotNumbers, value);
+          // selected last slot
           this.patchForm('stampsSlotNumber', [this.stampSlotNumbers[this.stampSlotNumbers.length - 1].value]);
         }
       );
@@ -215,6 +216,9 @@ export class NewStampComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe((value: number[]) => {
+        if (!value) {
+          return;
+        }
         this.stampsSlotNumberData = value.map((item: number) => {
           return {rewardPosition: item - 1};
         });
