@@ -24,9 +24,9 @@ export class LoyaltyFormsService {
           transactionAmount: new FormControl(false),
           signUp: new FormControl(false),
           inviteOnly: new FormControl(false),
-          amount: new FormControl({value: null, disabled: true}, [Validators.required, Validators.min(1)]),
+          amount: new FormControl({value: null, disabled: true}, [Validators.required, Validators.min(1)])
         }, [ClValidators.requiredGroup]),
-        poolId: new FormControl(null,
+        poolId: new FormControl(null
           // [ Validators.required]
         )
       }),
@@ -42,7 +42,7 @@ export class LoyaltyFormsService {
         pointsExpiry: new FormGroup({
           amount: new FormControl(null, [Validators.required, Validators.min(1)]),
           type: new FormControl(null, [Validators.required]),
-          trigger: new FormControl(null, [Validators.required]),
+          trigger: new FormControl(null, [Validators.required])
         })
       })
     });
@@ -57,23 +57,23 @@ export class LoyaltyFormsService {
         pointsName: 'Point',
         imageUrl: null,
         joinMethod: {
-          inviteOnly: true,
+          inviteOnly: true
         },
         poolId: null
       },
       tiersConversions: {
         globalEarnRule: {
           amount: 1,
-          points: 1,
+          points: 1
         },
         globalBurnRule: {
           amount: 100,
-          points: 5,
+          points: 5
         },
         pointsExpiry: {
           amount: 1,
           type: 'year',
-          trigger: LoyaltyPointsExpireTrigger.accrual,
+          trigger: LoyaltyPointsExpireTrigger.accrual
         }
       }
     };
