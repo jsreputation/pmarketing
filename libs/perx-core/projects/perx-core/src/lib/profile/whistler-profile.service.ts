@@ -1,4 +1,4 @@
-import { IJsonApiItem, IJsonApiListPayload  } from './../jsonapi.payload';
+import { IJsonApiItem, IJsonApiListPayload } from './../jsonapi.payload';
 import { ProfileService } from './profile.service';
 import { Observable, throwError } from 'rxjs';
 import {
@@ -10,6 +10,7 @@ import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { TokenStorage } from '../auth/authentication/token-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class WhistlerProfileService extends ProfileService {
 
   constructor(
     private http: HttpClient,
-    config: Config
+    config: Config,
+    private tokenStorage: TokenStorage
   ) {
     super();
     this.apiHost = config.apiHost as string;
@@ -38,15 +40,15 @@ export class WhistlerProfileService extends ProfileService {
   }
 
   public whoAmI(): Observable<IProfile> {
-    const localStoreAppInfo = JSON.parse(window.localStorage.getItem('appInfo'));
-    const localStorePrimaryIdentifier = localStoreAppInfo.pi;
+    const localStorePrimaryIdentifier = this.tokenStorage.getAppInfoProperty('pi');
     const url = `${this.apiHost}/cognito/users`;
-    return this.http.get<IJsonApiListPayload<IWhistlerProfileAttributes>>(url)
+    const params = {
+      'filter[primary_identifier]': localStorePrimaryIdentifier
+    };
+
+    return this.http.get<IJsonApiListPayload<IWhistlerProfileAttributes>>(url, { params })
       .pipe(
-        map((arrayOfJsonApiUsers: IJsonApiListPayload<IWhistlerProfileAttributes>) => (
-            arrayOfJsonApiUsers.data
-              .filter(JsonApiUser => JsonApiUser.attributes.primary_identifier === localStorePrimaryIdentifier)[0]
-        )),
+        map((arrayOfJsonApiUsers: IJsonApiListPayload<IWhistlerProfileAttributes>) => arrayOfJsonApiUsers.data[0]),
         map((JsonApiUser: IJsonApiItem<IWhistlerProfileAttributes>) =>
           WhistlerProfileService.WhistlerProfileToProfile(JsonApiUser))
       );
