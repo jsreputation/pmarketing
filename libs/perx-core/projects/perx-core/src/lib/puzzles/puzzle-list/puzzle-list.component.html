@@ -6,7 +6,7 @@
       <img [ngClass]="isActive(puzzle) ? 'puzzle-img' : 'puzzle-img grayscale' " src="{{puzzle.displayProperties.cardImage.value.imageUrl}}">
     </div>
     <div class="puzzle-details">
-      <h1>Puzzle #{{indexToLetter(i)}}
+      <h1>Puzzle {{puzzleIndex(i)}}
         <span class="badge-warn">
           {{nbPlacedStamps(puzzle)}}/{{total}}
         </span>
