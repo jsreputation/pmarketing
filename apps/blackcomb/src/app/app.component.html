@@ -1,8 +1,11 @@
-<div translate>he</div>
-<div translate>ho</div>
-<div translate>halo</div>
-<div translate>balo</div>
-<div translate>dagon</div>
+<div *ngIf="display">
+  <div translate>he</div>
+  <div translate>ho</div>
+  <div translate>halo</div>
+  <div translate>balo</div>
+  <div translate>dagon</div>
+</div>
+
 <button (click)="translateRebuild()"> rebouild </button>
 <div class="main-app-container" *ngIf="theme && theme.properties">
   <mat-toolbar class="toolbar mat-elevation-z2" *ngIf="showHeader">

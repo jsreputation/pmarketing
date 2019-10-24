@@ -20,6 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  display = true;
   public showHeader: boolean = true;
   public showToolbar: boolean = true;
   public leftIcon: string = '';
@@ -75,9 +76,10 @@ export class AppComponent implements OnInit {
 
   }
   public translateRebuild(){
+    this.display = false;
     this.translate.reloadLang('en').subscribe(()=>{
-      console.log(this.translate.store);
       this.cd.detectChanges();
+      this.display=true;
     })
 
   }
