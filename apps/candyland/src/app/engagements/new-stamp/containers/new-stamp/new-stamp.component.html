@@ -55,7 +55,9 @@
           <div class="game-form">
             <div class="game-number">
               <div class="control-input" *ngIf="stampData?.number">
-                <mat-label>Total number of stamps on a card</mat-label>
+                <h3 class="card-fieldset-label">
+                  Total number of stamps on a card
+                </h3>
                 <div class="slider">
                   <mat-slider
                     class="slider-stamps-number"
@@ -72,8 +74,9 @@
             </div>
             <div class="game-number game-number-slot">
               <div class="control-input reward-slot" *ngIf="stampSlotNumbers">
-                <mat-label>Reward slot</mat-label>
-
+                <h3 class="card-fieldset-label">
+                  Reward slot
+                </h3>
                 <cl-checkbox-group [clearState]="true" class="btn-list btn-medium-list" formControlName="stampsSlotNumber">
                   <ng-container *ngFor="let stampSlot of stampSlotNumbers">
                     <mat-checkbox color="primary" [value]="stampSlot?.value">
