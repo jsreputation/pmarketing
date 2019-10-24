@@ -12,5 +12,4 @@ export class SimpleMobileViewComponent {
   @Input() public logo: string;
   @Input() public logoType: boolean;
   @Input() public fontFamily: string;
-
 }
