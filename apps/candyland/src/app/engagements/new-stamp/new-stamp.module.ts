@@ -13,6 +13,9 @@ import { GameMobilePreviewStampModule } from '@cl-shared/components/game-mobile-
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 import { PuzzlesModule } from '@perx/core';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,10 @@ import { DirectivesModule } from '@cl-shared/directives/directives.module';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    DirectivesModule
+    MatSliderModule,
+    MatCheckboxModule,
+    DirectivesModule,
+    CheckboxGroupModule
   ]
 })
 export class NewStampModule {

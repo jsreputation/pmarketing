@@ -26,17 +26,15 @@
 
   <!--Reward Loyalty-->
   <mat-expansion-panel class="card" expanded
-                       *ngIf="loyalties?.length"
-  >
+    *ngIf="loyalties?.length">
     <mat-expansion-panel-header class="card-header">
       <h2 class="card-title">
-        Loyalty
+        Loyalty (β)
       </h2>
     </mat-expansion-panel-header>
     <div class="card-content">
       <cl-reward-loyalty-form-group [loyalties]="loyalties"
-                                    [form]="rewardLoyaltyForm"
-      >
+        [form]="rewardLoyaltyForm">
       </cl-reward-loyalty-form-group>
     </div>
   </mat-expansion-panel>

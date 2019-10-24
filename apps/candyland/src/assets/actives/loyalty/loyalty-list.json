@@ -5,7 +5,7 @@
       "image": "https://robohash.org/loyalty-card-1.png",
       "name": "Loyalty Scheme 1",
       "groupName": "Retail Customers",
-      "tiersCount": null,
+      "customTiersCount": null,
       "status": "active"
     },
     {
@@ -13,7 +13,7 @@
       "image": "https://robohash.org/loyalty-card-1.png",
       "name": "Loyalty Scheme 2",
       "groupName": "Retail Customers",
-      "tiersCount": "4",
+      "customTiersCount": "4",
       "status": "draft"
     },
     {
@@ -21,7 +21,7 @@
       "image": "https://robohash.org/loyalty-card-1.png",
       "name": "Loyalty Scheme 3",
       "groupName": "Retail Customers",
-      "tiersCount": "3",
+      "customTiersCount": "3",
       "status": "paused"
     }
   ],

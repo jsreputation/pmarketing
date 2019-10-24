@@ -4,7 +4,7 @@ export enum StatusLabel {
   INACTIVE = 'inactive',
   PENDING = 'pending',
   SCHEDULED = 'scheduled',
-  PAUSED = 'paused',
+  PAUSED = 'pause',
   ENDED = 'ended',
   PROCESSED = 'processed',
   FAILED = 'failed',
