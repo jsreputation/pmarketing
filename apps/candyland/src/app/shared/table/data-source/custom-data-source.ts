@@ -14,6 +14,11 @@ export enum DataSourceStates {
   errorApi = 3 // get first response from data service with error (use for showing error)
 }
 
+export enum DataSourceUpdateSchema {
+  firstPage = 0,
+  currentPage = 1,
+}
+
 export class CustomDataSource<T> extends DataSource<T> {
   private dataSubject: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
   private loadingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -26,6 +31,7 @@ export class CustomDataSource<T> extends DataSource<T> {
   private lengthData: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   // used for set all length items the pagination component
   public length$: Observable<number> = this.lengthData.asObservable();
+  private pageIndex: number;
 
   public get length(): number {
     return this.lengthData.value;
@@ -65,7 +71,7 @@ export class CustomDataSource<T> extends DataSource<T> {
     if (params) {
       this.params = params;
     }
-    this.loadingData();
+    this.updateData(DataSourceUpdateSchema.firstPage);
   }
 
   private privateSort: SortModel;
@@ -77,7 +83,7 @@ export class CustomDataSource<T> extends DataSource<T> {
   public set sort(val: SortModel) {
     this.privateSort = val;
     this.changeFilterSearch.next(0);
-    this.loadingData();
+    this.updateData(DataSourceUpdateSchema.firstPage);
   }
 
   private privateFilter: any;
@@ -89,7 +95,7 @@ export class CustomDataSource<T> extends DataSource<T> {
       this.privateFilter = value;
     }
     this.changeFilterSearch.next(0);
-    this.loadingData();
+    this.updateData(DataSourceUpdateSchema.firstPage);
   }
 
   public set pagination(value: IPagination) {
@@ -97,7 +103,10 @@ export class CustomDataSource<T> extends DataSource<T> {
       this.pageSize = value.pageSize;
       this.changeFilterSearch.next(0);
     }
-    this.loadingData(value);
+    if (this.pageIndex !== value.pageIndex) {
+      this.pageIndex = value.pageIndex;
+    }
+    this.updateData(DataSourceUpdateSchema.currentPage);
   }
 
   public connect(): Observable<any> {
@@ -114,8 +123,15 @@ export class CustomDataSource<T> extends DataSource<T> {
     this.lengthData.complete();
   }
 
-  public updateData(): void {
-    this.loadingData({pageIndex: 0, pageSize: this.pageSize});
+  public updateData(schema: DataSourceUpdateSchema = DataSourceUpdateSchema.firstPage): void {
+    switch (schema) {
+      case DataSourceUpdateSchema.firstPage:
+        this.pageIndex = 0;
+        break;
+      case DataSourceUpdateSchema.currentPage:
+        break;
+    }
+    this.loadingData();
   }
 
   public registerSort(sort: MatSort): void {
@@ -130,13 +146,13 @@ export class CustomDataSource<T> extends DataSource<T> {
       .subscribe(newSort => this.sort = newSort);
   }
 
-  private loadingData(pagination?: IPagination): void {
+  private loadingData(): void {
     const params: HttpParamsOptions = {
       ...this.params,
       ...this.prepareFilters(),
       ...this.sortPrepare(this.sort),
-      'page[number]': pagination ? pagination.pageIndex + 1 : 1,
-      'page[size]': pagination ? pagination.pageSize : this.pageSize
+      'page[number]': this.pageIndex + 1,
+      'page[size]': this.pageSize
     };
     if (this.request) {
       this.request.unsubscribe();

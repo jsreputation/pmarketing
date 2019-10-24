@@ -51,7 +51,7 @@ export class NewsFeedComponent implements OnInit {
       data: item,
       height: '85vh',
       minWidth: '35.5rem',
-      maxWidth: '85vh'
+      maxWidth: '94vw'
     });
   }
 

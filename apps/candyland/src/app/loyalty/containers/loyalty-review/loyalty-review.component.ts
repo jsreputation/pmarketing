@@ -5,6 +5,7 @@ import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.
 import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
+import { ILoyaltyForm, ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Component({
   selector: 'cl-loyalty-review',
@@ -13,7 +14,7 @@ import { LoyaltyService } from '@cl-core/services/loyalty.service';
 })
 export class LoyaltyReviewComponent implements OnInit, OnDestroy {
   public loyalty: ILoyaltyForm;
-  public customTierDataSource: CustomDataSource<any>;
+  public customTierDataSource: CustomDataSource<ICustomTireForm>;
   protected destroy$: Subject<void> = new Subject();
 
   constructor(private route: ActivatedRoute,
@@ -21,7 +22,6 @@ export class LoyaltyReviewComponent implements OnInit, OnDestroy {
               private router: Router,
               private cd: ChangeDetectorRef,
               private loyaltyService: LoyaltyService) {
-    this.customTierDataSource = new CustomDataSource<any>(this.customTierService);
   }
 
   public ngOnInit(): void {
@@ -65,7 +65,7 @@ export class LoyaltyReviewComponent implements OnInit, OnDestroy {
 
   private initCustomTiersDataSource(): void {
     if (!this.customTierDataSource) {
-      this.customTierDataSource = new CustomDataSource<any>(this.customTierService);
+      this.customTierDataSource = new CustomDataSource<ICustomTireForm>(this.customTierService);
     }
   }
 
