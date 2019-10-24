@@ -1,4 +1,4 @@
-declare interface ILoyaltyApi {
+export interface ILoyaltyApi {
   name: string;
   unit: string;
   pool_id?: string;
@@ -7,7 +7,7 @@ declare interface ILoyaltyApi {
   created_at?: string;
 }
 
-declare interface IBasicTierApi {
+export interface IBasicTierApi {
   image_url: string;
   earn_ratio_money: number;
   earn_ratio_point: number;
@@ -16,10 +16,10 @@ declare interface IBasicTierApi {
   expiry_period: number;
   expiry_period_type: string;
   expiry_period_trigger: string;
-  join_method: any;
+  join_method: IJoinMethodApi;
 }
 
-declare interface ICustomTierApi {
+export interface ICustomTierApi {
   name: string;
   image_url: string;
   bonus_ratio: string;
@@ -27,5 +27,14 @@ declare interface ICustomTierApi {
   expiry_period: number;
   expiry_period_type: string;
   expiry_period_trigger: string;
-  join_method: any;
+  join_method: IJoinMethodApi;
+}
+
+export interface IJoinMethodApi {
+  transaction_amount?: boolean;
+  sign_up?: boolean;
+  invite_only?: boolean;
+  amount?: number;
+  points_threshold?: boolean;
+  points?: number;
 }

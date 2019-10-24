@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { map } from 'rxjs/operators';
 import { LoyaltyHttpAdapter } from '@cl-core/http-adapters/loyalty-http-adapter';
+import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Injectable({
   providedIn: 'root'

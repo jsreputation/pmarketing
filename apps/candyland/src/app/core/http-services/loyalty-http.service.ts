@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
+import {ILoyaltyApi, IBasicTierApi, ICustomTierApi} from '@perx/core';
 
 @Injectable({
   providedIn: 'root'

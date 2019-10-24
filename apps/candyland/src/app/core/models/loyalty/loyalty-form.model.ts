@@ -1,4 +1,6 @@
-declare interface ILoyaltyForm {
+import {IJoinMethod} from '@perx/core';
+
+export interface ILoyaltyForm {
   id?: string;
   name: string;
   createdAt?: string;
@@ -11,28 +13,14 @@ declare interface ILoyaltyForm {
   customTiers?: any;
 }
 
-declare interface ILoyaltySchemaInf extends ILoyaltyDetails {
-  name: string;
-  status: string;
-}
-
-declare interface ILoyaltyDetails {
+export interface ILoyaltyDetails {
   pointsName: string;
   imageUrl: string;
   joinMethod: IJoinMethod;
   poolId?: string;
 }
 
-declare interface IJoinMethod {
-  transactionAmount?: boolean;
-  signUp?: boolean;
-  inviteOnly?: boolean;
-  amount?: number;
-  pointsThreshold?: boolean;
-  points?: number;
-}
-
-declare interface ILoyaltyTiersConversions {
+export interface ILoyaltyTiersConversions {
   globalEarnRule: {
     amount: number;
     points: number;
@@ -48,7 +36,7 @@ declare interface ILoyaltyTiersConversions {
   };
 }
 
-declare interface ICustomTireForm {
+export interface ICustomTireForm {
   id?: string;
   name: string;
   joinMethod: IJoinMethod;
@@ -58,7 +46,7 @@ declare interface ICustomTireForm {
   pointsExpiry: IPointsExpiry;
 }
 
-declare interface IPointsExpiry {
+export interface IPointsExpiry {
   amount: number;
   type: string;
   trigger: string;

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClValidators } from '@cl-helpers/cl-validators';
 import { LoyaltyPointsExpireTrigger } from '../models/loyalty-points-expire-trigger.enum';
 import { StatusLabel } from '@cl-helpers/status-label.enum';
+import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Injectable({
   providedIn: 'root'

@@ -5,6 +5,7 @@ import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.
 import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
+import { ILoyaltyForm, ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Component({
   selector: 'cl-loyalty-review',

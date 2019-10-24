@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { LoyaltyHttpAdapter } from '@cl-core/http-adapters/loyalty-http-adapter';
 import { map, switchMap } from 'rxjs/operators';
+import { IBasicTierApi } from '@perx/core';
+import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +16,11 @@ export class LoyaltyService implements ITableService {
   constructor(private loyaltyHttpService: LoyaltyHttpService) {
   }
 
-  public getLoyalties(params: HttpParamsOptions): Observable<{ data: ILoyaltyForm[] }> {
+  public getLoyalties(params: HttpParamsOptions): Observable<{data: ILoyaltyForm[]}> {
     params.include = 'pool,basic_tier,custom_tiers';
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyHttpService.getLoyalties(httpParams).pipe(
-      map(response => {
-        return LoyaltyHttpAdapter.transformToLoyalties(response);
-      })
+      map(response => LoyaltyHttpAdapter.transformToLoyalties(response))
     );
   }
 

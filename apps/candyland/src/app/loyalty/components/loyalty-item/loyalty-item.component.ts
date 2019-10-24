@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from 
 import { Router } from '@angular/router';
 import { StatusLabel } from '@cl-helpers/status-label.enum';
 import { LoyaltyAction } from '../../models/loyalty-action.enum';
+import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 export interface IEngagementItemMenuOption {
   action: string;

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Component({
   selector: 'cl-view-global-earn-burn-rules',

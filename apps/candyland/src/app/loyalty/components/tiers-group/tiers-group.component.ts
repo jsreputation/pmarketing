@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { CustomDataSource } from '@cl-shared/table';
 import { LoyaltyPointsExpireTrigger } from '../../models/loyalty-points-expire-trigger.enum';
+import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Component({
   selector: 'cl-tiers-group',
