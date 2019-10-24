@@ -72,6 +72,8 @@ export class WhistlerVouchersService implements IVoucherService {
             if (merchantIdA ? !merchantIdB : merchantIdB) {
               return !merchantIdA ? 1 : -1;
             }
+
+            return 0;
           }))
       );
   }
