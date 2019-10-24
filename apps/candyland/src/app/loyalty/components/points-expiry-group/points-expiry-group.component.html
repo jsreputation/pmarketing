@@ -1,0 +1,31 @@
+<mat-expansion-panel class="card" expanded>
+  <mat-expansion-panel-header class="card-header">
+    <h2 class="card-title">
+      Points Expiry
+    </h2>
+  </mat-expansion-panel-header>
+  <div class="card-content" *ngIf="group" [formGroup]="pointsExpiry">
+    <div class="loyalty">
+      <div class="loyalty-row input-group">
+        <span>Points expire</span>
+        <mat-form-field>
+          <input type="number" [min]="0" matInput formControlName="amount">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="type">
+            <mat-option [value]="pointsExpirePeriodType.day">Day</mat-option>
+            <mat-option [value]="pointsExpirePeriodType.week">Week</mat-option>
+            <mat-option [value]="pointsExpirePeriodType.month">Month</mat-option>
+            <mat-option [value]="pointsExpirePeriodType.year">Year</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="loyalty-points-expiry-type-input">
+          <mat-select formControlName="trigger">
+            <mat-option [value]="pointsExpireTrigger.accrual">from when accrual the point was earned.</mat-option>
+            <mat-option [value]="pointsExpireTrigger.inactivity">from user inactivity.</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</mat-expansion-panel>

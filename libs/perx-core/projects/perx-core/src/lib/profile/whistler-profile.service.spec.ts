@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { V4ProfileService } from './v4-profile.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ProfileModule } from './profile.module';
-import { ConfigModule } from '../../public-api';
+import { ConfigModule, TokenStorage } from '../../public-api';
 
 describe('ProfileService', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -11,7 +11,8 @@ describe('ProfileService', () => {
       HttpClientTestingModule,
       ProfileModule,
       ConfigModule.forRoot({})
-    ]
+    ],
+    providers: [TokenStorage]
   }));
 
   it('should be created', () => {

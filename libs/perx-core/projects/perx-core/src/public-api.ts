@@ -99,8 +99,15 @@ export {
   ITransactionHistory,
   IRewardTransactionHistory,
   IPurchaseTransactionHistory,
-  TransactionDetailType
+  TransactionDetailType,
+  IJoinMethod
 } from './lib/loyalty/models/loyalty.model';
+export {
+  ILoyaltyApi,
+  IBasicTierApi,
+  ICustomTierApi,
+  IJoinMethodApi
+} from './lib/loyalty/models/loyalty-api.model';
 export { TransactionPipe } from './lib/loyalty/loyalty-transactions-list/transaction.pipe';
 export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-summary.component';
 
@@ -172,6 +179,8 @@ export { DateComponent } from './lib/survey/question/date/date.component';
  */
 export { ConfigModule } from './lib/config/config.module';
 export { Config } from './lib/config/config';
+export { ConfigService } from './lib/config/config.service';
+export { IConfig, IMicrositeSettings } from './lib/config/models/config.model';
 
 /**
  * Theme

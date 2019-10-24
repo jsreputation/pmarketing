@@ -12,6 +12,22 @@
   }
 }
 
+.login-bg {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+
+  img {
+    position: relative;
+    max-height: 100%;
+    height: 100%;
+    width: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
 .content-container {
   justify-content: space-around;
   text-align: center;
@@ -33,5 +49,52 @@
   .login-form {
     flex: 0;
     margin-bottom: 5rem;
+
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+      background-color: white;
+      border-radius: 5px;
+    }
+  }
+}
+
+.hsbc-xmas {
+  justify-content: start;
+
+  .logo {
+    min-width: 18.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 3.2rem;
+  }
+
+  .login-form {
+    box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.15);
+    border-radius: 0.8rem;
+    background-color: #ffffff;
+    padding: 2.4rem 1.5rem;
+
+    h1 {
+      text-align: left;
+      font-size: 3.4rem;
+      margin-top: 0;
+    }
+
+    mat-form-field {
+      &:first-child {
+        padding-bottom: 1.2rem;
+      }
+    }
+
+    mat-hint {
+      color: #0F69AF;
+      font-size: 1.2rem;
+    }
+
+    .other-info {
+      color: #666666;
+      font-size: 1rem;
+    }
   }
 }

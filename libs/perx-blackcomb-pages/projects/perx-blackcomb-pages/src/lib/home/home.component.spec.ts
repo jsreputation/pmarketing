@@ -2,7 +2,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ICampaignService, LoyaltyModule, RewardsModule, RewardsService, LoyaltyService, ProfileService } from '@perx/core';
+import { ICampaignService, LoyaltyModule, RewardsModule, RewardsService, LoyaltyService, ProfileService, IGameService } from '@perx/core';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material';
 import { GamesCollectionComponent } from './games-collection/games-collection.component';
@@ -17,6 +17,9 @@ const profileService = {
 
 const loyaltyServiceStub = {
   getLoyalties: () => of([])
+};
+
+const gameSvcStub = {
 };
 
 describe('HomeComponent', () => {
@@ -41,7 +44,8 @@ describe('HomeComponent', () => {
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
-        { provide: ProfileService, useValue: profileService }
+        { provide: ProfileService, useValue: profileService },
+        { provide: IGameService, useValue: gameSvcStub }
       ]
     })
       .compileComponents();

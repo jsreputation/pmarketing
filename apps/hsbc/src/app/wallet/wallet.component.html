@@ -1,6 +1,6 @@
 <div class="rewards-list">
   <h1>My Rewards</h1>
-  <perx-core-vouchers
+  <perx-core-vouchers *ngIf="sourceType !== null"
     (route)="onRoute($event)"
     [filter]="'issued'"
     [iconDisplay]="'arrow_forward_ios'"
@@ -9,6 +9,7 @@
     [showExpireDate]="true"
     [showRedeemedDate]="false"
     [showRedeemedIcon]="false"
+    [sourceType]="sourceType"
     ></perx-core-vouchers>
 </div>
 

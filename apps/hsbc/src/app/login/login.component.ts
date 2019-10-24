@@ -1,10 +1,10 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
-import { isPlatformBrowser } from '@angular/common';
-import { AuthenticationService, NotificationService } from '@perx/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Router} from '@angular/router';
+import {isPlatformBrowser} from '@angular/common';
+import {AuthenticationService, ConfigService, IConfig, NotificationService, IMicrositeSettings} from '@perx/core';
+import {Validators, FormBuilder, FormGroup} from '@angular/forms';
+import {HttpErrorResponse} from '@angular/common/http';
+import {switchMap, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -15,17 +15,18 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
 
   public preAuth: boolean;
-
+  public loginBackgroundUrl: string;
   public errorMessage: string;
+  public sourceType: string;
 
   constructor(
     private router: Router,
     private authService: AuthenticationService,
     @Inject(PLATFORM_ID) private platformId: object,
     private fb: FormBuilder,
+    private configService: ConfigService,
     private notificationService: NotificationService
   ) {
-    this.preAuth = environment.preAuth;
     this.initForm();
   }
 
@@ -37,13 +38,22 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
-      this.authService.autoLogin().subscribe(
-        () => {
-          this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'puzzle');
+    this.configService.readAppConfig().pipe(
+      tap((config: IConfig) => {
+        this.preAuth = config.preAuth as boolean;
+        if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
+          this.authService.autoLogin().subscribe(
+            () => {
+              this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'puzzle');
+            }
+          );
         }
-      );
-    }
+      }),
+      switchMap((config: IConfig) => this.configService.getTenantAppSettings(config.sourceType as string))
+    ).subscribe((settings: IMicrositeSettings) => {
+      this.loginBackgroundUrl = settings.jsonValue.background as string;
+      this.sourceType = settings.jsonValue.source_type as string;
+    });
   }
 
   public onSubmit(): void {
