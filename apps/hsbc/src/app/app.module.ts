@@ -22,6 +22,7 @@ import {
   ConfigModule,
   RewardsModule,
 
+  // ConfigService
   // StampService,
   // ICampaignService
 } from '@perx/core';
@@ -84,6 +85,22 @@ import { AccountComponent } from './account/account.component';
 //   getCampaigns: () => of(campaigns)
 // };
 
+// const configServiceStub = {
+//   getTenantAppSettings: () => of({
+//     id: 1,
+//     key: 'hsbc-xmas',
+//     stringValue: '',
+//     jsonValue: {
+//       background: 'assets/xmas_background.jpg',
+//       source_type: 'hsbc-xmas',
+//     },
+//   }),
+//   readAppConfig: () => of({
+//     preAuth: false,
+//     sourceType: 'hsbc-xmas'
+//   })
+// };
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -137,6 +154,7 @@ import { AccountComponent } from './account/account.component';
   providers: [
     DatePipe,
     {provide: APP_BASE_HREF, useValue: environment.baseHref },
+    // { provide: ConfigService, useValue: configServiceStub },
     // { provide: StampService, useValue: stampServiceStub },
     // { provide: ICampaignService, useValue: campaignServiceStub },
   ],
