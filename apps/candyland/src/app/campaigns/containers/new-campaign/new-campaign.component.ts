@@ -12,7 +12,7 @@ import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapte
 import { map, switchMap, tap, catchError, takeUntil } from 'rxjs/operators';
 import { combineLatest, iif, of, Observable, Subject } from 'rxjs';
 
-import { ICampaignAttributes, ICommTemplateAttributes, IOutcomeAttributes } from '@perx/whistler';
+import { ICampaignAttributes, ICommTemplateAttributes } from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';

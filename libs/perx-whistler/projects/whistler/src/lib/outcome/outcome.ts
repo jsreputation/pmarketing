@@ -10,4 +10,5 @@ export interface IOutcomeAttributes {
     probability?: number;
     loot_box_id?: number;
     no_outcome?: boolean;
+    campaign_entity_id?: number;
 }
