@@ -120,7 +120,6 @@ export class PuzzleComponent implements OnInit, OnDestroy {
           this.fetchCardsCount(this.campaignId);
         }
       );
-
     }
 
     if (!localStorage.getItem('enableSound')) {
