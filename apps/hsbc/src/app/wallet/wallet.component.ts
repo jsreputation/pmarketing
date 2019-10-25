@@ -15,6 +15,7 @@ export class WalletComponent implements OnInit {
   public selectedTab: number = 0;
   public sourceType: string | null = null;
   public voucherFilter: string[];
+  public canSelectRedeemed: boolean;
 
   constructor(
     private router: Router,
@@ -30,6 +31,7 @@ export class WalletComponent implements OnInit {
       (config: IConfig) => {
         this.sourceType = config.sourceType.toString();
         this.voucherFilter = this.setVoucherFilter();
+        this.canSelectRedeemed = this.setCanSelectRedeemed();
       }
     );
 
@@ -60,6 +62,13 @@ export class WalletComponent implements OnInit {
 
   public onRoute(id: string): void {
     this.router.navigate([`/voucher/${id}`]);
+  }
+
+  private setCanSelectRedeemed(): boolean {
+    if (this.sourceType === 'hsbc-xmas') {
+      return true;
+    }
+    return false;
   }
 
   private setVoucherFilter(): string[] {
