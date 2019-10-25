@@ -13,17 +13,18 @@
         </ng-container>
 
         <perx-core-puzzle-collect-stamps *ngIf="card.displayProperties.displayCampaignAs === 'stamp_card'"
-            [nbSlots]="card.campaignConfig.totalSlots"
-            [stamps]="card.collectionStamps"
-            [rewards]="card.campaignConfig.collectionRewards"
-            [preStampImg]="card.displayProperties.preStampImg"
-            [postStampImg]="card.displayProperties.postStampImg"
-            [rewardPreStamp]="card.displayProperties.rewardPreStamp"
-            [rewardPostStamp]="card.displayProperties.rewardPostStamp"
-            [backgroundImage]="card.displayProperties.cardImage.value.imageUrl"
+            [nbSlots]="card.displayProperties.totalSlots"
+            [stamps]="card.stamps ? card.stamps : []"
+            [rewards]="rewards"
+            [preStampImg]="'assets/hsbc-prestamp.png'"
+            [postStampImg]="'assets/hsbc-stamped.png'"
+            [rewardPreStamp]="'assets/pre-reward.png'"
+            [rewardPostStamp]="'assets/post-reward.png'"
+            [backgroundImage]="card.displayProperties.backgroundImg.value.imageUrl"
             [title]="card.title || title"
             [subTitle]="card.subTitle || subTitle"
-            (availableStampClicked)="stampClicked($event)">
+            (availableStampClicked)="stampClicked($event)"
+            [showStampsCounter]="true">
         </perx-core-puzzle-collect-stamps>
     </ng-container>
 </div>

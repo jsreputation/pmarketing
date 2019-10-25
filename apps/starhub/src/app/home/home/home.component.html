@@ -8,7 +8,9 @@
         <h2>Explore your rewards,</h2>
         <span class="tier" *ngIf="loyalty">{{loyalty.membershipTierName | noRenewaleInName | titlecase}} Member!</span>
         <div>
-          <span class="subtitle" *ngIf="profile && profile.customProperties && profile.customProperties.membership === 'Hub Club'">+ Hub Club</span>
+          <span class="subtitle"
+            *ngIf="profile && profile.customProperties && profile.customProperties.membership === 'Hub Club'">+ Hub
+            Club</span>
         </div>
       </div>
     </mat-toolbar-row>
@@ -19,7 +21,7 @@
         Rewards</a>
     </mat-toolbar-row>
   </mat-toolbar>
-  <div class="content">
+  <div class="content" (scroll)="onScrollCall($event)" #contentScrolled>
     <router-outlet></router-outlet>
   </div>
 </div>

@@ -1,0 +1,21 @@
+<mat-card matRipple [matRippleDisabled]="!isActive(puzzle)" [class.disabled]="!isActive(puzzle)"
+          [tabindex]="isActive(puzzle) ? 0 : -1" (click)="isActive(puzzle) && puzzleSelected(puzzle)"
+          *ngFor="let puzzle of puzzles; let i=index">
+  <div class="puzzle-content">
+    <div class="puzzle-img__wrapper">
+      <img [ngClass]="isActive(puzzle) ? 'puzzle-img' : 'puzzle-img grayscale' " src="{{puzzle.displayProperties.cardImage.value.imageUrl}}">
+    </div>
+    <div class="puzzle-details">
+      <h1>Puzzle #{{indexToLetter(i)}}
+        <span class="badge-warn">
+          {{nbPlacedStamps(puzzle)}}/{{total}}
+        </span>
+      </h1>
+      <p>{{nbAvailableStamps(puzzle)}} new pieces</p>
+      <p class="play-now">Play Now!</p>
+    </div>
+  </div>
+  <mat-icon *ngIf="iconDisplay">
+    {{iconDisplay}}
+  </mat-icon>
+</mat-card>

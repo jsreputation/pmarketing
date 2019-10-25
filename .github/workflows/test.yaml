@@ -1,0 +1,113 @@
+name: test
+on: [pull_request]
+jobs:
+  build:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: azure/k8s-actions/k8s-set-context@master
+        with:
+          kubeconfig: ${{ secrets.BUILDER_KUBE_CONFIG }}
+      - name: Get list of apps
+        run: |
+          APP_FOLDERS=$(ls -d apps/*)
+          LIBS_FOLDERS=$(ls -d libs/*)
+          BACKEND_FOLDERS=$(ls -d backend/*)
+
+          echo ::set-env name=APP_FOLDERS::${APP_FOLDERS[@]}
+          echo ::set-env name=LIBS_FOLDERS::${LIBS_FOLDERS[@]}
+          echo ::set-env name=BACKEND_FOLDERS::${BACKEND_FOLDERS[@]}
+      - name: Create tekton tasks
+        run: |
+          declare -a TEKTON_TASKS
+          FOLDERS=("${APP_FOLDERS[@]}" "${LIBS_FOLDERS[@]}" "${BACKEND_FOLDERS[@]}")
+          for f in ${FOLDERS[@]}; do
+          TEKTON_TASK=$(cat <<EOT | kubectl -n build create -f - --output=jsonpath={.metadata.name}
+          apiVersion: tekton.dev/v1alpha1
+          kind: TaskRun
+          metadata:
+            generateName: microsite-apps-ng-test-${f//[^0-9a-zA-Z-]/-}-
+          spec:
+            serviceAccount: tekton
+            taskRef:
+              name: microsite-apps-ng-test
+            inputs:
+              resources:
+                - name: workspace
+                  resourceSpec:
+                    type: git
+                    params:
+                      - name: url
+                        value: git@github.com:PerxTech/microsite-apps-ng.git
+                      - name: revision
+                        value: ${{ github.sha }}
+              params:
+                - name: folder
+                  value: ${f}
+            podTemplate:
+              securityContext:
+                runAsUser: 0
+                runAsGroup: 0
+              nodeSelector:
+                dedicated: build
+              tolerations:
+                - key: "dedicated"
+                  value: "build"
+                  effect: "NoSchedule"
+              affinity:
+                nodeAffinity:
+                  preferredDuringSchedulingIgnoredDuringExecution:
+                    - weight: 1
+                      preference:
+                        matchExpressions:
+                        - key: machine-type
+                          operator: In
+                          values:
+                          - standard
+          EOT
+          )
+          TEKTON_TASKS+=(${TEKTON_TASK})
+          done
+          echo ::set-env name=TEKTON_TASKS::${TEKTON_TASKS[@]}
+      - name: Download tekton cli and install parallel
+        run: |
+          curl -L https://github.com/tektoncd/cli/releases/download/v0.4.0/tkn_0.4.0_Linux_x86_64.tar.gz \
+          | sudo tar xzv -C /usr/local/bin tkn
+          sudo apt-get update && sudo apt-get install -y parallel
+      - name: Wait for tekton task running
+        run: |
+          for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
+            echo "Wait for tekton task: ${TASKRUN_NAME}"
+            WAIT_TIME=0
+            until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" = "Running" ] || [ $WAIT_TIME -gt 180 ]; do
+              (( WAIT_TIME+=5 ))
+              sleep 5
+            done
+          done
+      - name: Stream tekton logs
+        run: |
+          parallel tkn -n build taskrun logs -f {} ::: ${TEKTON_TASKS[@]}
+      - name: Check task result
+        run: |
+          for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
+            WAIT_TIME=0
+            until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" != "Running" ] || [ $WAIT_TIME -gt 10 ]; do
+              (( WAIT_TIME+=1 ))
+              echo "Task ${TASKRUN_NAME} is still running, wait for 1 second"
+              sleep 1
+            done
+            REASON=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath={.status.conditions[0].reason})
+            if [ "$REASON" != "Succeeded" ]; then
+              echo "Taskrun ${TASKRUN_NAME} status is ${REASON}, fail the job"
+              exit 1
+            fi
+          done
+      - name: Output Errors
+        if: failure()
+        run: |
+          for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
+            if [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" != "Succeeded" ]; then
+              tkn -n build taskrun logs ${TASKRUN_NAME}
+            fi
+          done

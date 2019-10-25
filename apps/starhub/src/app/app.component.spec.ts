@@ -1,4 +1,4 @@
-import { TestBed, async, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture, fakeAsync, tick, inject } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule, MatDialog, MatSnackBar } from '@angular/material';
@@ -14,7 +14,7 @@ import {
   // GameType,
   TokenStorage
 } from '@perx/core';
-import { of, Observable, throwError } from 'rxjs';
+import { of, Observable, throwError, BehaviorSubject } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
@@ -25,6 +25,7 @@ import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
 import { rewards } from './rewards.mock';
 import { game } from './game.mock';
+import { AnalyticsService, PageType } from './analytics.service';
 
 class MockNotificationService {
   get $popup(): Observable<any> {
@@ -36,12 +37,18 @@ class MockNotificationService {
   }
 }
 
+const analyticsServiceStub = {
+  events$: new BehaviorSubject({ pageName: 'test', pageType: PageType.detailPage }),
+  addEvent: (event) => analyticsServiceStub.events$.next(event)
+};
+
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let router: Router;
   const authenticationServiceStub = {
-    saveUserAccessToken: () => { }
+    saveUserAccessToken: () => { },
+    getUserAccessToken: () => 'token'
   };
   const profileServiceStub = {
     whoAmI: () => of()
@@ -153,7 +160,8 @@ describe('AppComponent', () => {
         { provide: Router, useValue: routerStub },
         { provide: MatSnackBar, useValue: matSnackBarStub },
         // { provide: IGameService, useValue: gameServiceStub },
-        { provide: TokenStorage, useValue: tokenStorageStub }
+        { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: AnalyticsService, useValue: analyticsServiceStub }
       ],
     });
     TestBed.overrideModule(BrowserDynamicTestingModule, {
@@ -291,4 +299,20 @@ describe('AppComponent', () => {
   //   expect(routerSpy).toHaveBeenCalledWith(['/game'], { queryParams: { id: 1 } });
   // }));
   // });
+  it('should handle event', fakeAsync(inject([AnalyticsService, AuthenticationService],
+    (analytics: AnalyticsService, authenticationService: AuthenticationService) => {
+      const spy = spyOn(authenticationService, 'getUserAccessToken');
+      analytics.addEvent({ pageName: 'test', pageType: PageType.detailPage });
+      component.ngOnInit();
+      tick();
+      expect(spy).toHaveBeenCalled();
+      analytics.addEvent({
+        pageName: 'test',
+        pageType: PageType.overlay,
+        siteSectionLevel2: 'test',
+        siteSectionLevel3: 'test'
+      });
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })));
 });
