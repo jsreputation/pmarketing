@@ -63,9 +63,9 @@ export class CommsService {
     return this.commsHttpsService.deleteCommsEvent(id);
   }
 
-  public updateCommsTemplate(id: string, data: IComm): Observable<any> {
+  public updateCommsTemplate(data: IComm): Observable<any> {
     const sendData = CommsHttpAdapter.transformFromCommsTemplates(data);
-    return this.commsHttpsService.updateCommsTemplate(id, { data: { id, ...sendData } });
+    return this.commsHttpsService.updateCommsTemplate(data.templateId, { data: { id: data.templateId, ...sendData } });
   }
 
   public createCommsTemplate(data: IComm): Observable<any> {

@@ -145,7 +145,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
 
   public addReward(value: IRewardEntity): void {
-    if (value.probability && !this.enableProbability.value) {
+    if ((value.probability || value.probability === 0) && !this.enableProbability.value) {
       this.enableProbability.patchValue(true);
     }
     this.rewards.push(this.createRewardFormGroup(value, this.enableProbability.value));

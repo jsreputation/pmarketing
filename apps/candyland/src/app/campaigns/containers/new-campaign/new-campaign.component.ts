@@ -12,7 +12,7 @@ import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapte
 import { map, switchMap, tap, catchError, takeUntil } from 'rxjs/operators';
 import { combineLatest, iif, of, Observable, Subject } from 'rxjs';
 
-import { ICampaignAttributes } from '@perx/whistler';
+import { ICampaignAttributes, ICommTemplateAttributes } from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
@@ -55,6 +55,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTenants();
     this.initForm();
+    this.store.currentCampaign$.subscribe(console.log);
     this.form.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
@@ -158,14 +159,29 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return generateLimitData$;
   }
 
-  private updateCommFn(): (campaign: ICampaign) => Observable<any> {
-    let generateCommsData$;
+  private updateCommFn(campaign: ICampaign): Observable<any> {
+    let templateAction$;
+    let eventAction$;
+    const channelInfo = Object.assign({}, this.campaign.channel);
+    const updateCommsTemplateFn$ = this.commsService.updateCommsTemplate(channelInfo);
+    const createCommsTemplateFn$ = this.commsService.createCommsTemplate(channelInfo);
+    const updateCommsEventFn$ = newTemplateId => this.commsService.updateCommsEvent(channelInfo.eventId, this.campaign, newTemplateId);
+    const createCommsEventFn$ = newTemplateId => this.commsService.createCommsEvent(this.campaign, newTemplateId);
 
-    const deleteCommsFn$ = campaign => this.commsService.deleteComms();
-    const updateCommsFn$ = campaign => this.commsService.updateComms();
-    const createCommsFn$ = campaign => this.commsService.createComms();
+    if (channelInfo.templateId) {
+      templateAction$ = updateCommsTemplateFn$;
+    } else {
+      templateAction$ = createCommsTemplateFn$;
+    }
+    if (channelInfo.eventId) {
+      eventAction$ = updateCommsEventFn$;
+    } else {
+      eventAction$ = createCommsEventFn$;
+    }
 
-    //If has id and choose weblink delete comms, else has id update comms, else create comms
+    return templateAction$.pipe(
+      switchMap((template: IJsonApiPayload<ICommTemplateAttributes>) => eventAction$(template.data.id))
+    );
   }
 
   private updateOutcomesFn(): (campaign: ICampaign) => Observable<any> {
@@ -278,9 +294,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       combineLatest(
         this.campaignsService.getCampaign(campaignId).pipe(catchError(() => of(null))),
         this.commsService.getCommsEvent(paramsComm).pipe(catchError(() => of(null))),
-        this.outcomesService.getOutcomes(paramsPO).pipe(
-          map(outcomes => outcomes.map(outcome => ({ ...outcome, probability: outcome.probability * 100 }))),
-          catchError(() => of(null)))
+        this.outcomesService.getOutcomes(paramsPO).pipe(catchError(() => of(null)))
       ).pipe(
         map(
           ([campaign, commEvent, outcomes]:
