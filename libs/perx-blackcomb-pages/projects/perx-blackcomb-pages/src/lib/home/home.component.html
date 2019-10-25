@@ -6,17 +6,18 @@
         mat-raised-button
         class="enlarge home-qr-button"
         routerLink="/qr"
+        translate
       >
-        My QR
+        {{ 'MY_QR' | translate }}
       </a>
     </div>
   </div>
   <div class="games">
-    <div class="title" translate>Games</div>
+    <div class="title" translate>GAMES</div>
     <perx-blackcomb-games-collection [games]="games$"></perx-blackcomb-games-collection>
   </div>
   <div class="rewards-collection" *ngIf="(rewards$ | async)?.length > 0">
-    <div class="title">Featured Rewards</div>
+    <div class="title" translate>FEATURED_REWARDS</div>
     <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>
   <div class="rewars-collection">

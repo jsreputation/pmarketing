@@ -6,11 +6,10 @@ import { LayoutComponent } from './layout.component';
 import {
   HistoryComponent,
   RedeemComponent,
-  LoginComponent,
   VoucherDetailComponent,
   RewardDetailsComponent,
-  LoadingComponent,
-  ContentComponent
+  ContentComponent,
+  LoadingComponent
 } from '@perx/blackcomb-pages';
 import { HomeModule } from '../home/home.module';
 
@@ -25,11 +24,10 @@ import { TranslateModule } from '@ngx-translate/core';
     LayoutComponent,
     HistoryComponent,
     RedeemComponent,
-    LoginComponent,
     VoucherDetailComponent,
     RewardDetailsComponent,
-    LoadingComponent,
     ContentComponent,
+    LoadingComponent
   ],
   imports: [
     WalletModule,

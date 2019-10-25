@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   PerxCoreModule,
@@ -30,25 +29,23 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class CustomTranslateLoader implements TranslateLoader {
-  contentHeader = new HttpHeaders({
+  private contentHeader: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
   });
-
-  constructor(private httpClient: HttpClient) { }
+  private hostUrl: string = 'http://localhost:4000/assets/';
+  constructor(private httpClient: HttpClient) {
+    if (environment.production) {
+      this.hostUrl = environment.baseHref+'/assets/'
+    }
+  }
   getTranslation(lang: string): Observable<any> {
-    console.log(lang, 555)
-    const apiAddress = 'http://localhost:4000/' + `assets/en-json.json`;
+    const apiAddress = this.hostUrl + `${lang}-json.json`;
     return this.httpClient.get(apiAddress, { headers: this.contentHeader })
       .pipe(
         catchError(() => this.httpClient.get(`/assets/i18n/en.json`))
       );
   }
-}
-
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  console.log('777')
-  return new TranslateHttpLoader(http);
 }
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
