@@ -174,6 +174,15 @@ export class PuzzleComponent implements OnInit, OnDestroy {
     .subscribe(
       (stamp: IStamp) => {
         if (stamp.state === StampState.redeemed) {
+
+          const redeemedCard = this.card.stamps.map((cardStamp: IStamp) => {
+            if (cardStamp.id === stampId) {
+              return { ...cardStamp, state: StampState.redeemed };
+            }
+            return cardStamp;
+          });
+          this.card = {...this.card, stamps: redeemedCard};
+
           if (this.card.cardNumber === this.cardsCount) { // we are on the last card
             const redeemedTransactionsCount = this.card.stamps.filter(s => s.state === StampState.redeemed).length;
             if (this.card.displayProperties.displayCampaignAs === 'stamp_card'
