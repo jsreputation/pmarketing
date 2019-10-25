@@ -71,10 +71,10 @@ export class RewardsListTabbedComponent implements OnInit {
 
     return rewardsList.pipe(
       map(rewards => tab.filterValue === null || tab.filterKey === null ? rewards : rewards.filter((reward: IReward) => {
-          const filterBy = tab.filterKey;
-          return reward[`${filterBy}`] &&
+        const filterBy = tab.filterKey;
+        return reward[`${filterBy}`] &&
             reward[`${filterBy}`].toLowerCase() === tab.filterValue.toLowerCase();
-        }
+      }
       ))
     );
   }

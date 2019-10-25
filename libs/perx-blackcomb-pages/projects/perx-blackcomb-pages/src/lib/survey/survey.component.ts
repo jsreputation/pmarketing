@@ -64,31 +64,31 @@ export class SurveyComponent implements OnInit, OnDestroy {
   }
   public onSubmit(): void {
     this.surveyService.postSurveyAnswer(this.answers, this.survey, this.route.snapshot.params.id)
-    .subscribe(
-      (res) => {
-        let text: string;
-        let title: string;
-        let imageUrl: string;
-        let buttonTxt: string;
-        if (res.hasOutcomes) {
-          text = 'See you at our event!';
-          title = 'Your RSVP is successful!';
-          buttonTxt = 'To Wallet';
-          imageUrl = 'assets/congrats_image.png';
-        } else {
-          text = 'Nonetheless, we’ve added you to our waiting list for the event and will call you when places are available by 07 October 2019';
-          title = 'Thank you for your interest. We’re sorry, all places have been taken.';
-          buttonTxt = null;
+      .subscribe(
+        (res) => {
+          let text: string;
+          let title: string;
+          let imageUrl: string;
+          let buttonTxt: string;
+          if (res.hasOutcomes) {
+            text = 'See you at our event!';
+            title = 'Your RSVP is successful!';
+            buttonTxt = 'To Wallet';
+            imageUrl = 'assets/congrats_image.png';
+          } else {
+            text = 'Nonetheless, we’ve added you to our waiting list for the event and will call you when places are available by 07 October 2019';
+            title = 'Thank you for your interest. We’re sorry, all places have been taken.';
+            buttonTxt = null;
+          }
+          this.router.navigate(['/wallet']);
+          this.notificationService.addPopup({
+            text,
+            title,
+            buttonTxt,
+            imageUrl
+          });
         }
-        this.router.navigate(['/wallet']);
-        this.notificationService.addPopup({
-          text,
-          title,
-          buttonTxt,
-          imageUrl
-        });
-      }
-    );
+      );
   }
 
   public setTotalLength(totalLength: number): void {

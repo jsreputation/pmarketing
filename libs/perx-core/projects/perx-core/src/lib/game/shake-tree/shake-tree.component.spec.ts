@@ -10,7 +10,7 @@ describe('ShakeTreeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ShakeTreeComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
