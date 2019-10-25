@@ -4,6 +4,7 @@ import { GameComponent } from './game.component';
 import { of } from 'rxjs';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
+import { ScratchComponent } from './scratch/scratch.component';
 import { GameModule, IGameService } from '@perx/core';
 import { MatDialogModule, MatProgressBarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -17,7 +18,12 @@ describe('GameComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GameComponent, ShakeComponent, TapComponent],
+      declarations: [
+        GameComponent,
+        ShakeComponent,
+        TapComponent,
+        ScratchComponent,
+      ],
       imports: [
         GameModule,
         MatDialogModule,
