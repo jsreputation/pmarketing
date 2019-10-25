@@ -15,8 +15,12 @@
     </div>
   </div>
   <div class="game-footer">
-    <button mat-flat-button (click)="isEnabled = true"
-    [hidden]="isEnabled" color="primary">
+    <button
+      mat-flat-button
+      color="primary"
+      [hidden]="isEnabled"
+      (click)="isEnabled = true"
+    >
       {{ game.texts.button }}
     </button>
   </div>
