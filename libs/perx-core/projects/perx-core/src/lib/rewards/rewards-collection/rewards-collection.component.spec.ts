@@ -92,7 +92,7 @@ describe('RewardsCollectionComponent', () => {
         UtilsModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

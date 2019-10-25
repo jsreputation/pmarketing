@@ -1,22 +1,22 @@
 import { ISurvey, SurveyQuestionType } from '@perx/core';
 
 export const survey: ISurvey = {
-    title: 'Please help us knowing you better',
-    questions: [
-        {
-            question: 'Which color you like?',
-            description: 'Please select',
-            id: '1',
-            required: false,
-            payload: {
-                type: SurveyQuestionType.multipleChoice,
-                multiple: false,
-                choices: [
-                    'blue',
-                    'white',
-                    'red'
-                ]
-            }
-        }
-    ]
+  title: 'Please help us knowing you better',
+  questions: [
+    {
+      question: 'Which color you like?',
+      description: 'Please select',
+      id: '1',
+      required: false,
+      payload: {
+        type: SurveyQuestionType.multipleChoice,
+        multiple: false,
+        choices: [
+          'blue',
+          'white',
+          'red'
+        ]
+      }
+    }
+  ]
 };

@@ -18,26 +18,26 @@ describe('VoucherComponent', () => {
   const mockVoucher: IVoucher = {
     id: 1,
     reward: {
-        id: 1,
-        name: 'reward name',
-        description: 'reward descriptiomn',
-        subtitle: '',
-        validFrom: new Date(),
-        validTo: new Date(),
-        sellingFrom: new Date(),
-        rewardThumbnail: '',
-        rewardBanner: 'https://picsum.photos/50/50?random=1',
-        merchantImg: 'https://picsum.photos/50/50?random=1',
-        rewardPrice: [],
-        merchantId: 1,
-        merchantName: 'merchant name',
-        merchantWebsite: '',
-        termsAndConditions: '',
-        howToRedeem: '',
-        redemptionType: null,
-        categoryTags: [],
-        inventory: null,
-      },
+      id: 1,
+      name: 'reward name',
+      description: 'reward descriptiomn',
+      subtitle: '',
+      validFrom: new Date(),
+      validTo: new Date(),
+      sellingFrom: new Date(),
+      rewardThumbnail: '',
+      rewardBanner: 'https://picsum.photos/50/50?random=1',
+      merchantImg: 'https://picsum.photos/50/50?random=1',
+      rewardPrice: [],
+      merchantId: 1,
+      merchantName: 'merchant name',
+      merchantWebsite: '',
+      termsAndConditions: '',
+      howToRedeem: '',
+      redemptionType: null,
+      categoryTags: [],
+      inventory: null,
+    },
     state: VoucherState.issued,
     code: 'yo',
     expiry: null,
@@ -88,7 +88,7 @@ describe('VoucherComponent', () => {
   it('should display reward name in component', fakeAsync(() => {
     component.voucherId = 1;
     const voucherService: IVoucherService = fixture.debugElement.injector
-    .get<IVoucherService>(IVoucherService as Type<IVoucherService>);
+      .get<IVoucherService>(IVoucherService as Type<IVoucherService>);
     const voucherServiceSpy = spyOn(voucherService, 'get').and.returnValue(
       of(mockVoucher)
     );

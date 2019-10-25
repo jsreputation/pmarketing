@@ -96,6 +96,6 @@ export class GameComponent implements OnInit, OnDestroy {
           }
         });
       }
-    );
+      );
   }
 }

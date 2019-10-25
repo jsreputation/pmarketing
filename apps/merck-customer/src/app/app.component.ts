@@ -37,8 +37,8 @@ export class AppComponent implements OnInit {
     private snackBar: MatSnackBar,
     private location: Location
   ) {
-      this.preAuth = environment.preAuth;
-      this.notificationService.$snack.subscribe((message: string) => {
+    this.preAuth = environment.preAuth;
+    this.notificationService.$snack.subscribe((message: string) => {
       this.snackBar.openFromComponent(CustomSnackbarComponent, {
         data: {
           message,

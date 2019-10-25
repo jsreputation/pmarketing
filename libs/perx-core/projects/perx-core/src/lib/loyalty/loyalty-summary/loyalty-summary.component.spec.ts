@@ -17,10 +17,10 @@ describe('LoyaltySummaryComponent', () => {
   };
   const profileServiceStub = {
     whoAmI: () => of({
-        id: 1,
-        state: '',
-        firstName: '',
-        lastName: ''})
+      id: 1,
+      state: '',
+      firstName: '',
+      lastName: ''})
   };
   beforeEach(async(() => {
     TestBed.configureTestingModule({

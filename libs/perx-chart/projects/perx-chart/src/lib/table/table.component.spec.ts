@@ -12,7 +12,7 @@ describe('TableComponent', () => {
       declarations: [ TableComponent ],
       imports: [ MatTableModule ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
