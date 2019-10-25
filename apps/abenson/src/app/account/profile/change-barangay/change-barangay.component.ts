@@ -35,9 +35,9 @@ export class ChangeBarangayComponent implements OnInit {
 
     if (this.customProperties.barangay) {
       this.profileService.setCustomProperties(this.customProperties).subscribe(() => {
-          this.location.back();
-        },
-        (err) => {console.error(err); });
+        this.location.back();
+      },
+      (err) => {console.error(err); });
     }
     return;
   }

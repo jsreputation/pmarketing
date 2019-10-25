@@ -56,35 +56,35 @@ export class LoginComponent implements OnInit, OnDestroy {
     const password: string = this.loginForm.get('password').value;
     this.errorMessage = null;
     this.authService.login(username, password, '2')
-    .pipe(
-      takeUntil(this.destroy$)
-    )
-    .subscribe(
-      () => {
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        () => {
         // set global userID var for GA tracking
-        if (!((window as any).primaryIdentifier)) {
-          (window as any).primaryIdentifier = username;
-        }
-        this.redirectAfterLogin();
-      },
-      (err) => {
-        if (err instanceof HttpErrorResponse) {
-          if (err.status === 0) {
-            this.notificationService.addPopup({
-              title: 'We could not reach the server',
-              text: 'Please try again soon'
-            });
-          } else if (err.status === 401) {
-            [this.loginForm.controls.customerID, this.loginForm.controls.password]
-              .forEach(c => c.setErrors({
-                invalid: true
-              }));
-            this.errorMessage = 'Invalid credentials';
+          if (!((window as any).primaryIdentifier)) {
+            (window as any).primaryIdentifier = username;
           }
-        } else {
-          this.errorMessage = err;
+          this.redirectAfterLogin();
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            if (err.status === 0) {
+              this.notificationService.addPopup({
+                title: 'We could not reach the server',
+                text: 'Please try again soon'
+              });
+            } else if (err.status === 401) {
+              [this.loginForm.controls.customerID, this.loginForm.controls.password]
+                .forEach(c => c.setErrors({
+                  invalid: true
+                }));
+              this.errorMessage = 'Invalid credentials';
+            }
+          } else {
+            this.errorMessage = err;
+          }
         }
-      }
-    );
+      );
   }
 }

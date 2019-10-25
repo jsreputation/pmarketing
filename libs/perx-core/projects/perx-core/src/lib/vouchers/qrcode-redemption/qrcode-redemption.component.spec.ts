@@ -48,7 +48,7 @@ describe('QrcodeRedemptionComponent', () => {
       imports: [
         VouchersModule,
         ConfigModule.forRoot({})
-        ],
+      ],
       providers: [
         { provide: IVoucherService, useValue: voucherServiceStub }
       ]
@@ -69,7 +69,7 @@ describe('QrcodeRedemptionComponent', () => {
   it('reward name should be displayed', fakeAsync(() => {
     component.voucherId = 1;
     const voucherService: IVoucherService = fixture.debugElement.injector
-    .get<IVoucherService>(IVoucherService as Type<IVoucherService>);
+      .get<IVoucherService>(IVoucherService as Type<IVoucherService>);
     const voucherServiceSpy = spyOn(voucherService, 'get').and.returnValue(
       of(mockVoucher)
     );
