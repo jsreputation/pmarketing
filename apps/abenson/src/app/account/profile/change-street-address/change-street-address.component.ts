@@ -47,9 +47,9 @@ export class ChangeStreetAddressComponent implements OnInit {
 
     if (this.customProperties.addr1) {
       this.profileService.setCustomProperties(this.customProperties).subscribe(() => {
-          this.location.back();
-        },
-        (err) => {console.log(err); });
+        this.location.back();
+      },
+      (err) => {console.log(err); });
     }
     return;
   }

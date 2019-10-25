@@ -13,7 +13,7 @@ describe('PuzzlePlayComponent', () => {
         MatGridListModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

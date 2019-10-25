@@ -10,7 +10,7 @@ describe('TermsAndConditionComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TermsAndConditionComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

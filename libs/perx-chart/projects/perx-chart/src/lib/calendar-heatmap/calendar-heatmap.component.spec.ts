@@ -16,7 +16,7 @@ describe('CalendarHeatmapComponent', () => {
         NoopAnimationsModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

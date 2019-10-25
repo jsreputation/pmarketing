@@ -54,13 +54,13 @@ describe('TapComponent', () => {
 
   it('should display title', () => {
     const title = fixture.debugElement.nativeElement.querySelector('.game-header')
-    .firstElementChild;
+      .firstElementChild;
     expect(title.textContent).toBe(component.game.texts.title);
   });
 
   it('should display subTitle', () => {
     const subTitle = fixture.debugElement.nativeElement.querySelector('.game-header')
-    .children[1];
+      .children[1];
     expect(subTitle.textContent).toBe(component.game.texts.subTitle);
   });
 

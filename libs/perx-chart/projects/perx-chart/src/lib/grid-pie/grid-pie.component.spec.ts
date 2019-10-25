@@ -16,7 +16,7 @@ describe('GridPieComponent', () => {
         NoopAnimationsModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

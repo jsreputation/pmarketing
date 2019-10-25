@@ -12,7 +12,7 @@ describe('MicroProfileComponent', () => {
       declarations: [ MicroProfileComponent ],
       imports: [ MatIconModule ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

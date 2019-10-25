@@ -42,7 +42,7 @@ describe('ForgotPinComponent', () => {
         { provide: AuthenticationService, useValue: {} }
       ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
