@@ -12,7 +12,7 @@ describe('PuzzleCollectStampsComponent', () => {
       declarations: [ PuzzleCollectStampsComponent ],
       imports: [MatIconModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

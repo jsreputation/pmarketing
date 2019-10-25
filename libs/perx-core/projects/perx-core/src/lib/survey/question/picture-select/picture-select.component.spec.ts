@@ -10,7 +10,7 @@ describe('PictureSelectComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ PictureSelectComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

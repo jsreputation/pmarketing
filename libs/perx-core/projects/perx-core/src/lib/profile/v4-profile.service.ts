@@ -81,13 +81,13 @@ export class V4ProfileService extends ProfileService {
     return this.whoAmI().pipe(
       mergeMap(
         (profile: IProfile) => this.http.patch<void>(
-            `${this.apiHost}/v4/customers/${profile.id}`,
-            {
-              personal_properties: {
-                ...profile.customProperties,
-                ...data
-              }
-            })
+          `${this.apiHost}/v4/customers/${profile.id}`,
+          {
+            personal_properties: {
+              ...profile.customProperties,
+              ...data
+            }
+          })
       )
     );
   }
@@ -104,11 +104,11 @@ export class V4ProfileService extends ProfileService {
     return this.whoAmI().pipe(
       mergeMap(
         (profile: IProfile) => this.http.patch<void>(
-            `${this.apiHost}/v4/customers/${profile.id}`,
-            {
-              ...profile,
-              ...data
-            })
+          `${this.apiHost}/v4/customers/${profile.id}`,
+          {
+            ...profile,
+            ...data
+          })
       )
     );
   }

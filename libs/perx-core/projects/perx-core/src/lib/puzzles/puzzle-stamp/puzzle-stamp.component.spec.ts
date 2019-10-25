@@ -14,7 +14,7 @@ describe('PuzzleStampComponent', () => {
       declarations: [PuzzleStampComponent, StampComponent],
       imports: [UtilsModule, MaterialModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

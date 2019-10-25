@@ -12,7 +12,7 @@ describe('StampsCardsListComponent', () => {
       declarations: [ StampsCardsListComponent ],
       imports: [MatCardModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

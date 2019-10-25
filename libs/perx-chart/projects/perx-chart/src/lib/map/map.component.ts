@@ -32,7 +32,7 @@ export class MapComponent implements OnInit, OnChanges {
     this.data.subscribe((data: IData) => {
       this.dataTable = data.rows.map((row: (string | number)[]) =>
         // data conversion to markers mode format
-         [
+        [
           +row[1], +row[2], row[0], row[3]
         ]
       );

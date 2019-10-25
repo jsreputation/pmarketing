@@ -29,7 +29,7 @@ describe('SignupComponent', () => {
         { provide: AuthenticationService, useValue: authenticationServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

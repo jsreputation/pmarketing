@@ -27,7 +27,7 @@ describe('WalletComponent', () => {
         { provide: IVoucherService, useValue: vouchersServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
