@@ -14,8 +14,10 @@ declare interface IEngagementApi {
     image_url?: string;
     properties?: {},
     display_properties: {
-      title: string;
-      sub_title: string;
+      title?: string;
+      sub_title?: string;
+      headline?: string;
+      sub_headline?: string;
       tree_img_url?: string;
       gift_box_img_url?: string;
       nb_hanged_gifts?: number;
