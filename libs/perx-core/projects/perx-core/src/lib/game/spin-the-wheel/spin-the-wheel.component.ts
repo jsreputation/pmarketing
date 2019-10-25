@@ -18,7 +18,7 @@ interface Pattern {
 })
 export class SpinTheWheelComponent implements OnInit {
   @Input()
-  public slices: ISlice[];
+  public slices: ISlice[] = [];
 
   @Input()
   public spinDuration: number = 3;
@@ -223,7 +223,7 @@ export class SpinTheWheelComponent implements OnInit {
     this.startAngle += spinAngle * Math.PI / 180;
     this.drawWheel();
     const that = this;
-    this.spinTimeout = setTimeout(() => {
+    this.spinTimeout = window.setTimeout(() => {
       that.rotateWheel();
     }, 30);
   }
@@ -235,7 +235,7 @@ export class SpinTheWheelComponent implements OnInit {
     const index = Math.floor((360 - degrees % 360) / arcd);
     this.ctx.save();
 
-    this.ctx.font = 'bold 15px Helvetica, Arial';
+    this.ctx.font = 'bold 20px Helvetica, Arial';
     this.ctx.fillStyle = 'black';
     const text = this.slices[index].label;
     this.ctx.fillText(
@@ -252,7 +252,7 @@ export class SpinTheWheelComponent implements OnInit {
 
   public handleMove(e: any): void {
     if (this.dragging) {
-      const container: HTMLElement = document.getElementById('container2');
+      const container: HTMLElement = document.getElementById('container');
 
       // get the center of the wheel as an array of [x, y]
       const targetCenter = [

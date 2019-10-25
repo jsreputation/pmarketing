@@ -10,7 +10,7 @@ describe('SpinTheWheelComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ SpinTheWheelComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
