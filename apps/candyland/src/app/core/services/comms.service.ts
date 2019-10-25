@@ -49,13 +49,13 @@ export class CommsService {
     );
   }
 
-  public updateCommsEvent(id: string, data: ICampaign, templateId: string): Observable<any> {
-    const sendData = CommsHttpAdapter.transformFromCommsEvents(data, templateId);
-    return this.commsHttpsService.updateCommsEvent(id, { data: { id, ...sendData } });
+  public updateCommsEvent(data: ICampaign, templateId: string, campaignId: string): Observable<any> {
+    const sendData = CommsHttpAdapter.transformFromCommsEvents(data, templateId, campaignId);
+    return this.commsHttpsService.updateCommsEvent(data.channel.eventId, { data: { id: data.channel.eventId, ...sendData } });
   }
 
-  public createCommsEvent(data: ICampaign, templateId: string): Observable<any> {
-    const sendData = CommsHttpAdapter.transformFromCommsEvents(data, templateId);
+  public createCommsEvent(data: ICampaign, templateId: string, campaignId: string): Observable<any> {
+    const sendData = CommsHttpAdapter.transformFromCommsEvents(data, templateId, campaignId);
     return this.commsHttpsService.createCommsEvent({ data: sendData });
   }
 

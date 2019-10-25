@@ -12,15 +12,21 @@ export class OutcomesHttpAdapter {
     };
   }
 
-  public static transformFromOutcomes(data: IOutcome, enableProbability: boolean): IJsonApiItem<IOutcomeAttributes> {
+  public static transformFromOutcomes(
+    data: any,
+    enableProbability: boolean,
+    campaignId: string,
+    slotNumber: number
+  ): IJsonApiItem<IOutcomeAttributes> {
     return {
       type: 'possible_outcomes',
       attributes: {
-        result_id: data.resultId,
+        result_id: data.id,
         result_type: data.resultType,
         probability: enableProbability ? data.probability / 100 : null,
-        loot_box_id: data.lootBoxId,
-        no_outcome: !data.resultId,
+        loot_box_id: slotNumber,
+        no_outcome: !data.id,
+        campaign_entity_id: campaignId && parseInt(campaignId, 10)
       }
     };
   }

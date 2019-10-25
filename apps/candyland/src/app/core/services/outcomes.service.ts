@@ -24,13 +24,13 @@ export class OutcomesService {
     );
   }
 
-  public updateOutcome(id: string, data: IOutcome, enableProbability: boolean): Observable<any> {
-    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data, enableProbability);
-    return this.outcomesHttpsService.updateOutcome(id, { data: { id, ...sendData } });
+  public updateOutcome(data: any, campaignId: string, enableProbability: boolean, slotNumber: number): Observable<any> {
+    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data, enableProbability, campaignId, slotNumber);
+    return this.outcomesHttpsService.updateOutcome(data.outcomeId, { data: { id: data.outcomeId, ...sendData } });
   }
 
-  public createOutcome(data: IOutcome, enableProbability: boolean): Observable<any> {
-    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data, enableProbability);
+  public createOutcome(data: any, campaignId: string, enableProbability: boolean, slotNumber: number): Observable<any> {
+    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data, enableProbability, campaignId, slotNumber);
     return this.outcomesHttpsService.createOutcome({ data: sendData });
   }
 

@@ -23,7 +23,7 @@ export class CommsHttpAdapter {
     };
   }
 
-  public static transformFromCommsEvents(data: ICampaign, templateId: string): IJsonApiItem<ICommEventAttributes> {
+  public static transformFromCommsEvents(data: ICampaign, templateId: string, campaignId: string): IJsonApiItem<ICommEventAttributes> {
     const sendTime = data.channel.schedule && data.channel.schedule.sendTime ? data.channel.schedule.sendTime : moment().format('LT');
     const sendAt = data.channel.schedule ?
       moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + sendTime).format() :
@@ -34,7 +34,7 @@ export class CommsHttpAdapter {
       attributes: {
         send_at: sendAt,
         provider_id: data.audience.select && parseInt(data.audience.select, 10) || null,
-        campaign_entity_id: data.id && parseInt(data.id, 10) || null,
+        campaign_entity_id: campaignId && parseInt(campaignId, 10) || null,
         template_id: templateId && parseInt(templateId, 10) || null,
         channel: data.channel.type
       }

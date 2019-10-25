@@ -12,11 +12,12 @@ import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapte
 import { map, switchMap, tap, catchError, takeUntil } from 'rxjs/operators';
 import { combineLatest, iif, of, Observable, Subject } from 'rxjs';
 
-import { ICampaignAttributes, ICommTemplateAttributes } from '@perx/whistler';
+import { ICampaignAttributes, ICommTemplateAttributes, IOutcomeAttributes } from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
+import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -121,7 +122,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     saveCampaign$.pipe(
       tap((res: IJsonApiPayload<ICampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
       switchMap(
-        (res) => iif(hasLimitData, generateLimitData$(res), of(res))
+        (res) => combineLatest(
+          iif(hasLimitData, generateLimitData$(res), of(res)),
+          this.updateOutcomes(res),
+          this.updateComm(res)
+        )
       ),
       takeUntil(this.destroy$)
     ).subscribe(
@@ -159,24 +164,24 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return generateLimitData$;
   }
 
-  private updateCommFn(campaign: ICampaign): Observable<any> {
+  private updateComm(campaign: ICampaign): Observable<any> {
     let templateAction$;
     let eventAction$;
     const channelInfo = Object.assign({}, this.campaign.channel);
-    const updateCommsTemplateFn$ = this.commsService.updateCommsTemplate(channelInfo);
-    const createCommsTemplateFn$ = this.commsService.createCommsTemplate(channelInfo);
-    const updateCommsEventFn$ = newTemplateId => this.commsService.updateCommsEvent(channelInfo.eventId, this.campaign, newTemplateId);
-    const createCommsEventFn$ = newTemplateId => this.commsService.createCommsEvent(this.campaign, newTemplateId);
+    const updateCommsTemplate$ = this.commsService.updateCommsTemplate(channelInfo);
+    const createCommsTemplate$ = this.commsService.createCommsTemplate(channelInfo);
+    const updateCommsEvent$ = newTemplateId => this.commsService.updateCommsEvent(this.campaign, newTemplateId, campaign.id);
+    const createCommsEvent$ = newTemplateId => this.commsService.createCommsEvent(this.campaign, newTemplateId, campaign.id);
 
     if (channelInfo.templateId) {
-      templateAction$ = updateCommsTemplateFn$;
+      templateAction$ = updateCommsTemplate$;
     } else {
-      templateAction$ = createCommsTemplateFn$;
+      templateAction$ = createCommsTemplate$;
     }
     if (channelInfo.eventId) {
-      eventAction$ = updateCommsEventFn$;
+      eventAction$ = updateCommsEvent$;
     } else {
-      eventAction$ = createCommsEventFn$;
+      eventAction$ = createCommsEvent$;
     }
 
     return templateAction$.pipe(
@@ -184,25 +189,64 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     );
   }
 
-  private updateOutcomesFn(): (campaign: ICampaign) => Observable<any> {
-    let generateCommsData$;
+  private updateOutcomes(campaign: ICampaign): Observable<any> {
+    let updateOutcomesArr$ = [];
 
-    const possibleOutcomes = data.template.attributes_type === EngagementType.stamp ?
-      data.rewardsListCollection.map(
-        rewardsData =>
-          CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(
+    if (this.campaign.template.attributes_type === EngagementType.stamp) {
+      this.campaign.rewardsListCollection.forEach(
+        rewardsData => {
+          const updateOutcomeList = this.updateOutcomeWhenEdit(
+            campaign,
             rewardsData.rewardsOptions.rewards,
             rewardsData.rewardsOptions.enableProbability,
             rewardsData.stampSlotNumber
-          )
-      ).flat(1) :
-      CampaignsHttpAdapter.transformPossibleOutcomesFromCampaign(data.rewardsOptions.rewards, data.rewardsOptions.enableProbability);
+          );
+          updateOutcomesArr$ = [...updateOutcomesArr$, ...updateOutcomeList];
 
-    const deleteOutcomesFn$ = campaign => this.outcomesService.deleteOutcomes();
-    const updateOutcomesFn$ = campaign => this.outcomesService.updateOutcomes();
-    const createOutcomesFn$ = campaign => this.outcomesService.createOutcomes();
+        });
+    } else {
+      updateOutcomesArr$ = this.updateOutcomeWhenEdit(
+        campaign,
+        this.campaign.rewardsOptions.rewards,
+        this.campaign.rewardsOptions.enableProbability
+      );
+    }
+    return combineLatest(...updateOutcomesArr$);
+  }
 
-    //If has id and choose weblink delete outcomes, else has id update outcomes, else create outcomes
+  private updateOutcomeWhenEdit(campaign: ICampaign, data: any[], enableProbability: boolean, slotNumber?: number): Observable<any>[] {
+    const updateOutcomesArr$ = [];
+    const oldCampaignList = this.campaign.rewardsList;
+    const deleteOutcomes$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
+    const updateOutcomes$ = outcomeData => this.outcomesService.updateOutcome(outcomeData, campaign.id, enableProbability, slotNumber);
+    const createOutcomes$ = outcomeData => this.outcomesService.createOutcome(outcomeData, campaign.id, enableProbability, slotNumber);
+
+    data.forEach(outcome => {
+      // for each need to check the data is changed or not. If changed with Id, then update,
+      // if no id, then create, if not exist in old arr, then delete
+      if (this.campaign.id) {
+        if (outcome.value.outcomeId) {
+          const oldRewardRecord = oldCampaignList.find(reward => reward.id === outcome.value.outcomeId);
+          const oldProbability = oldRewardRecord ? oldRewardRecord.probability : null;
+          if (oldProbability !== outcome.probability) {
+            updateOutcomesArr$.push(updateOutcomes$(outcome.value));
+          }
+        } else {
+          updateOutcomesArr$.push(createOutcomes$(outcome.value));
+        }
+      } else {
+        updateOutcomesArr$.push(createOutcomes$(outcome.value));
+      }
+    });
+
+    oldCampaignList.forEach(oldReward => {
+      const isOutcomeExist = data.find(oc => oc.value.outcomeId === oldReward.id);
+      if (!isOutcomeExist) {
+        updateOutcomesArr$.push(deleteOutcomes$);
+      }
+    });
+    debugger
+    return updateOutcomesArr$;
   }
 
   private getDialogData(campaign: ICampaign): Observable<NewCampaignDonePopupComponentData> {
