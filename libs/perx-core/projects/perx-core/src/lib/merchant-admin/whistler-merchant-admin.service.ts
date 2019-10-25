@@ -1,20 +1,31 @@
-import {Injectable} from '@angular/core';
-import {IMerchantAdminService} from './imerchant-admin.service';
-import {Observable} from 'rxjs';
-import {IMerchantAdminTransaction, IMerchantProfile} from './models/merchants-admin.model';
-import {IVoucher} from '../vouchers/models/voucher.model';
+import { Injectable } from '@angular/core';
+import { IMerchantAdminService } from './imerchant-admin.service';
+import { Observable } from 'rxjs';
+import { IMerchantAdminTransaction, IMerchantProfile } from './models/merchants-admin.model';
+import { IVoucher } from '../vouchers/models/voucher.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WhistlerMerchantAdminService implements IMerchantAdminService {
-
-  // @ts-ignore
-  public createTransaction(userId: number, merchantUsername: string, amount: number, currency: string,
-                           // @ts-ignore
-                           type: string, reference: string, pharmacy: string,
-                           // @ts-ignore
-                           productName: string): Observable<IMerchantAdminTransaction> {
+  public createTransaction(
+    // @ts-ignore
+    userId: number,
+    // @ts-ignore
+    merchantUsername: string,
+    // @ts-ignore
+    amount: number,
+    // @ts-ignore
+    currency: string,
+    // @ts-ignore
+    type: string,
+    // @ts-ignore
+    reference: string,
+    // @ts-ignore
+    pharmacy: string,
+    // @ts-ignore
+    productName: string
+  ): Observable<IMerchantAdminTransaction> {
     throw new Error(`createTransaction Method not implemented.`);
   }
 
@@ -36,5 +47,9 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   // @ts-ignore
   public setupNewMerchantsPassword(token: string, clientId: string, password: string): Observable<string> {
     throw new Error(`setupNewMerchantsPassword Method not implemented.`);
+  }
+
+  public getMerchantProfile(): Observable<IMerchantProfile> {
+    throw new Error(`getMerchantProfile Method not implemented.`);
   }
 }

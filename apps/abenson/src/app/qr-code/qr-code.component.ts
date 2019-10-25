@@ -43,14 +43,14 @@ export class QRCodeComponent implements OnInit {
         this.code = voucher.code;
       }),
       flatMap(() => this.vouchersService.stateChangedForVoucher(this.voucherId))).subscribe((val) =>
-        this.successRedeemed(val)
-      , (err) => {
-        if (err && err.error) {
-          this.notification.addSnack(err.error.message);
-        } else {
-          this.notification.addSnack('Oops, something went wrong');
-        }
-      });
+      this.successRedeemed(val)
+    , (err) => {
+      if (err && err.error) {
+        this.notification.addSnack(err.error.message);
+      } else {
+        this.notification.addSnack('Oops, something went wrong');
+      }
+    });
   }
 
   public successRedeemed(voucher: Voucher): void {

@@ -24,7 +24,7 @@ describe('SmsValidationComponent', () => {
         {provide: AuthenticationService, useValue: authenticationServiceStub}
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

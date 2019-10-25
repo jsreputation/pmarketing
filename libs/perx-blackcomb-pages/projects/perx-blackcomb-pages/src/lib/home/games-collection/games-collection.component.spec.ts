@@ -20,7 +20,7 @@ describe('GamesCollectionComponent', () => {
         RouterTestingModule,
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

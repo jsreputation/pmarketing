@@ -191,11 +191,11 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   public forgotPassword(phone: string): Observable<IMessageResponse> {
     return this.http.get<IMessageResponse>(
       this.customersEndPoint + '/forget_password', { params: { phone } }).pipe(
-        tap( // Log the result or error
-          data => console.log(data),
-          error => console.log(error)
-        )
-      );
+      tap( // Log the result or error
+        data => console.log(data),
+        error => console.log(error)
+      )
+    );
   }
 
   public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
@@ -207,22 +207,22 @@ export class V4AuthenticationService extends AuthenticationService implements Au
         password_confirmation: resetPasswordInfo.passwordConfirmation,
         confirmation_token: resetPasswordInfo.otp
       }).pipe(
-        tap( // Log the result or error
-          data => console.log(data),
-          error => console.log(error)
-        )
-      );
+      tap( // Log the result or error
+        data => console.log(data),
+        error => console.log(error)
+      )
+    );
   }
 
   // @ts-ignore
   public resendOTP(phone: string): Observable<IMessageResponse> {
     return this.http.get<IMessageResponse>(
       this.customersEndPoint + '/resend_confirmation', { params: { phone } }).pipe(
-        tap( // Log the result or error
-          data => console.log(data),
-          error => console.log(error)
-        )
-      );
+      tap( // Log the result or error
+        data => console.log(data),
+        error => console.log(error)
+      )
+    );
   }
 
   private signUpDataToV4SignUpData(data: ISignUpData): IV4SignUpData {
@@ -254,11 +254,11 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
     return this.http.patch<IMessageResponse>(
       this.customersEndPoint + '/confirm', { phone, confirmation_token: otp }).pipe(
-        tap( // Log the result or error
-          data => console.log(data),
-          error => console.log(error)
-        )
-      );
+      tap( // Log the result or error
+        data => console.log(data),
+        error => console.log(error)
+      )
+    );
   }
 
   public requestVerificationToken(phone?: string): Observable<void> {

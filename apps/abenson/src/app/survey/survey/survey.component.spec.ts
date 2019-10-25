@@ -41,7 +41,7 @@ describe('SurveyComponent', () => {
       ],
       schemas: [ ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -18,15 +18,14 @@
           <label class="card-fieldset-label">
             <span>Primary Color</span>
           </label>
-          <cl-color-picker [formControlName]="'primaryColor'"></cl-color-picker>
+          <cl-color-picker [formControlName]="'primaryColor'" aria-label="pick primary color"></cl-color-picker>
         </div>
         <div class="control-input">
           <label class="card-fieldset-label">
             <span>Secondary Color</span>
           </label>
           <cl-color-picker
-            [formControlName]="'secondaryColor'"
-          ></cl-color-picker>
+            [formControlName]="'secondaryColor'" aria-label="pick secondary color"></cl-color-picker>
         </div>
       </div>
     </mat-card>
@@ -47,8 +46,7 @@
                   class="select-color-preview"
                   [ngStyle]="{
                     'background-color': headerNavbarColor.value?.color
-                  }"
-                ></div>
+                  }"></div>
                 <p class="select-color-text">
                   {{ headerNavbarColor.value?.labelView }}
                 </p>
@@ -58,8 +56,7 @@
               <div class="select-color">
                 <div
                   class="select-color-preview"
-                  [ngStyle]="{ 'background-color': color.color }"
-                ></div>
+                  [ngStyle]="{ 'background-color': color.color }"></div>
                 <span class="select-color-text">
                   {{ color.labelView }}
                 </span>
@@ -101,8 +98,7 @@
                     class="select-color-preview"
                     [ngStyle]="{
                       'background-color': button_background_color.value.color
-                    }"
-                  ></div>
+                    }"></div>
                   <p class="select-color-text">
                     {{ button_background_color.value?.labelView }}
                   </p>
@@ -112,8 +108,7 @@
                 <div class="select-color">
                   <div
                     class="select-color-preview"
-                    [ngStyle]="{ 'background-color': color.color }"
-                  ></div>
+                    [ngStyle]="{ 'background-color': color.color }"></div>
                   <span class="select-color-text">
                     {{ color.labelView }}
                   </span>
@@ -124,7 +119,7 @@
         </div>
         <div class="control-input">
           <label class="card-fieldset-label">
-              <span>Text Color</span>
+            <span>Text Color</span>
           </label>
           <mat-form-field color="primary" appearance="outline">
             <mat-select [formControlName]="'button_text_color'">
@@ -134,8 +129,7 @@
                     class="select-color-preview"
                     [ngStyle]="{
                       'background-color': button_text_color.value.color
-                    }"
-                  ></div>
+                    }"></div>
                   <p class="select-color-text">
                     {{ button_text_color.value?.labelView }}
                   </p>
@@ -145,8 +139,7 @@
                 <div class="select-color">
                   <div
                     class="select-color-preview"
-                    [ngStyle]="{ 'background-color': color.color }"
-                  ></div>
+                    [ngStyle]="{ 'background-color': color.color }"></div>
                   <span class="select-color-text">
                     {{ color.labelView }}
                   </span>
@@ -171,8 +164,7 @@
       [backgroundColor]="primaryColor.value"
       [logo]="logo.value"
       [logoType]="logoType.value === 'image'"
-      [fontFamily]="font.value"
-    >
+      [fontFamily]="font.value">
       <div class="mobile-preview-header">
         <p class="mobile-preview-headline">
           Some text for example
@@ -199,8 +191,8 @@
                         backgroundColor: button_background_color.value.color,
                         'font-family': font.value,
                         color: button_text_color.value.color
-                    }"
-          >
+
+          }">
             Log In
           </button>
           <p class="mobile-additional-info">
@@ -208,7 +200,6 @@
           </p>
         </div>
       </div>
-
     </cl-simple-mobile-view>
     <!--HOME PAGE-->
     <cl-simple-mobile-view
@@ -218,8 +209,7 @@
       [logo]="logo.value"
       [backgroundColor]="'#E8E8E8'"
       [logoType]="logoType.value === 'image'"
-      [fontFamily]="font.value"
-    >
+      [fontFamily]="font.value">
       <!--Points block-->
       <div class="plugin-block">
         <div class="points-block flex justify-content-between">
@@ -237,8 +227,8 @@
                         backgroundColor: button_background_color.value.color,
                         'font-family': font.value,
                         color: button_text_color.value.color
-                    }"
-            >
+
+            }">
               My OR
             </button>
           </div>
@@ -263,8 +253,7 @@
       [headerColor]="headerNavbarColor.value.color"
       [logo]="logo.value"
       [logoType]="logoType.value === 'image'"
-      [fontFamily]="font.value"
-    >
+      [fontFamily]="font.value">
       <div class="plugin-block">
         <div
           class="mobile-preview-card"
@@ -273,8 +262,7 @@
               'url(assets/images/reward/card-background/card-bg-1.png)',
             'font-family': font.value,
             color: button_text_color.value.color
-          }"
-        >
+          }">
           <perx-core-reward [reward]="reward$"></perx-core-reward>
         </div>
       </div>
@@ -286,8 +274,7 @@
             backgroundColor: button_background_color.value.color,
             'font-family': font.value,
             color: button_text_color.value.color
-          }"
-        >
+          }">
           {{ "button text" }}
         </button>
       </div>

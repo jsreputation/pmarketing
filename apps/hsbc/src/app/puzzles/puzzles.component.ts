@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { IStampCard, NotificationService } from '@perx/core';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {ConfigService, IConfig, IStampCard, NotificationService} from '@perx/core';
 
 @Component({
   selector: 'app-puzzles',
@@ -9,13 +9,22 @@ import { IStampCard, NotificationService } from '@perx/core';
 })
 export class PuzzlesComponent implements OnInit {
   public campaignId: number = null;
+  private sourceType: string;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private notificationService: NotificationService
-  ) { }
+    private notificationService: NotificationService,
+    private configService: ConfigService
+  ) {
+  }
 
   public ngOnInit(): void {
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig) => {
+        this.sourceType = config.sourceType.toString();
+      }
+    );
     this.route.paramMap.subscribe(params => {
       this.campaignId = Number.parseInt(params.get('campaignId'), 10);
     });
@@ -26,9 +35,11 @@ export class PuzzlesComponent implements OnInit {
   }
 
   public completed(): void {
-    this.notificationService.addPopup({
-      // tslint:disable-next-line: max-line-length
-      text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of puzzle pieces. Don\'t forget to redeem your earned rewards!'
-    });
+    if (this.sourceType === 'puzzle') {
+      this.notificationService.addPopup({
+        // tslint:disable-next-line: max-line-length
+        text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of puzzle pieces. Don\'t forget to redeem your earned rewards!'
+      });
+    }
   }
 }

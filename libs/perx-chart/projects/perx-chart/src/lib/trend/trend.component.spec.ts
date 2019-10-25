@@ -18,7 +18,7 @@ describe('TrendComponent', () => {
         MatTableModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

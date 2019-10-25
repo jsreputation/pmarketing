@@ -41,11 +41,11 @@ export class WhistlerVouchersService implements IVoucherService {
 
   private static WVoucherStatusToState(stat: VoucherStatus): VoucherState {
     switch (stat) {
-      case VoucherStatus.assigned:
-      case VoucherStatus.issued:
-        return VoucherState.issued;
-      default:
-        return VoucherState.redeemed;
+    case VoucherStatus.assigned:
+    case VoucherStatus.issued:
+      return VoucherState.issued;
+    default:
+      return VoucherState.redeemed;
     }
   }
 
@@ -66,15 +66,15 @@ export class WhistlerVouchersService implements IVoucherService {
         map((res) => res.data),
         mergeMap((vouchers: IJsonApiItem<IWhistlerVoucher>[]) => combineLatest(...vouchers.map(v => this.getFullVoucher(v)))),
         map(vouchers => vouchers.sort((elA, elB) => {
-            const merchantIdA: number = elA.reward.merchantId;
-            const merchantIdB: number = elB.reward.merchantId;
+          const merchantIdA: number = elA.reward.merchantId;
+          const merchantIdB: number = elB.reward.merchantId;
 
-            if (merchantIdA ? !merchantIdB : merchantIdB) {
-              return !merchantIdA ? 1 : -1;
-            }
+          if (merchantIdA ? !merchantIdB : merchantIdB) {
+            return !merchantIdA ? 1 : -1;
+          }
 
-            return 0;
-          }))
+          return 0;
+        }))
       );
   }
 

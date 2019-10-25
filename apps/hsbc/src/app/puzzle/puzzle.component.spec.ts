@@ -16,6 +16,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { SoundModule } from '../sound/sound.module';
 import { of } from 'rxjs';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
 describe('PuzzleComponent', () => {
   let component: PuzzleComponent;
@@ -68,7 +69,15 @@ describe('PuzzleComponent', () => {
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: StampService, useValue: stampServiceStub },
-        { provide: AuthenticationService, useValue: authenticationServiceStub}
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              paramMap: convertToParamMap({ campaignId: 1 })
+            }
+          }
+        }
       ]
     })
       .compileComponents();
