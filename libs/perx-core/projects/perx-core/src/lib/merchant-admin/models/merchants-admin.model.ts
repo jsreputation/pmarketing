@@ -12,15 +12,33 @@ export interface IMerchantAdminTransaction {
     transaction_reference: string;
 }
 
+export interface IMerchantAccount {
+    id: number;
+    customer_id: number | null;
+    name: string;
+    state: string;
+    logo: string | null;
+    url: string | null;
+    type: string | null;
+    favourite: string | null;
+    is_featured: boolean;
+    tags: IMerchantTag[];
+}
+
+export interface IMerchantTag {
+  id: number;
+  name: string;
+}
+
 export interface IMerchantProfile {
   id: number;
   email: string;
   username: string;
   mobile: string;
   locationId: number;
-  merchantAccountId: number;
+  merchantAccountId?: number;
+  merchant_account?: IMerchantAccount;
   createdAt: Date;
   updatedAt: Date;
-  passwordChangedAt: Date;
   state: string;
 }
