@@ -24,6 +24,6 @@ export class VouchersHttpService {
   }
 
   public getStats(rewardId: string): Observable<IJsonApiPayload<IVoucherStatsApi>> {
-    return this.http.get<IJsonApiPayload<IVoucherStatsApi>>(`${ApiConfig.basePath}/voucher-services/stats?source_id=${rewardId}&source_type=Perx::Reward::Entity`);
+    return this.http.get<IJsonApiPayload<IVoucherStatsApi>>(`${ApiConfig.basePath}/voucher-service/stats?source_id=${rewardId}&source_type=Perx::Reward::Entity`);
   }
 }

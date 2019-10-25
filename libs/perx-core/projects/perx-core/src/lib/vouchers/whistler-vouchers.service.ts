@@ -41,11 +41,11 @@ export class WhistlerVouchersService implements IVoucherService {
 
   private static WVoucherStatusToState(stat: VoucherStatus): VoucherState {
     switch (stat) {
-    case VoucherStatus.assigned:
-    case VoucherStatus.issued:
-      return VoucherState.issued;
-    default:
-      return VoucherState.redeemed;
+      case VoucherStatus.assigned:
+      case VoucherStatus.issued:
+        return VoucherState.issued;
+      default:
+        return VoucherState.redeemed;
     }
   }
 
@@ -114,7 +114,7 @@ export class WhistlerVouchersService implements IVoucherService {
   }
 
   private get vouchersUrl(): string {
-    return `${this.config.apiHost}/voucher-services/vouchers`;
+    return `${this.config.apiHost}/voucher-service/vouchers`;
   }
 
   // @ts-ignore
