@@ -47,7 +47,7 @@ export class ListMerchantComponent implements OnDestroy {
           }
           return this.merchantService.createMerchant(updatedMerchant);
         }),
-        filter(data => data)
+        filter(data => !!data)
       )
       .subscribe(
         () => this.dataSource.updateData(),
