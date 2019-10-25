@@ -23,9 +23,9 @@ export class GridPieComponent implements OnChanges {
     }
     this.data.subscribe((data: IData) => {
       this.ngxChartData = data.rows.map((row: any[]) => ({
-          name: row[0],
-          value: row[1]
-        }));
+        name: row[0],
+        value: row[1]
+      }));
     });
   }
 }

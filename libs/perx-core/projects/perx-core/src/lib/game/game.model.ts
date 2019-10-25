@@ -32,21 +32,21 @@ export interface IGame {
 }
 
 export function defaultTree(): ITree {
-    return {
-        nbHangedGift: 6,
-        nbGiftsToDrop: 6,
-        nbTaps: 5,
-        treeImg: '',
-        giftImg: ''
-    };
+  return {
+    nbHangedGift: 6,
+    nbGiftsToDrop: 6,
+    nbTaps: 5,
+    treeImg: '',
+    giftImg: ''
+  };
 }
 
 export function defaultPinata(): IPinata {
-    return {
-        stillImg: '',
-        brokenImg: '',
-        nbTaps: 5
-    };
+  return {
+    stillImg: '',
+    brokenImg: '',
+    nbTaps: 5
+  };
 }
 export interface ITree {
     stillImg?: string;

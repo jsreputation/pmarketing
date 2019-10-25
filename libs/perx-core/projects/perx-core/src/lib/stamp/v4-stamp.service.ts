@@ -174,7 +174,7 @@ export class V4StampService implements StampService {
       campaignConfig: {
         totalSlots: oc(stampCard).campaign_config.total_slots(),
         rewards: (oc(stampCard) as unknown as IV4StampCard).campaign_config.rewards.map
-          ((rewards: IV4Reward) => V4StampService.v4RewardToReward(rewards)),
+        ((rewards: IV4Reward) => V4StampService.v4RewardToReward(rewards)),
       },
       displayProperties: {
         numberOfCols: stampCard.display_properties.number_of_cols,

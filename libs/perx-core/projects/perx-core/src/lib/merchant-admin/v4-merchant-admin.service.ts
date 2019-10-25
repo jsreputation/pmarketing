@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IMerchantAdminService } from './imerchant-admin.service';
-import {IMerchantAdminTransaction, IMerchantProfile} from './models/merchants-admin.model';
+import { IMerchantAdminTransaction, IMerchantProfile } from './models/merchants-admin.model';
 
 import { Config } from '../config/config';
 import {
@@ -76,6 +76,24 @@ interface IV4MerchantUserInvitationResponse {
   data: IV4MerchantProfile;
 }
 
+interface IV4MerchantAccount {
+  id: number;
+  customer_id: number | null;
+  name: string;
+  state: string;
+  logo: string | null;
+  url: string | null;
+  type: string | null;
+  favourite: string | null;
+  is_featured: boolean;
+  tags: IV4MerchantTag[];
+}
+
+interface IV4MerchantTag {
+  id: number;
+  name: string;
+}
+
 interface IV4MerchantProfile {
   id: number;
   email: string;
@@ -83,6 +101,7 @@ interface IV4MerchantProfile {
   mobile: string;
   location_id: number;
   merchant_account_id: number;
+  merchant_account: IV4MerchantAccount;
   created_at: Date;
   updated_at: Date;
   password_changed_at: Date;
@@ -94,7 +113,7 @@ interface IV4MerchantProfile {
 })
 export class V4MerchantAdminService implements IMerchantAdminService {
 
-  constructor(private http: HttpClient, private config: Config) {}
+  constructor(private http: HttpClient, private config: Config) { }
 
   public static v4TransactionToTransaction(transaction: IV4MerchantAdminTransaction): IMerchantAdminTransaction {
     return {
@@ -133,16 +152,23 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       mobile: profile.mobile,
       locationId: profile.location_id,
       merchantAccountId: profile.merchant_account_id,
+      merchant_account: profile.merchant_account,
       createdAt: new Date(profile.created_at),
       updatedAt: new Date(profile.updated_at),
-      passwordChangedAt: new Date(profile.password_changed_at),
       state: profile.state
     };
   }
 
-  public createTransaction(userId: number, merchantUsername: string, amount: number, currency: string,
-                           type: string, reference: string, pharmacy: string, productName: string): Observable<IMerchantAdminTransaction> {
-
+  public createTransaction(
+    userId: number,
+    merchantUsername: string,
+    amount: number,
+    currency: string,
+    type: string,
+    reference: string,
+    pharmacy: string,
+    productName: string
+  ): Observable<IMerchantAdminTransaction> {
     const url = `${this.config.apiHost}/v4/merchant_admin/transactions`;
     const body = {
       user_account_id: userId,
@@ -169,8 +195,8 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     const url = `${this.config.apiHost}/v4/merchant_admin/vouchers/${id}/redeem`;
 
     return this.http.put<IV4RedeemVoucherResponse>(url, null).pipe(
-        map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
-      );
+      map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
+    );
   }
 
   public issueVoucher(id: number, userId: string = ''): Observable<IVoucher> {
@@ -179,8 +205,8 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     const url = `${this.config.apiHost}/v4/merchant_admin/rewards/${id}/issue`;
 
     return this.http.post<IV4RedeemVoucherResponse>(url, null, { headers }).pipe(
-        map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
-      );
+      map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
+    );
   }
 
   public validateInvite(token: string, clientId: string): Observable<IMerchantProfile> {
@@ -190,7 +216,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
 
     const url = `${this.config.apiHost}/v4/merchant_user_account_invitations/accept`;
 
-    return this.http.get<IV4MerchantUserInvitationResponse>(url, {params}).pipe(
+    return this.http.get<IV4MerchantUserInvitationResponse>(url, { params }).pipe(
       map((res) => V4MerchantAdminService.v4MerchantProfileToMerchantProfile(res.data))
     );
   }
@@ -211,5 +237,12 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       // @ts-ignore
       map((res) => res.message)
     );
+  }
+
+  public getMerchantProfile(): Observable<IMerchantProfile> {
+    const url = `${this.config.apiHost}/v4/merchant_admin/me`;
+    return this.http.get<IV4MerchantUserInvitationResponse>(url).pipe(
+      map((res) => V4MerchantAdminService.v4MerchantProfileToMerchantProfile(res.data)
+      ));
   }
 }

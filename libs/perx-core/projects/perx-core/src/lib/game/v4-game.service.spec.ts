@@ -62,8 +62,8 @@ describe('V4GameService', () => {
         done();
       });
 
-      // err if games is empty
-      /*.subscribe(
+    // err if games is empty
+    /*.subscribe(
         () => { },
         (err: any) => {
           expect(err.message).toEqual('Games list is empty');

@@ -1,6 +1,7 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { IEngagementItemMenuOption } from '@cl-shared/components/engagement-item/engagement-item.component';
 import { CustomDataSource } from '@cl-shared/table';
+import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Component({
   selector: 'cl-loyalty-grid',
@@ -8,10 +9,8 @@ import { CustomDataSource } from '@cl-shared/table';
   styleUrls: ['./loyalty-grid.component.scss']
 })
 export class LoyaltyGridComponent {
-  @Input() public dataSource: CustomDataSource<any>;
-
+  @Input() public dataSource: CustomDataSource<ILoyaltyForm>;
   @Input() public menuOptions: IEngagementItemMenuOption[] = [];
-
   @Output() public menuTapped: EventEmitter<{ loyalty: ILoyaltyForm, action: string }> = new EventEmitter();
 
   /**

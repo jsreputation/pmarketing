@@ -6,7 +6,7 @@
     "build:lib": "ng build",
     "clean": "rm -rf ./dist ./node_modules",
     "lint": "ng lint && eslint \"projects/**/*.ts\"",
-    "lint:fix": "stylelint \"projects/**/*.*css\" --fix",
+    "lint:fix": "eslint \"projects/**/*.ts\" --fix",
     "e2e": "ng e2e",
     "test": "echo \"no test!\""
   },

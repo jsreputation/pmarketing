@@ -12,7 +12,7 @@
     "test": "ng test",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "lint": "ng lint && stylelint \"src/**/*.*css\" && eslint \"./src/*/*.ts\"",
-    "lint:fix": "stylelint \"src/**/*.*css\" --fix",
+    "lint:fix": "ng lint --fix && stylelint \"src/**/*.*css\" --fix && eslint \"./src/*/*.ts\" --fix",
     "e2e": "ng e2e"
   },
   "private": true,
