@@ -6,7 +6,7 @@
       <td mat-cell *matCellDef="let element" class="column-thumbnail">
         <div class="thumbnail">
           <ng-container *ngIf="element?.properties.logo_image" (click)="clickDetailItem(element)">
-            <img [src]="element?.properties.logo_image" alt="logo-merchant">
+            <img [src]="element?.properties.logo_image" alt="Merchant logo">
           </ng-container>
         </div>
       </td>
@@ -53,7 +53,7 @@
     <ng-container matColumnDef="actions" stickyEnd>
       <th mat-header-cell *matHeaderCellDef class="column-menu"></th>
       <td mat-cell *matCellDef="let element" class="column-menu">
-        <button mat-icon-button [matMenuTriggerFor]="itemMenu">
+        <button mat-icon-button [matMenuTriggerFor]="itemMenu" aria-label="Merchant menu">
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #itemMenu="matMenu">
