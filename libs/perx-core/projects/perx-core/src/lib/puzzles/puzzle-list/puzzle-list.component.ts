@@ -22,7 +22,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   public titleFn: (index?: number) => string;
 
-  public total: number = 6;
+  public total: number = null;
 
   @Output()
   public selected: EventEmitter<IStampCard> = new EventEmitter<IStampCard>();
@@ -30,6 +30,12 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   @Output()
   public completed: EventEmitter<void> = new EventEmitter<void>();
   private destroy$: Subject<any> = new Subject();
+
+  private initTotal(): void {
+    if (this.puzzles.length > 0) {
+      this.total = this.puzzles[0].displayProperties.totalSlots;
+    }
+  }
 
   constructor(private stampService: StampService) {
   }
@@ -48,6 +54,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
           .pipe(takeUntil(this.destroy$))
           .subscribe((res: IStampCard[]) => {
             this.puzzles = res;
+            this.initTotal();
             // assume all is completed
             let completed = true;
             // loop over all puzzles
