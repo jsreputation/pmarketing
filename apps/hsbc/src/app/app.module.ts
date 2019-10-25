@@ -21,6 +21,7 @@ import {
   UtilsModule,
   ConfigModule,
   RewardsModule,
+  ICampaignService,
 
   // ConfigService
   // StampService,
@@ -39,7 +40,8 @@ import {
   MatInputModule,
   MatProgressSpinnerModule,
   MatProgressBarModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatDialogModule
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { APP_BASE_HREF, DatePipe } from '@angular/common';
@@ -53,10 +55,11 @@ import { WalletComponent } from './wallet/wallet.component';
 import { AccountComponent } from './account/account.component';
 
 // import { PuzzleListComponent } from './mock/service/puzzle-list/puzzle-list.component';
-// import { of } from 'rxjs';
+import { of } from 'rxjs';
 // import { stampCard } from './mock/stamp.mock';
 // import { puzzle } from './mock/puzzle.mock';
-// import { campaigns } from './mock/campaigns.mock';
+import { campaigns } from './mock/campaigns.mock';
+import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 
 // const stampServiceStub = {
 //   getCurrentCard: (id: number) => {
@@ -81,9 +84,9 @@ import { AccountComponent } from './account/account.component';
 //   putStamp: () => of(stampCard)
 // };
 //
-// const campaignServiceStub = {
-//   getCampaigns: () => of(campaigns)
-// };
+const campaignServiceStub = {
+  getCampaigns: () => of(campaigns)
+};
 
 // const configServiceStub = {
 //   getTenantAppSettings: () => of({
@@ -116,6 +119,7 @@ import { AccountComponent } from './account/account.component';
     NavigateToolbarComponent,
     WalletComponent,
     AccountComponent,
+    RewardPopupComponent
 
     // PuzzleListComponent, // mock service/component
   ],
@@ -149,15 +153,17 @@ import { AccountComponent } from './account/account.component';
     StampModule,
     FormsModule,
     RewardsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule
   ],
   providers: [
     DatePipe,
     {provide: APP_BASE_HREF, useValue: environment.baseHref },
     // { provide: ConfigService, useValue: configServiceStub },
     // { provide: StampService, useValue: stampServiceStub },
-    // { provide: ICampaignService, useValue: campaignServiceStub },
+    { provide: ICampaignService, useValue: campaignServiceStub },
   ],
   bootstrap: [AppComponent],
+  entryComponents: [RewardPopupComponent]
 })
 export class AppModule { }
