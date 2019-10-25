@@ -1,6 +1,9 @@
 <div class="loyalty-item">
   <div class="loyalty-item-img-container" [class.linkable]="linkable" (click)="navigateToReview()">
-    <img class="loyalty-item-img" *ngIf="data?.details?.imageUrl" [src]="data?.details?.imageUrl">
+    <img class="loyalty-item-img"
+      *ngIf="data?.details?.imageUrl"
+      [src]="data?.details?.imageUrl"
+      alt="Loyalty program picture">
   </div>
   <div class="loyalty-item-info">
     <p class="loyalty-item-name" [class.linkable]="linkable" (click)="navigateToReview()">{{data?.name}}</p>
@@ -9,12 +12,16 @@
     <cl-status-label [status]="data?.status"></cl-status-label>
   </div>
   <div class="loyalty-item-actions" *ngIf="linkable || menuOptions.length > 0">
-    <button mat-button [matMenuTriggerFor]="menu" class="btn-icon">
+    <button mat-button [matMenuTriggerFor]="menu" class="btn-icon" aria-label="Loyalty program menu">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item *ngIf="data?.status === statusType.ACTIVE" (click)="tapped({action: loyaltyAction.pause})">Pause</button>
-      <button mat-menu-item *ngIf="data?.status === statusType.PAUSED" (click)="tapped({action: loyaltyAction.activate})">Active</button>
+      <button mat-menu-item
+        *ngIf="data?.status === statusType.ACTIVE"
+        (click)="tapped({action: loyaltyAction.pause})">Pause</button>
+      <button mat-menu-item
+        *ngIf="data?.status === statusType.PAUSED"
+        (click)="tapped({action: loyaltyAction.activate})">Active</button>
       <button mat-menu-item *ngFor="let action of menuOptions" (click)="tapped(action)">{{action.label}}</button>
     </mat-menu>
   </div>
