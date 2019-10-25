@@ -21,8 +21,8 @@ import {
   UtilsModule,
   ConfigModule,
   RewardsModule,
-  ICampaignService,
 
+  // ICampaignService,
   // ConfigService
   // StampService,
   // ICampaignService
@@ -53,13 +53,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavigateToolbarComponent } from './navigate-toolbar/navigate-toolbar.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { AccountComponent } from './account/account.component';
+import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 
 // import { PuzzleListComponent } from './mock/service/puzzle-list/puzzle-list.component';
-import { of } from 'rxjs';
+// import { of } from 'rxjs';
 // import { stampCard } from './mock/stamp.mock';
 // import { puzzle } from './mock/puzzle.mock';
-import { campaigns } from './mock/campaigns.mock';
-import { RewardPopupComponent } from './reward-popup/reward-popup.component';
+// import { campaigns } from './mock/campaigns.mock';
 
 // const stampServiceStub = {
 //   getCurrentCard: (id: number) => {
@@ -84,9 +84,9 @@ import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 //   putStamp: () => of(stampCard)
 // };
 //
-const campaignServiceStub = {
-  getCampaigns: () => of(campaigns)
-};
+// const campaignServiceStub = {
+//   getCampaigns: () => of(campaigns)
+// };
 
 // const configServiceStub = {
 //   getTenantAppSettings: () => of({
@@ -161,7 +161,7 @@ const campaignServiceStub = {
     {provide: APP_BASE_HREF, useValue: environment.baseHref },
     // { provide: ConfigService, useValue: configServiceStub },
     // { provide: StampService, useValue: stampServiceStub },
-    { provide: ICampaignService, useValue: campaignServiceStub },
+    // { provide: ICampaignService, useValue: campaignServiceStub },
   ],
   bootstrap: [AppComponent],
   entryComponents: [RewardPopupComponent]
