@@ -50,8 +50,8 @@ describe('GameComponent', () => {
         { provide: Router, useValue: routerStub },
       ]
     })
-    .overrideModule(BrowserDynamicTestingModule, { set: { entryComponents: [PopupComponent] } })
-    .compileComponents();
+      .overrideModule(BrowserDynamicTestingModule, { set: { entryComponents: [PopupComponent] } })
+      .compileComponents();
   }));
 
   beforeEach(() => {
