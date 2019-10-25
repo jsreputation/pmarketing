@@ -18,8 +18,8 @@ module.exports = {
     "import",
   ],
   "rules": {
-    // "indent": ["error", 2],
-    "import/no-deprecated": "warn",
+    "indent": ["error", 2],
+    // "import/no-deprecated": "warn",
     "@typescript-eslint/adjacent-overload-signatures": "error",
     "@typescript-eslint/array-type": "error",
     "@typescript-eslint/ban-types": "error",
@@ -89,7 +89,6 @@ module.exports = {
     "no-undef-init": "error",
     "no-unsafe-finally": "error",
     "no-unused-labels": "error",
-    // "no-useless-constructor": "error",
     "no-var": "error",
     "object-shorthand": "error",
     // "one-var": "error",
