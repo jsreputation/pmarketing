@@ -103,7 +103,9 @@ describe('GameComponent', () => {
       }));
 
       component.gameCompleted();
-      tick(10000);
+      tick(3000);
+      fixture.detectChanges();
+      tick();
       expect(gameServiceSpy).toHaveBeenCalled();
     }));
 
@@ -125,8 +127,9 @@ describe('GameComponent', () => {
       dialogSpy = dialogSpy.and.returnValue({ afterClosed: () => of(true) });
 
       component.gameCompleted();
-      tick(10000);
+      tick(3000);
       fixture.detectChanges();
+      tick();
       expect(gameServiceSpy).toHaveBeenCalled();
       expect(dialogSpy).toHaveBeenCalledWith(PopupComponent,
         { data:
@@ -150,8 +153,9 @@ describe('GameComponent', () => {
       dialogSpy = dialogSpy.and.returnValue({ afterClosed: () => of(true) });
 
       component.gameCompleted();
-      tick(10000);
+      tick(3000);
       fixture.detectChanges();
+      tick();
       expect(gameServiceSpy).toHaveBeenCalled();
       expect(dialogSpy).toHaveBeenCalledWith(PopupComponent, { data: Object({ title: 'Thanks for playing', text: 'Unfortunately, you did not win anything this time', buttonTxt: 'Go to Wallet' }) });
     }));
