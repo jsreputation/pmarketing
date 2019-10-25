@@ -50,7 +50,8 @@ describe('OrderComponent', () => {
   };
 
   const merchantAdminServiceStub = {
-    createTransaction: () => of(transaction)
+    createTransaction: () => of(transaction),
+    getMerchantProfile: () => of()
   };
 
   const products = [

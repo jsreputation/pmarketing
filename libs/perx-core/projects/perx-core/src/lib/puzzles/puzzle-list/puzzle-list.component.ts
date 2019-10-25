@@ -1,21 +1,26 @@
-import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
-import { StampService } from '../../stamp/stamp.service';
-import { IStampCard , StampCardState, StampState } from '../../stamp/models/stamp.model';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDestroy, OnInit} from '@angular/core';
+import {StampService} from '../../stamp/stamp.service';
+import {IStampCard, StampCardState, StampState} from '../../stamp/models/stamp.model';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-puzzle-list',
   templateUrl: './puzzle-list.component.html',
   styleUrls: ['./puzzle-list.component.scss']
 })
-export class PuzzleListComponent implements OnChanges, OnDestroy {
+export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
+
   public puzzles: IStampCard[];
 
   @Input()
   public campaignId: number = null;
+
   @Input()
   public iconDisplay: string;
+
+  @Input()
+  public titleFn: (index?: number) => string;
 
   public total: number = 6;
 
@@ -26,7 +31,14 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
   public completed: EventEmitter<void> = new EventEmitter<void>();
   private destroy$: Subject<any> = new Subject();
 
-  constructor(private stampService: StampService) { }
+  constructor(private stampService: StampService) {
+  }
+
+  public ngOnInit(): void {
+    if (!this.titleFn) {
+      this.titleFn = (index) => `Stamp Card ${this.puzzleIndex(index)} out of 10`;
+    }
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.campaignId) {
@@ -73,30 +85,59 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
       return false;
     }
     // if we have no information on stamps then it should not be active
-    if (!puzzle.stamps) {
+    if (!puzzle.stamps && puzzle.displayProperties.displayCampaignAs === 'puzzle') {
+      return false;
+    }
+
+    if (!puzzle.stamps && puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
       return false;
     }
 
     const totalSlots = puzzle.displayProperties.totalSlots;
 
     // if there is no more available stamp return false
-    if (puzzle.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots) {
-      return false;
-    }
+    if (puzzle.displayProperties.displayCampaignAs === 'puzzle') {
 
-    // get list of active puzzles
-    const activePuzzles = this.puzzles.filter(p => p.state === StampCardState.active &&
+      if (puzzle.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots) {
+        return false;
+      }
+
+      // get list of active puzzles
+      const activePuzzles = this.puzzles.filter(p => p.state === StampCardState.active &&
         p.stamps &&
         p.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots);
 
-    // if there is no active puzzle, this one should not be active
-    if (activePuzzles.length === 0) {
-      return false;
+      // if there is no active puzzle, this one should not be active
+      if (activePuzzles.length === 0) {
+        return false;
+      }
+
+      // if it is the first active puzzle then make it visible
+      if (puzzle.id === activePuzzles[0].id) {
+        return true;
+      }
     }
 
-    // if it is the first active puzzle then make it visible
-    if (puzzle.id === activePuzzles[0].id) {
-      return true;
+    if (puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
+
+      if (puzzle.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots) {
+        return false;
+      }
+
+      // get list of active puzzles
+      const activePuzzles = this.puzzles.filter(p => p.state === StampCardState.active &&
+        p.stamps &&
+        p.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots);
+
+      // if there is no active puzzle, this one should not be active
+      if (activePuzzles.length === 0) {
+        return false;
+      }
+
+      // if it is the first active puzzle then make it visible
+      if (puzzle.id === activePuzzles[0].id) {
+        return true;
+      }
     }
   }
 
@@ -106,6 +147,13 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
       return '';
     }
     return base[index % base.length];
+  }
+
+  public puzzleIndex(index: number): string {
+    if (index < 0) {
+      return '';
+    }
+    return String(++index);
   }
 
   public nbAvailableStamps(puzzle: IStampCard): number {

@@ -1,5 +1,12 @@
 import Utils from '@cl-helpers/utils';
 import { LoyaltyJoinMethodMap } from '@cl-core/models/loyalty/loyalty-joing-method-map';
+import {
+  ICustomTireForm,
+  ILoyaltyDetails,
+  ILoyaltyForm,
+  ILoyaltyTiersConversions
+} from '@cl-core/models/loyalty/loyalty-form.model';
+import { IBasicTierApi, ICustomTierApi, IJoinMethod, ILoyaltyApi } from '@perx/core';
 
 export class LoyaltyHttpAdapter {
 
@@ -12,7 +19,7 @@ export class LoyaltyHttpAdapter {
     return {data: formatData};
   }
 
-  public static transformToTableData(data: any): ITableData<any> {
+  public static transformToTableData(data: any): ITableData<ILoyaltyForm> {
     const formatData = data.data.map((item) => {
       let formLoyalty = LoyaltyHttpAdapter.transformToLoyaltyForm(item);
       formLoyalty = LoyaltyHttpAdapter.setIncludedToLoyaltyForm(data, item, formLoyalty);
@@ -21,27 +28,27 @@ export class LoyaltyHttpAdapter {
     return {data: formatData, meta: data.meta};
   }
 
-  public static transformFromLoyaltyForm(data: any): any {
+  public static transformFromLoyaltyForm(data: ILoyaltyForm): IJsonApiItem<ILoyaltyApi> {
     return {
       type: 'programs',
       attributes: {
         name: data.name,
         unit: data.details.pointsName,
-        pool_id: data.details.poolId || 1
+        pool_id: data.details.poolId
       }
     };
   }
 
-  public static transformLoyaltyStatus(status: string): any {
+  public static transformLoyaltyStatus(status: string): IJsonApiItem<Partial<ILoyaltyApi>> {
     return {
       type: 'programs',
       attributes: {
-        status,
+        status
       }
     };
   }
 
-  public static transformFromBasicTierForm(data: any, loyaltyId: string): any {
+  public static transformFromBasicTierForm(data: ILoyaltyForm, loyaltyId: string): IJsonApiItem<IBasicTierApi> {
     return {
       type: 'basic_tiers',
       attributes: {
@@ -53,7 +60,7 @@ export class LoyaltyHttpAdapter {
         expiry_period: data.tiersConversions.pointsExpiry.amount,
         expiry_period_type: data.tiersConversions.pointsExpiry.type,
         expiry_period_trigger: data.tiersConversions.pointsExpiry.trigger,
-        join_method: LoyaltyHttpAdapter.transformJoinMethodToApi(data.details.joinMethod),
+        join_method: LoyaltyHttpAdapter.transformJoinMethodToApi(data.details.joinMethod)
       },
       relationships: {
         program: {
@@ -66,7 +73,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformFromCustomTierForm(data: any, basicTierId: string): any {
+  public static transformFromCustomTierForm(data: ICustomTireForm, basicTierId: string): IJsonApiItem<ICustomTierApi> {
     return {
       type: 'custom_tiers',
       attributes: {
@@ -77,7 +84,7 @@ export class LoyaltyHttpAdapter {
         expiry_period: data.pointsExpiry.amount,
         expiry_period_type: data.pointsExpiry.type,
         expiry_period_trigger: data.pointsExpiry.trigger,
-        join_method: LoyaltyHttpAdapter.transformJoinMethodToApi(data.joinMethod),
+        join_method: LoyaltyHttpAdapter.transformJoinMethodToApi(data.joinMethod)
       },
       relationships: {
         basic_tier: {
@@ -90,28 +97,32 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformToTableDataCustomTierForm(data: any): ITableData<any> {
+  public static transformToTableDataCustomTierForm(data: IJsonApiListPayload<ICustomTierApi>): ITableData<ICustomTireForm> {
     const formatData = data.data.map((item) => LoyaltyHttpAdapter.transformToCustomTierForm(item));
     return {data: formatData, meta: data.meta};
   }
 
-  public static transformToCustomTierForm(data: any): any {
+  public static transformToCustomTierForm(data: IJsonApiItem<ICustomTierApi>): ICustomTireForm {
     return {
       id: data.id,
       name: data.attributes.name,
       joinMethod: LoyaltyHttpAdapter.transformJoinMethodFromApi(data.attributes.join_method),
       imageUrl: data.attributes.image_url,
-      earnBonus: data.attributes.bonus_ratio * 100,
-      burnDiscount: data.attributes.discount_ratio * 100,
+      earnBonus: +data.attributes.bonus_ratio * 100,
+      burnDiscount: +data.attributes.discount_ratio * 100,
       pointsExpiry: {
         amount: data.attributes.expiry_period,
         type: data.attributes.expiry_period_type,
-        trigger: data.attributes.expiry_period_trigger,
+        trigger: data.attributes.expiry_period_trigger
       }
     };
   }
 
-  public static setIncludedToLoyaltyForm(data: any, item: any, formLoyalty: any): any {
+  public static setIncludedToLoyaltyForm(
+    data: IJsonApiPayload<ILoyaltyApi>,
+    item: IJsonApiItem<ILoyaltyApi>,
+    formLoyalty: ILoyaltyForm
+  ): ILoyaltyForm {
     if (data.included && data.included.length) {
       for (let i = 0; i <= data.included.length - 1; i++) {
         if (item.relationships.basic_tier
@@ -126,8 +137,7 @@ export class LoyaltyHttpAdapter {
             ...detailsAndConversionsFormGroup
           };
         }
-        const poolId =
-          LoyaltyHttpAdapter.setPoolIdToLoyalty(data.included, item, i);
+        const poolId = LoyaltyHttpAdapter.setPoolIdToLoyalty(data.included, item, i);
         formLoyalty = {
           ...formLoyalty,
           details: {
@@ -156,7 +166,10 @@ export class LoyaltyHttpAdapter {
     return formLoyalty;
   }
 
-  public static setPoolIdToLoyalty(included: any, item: any, index: number): any {
+  public static setPoolIdToLoyalty(
+    included: IJsonApiItem<{ id: string, type: string }>,
+    item: IJsonApiItem<ILoyaltyApi>, index: number
+  ): string {
     if (item.relationships.pool
       && item.relationships.pool.data
       && item.relationships.pool.data.id
@@ -170,7 +183,7 @@ export class LoyaltyHttpAdapter {
     if (item.relationships.custom_tiers
       && item.relationships.custom_tiers.data
       && item.relationships.custom_tiers.data.length > 0
-     ) {
+    ) {
       const result = [];
       item.relationships.custom_tiers.data.map((customTier) => {
         if (customTier.id === included[index].id && customTier.type === included[index].type) {
@@ -181,14 +194,14 @@ export class LoyaltyHttpAdapter {
     }
   }
 
-  private static transformJoinMethodToApi(joinMethod: any): any {
+  private static transformJoinMethodToApi(joinMethod: IJoinMethod): any {
     const chosenMethods = Utils.filterObj(joinMethod, (item) => !!item);
     const apiJoinMethod = {};
     Object.keys(chosenMethods).forEach(key => apiJoinMethod[LoyaltyJoinMethodMap[key].apiName] = chosenMethods[key]);
     return apiJoinMethod;
   }
 
-  private static transformJoinMethodFromApi(apiJoinMethod: any): any {
+  private static transformJoinMethodFromApi(apiJoinMethod: any): IJoinMethod {
     const result = {};
     Object.entries(apiJoinMethod).map(([apiKey, apiValue]) => {
       Object.entries(LoyaltyJoinMethodMap).forEach(([key, value]) => {
@@ -201,7 +214,7 @@ export class LoyaltyHttpAdapter {
     return result;
   }
 
-  public static transformToLoyaltyForm(data: any): any {
+  public static transformToLoyaltyForm(data: IJsonApiItem<ILoyaltyApi>): ILoyaltyForm {
     return {
       id: data.id,
       customTiersCount: data.attributes.custom_tiers_count,
@@ -212,23 +225,23 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static getDetailsAndConversionsFormGroup(data: any, currentLoyalty: any): any {
+  public static getDetailsAndConversionsFormGroup(data: IBasicTierApi, currentLoyalty: ILoyaltyApi): Partial<ILoyaltyForm> {
     return {
       details: LoyaltyHttpAdapter.formatToDetailFormGroup(data, currentLoyalty),
-      tiersConversions: LoyaltyHttpAdapter.transformToTiersConversionsFormGroup(data),
+      tiersConversions: LoyaltyHttpAdapter.transformToTiersConversionsFormGroup(data)
     };
   }
 
-  private static formatToDetailFormGroup(data: any, currentLoyalty: any): any {
+  private static formatToDetailFormGroup(data: IBasicTierApi, currentLoyalty: ILoyaltyApi): ILoyaltyDetails {
     return {
       pointsName: currentLoyalty.unit,
       imageUrl: data.image_url,
-      poolId: currentLoyalty.poolId,
+      poolId: currentLoyalty.pool_id,
       joinMethod: LoyaltyHttpAdapter.transformJoinMethodFromApi(data.join_method)
     };
   }
 
-  private static transformToTiersConversionsFormGroup(data: any): any {
+  private static transformToTiersConversionsFormGroup(data: IBasicTierApi): ILoyaltyTiersConversions {
     return {
       globalEarnRule: {
         amount: data.earn_ratio_money,
