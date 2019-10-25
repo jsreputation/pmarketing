@@ -41,7 +41,7 @@ export class LayoutComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.translate.get('hoo').subscribe((val)=>console.log(val));
+    this.translate.get('hoo').subscribe((val) => console.log(val));
     this.themesService.getThemeSetting().subscribe(
       theme => this.theme = theme
     );

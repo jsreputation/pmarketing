@@ -26,7 +26,6 @@ import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-
 @Injectable()
 export class CustomTranslateLoader implements TranslateLoader {
   private contentHeader: HttpHeaders = new HttpHeaders({
@@ -36,10 +35,10 @@ export class CustomTranslateLoader implements TranslateLoader {
   private hostUrl: string = 'http://localhost:4000/assets/';
   constructor(private httpClient: HttpClient) {
     if (environment.production) {
-      this.hostUrl = environment.baseHref+'/assets/'
+      this.hostUrl = environment.baseHref + '/assets/';
     }
   }
-  getTranslation(lang: string): Observable<any> {
+  public getTranslation(lang: string): Observable<any> {
     const apiAddress = this.hostUrl + `${lang}-json.json`;
     return this.httpClient.get(apiAddress, { headers: this.contentHeader })
       .pipe(

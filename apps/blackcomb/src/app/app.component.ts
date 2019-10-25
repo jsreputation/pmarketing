@@ -19,7 +19,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  display = true;
   public showHeader: boolean;
   public showToolbar: boolean;
   public leftIcon: string = '';

@@ -1,6 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent, WalletComponent, HistoryComponent, RedeemComponent, VoucherDetailComponent, LoadingComponent, ContentComponent, RewardDetailsComponent } from '@perx/blackcomb-pages';
+import { 
+  HomeComponent, 
+  WalletComponent, 
+  HistoryComponent, 
+  RedeemComponent, 
+  VoucherDetailComponent, 
+  LoadingComponent, 
+  ContentComponent, 
+  RewardDetailsComponent 
+} from '@perx/blackcomb-pages';
 import { LayoutComponent } from './layout.component';
 const routes: Routes = [
   {

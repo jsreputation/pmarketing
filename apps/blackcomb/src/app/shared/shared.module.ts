@@ -1,5 +1,16 @@
 import { NgModule } from '@angular/core';
-import { MatToolbarModule, MatButtonModule, MatTabsModule, MatCardModule, MatRippleModule, MatIconModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatDialogModule } from '@angular/material';
+import {
+  MatToolbarModule,
+  MatButtonModule,
+  MatTabsModule,
+  MatCardModule,
+  MatRippleModule,
+  MatIconModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatProgressSpinnerModule,
+  MatDialogModule
+} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 const modules = [
   MatToolbarModule,
@@ -18,10 +29,10 @@ const modules = [
 @NgModule({
   declarations: [],
   imports: [
-   ... modules
+    ...modules
   ],
   exports: [
-    ... modules
+    ...modules
   ]
 })
 export class SharedModule { }

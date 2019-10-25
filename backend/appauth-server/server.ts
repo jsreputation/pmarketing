@@ -55,7 +55,7 @@ if (process.env.PRODUCTION) {
     res.sendFile(join(EXPRESS_DIST_FOLDER, '../../perx-microsite', 'index.html'), { req });
   });
 }
-app.use('/assets', express.static( 'assets'))
+app.use('/assets', express.static( 'assets'));
 // Start up the Node server
 const server = app.listen(PORT, () => {
   console.log(`Node server listening on http://localhost:${PORT}`);
