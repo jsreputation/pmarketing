@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { PopupComponent, NotificationService, IPopupConfig, ThemesService, ITheme, AuthenticationService } from '@perx/core';
 import {
@@ -12,14 +12,15 @@ import { Location } from '@angular/common';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-layout',
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.scss']
 })
-export class AppComponent implements OnInit {
-  display = true;
+export class LayoutComponent implements OnInit {
+
   public showHeader: boolean;
   public showToolbar: boolean;
   public leftIcon: string = '';
@@ -32,12 +33,15 @@ export class AppComponent implements OnInit {
     private location: Location,
     private router: Router,
     private themesService: ThemesService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private cd: ChangeDetectorRef,
+    private translate: TranslateService
   ) {
     this.preAuth = environment.preAuth;
   }
 
   public ngOnInit(): void {
+    this.translate.get('hoo').subscribe((val)=>console.log(val));
     this.themesService.getThemeSetting().subscribe(
       theme => this.theme = theme
     );
@@ -72,12 +76,14 @@ export class AppComponent implements OnInit {
       });
 
   }
+
   public onActivate(ref: any): void {
     this.showHeader = !(ref instanceof LoginComponent);
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||
       ref instanceof WalletComponent;
+    this.cd.detectChanges();
   }
 
   public leftClick(): void {
