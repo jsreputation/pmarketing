@@ -76,6 +76,24 @@ interface IV4MerchantUserInvitationResponse {
   data: IV4MerchantProfile;
 }
 
+interface IV4MerchantAccount {
+  id: number;
+  customer_id: number | null;
+  name: string;
+  state: string;
+  logo: string | null;
+  url: string | null;
+  type: string | null;
+  favourite: string | null;
+  is_featured: boolean;
+  tags: IV4MerchantTag[];
+}
+
+interface IV4MerchantTag {
+  id: number;
+  name: string;
+}
+
 interface IV4MerchantProfile {
   id: number;
   email: string;
@@ -83,6 +101,7 @@ interface IV4MerchantProfile {
   mobile: string;
   location_id: number;
   merchant_account_id: number;
+  merchant_account: IV4MerchantAccount;
   created_at: Date;
   updated_at: Date;
   password_changed_at: Date;
@@ -133,9 +152,9 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       mobile: profile.mobile,
       locationId: profile.location_id,
       merchantAccountId: profile.merchant_account_id,
+      merchant_account: profile.merchant_account,
       createdAt: new Date(profile.created_at),
       updatedAt: new Date(profile.updated_at),
-      passwordChangedAt: new Date(profile.password_changed_at),
       state: profile.state
     };
   }
@@ -211,5 +230,12 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       // @ts-ignore
       map((res) => res.message)
     );
+  }
+
+  public getMerchantProfile(): Observable<IMerchantProfile> {
+    const url = `${this.config.apiHost}/v4/merchant_admin/me`;
+    return this.http.get<IV4MerchantUserInvitationResponse>(url).pipe(
+      map((res) => V4MerchantAdminService.v4MerchantProfileToMerchantProfile(res.data)
+    ));
   }
 }

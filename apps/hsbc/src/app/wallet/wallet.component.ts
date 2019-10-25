@@ -13,7 +13,7 @@ export class WalletComponent implements OnInit {
 
   public campaignId: number;
   public selectedTab: number = 0;
-  public sourceType: string;
+  public sourceType: string | null = null;
 
   constructor(
     private router: Router,

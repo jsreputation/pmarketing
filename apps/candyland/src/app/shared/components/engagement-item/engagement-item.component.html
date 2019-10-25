@@ -1,6 +1,6 @@
 <div class="engagement-item">
   <div class="engagement-item-img-container" [class.linkable]="linkable" (click)="navigateToEdit()">
-    <img class="engagement-item-img" *ngIf="data?.image_url" [src]="data?.image_url">
+    <img class="engagement-item-img" *ngIf="data?.image_url" [src]="data?.image_url" alt="Engagement preview">
   </div>
   <div class="engagement-item-info">
     <p class="engagement-item-type">{{data?.attributes_type | engagementType }}</p>
@@ -8,7 +8,7 @@
     <p class="engagement-item-date">{{data?.created_at | date: 'mediumDate' }}</p>
   </div>
   <div class="engagement-item-actions" *ngIf="menuOptions.length > 0">
-    <button mat-button [matMenuTriggerFor]="menu" class="btn-icon">
+    <button mat-button [matMenuTriggerFor]="menu" class="btn-icon" aria-label="Engagement menu">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">

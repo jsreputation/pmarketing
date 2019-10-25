@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { StampService } from '@perx/core';
-import { IStampCard , StampCardState, StampState, PuzzleCollectStampState } from '@perx/core';
+import { IStampCard , StampCardState, StampState } from '@perx/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -79,7 +79,7 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
       return false;
     }
 
-    if (!puzzle.collectionStamps && puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
+    if (!puzzle.stamps && puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
       console.log('no stamp_card', puzzle.id);
       return false;
     }
@@ -114,15 +114,15 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
 
     if (puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
 
-      if (puzzle.collectionStamps.filter(st => st.state === PuzzleCollectStampState.redeemed).length >= totalSlots) {
+      if (puzzle.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots) {
         console.log('no available stamps', puzzle.id);
         return false;
       }
 
       // get list of active puzzles
       const activePuzzles = this.puzzles.filter(p => p.state === StampCardState.active &&
-        p.collectionStamps &&
-        p.collectionStamps.filter(st => st.state === PuzzleCollectStampState.redeemed).length < totalSlots);
+        p.stamps &&
+        p.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots);
 
       // if there is no active puzzle, this one should not be active
       if (activePuzzles.length === 0) {
@@ -155,10 +155,10 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
     }
 
     if (puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
-      if (puzzle.collectionStamps === undefined) {
+      if (puzzle.stamps === undefined) {
         return 0;
       }
-      return puzzle.collectionStamps.filter(st => st.state === PuzzleCollectStampState.issued).length;
+      return puzzle.stamps.filter(st => st.state === StampState.issued).length;
     }
 
   }

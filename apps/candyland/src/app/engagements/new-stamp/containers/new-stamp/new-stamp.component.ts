@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AvailableNewEngagementService, RoutingStateService, SettingsService, StampsService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
@@ -11,9 +11,9 @@ import { ControlsName } from '../../../../models/controls-name';
 import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
-import { CreateImageDirective } from '@cl-shared/directives/create-image.directive';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 
 @Component({
   selector: 'cl-new-stamp',
@@ -22,7 +22,7 @@ import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewStampComponent implements OnInit, OnDestroy {
-  @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
+  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<any> = new Subject();
 
@@ -79,10 +79,6 @@ export class NewStampComponent implements OnInit, OnDestroy {
     return this.formStamp.get(ControlsName.rewardPostStamps);
   }
 
-  public get stampsSlotNumber(): any[] {
-    return (this.formStamp.get(ControlsName.stampsSlotNumber) as FormArray).value;
-  }
-
   constructor(
     private fb: FormBuilder,
     private routingState: RoutingStateService,
@@ -131,7 +127,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
       this.formStamp.markAllAsTouched();
       return;
     }
-    this.createImagePreview.getPreviewUrl()
+    this.simpleMobileViewComponent.createPreview()
       .pipe(
         switchMap((imageUrl: IUploadedFile) => {
           if (this.id) {
@@ -203,6 +199,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
             });
           }
           this.stampSlotNumbers = this.stampDataService.filterStampSlot(this.allStampSlotNumbers, value);
+          this.formStamp.get('stampsSlotNumber').patchValue([]);
           // selected last slot
           this.patchForm('stampsSlotNumber', [this.stampSlotNumbers[this.stampSlotNumbers.length - 1].value]);
         }
