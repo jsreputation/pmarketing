@@ -132,7 +132,7 @@
 
   &-preview-btn-wrap {
     position: absolute;
-    left: 3px;
+    left: 0;
     bottom: 25px;
     display: flex;
     justify-content: center;
@@ -189,6 +189,10 @@
     display: block;
     z-index: 3;
     transform: scale(0.75);
+  }
+
+  &-preview-fullpage {
+    overflow: hidden;
   }
 
   &-preview-card {
@@ -253,4 +257,9 @@ perx-core-reward {
       box-shadow: none;
     }
   }
+}
+
+.mobile-preview-fullpage .details {
+  padding-left: 1.6rem !important;
+  padding-right: 1.6rem !important;
 }
