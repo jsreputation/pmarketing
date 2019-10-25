@@ -1,5 +1,5 @@
 import { IVoucher } from '../../vouchers/models/voucher.model';
-import { PuzzleCollectReward, PuzzleCollectStamp } from '../../puzzles/models/puzzle-stamp.model';
+import { PuzzleCollectReward } from '../../puzzles/models/puzzle-stamp.model';
 
 export interface IReward {
   id: number;
@@ -79,6 +79,5 @@ export interface IStampCard {
     };
     rewardPositions?: number[]
   };
-  collectionStamps?: PuzzleCollectStamp[];
   stamps?: IStamp[];
 }
