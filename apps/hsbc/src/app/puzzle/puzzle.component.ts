@@ -94,9 +94,15 @@ export class PuzzleComponent implements OnInit, OnDestroy {
         if (this.campaignId === null) {
           this.fetchCampaign();
         } else if (this.cardId === null || this.card === null) {
-          this.fetchCard(this.campaignId);
-          this.fetchStampTransactionCount(this.campaignId);
-          this.fetchCardsCount(this.campaignId);
+          this.fetchCard(this.campaignId).subscribe(
+            (card: IStampCard) => {
+              this.card = card;
+              this.cardId = card.id;
+              this.fetchStampTransactionCount(this.campaignId);
+              this.fetchCardsCount(this.campaignId);
+            }
+          );
+
         }
       }
     );
@@ -157,8 +163,8 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       });
   }
 
-  private fetchCard(id: number): Observable<IStampCard> {
-    return this.stampService.getCurrentCard(id);
+  private fetchCard(campaignId: number): Observable<IStampCard> {
+    return this.stampService.getCurrentCard(campaignId);
   }
 
   private fetchCardsCount(campaignId: number): void {

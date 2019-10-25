@@ -1,21 +1,26 @@
-import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
-import { StampService } from '../../stamp/stamp.service';
-import { IStampCard , StampCardState, StampState } from '../../stamp/models/stamp.model';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDestroy, OnInit} from '@angular/core';
+import {StampService} from '../../stamp/stamp.service';
+import {IStampCard, StampCardState, StampState} from '../../stamp/models/stamp.model';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-puzzle-list',
   templateUrl: './puzzle-list.component.html',
   styleUrls: ['./puzzle-list.component.scss']
 })
-export class PuzzleListComponent implements OnChanges, OnDestroy {
+export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
+
   public puzzles: IStampCard[];
 
   @Input()
   public campaignId: number = null;
+
   @Input()
   public iconDisplay: string;
+
+  @Input()
+  public titleFn: (index?: number) => string;
 
   public total: number = 6;
 
@@ -26,7 +31,14 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
   public completed: EventEmitter<void> = new EventEmitter<void>();
   private destroy$: Subject<any> = new Subject();
 
-  constructor(private stampService: StampService) { }
+  constructor(private stampService: StampService) {
+  }
+
+  public ngOnInit(): void {
+    if (!this.titleFn) {
+      this.titleFn = (index) => `Stamp Card ${this.puzzleIndex(index)} out of 10`;
+    }
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.campaignId) {
