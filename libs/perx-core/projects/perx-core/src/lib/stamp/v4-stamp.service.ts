@@ -194,7 +194,7 @@ export class V4StampService implements StampService {
         },
         rewardPositions: stampCard.display_properties.reward_positions,
         thumbnailImg: stampCard.display_properties.thumbnail_img ?
-         stampCard.display_properties.thumbnail_img.value.image_url : null
+          stampCard.display_properties.thumbnail_img.value.image_url : null
       },
       stamps: stampCard.stamps.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp))
     };
