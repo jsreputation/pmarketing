@@ -22,8 +22,9 @@ import {
   ConfigModule,
   RewardsModule,
 
-  StampService,
-  ICampaignService
+  // ConfigService
+  // StampService,
+  // ICampaignService
 } from '@perx/core';
 import { environment } from '../environments/environment';
 import {
@@ -51,38 +52,54 @@ import { NavigateToolbarComponent } from './navigate-toolbar/navigate-toolbar.co
 import { WalletComponent } from './wallet/wallet.component';
 import { AccountComponent } from './account/account.component';
 
-import { PuzzleListComponent } from './mock/service/puzzle-list/puzzle-list.component';
-import { of } from 'rxjs';
-import { stampCard } from './mock/stamp.mock';
-import { puzzle } from './mock/puzzle.mock';
-import { campaigns } from './mock/campaigns.mock';
+// import { PuzzleListComponent } from './mock/service/puzzle-list/puzzle-list.component';
+// import { of } from 'rxjs';
+// import { stampCard } from './mock/stamp.mock';
+// import { puzzle } from './mock/puzzle.mock';
+// import { campaigns } from './mock/campaigns.mock';
 
-const stampServiceStub = {
-  getCurrentCard: (id: number) => {
-    if (id === 100) {
-      return of(puzzle[0]);
-    }
+// const stampServiceStub = {
+//   getCurrentCard: (id: number) => {
+//     if (id === 100) {
+//       return of(puzzle[0]);
+//     }
+//
+//     if (id === 265) {
+//       return of(stampCard[0]);
+//     }
+//   },
+//   getStamps: () => of(),
+//   getCards: (id: number) => {
+//     if (id === 100) {
+//       return of(puzzle);
+//     }
+//
+//     if (id === 265) {
+//       return of(stampCard);
+//     }
+//   },
+//   putStamp: () => of(stampCard)
+// };
+//
+// const campaignServiceStub = {
+//   getCampaigns: () => of(campaigns)
+// };
 
-    if (id === 265) {
-      return of(stampCard[0]);
-    }
-  },
-  getStamps: () => of(),
-  getCards: (id: number) => {
-    if (id === 100) {
-      return of(puzzle);
-    }
-
-    if (id === 265) {
-      return of(stampCard);
-    }
-  },
-  putStamp: () => of(stampCard)
-};
-
-const campaignServiceStub = {
-  getCampaigns: () => of(campaigns)
-};
+// const configServiceStub = {
+//   getTenantAppSettings: () => of({
+//     id: 1,
+//     key: 'hsbc-xmas',
+//     stringValue: '',
+//     jsonValue: {
+//       background: 'assets/xmas_background.jpg',
+//       source_type: 'hsbc-xmas',
+//     },
+//   }),
+//   readAppConfig: () => of({
+//     preAuth: false,
+//     sourceType: 'hsbc-xmas'
+//   })
+// };
 
 @NgModule({
   declarations: [
@@ -100,7 +117,7 @@ const campaignServiceStub = {
     WalletComponent,
     AccountComponent,
 
-    PuzzleListComponent, // mock service/component
+    // PuzzleListComponent, // mock service/component
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
@@ -137,8 +154,9 @@ const campaignServiceStub = {
   providers: [
     DatePipe,
     {provide: APP_BASE_HREF, useValue: environment.baseHref },
-    { provide: StampService, useValue: stampServiceStub },
-    { provide: ICampaignService, useValue: campaignServiceStub },
+    // { provide: ConfigService, useValue: configServiceStub },
+    // { provide: StampService, useValue: stampServiceStub },
+    // { provide: ICampaignService, useValue: campaignServiceStub },
   ],
   bootstrap: [AppComponent],
 })

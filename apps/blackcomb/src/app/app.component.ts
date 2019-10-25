@@ -21,8 +21,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent implements OnInit {
   display = true;
-  public showHeader: boolean = true;
-  public showToolbar: boolean = true;
+  public showHeader: boolean;
+  public showToolbar: boolean;
   public leftIcon: string = '';
   public preAuth: boolean;
   public theme: ITheme;

@@ -10,7 +10,7 @@ describe('ScratchCardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ScratchCardComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

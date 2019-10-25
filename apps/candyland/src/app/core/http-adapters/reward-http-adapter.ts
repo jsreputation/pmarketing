@@ -163,11 +163,11 @@ export class RewardHttpAdapter {
   }
 
   public static getRewardDate(period: any): { [key: string]: any } {
-    const res = {
+    const res: any = {
       start_date: RewardHttpAdapter.setTime(period.startDate, period.startTime)
     };
     if (!period.disabledEndDate) {
-      res['end_date'] = RewardHttpAdapter.setTime(period.endDate, period.endTime);
+      res.end_date = RewardHttpAdapter.setTime(period.endDate, period.endTime);
     }
     return res;
   }

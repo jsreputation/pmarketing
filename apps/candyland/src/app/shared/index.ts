@@ -94,6 +94,8 @@ export * from './components/upload-file/upload-file.component';
 export * from './components/upload-graphic/upload-graphic.component';
 export * from './components/user/user.component';
 export * from './components/vouchers-progress-bar/vouchers-progress-bar.component';
+export * from './components/checkbox-group/checkbox-group.component';
+export * from './components/checkbox-group/checkbox-group.module';
 
 export * from './charts/calendar-chart/calendar-chart.module';
 export * from './charts/circle-pie-chart/circle-pie-chart.module';

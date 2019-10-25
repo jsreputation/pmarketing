@@ -26,7 +26,7 @@ describe('PromosComponent', () => {
         { provide: FeedReaderService, useValue: feedReaderServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

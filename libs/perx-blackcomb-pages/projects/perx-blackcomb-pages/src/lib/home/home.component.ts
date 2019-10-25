@@ -127,7 +127,11 @@ export class HomeComponent implements OnInit, OnDestroy {
               ...gameIds.map(id => this.gamesService.get(id)
                 .pipe(
                   retry(1),
-                  map((g: IGame) => ({ ...g, campaignId: (arrOfCampaigns.find(c => c.engagementId === g.id).id) })),
+                  map((g: IGame) => {
+                    const existingCampaign = arrOfCampaigns.find(c => c.engagementId === g.id);
+                    const existingCampaignId = existingCampaign && existingCampaign.id;
+                    return { ...g, campaignId: existingCampaignId };
+                  }),
                   tap((g: IGame) => {
                     const matchingCampaigns = arrOfCampaigns.filter(c => c.engagementId === g.id);
                     matchingCampaigns.forEach(c => {

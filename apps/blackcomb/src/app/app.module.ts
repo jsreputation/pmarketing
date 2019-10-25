@@ -46,6 +46,7 @@ import {
   WalletComponent
 } from '@perx/blackcomb-pages';
 import { HomeModule } from './home/home.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 const perxComponents = [
   HistoryComponent,
@@ -129,8 +130,8 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
         deps: [HttpClient],
         useClass: CustomTranslateLoader
       }
-    })
-    
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   bootstrap: [AppComponent],
   providers: [

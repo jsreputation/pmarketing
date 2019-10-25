@@ -101,4 +101,20 @@ describe('HomeComponent', () => {
       expect(badge).toBe('assets/plat-icon.svg');
     });
   });
+  it('should handle scroll', fakeAsync(() => {
+    component.previousDelta = -10;
+    const spy = spyOn(window, 'requestAnimationFrame').and.callThrough();
+    component.onScrollCall();
+    tick(100);
+    expect(spy).toHaveBeenCalled();
+    expect(component.top).toBe(-10);
+    component.previousDelta = 100;
+    component.onScrollCall();
+    tick(100);
+    expect(component.top).toBe(0);
+    component.previousDelta = -1000;
+    component.onScrollCall();
+    tick(100);
+    expect(component.top).toBe(-170);
+  }));
 });

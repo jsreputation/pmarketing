@@ -1,5 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
-import { PuzzleCollectStamp, PuzzleCollectReward, PuzzleCollectStampState } from '../models/puzzle-stamp.model';
+
+import { IStamp, StampState } from '../../stamp/models/stamp.model';
+import { PuzzleCollectReward } from '../models/puzzle-stamp.model';
 
 @Component({
   selector: 'perx-core-puzzle-collect-stamps',
@@ -10,16 +12,16 @@ import { PuzzleCollectStamp, PuzzleCollectReward, PuzzleCollectStampState } from
 export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   // This dummy array is describing the slots templates
   private stampsOrientations: number[][] = [[1, 2],
-  [2, 2],
-  [2, 1, 2],
-  [3, 3],
-  [3, 3, 1],
-  [4, 4],
-  [3, 3, 3],
-  [3, 3, 3, 1]];
+    [2, 2],
+    [2, 1, 2],
+    [3, 3],
+    [3, 3, 1],
+    [4, 4],
+    [3, 3, 3],
+    [3, 3, 3, 1]];
 
   @Input()
-  private stamps: PuzzleCollectStamp[] | null = [];
+  private stamps: IStamp[] | null = [];
 
   @Input()
   public showStampsCounter: boolean = false;
@@ -52,12 +54,11 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   public subTitle: string = null;
 
   @Output()
-  private availableStampClicked: EventEmitter<PuzzleCollectStamp> = new EventEmitter<PuzzleCollectStamp>();
+  private availableStampClicked: EventEmitter<IStamp> = new EventEmitter<IStamp>();
 
   public currentActiveOrientation: number[] = null;
   public stampCardImage: string = null;
   public availableStampCount: number = 0;
-  public availStamps: number = 0;
 
   public ngOnInit(): void {
     const availableStamps = this.stamps.filter(stamp => stamp.state === 'issued');
@@ -70,7 +71,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
       this.currentActiveOrientation = this.stampsOrientations[this.nbSlots - 3];
     }
     if (changes.stamps) {
-      this.availStamps = this.stamps.filter(stamp => stamp.state === PuzzleCollectStampState.issued).length;
+      this.availableStampCount = this.stamps.filter(stamp => stamp.state === StampState.issued).length;
     }
   }
 
@@ -92,7 +93,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
 
     const itemIndex = this.getItemIndex(index, rowNum);
 
-    const stamped: boolean = (itemIndex < this.stamps.length && this.stamps[itemIndex].state === PuzzleCollectStampState.redeemed);
+    const stamped: boolean = (itemIndex < this.stamps.length && this.stamps[itemIndex].state === StampState.redeemed);
 
     if (this.isIndexPresentInRewards(itemIndex)) {
       return stamped ? this.rewardPostStamp : this.rewardPreStamp;
@@ -104,7 +105,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   public isIssued(index: number, rowNum: number): boolean {
     const itemIndex = this.getItemIndex(index, rowNum);
     if (itemIndex < this.stamps.length) {
-      return this.stamps[itemIndex].state === PuzzleCollectStampState.issued;
+      return this.stamps[itemIndex].state === StampState.issued;
     }
     return false;
   }
@@ -112,7 +113,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   public onAvailableStampClicked(index: number, rowNum: number): void {
     const itemIndex = this.getItemIndex(index, rowNum);
     if (itemIndex < this.stamps.length) {
-      this.stamps[itemIndex].state = PuzzleCollectStampState.redeemed;
+      this.stamps[itemIndex].state = StampState.redeemed;
       this.availableStampClicked.emit(this.stamps[itemIndex]);
     }
   }

@@ -102,9 +102,10 @@ interface IV4StampCard {
     display_campaign_as: string;
     background_img?: {
       value?: {
-        image_url?: string
+        image_url?: string;
       }
     };
+    reward_positions?: number[];
   };
   stamps?: IV4Stamp[];
 }
@@ -168,7 +169,7 @@ export class V4StampService implements StampService {
       campaignConfig: {
         totalSlots: oc(stampCard).campaign_config.total_slots(),
         rewards: (oc(stampCard) as unknown as IV4StampCard).campaign_config.rewards.map
-          ((rewards: IV4Reward) => V4StampService.v4RewardToReward(rewards)),
+        ((rewards: IV4Reward) => V4StampService.v4RewardToReward(rewards)),
       },
       displayProperties: {
         numberOfCols: stampCard.display_properties.number_of_cols,
@@ -186,6 +187,7 @@ export class V4StampService implements StampService {
               stampCard.display_properties.background_img.value.image_url : null,
           }
         },
+        rewardPositions: stampCard.display_properties.reward_positions
       },
       stamps: stampCard.stamps.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp))
     };

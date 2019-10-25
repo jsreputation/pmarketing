@@ -1,4 +1,4 @@
-import { AuthenticationService, NotificationService, Config } from '@perx/core';
+import { AuthenticationService, NotificationService, Config, ITheme, ThemesService } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
@@ -17,12 +17,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   public preAuth: boolean;
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
+  public theme: ITheme;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private notificationService: NotificationService,
+    private themesService: ThemesService,
     private config: Config
   ) {
     this.preAuth = this.config ? this.config.preAuth : false;
@@ -30,6 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initForm();
+    this.theme = this.themesService.getActiveTheme();
   }
 
   public ngOnDestroy(): void {
@@ -53,35 +56,35 @@ export class LoginComponent implements OnInit, OnDestroy {
     const password: string = this.loginForm.get('password').value;
     this.errorMessage = null;
     this.authService.login(username, password, '2')
-    .pipe(
-      takeUntil(this.destroy$)
-    )
-    .subscribe(
-      () => {
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        () => {
         // set global userID var for GA tracking
-        if (!((window as any).primaryIdentifier)) {
-          (window as any).primaryIdentifier = username;
-        }
-        this.redirectAfterLogin();
-      },
-      (err) => {
-        if (err instanceof HttpErrorResponse) {
-          if (err.status === 0) {
-            this.notificationService.addPopup({
-              title: 'We could not reach the server',
-              text: 'Please try again soon'
-            });
-          } else if (err.status === 401) {
-            [this.loginForm.controls.customerID, this.loginForm.controls.password]
-              .forEach(c => c.setErrors({
-                invalid: true
-              }));
-            this.errorMessage = 'Invalid credentials';
+          if (!((window as any).primaryIdentifier)) {
+            (window as any).primaryIdentifier = username;
           }
-        } else {
-          this.errorMessage = err;
+          this.redirectAfterLogin();
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            if (err.status === 0) {
+              this.notificationService.addPopup({
+                title: 'We could not reach the server',
+                text: 'Please try again soon'
+              });
+            } else if (err.status === 401) {
+              [this.loginForm.controls.customerID, this.loginForm.controls.password]
+                .forEach(c => c.setErrors({
+                  invalid: true
+                }));
+              this.errorMessage = 'Invalid credentials';
+            }
+          } else {
+            this.errorMessage = err;
+          }
         }
-      }
-    );
+      );
   }
 }

@@ -8,7 +8,7 @@ import {
   OnDestroy, ChangeDetectorRef, AfterViewInit, OnInit
 } from '@angular/core';
 import { MatCheckbox } from '@angular/material';
-import { merge, noop, Subject } from 'rxjs';
+import { merge, noop, Subject, Subscription } from 'rxjs';
 import { distinctUntilChanged, map, takeUntil, tap } from 'rxjs/operators';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -31,10 +31,10 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
   @Input() set value(setValue: string[]) {
     this.writeValue(setValue);
   }
-
   private data: string[] = [];
   private destroy$: Subject<any> = new Subject();
   private onChange: any = noop;
+  private changeSubscription: Subscription;
   // @ts-ignore
   private onTouched: any = noop;
 
@@ -46,6 +46,7 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
 
   public ngAfterViewInit(): void {
     this.handlCheckboxList();
+    this.handleState();
   }
 
   public ngOnDestroy(): void {
@@ -73,7 +74,10 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
   }
 
   private handlCheckboxList(): void {
-    merge(...this.checkboxList.map(value => value.change))
+    if (this.changeSubscription) {
+      this.changeSubscription.unsubscribe();
+    }
+    this.changeSubscription = merge(...this.checkboxList.map(value => value.change))
       .pipe(
         takeUntil(this.destroy$),
         distinctUntilChanged(),
@@ -95,6 +99,8 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
       this.checkboxList.map((checkbox: MatCheckbox) => {
         if (this.data.includes(checkbox.value)) {
           checkbox.checked = true;
+        } else {
+          checkbox.checked = false;
         }
       });
     }
@@ -109,5 +115,13 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
         }
       });
     }
+  }
+
+  private handleState(): void {
+    this.checkboxList.changes
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((() => {
+        this.handlCheckboxList();
+      }));
   }
 }

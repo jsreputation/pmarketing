@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { map } from 'rxjs/operators';
 import { LoyaltyHttpAdapter } from '@cl-core/http-adapters/loyalty-http-adapter';
+import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,14 @@ export class LoyaltyCustomTierService implements ITableService {
   constructor(private loyaltyHttpService: LoyaltyHttpService) {
   }
 
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<any>> {
+  public getTableData(params: HttpParamsOptions): Observable<ITableData<ICustomTireForm>> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyHttpService.getCustomTiers(httpParams).pipe(
       map(response => LoyaltyHttpAdapter.transformToTableDataCustomTierForm(response))
     );
   }
 
-  public getCustomTier(id: string, params: HttpParamsOptions): Observable<IShakeTree> {
+  public getCustomTier(id: string, params: HttpParamsOptions): Observable<ICustomTireForm> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyHttpService.getCustomTier(id, httpParams).pipe(
       map((response: any) => LoyaltyHttpAdapter.transformToCustomTierForm(response.data))
