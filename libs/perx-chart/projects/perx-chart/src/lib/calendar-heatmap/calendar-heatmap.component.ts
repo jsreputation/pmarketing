@@ -23,12 +23,12 @@ export class CalendarHeatmapComponent implements OnChanges {
     }
     this.data.subscribe((data: IData) => {
       this.ngxChartData = data.rows.map((row: (string | number)[]) => ({
-          name: row[0],
-          series: [{
-            name: row[1],
-            value: row[2]
-          }]
-        }));
+        name: row[0],
+        series: [{
+          name: row[1],
+          value: row[2]
+        }]
+      }));
     });
   }
 }

@@ -16,7 +16,7 @@ describe('LoyaltyTransactionsListComponent', () => {
         TransactionPipe
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

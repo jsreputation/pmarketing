@@ -16,7 +16,7 @@ describe('LongTextComponent', () => {
         NoopAnimationsModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

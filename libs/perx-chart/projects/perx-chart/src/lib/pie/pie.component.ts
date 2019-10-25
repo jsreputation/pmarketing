@@ -17,9 +17,9 @@ export class PieComponent implements OnChanges {
     if (changes.data) {
       this.data.subscribe((data: IData) => {
         this.ngxChartData = data.rows.map((row: (string | number)[]) => ({
-            name: row[0],
-            value: row[1]
-          }));
+          name: row[0],
+          value: row[1]
+        }));
       });
     }
   }

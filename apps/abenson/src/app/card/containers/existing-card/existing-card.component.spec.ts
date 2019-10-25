@@ -39,7 +39,7 @@ describe('ExistingCardComponent', () => {
         { provide: ProfileService, useValue: profileServiceStub },
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

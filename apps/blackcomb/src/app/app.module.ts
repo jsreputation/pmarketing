@@ -44,6 +44,7 @@ import {
   WalletComponent
 } from '@perx/blackcomb-pages';
 import { HomeModule } from './home/home.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 const perxComponents = [
   HistoryComponent,
@@ -90,6 +91,7 @@ const perxComponents = [
     PerxCampaignModule,
     HttpClientModule,
     HomeModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   bootstrap: [AppComponent]
 })

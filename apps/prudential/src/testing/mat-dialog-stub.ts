@@ -6,9 +6,9 @@ export class MatDialogStub {
     // with an afterClosed method that allows to subscribe to the dialog result observable.
     // @ts-ignore
     public open(component: any, params: any): any {
-        this.params = params;
-        return {
-            afterClosed: () => of([])
-        };
+      this.params = params;
+      return {
+        afterClosed: () => of([])
+      };
     }
 }
