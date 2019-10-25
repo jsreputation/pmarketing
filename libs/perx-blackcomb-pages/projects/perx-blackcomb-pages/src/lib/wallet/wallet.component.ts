@@ -29,7 +29,7 @@ export class WalletComponent implements OnInit, OnDestroy {
         mergeMap((res) =>  combineLatest(
           ...res.map(c => this.stampService.getCurrentCard(c.id))
         )
-      ));
+        ));
     this.vouchers$ = this.vouchersService.getAll();
     this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
   }

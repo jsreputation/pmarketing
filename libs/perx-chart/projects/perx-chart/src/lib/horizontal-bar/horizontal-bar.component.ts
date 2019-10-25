@@ -34,12 +34,12 @@ export class HorizontalBarComponent implements OnChanges {
         }
 
         const series = row.slice(1).map((v: number, i: number) => ({
-            name: data.cols[i + 1].display_name,
-            value: v,
-            extra: {
-              code: data.cols[i + 1].name
-            }
-          }));
+          name: data.cols[i + 1].display_name,
+          value: v,
+          extra: {
+            code: data.cols[i + 1].name
+          }
+        }));
 
         return {
           name: row[0],

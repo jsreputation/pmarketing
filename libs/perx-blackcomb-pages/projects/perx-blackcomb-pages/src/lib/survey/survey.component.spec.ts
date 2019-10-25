@@ -34,7 +34,7 @@ describe('SurveyComponent', () => {
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

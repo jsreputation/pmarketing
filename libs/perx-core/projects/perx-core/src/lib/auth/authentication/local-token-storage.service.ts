@@ -16,34 +16,34 @@ export class LocalTokenStorage extends TokenStorage {
     public storageType: TokenType;
 
     constructor(config: Config) {
-        super();
-        if (config) {
-            this.storageType = config.storageType;
-        }
+      super();
+      if (config) {
+        this.storageType = config.storageType;
+      }
     }
     public getAppInfo(): Observable<IAppInfo> {
-        this.appInfo = JSON.parse(localStorage.getItem('appInfo')) || { appAccessToken: '', userAccessToken: '' };
-        return of(this.appInfo);
+      this.appInfo = JSON.parse(localStorage.getItem('appInfo')) || { appAccessToken: '', userAccessToken: '' };
+      return of(this.appInfo);
     }
 
     public getAppInfoProperty(key: string): string {
-        this.getAppInfo();
-        return this.appInfo[key];
+      this.getAppInfo();
+      return this.appInfo[key];
     }
 
     public setAppInfoProperty(value: string, key: string): void {
-        this.getAppInfo();
-        this.appInfo[key] = value;
-        localStorage.setItem('appInfo', JSON.stringify(this.appInfo));
+      this.getAppInfo();
+      this.appInfo[key] = value;
+      localStorage.setItem('appInfo', JSON.stringify(this.appInfo));
     }
 
     public clearAppInfoProperty(keys: string[]): void {
-        this.getAppInfo();
-        if (keys.length) {
-          keys.forEach(key => delete this.appInfo[key]);
-        } else {
-          this.appInfo = {};
-        }
-        localStorage.setItem('appInfo', JSON.stringify(this.appInfo));
+      this.getAppInfo();
+      if (keys.length) {
+        keys.forEach(key => delete this.appInfo[key]);
+      } else {
+        this.appInfo = {};
       }
+      localStorage.setItem('appInfo', JSON.stringify(this.appInfo));
+    }
 }
