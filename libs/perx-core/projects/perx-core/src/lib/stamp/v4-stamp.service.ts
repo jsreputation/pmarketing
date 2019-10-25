@@ -105,6 +105,11 @@ interface IV4StampCard {
         image_url?: string;
       }
     };
+    thumbnail_img?: {
+      value?: {
+        image_url?: string;
+      }
+    };
     reward_positions?: number[];
   };
   stamps?: IV4Stamp[];
@@ -187,7 +192,9 @@ export class V4StampService implements StampService {
               stampCard.display_properties.background_img.value.image_url : null,
           }
         },
-        rewardPositions: stampCard.display_properties.reward_positions
+        rewardPositions: stampCard.display_properties.reward_positions,
+        thumbnailImg: stampCard.display_properties.thumbnail_img ?
+         stampCard.display_properties.thumbnail_img.value.image_url : null
       },
       stamps: stampCard.stamps.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp))
     };
