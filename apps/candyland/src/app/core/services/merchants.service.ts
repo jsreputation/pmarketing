@@ -38,7 +38,7 @@ export class MerchantsService implements ITableService {
     );
     if ('branches' in data && data.branches && data.branches.length > 0) {
       request = request.pipe(
-        switchMap((merchant: any) => {
+        switchMap(merchant => {
           const id = merchant.data.id;
           const branchRequests$ = data.branches.map(branch => this.createMerchantBranch(id, branch));
           return combineLatest(branchRequests$);
@@ -48,24 +48,24 @@ export class MerchantsService implements ITableService {
     return request.pipe(map(() => merchantId));
   }
 
-  public createMerchantBranch(merchantId: string, data: MerchantBranch): Observable<any> {
+  public createMerchantBranch(merchantId: string, data: MerchantBranch): Observable<IJsonApiPayload<MerchantBranch>> {
     const sendData = MerchantHttpAdapter.transformFromMerchantBranchForm(data, merchantId);
     return this.merchantHttpService.createMerchantBranch({data: sendData});
   }
 
-  public updateMerchantBranch(id: string, data: MerchantBranch): Observable<any> {
+  public updateMerchantBranch(id: string, data: MerchantBranch): Observable<IJsonApiPayload<MerchantBranch>> {
     const sendData = MerchantHttpAdapter.transformFromMerchantBranchForm(data, id);
     sendData.id = data.id;
     return this.merchantHttpService.updateMerchantBranch(data.id, {data: sendData});
   }
 
-  public updateMerchant(id: string, data: IMerchantForm): Observable<any> {
+  public updateMerchant(id: string, data: IMerchantForm): Observable<Merchant> {
     const sendData = MerchantHttpAdapter.transformFromMerchantForm(data);
     sendData.id = id;
     let request$ = this.merchantHttpService.updateMerchant(id, {data: sendData});
     if ('branches' in data && data.branches && data.branches.length > 0) {
       request$ = request$.pipe(
-        switchMap((merchant: any) => {
+        switchMap(merchant => {
           const merchantId = merchant.data.id;
           const branchRequests$ = data.branches.map(branch => {
             if (branch.id) {
@@ -90,7 +90,7 @@ export class MerchantsService implements ITableService {
     return request$;
   }
 
-  public deleteMerchant(id: string): Observable<any> {
+  public deleteMerchant(id: string): Observable<Response> {
     return this.datastore.deleteRecord(Merchant, id);
   }
 
