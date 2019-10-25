@@ -1,12 +1,29 @@
 
 export interface IMerchant {
-    urn: string;
-    created_at: string;
-    updated_at: string;
+    id?: string;
     name: string;
+    type?: string;
     description: string;
+    urn?: string;
+    created_at?: string;
+    updated_at?: string;
     properties: {
+        logo_image?: string;
         country_code?: string;
-        logo_image?: string
+        phone: string;
+        address: string;
+        city: string;
+        state: string;
+        postal_code: string;
+        weblink: string;
+    };
+    branches?: any;
+}
+
+export interface IMerchantBranchApi {
+    name: string;
+    properties: {
+        phone: string;
+        address: string;
     };
 }
