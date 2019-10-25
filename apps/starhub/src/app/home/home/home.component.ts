@@ -1,21 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ILoyalty, LoyaltyService, ProfileService, IProfile } from '@perx/core';
-
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
+import { MatToolbar } from '@angular/material';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent implements OnInit {
+  @ViewChild(MatToolbar, { static: false })
+  private toolBar: MatToolbar;
+  public top: number = 0;
+  public previousDelta: number = 0;
+  public lastOffset: number = 0;
+  @ViewChild('contentScrolled', { static: false })
+  public contentScrolled: ElementRef;
   public loyalty: ILoyalty;
   public profile: IProfile;
 
   constructor(
     private noRenewalePipe: NoRenewaleInNamePipe,
     private loyaltyService: LoyaltyService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
   ) { }
 
   public ngOnInit(): void {
@@ -38,5 +46,18 @@ export class HomeComponent implements OnInit {
         return 'assets/green-icon.svg';
     }
   }
-
+  public onScrollCall(): void {
+    requestAnimationFrame(() => {
+      const delta = this.previousDelta - this.contentScrolled.nativeElement.scrollTop;
+      this.previousDelta = this.contentScrolled.nativeElement.scrollTop;
+      if (this.top + delta > 0) {
+        this.top = 0;
+      } else if (this.top + delta <= -170) {
+        this.top = - 170;
+      } else {
+        this.top = this.top + delta;
+      }
+      this.toolBar._elementRef.nativeElement.style.transform = `translateY(${this.top}px)`;
+    });
+  }
 }

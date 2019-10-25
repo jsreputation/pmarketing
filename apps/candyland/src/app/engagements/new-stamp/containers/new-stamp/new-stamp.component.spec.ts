@@ -15,6 +15,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PuzzlesModule } from '@perx/core';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DirectivesModule } from '@cl-shared/directives/directives.module';
+import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 
 describe('NewStampPageComponent', () => {
   let component: NewStampComponent;
@@ -41,6 +45,10 @@ describe('NewStampPageComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatSelectModule,
+        MatSliderModule,
+        MatCheckboxModule,
+        DirectivesModule,
+        CheckboxGroupModule
       ],
       declarations: [ NewStampComponent ],
       providers: [

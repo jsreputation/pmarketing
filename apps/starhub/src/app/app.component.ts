@@ -89,7 +89,10 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   }
 
   public ngOnInit(): void {
-    this.notificationService.$popup.subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
+    this.notificationService.$popup
+      .subscribe((data: IPopupConfig) =>
+      this.dialog.open(PopupComponent, { data, ... data.panelClass && {panelClass: data.panelClass }
+      }));
 
     this.notificationService.$snack.subscribe((msg: string) => this.snackBar.open(msg, 'x', { duration: 2000 }));
 
@@ -123,6 +126,9 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
 
         this.token = this.authenticationService.getUserAccessToken();
         this.data.perxID = this.token;
+        if (typeof _satellite === 'undefined') {
+          return;
+        }
         _satellite.track('msa-rewards-virtual-page');
       }
     );

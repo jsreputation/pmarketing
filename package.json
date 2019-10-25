@@ -1,6 +1,7 @@
 {
   "name": "perx-microsites",
   "scripts": {
+    "build:lib": "lerna run build:lib",
     "build": "lerna run build:lib && lerna run build -- ",
     "build:abenson:prod": "lerna run build:lib && lerna run build:abenson:prod --",
     "build:blackcomb:prod": "lerna run build:lib && lerna run build:blackcomb:prod --",
@@ -9,6 +10,7 @@
     "build:digi:prod": "lerna run build:lib && lerna run build:digi:prod --",
     "build:feature-demo:prod": "lerna run build:lib && lerna run build:feature-demo:prod --",
     "build:hsbc:prod": "lerna run build:lib && lerna run build:hsbc:prod --",
+    "build:hsbc-xmas:prod": "lerna run build:lib && lerna run build:hsbc:prod --",
     "build:hsbc-reward:prod": "lerna run build:lib && lerna run build:hsbc-reward:prod --",
     "build:prudential:prod": "lerna run build:lib && lerna run build:prudential:prod --",
     "build:merck-core:prod": "lerna run build:lib && lerna run build:merck-core:prod --",

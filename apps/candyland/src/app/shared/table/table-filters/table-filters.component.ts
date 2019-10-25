@@ -47,6 +47,7 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
       });
     this.fg.valueChanges
       .pipe(
+        takeUntil(this.destroy$),
         startWith(this.fg.value),
         map((values: any) => {
           const res = {};
@@ -57,8 +58,7 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
           return JSON.stringify(res);
         }),
         distinctUntilChanged(),
-        debounceTime(500),
-        takeUntil(this.destroy$)
+        debounceTime(500)
       )
       .subscribe((value: any) => {
         this.dataSource.filter = value;
@@ -92,6 +92,7 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.changeDetectorRef.detach();
     this.destroy$.next();
     this.destroy$.complete();
     Object.values(this.cache).forEach((item: any) => {

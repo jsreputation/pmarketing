@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, OnChanges } from '@angular/core';
 import { IVoucherService } from '../ivoucher.service';
 import { Observable, of } from 'rxjs';
 import { IVoucher, StatusLabelMapping, VoucherState } from '../models/voucher.model';
@@ -9,7 +9,7 @@ import { map, delay } from 'rxjs/operators';
   templateUrl: './vouchers.component.html',
   styleUrls: ['./vouchers.component.scss']
 })
-export class VouchersComponent implements OnInit {
+export class VouchersComponent implements OnInit, OnChanges {
   @Input() public imageSize: string;
   @Input() public iconDisplay: string;
   @Input() public showTitle: boolean = true;
@@ -18,7 +18,7 @@ export class VouchersComponent implements OnInit {
   @Input() public showRedeemedDate: boolean = true;
   @Input() public showRedeemedIcon: boolean = true;
   @Input() public canSelectRedeemed: boolean = false;
-
+  @Input() public sourceType: string;
   /**
    * @deprecated
    */
@@ -49,12 +49,15 @@ export class VouchersComponent implements OnInit {
       console.error(`Error: 'mapping' is not defined`);
     }
 
-    if (!this.vouchers$) {
-      this.vouchers$ = this.vouchersService.getAll();
-    }
     of(true).pipe(delay(2000)).subscribe(
       () => this.ghostTimeOut = true
     );
+  }
+
+  public ngOnChanges(): void {
+    if (!this.vouchers$) {
+      this.vouchers$ = this.vouchersService.getAll({sourceType: this.sourceType, type: null});
+    }
   }
 
   public isVoucherQueryComplete(vouchers: IVoucher[]): boolean {

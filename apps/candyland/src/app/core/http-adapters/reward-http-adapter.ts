@@ -95,11 +95,12 @@ export class RewardHttpAdapter {
         merchantId: data.attributes.organization_id
       },
       vouchers,
-      displayProperties: data.attributes.display_properties
+      displayProperties: data.attributes.display_properties,
+      loyalties: data.attributes.display_properties.loyalties
     };
   }
 
-  public static transformFromRewardForm(data: IRewardEntityForm): IJsonApiItem<IRewardEntityAttributes> {
+  public static transformFromRewardForm(data: IRewardEntityForm, loyalties?: any): IJsonApiItem<IRewardEntityAttributes> {
     return {
       type: 'entities',
       attributes: {
@@ -120,7 +121,8 @@ export class RewardHttpAdapter {
             validity: {
               ...RewardHttpAdapter.getRewardValidity(data)
             }
-          }
+          },
+          loyalties,
         }
       }
     };
@@ -161,11 +163,11 @@ export class RewardHttpAdapter {
   }
 
   public static getRewardDate(period: any): { [key: string]: any } {
-    const res = {
+    const res: any = {
       start_date: RewardHttpAdapter.setTime(period.startDate, period.startTime)
     };
     if (!period.disabledEndDate) {
-      res['end_date'] = RewardHttpAdapter.setTime(period.endDate, period.endTime);
+      res.end_date = RewardHttpAdapter.setTime(period.endDate, period.endTime);
     }
     return res;
   }
@@ -200,7 +202,8 @@ export class RewardHttpAdapter {
               times: data.voucherValidity.times,
               duration: data.voucherValidity.duration
             }
-          }
+          },
+          loyalties: null,
         }
       }
     };

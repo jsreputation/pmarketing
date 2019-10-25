@@ -19,7 +19,6 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   @Input() public placeholder: string = 'Recommended format: .JPG, .PNG or .GIF';
   @Input() public btnLabel: string = '+ Add New';
   @Input() public classList: string = '';
-  @Input() public btnStyleClass: string = '';
   @Input() public isRequired: boolean;
 
   @Input()

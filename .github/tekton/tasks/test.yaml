@@ -1,0 +1,38 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: microsite-apps-ng-test
+  namespace: build
+spec:
+  inputs:
+    resources:
+      - name: workspace
+        type: git
+        targetPath: project
+    params:
+      - name: folder
+        type: string
+        description: The folder to run the test command
+  stepTemplate:
+    image: circleci/node:10-browsers
+    resources: &resources
+      requests:
+        cpu: 2
+        memory: "4Gi"
+  steps:
+    - name: yarn-install
+      workingDir: "/workspace/project"
+      command: ["yarn", "install"]
+      resources: *resources
+    - name: build-lib
+      workingDir: "/workspace/project"
+      command: ["yarn", "build:lib"]
+      resources: *resources
+    - name: config
+      workingDir: "/workspace/project"
+      command: ["yarn", "run", "lerna", "run", "config"]
+      resources: *resources
+    - name: test
+      workingDir: "/workspace/project/$(inputs.params.folder)"
+      command: ["yarn", "test", "--no-watch", "--no-progress", "--browsers=ChromeHeadlessCI"]
+      resources: *resources

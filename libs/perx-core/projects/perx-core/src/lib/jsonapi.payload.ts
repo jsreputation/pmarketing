@@ -1,6 +1,8 @@
-export interface IJsonApiListPayload<T> {
-    data: IJsonApiItem<T>[];
-    meta?: IMeta;
+import { IJsonApiItem } from './jsonapi.payload';
+export interface IJsonApiListPayload<T, S = any> {
+  data: IJsonApiItem<T>[];
+  included?: IJsonApiItem<S>[];
+  meta?: IMeta;
 }
 
 export interface IMeta {
@@ -8,25 +10,30 @@ export interface IMeta {
   page_count?: number;
 }
 
-export interface IJsonApiItemPayload<T> {
-    data: IJsonApiItem<T>;
+export interface IJsonApiItemPayload<T, S = any> {
+  data: IJsonApiItem<T>;
+  included?: IJsonApiItem<S>[];
 }
 
 export interface IJsonApiItem<T> {
-    id: string;
-    type: string;
-    links: {
+  id: string;
+  type: string;
+  links: {
+    self: string;
+  };
+  attributes: T;
+  relationships?: {
+    [source: string]: {
+      links: {
         self: string;
-    };
-    attributes: T;
-    relationships?: {
-        source: {
-            links: {
-                self: string;
-                related: string;
-            }
-        }
-    };
+        related: string;
+      },
+      data?: {
+        id: string;
+        type: string;
+      }[]
+    }
+  };
 }
 
 export interface IJsonApiPatchItem<T> {
