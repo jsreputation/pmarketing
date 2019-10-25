@@ -59,14 +59,14 @@ export class RewardComponent implements OnInit, OnDestroy {
               throw new Error('empty');
             }
           }),
-          takeUntil(this.destroy$),
           catchError(() => {
             this.dialog.open(PopupComponent, { data: this.dataPopEmpty });
             /* todo display popup and redirect to wallet*/
             this.router.navigate(['/wallet']);
             // next line is actually useless as we will redirected.
             return of<IReward[]>([]);
-          })
+          }),
+          takeUntil(this.destroy$)
         );
   }
 

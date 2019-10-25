@@ -59,8 +59,8 @@ export class RewardComponent implements OnInit, OnDestroy {
     };
     this.dialog.open(RewardConfirmComponent, { data })
       .afterClosed().pipe(
-        takeUntil(this.destroy$),
         switchMap((result) => result ? this.exchangePoints() : of(null))
+        takeUntil(this.destroy$),
       ).subscribe(() => { });
   }
 
