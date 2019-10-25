@@ -23,6 +23,6 @@ Scenario: Ensure that instant reward page have relevant elements
   Then  4_I should see the correct survey options reflected to blackcomb.
 @runThis
 Scenario: Ensure that url link works on a new window
-  Given 5_I am on the launch page with the url generated
+  Given 5_I am on the campaign review page
   When  5_I clear all session tokens from tbe browser
   Then  5_I access blackcomb with the url generated.
