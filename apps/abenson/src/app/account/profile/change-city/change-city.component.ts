@@ -46,7 +46,7 @@ export class ChangeCityComponent implements OnInit {
 
     if (this.customProperties.city) {
       this.profileService.setCustomProperties(this.customProperties).subscribe(() =>
-      this.location.back(),
+        this.location.back(),
       (err) => { console.log(err); });
     }
     return;

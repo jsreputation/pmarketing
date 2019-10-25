@@ -66,7 +66,7 @@ export class PuzzlePlayComponent implements OnChanges {
   @ViewChild('puzzleBoard', { static: false }) public puzzleView: ElementRef;
 
   public ngOnChanges(
-    // changes: SimpleChanges
+  // changes: SimpleChanges
   ): void {
     // if (this.img) {
 
@@ -105,7 +105,7 @@ export class PuzzlePlayComponent implements OnChanges {
       this.moved.emit();
       this.boardPuzzleTiles[puzzleLocation].isSelected = true;
       this.remainingPuzzleTiles = this.remainingPuzzleTiles
-      .filter((currentValue: DrawTile) => currentValue.puzzleLocation !== puzzleLocation);
+        .filter((currentValue: DrawTile) => currentValue.puzzleLocation !== puzzleLocation);
     }
   }
 

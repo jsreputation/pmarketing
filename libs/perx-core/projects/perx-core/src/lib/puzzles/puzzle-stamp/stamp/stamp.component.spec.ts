@@ -12,7 +12,7 @@ describe('StampComponent', () => {
       declarations: [StampComponent],
       imports: [UtilsModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
