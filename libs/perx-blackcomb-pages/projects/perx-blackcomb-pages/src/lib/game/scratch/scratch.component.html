@@ -7,8 +7,9 @@
     <div class="scratch-wrapper">
       <perx-core-scratch-card
         [coverImg]="config.coverImg"
-        [underlyingImg]="config.uncoverPortionToTrigger"
+        [underlyingImg]="config.underlyingImg"
         [uncoverPortionToTrigger]="config.uncoverPortionToTrigger"
+        [enabled]="isEnabled"
         (completed)="gameCompleted()"
       >
       </perx-core-scratch-card>
