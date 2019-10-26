@@ -198,7 +198,11 @@ export class V4VouchersService implements IVoucherService {
       map(resp => resp.data),
       map((v: IV4Voucher) => V4VouchersService.v4VoucherToVoucher(v)),
       // if the vouchers list was not empty but we are here, it means it is a new voucher, so let's add it.
-      tap((v: IVoucher) => { if (this.vouchers.length > 0) { this.vouchers.unshift(v); } })
+      tap((v: IVoucher) => {
+        if (this.vouchers.length > 0 && !this.vouchers.some((voucher) => voucher.id === v.id)) {
+          this.vouchers.unshift(v);
+        }
+      })
     );
   }
 
