@@ -73,6 +73,7 @@ export interface IScratch {
   coverImg: string;
   underlyingImg: string;
   uncoverPortionToTrigger: number;
+  nbTaps: number;
 }
 
 export interface IPlayOutcome {
