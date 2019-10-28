@@ -20,6 +20,7 @@ import {
   map,
   retry,
   switchMap,
+  mergeMap,
 } from 'rxjs/operators';
 
 import {
@@ -163,8 +164,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
     this.initCampaign();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
-    this.staticTab = stubTabs;
-    this.getTabedList();
+    this.getTabedList()
   }
 
   public ngOnDestroy(): void {
@@ -173,21 +173,34 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private getTabedList(): void {
-    this.tabs$.next(this.staticTab);
-    forkJoin(this.staticTab.map((tab) =>
-      this.rewardsService.getAllRewards(null, tab.rewardsType ? [tab.rewardsType] : null)
-        .pipe(
-          tap((reward) => {
-            tab.rewardsList = of(reward);
-            this.tabs$.next(this.staticTab);
-          }),
-          takeUntil(this.destroy$)
-        )
-    )).subscribe(() => {
-      this.tabs$.next(this.staticTab);
-    });
+    this.getTabs()
+      .pipe(
+        mergeMap((tabs) => {
+          this.staticTab = tabs;
+          this.tabs$.next(this.staticTab);
+          return forkJoin(this.staticTab.map((tab) =>
+            this.rewardsService.getAllRewards(null, tab.rewardsType ? [tab.rewardsType] : null)
+              .pipe(
+                map((reward) => {
+                  const observReward = of(reward)
+                  tab.rewardsList = observReward;
+                  this.tabs$.next(this.staticTab);
+                  return observReward;
+                }),
+                takeUntil(this.destroy$)
+              )
+          ))
+        })).subscribe((tab) => {
+          this.tabs$.next(this.staticTab);
+        });
   }
-
+  private getTabs(): Observable<ITabConfigExtended[]> {
+    return this.translate.get(stubTabs.map(tab => tab.tabName))
+      .pipe(map((translation) => stubTabs.map((tab) => {
+        tab.tabName = translation[tab.tabName];
+        return tab;
+      })));
+  }
   public goToReward(reward: IReward): void {
     this.router.navigate([`/reward-detail/${reward.id}`]);
   }
