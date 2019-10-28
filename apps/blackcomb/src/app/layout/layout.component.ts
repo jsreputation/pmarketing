@@ -12,7 +12,6 @@ import { Location } from '@angular/common';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-layout',

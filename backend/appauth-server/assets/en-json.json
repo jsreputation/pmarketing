@@ -5,5 +5,18 @@
     "HELLO": "Welcome",
     "MY_WALLET": "My Wallet",
     "STAMP_CARDS": "My Stamp Cards",
-    "MY_HISTORY": "MY_HISTORY"
+    "MY_HISTORY": "MY_HISTORY",
+    "ALL": "All",
+    "FOOD_BEVERAGE": "Food & Beverage",
+    "TRAVEL": "Travel", 
+    "ELECTRONICS": "Electronics",
+    "WELLNESS": "Wellness",
+    "ENTERTAINMENT": "Entertainment",
+    "SHOPPING": "Shopping",
+    "MERCHANT_SELF": "Merchant Self",
+    "OTHERS": "Others",
+    "HOME": "Home",
+    "WALLET": "Wallet",
+    "HISTORY": "History",
+    "ACCOUNT":"Account"
 }

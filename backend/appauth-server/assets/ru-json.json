@@ -5,5 +5,20 @@
     "HELLO": "Добро пожаловать",
     "MY_WALLET": "Мой кощелёк",
     "STAMP_CARDS": "Мои почтовые карточки",
-    "MY_HISTORY": "История"
+    "MY_HISTORY": "История",
+    "ALL": "Все",
+    "FOOD_BEVERAGE": "Еда и напитки",
+    "TRAVEL": "Путешествия", 
+    "ELECTRONICS": "Електроника",
+    "WELLNESS": "Здоровье",
+    "ENTERTAINMENT": "Развлечения",
+    "SHOPPING": "Шопинг",
+    "MERCHANT_SELF": "Самообслуживание",
+    "OTHERS": "Другое",
+    "HOME": "Главная",
+    "WALLET": "Кошелёк",
+    "HISTORY": "ИСТОРИЯ",
+    "ACCOUNT":"Аккаунт",
+    "Contact Us": "Обратная связь",
+    "Terms and Conditions": "Условия и положения"
 }
