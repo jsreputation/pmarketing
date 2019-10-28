@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { Router, ActivatedRoute } from '@angular/router';
-import { ICampaignService, NotificationService, CampaignType, IConfig, ConfigService } from '@perx/core';
-import { map } from 'rxjs/operators';
+import {Router, ActivatedRoute} from '@angular/router';
+import {ICampaignService, NotificationService, CampaignType, IConfig, ConfigService} from '@perx/core';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-wallet',
@@ -14,6 +14,8 @@ export class WalletComponent implements OnInit {
   public campaignId: number;
   public selectedTab: number = 0;
   public sourceType: string | null = null;
+  public voucherFilter: string[];
+  public canSelectRedeemed: boolean;
 
   constructor(
     private router: Router,
@@ -21,12 +23,15 @@ export class WalletComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private notificationService: NotificationService,
     private configService: ConfigService
-  ) { }
+  ) {
+  }
 
   public ngOnInit(): void {
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => {
         this.sourceType = config.sourceType.toString();
+        this.voucherFilter = this.setVoucherFilter();
+        this.canSelectRedeemed = this.setCanSelectRedeemed();
       }
     );
 
@@ -57,5 +62,19 @@ export class WalletComponent implements OnInit {
 
   public onRoute(id: string): void {
     this.router.navigate([`/voucher/${id}`]);
+  }
+
+  private setCanSelectRedeemed(): boolean {
+    if (this.sourceType === 'hsbc-xmas') {
+      return true;
+    }
+    return false;
+  }
+
+  private setVoucherFilter(): string[] {
+    if (this.sourceType === 'hsbc-xmas') {
+      return ['issued', 'redeemed'];
+    }
+    return ['issued'];
   }
 }
