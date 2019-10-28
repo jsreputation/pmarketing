@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
           );
         }
       }),
-      tap(() => this.tokenStorage.clearAppInfoProperty(['appAccessToken'])),
+      tap(() => this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'appAccessToken'])),
       switchMap((config: IConfig) => this.configService.getTenantAppSettings(config.sourceType as string))
     ).subscribe((settings: IMicrositeSettings) => {
       this.loginBackgroundUrl = settings.jsonValue.background as string;
