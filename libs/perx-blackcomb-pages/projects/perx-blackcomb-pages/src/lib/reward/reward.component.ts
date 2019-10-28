@@ -47,6 +47,7 @@ export class RewardComponent implements OnInit, OnDestroy {
         if (eng.noRewardsPopUp) {
           this.dataPopEmpty.title = eng.noRewardsPopUp.headLine;
           this.dataPopEmpty.text = eng.noRewardsPopUp.subHeadLine;
+          this.dataPopEmpty.imageUrl = eng.noRewardsPopUp.imageURL;
         }
       });
 
