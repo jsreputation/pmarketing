@@ -3,7 +3,7 @@
           *ngFor="let puzzle of puzzles; let i=index">
   <div class="puzzle-content">
     <div class="puzzle-img__wrapper">
-      <img [ngClass]="isActive(puzzle) ? 'puzzle-img' : 'puzzle-img grayscale' " src="{{puzzle.displayProperties.cardImage.value.imageUrl}}">
+      <img [ngClass]="isActive(puzzle) ? 'puzzle-img' : 'puzzle-img grayscale' " src="{{puzzle.displayProperties.thumbnailImg}}">
     </div>
     <div class="puzzle-details">
       <h1>
