@@ -141,7 +141,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                 ))
             );
           })
-        ).subscribe(() => subject.complete());
+        )
     }));
   }
 

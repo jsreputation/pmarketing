@@ -1,6 +1,6 @@
-<div *ngIf="(games$ | async) as games">
+<div *ngIf="(games$ | async) as games" [@listAnimation]="games.length">
   <mat-card
-  *ngFor="let game of ((showAllGames || (games.length <= defaultNbGames ))
+  *ngFor="let game of ((showAllGames || (games.length <= defaultNbGames))
   ? games : (games | slice:0:defaultNbGames))"
   [routerLink]="[ '/game', game.campaignId ]"
   matRipple
@@ -16,14 +16,15 @@
 </mat-card>
 <div class="flex-for-button">
   <button
-  *ngIf="!showAllGames && (games.length > defaultNbGames)"
+  *ngIf="!(games.length <= defaultNbGames)"
   mat-flat-button
   class="see-button"
   (click)="showAllGames = !showAllGames">
-    See More
+    {{ !showAllGames?  "See More" : "See Less"}}
   </button>
 </div>
 </div>
+
 
 
 
