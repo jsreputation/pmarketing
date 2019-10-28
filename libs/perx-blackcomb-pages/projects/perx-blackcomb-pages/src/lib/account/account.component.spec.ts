@@ -4,6 +4,7 @@ import { AccountComponent } from './account.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService, ProfileModule, ProfileService, ThemesService } from '@perx/core';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AccountComponent', () => {
   let component: AccountComponent;
@@ -20,7 +21,8 @@ describe('AccountComponent', () => {
       declarations: [AccountComponent],
       imports: [
         RouterTestingModule,
-        ProfileModule
+        ProfileModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },

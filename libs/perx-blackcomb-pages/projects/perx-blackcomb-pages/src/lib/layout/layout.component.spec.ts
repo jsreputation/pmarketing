@@ -3,7 +3,8 @@ import { async, TestBed } from '@angular/core/testing';
 import { LayoutComponent } from './layout.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule, MatToolbarModule, MatIconModule } from '@angular/material';
-import { ThemesService, AuthenticationService } from '@perx/core';
+import { ThemesService, AuthenticationService, ConfigModule } from '@perx/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 const themesServiceStub = {};
 const authServiceStub = {};
@@ -17,7 +18,9 @@ describe('LayoutComponent', () => {
         ]),
         MatDialogModule,
         MatToolbarModule,
-        MatIconModule
+        MatIconModule,
+        TranslateModule.forRoot(),
+        ConfigModule.forRoot({})
       ],
       declarations: [
         LayoutComponent

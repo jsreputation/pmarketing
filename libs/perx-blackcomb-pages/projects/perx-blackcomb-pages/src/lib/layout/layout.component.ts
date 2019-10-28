@@ -1,20 +1,24 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { PopupComponent, NotificationService, IPopupConfig, ThemesService, ITheme, AuthenticationService } from '@perx/core';
-import {
-  HomeComponent,
-  HistoryComponent,
-  AccountComponent,
-  LoginComponent,
-  WalletComponent
-} from '@perx/blackcomb-pages';
+import { PopupComponent, NotificationService, IPopupConfig, ThemesService, ITheme, AuthenticationService, Config } from '@perx/core';
+// import {
+//   HomeComponent,
+//   HistoryComponent,
+//   AccountComponent,
+//   LoginComponent,
+//   WalletComponent
+// } from '@perx/blackcomb-pages';
 import { Location } from '@angular/common';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { LoginComponent } from '../login/login.component';
+import { HomeComponent } from '../home/home.component';
+import { HistoryComponent } from '../history/history.component';
+import { AccountComponent } from '../account/account.component';
+import { WalletComponent } from '../wallet/wallet.component';
 
 @Component({
-  selector: 'app-layout',
+  selector: 'perx-blackcomb-games-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })
@@ -34,8 +38,11 @@ export class LayoutComponent implements OnInit {
     private themesService: ThemesService,
     private authService: AuthenticationService,
     private cd: ChangeDetectorRef,
+    private config: Config
   ) {
-    this.preAuth = environment.preAuth;
+    if (config) {
+      this.preAuth = this.config.preAuth;
+    }
   }
 
   public ngOnInit(): void {

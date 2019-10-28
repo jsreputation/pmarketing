@@ -8,9 +8,9 @@ import {
   VoucherDetailComponent,
   LoadingComponent,
   ContentComponent,
-  RewardDetailsComponent
+  RewardDetailsComponent,
+  LayoutComponent
 } from '@perx/blackcomb-pages';
-import { LayoutComponent } from './layout.component';
 const routes: Routes = [
   {
     path: '',

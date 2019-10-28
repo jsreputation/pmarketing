@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LayoutRoutingModule } from './layout-routing.module';
-import { LayoutComponent } from './layout.component';
 import {
   HistoryComponent,
   RedeemComponent,
   VoucherDetailComponent,
   RewardDetailsComponent,
   ContentComponent,
-  LoadingComponent
+  LoadingComponent,
+  LayoutComponent
 } from '@perx/blackcomb-pages';
 import { HomeModule } from '../home/home.module';
 
