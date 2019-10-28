@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule, Title} from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -157,6 +157,7 @@ import { RewardPopupComponent } from './reward-popup/reward-popup.component';
     MatDialogModule
   ],
   providers: [
+    Title,
     DatePipe,
     {provide: APP_BASE_HREF, useValue: environment.baseHref },
     // { provide: ConfigService, useValue: configServiceStub },
