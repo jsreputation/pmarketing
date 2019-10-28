@@ -182,15 +182,15 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.rewardsService.getAllRewards(null, tab.rewardsType ? [tab.rewardsType] : null)
               .pipe(
                 map((reward) => {
-                  const observReward = of(reward)
-                  tab.rewardsList = observReward;
+                  tab.rewardsList = of(reward);
                   this.tabs$.next(this.staticTab);
-                  return observReward;
+                  return tab;
                 }),
                 takeUntil(this.destroy$)
               )
           ))
         })).subscribe((tab) => {
+          this.staticTab = tab;
           this.tabs$.next(this.staticTab);
         });
   }
