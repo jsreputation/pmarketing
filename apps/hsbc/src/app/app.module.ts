@@ -22,6 +22,7 @@ import {
   ConfigModule,
   RewardsModule,
 
+  // ICampaignService,
   // ConfigService
   // StampService,
   // ICampaignService
@@ -39,7 +40,8 @@ import {
   MatInputModule,
   MatProgressSpinnerModule,
   MatProgressBarModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatDialogModule
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { APP_BASE_HREF, DatePipe } from '@angular/common';
@@ -51,6 +53,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavigateToolbarComponent } from './navigate-toolbar/navigate-toolbar.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { AccountComponent } from './account/account.component';
+import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 
 // import { PuzzleListComponent } from './mock/service/puzzle-list/puzzle-list.component';
 // import { of } from 'rxjs';
@@ -116,6 +119,7 @@ import { AccountComponent } from './account/account.component';
     NavigateToolbarComponent,
     WalletComponent,
     AccountComponent,
+    RewardPopupComponent
 
     // PuzzleListComponent, // mock service/component
   ],
@@ -149,7 +153,8 @@ import { AccountComponent } from './account/account.component';
     StampModule,
     FormsModule,
     RewardsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule
   ],
   providers: [
     DatePipe,
@@ -159,5 +164,6 @@ import { AccountComponent } from './account/account.component';
     // { provide: ICampaignService, useValue: campaignServiceStub },
   ],
   bootstrap: [AppComponent],
+  entryComponents: [RewardPopupComponent]
 })
 export class AppModule { }

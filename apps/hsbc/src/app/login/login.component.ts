@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {Router} from '@angular/router';
 import {isPlatformBrowser} from '@angular/common';
-import {AuthenticationService, ConfigService, IConfig, NotificationService, IMicrositeSettings} from '@perx/core';
+import {AuthenticationService, ConfigService, IConfig, NotificationService, IMicrositeSettings, TokenStorage} from '@perx/core';
 import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {HttpErrorResponse} from '@angular/common/http';
 import {switchMap, tap} from 'rxjs/operators';
@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: object,
     private fb: FormBuilder,
     private configService: ConfigService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private tokenStorage: TokenStorage
   ) {
     this.initForm();
   }
@@ -49,6 +50,7 @@ export class LoginComponent implements OnInit {
           );
         }
       }),
+      tap(() => this.tokenStorage.clearAppInfoProperty(['appAccessToken'])),
       switchMap((config: IConfig) => this.configService.getTenantAppSettings(config.sourceType as string))
     ).subscribe((settings: IMicrositeSettings) => {
       this.loginBackgroundUrl = settings.jsonValue.background as string;
