@@ -14,6 +14,7 @@ export class VoucherComponent implements OnInit {
   public voucher: Voucher;
   public btnTxt: string = 'View';
   public sourceType: string;
+  public expiryFn: () => string;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,7 +26,7 @@ export class VoucherComponent implements OnInit {
   public ngOnInit(): void {
     this.firstTime = this.route.snapshot.paramMap.get('win') === 'true';
     this.id = this.route.snapshot.params.id;
-
+    this.expiryFn = () => 'd MMMM y';
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => {
         this.sourceType = config.sourceType.toString();
