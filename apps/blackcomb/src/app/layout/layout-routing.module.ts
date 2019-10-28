@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { 
-  HomeComponent, 
-  WalletComponent, 
-  HistoryComponent, 
-  RedeemComponent, 
-  VoucherDetailComponent, 
-  LoadingComponent, 
-  ContentComponent, 
-  RewardDetailsComponent 
+import {
+  HomeComponent,
+  WalletComponent,
+  HistoryComponent,
+  RedeemComponent,
+  VoucherDetailComponent,
+  LoadingComponent,
+  ContentComponent,
+  RewardDetailsComponent
 } from '@perx/blackcomb-pages';
 import { LayoutComponent } from './layout.component';
 const routes: Routes = [
@@ -24,11 +24,11 @@ const routes: Routes = [
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
       {
         path: 'qr', loadChildren: (): any => import('../qr/qr.module').then((mod: any) => mod.QRModule)
-    
+
       },
       {
         path: 'account', loadChildren: (): any => import('../account/account.module').then((mod: any) => mod.AccountModule)
-    
+
       },
       {
         path: 'stamp/:id',
@@ -51,7 +51,7 @@ const routes: Routes = [
       { path: 'c/:key', component: ContentComponent },
     ]
   }
- 
+
 ];
 
 @NgModule({

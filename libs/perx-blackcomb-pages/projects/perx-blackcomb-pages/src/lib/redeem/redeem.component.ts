@@ -52,8 +52,7 @@ export class RedeemComponent implements OnInit, OnDestroy {
         title: text,
         text: 'ID: ' + this.voucherId
       })
-    )
-
+    );
   }
 
   public errorHandler(status: number): void {
@@ -65,22 +64,17 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public needLoginPopup(): void {
-    this.translate.get(['REEDEM_QUEST', "GO_TO_LOGIN"]).subscribe((dictionary)=>
-    this.popup({
+    this.translate.get(['REEDEM_QUEST', 'GO_TO_LOGIN']).pipe(map((dictionary) => this.popup({
       title: dictionary.REEDEM_QUEST,
       buttonTxt: dictionary.GO_TO_LOGIN
-    })
-      .afterClosed()
-      .subscribe(() => this.router.navigate(['/login']))
-    );
+    }).afterClosed())).subscribe(() => this.router.navigate(['/login']));
   }
 
   public errorPopup(): void {
-    this.translate.get('TRY_AGAIN_LATER').subscribe((qest)=>{
+    this.translate.get('TRY_AGAIN_LATER').subscribe((qest) =>
       this.popup({
         title: qest
-      })
-    });
+      }));
   }
 
   public popup(data: IPopupConfig): MatDialogRef<PopupComponent> {

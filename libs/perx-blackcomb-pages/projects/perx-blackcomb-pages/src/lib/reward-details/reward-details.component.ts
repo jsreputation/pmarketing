@@ -22,7 +22,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.translate.get("POINTS")
+    this.translate.get('POINTS')
       .subscribe((points) => this.displayPriceFn = (price: IPrice) => `${price.price} ${points}`);
     this.reward$ = this.activeRoute.params
       .pipe(

@@ -2,15 +2,15 @@ import { Voucher, VoucherState, IVoucherService, RedemptionType } from '@perx/co
 import { of, BehaviorSubject } from 'rxjs';
 
 export const vouchersServiceStub: IVoucherService = {
-  getAll: ()=>of(vouchers),
-  get: (id)=>of(vouchers.find(voucher=>voucher.id===id)),
-  reset: ()=>{ vouchers.forEach((_, key)=>delete vouchers[key])},
-  redeemVoucher: ()=>of(null),
-  newVouchersCreatedForReward: ()=>of(vouchers),
-  stateChangedForVoucher: ()=> new BehaviorSubject<Voucher>(null),
-  reserveReward: ()=>of(vouchers[0]),
-  issueReward: ()=>of(vouchers[0])
-}
+  getAll: () => of(vouchers),
+  get: (id) => of(vouchers.find(voucher => voucher.id === id)),
+  reset: () => vouchers.forEach((_, key) => delete vouchers[key]),
+  redeemVoucher: () => of(null),
+  newVouchersCreatedForReward: () => of(vouchers),
+  stateChangedForVoucher: () => new BehaviorSubject<Voucher>(null),
+  reserveReward: () => of(vouchers[0]),
+  issueReward: () => of(vouchers[0])
+};
 
 export const vouchers: Voucher[] = [
   {
@@ -26,7 +26,7 @@ export const vouchers: Voucher[] = [
       rewardThumbnail: '',
       rewardBanner: '',
       merchantImg: '',
-      rewardPrice: [{id: 1}],
+      rewardPrice: [{ id: 1 }],
       merchantId: 1,
       merchantName: 'Test',
       merchantWebsite: '',

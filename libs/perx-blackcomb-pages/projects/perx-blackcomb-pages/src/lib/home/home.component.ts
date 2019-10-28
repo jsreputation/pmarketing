@@ -164,7 +164,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
     this.initCampaign();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
-    this.getTabedList()
+    this.getTabedList();
   }
 
   public ngOnDestroy(): void {
@@ -174,25 +174,23 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private getTabedList(): void {
     this.getTabs()
-      .pipe(
-        mergeMap((tabs) => {
-          this.staticTab = tabs;
-          this.tabs$.next(this.staticTab);
-          return forkJoin(this.staticTab.map((tab) =>
-            this.rewardsService.getAllRewards(null, tab.rewardsType ? [tab.rewardsType] : null)
-              .pipe(
-                map((reward) => {
-                  tab.rewardsList = of(reward);
-                  this.tabs$.next(this.staticTab);
-                  return tab;
-                }),
-                takeUntil(this.destroy$)
-              )
-          ))
-        })).subscribe((tab) => {
-          this.staticTab = tab;
-          this.tabs$.next(this.staticTab);
-        });
+      .pipe(mergeMap((tabs) => {
+        this.staticTab = tabs;
+        this.tabs$.next(this.staticTab);
+        return forkJoin(this.staticTab.map((tab) =>
+          this.rewardsService.getAllRewards(null, tab.rewardsType ? [tab.rewardsType] : null)
+            .pipe(
+              map((reward) => {
+                tab.rewardsList = of(reward);
+                this.tabs$.next(this.staticTab);
+                return tab;
+              }),
+              takeUntil(this.destroy$)
+            )));
+      })).subscribe((tab) => {
+        this.staticTab = tab;
+        this.tabs$.next(this.staticTab);
+      });
   }
   private getTabs(): Observable<ITabConfigExtended[]> {
     return this.translate.get(stubTabs.map(tab => tab.tabName))

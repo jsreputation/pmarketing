@@ -25,7 +25,7 @@ const modules = [
   MatDialogModule,
   FormsModule,
   ReactiveFormsModule
-]
+];
 @NgModule({
   declarations: [],
   imports: [
