@@ -1,26 +1,38 @@
-import { Voucher, VoucherState } from '@perx/core';
+import { Voucher, VoucherState, IVoucherService, RedemptionType } from '@perx/core';
+import { of, BehaviorSubject } from 'rxjs';
+
+export const vouchersServiceStub: IVoucherService = {
+  getAll: ()=>of(vouchers),
+  get: (id)=>of(vouchers.find(voucher=>voucher.id===id)),
+  reset: ()=>{ vouchers.forEach((_, key)=>delete vouchers[key])},
+  redeemVoucher: ()=>of(null),
+  newVouchersCreatedForReward: ()=>of(vouchers),
+  stateChangedForVoucher: ()=> new BehaviorSubject<Voucher>(null),
+  reserveReward: ()=>of(vouchers[0]),
+  issueReward: ()=>of(vouchers[0])
+}
 
 export const vouchers: Voucher[] = [
   {
     id: 1,
     reward: {
       id: 1,
-      name: '',
-      description: '',
-      subtitle: '',
+      name: 'Voucher',
+      description: 'Voucher',
+      subtitle: 'Voucher',
       validFrom: new Date(),
       validTo: new Date(),
       sellingFrom: new Date(),
       rewardThumbnail: '',
       rewardBanner: '',
       merchantImg: '',
-      rewardPrice: [],
+      rewardPrice: [{id: 1}],
       merchantId: 1,
-      merchantName: '',
+      merchantName: 'Test',
       merchantWebsite: '',
-      termsAndConditions: '',
-      howToRedeem: '',
-      redemptionType: null,
+      termsAndConditions: 'Test',
+      howToRedeem: 'pin',
+      redemptionType: RedemptionType.pin,
       categoryTags: [],
       inventory: null,
     },

@@ -33,7 +33,7 @@ export class LayoutComponent implements OnInit {
     private router: Router,
     private themesService: ThemesService,
     private authService: AuthenticationService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
   ) {
     this.preAuth = environment.preAuth;
   }

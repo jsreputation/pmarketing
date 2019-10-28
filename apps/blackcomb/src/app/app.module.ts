@@ -11,7 +11,7 @@ import {
   CampaignModule as PerxCampaignModule,
   StampModule as PerxStampModule,
   ProfileModule,
-  RewardsModule,
+  RewardsModule
 } from '@perx/core';
 
 import { AppRoutingModule } from './app-routing.module';
