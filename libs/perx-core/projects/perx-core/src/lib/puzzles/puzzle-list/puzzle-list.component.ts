@@ -42,7 +42,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
 
   public ngOnInit(): void {
     if (!this.titleFn) {
-      this.titleFn = (index) => `Stamp Card ${this.puzzleIndex(index)} out of 10`;
+      this.titleFn = (index) => `Stamp Card ${this.puzzleIndex(index)} out of 12`;
     }
   }
 
