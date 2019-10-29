@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
-import {AuthenticationService, PopupComponent, NotificationService, ConfigService, IConfig} from '@perx/core';
+import { AuthenticationService, PopupComponent, NotificationService, ConfigService, IConfig } from '@perx/core';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatSidenav } from '@angular/material';
 import { PuzzleComponent } from './puzzle/puzzle.component';
@@ -16,7 +16,7 @@ import { TncComponent } from './tnc/tnc.component';
 import { environment } from '../environments/environment';
 import { AccountComponent } from './account/account.component';
 import { WalletComponent } from './wallet/wallet.component';
-import {Title} from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -78,16 +78,20 @@ export class AppComponent implements OnInit {
         } else {
           title = 'HSBC Collect 2.0';
         }
-        this.titleService.setTitle( title);
+        this.titleService.setTitle(title);
       }
     );
   }
 
-  public goHome(): void {
+  private goHome(): void {
     this.router.navigate(['/home']);
   }
 
-  public goBack(): void {
+  private goWallet(): void {
+    this.router.navigate(['/wallet']);
+  }
+
+  private goBack(): void {
     this.location.back();
   }
 
@@ -132,7 +136,7 @@ export class AppComponent implements OnInit {
     this.onLeftActionClick = ref instanceof PuzzlesComponent ? this.goHome :
       ref instanceof PuzzleComponent ? this.goHome :
         ref instanceof RedemptionComponent ? this.goBack :
-          ref instanceof VoucherComponent ? this.goBack :
+          ref instanceof VoucherComponent ? this.goWallet :
             ref instanceof FaqComponent ? this.goBack :
               ref instanceof TncComponent ? this.goBack :
                 ref instanceof AccountComponent ? this.goBack :
