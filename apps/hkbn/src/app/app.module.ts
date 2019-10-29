@@ -32,9 +32,9 @@ import { HistoryComponent } from './history/history.component';
 const getAppAccessToken = (authenticationService: AuthenticationService) => () => authenticationService.getAppToken().toPromise();
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
-    translateService.setDefaultLang(environment.defaultLang);
-    resolve();
-  });
+  translateService.setDefaultLang(environment.defaultLang);
+  resolve();
+});
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);

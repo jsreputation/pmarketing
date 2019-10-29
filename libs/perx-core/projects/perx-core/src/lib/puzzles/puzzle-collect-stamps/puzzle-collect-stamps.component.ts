@@ -12,13 +12,13 @@ import { PuzzleCollectReward } from '../models/puzzle-stamp.model';
 export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   // This dummy array is describing the slots templates
   private stampsOrientations: number[][] = [[1, 2],
-  [2, 2],
-  [2, 1, 2],
-  [3, 3],
-  [3, 3, 1],
-  [4, 4],
-  [3, 3, 3],
-  [3, 3, 3, 1]];
+    [2, 2],
+    [2, 1, 2],
+    [3, 3],
+    [3, 3, 1],
+    [4, 4],
+    [3, 3, 3],
+    [3, 3, 3, 1]];
 
   @Input()
   private stamps: IStamp[] | null = [];
@@ -59,7 +59,6 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   public currentActiveOrientation: number[] = null;
   public stampCardImage: string = null;
   public availableStampCount: number = 0;
-  public availStamps: number = 0;
 
   public ngOnInit(): void {
     const availableStamps = this.stamps.filter(stamp => stamp.state === 'issued');
@@ -72,7 +71,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
       this.currentActiveOrientation = this.stampsOrientations[this.nbSlots - 3];
     }
     if (changes.stamps) {
-      this.availStamps = this.stamps.filter(stamp => stamp.state === StampState.issued).length;
+      this.availableStampCount = this.stamps.filter(stamp => stamp.state === StampState.issued).length;
     }
   }
 

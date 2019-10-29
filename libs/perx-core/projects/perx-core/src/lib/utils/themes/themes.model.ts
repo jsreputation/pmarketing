@@ -17,19 +17,19 @@ interface IThemeProperties {
 }
 
 export const LIGHT: ITheme = {
-    name: 'Light',
-    properties: {
-        '--background': '#fafafa',
-        '--font_color': '#333'
-    }
+  name: 'Light',
+  properties: {
+    '--background': '#fafafa',
+    '--font_color': '#333'
+  }
 };
 
 export const DARK: ITheme = {
-    name: 'Dark',
-    properties: {
-        '--background': '#1f2935',
-        '--font_color': '#fff'
-    }
+  name: 'Dark',
+  properties: {
+    '--background': '#1f2935',
+    '--font_color': '#fff'
+  }
 };
 
 export interface WhistlerITenant {

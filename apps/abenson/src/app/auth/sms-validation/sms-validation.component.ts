@@ -53,6 +53,6 @@ export class SmsValidationComponent implements OnInit {
   }
 
   public redirectToLogin(): void {
-   this.router.navigate(['/login']);
+    this.router.navigate(['/login']);
   }
 }
