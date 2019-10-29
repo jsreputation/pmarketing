@@ -39,6 +39,7 @@ export class CommsHttpAdapter {
         template_id: templateId && parseInt(templateId, 10) || null,
         channel: data.channel.type,
         target_id: data.audience.select && parseInt(data.audience.select, 10) || null,
+        target_type: 'Ros::Comm::Pool'
       }
     };
   }
