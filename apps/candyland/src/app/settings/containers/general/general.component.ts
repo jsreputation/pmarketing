@@ -19,8 +19,10 @@ export class GeneralComponent implements OnInit, OnDestroy {
   public currency$: Observable<Currency[]>;
   public formGeneral: FormGroup;
   public tenants: Tenants;
-  constructor(private settingsService: SettingsService,
-              private fb: FormBuilder) { }
+  constructor(
+    private settingsService: SettingsService,
+    private fb: FormBuilder
+  ) { }
 
   public ngOnInit(): void {
     this.createFormGeneral();
@@ -41,12 +43,10 @@ export class GeneralComponent implements OnInit, OnDestroy {
       .valueChanges
       .pipe(
         debounceTime(300),
+        switchMap((value => this.settingsService.updateTenants(value))),
         takeUntil(this.destroy$),
-        switchMap((value => this.settingsService.updateTenants(value))
-        )
       )
-      .subscribe(() => {
-      });
+      .subscribe(() => { });
   }
 
   private getTimeZone(): void {

@@ -23,10 +23,10 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
   public params: { [key: string]: string };
   public activeTab: string = 'survey';
   public tabs: ITotal[] = [
-    {id: 174, name: 'survey', title: 'Survey'},
-    {id: 181, name: 'games', title: 'Games'},
-    {id: 173, name: 'stamps', title: 'Stamps'},
-    {id: 180, name: 'reward', title: 'Instant Reward'}
+    { id: 174, name: 'survey', title: 'Survey' },
+    { id: 181, name: 'games', title: 'Games' },
+    { id: 173, name: 'stamps', title: 'Stamps' },
+    { id: 180, name: 'reward', title: 'Instant Reward' }
   ];
   public tabsValue: any;
   public activeCampaigns: number;
@@ -39,10 +39,11 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
     return this.tabsValue ? this.tabsValue[index] : null;
   }
 
-  constructor(private dashboardService: DashboardService,
-              private cd: ChangeDetectorRef,
-              private chartsParametersService: DashboardChartsParametersService) {
-  }
+  constructor(
+    private dashboardService: DashboardService,
+    private cd: ChangeDetectorRef,
+    private chartsParametersService: DashboardChartsParametersService
+  ) { }
 
   public ngOnInit(): void {
     this.handelChartsParamsChanges();
@@ -61,10 +62,10 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
   private handelChartsParamsChanges(): void {
     this.chartsParametersService.params$
       .pipe(
-        takeUntil(this.destroy$),
         tap(value => this.params = value),
         switchMap(params => this.dashboardService.getTabsValue(this.tabsIds, params)),
-        tap(value => this.tabsValue = value)
+        tap(value => this.tabsValue = value),
+        takeUntil(this.destroy$),
       )
       .subscribe(() => this.cd.detectChanges());
   }
@@ -72,9 +73,9 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
   private handelActiveCampaigns(): void {
     this.chartsParametersService.params$
       .pipe(
-        takeUntil(this.destroy$),
         switchMap(params => this.dashboardService.getTabValue(176, params)),
-        tap(value => this.activeCampaigns = value)
+        tap(value => this.activeCampaigns = value),
+        takeUntil(this.destroy$),
       )
       .subscribe(() => this.cd.detectChanges());
   }

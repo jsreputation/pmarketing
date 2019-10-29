@@ -32,7 +32,7 @@ import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-v
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
+  @ViewChild(SimpleMobileViewComponent, { static: false }) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<any> = new Subject();
 
@@ -119,9 +119,9 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
       .pipe(switchMap((imageUrl: IUploadedFile) => {
         if (this.id) {
           return this.instantRewardsService.updateInstantReward(this.id,
-            {...(this.form.value as IRewardForm), image_url: imageUrl.url});
+            { ...(this.form.value as IRewardForm), image_url: imageUrl.url });
         }
-        return this.instantRewardsService.createRewardGame({...this.form.value , image_url: imageUrl.url}).pipe(
+        return this.instantRewardsService.createRewardGame({ ...this.form.value, image_url: imageUrl.url }).pipe(
           map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
           tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
         );
@@ -136,8 +136,8 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
   private initRewardForm(): void {
     this.form = this.fb.group({
       name: [null, [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: [null, [
         Validators.required,
@@ -179,24 +179,23 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
 
   private initTenants(): void {
     this.settingsService.getTenants()
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((res: Tenants) => {
-      this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
-      this.cd.detectChanges();
-    });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res: Tenants) => {
+        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+        this.cd.detectChanges();
+      });
   }
 
   private getRewardData(): Observable<IRewardDefaultValue> {
     return this.instantRewardsService.getInstantRewardData()
       .pipe(
+        tap(data => this.rewardData = data),
         takeUntil(this.destroy$),
-        tap(data => this.rewardData = data)
       );
   }
 
   private handleRouteParams(): Observable<IRewardForm | null> {
     return this.route.paramMap.pipe(
-      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.id = id),
       switchMap(id => {
@@ -204,7 +203,8 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
           return this.instantRewardsService.getInstantReward(id);
         }
         return of(null);
-      })
+      }),
+      takeUntil(this.destroy$),
     );
   }
 }
