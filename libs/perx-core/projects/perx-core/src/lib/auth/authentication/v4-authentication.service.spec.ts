@@ -9,6 +9,7 @@ import { ConfigModule } from '../../config/config.module';
 import { LocalTokenStorage } from './local-token-storage.service';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { ProfileService } from '../../profile/profile.service';
 
 function fakeFactory(): TokenStorage {
   return new LocalTokenStorage({});
@@ -35,7 +36,9 @@ describe('V4AuthenticationService', () => {
         ProfileModule,
         ConfigModule.forRoot({ ...environment })
       ],
-      providers: [{ provide: TokenStorage, useFactory: fakeFactory }]
+      providers: [
+        { provide: TokenStorage, useFactory: fakeFactory }
+      ]
     });
     httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
     service = TestBed.get(V4AuthenticationService);
@@ -210,5 +213,174 @@ describe('V4AuthenticationService', () => {
     const url = 'http://test';
     authService.setInterruptedUrl(url);
     expect(authService.getInterruptedUrl()).toBe(url);
+  }));
+
+  it('should clear token', inject([V4AuthenticationService, TokenStorage],
+    (authService: V4AuthenticationService, tokenSotrage: TokenStorage) => {
+      const spy = spyOn(tokenSotrage, 'clearAppInfoProperty');
+      authService.logout();
+      expect(spy).toHaveBeenCalled();
+    }));
+  it('should get token', inject([V4AuthenticationService, TokenStorage],
+    (authService: V4AuthenticationService, tokenSotrage: TokenStorage) => {
+      const spy = spyOn(tokenSotrage, 'getAppInfoProperty');
+      authService.getAppAccessToken();
+      expect(spy).toHaveBeenCalled();
+    }));
+  it('should get AccessToken', inject([V4AuthenticationService],
+    (authService: V4AuthenticationService) => {
+      const spyUser = spyOn(authService, 'getUserAccessToken');
+      const spyApp = spyOn(authService, 'getAppAccessToken');
+      authService.getAccessToken();
+      expect(spyUser).toHaveBeenCalled();
+      spyUser.and.returnValue('test');
+      authService.getAccessToken();
+      expect(spyApp).toHaveBeenCalled();
+    }));
+  it('should handle error then we call forgotPassword', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      const spy = spyOn(console, 'log');
+      spyOn(http, 'get').and.returnValue(throwError('error'));
+      try {
+        authService.forgotPassword('').subscribe(() => { });
+        tick();
+      } catch {
+        expect(spy).toHaveBeenCalledWith('error');
+      }
+    })));
+  it('should handle error then we call forgotPassword', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      const spy = spyOn(console, 'log');
+      spyOn(http, 'patch').and.returnValue(throwError('error'));
+      try {
+        authService.resetPassword({
+          phone: '1',
+          newPassword: '2',
+          otp: '3',
+          passwordConfirmation: '4'
+        }).subscribe(() => { });
+        tick();
+      } catch {
+        expect(spy).toHaveBeenCalledWith('error');
+      }
+    })));
+
+  it('should handle getUserAccessToken', inject([V4AuthenticationService, TokenStorage],
+    (authService: V4AuthenticationService, tokenSotrage: TokenStorage) => {
+      const spyGet = spyOn(tokenSotrage, 'getAppInfoProperty');
+      const spySet = spyOn(tokenSotrage, 'setAppInfoProperty');
+      authService.getUserAccessToken();
+      authService.saveUserAccessToken('token');
+      expect(spyGet).toHaveBeenCalledWith('userAccessToken');
+      expect(spySet).toHaveBeenCalledWith('token', 'userAccessToken');
+    }));
+
+  it('should resend otp', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      const spy = spyOn(http, 'get').and.returnValue(of(null));
+      const spyLog = spyOn(console, 'log');
+      spy.and.returnValue(of('test'));
+      authService.resendOTP('999').subscribe(() => { });
+      tick();
+      expect(spy).toHaveBeenCalled();
+      expect(spyLog).toHaveBeenCalledWith('test');
+      tick();
+      spy.and.returnValue(throwError('test'));
+      try {
+        authService.resendOTP('999').subscribe(() => { });
+        tick();
+      } catch {
+        expect(spyLog).toHaveBeenCalledWith('test');
+      }
+    })));
+
+  it('should signup', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (authService: V4AuthenticationService, http: HttpClient) => {
+      const spyLog = spyOn(console, 'log');
+      const spy = spyOn(http, 'post');
+      spy.and.returnValue(of({ data: {} }));
+      authService.signup({
+        lastName: 'name',
+        password: '1234',
+        phone: '1234',
+        password_confirmation: '1234'
+      }).subscribe(() => { });
+      tick();
+      expect(spyLog).toHaveBeenCalled();
+      spy.and.returnValue(throwError('error'));
+      try {
+        authService.signup({
+          lastName: 'name',
+          password: '1234',
+          phone: '1234',
+          password_confirmation: '1234'
+        }).subscribe(() => { });
+        tick();
+      } catch {
+        expect(spyLog).toHaveBeenCalled();
+      }
+    })));
+
+  it('should throw error', inject([V4AuthenticationService], (auth: V4AuthenticationService) => {
+    const obs = { error: () => { } };
+    const spyObs = spyOn(obs, 'error');
+    auth.createUserAndAutoLogin('').subscribe(() => { }, obs.error);
+    expect(spyObs).toHaveBeenCalled();
+  }));
+
+  it('should verify otp', fakeAsync(inject([V4AuthenticationService, HttpClient],
+    (auth: V4AuthenticationService, http: HttpClient) => {
+      const spyHttp = spyOn(http, 'patch');
+      const spyLog = spyOn(console, 'log');
+      spyHttp.and.returnValue(of('success'));
+      auth.verifyOTP('', '').subscribe(() => { });
+      tick();
+      expect(spyLog).toHaveBeenCalledWith('success');
+      spyHttp.and.returnValue(throwError('error'));
+      try {
+        auth.verifyOTP('', '').subscribe(() => { });
+        tick();
+      } catch {
+        expect(spyLog).toHaveBeenCalledWith('error');
+      }
+    })));
+
+  it('changePassword', fakeAsync(inject([V4AuthenticationService, HttpClient, ProfileService],
+    (auth: V4AuthenticationService, http: HttpClient, profile: ProfileService) => {
+      spyOn(profile, 'whoAmI').and.returnValue(of({ id: 1, firstName: '123', lastName: '123' }));
+      const spy = spyOn(http, 'patch').and.returnValue(of(null));
+      auth.changePassword({ oldPassword: '123', passwordConfirmation: '123', otp: '123', newPassword: '123' }).subscribe(() => { });
+      tick();
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })));
+
+  it('requestVerificationToken', fakeAsync(inject([V4AuthenticationService, HttpClient, ProfileService],
+    (auth: V4AuthenticationService, http: HttpClient, profile: ProfileService) => {
+      spyOn(profile, 'whoAmI').and.returnValue(of({ id: 1, firstName: '123', lastName: '123' }));
+      const spy = spyOn(http, 'get').and.returnValue(of(null));
+      auth.requestVerificationToken().subscribe(() => { });
+      tick();
+      expect(spy).toHaveBeenCalled();
+      auth.requestVerificationToken('1234').subscribe(() => { });
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })));
+
+  it('changePhone', fakeAsync(inject([V4AuthenticationService, HttpClient, ProfileService],
+    (auth: V4AuthenticationService, http: HttpClient, profile: ProfileService) => {
+      spyOn(profile, 'whoAmI').and.returnValue(of({ id: 1, firstName: '123', lastName: '123' }));
+      const spy = spyOn(http, 'patch').and.returnValue(of(null));
+      auth.changePhone({ otp: '123', phone: '123' }).subscribe(() => { });
+      expect(spy).toHaveBeenCalled();
+    })));
+
+  it('handle pi', inject([V4AuthenticationService, TokenStorage], (auth: V4AuthenticationService, storage: TokenStorage) => {
+    const spyGet = spyOn(storage, 'getAppInfoProperty');
+    const spySet = spyOn(storage, 'setAppInfoProperty');
+    auth.getPI();
+    expect(spyGet).toHaveBeenCalled();
+    auth.savePI('1234');
+    expect(spySet).toHaveBeenCalledWith('1234', 'pi');
   }));
 });

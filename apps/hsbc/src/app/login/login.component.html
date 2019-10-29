@@ -3,7 +3,7 @@
 </div>
 <div [ngClass]="'content-container ' + sourceType">
   <div class="login-image">
-    <img class="logo" [src]="sourceType === 'hsbc-xmas' ? 'assets/hsbc-logo-white.svg' : 'assets/logo.png' " />
+    <img class="logo" src='assets/hsbc-logo-black.svg' />
   </div>
 
   <div class="form-container">
@@ -22,9 +22,6 @@
           <mat-error *ngIf="loginForm.hasError('playerCode')">
             Player code is <strong>required</strong>
           </mat-error>
-          <mat-hint *ngIf="sourceType === 'hsbc-xmas'">
-            Forgot player code?
-          </mat-hint>
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width__input">
           <mat-label>Last 4 digits of your HSBC Credit Card</mat-label>

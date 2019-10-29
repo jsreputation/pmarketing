@@ -46,9 +46,9 @@ export class SignUpComponent implements OnInit {
     profile.password_confirmation = password;
 
     this.authService.signup(profile).subscribe(() => {
-        this.router.navigate(['sms-validation'], { queryParams: { identifier: profile.phone } });
-        },
-      (e) => {
+      this.router.navigate(['sms-validation'], { queryParams: { identifier: profile.phone } });
+    },
+    (e) => {
       console.log(e);
     });
   }

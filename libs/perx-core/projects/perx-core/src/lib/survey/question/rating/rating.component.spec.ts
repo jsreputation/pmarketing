@@ -13,7 +13,7 @@ describe('RatingComponent', () => {
         MatIconModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
