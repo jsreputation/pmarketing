@@ -1,4 +1,4 @@
-<div *ngIf="(games$ | async) as games" [@listAnimation]="games.length">
+<div *ngIf="(games$ | async) as games" [@listAnimation]="!showAllGames || games.length">
   <mat-card
   *ngFor="let game of ((showAllGames || (games.length <= defaultNbGames))
   ? games : (games | slice:0:defaultNbGames))"

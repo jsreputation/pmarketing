@@ -7,7 +7,7 @@ export const listAnimation = trigger('listAnimation', [
       { optional: true }
     ),
     query(':leave',
-      stagger('-60ms', animate('300ms ease-out', style({ opacity: 0 }))),
+      stagger('-60ms', animate('300ms ease-out', style({ opacity: 0, height: 0 }))),
       { optional: true }
     )
   ])
