@@ -5,18 +5,20 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login.component';
 import { MatCardModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, UtilsModule } from '@perx/core';
+import { AuthenticationService, UtilsModule, TokenStorage } from '@perx/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   const authenticationServiceStub = {};
+  const tokenStorageStub = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: AuthenticationService, useValue: authenticationServiceStub }
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: TokenStorage, useValue: tokenStorageStub }
       ],
       imports: [
         MatCardModule,
