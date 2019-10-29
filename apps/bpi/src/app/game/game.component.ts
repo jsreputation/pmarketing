@@ -185,8 +185,8 @@ export class GameComponent implements OnInit {
     return card.stamps.filter(stamp => stamp.state === 'redeemed').length === this.rows * totalSlots;
   }
 
-  public isCurrent(card: IStampCard): boolean {
-    return this.cards[0].id === card.id;
+  public isCurrent(inCard: IStampCard): boolean {
+    return this.cards.find(card => card.state === 'active').id === inCard.id;
   }
 
   private checkKeys(cardSelected?: IStampCard): void {
