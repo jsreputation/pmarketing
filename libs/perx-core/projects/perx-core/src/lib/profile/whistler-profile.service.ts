@@ -40,17 +40,21 @@ export class WhistlerProfileService extends ProfileService {
   }
 
   public whoAmI(): Observable<IProfile> {
-    const localStorePrimaryIdentifier = this.tokenStorage.getAppInfoProperty('pi');
+    const pi = this.tokenStorage.getAppInfoProperty('pi');
     const url = `${this.apiHost}/cognito/users`;
     const params = {
-      'filter[primary_identifier]': localStorePrimaryIdentifier
+      'filter[primary_identifier]': pi
     };
 
     return this.http.get<IJsonApiListPayload<IWhistlerProfileAttributes>>(url, { params })
       .pipe(
-        map((arrayOfJsonApiUsers: IJsonApiListPayload<IWhistlerProfileAttributes>) => arrayOfJsonApiUsers.data[0]),
-        map((JsonApiUser: IJsonApiItem<IWhistlerProfileAttributes>) =>
-          WhistlerProfileService.WhistlerProfileToProfile(JsonApiUser))
+        map((res: IJsonApiListPayload<IWhistlerProfileAttributes>) => {
+          if (res.data.length > 0) {
+            return res.data[0];
+          }
+          throw new Error(`There is no user with pi '${pi}'`);
+        }),
+        map((JsonApiUser: IJsonApiItem<IWhistlerProfileAttributes>) => WhistlerProfileService.WhistlerProfileToProfile(JsonApiUser))
       );
   }
 
@@ -69,5 +73,4 @@ export class WhistlerProfileService extends ProfileService {
   public setCardNumber(): Observable<void> {
     return throwError('Not implement yet');
   }
-
 }

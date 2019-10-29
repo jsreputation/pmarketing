@@ -16,9 +16,9 @@ Then(/^6_I see the navigation bar$/, async () => {
   // waiting for the nav bar to load
   await browser.wait(ec.presenceOf(element.all(by.css('mat-toolbar')).get(1)), 6000);
   // waiting for the card for stamp cards
-  await browser.wait(ec.presenceOf(element.all(by.css('mat-card')).get(0)), 6000);
+  await browser.wait(ec.presenceOf(element.all(by.css('mat-card')).get(0)), 7000);
   // waiting for voucher field to load
-  await browser.wait(ec.presenceOf(element.all(by.css('mat-card')).get(1)), 6000);
+  await browser.wait(ec.presenceOf(element.all(by.css('mat-card')).get(1)), 8000);
   // doing an assertion on the presence of the elements
   expect(await element.all(by.css('mat-toolbar')).get(1).isDisplayed()).to.equal(true);
   expect(await element.all(by.css('mat-card')).get(0).isDisplayed()).to.equal(true);
