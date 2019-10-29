@@ -16,7 +16,7 @@ describe('LineComponent', () => {
         NoopAnimationsModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

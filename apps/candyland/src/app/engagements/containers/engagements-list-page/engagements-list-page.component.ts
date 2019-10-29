@@ -86,11 +86,11 @@ export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
   private getData(): void {
     this.engagementsService.getEngagements()
       .pipe(
-        takeUntil(this.destroy$),
         tap(data => {
           const counterObject = PrepareTableFilters.countFieldValue(data, 'attributes_type');
           this.tabsFilterConfig = PrepareTableFilters.prepareTabsFilterConfig(counterObject, data);
-        })
+        }),
+        takeUntil(this.destroy$),
       )
       .subscribe((res: IEngagement[]) => {
         this.dataSource.data = res;

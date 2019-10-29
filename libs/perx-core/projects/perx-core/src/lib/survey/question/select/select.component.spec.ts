@@ -20,7 +20,7 @@ describe('SelectComponent', () => {
         ReactiveFormsModule,
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

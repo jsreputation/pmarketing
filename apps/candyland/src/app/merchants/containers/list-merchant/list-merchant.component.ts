@@ -39,7 +39,6 @@ export class ListMerchantComponent implements OnDestroy {
 
     dialogRef.afterClosed()
       .pipe(
-        takeUntil(this.destroy$),
         filter(Boolean),
         switchMap((updatedMerchant: IMerchantForm) => {
           if (merchant) {
@@ -47,7 +46,8 @@ export class ListMerchantComponent implements OnDestroy {
           }
           return this.merchantService.createMerchant(updatedMerchant);
         }),
-        filter(data => data)
+        filter(data => !!data),
+        takeUntil(this.destroy$),
       )
       .subscribe(
         () => this.dataSource.updateData(),

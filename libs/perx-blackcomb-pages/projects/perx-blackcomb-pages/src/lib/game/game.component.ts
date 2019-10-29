@@ -14,7 +14,7 @@ export class GameComponent implements OnInit, OnDestroy {
   public gameData$: Observable<IGame>;
   public gt: typeof GameType = GameType;
   private campaignId: number;
-  private engagementId: number;
+  private engagementId: number | null;
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
 
@@ -36,7 +36,7 @@ export class GameComponent implements OnInit, OnDestroy {
       first(),
       tap((games: IGame[]) => !games || !games.length && this.router.navigate(['/wallet'])),
       map((games: IGame[]) => games[0]),
-      tap((game: IGame) => this.engagementId = game.id)
+      tap((game: IGame) => game ? this.engagementId = game.id : null)
     );
   }
 
@@ -52,7 +52,10 @@ export class GameComponent implements OnInit, OnDestroy {
     const nbSteps = 60;
     const r2: Observable<number[]> = interval(delay / nbSteps)
       .pipe(
-        tap(v => this.progressValue = v * 100 / nbSteps),
+        tap(v => {
+          console.log(v * 100 / nbSteps);
+          return this.progressValue = v * 100 / nbSteps;
+        }),
         bufferCount(nbSteps),
         first()
       );
@@ -93,6 +96,6 @@ export class GameComponent implements OnInit, OnDestroy {
           }
         });
       }
-    );
+      );
   }
 }

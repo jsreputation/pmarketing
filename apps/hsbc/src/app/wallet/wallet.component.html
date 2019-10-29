@@ -1,16 +1,17 @@
 <div class="rewards-list">
   <h1>My Rewards</h1>
   <perx-core-vouchers *ngIf="sourceType !== null"
-    (route)="onRoute($event)"
-    [filter]="'issued'"
-    [iconDisplay]="'arrow_forward_ios'"
-    [showTitle]="true"
-    [showMerchant]="true"
-    [showExpireDate]="true"
-    [showRedeemedDate]="false"
-    [showRedeemedIcon]="false"
-    [sourceType]="sourceType"
-    ></perx-core-vouchers>
+                      (route)="onRoute($event)"
+                      [filter]="voucherFilter"
+                      [iconDisplay]="'arrow_forward_ios'"
+                      [showTitle]="true"
+                      [showMerchant]="true"
+                      [showExpireDate]="true"
+                      [showRedeemedDate]="false"
+                      [showRedeemedIcon]="false"
+                      [sourceType]="sourceType"
+                      [canSelectRedeemed]="canSelectRedeemed"
+  ></perx-core-vouchers>
 </div>
 
 <app-navigate-toolbar></app-navigate-toolbar>

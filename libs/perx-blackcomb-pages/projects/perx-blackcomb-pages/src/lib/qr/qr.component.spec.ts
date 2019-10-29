@@ -53,7 +53,7 @@ describe('RedeemComponent', () => {
         { provide: Location, useValue: locationStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -68,7 +68,7 @@ describe('RedeemComponent', () => {
 
   it ('should set rewardId and reward details onInit', fakeAsync(() => {
     const profileService: ProfileService = fixture.debugElement.injector.get<ProfileService>
-      (ProfileService as Type<ProfileService>);
+    (ProfileService as Type<ProfileService>);
     const profileSpy = spyOn(profileService, 'whoAmI').and.returnValue(
       of({
         id: 1,

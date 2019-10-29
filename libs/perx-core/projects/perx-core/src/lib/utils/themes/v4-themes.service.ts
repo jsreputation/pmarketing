@@ -15,7 +15,7 @@ export class V4ThemesService implements ThemesService {
   private availableThemes: ITheme[] = [LIGHT, DARK];
 
   constructor(private http: HttpClient, config: Config ) {
-   this.themeSettingEndpoint = config.baseHref + `assets/theme.json`;
+    this.themeSettingEndpoint = config.baseHref + `assets/theme.json`;
   }
 
   public getAvailableThemes(): ITheme[] {

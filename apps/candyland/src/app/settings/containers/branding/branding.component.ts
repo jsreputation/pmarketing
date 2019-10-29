@@ -17,7 +17,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
   public styles: ISimpleValue[] = settingsStyles;
   public fonts: ISimpleValue[] = settingsFonts;
   public formBranding: FormGroup;
-  public listColors: {labelView: string, color: string}[];
+  public listColors: { labelView: string, color: string }[];
   public listColorsText: {
     labelView: string, color: string
   }[];
@@ -152,13 +152,13 @@ export class BrandingComponent implements OnInit, OnDestroy {
       .valueChanges
       .pipe(
         debounceTime(300),
-        takeUntil(this.destroy$),
         switchMap((value => {
           if (this.formBranding.valid) {
             return this.settingsService.updateTenants(SettingsHttpAdapter.transformSettingsBrandingFormToAPI(value));
           }
           return of([]);
-        }))
+        })),
+        takeUntil(this.destroy$),
       )
       .subscribe(() => {
       });

@@ -37,6 +37,10 @@ export class VoucherComponent implements OnChanges, OnInit {
 
   @Input()
   public redeemLabelFn: () => string;
+
+  @Input()
+  public expiryFn: () => string;
+
   constructor(private vouchersService: IVoucherService) {
   }
 
@@ -53,6 +57,10 @@ export class VoucherComponent implements OnChanges, OnInit {
   public ngOnInit(): void {
     if (!this.redeemLabelFn) {
       this.redeemLabelFn = () => 'REDEEM NOW';
+    }
+
+    if (!this.expiryFn) {
+      this.expiryFn = () => 'dd/MM/yyyy';
     }
   }
 }

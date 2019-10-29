@@ -30,11 +30,11 @@ export class QrRedemptionComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.subscriptionVoucher = this.route.paramMap
       .pipe(
-        takeUntil(this.destroy$),
         switchMap((params: ParamMap) => {
           this.voucherId = parseInt(params.get('id'), 10);
           return this.voucherService.stateChangedForVoucher(this.voucherId);
-        })
+        }),
+        takeUntil(this.destroy$),
       )
       .subscribe((voucher: IVoucher) => {
         if (voucher.state === VoucherState.issued) {
