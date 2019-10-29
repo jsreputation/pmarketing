@@ -33,11 +33,12 @@ export class CommsHttpAdapter {
       type: 'events',
       attributes: {
         send_at: sendAt,
-        provider_id: data.audience.select && parseInt(data.audience.select, 10) || null,
+        provider_id: 1,
         owner_id: campaignId && parseInt(campaignId, 10) || null,
         owner_type: 'Perx::Campaign:Entity',
         template_id: templateId && parseInt(templateId, 10) || null,
-        channel: data.channel.type
+        channel: data.channel.type,
+        target_id: data.audience.select && parseInt(data.audience.select, 10) || null,
       }
     };
   }

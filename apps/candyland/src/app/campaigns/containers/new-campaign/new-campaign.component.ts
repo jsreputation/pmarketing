@@ -56,7 +56,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTenants();
     this.initForm();
-    this.store.currentCampaign$.subscribe(console.log);
     this.form.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
@@ -110,8 +109,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public save(): void {
     let saveCampaign$;
     this.store.updateCampaign(this.form.value);
-    if (this.campaign) {
-      saveCampaign$ = this.campaignsService.updateCampaign(this.campaign.id, this.store.currentCampaign);
+    if (this.store.currentCampaign.id) {
+      saveCampaign$ = this.campaignsService.updateCampaign(this.store.currentCampaign);
     } else {
       saveCampaign$ = this.campaignsService.createCampaign(this.store.currentCampaign);
     }
@@ -122,10 +121,10 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     saveCampaign$.pipe(
       tap((res: IJsonApiPayload<ICampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
       switchMap(
-        (res) => combineLatest(
-          iif(hasLimitData, generateLimitData$(res), of(res)),
-          this.updateOutcomes(res),
-          this.updateComm(res)
+        (res: IJsonApiPayload<ICampaignAttributes>) => combineLatest(
+          iif(hasLimitData, generateLimitData$(res.data), of(res)),
+          this.updateOutcomes(res.data),
+          this.updateComm(res.data)
         )
       ),
       takeUntil(this.destroy$)
@@ -146,17 +145,17 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       this.store.currentCampaign.limits.id,
       this.store.currentCampaign.limits,
       this.store.currentCampaign.template.attributes_type,
-      campaign.data.id,
+      campaign.id,
       this.store.currentCampaign.template.id
     );
     const createLimit$ = campaign => this.limitsService.createLimits(
       this.store.currentCampaign.limits,
       this.store.currentCampaign.template.attributes_type,
-      campaign.data.id,
+      campaign.id,
       this.store.currentCampaign.template.id
     );
 
-    if (this.campaign) {
+    if (this.store.currentCampaign) {
       generateLimitData$ = this.store.currentCampaign.limits.id ? updateLimit$ : createLimit$;
     } else {
       generateLimitData$ = createLimit$;
@@ -167,33 +166,44 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private updateComm(campaign: ICampaign): Observable<any> {
     let templateAction$;
     let eventAction$;
-    const channelInfo = Object.assign({}, this.campaign.channel);
+    const channelInfo = Object.assign({}, this.store.currentCampaign.channel);
     const updateCommsTemplate$ = this.commsService.updateCommsTemplate(channelInfo);
     const createCommsTemplate$ = this.commsService.createCommsTemplate(channelInfo);
-    const updateCommsEvent$ = newTemplateId => this.commsService.updateCommsEvent(this.campaign, newTemplateId, campaign.id);
-    const createCommsEvent$ = newTemplateId => this.commsService.createCommsEvent(this.campaign, newTemplateId, campaign.id);
+    const updateCommsEvent$ = newTemplateId =>
+      this.commsService.updateCommsEvent(this.store.currentCampaign, newTemplateId, campaign.id);
+    const createCommsEvent$ = newTemplateId =>
+      this.commsService.createCommsEvent(this.store.currentCampaign, newTemplateId, campaign.id);
 
-    if (channelInfo.templateId) {
-      templateAction$ = updateCommsTemplate$;
-    } else {
-      templateAction$ = createCommsTemplate$;
+    if (channelInfo.type === 'sms') {
+      if (channelInfo.templateId) {
+        templateAction$ = updateCommsTemplate$;
+      } else {
+        templateAction$ = createCommsTemplate$;
+      }
+      if (channelInfo.eventId) {
+        eventAction$ = updateCommsEvent$;
+      } else {
+        eventAction$ = createCommsEvent$;
+      }
+
+      return templateAction$.pipe(
+        switchMap((template: IJsonApiPayload<ICommTemplateAttributes>) => eventAction$(template.data.id))
+      );
     }
+
     if (channelInfo.eventId) {
       eventAction$ = updateCommsEvent$;
     } else {
       eventAction$ = createCommsEvent$;
     }
 
-    return templateAction$.pipe(
-      switchMap((template: IJsonApiPayload<ICommTemplateAttributes>) => eventAction$(template.data.id))
-    );
+    return eventAction$(null);
   }
 
   private updateOutcomes(campaign: ICampaign): Observable<any> {
     let updateOutcomesArr$ = [];
-
-    if (this.campaign.template.attributes_type === EngagementType.stamp) {
-      this.campaign.rewardsListCollection.forEach(
+    if (this.store.currentCampaign.template.attributes_type === EngagementType.stamp) {
+      this.store.currentCampaign.rewardsListCollection.forEach(
         rewardsData => {
           const updateOutcomeList = this.updateOutcomeWhenEdit(
             campaign,
@@ -207,45 +217,50 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     } else {
       updateOutcomesArr$ = this.updateOutcomeWhenEdit(
         campaign,
-        this.campaign.rewardsOptions.rewards,
-        this.campaign.rewardsOptions.enableProbability
+        this.store.currentCampaign.rewardsOptions.rewards,
+        this.store.currentCampaign.rewardsOptions.enableProbability
       );
+    }
+
+    if (updateOutcomesArr$.length <= 0) {
+      return of([]);
     }
     return combineLatest(...updateOutcomesArr$);
   }
 
   private updateOutcomeWhenEdit(campaign: ICampaign, data: any[], enableProbability: boolean, slotNumber?: number): Observable<any>[] {
+    if (data.length <= 0) {
+      return [];
+    }
     const updateOutcomesArr$ = [];
-    const oldCampaignList = this.campaign.rewardsList;
+    const oldCampaignList = this.store.currentCampaign.rewardsList;
     const deleteOutcomes$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
     const updateOutcomes$ = outcomeData => this.outcomesService.updateOutcome(outcomeData, campaign.id, enableProbability, slotNumber);
     const createOutcomes$ = outcomeData => this.outcomesService.createOutcome(outcomeData, campaign.id, enableProbability, slotNumber);
 
     data.forEach(outcome => {
-      // for each need to check the data is changed or not. If changed with Id, then update,
-      // if no id, then create, if not exist in old arr, then delete
-      if (this.campaign.id) {
+      if (this.store.currentCampaign.id) {
         if (outcome.value.outcomeId) {
           const oldRewardRecord = oldCampaignList.find(reward => reward.id === outcome.value.outcomeId);
           const oldProbability = oldRewardRecord ? oldRewardRecord.probability : null;
-          if (oldProbability !== outcome.probability) {
-            updateOutcomesArr$.push(updateOutcomes$(outcome.value));
+          if (!!outcome.probability && oldProbability !== outcome.probability) {
+            updateOutcomesArr$.push(updateOutcomes$(outcome));
           }
         } else {
-          updateOutcomesArr$.push(createOutcomes$(outcome.value));
+          updateOutcomesArr$.push(createOutcomes$(outcome));
         }
       } else {
-        updateOutcomesArr$.push(createOutcomes$(outcome.value));
+        updateOutcomesArr$.push(createOutcomes$(outcome));
       }
     });
-
-    oldCampaignList.forEach(oldReward => {
-      const isOutcomeExist = data.find(oc => oc.value.outcomeId === oldReward.id);
-      if (!isOutcomeExist) {
-        updateOutcomesArr$.push(deleteOutcomes$);
-      }
-    });
-    debugger
+    if (oldCampaignList && oldCampaignList.length >= 0) {
+      oldCampaignList.forEach(oldReward => {
+        const isOutcomeExist = data.find(oc => oc.value.outcomeId === oldReward.id);
+        if (!isOutcomeExist) {
+          updateOutcomesArr$.push(deleteOutcomes$(oldReward.id));
+        }
+      });
+    }
     return updateOutcomesArr$;
   }
 
