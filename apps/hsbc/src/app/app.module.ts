@@ -54,6 +54,7 @@ import { NavigateToolbarComponent } from './navigate-toolbar/navigate-toolbar.co
 import { WalletComponent } from './wallet/wallet.component';
 import { AccountComponent } from './account/account.component';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
+import { ContentModule } from './content/content.module';
 
 // import { PuzzleListComponent } from './mock/service/puzzle-list/puzzle-list.component';
 // import { of } from 'rxjs';
@@ -154,7 +155,8 @@ import { RewardPopupComponent } from './reward-popup/reward-popup.component';
     FormsModule,
     RewardsModule,
     HttpClientModule,
-    MatDialogModule
+    MatDialogModule,
+    ContentModule
   ],
   providers: [
     Title,
