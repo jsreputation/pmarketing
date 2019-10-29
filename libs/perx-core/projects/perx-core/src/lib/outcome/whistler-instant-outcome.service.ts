@@ -38,12 +38,10 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       `${this.config.apiHost}/campaign/entities/${campaignId}`
     )
       .pipe(
-        map(res => {
-          return {
-            id: Number.parseInt(res.data.attributes.engagement_id, 10),
-            display_properties: res.data.attributes.display_properties
-          };
-        }),
+        map(res => ({
+          id: Number.parseInt(res.data.attributes.engagement_id, 10),
+          display_properties: res.data.attributes.display_properties
+        })),
       );
   }
 
