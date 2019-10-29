@@ -192,7 +192,7 @@ export { ThemesService } from './lib/utils/themes/themes.service';
  * Outcome
  */
 export { InstantOutcomeService } from './lib/outcome/instant-outcome.service';
-export { IOutcome } from './lib/outcome/models/outcome.model';
+export { IOutcome, NoRewardsPopUp } from './lib/outcome/models/outcome.model';
 export { OutcomeModule } from './lib/outcome/outcome.module';
 
 /**

@@ -5,9 +5,11 @@ export interface IOutcome {
   banner: string;
   background_img_url: string;
   card_background_img_url: string;
-  noRewardsPopUp?: {
-    headLine: string,
-    subHeadLine: string,
-    imageURL: string
-  };
+  noRewardsPopUp?: NoRewardsPopUp;
+}
+
+export interface NoRewardsPopUp {
+  headLine?: string;
+  subHeadLine?: string;
+  imageURL?: string;
 }
