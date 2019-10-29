@@ -25,7 +25,7 @@ import { IBasicTierApi } from '@perx/core';
   templateUrl: './new-loyalty.component.html',
   styleUrls: ['./new-loyalty.component.scss'],
   providers: [{
-    provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
+    provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
   }]
 })
 
@@ -38,7 +38,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   public isEditPage: boolean = false;
   public showDraftButton: boolean = true;
   public prevFormValue: ILoyaltyForm;
-  @ViewChild('stepper', {static: false}) private stepper: MatStepper;
+  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
   protected destroy$: Subject<void> = new Subject();
 
@@ -66,23 +66,24 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
     return this.userService.currency$;
   }
 
-  constructor(private loyaltyFormsService: LoyaltyFormsService,
-              private loyaltyService: LoyaltyService,
-              private customTierService: LoyaltyCustomTierService,
-              private userService: UserService,
-              private audiencesService: AudiencesService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private dialog: MatDialog) {
-  }
+  constructor(
+    private loyaltyFormsService: LoyaltyFormsService,
+    private loyaltyService: LoyaltyService,
+    private customTierService: LoyaltyCustomTierService,
+    private userService: UserService,
+    private audiencesService: AudiencesService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private dialog: MatDialog
+  ) { }
 
   public ngOnInit(): void {
     this.initPools();
     this.initForm();
     this.initCustomTiersDataSource();
     this.handleRouteParams().subscribe((loyalty: ILoyaltyForm) => {
-        this.initLoyaltyData(loyalty);
-      },
+      this.initLoyaltyData(loyalty);
+    },
       (error: Error) => {
         console.warn(error.message);
         this.router.navigateByUrl('/loyalty');
@@ -194,8 +195,8 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
 
     return dialogRef.afterClosed()
       .pipe(
+        filter(Boolean),
         takeUntil(this.destroy$),
-        filter(Boolean)
       );
   }
 
@@ -236,7 +237,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   private setBasicTierIdToCustomTiersDataSourceFilter(basicTierId: string): void {
-    this.customTierDataSource.filter = {program_id: basicTierId};
+    this.customTierDataSource.filter = { program_id: basicTierId };
   }
 
   private initPools(): void {
@@ -251,7 +252,6 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
     const newLoyalty = this.form.value;
     return this.loyaltyService.getLoyaltyRequest(newLoyalty, this.loyaltyId)
       .pipe(
-        takeUntil(this.destroy$),
         tap(loyalty => {
           this.loyaltyId = loyalty.id;
           this.form.get('createdAt').patchValue(loyalty.createdAt);
@@ -259,6 +259,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
         switchMap(() => this.loyaltyService.getBasicTierRequest(newLoyalty, this.loyaltyId, this.basicTierId)),
         filter(Boolean),
         tap(basicTier => this.setBasicTierId(basicTier.data.id)),
+        takeUntil(this.destroy$),
       );
   }
 
@@ -272,7 +273,6 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   private handleRouteParams(): Observable<ILoyaltyForm | null> {
     return this.route.paramMap
       .pipe(
-        takeUntil(this.destroy$),
         map((params: ParamMap) => params.get('id')),
         switchMap(id => {
           if (id) {
@@ -280,6 +280,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
           }
           return of(null);
         }),
+        takeUntil(this.destroy$),
       );
   }
 

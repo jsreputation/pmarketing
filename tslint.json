@@ -103,6 +103,7 @@
     "rxjs-no-nested-subscribe": true,
     "rxjs-no-wholesale": false,
     "rxjs-no-create": true,
+    "rxjs-no-unsafe-takeuntil": true,
     "naming-convention": [
       true,
       {

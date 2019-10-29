@@ -17,9 +17,9 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
   public params: { [key: string]: string };
   public activeTab: any = 'activeCustomers';
   public tabs: ITotal[] = [
-    {name: 'activeCustomers', id: 106, title: 'Total Active Customers'},
-    {name: 'issuedRewards', id: 147, title: 'Total Issued Rewards'},
-    {name: 'activeCampaigns', id: 153, title: 'Total Running Campaigns'}
+    { name: 'activeCustomers', id: 106, title: 'Total Active Customers' },
+    { name: 'issuedRewards', id: 147, title: 'Total Issued Rewards' },
+    { name: 'activeCampaigns', id: 153, title: 'Total Running Campaigns' }
   ];
   public tabsValue: any;
   public get tabsIds(): number[] {
@@ -30,10 +30,11 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
     return this.tabsValue ? this.tabsValue[index] : null;
   }
 
-  constructor(private dashboardService: DashboardService,
-              private cd: ChangeDetectorRef,
-              private chartsParametersService: DashboardChartsParametersService) {
-  }
+  constructor(
+    private dashboardService: DashboardService,
+    private cd: ChangeDetectorRef,
+    private chartsParametersService: DashboardChartsParametersService
+  ) { }
 
   public ngOnInit(): void {
     this.handelChartsParamsChanges();
@@ -48,15 +49,15 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
   private handelChartsParamsChanges(): void {
     this.chartsParametersService.params$
       .pipe(
-        takeUntil(this.destroy$),
         tap(value => this.params = value),
         switchMap(params => this.dashboardService.getTabsValue(this.tabsIds, params)),
-        tap(value => this.tabsValue = value)
+        tap(value => this.tabsValue = value),
+        takeUntil(this.destroy$),
       )
       .subscribe(() => {
-          if (this.cd !== null && this.cd !== undefined && !(this.cd as ViewRef).destroyed) {
-            this.cd.detectChanges();
-          }
+        if (this.cd !== null && this.cd !== undefined && !(this.cd as ViewRef).destroyed) {
+          this.cd.detectChanges();
+        }
       });
   }
 

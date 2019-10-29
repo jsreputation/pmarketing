@@ -92,9 +92,9 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     }
     this.form.valueChanges
       .pipe(
-        takeUntil(this.destroy$),
         distinctUntilChanged(),
-        debounceTime(500)
+        debounceTime(500),
+        takeUntil(this.destroy$)
       )
       .subscribe(() => {
         const toggleConfig = this.formService.getToggleConfig(this.form);

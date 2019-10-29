@@ -67,7 +67,6 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         this.outcomesService.getOutcomes(paramsPO).pipe(
           map(outcomes => outcomes.map(outcome => ({ ...outcome, probability: outcome.probability * 100 }))),
           catchError(() => of(null)))).pipe(
-            takeUntil(this.destroy$),
             map(
               ([campaign, commEvent, outcomes]:
                 [ICampaign | null, IComm | null, IOutcome[] | null]) => ({
@@ -130,7 +129,8 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
                 rewardsOptions,
                 rewardsListCollection
               };
-            })
+            }),
+            takeUntil(this.destroy$),
           ).subscribe(
             campaign => {
               this.campaign = campaign;
