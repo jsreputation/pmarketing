@@ -343,7 +343,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const campaignId = this.route.snapshot.params.id;
     const paramsComm: HttpParamsOptions = {
       'filter[owner_id]': campaignId,
-      'filter[owner_type]': 'Perx::Campaign::Entity',
       include: 'template',
     };
     const paramsPO: HttpParamsOptions = {
