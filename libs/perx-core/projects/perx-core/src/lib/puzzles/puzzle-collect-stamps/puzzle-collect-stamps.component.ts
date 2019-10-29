@@ -50,6 +50,9 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   public backgroundImage: string = null;
 
   @Input()
+  public cardBgImage: string = null;
+
+  @Input()
   public title: string = null;
 
   @Input()

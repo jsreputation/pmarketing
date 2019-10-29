@@ -1,3 +1,24 @@
+:host {
+  .content-container {
+    background-color: #fff;
+  }
+}
+
 .actions-container {
   background-color: #fff;
+}
+
+.hsbc-xmas {
+  .actions-container {
+    background-color: transparent;
+
+    button {
+      background-color: transparent;
+      color: #db0010;
+      border-radius: 0.5rem;
+      border: 0.1rem solid rgba(0, 0, 0, 0.12);
+      box-shadow: none;
+      text-transform: none;
+    }
+  }
 }
