@@ -7,7 +7,7 @@ export class OutcomesHttpAdapter {
       id: data.id,
       resultId: data.attributes.result_id,
       resultType: data.attributes.result_type,
-      probability: data.attributes.probability * 100,
+      probability: data.attributes.probability ? data.attributes.probability * 100 : null,
       lootBoxId: data.attributes.loot_box_id,
     };
   }
@@ -22,7 +22,7 @@ export class OutcomesHttpAdapter {
       type: 'possible_outcomes',
       attributes: {
         result_id: data.id,
-        result_type: data.resultType,
+        result_type: 'Perx::Reward::Entity',
         probability: enableProbability ? data.probability / 100 : null,
         loot_box_id: slotNumber,
         no_outcome: !data.id,
