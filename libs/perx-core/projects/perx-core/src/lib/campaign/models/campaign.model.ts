@@ -19,7 +19,7 @@ export interface ICampaign {
   description: string;
   type: CampaignType;
   state: CampaignState;
-  endsAt: Date;
+  endsAt: Date | null;
   rewards?: IReward[];
   thumbnailUrl?: string;
   engagementId?: number;

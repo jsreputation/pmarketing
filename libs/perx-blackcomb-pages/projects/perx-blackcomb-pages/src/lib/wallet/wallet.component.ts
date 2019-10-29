@@ -1,8 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ICampaign, ICampaignService, IVoucherService, VoucherState, Voucher, CampaignType, StampService, IStampCard } from '@perx/core';
+import {
+  ICampaign,
+  ICampaignService,
+  IVoucherService,
+  VoucherState,
+  Voucher,
+  CampaignType,
+  StampService,
+  IStampCard,
+  NotificationService, IPopupConfig, PopupComponent
+} from '@perx/core';
 import { Router } from '@angular/router';
 import { Observable, combineLatest, Subject } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'perx-blackcomb-pages-wallet',
@@ -19,10 +30,15 @@ export class WalletComponent implements OnInit, OnDestroy {
     private router: Router,
     private vouchersService: IVoucherService,
     private stampService: StampService,
-    private campaignService: ICampaignService
+    private campaignService: ICampaignService,
+    private dialog: MatDialog,
+    private notificationService: NotificationService,
   ) { }
 
   public ngOnInit(): void {
+    this.notificationService.$popup
+      .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
+
     this.stampCards$ = this.campaignService.getCampaigns()
       .pipe(
         map((campaigns: ICampaign[]) => campaigns.filter(c => c.type === CampaignType.stamp)),

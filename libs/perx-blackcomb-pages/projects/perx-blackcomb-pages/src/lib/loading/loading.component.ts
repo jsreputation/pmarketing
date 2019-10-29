@@ -1,9 +1,26 @@
 import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService, ICampaignService, Config } from '@perx/core';
 import { isPlatformBrowser } from '@angular/common';
-import { switchMap, tap, takeUntil } from 'rxjs/operators';
-import { of, iif, Subject } from 'rxjs';
+
+import {
+  switchMap,
+  tap,
+  takeUntil,
+} from 'rxjs/operators';
+import {
+  of,
+  iif,
+  Subject,
+} from 'rxjs';
+
+import {
+  AuthenticationService,
+  Config,
+  NotificationService,
+  ICampaign,
+  ICampaignService,
+} from '@perx/core';
+
 import * as uuid from 'uuid';
 
 // @dynamic
@@ -14,18 +31,59 @@ import * as uuid from 'uuid';
 })
 export class LoadingComponent implements OnInit, OnDestroy {
   public preAuth: boolean;
+
+  private campaignId: number = null;
+  private campaignData: ICampaign = null;
+
   private destroy$: Subject<any> = new Subject();
+
+  private setCampaignData(): void {
+    if (this.campaignId) {
+      this.campaignSvc.getCampaign(this.campaignId)
+        .pipe(
+          takeUntil(this.destroy$)
+        )
+        .subscribe((campaignData: ICampaign) => {
+          this.campaignData = campaignData;
+        });
+    }
+  }
+
+  private setCampaignId(): void {
+    this.campaignId = (window as any).campaignId;
+  }
+
+  private checkIsCampaignEnded(): void {
+    if (this.campaignData && this.campaignData.endsAt) {
+      this.router.navigate(['/wallet']);
+      this.initCampaignEndedPopup();
+    }
+  }
+
+  private initCampaignEndedPopup(): void {
+    this.notificationService.addPopup({
+      title: `Oops, the Campaign has ended`,
+      text: `We'll be in touch soon.`,
+      imageUrl: `assets/beer_and_tea.png`,
+      buttonTxt: 'Back To Wallet',
+    });
+  }
 
   constructor(
     private router: Router,
     private authService: AuthenticationService,
-    @Inject(PLATFORM_ID) private platformId: object,
     private campaignSvc: ICampaignService,
-    private config: Config
+    private config: Config,
+    private notificationService: NotificationService,
+    @Inject(PLATFORM_ID) private platformId: object,
   ) {
     this.preAuth = this.config ? this.config.preAuth : false;
   }
   public ngOnInit(): void {
+    this.setCampaignId();
+    this.setCampaignData();
+    this.checkIsCampaignEnded();
+
     if (this.preAuth && isPlatformBrowser(this.platformId)) {
       const param = location.search;
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
@@ -71,19 +129,11 @@ export class LoadingComponent implements OnInit, OnDestroy {
   }
 
   public redirectAfterLogin(): void {
-    const campaignId = (window as any).campaignId;
-    // get from game service check what engagement type to route accordingly
-    // engagement router - i should put it in its own service
-    if (campaignId) {
-      this.campaignSvc.getCampaign(campaignId)
-        .pipe(
-          takeUntil(this.destroy$)
-        )
-        .subscribe(({ type }) => {
-          this.router.navigateByUrl(
-            this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${campaignId}`
-          );
-        });
+    if (this.campaignData && !this.campaignData.endsAt) {
+      const { type } = this.campaignData;
+      this.router.navigateByUrl(
+        this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${this.campaignId}`
+      );
     } else {
       this.router.navigate(['/wallet']);
     }
