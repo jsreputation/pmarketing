@@ -47,18 +47,18 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
       });
     this.fg.valueChanges
       .pipe(
-        takeUntil(this.destroy$),
         startWith(this.fg.value),
         map((values: any) => {
           const res = {};
-          Object.keys(values).forEach( (key: string) => {
+          Object.keys(values).forEach((key: string) => {
             const newKey = key.replace(/-/gi, '.');
             res[newKey] = values[key] ? values[key].trim() : values[key];
           });
           return JSON.stringify(res);
         }),
         distinctUntilChanged(),
-        debounceTime(500)
+        debounceTime(500),
+        takeUntil(this.destroy$)
       )
       .subscribe((value: any) => {
         this.dataSource.filter = value;

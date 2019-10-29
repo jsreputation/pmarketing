@@ -265,7 +265,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
                 disableOverlayClose: true,
                 url: `/voucher/${voucherId}`,
                 afterClosedCallBackRedirect: this,
-                didWin: true,
+                didWin: this.sourceType === 'hsbc-collect2' ? true : false,
                 buttonTxt: 'View Reward',
               };
               this.dialog.open(RewardPopupComponent, {data});
