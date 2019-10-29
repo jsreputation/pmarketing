@@ -241,8 +241,8 @@ export class EngagementHttpAdapter {
         game_type: 'scratch',
         image_url: data.image_url,
         display_properties: {
-          headline: data.headlineMessage,
-          sub_headline: data.subHeadlineMessage,
+          title: data.headlineMessage,
+          sub_title: data.subHeadlineMessage,
           button: data.buttonText,
           pre_scratch_img_url: ImageControlValue.getImagePath(data.preScratchImage),
           post_scratch_success_img_url: ImageControlValue.getImagePath(data.postScratchSuccessImage),
