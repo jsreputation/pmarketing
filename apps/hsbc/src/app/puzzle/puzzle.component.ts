@@ -35,6 +35,8 @@ import {
 } from '@perx/core';
 
 import { SoundService } from '../sound/sound.service';
+import { RewardPopupComponent, IRewardPopupConfig } from '../reward-popup/reward-popup.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-puzzle',
@@ -69,7 +71,8 @@ export class PuzzleComponent implements OnInit, OnDestroy {
     private router: Router,
     private notificationService: NotificationService,
     private soundService: SoundService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private dialog: MatDialog,
   ) {
   }
 
@@ -120,7 +123,6 @@ export class PuzzleComponent implements OnInit, OnDestroy {
           this.fetchCardsCount(this.campaignId);
         }
       );
-
     }
 
     if (!localStorage.getItem('enableSound')) {
@@ -216,6 +218,14 @@ export class PuzzleComponent implements OnInit, OnDestroy {
     this.stampCard(stamp.id);
   }
 
+  public closeAndRedirect(url: string, didWin: boolean): void {
+    if (didWin) {
+      this.router.navigate([url, { win: true }]);
+    } else {
+      this.router.navigateByUrl(url);
+    }
+  }
+
   private stampCard(stampId: number): void {
     this.stampService.putStamp(stampId, this.sourceType)
       .subscribe(
@@ -248,17 +258,32 @@ export class PuzzleComponent implements OnInit, OnDestroy {
 
             if (stamp.vouchers && stamp.vouchers.length > 0) {
               const voucherId = stamp.vouchers[0].id;
-              this.router.navigate([`/voucher/${voucherId}`, { win: true }]);
+              const data: IRewardPopupConfig =  {
+                title: 'Congratulations!',
+                text: 'Here is a reward for you.',
+                imageUrl: 'assets/gift-image.svg',
+                disableOverlayClose: true,
+                url: `/voucher/${voucherId}`,
+                afterClosedCallBackRedirect: this,
+                didWin: this.sourceType === 'hsbc-collect2' ? true : false,
+                buttonTxt: 'View Reward',
+              };
+              this.dialog.open(RewardPopupComponent, {data});
             }
           } else {
             const issuedLeft = this.card.stamps.filter(s => s.state === StampState.issued);
             if (issuedLeft.length === 0) {
               // all redeemed but no voucher
-              this.notificationService.addPopup({
-                title: 'Something went wrong, with our server',
-                text: 'We notified our team. Sorry about the inconvenience.'
-              });
-              this.router.navigateByUrl('/home');
+              const data: IRewardPopupConfig =  {
+                title: 'No Reward Received',
+                text: 'Try again next time',
+                disableOverlayClose: true,
+                url: '/home',
+                afterClosedCallBackRedirect: this,
+                didWin: false,
+                buttonTxt: 'Close',
+              };
+              this.dialog.open(RewardPopupComponent, {data});
             }
           }
           this.currentStampId++;

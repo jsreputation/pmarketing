@@ -2,7 +2,7 @@
 <div class="voucher-container">
     <h1 *ngIf="firstTime">Congratulations!</h1>
     <h2 *ngIf="firstTime">You just won an instant reward.</h2>
-    <perx-core-voucher [hideMerchantImg]="true" [hideMerchantName]="true" [hideActions]="true" [voucherId]="id">
+    <perx-core-voucher [hideMerchantImg]="true" [hideMerchantName]="true" [hideActions]="true" [voucherId]="id" [expiryFn]="expiryFn">
     </perx-core-voucher>
 </div>
 <div class="actions-container" *ngIf="firstTime || (voucher && !!voucher.code)">
