@@ -1,43 +1,8 @@
-.container-img {
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  height: 90rem;
 
-  img {
-    position: relative;
-    top: -8rem;
-  }
+img {
+  width: 100%;
 }
-
 .page {
   padding-top: 6rem;
-}
-
-.second-elem {
-  height: 98rem;
-
-  img {
-    top: -10rem;
-  }
-}
-
-.third-elem {
-  height: 75rem;
-
-  img {
-    top: -28rem;
-  }
-}
-
-.though-elem {
-  top: 0;
-  align-items: flex-start;
-  margin: 0;
-  height: 33rem;
-
-  img {
-    top: -9rem;
-  }
+  background: #fff;
 }

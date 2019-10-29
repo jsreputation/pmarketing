@@ -1,25 +1,7 @@
-.container-img {
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  height: 100rem;
-
-  img {
-    position: relative;
-    top: -8rem;
-    width: 92rem;
-  }
+img {
+  width: 100%;
 }
-
 .page {
   padding-top: 6rem;
-}
-
-.second-elem {
-  height: 98rem;
-
-  img {
-    top: -10rem;
-  }
+  background: #fff;
 }
