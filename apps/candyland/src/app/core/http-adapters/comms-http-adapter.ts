@@ -34,7 +34,8 @@ export class CommsHttpAdapter {
       attributes: {
         send_at: sendAt,
         provider_id: data.audience.select && parseInt(data.audience.select, 10) || null,
-        campaign_entity_id: campaignId && parseInt(campaignId, 10) || null,
+        owner_id: campaignId && parseInt(campaignId, 10) || null,
+        owner_type: 'Perx::Campaign:Entity',
         template_id: templateId && parseInt(templateId, 10) || null,
         channel: data.channel.type
       }
