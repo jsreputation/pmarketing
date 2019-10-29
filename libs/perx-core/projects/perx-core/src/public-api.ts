@@ -70,7 +70,8 @@ export {
   ITree,
   IScratch,
   defaultTree,
-  IPlayOutcome
+  IPlayOutcome,
+  ISlice
 } from './lib/game/game.model';
 export { IGameService } from './lib/game/igame.service';
 export { IGameComponent } from './lib/game/igame.component';

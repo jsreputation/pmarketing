@@ -80,3 +80,11 @@ export interface IPlayOutcome {
     vouchers: IVoucher[];
     rawPayload: any;
 }
+
+export interface ISlice {
+  id: string;
+  label?: string;
+  label_color?: string;
+  background_color?: string;
+  background_image?: string;
+}
