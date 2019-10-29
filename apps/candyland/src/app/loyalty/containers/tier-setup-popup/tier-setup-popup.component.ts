@@ -19,11 +19,12 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
   protected destroy$: Subject<void> = new Subject();
   public pointsExpirePeriodType: typeof PeriodType = PeriodType;
 
-  constructor(public dialogRef: MatDialogRef<TierSetupPopupComponent>,
-              private customTierFormsService: LoyaltyCustomTierFormsService,
-              private customTierService: LoyaltyCustomTierService,
-              @Inject(MAT_DIALOG_DATA) public data: { basicTierId: string, tier: ICustomTireForm | null }) {
-  }
+  constructor(
+    public dialogRef: MatDialogRef<TierSetupPopupComponent>,
+    private customTierFormsService: LoyaltyCustomTierFormsService,
+    private customTierService: LoyaltyCustomTierService,
+    @Inject(MAT_DIALOG_DATA) public data: { basicTierId: string, tier: ICustomTireForm | null }
+  ) { }
 
   public get pointsThreshold(): AbstractControl {
     return this.form.get('joinMethod.pointsThreshold') || null;
@@ -97,16 +98,16 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
 
   private handlePointsThreshold(): void {
     this.pointsThreshold.valueChanges.pipe(
+      distinctUntilChanged(),
       takeUntil(this.destroy$),
-      distinctUntilChanged()
     ).subscribe((value: boolean) => {
       if (value) {
-        this.points.enable({onlySelf: true, emitEvent: false});
+        this.points.enable({ onlySelf: true, emitEvent: false });
       } else {
-        this.points.reset(null, {onlySelf: true, emitEvent: false});
-        this.points.disable({onlySelf: true, emitEvent: false});
+        this.points.reset(null, { onlySelf: true, emitEvent: false });
+        this.points.disable({ onlySelf: true, emitEvent: false });
       }
-      this.points.updateValueAndValidity({onlySelf: true, emitEvent: false});
+      this.points.updateValueAndValidity({ onlySelf: true, emitEvent: false });
     });
   }
 }
