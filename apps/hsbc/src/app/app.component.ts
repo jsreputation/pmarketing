@@ -130,8 +130,9 @@ export class AppComponent implements OnInit {
             ref instanceof VoucherComponent ? 'arrow_back_ios' :
               ref instanceof FaqComponent ? 'arrow_back_ios' :
                 ref instanceof TncComponent ? 'arrow_back_ios' :
-                  ref instanceof AccountComponent ? 'arrow_back_ios' :
-                    ref instanceof WalletComponent ? 'arrow_back_ios' : '';
+                  // ref instanceof AccountComponent ? 'arrow_back_ios' :
+                  // ref instanceof WalletComponent ? 'arrow_back_ios' :
+                  '';
 
     this.onLeftActionClick = ref instanceof PuzzlesComponent ? this.goHome :
       ref instanceof PuzzleComponent ? this.goHome :
