@@ -17,12 +17,13 @@ export class LoyaltyReviewComponent implements OnInit, OnDestroy {
   public customTierDataSource: CustomDataSource<ICustomTireForm>;
   protected destroy$: Subject<void> = new Subject();
 
-  constructor(private route: ActivatedRoute,
-              private customTierService: LoyaltyCustomTierService,
-              private router: Router,
-              private cd: ChangeDetectorRef,
-              private loyaltyService: LoyaltyService) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private customTierService: LoyaltyCustomTierService,
+    private router: Router,
+    private cd: ChangeDetectorRef,
+    private loyaltyService: LoyaltyService
+  ) { }
 
   public ngOnInit(): void {
     this.handleRouteParams();
@@ -39,18 +40,18 @@ export class LoyaltyReviewComponent implements OnInit, OnDestroy {
 
   private handleRouteParams(): void {
     this.route.paramMap.pipe(
-      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.setBasicTierId(id)),
       switchMap(id => this.loyaltyService.getLoyalty(id)),
+      takeUntil(this.destroy$),
     ).subscribe(data => {
-        if (data) {
-          this.loyalty = data;
-          this.cd.detectChanges();
-        } else {
-          this.router.navigateByUrl('/loyalty');
-        }
-      },
+      if (data) {
+        this.loyalty = data;
+        this.cd.detectChanges();
+      } else {
+        this.router.navigateByUrl('/loyalty');
+      }
+    },
       (error: Error) => {
         console.warn(error.message);
         this.router.navigateByUrl('/loyalty');
@@ -70,6 +71,6 @@ export class LoyaltyReviewComponent implements OnInit, OnDestroy {
   }
 
   private setBasicTierIdToCustomTiersDataSourceFilter(basicTierId: string): void {
-    this.customTierDataSource.filter = {program_id: basicTierId};
+    this.customTierDataSource.filter = { program_id: basicTierId };
   }
 }

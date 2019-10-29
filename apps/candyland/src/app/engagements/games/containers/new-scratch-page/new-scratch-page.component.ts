@@ -55,7 +55,7 @@ import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-v
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewScratchPageComponent implements OnInit, OnDestroy {
-  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
+  @ViewChild(SimpleMobileViewComponent, { static: false }) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<any> = new Subject();
 
@@ -103,7 +103,7 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
 
   public get postScratchImage(): string {
     return this.currentPostScratchImageUrl ||
-           this.getImgLink(this.postScratchSuccessImage as FormControl, 'assets/images/background/background1.png');
+      this.getImgLink(this.postScratchSuccessImage as FormControl, 'assets/images/background/background1.png');
   }
 
   constructor(
@@ -151,9 +151,9 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((imageUrl: IUploadedFile) => {
           if (this.id) {
-            return this.scratchService.updateScratch(this.id, {...this.form.value, image_url: imageUrl.url});
+            return this.scratchService.updateScratch(this.id, { ...this.form.value, image_url: imageUrl.url });
           }
-          return this.scratchService.createScratch({...this.form.value, image_url: imageUrl.url})
+          return this.scratchService.createScratch({ ...this.form.value, image_url: imageUrl.url })
             .pipe(
               map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
               tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
@@ -183,8 +183,8 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
   private initScratchForm(): void {
     this.form = this.fb.group({
       name: ['Scratch the Card Template', [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: ['Scratch the Card and Win!', [
         Validators.required,
@@ -241,7 +241,6 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
 
   private handleRouteParams(): Observable<null | IScratchForm> {
     return this.route.paramMap.pipe(
-      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.id = id),
       switchMap(id => {
@@ -250,7 +249,8 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
         }
         return of(null);
       }),
-      tap(scratch => this.checkGameType(scratch))
+      tap(scratch => this.checkGameType(scratch)),
+      takeUntil(this.destroy$),
     );
   }
 
