@@ -83,8 +83,8 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
 
   private handleRouteParams(): void {
     const $id = this.route.paramMap.pipe(
+      map((params: ParamMap) => params.get('id')),
       takeUntil(this.destroy$),
-      map((params: ParamMap) => params.get('id'))
     );
     $id.subscribe(id => this.id = id);
     $id

@@ -21,7 +21,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   public dateRange: FormControl = new FormControl();
   public gameCard$: Observable<DashboardGameCard[]>;
   public userName$: string;
-  public navLinks: {path: string, label: string}[] = [
+  public navLinks: { path: string, label: string }[] = [
     {
       path: 'overview',
       label: 'Overview'
@@ -36,15 +36,17 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     }
   ];
 
-  constructor(private dashboardService: DashboardService,
-              private userService: UserService,
-              private chartsParametersService: DashboardChartsParametersService,
-              @Inject(DOCUMENT) private document: Document,
-              private renderer: Renderer2) {
+  constructor(
+    private dashboardService: DashboardService,
+    private userService: UserService,
+    private chartsParametersService: DashboardChartsParametersService,
+    @Inject(DOCUMENT) private document: Document,
+    private renderer: Renderer2
+  ) {
   }
 
   public ngOnInit(): void {
-    this.userName$ =  this.userService.userName$;
+    this.userName$ = this.userService.userName$;
     this.getGameCard();
     this.handelDateRangeChanges();
     this.dateRange.patchValue(this.defaultDateRange);
@@ -59,12 +61,12 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   private handelDateRangeChanges(): void {
     this.dateRange.valueChanges.pipe(
-      takeUntil(this.destroy$),
       map((data: DatepickerRangeValue<Date>) => new Object({
-          start_date: this.dateToString(data.begin),
-          end_date: this.dateToString(data.end)
-        })
-      )
+        start_date: this.dateToString(data.begin),
+        end_date: this.dateToString(data.end)
+      })
+      ),
+      takeUntil(this.destroy$),
     ).subscribe(value => this.chartsParametersService.params = value);
   }
 
