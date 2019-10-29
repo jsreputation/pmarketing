@@ -1,10 +1,24 @@
 <!-- Template stuff aimed at being replaced by real components -->
 <div class="content-container">
+  <div *ngIf="!sourceType">
     <perx-core-bcode-redemption
-        [voucherId]="voucherId"
-        [instructions]="'Present the code below to the merchant to complete your transaction.'"
+      [voucherId]="voucherId"
+      [instructions]="'Present the code below to the merchant to complete your transaction.'"
     ></perx-core-bcode-redemption>
     <div class="actions-container">
-        <button [routerLink]="['/home']" [queryParams]="{tab:'history'}" mat-flat-button color="primary">Redeem later</button>
+      <button [routerLink]="['/home']" [queryParams]="{tab:'history'}" mat-flat-button color="primary">
+        Redeem later {{sourceType}}
+      </button>
     </div>
+  </div>
+  <div class="redeem-info" *ngIf="sourceType == 'hsbc-xmas'">
+    <h2>Present the code below to the merchant to complete your transaction.</h2>
+    <div class="code">XXXX - XXXX</div>
+
+    <div class="actions-container">
+      <button [routerLink]="['/home']" [queryParams]="{tab:'history'}" mat-flat-button>
+        Cancel
+      </button>
+    </div>
+  </div>
 </div>
