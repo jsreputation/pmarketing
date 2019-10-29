@@ -1,4 +1,21 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+
+import {
+  Observable,
+  combineLatest,
+  Subject,
+} from 'rxjs';
+import {
+  map,
+  mergeMap,
+} from 'rxjs/operators';
+
 import {
   ICampaign,
   ICampaignService,
@@ -8,12 +25,10 @@ import {
   CampaignType,
   StampService,
   IStampCard,
-  NotificationService, IPopupConfig, PopupComponent
+  NotificationService,
+  IPopupConfig,
+  PopupComponent,
 } from '@perx/core';
-import { Router } from '@angular/router';
-import { Observable, combineLatest, Subject } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
-import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'perx-blackcomb-pages-wallet',
