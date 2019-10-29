@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
-import { AuthenticationService, PopupComponent, NotificationService } from '@perx/core';
+import {AuthenticationService, PopupComponent, NotificationService, ConfigService, IConfig} from '@perx/core';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatSidenav } from '@angular/material';
 import { PuzzleComponent } from './puzzle/puzzle.component';
@@ -16,6 +16,7 @@ import { TncComponent } from './tnc/tnc.component';
 import { environment } from '../environments/environment';
 import { AccountComponent } from './account/account.component';
 import { WalletComponent } from './wallet/wallet.component';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -42,6 +43,8 @@ export class AppComponent implements OnInit {
     private notificationService: NotificationService,
     private dialog: MatDialog,
     private soundService: SoundService,
+    private titleService: Title,
+    private configService: ConfigService,
     @Inject(DOCUMENT) private document: any
   ) {
   }
@@ -65,6 +68,19 @@ export class AppComponent implements OnInit {
     this.notificationService.$popup.subscribe(data => {
       this.dialog.open(PopupComponent, { data });
     });
+
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig) => {
+        let title = '';
+        const sourceType = config.sourceType as string;
+        if (sourceType === 'hsbc-xmas') {
+          title = 'HSBC Xmas';
+        } else {
+          title = 'HSBC Collect 2.0';
+        }
+        this.titleService.setTitle( title);
+      }
+    );
   }
 
   public goHome(): void {
