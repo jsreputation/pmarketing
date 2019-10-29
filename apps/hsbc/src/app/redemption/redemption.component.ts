@@ -10,7 +10,9 @@ import { ConfigService, IConfig } from '@perx/core';
 export class RedemptionComponent implements OnInit {
   public voucherId: number;
   public sourceType: string;
-  public voucherCode: string = 'XXXX - XXXX';
+
+  public useMinimalStyle: boolean;
+  public buttonText: string = 'Redeem later';
 
   constructor(
     private route: ActivatedRoute,
@@ -24,6 +26,11 @@ export class RedemptionComponent implements OnInit {
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => {
         this.sourceType = config.sourceType as string;
+
+        if (config.sourceType === 'hsbc-xmas') {
+          this.useMinimalStyle = true;
+          this.buttonText = 'Cancel';
+        }
       }
     );
   }
