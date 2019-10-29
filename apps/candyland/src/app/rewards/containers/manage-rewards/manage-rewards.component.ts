@@ -94,10 +94,10 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed()
       .pipe(
-        takeUntil(this.destroy$),
         filter(Boolean),
         switchMap((merchant: any) => this.merchantsService.createMerchant(merchant)),
-        filter(Boolean)
+        filter(Boolean),
+        takeUntil(this.destroy$),
       )
       .subscribe((id) => {
         this.merchantId.patchValue(id);
@@ -131,9 +131,9 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   private handleFormValueChanges(): void {
     this.form.valueChanges
       .pipe(
-        takeUntil(this.destroy$),
         distinctUntilChanged(),
-        debounceTime(500)
+        debounceTime(500),
+        takeUntil(this.destroy$),
       )
       .subscribe(() => {
         const toggleConfig = this.newRewardFormService.getToggleConfig(this.form);
@@ -147,11 +147,11 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   private handleMerchantIdChanges(): void {
     this.merchantId.valueChanges
       .pipe(
-        takeUntil(this.destroy$),
         distinctUntilChanged(),
         debounceTime(500),
         filter(Boolean),
-        switchMap((id: string) => this.merchantsService.getMerchant(id))
+        switchMap((id: string) => this.merchantsService.getMerchant(id)),
+        takeUntil(this.destroy$),
       )
       .subscribe((merchant) => {
         this.selectedMerchant = merchant;
@@ -166,7 +166,6 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
 
   private handleRouteParams(): void {
     this.route.paramMap.pipe(
-      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.id = id),
       switchMap((id: string) => {
@@ -174,7 +173,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
           return this.rewardsService.getRewardToForm(id);
         }
         return of(null);
-      })
+      }),
+      takeUntil(this.destroy$),
     )
       .subscribe(
         (reward: IRewardEntityForm) => {
@@ -224,7 +224,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       }));
   }
 
-  private getLoyalties(): Observable<{data: ILoyaltyForm[]}> {
+  private getLoyalties(): Observable<{ data: ILoyaltyForm[] }> {
     const params: any = {
       'page[number]': 1,
       'page[size]': 20

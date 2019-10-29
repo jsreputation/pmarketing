@@ -22,7 +22,7 @@ import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-v
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewShakePageComponent implements OnInit, OnDestroy {
-  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
+  @ViewChild(SimpleMobileViewComponent, { static: false }) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<any> = new Subject();
 
@@ -115,14 +115,14 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((imageUrl: IUploadedFile) => {
           if (this.id) {
-            return  this.shakeTreeService.updateShakeTree(this.id, {...this.form.value as IShakeTreeForm, image_url: imageUrl.url});
+            return this.shakeTreeService.updateShakeTree(this.id, { ...this.form.value as IShakeTreeForm, image_url: imageUrl.url });
           }
           return this.shakeTreeService
-            .createShakeTree({...this.form.value as IShakeTreeForm, image_url: imageUrl.url})
+            .createShakeTree({ ...this.form.value as IShakeTreeForm, image_url: imageUrl.url })
             .pipe(map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
-            tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
+              tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
             );
-          })
+        })
       )
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.router.navigateByUrl('/engagements'));
@@ -143,12 +143,12 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
   private initShakeTreeForm(): void {
     this.form = this.fb.group({
       name: ['Shake the Tree Template', [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: ['Tap the Tree and Win!', [Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(60)]
+      Validators.minLength(5),
+      Validators.maxLength(60)]
       ],
       subHeadlineMessage: ['Tap the tree until you get a reward!', [
         Validators.minLength(5),
@@ -194,7 +194,6 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
 
   private handleRouteParams(): Observable<IShakeTree | null> {
     return this.route.paramMap.pipe(
-      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.id = id),
       switchMap(id => {
@@ -203,7 +202,8 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
         }
         return of(null);
       }),
-      tap(shakeTree => this.checkGameType(shakeTree))
+      tap(shakeTree => this.checkGameType(shakeTree)),
+      takeUntil(this.destroy$),
     );
   }
 

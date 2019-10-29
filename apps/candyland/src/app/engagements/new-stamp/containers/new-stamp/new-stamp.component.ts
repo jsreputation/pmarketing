@@ -22,7 +22,7 @@ import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-v
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewStampComponent implements OnInit, OnDestroy {
-  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
+  @ViewChild(SimpleMobileViewComponent, { static: false }) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<any> = new Subject();
 
@@ -32,7 +32,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
   public allStampSlotNumbers: CommonSelect[];
   public stampData: IStampsDefaultValue;
   public stamps: PuzzleCollectStamp[] = [];
-  public stampsSlotNumberData: {rewardPosition: number}[] = [];
+  public stampsSlotNumberData: { rewardPosition: number }[] = [];
   public tenantSettings: ITenantsProperties;
 
   public get name(): AbstractControl {
@@ -131,9 +131,9 @@ export class NewStampComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((imageUrl: IUploadedFile) => {
           if (this.id) {
-            return this.stampsService.updateStamp(this.id, {...this.formStamp.value, image_url: imageUrl.url});
+            return this.stampsService.updateStamp(this.id, { ...this.formStamp.value, image_url: imageUrl.url });
           }
-          return this.stampsService.createStamp({...this.formStamp.value, image_url: imageUrl.url}).pipe(
+          return this.stampsService.createStamp({ ...this.formStamp.value, image_url: imageUrl.url }).pipe(
             map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
             tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
           );
@@ -150,8 +150,8 @@ export class NewStampComponent implements OnInit, OnDestroy {
   private createStampForm(): void {
     this.formStamp = this.fb.group({
       name: ['Stamp Card Template', [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: ['Collect stamps', [
         Validators.required,
@@ -217,7 +217,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
           return;
         }
         this.stampsSlotNumberData = value.map((item: number) => {
-          return {rewardPosition: item - 1};
+          return { rewardPosition: item - 1 };
         });
       });
   }
@@ -241,16 +241,15 @@ export class NewStampComponent implements OnInit, OnDestroy {
 
   private initTenants(): void {
     this.settingsService.getTenants()
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((res: Tenants) => {
-      this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
-      this.cd.detectChanges();
-    });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res: Tenants) => {
+        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+        this.cd.detectChanges();
+      });
   }
 
   private handleRouteParams(): Observable<Partial<IStampsEntityForm> | null> {
     return this.route.paramMap.pipe(
-      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.id = id),
       switchMap(id => {
@@ -258,7 +257,8 @@ export class NewStampComponent implements OnInit, OnDestroy {
           return this.stampsService.getStamp(id);
         }
         return of(null);
-      })
+      }),
+      takeUntil(this.destroy$),
     );
   }
 }

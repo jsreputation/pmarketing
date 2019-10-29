@@ -10,6 +10,7 @@ export class GamesComponent {
   public navLinks: INavLink[] = [
     { path: 'shake', label: 'Shake' },
     { path: 'tap', label: 'Tap' },
-    { path: 'scratch', label: 'Scratch'}
+    { path: 'scratch', label: 'Scratch' },
+    { path: 'spin', label: 'Spin' }
   ];
 }

@@ -15,6 +15,7 @@ import { SoundModule } from './sound/sound.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthenticationService, ProfileModule } from '@perx/core';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
   const authenticationServiceStub = {};
@@ -31,7 +32,8 @@ describe('AppComponent', () => {
         MatToolbarModule,
         NoopAnimationsModule,
         SoundModule,
-        ProfileModule
+        ProfileModule,
+        HttpClientTestingModule
       ],
       declarations: [
         AppComponent,
@@ -51,9 +53,4 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'HSBC Win A Treat'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('HSBC Win A Treat');
-  });
 });
