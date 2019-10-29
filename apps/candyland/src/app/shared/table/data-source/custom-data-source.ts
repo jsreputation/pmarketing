@@ -140,8 +140,8 @@ export class CustomDataSource<T> extends DataSource<T> {
     }
     sort.sortChange
       .pipe(
+        debounceTime(300),
         takeUntil(this.destroy$),
-        debounceTime(300)
       )
       .subscribe(newSort => this.sort = newSort);
   }
@@ -184,7 +184,7 @@ export class CustomDataSource<T> extends DataSource<T> {
       const sort = sortData.direction === 'asc'
         ? `${sortData.active}`
         : `-${sortData.active}`;
-      return {sort};
+      return { sort };
     }
     return {};
   }

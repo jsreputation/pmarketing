@@ -106,12 +106,12 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
 
   private handleRouteParams(): void {
     this.route.paramMap.pipe(
-      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap((id: string) => this.userId = id),
       distinct(),
       tap(() => this.initDataSource()),
-      switchMap((id: string) => this.audiencesUserService.getUser(id))
+      switchMap((id: string) => this.audiencesUserService.getUser(id)),
+      takeUntil(this.destroy$),
     )
       .subscribe(
         user => {
