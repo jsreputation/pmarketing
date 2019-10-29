@@ -22,7 +22,7 @@ import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-v
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewPinataPageComponent implements OnInit, OnDestroy {
-  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
+  @ViewChild(SimpleMobileViewComponent, { static: false }) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<any> = new Subject();
 
@@ -100,9 +100,9 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((imageUrl: IUploadedFile) => {
           if (this.id) {
-            return this.pinataService.updatePinata(this.id, {...this.form.value, image_url: imageUrl.url});
+            return this.pinataService.updatePinata(this.id, { ...this.form.value, image_url: imageUrl.url });
           }
-          return this.pinataService.createPinata({...this.form.value, image_url: imageUrl.url}).pipe(
+          return this.pinataService.createPinata({ ...this.form.value, image_url: imageUrl.url }).pipe(
             map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
             tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
           );
@@ -122,8 +122,8 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   private createPinataForm(): void {
     this.form = this.fb.group({
       name: ['Hit the Pinata Template', [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: ['Tap the Piñata and Win!', [
         Validators.required,
@@ -171,7 +171,6 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
 
   private handleRouteParams(): Observable<null | IPinataForm> {
     return this.route.paramMap.pipe(
-      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap(id => this.id = id),
       switchMap(id => {
@@ -180,7 +179,8 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
         }
         return of(null);
       }),
-      tap(pinata => this.checkGameType(pinata))
+      tap(pinata => this.checkGameType(pinata)),
+      takeUntil(this.destroy$),
     );
   }
 
