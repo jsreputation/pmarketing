@@ -26,7 +26,7 @@ export class OutcomesService {
 
   public updateOutcome(data: any, campaignId: string, enableProbability: boolean, slotNumber: number): Observable<any> {
     const sendData = OutcomesHttpAdapter.transformFromOutcomes(data, enableProbability, campaignId, slotNumber);
-    return this.outcomesHttpsService.updateOutcome(data.outcomeId, { data: { id: data.outcomeId, ...sendData } });
+    return this.outcomesHttpsService.updateOutcome(data.value.outcomeId, { data: { id: data.value.outcomeId, ...sendData } });
   }
 
   public createOutcome(data: any, campaignId: string, enableProbability: boolean, slotNumber: number): Observable<any> {

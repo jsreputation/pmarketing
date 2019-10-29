@@ -64,81 +64,80 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       combineLatest(
         this.campaignsService.getCampaign(campaignId).pipe(catchError(() => of(null))),
         this.commsService.getCommsEvent(params).pipe(catchError(() => of(null))),
-        this.outcomesService.getOutcomes(paramsPO).pipe(
-          map(outcomes => outcomes.map(outcome => ({ ...outcome, probability: outcome.probability * 100 }))),
-          catchError(() => of(null)))).pipe(
-            map(
-              ([campaign, commEvent, outcomes]:
-                [ICampaign | null, IComm | null, IOutcome[] | null]) => ({
-                  ...campaign,
-                  audience: { select: commEvent && commEvent.poolId || null },
-                  channel: {
-                    type: commEvent && commEvent.channel || 'weblink',
-                    message: commEvent && commEvent.message,
-                    schedule: commEvent && { ...commEvent.schedule }
-                  },
-                  rewardsList: outcomes
-                })
-            ),
-            switchMap((campaign: ICampaign) => {
-              const limitParams: HttpParamsOptions = {
-                'filter[campaign_entity_id]': campaign.id
-              };
-              const eType = campaign.engagement_type;
-              return combineLatest(
-                of(campaign),
-                this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
-                this.limitsService.getLimits(limitParams, eType).pipe(map(limits => limits[0]), catchError(() => of({ times: null }))),
-                this.getRewards(campaign.rewardsList)
-              );
-            }),
-            map(([campaign, engagement, limits, rewards]:
-              [
-                ICampaign | null, IEngagement | null, ILimit | null,
-                { value: IRewardEntity, probability?: number, stampsSlotNumber?: number }[] | null
-              ]) => {
-              let rewardsOptions = null;
-              let rewardsListCollection = null;
-              if (campaign.engagement_type === 'stamps') {
-                const transformedRewards = {};
-                rewards.forEach(reward => {
-                  if (!transformedRewards[reward.stampsSlotNumber]) {
-                    transformedRewards[reward.stampsSlotNumber] = {
-                      stampSlotNumber: reward.stampsSlotNumber,
-                      rewardsOptions: {
-                        enableProbability: !!reward.probability,
-                        rewards: [reward]
-                      }
-                    };
-                  } else {
-                    transformedRewards[reward.stampsSlotNumber].rewardsOptions.rewards =
-                      [...transformedRewards[reward.stampsSlotNumber].rewardsOptions.rewards, reward];
-                  }
-                });
-                rewardsListCollection = [...Object.values(transformedRewards)];
-              } else {
-                rewardsOptions = {
-                  enableProbability: rewards.some(reward => !!reward.probability),
-                  rewards
-                };
-              }
-              return {
-                ...campaign,
-                template: engagement,
-                limits,
-                rewardsOptions,
-                rewardsListCollection
-              };
-            }),
-            takeUntil(this.destroy$),
-          ).subscribe(
-            campaign => {
-              this.campaign = campaign;
-              this.store.updateCampaign(this.campaign);
-              this.cd.detectChanges();
-            },
-            (err) => console.log(err)
+        this.outcomesService.getOutcomes(paramsPO).pipe(catchError(() => of(null)))
+      ).pipe(
+        map(
+          ([campaign, commEvent, outcomes]:
+            [ICampaign | null, IComm | null, IOutcome[] | null]) => ({
+              ...campaign,
+              audience: { select: commEvent && commEvent.poolId || null },
+              channel: {
+                type: commEvent && commEvent.channel || 'weblink',
+                message: commEvent && commEvent.message,
+                schedule: commEvent && { ...commEvent.schedule }
+              },
+              rewardsList: outcomes
+            })
+        ),
+        switchMap((campaign: ICampaign) => {
+          const limitParams: HttpParamsOptions = {
+            'filter[campaign_entity_id]': campaign.id
+          };
+          const eType = campaign.engagement_type;
+          return combineLatest(
+            of(campaign),
+            this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
+            this.limitsService.getLimits(limitParams, eType).pipe(map(limits => limits[0]), catchError(() => of({ times: null }))),
+            this.getRewards(campaign.rewardsList)
           );
+        }),
+        map(([campaign, engagement, limits, rewards]:
+          [
+            ICampaign | null, IEngagement | null, ILimit | null,
+            { value: IRewardEntity, probability?: number, stampsSlotNumber?: number }[] | null
+          ]) => {
+          let rewardsOptions = null;
+          let rewardsListCollection = null;
+          if (campaign.engagement_type === 'stamps') {
+            const transformedRewards = {};
+            rewards.forEach(reward => {
+              if (!transformedRewards[reward.stampsSlotNumber]) {
+                transformedRewards[reward.stampsSlotNumber] = {
+                  stampSlotNumber: reward.stampsSlotNumber,
+                  rewardsOptions: {
+                    enableProbability: !!reward.probability,
+                    rewards: [reward]
+                  }
+                };
+              } else {
+                transformedRewards[reward.stampsSlotNumber].rewardsOptions.rewards =
+                  [...transformedRewards[reward.stampsSlotNumber].rewardsOptions.rewards, reward];
+              }
+            });
+            rewardsListCollection = [...Object.values(transformedRewards)];
+          } else {
+            rewardsOptions = {
+              enableProbability: rewards.some(reward => !!reward.probability),
+              rewards
+            };
+          }
+          return {
+            ...campaign,
+            template: engagement,
+            limits,
+            rewardsOptions,
+            rewardsListCollection
+          };
+        }),
+        takeUntil(this.destroy$),
+      ).subscribe(
+        campaign => {
+          this.campaign = campaign;
+          this.store.updateCampaign(this.campaign);
+          this.cd.detectChanges();
+        },
+        (err) => console.log(err)
+      );
     }
   }
 
