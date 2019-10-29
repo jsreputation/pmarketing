@@ -14,7 +14,7 @@ export class CommsHttpAdapter {
   public static transformEventAPIResponseToComm(data: IJsonApiItem<ICommEventAttributes>): IComm {
     return {
       eventId: data.id,
-      poolId: data.attributes.target_id && data.attributes.target_id.toString(),
+      poolId: data.attributes.pool_id && data.attributes.pool_id.toString(),
       channel: data.attributes.channel,
       schedule: {
         sendDate: new Date(data.attributes.send_at),
@@ -38,8 +38,7 @@ export class CommsHttpAdapter {
         owner_type: 'Perx::Campaign:Entity',
         template_id: templateId && parseInt(templateId, 10) || null,
         channel: data.channel.type,
-        target_id: data.audience.select && parseInt(data.audience.select, 10) || null,
-        target_type: 'Ros::Comm::Pool'
+        pool_id: data.audience.select && parseInt(data.audience.select, 10) || null,
       }
     };
   }

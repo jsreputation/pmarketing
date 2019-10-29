@@ -190,7 +190,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         switchMap((template: IJsonApiPayload<ICommTemplateAttributes>) => eventAction$(template.data.id))
       );
     }
-
     if (channelInfo.eventId) {
       eventAction$ = updateCommsEvent$;
     } else {
@@ -207,18 +206,19 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         rewardsData => {
           const updateOutcomeList = this.updateOutcomeWhenEdit(
             campaign,
-            rewardsData.rewardsOptions.rewards,
-            rewardsData.rewardsOptions.enableProbability,
+            rewardsData.rewardsOptions && rewardsData.rewardsOptions.rewards,
+            rewardsData.rewardsOptions && rewardsData.rewardsOptions.enableProbability,
             rewardsData.stampSlotNumber
           );
           updateOutcomesArr$ = [...updateOutcomesArr$, ...updateOutcomeList];
 
         });
     } else {
+      const rewardsOptions = this.store.currentCampaign.rewardsOptions;
       updateOutcomesArr$ = this.updateOutcomeWhenEdit(
         campaign,
-        this.store.currentCampaign.rewardsOptions.rewards,
-        this.store.currentCampaign.rewardsOptions.enableProbability
+        rewardsOptions && rewardsOptions.rewards,
+        rewardsOptions && rewardsOptions.enableProbability
       );
     }
 
@@ -229,7 +229,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   private updateOutcomeWhenEdit(campaign: ICampaign, data: any[], enableProbability: boolean, slotNumber?: number): Observable<any>[] {
-    if (data.length <= 0) {
+    if (!data || data.length <= 0) {
       return [];
     }
     const updateOutcomesArr$ = [];

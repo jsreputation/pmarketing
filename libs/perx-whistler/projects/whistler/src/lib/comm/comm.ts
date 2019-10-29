@@ -12,7 +12,6 @@ export interface ICommEventAttributes {
     owner_type?: string;
     template_id?: number;
     channel: string;
-    target_id?: number;
-    target_type?: string;
+    pool_id?: number;
     name?: string;
 }
