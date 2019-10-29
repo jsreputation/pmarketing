@@ -122,9 +122,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       tap((res: IJsonApiPayload<ICampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
       switchMap(
         (res: IJsonApiPayload<ICampaignAttributes>) => combineLatest(
-          iif(hasLimitData, generateLimitData$(res.data), of(res)),
-          this.updateOutcomes(res.data),
-          this.updateComm(res.data)
+          iif(hasLimitData, generateLimitData$(res.data), of(res)).pipe(catchError(() => of(null))),
+          this.updateOutcomes(res.data).pipe(catchError(() => of(null))),
+          this.updateComm(res.data).pipe(catchError(() => of(null)))
         )
       ),
       takeUntil(this.destroy$)
