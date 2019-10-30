@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { MerchantHttpAdapter } from '@cl-core/http-adapters/merchant-http-adapter';
 import { Merchant } from '@cl-core/http-adapters/merchant';
 import { MatDialog } from '@angular/material';
-import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
+import { CustomDataSource, DataSourceStates } from '@cl-shared/table/data-source/custom-data-source';
 import { CreateMerchantPopupComponent } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.component';
 
 import { Subject } from 'rxjs';
@@ -17,8 +17,8 @@ import { MerchantsService } from '@cl-core-services';
 })
 export class ListMerchantComponent implements OnDestroy {
   private destroy$: Subject<any> = new Subject();
-
   public dataSource: CustomDataSource<Merchant>;
+  public dataSourceStates: typeof DataSourceStates = DataSourceStates;
 
   constructor(
     private merchantService: MerchantsService,

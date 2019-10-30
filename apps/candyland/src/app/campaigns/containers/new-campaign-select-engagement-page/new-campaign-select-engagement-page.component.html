@@ -18,23 +18,46 @@
       </cl-table-filters>
       <cl-button classList="tertiary ph-0" (click)="createNewEngagement()">+ Create New Engagement</cl-button>
     </div>
-    <!--items-->
-    <mat-error class="error template-error" *ngIf="form.get('template').getError('required') && form.get('template').touched">
-      Please, choose template.
-    </mat-error>
+    <ng-container *ngIf="hasData">
+      <!--items-->
+      <mat-error class="error template-error"
+                 *ngIf="form.get('template').getError('required') && form.get('template').touched">
+        Please, choose template.
+      </mat-error>
 
-    <mat-radio-group color="primary" class="item-list shadow" [formControl]="form.get('template')">
-      <ng-container *ngIf="(dataSource.connect() | async) as items">
-        <ng-container *ngFor="let item of items">
-          <mat-radio-button [value]="item">
-            <cl-engagement-item [data]="item"></cl-engagement-item>
-          </mat-radio-button>
+      <mat-radio-group color="primary" class="item-list shadow" [formControl]="form.get('template')">
+        <ng-container *ngIf="(dataSource.connect() | async) as items">
+          <ng-container *ngFor="let item of items">
+            <mat-radio-button [value]="item">
+              <cl-engagement-item [data]="item"></cl-engagement-item>
+            </mat-radio-button>
+          </ng-container>
         </ng-container>
-      </ng-container>
-    </mat-radio-group>
+      </mat-radio-group>
+      <!--/ items-->
+
+      <!--    paginator-->
+      <div class="table-card template-paginator">
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+      </div>
+      <!--/    paginator-->
+    </ng-container>
+
+    <cl-no-data *ngIf="noData">
+      <img class="no-data-img" src="/assets/images/no-data/engagements-empty-illustration.svg" alt="">
+      <h2 class="no-data-title">
+        Build your customer experience, now!
+      </h2>
+      <p class="no-data-text">
+        Let&rsquo;s begin by creating your first Engagement
+      </p>
+    </cl-no-data>
   </div>
-  <cl-campaigns-mobile-preview [storeTemplate$]="store.template$"
-                               [tenantSettings]="tenantSettings"
-  >
-  </cl-campaigns-mobile-preview>
+  <div>
+    <cl-campaigns-mobile-preview *ngIf="hasData"
+                                 [storeTemplate$]="store.template$"
+                                 [tenantSettings]="tenantSettings"
+    >
+    </cl-campaigns-mobile-preview>
+  </div>
 </div>

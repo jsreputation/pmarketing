@@ -23,3 +23,34 @@
     width: 100%;
   }
 }
+
+.points {
+  &-block {
+    padding: 1.5rem;
+    background: $white;
+  }
+
+  &-count {
+    font-weight: 500;
+    font-size: 3.4rem;
+    line-height: 4rem;
+    color: $base-font-color;
+  }
+
+  &-title {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    color: $base-font-color;
+  }
+}
+
+.quare-code-btn {
+  align-self: flex-end;
+}
+
+.games {
+  &-block {
+    padding: 1.5rem;
+    background: $light-gray;
+  }
+}

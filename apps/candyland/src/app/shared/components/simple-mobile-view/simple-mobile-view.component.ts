@@ -10,8 +10,10 @@ import { Observable } from 'rxjs';
 export class SimpleMobileViewComponent {
   @ViewChild(CreateImageDirective, {static: false}) public createImagePreview: CreateImageDirective;
   @Input() public background: string = 'assets/images/reward/card-background/card-bg-1.png';
+  @Input() public backgroundColor: string = null;
   @Input() public mobileImageClass: string = 'mobile-preview-mobile';
   @Input() public headerColor: string = '#ffffff';
+  @Input() public primaryColor: string  = null;
   @Input() public logo: string;
   @Input() public logoType: boolean;
   @Input() public fontFamily: string;
@@ -19,4 +21,8 @@ export class SimpleMobileViewComponent {
   public createPreview(): Observable<IUploadedFile> {
     return this.createImagePreview.getPreviewUrl();
   }
+
+  // public getBackground(): string {
+  //   return this.backgroundColor ? this.backgroundColor : `url(${this.background})`;
+  // }
 }
