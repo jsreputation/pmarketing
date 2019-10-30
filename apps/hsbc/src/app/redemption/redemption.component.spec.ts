@@ -1,10 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RedemptionComponent } from './redemption.component';
-import { VouchersModule, IVoucherService, Voucher, VoucherState } from '@perx/core';
+import {
+  VouchersModule,
+  IVoucherService,
+  Voucher,
+  VoucherState,
+  ThemesService,
+  FeedReaderService,
+  ProfileService,
+  AuthenticationService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
@@ -39,16 +48,26 @@ describe('RedemptionComponent', () => {
   const vouchersServiceStub = {
     get: () => of(mockVoucher)
   };
+  const themesServiceStub = {};
+  const feedReaderServiceStub = {};
+  const authenticationServiceStub = {};
+  const profileServiceStub = {};
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RedemptionComponent],
       imports: [
+        HttpClientTestingModule,
         RouterTestingModule,
         NoopAnimationsModule,
         VouchersModule
       ],
       providers: [
-        { provide: IVoucherService, useValue: vouchersServiceStub }
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: ProfileService, useValue: profileServiceStub },
+        { provide: FeedReaderService, useValue: feedReaderServiceStub },
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: IVoucherService, useValue: vouchersServiceStub },
       ]
     })
       .compileComponents();

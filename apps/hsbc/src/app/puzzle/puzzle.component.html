@@ -21,6 +21,7 @@
             [rewardPreStamp]="'assets/pre-reward.png'"
             [rewardPostStamp]="'assets/post-reward.png'"
             [backgroundImage]="card.displayProperties.backgroundImg.value.imageUrl"
+            [cardBgImage]="card.displayProperties.cardImage.value.imageUrl"
             [title]="card.title || title"
             [subTitle]="card.subTitle || subTitle"
             (availableStampClicked)="stampClicked($event)"

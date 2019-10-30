@@ -1,11 +1,16 @@
-<div class="reward-container" *ngIf="voucher$ | async as voucher">
+<div [ngClass]="useMinimalStyle ? 'reward-container plain' : 'reward-container'" *ngIf="voucher$ | async as voucher">
   <div class="reward-detail-container">
-    <div class="reward-image-container">
+    <div class="reward-image-container" *ngIf="showImage">
       <img class="reward-image" src="{{voucher.reward.rewardBanner}}">
     </div>
-    <h1>{{voucher.reward.name}}</h1>
-    <pre class="bcode" *ngIf="voucher?.code">{{voucher.code}}</pre>
+    <h1 *ngIf="showVoucherName">{{voucher.reward.name}}</h1>
+    <div *ngIf="!showAfterInstruction">
+      <pre class="bcode" *ngIf="voucher?.code">{{voucher.code}}</pre>
+    </div>
     <p class="instruction">{{voucher?.reward?.redemptionText || instructions}}</p>
+    <div *ngIf="showAfterInstruction">
+      <div class="bcode" *ngIf="voucher?.code">{{voucher.code}}</div>
+    </div>
   </div>
-  <p class="tnc">Terms & Conditions applies.</p>
+  <p *ngIf="showTermsAndCondition" class="tnc">Terms & Conditions applies.</p>
 </div>

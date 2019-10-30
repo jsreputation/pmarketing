@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ICampaignService } from './icampaign.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ICampaign, CampaignState, CommChannel, CampaignType } from './models/campaign.model';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
 
 enum WhistlerCampaignType {
@@ -30,6 +30,7 @@ interface IWhistlerCampaignAttributes {
 })
 export class WhistlerCampaignService implements ICampaignService {
   private baseUrl: string;
+  private pagesCache: { [p: number]: IJsonApiListPayload<IWhistlerCampaignAttributes> } = {};
   constructor(private http: HttpClient, config: Config) {
     this.baseUrl = config.apiHost as string;
   }
@@ -92,7 +93,11 @@ export class WhistlerCampaignService implements ICampaignService {
   }
 
   private getPage(n: number): Observable<IJsonApiListPayload<IWhistlerCampaignAttributes>> {
-    return this.http.get<IJsonApiListPayload<IWhistlerCampaignAttributes>>(`${this.baseUrl}/campaign/entities?page[number]=${n}`);
+    if (this.pagesCache[n]) {
+      return of(this.pagesCache[n]);
+    }
+    return this.http.get<IJsonApiListPayload<IWhistlerCampaignAttributes>>(`${this.baseUrl}/campaign/entities?page[number]=${n}`)
+      .pipe(tap(page => this.pagesCache[n] = page));
   }
 
   public getCampaign(id: number): Observable<ICampaign> {
