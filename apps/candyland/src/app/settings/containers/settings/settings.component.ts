@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Inject, OnDestroy, Renderer2 } from '@angular/core';
+import { MsgService } from '@cl-core/services/message.service';
 
 @Component({
   selector: 'cl-settings',
@@ -29,12 +30,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   constructor(private cd: ChangeDetectorRef,
               @Inject(DOCUMENT) private document: Document,
-              private renderer: Renderer2) {
+              private renderer: Renderer2,
+              private snack: MsgService) {
   }
 
   public ngOnInit(): void {
     setTimeout(() => this.cd.detectChanges());
     this.renderer.addClass(this.document.body, 'no-cta');
+    this.snack.showSnackBar('User successfully created.', 'Success');
   }
 
   public ngOnDestroy(): void {
