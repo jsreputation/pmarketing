@@ -47,6 +47,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ErrorComponent } from './error/error.component';
 import {QRCodeModule} from 'angularx-qrcode';
+import {NgxBarcodeModule} from 'ngx-barcode';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import {QRCodeModule} from 'angularx-qrcode';
     ScrollingModule,
     CampaignModule,
     MerchantsModule,
-    QRCodeModule
+    QRCodeModule,
+    NgxBarcodeModule
   ],
   entryComponents: [
     CategorySelectComponent,
