@@ -4,7 +4,7 @@
 </header>
 
 <section class="content">
-  <ng-container *ngIf="(hasData$ | async); else noData">
+  <ng-container *ngIf="(hasData$ | async)">
     <!--tabs-->
     <cl-tabs-filter [tabs]="tabsFilterConfig" [formControl]="tabs"></cl-tabs-filter>
 
@@ -45,15 +45,13 @@
     </div>
   </ng-container>
 
-  <ng-template #noData>
-    <cl-no-data>
-      <img class="no-data-img" src="/assets/images/no-data/audience-empty-illustration.svg" alt="">
-      <h2 class="no-data-title">
-        Slice and dice your target audience
-      </h2>
-      <p class="no-data-text">
-        Let&rsquo;s begin by creating your first Audience List
-      </p>
-    </cl-no-data>
-  </ng-template>
+  <cl-no-data *ngIf="(noData$ | async)">
+    <img class="no-data-img" src="/assets/images/no-data/audience-empty-illustration.svg" alt="">
+    <h2 class="no-data-title">
+      Slice and dice your target audience
+    </h2>
+    <p class="no-data-text">
+      Let&rsquo;s begin by creating your first Audience List
+    </p>
+  </cl-no-data>
 </section>
