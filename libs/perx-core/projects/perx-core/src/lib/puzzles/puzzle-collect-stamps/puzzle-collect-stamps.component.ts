@@ -11,14 +11,16 @@ import { PuzzleCollectReward } from '../models/puzzle-stamp.model';
 
 export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   // This dummy array is describing the slots templates
-  private stampsOrientations: number[][] = [[1, 2],
+  private stampsOrientations: number[][] = [
+    [1, 2],
     [2, 2],
     [2, 1, 2],
     [3, 3],
     [3, 3, 1],
     [4, 4],
     [3, 3, 3],
-    [3, 3, 3, 1]];
+    [3, 3, 3, 1]
+  ];
 
   @Input()
   private stamps: IStamp[] | null = [];
@@ -46,6 +48,9 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
 
   @Input()
   public backgroundImage: string = null;
+
+  @Input()
+  public cardBgImage: string = null;
 
   @Input()
   public title: string = null;
@@ -113,7 +118,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   public onAvailableStampClicked(index: number, rowNum: number): void {
     const itemIndex = this.getItemIndex(index, rowNum);
     if (itemIndex < this.stamps.length) {
-      this.stamps[itemIndex].state = StampState.redeemed;
+      //   this.stamps[itemIndex].state = StampState.redeemed;
       this.availableStampClicked.emit(this.stamps[itemIndex]);
     }
   }
