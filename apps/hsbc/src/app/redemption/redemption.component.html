@@ -1,10 +1,11 @@
 <!-- Template stuff aimed at being replaced by real components -->
-<div class="content-container">
+<div [ngClass]="'content-container ' + sourceType">
     <perx-core-bcode-redemption
         [voucherId]="voucherId"
         [instructions]="'Present the code below to the merchant to complete your transaction.'"
+        [useMinimalStyle]="useMinimalStyle"
     ></perx-core-bcode-redemption>
     <div class="actions-container">
-        <button [routerLink]="['/home']" [queryParams]="{tab:'history'}" mat-flat-button color="primary">Redeem later</button>
+        <button [routerLink]="['/home']" [queryParams]="{tab:'history'}" mat-flat-button color="primary">{{buttonText}}</button>
     </div>
 </div>

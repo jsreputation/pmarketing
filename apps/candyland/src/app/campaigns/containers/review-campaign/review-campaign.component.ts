@@ -1,5 +1,13 @@
+import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { RewardsService } from './../../../core/services/rewards.service';
-import { CampaignsService, EngagementsService, CommsService, OutcomesService, LimitsService } from '@cl-core/services';
+import {
+  CampaignsService,
+  EngagementsService,
+  CommsService,
+  OutcomesService,
+  LimitsService,
+  SettingsService
+} from '@cl-core/services';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,6 +19,7 @@ import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
+import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 
 @Component({
   selector: 'cl-review-campaign',
@@ -18,6 +27,7 @@ import { ILimit } from '@cl-core/models/limit/limit.interface';
   styleUrls: ['./review-campaign.component.scss']
 })
 export class ReviewCampaignComponent implements OnInit, OnDestroy {
+  public tenantSettings: ITenantsProperties;
   private destroy$: Subject<any> = new Subject();
 
   public campaign: any;
@@ -31,6 +41,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     private outcomesService: OutcomesService,
     private limitsService: LimitsService,
     private engagementsService: EngagementsService,
+    private settingsService: SettingsService,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef
   ) {
@@ -38,6 +49,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.store.resetCampaign();
+    this.getTenants();
     this.getCampaignData();
   }
 
@@ -49,13 +61,22 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  private getTenants(): void {
+    this.settingsService.getTenants()
+      .subscribe((res: Tenants) => {
+        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+        this.cd.detectChanges();
+      });
+  }
+
   // TODO: it need for get right data from back end in the future
   private getCampaignData(): void {
     const campaignId = this.route.snapshot.params.id;
     const params: HttpParamsOptions = {
       'filter[owner_id]': campaignId,
       'filter[owner_type]': 'Perx::Campaign::Entity',
-      include: 'template',
+      include: 'template'
     };
     const paramsPO: HttpParamsOptions = {
       'filter[campaign_entity_id]': campaignId
@@ -149,11 +170,15 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       reward => {
         if (reward.resultId) {
           return this.rewardsService.getReward(reward.resultId).pipe(
-            map(rewardData => ({ value: { ...rewardData }, probability: reward.probability, stampsSlotNumber: reward.lootBoxId })),
-            catchError(() => of({ value: null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId }))
+            map(rewardData => ({
+              value: {...rewardData},
+              probability: reward.probability,
+              stampsSlotNumber: reward.lootBoxId
+            })),
+            catchError(() => of({value: null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId}))
           );
         }
-        return of({ value: null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId });
+        return of({value: null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId});
       }
     ));
   }
