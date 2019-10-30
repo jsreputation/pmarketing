@@ -78,6 +78,9 @@ import { SimpleMobileViewModule, PipesModule } from '@cl-shared';
 import { SurveyModule as PerxSurveyModule, GameModule, ConfigModule, PuzzlesModule, RewardsModule as PerxRewardsModule } from '@perx/core';
 import { environment } from '@cl-environments/environment';
 import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-preview/campaigns-mobile-preview.component';
+import { NewCampaignNotificationsComponent } from './containers/new-campaign-notifications/new-campaign-notifications.component';
+import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
+import { SubMenuItemComponent } from './components/sub-menu/sub-menu-item/sub-menu-item.component';
 
 @NgModule({
   providers: [
@@ -104,6 +107,9 @@ import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-p
     ReviewCampaignComponent,
     NewCampaignRewardsSurveyPageComponent,
     CampaignsMobilePreviewComponent,
+    NewCampaignNotificationsComponent,
+    SubMenuComponent,
+    SubMenuItemComponent,
   ],
   imports: [
     CommonModule,
