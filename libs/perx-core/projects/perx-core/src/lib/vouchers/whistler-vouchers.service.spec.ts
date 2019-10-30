@@ -40,7 +40,9 @@ fdescribe('WhistlerVouchersService', () => {
     links: {
       self: ''
     },
-    attributes: {}
+    attributes: {
+
+    }
   };
 
   beforeEach(() => TestBed.configureTestingModule({
