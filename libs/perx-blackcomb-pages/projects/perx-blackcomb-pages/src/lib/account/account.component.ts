@@ -4,15 +4,15 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { take } from 'rxjs/operators';
+
 import {
   ProfileService,
   IProfile,
   ThemesService,
   AuthenticationService,
 } from '@perx/core';
-
-import { take } from 'rxjs/operators';
-import {environment} from '@perx/blackcomb/src/environments/environment';
+import { environment } from '@perx/blackcomb/src/environments/environment';
 
 interface AccountPageObject {
   title: string;
