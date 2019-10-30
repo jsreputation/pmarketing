@@ -5,7 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { ConfigModule, RewardsService } from '../../public-api';
 import { of } from 'rxjs';
 import { IReward } from '../rewards/models/reward.model';
-import { IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
+import { IJsonApiItem, IJsonApiItemPayload, IJsonApiListPayload } from '../jsonapi.payload';
 import { IAssignedAttributes, AssignedStatus } from '@perx/whistler';
 import { IVoucher } from './models/voucher.model';
 import { Type } from '@angular/core';
@@ -88,6 +88,23 @@ fdescribe('WhistlerVouchersService', () => {
     expect(req.request.method).toEqual('GET');
     const res: IJsonApiItemPayload<IAssignedAttributes> = {
       data: mockVoucherApi
+    };
+    req.flush(res);
+
+    httpTestingController.verify();
+  });
+
+  it('should get all vouchers', (done: DoneFn) => {
+    service.getAll()
+      .subscribe((vs: IVoucher[]) => {
+        expect(vs.length).toEqual(1);
+        done();
+      });
+
+    const req = httpTestingController.expectOne('https://blabla/voucher-service/vouchers');
+    expect(req.request.method).toEqual('GET');
+    const res: IJsonApiListPayload<IAssignedAttributes> = {
+      data: [mockVoucherApi]
     };
     req.flush(res);
 
