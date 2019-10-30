@@ -6,7 +6,7 @@
       <p class="subtitle" *ngIf="subTitle">{{subTitle}}</p>
       <p class="available-stamp" *ngIf="showStampsCounter">
         <img *ngIf="stampCardImage" class="stampCountImage" [src]="stampCardImage" alt="">
-        <span>X {{availableStampCount}}</span>
+        <span>= {{availableStampCount}}</span>
       </p>
       <div class="row" *ngFor="let rowItemsCount of currentActiveOrientation; let rowNum = index">
         <div class="dummy-container" *ngFor="let box of counter(rowItemsCount); let i = index">
