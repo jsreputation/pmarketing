@@ -24,7 +24,7 @@ app.use(express.json());
 app.use('/static', express.static('static'));
 
 const PORT = process.env.PORT || 4000;
-const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
+// const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
 const BASE_HREF = process.env.BASE_HREF || '/';
 
 const apiConfigPath = process.env.API_CONFIG_PATH || 'config.json';
@@ -44,20 +44,22 @@ app.post(`${BASE_HREF}cognito/users`, users(apiConfig));
 
 app.post(`${BASE_HREF}themes`, themes(apiConfig));
 
-app.get(`${BASE_HREF}webmanifest`, manifest(apiConfig))
+app.get(`${BASE_HREF}manifest.webmanifest`, manifest(apiConfig))
 
 if (process.env.PRODUCTION) {
+  //join(EXPRESS_DIST_FOLDER, '../../perx-microsite')
+  const appPath = '/Users/perx/Desktop/ultimateMicroFolder/apps/blackcomb/dist/blackcomb';
   console.log('production mode ON');
   app.set('view engine', 'html');
-  app.set('views', join(EXPRESS_DIST_FOLDER, '../../perx-microsite'));
+  app.set('views', appPath);
 
   // Serve static files from /../../perx-microsite
-  app.use(BASE_HREF, express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite')));
-  app.get('*.*', express.static(join(EXPRESS_DIST_FOLDER, '../../perx-microsite'), { maxAge: '1y' }));
+  app.use(BASE_HREF, express.static(appPath));
+  app.get('*.*', express.static(appPath, { maxAge: '1y' }));
 
   // All regular routes use the index.html
   app.get('*', (req, res) => {
-    res.sendFile(join(EXPRESS_DIST_FOLDER, '../../perx-microsite', 'index.html'), { req });
+    res.sendFile(join(appPath, 'index.html'), { req });
   });
 }
 

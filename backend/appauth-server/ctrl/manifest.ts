@@ -1,9 +1,11 @@
 import cacheManager from 'cache-manager';
 import Jimp from 'jimp';
-import Manifest, { DARK, LIGHT } from './manifest-model';
+import { ITenantAttributes, IJsonApiItem, IJsonApiListPayload } from '@perx/whistler';
+import Manifest, { DARK, LIGHT } from '../types/manifest-model';
 import { ApiConfig } from '../types/apiConfig';
 import { Request, Response, NextFunction } from 'express';
 import { fetchTheme } from './themes';
+import { getQueryHost } from './utils';
 
 const PORT = process.env.PORT || 4000;
 let exportedImgDirectory = '/static/generated';
@@ -16,8 +18,8 @@ const themeHasher = (themeObject: string): number => {
   }
   return (h ^ h >>> 16) >>> 0;
 }
-// prbly pass in tenantName
-const generateManifest = (tenantObj: any, hash: string) => {
+
+const generateManifest = (tenantObj: IJsonApiItem<ITenantAttributes>, hash: string) => {
   const displayProperties = tenantObj.attributes.display_properties;
   const themeColorAPI = displayProperties['theme.style'] === LIGHT.name ? LIGHT.properties['--background'] : DARK.properties['--background'];
   const themeBGAPI = displayProperties['theme.button_background_color'];
@@ -28,7 +30,6 @@ const generateManifest = (tenantObj: any, hash: string) => {
     Jimp.read(displayProperties['theme.logo'])
       .then(image => {
         // Do stuff with the image.
-        console.log(`http://localhost:${PORT}${exportedImgDirectory}/${hash}/${size}x${size}.png`)
         image.clone()
           .contain(size, size)
           .write(`./${exportedImgDirectory}/${hash}/${size}x${size}.png`) //use a name, which includes the hash
@@ -57,13 +58,12 @@ const generateManifest = (tenantObj: any, hash: string) => {
 export const manifest = (apiConfig: ApiConfig) => async (req: Request, res: Response, next: NextFunction) => {
   // is there a way of express to delete files after that? so i save space, rly generate on fly
   try {
-    // check body parameter 'url'
-    //@ts-ignore
-    const url = req.headers.origin.split("http://")[1]; // body param url, 4202 for credentials
+    const url = getQueryHost(req);
+
     const endpointRequest = await fetchTheme(url, apiConfig);
-    let tenantObj = endpointRequest.data.data[0];
+    let tenantObj: IJsonApiItem<ITenantAttributes> = endpointRequest.data.data[0];
     const displayProperties = tenantObj.attributes.display_properties; //type using @perx/whistler
-    const hashedTheme = themeHasher(JSON.stringify(displayProperties)).toString(36);
+    const hashedTheme = themeHasher(JSON.stringify(displayProperties)).toString(12);
     // we could peek instd so its 'most-recentness' isn't updated
     res.type('application/manifest+json');
 
