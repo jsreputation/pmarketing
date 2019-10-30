@@ -42,23 +42,23 @@ export class VouchersHttpAdapter {
   }
 
   public static transformToVoucherStatsObj(res: IJsonApiPayload<IVoucherStatsApi>): { [k: string]: number } {
-    const { inventory, assigned } = res.data.attributes;
+    const { code, voucher } = res.data.attributes;
     const result = {};
 
-    Object.keys(inventory)
+    Object.keys(code)
       .filter(k => k !== 'issued')
       .forEach(k => {
         if (!result[k]) {
           result[k] = 0;
         }
-        result[k] += inventory[k];
+        result[k] += code[k];
       });
-    Object.keys(assigned)
+    Object.keys(voucher)
       .forEach(k => {
         if (!result[k]) {
           result[k] = 0;
         }
-        result[k] += assigned[k];
+        result[k] += voucher[k];
       });
 
     return result;
