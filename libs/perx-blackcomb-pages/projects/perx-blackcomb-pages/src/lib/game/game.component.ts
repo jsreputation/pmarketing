@@ -52,10 +52,7 @@ export class GameComponent implements OnInit, OnDestroy {
     const nbSteps = 60;
     const r2: Observable<number[]> = interval(delay / nbSteps)
       .pipe(
-        tap(v => {
-          console.log(v * 100 / nbSteps);
-          return this.progressValue = v * 100 / nbSteps;
-        }),
+        tap(v => this.progressValue = v * 100 / nbSteps),
         bufferCount(nbSteps),
         first()
       );

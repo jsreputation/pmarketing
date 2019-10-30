@@ -114,7 +114,7 @@ export class WhistlerVouchersService implements IVoucherService {
   }
 
   private get vouchersUrl(): string {
-    return `${this.config.apiHost}/voucher/assigneds`;
+    return `${this.config.apiHost}/voucher-service/vouchers`;
   }
 
   // @ts-ignore

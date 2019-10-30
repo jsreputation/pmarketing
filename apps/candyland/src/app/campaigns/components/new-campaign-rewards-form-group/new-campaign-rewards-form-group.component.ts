@@ -91,8 +91,8 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       });
     this.enableProbability.valueChanges
       .pipe(
-        takeUntil(this.destroy$),
-        distinctUntilChanged()
+        distinctUntilChanged(),
+        takeUntil(this.destroy$)
       )
       .subscribe((value: boolean) => {
         this.updateRewards(value);

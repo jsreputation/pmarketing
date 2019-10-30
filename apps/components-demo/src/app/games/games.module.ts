@@ -6,6 +6,7 @@ import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
 import { GamesComponent } from './games.component';
 import { ScratchComponent } from './scratch/scratch.component';
+import { SpinComponent } from './spin/spin.component';
 import { GameModule } from '@perx/core';
 import {
   MatTabsModule,
@@ -17,7 +18,7 @@ import {
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [ShakeComponent, TapComponent, GamesComponent, ScratchComponent],
+  declarations: [ShakeComponent, TapComponent, GamesComponent, ScratchComponent, SpinComponent],
   imports: [
     CommonModule,
     GamesRoutingModule,

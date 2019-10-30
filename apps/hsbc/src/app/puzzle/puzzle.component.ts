@@ -153,7 +153,6 @@ export class PuzzleComponent implements OnInit, OnDestroy {
                 card => card.displayProperties.displayCampaignAs &&
                   card.displayProperties.displayCampaignAs === this.displayCampaignAs);
             }),
-            tap((res) => console.log(res)),
             map((cards: IStampCard[]) => cards[0]),
             tap((card: IStampCard) => this.campaignId = card.campaignId)
           )
@@ -211,11 +210,17 @@ export class PuzzleComponent implements OnInit, OnDestroy {
     }
     const firstAvailableStamp = stamps[this.currentStampId];
     this.stampCard(firstAvailableStamp.id);
-
   }
 
-  public stampClicked(stamp: { id: number, state: string }): void {
-    this.stampCard(stamp.id);
+  public async stampClicked(stamp: IStamp): Promise<void> {
+    // build ordered list of stamps to be stamped
+    const stamps: IStamp[] = this.card.stamps.filter(s => s.state === StampState.issued);
+    for (const st of stamps) {
+      await this.stampCard(st.id);
+      if (st.id === stamp.id) {
+        break;
+      }
+    }
   }
 
   public closeAndRedirect(url: string, didWin: boolean): void {
@@ -226,9 +231,10 @@ export class PuzzleComponent implements OnInit, OnDestroy {
     }
   }
 
-  private stampCard(stampId: number): void {
-    this.stampService.putStamp(stampId, this.sourceType)
-      .subscribe(
+  private stampCard(stampId: number): Promise<void> {
+    return this.stampService.putStamp(stampId, this.sourceType)
+      .toPromise()
+      .then(
         (stamp: IStamp) => {
           if (stamp.state === StampState.redeemed) {
             const redeemedCard = this.card.stamps.map((cardStamp: IStamp) => {
@@ -237,7 +243,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
               }
               return cardStamp;
             });
-            this.card = {...this.card, stamps: redeemedCard};
+            this.card = { ...this.card, stamps: redeemedCard };
 
             if (this.card.cardNumber === this.cardsCount) { // we are on the last card
               const redeemedTransactionsCount = this.card.stamps.filter(s => s.state === StampState.redeemed).length;
@@ -258,7 +264,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
 
             if (stamp.vouchers && stamp.vouchers.length > 0) {
               const voucherId = stamp.vouchers[0].id;
-              const data: IRewardPopupConfig =  {
+              const data: IRewardPopupConfig = {
                 title: 'Congratulations!',
                 text: 'Here is a reward for you.',
                 imageUrl: 'assets/gift-image.svg',
@@ -268,13 +274,13 @@ export class PuzzleComponent implements OnInit, OnDestroy {
                 didWin: this.sourceType === 'hsbc-collect2' ? true : false,
                 buttonTxt: 'View Reward',
               };
-              this.dialog.open(RewardPopupComponent, {data});
+              this.dialog.open(RewardPopupComponent, { data });
             }
           } else {
             const issuedLeft = this.card.stamps.filter(s => s.state === StampState.issued);
             if (issuedLeft.length === 0) {
               // all redeemed but no voucher
-              const data: IRewardPopupConfig =  {
+              const data: IRewardPopupConfig = {
                 title: 'No Reward Received',
                 text: 'Try again next time',
                 disableOverlayClose: true,
@@ -283,11 +289,12 @@ export class PuzzleComponent implements OnInit, OnDestroy {
                 didWin: false,
                 buttonTxt: 'Close',
               };
-              this.dialog.open(RewardPopupComponent, {data});
+              this.dialog.open(RewardPopupComponent, { data });
             }
           }
           this.currentStampId++;
-        },
+        })
+      .catch(
         () => {
           this.notificationService.addPopup({
             title: 'Something went wrong, with our server',
