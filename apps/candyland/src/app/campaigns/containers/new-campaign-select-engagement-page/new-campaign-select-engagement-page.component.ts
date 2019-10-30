@@ -92,7 +92,6 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
         })
       )
       .subscribe((res: IEngagement[]) => {
-        // res = [];
         this.hasData = res && res.length > 0;
         this.noData = res && res.length === 0;
         this.dataSource.data = res;

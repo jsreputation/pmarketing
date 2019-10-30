@@ -27,7 +27,6 @@ export class AbstractStepWithForm implements OnInit, OnDestroy {
       .asObservable()
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
-        console.log('change', data);
         this.campaign = data;
       });
 
