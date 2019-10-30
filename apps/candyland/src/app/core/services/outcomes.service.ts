@@ -24,12 +24,22 @@ export class OutcomesService {
     );
   }
 
-  public updateOutcome(data: any, campaignId: string, enableProbability: boolean, slotNumber: number): Observable<any> {
+  public updateOutcome(
+    data: { value: IRewardEntity, probability: number },
+    campaignId: string,
+    enableProbability: boolean,
+    slotNumber: number
+  ): Observable<IJsonApiPayload<IOutcomeAttributes>> {
     const sendData = OutcomesHttpAdapter.transformFromOutcomes(data, enableProbability, campaignId, slotNumber);
     return this.outcomesHttpsService.updateOutcome(data.value.outcomeId, { data: { id: data.value.outcomeId, ...sendData } });
   }
 
-  public createOutcome(data: any, campaignId: string, enableProbability: boolean, slotNumber: number): Observable<any> {
+  public createOutcome(
+    data: { value: IRewardEntity, probability: number },
+    campaignId: string,
+    enableProbability: boolean,
+    slotNumber: number
+  ): Observable<IJsonApiPayload<IOutcomeAttributes>> {
     const sendData = OutcomesHttpAdapter.transformFromOutcomes(data, enableProbability, campaignId, slotNumber);
     return this.outcomesHttpsService.createOutcome({ data: sendData });
   }

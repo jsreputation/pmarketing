@@ -49,12 +49,12 @@ export class CommsService {
     );
   }
 
-  public updateCommsEvent(data: ICampaign, templateId: string, campaignId: string): Observable<any> {
+  public updateCommsEvent(data: ICampaign, templateId: string, campaignId: string): Observable<IJsonApiPayload<ICommEventAttributes>> {
     const sendData = CommsHttpAdapter.transformFromCommsEvents(data, templateId, campaignId);
     return this.commsHttpsService.updateCommsEvent(data.channel.eventId, { data: { id: data.channel.eventId, ...sendData } });
   }
 
-  public createCommsEvent(data: ICampaign, templateId: string, campaignId: string): Observable<any> {
+  public createCommsEvent(data: ICampaign, templateId: string, campaignId: string): Observable<IJsonApiPayload<ICommEventAttributes>> {
     const sendData = CommsHttpAdapter.transformFromCommsEvents(data, templateId, campaignId);
     return this.commsHttpsService.createCommsEvent({ data: sendData });
   }
@@ -63,12 +63,12 @@ export class CommsService {
     return this.commsHttpsService.deleteCommsEvent(id);
   }
 
-  public updateCommsTemplate(data: IComm): Observable<any> {
+  public updateCommsTemplate(data: IComm): Observable<IJsonApiPayload<ICommTemplateAttributes>> {
     const sendData = CommsHttpAdapter.transformFromCommsTemplates(data);
     return this.commsHttpsService.updateCommsTemplate(data.templateId, { data: { id: data.templateId, ...sendData } });
   }
 
-  public createCommsTemplate(data: IComm): Observable<any> {
+  public createCommsTemplate(data: IComm): Observable<IJsonApiPayload<ICommTemplateAttributes>> {
     const sendData = CommsHttpAdapter.transformFromCommsTemplates(data);
     return this.commsHttpsService.createCommsTemplate({ data: sendData });
   }

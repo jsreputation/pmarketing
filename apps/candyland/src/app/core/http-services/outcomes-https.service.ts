@@ -15,11 +15,11 @@ export class OutcomesHttpsService {
     return this.http.get<IJsonApiListPayload<IOutcomeAttributes>>(ApiConfig.outcomesPath, { params });
   }
 
-  public updateOutcome(id: string, data: IJsonApiPayload<IOutcomeAttributes>): Observable<IJsonApiPayload<any>> {
+  public updateOutcome(id: string, data: IJsonApiPayload<IOutcomeAttributes>): Observable<IJsonApiPayload<IOutcomeAttributes>> {
     return this.http.patch<IJsonApiPayload<any>>(ApiConfig.outcomesPath + '/' + id, data);
   }
 
-  public createOutcome(data: IJsonApiPayload<IOutcomeAttributes>): Observable<IJsonApiPayload<any>> {
+  public createOutcome(data: IJsonApiPayload<IOutcomeAttributes>): Observable<IJsonApiPayload<IOutcomeAttributes>> {
     return this.http.post<IJsonApiPayload<any>>(ApiConfig.outcomesPath, data);
   }
 

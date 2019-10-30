@@ -13,7 +13,7 @@ export class OutcomesHttpAdapter {
   }
 
   public static transformFromOutcomes(
-    data: any,
+    data: { value: IRewardEntity, probability: number },
     enableProbability: boolean,
     campaignId: string,
     slotNumber: number
@@ -21,7 +21,7 @@ export class OutcomesHttpAdapter {
     return {
       type: 'possible_outcomes',
       attributes: {
-        result_id: data.value.id,
+        result_id: data.value && parseInt(data.value.id, 10),
         result_type: 'Perx::Reward::Entity',
         probability: enableProbability ? data.probability / 100 : null,
         loot_box_id: slotNumber,

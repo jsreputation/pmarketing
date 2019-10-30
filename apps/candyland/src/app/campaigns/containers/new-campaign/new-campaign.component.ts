@@ -228,7 +228,12 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return combineLatest(...updateOutcomesArr$);
   }
 
-  private updateOutcomeWhenEdit(campaign: ICampaign, data: any[], enableProbability: boolean, slotNumber?: number): Observable<any>[] {
+  private updateOutcomeWhenEdit(
+    campaign: ICampaign,
+    data: { value: IRewardEntity, probability: number }[],
+    enableProbability: boolean,
+    slotNumber?: number
+  ): Observable<any>[] {
     if (!data || data.length <= 0) {
       return [];
     }
