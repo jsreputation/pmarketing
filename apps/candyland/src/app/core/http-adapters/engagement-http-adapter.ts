@@ -242,8 +242,8 @@ export class EngagementHttpAdapter {
         image_url: data.image_url,
         display_properties: {
           title: data.headlineMessage,
-          button: data.buttonText,
           sub_title: data.subHeadlineMessage,
+          button: data.buttonText,
           pre_scratch_img_url: ImageControlValue.getImagePath(data.preScratchImage),
           post_scratch_success_img_url: ImageControlValue.getImagePath(data.postScratchSuccessImage),
           post_scratch_fail_img_url: ImageControlValue.getImagePath(data.postScratchFailImage),
