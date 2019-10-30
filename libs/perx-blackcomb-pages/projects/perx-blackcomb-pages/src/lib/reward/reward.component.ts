@@ -44,10 +44,10 @@ export class RewardComponent implements OnInit, OnDestroy {
         this.button = eng.button;
         this.background = eng.background_img_url;
         this.cardBackground = eng.card_background_img_url;
-        if (eng.noRewardsPopUp) {
-          this.dataPopEmpty.title = eng.noRewardsPopUp.headLine;
-          this.dataPopEmpty.text = eng.noRewardsPopUp.subHeadLine;
-          this.dataPopEmpty.imageUrl = eng.noRewardsPopUp.imageURL;
+        if (eng.display_properties && eng.display_properties.noRewardsPopUp) {
+          this.dataPopEmpty.title = eng.display_properties.noRewardsPopUp.headLine;
+          this.dataPopEmpty.text = eng.display_properties.noRewardsPopUp.subHeadLine;
+          this.dataPopEmpty.imageUrl = eng.display_properties.noRewardsPopUp.imageURL;
         }
       });
 

@@ -37,6 +37,7 @@ export interface ISurvey {
     card_background_img_url?: string;
     background_img_url?: string;
     questions: IQuestion[];
+    campaign_properties?: any;
 }
 
 export enum SurveyQuestionType {

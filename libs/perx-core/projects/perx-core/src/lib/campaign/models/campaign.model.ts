@@ -24,6 +24,7 @@ export interface ICampaign {
   thumbnailUrl?: string;
   engagementId?: number;
   rawPayload?: any;
+  displayProperties?: any;
 }
 
 export enum CommChannel {

@@ -48,6 +48,7 @@ interface AttbsObjEntity {
   status: string;
   updated_at: string;
   urn: string;
+  display_properties?: any;
 }
 
 interface AttbsObjTrans {
@@ -208,12 +209,16 @@ export class WhistlerGameService implements IGameService {
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
+    let displayProperties: any = null;
     return this.http.get<IJsonApiItemPayload<AttbsObjEntity>>(`${this.hostName}/campaign/entities/${campaignId}`)
       .pipe(
         map((res: IJsonApiItemPayload<AttbsObjEntity>) => res.data.attributes),
-        map((entity: AttbsObjEntity) => entity.engagement_id),
+        map((entity: AttbsObjEntity) => {
+          displayProperties = entity.display_properties;
+          return entity.engagement_id;
+        }),
         switchMap((correctId: number) => this.get(correctId)),
-        map((game: IGame) => [{ ...game, campaignId }])
+        map((game: IGame) => ([{ ...game, campaignId, displayProperties }]))
       );
   }
 }

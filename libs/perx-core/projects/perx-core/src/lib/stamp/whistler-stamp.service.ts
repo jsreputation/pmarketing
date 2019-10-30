@@ -24,6 +24,7 @@ interface AttbsObjEntity {
   engagement_type: string;
   engagement_id: number;
   pool_id: null;
+  display_properties?: any;
 }
 
 interface AttbsObjStamp {
@@ -98,16 +99,20 @@ export class WhistlerStampService implements StampService {
   }
 
   public getCurrentCard(campaignId: number): Observable<IStampCard> {
+    let propertiesFromCampaign: any;
     if (this.cache[campaignId]) {
       return of(this.cache[campaignId]);
     }
     return this.http.get<IJsonApiItemPayload<AttbsObjEntity>>(`${this.baseUrl}/campaign/entities/${campaignId}`)
       .pipe(
         map(res => res.data.attributes),
-        switchMap(correctEntityAttribute => this.http.get<IJsonApiItemPayload<AttbsObjStamp>>(
-          `${this.baseUrl}/loyalty/engagements/${correctEntityAttribute.engagement_id}`
-        )),
-        map((res) => ({ ...WhistlerStampService.WStampCardToStampCard(res.data), campaignId })),
+        switchMap(correctEntityAttribute => {
+          propertiesFromCampaign = correctEntityAttribute.display_properties;
+          return this.http.get<IJsonApiItemPayload<AttbsObjStamp>>(
+            `${this.baseUrl}/loyalty/engagements/${correctEntityAttribute.engagement_id}`
+          );
+        }),
+        map((res) => ({ ...WhistlerStampService.WStampCardToStampCard(res.data), campaignId, propertiesFromCampaign })),
         tap(sc => this.cache[campaignId] = sc)
       );
   }

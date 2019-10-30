@@ -36,7 +36,7 @@ interface IWhistlerDisplayProperties {
   progress_bar_color: string;
   card_background_img_url: string;
   questions: IQuestion[];
-
+  campaign_properties?: any;
 }
 
 interface IWhistlerPostAnswerAttributes {
@@ -78,19 +78,27 @@ export class SurveyService {
       progress_bar_color: MaterialColor[dp.progress_bar_color],
       card_background_img_url: dp.card_background_img_url,
       background_img_url: dp.background_img_url,
-      questions: dp.questions
+      questions: dp.questions,
+      campaign_properties: dp.campaign_properties
     };
   }
 
   public getSurveyFromCampaign(id: number): Observable<ISurvey> {
+    let dispProp: any;
     return this.campaignService.getCampaign(id)
       .pipe(
         switchMap(
-          (campaign: ICampaign) => this.http.get<IWhistlerSurvey>(
-            this.baseUrl + '/survey/engagements/' + campaign.rawPayload.engagement_id + '?campaign_id=' + id
-          )
+          (campaign: ICampaign) => {
+            dispProp = campaign.displayProperties;
+            return this.http.get<IWhistlerSurvey>(
+              this.baseUrl + '/survey/engagements/' + campaign.rawPayload.engagement_id + '?campaign_id=' + id
+            );
+          }
         ),
-        map((res: IWhistlerSurvey) => SurveyService.WhistlerSurveyService(res))
+        map((res: IWhistlerSurvey) => {
+          res.data.attributes.display_properties.campaign_properties = dispProp;
+          return SurveyService.WhistlerSurveyService(res);
+        })
       );
   }
 

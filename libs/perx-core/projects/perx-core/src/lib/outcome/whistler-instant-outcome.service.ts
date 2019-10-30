@@ -1,6 +1,6 @@
 import { IJsonApiPostItem } from './../jsonapi.payload';
 import { InstantOutcomeService } from './instant-outcome.service';
-import { IOutcome, NoRewardsPopUp } from './models/outcome.model';
+import { IOutcome, IDisplayProperties } from './models/outcome.model';
 import { Observable, combineLatest } from 'rxjs';
 import { map, switchMap, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -18,9 +18,7 @@ import {
 
 interface CampaignProperties {
   id: number;
-  display_properties: {
-      noRewardsPopUp: NoRewardsPopUp;
-  };
+  display_properties: IDisplayProperties;
 }
 
 @Injectable({
@@ -38,16 +36,17 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       `${this.config.apiHost}/campaign/entities/${campaignId}`
     )
       .pipe(
-        map(res => ({
-          id: Number.parseInt(res.data.attributes.engagement_id, 10),
-          display_properties: res.data.attributes.display_properties
-        })),
+        map(res => res.data.attributes),
+        map(attributes => ({
+            id: Number.parseInt(attributes.engagement_id, 10),
+            display_properties: attributes.display_properties
+          })),
       );
   }
 
   // usage is to get return from pipe to call other functions
   public getFromCampaign(campaignId: number): Observable<IOutcome> {
-    let displayProps: { noRewardsPopUp: NoRewardsPopUp };
+    let displayProps: IDisplayProperties;
     return this.getEngagementId(campaignId)
       .pipe(
         switchMap((campaign: CampaignProperties) => {
@@ -55,7 +54,8 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
           return this.http.get<IJsonApiItemPayload<InstantOutcomeEngagementAttributes>>(
             `${this.config.apiHost}/instant_outcome/engagements/${campaign.id}`);
         }),
-        map(res => Object.assign(res.data.attributes.display_properties, displayProps))
+        map(res => res.data.attributes.display_properties),
+        map(displayProperties => Object.assign(displayProperties, displayProps))
       );
   }
 

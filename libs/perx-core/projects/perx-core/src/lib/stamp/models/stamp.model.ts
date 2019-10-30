@@ -81,4 +81,5 @@ export interface IStampCard {
     thumbnailImg?: string;
   };
   stamps?: IStamp[];
+  propertiesFromCampaign?: any;
 }

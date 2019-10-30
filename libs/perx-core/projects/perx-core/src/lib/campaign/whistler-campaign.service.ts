@@ -23,6 +23,7 @@ interface IWhistlerCampaignAttributes {
   engagement_id: number;
   engagement_type: WhistlerCampaignType;
   comm_channel: CommChannel;
+  display_properties?: any;
 }
 
 @Injectable({
@@ -49,7 +50,8 @@ export class WhistlerCampaignService implements ICampaignService {
       state: cAttributes.status,
       endsAt: new Date(cAttributes.end_date_time),
       engagementId: cAttributes.engagement_id,
-      rawPayload: cAttributes
+      rawPayload: cAttributes,
+      displayProperties: cAttributes.display_properties,
     };
   }
 

@@ -14,7 +14,7 @@ export interface ICampaignAttributes {
     comm?: any;
     labels?: string[];
     display_properties?: {
-      noRewardsPopUp: {
+      noRewardsPopUp?: {
         headLine?: string,
         subHeadLine?: string,
         imageUrl?: string
