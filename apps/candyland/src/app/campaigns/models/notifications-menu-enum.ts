@@ -2,7 +2,7 @@ export enum NotificationsMenu {
   onCampaignLaunch = 'launch',
   campaignNotCompleted = 'completed',
   beforeCampaignEnds = 'campaignEnds',
-  beforeRewardExpires = 'RewardExpires',
+  beforeRewardExpires = 'rewardExpires',
   noOfStampsToNextReward = 'noStampsReward',
   earnedStamp = 'earnedStamp',
   earnedReward = 'earnedReward'

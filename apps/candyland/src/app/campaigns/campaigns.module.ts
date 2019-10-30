@@ -81,13 +81,16 @@ import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-p
 import { NewCampaignNotificationsComponent } from './containers/new-campaign-notifications/new-campaign-notifications.component';
 import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
 import { SubMenuItemComponent } from './components/sub-menu/sub-menu-item/sub-menu-item.component';
+import { CampaignChannelsFormService } from './services/campaign-channels-form.service';
+import { CampaignLaunchMessageComponent } from './components/campaign-launch-message/campaign-launch-message.component';
 
 @NgModule({
   providers: [
     CampaignCreationStoreService,
     StepConditionService,
     NewCampaignDetailFormService,
-    NewCampaignRewardsStampsFormService
+    NewCampaignRewardsStampsFormService,
+    CampaignChannelsFormService,
   ],
   declarations: [
     CampaignsListComponent,
@@ -110,6 +113,7 @@ import { SubMenuItemComponent } from './components/sub-menu/sub-menu-item/sub-me
     NewCampaignNotificationsComponent,
     SubMenuComponent,
     SubMenuItemComponent,
+    CampaignLaunchMessageComponent,
   ],
   imports: [
     CommonModule,

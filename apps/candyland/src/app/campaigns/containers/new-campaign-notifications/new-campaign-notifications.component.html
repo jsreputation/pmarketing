@@ -1,15 +1,94 @@
-<p>new-campaign-notifications works!</p>
-<div class="flex">
-  <div class="sub-menu-block">
-    <cl-sub-menu [subMenu]="subMenu"
-                 [activeItem]="selectedMenu"
-                 (selectMenu)="selectMenu($event)"
-    >
-      <h2 class="title card-title">
-        Message Triggers
+<section class="channels" [formGroup]="form">
+  <mat-expansion-panel class="card" expanded>
+    <!--select channel-->
+    <mat-expansion-panel-header class="card-header">
+      <h2 class="card-title">
+        Select channel
       </h2>
-    </cl-sub-menu>
+    </mat-expansion-panel-header>
+    <!--channel type-->
+    <div class="card-content">
+      <div class="card-row">
+        <section>
+          <mat-checkbox color="primary" class="channels-margin" formControlName="webLink">Weblink</mat-checkbox>
+          <mat-checkbox color="primary" class="channels-margin" formControlName="sms">SMS</mat-checkbox>
+        </section>
+        <!--<mat-radio-group color="primary" [formControl]="channel.get('type')">-->
+        <!--<ng-container *ngFor="let type of config?.channelTypes">-->
+        <!--<mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>-->
+        <!--</ng-container>-->
+        <!--</mat-radio-group>-->
+      </div>
+    </div>
+  </mat-expansion-panel>
+  <mat-expansion-panel class="card"
+                       expanded
+                       *ngIf="getWebLink()?.value">
+  <!--Weblink options-->
+  <mat-expansion-panel-header class="card-header">
+    <h2 class="card-title">
+      Select channel
+    </h2>
+  </mat-expansion-panel-header>
+  <!--web link options-->
+  <div class="card-content">
+    <div class="card-row">
+      <mat-radio-group color="primary" formControlName="webLinkOptions">
+        <mat-radio-button value="collect_identifier">Collect Identifier</mat-radio-button>
+        <mat-radio-button value="enable_sign_up">Enable Sign-up</mat-radio-button>
+        <mat-radio-button value="no_sign_up_identifier">No sign-up/identifier</mat-radio-button>
+      </mat-radio-group>
+    </div>
   </div>
+  </mat-expansion-panel>
+  <!--SMS Notifications-->
+  <mat-expansion-panel class="card"
+                       expanded
+                       *ngIf="getSms()?.value">
+    <!--Weblink options-->
+    <mat-expansion-panel-header class="card-header">
+      <h2 class="card-title">
+        SMS Notifications
+      </h2>
+    </mat-expansion-panel-header>
+    <!--sms block-->
+    <div class="card-content">
+      <div class="card-row">
+        <div class="flex">
+          <div class="sub-menu-block">
+            <cl-sub-menu [activeItem]="selectedMenu"
+                         [form]="form"
+                         (selectMenu)="selectMenu($event)"
+            >
+              <h2 class="title card-title">
+                Message Triggers
+              </h2>
+            </cl-sub-menu>
+          </div>
+        </div>
+        <ng-container *ngIf="form">
+          <section class="message-container" [ngSwitch]="selectedMenu">
+            <ng-container *ngSwitchCase="notificationsMenu.onCampaignLaunch">
+              <cl-campaign-launch-message *ngFor="let group of getLaunch().controls; let index = index"
+                                          [formGroup]="group"
+                                          [group]="group"
+                                          [campaign]="campaign"
+                                          [shortCodes]="shortCodes"
+                                          [index]="index"
+                                          (deleteGroup)="deleteLaunchGroup($event)"
+              ></cl-campaign-launch-message>
+              <cl-button classList="tertiary ph-0" (click)="addNewLaunchGroup()">
+                + Add another message
+              </cl-button>
 
-</div>
+            </ng-container>
+          </section>
+        </ng-container>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+
+</section>
+
 

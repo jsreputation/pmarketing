@@ -3,3 +3,22 @@
   width: 23.7rem;
   background: rgba(196, 196, 196, 0.1);
 }
+
+.channels {
+  &-margin {
+    margin: 0 1.8rem 0 0;
+  }
+}
+
+.message-container {
+  width: 100%;
+}
+
+cl-campaign-launch-message  {
+  display: block;
+  margin-bottom: 2.4rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

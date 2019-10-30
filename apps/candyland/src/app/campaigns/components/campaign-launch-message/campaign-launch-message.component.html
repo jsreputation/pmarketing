@@ -1,0 +1,59 @@
+<section class="launch-wrap" [formGroup]="group">
+  <h2 class="card-title">
+    On Campaign Launch Message
+  </h2>
+
+  <div class="input-group notification-row">
+    <span>
+      Message will be sent on
+    </span>
+    <mat-form-field class="notification-type">
+      <mat-select formControlName="sentType">
+        <mat-option [value]="launchType.launchDate">Campaign launch date and time</mat-option>
+        <mat-option [value]="launchType.usersDateBirth">User’s Date of Birth</mat-option>
+        <mat-option [value]="launchType.usersMonthBirth">User’s Month of Birth</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="launch-date-time" *ngIf="compareType(launchType.launchDate)">
+    Message will be sent on {{campaign?.campaignInfo?.startDate | date: 'dd/MM/yyyy'}} at {{campaign?.campaignInfo?.startTime}}.
+  </div>
+
+  <section class="launch-date-time input-group notification-row" *ngIf="compareType(launchType.usersDateBirth)">
+    <span>
+      Message will be sent on the user’s birthday at
+    </span>
+    <cl-time-picker formControlName="birthdayTime"></cl-time-picker>
+  </section>
+
+  <section class="launch-date-time input-group notification-row" *ngIf="compareType(launchType.usersMonthBirth)">
+    <span>
+      Message will be sent on day
+    </span>
+    <mat-form-field>
+      <input type="number" [min]="1" matInput formControlName="monthDay">
+      <!--<mat-error *ngIf="amount.hasError('required') && amount.touched">Required field</mat-error>-->
+      <!--<mat-error *ngIf="amount.hasError('min') && amount.touched">Min value 1</mat-error>-->
+    </mat-form-field>
+    <span>
+      of the user’s birth month at
+    </span>
+    <cl-time-picker formControlName="birthdayTime"></cl-time-picker>
+  </section>
+
+  <section calss="notification-message">
+    <h2 class="card-title">
+      Message Content
+    </h2>
+    <cl-sms-editor [options]="shortCodes" [control]="group.get('message')"></cl-sms-editor>
+  </section>
+  <section class="notification-launch-actions flex justify-content-between align-items-center">
+    <cl-button classList="tertiary ph-0" (click)="sendTestSms()">
+      <i class="material-icons">
+        send
+      </i>
+      Send test SMS
+    </cl-button>
+    <cl-button classList="secondary" (click)="deleteLaunchGroup()">Delete</cl-button>
+  </section>
+</section>

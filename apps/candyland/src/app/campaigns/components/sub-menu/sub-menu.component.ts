@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NotificationsMenu } from '../../models/notifications-menu-enum';
+import { FormArray, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'cl-sub-menu',
@@ -7,9 +8,9 @@ import { NotificationsMenu } from '../../models/notifications-menu-enum';
   styleUrls: ['./sub-menu.component.scss']
 })
 export class SubMenuComponent {
-  @Input() public subMenu: ISubMenu[];
   @Input() public activeItem: string;
-  @Output() public selectMenu: string = new EventEmitter();
+  @Input() public form: FormGroup;
+  @Output() public selectMenu: EventEmitter<string> = new EventEmitter<string>();
   public menuType: typeof NotificationsMenu = NotificationsMenu;
 
   public clickOnMenu(menuItem: string): void {
@@ -21,7 +22,9 @@ export class SubMenuComponent {
   }
 
   public getCount(menuType: string): number {
-    console.log(menuType);
-    return 1;
+    if (this.form && this.form.get(menuType)) {
+      return (this.form.get(menuType) as FormArray).length;
+    }
+    return 0;
   }
 }
