@@ -44,7 +44,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     private limitsService: LimitsService,
     private route: ActivatedRoute
   ) {
-    super(0, store, stepConditionService, cd);
+    super(0, store, stepConditionService);
     this.initForm();
     this.initFiltersDefaultValue();
   }

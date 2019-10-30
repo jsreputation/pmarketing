@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, OnDestroy, OnInit, Optional } from '@angular/core';
+import { OnDestroy, OnInit, Optional } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { Subject } from 'rxjs';
@@ -18,7 +18,6 @@ export class AbstractStepWithForm implements OnInit, OnDestroy {
     public stepIndex: number,
     public store: CampaignCreationStoreService,
     @Optional() public stepConditionService: StepConditionService,
-    public cd: ChangeDetectorRef
   ) {
   }
 
@@ -28,8 +27,8 @@ export class AbstractStepWithForm implements OnInit, OnDestroy {
       .asObservable()
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
+        console.log('change', data);
         this.campaign = data;
-        this.cd.detectChanges();
       });
 
     if (this.stepIndex !== undefined && this.stepConditionService && this.form) {

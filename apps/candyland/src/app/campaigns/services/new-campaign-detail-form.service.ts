@@ -28,13 +28,12 @@ export class NewCampaignDetailFormService {
         schedule: this.fb.group({
           sendDate: [],
           sendTime: [],
-          enableRecurrence: [],
-          recurrence: this.fb.group({
-            times: [],
-            period: [],
-            repeatOn: []
-          })
-
+          // enableRecurrence: [],
+          // recurrence: this.fb.group({
+          //   times: [],
+          //   period: [],
+          //   repeatOn: []
+          // })
         })
       }),
       audience: this.fb.group({
@@ -56,14 +55,18 @@ export class NewCampaignDetailFormService {
         condition: form.get('channel.type').value === 'sms',
         controls: [form.get('channel.message'), form.get('channel.schedule')]
       },
-      {
-        condition: form.get('channel.schedule.enableRecurrence').value === true,
-        controls: [form.get('channel.schedule.recurrence')]
-      },
-      {
-        condition: form.get('channel.schedule.recurrence.period').value === 'week',
-        controls: [form.get('channel.schedule.recurrence.repeatOn')]
-      },
+      // {
+      //   condition: form.get('channel.schedule.enableRecurrence').value === true,
+      //   controls: [form.get('channel.schedule.recurrence')]
+      // },
+      // {
+      //   condition: form.get('channel.schedule.enableRecurrence').value === true,
+      //   controls: [form.get('channel.schedule.recurrence')]
+      // },
+      // {
+      //   condition: form.get('channel.schedule.recurrence.period').value === 'week',
+      //   controls: [form.get('channel.schedule.recurrence.repeatOn')]
+      // },
       {
         condition: form.get('audience.type').value === 'upload',
         controls: [form.get('audience.file')]
