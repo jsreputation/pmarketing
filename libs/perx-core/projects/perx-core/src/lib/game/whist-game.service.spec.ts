@@ -9,7 +9,7 @@ import { IJsonApiItemPayload } from '../jsonapi.payload';
 import { Type } from '@angular/core';
 import { IGame, GameType } from './game.model';
 
-fdescribe('WhistlerGameService', () => {
+describe('WhistlerGameService', () => {
   let httpTestingController: HttpTestingController;
   let service: WhistlerGameService;
   const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', ['']);
