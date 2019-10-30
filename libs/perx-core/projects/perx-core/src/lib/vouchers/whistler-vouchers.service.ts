@@ -15,9 +15,7 @@ import { IAssignedAttributes, AssignedStatus } from '@perx/whistler';
 })
 export class WhistlerVouchersService implements IVoucherService {
   constructor(
-    // @ts-ignore
     private http: HttpClient,
-    // @ts-ignore
     private config: Config,
     private rewardsService: RewardsService,
   ) { }
