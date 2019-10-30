@@ -27,7 +27,7 @@ interface AccountPageObject {
 export class AccountComponent implements OnInit {
   public profile: IProfile;
   public pages!: AccountPageObject[] ;
-  public preAuth: boolean;
+  public preAuth: boolean = false;
 
   constructor(
     private profileService: ProfileService,
