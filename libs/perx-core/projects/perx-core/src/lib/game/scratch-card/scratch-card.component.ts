@@ -28,6 +28,9 @@ export class ScratchCardComponent implements AfterViewInit {
   @Input()
   public uncoverPortionToTrigger?: number = 90;
 
+  @Input()
+  public enabled: boolean = true;
+
   @Output()
   public completed: EventEmitter<void> = new EventEmitter<void>();
 
@@ -136,7 +139,7 @@ export class ScratchCardComponent implements AfterViewInit {
   }
 
   public handleMouseMove(e: TouchEvent): void {
-    if (!this.isDrawing) {
+    if (!this.isDrawing || !this.enabled) {
       return;
     }
 

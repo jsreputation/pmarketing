@@ -68,6 +68,7 @@ export {
   IGameOutcome,
   IPinata,
   ITree,
+  IScratch,
   defaultTree,
   IPlayOutcome,
   ISlice
@@ -76,6 +77,7 @@ export { IGameService } from './lib/game/igame.service';
 export { IGameComponent } from './lib/game/igame.component';
 export { ShakeTreeComponent } from './lib/game/shake-tree/shake-tree.component';
 export { PinataComponent } from './lib/game/pinata/pinata.component';
+export { ScratchCardComponent } from './lib/game/scratch-card/scratch-card.component';
 
 /**
  * Profile

@@ -3,7 +3,8 @@ import { IVoucher } from '../vouchers/models/voucher.model';
 export enum GameType {
     unknown = -1,
     shakeTheTree = 'shake',
-    pinata = 'tap'
+    pinata = 'tap',
+    scratch = 'scratch',
 }
 
 export interface IGameOutcome {
@@ -17,7 +18,7 @@ export interface IGame {
     campaignId?: number;
     type: GameType;
     remainingNumberOfTries: number;
-    config: ITree | IPinata;
+    config: ITree | IPinata | IScratch;
     backgroundImg?: string;
     texts: {
         title?: string;
@@ -66,6 +67,13 @@ export interface IPinata {
     breakingImg?: string;
     brokenImg: string;
     nbTaps: number;
+}
+
+export interface IScratch {
+  coverImg: string;
+  underlyingImg: string;
+  uncoverPortionToTrigger: number;
+  nbTaps: number;
 }
 
 export interface IPlayOutcome {
