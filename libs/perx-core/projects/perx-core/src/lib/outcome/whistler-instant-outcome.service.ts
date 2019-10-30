@@ -38,7 +38,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       .pipe(
         map(res => res.data.attributes),
         map(attributes => ({
-          id: Number.parseInt(attributes.engagement_id, 10),
+          id: attributes.engagement_id,
           display_properties: attributes.display_properties
         })),
       );
