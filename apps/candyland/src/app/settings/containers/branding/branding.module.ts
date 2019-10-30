@@ -8,6 +8,7 @@ import { ClColorPickerModule } from '@cl-shared/components/cl-color-picker/cl-co
 import { UploadGraphicModule } from '@cl-shared/components/upload-graphic/upload-graphic.module';
 import { SimpleMobileViewModule } from '@cl-shared';
 import { RewardsModule as PerxRewardsModule } from '@perx/core';
+import { DirectivesModule } from '@cl-shared/directives/directives.module';
 
 @NgModule({
   declarations: [BrandingComponent],
@@ -25,6 +26,8 @@ import { RewardsModule as PerxRewardsModule } from '@perx/core';
     MatRadioModule,
     MatFormFieldModule,
     MatInputModule,
+    DirectivesModule,
+
   ]
 })
 export class BrandingModule { }
