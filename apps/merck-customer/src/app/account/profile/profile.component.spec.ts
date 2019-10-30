@@ -11,6 +11,7 @@ import { ProfileService, LoyaltyService } from '@perx/core';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -51,7 +52,7 @@ describe('ProfileComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ProfileComponent ],
-      imports: [ MatIconModule, MatToolbarModule, MatListModule ],
+      imports: [ MatIconModule, MatToolbarModule, MatListModule, TranslateModule.forRoot() ],
       providers: [
         { provide: Location, useValue: locationStub },
         { provide: ProfileService, useValue: profileServiceStub },
