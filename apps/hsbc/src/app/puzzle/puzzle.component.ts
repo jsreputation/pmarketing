@@ -153,7 +153,6 @@ export class PuzzleComponent implements OnInit, OnDestroy {
                 card => card.displayProperties.displayCampaignAs &&
                   card.displayProperties.displayCampaignAs === this.displayCampaignAs);
             }),
-            // tap((res) => console.log(res)),
             map((cards: IStampCard[]) => cards[0]),
             tap((card: IStampCard) => this.campaignId = card.campaignId)
           )
