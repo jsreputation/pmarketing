@@ -11,8 +11,8 @@ import {
   IProfile,
   ThemesService,
   AuthenticationService,
+  Config,
 } from '@perx/core';
-import { environment } from '@perx/blackcomb/src/environments/environment';
 
 interface AccountPageObject {
   title: string;
@@ -30,12 +30,13 @@ export class AccountComponent implements OnInit {
   public preAuth: boolean = false;
 
   constructor(
+    config: Config,
     private profileService: ProfileService,
     private themeService: ThemesService,
     private router: Router,
     private authenticationService: AuthenticationService,
   ) {
-    this.preAuth = environment.preAuth;
+    this.preAuth = config.preAuth;
   }
 
   public ngOnInit(): void {
