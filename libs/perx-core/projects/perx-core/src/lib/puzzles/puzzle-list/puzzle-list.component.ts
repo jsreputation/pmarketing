@@ -13,6 +13,8 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
 
   public puzzles: IStampCard[];
 
+  public repeatGhostCount: number = 10;
+
   @Input()
   public campaignId: number = null;
 
