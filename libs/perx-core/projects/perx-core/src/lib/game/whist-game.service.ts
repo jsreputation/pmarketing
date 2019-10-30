@@ -85,7 +85,7 @@ export class WhistlerGameService implements IGameService {
       };
     } else if (attributes.game_type === WGameType.scratch) {
       type = TYPE.scratch;
-      //todo
+      // todo
     }
 
     const texts: { [key: string]: string } = {};

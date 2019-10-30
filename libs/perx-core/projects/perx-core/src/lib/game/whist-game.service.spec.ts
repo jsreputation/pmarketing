@@ -149,7 +149,6 @@ describe('WhistlerGameService', () => {
     httpTestingController.verify();
   });
 
-
   it('should get a scratch card from its id', (done: DoneFn) => {
     service.get(42)
       .subscribe(
