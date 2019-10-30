@@ -22,7 +22,7 @@ describe('V4CampaignService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, HttpClientTestingModule, ConfigModule.forRoot({...environment})],
+      imports: [HttpClientTestingModule, ConfigModule.forRoot({ ...environment })],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceMock }
       ]
@@ -30,7 +30,6 @@ describe('V4CampaignService', () => {
     // httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
     service = TestBed.get(V4CampaignService);
-
   });
 
   it('should be created', () => {
