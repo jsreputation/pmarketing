@@ -151,44 +151,100 @@
       </div>
     </mat-card>
   </div>
-  <cl-settings-mobile-preview
-    [tabs]="['Login', 'Home', 'Reward Detail']">
+  <cl-settings-mobile-preview #mobilePreview
+    [tabs]="['Login', 'Home', 'Reward Detail']"
+    class="branding"
+  >
+    <!--LOG IN PAGE-->
     <cl-simple-mobile-view
       class="firs-tab"
       [mobileImageClass]="'mobile-non-header'"
       [headerColor]="headerNavbarColor.value.color"
+      [primaryColor]="primaryColor.value"
+      [backgroundColor]="primaryColor.value"
       [logo]="logo.value"
       [logoType]="logoType.value === 'image'"
       [fontFamily]="font.value">
-      <div class="mobile-preview-btn-wrap mobile-btn-block">
-        <button
-          class="mobile-preview-btn"
-          [ngStyle]="{
-            backgroundColor: button_background_color.value.color,
-            'font-family': font.value,
-            color: button_text_color.value.color
+      <div class="mobile-preview-header">
+        <p class="mobile-preview-headline">
+          Some text for example
+        </p>
+      </div>
+      <div class="plugin-block">
+        <div class="mobile-preview-card"
+             [ngStyle]="{'background-color': '#fffff'}"
+        >
+          <div class="mobile-preview-header-nested">
+            <p class="mobile-preview-headline">
+              Log In
+            </p>
+          </div>
+          <mat-form-field appearance="fill" class="control-input">
+            <input matInput placeholder="Player Code">
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="control-input">
+            <input matInput placeholder="Card last 4 digit">
+          </mat-form-field>
+
+          <button class="mobile-preview-btn"
+                  [ngStyle]="{
+                        backgroundColor: button_background_color.value.color,
+                        'font-family': font.value,
+                        color: button_text_color.value.color
+
           }">
-          {{ "button text" }}
-        </button>
+            Log In
+          </button>
+          <p class="mobile-additional-info">
+            Other additional info
+          </p>
+        </div>
       </div>
     </cl-simple-mobile-view>
+    <!--HOME PAGE-->
     <cl-simple-mobile-view
       class="second-tab"
       [mobileImageClass]="'mobile-non-header'"
       [headerColor]="headerNavbarColor.value.color"
       [logo]="logo.value"
+      [backgroundColor]="'#E8E8E8'"
       [logoType]="logoType.value === 'image'"
       [fontFamily]="font.value">
-      <div class="mobile-preview-btn-wrap mobile-btn-block">
-        <button
-          class="mobile-preview-btn"
-          [ngStyle]="{
-            backgroundColor: button_background_color.value.color,
-            'font-family': font.value,
-            color: button_text_color.value.color
-          }">
-          {{ "button text" }}
-        </button>
+      <!--Points block-->
+      <div class="plugin-block">
+        <div class="points-block flex justify-content-between">
+          <div class="points">
+            <p class="points-count">
+              0
+            </p>
+            <p class="points-title">
+              Your total points
+            </p>
+          </div>
+          <div class="quare-code-btn">
+            <button class="mobile-preview-btn"
+                    [ngStyle]="{
+                        backgroundColor: button_background_color.value.color,
+                        'font-family': font.value,
+                        color: button_text_color.value.color
+
+            }">
+              My OR
+            </button>
+          </div>
+        </div>
+        <div class="games-block">
+          <h2 class="card-fieldset-title sub-title">
+            Featured Rewards
+          </h2>
+          <perx-core-rewards-collection [rewardsList]="rewards$"
+                                        clScrollTo
+                                        [shiftTo]="50"
+                                        canRun="true"
+                                        classElement="card-collection-container"
+                                        [emit$]="mobilePreview.animationDone"
+          ></perx-core-rewards-collection>
+        </div>
       </div>
     </cl-simple-mobile-view>
     <cl-simple-mobile-view
@@ -207,7 +263,7 @@
             'font-family': font.value,
             color: button_text_color.value.color
           }">
-          <perx-core-reward [reward]="reward"></perx-core-reward>
+          <perx-core-reward [reward]="reward$"></perx-core-reward>
         </div>
       </div>
 
