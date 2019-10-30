@@ -3,7 +3,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
 import { ICampaignAttributes } from '@perx/whistler';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +19,7 @@ export class CampaignsHttpsService {
     return this.http.get<IJsonApiPayload<ICampaignAttributes>>(`${ApiConfig.campaignsPath}/${id}`);
   }
 
-  public updateCampaign(id: string, data: IJsonApiPayload<ICampaign>): Observable<IJsonApiPayload<ICampaignAttributes>> {
+  public updateCampaign(id: string, data: IJsonApiPayload<ICampaignAttributes>): Observable<IJsonApiPayload<ICampaignAttributes>> {
     return this.http.patch<IJsonApiPayload<ICampaignAttributes>>(ApiConfig.campaignsPath + '/' + id, data);
   }
 

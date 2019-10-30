@@ -56,6 +56,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTenants();
     this.initForm();
+    this.store.currentCampaign$.subscribe(console.log);
     this.form.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
@@ -243,7 +244,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         if (outcome.value.outcomeId) {
           const oldRewardRecord = oldCampaignList.find(reward => reward.id === outcome.value.outcomeId);
           const oldProbability = oldRewardRecord ? oldRewardRecord.probability : null;
-          if (!!outcome.probability && oldProbability !== outcome.probability) {
+          if (oldProbability !== outcome.probability) {
             updateOutcomesArr$.push(updateOutcomes$(outcome));
           }
         } else {
