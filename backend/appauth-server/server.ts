@@ -21,7 +21,7 @@ app.use(compression());
 const cors = require('cors');
 app.use(cors());
 app.use(express.json());
-app.use('./exported-images', express.static('static'));
+app.use('/static', express.static('static'));
 
 const PORT = process.env.PORT || 4000;
 const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
@@ -44,7 +44,7 @@ app.post(`${BASE_HREF}cognito/users`, users(apiConfig));
 
 app.post(`${BASE_HREF}themes`, themes(apiConfig));
 
-app.get(`${BASE_HREF}manifest-webmanifest`, manifest(apiConfig))
+app.get(`${BASE_HREF}webmanifest`, manifest(apiConfig))
 
 if (process.env.PRODUCTION) {
   console.log('production mode ON');
