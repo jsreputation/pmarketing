@@ -18,3 +18,12 @@ export { IMerchant, IMerchantBranchApi } from './lib/merchant/merchant';
 export { ITenantProperties } from './lib/settings/tenant';
 export { ITimeZone } from './lib/settings/time-zone';
 export { ILoyalty, ILoyaltyCard } from './lib/loyalty/loyalty';
+
+export {
+    WAttbsObjGame,
+    WAttbsObjEntity,
+    WGameDisplayProperties,
+    WGameOutcome,
+    WTreeDisplayProperties,
+    WPinataDisplayProperties
+} from './lib/game/game';
