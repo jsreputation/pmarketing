@@ -4,7 +4,6 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
 
 import {
   Observable,
@@ -25,9 +24,6 @@ import {
   CampaignType,
   StampService,
   IStampCard,
-  NotificationService,
-  IPopupConfig,
-  PopupComponent,
 } from '@perx/core';
 
 @Component({
@@ -46,14 +42,9 @@ export class WalletComponent implements OnInit, OnDestroy {
     private vouchersService: IVoucherService,
     private stampService: StampService,
     private campaignService: ICampaignService,
-    private dialog: MatDialog,
-    private notificationService: NotificationService,
   ) { }
 
   public ngOnInit(): void {
-    this.notificationService.$popup
-      .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
-
     this.stampCards$ = this.campaignService.getCampaigns()
       .pipe(
         map((campaigns: ICampaign[]) => campaigns.filter(c => c.type === CampaignType.stamp)),

@@ -1,4 +1,10 @@
-import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  PLATFORM_ID,
+  OnDestroy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -37,6 +43,25 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<any> = new Subject();
 
+  public get isCampaignEnded(): boolean {
+    if (
+      this.campaignData &&
+      this.campaignData.endsAt &&
+      this.campaignData.endsAt > new Date()
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  private goWallet(): void {
+    this.router.navigate(['/wallet']);
+  }
+
+  private setCampaignId(): void {
+    this.campaignId = (window as any).campaignId;
+  }
+
   private setCampaignData(): void {
     if (this.campaignId) {
       this.campaignSvc.getCampaign(this.campaignId)
@@ -49,17 +74,6 @@ export class LoadingComponent implements OnInit, OnDestroy {
     }
   }
 
-  private setCampaignId(): void {
-    this.campaignId = (window as any).campaignId;
-  }
-
-  private checkIsCampaignEnded(): void {
-    if (this.campaignData && this.campaignData.endsAt) {
-      this.router.navigate(['/wallet']);
-      this.initCampaignEndedPopup();
-    }
-  }
-
   private initCampaignEndedPopup(): void {
     this.notificationService.addPopup({
       title: `Oops, the Campaign has ended`,
@@ -67,6 +81,28 @@ export class LoadingComponent implements OnInit, OnDestroy {
       imageUrl: `assets/beer_and_tea.png`,
       buttonTxt: 'Back To Wallet',
     });
+  }
+
+  private afterLogin(): void {
+    this.setCampaignId();
+    this.setCampaignData();
+    this.redirectAfterLogin();
+  }
+
+  private redirectAfterLogin(): void {
+    if (this.campaignId) {
+      if (!this.isCampaignEnded) {
+        const { type } = this.campaignData;
+        this.router.navigateByUrl(
+          this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${this.campaignId}`
+        );
+      } else {
+        this.initCampaignEndedPopup();
+        this.goWallet();
+      }
+      return;
+    }
+    this.goWallet();
   }
 
   constructor(
@@ -80,10 +116,6 @@ export class LoadingComponent implements OnInit, OnDestroy {
     this.preAuth = this.config ? this.config.preAuth : false;
   }
   public ngOnInit(): void {
-    this.setCampaignId();
-    this.setCampaignData();
-    this.checkIsCampaignEnded();
-
     if (this.preAuth && isPlatformBrowser(this.platformId)) {
       const param = location.search;
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
@@ -117,7 +149,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
         ),
         takeUntil(this.destroy$)
       ).subscribe(
-        () => this.redirectAfterLogin(),
+        () => this.afterLogin(),
         () => this.router.navigate(['/login'])
       );
     }
@@ -126,16 +158,5 @@ export class LoadingComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  public redirectAfterLogin(): void {
-    if (this.campaignData && !this.campaignData.endsAt) {
-      const { type } = this.campaignData;
-      this.router.navigateByUrl(
-        this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${this.campaignId}`
-      );
-    } else {
-      this.router.navigate(['/wallet']);
-    }
   }
 }
