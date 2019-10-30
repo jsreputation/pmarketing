@@ -10,7 +10,7 @@ import { IAssignedAttributes, AssignedStatus } from '@perx/whistler';
 import { IVoucher } from './models/voucher.model';
 import { Type } from '@angular/core';
 
-fdescribe('WhistlerVouchersService', () => {
+describe('WhistlerVouchersService', () => {
   let httpTestingController: HttpTestingController;
   let service: WhistlerVouchersService;
   const environment = {
