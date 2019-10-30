@@ -8,24 +8,7 @@ import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsona
 import { map, switchMap, mergeMap } from 'rxjs/operators';
 import { RewardsService } from '../rewards/rewards.service';
 import { IReward, IRewardParams } from '../rewards/models/reward.model';
-
-const enum VoucherStatus {
-  assigned = 'assigned',
-  issued = 'issued',
-}
-
-export interface IWhistlerVoucher {
-  urn: string;
-  created_at: string;
-  updated_at: string;
-  batch_id: number;
-  code: string;
-  assigned_to_id: number;
-  status: VoucherStatus;
-  source_id: number;
-  source_type: string;
-  end_date_time: string;
-}
+import { IAssignedAttributes, AssignedStatus } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -39,32 +22,32 @@ export class WhistlerVouchersService implements IVoucherService {
     private rewardsService: RewardsService,
   ) { }
 
-  private static WVoucherStatusToState(stat: VoucherStatus): VoucherState {
+  private static WVoucherStatusToState(stat: AssignedStatus): VoucherState {
     switch (stat) {
-    case VoucherStatus.assigned:
-    case VoucherStatus.issued:
-      return VoucherState.issued;
-    default:
-      return VoucherState.redeemed;
+      case AssignedStatus.assigned:
+      case AssignedStatus.issued:
+        return VoucherState.issued;
+      default:
+        return VoucherState.redeemed;
     }
   }
 
-  private static WVoucherToVoucher(voucher: IJsonApiItem<IWhistlerVoucher>, reward: IReward): IVoucher {
+  private static WVoucherToVoucher(voucher: IJsonApiItem<IAssignedAttributes>, reward: IReward): IVoucher {
     return {
       id: (typeof voucher.id === 'string') ? Number.parseInt(voucher.id, 10) : voucher.id,
       reward,
       state: WhistlerVouchersService.WVoucherStatusToState(voucher.attributes.status),
-      code: voucher.attributes.code,
-      expiry: voucher.attributes.end_date_time ? new Date(voucher.attributes.end_date_time) : null,
+      code: voucher.attributes.value,
+      expiry: voucher.attributes.valid_to ? new Date(voucher.attributes.valid_to) : null,
     };
   }
 
   // @ts-ignore
   public getAll(voucherParams?: IGetVoucherParams): Observable<IVoucher[]> {
-    return this.http.get<IJsonApiListPayload<IWhistlerVoucher>>(this.vouchersUrl)
+    return this.http.get<IJsonApiListPayload<IAssignedAttributes>>(this.vouchersUrl)
       .pipe(
         map((res) => res.data),
-        mergeMap((vouchers: IJsonApiItem<IWhistlerVoucher>[]) => combineLatest(...vouchers.map(v => this.getFullVoucher(v)))),
+        mergeMap((vouchers: IJsonApiItem<IAssignedAttributes>[]) => combineLatest(...vouchers.map(v => this.getFullVoucher(v)))),
         map(vouchers => vouchers.sort((elA, elB) => {
           const merchantIdA: number = elA.reward.merchantId;
           const merchantIdB: number = elB.reward.merchantId;
@@ -78,19 +61,20 @@ export class WhistlerVouchersService implements IVoucherService {
       );
   }
 
-  private getFullVoucher(voucher: IJsonApiItem<IWhistlerVoucher>): Observable<IVoucher> {
+  private getFullVoucher(voucher: IJsonApiItem<IAssignedAttributes>): Observable<IVoucher> {
     return combineLatest(of(voucher), this.rewardsService.getReward(voucher.attributes.source_id))
       .pipe(
-        map(([v, reward]: [IJsonApiItem<IWhistlerVoucher>, IReward]) => WhistlerVouchersService.WVoucherToVoucher(v, reward))
+        map(([v, reward]: [IJsonApiItem<IAssignedAttributes>, IReward]) => WhistlerVouchersService.WVoucherToVoucher(v, reward))
       );
   }
 
   // @ts-ignore
   public get(id: number, useCache?: boolean): Observable<IVoucher> {
-    return this.http.get<IJsonApiItemPayload<IWhistlerVoucher>>(this.vouchersUrl + '/' + id).pipe(
-      map((res) => res.data),
-      switchMap((voucher: IJsonApiItem<IWhistlerVoucher>) => this.getFullVoucher(voucher))
-    );
+    return this.http.get<IJsonApiItemPayload<IAssignedAttributes>>(`${this.vouchersUrl}/${id}`)
+      .pipe(
+        map((res) => res.data),
+        switchMap((voucher: IJsonApiItem<IAssignedAttributes>) => this.getFullVoucher(voucher))
+      );
   }
 
   // @ts-ignore
