@@ -168,35 +168,35 @@ export class V4LoyaltyService extends LoyaltyService {
 
     if (transactionDetails) {
       switch (transactionHistory.transaction_details.type) {
-      case TransactionDetailType.reward:
-        const rthDetails = transactionDetails as IV4RewardTransactionHistory;
-        data = {
-          id: transactionDetails.id,
-          state: rthDetails.state,
-          voucherExpiry: rthDetails.voucher_expires_at,
-          userAccount: rthDetails.user_account.identifier,
-          rewardName: rthDetails.reward.name,
-          redemptionLocation: rthDetails.redemption_location,
-        };
-        break;
-      case TransactionDetailType.transaction:
-        const pthDetails = transactionDetails as IV4PurchaseTransactionHistory;
-        const pthProps = oc(pthDetails).properties() as {
+        case TransactionDetailType.reward:
+          const rthDetails = transactionDetails as IV4RewardTransactionHistory;
+          data = {
+            id: transactionDetails.id,
+            state: rthDetails.state,
+            voucherExpiry: rthDetails.voucher_expires_at,
+            userAccount: rthDetails.user_account.identifier,
+            rewardName: rthDetails.reward.name,
+            redemptionLocation: rthDetails.redemption_location,
+          };
+          break;
+        case TransactionDetailType.transaction:
+          const pthDetails = transactionDetails as IV4PurchaseTransactionHistory;
+          const pthProps = oc(pthDetails).properties() as {
             merchant_username: string;
             pharmacy: string;
             product: string;
           };
-        data = {
-          id: transactionDetails.id,
-          productName: oc(pthProps).product(),
-          pharmacyName: oc(pthProps).pharmacy(),
-          issuerName: oc(pthProps).merchant_username(),
-          transactionDate: pthDetails.transaction_date,
-          transactionRef: pthDetails.transaction_reference,
-          price: pthDetails.amount,
-          currency: pthDetails.currency,
-        };
-        break;
+          data = {
+            id: transactionDetails.id,
+            productName: oc(pthProps).product(),
+            pharmacyName: oc(pthProps).pharmacy(),
+            issuerName: oc(pthProps).merchant_username(),
+            transactionDate: pthDetails.transaction_date,
+            transactionRef: pthDetails.transaction_reference,
+            price: pthDetails.amount,
+            currency: pthDetails.currency,
+          };
+          break;
       }
     }
     return {
