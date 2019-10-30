@@ -1,10 +1,15 @@
+export const enum WGameType {
+  shakeTheTree = 'shake',
+  pinata = 'tap',
+  scratch = 'scratch'
+}
 
 export interface WAttbsObjGame {
   number_of_tries?: number;
   urn: string;
   created_at: string;
   updated_at: string;
-  game_type: string;
+  game_type: WGameType;
   type?: string;
   title: string;
   description: string;

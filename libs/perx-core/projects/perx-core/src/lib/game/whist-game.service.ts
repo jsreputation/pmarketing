@@ -20,13 +20,9 @@ import {
   WAttbsObjGame,
   WTreeDisplayProperties,
   WPinataDisplayProperties,
-  WAttbsObjEntity
+  WAttbsObjEntity,
+  WGameType
 } from '@perx/whistler';
-
-const enum GameType {
-  shakeTheTree = 'shake',
-  pinata = 'tap'
-}
 
 export interface AttbsObjTrans {
   urn: string;
@@ -68,7 +64,7 @@ export class WhistlerGameService implements IGameService {
     let type = TYPE.unknown;
     let config: ITree | IPinata;
     const { attributes } = game;
-    if (attributes.game_type === GameType.shakeTheTree) {
+    if (attributes.game_type === WGameType.shakeTheTree) {
       type = TYPE.shakeTheTree;
       const treedp: WTreeDisplayProperties = attributes.display_properties as WTreeDisplayProperties;
       config = {
@@ -78,7 +74,7 @@ export class WhistlerGameService implements IGameService {
         nbHangedGift: treedp.nb_hanged_gifts,
         nbGiftsToDrop: treedp.nb_gifts_to_drop || 1
       };
-    } else if (attributes.game_type === GameType.pinata) {
+    } else if (attributes.game_type === WGameType.pinata) {
       type = TYPE.pinata;
       const pinatadp: WPinataDisplayProperties = attributes.display_properties as WPinataDisplayProperties;
       config = {
@@ -87,7 +83,11 @@ export class WhistlerGameService implements IGameService {
         breakingImg: pinatadp.cracking_pinata_img_url,
         brokenImg: pinatadp.opened_pinata_img_url
       };
+    } else if (attributes.game_type === WGameType.scratch) {
+      type = TYPE.scratch;
+      //todo
     }
+
     const texts: { [key: string]: string } = {};
     if (attributes.display_properties.title) {
       texts.title = attributes.display_properties.title;
