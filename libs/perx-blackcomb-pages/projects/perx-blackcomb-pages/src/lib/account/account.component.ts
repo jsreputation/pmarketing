@@ -1,6 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { ProfileService, IProfile, ThemesService } from '@perx/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import { Router } from '@angular/router';
+
+import {
+  ProfileService,
+  IProfile,
+  ThemesService,
+  AuthenticationService,
+} from '@perx/core';
+
 import { take } from 'rxjs/operators';
+import {environment} from '@perx/blackcomb/src/environments/environment';
 
 interface AccountPageObject {
   title: string;
@@ -15,11 +27,16 @@ interface AccountPageObject {
 export class AccountComponent implements OnInit {
   public profile: IProfile;
   public pages!: AccountPageObject[] ;
+  public preAuth: boolean;
 
   constructor(
     private profileService: ProfileService,
-    private themeService: ThemesService
-  ) { }
+    private themeService: ThemesService,
+    private router: Router,
+    private authenticationService: AuthenticationService,
+  ) {
+    this.preAuth = environment.preAuth;
+  }
 
   public ngOnInit(): void {
     this.themeService.getAccountSettings()
@@ -33,4 +50,8 @@ export class AccountComponent implements OnInit {
       });
   }
 
+  public logout(): void {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
+  }
 }
