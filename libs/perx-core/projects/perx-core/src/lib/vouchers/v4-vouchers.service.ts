@@ -1,16 +1,16 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams,} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 import {oc} from 'ts-optchain';
-import {interval, Observable, of,} from 'rxjs';
-import {filter, flatMap, map, mergeAll, scan, switchMap, tap,} from 'rxjs/operators';
+import {interval, Observable, of} from 'rxjs';
+import {filter, flatMap, map, mergeAll, scan, switchMap, tap} from 'rxjs/operators';
 
 import {IVoucherService} from './ivoucher.service';
-import {IGetVoucherParams, IRedeemOptions, IVoucher, RedemptionType, VoucherState,} from './models/voucher.model';
+import {IGetVoucherParams, IRedeemOptions, IVoucher, RedemptionType, VoucherState} from './models/voucher.model';
 
 import {Config} from '../config/config';
 import {IRewardParams} from '../rewards/models/reward.model';
-import {IV4Reward, V4RewardsService,} from '../rewards/v4-rewards.service';
+import {IV4Reward, V4RewardsService} from '../rewards/v4-rewards.service';
 
 interface IV4Meta {
   count?: number;
