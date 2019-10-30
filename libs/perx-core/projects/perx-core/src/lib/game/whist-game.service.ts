@@ -24,7 +24,7 @@ import {
   WGameType
 } from '@perx/whistler';
 
-export interface AttbsObjTrans {
+interface AttbsObjTrans {
   urn: string;
   created_at: string;
   updated_at: string;
@@ -34,7 +34,7 @@ export interface AttbsObjTrans {
   results: IJsonApiItem<ResultsObj>;
 }
 
-export interface ResultsObj {
+interface ResultsObj {
   campaign_entity_id: number;
   source_type: number;
   source_id: number;
