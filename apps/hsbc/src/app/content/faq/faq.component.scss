@@ -1,0 +1,67 @@
+.page {
+  background: #fff;
+  padding: 8.5rem 1.5rem 1.5rem;
+  font-size: 1.6rem;
+  line-height: 2rem;
+}
+
+img {
+  height: 5rem;
+}
+
+p {
+  margin: 0;
+}
+
+.question {
+  font-weight: 600;
+  display: inline;
+}
+
+.response {
+  margin: 2rem 0;
+}
+
+.main {
+  counter-reset: list;
+  padding-inline-start: 0;
+
+  li {
+    list-style-type: none;
+  }
+
+  li::before {
+    counter-increment: list;
+    content: counter(list) ")";
+    display: inline-block;
+    margin-right: 1rem;
+  }
+}
+
+.table-black {
+  margin: 2rem auto;
+  border: 1px solid #000;
+  border-collapse: collapse;
+  max-width: 60rem;
+  width: 100%;
+  margin-bottom: 2rem;
+
+  thead {
+    background: #000;
+    color: #fff;
+  }
+
+  th {
+    padding: 2rem 1.5rem;
+  }
+
+  td {
+    padding: 1rem 1.5rem 0 3rem;
+    font-weight: 400;
+    border: 1px solid #000;
+  }
+
+  td:first-child {
+    padding-left: 1.5rem;
+  }
+}

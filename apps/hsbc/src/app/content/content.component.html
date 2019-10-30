@@ -1,1 +1,10 @@
-<app-tnc></app-tnc>
+<div *ngIf="param$ | async as param">
+  <div [ngSwitch]="param">
+    <ng-container *ngSwitchCase="'tnc'">
+      <app-tnc></app-tnc>
+    </ng-container>
+    <ng-container *ngSwitchCase="'faq'">
+      <app-faq></app-faq>
+    </ng-container>
+  </div>
+</div>

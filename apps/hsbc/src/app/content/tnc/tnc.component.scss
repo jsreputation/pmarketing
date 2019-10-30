@@ -13,7 +13,7 @@ p {
   padding-inline-start: 5rem;
 }
 
-.main>li {
+.main > li {
   padding-left: 1.5rem;
   margin-bottom: 1.5rem;
 }
@@ -67,9 +67,6 @@ img {
   td {
     padding: 1rem 1.5rem 0;
     font-weight: 400;
-  }
-
-  td {
     border: 1px solid #000;
   }
 
@@ -91,7 +88,7 @@ img {
   margin-top: 2rem;
 }
 
-.table-white {
+.page .table-white {
   border-collapse: collapse;
 
   td,
@@ -123,17 +120,18 @@ img {
 }
 
 .centers {
-    font-weight: 100;
-    li {
-        list-style-type: none;
-    }
+  font-weight: 100;
 
-    counter-reset: list;
+  li {
+    list-style-type: none;
+  }
 
-    li:before {
-        width: 3rem;
-        counter-increment: list;
-        content: counter(list) ".";
-        display: inline-block;
-    }
-} 
+  counter-reset: list;
+
+  li::before {
+    width: 3rem;
+    counter-increment: list;
+    content: counter(list) ".";
+    display: inline-block;
+  }
+}

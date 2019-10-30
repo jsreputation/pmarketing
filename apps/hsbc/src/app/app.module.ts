@@ -46,8 +46,6 @@ import {
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { APP_BASE_HREF, DatePipe } from '@angular/common';
 import { SoundModule } from './sound/sound.module';
-// import { TncComponent } from './tnc/tnc.component';
-// import { FaqComponent } from './faq/faq.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavigateToolbarComponent } from './navigate-toolbar/navigate-toolbar.component';
@@ -114,8 +112,6 @@ import { ContentModule } from './content/content.module';
     RedemptionComponent,
     HomeComponent,
     PuzzlesComponent,
-    // TncComponent,
-    // FaqComponent,
     ProfileComponent,
     NavigateToolbarComponent,
     WalletComponent,
