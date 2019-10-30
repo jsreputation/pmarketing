@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { of } from 'rxjs';
 import { tap, map, catchError, takeUntil } from 'rxjs/operators';
 
 import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { AvailableNewEngagementService, EngagementsService, LimitsService } from '@cl-core/services';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
@@ -28,6 +28,9 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   public defaultTypeValue: any = null;
   public typeFilterConfig: OptionConfig[];
   public isFirstInit: boolean = true;
+  public hasData: boolean;
+  public noData: boolean;
+  @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
 
   public get template(): AbstractControl {
     return this.form.get('template');
@@ -52,7 +55,6 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   public ngOnInit(): void {
     super.ngOnInit();
     this.initData();
-    this.dataSource.filterPredicate = PrepareTableFilters.getClientSideFilterFunction();
     this.subscribeFormValueChange();
   }
 
@@ -89,9 +91,14 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
         })
       )
       .subscribe((res: IEngagement[]) => {
+        // res = [];
+        this.hasData = res && res.length > 0;
+        this.noData = res && res.length === 0;
         this.dataSource.data = res;
         this.initSelectedTemplate(res);
         this.cd.detectChanges();
+        this.dataSource.filterPredicate = PrepareTableFilters.getClientSideFilterFunction();
+        this.dataSource.paginator = this.paginator;
       });
   }
   private initSelectedTemplate(res: IEngagement[]): void {
