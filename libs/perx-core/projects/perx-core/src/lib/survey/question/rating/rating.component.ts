@@ -34,7 +34,7 @@ export class RatingComponent implements OnChanges {
   }
 
   public surveyRatingIcons(index: number): string {
-    const iconName = index <= this.selectedChoice  ? this.payload.shape + '_selected' :  this.payload.shape;
+    const iconName = index <= this.selectedChoice ? this.payload.shape + '_selected' : this.payload.shape;
     return SurveyRatingIcons[iconName];
   }
 
@@ -46,5 +46,4 @@ export class RatingComponent implements OnChanges {
   public isSelected(index: number): boolean {
     return this.selectedChoice === index;
   }
-
 }

@@ -1,4 +1,4 @@
-import { IQuestion } from '@perx/core';
+import { IWQuestion } from '@perx/whistler';
 
 export interface ISurveyForm {
   id: string;
@@ -8,7 +8,7 @@ export interface ISurveyForm {
   name: string;
   headlineMessage: string;
   subHeadlineMessage: string;
-  questions: IQuestion[];
+  questions: IWQuestion[];
   color: string;
   cardBackground: string;
   background: string;

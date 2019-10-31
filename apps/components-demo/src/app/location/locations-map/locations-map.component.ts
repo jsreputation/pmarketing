@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ILocation } from '../../../../../../libs/perx-core/projects/perx-core/src/lib/location/ilocation';
+import { ILocation } from '@perx/core';
 import { BehaviorSubject } from 'rxjs';
 import { test1, test2 } from '../mock';
 

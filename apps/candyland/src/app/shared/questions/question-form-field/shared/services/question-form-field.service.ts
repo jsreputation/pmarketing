@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IQuestion, SurveyQuestionType } from '@perx/core';
+import { IWQuestion, WSurveyQuestionType } from '@perx/whistler';
 
 @Injectable()
 export class QuestionFormFieldService {
@@ -9,14 +9,14 @@ export class QuestionFormFieldService {
   public listIdDrag: string[] = [];
   private descriptionFieldMaxLength: number = 1024;
 
-  private formControls: {[key: string]: any} = {
-    [SurveyQuestionType.rating]: (type) => this.ratingGroup(type),
-    [SurveyQuestionType.date]: (type) => this.dateGroup(type),
-    [SurveyQuestionType.phone]: (type) => this.phoneGroup(type),
-    [SurveyQuestionType.questionGroup]: (type) => this.questionGroup(type),
-    [SurveyQuestionType.longText]: (type) => this.questionLongText(type),
-    [SurveyQuestionType.pictureChoice]: (type) => this.questionPictureChoice(type),
-    [SurveyQuestionType.multipleChoice]: (type) => this.questionMultipleChoice(type)
+  private formControls: { [key: string]: any } = {
+    [WSurveyQuestionType.rating]: (type) => this.ratingGroup(type),
+    [WSurveyQuestionType.date]: (type) => this.dateGroup(type),
+    [WSurveyQuestionType.phone]: (type) => this.phoneGroup(type),
+    [WSurveyQuestionType.questionGroup]: (type) => this.questionGroup(type),
+    [WSurveyQuestionType.longText]: (type) => this.questionLongText(type),
+    [WSurveyQuestionType.pictureChoice]: (type) => this.questionPictureChoice(type),
+    [WSurveyQuestionType.multipleChoice]: (type) => this.questionMultipleChoice(type)
   };
   private idCounter: number = 0;
 
@@ -55,22 +55,22 @@ export class QuestionFormFieldService {
     ]);
   }
 
-  public createFormField(type: SurveyQuestionType): FormGroup {
+  public createFormField(type: WSurveyQuestionType): FormGroup {
     return this.formControls[type](type);
   }
 
-  public patchMultipleChoice(item: IQuestion, group: FormGroup): void {
+  public patchMultipleChoice(item: IWQuestion, group: FormGroup): void {
     const choices = (this.getChoices('payload.choices', group) as FormArray);
     this.removeFirsElement(choices);
 
     item.payload.choices.forEach((dataChoice) => {
       choices.push(this.fb.control(
-      dataChoice, [Validators.required]
+        dataChoice, [Validators.required]
       ));
     });
   }
 
-  public pathChoicePicture(item: IQuestion, group: FormGroup): void {
+  public pathChoicePicture(item: IWQuestion, group: FormGroup): void {
     const choices = (this.getChoices('payload.choices', group) as FormArray);
     this.removeFirsElement(choices);
 
