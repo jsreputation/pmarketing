@@ -3,11 +3,11 @@ import { FormGroup } from '@angular/forms';
 import { PeriodType } from '@cl-core/models/period-type.enum';
 
 @Component({
-  selector: 'cl-campaign-not-completed-form-group',
-  templateUrl: './campaign-not-completed-form-group.component.html',
-  styleUrls: ['./campaign-not-completed-form-group.component.scss']
+  selector: 'cl-before-campaign-ends-form-group',
+  templateUrl: './before-campaign-ends-form-group.component.html',
+  styleUrls: ['./before-campaign-ends-form-group.component.scss']
 })
-export class CampaignNotCompletedFormGroupComponent {
+export class BeforeCampaignEndsFormGroupComponent {
   @Input() public group: FormGroup;
   @Input() public shortCodes: any[];
   @Input() public index: number;
@@ -17,7 +17,8 @@ export class CampaignNotCompletedFormGroupComponent {
     console.log('sendTestSms');
   }
 
-  public deleteCompletedGroup(): void {
+  public deleteCampaignEndsGroup(): void {
     this.deleteGroup.emit(this.index);
   }
+
 }

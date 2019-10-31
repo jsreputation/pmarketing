@@ -1,44 +1,18 @@
 import { Injectable } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.interface';
+import { NotificationsMenu } from '../models/notifications-menu-enum';
 
 @Injectable()
 export class CampaignChannelsFormService {
+  public notificationsFormGroups: typeof NotificationsMenu = NotificationsMenu;
 
   public getForm(): FormGroup {
-    // return this.fb.group({
-    //   rewardsListCollection: this.fb.array([]),
-    //   stampsRule: this.fb.group({
-    //     sequence: [],
-    //     rules: this.fb.array([
-    //       this.fb.control(null)
-    //     ])
-    //   }),
-    //   limits: this.fb.group({
-    //     enableStampCard: [false],
-    //     stampCard: this.fb.group({
-    //       perCampaign: [null, [Validators.max(1000)]],
-    //       perUser: [null, [Validators.max(1000)]],
-    //       duration: []
-    //     }),
-    //     enableStamp: [false],
-    //     stamp: this.fb.group({
-    //       perUser: [null, [Validators.max(1000)]],
-    //       duration: []
-    //     })
-    //   }),
-    //   enableStampCardsValidity: [],
-    //   stampCardsValidity: this.fb.group({
-    //     times: [],
-    //     duration: []
-    //   })
-    // });
     return new FormGroup({
       webLink: new FormControl(null),
       sms: new FormControl(null),
       webLinkOptions: new FormControl(null),
       launch: new FormArray([this.getLaunchGroup()]),
-      completed: new FormArray([]),
+      completed: new FormArray([this.getCompletedGroup()]),
       campaignEnds: new FormArray([]),
       rewardExpires: new FormArray([]),
       noStampsReward: new FormArray([]),
@@ -61,17 +35,91 @@ export class CampaignChannelsFormService {
   public getCompletedGroup(): FormGroup {
     return new FormGroup({
       numberPeriod: new FormControl(null, [Validators.required, Validators.min(1)]),
-      periodType: new FormControl(null, [Validators.required])
-      time: new FormControl(null, [Validators.required])
+      type: new FormControl(null, [Validators.required]),
+      time: new FormControl(null, [Validators.required]),
+      message: new FormControl(null, [Validators.required]),
+    });
+  }
+
+  public getRewardExpiresGroup(): FormGroup {
+    return new FormGroup({
+      numberPeriod: new FormControl(null, [Validators.required, Validators.min(1)]),
+      type: new FormControl(null, [Validators.required]),
+      time: new FormControl(null, [Validators.required]),
+      message: new FormControl(null, [Validators.required]),
+    });
+  }
+
+  public getCampaignEndsGroup(): FormGroup {
+    return new FormGroup({
+      numberPeriod: new FormControl(null, [Validators.required, Validators.min(1)]),
+      type: new FormControl(null, [Validators.required]),
+      time: new FormControl(null, [Validators.required]),
+      message: new FormControl(null, [Validators.required]),
+    });
+  }
+
+  public getNoStampsRewardGroup(): FormGroup {
+    return new FormGroup({
+      stamp: new FormControl(null, [Validators.required, Validators.min(1)]),
+      slot: new FormControl(null, [Validators.required]),
+      message: new FormControl(null, [Validators.required]),
+    });
+  }
+
+  public getEarnedStampGroup(): FormGroup {
+    return new FormGroup({
+      stamp: new FormControl(null, [Validators.required, Validators.min(1)]),
+      message: new FormControl(null, [Validators.required]),
     });
   }
 
   public addNewLaunchGroup(form: FormGroup): void {
-    (form.get('launch') as FormArray).push(this.getLaunchGroup());
+    (form.get(this.notificationsFormGroups.onCampaignLaunch) as FormArray).push(this.getLaunchGroup());
   }
 
   public deleteLaunchGroup(form: FormGroup, index: number): void {
-    (form.get('launch') as FormArray).removeAt(index);
+    (form.get(this.notificationsFormGroups.onCampaignLaunch) as FormArray).removeAt(index);
+  }
+
+  public addNewCompletedGroup(form: FormGroup): void {
+    (form.get(this.notificationsFormGroups.campaignNotCompleted) as FormArray).push(this.getCompletedGroup());
+  }
+
+  public deleteCompletedGroup(form: FormGroup, index: number): void {
+    (form.get(this.notificationsFormGroups.campaignNotCompleted) as FormArray).removeAt(index);
+  }
+
+  public addNewCampaignEndsGroup(form: FormGroup): void {
+    (form.get(this.notificationsFormGroups.beforeCampaignEnds) as FormArray).push(this.getCampaignEndsGroup());
+  }
+
+  public deleteCampaignEndsGroup(form: FormGroup, index: number): void {
+    (form.get(this.notificationsFormGroups.beforeCampaignEnds) as FormArray).removeAt(index);
+  }
+
+  public addNewRewardExpiresGroup(form: FormGroup): void {
+    (form.get(this.notificationsFormGroups.beforeRewardExpires) as FormArray).push(this.getRewardExpiresGroup());
+  }
+
+  public deleteRewardExpiresGroup(form: FormGroup, index: number): void {
+    (form.get(this.notificationsFormGroups.beforeRewardExpires) as FormArray).removeAt(index);
+  }
+
+  public addNewNoStampsRewardGroup(form: FormGroup): void {
+    (form.get(this.notificationsFormGroups.noOfStampsToNextReward) as FormArray).push(this.getNoStampsRewardGroup());
+  }
+
+  public deleteNoStampsRewardGroup(form: FormGroup, index: number): void {
+    (form.get(this.notificationsFormGroups.noOfStampsToNextReward) as FormArray).removeAt(index);
+  }
+
+  public addNewEarnedStampGroup(form: FormGroup): void {
+    (form.get(this.notificationsFormGroups.earnedStamp) as FormArray).push(this.getNoStampsRewardGroup());
+  }
+
+  public deleteEarnedStampGroup(form: FormGroup, index: number): void {
+    (form.get(this.notificationsFormGroups.earnedStamp) as FormArray).removeAt(index);
   }
 
   public getShortCodes(): any[] {

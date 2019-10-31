@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { PeriodType } from '@cl-core/models/period-type.enum';
 
 @Component({
-  selector: 'cl-campaign-not-completed-form-group',
-  templateUrl: './campaign-not-completed-form-group.component.html',
-  styleUrls: ['./campaign-not-completed-form-group.component.scss']
+  selector: 'cl-before-reward-expires-form-group',
+  templateUrl: './before-reward-expires-form-group.component.html',
+  styleUrls: ['./before-reward-expires-form-group.component.scss']
 })
-export class CampaignNotCompletedFormGroupComponent {
+export class BeforeRewardExpiresFormGroupComponent {
   @Input() public group: FormGroup;
   @Input() public shortCodes: any[];
   @Input() public index: number;
@@ -17,7 +17,7 @@ export class CampaignNotCompletedFormGroupComponent {
     console.log('sendTestSms');
   }
 
-  public deleteCompletedGroup(): void {
+  public deleteRewardExpiresGroup(): void {
     this.deleteGroup.emit(this.index);
   }
 }

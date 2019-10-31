@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NotificationsMenu } from '../../models/notifications-menu-enum';
 import { FormArray, FormGroup } from '@angular/forms';
+import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 @Component({
   selector: 'cl-sub-menu',
@@ -10,6 +11,7 @@ import { FormArray, FormGroup } from '@angular/forms';
 export class SubMenuComponent {
   @Input() public activeItem: string;
   @Input() public form: FormGroup;
+  @Input() public campaign: ICampaign;
   @Output() public selectMenu: EventEmitter<string> = new EventEmitter<string>();
   public menuType: typeof NotificationsMenu = NotificationsMenu;
 
@@ -26,5 +28,11 @@ export class SubMenuComponent {
       return (this.form.get(menuType) as FormArray).length;
     }
     return 0;
+  }
+
+  public showSlotItem(): boolean {
+    return this.campaign
+      && this.campaign.template
+      && this.campaign.template.attributes_type === 'stamps';
   }
 }

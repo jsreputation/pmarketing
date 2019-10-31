@@ -1,16 +1,16 @@
 <section class="notification-wrap" [formGroup]="group">
   <h2 class="card-title">
-    Campaign not completed Message <span>{{index + 1}}</span>
+    Before Rewards Expires Message <span>{{index + 1}}</span>
   </h2>
   <div class="input-group notification-row">
     <span>
       Message will be sent on
     </span>
-        <mat-form-field>
-          <input type="number" [min]="1" matInput formControlName="numberPeriod">
-          <!--<mat-error *ngIf="amount.hasError('required') && amount.touched">Required field</mat-error>-->
-          <!--<mat-error *ngIf="amount.hasError('min') && amount.touched">Min value 1</mat-error>-->
-        </mat-form-field>
+    <mat-form-field>
+      <input type="number" [min]="1" matInput formControlName="numberPeriod">
+      <!--<mat-error *ngIf="amount.hasError('required') && amount.touched">Required field</mat-error>-->
+      <!--<mat-error *ngIf="amount.hasError('min') && amount.touched">Min value 1</mat-error>-->
+    </mat-form-field>
 
     <mat-form-field>
       <mat-select formControlName="type">
@@ -20,14 +20,11 @@
         <mat-option [value]="periodType.year">Year</mat-option>
       </mat-select>
     </mat-form-field>
-    <span>after campaign starts </span>
+    <span>before rewards expire,</span>
   </div>
   <div class="input-group notification-row">
     <span>at</span>
     <cl-time-picker formControlName="time"></cl-time-picker>
-    <span>
-      if user has not completed the campaign.
-    </span>
   </div>
   <section class="notification-message">
     <h2 class="card-title">
@@ -42,7 +39,7 @@
       </i>
       Send test SMS
     </cl-button>
-    <cl-button classList="secondary" (click)="deleteCompletedGroup()">Delete</cl-button>
+    <cl-button classList="secondary" (click)="deleteRewardExpiresGroup()">Delete</cl-button>
   </section>
 </section>
 

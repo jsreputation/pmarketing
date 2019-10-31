@@ -1,4 +1,4 @@
-<section class="launch-wrap" [formGroup]="group">
+<section class="notification-wrap" [formGroup]="group">
   <h2 class="card-title">
     On Campaign Launch Message <span>{{index + 1}}</span>
   </h2>
@@ -15,18 +15,18 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <div class="launch-date-time" *ngIf="compareType(launchType.launchDate)">
+  <div class="notification-date-time" *ngIf="compareType(launchType.launchDate)">
     Message will be sent on {{campaign?.campaignInfo?.startDate | date: 'dd/MM/yyyy'}} at {{campaign?.campaignInfo?.startTime}}.
   </div>
 
-  <section class="launch-date-time input-group notification-row" *ngIf="compareType(launchType.usersDateBirth)">
+  <section class="notification-date-time input-group notification-row" *ngIf="compareType(launchType.usersDateBirth)">
     <span>
       Message will be sent on the user’s birthday at
     </span>
     <cl-time-picker formControlName="birthdayTime"></cl-time-picker>
   </section>
 
-  <section class="launch-date-time input-group notification-row" *ngIf="compareType(launchType.usersMonthBirth)">
+  <section class="notification-date-time input-group notification-row" *ngIf="compareType(launchType.usersMonthBirth)">
     <span>
       Message will be sent on day
     </span>
@@ -41,13 +41,13 @@
     <cl-time-picker formControlName="birthdayTime"></cl-time-picker>
   </section>
 
-  <section calss="notification-message">
+  <section class="notification-message">
     <h2 class="card-title">
       Message Content
     </h2>
     <cl-sms-editor [options]="shortCodes" [control]="group.get('message')"></cl-sms-editor>
   </section>
-  <section class="notification-launch-actions flex justify-content-between align-items-center">
+  <section class="notification-actions flex justify-content-between align-items-center">
     <cl-button classList="tertiary ph-0" (click)="sendTestSms()">
       <i class="material-icons">
         send

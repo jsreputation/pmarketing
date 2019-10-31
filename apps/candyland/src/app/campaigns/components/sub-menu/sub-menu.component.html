@@ -36,14 +36,15 @@
                       (click)="clickOnMenu(menuType.beforeRewardExpires)"
     >
     </cl-sub-menu-item>
-    <cl-sub-menu-item [count]="getCount(menuType.noOfStampsToNextReward)"
+    <cl-sub-menu-item *ngIf="showSlotItem()"
+                      [count]="getCount(menuType.noOfStampsToNextReward)"
                       title="No. of Stamps to Next Reward"
                       [class.active]="checkActiveMenu(menuType.noOfStampsToNextReward)"
                       (click)="clickOnMenu(menuType.noOfStampsToNextReward)"
     >
     </cl-sub-menu-item>
   </div>
-  <div class="sub-group-menu">
+  <div class="sub-group-menu" *ngIf="showSlotItem()">
     <p class="sub-menu-group-title">
       Thank You
     </p>

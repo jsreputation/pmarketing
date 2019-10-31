@@ -84,6 +84,11 @@ import { SubMenuItemComponent } from './components/sub-menu/sub-menu-item/sub-me
 import { CampaignChannelsFormService } from './services/campaign-channels-form.service';
 import { CampaignLaunchMessageComponent } from './components/campaign-launch-message/campaign-launch-message.component';
 import { CampaignNotCompletedFormGroupComponent } from './components/campaign-not-completed-form-group/campaign-not-completed-form-group.component';
+import { BeforeCampaignEndsFormGroupComponent } from './components/before-campaign-ends-form-group/before-campaign-ends-form-group.component';
+import { BeforeRewardExpiresFormGroupComponent } from './components/before-reward-expires-form-group/before-reward-expires-form-group.component';
+import { NoStampsToNextRewardFormGroupComponent } from './components/no-stamps-to-next-reward-form-group/no-stamps-to-next-reward-form-group.component';
+import { EarnedStampFormGroupComponent } from './components/earned-stamp-form-group/earned-stamp-form-group.component';
+import { EarnedRewardFormGroupComponent } from './components/earned-reward-form-group/earned-reward-form-group.component';
 
 @NgModule({
   providers: [
@@ -116,6 +121,11 @@ import { CampaignNotCompletedFormGroupComponent } from './components/campaign-no
     SubMenuItemComponent,
     CampaignLaunchMessageComponent,
     CampaignNotCompletedFormGroupComponent,
+    BeforeCampaignEndsFormGroupComponent,
+    BeforeRewardExpiresFormGroupComponent,
+    NoStampsToNextRewardFormGroupComponent,
+    EarnedStampFormGroupComponent,
+    EarnedRewardFormGroupComponent,
   ],
   imports: [
     CommonModule,
