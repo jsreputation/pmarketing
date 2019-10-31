@@ -64,7 +64,7 @@ describe('WhistlerAuthenticationService', () => {
       expect(spyHttp).toHaveBeenCalled();
     })));
 
-  it('autoLogin', fakeAsync(inject([WhistlerAuthenticationService, HttpClient],
+  it('autoLogin error handle', fakeAsync(inject([WhistlerAuthenticationService, HttpClient],
     (auth: WhistlerAuthenticationService, http: HttpClient) => {
       spyOn(http, 'post').and.returnValue(of({ data: [{ attributes: { jwt: null } }] }));
       const errorFunction = () => {
@@ -74,4 +74,22 @@ describe('WhistlerAuthenticationService', () => {
       expect(errorFunction).toThrowError();
     })));
 
+  it('createUserAndAutoLogin', fakeAsync(inject([WhistlerAuthenticationService, HttpClient],
+    (auth: WhistlerAuthenticationService, http: HttpClient) => {
+      const spy = spyOn(auth, 'savePI');
+      spyOn(http, 'post').and.returnValue(of({ data: [{ attributes: { jwt: 'token' } }] }));
+      auth.createUserAndAutoLogin('test').subscribe(() => { });
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })));
+
+  it('createUserAndAutoLogin error handle', fakeAsync(inject([WhistlerAuthenticationService, HttpClient],
+    (auth: WhistlerAuthenticationService, http: HttpClient) => {
+      spyOn(http, 'post').and.returnValue(of({ data: [{ attributes: { jwt: null } }] }));
+      const errorFunction = () => {
+        auth.createUserAndAutoLogin('test').subscribe(() => { });
+        tick();
+      }
+      expect(errorFunction).toThrowError();
+    })));
 });
