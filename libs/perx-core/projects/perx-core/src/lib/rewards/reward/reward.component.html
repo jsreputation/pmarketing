@@ -44,5 +44,13 @@
         <div [innerHtml]="reward.howToRedeem"></div>
       </div>
     </div>
+    <div class="actions-container">
+      <button
+        mat-flat-button
+        color="primary"
+      >
+        {{getButtonTxt(reward.display_properties.buttonTxt )}}
+      </button>
+    </div>
   </div>
 </ng-container>

@@ -28,6 +28,7 @@ export interface IReward {
   inventory?: Inventory;
   redemptionText?: string;
   rawPayload?: any;
+  display_properties: IDisplayProperties;
 }
 
 export interface ICatalog {
@@ -65,4 +66,8 @@ export interface Inventory {
   rewardTotalBalance?: number | null;
   rewardTotalLimit?: number | null;
   rewardLimitPerUserBalance?: number | null;
+}
+
+export interface IDisplayProperties {
+  buttonTxt?: string;
 }

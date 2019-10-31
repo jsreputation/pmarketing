@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {IPrice, IReward} from '../models/reward.model';
+import {GAME_DEFAULT_DISPLAY_PROPERTIES} from '../../constants';
 
 @Component({
   selector: 'perx-core-reward',
@@ -20,6 +21,10 @@ export class RewardComponent implements OnInit {
 
   @Input()
   public showExpiry: boolean = true;
+
+  public getButtonTxt(buttonTxt: string): string {
+    return buttonTxt || GAME_DEFAULT_DISPLAY_PROPERTIES.buttonTxt;
+  }
 
   public ngOnInit(): void {
     if (!this.displayPriceFn) {
