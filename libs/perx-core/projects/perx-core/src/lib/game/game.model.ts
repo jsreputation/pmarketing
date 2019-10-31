@@ -88,3 +88,11 @@ export interface ISlice {
   background_color?: string;
   background_image?: string;
 }
+
+export interface IDisplayProperties {
+  noRewardsPopUp?: {
+    headLine?: string,
+    subHeadLine?: string,
+    imageURL?: string,
+  };
+}
