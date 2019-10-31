@@ -4,7 +4,7 @@ import {
   AfterViewInit,
   ViewChild,
   ChangeDetectorRef,
-  OnDestroy
+  OnDestroy, OnInit
 } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
@@ -24,13 +24,14 @@ import { IEngagementItemMenuOption } from '@cl-shared/components/engagement-item
   styleUrls: ['./engagements-list-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
+export class EngagementsListPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private static CAMPAIGN_ACTION: string = 'campaign';
   private destroy$: Subject<any> = new Subject();
 
   public dataSource: MatTableDataSource<IEngagement> = new MatTableDataSource<IEngagement>();
   public tabsFilterConfig: OptionConfig[];
-  public hasData: boolean = true;
+  public hasData: boolean;
+  public noData: boolean;
   public isGridMode: boolean = true;
   public options: IEngagementItemMenuOption[] = [
     { action: EngagementsListPageComponent.CAMPAIGN_ACTION, label: 'Launch as a campaign' }
@@ -47,13 +48,14 @@ export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
   ) {
   }
 
-  public ngAfterViewInit(): void {
+  public ngOnInit(): void {
     if (this.availableNewEngagementService.isAvailable) {
       this.showLaunchDialog();
     }
-    this.getData();
-    this.dataSource.filterPredicate = PrepareTableFilters.getClientSideFilterFunction();
-    this.dataSource.paginator = this.paginator;
+    this.initData();
+  }
+
+  public ngAfterViewInit(): void {
   }
 
   public ngOnDestroy(): void {
@@ -83,7 +85,7 @@ export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  private getData(): void {
+  private initData(): void {
     this.engagementsService.getEngagements()
       .pipe(
         tap(data => {
@@ -93,9 +95,12 @@ export class EngagementsListPageComponent implements AfterViewInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe((res: IEngagement[]) => {
+        this.hasData = res && res.length > 0;
+        this.noData = res && res.length === 0;
         this.dataSource.data = res;
-        this.hasData = !!res && res.length > 0;
         this.cd.detectChanges();
+        this.dataSource.filterPredicate = PrepareTableFilters.getClientSideFilterFunction();
+        this.dataSource.paginator = this.paginator;
       });
   }
 

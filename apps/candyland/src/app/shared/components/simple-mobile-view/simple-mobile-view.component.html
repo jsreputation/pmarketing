@@ -1,5 +1,5 @@
 <div class="mobile-preview mobile-content-multiple">
-  <div class="mobile-header" [ngStyle]="{background: headerColor}">
+  <div class="mobile-header" [ngStyle]="{background: primaryColor? primaryColor :  headerColor}">
     <ng-container *ngIf="logoType; else logoTextTemplate">
       <div class="header-logo-mobile">
         <img [src]="logo ? logo : 'assets/images/logo.svg' " alt="mobile-logo">
@@ -9,7 +9,9 @@
   <div [ngClass]="mobileImageClass" class="test">
     <div class="mobile-preview-background"
          clCreateImage
-         [ngStyle]="{'background-image': 'url(' + background + ')'}"
+         [ngStyle]="{
+         'background-image': 'url(' + background + ')',
+         'background-color': backgroundColor}"
     >
       <ng-content select=".mobile-preview-header"></ng-content>
       <ng-content select=".plugin-block"></ng-content>

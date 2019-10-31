@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   public loginBackgroundUrl: string;
   public errorMessage: string;
   public sourceType: string;
+  public isLoading: boolean = true;
 
   constructor(
     private router: Router,
@@ -55,6 +56,7 @@ export class LoginComponent implements OnInit {
     ).subscribe((settings: IMicrositeSettings) => {
       this.loginBackgroundUrl = settings.jsonValue.background as string;
       this.sourceType = settings.jsonValue.source_type as string;
+      this.isLoading = false;
     });
   }
 

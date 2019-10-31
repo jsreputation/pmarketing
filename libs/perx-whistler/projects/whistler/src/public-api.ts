@@ -23,3 +23,13 @@ export {
 } from './lib/jsonapi.payload';
 export { ITimeZone } from './lib/settings/time-zone';
 export { ILoyalty, ILoyaltyCard } from './lib/loyalty/loyalty';
+
+export {
+  WGameType,
+  WAttbsObjGame,
+  WAttbsObjEntity,
+  WGameDisplayProperties,
+  WGameOutcome,
+  WTreeDisplayProperties,
+  WPinataDisplayProperties
+} from './lib/game/game';
