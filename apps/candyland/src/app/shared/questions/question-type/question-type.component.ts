@@ -5,7 +5,7 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 import { SurveyService } from '@cl-core-services';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { SurveyQuestionType } from '@perx/core';
+import { WSurveyQuestionType } from '@perx/whistler';
 // tslint:disable
 export const EPANDED_TEXTAREA_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -33,7 +33,7 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
 
   @Output() selectTypeQuestion = new EventEmitter<IEngagementType>();
 
-  @ViewChild('matSelect', {static: true}) public matSelect: any;
+  @ViewChild('matSelect', { static: true }) public matSelect: any;
   public type = new FormControl();
 
   private destroy$ = new Subject();
@@ -44,7 +44,7 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
   };
 
   constructor(private surveyService: SurveyService,
-              private cd: ChangeDetectorRef) {
+    private cd: ChangeDetectorRef) {
   }
 
   public closed(): void {
@@ -70,9 +70,9 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
 
   public hideQuestionGroup(type: string): boolean {
     if (this.addQuestionType) {
-      return !(this.level >= 0 && type === SurveyQuestionType.questionGroup);
+      return !(this.level >= 0 && type === WSurveyQuestionType.questionGroup);
     }
-    return !(this.level > 0 && type === SurveyQuestionType.questionGroup);
+    return !(this.level > 0 && type === WSurveyQuestionType.questionGroup);
   }
 
   ngOnInit() {
