@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { map, mergeMap, mergeAll, tap } from 'rxjs/operators';
+import { map, mergeMap, mergeAll, tap, expand } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
 import { IMerchant } from './models/merchants.model';
 import { Config } from '../config/config';
@@ -53,9 +53,20 @@ export class WhistlerMerchantsService implements IMerchantsService {
         mergeAll(5),
       );
   }
-
+  public getAllMerchantsNew(){
+    let i = 1;
+    const params = {
+      page_number: `${i}`,
+      page_size: '10'
+    }
+    return this.http.get(`${this.config.apiHost}/organization/orgs`, {params}).pipe(expand((data)=> {
+      // current progress
+      return this.http.get(`${this.config.apiHost}/organization/orgs`, {params})
+    }))
+  }
   public getMerchants(page: number = 1): Observable<IMerchant[]> {
     const pageSize: number = 10;
+
     return this.http.get<IJsonApiListPayload<IWMerchant>>(
       `${this.config.apiHost}/organization/orgs`,
       {
