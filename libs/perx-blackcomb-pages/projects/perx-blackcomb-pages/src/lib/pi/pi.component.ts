@@ -11,10 +11,7 @@ import {
 
 import { Subject } from 'rxjs';
 
-import {
-  Config,
-  ITheme,
-} from '@perx/core';
+import { Config } from '@perx/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-pi',
@@ -27,7 +24,6 @@ export class PIComponent implements OnInit, OnDestroy {
   public preAuth: boolean;
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
-  public theme: ITheme;
 
   private initForm(): void {
     this.PIForm = this.fb.group({
