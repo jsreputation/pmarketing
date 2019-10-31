@@ -1,4 +1,4 @@
-import { IQuestion } from '@perx/core';
+import { IWQuestion } from '@perx/whistler';
 
 export interface IEngagementShakeType {
   id: string;
@@ -68,7 +68,7 @@ export interface IEngagementSurvey {
   description: string;
   image_url: string;
   title_display: string;
-  questions: IQuestion[];
+  questions: IWQuestion[];
   sub_title: string;
   background_img_url: string;
   progress_bar_color: string;
@@ -77,7 +77,7 @@ export interface IEngagementSurvey {
   button: string;
 }
 
-export interface  IEngagementInstantReward {
+export interface IEngagementInstantReward {
   id: string;
   type: string;
   created_at: string;
