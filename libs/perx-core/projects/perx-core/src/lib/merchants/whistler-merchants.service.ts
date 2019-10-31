@@ -36,25 +36,26 @@ export class WhistlerMerchantsService implements IMerchantsService {
   }
 
   public getAllMerchants(): Observable<IMerchant[]> {
-    const pageSize = 10;
-    return this.getMerchants(1, pageSize).pipe(
-      mergeMap((merchants: IMerchant[]) => {
-        const streams = [
-          of(merchants)
-        ];
+    return this.getMerchants(1)
+      .pipe(
+        mergeMap((merchants: IMerchant[]) => {
+          const streams = [
+            of(merchants)
+          ];
 
-        for (let i = 2; i <= this.historyMeta.page_count; i++) {
-          const stream = this.getMerchants(i, pageSize);
-          streams.push(stream);
-        }
+          for (let i = 2; i <= this.historyMeta.page_count; i++) {
+            const stream = this.getMerchants(i);
+            streams.push(stream);
+          }
 
-        return streams;
-      }),
-      mergeAll(5),
-    );
+          return streams;
+        }),
+        mergeAll(5),
+      );
   }
 
-  public getMerchants(page: number = 1, pageSize: number = 10): Observable<IMerchant[]> {
+  public getMerchants(page: number = 1): Observable<IMerchant[]> {
+    const pageSize: number = 10;
     return this.http.get<IJsonApiListPayload<IWMerchant>>(
       `${this.config.apiHost}/organization/orgs`,
       {

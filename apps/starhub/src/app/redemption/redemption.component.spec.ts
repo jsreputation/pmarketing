@@ -13,6 +13,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { rewards } from '../rewards.mock';
 import { AnalyticsService } from '../analytics.service';
+import { NgxBarcodeModule } from 'ngx-barcode';
+import { QRCodeModule } from 'angularx-qrcode';
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0])
@@ -81,7 +83,9 @@ describe('RedemptionComponent', () => {
         MatIconModule,
         MatDividerModule,
         VouchersModule,
-        UtilsModule
+        UtilsModule,
+        QRCodeModule,
+        NgxBarcodeModule
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub },
