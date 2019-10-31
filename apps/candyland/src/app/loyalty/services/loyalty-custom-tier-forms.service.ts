@@ -4,9 +4,7 @@ import { ClValidators } from '@cl-helpers/cl-validators';
 import { LoyaltyPointsExpireTrigger } from '../models/loyalty-points-expire-trigger.enum';
 import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class LoyaltyCustomTierFormsService {
 
   public getTireForm(): FormGroup {

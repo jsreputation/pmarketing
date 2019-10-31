@@ -19,13 +19,14 @@ import Utils from '@cl-helpers/utils';
 import { StatusLabel } from '@cl-helpers/status-label.enum';
 import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { IBasicTierApi } from '@perx/core';
+import { RuleSetupPopupComponent } from '../rule-setup-popup/rule-setup-popup.component';
 
 @Component({
   selector: 'cl-new-loyalty',
   templateUrl: './new-loyalty.component.html',
   styleUrls: ['./new-loyalty.component.scss'],
   providers: [{
-    provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
+    provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
   }]
 })
 
@@ -38,7 +39,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   public isEditPage: boolean = false;
   public showDraftButton: boolean = true;
   public prevFormValue: ILoyaltyForm;
-  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
+  @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
   protected destroy$: Subject<void> = new Subject();
 
@@ -75,15 +76,16 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog
-  ) { }
+  ) {
+  }
 
   public ngOnInit(): void {
     this.initPools();
     this.initForm();
     this.initCustomTiersDataSource();
     this.handleRouteParams().subscribe((loyalty: ILoyaltyForm) => {
-      this.initLoyaltyData(loyalty);
-    },
+        this.initLoyaltyData(loyalty);
+      },
       (error: Error) => {
         console.warn(error.message);
         this.router.navigateByUrl('/loyalty');
@@ -196,7 +198,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
     return dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
-        takeUntil(this.destroy$),
+        takeUntil(this.destroy$)
       );
   }
 
@@ -223,13 +225,6 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
       .subscribe(() => this.updateCustomTiersDataSource());
   }
 
-  // public addRule(): void {
-  //   const dialogRef = this.dialog.open(AddRulePopupComponent);
-  //
-  //   dialogRef.afterClosed().subscribe(() => {
-  //   });
-  // }
-
   private initCustomTiersDataSource(): void {
     if (!this.customTierDataSource) {
       this.customTierDataSource = new CustomDataSource<ICustomTireForm>(this.customTierService);
@@ -237,7 +232,49 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   private setBasicTierIdToCustomTiersDataSourceFilter(basicTierId: string): void {
-    this.customTierDataSource.filter = { program_id: basicTierId };
+    this.customTierDataSource.filter = {program_id: basicTierId};
+  }
+
+  // public addRule(): void {
+  //   const dialogRef = this.dialog.open(AddRulePopupComponent);
+  //
+  //   dialogRef.afterClosed().subscribe(() => {
+  //   });
+  // }
+
+  private getRefDialogSetupRule(data: any = null): Observable<MatDialogRef<RuleSetupPopupComponent>> {
+    const dialogRef: MatDialogRef<RuleSetupPopupComponent> = this.dialog.open(RuleSetupPopupComponent, {
+      panelClass: 'tier-setup-dialog',
+      data: {
+        // basicTierId: this.basicTierId,
+        // type:
+        // tier: data
+      }
+    });
+
+    return dialogRef.afterClosed()
+      .pipe(
+        filter(Boolean),
+        takeUntil(this.destroy$)
+      );
+  }
+
+  private createCustomRule(): void {
+    this.getRefDialogSetupRule()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.updateCustomTiersDataSource());
+  }
+
+  private editRule(data: ICustomTireForm): void {
+    this.getRefDialogSetupRule(data)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.updateCustomTiersDataSource());
+  }
+
+  private deleteRule(id: string): void {
+    // this.customTierService.deleteCustomTier(id)
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe(() => this.updateCustomTiersDataSource());
   }
 
   private initPools(): void {
@@ -259,7 +296,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
         switchMap(() => this.loyaltyService.getBasicTierRequest(newLoyalty, this.loyaltyId, this.basicTierId)),
         filter(Boolean),
         tap(basicTier => this.setBasicTierId(basicTier.data.id)),
-        takeUntil(this.destroy$),
+        takeUntil(this.destroy$)
       );
   }
 
@@ -280,7 +317,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
           }
           return of(null);
         }),
-        takeUntil(this.destroy$),
+        takeUntil(this.destroy$)
       );
   }
 

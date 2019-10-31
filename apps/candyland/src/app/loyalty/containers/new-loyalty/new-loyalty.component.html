@@ -17,6 +17,7 @@
   <!--/  buttons-->
 </header>
 <section class="content form-limiter loyalty">
+  <button (click)="createCustomRule()">Rules</button>
   <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0">
     <mat-step completed="false">
       <ng-template matStepLabel>Loyalty Details</ng-template>
@@ -34,14 +35,14 @@
       </cl-loyalty-form-step-tiers-conversions>
 
     </mat-step>
-    <!--hide this step for now-->
-    <!--    <mat-step>-->
-    <!--      <ng-template matStepLabel>Point Earn Rules</ng-template>-->
-    <!--        step three-->
-    <!--        <cl-loyalty-form-step-earn-rules></cl-loyalty-form-step-earn-rules>-->
-    <!--      <div>-->
-    <!--      </div>-->
-    <!--    </mat-step>-->
+
+    <mat-step>
+      <ng-template matStepLabel>Point Earn Rules</ng-template>
+      step three
+      <cl-loyalty-form-step-earn-rules></cl-loyalty-form-step-earn-rules>
+      <div>
+      </div>
+    </mat-step>
     <mat-step>
       <ng-template matStepLabel>Review</ng-template>
       <cl-loyalty-form-step-review *ngIf="form && stepOne && stepTwo && isLastStep"

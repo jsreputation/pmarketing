@@ -5,9 +5,7 @@ import { LoyaltyPointsExpireTrigger } from '../models/loyalty-points-expire-trig
 import { StatusLabel } from '@cl-helpers/status-label.enum';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class LoyaltyFormsService {
 
   public getFormLoyalty(): FormGroup {
@@ -55,7 +53,8 @@ export class LoyaltyFormsService {
       status: StatusLabel.DRAFT,
       details: {
         pointsName: 'Point',
-        imageUrl: null,
+        // imageUrl: null ,
+        imageUrl: 'https://material.angular.io/assets/img/homepage/github-circle-white-transparent.svg',
         joinMethod: {
           inviteOnly: true
         },

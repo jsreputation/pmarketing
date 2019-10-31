@@ -1,0 +1,169 @@
+<aside class="dialog loyalty" role="dialog" aria-labelledby="dialogTitle-tierSetup">
+  <header class="dialog-header-wrap">
+    <h2 class="dialog-title" id="dialogTitle-tierSetup">{{data?.rule ? 'Edit' : 'Add'}} Rule</h2>
+    <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+  <div class="dialog-content" [formGroup]="form">
+    <mat-form-field>
+      <input type="text" matInput formControlName="name" placeholder="Rule name">
+      <mat-error *ngIf="name.hasError('required') && name.touched">Required field</mat-error>
+      <mat-error *ngIf="name.hasError('minlength') && name.touched">Min length 1</mat-error>
+      <mat-error *ngIf="name.hasError('maxlength') && name.touched">Max length 60</mat-error>
+    </mat-form-field>
+
+    <label class="loyalty-label">If the customer...</label>
+
+    <div class="card-section card-content">
+      <div class="row">
+        <mat-form-field>
+          <mat-select>
+            <mat-option value="transaction">Makes a transaction TYPE</mat-option>
+            <mat-option value="amount">Makes a transaction AMOUNT</mat-option>
+            <mat-option value="date">Transacts within these DATES</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field>
+          <mat-select>
+            <mat-option value="prepaid">PREPAID</mat-option>
+            <mat-option value="other">Other Option</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <label class="loyalty-label">AND</label>
+
+    <div class="card-section card-content">
+      <div class="row">
+        <mat-form-field>
+          <mat-select>
+            <mat-option value="transaction">Makes a transaction TYPE</mat-option>
+            <mat-option value="amount">Makes a transaction AMOUNT</mat-option>
+            <mat-option value="date">Transacts within these DATES</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="loyalty-row input-group ">
+        <mat-form-field floatLabel="never">
+          <mat-select>
+            <mat-option value="equal">equal to</mat-option>
+            <mat-option value="notEqual">not equal to</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select floatLabel="never">
+            <mat-option value="SGD">SGD</mat-option>
+            <mat-option value="other">Other Option</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field floatLabel="never">
+          <input type="number" [min]="1" matInput placeholder="e.g. 10">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <label class="loyalty-label">AND</label>
+
+    <div class="card-section card-content">
+      <div class="row">
+        <mat-form-field>
+          <mat-select>
+            <mat-option value="transaction">Makes a transaction TYPE</mat-option>
+            <mat-option value="amount">Makes a transaction AMOUNT</mat-option>
+            <mat-option value="date">Transacts within these DATES</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="loyalty-row input-group ">
+        <cl-date-picker placeholder="Start date">
+        </cl-date-picker>
+        <span>to</span>
+        <cl-date-picker placeholder="End date">
+        </cl-date-picker>
+      </div>
+    </div>
+
+    <br>
+    <cl-button [classList]="'tertiary'">
+        <span>
+         + Add another subcondition
+        </span>
+    </cl-button>
+
+
+    <label class="loyalty-label">THEN</label>
+    <ng-container formGroupName="pointsEarned">
+      <div class="card-section card-content">
+        <mat-form-field>
+          <mat-select formControlName="typePoints">
+            <mat-option value="bonus">Bonus Points</mat-option>
+            <mat-option value="discount">Discount Points</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="loyalty-row input-group ">
+          <span>Award</span>
+          <mat-form-field floatLabel="never">
+            <input type="number" [min]="1" matInput formControlName="awardPoints" placeholder="e.g. 100">
+            <mat-error *ngIf="awardPoints.hasError('required') && awardPoints.touched">Required field</mat-error>
+            <mat-error *ngIf="awardPoints.hasError('min') && awardPoints.touched">Min value 1</mat-error>
+          </mat-form-field>
+          <span>Points</span>
+        </div>
+      </div>
+
+      <div class="card-section card-content">
+        <mat-form-field>
+          <mat-select formControlName="typeMultiplier">
+            <mat-option value="multiplier">Multiplier</mat-option>
+            <mat-option value="multiplier2">Multiplier 2</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="loyalty-row input-group ">
+          <span>Apply</span>
+          <mat-form-field floatLabel="never">
+            <input type="number" [min]="1" matInput formControlName="applyMultiplier" placeholder="e.g. 2x">
+            <mat-error *ngIf="applyMultiplier.hasError('required') && applyMultiplier.touched">Required field
+            </mat-error>
+            <mat-error *ngIf="applyMultiplier.hasError('min') && applyMultiplier.touched">Min value 1</mat-error>
+          </mat-form-field>
+          <span>Multiplier to points</span>
+        </div>
+        <div class="loyalty-row input-group ">
+          <span>Up to a maximum of</span>
+          <mat-form-field floatLabel="never">
+            <input class="loyalty-points-input" type="number" [min]="1" matInput formControlName="maximumPoints"
+                   placeholder="e.g. 2x">
+            <mat-error *ngIf="maximumPoints.hasError('required') && maximumPoints.touched">Required field
+            </mat-error>
+            <mat-error *ngIf="maximumPoints.hasError('min') && maximumPoints.touched">Min value 1</mat-error>
+          </mat-form-field>
+          <span>Points</span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <footer class="dialog-actions">
+    <cl-button classList="tertiary"
+               class="actions-close"
+               (click)="close()"
+               [disableRipple]="true">
+        <span>
+          Cancel
+        </span>
+    </cl-button>
+
+    <cl-button classList="primary"
+               (click)="apply()">
+        <span>
+         {{data?.rule ? 'Apply' : 'Save'}} Rule
+        </span>
+    </cl-button>
+  </footer>
+</aside>
+
+

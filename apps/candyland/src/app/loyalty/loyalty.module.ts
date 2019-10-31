@@ -46,6 +46,12 @@ import { ViewSchemeInfoComponent } from './components/view-scheme-info/view-sche
 import { ViewLoyaltyComponent } from './components/view-loyalty/view-loyalty.component';
 import { ViewGlobalEarnBurnRulesComponent } from './components/view-global-earn-burn-rules/view-global-earn-burn-rules.component';
 import { LoyaltyReviewComponent } from './containers/loyalty-review/loyalty-review.component';
+import { LoyaltyFormStepEarnRulesComponent } from './components/loyalty-form-step-earn-rules/loyalty-form-step-earn-rules.component';
+import { PointEarnRulesGroupComponent } from './components/point-earn-rules-group/point-earn-rules-group.component';
+import { PointEarnRulesListComponent } from './components/point-earn-rules-list/point-earn-rules-list.component';
+import { RuleSetupPopupComponent } from './containers/rule-setup-popup/rule-setup-popup.component';
+import { LoyaltyCustomTierFormsService } from './services/loyalty-custom-tier-forms.service';
+import { LoyaltyEarnRulesFormsService } from './services/loyalty-earn-rules-forms.service';
 
 @NgModule({
   declarations: [
@@ -72,6 +78,10 @@ import { LoyaltyReviewComponent } from './containers/loyalty-review/loyalty-revi
     ViewLoyaltyComponent,
     ViewGlobalEarnBurnRulesComponent,
     LoyaltyReviewComponent,
+    LoyaltyFormStepEarnRulesComponent,
+    PointEarnRulesGroupComponent,
+    PointEarnRulesListComponent,
+    RuleSetupPopupComponent,
   ],
   imports: [
     CommonModule,
@@ -105,11 +115,14 @@ import { LoyaltyReviewComponent } from './containers/loyalty-review/loyalty-revi
     PipesModule
   ],
   providers: [
-    LoyaltyFormsService
+    LoyaltyFormsService,
+    LoyaltyCustomTierFormsService,
+    LoyaltyEarnRulesFormsService
   ],
   entryComponents: [
     AddRulePopupComponent,
-    TierSetupPopupComponent
+    TierSetupPopupComponent,
+    RuleSetupPopupComponent
   ]
 })
 export class LoyaltyModule {
