@@ -5,4 +5,13 @@ export interface IOutcome {
   banner: string;
   background_img_url: string;
   card_background_img_url: string;
+  display_properties?: IDisplayProperties;
+}
+
+export interface IDisplayProperties {
+  noRewardsPopUp?: {
+    headLine?: string,
+    subHeadLine?: string,
+    imageURL?: string,
+  };
 }

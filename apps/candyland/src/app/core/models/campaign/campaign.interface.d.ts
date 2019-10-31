@@ -29,6 +29,7 @@ export interface ICampaign {
     };
     template?: any;
     rewardsList?: {
+        id?: string;
         result_id?: number;
         result_type?: string;
         probability?: number;
