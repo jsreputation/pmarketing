@@ -166,7 +166,7 @@ export { GeoLocationService } from './lib/location/geolocation.service';
  */
 export { SurveyModule } from './lib/survey/survey.module';
 export { SurveyService } from './lib/survey/survey.service';
-export { ISurvey, SurveyQuestionType, IQuestion } from './lib/survey/models/survey.model';
+// export { ISurvey, SurveyQuestionType, IQuestion } from './lib/survey/models/survey.model';
 export { SurveyComponent } from './lib/survey/survey/survey.component';
 export { QuestionComponent } from './lib/survey/question/question.component';
 export { SelectComponent } from './lib/survey/question/select/select.component';
