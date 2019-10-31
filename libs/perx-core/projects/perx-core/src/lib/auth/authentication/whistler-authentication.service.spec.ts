@@ -4,8 +4,8 @@ import { WhistlerAuthenticationService } from './whistler-authentication.service
 import { TokenStorage } from './token-storage.service';
 import { ProfileModule } from '../../profile/profile.module';
 import { ConfigModule } from '../../config/config.module';
-import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 const tokenStorageStub = {
   getAppInfoProperty: () => { },
@@ -88,6 +88,35 @@ describe('WhistlerAuthenticationService', () => {
       spyOn(http, 'post').and.returnValue(of({ data: [{ attributes: { jwt: null } }] }));
       const errorFunction = () => {
         auth.createUserAndAutoLogin('test').subscribe(() => { });
+        tick();
+      }
+      expect(errorFunction).toThrowError();
+    })));
+
+  it('should call refreshShouldHappen', inject([WhistlerAuthenticationService], (whService: WhistlerAuthenticationService) => {
+    expect(whService.refreshShouldHappen({} as HttpErrorResponse)).toBeFalsy();
+  }));
+
+  it('should verify token request', inject([WhistlerAuthenticationService], (whService: WhistlerAuthenticationService) => {
+    expect(whService.verifyTokenRequest('http://test.com/preauth')).toBeTruthy();
+    expect(whService.verifyTokenRequest('http://test.com//v4/oauth/token')).toBeTruthy();
+    expect(whService.verifyTokenRequest('http://test.com/v2/oauth/token')).toBeTruthy();
+    expect(whService.verifyTokenRequest('http://test.com/v2/cognito/login')).toBeTruthy();
+  }));
+
+  it('should login', fakeAsync(inject([WhistlerAuthenticationService, HttpClient],
+    (auth: WhistlerAuthenticationService, http: HttpClient) => {
+      const spy = spyOn(http, 'post').and.returnValue(of({ headers: { get: () => 'token' } }));
+      auth.login('test', 'test').subscribe(() => { });
+      tick();
+      expect(spy).toHaveBeenCalled();
+
+      spy.and.returnValue(throwError(null));
+      auth.login('test', 'test').subscribe(() => { });
+
+      spy.and.returnValue(of({ headers: { get: () => null } }));
+      const errorFunction = () => {
+        auth.login('test', 'test').subscribe(() => { });
         tick();
       }
       expect(errorFunction).toThrowError();
