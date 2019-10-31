@@ -11,7 +11,7 @@ import {
   IOutcome
 } from '@perx/core';
 import { Observable, Subject } from 'rxjs';
-import { filter, switchMap, takeUntil, map, tap, /*catchError*/ } from 'rxjs/operators';
+import { filter, switchMap, takeUntil, map, tap } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
@@ -84,7 +84,7 @@ export class RedeemComponent implements OnInit, OnDestroy {
         if (eng.display_properties && eng.display_properties.errorPopUp) {
           this.errorPopUp.imageUrl = eng.display_properties.errorPopUp.imageURL;
         }
-    });
+      });
 
   }
 
