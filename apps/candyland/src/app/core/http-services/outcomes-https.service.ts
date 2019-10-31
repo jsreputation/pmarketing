@@ -14,4 +14,17 @@ export class OutcomesHttpsService {
   public getOutcomes(params: HttpParams): Observable<IJsonApiListPayload<IOutcomeAttributes>> {
     return this.http.get<IJsonApiListPayload<IOutcomeAttributes>>(ApiConfig.outcomesPath, { params });
   }
+
+  public updateOutcome(id: string, data: IJsonApiPayload<IOutcomeAttributes>): Observable<IJsonApiPayload<IOutcomeAttributes>> {
+    return this.http.patch<IJsonApiPayload<any>>(ApiConfig.outcomesPath + '/' + id, data);
+  }
+
+  public createOutcome(data: IJsonApiPayload<IOutcomeAttributes>): Observable<IJsonApiPayload<IOutcomeAttributes>> {
+    return this.http.post<IJsonApiPayload<any>>(ApiConfig.outcomesPath, data);
+  }
+
+  public deleteOutcome(id: string): Observable<any> {
+    return this.http.delete(`${ApiConfig.outcomesPath}/${id}`);
+  }
+
 }
