@@ -1,40 +1,16 @@
-import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpParams,
-} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
-import { oc } from 'ts-optchain';
-import {
-  Observable,
-  of,
-  interval,
-} from 'rxjs';
-import {
-  map,
-  tap,
-  flatMap,
-  mergeAll,
-  scan,
-  filter,
-  switchMap,
-} from 'rxjs/operators';
+import {oc} from 'ts-optchain';
+import {interval, Observable, of} from 'rxjs';
+import {filter, flatMap, map, mergeAll, scan, switchMap, tap} from 'rxjs/operators';
 
-import { IVoucherService } from './ivoucher.service';
-import {
-  IVoucher,
-  VoucherState,
-  RedemptionType,
-  IGetVoucherParams,
-  IRedeemOptions,
-} from './models/voucher.model';
+import {IVoucherService} from './ivoucher.service';
+import {IGetVoucherParams, IRedeemOptions, IVoucher, RedemptionType, VoucherState} from './models/voucher.model';
 
-import { Config } from '../config/config';
-import { IRewardParams } from '../rewards/models/reward.model';
-import {
-  IV4Reward,
-  V4RewardsService,
-} from '../rewards/v4-rewards.service';
+import {Config} from '../config/config';
+import {IRewardParams} from '../rewards/models/reward.model';
+import {IV4Reward, V4RewardsService} from '../rewards/v4-rewards.service';
 
 interface IV4Meta {
   count?: number;
@@ -119,7 +95,8 @@ export class V4VouchersService implements IVoucherService {
       code: v.voucher_code,
       expiry: reward.valid_to !== null ? new Date(reward.valid_to) : null,
       redemptionDate: v.redemption_date !== null ? new Date(v.redemption_date) : null,
-      redemptionType: v.redemption_type !== null ? v.redemption_type.type : null
+      redemptionType: v.redemption_type !== null && v.redemption_type.type !== null ? v.redemption_type.type :
+        v.voucher_type.toString() === 'code' ? RedemptionType.txtCode : v.voucher_type
     };
   }
 
