@@ -77,15 +77,14 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     private toggleControlService: ToggleControlService,
     private route: ActivatedRoute
   ) {
-    super(2, store, stepConditionService, cd);
+    super(2, store, stepConditionService);
     this.initForm();
   }
 
   public ngOnInit(): void {
     super.ngOnInit();
     this.channelType.valueChanges
-      .pipe(takeUntil(this.destroy$)).subscribe(
-      value => {
+      .pipe(takeUntil(this.destroy$)).subscribe( value => {
         if (value === 'sms') {
           this.pool.setValidators([Validators.required]);
           this.message.setValidators([Validators.required]);
@@ -98,8 +97,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
         this.pool.updateValueAndValidity();
         this.message.updateValueAndValidity();
         this.scheduleSendDate.updateValueAndValidity();
-      }
-    );
+      });
 
     this.campaignId = this.route.snapshot.params.id;
     this.isFirstInit = true;

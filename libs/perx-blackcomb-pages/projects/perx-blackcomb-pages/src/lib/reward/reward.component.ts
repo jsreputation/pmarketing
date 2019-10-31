@@ -83,5 +83,4 @@ export class RewardComponent implements OnInit, OnDestroy {
     };
     this.dialog.open(PopupComponent, { data });
   }
-
 }

@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable, of } from 'rxjs';
-import { GeneralStaticDataService, SurveyQuestionType } from '@perx/core';
+import { GeneralStaticDataService } from '@perx/core';
+import { WSurveyQuestionType } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -89,7 +90,7 @@ export class SurveyHttpService {
         },
         {
           total: 1000,
-          selectedType: SurveyQuestionType.pictureChoice,
+          selectedType: WSurveyQuestionType.pictureChoice,
           question_title: 'How satisfied were you with the event?',
           payload: [
             {
@@ -124,7 +125,7 @@ export class SurveyHttpService {
         },
         {
           total: 1000,
-          selectedType: SurveyQuestionType.multipleChoice,
+          selectedType: WSurveyQuestionType.multipleChoice,
           question_title: 'How satisfied were you with the event?',
           payload: [
             {
@@ -155,7 +156,7 @@ export class SurveyHttpService {
         },
         {
           total: 1000,
-          selectedType: SurveyQuestionType.longText,
+          selectedType: WSurveyQuestionType.longText,
           question_title: 'How satisfied were you with the event?',
           payload: [
             {
@@ -204,7 +205,7 @@ export class SurveyHttpService {
         },
         {
           total: 8000,
-          selectedType: SurveyQuestionType.questionGroup,
+          selectedType: WSurveyQuestionType.questionGroup,
           question_title: 'How satisfied were you with the event?',
           payload: [
             {
@@ -233,7 +234,7 @@ export class SurveyHttpService {
             },
             {
               total: 1000,
-              selectedType: SurveyQuestionType.pictureChoice,
+              selectedType: WSurveyQuestionType.pictureChoice,
               question_title: 'How satisfied were you with the event?',
               payload: [
                 {
@@ -268,7 +269,7 @@ export class SurveyHttpService {
             },
             {
               total: 1000,
-              selectedType: SurveyQuestionType.multipleChoice,
+              selectedType: WSurveyQuestionType.multipleChoice,
               question_title: 'How satisfied were you with the event?',
               payload: [
                 {
@@ -299,7 +300,7 @@ export class SurveyHttpService {
             },
             {
               total: 1000,
-              selectedType: SurveyQuestionType.longText,
+              selectedType: WSurveyQuestionType.longText,
               question_title: 'How satisfied were you with the event?',
               payload: [
                 {

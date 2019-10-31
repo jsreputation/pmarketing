@@ -106,5 +106,4 @@ export class QuestionComponent implements OnChanges {
       this.errorState.hasError = true;
     }
   }
-
 }

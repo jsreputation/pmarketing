@@ -62,5 +62,4 @@ export class GroupComponent implements OnChanges {
     const totalPoint = pointsTrackerValues.reduce((sum, point) => sum + point, 0);
     return totalPoint / subQuestionLength;
   }
-
 }

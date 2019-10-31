@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { QuestionFormFieldService } from '@cl-shared/questions/question-form-field/shared/services/question-form-field.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { SurveyQuestionType } from '@perx/core';
+import { WSurveyQuestionType } from '@perx/whistler';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -24,7 +24,7 @@ export class QuestionFormFieldComponent implements OnInit, OnChanges, OnDestroy 
   public showDescription: boolean;
   public required: boolean = false;
   public closed: boolean = true;
-  public surveyQuestionType: any = SurveyQuestionType;
+  public surveyQuestionType: any = WSurveyQuestionType;
   private destroy$: Subject<any> = new Subject();
 
   constructor(
@@ -70,7 +70,7 @@ export class QuestionFormFieldComponent implements OnInit, OnChanges, OnDestroy 
     this.removed.emit(this.currentIndex);
   }
 
-  public choseTypeQuestion(selectedTypeQuestion: SurveyQuestionType): void {
+  public choseTypeQuestion(selectedTypeQuestion: WSurveyQuestionType): void {
     this.changeControl.emit({ index: this.currentIndex, selectedTypeQuestion, level: this.level });
   }
 
