@@ -7,8 +7,27 @@ export class OutcomesHttpAdapter {
       id: data.id,
       resultId: data.attributes.result_id,
       resultType: data.attributes.result_type,
-      probability: data.attributes.probability,
+      probability: data.attributes.probability ? data.attributes.probability * 100 : null,
       lootBoxId: data.attributes.loot_box_id,
+    };
+  }
+
+  public static transformFromOutcomes(
+    data: { value: IRewardEntity, probability: number },
+    enableProbability: boolean,
+    campaignId: string,
+    slotNumber: number
+  ): IJsonApiItem<IOutcomeAttributes> {
+    return {
+      type: 'possible_outcomes',
+      attributes: {
+        result_id: data.value && parseInt(data.value.id, 10),
+        result_type: 'Perx::Reward::Entity',
+        probability: enableProbability ? data.probability / 100 : null,
+        loot_box_id: slotNumber,
+        no_outcome: !data.value.id,
+        campaign_entity_id: campaignId && parseInt(campaignId, 10)
+      }
     };
   }
 }
