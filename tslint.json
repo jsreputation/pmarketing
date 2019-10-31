@@ -135,6 +135,7 @@
     "object-literal-key-quotes": [
       true,
       "as-needed"
-    ]
+    ],
+    "no-bitwise": false
   }
 }
