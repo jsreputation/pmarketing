@@ -28,7 +28,7 @@ export interface IReward {
   inventory?: Inventory;
   redemptionText?: string;
   rawPayload?: any;
-  display_properties: IDisplayProperties;
+  display_properties?: IDisplayProperties;
 }
 
 export interface ICatalog {

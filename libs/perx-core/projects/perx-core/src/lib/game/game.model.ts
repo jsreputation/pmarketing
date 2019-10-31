@@ -98,9 +98,9 @@ export interface IDisplayProperties {
     buttonTxt?: string,
   };
   rewardSuccessPopUp?: {
-    buttonTxt: string,
+    buttonTxt?: string,
   };
   rewardCongratulationsPopUp?: {
-    buttonTxt: string,
+    buttonTxt?: string,
   };
 }
