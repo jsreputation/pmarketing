@@ -31,10 +31,10 @@ export function TokenStorageServiceFactory(
   config: Config
 ): TokenStorage {
   switch (config.storageType) {
-  case 'local':
-    return new LocalTokenStorage(config);
-  default:
-    return new LocalTokenStorage(null);
+    case 'local':
+      return new LocalTokenStorage(config);
+    default:
+      return new LocalTokenStorage(null);
   }
 }
 
