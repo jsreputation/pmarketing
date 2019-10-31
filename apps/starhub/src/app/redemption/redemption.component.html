@@ -23,6 +23,18 @@
                 </ng-template>
               </div>
             </div>
+            <div *ngIf="voucher.redemptionType === 'qrcode'">
+              <div class="code-redemption">
+                <p>Please ask cashier to scan QR code</p>
+                <qrcode [qrdata]="voucher.code" [size]="100"></qrcode>
+              </div>
+            </div>
+            <div *ngIf="voucher.redemptionType === 'barcode'">
+              <div class="code-redemption">
+                <p>Please ask cashier to scan barcode</p>
+                <ngx-barcode [bc-value]="voucher.code"></ngx-barcode>
+              </div>
+            </div>
             <div *ngIf="voucher.redemptionType === 'pin'" class="code-redemption">
               <p>Please ask cashier to enter PIN</p>
               <button *ngIf="!showEnterPinComponent else pinComponent" class="enter-pin" mat-flat-button color="primary" (click)="showPinComponent()">Enter PIN</button>
