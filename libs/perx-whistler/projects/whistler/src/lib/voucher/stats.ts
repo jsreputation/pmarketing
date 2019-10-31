@@ -2,10 +2,10 @@ export interface IVoucherStatsApi {
   urn: string;
   created_at: string;
   updated_at: string;
-  inventory: {
+  code: {
     [key: string]: number;
   };
-  assigned: {
+  voucher: {
     [key: string]: number
   };
 }

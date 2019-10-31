@@ -1,12 +1,12 @@
 <div class="main-container" [ngStyle]="{'background-image': backgroundImage? 'url(' + backgroundImage + ')': '' }">
 
   <div class="content">
-    <div class="stamps">
+    <div class="stamps" [ngStyle]="{'background-image': cardBgImage? 'url(' + cardBgImage + ')': '' }">
       <h1 *ngIf="title">{{title}}</h1>
       <p class="subtitle" *ngIf="subTitle">{{subTitle}}</p>
       <p class="available-stamp" *ngIf="showStampsCounter">
         <img *ngIf="stampCardImage" class="stampCountImage" [src]="stampCardImage" alt="">
-        <span>X {{availableStampCount}}</span>
+        <span>= {{availableStampCount}}</span>
       </p>
       <div class="row" *ngFor="let rowItemsCount of currentActiveOrientation; let rowNum = index">
         <div class="dummy-container" *ngFor="let box of counter(rowItemsCount); let i = index">
