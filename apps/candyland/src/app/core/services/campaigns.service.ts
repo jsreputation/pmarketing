@@ -35,15 +35,17 @@ export class CampaignsService implements ITableService {
     );
   }
 
-  public updateCampaign(id: string, data: any): Observable<IJsonApiPayload<ICampaignAttributes>> {
+  public updateCampaign(data: ICampaign): Observable<IJsonApiPayload<ICampaignAttributes>> {
     const sendData = CampaignsHttpAdapter.transformFromCampaign(data);
-    sendData.id = id;
-    return this.campaignsHttpsService.updateCampaign(id, {data: sendData});
+    if (data.id) {
+      sendData.id = data.id;
+    }
+    return this.campaignsHttpsService.updateCampaign(data.id, { data: sendData });
   }
 
-  public createCampaign(data: any): Observable<IJsonApiPayload<ICampaignAttributes>> {
+  public createCampaign(data: ICampaign): Observable<IJsonApiPayload<ICampaignAttributes>> {
     const sendData = CampaignsHttpAdapter.transformFromCampaign(data);
-    return this.campaignsHttpsService.createCampaign({data: sendData});
+    return this.campaignsHttpsService.createCampaign({ data: sendData });
   }
 
   public duplicateCampaign(id: string): Observable<IJsonApiPayload<ICampaignAttributes>> {
