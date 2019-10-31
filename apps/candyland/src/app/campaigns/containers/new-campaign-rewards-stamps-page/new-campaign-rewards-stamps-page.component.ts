@@ -23,7 +23,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     public cd: ChangeDetectorRef,
     private toggleControlService: ToggleControlService,
     private formService: NewCampaignRewardsStampsFormService) {
-    super(1, store, stepConditionService, cd);
+    super(1, store, stepConditionService);
     this.initForm();
   }
 
