@@ -1,8 +1,30 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ICampaign, ICampaignService, IVoucherService, VoucherState, Voucher, CampaignType, StampService, IStampCard } from '@perx/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, combineLatest, Subject } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+
+import {
+  Observable,
+  combineLatest,
+  Subject,
+} from 'rxjs';
+import {
+  map,
+  mergeMap,
+} from 'rxjs/operators';
+
+import {
+  ICampaign,
+  ICampaignService,
+  IVoucherService,
+  VoucherState,
+  Voucher,
+  CampaignType,
+  StampService,
+  IStampCard,
+} from '@perx/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-wallet',
@@ -19,7 +41,7 @@ export class WalletComponent implements OnInit, OnDestroy {
     private router: Router,
     private vouchersService: IVoucherService,
     private stampService: StampService,
-    private campaignService: ICampaignService
+    private campaignService: ICampaignService,
   ) { }
 
   public ngOnInit(): void {

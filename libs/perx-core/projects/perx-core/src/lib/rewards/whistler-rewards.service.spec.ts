@@ -75,12 +75,8 @@ describe('WhistlerRewardsService', () => {
         ConfigModule.forRoot({ ...environment })
       ],
       providers: [
-        {
-          provide: IMerchantsService, useValue: merchantsServiceStub
-        },
-        {
-          provide: HttpClient, useValue: httpClientSpy
-        }
+        { provide: IMerchantsService, useValue: merchantsServiceStub },
+        { provide: HttpClient, useValue: httpClientSpy }
       ]
     });
     service = TestBed.get(WhistlerRewardsService);
