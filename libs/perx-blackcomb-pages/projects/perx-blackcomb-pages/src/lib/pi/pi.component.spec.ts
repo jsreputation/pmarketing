@@ -10,7 +10,7 @@ describe('PIComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ PIComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
