@@ -85,17 +85,17 @@ describe('WhistlerMerchantsService', () => {
     (merchantService: WhistlerMerchantsService, http: HttpClient) => {
       const spy = spyOn(http, 'get').and.returnValue(of({ data: [mockMerchant], meta: {} }));
       merchantService.getMerchants().subscribe(() => { });
-      tick()
+      tick();
       expect(spy).toHaveBeenCalled();
       spy.and.returnValue(of({ data: [mockMerchant] }));
       merchantService.getMerchants(1).subscribe(() => { });
-      tick()
+      tick();
       expect(spy).toHaveBeenCalled();
     })));
 
   it('should return mechant from last call', fakeAsync(inject([WhistlerMerchantsService, HttpClient],
     (merchantService: WhistlerMerchantsService, http: HttpClient) => {
-      spyOn(http, 'get').and.returnValue(of({ data: [mockMerchant], meta: { page_count: 3 } }))
+      spyOn(http, 'get').and.returnValue(of({ data: [mockMerchant], meta: { page_count: 3 } }));
       merchantService.getAllMerchants().subscribe(() => { });
       tick();
       merchantService.getMerchant(42).subscribe(() => { });

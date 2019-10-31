@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, empty } from 'rxjs';
+import { Observable, of, EMPTY } from 'rxjs';
 import { map, tap, expand, finalize } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
 import { IMerchant } from './models/merchants.model';
@@ -34,19 +34,19 @@ export class WhistlerMerchantsService implements IMerchantsService {
       ]
     };
   }
-  
+
   public getAllMerchants(): Observable<IMerchant[]> {
     let i = 1;
-    let current = {};
+    const current = {};
     return new Observable((sub) => {
       this.getMerchantsPage(i).pipe(
-        expand((response) => i < (response.meta && response.meta.page_count) ? this.getMerchantsPage(++i) : empty()),
+        expand((response) => i < (response.meta && response.meta.page_count) ? this.getMerchantsPage(++i) : EMPTY),
         map((value) => value.data.map((el) => WhistlerMerchantsService.WMerchantToMerchant(el))),
         tap((data) => data.forEach((el) => current[el.id] = el)),
         finalize(() => this.merchants = current)
       ).subscribe(() => {
         sub.next(Object.values(Object.assign(current, this.merchants)));
-      })
+      });
     });
   }
 
@@ -55,11 +55,11 @@ export class WhistlerMerchantsService implements IMerchantsService {
     const params = {
       page_number: `${page}`,
       page_size: `${pageSize}`
-    }
+    };
     return this.http.get<IJsonApiListPayload<IWMerchant>>(
       `${this.config.apiHost}/organization/orgs`,
       { params }
-    )
+    );
   }
 
   public getMerchants(page: number = 1): Observable<IMerchant[]> {
