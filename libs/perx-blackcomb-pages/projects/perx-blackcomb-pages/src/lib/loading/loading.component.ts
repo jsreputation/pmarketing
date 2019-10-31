@@ -25,6 +25,11 @@ import {
   NotificationService,
   ICampaign,
   ICampaignService,
+  // CampaignType,
+  // IGameService,
+  // SurveyService,
+  // LoyaltyService,
+  // InstantOutcomeService
 } from '@perx/core';
 
 import * as uuid from 'uuid';
@@ -44,14 +49,9 @@ export class LoadingComponent implements OnInit, OnDestroy {
   private destroy$: Subject<any> = new Subject();
 
   public get isCampaignEnded(): boolean {
-    if (
-      this.campaignData &&
+    return !(this.campaignData &&
       this.campaignData.endsAt &&
-      this.campaignData.endsAt > new Date()
-    ) {
-      return false;
-    }
-    return true;
+      this.campaignData.endsAt > new Date());
   }
 
   private goWallet(): void {
@@ -90,19 +90,44 @@ export class LoadingComponent implements OnInit, OnDestroy {
   }
 
   private redirectAfterLogin(): void {
-    if (this.campaignId) {
-      if (!this.isCampaignEnded) {
-        const { type } = this.campaignData;
-        this.router.navigateByUrl(
-          this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${this.campaignId}`
-        );
-      } else {
-        this.initCampaignEndedPopup();
-        this.goWallet();
-      }
-      return;
+    if (!this.isCampaignEnded) {
+      this.prePlay();
+    } else if (this.campaignId && this.isCampaignEnded) {
+      this.initCampaignEndedPopup();
     }
     this.goWallet();
+  }
+
+  private prePlay(): void {
+    const { type } = this.campaignData;
+    // Pre-play logic placeholder
+    // let prePlay$;
+    // switch (type) {
+    //   case CampaignType.game:
+    //     prePlay$ = this.gameService.prePlay();
+    //     break;
+    //   case CampaignType.stamp:
+    //     prePlay$ = this.loyaltyService.prePlay();
+    //     break;
+    //   case CampaignType.survey:
+    //     prePlay$ = this.surveyService.prePlay();
+    //     break;
+    //   case CampaignType.give_reward:
+    //     prePlay$ = this.instantOutcomeService.prePlay();
+    //     break;
+    // }
+    // prePlay$.subscribe(
+    //   () => this.redirectToEngagementPage(type)
+    // );
+
+    this.redirectToEngagementPage(type);
+
+  }
+
+  private redirectToEngagementPage(type: string): void {
+    this.router.navigateByUrl(
+      this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${this.campaignId}`
+    );
   }
 
   constructor(
@@ -111,6 +136,10 @@ export class LoadingComponent implements OnInit, OnDestroy {
     private campaignSvc: ICampaignService,
     private config: Config,
     private notificationService: NotificationService,
+    // private gameService: IGameService,
+    // private surveyService: SurveyService,
+    // private loyaltyService: LoyaltyService,
+    // private instantOutcomeService: InstantOutcomeService,
     @Inject(PLATFORM_ID) private platformId: object,
   ) {
     this.preAuth = this.config ? this.config.preAuth : false;
