@@ -11,7 +11,7 @@ const tokenStorageStub = {
   getAppInfoProperty: () => { },
   clearAppInfoProperty: () => { },
   setAppInfoProperty: () => { }
-}
+};
 
 describe('WhistlerAuthenticationService', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -70,7 +70,7 @@ describe('WhistlerAuthenticationService', () => {
       const errorFunction = () => {
         auth.autoLogin().subscribe(() => { });
         tick();
-      }
+      };
       expect(errorFunction).toThrowError();
     })));
 
@@ -89,7 +89,7 @@ describe('WhistlerAuthenticationService', () => {
       const errorFunction = () => {
         auth.createUserAndAutoLogin('test').subscribe(() => { });
         tick();
-      }
+      };
       expect(errorFunction).toThrowError();
     })));
 
@@ -118,7 +118,7 @@ describe('WhistlerAuthenticationService', () => {
       const errorFunction = () => {
         auth.login('test', 'test').subscribe(() => { });
         tick();
-      }
+      };
       expect(errorFunction).toThrowError();
     })));
 });
