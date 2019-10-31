@@ -1,7 +1,7 @@
 import { ICampaign } from './../campaign/models/campaign.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ISurvey, IQuestion, MaterialColor, IAnswer } from './models/survey.model';
+import { ISurvey, IQuestion, MaterialColor, IAnswer, IDisplayProperties } from './models/survey.model';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
@@ -36,7 +36,7 @@ interface IWhistlerDisplayProperties {
   progress_bar_color: string;
   card_background_img_url: string;
   questions: IQuestion[];
-  campaign_properties?: any;
+  disProp?: IDisplayProperties;
 }
 
 interface IWhistlerPostAnswerAttributes {
@@ -79,24 +79,24 @@ export class SurveyService {
       card_background_img_url: dp.card_background_img_url,
       background_img_url: dp.background_img_url,
       questions: dp.questions,
-      campaign_properties: dp.campaign_properties
+      displayProperties: dp.disProp
     };
   }
 
   public getSurveyFromCampaign(id: number): Observable<ISurvey> {
-    let dispProp: any;
+    let disProp: IDisplayProperties;
     return this.campaignService.getCampaign(id)
       .pipe(
         switchMap(
           (campaign: ICampaign) => {
-            dispProp = campaign.displayProperties;
+            disProp = campaign.displayProperties;
             return this.http.get<IWhistlerSurvey>(
               this.baseUrl + '/survey/engagements/' + campaign.rawPayload.engagement_id + '?campaign_id=' + id
             );
           }
         ),
         map((res: IWhistlerSurvey) => {
-          res.data.attributes.display_properties.campaign_properties = dispProp;
+          res.data.attributes.display_properties = { ...res.data.attributes.display_properties, disProp };
           return SurveyService.WhistlerSurveyService(res);
         })
       );

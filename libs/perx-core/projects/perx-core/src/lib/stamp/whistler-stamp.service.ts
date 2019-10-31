@@ -2,7 +2,8 @@ import { switchMap, map, tap } from 'rxjs/operators';
 import {
   IStampCard,
   IStamp,
-  StampCardState
+  StampCardState,
+  IDisplayProperties
 } from './models/stamp.model';
 import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { Observable, of } from 'rxjs';
@@ -24,7 +25,7 @@ interface AttbsObjEntity {
   engagement_type: string;
   engagement_id: number;
   pool_id: null;
-  display_properties?: any;
+  display_properties?: IDisplayProperties;
 }
 
 interface AttbsObjStamp {
@@ -48,6 +49,7 @@ interface AttbsObjStamp {
     card_background_img_url: string;
     background_img_url: string;
     display_campaign_as: string;
+    disProp?: IDisplayProperties;
   };
 }
 
@@ -89,6 +91,7 @@ export class WhistlerStampService implements StampService {
         bgImage: attributesObj.display_properties.background_img_url,
         cardBgImage: attributesObj.display_properties.card_background_img_url,
         displayCampaignAs: attributesObj.display_properties.display_campaign_as,
+        disProp: attributesObj.display_properties.disProp
       }
     };
   }
@@ -99,7 +102,7 @@ export class WhistlerStampService implements StampService {
   }
 
   public getCurrentCard(campaignId: number): Observable<IStampCard> {
-    let propertiesFromCampaign: any;
+    let disProp: IDisplayProperties;
     if (this.cache[campaignId]) {
       return of(this.cache[campaignId]);
     }
@@ -107,12 +110,16 @@ export class WhistlerStampService implements StampService {
       .pipe(
         map(res => res.data.attributes),
         switchMap(correctEntityAttribute => {
-          propertiesFromCampaign = correctEntityAttribute.display_properties;
+          disProp = correctEntityAttribute.display_properties;
           return this.http.get<IJsonApiItemPayload<AttbsObjStamp>>(
             `${this.baseUrl}/loyalty/engagements/${correctEntityAttribute.engagement_id}`
           );
         }),
-        map((res) => ({ ...WhistlerStampService.WStampCardToStampCard(res.data), campaignId, propertiesFromCampaign })),
+        map((res) => {
+          res.data.attributes.display_properties = { ...res.data.attributes.display_properties, disProp };
+          return res;
+        }),
+        map((res) => ({ ...WhistlerStampService.WStampCardToStampCard(res.data), campaignId })),
         tap(sc => this.cache[campaignId] = sc)
       );
   }

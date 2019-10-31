@@ -17,7 +17,7 @@ import {
 } from '@perx/whistler';
 
 interface CampaignProperties {
-  id: number;
+  engagementId: number;
   display_properties: IDisplayProperties;
 }
 
@@ -38,7 +38,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       .pipe(
         map(res => res.data.attributes),
         map(attributes => ({
-          id: attributes.engagement_id,
+          engagementId: attributes.engagement_id,
           display_properties: attributes.display_properties
         })),
       );
@@ -52,7 +52,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
         switchMap((campaign: CampaignProperties) => {
           displayProps = campaign.display_properties;
           return this.http.get<IJsonApiItemPayload<InstantOutcomeEngagementAttributes>>(
-            `${this.config.apiHost}/instant_outcome/engagements/${campaign.id}`);
+            `${this.config.apiHost}/instant_outcome/engagements/${campaign.engagementId}`);
         }),
         map(res => res.data.attributes.display_properties),
         map(displayProperties => Object.assign(displayProperties, displayProps))
@@ -67,7 +67,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
           data: {
             type: 'transactions',
             attributes: {
-              engagement_id: campaign.id,
+              engagement_id: campaign.engagementId,
               campaign_entity_id: campaignId
             }
           }

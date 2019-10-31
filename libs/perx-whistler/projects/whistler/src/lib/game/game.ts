@@ -31,7 +31,13 @@ export interface WAttbsObjEntity {
   status: string;
   updated_at: string;
   urn: string;
-  display_properties?: any;
+  display_properties?: {
+    noRewardsPopUp?: {
+      headLine?: string,
+      subHeadLine?: string,
+      imageUrl?: string
+    }
+  };
 }
 
 export interface WGameDisplayProperties {
