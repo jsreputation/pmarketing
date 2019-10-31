@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Observable} from 'rxjs';
-import {IPrice, IReward} from '../models/reward.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IPrice, IReward } from '../models/reward.model';
 
 @Component({
   selector: 'perx-core-rewards-list',
@@ -44,5 +44,4 @@ export class RewardsListComponent implements OnInit {
   public rewardClickedHandler(reward: IReward): void {
     this.tapped.emit(reward);
   }
-
 }
