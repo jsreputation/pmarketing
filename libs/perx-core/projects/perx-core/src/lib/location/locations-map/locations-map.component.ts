@@ -86,7 +86,7 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
       });
     });
     script.innerHTML = '';
-    let url = 'http://maps.googleapis.com/maps/api/js';
+    let url = 'https://maps.googleapis.com/maps/api/js';
     if (this.key) {
       url += `?key=${this.key}`;
     }
@@ -108,7 +108,7 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
 
     if (!this.userMarker) {
       this.userMarker = new google.maps.Marker({
-        icon: 'http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png',
+        icon: 'https://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png',
         position: location,
         map: this.map,
       });

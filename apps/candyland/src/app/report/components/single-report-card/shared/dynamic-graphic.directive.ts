@@ -1,16 +1,16 @@
 import { ComponentFactoryResolver, Directive, Input, OnChanges, OnInit, ViewContainerRef } from '@angular/core';
-import { SurveyQuestionType } from '../../../../../../../../libs/perx-core/dist/perx-core';
+import { WSurveyQuestionType } from '@perx/whistler';
 import { RatingGraphicComponent } from '../../rating-graphic/rating-graphic.component';
 import { PictureChoiceGraphicComponent } from '../../picture-choice-graphic/picture-choice-graphic.component';
 import { MultipleChoiceGraphicComponent } from '../../multiple-choice-graphic/multiple-choice-graphic.component';
 import { LongTextGraphicComponent } from '../../long-text-graphic/long-text-graphic.component';
 import { QuestionGroupGraphicComponent } from '../../question-group-graphic/question-group-graphic.component';
 const componentMapper = {
-  [SurveyQuestionType.rating]: RatingGraphicComponent,
-  [SurveyQuestionType.pictureChoice]: PictureChoiceGraphicComponent,
-  [SurveyQuestionType.multipleChoice]: MultipleChoiceGraphicComponent,
-  [SurveyQuestionType.longText]: LongTextGraphicComponent,
-  [SurveyQuestionType.questionGroup]: QuestionGroupGraphicComponent,
+  [WSurveyQuestionType.rating]: RatingGraphicComponent,
+  [WSurveyQuestionType.pictureChoice]: PictureChoiceGraphicComponent,
+  [WSurveyQuestionType.multipleChoice]: MultipleChoiceGraphicComponent,
+  [WSurveyQuestionType.longText]: LongTextGraphicComponent,
+  [WSurveyQuestionType.questionGroup]: QuestionGroupGraphicComponent,
 };
 @Directive({
   selector: '[clDynamicGraphic]'
@@ -20,9 +20,9 @@ export class DynamicGraphicDirective implements OnInit, OnChanges {
   @Input() public data: any;
   @Input() public type: string;
   @Input() public currentIndex: number;
-  constructor(private resolver: ComponentFactoryResolver,
-              private container: ViewContainerRef) {
-  }
+  constructor(
+    private resolver: ComponentFactoryResolver,
+    private container: ViewContainerRef) { }
 
   public ngOnInit(): void {
     this.createComponentFactory();
@@ -36,7 +36,7 @@ export class DynamicGraphicDirective implements OnInit, OnChanges {
     const factory = this.resolver.resolveComponentFactory(componentMapper[this.type]);
     this.componentRef = this.container.createComponent(factory);
 
-    if (this.type === SurveyQuestionType.questionGroup) {
+    if (this.type === WSurveyQuestionType.questionGroup) {
       this.componentRef.instance.data = this.data;
       this.setSettingsForGroup();
     } else {

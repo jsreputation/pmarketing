@@ -44,5 +44,4 @@ export class ContentComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }
