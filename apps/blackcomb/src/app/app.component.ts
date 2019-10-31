@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { PopupComponent, NotificationService, IPopupConfig, ThemesService, ITheme, AuthenticationService } from '@perx/core';
 import {
@@ -31,7 +31,8 @@ export class AppComponent implements OnInit {
     private location: Location,
     private router: Router,
     private themesService: ThemesService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private cd: ChangeDetectorRef
   ) {
     this.preAuth = environment.preAuth;
   }
@@ -77,6 +78,7 @@ export class AppComponent implements OnInit {
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||
       ref instanceof WalletComponent;
+    this.cd.detectChanges();
   }
 
   public leftClick(): void {

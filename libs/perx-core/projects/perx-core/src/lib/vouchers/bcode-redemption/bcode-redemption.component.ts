@@ -15,6 +15,14 @@ export class BcodeRedemptionComponent implements OnChanges {
   @Input()
   public instructions: string = 'Present this code to the cashier to complete your transaction.';
 
+  public showImage: boolean = true;
+  public showVoucherName: boolean = true;
+  public showAfterInstruction: boolean = false;
+  public showTermsAndCondition: boolean = true;
+
+  @Input()
+  public useMinimalStyle: boolean = false;
+
   public bCode: string = ``;
 
   @Input('voucher')
@@ -27,6 +35,14 @@ export class BcodeRedemptionComponent implements OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.voucherId) {
       this.voucher$ = this.vouchersService.get(this.voucherId);
+    }
+
+    if (changes.useMinimalStyle && this.useMinimalStyle) {
+      this.useMinimalStyle = true;
+      this.showImage = false;
+      this.showVoucherName = false;
+      this.showTermsAndCondition = false;
+      this.showAfterInstruction = true;
     }
   }
 }

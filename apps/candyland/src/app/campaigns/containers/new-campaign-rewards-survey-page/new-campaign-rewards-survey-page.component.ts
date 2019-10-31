@@ -35,7 +35,7 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
     private fb: FormBuilder,
     private route: ActivatedRoute
   ) {
-    super(1, store, stepConditionService, cd);
+    super(1, store, stepConditionService);
     this.initForm();
   }
 

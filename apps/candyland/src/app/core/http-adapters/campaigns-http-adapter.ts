@@ -42,7 +42,7 @@ export class CampaignsHttpAdapter {
     return {
       id: data.id,
       name: campaignData.name,
-      engagement_id: campaignData.engagement_id,
+      engagement_id: `${campaignData.engagement_id}`,
       engagement_type: EngagementTypeFromAPIMapping[campaignData.engagement_type],
       campaignInfo: {
         goal: campaignData.goal,

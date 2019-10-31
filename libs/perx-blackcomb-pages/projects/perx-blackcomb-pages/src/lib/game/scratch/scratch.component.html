@@ -1,0 +1,28 @@
+<div class="main-puzzle-container">
+  <div class="game-header">
+    <h1>{{game.texts.title}}</h1>
+    <h3>{{game.texts.subTitle}}</h3>
+  </div>
+  <div class="game-wrapper">
+    <div class="scratch-wrapper">
+      <perx-core-scratch-card
+        [coverImg]="config.coverImg"
+        [underlyingImg]="config.underlyingImg"
+        [uncoverPortionToTrigger]="config.uncoverPortionToTrigger"
+        [enabled]="isEnabled"
+        (completed)="gameCompleted()"
+      >
+      </perx-core-scratch-card>
+    </div>
+  </div>
+  <div class="game-footer">
+    <button
+      mat-flat-button
+      color="primary"
+      [hidden]="isEnabled"
+      (click)="isEnabled = true"
+    >
+      {{ game.texts.button }}
+    </button>
+  </div>
+</div>
