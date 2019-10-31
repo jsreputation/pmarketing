@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit, PageAppearence {
       .getAllRewards()
       .subscribe((rewards) => this.rewards = of(rewards));
     this.getRewards();
-    this.translate.get('TOTAL_POINTS').subscribe((msg) => this.subTitleFn = (loyalty) => loyalty.pointsBalance + ' ' + msg);
+    this.translate.get('TOTAL_POINTS').subscribe((msg) => this.subTitleFn = () => msg);
   }
 
   private getRewards(): void {
