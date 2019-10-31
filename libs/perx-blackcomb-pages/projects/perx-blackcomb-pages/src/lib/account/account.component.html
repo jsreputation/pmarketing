@@ -1,3 +1,10 @@
 <div class="section">
     <a [routerLink]="'/c/' +page.key" *ngFor="let page of pages">{{page.title}}</a>
 </div>
+<div *ngIf="!preAuth" class="section">
+  <span
+    (click)="logout()"
+  >
+    Log Out
+  </span>
+</div>
