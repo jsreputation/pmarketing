@@ -14,6 +14,7 @@ import {
   MerchantsModule as PerxMerchantsModule,
   CampaignModule as PerxCampaignModule,
   StampModule as PerxStampModule,
+  OutcomeModule,
 } from '@perx/core';
 import {
   MatToolbarModule,
@@ -67,6 +68,7 @@ const perxComponents = [
     AppRoutingModule,
     PerxCoreModule,
     VouchersModule,
+    OutcomeModule,
     AuthenticationModule,
     GameModule,
     AccountModule,

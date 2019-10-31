@@ -17,7 +17,7 @@
             </mat-card>
         </a>
     </div>
-    <h1>My Wallet</h1>
+    <h1>{{rewardsHeadline}}</h1>
     <perx-core-vouchers (tapped)="voucherSelected($event)" [data]="vouchers$" [filter]="filter"
         [showRedeemedIcon]="false">
     </perx-core-vouchers>

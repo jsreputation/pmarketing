@@ -1,14 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RedeemComponent } from './redeem.component';
-import { VouchersModule, IVoucherService } from '@perx/core';
-// import { of } from 'rxjs';
+import { VouchersModule, IVoucherService, InstantOutcomeService } from '@perx/core';
+import { of } from 'rxjs';
 
 describe('RedeemComponent', () => {
   let component: RedeemComponent;
   let fixture: ComponentFixture<RedeemComponent>;
   const vouchersServiceStub = {
     // getAll: () => of([])
+  };
+  const outcomeServiceStub = {
+    getFromCampaign: () => of()
   };
 
   beforeEach(async(() => {
@@ -19,7 +22,8 @@ describe('RedeemComponent', () => {
         VouchersModule
       ],
       providers: [
-        { provide: IVoucherService, useValue: vouchersServiceStub }
+        { provide: IVoucherService, useValue: vouchersServiceStub },
+        { provide: InstantOutcomeService, useValue: outcomeServiceStub }
       ]
     })
       .compileComponents();

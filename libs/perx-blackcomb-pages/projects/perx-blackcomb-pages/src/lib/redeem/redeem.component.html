@@ -2,10 +2,10 @@
   <div class="full-page-container-white">
     <div *ngIf="redemptionType === rt.pin">
       <p>
-        The merchant will enter the redemption code when you are ready to redeem at the venue.
+        {{subHeadLine}}
       </p>
       <h1>
-        Merchant to enter the code
+        {{headLine}}
       </h1>
       <perx-core-pin-redemption
         length="4"
@@ -15,7 +15,7 @@
       </perx-core-pin-redemption>
     </div>
     <div *ngIf="redemptionType === rt.txtCode || redemptionType === rt.offline" class="code-container">
-      <perx-core-bcode-redemption [voucherId]="voucherId"></perx-core-bcode-redemption>
+      <perx-core-bcode-redemption [instructions]="codeInstructionsText" [voucherId]="voucherId"></perx-core-bcode-redemption>
       <div class="button-container">
         <button mat-stroked-button color="default" (click)="goBack()">Cancel</button>
       </div>

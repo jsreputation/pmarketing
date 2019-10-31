@@ -36,6 +36,7 @@ export class WalletComponent implements OnInit, OnDestroy {
   public vouchers$: Observable<Voucher[]>;
   private destroy$: Subject<void> = new Subject();
   public filter: string[];
+  public rewardsHeadline: 'My Rewards';
 
   constructor(
     private router: Router,
