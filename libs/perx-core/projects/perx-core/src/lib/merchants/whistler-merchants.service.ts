@@ -40,7 +40,7 @@ export class WhistlerMerchantsService implements IMerchantsService {
     let current = {};
     return new Observable((sub) => {
       this.getMerchantsPage(i).pipe(
-        expand((response) => i < response.meta && response.meta.page_count ? this.getMerchantsPage(++i) : empty()),
+        expand((response) => i < (response.meta && response.meta.page_count) ? this.getMerchantsPage(++i) : empty()),
         map((value) => value.data.map((el) => WhistlerMerchantsService.WMerchantToMerchant(el))),
         tap((data) => data.forEach((el) => current[el.id] = el)),
         finalize(() => this.merchants = current)
@@ -50,7 +50,7 @@ export class WhistlerMerchantsService implements IMerchantsService {
     });
   }
 
-  public getMerchantsPage(page: number = 1): Observable<IJsonApiListPayload<IWMerchant>> {
+  private getMerchantsPage(page: number): Observable<IJsonApiListPayload<IWMerchant>> {
     const pageSize: number = 10;
     const params = {
       page_number: `${page}`,
