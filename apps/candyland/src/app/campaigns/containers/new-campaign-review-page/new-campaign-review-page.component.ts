@@ -19,9 +19,9 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
 
   constructor(
     public store: CampaignCreationStoreService,
-    public cd: ChangeDetectorRef,
+    public cd: ChangeDetectorRef
   ) {
-    super(0, store, null, cd);
+    super(0, store, null);
   }
 
   public ngOnInit(): void {
@@ -44,9 +44,7 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
         }
       });
     }
-    if (this.stampsHasRewards) {
-      this.cd.detectChanges();
-    }
+    this.cd.detectChanges();
   }
 
   public ngOnDestroy(): void {
