@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { map, mergeMap, mergeAll, tap, expand } from 'rxjs/operators';
+import { Observable, of, empty } from 'rxjs';
+import { map, tap, expand, finalize } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
 import { IMerchant } from './models/merchants.model';
 import { Config } from '../config/config';
@@ -34,36 +34,34 @@ export class WhistlerMerchantsService implements IMerchantsService {
       ]
     };
   }
-
+  
   public getAllMerchants(): Observable<IMerchant[]> {
-    return this.getMerchants(1)
-      .pipe(
-        mergeMap((merchants: IMerchant[]) => {
-          const streams = [
-            of(merchants)
-          ];
-
-          for (let i = 2; i <= this.historyMeta.page_count; i++) {
-            const stream = this.getMerchants(i);
-            streams.push(stream);
-          }
-
-          return streams;
-        }),
-        mergeAll(5),
-      );
-  }
-  public getAllMerchantsNew(){
     let i = 1;
-    const params = {
-      page_number: `${i}`,
-      page_size: '10'
-    }
-    return this.http.get(`${this.config.apiHost}/organization/orgs`, {params}).pipe(expand((data)=> {
-      // current progress
-      return this.http.get(`${this.config.apiHost}/organization/orgs`, {params})
-    }))
+    let current = {};
+    return new Observable((sub) => {
+      this.getMerchantsPage(i).pipe(
+        expand((response) => i < response.meta && response.meta.page_count ? this.getMerchantsPage(++i) : empty()),
+        map((value) => value.data.map((el) => WhistlerMerchantsService.WMerchantToMerchant(el))),
+        tap((data) => data.forEach((el) => current[el.id] = el)),
+        finalize(() => this.merchants = current)
+      ).subscribe(() => {
+        sub.next(Object.values(Object.assign(current, this.merchants)));
+      })
+    });
   }
+
+  public getMerchantsPage(page: number = 1): Observable<IJsonApiListPayload<IWMerchant>> {
+    const pageSize: number = 10;
+    const params = {
+      page_number: `${page}`,
+      page_size: `${pageSize}`
+    }
+    return this.http.get<IJsonApiListPayload<IWMerchant>>(
+      `${this.config.apiHost}/organization/orgs`,
+      { params }
+    )
+  }
+
   public getMerchants(page: number = 1): Observable<IMerchant[]> {
     const pageSize: number = 10;
 
