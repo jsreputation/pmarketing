@@ -21,13 +21,12 @@ interface IV4MicrositeSettings {
   providedIn: 'root'
 })
 export class ConfigService {
-
   private appConfig: IConfig;
 
-  constructor(private http: HttpClient,
-    private authenticationService: AuthenticationService) {
-
-  }
+  constructor(
+    private http: HttpClient,
+    private authenticationService: AuthenticationService
+  ) { }
 
   public static v4MicrositeSettingsToMicrositeSettings(v4Settings: IV4MicrositeSettings): IMicrositeSettings {
     return {
