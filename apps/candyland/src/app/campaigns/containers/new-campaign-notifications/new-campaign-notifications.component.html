@@ -80,7 +80,10 @@
               <cl-button classList="tertiary ph-0" (click)="addNewLaunchGroup()">
                 + Add another message
               </cl-button>
-
+            </ng-container>
+            <ng-container *ngSwitchCase="notificationsMenu.campaignNotCompleted">
+              <cl-campaign-not-completed-form-group>
+              </cl-campaign-not-completed-form-group>
             </ng-container>
           </section>
         </ng-container>

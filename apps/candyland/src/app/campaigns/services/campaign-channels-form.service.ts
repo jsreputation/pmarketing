@@ -58,6 +58,14 @@ export class CampaignChannelsFormService {
     });
   }
 
+  public getCompletedGroup(): FormGroup {
+    return new FormGroup({
+      numberPeriod: new FormControl(null, [Validators.required, Validators.min(1)]),
+      periodType: new FormControl(null, [Validators.required])
+      time: new FormControl(null, [Validators.required])
+    });
+  }
+
   public addNewLaunchGroup(form: FormGroup): void {
     (form.get('launch') as FormArray).push(this.getLaunchGroup());
   }

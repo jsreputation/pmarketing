@@ -83,6 +83,7 @@ import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
 import { SubMenuItemComponent } from './components/sub-menu/sub-menu-item/sub-menu-item.component';
 import { CampaignChannelsFormService } from './services/campaign-channels-form.service';
 import { CampaignLaunchMessageComponent } from './components/campaign-launch-message/campaign-launch-message.component';
+import { CampaignNotCompletedFormGroupComponent } from './components/campaign-not-completed-form-group/campaign-not-completed-form-group.component';
 
 @NgModule({
   providers: [
@@ -114,6 +115,7 @@ import { CampaignLaunchMessageComponent } from './components/campaign-launch-mes
     SubMenuComponent,
     SubMenuItemComponent,
     CampaignLaunchMessageComponent,
+    CampaignNotCompletedFormGroupComponent,
   ],
   imports: [
     CommonModule,
