@@ -163,3 +163,11 @@ export class BlackcombWalletAppPage {
  }
 
 }
+
+export class BlackcombHomeAppPage {
+
+  public navigateToBlackcombHomeApp(): Promise<string> {
+    return browser.get('https://generic-blackcomb-dev1.uat.whistler.perxtech.io/home') as Promise<string> ;
+ }
+
+}
