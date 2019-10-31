@@ -165,7 +165,6 @@ module.exports = {
               "format": "PascalCase"
             }
           ],
-          "no-bitwise": false,
           "no-accessor-recursion": true,
           "no-async-without-await": true,
           "no-collapsible-if": true,
