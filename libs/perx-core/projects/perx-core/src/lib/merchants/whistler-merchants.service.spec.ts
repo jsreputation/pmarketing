@@ -8,7 +8,7 @@ import { IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
 import { IMerchant as IWMerchant } from '@perx/whistler';
 import { Type } from '@angular/core';
 
-fdescribe('WhistlerMerchantsService', () => {
+describe('WhistlerMerchantsService', () => {
   let httpTestingController: HttpTestingController;
   let service: WhistlerMerchantsService;
   const environment = {
