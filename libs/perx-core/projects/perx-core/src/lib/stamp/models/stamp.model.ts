@@ -82,7 +82,6 @@ export interface IStampCard {
     disProp?: IDisplayProperties;
   };
   stamps?: IStamp[];
-  propertiesFromCampaign?: any;
 }
 
 export interface IDisplayProperties {

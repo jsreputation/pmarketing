@@ -24,10 +24,18 @@ export interface ICampaign {
   thumbnailUrl?: string;
   engagementId?: number;
   rawPayload?: any;
-  displayProperties?: any;
+  displayProperties?: IDisplayProperties;
 }
 
 export enum CommChannel {
   sms = 'sms',
   email = 'email'
+}
+
+export interface IDisplayProperties {
+  noRewardsPopUp?: {
+    headLine?: string,
+    subHeadLine?: string,
+    imageURL?: string,
+  };
 }
