@@ -11,16 +11,16 @@ import {
 import {
   QuestionMultipleChoiceFieldComponent
 } from '@cl-shared/questions/question-multiple-choice-field/question-multiple-choice-field.component';
-import { SurveyQuestionType } from '@perx/core';
+import { WSurveyQuestionType } from '@perx/whistler';
 
 const componentMapper = {
-  [SurveyQuestionType.rating]: QuestionRatingFieldComponent,
-  [SurveyQuestionType.date]: QuestionDateFieldComponent,
-  [SurveyQuestionType.phone]: QuestionCountryCodeFieldComponent,
-  [SurveyQuestionType.questionGroup]: QuestionGroupFieldComponent,
-  [SurveyQuestionType.longText]: QuestionLongTextFieldComponent,
-  [SurveyQuestionType.pictureChoice]: QuestionPictureChoiceFieldComponent,
-  [SurveyQuestionType.multipleChoice]: QuestionMultipleChoiceFieldComponent
+  [WSurveyQuestionType.rating]: QuestionRatingFieldComponent,
+  [WSurveyQuestionType.date]: QuestionDateFieldComponent,
+  [WSurveyQuestionType.phone]: QuestionCountryCodeFieldComponent,
+  [WSurveyQuestionType.questionGroup]: QuestionGroupFieldComponent,
+  [WSurveyQuestionType.longText]: QuestionLongTextFieldComponent,
+  [WSurveyQuestionType.pictureChoice]: QuestionPictureChoiceFieldComponent,
+  [WSurveyQuestionType.multipleChoice]: QuestionMultipleChoiceFieldComponent
 };
 
 @Directive({
@@ -34,9 +34,9 @@ export class DynamicFieldDirective implements OnInit, OnChanges {
   @Input() public currentIndex: number;
   public componentRef: any;
 
-  constructor(private resolver: ComponentFactoryResolver,
-              private container: ViewContainerRef) {
-  }
+  constructor(
+    private resolver: ComponentFactoryResolver,
+    private container: ViewContainerRef) { }
 
   public ngOnInit(): void {
     this.createComponentFactory();
@@ -50,7 +50,7 @@ export class DynamicFieldDirective implements OnInit, OnChanges {
     const factory = this.resolver.resolveComponentFactory(componentMapper[this.type]);
     this.componentRef = this.container.createComponent(factory);
 
-    if (this.type === SurveyQuestionType.questionGroup) {
+    if (this.type === WSurveyQuestionType.questionGroup) {
       this.componentRef.instance.group = this.group;
       this.setSettingsForGroup();
     } else {
