@@ -1,1 +1,4 @@
-<perx-core-reward [reward]="reward$"></perx-core-reward>
+<perx-core-reward class="core-reward" [reward]="reward$" [displayPriceFn]="displayPriceFn"></perx-core-reward>
+<div class="action">
+    <button mat-button>{{ 'PURCHASE' | translate }}</button>
+</div>

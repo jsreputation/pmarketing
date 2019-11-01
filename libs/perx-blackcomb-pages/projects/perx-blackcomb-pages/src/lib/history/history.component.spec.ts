@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HistoryComponent } from './history.component';
 import { VouchersModule, IVoucherService } from '@perx/core';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('HistoryComponent', () => {
   let component: HistoryComponent;
@@ -17,6 +18,7 @@ describe('HistoryComponent', () => {
       declarations: [HistoryComponent],
       imports: [
         VouchersModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub }

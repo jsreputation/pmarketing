@@ -13,6 +13,7 @@ import {
 import { Observable, Subject } from 'rxjs';
 import { filter, switchMap, takeUntil, map, tap } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-redeem',
@@ -25,8 +26,8 @@ export class RedeemComponent implements OnInit, OnDestroy {
   public redemptionType: RedemptionType;
   private destroy$: Subject<void> = new Subject<void>();
   public rt: typeof RedemptionType = RedemptionType;
-  public headLine: string = 'Enter Pin';
-  public subHeadLine: string = 'Pass your device to the merchant to enter the PIN and redeem your reward';
+  public headLine: string = ENTER_CODE;
+  public subHeadLine: string = REDEMPTION_CODE;
   public rewardSuccessPopUp: IPopupConfig = {
     title: 'Successfully Redeemed!',
     text: '',
@@ -43,7 +44,8 @@ export class RedeemComponent implements OnInit, OnDestroy {
     private vouchersService: IVoucherService,
     private dialog: MatDialog,
     private router: Router,
-    private outcomeService: InstantOutcomeService
+    private outcomeService: InstantOutcomeService,
+    private translate: TranslateService
   ) {
   }
 
@@ -60,7 +62,8 @@ export class RedeemComponent implements OnInit, OnDestroy {
         }),
         takeUntil(this.destroy$)
       );
-
+    this.translate.get('ENTER_CODE').subscribe((text) => this.headLine = text);
+    this.translate.get('REDEMPTION_CODE').subscribe((text) => this.subHeadLine = text);
     this.route.params
       .pipe(
         map((params: Params) => params.id),
@@ -95,6 +98,12 @@ export class RedeemComponent implements OnInit, OnDestroy {
 
   public pinInputSuccess(): void {
     this.popup(this.rewardSuccessPopUp);
+    this.translate.get('REDEEM_SUCCESSFULLY').subscribe((text) =>
+      this.popup({
+        title: text,
+        text: 'ID: ' + this.voucherId
+      })
+    );
   }
 
   public errorHandler(status: number): void {
@@ -106,16 +115,18 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public needLoginPopup(): void {
-    this.popup({
-      title: 'You need to login to redeem the voucher',
-      buttonTxt: 'Go to login'
-    })
-      .afterClosed()
-      .subscribe(() => this.router.navigate(['/login']));
+    this.translate.get(['REEDEM_QUEST', 'GO_TO_LOGIN']).pipe(map((dictionary) => this.popup({
+      title: dictionary.REEDEM_QUEST,
+      buttonTxt: dictionary.GO_TO_LOGIN
+    }).afterClosed())).subscribe(() => this.router.navigate(['/login']));
   }
 
   public errorPopup(): void {
     this.popup(this.errorPopUp);
+    this.translate.get('TRY_AGAIN_LATER').subscribe((qest) =>
+      this.popup({
+        title: qest
+      }));
   }
 
   public popup(data: IPopupConfig): MatDialogRef<PopupComponent> {
