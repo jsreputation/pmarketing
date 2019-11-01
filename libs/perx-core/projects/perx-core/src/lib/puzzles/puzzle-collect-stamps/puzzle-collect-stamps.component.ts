@@ -32,31 +32,31 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   private rewards: PuzzleCollectReward[] = [];
 
   @Input()
-  private nbSlots: number = null;
+  private nbSlots: number | null = null;
 
   @Input()
-  private preStampImg: string = null;
+  private preStampImg: string | null = null;
 
   @Input()
-  private postStampImg: string = null;
+  private postStampImg: string | null = null;
 
   @Input()
-  private rewardPreStamp: string = null;
+  private rewardPreStamp: string | null = null;
 
   @Input()
-  private rewardPostStamp: string = null;
+  private rewardPostStamp: string | null = null;
 
   @Input()
-  public backgroundImage: string = null;
+  public backgroundImage: string | null = null;
 
   @Input()
-  public cardBgImage: string = null;
+  public cardBgImage: string | null = null;
 
   @Input()
-  public title: string = null;
+  public title: string | null = null;
 
   @Input()
-  public subTitle: string = null;
+  public subTitle: string | null = null;
 
   @Output()
   private availableStampClicked: EventEmitter<IStamp> = new EventEmitter<IStamp>();
