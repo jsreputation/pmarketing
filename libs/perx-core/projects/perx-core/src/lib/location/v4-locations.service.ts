@@ -10,6 +10,7 @@ import {
   filter,
   scan,
   mergeAll,
+  share
 } from 'rxjs/operators';
 
 import { ILocation } from './ilocation';
@@ -55,7 +56,8 @@ export class V4LocationsService extends LocationsService {
         return filteredMerchants.map((merchant: IMerchant) => this.getFromMerchant(merchant.id));
       }),
       mergeAll(5),
-      scan((acc: ILocation[], curr: ILocation[]) => acc.concat(curr), [])
+      scan((acc: ILocation[], curr: ILocation[]) => acc.concat(curr), []),
+      share()
     );
   }
 
