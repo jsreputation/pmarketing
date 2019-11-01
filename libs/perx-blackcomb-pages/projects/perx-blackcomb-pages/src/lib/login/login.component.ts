@@ -5,6 +5,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-login',
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authService: AuthenticationService,
     private notificationService: NotificationService,
     private themesService: ThemesService,
-    private config: Config
+    private config: Config,
+    public translate: TranslateService
   ) {
     this.preAuth = this.config ? this.config.preAuth : false;
   }
@@ -61,7 +63,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         () => {
-        // set global userID var for GA tracking
+          // set global userID var for GA tracking
           if (!((window as any).primaryIdentifier)) {
             (window as any).primaryIdentifier = username;
           }
@@ -79,7 +81,9 @@ export class LoginComponent implements OnInit, OnDestroy {
                 .forEach(c => c.setErrors({
                   invalid: true
                 }));
-              this.errorMessage = 'Invalid credentials';
+              this.translate.get('INVALID_CREDENTIALS')
+                // tslint:disable-next-line: rxjs-no-nested-subscribe
+                .subscribe(t => this.errorMessage = t);
             }
           } else {
             this.errorMessage = err;
