@@ -11,6 +11,7 @@ export { IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttri
 export { IOutcomeAttributes } from './lib/outcome/outcome';
 export { ICommTemplateAttributes, ICommEventAttributes } from './lib/comm/comm';
 export { ICampaignAttributes } from './lib/campaign/campaign';
+export { WEngagementType } from './lib/campaign/campaign';
 export { IInstantOutcomeTransactionAttributes, IInstantOutcomeTxnReq } from './lib/instant-outcome/transaction';
 export { InstantOutcomeEngagementAttributes, IOutcomeDisplayProperties } from './lib/instant-outcome/engagement';
 export { IWhistlerProfileAttributes } from './lib/profile/profile';
