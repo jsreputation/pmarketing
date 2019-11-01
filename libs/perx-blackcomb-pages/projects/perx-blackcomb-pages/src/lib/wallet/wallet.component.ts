@@ -25,6 +25,7 @@ import {
   StampService,
   IStampCard,
 } from '@perx/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-wallet',
@@ -36,13 +37,14 @@ export class WalletComponent implements OnInit, OnDestroy {
   public vouchers$: Observable<Voucher[]>;
   private destroy$: Subject<void> = new Subject();
   public filter: string[];
-  public rewardsHeadline: 'My Rewards';
+  public rewardsHeadline: string;
 
   constructor(
     private router: Router,
     private vouchersService: IVoucherService,
     private stampService: StampService,
     private campaignService: ICampaignService,
+    private translate: TranslateService
   ) { }
 
   public ngOnInit(): void {
@@ -53,6 +55,7 @@ export class WalletComponent implements OnInit, OnDestroy {
           ...res.map(c => this.stampService.getCurrentCard(c.id))
         )
         ));
+    this.translate.get('MY_WALLET').subscribe( text => this.rewardsHeadline = text);
     this.vouchers$ = this.vouchersService.getAll();
     this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
   }
