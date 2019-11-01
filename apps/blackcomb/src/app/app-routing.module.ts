@@ -1,17 +1,27 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ProtectedGuard, PublicGuard } from 'ngx-auth';
+import {
+  Routes,
+  RouterModule,
+} from '@angular/router';
+
+import {
+  ProtectedGuard,
+  PublicGuard,
+} from 'ngx-auth';
+
 import {
   HomeComponent,
   HistoryComponent,
   RedeemComponent,
   LoginComponent,
+  PIComponent,
   VoucherDetailComponent,
   RewardDetailsComponent,
   LoadingComponent,
   ContentComponent,
   WalletComponent,
 } from '@perx/blackcomb-pages';
+
 const routes: Routes = [
   {
     path: '',
@@ -56,6 +66,7 @@ const routes: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },
+  { path: 'pi', component: PIComponent, canActivate: [PublicGuard] },
   { path: '**', redirectTo: '/wallet' }
 ];
 

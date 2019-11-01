@@ -51,6 +51,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { LoginComponent } from './login/login.component';
+import { PIComponent } from './pi/pi.component';
 import { QRComponent } from './qr/qr.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { RewardDetailsComponent } from './reward-details/reward-details.component';
@@ -74,6 +75,7 @@ const comps: any[] = [
   LoadingComponent,
   RedeemComponent,
   LoginComponent,
+  PIComponent,
   QRComponent,
   RewardDetailsComponent,
   PerxRewardComponent,
@@ -122,10 +124,10 @@ const comps: any[] = [
     MatDatepickerModule
   ],
   exports: [
-    ...comps
+    ...comps,
   ],
   declarations: [
-    ...comps
+    ...comps,
   ]
 })
 export class PerxBlackcombPagesModule {
