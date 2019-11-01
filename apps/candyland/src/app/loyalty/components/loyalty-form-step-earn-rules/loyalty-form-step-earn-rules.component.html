@@ -1,1 +1,30 @@
-<p>loyaly-form-step-earn-rules works!</p>
+<mat-expansion-panel class="card" expanded>
+  <mat-expansion-panel-header class="card-header">
+    <h2 class="card-title">
+      General Rules
+    </h2>
+  </mat-expansion-panel-header>
+
+  <div class="card-content">
+    <label class="card-label">Rules Application</label>
+    <div class="card-row">
+      <mat-form-field>
+        <mat-select>
+          <mat-option value="first">Apply First Matching Rule</mat-option>
+          <!--          <mat-option [value]="pointsExpirePeriodType.week">Week</mat-option>-->
+          <!--          <mat-option [value]="pointsExpirePeriodType.month">Month</mat-option>-->
+          <!--          <mat-option [value]="pointsExpirePeriodType.year">Year</mat-option>-->
+        </mat-select>
+        <mat-hint>Perx will apply only the topmost rule in the list that matches the conditions.</mat-hint>
+      </mat-form-field>
+    </div>
+      <br>
+      <label class="card-label">Points Earn Rules</label>
+      <cl-point-earn-rules-list></cl-point-earn-rules-list>
+      <cl-button [classList]="'tertiary'">
+        <span>
+         + Create new rule
+        </span>
+      </cl-button>
+  </div>
+</mat-expansion-panel>

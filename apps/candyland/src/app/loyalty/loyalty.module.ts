@@ -55,6 +55,7 @@ import { DateConditionGroupComponent } from './components/date-condition-group/d
 import { AmountConditionGroupComponent } from './components/amount-condition-group/amount-condition-group.component';
 import { TransactionConditionGroupComponent } from './components/transaction-condition-group/transaction-condition-group.component';
 import { DynamicFormGroupDirective } from './dynamic-field.directive';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -117,7 +118,8 @@ import { DynamicFormGroupDirective } from './dynamic-field.directive';
     MatTabsModule,
     MatTableModule,
     DatePickerModule,
-    PipesModule
+    PipesModule,
+    DragDropModule
   ],
   providers: [
     LoyaltyFormsService,
