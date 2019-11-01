@@ -7,10 +7,9 @@ import { RedemptionComponent } from './redemption/redemption.component';
 import { HomeComponent } from './home/home.component';
 import { PuzzlesComponent } from './puzzles/puzzles.component';
 import { ProtectedGuard } from 'ngx-auth';
-import { TncComponent } from './tnc/tnc.component';
-import { FaqComponent } from './faq/faq.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { AccountComponent } from './account/account.component';
+import { ContentComponent } from './content/content.component';
 
 const routes: Routes = [
   {
@@ -25,12 +24,11 @@ const routes: Routes = [
       { path: 'redemption/:id', component: RedemptionComponent },
       { path: 'voucher/:id', component: VoucherComponent },
       { path: 'wallet', component: WalletComponent },
-      { path: 'account', component: AccountComponent }
+      { path: 'account', component: AccountComponent },
+      { path: 'content/:type', component: ContentComponent}
     ],
     canActivate: [ProtectedGuard]
   },
-  { path: 'tnc', component: TncComponent },
-  { path: 'faq', component: FaqComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: '/home' }
 ];

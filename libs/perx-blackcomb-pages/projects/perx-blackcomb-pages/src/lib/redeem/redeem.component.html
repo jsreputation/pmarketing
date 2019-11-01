@@ -1,11 +1,11 @@
 <div class="parent-container" *ngIf="voucher$ | async as voucher">
   <div class="full-page-container-white">
     <div *ngIf="redemptionType === rt.pin">
-      <p translate>
-        REDEMPTION_CODE
+      <p>
+        {{subHeadLine}}
       </p>
-      <h1 translate>
-        ENTER_CODE
+      <h1>
+        {{headLine}}
       </h1>
       <perx-core-pin-redemption
         length="4"
@@ -15,7 +15,7 @@
       </perx-core-pin-redemption>
     </div>
     <div *ngIf="redemptionType === rt.txtCode || redemptionType === rt.offline" class="code-container">
-      <perx-core-bcode-redemption [voucherId]="voucherId"></perx-core-bcode-redemption>
+      <perx-core-bcode-redemption [instructions]="codeInstructionsText" [voucherId]="voucherId"></perx-core-bcode-redemption>
       <div class="button-container">
         <button mat-stroked-button color="default" (click)="goBack()">{{ "CANCEL" | translate }}</button>
       </div>

@@ -5,7 +5,6 @@ import { MatCardModule, MatButtonModule } from '@angular/material';
 import { LoyaltyModule, RewardsModule } from '@perx/core';
 import { HomeComponent, GamesCollectionComponent } from '@perx/blackcomb-pages';
 import { TranslateModule } from '@ngx-translate/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -20,8 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RewardsModule,
     MatCardModule,
     MatButtonModule,
-    TranslateModule.forChild(),
-    BrowserAnimationsModule
+    TranslateModule.forChild()
   ],
   exports: [
     HomeComponent,
