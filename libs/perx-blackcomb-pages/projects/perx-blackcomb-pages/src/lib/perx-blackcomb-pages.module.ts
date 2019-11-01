@@ -17,6 +17,7 @@ import {
   MatCheckboxModule,
   MatSelectModule,
   MatDatepickerModule,
+  MatToolbarModule,
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
@@ -60,6 +61,8 @@ import { SurveyComponent } from './survey/survey.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { LayoutComponent } from './layout/layout.component';
 const comps: any[] = [
   AccountComponent,
   ContentComponent,
@@ -97,7 +100,8 @@ const comps: any[] = [
   RewardsListTabbedComponent,
   LoyaltySummaryComponent,
   GamesCollectionComponent,
-  RewardsListComponent
+  RewardsListComponent,
+  LayoutComponent
 ];
 
 @NgModule({
@@ -121,7 +125,9 @@ const comps: any[] = [
     MatRadioModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    TranslateModule.forChild(),
+    MatToolbarModule
   ],
   exports: [
     ...comps,

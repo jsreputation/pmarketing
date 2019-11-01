@@ -1,6 +1,6 @@
 <ng-container *ngIf="profile">
     <perx-core-micro-profile [profile]="profile"></perx-core-micro-profile>
-    <div class="profile-item">
+    <div class="profile-item" *ngIf="profile.customProperties && profile.customProperties['code']">
         <div class="profile-item_label">
             Player Code
         </div>
@@ -8,7 +8,7 @@
             {{profile.customProperties['code']}}
         </div>
     </div>
-    <div class="profile-item">
+    <div class="profile-item" *ngIf="profile.customProperties && profile.customProperties['last_4']">
         <div class="profile-item_label">
             Card Last 4 Digit
         </div>

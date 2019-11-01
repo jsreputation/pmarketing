@@ -20,3 +20,4 @@ export { SurveyComponent } from './lib/survey/survey.component';
 export { StampCardComponent } from './lib/stamp-card/stamp-card.component';
 export { WalletComponent } from './lib/wallet/wallet.component';
 export { GamesCollectionComponent } from './lib/home/games-collection/games-collection.component';
+export { LayoutComponent } from './lib/layout/layout.component';

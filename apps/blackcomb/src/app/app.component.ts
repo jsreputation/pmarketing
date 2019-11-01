@@ -72,7 +72,6 @@ export class AppComponent implements OnInit {
       });
 
   }
-
   public onActivate(ref: any): void {
     this.showHeader = !(ref instanceof LoginComponent);
     this.showToolbar = ref instanceof HomeComponent ||
