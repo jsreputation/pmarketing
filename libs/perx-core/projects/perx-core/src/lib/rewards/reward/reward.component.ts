@@ -1,7 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {IPrice, IReward} from '../models/reward.model';
-import {GAME_DEFAULT_DISPLAY_PROPERTIES} from '../../constants';
+import {
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
+
+import { Observable } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+
+import {
+  IPrice,
+  IReward ,
+} from '../models/reward.model';
 
 @Component({
   selector: 'perx-core-reward',
@@ -9,6 +18,8 @@ import {GAME_DEFAULT_DISPLAY_PROPERTIES} from '../../constants';
   styleUrls: ['./reward.component.scss']
 })
 export class RewardComponent implements OnInit {
+
+  private defaultButtonTxt: string = null;
 
   @Input('reward')
   public reward$: Observable<IReward>;
@@ -23,7 +34,13 @@ export class RewardComponent implements OnInit {
   public showExpiry: boolean = true;
 
   public getButtonTxt(buttonTxt: string): string {
-    return buttonTxt || GAME_DEFAULT_DISPLAY_PROPERTIES.buttonTxt;
+    return buttonTxt || this.defaultButtonTxt;
+  }
+
+  constructor(
+    private translate: TranslateService,
+  ) {
+    this.translate.get('BACK_TO_WALLET').subscribe( text => this.defaultButtonTxt = text);
   }
 
   public ngOnInit(): void {
