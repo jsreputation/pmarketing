@@ -34,4 +34,39 @@ export class LoyaltyEarnRulesFormsService {
       }
     };
   }
+
+  public createFormField(type: string): FormGroup {
+    return this.conditionGroups[type](type) as FormGroup;
+  }
+
+  private conditionGroups: { [key: string]: any } = {
+    transaction: (type) => this.transactionGroup(type),
+    amount: (type) => this.amountGroup(type),
+    date: (type) => this.dateGroup(type)
+  };
+
+  public transactionGroup(type: string): FormGroup {
+    return new FormGroup({
+      type: new FormControl(type),
+      transactionType: new FormControl(null, [Validators.required])
+    });
+  }
+
+  public amountGroup(type: string): FormGroup {
+    return new FormGroup({
+      type: new FormControl(type),
+      operator: new FormControl(null, [Validators.required]),
+      currency: new FormControl(null, [Validators.required]),
+      value: new FormControl(null, [Validators.required])
+    });
+  }
+
+  public dateGroup(type: string): FormGroup {
+    return new FormGroup({
+      type: new FormControl(type),
+      startDate: new FormControl(null, [Validators.required]),
+      endDate: new FormControl(null, [Validators.required])
+    });
+  }
+
 }

@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
@@ -30,6 +30,10 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
     return this.form.get('pointsEarned.maximumPoints');
   }
 
+  public get conditions(): FormArray {
+    return this.form.get('conditions') as FormArray;
+  }
+
   constructor(
     public dialogRef: MatDialogRef<RuleSetupPopupComponent>,
     private formsService: LoyaltyEarnRulesFormsService,
@@ -45,6 +49,19 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  public addCondition(type: string = 'transaction'): void {
+    this.conditions.push(this.formsService.createFormField(type));
+  }
+
+  public deleteCondition(index: number): void {
+    this.conditions.removeAt(index);
+  }
+
+  public updateCondition(index: number, type: string): void {
+    this.deleteCondition(index);
+    this.conditions.insert(index, this.formsService.createFormField(type));
   }
 
   public close(): void {

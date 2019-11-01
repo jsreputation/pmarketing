@@ -1,0 +1,19 @@
+<ng-container [formGroup]="group">
+  <div class="loyalty-row input-group ">
+    <mat-form-field floatLabel="never" class="loyalty-rule-input">
+      <mat-select formControlName="operator">
+        <mat-option value="equal">equal to</mat-option>
+        <mat-option value="notEqual">not equal to</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="loyalty-rule-input">
+      <mat-select floatLabel="never" formControlName="currency">
+        <mat-option value="SGD">SGD</mat-option>
+        <mat-option value="other">Other Option</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field floatLabel="never" class="loyalty-rule-input">
+      <input type="number" [min]="1" matInput placeholder="e.g. 10" formControlName="value">
+    </mat-form-field>
+  </div>
+</ng-container>

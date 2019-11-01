@@ -41,7 +41,6 @@ import { GlobalBurnRuleGroupComponent } from './components/global-burn-rule-grou
 import { PointsExpiryGroupComponent } from './components/points-expiry-group/points-expiry-group.component';
 import { TiersGroupComponent } from './components/tiers-group/tiers-group.component';
 import { MatTableModule } from '@angular/material/table';
-import { AddRulePopupComponent } from './components/add-rule-popup/add-rule-popup.component';
 import { ViewSchemeInfoComponent } from './components/view-scheme-info/view-scheme-info.component';
 import { ViewLoyaltyComponent } from './components/view-loyalty/view-loyalty.component';
 import { ViewGlobalEarnBurnRulesComponent } from './components/view-global-earn-burn-rules/view-global-earn-burn-rules.component';
@@ -52,6 +51,10 @@ import { PointEarnRulesListComponent } from './components/point-earn-rules-list/
 import { RuleSetupPopupComponent } from './containers/rule-setup-popup/rule-setup-popup.component';
 import { LoyaltyCustomTierFormsService } from './services/loyalty-custom-tier-forms.service';
 import { LoyaltyEarnRulesFormsService } from './services/loyalty-earn-rules-forms.service';
+import { DateConditionGroupComponent } from './components/date-condition-group/date-condition-group.component';
+import { AmountConditionGroupComponent } from './components/amount-condition-group/amount-condition-group.component';
+import { TransactionConditionGroupComponent } from './components/transaction-condition-group/transaction-condition-group.component';
+import { DynamicFormGroupDirective } from './dynamic-field.directive';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,6 @@ import { LoyaltyEarnRulesFormsService } from './services/loyalty-earn-rules-form
     ProgramMainImageComponent,
     UserJoinMethodComponent,
     SelectAudienceComponent,
-    AddRulePopupComponent,
     TierSetupPopupComponent,
     GlobalEarnRuleGroupComponent,
     GlobalBurnRuleGroupComponent,
@@ -82,6 +84,10 @@ import { LoyaltyEarnRulesFormsService } from './services/loyalty-earn-rules-form
     PointEarnRulesGroupComponent,
     PointEarnRulesListComponent,
     RuleSetupPopupComponent,
+    DateConditionGroupComponent,
+    AmountConditionGroupComponent,
+    TransactionConditionGroupComponent,
+    DynamicFormGroupDirective
   ],
   imports: [
     CommonModule,
@@ -90,7 +96,6 @@ import { LoyaltyEarnRulesFormsService } from './services/loyalty-earn-rules-form
     ButtonModule,
     UploadGraphicModule,
     UploadFileModule,
-
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
@@ -117,12 +122,14 @@ import { LoyaltyEarnRulesFormsService } from './services/loyalty-earn-rules-form
   providers: [
     LoyaltyFormsService,
     LoyaltyCustomTierFormsService,
-    LoyaltyEarnRulesFormsService
+    LoyaltyEarnRulesFormsService,
   ],
   entryComponents: [
-    AddRulePopupComponent,
     TierSetupPopupComponent,
-    RuleSetupPopupComponent
+    RuleSetupPopupComponent,
+    DateConditionGroupComponent,
+    AmountConditionGroupComponent,
+    TransactionConditionGroupComponent,
   ]
 })
 export class LoyaltyModule {

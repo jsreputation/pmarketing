@@ -1,4 +1,4 @@
-import { takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -21,10 +21,10 @@ import { noop, Subject } from 'rxjs';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => DatePickerComponent),
-      multi: true,
+      multi: true
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, ControlValueAccessor {
   @Input() public control: AbstractControl = new FormControl(null, []);
@@ -56,7 +56,8 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, Contro
   public ngOnInit(): void {
     this.control.valueChanges
       .pipe(
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
+        distinctUntilChanged(),
       )
       .subscribe((value: Date) => {
         this.onChange(value);
@@ -79,13 +80,16 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, Contro
   }
 
   public minMaxFilter(d: Date): boolean {
-    const from = this.min;
-    const to = this.max;
-    return !((!!from && (d <= from)) || (!!to && (d >= to)));
+    const current = d.getTime();
+    const from = this.min ? this.min.getTime() : null;
+    const to = this.max ? this.max.getTime() : null;
+    return !((!!from && (current < from)) || (!!to && (current > to)));
   }
 
   public registerOnChange(fn: any): void {
     this.onChange = fn;
+    this.onTouched = fn;
+    this.control.markAsTouched();
   }
 
   public registerOnTouched(fn: any): void {

@@ -14,81 +14,34 @@
     </mat-form-field>
 
     <label class="loyalty-label">If the customer...</label>
-
-    <div class="card-section card-content">
-      <div class="row">
-        <mat-form-field>
-          <mat-select>
-            <mat-option value="transaction">Makes a transaction TYPE</mat-option>
-            <mat-option value="amount">Makes a transaction AMOUNT</mat-option>
-            <mat-option value="date">Transacts within these DATES</mat-option>
-          </mat-select>
-        </mat-form-field>
+    <ng-container *ngFor="let conditionGroup of conditions.controls;let index = index; let first = first">
+      <div class="row" *ngIf="!first">
+        <label class="loyalty-label">AND</label>
+        <button class="question-remove btn-transparent" (click)="deleteCondition(index)">
+          <i class="icon delete"></i>
+        </button>
       </div>
-      <div class="row">
-        <mat-form-field>
-          <mat-select>
-            <mat-option value="prepaid">PREPAID</mat-option>
-            <mat-option value="other">Other Option</mat-option>
-          </mat-select>
-        </mat-form-field>
+      <div class="card-section card-content">
+        <div class="row">
+          <mat-form-field>
+            <mat-select [formControl]="conditionGroup.get('type')"
+                        (valueChange)="updateCondition(index, $event)">
+              <mat-option value="transaction">Makes a transaction TYPE</mat-option>
+              <mat-option value="amount">Makes a transaction AMOUNT</mat-option>
+              <mat-option value="date">Transacts within these DATES</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <ng-container clDynamicFormGroup
+                      [group]="conditionGroup"
+                      [type]="conditionGroup.get('type')?.value"
+        >
+        </ng-container>
       </div>
-    </div>
-
-    <label class="loyalty-label">AND</label>
-
-    <div class="card-section card-content">
-      <div class="row">
-        <mat-form-field>
-          <mat-select>
-            <mat-option value="transaction">Makes a transaction TYPE</mat-option>
-            <mat-option value="amount">Makes a transaction AMOUNT</mat-option>
-            <mat-option value="date">Transacts within these DATES</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="loyalty-row input-group ">
-        <mat-form-field floatLabel="never">
-          <mat-select>
-            <mat-option value="equal">equal to</mat-option>
-            <mat-option value="notEqual">not equal to</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select floatLabel="never">
-            <mat-option value="SGD">SGD</mat-option>
-            <mat-option value="other">Other Option</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field floatLabel="never">
-          <input type="number" [min]="1" matInput placeholder="e.g. 10">
-        </mat-form-field>
-      </div>
-    </div>
-
-    <label class="loyalty-label">AND</label>
-
-    <div class="card-section card-content">
-      <div class="row">
-        <mat-form-field>
-          <mat-select>
-            <mat-option value="transaction">Makes a transaction TYPE</mat-option>
-            <mat-option value="amount">Makes a transaction AMOUNT</mat-option>
-            <mat-option value="date">Transacts within these DATES</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="loyalty-row input-group ">
-        <cl-date-picker placeholder="Start date">
-        </cl-date-picker>
-        <span>to</span>
-        <cl-date-picker placeholder="End date">
-        </cl-date-picker>
-      </div>
-    </div>
+    </ng-container>
 
     <br>
-    <cl-button [classList]="'tertiary'">
+    <cl-button [classList]="'tertiary'" (click)="addCondition()">
         <span>
          + Add another subcondition
         </span>
@@ -106,8 +59,9 @@
         </mat-form-field>
         <div class="loyalty-row input-group ">
           <span>Award</span>
-          <mat-form-field floatLabel="never">
-            <input type="number" [min]="1" matInput formControlName="awardPoints" placeholder="e.g. 100">
+          <mat-form-field floatLabel="never" class="loyalty-rule-input">
+            <input type="number" [min]="1" matInput formControlName="awardPoints"
+                   placeholder="e.g. 100">
             <mat-error *ngIf="awardPoints.hasError('required') && awardPoints.touched">Required field</mat-error>
             <mat-error *ngIf="awardPoints.hasError('min') && awardPoints.touched">Min value 1</mat-error>
           </mat-form-field>
@@ -124,8 +78,9 @@
         </mat-form-field>
         <div class="loyalty-row input-group ">
           <span>Apply</span>
-          <mat-form-field floatLabel="never">
-            <input type="number" [min]="1" matInput formControlName="applyMultiplier" placeholder="e.g. 2x">
+          <mat-form-field floatLabel="never" class="loyalty-rule-input">
+            <input type="number" [min]="1" matInput formControlName="applyMultiplier"
+                   placeholder="e.g. 2x">
             <mat-error *ngIf="applyMultiplier.hasError('required') && applyMultiplier.touched">Required field
             </mat-error>
             <mat-error *ngIf="applyMultiplier.hasError('min') && applyMultiplier.touched">Min value 1</mat-error>
@@ -134,8 +89,8 @@
         </div>
         <div class="loyalty-row input-group ">
           <span>Up to a maximum of</span>
-          <mat-form-field floatLabel="never">
-            <input class="loyalty-points-input" type="number" [min]="1" matInput formControlName="maximumPoints"
+          <mat-form-field floatLabel="never" class="loyalty-rule-input">
+            <input type="number" [min]="1" matInput formControlName="maximumPoints"
                    placeholder="e.g. 2x">
             <mat-error *ngIf="maximumPoints.hasError('required') && maximumPoints.touched">Required field
             </mat-error>

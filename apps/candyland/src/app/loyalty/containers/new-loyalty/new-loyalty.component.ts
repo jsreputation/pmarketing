@@ -248,8 +248,9 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
       data: {
         // basicTierId: this.basicTierId,
         // type:
-        // tier: data
+        rule: data
       }
+
     });
 
     return dialogRef.afterClosed()
