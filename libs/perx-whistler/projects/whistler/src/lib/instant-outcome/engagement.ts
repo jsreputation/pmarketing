@@ -17,7 +17,7 @@ export interface IWOutcomeDisplayProperties {
   banner: string;
   background_img_url: string;
   card_background_img_url: string;
-  display_properties?: {
+  displayProperties?: {
     noRewardsPopUp?: {
       headLine?: string,
       subHeadLine?: string,

@@ -43,8 +43,8 @@ export class GameComponent implements OnInit, OnDestroy {
       tap((games: IGame[]) => !games || !games.length && this.router.navigate(['/wallet'])),
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => {
-        if (game && game.display_properties && game.display_properties.congratulationsPopUp.imageURL) {
-          this.congratulationsPopUp.imageUrl = game.display_properties.congratulationsPopUp.imageURL;
+        if (game && game.displayProperties && game.displayProperties.congratulationsPopUp.imageURL) {
+          this.congratulationsPopUp.imageUrl = game.displayProperties.congratulationsPopUp.imageURL;
         }
         this.engagementId = game ? game.id : null;
       })

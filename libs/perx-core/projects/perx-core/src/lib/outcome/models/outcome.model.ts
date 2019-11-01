@@ -5,7 +5,7 @@ export interface IOutcome {
   banner: string;
   background_img_url: string;
   card_background_img_url: string;
-  display_properties?: IDisplayProperties;
+  displayProperties?: IDisplayProperties;
 }
 
 export interface IDisplayProperties {

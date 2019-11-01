@@ -40,7 +40,6 @@ export class SurveyService {
       progress_bar_color: MaterialColor[dp.progress_bar_color],
       card_background_img_url: dp.card_background_img_url,
       background_img_url: dp.background_img_url,
-      displayProperties: dp.disProp,
       questions
     };
   }
@@ -58,10 +57,7 @@ export class SurveyService {
           }
         ),
         tap(s => console.error('got survey', s)),
-        map((res: IJsonApiItemPayload<IWSurveyAttributes>) => {
-          res.data.attributes.display_properties = { ...res.data.attributes.display_properties, ...disProp };
-          return SurveyService.WSurveyToSurvey(res);
-        })
+        map((res: IJsonApiItemPayload<IWSurveyAttributes>) => ({...SurveyService.WSurveyToSurvey(res), displayProperties: disProp}))
       );
   }
 
