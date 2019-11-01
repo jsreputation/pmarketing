@@ -14,7 +14,7 @@ export class PinService {
     return this.vouchersService.get(voucherId).pipe(
       map(voucher => {
         let rewardId = '0000';
-        if (voucher) {
+        if (voucher && voucher.reward) {
           // tslint:disable-next-line: radix
           rewardId = voucher.reward.id.toString();
         }

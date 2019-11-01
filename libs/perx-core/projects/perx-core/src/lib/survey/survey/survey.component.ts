@@ -46,12 +46,16 @@ export class SurveyComponent implements OnInit, OnDestroy {
   }
 
   public updateAnswers(answer: IAnswer): void {
-    this.answersTracker[answer.question_id] = answer;
+    if (answer.question_id) {
+      this.answersTracker[answer.question_id] = answer;
+    }
   }
 
   public updatePoints(points: IPoints): void {
-    this.pointsTracker[points.question_id] = points.point;
-    this.updateParent();
+    if (points.question_id) {
+      this.pointsTracker[points.question_id] = points.point;
+      this.updateParent();
+    }
   }
 
   public updateParent(): void {
