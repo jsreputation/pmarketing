@@ -5,6 +5,7 @@ import { Voucher, IVoucherService, RedemptionType, IPopupConfig, PopupComponent 
 import { Observable, Subject } from 'rxjs';
 import { filter, switchMap, takeUntil, map, tap } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-redeem',
@@ -23,7 +24,8 @@ export class RedeemComponent implements OnInit, OnDestroy {
     private location: Location,
     private vouchersService: IVoucherService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
   }
 
@@ -45,10 +47,12 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public pinInputSuccess(): void {
-    this.popup({
-      title: 'Redeem Successfully',
-      text: 'ID: ' + this.voucherId
-    });
+    this.translate.get('REDEEM_SUCCESSFULLY').subscribe((text) =>
+      this.popup({
+        title: text,
+        text: 'ID: ' + this.voucherId
+      })
+    );
   }
 
   public errorHandler(status: number): void {
@@ -60,18 +64,17 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public needLoginPopup(): void {
-    this.popup({
-      title: 'You need to login to redeem the voucher',
-      buttonTxt: 'Go to login'
-    })
-      .afterClosed()
-      .subscribe(() => this.router.navigate(['/login']));
+    this.translate.get(['REEDEM_QUEST', 'GO_TO_LOGIN']).pipe(map((dictionary) => this.popup({
+      title: dictionary.REEDEM_QUEST,
+      buttonTxt: dictionary.GO_TO_LOGIN
+    }).afterClosed())).subscribe(() => this.router.navigate(['/login']));
   }
 
   public errorPopup(): void {
-    this.popup({
-      title: 'Error occur, please try again later'
-    });
+    this.translate.get('TRY_AGAIN_LATER').subscribe((qest) =>
+      this.popup({
+        title: qest
+      }));
   }
 
   public popup(data: IPopupConfig): MatDialogRef<PopupComponent> {

@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { QRCodeModule} from 'angularx-qrcode';
 
 import { QRComponent } from '@perx/blackcomb-pages';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [{
   path: '',
@@ -23,7 +24,8 @@ const routes: Routes = [{
     UtilsModule,
     QRCodeModule,
     MatButtonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    TranslateModule
   ]
 })
 export class QRModule { }

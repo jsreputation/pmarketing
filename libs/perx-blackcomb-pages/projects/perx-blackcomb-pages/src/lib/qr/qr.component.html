@@ -1,13 +1,9 @@
 <div class="main-container">
   <div class="top-section" *ngIf="rewardDetails">
     <qrcode [qrdata]="rewardDetails" [size]="150"></qrcode>
-    <h4>Present this QR code to the merchant</h4>
+    <h4 translate>QR_TO_MERCHANT</h4>
   </div>
-  <button
-    mat-stroked-button
-    color="primary"
-    (click)="onCancel()"
-  >
-    Cancel
+  <button mat-stroked-button color="primary" (click)="onCancel()">
+    {{'CANCEL' | translate }}
   </button>
 </div>
