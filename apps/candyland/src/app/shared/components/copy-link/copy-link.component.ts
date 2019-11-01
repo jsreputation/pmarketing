@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { MsgService } from '@cl-core-services';
 
 @Component({
   selector: 'cl-copy-link',
@@ -7,11 +8,13 @@ import { Component, Input } from '@angular/core';
 })
 export class CopyLinkComponent {
   @Input() public link: string;
+  constructor(private snack: MsgService) { }
 
   public copyInputMessage(inputElement: HTMLInputElement): void {
     inputElement.select();
     document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);
+    this.snack.showSnackBar('Link copied to clipboard!', 'x');
   }
 
 }
