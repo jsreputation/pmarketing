@@ -19,7 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
     RewardsModule,
     MatCardModule,
     MatButtonModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
   ],
   exports: [
     HomeComponent,
