@@ -6,7 +6,7 @@ import { ConfigModule } from '../config/config.module';
 import { ICampaign } from './models/campaign.model';
 import { Type } from '@angular/core';
 import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
-import { ICampaignAttributes } from '@perx/whistler';
+import { ICampaignAttributes, WEngagementType } from '@perx/whistler';
 // import { tap } from 'rxjs/operators';
 
 describe('WhistlerCampaignService', () => {
@@ -31,7 +31,7 @@ describe('WhistlerCampaignService', () => {
       name: 'I love that stuff',
       start_date_time: null,
       end_date_time: null,
-      engagement_type: 'survey',
+      engagement_type: WEngagementType.survey,
       engagement_id: 1
     }
   };
@@ -49,7 +49,7 @@ describe('WhistlerCampaignService', () => {
       name: '',
       start_date_time: tomorrow.toISOString(),
       end_date_time: null,
-      engagement_type: 'survey',
+      engagement_type: WEngagementType.survey,
       engagement_id: 1
     }
   };
@@ -66,7 +66,7 @@ describe('WhistlerCampaignService', () => {
       name: '',
       start_date_time: null,
       end_date_time: yesterday.toISOString(),
-      engagement_type: 'survey',
+      engagement_type: WEngagementType.survey,
       engagement_id: 1
     }
   };
