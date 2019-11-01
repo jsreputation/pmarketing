@@ -17,7 +17,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar class="toolbar">
+    <mat-toolbar *ngIf="showHeader" class="toolbar">
       <button [disabled]="leftIconToShow === ''" mat-icon-button (click)="onLeftActionClick()">
         <mat-icon *ngIf="leftIconToShow !== ''">
           {{leftIconToShow}}
