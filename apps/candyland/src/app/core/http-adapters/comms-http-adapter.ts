@@ -17,8 +17,8 @@ export class CommsHttpAdapter {
       poolId: data.attributes.target_id && data.attributes.target_id.toString(),
       channel: data.attributes.channel,
       schedule: {
-        sendDate: new Date(data.attributes.send_at),
-        sendTime: moment(data.attributes.send_at).format('LT')
+        sendDate: data.attributes.send_at ? new Date(data.attributes.send_at) : null,
+        sendTime: data.attributes.send_at ? moment(data.attributes.send_at).format('LT') : null
       }
     };
   }
