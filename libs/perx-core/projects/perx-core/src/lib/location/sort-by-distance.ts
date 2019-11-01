@@ -41,6 +41,16 @@ export const sortByDistance = (
     map(([latestPosition, latestLocations]: [Position, ILocation[]]) => {
       const locationsList = countDistance(latestPosition, latestLocations);
 
-      return locationsList.sort((loc1, loc2) => inc ? loc1.distance - loc2.distance : loc2.distance - loc1.distance);
+      return locationsList.sort((loc1, loc2) => {
+        let dist;
+        if (!loc1.distance) {
+          dist = loc2.distance ? 1 : 0;
+        } else if (!loc2.distance) {
+          dist = -1;
+        } else {
+          dist = loc1.distance - loc2.distance;
+        }
+        return inc ? dist : -dist;
+      });
     })
   );
