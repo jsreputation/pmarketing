@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CopyLinkComponent } from './copy-link.component';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { MatSnackBarModule } from '@angular/material';
 
 describe('DownloadLinkComponent', () => {
   let component: CopyLinkComponent;
@@ -10,6 +12,10 @@ describe('DownloadLinkComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        BrowserDynamicTestingModule,
+        MatSnackBarModule
+      ],
       declarations: [ CopyLinkComponent ],
       schemas: [ NO_ERRORS_SCHEMA ]
     })
