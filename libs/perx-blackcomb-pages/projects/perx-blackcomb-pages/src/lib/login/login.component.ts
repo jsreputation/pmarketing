@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public preAuth: boolean;
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
-  public theme: ITheme;
+  public theme: Observable<ITheme>;
 
   constructor(
     private router: Router,
