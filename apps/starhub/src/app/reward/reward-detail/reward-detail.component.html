@@ -1,9 +1,6 @@
 <div class="main" *ngIf="reward">
   <div [ngClass]="'contents ' + className">
     <div class="app-header">
-      <button *ngIf="showBackButton" class="icon" (click)="back()">
-        <mat-icon>arrow_backward</mat-icon>
-      </button>
       <img *ngIf="showBannerImage" class="banner" [src]="reward.rewardBanner">
       <div class="badge" *ngIf="reward.merchantImg">
         <img [src]="reward.merchantImg">

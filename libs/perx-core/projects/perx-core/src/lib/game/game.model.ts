@@ -30,7 +30,7 @@ export interface IGame {
         noOutcome?: IGameOutcome;
     };
     imgUrl?: string;
-    display_properties?: IDisplayProperties;
+    disProp?: IDisplayProperties;
 }
 
 export function defaultTree(): ITree {
@@ -97,10 +97,16 @@ export interface IDisplayProperties {
     imageURL?: string,
     buttonTxt?: string,
   };
-  rewardSuccessPopUp?: {
+  congratulationsPopUp?: {
+    headLine?: string,
+    subHeadLine?: string,
+    imageURL?: string,
     buttonTxt?: string,
   };
-  rewardCongratulationsPopUp?: {
+  successPopUp?: {
+    headLine?: string,
+    subHeadLine?: string,
+    imageURL?: string,
     buttonTxt?: string,
   };
 }
