@@ -9,8 +9,15 @@ export interface ICampaignAttributes {
     end_date_time: string;
     goal?: string;
     engagement_type: string;
-    engagement_id: string;
+    engagement_id: number;
     possible_outcomes?: any;
     comm?: any;
     labels?: string[];
+    display_properties?: {
+      noRewardsPopUp?: {
+        headLine?: string,
+        subHeadLine?: string,
+        imageUrl?: string
+      }
+    };
 }

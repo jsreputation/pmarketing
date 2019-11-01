@@ -4,7 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PromosComponent } from './promos.component';
 import { of } from 'rxjs';
-import { FeedReaderService } from '../../../../../libs/perx-core/dist/perx-core';
+import { FeedReaderService } from '@perx/core';
 
 describe('PromosComponent', () => {
   let component: PromosComponent;
@@ -16,7 +16,7 @@ describe('PromosComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PromosComponent ],
+      declarations: [PromosComponent],
       imports: [
         NoopAnimationsModule,
         MatTabsModule,

@@ -2,28 +2,42 @@
   <h1 class="title">Merchants</h1>
   <cl-button (click)="openDialogCreate()" classList="primary cta cta-new">Create New</cl-button>
 </header>
+
 <section class="content merchant-list-content">
-  <div class="merchant-list">
-    <!--filters-->
-    <cl-table-filters [dataSource]="dataSource" classList="block">
-      <ng-container *clTableFilter="'name'; let filter">
-        <cl-search-filter class="search-block" [control]="filter" placeholder="Search for merchants"></cl-search-filter>
-      </ng-container>
-    </cl-table-filters>
-    <div class="table-card">
-      <!--table-->
-      <div class="merchant-list-wrapper">
-        <cl-list-merchant-view [dataSource]="dataSource"
-                              (itemAction)="handlerAction($event)"
-        >
-        </cl-list-merchant-view>
+  <div class="merchant-list" [ngSwitch]="dataSource.state$ | async">
+    <ng-container *ngSwitchCase="dataSourceStates.hasDataApi">
+      <!--filters-->
+      <cl-table-filters [dataSource]="dataSource" classList="block">
+        <ng-container *clTableFilter="'name'; let filter">
+          <cl-search-filter class="search-block" [control]="filter"
+                            placeholder="Search for merchants"></cl-search-filter>
+        </ng-container>
+      </cl-table-filters>
+      <div class="table-card">
+        <!--table-->
+        <div class="merchant-list-wrapper">
+          <cl-list-merchant-view [dataSource]="dataSource"
+                                 (itemAction)="handlerAction($event)"
+          >
+          </cl-list-merchant-view>
+        </div>
+        <!--paginator-->
+        <cl-paginator [dataSource]="dataSource"
+                      [pageSize]="5"
+                      [pageSizeOptions]="[5, 10, 20]"
+        ></cl-paginator>
+        <!--/ paginator-->
       </div>
-      <!--paginator-->
-      <cl-paginator [dataSource]="dataSource"
-                    [pageSize]="5"
-                    [pageSizeOptions]="[5, 10, 20]"
-      ></cl-paginator>
-      <!--/ paginator-->
-    </div>
+    </ng-container>
+
+    <cl-no-data *ngSwitchCase="dataSourceStates.noDataApi">
+      <img class="no-data-img" src="/assets/images/no-data/merchants-empty-illustration.svg" alt="">
+      <h2 class="no-data-title">
+        You need Merchants to build your eco-system!
+      </h2>
+      <p class="no-data-text">
+        Let&rsquo;s begin by creating your first Merchant
+      </p>
+    </cl-no-data>
   </div>
 </section>

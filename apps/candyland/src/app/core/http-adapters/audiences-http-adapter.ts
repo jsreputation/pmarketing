@@ -3,17 +3,18 @@ import { IAssignedAttributes, IAssignRequestAttributes } from '@perx/whistler';
 export class AudiencesHttpAdapter {
 
   public static transformFromUserForm(data: IAudiencesUserForm): IJsonApiItem<IUserApi> {
-    const optionalPool = data.audienceList ? { relationships: { pools: {data: data.audienceList}}} : {};
+    const optionalPool = data.audienceList ? { relationships: { pools: { data: data.audienceList } } } : {};
     const mainUserApiObject = {
-        type: 'users',
-        attributes: {
+      type: 'users',
+      attributes: {
         title: data.firstName + ' ' + data.lastName,
         first_name: data.firstName,
         last_name: data.lastName,
         phone_number: data.phone,
         email_address: data.email,
         primary_identifier: data.firstName + 'identifier',
-    }};
+      }
+    };
     return Object.assign(mainUserApiObject, optionalPool);
 
   }
@@ -59,10 +60,10 @@ export class AudiencesHttpAdapter {
   public static transformAudiencesVoucher(data: IJsonApiItem<IAssignedAttributes>): Partial<IAudienceVoucher> {
     return {
       id: data.id,
-      endDate: data.attributes.end_date,
+      endDate: data.attributes.valid_to,
       rewardId: data.attributes.source_id.toString(),
-      issuedDate: AudiencesHttpAdapter.stringToDate(data.attributes.start_date),
-      expiryDate: AudiencesHttpAdapter.stringToDate(data.attributes.end_date), status: data.attributes.status
+      issuedDate: AudiencesHttpAdapter.stringToDate(data.attributes.valid_from),
+      expiryDate: AudiencesHttpAdapter.stringToDate(data.attributes.valid_to), status: data.attributes.status
     };
   }
 
@@ -81,7 +82,7 @@ export class AudiencesHttpAdapter {
     return {
       id, type: 'assigneds',
       attributes: {
-        end_date: endData
+        valid_to: endData
       }
     };
   }
