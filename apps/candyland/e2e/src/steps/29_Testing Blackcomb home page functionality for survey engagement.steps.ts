@@ -78,39 +78,53 @@ Then(/^10_I should be navigated to the qr card page.$/, async () => {
 });
 
 // Ensuring qr page has the relevant elements.
-/*Given(/^11_I am at the blackcomb qr page.$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
+Given(/^11_I am at the blackcomb qr page.$/, async () => {
+  await BlackcombHomeApp.navigateToBlackcombHomeApp();
+  // waiting for qr button to load
+  await browser.wait(ec.presenceOf(element(by.css('div.mat-button-ripple'))), 6000);
+  // clicking on the qr button
+  await element(by.css('span.mat-button-wrapper')).click();
+  await browser.sleep(1000);
 });
 
-When(/^11_I do nothing$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-});
+When(/^11_I do nothing$/, () => {});
 
 Then(/^11_I should see the qr code and the message text below the qr code.$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
+  // waiting for the qr code to load
+  await browser.wait(ec.presenceOf(element.all(by.css('img')).get(1)), 6000);
+  // waiting for the qr text field to load
+  await browser.wait(ec.presenceOf(element(by.css('h4'))), 5000);
+  // doing an assertion on the presence of the elements
+  expect(await element.all(by.css('img')).get(1).isDisplayed()).to.equal(true);
+  expect(await element(by.css('h4')).isDisplayed()).to.equal(true);
+  expect(await element(by.css('h4')).getText()).to.contain('Present this QR code to the merchant');
 });
 
 // Ensuring functionality of cancel button for the qr code page
 Given(/^12_I am at the blackcomb qr page.$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+  await BlackcombHomeApp.navigateToBlackcombHomeApp();
+  // waiting for qr button to load
+  await browser.wait(ec.presenceOf(element(by.css('div.mat-button-ripple'))), 6000);
+  // clicking on the qr button
+  await element(by.css('span.mat-button-wrapper')).click();
+  await browser.sleep(1000);
+});
 
 When(/^12_I click on the cancel button$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
+  // waiting for the cancel button to load
+  await browser.wait(ec.elementToBeClickable(element(by.css('button'))), 6000);
+  // clicking on the cancel button
+  await element(by.css('button')).click();
+  await browser.sleep(1000);
 });
 
 Then(/^12_I should be navigated to blackcomb home page.$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
+  // doing an assertion on the url of the page
+  expect(await browser.getCurrentUrl()).to.contain('home');
 });
 
 // Ensuring functionality of rewards filter
-Given(/^13_I am at the blackcomb home page$/, async () => {
+/*Given(/^13_I am at the blackcomb home page$/, async () => {
     // Write code here that turns the phrase above into concrete actions
     return 'pending';
   });
