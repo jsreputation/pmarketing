@@ -41,7 +41,7 @@ jobs:
                       - name: url
                         value: git@github.com:PerxTech/microsite-apps-ng.git
                       - name: revision
-                        value: ${{ github.sha }}
+                        value: ${{ github.ref }}
               params:
                 - name: folder
                   value: ${f}
