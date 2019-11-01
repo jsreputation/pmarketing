@@ -8,7 +8,7 @@ import {
   IPinata,
   defaultPinata,
   IPlayOutcome,
-  IGameDisplayProperties
+  IDisplayProperties
 } from './game.model';
 import { Observable, combineLatest, of } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -154,7 +154,7 @@ export class WhistlerGameService implements IGameService {
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    let disProp: IGameDisplayProperties = null;
+    let disProp: IDisplayProperties = null;
     return this.http.get<IJsonApiItemPayload<WAttbsObjEntity>>(`${this.hostName}/campaign/entities/${campaignId}`)
       .pipe(
         map((res: IJsonApiItemPayload<WAttbsObjEntity>) => res.data.attributes),
