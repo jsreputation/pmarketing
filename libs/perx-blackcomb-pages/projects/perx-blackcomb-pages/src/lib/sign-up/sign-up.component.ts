@@ -15,7 +15,7 @@ interface IAnswer {
 })
 export class SignUpComponent implements OnInit, OnDestroy {
   public data$: Observable<ISurvey>;
-  public destroy$: Subject<any> = new Subject();
+  public destroy$: Subject<void> = new Subject();
   public survey: ISurvey;
   public answers: IAnswer[];
   public totalLength: number;
