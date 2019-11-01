@@ -7,6 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { GamesCollectionComponent } from './games-collection.component';
 import { MatCardModule } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('GamesCollectionComponent', () => {
   let component: GamesCollectionComponent;
@@ -18,6 +19,7 @@ describe('GamesCollectionComponent', () => {
       imports: [
         MatCardModule,
         RouterTestingModule,
+        TranslateModule.forRoot()
       ]
     })
       .compileComponents();
