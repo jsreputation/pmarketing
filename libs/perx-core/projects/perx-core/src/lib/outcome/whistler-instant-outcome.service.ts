@@ -16,8 +16,6 @@ import {
   IWOutcomeDisplayProperties,
   ICampaignAttributes
 } from '@perx/whistler';
-import { IQuestion } from '../../public-api';
-import { MaterialColor } from '../survey/models/survey.model';
 
 interface CampaignProperties {
   engagementId: number;
