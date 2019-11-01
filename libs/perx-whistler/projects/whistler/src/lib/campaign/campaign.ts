@@ -1,3 +1,10 @@
+export enum WEngagementType {
+  games = 'game',
+  survey = 'survey',
+  instantOutcome = 'instant_outcome',
+  loyalty = 'loyalty',
+}
+
 export interface ICampaignAttributes {
     id?: string;
     name: string;
@@ -8,7 +15,7 @@ export interface ICampaignAttributes {
     start_date_time: string;
     end_date_time: string;
     goal?: string;
-    engagement_type: string;
+    engagement_type: WEngagementType;
     engagement_id: number;
     possible_outcomes?: any;
     comm?: any;
