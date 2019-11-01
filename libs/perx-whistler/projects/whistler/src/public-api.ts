@@ -18,3 +18,27 @@ export { IMerchant, IMerchantBranchApi } from './lib/merchant/merchant';
 export { ITenantProperties } from './lib/settings/tenant';
 export { ITimeZone } from './lib/settings/time-zone';
 export { ILoyalty, ILoyaltyCard } from './lib/loyalty/loyalty';
+
+export {
+  WGameType,
+  WAttbsObjGame,
+  WAttbsObjEntity,
+  WGameDisplayProperties,
+  WGameOutcome,
+  WTreeDisplayProperties,
+  WPinataDisplayProperties
+} from './lib/game/game';
+
+/** Survey */
+export {
+  IWSurveyAttributes,
+  IWSurveyProperties,
+  IWSurveyDisplayProperties,
+  IWPostAnswerAttributes,
+  IWOutcomes
+} from './lib/survey/survey';
+export {
+  IWQuestion,
+  IWPayload,
+  WSurveyQuestionType
+} from './lib/survey/question';
