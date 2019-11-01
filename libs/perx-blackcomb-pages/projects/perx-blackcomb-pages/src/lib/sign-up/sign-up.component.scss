@@ -1,0 +1,33 @@
+@import "../custom-theme.scss";
+
+.signup {
+  display: flex;
+  width: 80%;
+  margin: 0 auto;
+  height: 100vh;
+
+  .signup-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 34rem;
+    margin: auto;
+    margin-top: 2rem;
+
+    h1 {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    h2 {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 1.2rem;
+      text-align: start;
+      color: #666666;
+    }
+
+  }
+}
