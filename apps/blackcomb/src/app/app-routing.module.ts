@@ -8,6 +8,11 @@ const routes: Routes = [
     canActivate: [PublicGuard]
   },
   {
+    path: 'loading',
+    loadChildren: () => import('./loading/loading.module').then((mod) => mod.LoadingModule),
+    canActivate: [PublicGuard]
+  },
+  {
     path: '',
     loadChildren: () => import('./layout/layout.module').then((mod) => mod.LayoutModule),
     canActivate: [ProtectedGuard]
