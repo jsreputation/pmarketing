@@ -5,9 +5,6 @@ import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil 
 import { Observable, interval, combineLatest, throwError, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material';
 
-import { GAME_DEFAULT_DISPLAY_PROPERTIES } from '../constants';
-import { IDisplayProperties } from '../../../../../../perx-core/dist/perx-core/lib/game/game.model';
-
 @Component({
   selector: 'perx-blackcomb-pages-game',
   templateUrl: './game.component.html',
@@ -15,8 +12,6 @@ import { IDisplayProperties } from '../../../../../../perx-core/dist/perx-core/l
 })
 export class GameComponent implements OnInit, OnDestroy {
   public gameData$: Observable<IGame>;
-  private game: IGame = null;
-  private defaultProperties: IDisplayProperties = GAME_DEFAULT_DISPLAY_PROPERTIES;
   public gt: typeof GameType = GameType;
   private campaignId: number;
   private engagementId: number | null = null;
@@ -25,13 +20,9 @@ export class GameComponent implements OnInit, OnDestroy {
   public congratulationsPopUp: IPopupConfig = {
     title: 'Congratulations!',
     text: '',
-    buttonTxt: 'View Rewards',
+    buttonTxt: 'View Reward',
     imageUrl: 'assets/congrats_image.png',
   };
-
-  public get defaultPropertiesCongratulations(): any {
-    return this.defaultProperties.rewardCongratulationsPopUp;
-  }
 
   constructor(
     private route: ActivatedRoute,
@@ -52,10 +43,6 @@ export class GameComponent implements OnInit, OnDestroy {
       tap((games: IGame[]) => !games || !games.length && this.router.navigate(['/wallet'])),
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => {
-        if (game) {
-          this.engagementId = game.id;
-          this.game = game;
-        }
         if (game && game.disProp && game.disProp.congratulationsPopUp.imageURL) {
           this.congratulationsPopUp.imageUrl = game.disProp.congratulationsPopUp.imageURL;
         }
@@ -70,7 +57,6 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   public gameCompleted(): void {
-    const { display_properties } = this.game;
     const r1 = this.gameService.play(this.campaignId, this.engagementId);
     // display a loader before redirecting to next page
     const delay = 3000;

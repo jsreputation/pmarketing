@@ -22,8 +22,8 @@ export class RewardComponent implements OnInit {
   @Input()
   public showExpiry: boolean = true;
 
-  public getButtonTxt(buttonTxt: string): string {
-    return buttonTxt || GAME_DEFAULT_DISPLAY_PROPERTIES.buttonTxt;
+  public get buttonTxt(): string {
+    return GAME_DEFAULT_DISPLAY_PROPERTIES.buttonTxt;
   }
 
   public ngOnInit(): void {
