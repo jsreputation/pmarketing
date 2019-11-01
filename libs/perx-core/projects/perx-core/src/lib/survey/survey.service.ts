@@ -59,7 +59,7 @@ export class SurveyService {
         ),
         tap(s => console.error('got survey', s)),
         map((res: IJsonApiItemPayload<IWSurveyAttributes>) => {
-          res.data.attributes.display_properties = { ...res.data.attributes.display_properties, disProp };
+          res.data.attributes.display_properties = { ...res.data.attributes.display_properties, ...disProp };
           return SurveyService.WSurveyToSurvey(res);
         })
       );

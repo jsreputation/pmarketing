@@ -1,4 +1,4 @@
-export interface InstantOutcomeEngagementAttributes {
+export interface IWInstantOutcomeEngagementAttributes {
   urn: string;
   created_at: string;
   updated_at: string;
@@ -7,10 +7,10 @@ export interface InstantOutcomeEngagementAttributes {
   description: string;
   image_url: string;
   properties?: {};
-  display_properties?: IOutcomeDisplayProperties;
+  display_properties?: IWOutcomeDisplayProperties;
 }
 
-export interface IOutcomeDisplayProperties {
+export interface IWOutcomeDisplayProperties {
   title: string;
   button: string;
   sub_title: string;
@@ -21,7 +21,24 @@ export interface IOutcomeDisplayProperties {
     noRewardsPopUp?: {
       headLine?: string,
       subHeadLine?: string,
-      imageUrl?: string
-    }
+      imageURL?: string,
+    };
+    merchantPinText?: {
+      headLine?: string,
+      subHeadLine?: string,
+    };
+    rewardSuccessPopUp?: {
+      headLine?: string,
+      subHeadLine?: string,
+      imageURL?: string,
+    };
+    codeInstructionsText?: {
+      headLine?: string,
+    };
+    errorPopUp?: {
+      headLine?: string,
+      subHeadLine?: string,
+      imageURL?: string,
+    };
   };
 }
