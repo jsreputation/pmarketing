@@ -6,6 +6,7 @@ import { IVoucherService, VouchersModule, ICampaignService, StampService } from 
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('HomeComponent', () => {
   let component: WalletComponent;
@@ -33,7 +34,8 @@ describe('HomeComponent', () => {
         NoopAnimationsModule,
         MatCardModule,
         VouchersModule,
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: Router, useValue: router },

@@ -3,7 +3,7 @@ import {
   EngagementTypeAPIMapping,
   EngagementTypeFromAPIMapping
 } from '@cl-core/models/engagement/engagement-type.enum';
-import { ICampaignAttributes } from '@perx/whistler';
+import { ICampaignAttributes, WEngagementType } from '@perx/whistler';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 export class CampaignsHttpAdapter {
@@ -67,7 +67,7 @@ export class CampaignsHttpAdapter {
       type: 'entities',
       attributes: {
         name: data.name,
-        engagement_type: EngagementTypeAPIMapping[data.template.attributes_type],
+        engagement_type: EngagementTypeAPIMapping[data.template.attributes_type] as WEngagementType,
         engagement_id: data.template.id,
         status: 'scheduled',
         start_date_time: startDate,

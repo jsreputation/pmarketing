@@ -92,7 +92,7 @@ jobs:
         run: |
           for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
             WAIT_TIME=0
-            until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" != "Running" ] || [ $WAIT_TIME -gt 10 ]; do
+            until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" != "Running" ] || [ $WAIT_TIME -gt 30 ]; do
               (( WAIT_TIME+=1 ))
               echo "Task ${TASKRUN_NAME} is still running, wait for 1 second"
               sleep 1
