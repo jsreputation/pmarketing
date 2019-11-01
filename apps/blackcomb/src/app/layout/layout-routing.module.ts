@@ -6,7 +6,6 @@ import {
   HistoryComponent,
   RedeemComponent,
   VoucherDetailComponent,
-  LoadingComponent,
   ContentComponent,
   RewardDetailsComponent,
   LayoutComponent
@@ -47,7 +46,6 @@ const routes: Routes = [
         loadChildren: (): any => import('../instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule)
       },
       { path: 'reward-detail/:id', component: RewardDetailsComponent },
-      { path: 'loading', component: LoadingComponent },
       { path: 'c/:key', component: ContentComponent },
     ]
   }
