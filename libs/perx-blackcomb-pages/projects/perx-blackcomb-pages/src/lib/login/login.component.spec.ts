@@ -6,6 +6,7 @@ import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationService, Config, ThemesService } from '@perx/core';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 const configStub = {
   preAuth: false
@@ -34,7 +35,8 @@ describe('LoginComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         ReactiveFormsModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
