@@ -26,8 +26,8 @@ export class RedeemComponent implements OnInit, OnDestroy {
   public redemptionType: RedemptionType;
   private destroy$: Subject<void> = new Subject<void>();
   public rt: typeof RedemptionType = RedemptionType;
-  public headLine: string = ENTER_CODE;
-  public subHeadLine: string = REDEMPTION_CODE;
+  public headLine: string;
+  public subHeadLine: string;
   public rewardSuccessPopUp: IPopupConfig = {
     title: 'Successfully Redeemed!',
     text: '',
