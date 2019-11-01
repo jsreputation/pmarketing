@@ -6,6 +6,7 @@ import {
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 import {
   AuthenticationService,
@@ -40,6 +41,7 @@ describe('AccountComponent', () => {
       imports: [
         RouterTestingModule,
         ProfileModule,
+        TranslateModule.forRoot(),
         ConfigModule.forRoot({ ...environment })
       ],
       providers: [

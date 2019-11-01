@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatProgressBarModule } from '@angular/material';
+import { MatProgressBarModule, MatButtonModule } from '@angular/material';
 
 import {
   PinataComponent,
@@ -30,7 +30,8 @@ import { GameComponent } from './game.component';
   ],
   imports: [
     CommonModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatButtonModule
   ]
 })
 export class GameModule { }

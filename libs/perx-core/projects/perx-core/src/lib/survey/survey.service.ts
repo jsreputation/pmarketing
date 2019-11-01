@@ -24,7 +24,7 @@ export class SurveyService {
     private campaignService: ICampaignService,
     config: Config,
   ) {
-    this.baseUrl = config.apiHost;
+    this.baseUrl = config.apiHost || '';
   }
 
   private static WSurveyToSurvey(survey: IJsonApiItemPayload<IWSurveyAttributes>): ISurvey {
@@ -46,7 +46,7 @@ export class SurveyService {
   }
 
   public getSurveyFromCampaign(id: number): Observable<ISurvey> {
-    let disProp: IDisplayProperties;
+    let disProp: IDisplayProperties | undefined;
     return this.campaignService.getCampaign(id)
       .pipe(
         switchMap(

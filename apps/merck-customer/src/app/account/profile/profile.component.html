@@ -1,27 +1,27 @@
 <mat-list *ngIf="profile">
   <mat-list-item>
-    <p matLine class="label">Name</p>
+    <p matLine class="label" translate>STATIC_NAME</p>
     <p matLine>{{profile.firstName}} {{profile.lastName}}</p>
   </mat-list-item>
 
   <mat-divider></mat-divider>
 
   <mat-list-item>
-    <p matLine class="label">Mobile</p>
+    <p matLine class="label" translate>STATIC_MOBILE</p>
     <p matLine>{{profile.phone}}</p>
   </mat-list-item>
 
   <mat-divider></mat-divider>
 
   <mat-list-item>
-    <p matLine class="label">Membership Tier</p>
+    <p matLine class="label" translate>STATIC_MEMBERSHIP_TIER</p>
     <p matLine>{{tier}}</p>
   </mat-list-item>
 
   <mat-divider></mat-divider>
 
   <mat-list-item>
-    <p matLine class="label">Password</p>
+    <p matLine class="label" translate>STATIC_PASSWORD</p>
     <p matLine>••••••••••</p>
     <mat-icon (click)="onEditPasswordClicked()">edit</mat-icon>
   </mat-list-item>
@@ -29,7 +29,7 @@
   <mat-divider></mat-divider>
 
   <mat-list-item>
-    <p matLine class="label">Condition</p>
+    <p matLine class="label" translate>STATIC_CONDITION</p>
     <p matLine class="conditions">{{conditions.length > 0 ? conditions.join(', ') : 'None'}}</p>
     <mat-icon (click)="onSubScreenNavigate('account/condition')">edit</mat-icon>
   </mat-list-item>

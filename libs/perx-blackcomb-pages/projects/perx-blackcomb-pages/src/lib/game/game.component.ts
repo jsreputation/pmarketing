@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { IGameService, IGame, GameType, IPlayOutcome, PopupComponent } from '@perx/core';
+import { IGameService, IGame, GameType, IPlayOutcome, PopupComponent, IPopupConfig } from '@perx/core';
 import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
 import { Observable, interval, combineLatest, throwError, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material';
@@ -17,6 +17,12 @@ export class GameComponent implements OnInit, OnDestroy {
   private engagementId: number | null;
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
+  public congratulationsPopUp: IPopupConfig = {
+    title: 'Congratulations!',
+    text: '',
+    buttonTxt: 'View Rewards',
+    imageUrl: 'assets/congrats_image.png',
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -36,7 +42,12 @@ export class GameComponent implements OnInit, OnDestroy {
       first(),
       tap((games: IGame[]) => !games || !games.length && this.router.navigate(['/wallet'])),
       map((games: IGame[]) => games[0]),
-      tap((game: IGame) => game ? this.engagementId = game.id : null)
+      tap((game: IGame) => {
+        if (game && game.disProp && game.disProp.congratulationsPopUp.imageURL) {
+          this.congratulationsPopUp.imageUrl = game.disProp.congratulationsPopUp.imageURL;
+        }
+        this.engagementId = game ? game.id : null;
+      })
     );
   }
 
@@ -62,18 +73,24 @@ export class GameComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       // @ts-ignore
-      .subscribe(([outcome, c]: [IPlayOutcome, any]) => {
-        this.router.navigate(['/wallet']);
-        if (outcome.vouchers.length > 0) {
-          this.dialog.open(PopupComponent, {
-            data: {
-              title: 'Congratulations!',
-              text: `You earned ${outcome.vouchers.length} rewards`,
-              buttonTxt: 'View Rewards',
-              imageUrl: 'assets/congrats_image.png',
-            }
-          });
-        } else {
+      .subscribe(
+        ([outcome, _]: [IPlayOutcome, any]) => {
+          this.router.navigate(['/wallet']);
+          if (outcome.vouchers.length > 0) {
+            this.congratulationsPopUp.text = `You earned ${outcome.vouchers.length} rewards`;
+            this.dialog.open(PopupComponent, { data: this.congratulationsPopUp });
+          } else {
+            this.dialog.open(PopupComponent, {
+              data: {
+                title: 'Thanks for playing',
+                text: 'Unfortunately, you did not win anything this time',
+                buttonTxt: 'Go to Wallet',
+              }
+            });
+          }
+        },
+        () => {
+          this.router.navigate(['/wallet']);
           this.dialog.open(PopupComponent, {
             data: {
               title: 'Thanks for playing',
@@ -82,17 +99,6 @@ export class GameComponent implements OnInit, OnDestroy {
             }
           });
         }
-      },
-      () => {
-        this.router.navigate(['/wallet']);
-        this.dialog.open(PopupComponent, {
-          data: {
-            title: 'Thanks for playing',
-            text: 'Unfortunately, you did not win anything this time',
-            buttonTxt: 'Go to Wallet',
-          }
-        });
-      }
       );
   }
 }
