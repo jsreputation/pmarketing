@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RedeemComponent } from './redeem.component';
 import { VouchersModule, IVoucherService } from '@perx/core';
+import { TranslateModule } from '@ngx-translate/core';
 // import { of } from 'rxjs';
 
 describe('RedeemComponent', () => {
@@ -16,7 +17,8 @@ describe('RedeemComponent', () => {
       declarations: [RedeemComponent],
       imports: [
         RouterTestingModule,
-        VouchersModule
+        VouchersModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub }
