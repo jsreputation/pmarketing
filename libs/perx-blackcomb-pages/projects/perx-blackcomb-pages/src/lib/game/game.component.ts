@@ -73,21 +73,22 @@ export class GameComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       // @ts-ignore
-      .subscribe(([outcome, c]: [IPlayOutcome, any]) => {
-        this.router.navigate(['/wallet']);
-        if (outcome.vouchers.length > 0) {
-          this.congratulationsPopUp.text = `You earned ${outcome.vouchers.length} rewards`;
-          this.dialog.open(PopupComponent, { data: this.congratulationsPopUp });
-        } else {
-          this.dialog.open(PopupComponent, {
-            data: {
-              title: 'Thanks for playing',
-              text: 'Unfortunately, you did not win anything this time',
-              buttonTxt: 'Go to Wallet',
-            }
-          });
-        }
-      },
+      .subscribe(
+        ([outcome, _]: [IPlayOutcome, any]) => {
+          this.router.navigate(['/wallet']);
+          if (outcome.vouchers.length > 0) {
+            this.congratulationsPopUp.text = `You earned ${outcome.vouchers.length} rewards`;
+            this.dialog.open(PopupComponent, { data: this.congratulationsPopUp });
+          } else {
+            this.dialog.open(PopupComponent, {
+              data: {
+                title: 'Thanks for playing',
+                text: 'Unfortunately, you did not win anything this time',
+                buttonTxt: 'Go to Wallet',
+              }
+            });
+          }
+        },
         () => {
           this.router.navigate(['/wallet']);
           this.dialog.open(PopupComponent, {
