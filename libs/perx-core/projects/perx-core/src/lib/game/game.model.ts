@@ -103,4 +103,9 @@ export interface IDisplayProperties {
   rewardCongratulationsPopUp?: {
     buttonTxt?: string,
   };
+  congratulationsPopUp?: {
+    headLine?: string,
+    subHeadLine?: string,
+    imageURL?: string,
+  };
 }

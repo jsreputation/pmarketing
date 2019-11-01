@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProfileService, IProfile, LoyaltyService, ILoyalty } from '@perx/core';
 import { Router } from '@angular/router';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-properties';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mc-profile',
@@ -17,7 +18,8 @@ export class ProfileComponent implements OnInit, PageAppearence {
   constructor(
     private profileService: ProfileService,
     private router: Router,
-    private loyaltyService: LoyaltyService
+    private loyaltyService: LoyaltyService,
+    private translate: TranslateService
   ) { }
 
   public ngOnInit(): void {
@@ -35,11 +37,15 @@ export class ProfileComponent implements OnInit, PageAppearence {
         if (property === 'diabetesState') {
           const diabetesState = profile.customProperties[property];
           if (diabetesState && typeof diabetesState === 'string') {
-            filteredConditions.push(diabetesState.replace('_', '-'));
+            if (diabetesState === 'pre_diabetes') {
+              this.translate.get('STATIC_PRE_DIABETES').subscribe((text) => filteredConditions.push(text));
+            } else if (diabetesState === 'diabetes') {
+              this.translate.get('STATIC_DIABETES').subscribe((text) => filteredConditions.push(text));
+            }
           }
         }
         if (property === 'hypertension' && profile.customProperties[property] === 'true') {
-          filteredConditions.push('Hypertension');
+          this.translate.get('STATIC_HYPERTENSION').subscribe((text) => filteredConditions.push(text));
         }
       });
     return filteredConditions.filter(condition => condition !== '');
@@ -50,7 +56,7 @@ export class ProfileComponent implements OnInit, PageAppearence {
       header: true,
       backButtonEnabled: true,
       bottomSelectedItem: BarSelectedItem.ACCOUNT,
-      pageTitle: 'Profile'
+      pageTitle: 'STATIC_PROFILE'
     };
   }
 
