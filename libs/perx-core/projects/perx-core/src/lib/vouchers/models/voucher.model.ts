@@ -35,7 +35,7 @@ export interface IVoucher {
 }
 
 export interface IGetVoucherParams {
-  type: string;
+  type: string | null;
   sourceType?: string;
 }
 
