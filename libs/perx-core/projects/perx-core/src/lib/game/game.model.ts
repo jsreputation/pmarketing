@@ -30,7 +30,7 @@ export interface IGame {
         noOutcome?: IGameOutcome;
     };
     imgUrl?: string;
-    disProp?: IDisplayProperties;
+    disProp?: IGameDisplayProperties;
 }
 
 export function defaultTree(): ITree {
@@ -90,7 +90,7 @@ export interface ISlice {
   background_image?: string;
 }
 
-export interface IDisplayProperties {
+export interface IGameDisplayProperties {
   noRewardsPopUp?: {
     headLine?: string,
     subHeadLine?: string,

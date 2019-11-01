@@ -5,9 +5,6 @@ import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil 
 import { Observable, interval, combineLatest, throwError, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material';
 
-import { GAME_DEFAULT_DISPLAY_PROPERTIES } from '../constants';
-import { IGameDisplayProperties } from '@perx/core';
-
 @Component({
   selector: 'perx-blackcomb-pages-game',
   templateUrl: './game.component.html',
@@ -15,8 +12,6 @@ import { IGameDisplayProperties } from '@perx/core';
 })
 export class GameComponent implements OnInit, OnDestroy {
   public gameData$: Observable<IGame>;
-  private game: IGame = null;
-  private defaultProperties: IGameDisplayProperties = GAME_DEFAULT_DISPLAY_PROPERTIES;
   public gt: typeof GameType = GameType;
   private campaignId: number;
   private engagementId: number | null = null;
