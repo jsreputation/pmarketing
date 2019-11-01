@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+// tslint:disable-next-line
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { SubMenuComponent } from './sub-menu.component';
 
 describe('SubMenuComponent', () => {
@@ -8,7 +9,8 @@ describe('SubMenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SubMenuComponent ]
+      declarations: [ SubMenuComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
