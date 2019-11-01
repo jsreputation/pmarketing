@@ -13,5 +13,4 @@ export class UserProfileComponent implements OnInit {
 
   public ngOnInit(): void {
   }
-
 }

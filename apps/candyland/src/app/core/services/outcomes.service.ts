@@ -23,4 +23,29 @@ export class OutcomesService {
         response.map((outcome: IJsonApiItem<IOutcomeAttributes>) => OutcomesHttpAdapter.transformAPIResponseToOutcome(outcome)))
     );
   }
+
+  public updateOutcome(
+    data: { value: IRewardEntity, probability: number },
+    campaignId: string,
+    enableProbability: boolean,
+    slotNumber: number
+  ): Observable<IJsonApiPayload<IOutcomeAttributes>> {
+    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data, enableProbability, campaignId, slotNumber);
+    return this.outcomesHttpsService.updateOutcome(data.value.outcomeId, { data: { id: data.value.outcomeId, ...sendData } });
+  }
+
+  public createOutcome(
+    data: { value: IRewardEntity, probability: number },
+    campaignId: string,
+    enableProbability: boolean,
+    slotNumber: number
+  ): Observable<IJsonApiPayload<IOutcomeAttributes>> {
+    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data, enableProbability, campaignId, slotNumber);
+    return this.outcomesHttpsService.createOutcome({ data: sendData });
+  }
+
+  public deleteOutcome(id: string): Observable<any> {
+    return this.outcomesHttpsService.deleteOutcome(id);
+  }
+
 }

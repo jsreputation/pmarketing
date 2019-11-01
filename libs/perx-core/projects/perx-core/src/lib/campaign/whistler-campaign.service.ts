@@ -39,7 +39,8 @@ export class WhistlerCampaignService implements ICampaignService {
       state: cAttributes.status as CampaignState,
       endsAt: new Date(cAttributes.end_date_time) || null,
       engagementId: cAttributes.engagement_id,
-      rawPayload: cAttributes
+      rawPayload: cAttributes,
+      displayProperties: cAttributes.display_properties,
     };
   }
 

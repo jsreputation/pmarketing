@@ -28,3 +28,17 @@ export {
   WTreeDisplayProperties,
   WPinataDisplayProperties
 } from './lib/game/game';
+
+/** Survey */
+export {
+  IWSurveyAttributes,
+  IWSurveyProperties,
+  IWSurveyDisplayProperties,
+  IWPostAnswerAttributes,
+  IWOutcomes
+} from './lib/survey/survey';
+export {
+  IWQuestion,
+  IWPayload,
+  WSurveyQuestionType
+} from './lib/survey/question';

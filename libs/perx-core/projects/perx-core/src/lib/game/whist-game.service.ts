@@ -7,7 +7,8 @@ import {
   ITree,
   IPinata,
   defaultPinata,
-  IPlayOutcome
+  IPlayOutcome,
+  IDisplayProperties
 } from './game.model';
 import { Observable, combineLatest, of } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -153,12 +154,16 @@ export class WhistlerGameService implements IGameService {
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
+    let disProp: IDisplayProperties = null;
     return this.http.get<IJsonApiItemPayload<WAttbsObjEntity>>(`${this.hostName}/campaign/entities/${campaignId}`)
       .pipe(
         map((res: IJsonApiItemPayload<WAttbsObjEntity>) => res.data.attributes),
-        map((entity: WAttbsObjEntity) => entity.engagement_id),
+        map((entity: WAttbsObjEntity) => {
+          disProp = entity.display_properties;
+          return entity.engagement_id;
+        }),
         switchMap((correctId: number) => this.get(correctId)),
-        map((game: IGame) => [{ ...game, campaignId }])
+        map((game: IGame) => ([{ ...game, campaignId, disProp }]))
       );
   }
 }

@@ -66,7 +66,10 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   public availableStampCount: number = 0;
 
   public ngOnInit(): void {
-    const availableStamps = this.stamps.filter(stamp => stamp.state === 'issued');
+    if (!Array.isArray(this.stamps)) {
+      this.stamps = [];
+    }
+    const availableStamps = this.stamps.filter(stamp => stamp.state === StampState.issued);
     this.availableStampCount = availableStamps.length;
     this.stampCardImage = this.postStampImg;
   }
@@ -75,7 +78,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
     if (changes.nbSlots) {
       this.currentActiveOrientation = this.stampsOrientations[this.nbSlots - 3];
     }
-    if (changes.stamps) {
+    if (changes.stamps && this.stamps) {
       this.availableStampCount = this.stamps.filter(stamp => stamp.state === StampState.issued).length;
     }
   }
