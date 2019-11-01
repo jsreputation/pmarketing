@@ -30,7 +30,8 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   public isFirstInit: boolean = true;
   public hasData: boolean;
   public noData: boolean;
-  @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
+  public templateIndex: number;
+  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
 
   public get template(): AbstractControl {
     return this.form.get('template');
@@ -47,7 +48,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     private limitsService: LimitsService,
     private route: ActivatedRoute
   ) {
-    super(0, store, stepConditionService, cd);
+    super(0, store, stepConditionService);
     this.initForm();
     this.initFiltersDefaultValue();
   }
@@ -91,16 +92,22 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
         })
       )
       .subscribe((res: IEngagement[]) => {
-        // res = [];
         this.hasData = res && res.length > 0;
         this.noData = res && res.length === 0;
         this.dataSource.data = res;
-        this.initSelectedTemplate(res);
         this.cd.detectChanges();
+        if (this.noData) {
+          return;
+        }
+        this.initSelectedTemplate(res);
         this.dataSource.filterPredicate = PrepareTableFilters.getClientSideFilterFunction();
+        if (this.templateIndex) {
+          this.paginator.pageIndex = Math.ceil(this.templateIndex / this.paginator.pageSize) - 1;
+        }
         this.dataSource.paginator = this.paginator;
       });
   }
+
   private initSelectedTemplate(res: IEngagement[]): void {
     if (this.availableNewEngagementService.isAvailable) {
       this.initSelectedNewCreateTemplate(res, this.availableNewEngagementService.newEngagement.id);
@@ -108,10 +115,11 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
       this.initSelectedTemplateFromEdit(res);
     }
   }
+
   private initSelectedNewCreateTemplate(res: IEngagement[], id: string): void {
     if (id) {
-      const findTemplate = res.find(template => template.id === id);
-      this.template.patchValue(findTemplate);
+      this.templateIndex = res.findIndex(template => template.id === id);
+      this.template.patchValue(res[this.templateIndex]);
     }
   }
 
@@ -123,8 +131,9 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
         if (campaignData && campaignData.engagement_id && this.isFirstInit) {
           this.isFirstInit = false;
           const engagementId = campaignData.engagement_id.toString();
-          const findTemplate = res.find(template =>
+          this.templateIndex = res.findIndex(template =>
             template.id === engagementId && template.attributes_type === campaignData.engagement_type);
+          const findTemplate = res[this.templateIndex];
           this.getLimits(campaignData, findTemplate);
           this.template.patchValue(findTemplate);
         }

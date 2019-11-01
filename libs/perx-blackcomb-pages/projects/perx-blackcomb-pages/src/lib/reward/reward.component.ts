@@ -1,7 +1,7 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { InstantOutcomeService, IReward, PopupComponent, IOutcome } from '@perx/core';
+import { InstantOutcomeService, IReward, PopupComponent, IOutcome, IPopupConfig } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { map, switchMap, catchError, tap, takeUntil, } from 'rxjs/operators';
 
@@ -17,10 +17,9 @@ export class RewardComponent implements OnInit, OnDestroy {
   public background: string;
   public cardBackground: string;
   public rewards$: Observable<IReward[]>;
-  public dataPopEmpty: object = {
-    title: 'No rewards here',
-    text: 'NIL',
-    buttonTxt: 'close'
+  public dataPopEmpty: IPopupConfig = {
+    title: 'We’re sorry, all rewards have been claimed',
+    text: 'Look out for more rewards coming your way, soon!',
   };
   private destroy$: Subject<any> = new Subject();
 
@@ -45,6 +44,11 @@ export class RewardComponent implements OnInit, OnDestroy {
         this.button = eng.button;
         this.background = eng.background_img_url;
         this.cardBackground = eng.card_background_img_url;
+        if (eng.display_properties && eng.display_properties.noRewardsPopUp) {
+          this.dataPopEmpty.title = eng.display_properties.noRewardsPopUp.headLine;
+          this.dataPopEmpty.text = eng.display_properties.noRewardsPopUp.subHeadLine;
+          this.dataPopEmpty.imageUrl = eng.display_properties.noRewardsPopUp.imageURL;
+        }
       });
 
     this.rewards$ =
@@ -83,5 +87,4 @@ export class RewardComponent implements OnInit, OnDestroy {
     };
     this.dialog.open(PopupComponent, { data });
   }
-
 }

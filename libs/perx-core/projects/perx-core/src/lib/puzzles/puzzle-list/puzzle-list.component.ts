@@ -24,6 +24,9 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   public titleFn: (index?: number) => string;
 
+  @Input()
+  public puzzleTextFn: () => string;
+
   public total: number = null;
 
   @Output()
@@ -45,6 +48,10 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   public ngOnInit(): void {
     if (!this.titleFn) {
       this.titleFn = (index) => `Stamp Card ${this.puzzleIndex(index)} out of 12`;
+    }
+
+    if (!this.puzzleTextFn) {
+      this.puzzleTextFn = () => 'new pieces';
     }
   }
 
