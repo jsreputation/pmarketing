@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from '@perx/blackcomb-pages';
 import { SharedModule } from '../shared/shared.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -11,6 +12,7 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     LoginRoutingModule,
     SharedModule,
+    TranslateModule.forChild()
   ]
 })
 export class LoginModule { }
