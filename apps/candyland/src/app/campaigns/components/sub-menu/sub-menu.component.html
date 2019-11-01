@@ -44,11 +44,12 @@
     >
     </cl-sub-menu-item>
   </div>
-  <div class="sub-group-menu" *ngIf="showSlotItem()">
+  <div class="sub-group-menu">
     <p class="sub-menu-group-title">
       Thank You
     </p>
-    <cl-sub-menu-item [count]="getCount(menuType.earnedStamp)"
+    <cl-sub-menu-item *ngIf="showSlotItem()"
+                      [count]="getCount(menuType.earnedStamp)"
                       title="Earned a Stamp"
                       [class.active]="checkActiveMenu(menuType.earnedStamp)"
                       (click)="clickOnMenu(menuType.earnedStamp)"

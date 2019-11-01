@@ -149,13 +149,29 @@
                 + Add another message
               </cl-button>
             </ng-container>
+            <ng-container *ngSwitchCase="notificationsMenu.earnedReward">
+              <cl-earned-reward-form-group *ngFor="let group of getEarnedRewardGroup().controls; let index = index;"
+                                          [formGroup]="group"
+                                          [group]="group"
+                                          [shortCodes]="shortCodes"
+                                          [index]="index"
+                                          [stampNumbers]="stampNumbers"
+                                          [checkIsStamp]="checkIsStamp(campaign)"
+                                          (deleteGroup)="deleteEarnedRewardGroup($event)"
+              >
+              </cl-earned-reward-form-group>
+              <cl-button classList="tertiary ph-0" (click)="addNewEarnedRewardGroup()">
+                + Add another message
+              </cl-button>
+            </ng-container>
+
+
+
           </section>
         </ng-container>
       </div>
     </div>
   </mat-expansion-panel>
-
-
 </section>
 
 

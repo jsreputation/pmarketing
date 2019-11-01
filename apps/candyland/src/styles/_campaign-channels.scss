@@ -25,8 +25,13 @@
   &-message {
     margin-top: 4rem;
   }
+
+  &-row .notification-type {
+    max-width: inherit;
+  }
+
+  &-medium-select {
+    max-width: 9rem !important;
+  }
 }
 
-.notification-row .notification-type {
-  max-width: inherit;
-}

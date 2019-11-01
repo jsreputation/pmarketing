@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotificationsMenu } from '../models/notifications-menu-enum';
+import Utils from '@cl-helpers/utils';
 
 @Injectable()
 export class CampaignChannelsFormService {
@@ -74,6 +75,13 @@ export class CampaignChannelsFormService {
     });
   }
 
+  public getEarnedRewardGroup(): FormGroup {
+    return new FormGroup({
+      slot: new FormControl(null, [Validators.required, Validators.min(1)]),
+      message: new FormControl(null, [Validators.required]),
+    });
+  }
+
   public addNewLaunchGroup(form: FormGroup): void {
     (form.get(this.notificationsFormGroups.onCampaignLaunch) as FormArray).push(this.getLaunchGroup());
   }
@@ -115,152 +123,116 @@ export class CampaignChannelsFormService {
   }
 
   public addNewEarnedStampGroup(form: FormGroup): void {
-    (form.get(this.notificationsFormGroups.earnedStamp) as FormArray).push(this.getNoStampsRewardGroup());
+    (form.get(this.notificationsFormGroups.earnedStamp) as FormArray).push(this.getEarnedStampGroup());
   }
 
   public deleteEarnedStampGroup(form: FormGroup, index: number): void {
     (form.get(this.notificationsFormGroups.earnedStamp) as FormArray).removeAt(index);
   }
 
-  public getShortCodes(): any[] {
-    return [
-      { title: 'Campaign Url', value: '[campaignUrl]' },
-      { title: 'User ID', value: '[userId]' },
-      { title: 'First name', value: '[userFirstName]' },
-      { title: 'Last name', value: '[userLastName]' },
-      { title: 'Salutation', value: '[salutation]' }
-      ];
+  public deleteEarnedRewardGroup(form: FormGroup, index: number): void {
+    (form.get(this.notificationsFormGroups.earnedReward) as FormArray).removeAt(index);
   }
 
-  // public getToggleConfig(form: FormGroup): ToggleControlConfig[] {
-  //   return [
-  //     {
-  //       condition: form.get('limits.enableStampCard').value === true,
-  //       controls: [form.get('limits.stampCard')]
-  //     },
-  //     {
-  //       condition: form.get('limits.enableStamp').value === true,
-  //       controls: [form.get('limits.stamp')]
-  //     },
-  //     {
-  //       condition: form.get('enableStampCardsValidity').value === true,
-  //       controls: [form.get('stampCardsValidity')]
-  //     }
-  //   ];
-  // }
+  public addNewEarnedRewardGroup(form: FormGroup): void {
+    (form.get(this.notificationsFormGroups.earnedReward) as FormArray).push(this.getEarnedRewardGroup());
+  }
+
+  public getShortCodes(): any[] {
+    return [
+      {title: 'Campaign Url', value: '[campaignUrl]'},
+      {title: 'User ID', value: '[userId]'},
+      {title: 'First name', value: '[userFirstName]'},
+      {title: 'Last name', value: '[userLastName]'},
+      {title: 'Salutation', value: '[salutation]'}
+    ];
+  }
 
   public getDefaultValue(): { [key: string]: any } {
     return {
-      rewardsList: [
-        // {
-        //   stampSlotNumber: 2,
-        //   rewardsOptions: {
-        //     enableProbability: true,
-        //     rewards: [
-        //       {
-        //         value: null,
-        //         probability: 5
-        //       },
-        //       {
-        //         value: {
-        //           id: 1,
-        //           image: 'assets/images/placeholders/mask-group.png',
-        //           name: 'Free Coffee',
-        //           type: 'Starbucks',
-        //           current: 500,
-        //           total: 1000
-        //         },
-        //         probability: 20
-        //       },
-        //       {
-        //         value: {
-        //           id: 2,
-        //           image: 'assets/images/placeholders/mask-group.png',
-        //           name: 'Free Coffee 2',
-        //           type: 'Starbucks',
-        //           current: 500,
-        //           total: 800
-        //         },
-        //         probability: 43
-        //       }
-        //     ]
-        //   }
-        // },
-        // {
-        //   stampSlotNumber: 4,
-        //   rewardsOptions: {
-        //     enableProbability: false,
-        //     rewards: [
-        //       {
-        //         value: {
-        //           id: 1,
-        //           image: 'assets/images/placeholders/mask-group.png',
-        //           name: 'Free Coffee',
-        //           type: 'Starbucks',
-        //           current: 500,
-        //           total: 1000
-        //         }
-        //       },
-        //       {
-        //         value: {
-        //           id: 2,
-        //           image: 'assets/images/placeholders/mask-group.png',
-        //           name: 'Free Coffee 2',
-        //           type: 'Starbucks',
-        //           current: 500,
-        //           total: 800
-        //         }
-        //       }
-        //     ]
-        //   }
-        // }
-      ],
-      stampsRule: {
-        sequence: true,
-        rules: [
-          {
-            ruleType: 'review',
-            product: 'productC'
-          },
-          {
-            ruleType: 'purchase',
-            product: 'productB'
-          },
-          {
-            ruleType: 'transaction',
-            condition: {
-              rule: 'isMoreThan',
-              value: 54
-            }
-          },
-          {
-            ruleType: 'Bill payment'
-          },
-          {
-            ruleType: 'Reward redeemed'
-          },
-          {
-            ruleType: 'Sign up'
-          },
-          {
-            ruleType: 'Bill payment'
-          },
-          {
-            ruleType: 'Sign up'
-          },
-          {
-            ruleType: 'review',
-            product: 'productB'
-          },
-          {
-            ruleType: 'transaction',
-            condition: {
-              rule: 'isMoreThan',
-              value: 47
-            }
-          }
-        ]
-      }
+      webLink: true,
+      sms: true,
+      webLinkOptions: 'collect_identifier',
+      launch: [{
+        sentType: 'campaign_launch_date',
+        sentDay: null,
+        sentTime: null,
+        message: 'null [userId] sdfgsdfg [userFirstName] ',
+        birthdayTime: null,
+        monthDay: null
+      }, {
+        sentType: 'users_date_birth',
+        sentDay: null,
+        sentTime: null,
+        message: 'null [userLastName] asdfasdfasdf',
+        birthdayTime: '03:20',
+        monthDay: null
+      }, {
+        sentType: 'users_month_birth',
+        sentDay: null,
+        sentTime: null,
+        message: 'null [userId]  asdfasdfasdf',
+        birthdayTime: '15:15',
+        monthDay: 3423
+      }],
+      completed: [{
+        numberPeriod: 33,
+        type: 'day',
+        time: '15:15',
+        message: 'ttttttttttttttttttt [campaignUrl] '
+      }, {numberPeriod: 4444, type: 'month', time: '18:30', message: 'null [userLastName] 33333333333333333333333'}],
+      campaignEnds: [{
+        numberPeriod: 666,
+        type: 'day',
+        time: '16:20',
+        message: 'null [campaignUrl] 66666666'
+      }, {numberPeriod: 999, type: 'year', time: '17:25', message: 'null [userLastName] '}],
+      rewardExpires: [{numberPeriod: 44, type: 'week', time: '17:25', message: '2344243 [userId] '}, {
+        numberPeriod: 44,
+        type: 'day',
+        time: '14:10',
+        message: '444444 [userId] '
+      }],
+      noStampsReward: [{stamp: 3, slot: 10, message: '232324 [userId] '}, {
+        stamp: 6,
+        slot: 10,
+        message: 'e567456745764567 [salutation] '
+      }],
+      earnedStamp: [{stamp: 5, message: 'sgfsdfgsdfg [campaignUrl] '}, {
+        stamp: 3,
+        message: 'asdfasdfasdf [userLastName] '
+      }],
+      earnedReward: [{slot: 5, message: 'null [userId] asdfasdfasdf'}, {
+        slot: 3,
+        message: 'null [userLastName] asdfasdfasdf'
+      }]
     };
+  }
+
+  public patchForm(form: FormGroup, value: any): void {
+    Object.keys(value).forEach((key) => {
+      if (Utils.isArray(value[key])) {
+        value[key].forEach((item) => {
+          const formGroup: FormGroup = this.formGroupsMap(key);
+          formGroup.patchValue(item);
+          (form.get(key) as FormArray).push(formGroup);
+        });
+          } else {
+        form.patchValue({[key]: value[key]}, {onlySelf: false, emitEvent: false});
+      }
+    });
+  }
+
+  private formGroupsMap(name: string): FormGroup {
+    const mapGroups = {
+      [this.notificationsFormGroups.onCampaignLaunch]: this.getLaunchGroup(),
+      [this.notificationsFormGroups.campaignNotCompleted]: this.getCompletedGroup(),
+      [this.notificationsFormGroups.beforeCampaignEnds]: this.getCampaignEndsGroup(),
+      [this.notificationsFormGroups.beforeRewardExpires]: this.getRewardExpiresGroup(),
+      [this.notificationsFormGroups.noOfStampsToNextReward]: this.getNoStampsRewardGroup(),
+      [this.notificationsFormGroups.earnedStamp]: this.getEarnedStampGroup(),
+      [this.notificationsFormGroups.earnedReward]: this.getEarnedRewardGroup(),
+    };
+    return mapGroups[name];
   }
 }

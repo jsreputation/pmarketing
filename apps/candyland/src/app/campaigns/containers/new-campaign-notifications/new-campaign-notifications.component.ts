@@ -31,10 +31,13 @@ export class NewCampaignNotificationsComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.getForm();
-    this.subscribeFormChanges();
     this.getShortCodes();
     this.getStampData();
     this.subscribeToStore();
+  }
+
+  public patchForm(value: any): void {
+    this.campaignChannelsFormService.patchForm(this.form, value);
   }
 
   public ngOnDestroy(): void {
@@ -48,14 +51,6 @@ export class NewCampaignNotificationsComponent implements OnInit, OnDestroy {
 
   private getForm(): void {
     this.form = this.campaignChannelsFormService.getForm();
-  }
-
-  private subscribeFormChanges(): void {
-    this.form.valueChanges
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(value => {
-        console.log(value);
-      });
   }
 
   public addNewLaunchGroup(): void {
@@ -106,6 +101,14 @@ export class NewCampaignNotificationsComponent implements OnInit, OnDestroy {
     this.campaignChannelsFormService.deleteEarnedStampGroup(this.form, index);
   }
 
+  public addNewEarnedRewardGroup(): void {
+    this.campaignChannelsFormService.addNewEarnedRewardGroup(this.form);
+  }
+
+  public deleteEarnedRewardGroup(index: number): void {
+    this.campaignChannelsFormService.deleteEarnedRewardGroup(this.form, index);
+  }
+
   public getLaunchGroup(): FormArray {
     return (this.form.get(this.notificationsMenu.onCampaignLaunch) as FormArray);
   }
@@ -130,6 +133,10 @@ export class NewCampaignNotificationsComponent implements OnInit, OnDestroy {
     return (this.form.get(this.notificationsMenu.earnedStamp) as FormArray);
   }
 
+  public getEarnedRewardGroup(): FormArray {
+    return (this.form.get(this.notificationsMenu.earnedReward) as FormArray);
+  }
+
   public getWebLink(): FormControl {
     return (this.form.get('webLink') as FormControl);
   }
@@ -145,7 +152,6 @@ export class NewCampaignNotificationsComponent implements OnInit, OnDestroy {
   private getStampData(): void {
     this.stampsService.getStampsData()
       .subscribe((response) => {
-        console.log(response);
         this.allStampSlotNumbers = response.slotNumber;
       });
   }
@@ -156,31 +162,30 @@ export class NewCampaignNotificationsComponent implements OnInit, OnDestroy {
       .subscribe((value => {
         this.campaign = value;
         this.cd.markForCheck();
-        console.log(value);
         this.getSlotNumber(this.campaign);
         this.getStampNumbers(this.campaign);
       }));
   }
 
   private getSlotNumber(campaign: ICampaign): void {
-    if (this.checkIsStemp(campaign)) {
+    if (this.checkIsStamp(campaign)) {
       this.stampSlotNumbers =
         this.allStampSlotNumbers.filter((item: CommonSelect) => campaign.template.slots.includes(item.value));
     }
   }
 
   private getStampNumbers(campaign: ICampaign): void {
-    if (this.checkIsStemp(campaign)) {
+    if (this.checkIsStamp(campaign)) {
       this.stampNumbers = Array.from(Array(10).keys(), (item) => {
         return {
           value: item + 1,
-          viewValue: `Stamp ${item + 1}`
+          viewValue: `${item + 1}`
       };
       });
     }
   }
 
-  private checkIsStemp(campaign: ICampaign): boolean {
+  public checkIsStamp(campaign: ICampaign): boolean {
     return campaign && campaign.template && campaign.template.attributes_type === 'stamps';
   }
 }

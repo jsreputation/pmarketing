@@ -6,9 +6,9 @@
     <span>
      Message will be sent when users have earned
     </span>
-    <mat-form-field>
-      <mat-select formControlName="slot">
-        <mat-option [value]="item.value" *ngFor="let item of stampNumbers">{{item.viewValue}}</mat-option>
+    <mat-form-field class="notification-medium-select">
+      <mat-select formControlName="stamp">
+        <mat-option [value]="item.value" *ngFor="let item of stampNumbers">Stamp {{item.viewValue}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>

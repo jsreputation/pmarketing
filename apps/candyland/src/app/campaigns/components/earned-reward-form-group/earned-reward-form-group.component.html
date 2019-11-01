@@ -1,1 +1,30 @@
-<p>earned-reward-form-group works!</p>
+<section class="notification-wrap" [formGroup]="group">
+  <h2 class="card-title">
+    Earned Reward message <span>{{index + 1}}</span>
+  </h2>
+  <div class="input-group notification-row" *ngIf="checkIsStamp">
+    <span>
+     Message will be sent when users have earned a reward in
+    </span>
+    <mat-form-field class="notification-medium-select">
+      <mat-select formControlName="slot">
+        <mat-option [value]="item.value" *ngFor="let item of stampNumbers">Slot {{item.viewValue}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <section class="notification-message">
+    <h2 class="card-title">
+      Message Content
+    </h2>
+    <cl-sms-editor [options]="shortCodes" [control]="group.get('message')"></cl-sms-editor>
+  </section>
+  <section class="notification-actions flex justify-content-between align-items-center">
+    <cl-button classList="tertiary ph-0" (click)="sendTestSms()">
+      <i class="material-icons">
+        send
+      </i>
+      Send test SMS
+    </cl-button>
+    <cl-button classList="secondary" (click)="deleteEarnedRewardGroup()">Delete</cl-button>
+  </section>
+</section>
