@@ -1,4 +1,5 @@
 import { switchMap, map, tap } from 'rxjs/operators';
+import { WEngagementType } from '@perx/whistler';
 import {
   IStampCard,
   IStamp,
@@ -22,7 +23,7 @@ interface AttbsObjEntity {
   start_date_time: null;
   end_date_time: null;
   comm_channel: null;
-  engagement_type: string;
+  engagement_type: WEngagementType;
   engagement_id: number;
   pool_id: null;
   display_properties?: IDisplayProperties;
