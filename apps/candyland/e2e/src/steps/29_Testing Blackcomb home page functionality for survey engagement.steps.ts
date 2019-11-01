@@ -1,17 +1,44 @@
-import { Given, Then, setDefaultTimeout } from 'cucumber';
+import { Given, Then } from 'cucumber';
 import { expect } from 'chai';
-import { browser, element, by , protractor, ProtractorExpectedConditions } from 'protractor';
-import { BlackcombHomeAppPage } from '../pages/candylandApp.po';
+import { browser, element, by, ProtractorExpectedConditions, protractor  } from 'protractor';
+import { BlackcombHomeAppPage, CreateCampaignAppPage } from '../pages/candylandApp.po';
 
-setDefaultTimeout(60 * 1000);
+// setDefaultTimeout(60 * 1000);
 const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 let BlackcombHomeApp: BlackcombHomeAppPage;
+let CreateCampaignPage: CreateCampaignAppPage;
 
 // Ensuring home page has the relevant elements
 Given(/^9_I am at the blackcomb home page$/, async () => {
   BlackcombHomeApp = new BlackcombHomeAppPage();
-  await BlackcombHomeApp.navigateToBlackcombHomeApp();
+  CreateCampaignPage = new CreateCampaignAppPage();
+  await CreateCampaignPage.navigateToCreateCampaign();
+  // await browser.executeScript('WalkMeAPI.stopFlow()');
+  // waiting for the search bar to load
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('input[type=text]')).get(1)), 5000);
+  // entering search criteria for survey in search bar
+  await element.all(by.css('input[type=text]')).get(1).sendKeys('Survey 1');
+  // selecting first element
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('div.engagement-item')).first()), 5000);
+  // asserting the presence of the card and title of the card
+  await element.all(by.css('div.engagement-item')).first().click();
+  // clicking on the next button on select engagement page
+  await element.all(by.css('cl-button')).get(1).click();
+  // clicking on the next button on the rewards and limits page
+  await element.all(by.css('cl-button')).get(1).click();
+  // browser.sleep(3000);
+  // clicking the next button on the campaign details package
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('cl-button')).get(1)), 5000);
+  await element.all(by.css('cl-button')).get(1).click();
+  // clicking on the launch button
+  await browser.wait(ec.elementToBeClickable(element.all(by.css('cl-button')).get(1)), 5000);
+  await element.all(by.css('cl-button')).get(1).click();
+  await browser.wait(ec.presenceOf(element.all(by.css('input[type=text]')).get(2)), 5000);
+  const urlString = await element.all(by.css('input[type=text]')).get(2).getAttribute('value');
+  await browser.get(urlString);
   await browser.sleep(3000);
+  await BlackcombHomeApp.navigateToBlackcombHomeApp();
+
 });
 
 Then(/^9_I see the welcome message ,relevant headers, qr button and category tabs.$/, async () => {
@@ -19,13 +46,13 @@ Then(/^9_I see the welcome message ,relevant headers, qr button and category tab
   await browser.wait(ec.presenceOf(element(by.css('div.welcome-text.ng-star-inserted'))), 6000);
   // waiting for the headers to load
   // game header
-  // await browser.wait(ec.presenceOf(element.all(by.css('div[class=title]')).get(0)), 6000);
+  await browser.wait(ec.presenceOf(element.all(by.css('div[class=title]')).get(0)), 6000);
   // featured rewards header
-  // await browser.wait(ec.presenceOf(element.all(by.css('div[class=title]')).get(1)), 6000);
+  await browser.wait(ec.presenceOf(element.all(by.css('div[class=title]')).get(1)), 6000);
   // waiting for qr button to load
-  // await browser.wait(ec.presenceOf(element(by.css('div.mat-button-ripple'))), 6000);
+  await browser.wait(ec.presenceOf(element(by.css('div.mat-button-ripple'))), 6000);
   // waiting for category tab to load
-  // await browser.wait(ec.presenceOf(element(by.css('div.mat-tab-list'))), 6000);
+  await browser.wait(ec.presenceOf(element(by.css('div.mat-tab-list'))), 6000);
   // doing an assertion on the presence of the element
   expect(await element(by.css('div.welcome-text.ng-star-inserted')).isDisplayed()).to.equal(true);
   expect(await element.all(by.css('div[class=title]')).get(0).isDisplayed()).to.equal(true);
