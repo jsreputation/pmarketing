@@ -31,7 +31,7 @@ describe('WhistlerCampaignService', () => {
       name: 'I love that stuff',
       start_date_time: null,
       end_date_time: null,
-      engagement_type: '',
+      engagement_type: 'survey',
       engagement_id: 1
     }
   };
@@ -49,7 +49,7 @@ describe('WhistlerCampaignService', () => {
       name: '',
       start_date_time: tomorrow.toISOString(),
       end_date_time: null,
-      engagement_type: '',
+      engagement_type: 'survey',
       engagement_id: 1
     }
   };
@@ -66,7 +66,7 @@ describe('WhistlerCampaignService', () => {
       name: '',
       start_date_time: null,
       end_date_time: yesterday.toISOString(),
-      engagement_type: '',
+      engagement_type: 'survey',
       engagement_id: 1
     }
   };
