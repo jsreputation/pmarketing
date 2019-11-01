@@ -41,14 +41,13 @@ export class GameComponent implements OnInit, OnDestroy {
       switchMap((id: number) => this.gameService.getGamesFromCampaign(id)),
       first(),
       tap((games: IGame[]) => !games || !games.length && this.router.navigate(['/wallet'])),
-      map((games: IGame[]) => {
-        const game: IGame = games[0];
+      map((games: IGame[]) => games[0]),
+      tap((game: IGame) => {
         if (game && game.disProp && game.disProp.congratulationsPopUp.imageURL) {
           this.congratulationsPopUp.imageUrl = game.disProp.congratulationsPopUp.imageURL;
         }
-        return game;
-      }),
-      tap((game: IGame) => game ? this.engagementId = game.id : null)
+        this.engagementId = game ? game.id : null;
+      })
     );
   }
 
@@ -78,7 +77,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.router.navigate(['/wallet']);
         if (outcome.vouchers.length > 0) {
           this.congratulationsPopUp.text = `You earned ${outcome.vouchers.length} rewards`;
-          this.dialog.open(PopupComponent, {data: this.congratulationsPopUp });
+          this.dialog.open(PopupComponent, { data: this.congratulationsPopUp });
         } else {
           this.dialog.open(PopupComponent, {
             data: {
@@ -89,16 +88,16 @@ export class GameComponent implements OnInit, OnDestroy {
           });
         }
       },
-      () => {
-        this.router.navigate(['/wallet']);
-        this.dialog.open(PopupComponent, {
-          data: {
-            title: 'Thanks for playing',
-            text: 'Unfortunately, you did not win anything this time',
-            buttonTxt: 'Go to Wallet',
-          }
-        });
-      }
+        () => {
+          this.router.navigate(['/wallet']);
+          this.dialog.open(PopupComponent, {
+            data: {
+              title: 'Thanks for playing',
+              text: 'Unfortunately, you did not win anything this time',
+              buttonTxt: 'Go to Wallet',
+            }
+          });
+        }
       );
   }
 }
