@@ -1,11 +1,17 @@
 import {
   async,
+  fakeAsync,
   ComponentFixture,
   TestBed,
 } from '@angular/core/testing';
+import { Type } from '@angular/core';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { of } from 'rxjs';
+import {
+  Observable,
+  of,
+} from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
 import {
@@ -14,11 +20,16 @@ import {
   ProfileService,
   ThemesService,
   ConfigModule,
+  IProfile,
+  PagesObject,
 } from '@perx/core';
 
 import { AccountComponent } from './account.component';
 
-describe('AccountComponent', () => {
+import { profile } from '../mock/profile.mock';
+import { pagesObject } from '../mock/pages.mock';
+
+fdescribe('AccountComponent', () => {
   const environment = {
     apiHost: 'https://api.perxtech.io',
     production: false,
@@ -28,12 +39,16 @@ describe('AccountComponent', () => {
   };
   let component: AccountComponent;
   let fixture: ComponentFixture<AccountComponent>;
-  const authenticationServiceStub = {};
+  let router: Router;
+  let auth: AuthenticationService;
   const profileServiceStub = {
-    whoAmI: () => of()
+    whoAmI: (): Observable<IProfile> => of(profile)
   };
-  const themeSvcStub = {
-    getAccountSettings: () => of()
+  const themeServiceStub = {
+    getAccountSettings: (): Observable<PagesObject> => of(pagesObject)
+  };
+  const authenticationServiceStub = {
+    logout: () => { }
   };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -47,7 +62,7 @@ describe('AccountComponent', () => {
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
-        { provide: ThemesService, useValue: themeSvcStub }
+        { provide: ThemesService, useValue: themeServiceStub }
       ]
     })
       .compileComponents();
@@ -56,10 +71,30 @@ describe('AccountComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AccountComponent);
     component = fixture.componentInstance;
+    router = TestBed.get<Router>(Router as Type<Router>);
+    auth = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should fetch profile', fakeAsync(() => {
+    component.ngOnInit();
+    expect(component.profile).toBe(profile);
+  }));
+
+  it('should fetch pages', fakeAsync(() => {
+    component.ngOnInit();
+    expect(component.pages).toBe(pagesObject.pages);
+  }));
+
+  it('should logout', () => {
+    const routerSpy = spyOn(router, 'navigate');
+    const authSpy = spyOn(auth, 'logout');
+    component.logout();
+    expect(routerSpy).toHaveBeenCalledWith(['/login']);
+    expect(authSpy).toHaveBeenCalled();
   });
 });
