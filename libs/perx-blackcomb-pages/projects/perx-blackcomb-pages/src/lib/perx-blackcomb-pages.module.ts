@@ -59,11 +59,13 @@ import { SurveyComponent } from './survey/survey.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 const comps: any[] = [
   AccountComponent,
   ContentComponent,
   HistoryComponent,
   VouchersComponent,
+  SignUpComponent,
   RepeatTimesDirective,
   RewardsCollectionComponent,
   HomeComponent,

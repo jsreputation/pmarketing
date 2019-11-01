@@ -52,6 +52,7 @@ const routes: Routes = [
       },
       { path: 'reward-detail/:id', component: RewardDetailsComponent, canActivate: [ProtectedGuard] },
       { path: 'loading', component: LoadingComponent },
+      { path: 'signup',  loadChildren: (): any => import('./sign-up/sign-up.module').then((mod: any) => mod.SignUpModule) },
       { path: 'c/:key', component: ContentComponent, canActivate: [ProtectedGuard] },
     ]
   },

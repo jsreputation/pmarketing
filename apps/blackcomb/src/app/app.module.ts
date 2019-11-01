@@ -11,6 +11,7 @@ import {
   ProfileModule,
   ConfigModule,
   RewardsModule,
+  SurveyModule,
   MerchantsModule as PerxMerchantsModule,
   CampaignModule as PerxCampaignModule,
   StampModule as PerxStampModule,
@@ -45,6 +46,7 @@ import {
 } from '@perx/blackcomb-pages';
 import { HomeModule } from './home/home.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { SignUpModule } from './sign-up/sign-up.module';
 
 const perxComponents = [
   HistoryComponent,
@@ -70,6 +72,7 @@ const perxComponents = [
     AuthenticationModule,
     GameModule,
     AccountModule,
+    SignUpModule,
     ProfileModule,
     BrowserAnimationsModule,
     RewardsModule,
@@ -91,6 +94,7 @@ const perxComponents = [
     PerxCampaignModule,
     HttpClientModule,
     HomeModule,
+    SurveyModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   bootstrap: [AppComponent]
