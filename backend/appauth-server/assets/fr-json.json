@@ -37,6 +37,5 @@
     "TRY_AGAIN_LATER": "Error occur, please try again later",
     "ENTER_CUSTOM_ID": "Entrez votre identifiant",
     "ENTER_PASSWORD": "Entrez votre mot de passe",
-    "INVALID_CREDENTIALS": "Données invalides",
-    "BACK_TO_WALLET": "Retour au portefeuille"
+    "INVALID_CREDENTIALS": "Données invalides"
 }

@@ -5,7 +5,6 @@ import {
 } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
 
 import {
   IPrice,
@@ -18,9 +17,6 @@ import {
   styleUrls: ['./reward.component.scss']
 })
 export class RewardComponent implements OnInit {
-
-  private defaultButtonTxt: string = null;
-
   @Input('reward')
   public reward$: Observable<IReward>;
 
@@ -32,16 +28,6 @@ export class RewardComponent implements OnInit {
 
   @Input()
   public showExpiry: boolean = true;
-
-  public getButtonTxt(buttonTxt: string): string {
-    return buttonTxt || this.defaultButtonTxt;
-  }
-
-  constructor(
-    private translate: TranslateService,
-  ) {
-    this.translate.get('BACK_TO_WALLET').subscribe( text => this.defaultButtonTxt = text);
-  }
 
   public ngOnInit(): void {
     if (!this.displayPriceFn) {
