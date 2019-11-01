@@ -1,4 +1,4 @@
-import { Given, Then } from 'cucumber';
+import { Given, When, Then } from 'cucumber';
 import { expect } from 'chai';
 import { browser, element, by, ProtractorExpectedConditions, protractor  } from 'protractor';
 import { BlackcombHomeAppPage, CreateCampaignAppPage } from '../pages/candylandApp.po';
@@ -26,7 +26,6 @@ Given(/^9_I am at the blackcomb home page$/, async () => {
   await element.all(by.css('cl-button')).get(1).click();
   // clicking on the next button on the rewards and limits page
   await element.all(by.css('cl-button')).get(1).click();
-  // browser.sleep(3000);
   // clicking the next button on the campaign details package
   await browser.wait(ec.elementToBeClickable(element.all(by.css('cl-button')).get(1)), 5000);
   await element.all(by.css('cl-button')).get(1).click();
@@ -62,23 +61,24 @@ Then(/^9_I see the welcome message ,relevant headers, qr button and category tab
 });
 
 // Ensuring functionality of qr button.
-/*Given(/^10_I am at the blackcomb home page$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
+Given(/^10_I am at the blackcomb home page$/, async () => {
+  await BlackcombHomeApp.navigateToBlackcombHomeApp();
 });
 
 When(/^10_I click on the qr button$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
+  // waiting for qr button to load
+  await browser.wait(ec.presenceOf(element(by.css('div.mat-button-ripple'))), 6000);
+  // clicking on the qr button
+  await element(by.css('span.mat-button-wrapper')).click();
+  await browser.sleep(1000);
 });
 
 Then(/^10_I should be navigated to the qr card page.$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+  expect(await browser.getCurrentUrl()).to.contain('qr');
+});
 
 // Ensuring qr page has the relevant elements.
-Given(/^11_I am at the blackcomb qr page.$/, async () => {
+/*Given(/^11_I am at the blackcomb qr page.$/, async () => {
     // Write code here that turns the phrase above into concrete actions
     return 'pending';
 });
