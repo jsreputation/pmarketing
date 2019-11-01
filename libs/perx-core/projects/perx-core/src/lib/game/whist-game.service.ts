@@ -163,7 +163,7 @@ export class WhistlerGameService implements IGameService {
           return entity.engagement_id;
         }),
         switchMap((correctId: number) => this.get(correctId)),
-        map((game: IGame) => ([{ ...game, campaignId, displayProperties: disProp }]))
+        map((game: IGame) => ([{ ...game, campaignId, displayProperties: { ...game.displayProperties, ...disProp } }]))
       );
   }
 }
