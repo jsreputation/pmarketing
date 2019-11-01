@@ -148,7 +148,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         ).subscribe((games) => {
           this.showGames = games.length > 0;
           return subject.complete();
-      });
+        });
     }));
   }
 
