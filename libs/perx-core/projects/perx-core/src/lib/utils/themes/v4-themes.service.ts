@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ThemesService } from './themes.service';
-import { DARK, ITheme, LIGHT, PagesObject } from './themes.model';
+import { ITheme, PagesObject } from './themes.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
@@ -9,32 +9,12 @@ import { map, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class V4ThemesService implements ThemesService {
+export class V4ThemesService extends ThemesService {
   private themeSettingEndpoint: string;
-  private active: ITheme;
-  private availableThemes: ITheme[] = [LIGHT, DARK];
 
-  constructor(private http: HttpClient, config: Config ) {
+  constructor(private http: HttpClient, config: Config) {
+    super();
     this.themeSettingEndpoint = config.baseHref + `assets/theme.json`;
-  }
-
-  public getAvailableThemes(): ITheme[] {
-    return this.availableThemes;
-  }
-
-  public getActiveTheme(): ITheme {
-    return this.active;
-  }
-
-  public setActiveTheme(theme: ITheme): void {
-    this.active = theme;
-
-    Object.keys(this.active.properties).forEach(property => {
-      document.documentElement.style.setProperty(
-        property,
-        this.active.properties[property]
-      );
-    });
   }
 
   public getThemeSetting(): Observable<ITheme> {
