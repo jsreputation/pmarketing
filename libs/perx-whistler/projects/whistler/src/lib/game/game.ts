@@ -1,3 +1,5 @@
+import { WEngagementType } from '../campaign/campaign';
+
 export const enum WGameType {
   shakeTheTree = 'shake',
   pinata = 'tap',
@@ -23,7 +25,7 @@ export interface WAttbsObjEntity {
   created_at: string;
   end_date_time: null;
   engagement_id: number;
-  engagement_type: string;
+  engagement_type: WEngagementType;
   goal: null;
   name: string;
   pool_id: null;
@@ -31,6 +33,13 @@ export interface WAttbsObjEntity {
   status: string;
   updated_at: string;
   urn: string;
+  display_properties?: {
+    noRewardsPopUp?: {
+      headLine?: string,
+      subHeadLine?: string,
+      imageUrl?: string
+    }
+  };
 }
 
 export interface WGameDisplayProperties {

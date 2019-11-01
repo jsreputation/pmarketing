@@ -1,7 +1,7 @@
 import { ICampaign } from './../campaign/models/campaign.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ISurvey, MaterialColor, IAnswer, IQuestion, SurveyQuestionType } from './models/survey.model';
+import { ISurvey, IQuestion, MaterialColor, IAnswer, IDisplayProperties, SurveyQuestionType } from './models/survey.model';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
@@ -24,7 +24,7 @@ export class SurveyService {
     private campaignService: ICampaignService,
     config: Config,
   ) {
-    this.baseUrl = config.apiHost;
+    this.baseUrl = config.apiHost || '';
   }
 
   private static WSurveyToSurvey(survey: IJsonApiItemPayload<IWSurveyAttributes>): ISurvey {
@@ -40,20 +40,28 @@ export class SurveyService {
       progress_bar_color: MaterialColor[dp.progress_bar_color],
       card_background_img_url: dp.card_background_img_url,
       background_img_url: dp.background_img_url,
+      displayProperties: dp.disProp,
       questions
     };
   }
 
   public getSurveyFromCampaign(id: number): Observable<ISurvey> {
+    let disProp: IDisplayProperties | undefined;
     return this.campaignService.getCampaign(id)
       .pipe(
         switchMap(
-          (campaign: ICampaign) => this.http.get<IJsonApiItemPayload<IWSurveyAttributes>>(
-            `${this.baseUrl}/survey/engagements/${campaign.engagementId}?campaign_id=${id}`
-          )
+          (campaign: ICampaign) => {
+            disProp = campaign.displayProperties;
+            return this.http.get<IJsonApiItemPayload<IWSurveyAttributes>>(
+              `${this.baseUrl}/survey/engagements/${campaign.engagementId}?campaign_id=${id}`
+            );
+          }
         ),
         tap(s => console.error('got survey', s)),
-        map((res: IJsonApiItemPayload<IWSurveyAttributes>) => SurveyService.WSurveyToSurvey(res))
+        map((res: IJsonApiItemPayload<IWSurveyAttributes>) => {
+          res.data.attributes.display_properties = { ...res.data.attributes.display_properties, disProp };
+          return SurveyService.WSurveyToSurvey(res);
+        })
       );
   }
 

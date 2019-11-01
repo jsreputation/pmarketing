@@ -17,6 +17,7 @@ import {
   MatCheckboxModule,
   MatSelectModule,
   MatDatepickerModule,
+  MatToolbarModule,
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
@@ -51,6 +52,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { LoginComponent } from './login/login.component';
+import { PIComponent } from './pi/pi.component';
 import { QRComponent } from './qr/qr.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { RewardDetailsComponent } from './reward-details/reward-details.component';
@@ -60,6 +62,8 @@ import { VoucherDetailComponent } from './voucher-detail/voucher-detail.componen
 import { WalletComponent } from './wallet/wallet.component';
 import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { LayoutComponent } from './layout/layout.component';
 const comps: any[] = [
   AccountComponent,
   ContentComponent,
@@ -76,6 +80,7 @@ const comps: any[] = [
   LoadingComponent,
   RedeemComponent,
   LoginComponent,
+  PIComponent,
   QRComponent,
   RewardDetailsComponent,
   PerxRewardComponent,
@@ -97,7 +102,8 @@ const comps: any[] = [
   RewardsListTabbedComponent,
   LoyaltySummaryComponent,
   GamesCollectionComponent,
-  RewardsListComponent
+  RewardsListComponent,
+  LayoutComponent
 ];
 
 @NgModule({
@@ -121,13 +127,15 @@ const comps: any[] = [
     MatRadioModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    TranslateModule.forChild(),
+    MatToolbarModule
   ],
   exports: [
-    ...comps
+    ...comps,
   ],
   declarations: [
-    ...comps
+    ...comps,
   ]
 })
 export class PerxBlackcombPagesModule {

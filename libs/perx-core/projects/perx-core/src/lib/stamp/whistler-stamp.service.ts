@@ -1,8 +1,10 @@
 import { switchMap, map, tap } from 'rxjs/operators';
+import { WEngagementType } from '@perx/whistler';
 import {
   IStampCard,
   IStamp,
-  StampCardState
+  StampCardState,
+  IDisplayProperties
 } from './models/stamp.model';
 import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { Observable, of } from 'rxjs';
@@ -21,9 +23,10 @@ interface AttbsObjEntity {
   start_date_time: null;
   end_date_time: null;
   comm_channel: null;
-  engagement_type: string;
+  engagement_type: WEngagementType;
   engagement_id: number;
   pool_id: null;
+  display_properties?: IDisplayProperties;
 }
 
 interface AttbsObjStamp {
@@ -47,6 +50,7 @@ interface AttbsObjStamp {
     card_background_img_url: string;
     background_img_url: string;
     display_campaign_as: string;
+    disProp?: IDisplayProperties;
   };
 }
 
@@ -88,6 +92,7 @@ export class WhistlerStampService implements StampService {
         bgImage: attributesObj.display_properties.background_img_url,
         cardBgImage: attributesObj.display_properties.card_background_img_url,
         displayCampaignAs: attributesObj.display_properties.display_campaign_as,
+        disProp: attributesObj.display_properties.disProp
       }
     };
   }
@@ -98,15 +103,23 @@ export class WhistlerStampService implements StampService {
   }
 
   public getCurrentCard(campaignId: number): Observable<IStampCard> {
+    let disProp: IDisplayProperties;
     if (this.cache[campaignId]) {
       return of(this.cache[campaignId]);
     }
     return this.http.get<IJsonApiItemPayload<AttbsObjEntity>>(`${this.baseUrl}/campaign/entities/${campaignId}`)
       .pipe(
         map(res => res.data.attributes),
-        switchMap(correctEntityAttribute => this.http.get<IJsonApiItemPayload<AttbsObjStamp>>(
-          `${this.baseUrl}/loyalty/engagements/${correctEntityAttribute.engagement_id}`
-        )),
+        switchMap(correctEntityAttribute => {
+          disProp = correctEntityAttribute.display_properties;
+          return this.http.get<IJsonApiItemPayload<AttbsObjStamp>>(
+            `${this.baseUrl}/loyalty/engagements/${correctEntityAttribute.engagement_id}`
+          );
+        }),
+        map((res) => {
+          res.data.attributes.display_properties = { ...res.data.attributes.display_properties, disProp };
+          return res;
+        }),
         map((res) => ({ ...WhistlerStampService.WStampCardToStampCard(res.data), campaignId })),
         tap(sc => this.cache[campaignId] = sc)
       );
