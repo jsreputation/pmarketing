@@ -1,8 +1,8 @@
 import { ISurvey } from './../../survey/models/survey.model';
 import { HttpClient } from '@angular/common/http';
-import { Config} from '../../config/config';
+import { Config } from '../../config/config';
 // import { ISurvey } from '../../survey/models/survey.model';
-import { Observable  } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IFormsService } from './iforms.service';
 import { Injectable } from '@angular/core';
 // import { IJsonApiListPayload } from '../../jsonapi.payload';
@@ -20,7 +20,7 @@ export class WhistlerFormsService implements IFormsService {
 
   public getSignupForm(): Observable<ISurvey> {
     return (this.http.get(`${this.baseUrl}/cognito/tenants/1`).pipe(
-        pluck("data", "attributes", "properties")
+      pluck('data', 'attributes', 'properties')
     ) as Observable<ISurvey>);
   }
 

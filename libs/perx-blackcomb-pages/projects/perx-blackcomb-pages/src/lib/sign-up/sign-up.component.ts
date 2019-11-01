@@ -24,8 +24,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   // set up submit button t cognito users
   constructor(private formSvc: IFormsService) { }
 
-
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.data$ = this.formSvc.getSignupForm();
 
   }
@@ -46,6 +45,4 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public onSubmit(): void {
     console.log(this.answers);
   }
-
-
 }
