@@ -41,7 +41,8 @@ import {
   RewardDetailsComponent,
   LoadingComponent,
   ContentComponent,
-  WalletComponent
+  WalletComponent,
+  PIComponent,
 } from '@perx/blackcomb-pages';
 import { HomeModule } from './home/home.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -50,6 +51,7 @@ const perxComponents = [
   HistoryComponent,
   RedeemComponent,
   LoginComponent,
+  PIComponent,
   VoucherDetailComponent,
   RewardDetailsComponent,
   LoadingComponent,

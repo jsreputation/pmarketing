@@ -26,4 +26,5 @@ declare interface IRewardEntity {
   merchantId?: string;
   merchantName?: string;
   tags: string[];
+  outcomeId?: string;
 }

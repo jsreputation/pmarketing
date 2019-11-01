@@ -13,4 +13,11 @@ export interface ICampaignAttributes {
     possible_outcomes?: any;
     comm?: any;
     labels?: string[];
+    display_properties?: {
+      noRewardsPopUp?: {
+        headLine?: string,
+        subHeadLine?: string,
+        imageUrl?: string
+      }
+    };
 }
