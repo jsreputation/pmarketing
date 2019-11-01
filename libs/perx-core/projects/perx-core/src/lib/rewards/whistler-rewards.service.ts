@@ -77,7 +77,7 @@ export class WhistlerRewardsService implements RewardsService {
         current = current.concat(res);
         subject.next(current);
         // if finished close the stream
-        if (meta.currentPage >= meta.totalPages) {
+        if (!meta.currentPage || !meta.totalPages || meta.currentPage >= meta.totalPages) {
           subject.complete();
         } else {
           // otherwise get next page

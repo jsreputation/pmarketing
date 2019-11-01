@@ -39,7 +39,7 @@ export class V4LocationsService extends LocationsService {
     return forkJoin(allMerchants).pipe(
       mergeMap((merchantsArr: IMerchant[][]) => {
         const merchants: IMerchant[] = merchantsArr[0];
-        let filteredMerchants: IMerchant[] = null;
+        let filteredMerchants: IMerchant[] | null = null;
         if (tags && tags.length > 0) {
           filteredMerchants = merchants.filter(merchant => {
             let found = false;
@@ -68,7 +68,7 @@ export class V4LocationsService extends LocationsService {
     }
     return this.merchantsService.getMerchants(page).pipe(
       mergeMap((merchants: IMerchant[]) => {
-        let filteredMerchants: IMerchant[];
+        let filteredMerchants: IMerchant[] | undefined;
         if (tags && tags.length > 0) {
           filteredMerchants = merchants.filter(merchant => {
             let found = false;
