@@ -19,7 +19,7 @@ import {
 })
 export class AccountComponent implements OnInit {
   public profile: IProfile;
-  public pages: AccountPageObject[];
+  public pages!: AccountPageObject[];
   public preAuth: boolean = false;
 
   constructor(

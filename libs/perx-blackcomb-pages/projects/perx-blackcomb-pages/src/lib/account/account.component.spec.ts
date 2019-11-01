@@ -29,7 +29,7 @@ import { AccountComponent } from './account.component';
 import { profile } from '../mock/profile.mock';
 import { pagesObject } from '../mock/pages.mock';
 
-fdescribe('AccountComponent', () => {
+describe('AccountComponent', () => {
   const environment = {
     apiHost: 'https://api.perxtech.io',
     production: false,
