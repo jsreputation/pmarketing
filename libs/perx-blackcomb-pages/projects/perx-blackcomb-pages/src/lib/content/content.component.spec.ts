@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { Type } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
 // import { Type } from '@angular/core';
 
 describe('ContentComponent', () => {
@@ -20,7 +21,10 @@ describe('ContentComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ContentComponent],
-      imports: [MatProgressSpinnerModule],
+      imports: [
+        MatProgressSpinnerModule,
+        TranslateModule.forRoot()
+      ],
       providers: [
         { provide: ThemesService, useValue: themeSvcStub },
         {
@@ -69,7 +73,7 @@ describe('ContentComponent', () => {
         () => {
           fixture.detectChanges();
           expect(component.errorFlag).toBe(true);
-          expect(fixture.nativeElement.querySelector('.loading').innerText).toBe('Content Page Not Found');
+          expect(fixture.nativeElement.querySelector('.loading').innerText).toBe('CONTENT_PAGE');
         }
       );
     }));
@@ -165,7 +169,7 @@ describe('ContentComponent', () => {
         () => {
           fixture.detectChanges();
           expect(component.errorFlag).toBe(true);
-          expect(fixture.nativeElement.querySelector('.loading').innerText).toBe('Content Page Not Found');
+          expect(fixture.nativeElement.querySelector('.loading').innerText).toBe('CONTENT_PAGE');
         }
       );
     }));

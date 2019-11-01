@@ -48,7 +48,7 @@ export class WhistlerRewardsService implements RewardsService {
       rewardThumbnail: r.attributes.image_url,
       rewardBanner: r.attributes.image_url,
       merchantId: Number.parseInt(r.attributes.organization_id, 10),
-      merchantImg: merchant && merchant.images.length > 0 ? merchant.images[0].url : null,
+      merchantImg: merchant && merchant.images && merchant.images.length > 0 ? merchant.images[0].url : null,
       merchantName: merchant ? merchant.name : null,
       rewardPrice: [],
       termsAndConditions: r.attributes.terms_conditions,
@@ -154,7 +154,7 @@ export class WhistlerRewardsService implements RewardsService {
     return this.http.get<IJsonApiItemPayload<IRewardEntityAttributes>>(`${this.baseUrl}/${id}`)
       .pipe(
         switchMap((reward: IJsonApiItemPayload<IRewardEntityAttributes>) => {
-          if (reward.data.attributes.organization_id === null) {
+          if (!reward.data.attributes.organization_id || reward.data.attributes.organization_id === null) {
             return of([reward, null]);
           }
           return combineLatest(

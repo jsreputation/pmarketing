@@ -3,7 +3,8 @@
     <perx-core-puzzle-list *ngIf="campaignId"
         (selected)="selected($event)"
         [campaignId]="campaignId"
-        (completed)="completed()">
+        (completed)="completed()"
+        [puzzleTextFn]="puzzleTextFn">
     </perx-core-puzzle-list>
 
     <!-- <mock-puzzle-list *ngIf="campaignId"

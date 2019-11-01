@@ -17,10 +17,10 @@ export class ApiConfig {
   public static getAudiences: string = `${ApiConfig.baseAPIUserPath}/pools`;
   public static signIn: string = `${ApiConfig.IAMUsersPath}/sign_in`;
   public static stampsPath: string = `${ApiConfig.engagementsPath}`;
-  public static voucherBatchPath: string = `${ApiConfig.basePath}/voucher/batch`;
-  public static vouchersPath: string = `${ApiConfig.basePath}/vouchers/batches`;
-  public static vouchersEntitiesPath: string = `${ApiConfig.basePath}/voucher/entities`;
-  public static vouchersAssignedPath: string = `${ApiConfig.basePath}/voucher/assigneds`;
+  public static voucherBatchPath: string = `${ApiConfig.basePath}/voucher-service/batch`;
+  // public static vouchersPath: string = `${ApiConfig.basePath}/vouchers/batches`;
+  public static vouchersEntitiesPath: string = `${ApiConfig.basePath}/voucher-service/entities`;
+  public static vouchersAssignedPath: string = `${ApiConfig.basePath}/voucher-service/vouchers`;
   public static tenantsPath: string = `${ApiConfig.baseAPIPath}/tenants`;
   public static merchantsPath: string = `${ApiConfig.basePath}/organization`;
   public static uploadImagePath: string = `${ApiConfig.basePath}/storage/images`;

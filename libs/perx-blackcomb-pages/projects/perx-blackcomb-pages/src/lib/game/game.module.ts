@@ -1,16 +1,37 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatProgressBarModule, MatButtonModule } from '@angular/material';
+
+import {
+  PinataComponent,
+  ShakeTreeComponent,
+  ScratchCardComponent,
+} from '@perx/core';
+
 import { TapComponent } from './tap/tap.component';
 import { ShakeComponent } from './shake/shake.component';
-import { PinataComponent, ShakeTreeComponent } from '@perx/core';
+import { ScratchComponent } from './scratch/scratch.component';
 import { GameComponent } from './game.component';
-import { MatProgressBarModule } from '@angular/material';
+
 @NgModule({
-  declarations: [TapComponent, ShakeComponent, PinataComponent, ShakeTreeComponent, GameComponent],
-  exports: [TapComponent, ShakeComponent],
+  declarations: [
+    TapComponent,
+    ShakeComponent,
+    ScratchComponent,
+    PinataComponent,
+    ShakeTreeComponent,
+    ScratchCardComponent,
+    GameComponent,
+  ],
+  exports: [
+    TapComponent,
+    ShakeComponent,
+    ScratchComponent,
+  ],
   imports: [
     CommonModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatButtonModule
   ]
 })
 export class GameModule { }

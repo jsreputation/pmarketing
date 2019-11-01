@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
-import {AuthenticationService, PopupComponent, NotificationService, ConfigService, IConfig} from '@perx/core';
+import { AuthenticationService, PopupComponent, NotificationService, ConfigService, IConfig } from '@perx/core';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatSidenav } from '@angular/material';
 import { PuzzleComponent } from './puzzle/puzzle.component';
@@ -11,12 +11,11 @@ import { VoucherComponent } from './voucher/voucher.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { SoundService } from './sound/sound.service';
-import { FaqComponent } from './faq/faq.component';
-import { TncComponent } from './tnc/tnc.component';
 import { environment } from '../environments/environment';
 import { AccountComponent } from './account/account.component';
 import { WalletComponent } from './wallet/wallet.component';
-import {Title} from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
+import { ContentComponent } from './content/content.component';
 
 @Component({
   selector: 'app-root',
@@ -78,16 +77,20 @@ export class AppComponent implements OnInit {
         } else {
           title = 'HSBC Collect 2.0';
         }
-        this.titleService.setTitle( title);
+        this.titleService.setTitle(title);
       }
     );
   }
 
-  public goHome(): void {
+  private goHome(): void {
     this.router.navigate(['/home']);
   }
 
-  public goBack(): void {
+  private goWallet(): void {
+    this.router.navigate(['/wallet']);
+  }
+
+  private goBack(): void {
     this.location.back();
   }
 
@@ -102,8 +105,7 @@ export class AppComponent implements OnInit {
       ref instanceof RedemptionComponent ||
       ref instanceof VoucherComponent ||
       ref instanceof HomeComponent ||
-      ref instanceof FaqComponent ||
-      ref instanceof TncComponent ||
+      ref instanceof ContentComponent ||
       ref instanceof AccountComponent ||
       ref instanceof WalletComponent;
 
@@ -114,29 +116,27 @@ export class AppComponent implements OnInit {
             ref instanceof RedemptionComponent ? 'eGift Redeem' :
               ref instanceof VoucherComponent ? 'Reward' :
                 ref instanceof HomeComponent ? 'Home' :
-                  ref instanceof TncComponent ? 'Terms and Conditions' :
-                    ref instanceof FaqComponent ? 'FAQ' :
-                      ref instanceof AccountComponent ? 'Account' :
-                        ref instanceof WalletComponent ? 'Wallet' : '';
+                  ref instanceof ContentComponent ? 'Content' :
+                    ref instanceof AccountComponent ? 'Account' :
+                      ref instanceof WalletComponent ? 'Wallet' : '';
 
     this.leftIconToShow =
       ref instanceof PuzzlesComponent ? 'home' :
         ref instanceof PuzzleComponent ? 'arrow_back_ios' :
           ref instanceof RedemptionComponent ? 'arrow_back_ios' :
             ref instanceof VoucherComponent ? 'arrow_back_ios' :
-              ref instanceof FaqComponent ? 'arrow_back_ios' :
-                ref instanceof TncComponent ? 'arrow_back_ios' :
-                  ref instanceof AccountComponent ? 'arrow_back_ios' :
-                    ref instanceof WalletComponent ? 'arrow_back_ios' : '';
+              ref instanceof ContentComponent ? 'arrow_back_ios' :
+                // ref instanceof AccountComponent ? 'arrow_back_ios' :
+                // ref instanceof WalletComponent ? 'arrow_back_ios' :
+                '';
 
     this.onLeftActionClick = ref instanceof PuzzlesComponent ? this.goHome :
       ref instanceof PuzzleComponent ? this.goHome :
         ref instanceof RedemptionComponent ? this.goBack :
-          ref instanceof VoucherComponent ? this.goBack :
-            ref instanceof FaqComponent ? this.goBack :
-              ref instanceof TncComponent ? this.goBack :
-                ref instanceof AccountComponent ? this.goBack :
-                  ref instanceof WalletComponent ? this.goBack : dummy;
+          ref instanceof VoucherComponent ? this.goWallet :
+            ref instanceof ContentComponent ? this.goBack :
+              ref instanceof AccountComponent ? this.goBack :
+                ref instanceof WalletComponent ? this.goBack : dummy;
 
     if (ref instanceof PuzzleComponent) {
       this.soundToggleSubscription = this.soundService.onToggle.subscribe(() => {

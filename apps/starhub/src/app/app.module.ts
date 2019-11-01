@@ -46,6 +46,8 @@ import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.compone
 import { HttpClientModule } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ErrorComponent } from './error/error.component';
+import {QRCodeModule} from 'angularx-qrcode';
+import {NgxBarcodeModule} from 'ngx-barcode';
 
 @NgModule({
   declarations: [
@@ -68,7 +70,7 @@ import { ErrorComponent } from './error/error.component';
     ErrorComponent,
   ],
   imports: [
-    ConfigModule.forRoot({ ...environment }),
+    ConfigModule.forRoot({...environment}),
     BrowserModule,
     CampaignModule,
     AppRoutingModule,
@@ -93,7 +95,9 @@ import { ErrorComponent } from './error/error.component';
     LocationModule,
     ScrollingModule,
     CampaignModule,
-    MerchantsModule
+    MerchantsModule,
+    QRCodeModule,
+    NgxBarcodeModule
   ],
   entryComponents: [
     CategorySelectComponent,

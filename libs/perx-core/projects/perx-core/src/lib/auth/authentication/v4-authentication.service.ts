@@ -189,24 +189,25 @@ export class V4AuthenticationService extends AuthenticationService implements Au
 
   // @ts-ignore
   public forgotPassword(phone: string): Observable<IMessageResponse> {
-    return this.http.get<IMessageResponse>(
-      this.customersEndPoint + '/forget_password', { params: { phone } }).pipe(
-      tap( // Log the result or error
-        data => console.log(data),
-        error => console.log(error)
-      )
-    );
+    return this.http.get<IMessageResponse>(`${this.customersEndPoint}/forget_password`, { params: { phone } })
+      .pipe(
+        tap( // Log the result or error
+          data => console.log(data),
+          error => console.log(error)
+        )
+      );
   }
 
   public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
     return this.http.patch<IMessageResponse>(
-      this.customersEndPoint + '/reset_password',
+      `${this.customersEndPoint}/reset_password`,
       {
         phone: resetPasswordInfo.phone,
         password: resetPasswordInfo.newPassword,
         password_confirmation: resetPasswordInfo.passwordConfirmation,
         confirmation_token: resetPasswordInfo.otp
-      }).pipe(
+      }
+    ).pipe(
       tap( // Log the result or error
         data => console.log(data),
         error => console.log(error)
@@ -216,13 +217,13 @@ export class V4AuthenticationService extends AuthenticationService implements Au
 
   // @ts-ignore
   public resendOTP(phone: string): Observable<IMessageResponse> {
-    return this.http.get<IMessageResponse>(
-      this.customersEndPoint + '/resend_confirmation', { params: { phone } }).pipe(
-      tap( // Log the result or error
-        data => console.log(data),
-        error => console.log(error)
-      )
-    );
+    return this.http.get<IMessageResponse>(`${this.customersEndPoint}/resend_confirmation`, { params: { phone } })
+      .pipe(
+        tap( // Log the result or error
+          data => console.log(data),
+          error => console.log(error)
+        )
+      );
   }
 
   private signUpDataToV4SignUpData(data: ISignUpData): IV4SignUpData {
@@ -240,7 +241,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   // @ts-ignore
   public signup(profile: ISignUpData): Observable<IProfile> {
     const profileV4 = this.signUpDataToV4SignUpData(profile);
-    return this.http.post<IV4ProfileResponse>(this.customersEndPoint + '/signup', profileV4)
+    return this.http.post<IV4ProfileResponse>(`${this.customersEndPoint}/signup`, profileV4)
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -252,22 +253,21 @@ export class V4AuthenticationService extends AuthenticationService implements Au
 
   // @ts-ignore
   public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
-    return this.http.patch<IMessageResponse>(
-      this.customersEndPoint + '/confirm', { phone, confirmation_token: otp }).pipe(
-      tap( // Log the result or error
-        data => console.log(data),
-        error => console.log(error)
-      )
-    );
+    return this.http.patch<IMessageResponse>(`${this.customersEndPoint}/confirm`, { phone, confirmation_token: otp })
+      .pipe(
+        tap( // Log the result or error
+          data => console.log(data),
+          error => console.log(error)
+        )
+      );
   }
 
   public requestVerificationToken(phone?: string): Observable<void> {
     return this.profileService.whoAmI().pipe(
       mergeMap(
-        (profile: IProfile) =>
-          this.http.get<void>(
-            `${this.customersEndPoint}/${profile.id}/request_verification_token${phone ? '?phone=' + phone : ''}`
-          )
+        (profile: IProfile) => this.http.get<void>(
+          `${this.customersEndPoint}/${profile.id}/request_verification_token${phone ? '?phone=' + phone : ''}`
+        )
       )
     );
   }
@@ -296,7 +296,8 @@ export class V4AuthenticationService extends AuthenticationService implements Au
             password: changePasswordData.newPassword,
             password_confirmation: changePasswordData.passwordConfirmation,
             confirmation_token: changePasswordData.otp
-          })
+          }
+        )
       )
     );
   }
@@ -355,5 +356,4 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   public savePI(pi: string): void {
     this.tokenStorage.setAppInfoProperty(pi, 'pi');
   }
-
 }

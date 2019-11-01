@@ -1,15 +1,15 @@
 import { ImageControlValue } from '@cl-helpers/image-control-value';
-import { SurveyQuestionType } from '@perx/core';
+import { WSurveyQuestionType } from '@perx/whistler';
 import { ISurveyForm } from '@cl-core/models/survey/survey-common.interface';
 
 export class SurveyHttpAdapter {
   public static transformSurvey(data: any): any {
     const cleanupQuestions = (q: { payload: any; }) => {
-      if (q.payload.type === SurveyQuestionType.phone && q.payload.default_country_code === null) {
+      if (q.payload.type === WSurveyQuestionType.phone && q.payload.default_country_code === null) {
         delete q.payload.default_country_code;
-      } else if (q.payload.type === SurveyQuestionType.longText && q.payload['max-length'] === null) {
+      } else if (q.payload.type === WSurveyQuestionType.longText && q.payload['max-length'] === null) {
         delete q.payload['max-length'];
-      } else if (q.payload.type === SurveyQuestionType.questionGroup) {
+      } else if (q.payload.type === WSurveyQuestionType.questionGroup) {
         q.payload.questions.forEach(cleanupQuestions);
       }
     };

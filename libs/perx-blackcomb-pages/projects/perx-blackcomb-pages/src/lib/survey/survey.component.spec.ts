@@ -4,6 +4,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SurveyComponent } from './survey.component';
 import { MatCardModule, MatButtonModule, MatProgressBarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SurveyComponent', () => {
   let component: SurveyComponent;
@@ -22,7 +23,8 @@ describe('SurveyComponent', () => {
           { path: 'wallet', redirectTo: '/' }
         ]),
         MatProgressBarModule,
-        PerxSurveyModule
+        PerxSurveyModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         {

@@ -121,4 +121,11 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
       distinctUntilChanged()
     );
   }
+
+  get noData$(): Observable<boolean> {
+    return this.dataSource.state$.pipe(
+      map((stateUser) => stateUser === this.dataSourceStates.noDataApi),
+      distinctUntilChanged()
+    );
+  }
 }
