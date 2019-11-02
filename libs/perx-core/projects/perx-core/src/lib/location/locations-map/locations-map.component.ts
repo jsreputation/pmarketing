@@ -30,14 +30,14 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   public locations: Observable<ILocation[]>;
 
-  public current: ILocation;
+  public current: ILocation | null;
 
   public userMarker: google.maps.Marker;
   public markersArray: google.maps.Marker[] = [];
   public userLocation: Subject<Position> = new Subject();
   private destroy$: Subject<any> = new Subject();
   @Input()
-  public key: string = null;
+  public key: string | null = null;
 
   @ViewChild('gmap', { static: false }) public gmapElement: ElementRef;
   private map: google.maps.Map;
