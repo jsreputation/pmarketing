@@ -10,7 +10,7 @@ import {
 import { CreateMerchantFormComponent } from './create-merchant-form.component';
 import { ButtonModule } from '../button/button.module';
 import { UploadGraphicModule } from '@cl-shared/components/upload-graphic/upload-graphic.module';
-import { UtilsModule } from '../../../../../../../libs/perx-core/projects/perx-core/src/lib/utils/utils.module';
+import { UtilsModule } from '@perx/core';
 import { MerchantBranchComponent } from './merchant-branch/merchant-branch.component';
 
 @NgModule({

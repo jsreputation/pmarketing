@@ -15,5 +15,4 @@ export class StampsCardsListComponent {
     // tslint:disable-next-line: deprecation
     this.tapped.emit(stampCard);
   }
-
 }

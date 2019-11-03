@@ -30,5 +30,4 @@ export class NotificationService {
   get $snack(): Observable<string> {
     return this.$snackSubject;
   }
-
 }

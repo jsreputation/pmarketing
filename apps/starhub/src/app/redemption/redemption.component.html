@@ -1,9 +1,6 @@
 <div class="main" *ngIf="voucher">
   <div class="contents">
     <div class="app-header">
-      <button class="icon" (click)="back()">
-        <mat-icon>arrow_backward</mat-icon>
-      </button>
       <img [src]="voucher.reward.rewardBanner" class="banner">
     </div>
     <div class="redeem-block">
@@ -60,7 +57,6 @@
             <app-reward-detail
               [macaron]="macaron"
               [reward]="voucher.reward"
-              [showBackButton]="false"
               [showBannerImage]="false"
               [showMacaron]="false"
               [className]="'voucher'"

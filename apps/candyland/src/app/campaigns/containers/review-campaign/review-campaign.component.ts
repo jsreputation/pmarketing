@@ -85,21 +85,20 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       combineLatest(
         this.campaignsService.getCampaign(campaignId).pipe(catchError(() => of(null))),
         this.commsService.getCommsEvent(params).pipe(catchError(() => of(null))),
-        this.outcomesService.getOutcomes(paramsPO).pipe(
-          map(outcomes => outcomes.map(outcome => ({...outcome, probability: outcome.probability * 100}))),
-          catchError(() => of(null)))).pipe(
+        this.outcomesService.getOutcomes(paramsPO).pipe(catchError(() => of(null)))
+      ).pipe(
         map(
           ([campaign, commEvent, outcomes]:
-             [ICampaign | null, IComm | null, IOutcome[] | null]) => ({
-            ...campaign,
-            audience: {select: commEvent && commEvent.poolId || null},
-            channel: {
-              type: commEvent && commEvent.channel || 'weblink',
-              message: commEvent && commEvent.message,
-              schedule: commEvent && {...commEvent.schedule}
-            },
-            rewardsList: outcomes
-          })
+            [ICampaign | null, IComm | null, IOutcome[] | null]) => ({
+              ...campaign,
+              audience: { select: commEvent && commEvent.poolId || null },
+              channel: {
+                type: commEvent && commEvent.channel || 'weblink',
+                message: commEvent && commEvent.message,
+                schedule: commEvent && { ...commEvent.schedule }
+              },
+              rewardsList: outcomes
+            })
         ),
         switchMap((campaign: ICampaign) => {
           const limitParams: HttpParamsOptions = {
@@ -109,15 +108,15 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
           return combineLatest(
             of(campaign),
             this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
-            this.limitsService.getLimits(limitParams, eType).pipe(map(limits => limits[0]), catchError(() => of({times: null}))),
+            this.limitsService.getLimits(limitParams, eType).pipe(map(limits => limits[0]), catchError(() => of({ times: null }))),
             this.getRewards(campaign.rewardsList)
           );
         }),
         map(([campaign, engagement, limits, rewards]:
-               [
-                 ICampaign | null, IEngagement | null, ILimit | null,
-                 { value: IRewardEntity, probability?: number, stampsSlotNumber?: number }[] | null
-                 ]) => {
+          [
+            ICampaign | null, IEngagement | null, ILimit | null,
+            { value: IRewardEntity, probability?: number, stampsSlotNumber?: number }[] | null
+          ]) => {
           let rewardsOptions = null;
           let rewardsListCollection = null;
           if (campaign.engagement_type === 'stamps') {
@@ -151,7 +150,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
             rewardsListCollection
           };
         }),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       ).subscribe(
         campaign => {
           this.campaign = campaign;

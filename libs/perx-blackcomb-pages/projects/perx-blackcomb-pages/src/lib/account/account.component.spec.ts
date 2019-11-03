@@ -1,11 +1,31 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+
+import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
+
+import {
+  AuthenticationService,
+  ProfileModule,
+  ProfileService,
+  ThemesService,
+  ConfigModule,
+} from '@perx/core';
 
 import { AccountComponent } from './account.component';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, ProfileModule, ProfileService, ThemesService } from '@perx/core';
-import { of } from 'rxjs';
 
 describe('AccountComponent', () => {
+  const environment = {
+    apiHost: 'https://api.perxtech.io',
+    production: false,
+    isWhistler: false,
+    preAuth: false,
+    baseHref: '/'
+  };
   let component: AccountComponent;
   let fixture: ComponentFixture<AccountComponent>;
   const authenticationServiceStub = {};
@@ -20,7 +40,9 @@ describe('AccountComponent', () => {
       declarations: [AccountComponent],
       imports: [
         RouterTestingModule,
-        ProfileModule
+        ProfileModule,
+        TranslateModule.forRoot(),
+        ConfigModule.forRoot({ ...environment })
       ],
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },

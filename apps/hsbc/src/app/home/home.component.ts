@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
   public campaignId: number;
   public selectedTab: number = 0;
   private displayCampaignAs: string = 'puzzle';
+  public puzzleTextFn: () => string;
 
   constructor(
     private router: Router,
@@ -29,6 +30,7 @@ export class HomeComponent implements OnInit {
       (config: IConfig) => {
         if (config.sourceType === 'hsbc-xmas') {
           this.displayCampaignAs = 'stamp_card';
+          this.puzzleTextFn = () => 'new stamps';
         }
       });
 

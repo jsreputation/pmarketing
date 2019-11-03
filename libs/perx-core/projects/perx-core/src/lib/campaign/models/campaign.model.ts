@@ -19,14 +19,23 @@ export interface ICampaign {
   description: string;
   type: CampaignType;
   state: CampaignState;
-  endsAt: Date;
+  endsAt: Date | null;
   rewards?: IReward[];
   thumbnailUrl?: string;
   engagementId?: number;
   rawPayload?: any;
+  displayProperties?: IDisplayProperties;
 }
 
 export enum CommChannel {
   sms = 'sms',
   email = 'email'
+}
+
+export interface IDisplayProperties {
+  noRewardsPopUp?: {
+    headLine?: string,
+    subHeadLine?: string,
+    imageURL?: string,
+  };
 }

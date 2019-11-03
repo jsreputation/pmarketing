@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { QuestionFormFieldService } from '@cl-shared/questions/question-form-field/shared/services/question-form-field.service';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { SurveyQuestionType } from '@perx/core';
+import { WSurveyQuestionType } from '@perx/whistler';
 
 @Component({
   selector: 'cl-question-group-field',
@@ -32,12 +32,12 @@ export class QuestionGroupFieldComponent {
     return id;
   }
 
-  public updateQuestionType(data: {index: number, selectedTypeQuestion: SurveyQuestionType}): void {
+  public updateQuestionType(data: { index: number, selectedTypeQuestion: WSurveyQuestionType }): void {
     this.deleteQuestion(data.index);
     this.surveyQuestionGroup.insert(data.index, this.createControlQuestion(data.selectedTypeQuestion));
   }
 
-  public choseTypeQuestion(selectedTypeQuestion: SurveyQuestionType): void {
+  public choseTypeQuestion(selectedTypeQuestion: WSurveyQuestionType): void {
     this.addQuestion(selectedTypeQuestion);
   }
 
@@ -45,7 +45,7 @@ export class QuestionGroupFieldComponent {
     this.surveyQuestionGroup.removeAt(index);
   }
 
-  public addQuestion(questionType: SurveyQuestionType): void {
+  public addQuestion(questionType: WSurveyQuestionType): void {
     this.surveyQuestionGroup.push(this.createControlQuestion(questionType));
   }
 
@@ -53,7 +53,7 @@ export class QuestionGroupFieldComponent {
     return (this.group.get('payload.questions') as FormArray);
   }
 
-  private createControlQuestion(questionType: SurveyQuestionType): FormGroup {
+  private createControlQuestion(questionType: WSurveyQuestionType): FormGroup {
     return this.questionFormFieldService.createFormField(questionType);
   }
 }
