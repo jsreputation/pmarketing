@@ -12,7 +12,7 @@ export class VoucherComponent implements OnInit {
   public id: number;
   public redeeming: boolean = false;
   public voucher: Voucher;
-  public btnTxt: string = 'View';
+  public btnTxt: string = 'View Code';
   public sourceType: string;
   public expiryFn: () => string;
 
