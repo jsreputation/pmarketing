@@ -1,4 +1,4 @@
-import { ISchedule } from "../comm/schedule";
+import { ISchedule } from '../comm/schedule';
 
 export interface ICampaign {
     id?: string;
