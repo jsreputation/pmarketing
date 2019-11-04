@@ -15,21 +15,4 @@ export interface IDisplayProperties {
     imageURL?: string,
     buttonTxt?: string,
   };
-  merchantPinText?: {
-    headLine?: string,
-    subHeadLine?: string,
-  };
-  rewardSuccessPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageURL?: string,
-  };
-  codeInstructionsText?: {
-    headLine?: string,
-  };
-  errorPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageURL?: string,
-  };
 }
