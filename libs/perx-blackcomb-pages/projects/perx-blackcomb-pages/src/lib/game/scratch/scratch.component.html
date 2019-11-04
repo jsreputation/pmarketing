@@ -10,8 +10,7 @@
         [underlyingImg]="config.underlyingImg"
         [uncoverPortionToTrigger]="config.uncoverPortionToTrigger"
         [enabled]="isEnabled"
-        (completed)="gameCompleted()"
-      >
+        (completed)="gameCompleted()">
       </perx-core-scratch-card>
     </div>
   </div>
@@ -20,8 +19,7 @@
       mat-flat-button
       color="primary"
       [hidden]="isEnabled"
-      (click)="isEnabled = true"
-    >
+      (click)="isEnabled = true">
       {{ game.texts.button }}
     </button>
   </div>

@@ -5,7 +5,7 @@
             <mat-card matRipple>
                 <div class="puzzle-content">
                     <div class="puzzle-img__wrapper">
-                      <img class="puzzle-img" src="{{stampCard.displayProperties.rewardPostStamp}}">
+                        <img class="puzzle-img" src="{{stampCard.displayProperties.rewardPostStamp}}">
                     </div>
                     <div class="puzzle-details">
                         <span class='main-reward-title'>
@@ -19,6 +19,6 @@
     </div>
     <h1>{{rewardsHeadline}}</h1>
     <perx-core-vouchers (tapped)="voucherSelected($event)" [data]="vouchers$" [filter]="filter"
-        [showRedeemedIcon]="false">
+        [showRedeemedIcon]="false" [expiryLabelFn]="expiryLabelFn">
     </perx-core-vouchers>
 </div>
