@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
 import { ProfileService } from '@perx/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ConditionComponent', () => {
   let component: ConditionComponent;
@@ -53,7 +54,8 @@ describe('ConditionComponent', () => {
         MatToolbarModule,
         MatSlideToggleModule,
         MatListModule,
-        MatRadioModule
+        MatRadioModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: Location, useValue: locationStub },

@@ -10,10 +10,7 @@ import { ThemesService } from './themes.service';
 @Injectable({
   providedIn: 'root'
 })
-export class WhistlerThemesService implements ThemesService {
-
-  private active: ITheme = LIGHT;
-  private availableThemes: ITheme[] = [LIGHT, DARK];
+export class WhistlerThemesService extends ThemesService {
   private themeSettingEndpoint: string;
   private settings: any;
 
@@ -21,6 +18,7 @@ export class WhistlerThemesService implements ThemesService {
     private http: HttpClient,
     config: Config,
   ) {
+    super();
     if (!config.production) {
       this.themeSettingEndpoint = 'http://localhost:4000/themes';
     } else {
@@ -55,25 +53,6 @@ export class WhistlerThemesService implements ThemesService {
     };
   }
 
-  public getAvailableThemes(): ITheme[] {
-    return this.availableThemes;
-  }
-
-  public getActiveTheme(): ITheme {
-    return this.active;
-  }
-
-  public setActiveTheme(theme: ITheme): void {
-    this.active = theme;
-
-    Object.keys(this.active.properties).forEach(property => {
-      document.documentElement.style.setProperty(
-        property,
-        this.active.properties[property]
-      );
-    });
-  }
-
   public getThemeSetting(): Observable<ITheme> {
     const themesRequest: { url: string } = {
       url: location.host
@@ -95,7 +74,7 @@ export class WhistlerThemesService implements ThemesService {
     };
     return this.http.post<IJsonApiListPayload<WhistlerITenant>>(this.themeSettingEndpoint, accountSettingRequest).pipe(
       map(res => res.data && res.data[0].attributes.display_properties),
-      map((displayProps) => displayProps.account || {pages: []}),
+      map((displayProps) => displayProps.account || { pages: [] }),
       map((account) => this.settings = account)
     );
   }

@@ -137,8 +137,9 @@ export class V4GameService implements IGameService {
           breakingImg: oc(dpps).cracking_image.value.image_url() || oc(dpps).cracking_image.value.file(),
           nbTaps: dpps.number_of_taps || 5
         };
-
         break;
+      default:
+        throw new Error(`${game.game_type} is not mapped yet`);
     }
 
     const texts: { [key: string]: string } = {};
@@ -191,7 +192,7 @@ export class V4GameService implements IGameService {
       .pipe(
         map((res: IV4PlayResponse) => {
           // @ts-ignore
-          const vs: IV4Voucher[] = res.data.outcomes.filter((out) =>  out.outcome_type === 'reward');
+          const vs: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === 'reward');
           return {
             vouchers: vs.map(v => V4VouchersService.v4VoucherToVoucher(v)),
             rawPayload: res

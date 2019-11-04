@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService, ICampaignService, IGameService, Config } from '@perx/core';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 const configStub = {
   preAuth: false
@@ -34,7 +35,8 @@ describe('LoadingComponent', () => {
       declarations: [LoadingComponent],
       imports: [
         MatProgressSpinnerModule,
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
