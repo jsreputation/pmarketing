@@ -57,7 +57,7 @@ export class WhistlerThemesService extends ThemesService {
     const themesRequest: { url: string } = {
       url: location.host
     };
-  
+
     return this.http.post<IJsonApiListPayload<WhistlerITenant>>(this.themeSettingEndpoint, themesRequest).pipe(
       map(res => res.data && res.data[0].attributes.display_properties),
       map((setting) => WhistlerThemesService.WThemeToTheme(setting)),
