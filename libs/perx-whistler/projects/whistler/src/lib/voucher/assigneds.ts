@@ -14,7 +14,7 @@ export interface IAssignedAttributes {
   status: AssignedStatus;
   updated_at: string;
   urn: string;
-  display_properties: {
+  display_properties?: {
     merchantPinText?: {
       headLine?: string,
       subHeadLine?: string,
@@ -32,7 +32,7 @@ export interface IAssignedAttributes {
       subHeadLine?: string,
       imageURL?: string,
     };
-  }
+  };
 }
 
 export interface IAssignRequestAttributes {
