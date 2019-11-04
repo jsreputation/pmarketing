@@ -8,13 +8,10 @@ import {
   ThemesService,
   AuthenticationService,
   Config,
+  PagesObject,
+  AccountPageObject,
 } from '@perx/core';
 
-interface AccountPageObject {
-  title: string;
-  content_url: string;
-  key: string;
-}
 @Component({
   selector: 'perx-blackcomb-pages-account',
   templateUrl: './account.component.html',
@@ -39,7 +36,7 @@ export class AccountComponent implements OnInit {
   public ngOnInit(): void {
     this.themeService.getAccountSettings()
       .pipe(
-        tap((settings) => this.pages = settings.pages),
+        tap((settings: PagesObject) => this.pages = settings.pages),
         flatMap((settings) => this.translate.get(settings.pages.map((page) => page.title))),
       )
       .subscribe((translations) => this.pages.forEach((page) => page.title = translations[page.title]));
