@@ -25,7 +25,6 @@ export {
   WAttbsObjGame,
   WAttbsObjEntity,
   WGameDisplayProperties,
-  WGameOutcome,
   WTreeDisplayProperties,
   WPinataDisplayProperties
 } from './lib/game/game';
