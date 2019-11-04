@@ -86,4 +86,5 @@ export interface IDisplayProperties {
     subHeadLine?: string,
     imageURL?: string,
   };
+  CTAButtonTxt?: string;
 }
