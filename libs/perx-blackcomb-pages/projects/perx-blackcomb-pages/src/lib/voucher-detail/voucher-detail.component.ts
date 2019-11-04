@@ -13,6 +13,8 @@ import { DatePipe } from '@angular/common';
 })
 export class VoucherDetailComponent implements OnInit, OnDestroy {
   public expiryLabelFn: (v: Voucher) => string;
+  public descriptionLabel: string = 'Description';
+  public tncLabel: string = 'Terms and Conditions';
 
   constructor(
     private router: Router,
@@ -43,6 +45,14 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
           const dateStr = this.datePipe.transform(v.expiry, 'shortDate');
           return text.replace('{{date}}', dateStr);
         };
+      });
+    this.translate.get('DESCRIPTION')
+      .subscribe((desc: string) => {
+        this.descriptionLabel = desc;
+      });
+    this.translate.get('Terms and Conditions')
+      .subscribe((tnc: string) => {
+        this.tncLabel = tnc;
       });
   }
 
