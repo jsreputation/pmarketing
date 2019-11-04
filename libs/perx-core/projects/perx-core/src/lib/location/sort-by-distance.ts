@@ -4,7 +4,7 @@ import { ILocation } from './ilocation';
 
 const countDistance = (latestPosition: Position | null, latestLocations: ILocation[]): ILocation[] => {
   if (latestPosition === null) {
-    latestLocations.forEach(loc => loc.distance = null);
+    latestLocations.forEach(loc => loc.distance = undefined);
     return latestLocations;
   }
   const R: number = 6371e3; // radius of the earth
