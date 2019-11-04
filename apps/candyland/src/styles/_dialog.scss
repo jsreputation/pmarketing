@@ -2,6 +2,7 @@
 
 .cdk-overlay-pane {
   max-width: initial !important;
+  width: 100%;
 
   @include typo-body2;
 }

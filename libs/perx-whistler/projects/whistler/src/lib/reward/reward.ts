@@ -12,7 +12,7 @@ export interface IRewardEntityAttributes {
   currency?: string;
   description?: string;
   terms_conditions?: string;
-  display_properties: {
+  display_properties?: {
     voucher_properties?: {
       code_type: string,
       code?: string,
@@ -27,6 +27,23 @@ export interface IRewardEntityAttributes {
         duration?: string;
       }
     },
+    merchantPinText?: {
+      headLine?: string,
+      subHeadLine?: string,
+    };
+    rewardSuccessPopUp?: {
+      headLine?: string,
+      subHeadLine?: string,
+      imageURL?: string,
+    };
+    codeInstructionsText?: {
+      headLine?: string,
+    };
+    errorPopUp?: {
+      headLine?: string,
+      subHeadLine?: string,
+      imageURL?: string,
+    };
     redemption_text?: string;
     loyalties: any;
   };

@@ -58,6 +58,11 @@ button.mat-default {
   color: var(--font_color) !important;
 }
 
+button.mat-stroked-button {
+  background-color: white !important;
+  color: var(--accent) !important;
+}
+
 .mat-toolbar {
   background-color: var(--header_color) !important;
 }
