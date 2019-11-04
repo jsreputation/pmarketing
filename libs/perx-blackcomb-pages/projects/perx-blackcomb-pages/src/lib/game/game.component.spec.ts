@@ -142,7 +142,7 @@ describe('GameComponent', () => {
         { data:
           { title: 'Congratulations!',
             text: 'You earned 1 rewards',
-            buttonTxt: 'View Rewards',
+            buttonTxt: 'View Reward',
             imageUrl: 'assets/congrats_image.png'
           }
         }

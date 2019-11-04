@@ -20,6 +20,7 @@ export class RewardComponent implements OnInit, OnDestroy {
   public dataPopEmpty: IPopupConfig = {
     title: 'We’re sorry, all rewards have been claimed',
     text: 'Look out for more rewards coming your way, soon!',
+    buttonTxt: 'Back to Wallet',
   };
   private destroy$: Subject<any> = new Subject();
 
@@ -48,6 +49,7 @@ export class RewardComponent implements OnInit, OnDestroy {
           this.dataPopEmpty.title = eng.displayProperties.noRewardsPopUp.headLine;
           this.dataPopEmpty.text = eng.displayProperties.noRewardsPopUp.subHeadLine;
           this.dataPopEmpty.imageUrl = eng.displayProperties.noRewardsPopUp.imageURL;
+          this.dataPopEmpty.buttonTxt = eng.displayProperties.noRewardsPopUp.buttonTxt;
         }
       });
 

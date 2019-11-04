@@ -93,5 +93,6 @@ export interface IDisplayProperties {
     headLine?: string,
     subHeadLine?: string,
     imageURL?: string,
+    buttonTxt?: string,
   };
 }
