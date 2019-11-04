@@ -17,7 +17,7 @@ export { InstantOutcomeEngagementAttributes, IOutcomeDisplayProperties } from '.
 export { IWhistlerProfileAttributes } from './lib/profile/profile';
 export { IMerchant, IMerchantBranchApi } from './lib/merchant/merchant';
 export { ITenantProperties } from './lib/settings/tenant';
-export { ITenantAttributes } from './lib/tenant/raw-tenant';
+
 export {
   IJsonApiListPayload, IJsonApiItemPayload, IMeta, IJsonApiItem,
   IJsonApiPatchItem, IJsonApiPatchData, IJsonApiPostItem, IJsonApiPostData

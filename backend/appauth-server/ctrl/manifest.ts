@@ -1,9 +1,9 @@
 import cacheManager from 'cache-manager';
 import Jimp from 'jimp';
 import {
-  ITenantAttributes,
   IJsonApiItem
 } from '@perx/whistler';
+import { ITenantAttributes } from '@perx/core';
 import { Manifest, DARK, LIGHT } from '../types/manifest-model';
 import { ApiConfig } from '../types/apiConfig';
 import { Request, Response, NextFunction } from 'express';
@@ -54,7 +54,7 @@ const generateManifest = (
     short_name: themeName,
     name: themeName,
     icons: imageSizes.map(size => ({
-      src: `http://localhost:${PORT}${exportedImgDirectory}/${hash}/${size}x${size}.png`,
+      src: `/${exportedImgDirectory}/${hash}/${size}x${size}.png`,
       sizes: `${size}x${size}`,
       type: 'image/png'
     })),
@@ -93,7 +93,7 @@ export const manifest = (apiConfig: ApiConfig) => async (
       // can be dont match or dont exist // doesnt matter -> we regenerate
       if (!result) {
         // try to fetch if no have or if the key change, then set, 0 for ttl everlast
-        result = generateManifest(tenantObj,endpointTargetUrl, hashedTheme);
+        result = generateManifest(tenantObj, endpointTargetUrl, hashedTheme);
         cache.set(hashedTheme, result, 0);
       }
       res.json(result);

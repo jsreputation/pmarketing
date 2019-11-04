@@ -9,12 +9,11 @@ import compression from 'compression';
 
 import { preauth } from './ctrl/preauth';
 import { login, users } from './ctrl/cognito';
-import { v4Token } from './ctrl/v4-token'; // accidentally deleted?
+import { v4Token } from './ctrl/v4-token';
 import { ApiConfig } from './types/apiConfig';
 import { v2Token } from './ctrl/v2-token';
 import { themes } from './ctrl/themes';
 import { manifest } from './ctrl/manifest';
-
 
 // Express server
 const app = express();
