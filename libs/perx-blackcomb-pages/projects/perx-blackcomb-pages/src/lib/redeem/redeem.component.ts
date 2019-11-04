@@ -69,23 +69,23 @@ export class RedeemComponent implements OnInit, OnDestroy {
         map((params: Params) => params.id),
         switchMap((id: string) => this.outcomeService.getFromCampaign(+id)),
       ).subscribe((eng: IOutcome) => {
-        if (eng.display_properties && eng.display_properties.merchantPinText) {
-          this.headLine = eng.display_properties.merchantPinText.headLine;
-          this.subHeadLine = eng.display_properties.merchantPinText.subHeadLine;
+        if (eng.displayProperties && eng.displayProperties.merchantPinText) {
+          this.headLine = eng.displayProperties.merchantPinText.headLine;
+          this.subHeadLine = eng.displayProperties.merchantPinText.subHeadLine;
         }
 
-        if (eng.display_properties && eng.display_properties.rewardSuccessPopUp) {
-          this.rewardSuccessPopUp.title = eng.display_properties.rewardSuccessPopUp.headLine;
-          this.rewardSuccessPopUp.text = eng.display_properties.rewardSuccessPopUp.subHeadLine;
-          this.rewardSuccessPopUp.imageUrl = eng.display_properties.rewardSuccessPopUp.imageURL;
+        if (eng.displayProperties && eng.displayProperties.rewardSuccessPopUp) {
+          this.rewardSuccessPopUp.title = eng.displayProperties.rewardSuccessPopUp.headLine;
+          this.rewardSuccessPopUp.text = eng.displayProperties.rewardSuccessPopUp.subHeadLine;
+          this.rewardSuccessPopUp.imageUrl = eng.displayProperties.rewardSuccessPopUp.imageURL;
         }
 
-        if (eng.display_properties && eng.display_properties.codeInstructionsText) {
-          this.codeInstructionsText = eng.display_properties.codeInstructionsText.headLine;
+        if (eng.displayProperties && eng.displayProperties.codeInstructionsText) {
+          this.codeInstructionsText = eng.displayProperties.codeInstructionsText.headLine;
         }
 
-        if (eng.display_properties && eng.display_properties.errorPopUp) {
-          this.errorPopUp.imageUrl = eng.display_properties.errorPopUp.imageURL;
+        if (eng.displayProperties && eng.displayProperties.errorPopUp) {
+          this.errorPopUp.imageUrl = eng.displayProperties.errorPopUp.imageURL;
         }
       });
 
@@ -97,13 +97,10 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public pinInputSuccess(): void {
-    this.popup(this.rewardSuccessPopUp);
-    this.translate.get('REDEEM_SUCCESSFULLY').subscribe((text) =>
-      this.popup({
-        title: text,
-        text: 'ID: ' + this.voucherId
-      })
-    );
+    this.translate.get('REDEEM_SUCCESSFULLY').subscribe((text) => {
+      this.rewardSuccessPopUp.title = text;
+      this.popup(this.rewardSuccessPopUp);
+    });
   }
 
   public errorHandler(status: number): void {
@@ -122,11 +119,10 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public errorPopup(): void {
-    this.popup(this.errorPopUp);
-    this.translate.get('TRY_AGAIN_LATER').subscribe((qest) =>
-      this.popup({
-        title: qest
-      }));
+    this.translate.get('TRY_AGAIN_LATER').subscribe((qest) => {
+      this.errorPopUp.title = qest;
+      this.popup(this.errorPopUp);
+    });
   }
 
   public popup(data: IPopupConfig): MatDialogRef<PopupComponent> {
