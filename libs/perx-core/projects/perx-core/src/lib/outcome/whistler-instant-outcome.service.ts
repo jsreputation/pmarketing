@@ -12,8 +12,8 @@ import { RewardsService } from '../rewards/rewards.service';
 import {
   IInstantOutcomeTransactionAttributes,
   IInstantOutcomeTxnReq,
-  IWInstantOutcomeEngagementAttributes,
-  IWOutcomeDisplayProperties,
+  InstantOutcomeEngagementAttributes,
+  IOutcomeDisplayProperties,
   ICampaignAttributes
 } from '@perx/whistler';
 
@@ -52,12 +52,12 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       .pipe(
         switchMap((campaign: CampaignProperties) => {
           displayProps = campaign.display_properties;
-          return this.http.get<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>>(
+          return this.http.get<IJsonApiItemPayload<InstantOutcomeEngagementAttributes>>(
             `${this.config.apiHost}/instant_outcome/engagements/${campaign.engagementId}`);
         }),
         map(res => res.data.attributes.display_properties),
-        map((outcomeData: IWOutcomeDisplayProperties) =>
-          ({ ...outcomeData, displayProperties: { ...outcomeData.displayProperties, ...displayProps } }))
+        map((outcomeData: IOutcomeDisplayProperties) =>
+          ({ ...outcomeData, displayProperties: { ...outcomeData.display_properties, ...displayProps } }))
       );
   }
 
