@@ -8,14 +8,14 @@
 
   .result-text {
     font-size: 1.8rem;
-    color: #212B36;
+    color: #212b36;
     margin-top: 1rem;
   }
 
   .result-reward-text {
     font-size: 1.2rem;
     line-height: 1.4rem;
-    color: #6B6B6B;
+    color: #6b6b6b;
     margin-top: 1rem;
   }
 
@@ -57,21 +57,21 @@ perx-core-qrcode-redemption {
   margin-top: 7rem;
 }
 
-.redeem-btn {
-  width: 100%;
-  margin-top: 4rem;
-  color: #2665EE;
-  border-block-color: #2665EE;
-  background: white;
-}
+// .redeem-btn {
+//   width: 100%;
+//   margin-top: 4rem;
+//   // color: #2665EE;
+//   // border-block-color: #2665EE;
+//   // background: white;
+// }
 
-.back-to-wallet {
-  position: absolute;
-  bottom: 0;
-  margin-bottom: 2rem;
-  width: 90%;
-  color: #2665ee;
-}
+// .back-to-wallet {
+//   position: absolute;
+//   bottom: 0;
+//   margin-bottom: 2rem;
+//   width: 90%;
+//   color: #2665ee;
+// }
 
 .code-container {
   height: 100%;
@@ -87,12 +87,12 @@ perx-core-qrcode-redemption {
 }
 
 .button-container {
-  padding: 0 1.6rem 3.2rem;
+  padding: 0 1.6rem 1.6rem;
 
   button {
     width: 100%;
     height: 4.4rem;
-    font-size: 1.4rem;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    // font-size: 1.4rem;
+    // border: 1px solid rgba(0, 0, 0, 0.12);
   }
 }
