@@ -2,8 +2,7 @@ import cacheManager from 'cache-manager';
 import Jimp from 'jimp';
 import {
   ITenantAttributes,
-  IJsonApiItem,
-  IJsonApiListPayload
+  IJsonApiItem
 } from '@perx/whistler';
 import { Manifest, DARK, LIGHT } from '../types/manifest-model';
 import { ApiConfig } from '../types/apiConfig';
@@ -27,6 +26,7 @@ const themeHasher = (themeObject: string): number => {
 
 const generateManifest = (
   tenantObj: IJsonApiItem<ITenantAttributes>,
+  endpointUrl: string,
   hash: string
 ): Manifest => {
   const displayProperties = tenantObj.attributes.display_properties;
@@ -44,7 +44,7 @@ const generateManifest = (
         image
           .clone()
           .contain(size, size)
-          .write(`./${exportedImgDirectory}/${hash}/${size}x${size}.png`); // use a name, which includes the hash
+          .write(`${endpointUrl}/${exportedImgDirectory}/${hash}/${size}x${size}.png`); // use a name, which includes the hash
       })
       .catch(err => {
         console.log(err);
@@ -74,6 +74,12 @@ export const manifest = (apiConfig: ApiConfig) => async (
   try {
     const url = getQueryHost(req);
 
+    const endpoint = apiConfig.endpoints[url];
+    if (endpoint === undefined) {
+      throw new Error(`No endpoints found for ${url}`);
+    }
+
+    const endpointTargetUrl = endpoint.target_url;
     const endpointRequest = await fetchTheme(url, apiConfig);
     const tenantObj: IJsonApiItem<ITenantAttributes> = endpointRequest.data.data[0];
     const displayProperties = tenantObj.attributes.display_properties;
@@ -87,7 +93,7 @@ export const manifest = (apiConfig: ApiConfig) => async (
       // can be dont match or dont exist // doesnt matter -> we regenerate
       if (!result) {
         // try to fetch if no have or if the key change, then set, 0 for ttl everlast
-        result = generateManifest(tenantObj, hashedTheme);
+        result = generateManifest(tenantObj,endpointTargetUrl, hashedTheme);
         cache.set(hashedTheme, result, 0);
       }
       res.json(result);
