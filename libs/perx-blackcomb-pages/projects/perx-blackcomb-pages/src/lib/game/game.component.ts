@@ -14,13 +14,13 @@ export class GameComponent implements OnInit, OnDestroy {
   public gameData$: Observable<IGame>;
   public gt: typeof GameType = GameType;
   private campaignId: number;
-  private engagementId: number | null;
+  private engagementId: number | null = null;
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
   public congratulationsPopUp: IPopupConfig = {
     title: 'Congratulations!',
     text: '',
-    buttonTxt: 'View Rewards',
+    buttonTxt: 'View Reward',
     imageUrl: 'assets/congrats_image.png',
   };
 
