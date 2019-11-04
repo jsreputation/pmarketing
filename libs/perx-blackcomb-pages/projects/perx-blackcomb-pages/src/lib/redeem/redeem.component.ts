@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import {
   Voucher,
@@ -7,8 +7,6 @@ import {
   RedemptionType,
   IPopupConfig,
   PopupComponent,
-  InstantOutcomeService,
-  IOutcome
 } from '@perx/core';
 import { Observable, Subject } from 'rxjs';
 import { filter, switchMap, takeUntil, map, tap } from 'rxjs/operators';
@@ -44,7 +42,6 @@ export class RedeemComponent implements OnInit, OnDestroy {
     private vouchersService: IVoucherService,
     private dialog: MatDialog,
     private router: Router,
-    private outcomeService: InstantOutcomeService,
     private translate: TranslateService
   ) {
   }
@@ -59,36 +56,29 @@ export class RedeemComponent implements OnInit, OnDestroy {
         tap((voucher: Voucher) => {
           this.rewardSuccessPopUp.text = `You have redeemed ${voucher.reward.name}`;
           this.redemptionType = voucher.reward.redemptionType;
+          if (voucher.displayProperties && voucher.displayProperties.merchantPinText) {
+            this.headLine = voucher.displayProperties.merchantPinText.headLine;
+            this.subHeadLine = voucher.displayProperties.merchantPinText.subHeadLine;
+          }
+
+          if (voucher.displayProperties && voucher.displayProperties.rewardSuccessPopUp) {
+            this.rewardSuccessPopUp.title = voucher.displayProperties.rewardSuccessPopUp.headLine;
+            this.rewardSuccessPopUp.text = voucher.displayProperties.rewardSuccessPopUp.subHeadLine;
+            this.rewardSuccessPopUp.imageUrl = voucher.displayProperties.rewardSuccessPopUp.imageURL;
+          }
+
+          if (voucher.displayProperties && voucher.displayProperties.codeInstructionsText) {
+            this.codeInstructionsText = voucher.displayProperties.codeInstructionsText.headLine;
+          }
+
+          if (voucher.displayProperties && voucher.displayProperties.errorPopUp) {
+            this.errorPopUp.imageUrl = voucher.displayProperties.errorPopUp.imageURL;
+          }
         }),
         takeUntil(this.destroy$)
       );
     this.translate.get('ENTER_CODE').subscribe((text) => this.headLine = text);
     this.translate.get('REDEMPTION_CODE').subscribe((text) => this.subHeadLine = text);
-    this.route.params
-      .pipe(
-        map((params: Params) => params.id),
-        switchMap((id: string) => this.outcomeService.getFromCampaign(+id)),
-      ).subscribe((eng: IOutcome) => {
-        if (eng.displayProperties && eng.displayProperties.merchantPinText) {
-          this.headLine = eng.displayProperties.merchantPinText.headLine;
-          this.subHeadLine = eng.displayProperties.merchantPinText.subHeadLine;
-        }
-
-        if (eng.displayProperties && eng.displayProperties.rewardSuccessPopUp) {
-          this.rewardSuccessPopUp.title = eng.displayProperties.rewardSuccessPopUp.headLine;
-          this.rewardSuccessPopUp.text = eng.displayProperties.rewardSuccessPopUp.subHeadLine;
-          this.rewardSuccessPopUp.imageUrl = eng.displayProperties.rewardSuccessPopUp.imageURL;
-        }
-
-        if (eng.displayProperties && eng.displayProperties.codeInstructionsText) {
-          this.codeInstructionsText = eng.displayProperties.codeInstructionsText.headLine;
-        }
-
-        if (eng.displayProperties && eng.displayProperties.errorPopUp) {
-          this.errorPopUp.imageUrl = eng.displayProperties.errorPopUp.imageURL;
-        }
-      });
-
   }
 
   public ngOnDestroy(): void {

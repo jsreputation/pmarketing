@@ -23,7 +23,7 @@ export { IVoucherService } from './lib/vouchers/ivoucher.service';
 export { PinService } from './lib/vouchers/pin.service';
 export { VouchersComponent } from './lib/vouchers/vouchers/vouchers.component';
 export { VoucherComponent } from './lib/vouchers/voucher/voucher.component';
-export { IVoucher as Voucher, RedemptionType, VoucherState, StatusLabelMapping } from './lib/vouchers/models/voucher.model';
+export { IVoucher as Voucher, RedemptionType, VoucherState, StatusLabelMapping, IDisplayProperties as IVoucherDisplayProperties } from './lib/vouchers/models/voucher.model';
 export { PinRedemptionComponent } from './lib/vouchers/pin-redemption/pin-redemption.component';
 export { BcodeRedemptionComponent } from './lib/vouchers/bcode-redemption/bcode-redemption.component';
 export { QrcodeRedemptionComponent } from './lib/vouchers/qrcode-redemption/qrcode-redemption.component';
