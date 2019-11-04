@@ -21,8 +21,4 @@ export class SimpleMobileViewComponent {
   public createPreview(): Observable<IUploadedFile> {
     return this.createImagePreview.getPreviewUrl();
   }
-
-  // public getBackground(): string {
-  //   return this.backgroundColor ? this.backgroundColor : `url(${this.background})`;
-  // }
 }
