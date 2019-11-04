@@ -3,6 +3,8 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { IVoucherService, Voucher } from '@perx/core';
 import { filter, switchMap, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'perx-blackcomb-voucher-detail',
@@ -10,10 +12,14 @@ import { Observable, Subject } from 'rxjs';
   styleUrls: ['./voucher-detail.component.scss']
 })
 export class VoucherDetailComponent implements OnInit, OnDestroy {
+  public expiryLabelFn: (v: Voucher) => string;
+
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
-    private vouchersService: IVoucherService
+    private vouchersService: IVoucherService,
+    private translate: TranslateService,
+    private datePipe: DatePipe
   ) { }
 
   public voucher$: Observable<Voucher>;
@@ -30,6 +36,14 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
         }),
         takeUntil(this.destroy$)
       );
+
+    this.translate.get('VOUCHER_EXPIRY')
+      .subscribe((text: string) => {
+        this.expiryLabelFn = (v: Voucher) => {
+          const dateStr = this.datePipe.transform(v.expiry, 'shortDate');
+          return text.replace('{{date}}', dateStr);
+        };
+      });
   }
 
   public ngOnDestroy(): void {

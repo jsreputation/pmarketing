@@ -160,7 +160,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.translate.get(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING'])
       .subscribe((res: any) => {
-        this.titleFn = (profile: IProfile) => res.HELLO + profile && profile.lastName ? ` ${profile.lastName},` : '';
+        this.titleFn = (profile: IProfile) => `${res.HELLO} ${profile && profile.lastName ? profile.lastName : ''},`;
       });
     this.initCampaign();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);

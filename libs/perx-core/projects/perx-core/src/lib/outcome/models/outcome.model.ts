@@ -5,7 +5,7 @@ export interface IOutcome {
   banner: string;
   background_img_url: string;
   card_background_img_url: string;
-  display_properties?: IDisplayProperties;
+  displayProperties?: IDisplayProperties;
 }
 
 export interface IDisplayProperties {
@@ -13,6 +13,7 @@ export interface IDisplayProperties {
     headLine?: string,
     subHeadLine?: string,
     imageURL?: string,
+    buttonTxt?: string,
   };
   merchantPinText?: {
     headLine?: string,

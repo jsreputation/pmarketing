@@ -49,19 +49,6 @@ export interface WGameDisplayProperties {
   background_img_url?: string;
 }
 
-export interface WGameOutcome {
-  source_type: string;
-  source_id: number;
-  urn: string;
-  created_at: string;
-  updated_at: string;
-  code: string;
-  status: string;
-  start_date: string;
-  end_date: string;
-  assigned_to_id: number;
-}
-
 export interface WTreeDisplayProperties extends WGameDisplayProperties {
   tree_img_url: string;
   nb_hanged_gifts: number;

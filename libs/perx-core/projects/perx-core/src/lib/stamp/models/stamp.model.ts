@@ -79,7 +79,11 @@ export interface IStampCard {
     };
     rewardPositions?: number[]
     thumbnailImg?: string;
-    disProp?: IDisplayProperties;
+    noRewardsPopUp?: {
+      headLine?: string,
+      subHeadLine?: string,
+      imageURL?: string,
+    };
   };
   stamps?: IStamp[];
 }
@@ -89,5 +93,6 @@ export interface IDisplayProperties {
     headLine?: string,
     subHeadLine?: string,
     imageURL?: string,
+    buttonTxt?: string,
   };
 }
