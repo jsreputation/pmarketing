@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTable } from '@angular/material/table';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
@@ -13,7 +13,7 @@ import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 export class PointEarnRulesListComponent {
   @Input() public editable: boolean = false;
   @Input() public dataSource: Array<any>;
-  @Input() public displayedColumns: string[] = ['priority', 'name', 'conditions', 'pointsEarned', 'actions'];
+  @Input() public displayedColumns: string[] = ['priority', 'name', 'conditions', 'pointsEarned'];
   @Output() public rulesAction: EventEmitter<{ action: NewLoyaltyActions, data?: ICustomTireForm }> = new EventEmitter();
   @ViewChild('table', {static: false}) public table: MatTable<any>;
 

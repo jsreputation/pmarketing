@@ -25,7 +25,7 @@
       {{rule?.tier?.type === 'basicTier' ? 'Points Earn Rules' : ''}}
       {{rule?.tier?.type === 'customTier' ? 'Special Rules' : ''}}
     </label>
-    <cl-point-earn-rules-list *ngIf="rule?.rules" [dataSource]="rule?.rules" (rulesAction)="handleTiersAction($event)"></cl-point-earn-rules-list>
+    <cl-point-earn-rules-list [editable]="false" *ngIf="rule?.rules" [dataSource]="rule?.rules" (rulesAction)="handleTiersAction($event)"></cl-point-earn-rules-list>
     <cl-button [classList]="'tertiary'" (click)="createRule()">
         <span>
          + Create new rule
