@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnIni
 import { IVoucherService } from '../ivoucher.service';
 import { Observable } from 'rxjs';
 import { IVoucher, StatusLabelMapping } from '../models/voucher.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'perx-core-voucher',
@@ -39,9 +40,9 @@ export class VoucherComponent implements OnChanges, OnInit {
   public redeemLabelFn: () => string;
 
   @Input()
-  public expiryFn: () => string;
+  public expiryFn: (v: IVoucher) => string;
 
-  constructor(private vouchersService: IVoucherService) {
+  constructor(private vouchersService: IVoucherService, private datePipe: DatePipe) {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -60,7 +61,7 @@ export class VoucherComponent implements OnChanges, OnInit {
     }
 
     if (!this.expiryFn) {
-      this.expiryFn = () => 'dd/MM/yyyy';
+      this.expiryFn = (v: IVoucher) => `Expires on ${this.datePipe.transform(v.expiry, 'shortDate')}`;
     }
   }
 }

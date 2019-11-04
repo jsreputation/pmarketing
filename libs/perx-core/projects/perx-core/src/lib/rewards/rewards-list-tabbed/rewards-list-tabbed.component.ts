@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {IPrice, IReward} from '../models/reward.model';
-import {map} from 'rxjs/operators';
-import {MatTabChangeEvent} from '@angular/material';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { IPrice, IReward } from '../models/reward.model';
+import { map } from 'rxjs/operators';
+import { MatTabChangeEvent } from '@angular/material';
 
 export interface ITabConfig {
   filterKey?: string;
@@ -51,11 +51,11 @@ export class RewardsListTabbedComponent implements OnInit {
      */
     if (!this.displayPriceFn) {
       this.displayPriceFn = (rewardPrice: IPrice) => {
-        if (rewardPrice.price > 0) {
+        if (rewardPrice.price && rewardPrice.price > 0) {
           return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
         }
 
-        if (rewardPrice.points > 0) {
+        if (rewardPrice.points && rewardPrice.points > 0) {
           return `${rewardPrice.points} points`;
         }
         return '0 points'; // is actually 0 or invalid value default
@@ -73,7 +73,7 @@ export class RewardsListTabbedComponent implements OnInit {
       map(rewards => tab.filterValue === null || tab.filterKey === null ? rewards : rewards.filter((reward: IReward) => {
         const filterBy = tab.filterKey;
         return reward[`${filterBy}`] &&
-            reward[`${filterBy}`].toLowerCase() === tab.filterValue.toLowerCase();
+          reward[`${filterBy}`].toLowerCase() === tab.filterValue.toLowerCase();
       }
       ))
     );

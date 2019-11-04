@@ -14,13 +14,13 @@ export class GameComponent implements OnInit, OnDestroy {
   public gameData$: Observable<IGame>;
   public gt: typeof GameType = GameType;
   private campaignId: number;
-  private engagementId: number | null;
+  private engagementId: number | null = null;
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
   public congratulationsPopUp: IPopupConfig = {
     title: 'Congratulations!',
     text: '',
-    buttonTxt: 'View Rewards',
+    buttonTxt: 'View Reward',
     imageUrl: 'assets/congrats_image.png',
   };
 
@@ -43,7 +43,7 @@ export class GameComponent implements OnInit, OnDestroy {
       tap((games: IGame[]) => !games || !games.length && this.router.navigate(['/wallet'])),
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => {
-        if (game && game.disProp && game.disProp.congratulationsPopUp.imageURL) {
+        if (game && game.disProp && game.disProp.congratulationsPopUp && game.disProp.congratulationsPopUp.imageURL) {
           this.congratulationsPopUp.imageUrl = game.disProp.congratulationsPopUp.imageURL;
         }
         this.engagementId = game ? game.id : null;
