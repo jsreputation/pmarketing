@@ -1,18 +1,17 @@
 <div class="sign-up">
-  <div class="signup-card">
     <perx-core-survey
       [data]="data$"
       (surveyDone)="updateSurveyStatus($event)"
       (totalLength)="setTotalLength($event)"
       (currentPointer)="setCurrentPointer($event)"
     ></perx-core-survey>
-  </div>
-  <button
-  *ngIf="surveyComplete"
-  mat-flat-button
-  color="primary"
-  (click)="onSubmit()"
-  >
-  Submit
-  </button>
+    
+    <button
+    mat-flat-button
+    color="primary"
+    (click)="onSubmit()"
+    >
+    Submit
+    </button>
+
 </div>

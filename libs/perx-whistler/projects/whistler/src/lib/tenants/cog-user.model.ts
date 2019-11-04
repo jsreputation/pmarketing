@@ -15,7 +15,7 @@ export interface ICognitoUObject {
   data: InnerDataCognitoUser;
 }
 
-interface InnerDataCognitoUser {
+export interface InnerDataCognitoUser {
   type: 'users';
   attributes: ICognitoUserAttributes;
 }
