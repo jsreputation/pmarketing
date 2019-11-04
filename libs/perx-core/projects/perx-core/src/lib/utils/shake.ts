@@ -72,7 +72,7 @@ export class Shake implements EventListenerObject {
   protected devicemotion(e: DeviceMotionEvent): void {
     const current: DeviceAcceleration = e.accelerationIncludingGravity;
 
-    if ((this.lastX === null) && (this.lastY === null) && (this.lastZ === null)) {
+    if ((this.lastX === null) || (this.lastY === null) || (this.lastZ === null)) {
       this.lastX = current.x;
       this.lastY = current.y;
       this.lastZ = current.z;
