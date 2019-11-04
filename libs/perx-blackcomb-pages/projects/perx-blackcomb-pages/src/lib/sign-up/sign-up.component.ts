@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 import { IFormsService } from '@perx/core';
 import { ISurvey } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -6,6 +8,11 @@ import { Observable, Subject } from 'rxjs';
 interface IAnswer {
   question_id: string;
   content: any;
+}
+
+enum TitleProperty {
+  Mr,
+  Mrs
 }
 
 @Component({
@@ -20,19 +27,13 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public answers: IAnswer[];
   public totalLength: number;
   public currentPointer: number;
-  // go inside survey to setup email validation --
-  // set up submit button t cognito users
-  constructor(private formSvc: IFormsService) { }
+
+  constructor(private formSvc: IFormsService, public snack: MatSnackBar, private router: Router) { }
 
   public ngOnInit(): void {
     this.data$ = this.formSvc.getSignupForm();
-    this.data$.subscribe(
-      (res) => {
-        console.log(res);
-      }
-    );
   }
-˜
+
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -44,12 +45,10 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   public setTotalLength(totalLength: number): void {
     this.totalLength = totalLength;
-    console.log(this.totalLength);
   }
 
   public setCurrentPointer(currentPointer: number): void {
     this.currentPointer = currentPointer;
-    console.log(this.currentPointer);
   }
 
   public updateSurveyStatus(answers: IAnswer[]): void {
@@ -57,6 +56,19 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
-    console.log(this.answers);
+    const mapOfObjects = this.answers
+      .map(answer => ({[answer.question_id]:
+        (Array.isArray(answer.content) &&
+        answer.question_id === 'title' ? TitleProperty[answer.content[0]] : answer.content)}));
+
+    const userObj = Object.assign.apply(null, mapOfObjects);
+
+    this.formSvc.postUser(userObj).subscribe(
+      () => {
+        this.snack.open('User successfully created.', 'x', {duration: 2000});
+        this.router.navigate(['/wallet']);
+      },
+      (err) => console.error(err)
+    );
   }
 }

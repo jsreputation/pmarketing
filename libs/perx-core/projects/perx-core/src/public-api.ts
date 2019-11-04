@@ -212,5 +212,5 @@ export { IOutcome, IDisplayProperties as IOutcomeDisplayProperties } from './lib
 export { OutcomeModule } from './lib/outcome/outcome.module';
 
 /**
- * Outcome
+ * Tenants
  */

@@ -1,3 +1,4 @@
+import { MatSnackBarModule } from '@angular/material';
 import { SignUpRoutingModule } from './sign-up-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -10,7 +11,8 @@ import { SignUpComponent } from '@perx/blackcomb-pages';
     AuthenticationModule,
     CommonModule,
     SurveyModule,
-    SignUpRoutingModule
+    SignUpRoutingModule,
+    MatSnackBarModule
   ]
 })
 export class SignUpModule { }

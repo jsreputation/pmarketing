@@ -7,6 +7,10 @@
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0",
     "@angular/material": "^8.0.1",
-    "ngx-auth": "^5.0.0"
+    "ngx-auth": "^5.0.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/uuid": "^3.4.6"
   }
 }

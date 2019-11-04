@@ -42,3 +42,4 @@ export {
   IWPayload,
   WSurveyQuestionType
 } from './lib/survey/question';
+export { ICognitoUserAttributes, ICognitoUObject } from './lib/tenants/cog-user.model';
