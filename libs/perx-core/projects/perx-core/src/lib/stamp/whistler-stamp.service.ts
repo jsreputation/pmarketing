@@ -50,7 +50,11 @@ interface AttbsObjStamp {
     card_background_img_url: string;
     background_img_url: string;
     display_campaign_as: string;
-    disProp?: IDisplayProperties;
+    noRewardsPopUp?: {
+      headLine?: string,
+      subHeadLine?: string,
+      imageURL?: string,
+    };
   };
 }
 
@@ -92,7 +96,6 @@ export class WhistlerStampService implements StampService {
         bgImage: attributesObj.display_properties.background_img_url,
         cardBgImage: attributesObj.display_properties.card_background_img_url,
         displayCampaignAs: attributesObj.display_properties.display_campaign_as,
-        disProp: attributesObj.display_properties.disProp
       }
     };
   }
@@ -117,10 +120,9 @@ export class WhistlerStampService implements StampService {
           );
         }),
         map((res) => {
-          res.data.attributes.display_properties = { ...res.data.attributes.display_properties, disProp };
-          return res;
+          const stampData = WhistlerStampService.WStampCardToStampCard(res.data);
+          return { ...stampData, campaignId, displayProperties: { ...stampData.displayProperties, ...disProp } };
         }),
-        map((res) => ({ ...WhistlerStampService.WStampCardToStampCard(res.data), campaignId })),
         tap(sc => this.cache[campaignId] = sc)
       );
   }

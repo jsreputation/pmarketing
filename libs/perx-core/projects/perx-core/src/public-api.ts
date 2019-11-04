@@ -198,7 +198,11 @@ export { IConfig, IMicrositeSettings } from './lib/config/models/config.model';
 /**
  * Theme
  */
-export { ITheme } from './lib/utils/themes/themes.model';
+export {
+  ITheme,
+  PagesObject,
+  AccountPageObject,
+} from './lib/utils/themes/themes.model';
 export { ThemesService } from './lib/utils/themes/themes.service';
 /**
  * Outcome
