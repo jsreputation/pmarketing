@@ -3,6 +3,7 @@ import { IVoucherService } from '../ivoucher.service';
 import { Observable, of } from 'rxjs';
 import { IVoucher, StatusLabelMapping, VoucherState } from '../models/voucher.model';
 import { map, delay } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'perx-core-vouchers',
@@ -38,11 +39,14 @@ export class VouchersComponent implements OnInit, OnChanges {
   @Input()
   public mapping?: StatusLabelMapping;
 
+  @Input()
+  public expiryLabelFn: ((tr: IVoucher) => string) | undefined;
+
   public repeatGhostCount: number = 10;
 
   public ghostTimeOut: boolean;
 
-  constructor(private vouchersService: IVoucherService) { }
+  constructor(private vouchersService: IVoucherService, private datePipe: DatePipe) { }
 
   public ngOnInit(): void {
     if (this.showRedeemedIcon && !this.mapping) {
@@ -52,11 +56,15 @@ export class VouchersComponent implements OnInit, OnChanges {
     of(true).pipe(delay(2000)).subscribe(
       () => this.ghostTimeOut = true
     );
+
+    if (this.expiryLabelFn === undefined) {
+      this.expiryLabelFn = (v: IVoucher) => v.expiry ? `Expiry: ${this.datePipe.transform(v.expiry, 'shortDate')}` : '';
+    }
   }
 
   public ngOnChanges(): void {
     if (!this.vouchers$) {
-      this.vouchers$ = this.vouchersService.getAll({sourceType: this.sourceType, type: null});
+      this.vouchers$ = this.vouchersService.getAll({ sourceType: this.sourceType, type: null });
     }
   }
 
