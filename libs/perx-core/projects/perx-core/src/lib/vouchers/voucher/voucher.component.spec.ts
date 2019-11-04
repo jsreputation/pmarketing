@@ -10,6 +10,7 @@ import { IVoucherService } from '../ivoucher.service';
 import { RewardsService } from '../../rewards/rewards.service';
 import { IVoucher, VoucherState } from '../models/voucher.model';
 import { Type, SimpleChange } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
@@ -63,13 +64,10 @@ describe('VoucherComponent', () => {
         ConfigModule.forRoot({})
       ],
       providers: [
+        DatePipe,
         { provide: IVoucherService, useValue: voucherServiceStub },
-        {
-          provide: RewardsService, useValue: rewardsServiceStub
-        },
-        {
-          provide: IMerchantsService, useValue: merchantsServiceStub
-        }
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: IMerchantsService, useValue: merchantsServiceStub }
       ]
     })
       .compileComponents();
