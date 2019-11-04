@@ -27,13 +27,13 @@
       <!--        </div>-->
       <!--      </div>-->
       <div class="section-heading" *ngIf="voucher.reward.description">
-        Description
+        {{descriptionLabel}}
       </div>
       <div class="section-content" *ngIf="voucher.reward.description">
         <div id="rewardDescription" [innerHtml]="voucher.reward.description"></div>
       </div>
       <div class="section-heading" *ngIf="voucher.reward.termsAndConditions">
-        Terms and Conditions
+        {{tncLabel}}
       </div>
       <div class="section-content" *ngIf="voucher.reward.termsAndConditions">
         <div [innerHtml]="voucher.reward.termsAndConditions"></div>
