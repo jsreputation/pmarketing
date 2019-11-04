@@ -3,6 +3,8 @@
     <perx-core-survey
       [data]="data$"
       (surveyDone)="updateSurveyStatus($event)"
+      (totalLength)="setTotalLength($event)"
+      (currentPointer)="setCurrentPointer($event)"
     ></perx-core-survey>
     <button
       *ngIf="surveyComplete"

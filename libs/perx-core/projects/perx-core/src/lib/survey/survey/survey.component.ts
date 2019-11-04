@@ -83,6 +83,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   }
 
   public calculatePoints(): number {
+    console.log(this.pointsTracker)
     return Object.values(this.pointsTracker).reduce((sum, point) => sum + point, 0);
   }
 

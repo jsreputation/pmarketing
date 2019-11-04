@@ -5,8 +5,8 @@ import { Config } from '../../config/config';
 import { Observable } from 'rxjs';
 import { IFormsService } from './iforms.service';
 import { Injectable } from '@angular/core';
-// import { IJsonApiListPayload } from '../../jsonapi.payload';
-import { pluck } from 'rxjs/operators';
+import { pluck, map } from 'rxjs/operators';
+import { IJsonApiItemPayload } from '../../jsonapi.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +24,26 @@ export class WhistlerFormsService implements IFormsService {
     ) as Observable<ISurvey>);
   }
 
-  public postUser(): Observable<unknown> {
+  public postUser(userObj): Observable<unknown> {
     // to be included
-    return;
+    return this.http.post(`${this.baseUrl}/users`, userObj,{ headers: { 'Content-Type': 'application/vnd.api+json' } })
+    .pipe(
+      map((res: IJsonApiItemPayload<any>) => res.data),
+    )
   }
+
+  // {
+  //   "data": {
+  //       "type": "users",
+  //       "attributes": {
+  //           "title": "<string>",
+  //           "first_name": "<string>",
+  //           "last_name": "<string>",
+  //           "phone_number": "<string>",
+  //           "email_address": "<string>",
+  //           "primary_identifier": "<string>",
+  //           "properties": "<string>"
+  //       }
+  //   }
+  // }
 }

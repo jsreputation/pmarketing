@@ -26,9 +26,13 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.data$ = this.formSvc.getSignupForm();
-
+    this.data$.subscribe(
+      (res) => {
+        console.log(res);
+      }
+    );
   }
-
+˜
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -36,6 +40,16 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   public get surveyComplete(): boolean {
     return this.currentPointer === this.totalLength;
+  }
+
+  public setTotalLength(totalLength: number): void {
+    this.totalLength = totalLength;
+    console.log(this.totalLength);
+  }
+
+  public setCurrentPointer(currentPointer: number): void {
+    this.currentPointer = currentPointer;
+    console.log(this.currentPointer);
   }
 
   public updateSurveyStatus(answers: IAnswer[]): void {
