@@ -61,7 +61,13 @@ export class WhistlerRewardsService implements RewardsService {
         }
       ],
       redemptionType: WhistlerRewardsService.WRedemptionToRT(r.attributes.redemption_type),
-      rawPayload: metaData
+      rawPayload: metaData,
+      displayProperties: {
+        merchantPinText: r.attributes.display_properties.merchantPinText,
+        rewardSuccessPopUp: r.attributes.display_properties.rewardSuccessPopUp,
+        codeInstructionsText: r.attributes.display_properties.codeInstructionsText,
+        errorPopUp: r.attributes.display_properties.errorPopUp,
+      }
     };
   }
 

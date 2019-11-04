@@ -28,7 +28,7 @@ export interface IReward {
   inventory?: Inventory;
   redemptionText?: string;
   rawPayload?: any;
-  display_properties?: IDisplayProperties;
+  displayProperties?: IDisplayProperties;
 }
 
 export interface ICatalog {
@@ -69,5 +69,21 @@ export interface Inventory {
 }
 
 export interface IDisplayProperties {
-  buttonTxt?: string;
+  merchantPinText?: {
+    headLine?: string,
+    subHeadLine?: string,
+  };
+  rewardSuccessPopUp?: {
+    headLine?: string,
+    subHeadLine?: string,
+    imageURL?: string,
+  };
+  codeInstructionsText?: {
+    headLine?: string,
+  };
+  errorPopUp?: {
+    headLine?: string,
+    subHeadLine?: string,
+    imageURL?: string,
+  };
 }
