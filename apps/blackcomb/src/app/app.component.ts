@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { PopupComponent, NotificationService, IPopupConfig, ThemesService, ITheme, AuthenticationService } from '@perx/core';
+import { PopupComponent, NotificationService, IPopupConfig, ITheme, AuthenticationService } from '@perx/core';
 import {
   HomeComponent,
   HistoryComponent,
@@ -30,7 +30,6 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog,
     private location: Location,
     private router: Router,
-    private themesService: ThemesService,
     private authService: AuthenticationService,
     private cd: ChangeDetectorRef
   ) {
@@ -38,10 +37,6 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.themesService.getThemeSetting().subscribe(
-      theme => this.theme = theme
-    );
-
     this.authService.$failedAuth.subscribe(
       res => {
         if (res) {
