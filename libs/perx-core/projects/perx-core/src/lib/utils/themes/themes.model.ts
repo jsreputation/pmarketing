@@ -14,6 +14,7 @@ interface IThemeProperties {
     '--header_color'?: string;
     '--background': string;
     '--font_color': string;
+    'showHomePage'?: boolean;
 }
 
 export const LIGHT: ITheme = {
