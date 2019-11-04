@@ -63,7 +63,7 @@ export class RedeemComponent implements OnInit, OnDestroy {
 
           if (voucher.displayProperties && voucher.displayProperties.rewardSuccessPopUp) {
             this.rewardSuccessPopUp.title = voucher.displayProperties.rewardSuccessPopUp.headLine;
-            this.rewardSuccessPopUp.text = voucher.displayProperties.rewardSuccessPopUp.subHeadLine;
+            this.rewardSuccessPopUp.text = voucher.displayProperties.rewardSuccessPopUp.subHeadLine || this.rewardSuccessPopUp.text;
             this.rewardSuccessPopUp.imageUrl = voucher.displayProperties.rewardSuccessPopUp.imageURL;
           }
 
@@ -72,6 +72,7 @@ export class RedeemComponent implements OnInit, OnDestroy {
           }
 
           if (voucher.displayProperties && voucher.displayProperties.errorPopUp) {
+            this.errorPopUp.title = voucher.displayProperties.errorPopUp.headLine;
             this.errorPopUp.imageUrl = voucher.displayProperties.errorPopUp.imageURL;
           }
         }),
