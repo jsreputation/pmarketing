@@ -20,8 +20,7 @@ const loyaltyServiceStub = {
   getLoyalties: () => of([])
 };
 
-const gameSvcStub = {
-};
+const gameSvcStub = {};
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
