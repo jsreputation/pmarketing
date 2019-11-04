@@ -58,24 +58,24 @@ export class RedeemComponent implements OnInit, OnDestroy {
         tap((voucher: Voucher) => {
           this.rewardSuccessPopUp.text = `You have redeemed ${voucher.reward.name}`;
           this.redemptionType = voucher.reward.redemptionType;
-          if (voucher.displayProperties && voucher.displayProperties.merchantPinText) {
-            this.headLine = voucher.displayProperties.merchantPinText.headLine || this.headLine;
-            this.subHeadLine = voucher.displayProperties.merchantPinText.subHeadLine || this.subHeadLine;
+          if (voucher.reward.displayProperties && voucher.reward.displayProperties.merchantPinText) {
+            this.headLine = voucher.reward.displayProperties.merchantPinText.headLine || this.headLine;
+            this.subHeadLine = voucher.reward.displayProperties.merchantPinText.subHeadLine || this.subHeadLine;
           }
 
-          if (voucher.displayProperties && voucher.displayProperties.rewardSuccessPopUp) {
-            this.rewardSuccessPopUp.title = voucher.displayProperties.rewardSuccessPopUp.headLine;
-            this.rewardSuccessPopUp.text = voucher.displayProperties.rewardSuccessPopUp.subHeadLine || this.rewardSuccessPopUp.text;
-            this.rewardSuccessPopUp.imageUrl = voucher.displayProperties.rewardSuccessPopUp.imageURL;
+          if (voucher.reward.displayProperties && voucher.reward.displayProperties.rewardSuccessPopUp) {
+            this.rewardSuccessPopUp.title = voucher.reward.displayProperties.rewardSuccessPopUp.headLine;
+            this.rewardSuccessPopUp.text = voucher.reward.displayProperties.rewardSuccessPopUp.subHeadLine || this.rewardSuccessPopUp.text;
+            this.rewardSuccessPopUp.imageUrl = voucher.reward.displayProperties.rewardSuccessPopUp.imageURL;
           }
 
-          if (voucher.displayProperties && voucher.displayProperties.codeInstructionsText) {
-            this.codeInstructionsText = voucher.displayProperties.codeInstructionsText.headLine;
+          if (voucher.reward.displayProperties && voucher.reward.displayProperties.codeInstructionsText) {
+            this.codeInstructionsText = voucher.reward.displayProperties.codeInstructionsText.headLine;
           }
 
-          if (voucher.displayProperties && voucher.displayProperties.errorPopUp) {
-            this.errorPopUp.title = voucher.displayProperties.errorPopUp.headLine;
-            this.errorPopUp.imageUrl = voucher.displayProperties.errorPopUp.imageURL;
+          if (voucher.reward.displayProperties && voucher.reward.displayProperties.errorPopUp) {
+            this.errorPopUp.title = voucher.reward.displayProperties.errorPopUp.headLine;
+            this.errorPopUp.imageUrl = voucher.reward.displayProperties.errorPopUp.imageURL;
           }
         }),
         takeUntil(this.destroy$)

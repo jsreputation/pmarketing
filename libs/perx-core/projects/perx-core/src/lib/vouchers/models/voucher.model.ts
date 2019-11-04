@@ -32,27 +32,6 @@ export interface IVoucher {
   expiry: Date | null;
   redemptionDate?: Date | null;
   redemptionType?: RedemptionType | null;
-  displayProperties?: IDisplayProperties;
-}
-
-export interface IDisplayProperties {
-  merchantPinText?: {
-    headLine?: string,
-    subHeadLine?: string,
-  };
-  rewardSuccessPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageURL?: string,
-  };
-  codeInstructionsText?: {
-    headLine?: string,
-  };
-  errorPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageURL?: string,
-  };
 }
 
 export interface IGetVoucherParams {
