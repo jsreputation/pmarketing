@@ -28,7 +28,7 @@
     "SEE_MORE": "See more",
     "QR_TO_MERCHANT": "Present this QR code to the merchant",
     "CANCEL": "Hủy",
-    "REDEMPTION_CODE": " The merchant will enter the redemption code when you are ready to redeem at the venue.",
+    "REDEMPTION_CODE": "The merchant will enter the redemption code when you are ready to redeem at the venue.",
     "ENTER_CODE": "Merchant to enter the code",
     "REEDEM_QUEST": "You need to login to redeem the voucher",
     "GO_TO_LOGIN": "Go to login",
@@ -38,5 +38,6 @@
     "ENTER_CUSTOM_ID": "Enter Customer Id",
     "ENTER_PASSWORD": "Enter Password",
     "INVALID_CREDENTIALS": "Invalid Credentials",
-    "VOUCHER_EXPIRY": "Hiệu lực đến: {{date}}"
+    "VOUCHER_EXPIRY": "Hiệu lực đến: {{date}}",
+    "DESCRIPTION": "Mô tả"
 }
