@@ -13,7 +13,7 @@ export { ICommTemplateAttributes, ICommEventAttributes } from './lib/comm/comm';
 export { ICampaignAttributes } from './lib/campaign/campaign';
 export { WEngagementType } from './lib/campaign/campaign';
 export { IInstantOutcomeTransactionAttributes, IInstantOutcomeTxnReq } from './lib/instant-outcome/transaction';
-export { InstantOutcomeEngagementAttributes, IOutcomeDisplayProperties } from './lib/instant-outcome/engagement';
+export { IWInstantOutcomeEngagementAttributes, IWOutcomeDisplayProperties } from './lib/instant-outcome/engagement';
 export { IWhistlerProfileAttributes } from './lib/profile/profile';
 export { IMerchant, IMerchantBranchApi } from './lib/merchant/merchant';
 export { ITenantProperties } from './lib/settings/tenant';
@@ -25,7 +25,6 @@ export {
   WAttbsObjGame,
   WAttbsObjEntity,
   WGameDisplayProperties,
-  WGameOutcome,
   WTreeDisplayProperties,
   WPinataDisplayProperties
 } from './lib/game/game';

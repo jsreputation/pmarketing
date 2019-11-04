@@ -17,7 +17,7 @@ import { Config } from '../config/config';
 import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import {
-  WGameOutcome,
+  IAssignedAttributes,
   WAttbsObjGame,
   WTreeDisplayProperties,
   WPinataDisplayProperties,
@@ -42,7 +42,7 @@ interface ResultsObj {
   urn: string;
   created_at: string;
   updated_at: string;
-  results: IJsonApiItem<WGameOutcome>[];
+  results: IJsonApiItem<IAssignedAttributes>[];
 }
 
 @Injectable({
@@ -132,7 +132,7 @@ export class WhistlerGameService implements IGameService {
     ).pipe(
       mergeMap(res => (
         combineLatest(...res.data.attributes.results.attributes.results.map(
-          (outcome: IJsonApiItem<WGameOutcome>) => this.whistVouchSvc.get(Number.parseInt(outcome.id, 10))
+          (outcome: IJsonApiItem<IAssignedAttributes>) => this.whistVouchSvc.get(Number.parseInt(outcome.id, 10))
         )).pipe(
           map((vouchArr) => vouchArr.reduce((acc, currVouch) =>
             ({ ...acc, vouchers: [...acc.vouchers, currVouch] }), { vouchers: [], rawPayload: res })
@@ -163,7 +163,7 @@ export class WhistlerGameService implements IGameService {
           return entity.engagement_id;
         }),
         switchMap((correctId: number) => this.get(correctId)),
-        map((game: IGame) => ([{ ...game, campaignId, disProp }]))
+        map((game: IGame) => ([{ ...game, campaignId, displayProperties: { ...game.displayProperties, ...disProp } }]))
       );
   }
 }

@@ -44,7 +44,8 @@ export interface IDisplayProperties {
   noRewardsPopUp?: {
     headLine?: string,
     subHeadLine?: string,
-    imageUrl?: string
+    imageUrl?: string,
+    buttonTxt?: string,
   };
 }
 

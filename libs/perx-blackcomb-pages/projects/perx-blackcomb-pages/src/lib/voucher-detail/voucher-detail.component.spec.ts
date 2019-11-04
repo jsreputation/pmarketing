@@ -3,6 +3,7 @@ import { VoucherDetailComponent } from './voucher-detail.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IVoucherService, VouchersModule } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 describe('VoucherDetailComponent', () => {
   let component: VoucherDetailComponent;
@@ -20,6 +21,7 @@ describe('VoucherDetailComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
+        DatePipe,
         { provide: IVoucherService, useValue: vouchersServiceStub }
       ]
     })
