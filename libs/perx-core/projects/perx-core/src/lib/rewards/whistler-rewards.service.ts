@@ -33,6 +33,10 @@ export class WhistlerRewardsService implements RewardsService {
     if (rt === 'QR Code') {
       return RedemptionType.qr;
     }
+    if (rt === 'Merchant PIN') {
+      return RedemptionType.pin;
+    }
+
     return RedemptionType.none;
   }
 
