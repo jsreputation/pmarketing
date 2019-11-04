@@ -34,17 +34,17 @@ export class CustomTranslateLoader implements TranslateLoader {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
   });
-  private hostUrl: string = 'http://localhost:4000';
+  private hostUrl: string = 'http://localhost:4000/';
   constructor(private httpClient: HttpClient) {
     if (environment.production) {
       this.hostUrl = `${environment.baseHref}`;
     }
   }
   public getTranslation(lang: string): Observable<{ [k: string]: string }> {
-    const apiAddress = `${this.hostUrl}/lang?default=${lang}`;
+    const apiAddress = `${this.hostUrl}lang?default=${lang}`;
     return this.httpClient.get<{ [k: string]: string }>(apiAddress, { headers: this.contentHeader })
       .pipe(
-        catchError(() => this.httpClient.get<{ [k: string]: string }>(`${this.hostUrl}/assets/en-json.json`))
+        catchError(() => this.httpClient.get<{ [k: string]: string }>(`${this.hostUrl}assets/en-json.json`))
       );
   }
 }

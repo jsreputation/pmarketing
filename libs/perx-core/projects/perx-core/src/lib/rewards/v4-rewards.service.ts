@@ -179,7 +179,7 @@ export class V4RewardsService extends RewardsService {
       howToRedeem: reward.how_to_redeem,
       categoryTags: reward.category_tags,
       inventory,
-      display_properties: reward.display_properties,
+      displayProperties: reward.display_properties,
     };
   }
 
