@@ -20,6 +20,7 @@ import {
   map,
   retry,
   switchMap,
+  mergeMap,
 } from 'rxjs/operators';
 
 import {
@@ -31,7 +32,9 @@ import {
   IGameService,
   IGame,
   CampaignType,
+  IProfile,
 } from '@perx/core';
+import { TranslateService } from '@ngx-translate/core';
 
 const stubTabs: ITabConfigExtended[] = [
   {
@@ -44,55 +47,55 @@ const stubTabs: ITabConfigExtended[] = [
   , {
     filterKey: null,
     filterValue: null,
-    tabName: 'Food & Beverage',
+    tabName: 'FOOD_BEVERAGE',
     rewardsList: null,
     rewardsType: 'Food & Beverage'
   }, {
     filterKey: null,
     filterValue: null,
-    tabName: 'Travel',
+    tabName: 'TRAVEL',
     rewardsList: null,
     rewardsType: 'Travel'
   },
   {
     filterKey: null,
     filterValue: null,
-    tabName: 'Electronics',
+    tabName: 'ELECTRONICS',
     rewardsList: null,
     rewardsType: 'Electronics'
   },
   {
     filterKey: null,
     filterValue: null,
-    tabName: 'Wellness',
+    tabName: 'WELLNESS',
     rewardsList: null,
     rewardsType: 'Wellness'
   },
   {
     filterKey: null,
     filterValue: null,
-    tabName: 'Entertainment',
+    tabName: 'ENTERTAINMENT',
     rewardsList: null,
     rewardsType: 'Entertainment'
   },
   {
     filterKey: null,
     filterValue: null,
-    tabName: 'Shopping',
+    tabName: 'SHOPPING',
     rewardsList: null,
     rewardsType: 'Shopping'
   },
   {
     filterKey: null,
     filterValue: null,
-    tabName: 'Merchant Self',
+    tabName: 'MERCHANT_SELF',
     rewardsList: null,
     rewardsType: 'Merchant Self'
   },
   {
     filterKey: null,
     filterValue: null,
-    tabName: 'Others',
+    tabName: 'OTHERS',
     rewardsList: null,
     rewardsType: 'Others'
   },
@@ -110,7 +113,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public games$: Observable<IGame[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
-
+  public titleFn: (profile: IProfile) => string;
   private initCampaign(): void {
     this.games$ = (new Observable((subject: Subscriber<IGame[]>) => {
       const gameByCid: { [cid: number]: IGame } = {};
@@ -149,14 +152,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     private campaingService: ICampaignService,
     private rewardsService: RewardsService,
     private gamesService: IGameService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
   }
 
   public ngOnInit(): void {
+    this.translate.get(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING'])
+      .subscribe((res: any) => {
+        this.titleFn = (profile: IProfile) => `${res.HELLO} ${profile && profile.lastName ? profile.lastName : ''},`;
+      });
     this.initCampaign();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
-    this.staticTab = stubTabs;
     this.getTabedList();
   }
 
@@ -166,21 +173,32 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private getTabedList(): void {
-    this.tabs$.next(this.staticTab);
-    forkJoin(this.staticTab.map((tab) =>
-      this.rewardsService.getAllRewards(null, tab.rewardsType ? [tab.rewardsType] : null)
-        .pipe(
-          tap((reward) => {
-            tab.rewardsList = of(reward);
-            this.tabs$.next(this.staticTab);
-          }),
-          takeUntil(this.destroy$)
-        )
-    )).subscribe(() => {
-      this.tabs$.next(this.staticTab);
-    });
+    this.getTabs()
+      .pipe(mergeMap((tabs) => {
+        this.staticTab = tabs;
+        this.tabs$.next(this.staticTab);
+        return forkJoin(this.staticTab.map((tab) =>
+          this.rewardsService.getAllRewards(null, tab.rewardsType ? [tab.rewardsType] : null)
+            .pipe(
+              map((reward) => {
+                tab.rewardsList = of(reward);
+                this.tabs$.next(this.staticTab);
+                return tab;
+              }),
+              takeUntil(this.destroy$)
+            )));
+      })).subscribe((tab) => {
+        this.staticTab = tab;
+        this.tabs$.next(this.staticTab);
+      });
   }
-
+  private getTabs(): Observable<ITabConfigExtended[]> {
+    return this.translate.get(stubTabs.map(tab => tab.tabName))
+      .pipe(map((translation) => stubTabs.map((tab) => {
+        tab.tabName = translation[tab.tabName];
+        return tab;
+      })));
+  }
   public goToReward(reward: IReward): void {
     this.router.navigate([`/reward-detail/${reward.id}`]);
   }

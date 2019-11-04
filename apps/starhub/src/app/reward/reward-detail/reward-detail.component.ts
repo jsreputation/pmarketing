@@ -20,9 +20,6 @@ export class RewardDetailComponent {
   public isButtonEnabled: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input()
-  public showBackButton: boolean = true;
-
-  @Input()
   public showBannerImage: boolean = true;
 
   @Input()

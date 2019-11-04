@@ -1,13 +1,11 @@
 <div class="prize-wrapper">
   <div class="voucher-container">
-    <perx-core-voucher 
-      [hideMerchantImg]="false"
-      [hideMerchantName]="false"
-      [hideActions]="true"
-      [voucher]="voucher$">
+    <perx-core-voucher [hideMerchantImg]="false"
+      [hideMerchantName]="false" [hideActions]="true" [voucher]="voucher$"
+      [expiryFn]="expiryLabelFn">
     </perx-core-voucher>
   </div>
   <div class="actions-container mat-elevation-z2">
-    <button mat-flat-button color="primary" (click)="onRedeem()">Redeem</button>
+    <button mat-flat-button color="primary" (click)="onRedeem()">{{'REDEEM' | translate}}</button>
   </div>
 </div>

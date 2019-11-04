@@ -1,35 +1,36 @@
 import { IVoucher } from '../vouchers/models/voucher.model';
 
 export enum GameType {
-    unknown = -1,
-    shakeTheTree = 'shake',
-    pinata = 'tap',
-    scratch = 'scratch',
+  unknown = -1,
+  shakeTheTree = 'shake',
+  pinata = 'tap',
+  scratch = 'scratch',
 }
 
 export interface IGameOutcome {
-    title: string;
-    subTitle: string;
-    image?: string;
-    button: string;
+  title: string;
+  subTitle: string;
+  image?: string;
+  button: string;
 }
 export interface IGame {
-    id: number;
-    campaignId?: number;
-    type: GameType;
-    remainingNumberOfTries: number;
-    config: ITree | IPinata | IScratch;
-    backgroundImg?: string;
-    texts: {
-        title?: string;
-        subTitle?: string;
-        button?: string;
-    };
-    results: {
-        outcome?: IGameOutcome;
-        noOutcome?: IGameOutcome;
-    };
-    imgUrl?: string;
+  id: number;
+  campaignId?: number;
+  type: GameType;
+  remainingNumberOfTries: number;
+  config: ITree | IPinata | IScratch;
+  backgroundImg?: string;
+  texts: {
+    title?: string;
+    subTitle?: string;
+    button?: string;
+  };
+  results: {
+    outcome?: IGameOutcome;
+    noOutcome?: IGameOutcome;
+  };
+  imgUrl?: string;
+  displayProperties?: IDisplayProperties;
 }
 
 export function defaultTree(): ITree {
@@ -50,23 +51,23 @@ export function defaultPinata(): IPinata {
   };
 }
 export interface ITree {
-    stillImg?: string;
-    openedImg?: string;
-    treeImg: string;
-    giftImg: string;
-    waitingAccessoryImg?: string;
-    celebratingAccessoryImg?: string;
-    nbHangedGift: number;
-    nbGiftsToDrop: number;
-    nbTaps: number;
+  stillImg?: string;
+  openedImg?: string;
+  treeImg: string;
+  giftImg: string;
+  waitingAccessoryImg?: string;
+  celebratingAccessoryImg?: string;
+  nbHangedGift: number;
+  nbGiftsToDrop: number;
+  nbTaps: number;
 }
 
 export interface IPinata {
-    openedImg?: string;
-    stillImg: string;
-    breakingImg?: string;
-    brokenImg: string;
-    nbTaps: number;
+  openedImg?: string;
+  stillImg: string;
+  breakingImg?: string;
+  brokenImg: string;
+  nbTaps: number;
 }
 
 export interface IScratch {
@@ -77,8 +78,8 @@ export interface IScratch {
 }
 
 export interface IPlayOutcome {
-    vouchers: IVoucher[];
-    rawPayload: any;
+  vouchers: IVoucher[];
+  rawPayload: any;
 }
 
 export interface ISlice {
@@ -87,4 +88,25 @@ export interface ISlice {
   label_color?: string;
   background_color?: string;
   background_image?: string;
+}
+
+export interface IDisplayProperties {
+  noRewardsPopUp?: {
+    headLine?: string,
+    subHeadLine?: string,
+    imageURL?: string,
+    buttonTxt?: string,
+  };
+  congratulationsPopUp?: {
+    headLine?: string,
+    subHeadLine?: string,
+    imageURL?: string,
+    buttonTxt?: string,
+  };
+  successPopUp?: {
+    headLine?: string,
+    subHeadLine?: string,
+    imageURL?: string,
+    buttonTxt?: string,
+  };
 }

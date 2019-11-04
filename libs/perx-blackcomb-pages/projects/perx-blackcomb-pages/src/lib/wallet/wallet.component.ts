@@ -25,6 +25,8 @@ import {
   StampService,
   IStampCard,
 } from '@perx/core';
+import { TranslateService } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'perx-blackcomb-pages-wallet',
@@ -36,24 +38,36 @@ export class WalletComponent implements OnInit, OnDestroy {
   public vouchers$: Observable<Voucher[]>;
   private destroy$: Subject<void> = new Subject();
   public filter: string[];
+  public rewardsHeadline: string;
+  public expiryLabelFn: ((v: Voucher) => string) | undefined;
 
   constructor(
     private router: Router,
     private vouchersService: IVoucherService,
     private stampService: StampService,
     private campaignService: ICampaignService,
+    private datePipe: DatePipe,
+    private translate: TranslateService
   ) { }
 
   public ngOnInit(): void {
     this.stampCards$ = this.campaignService.getCampaigns()
       .pipe(
         map((campaigns: ICampaign[]) => campaigns.filter(c => c.type === CampaignType.stamp)),
-        mergeMap((res) =>  combineLatest(
+        mergeMap((res) => combineLatest(
           ...res.map(c => this.stampService.getCurrentCard(c.id))
         )
         ));
+    this.translate.get('MY_WALLET').subscribe(text => this.rewardsHeadline = text);
     this.vouchers$ = this.vouchersService.getAll();
     this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
+    this.translate.get('VOUCHER_EXPIRY')
+      .subscribe((text: string) => {
+        this.expiryLabelFn = (v: Voucher) => {
+          const dateStr = this.datePipe.transform(v.expiry, 'shortDate');
+          return text.replace('{{date}}', dateStr);
+        };
+      });
   }
 
   public voucherSelected(voucher: Voucher): void {

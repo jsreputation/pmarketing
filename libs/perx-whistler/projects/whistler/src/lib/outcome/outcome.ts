@@ -9,4 +9,6 @@ export interface IOutcomeAttributes {
     result_type: string;
     probability?: number;
     loot_box_id?: number;
+    no_outcome?: boolean;
+    campaign_entity_id?: number;
 }

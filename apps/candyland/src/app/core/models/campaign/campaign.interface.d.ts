@@ -1,4 +1,4 @@
-import { ISchedule } from "../comm/schedule";
+import { ISchedule } from '../comm/schedule';
 
 export interface ICampaign {
     id?: string;
@@ -29,6 +29,7 @@ export interface ICampaign {
     };
     template?: any;
     rewardsList?: {
+        id?: string;
         result_id?: number;
         result_type?: string;
         probability?: number;

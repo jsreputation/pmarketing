@@ -20,6 +20,11 @@ export interface IWSurveyDisplayProperties {
   progress_bar_color: string;
   card_background_img_url: string;
   questions: IWQuestion[];
+  noRewardsPopUp?: {
+    headLine?: string,
+    subHeadLine?: string,
+    imageUrl?: string
+  };
 }
 
 export interface IWPostAnswerAttributes {

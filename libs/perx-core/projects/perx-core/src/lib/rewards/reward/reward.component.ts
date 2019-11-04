@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {IPrice, IReward} from '../models/reward.model';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IPrice, IReward } from '../models/reward.model';
 
 @Component({
   selector: 'perx-core-reward',
@@ -8,7 +8,6 @@ import {IPrice, IReward} from '../models/reward.model';
   styleUrls: ['./reward.component.scss']
 })
 export class RewardComponent implements OnInit {
-
   @Input('reward')
   public reward$: Observable<IReward>;
 
@@ -24,11 +23,11 @@ export class RewardComponent implements OnInit {
   public ngOnInit(): void {
     if (!this.displayPriceFn) {
       this.displayPriceFn = (rewardPrice: IPrice) => {
-        if (rewardPrice.price > 0) {
+        if (rewardPrice.price && rewardPrice.price > 0) {
           return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
         }
 
-        if (rewardPrice.points > 0) {
+        if (rewardPrice.points && rewardPrice.points > 0) {
           return `${rewardPrice.points} points`;
         }
         return '0 points'; // is actually 0 or invalid value default

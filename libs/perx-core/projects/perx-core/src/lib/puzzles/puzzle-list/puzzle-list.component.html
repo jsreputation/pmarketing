@@ -1,24 +1,46 @@
-<mat-card matRipple [matRippleDisabled]="!isActive(puzzle)" [class.disabled]="!isActive(puzzle)"
-          [tabindex]="isActive(puzzle) ? 0 : -1" (click)="isActive(puzzle) && puzzleSelected(puzzle)"
-          *ngFor="let puzzle of puzzles; let i=index">
-  <div class="puzzle-content">
-    <div class="puzzle-img__wrapper">
-      <img [ngClass]="isActive(puzzle) ? 'puzzle-img' : 'puzzle-img grayscale' " src="{{puzzle.displayProperties.thumbnailImg}}">
-    </div>
-    <div class="puzzle-details">
-      <h1>
-        <ng-container>
-          {{titleFn(i)}}
-        </ng-container>
-        <span class="badge-warn">
-          {{nbPlacedStamps(puzzle)}}/{{total}}
-        </span>
-      </h1>
-      <p>{{nbAvailableStamps(puzzle)}} new pieces</p>
-      <p class="play-now">Play Now!</p>
-    </div>
-  </div>
-  <mat-icon *ngIf="iconDisplay">
-    {{iconDisplay}}
-  </mat-icon>
-</mat-card>
+<div [class]="puzzles ? 'card-list-container' : 'card-list-container loading'">
+  <div *ngIf="puzzles; then thenBlock else elseBlock"></div>
+  <ng-template #thenBlock>
+    <mat-card matRipple *ngFor="let puzzle of puzzles; let i=index"
+      [matRippleDisabled]="!isActive(puzzle)"
+      [class.disabled]="!isActive(puzzle)"
+      [tabindex]="isActive(puzzle) ? 0 : -1"
+      (click)="isActive(puzzle) && puzzleSelected(puzzle)">
+      <div class="puzzle-content">
+        <div class="puzzle-img__wrapper">
+          <img [ngClass]="isActive(puzzle) ? 'puzzle-img' : 'puzzle-img grayscale' " src="{{puzzle.displayProperties.thumbnailImg}}">
+        </div>
+        <div class="puzzle-details">
+          <h1>
+            <ng-container>
+              {{titleFn(i)}}
+            </ng-container>
+            <span class="badge-warn">
+              {{nbPlacedStamps(puzzle)}}/{{total}}
+            </span>
+          </h1>
+          <p>{{nbAvailableStamps(puzzle)}} {{puzzleTextFn()}}</p>
+          <p class="play-now">Play Now!</p>
+        </div>
+      </div>
+      <mat-icon *ngIf="iconDisplay">
+        {{iconDisplay}}
+      </mat-icon>
+    </mat-card>
+  </ng-template>
+
+  <ng-template #elseBlock>
+    <mat-card *perxCoreRepeatTimes="repeatGhostCount">
+      <div class="reward-content">
+        <div class="reward-img__wrapper">
+          <div class="img-placeholder ghost"></div>
+        </div>
+        <div class="reward-preview-details">
+          <div class="reward-name ghost"></div>
+          <div class="reward-subtitle ghost"></div>
+          <div class="reward-price-details ghost"></div>
+        </div>
+      </div>
+    </mat-card>
+  </ng-template>
+</div>

@@ -6,6 +6,7 @@ import { ICampaignService, LoyaltyModule, RewardsModule, RewardsService, Loyalty
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material';
 import { GamesCollectionComponent } from './games-collection/games-collection.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 const rewardsServiceStub = {
   getAllRewards: () => of([])
@@ -19,8 +20,7 @@ const loyaltyServiceStub = {
   getLoyalties: () => of([])
 };
 
-const gameSvcStub = {
-};
+const gameSvcStub = {};
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -38,7 +38,8 @@ describe('HomeComponent', () => {
         MatCardModule,
         LoyaltyModule,
         RewardsModule,
-        RouterTestingModule.withRoutes([])
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },

@@ -37,6 +37,16 @@ export interface ISurvey {
   card_background_img_url?: string;
   background_img_url?: string;
   questions: IQuestion[];
+  displayProperties?: IDisplayProperties;
+}
+
+export interface IDisplayProperties {
+  noRewardsPopUp?: {
+    headLine?: string,
+    subHeadLine?: string,
+    imageUrl?: string,
+    buttonTxt?: string,
+  };
 }
 
 export enum SurveyQuestionType {

@@ -1,8 +1,8 @@
-import {Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDestroy, OnInit} from '@angular/core';
-import {StampService} from '../../stamp/stamp.service';
-import {IStampCard, StampCardState, StampState} from '../../stamp/models/stamp.model';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
+import { StampService } from '../../stamp/stamp.service';
+import { IStampCard, StampCardState, StampState } from '../../stamp/models/stamp.model';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-puzzle-list',
@@ -13,8 +13,10 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
 
   public puzzles: IStampCard[];
 
+  public repeatGhostCount: number = 10;
+
   @Input()
-  public campaignId: number = null;
+  public campaignId: number | null = null;
 
   @Input()
   public iconDisplay: string;
@@ -22,7 +24,10 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   public titleFn: (index?: number) => string;
 
-  public total: number = null;
+  @Input()
+  public puzzleTextFn: () => string;
+
+  public total: number | null = null;
 
   @Output()
   public selected: EventEmitter<IStampCard> = new EventEmitter<IStampCard>();
@@ -43,6 +48,10 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   public ngOnInit(): void {
     if (!this.titleFn) {
       this.titleFn = (index) => `Stamp Card ${this.puzzleIndex(index)} out of 12`;
+    }
+
+    if (!this.puzzleTextFn) {
+      this.puzzleTextFn = () => 'new pieces';
     }
   }
 
