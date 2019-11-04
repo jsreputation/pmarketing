@@ -47,6 +47,8 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.translate.get('ENTER_CODE').subscribe((text) => this.headLine = text);
+    this.translate.get('REDEMPTION_CODE').subscribe((text) => this.subHeadLine = text);
     this.voucher$ = this.route.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
@@ -57,8 +59,8 @@ export class RedeemComponent implements OnInit, OnDestroy {
           this.rewardSuccessPopUp.text = `You have redeemed ${voucher.reward.name}`;
           this.redemptionType = voucher.reward.redemptionType;
           if (voucher.displayProperties && voucher.displayProperties.merchantPinText) {
-            this.headLine = voucher.displayProperties.merchantPinText.headLine;
-            this.subHeadLine = voucher.displayProperties.merchantPinText.subHeadLine;
+            this.headLine = voucher.displayProperties.merchantPinText.headLine || this.headLine;
+            this.subHeadLine = voucher.displayProperties.merchantPinText.subHeadLine || this.subHeadLine;
           }
 
           if (voucher.displayProperties && voucher.displayProperties.rewardSuccessPopUp) {
@@ -78,8 +80,7 @@ export class RedeemComponent implements OnInit, OnDestroy {
         }),
         takeUntil(this.destroy$)
       );
-    this.translate.get('ENTER_CODE').subscribe((text) => this.headLine = text);
-    this.translate.get('REDEMPTION_CODE').subscribe((text) => this.subHeadLine = text);
+
   }
 
   public ngOnDestroy(): void {
