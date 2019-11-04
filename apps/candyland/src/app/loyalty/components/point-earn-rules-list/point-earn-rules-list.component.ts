@@ -1,6 +1,8 @@
-import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
+import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Component({
   selector: 'cl-point-earn-rules-list',
@@ -9,45 +11,39 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   encapsulation: ViewEncapsulation.None
 })
 export class PointEarnRulesListComponent {
-  @Input() public dataSource: MatTableDataSource<any>;
+  @Input() public editable: boolean = false;
+  @Input() public dataSource: Array<any>;
   @Input() public displayedColumns: string[] = ['priority', 'name', 'conditions', 'pointsEarned', 'actions'];
+  @Output() public rulesAction: EventEmitter<{ action: NewLoyaltyActions, data?: ICustomTireForm }> = new EventEmitter();
   @ViewChild('table', {static: false}) public table: MatTable<any>;
 
-  public data: any = [
-    {
-      priority: 1,
-      name: 'Main Rule Prepaid',
-      conditions: ['Makes a PREPAID transaction'],
-      pointsEarned: 'Apply 2x multiplier'
-    },
-    {
-      priority: 2,
-      name: 'Main Rule Accessories',
-      conditions: [
-        'Make a transaction for each RM100',
-        'Make a transaction of product category IT Accessories'
-      ],
-      pointsEarned: '100 Bonus Points'
-    },
-    {
-      priority: 3,
-      name: 'Main Rule Peripherals',
-      conditions: [
-        'Make a transaction for each RM200',
-        'Make a transaction of product category IT Accessories'
-      ],
-      pointsEarned: '100 Bonus Points'
+  public get displayedColumnsWithEdit(): string[] {
+    if (this.editable) {
+      return [...this.displayedColumns, 'actions'];
     }
-  ];
-
-  constructor() {
-    this.dataSource = new MatTableDataSource<any>();
-    this.dataSource.data = this.data;
+    return this.displayedColumns;
   }
 
+  public editItem(rule: ICustomTireForm): void {
+    this.rulesAction.emit({action: NewLoyaltyActions.editRule, data: rule});
+  }
+
+  public duplicateItem(rule: ICustomTireForm): void {
+    this.rulesAction.emit({action: NewLoyaltyActions.duplicateRule, data: rule});
+  }
+
+  public deleteItem(rule: ICustomTireForm): void {
+    this.rulesAction.emit({action: NewLoyaltyActions.deleteRule, data: rule});
+  }
+
+  // public dropTable(event: CdkDragDrop<any>): void {
+  //
+  // }
+
   public dropTable(event: CdkDragDrop<any>): void {
-    const prevIndex = this.data.findIndex((d) => d === event.item.data);
-    moveItemInArray(this.data, prevIndex, event.currentIndex);
+    const prevIndex = this.dataSource.findIndex((d) => d === event.item.data);
+    moveItemInArray(this.dataSource, prevIndex, event.currentIndex);
     this.table.renderRows();
+    this.rulesAction.emit({action: NewLoyaltyActions.dropRule, data: rule});
   }
 }

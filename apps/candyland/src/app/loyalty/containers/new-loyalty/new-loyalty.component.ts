@@ -35,6 +35,103 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   public basicTierId: string;
   public form: FormGroup;
   public customTierDataSource: CustomDataSource<ICustomTireForm>;
+  public earnRules: any = [
+    {
+      tier: {
+        name: 'General Rules',
+        type: 'basicTier',
+        id: '1'
+      },
+      matchMethod: 'first',
+      rules: [
+        {
+          priority: 1,
+          name: 'Main Rule Prepaid',
+          conditions: ['Makes a PREPAID transaction'],
+          pointsEarned: 'Apply 2x multiplier'
+        },
+        {
+          priority: 2,
+          name: 'Main Rule Accessories',
+          conditions: [
+            'Make a transaction for each RM100',
+            'Make a transaction of product category IT Accessories'
+          ],
+          pointsEarned: '100 Bonus Points'
+        },
+        {
+          priority: 3,
+          name: 'Main Rule Peripherals',
+          conditions: [
+            'Make a transaction for each RM200',
+            'Make a transaction of product category IT Accessories'
+          ],
+          pointsEarned: '100 Bonus Points'
+        },
+        {
+          priority: 4,
+          name: 'Main Rule Peripherals',
+          conditions: [
+            'Make a transaction for each RM200',
+            'Make a transaction of product category IT Accessories'
+          ],
+          pointsEarned: '100 Bonus Points'
+        }
+      ]
+    },
+    {
+      tier: {
+        name: 'Silver Tier',
+        type: 'customTier',
+        id: '11'
+      },
+      matchMethod: 'all',
+      rules: [
+        {
+          priority: 1,
+          name: 'Main Rule Prepaid',
+          conditions: ['Makes a PREPAID transaction'],
+          pointsEarned: 'Apply 2x multiplier'
+        },
+        {
+          priority: 2,
+          name: 'Main Rule Accessories',
+          conditions: [
+            'Make a transaction for each RM100',
+            'Make a transaction of product category IT Accessories'
+          ],
+          pointsEarned: '100 Bonus Points'
+        },
+        {
+          priority: 4,
+          name: 'Main Rule Peripherals',
+          conditions: [
+            'Make a transaction for each RM200',
+            'Make a transaction of product category IT Accessories'
+          ],
+          pointsEarned: '100 Bonus Points'
+        },
+        {
+          priority: 3,
+          name: 'Main Rule Peripherals',
+          conditions: [
+            'Make a transaction for each RM200',
+            'Make a transaction of product category IT Accessories'
+          ],
+          pointsEarned: '100 Bonus Points'
+        }
+      ]
+    },
+    {
+      tier: {
+        name: 'Gold Tier',
+        type: 'customTier',
+        id: '13'
+      },
+      matchMethod: 'all',
+      rules: []
+    }
+  ];
   public pools: IPools;
   public isEditPage: boolean = false;
   public showDraftButton: boolean = true;
@@ -83,9 +180,8 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
     this.initPools();
     this.initForm();
     this.initCustomTiersDataSource();
-    this.handleRouteParams().subscribe((loyalty: ILoyaltyForm) => {
-        this.initLoyaltyData(loyalty);
-      },
+    this.handleRouteParams().subscribe(
+      (loyalty: ILoyaltyForm) => this.initLoyaltyData(loyalty),
       (error: Error) => {
         console.warn(error.message);
         this.router.navigateByUrl('/loyalty');
@@ -178,6 +274,19 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
         break;
       case NewLoyaltyActions.deleteTier:
         this.deleteCustomTier(data.data.id);
+        break;
+      case NewLoyaltyActions.createRule:
+        this.createCustomRule();
+        break;
+      case NewLoyaltyActions.editRule:
+        this.editRule(data.data);
+        break;
+      case NewLoyaltyActions.deleteRule:
+        this.deleteRule(data.data.id);
+        break;
+      case NewLoyaltyActions.dropRule:
+        // this.deleteRule(data.data.id);
+        console.log('drop rule');
         break;
     }
   }

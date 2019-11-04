@@ -40,7 +40,7 @@
     <!--step 3-->
     <mat-step>
       <ng-template matStepLabel>Point Earn Rules</ng-template>
-      <cl-loyalty-form-step-earn-rules></cl-loyalty-form-step-earn-rules>
+      <cl-loyalty-form-step-earn-rules [rules]="earnRules" (rulesAction)="handleLoyaltyActions($event)"></cl-loyalty-form-step-earn-rules>
       <div>
       </div>
     </mat-step>
