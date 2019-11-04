@@ -86,3 +86,67 @@ mat-icon {
   border-radius: 0.8rem;
   margin-left: 0.5rem;
 }
+
+.card-list-container.loading {
+  overflow: hidden;
+
+  .ghost {
+    overflow: hidden;
+    background-color: #ededed;
+  }
+
+  .reward-content {
+    display: flex;
+    flex-basis: auto;
+    flex-grow: 1;
+    justify-content: flex-start;
+
+    .reward-img__wrapper {
+      flex: 0 0 10.5rem;
+      height: 10.5rem;
+      width: 10.5rem;
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+
+      .img-placeholder {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .reward-preview-details {
+      font-size: 1.4rem;
+      display: flex;
+      margin: 1.6rem 0;
+      margin-left: 0.8rem;
+      padding-left: 0;
+      flex-direction: column;
+      flex: 1;
+
+      &:nth-child(1) {
+        margin-top: 0;
+      }
+
+      .reward-name {
+        height: 1.6rem;
+        margin: 0.4rem 0;
+      }
+
+      .reward-subtitle {
+        height: 1.6rem;
+        margin: 0.4rem 0;
+      }
+
+      .reward-price-details {
+        height: 1.4rem;
+        font-size: 1rem;
+        line-height: 1.4rem;
+        min-height: 1.4rem;
+        -webkit-align-content: flex-end;
+        align-content: flex-end;
+        margin-top: auto;
+      }
+    }
+  }
+}

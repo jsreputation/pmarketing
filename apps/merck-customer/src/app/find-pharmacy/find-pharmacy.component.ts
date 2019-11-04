@@ -6,9 +6,11 @@ import { MatDialog } from '@angular/material';
 
 import {
   Observable,
-  of,
 } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {
+  takeLast,
+  share
+  } from 'rxjs/operators';
 
 import {
   LocationsService,
@@ -45,7 +47,7 @@ export class FindPharmacyComponent implements OnInit, PageAppearence {
   public merchants: Observable<IMerchant[]>;
   public tags: ITag[];
   public filteredLocations: Observable<ILocation[]>;
-  public headerFn: (location: ILocation) => Observable<string>;
+
   constructor(
     private locationsService: LocationsService,
     private dialog: MatDialog,
@@ -53,10 +55,11 @@ export class FindPharmacyComponent implements OnInit, PageAppearence {
   ) { }
 
   public ngOnInit(): void {
-    this.headerFn = (location: ILocation) => location.merchantName ? of(location.merchantName) :
-      location.merchantId ? this.merchantService.getMerchant(location.merchantId)
-        .pipe(map((merchant: IMerchant) => merchant.name)) : of(location.name);
-    this.merchants = this.merchantService.getAllMerchants();
+    this.merchants = this.merchantService.getAllMerchants().pipe(
+      takeLast(1),
+      share()
+    );
+
     this.locations = this.locationsService.getAllLocations(this.merchants);
 
     this.locationsService.getTags(this.merchants).subscribe((res) => {
