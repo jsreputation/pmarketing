@@ -15,10 +15,10 @@
               {{voucher.reward.merchantName}}
             </p>
             <p *ngIf="showExpireDate && voucher.expiry && voucher.expiry !== null">
-              Expiry: {{voucher.expiry | date: 'dd/MM/yyyy'}}
+              {{expiryLabelFn(voucher)}}
             </p>
             <p *ngIf="showRedeemedDate && voucher.redemptionDate">
-              Redeemed on {{voucher.redemptionDate | date: 'dd/MM/yyyy'}}
+              Redeemed on {{voucher.redemptionDate | date: 'shortDate'}}
             </p>
             <div [ngClass]="'ribbon ' + voucher.state" *ngIf="showRedeemedIcon && mapping && mapping[voucher.state]">
               {{mapping[voucher.state]}}</div>
