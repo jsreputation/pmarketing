@@ -33,5 +33,9 @@
     "REEDEM_QUEST": "You need to login to redeem the voucher",
     "GO_TO_LOGIN": "Go to login",
     "REDEEM_SUCCESSFULLY": "Redeem Successfully",
-    "TRY_AGAIN_LATER": "Error occur, please try again later"
+    "TRY_AGAIN_LATER": "Error occur, please try again later",
+    "LOGIN": "Login",
+    "ENTER_CUSTOM_ID": "Enter Customer Id",
+    "ENTER_PASSWORD": "Enter Password",
+    "INVALID_CREDENTIALS": "Invalid Credentials"
 }

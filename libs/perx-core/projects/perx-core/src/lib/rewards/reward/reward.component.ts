@@ -8,7 +8,6 @@ import { IPrice, IReward } from '../models/reward.model';
   styleUrls: ['./reward.component.scss']
 })
 export class RewardComponent implements OnInit {
-
   @Input('reward')
   public reward$: Observable<IReward>;
 
