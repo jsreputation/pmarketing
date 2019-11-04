@@ -14,7 +14,6 @@ describe('LoginComponent', () => {
     readAppConfig: () => of()
   };
 
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
