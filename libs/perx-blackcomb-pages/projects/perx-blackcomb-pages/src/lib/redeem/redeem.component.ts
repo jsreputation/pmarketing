@@ -97,13 +97,10 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public pinInputSuccess(): void {
-    this.popup(this.rewardSuccessPopUp);
-    this.translate.get('REDEEM_SUCCESSFULLY').subscribe((text) =>
-      this.popup({
-        title: text,
-        text: 'ID: ' + this.voucherId
-      })
-    );
+    this.translate.get('REDEEM_SUCCESSFULLY').subscribe((text) => {
+      this.rewardSuccessPopUp.title = text;
+      this.popup(this.rewardSuccessPopUp);
+    });
   }
 
   public errorHandler(status: number): void {
@@ -122,11 +119,10 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public errorPopup(): void {
-    this.popup(this.errorPopUp);
-    this.translate.get('TRY_AGAIN_LATER').subscribe((qest) =>
-      this.popup({
-        title: qest
-      }));
+    this.translate.get('TRY_AGAIN_LATER').subscribe((qest) => {
+      this.errorPopUp.title = qest;
+      this.popup(this.errorPopUp);
+    });
   }
 
   public popup(data: IPopupConfig): MatDialogRef<PopupComponent> {
