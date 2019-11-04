@@ -186,7 +186,12 @@ export class GameComponent implements OnInit {
   }
 
   public isCurrent(inCard: IStampCard): boolean {
-    return this.cards.find(card => card.state === 'active').id === inCard.id;
+    // handle edge case where user has only completed cards
+    const activeCard = this.cards.find(card => card.state === 'active');
+    if (!activeCard) {
+      return false;
+    }
+    return activeCard.id === inCard.id;
   }
 
   private checkKeys(cardSelected?: IStampCard): void {
