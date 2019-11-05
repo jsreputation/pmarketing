@@ -23,7 +23,7 @@ export class SpinTheWheelComponent implements OnInit {
   @Input()
   public spinDuration: number = 3;
 
-  public ctx: CanvasRenderingContext2D;
+  public ctx: CanvasRenderingContext2D | null;
   public ctxArrow: CanvasRenderingContext2D;
   public canvas: HTMLCanvasElement;
   public canvasArrow: HTMLCanvasElement;
@@ -35,7 +35,7 @@ export class SpinTheWheelComponent implements OnInit {
   public dragging: boolean = false;
   public spinTimeTotal: number = 0;
   public spinAngleStart: number = 0;
-  public spinTimeout: number;
+  public spinTimeout: number | null;
   public size: number;
 
   private static easeOut(t: number, b: number, c: number, d: number): number {
@@ -124,9 +124,9 @@ export class SpinTheWheelComponent implements OnInit {
     slicesWithImg.forEach((item) => {
       const image: HTMLImageElement = new Image();
       image.src = item.background_image;
-      images.push({id: item.id , image});
+      images.push({ id: item.id, image });
       image.onload = () => {
-        count ++;
+        count++;
         if (count === slicesWithImg.length) {
           this.createPatterns(images);
         }
@@ -135,7 +135,7 @@ export class SpinTheWheelComponent implements OnInit {
   }
 
   public createPatterns(arr: ImageForPattern[]): void {
-    this.patternImg = arr.map(item => ({id: item.id, pattern: this.ctx.createPattern(item.image, 'no-repeat')}));
+    this.patternImg = arr.map(item => ({ id: item.id, pattern: this.ctx.createPattern(item.image, 'no-repeat') }));
     this.drawWheel();
   }
 
@@ -197,7 +197,7 @@ export class SpinTheWheelComponent implements OnInit {
 
       this.ctxArrow.moveTo(0, outsideRadius + 5);
       this.ctxArrow.lineTo(0, outsideRadius - 5);
-      this.ctxArrow.lineTo(13, outsideRadius );
+      this.ctxArrow.lineTo(13, outsideRadius);
       this.ctxArrow.lineTo(0, outsideRadius + 5);
 
       this.ctxArrow.fill();
