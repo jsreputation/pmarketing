@@ -1,10 +1,9 @@
-import { ThemesService, AuthenticationService } from '@perx/core';
+import { AuthenticationService } from '@perx/core';
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule, MatToolbarModule, MatIconModule } from '@angular/material';
 
-const themesServiceStub = {};
 const authServiceStub = {};
 
 describe('AppComponent', () => {
@@ -23,10 +22,6 @@ describe('AppComponent', () => {
         AppComponent
       ],
       providers: [
-        {
-          provide: ThemesService,
-          useValue: themesServiceStub
-        },
         {
           provide: AuthenticationService,
           useValue: authServiceStub

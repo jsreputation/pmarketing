@@ -3,10 +3,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import { AuthenticationService, NotificationService, ConfigService, IConfig } from '@perx/core';
 import { HttpErrorResponse } from '@angular/common/http';
-
-import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -25,9 +23,9 @@ export class LoginComponent implements OnInit {
     private authService: AuthenticationService,
     @Inject(PLATFORM_ID) private platformId: object,
     private fb: FormBuilder,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private configService: ConfigService,
   ) {
-    this.preAuth = environment.preAuth;
     this.initForm();
   }
 
@@ -39,6 +37,12 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig) => {
+        this.preAuth = config.preAuth as boolean;
+      }
+    );
+
     if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
       this.authService.autoLogin().subscribe(
         () => {

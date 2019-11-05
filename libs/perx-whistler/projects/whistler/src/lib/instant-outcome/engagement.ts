@@ -23,22 +23,5 @@ export interface IWOutcomeDisplayProperties {
       subHeadLine?: string,
       imageURL?: string,
     };
-    merchantPinText?: {
-      headLine?: string,
-      subHeadLine?: string,
-    };
-    rewardSuccessPopUp?: {
-      headLine?: string,
-      subHeadLine?: string,
-      imageURL?: string,
-    };
-    codeInstructionsText?: {
-      headLine?: string,
-    };
-    errorPopUp?: {
-      headLine?: string,
-      subHeadLine?: string,
-      imageURL?: string,
-    };
   };
 }
