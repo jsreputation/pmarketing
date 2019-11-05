@@ -53,7 +53,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
         switchMap((campaign: CampaignProperties) => {
           displayProps = campaign.display_properties;
           return this.http.get<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>>(
-            `${this.config.apiHost}/instant_outcome/engagements/${campaign.engagementId}`);
+            `${this.config.apiHost}/instant-outcome/engagements/${campaign.engagementId}`);
         }),
         map(res => res.data.attributes.display_properties),
         map((outcomeData: IWOutcomeDisplayProperties) =>
