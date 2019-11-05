@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { HttpParams } from '@angular/common/http';
+import { IUser, IUserApi, IAudiencesUserForm, IPoolsApi } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'

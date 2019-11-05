@@ -1,3 +1,4 @@
+import { IAudiences, IUser } from '@perx/whistler';
 import {
   Component,
   ChangeDetectionStrategy,

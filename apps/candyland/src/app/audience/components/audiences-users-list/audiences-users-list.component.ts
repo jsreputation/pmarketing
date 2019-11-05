@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { MatSort } from '@angular/material';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
+import { IUser } from '@perx/whistler';
 
 @Component({
   selector: 'cl-audiences-users-list',

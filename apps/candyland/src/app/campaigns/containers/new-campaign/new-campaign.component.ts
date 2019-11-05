@@ -18,6 +18,7 @@ import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
+import { IUserApi } from '@perx/whistler';
 
 @Component({
   selector: 'cl-new-campaign',

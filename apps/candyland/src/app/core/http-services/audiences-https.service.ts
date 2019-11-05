@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IAssignedAttributes, IAssignRequestAttributes } from '@perx/whistler';
+import { IAssignedAttributes, IAssignRequestAttributes, IUserApi, IPoolsApi } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'

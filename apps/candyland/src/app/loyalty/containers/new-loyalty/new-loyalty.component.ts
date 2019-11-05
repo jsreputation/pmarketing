@@ -19,6 +19,7 @@ import Utils from '@cl-helpers/utils';
 import { StatusLabel } from '@cl-helpers/status-label.enum';
 import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { IBasicTierApi } from '@perx/core';
+import { IPools } from '@perx/whistler';
 
 @Component({
   selector: 'cl-new-loyalty',

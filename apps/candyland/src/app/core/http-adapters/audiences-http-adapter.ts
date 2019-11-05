@@ -1,4 +1,4 @@
-import { IAssignedAttributes, IAssignRequestAttributes } from '@perx/whistler';
+import { IAssignedAttributes, IAssignRequestAttributes, IAudiencesUserForm, IUserApi, IUser, IPoolsApi, IPools, IAudiences } from '@perx/whistler';
 
 export class AudiencesHttpAdapter {
 

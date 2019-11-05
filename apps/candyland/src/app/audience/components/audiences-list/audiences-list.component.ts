@@ -1,3 +1,4 @@
+import { IAudiences } from '@perx/whistler';
 import {
   Component,
   ChangeDetectionStrategy,

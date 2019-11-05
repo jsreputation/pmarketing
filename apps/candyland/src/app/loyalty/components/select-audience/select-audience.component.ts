@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { IPools } from '@perx/whistler';
 
 @Component({
   selector: 'cl-select-audience',
