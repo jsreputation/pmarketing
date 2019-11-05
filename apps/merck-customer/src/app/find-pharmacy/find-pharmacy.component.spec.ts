@@ -39,7 +39,7 @@ describe('FindPharmacyComponent', () => {
 
   const merchantsServiceStub = {
     getAllMerchants: () => of(),
-    getMerchant: () => of(null)
+    getMerchant: () => of({name: 'merchant-name'})
   };
 
   const locationsStub = [

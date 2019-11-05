@@ -17,17 +17,17 @@
         have to repeat div declaration because the directive reads the
         dom to insert ellipsis and will otherwise render angular logic code
         -->
-        <div *ngIf="reward.description; else showMerchantName">
-          <!-- <div class="description mat-caption" ngxEllipsis [lines]="2">
-            {{reward.description}}
-          </div> -->
-          <div class="description mat-caption"> {{reward.description | slice: 0 : 16}}</div>
-          <div class="description mat-caption overflow-text" *ngIf="reward.description.length > 16">
-            {{ reward.description | slice : 16 }}</div>
+        <div class="description mat-caption"
+          ngxEllipsis
+          [lines]="2"
+          *ngIf="reward.merchantName; else showDescription">
+          {{reward.merchantName}}
         </div>
-        <ng-template #showMerchantName>
-          <div class="description mat-caption" ngxEllipsis [lines]="2">
-            {{reward.merchantName}}
+        <ng-template #showDescription>
+          <div *ngIf="reward.description">
+            <div class="description mat-caption"> {{reward.description | slice: 0 : 16}}</div>
+            <div class="description mat-caption overflow-text" *ngIf="reward.description.length > 16">
+              {{ reward.description | slice : 16 }}</div>
           </div>
         </ng-template>
         <div *ngIf="reward.rewardPrice &&
