@@ -14,7 +14,8 @@ import {
   IInstantOutcomeTxnReq,
   IWInstantOutcomeEngagementAttributes,
   IWOutcomeDisplayProperties,
-  ICampaignAttributes
+  ICampaignAttributes,
+  IAssignedAttributes
 } from '@perx/whistler';
 
 interface CampaignProperties {
@@ -29,7 +30,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   private baseUrl: string;
 
   constructor(private http: HttpClient, private config: Config, private rewardsService: RewardsService) {
-    this.baseUrl = `${config.apiHost}/instant_outcome/transactions/`;
+    this.baseUrl = `${config.apiHost}/instant-outcome/transactions/`;
   }
 
   private getEngagementId(campaignId: number): Observable<CampaignProperties> {
@@ -61,7 +62,6 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       );
   }
 
-  // @ts-ignore
   public claim(campaignId: number): Observable<IReward[]> {
     const buildBody: Observable<IJsonApiPostItem<IInstantOutcomeTxnReq>> = this.getEngagementId(campaignId)
       .pipe(
@@ -95,4 +95,50 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       mergeMap((queries: Observable<IReward>[]): Observable<IReward[]> => combineLatest(...queries))
     );
   }
+
+  public prePlay(engagementId: number, campaignId?: number): Observable<IReward[]> {
+    const body = {
+      data: {
+        type: 'transactions',
+        attributes: {
+          engagement_id: engagementId,
+          campaign_entity_id: campaignId,
+          status: 'reserved'
+        }
+      }
+    };
+    return this.http.post<IJsonApiItemPayload<IInstantOutcomeTransactionAttributes>>(
+      `${this.config.apiHost}/instant-outcome/transactions`,
+      body,
+      { headers: { 'Content-Type': 'application/vnd.api+json' } }
+    ).pipe(
+      mergeMap(res => (
+        combineLatest(...res.data.attributes.results.attributes.results.map(
+          (outcome: IJsonApiItem<IAssignedAttributes>) => this.rewardsService.getReward(Number.parseInt(outcome.id, 10))
+        )).pipe(
+          map((vouchArr) => vouchArr.reduce((acc, currVouch) =>
+            ({ ...acc, vouchers: [...acc.vouchers, currVouch] }), { vouchers: []})
+          ))
+      ))
+    );
+  }
+  public prePlayConfirm(transactionId: number): Observable<void> {
+    const body = {
+      data: {
+        type: 'transactions',
+        id: transactionId,
+        attributes: {
+          status: 'confirmed'
+        }
+      }
+    };
+    return this.http.patch<IJsonApiItemPayload<IInstantOutcomeTransactionAttributes>>(
+      `${this.config.apiHost}/instant-outcome/transactions/${transactionId}`,
+      body,
+      { headers: { 'Content-Type': 'application/vnd.api+json' } }
+    ).pipe(
+      map(() => { return; })
+    );
+  }
+
 }

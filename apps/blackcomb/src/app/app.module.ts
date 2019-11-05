@@ -12,6 +12,7 @@ import {
   StampModule as PerxStampModule,
   VouchersModule,
   OutcomeModule,
+  GameModule,
   ProfileModule,
   RewardsModule
 } from '@perx/core';
@@ -68,6 +69,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     PerxStampModule,
     ProfileModule,
     UtilsModule,
+    GameModule,
     PerxCampaignModule,
     HttpClientModule,
     RewardsModule,

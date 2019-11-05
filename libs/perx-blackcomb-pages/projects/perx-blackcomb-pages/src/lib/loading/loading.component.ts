@@ -25,11 +25,11 @@ import {
   NotificationService,
   ICampaign,
   ICampaignService,
-  // CampaignType,
-  // IGameService,
+  CampaignType,
+  IGameService,
   // SurveyService,
   // LoyaltyService,
-  // InstantOutcomeService
+  InstantOutcomeService
 } from '@perx/core';
 
 import * as uuid from 'uuid';
@@ -101,26 +101,24 @@ export class LoadingComponent implements OnInit, OnDestroy {
   private prePlay(): void {
     const { type } = this.campaignData;
     // Pre-play logic placeholder
-    // let prePlay$;
-    // switch (type) {
-    //   case CampaignType.game:
-    //     prePlay$ = this.gameService.prePlay();
-    //     break;
-    //   case CampaignType.stamp:
-    //     prePlay$ = this.loyaltyService.prePlay();
-    //     break;
-    //   case CampaignType.survey:
-    //     prePlay$ = this.surveyService.prePlay();
-    //     break;
-    //   case CampaignType.give_reward:
-    //     prePlay$ = this.instantOutcomeService.prePlay();
-    //     break;
-    // }
-    // prePlay$.subscribe(
-    //   () => this.redirectToEngagementPage(type)
-    // );
-
-    this.redirectToEngagementPage(type);
+    let prePlay$;
+    switch (type) {
+      case CampaignType.game:
+        prePlay$ = this.gameService.prePlay(this.campaignData.engagementId, this.campaignId);
+        break;
+      // case CampaignType.stamp:
+      //   prePlay$ = this.loyaltyService.prePlay();
+      //   break;
+      // case CampaignType.survey:
+      //   prePlay$ = this.surveyService.prePlay();
+      //   break;
+      case CampaignType.give_reward:
+        prePlay$ = this.instantOutcomeService.prePlay(this.campaignData.engagementId, this.campaignId);
+        break;
+    }
+    prePlay$.subscribe(
+      () => this.redirectToEngagementPage(type)
+    );
 
   }
 
@@ -136,10 +134,10 @@ export class LoadingComponent implements OnInit, OnDestroy {
     private campaignSvc: ICampaignService,
     private config: Config,
     private notificationService: NotificationService,
-    // private gameService: IGameService,
+    private gameService: IGameService,
     // private surveyService: SurveyService,
     // private loyaltyService: LoyaltyService,
-    // private instantOutcomeService: InstantOutcomeService,
+    private instantOutcomeService: InstantOutcomeService,
     @Inject(PLATFORM_ID) private platformId: object,
   ) {
     this.preAuth = this.config ? this.config.preAuth : false;

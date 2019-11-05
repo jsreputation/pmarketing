@@ -216,4 +216,14 @@ export class V4GameService implements IGameService {
         map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game)))
       );
   }
+
+  // @ts-ignore
+  public prePlay(engagementId: number, campaignId?: number): Observable<IPlayOutcome> {
+    throw new Error('Not implemented.');
+  }
+  // @ts-ignore
+  public prePlayConfirm(transactionId: number): Observable<void> {
+    throw new Error('Not implemented.');
+  }
+
 }

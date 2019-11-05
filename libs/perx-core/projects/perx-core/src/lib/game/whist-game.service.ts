@@ -32,7 +32,7 @@ interface AttbsObjTrans {
   engagement_id: number;
   campaign_entity_id: number;
   user_id: number;
-  results: IJsonApiItem<ResultsObj>;
+  results?: IJsonApiItem<ResultsObj>;
 }
 
 interface ResultsObj {
@@ -121,7 +121,8 @@ export class WhistlerGameService implements IGameService {
         type: 'transactions',
         attributes: {
           engagement_id: gameId,
-          campaign_entity_id: campaignId
+          campaign_entity_id: campaignId,
+          status: 'confirmed'
         }
       }
     };
@@ -166,4 +167,50 @@ export class WhistlerGameService implements IGameService {
         map((game: IGame) => ([{ ...game, campaignId, displayProperties: { ...game.displayProperties, ...disProp } }]))
       );
   }
+
+  public prePlay(engagementId: number, campaignId?: number): Observable<IPlayOutcome> {
+    const body = {
+      data: {
+        type: 'transactions',
+        attributes: {
+          engagement_id: engagementId,
+          campaign_entity_id: campaignId,
+          status: 'reserved'
+        }
+      }
+    };
+    return this.http.post<IJsonApiItemPayload<AttbsObjTrans>>(
+      `${this.hostName}/game/transactions`,
+      body,
+      { headers: { 'Content-Type': 'application/vnd.api+json' } }
+    ).pipe(
+      mergeMap(res => (
+        combineLatest(...res.data.attributes.results.attributes.results.map(
+          (outcome: IJsonApiItem<IAssignedAttributes>) => this.whistVouchSvc.get(Number.parseInt(outcome.id, 10))
+        )).pipe(
+          map((vouchArr) => vouchArr.reduce((acc, currVouch) =>
+            ({ ...acc, vouchers: [...acc.vouchers, currVouch] }), { vouchers: [], rawPayload: res })
+          ))
+      ))
+    );
+  }
+  public prePlayConfirm(transactionId: number): Observable<void> {
+    const body = {
+      data: {
+        type: 'transactions',
+        id: transactionId,
+        attributes: {
+          status: 'confirmed'
+        }
+      }
+    };
+    return this.http.patch<IJsonApiItemPayload<AttbsObjTrans>>(
+      `${this.hostName}/game/transactions/${transactionId}`,
+      body,
+      { headers: { 'Content-Type': 'application/vnd.api+json' } }
+    ).pipe(
+      map(() => { return; })
+    );
+  }
+
 }
