@@ -97,12 +97,6 @@ export interface IDisplayProperties {
     imageURL?: string,
     buttonTxt?: string,
   };
-  congratulationsPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageURL?: string,
-    buttonTxt?: string,
-  };
   successPopUp?: {
     headLine?: string,
     subHeadLine?: string,
