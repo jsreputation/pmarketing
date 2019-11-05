@@ -41,11 +41,6 @@
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-import": "^2.18.2",
     "lerna": "^3.14.1"
-  },
-  "dependencies": {
-    "@types/cache-manager": "^2.10.0",
-    "cache-manager": "^2.10.0",
-    "jimp": "^0.8.5"
   }
 }
 
