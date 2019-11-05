@@ -43,4 +43,5 @@ export {
   WSurveyQuestionType
 } from './lib/survey/question';
 
-export { ICognitoUserAttributes, ICognitoUObject } from './lib/tenants/cog-user.model';
+/** Cognito */
+export { IWCognitoTenantAttributes } from './lib/cognito/tenants';

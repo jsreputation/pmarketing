@@ -91,7 +91,8 @@ export { ProfileService } from './lib/profile/profile.service';
 export {
   IProfile,
   ICardNumber,
-  ICustomProperties
+  ICustomProperties,
+  IProfileAttributes
 } from './lib/profile/profile.model';
 
 /**

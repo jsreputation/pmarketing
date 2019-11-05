@@ -1,18 +1,13 @@
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-import { IFormsService } from '@perx/core';
-import { ISurvey } from '@perx/core';
+import { IFormsService, AuthenticationService } from '@perx/core';
+import { ISurvey, IProfileAttributes } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 interface IAnswer {
   question_id: string;
   content: any;
-}
-
-enum TitleProperty {
-  Mr,
-  Mrs
 }
 
 @Component({
@@ -28,7 +23,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public totalLength: number;
   public currentPointer: number;
 
-  constructor(private formSvc: IFormsService, public snack: MatSnackBar, private router: Router) { }
+  constructor(private formSvc: IFormsService, private authSvc: AuthenticationService, public snack: MatSnackBar, private router: Router) { }
 
   public ngOnInit(): void {
     this.data$ = this.formSvc.getSignupForm();
@@ -58,12 +53,10 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public onSubmit(): void {
     const mapOfObjects = this.answers
       .map(answer => ({[answer.question_id]:
-        (Array.isArray(answer.content) &&
-        answer.question_id === 'title' ? TitleProperty[answer.content[0]] : answer.content)}));
+        (Array.isArray(answer.content)  ? answer.content[0] : answer.content)}));
 
-    const userObj = Object.assign.apply(null, mapOfObjects);
-
-    this.formSvc.postUser(userObj).subscribe(
+    const userObj: IProfileAttributes = Object.assign.apply(null, mapOfObjects);
+    this.authSvc.createUserAndAutoLogin(userObj.primary_identifier, userObj).subscribe(
       () => {
         this.snack.open('User successfully created.', 'x', {duration: 2000});
         this.router.navigate(['/wallet']);

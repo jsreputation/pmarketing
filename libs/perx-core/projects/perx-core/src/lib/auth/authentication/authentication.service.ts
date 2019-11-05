@@ -8,7 +8,7 @@ import {
   IChangePasswordData,
   IChangePhoneData
 } from './models/authentication.model';
-import { IProfile } from '../../profile/profile.model';
+import { IProfile, IProfileAttributes } from '../../profile/profile.model';
 import { AuthService } from 'ngx-auth';
 
 export abstract class AuthenticationService implements AuthService {
@@ -48,7 +48,7 @@ export abstract class AuthenticationService implements AuthService {
   public abstract login(user: string, pass: string, mechId?: string, campaignId?: string, scope?: string): Observable<any>;
 
   public abstract autoLogin(): Observable<any>;
-  public abstract createUserAndAutoLogin(pi: string): Observable<any>;
+  public abstract createUserAndAutoLogin(pi: string, userObj?: IProfileAttributes): Observable<any>;
   /**
    * This is important, for those public pages, API require app level access token in request header
    * Please add this call in every first page of the app to make sure those public page's API call works

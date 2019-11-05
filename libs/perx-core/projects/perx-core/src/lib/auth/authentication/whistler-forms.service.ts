@@ -4,9 +4,9 @@ import { Config } from '../../config/config';
 import { Observable } from 'rxjs';
 import { IFormsService } from './iforms.service';
 import { Injectable } from '@angular/core';
-import { pluck, map } from 'rxjs/operators';
-import { IJsonApiItem } from '../../jsonapi.payload';
-import { ICognitoUserAttributes, ICognitoUObject } from '@perx/whistler';
+import { map } from 'rxjs/operators';
+import { IJsonApiListPayload } from '../../jsonapi.payload';
+import { IWCognitoTenantAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -19,26 +19,11 @@ export class WhistlerFormsService implements IFormsService {
   }
 
   public getSignupForm(): Observable<ISurvey> {
-    return this.http.get(`${this.baseUrl}/cognito/tenants/`).pipe(
-      pluck('data'),
-      map(res => res[0]),
-      pluck('attributes', 'properties')
-    ) as Observable<ISurvey>;
-  }
-
-  public postUser(
-    userObj: ICognitoUObject
-  ): Observable<IJsonApiItem<ICognitoUserAttributes>> {
-    const body = {
-      data: {
-        type: 'users',
-        attributes: { ...userObj }
-      }
-    };
-    return this.http.post<IJsonApiItem<ICognitoUserAttributes>>(
-      `${this.baseUrl}/cognito/users`,
-      body,
-      { headers: { 'Content-Type': 'application/vnd.api+json' } }
-    );
+    return this.http.get<IJsonApiListPayload<IWCognitoTenantAttributes>>(`${this.baseUrl}/cognito/tenants/`)
+      .pipe(
+        map(res => res.data),
+        map(res => res[0]),
+        map(res => res.attributes.properties.signup)
+      ) as Observable<ISurvey>;
   }
 }

@@ -6,6 +6,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
 import { TokenStorage } from './token-storage.service';
+import { IProfileAttributes } from '../../profile/profile.model';
 import {
   IAppAccessTokenResponse,
   IMessageResponse,
@@ -16,6 +17,7 @@ import {
 } from './models/authentication.model';
 import { Config } from '../../config/config';
 import { IJsonApiListPayload } from '../../jsonapi.payload';
+import { IWhistlerProfileAttributes } from '@perx/whistler';
 
 interface ICognitoLogin {
   jwt: string;
@@ -24,6 +26,7 @@ interface ICognitoLogin {
 interface IUserJWTRequest {
   identifier: string;
   url: string;
+  profile?: IWhistlerProfileAttributes;
 }
 
 @Injectable({
@@ -104,8 +107,8 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     );
   }
 
-  public createUserAndAutoLogin(pi: string): Observable<any> {
-    return this.createUserWithPI(pi).pipe(
+  public createUserAndAutoLogin(pi: string, userObj: IProfileAttributes): Observable<any> {
+    return this.createUserWithPI(pi, userObj).pipe(
       tap(
         (res: IJsonApiListPayload<ICognitoLogin>) => {
           const userBearer = res.data[0].attributes.jwt;
@@ -129,11 +132,14 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
-  private createUserWithPI(pi: string): Observable<IJsonApiListPayload<ICognitoLogin>> {
+  private createUserWithPI(pi: string, userObj?: IWhistlerProfileAttributes): Observable<IJsonApiListPayload<ICognitoLogin>> {
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: pi
     };
+    if (userObj) {
+      userJWTRequest.profile = userObj;
+    }
 
     return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.createUsersEndPoint, userJWTRequest);
   }
