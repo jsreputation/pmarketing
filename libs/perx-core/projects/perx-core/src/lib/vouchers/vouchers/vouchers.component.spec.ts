@@ -11,6 +11,7 @@ import { IMerchantsService } from '../../merchants/imerchants.service';
 import { IVoucherService } from '../ivoucher.service';
 import { RewardsService } from '../../rewards/rewards.service';
 import { By } from '@angular/platform-browser';
+import { DatePipe } from '@angular/common';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
@@ -92,13 +93,10 @@ describe('VouchersComponent', () => {
         ConfigModule.forRoot({})
       ],
       providers: [
+        DatePipe,
         { provide: IVoucherService, useValue: voucherServiceStub },
-        {
-          provide: RewardsService, useValue: rewardsServiceStub
-        },
-        {
-          provide: IMerchantsService, useValue: merchantsServiceStub
-        }
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: IMerchantsService, useValue: merchantsServiceStub }
       ]
     })
       .compileComponents();

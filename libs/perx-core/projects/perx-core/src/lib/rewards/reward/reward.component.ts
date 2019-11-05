@@ -8,7 +8,6 @@ import { IPrice, IReward } from '../models/reward.model';
   styleUrls: ['./reward.component.scss']
 })
 export class RewardComponent implements OnInit {
-
   @Input('reward')
   public reward$: Observable<IReward>;
 
@@ -20,6 +19,12 @@ export class RewardComponent implements OnInit {
 
   @Input()
   public showExpiry: boolean = true;
+
+  @Input()
+  public descriptionLabel: string = 'Description';
+
+  @Input()
+  public tncLabel: string = 'Terms and Conditions';
 
   public ngOnInit(): void {
     if (!this.displayPriceFn) {

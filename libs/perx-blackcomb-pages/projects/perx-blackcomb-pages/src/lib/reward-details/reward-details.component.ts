@@ -14,6 +14,8 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public reward$: Observable<IReward>;
   public displayPriceFn: (price: IPrice) => string;
   private destroy$: Subject<any> = new Subject();
+  public descriptionLabel: string = 'Description';
+  public tncLabel: string = 'Terms and Conditions';
 
   constructor(
     private rewardsService: RewardsService,
@@ -23,7 +25,19 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.translate.get('POINTS')
-      .subscribe((points) => this.displayPriceFn = (price: IPrice) => `${price.price} ${points}`);
+      .subscribe((points: string) => {
+        this.displayPriceFn = (price: IPrice) => `${price.price} ${points}`;
+
+      });
+    this.translate.get('DESCRIPTION')
+      .subscribe((desc: string) => {
+        this.descriptionLabel = desc;
+      });
+    this.translate.get('Terms and Conditions')
+      .subscribe((tnc: string) => {
+        this.tncLabel = tnc;
+      });
+
     this.reward$ = this.activeRoute.params
       .pipe(
         filter((ps: Params) => ps.id),

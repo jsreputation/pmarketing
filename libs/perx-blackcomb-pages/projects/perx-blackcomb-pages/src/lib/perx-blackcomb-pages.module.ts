@@ -45,7 +45,6 @@ import {
   LoyaltySummaryComponent
 } from '@perx/core';
 
-import { HomeComponent } from './home/home.component';
 import { RewardComponent } from './reward/reward.component';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { LoadingComponent } from './loading/loading.component';
@@ -60,9 +59,10 @@ import { StampCardComponent } from './stamp-card/stamp-card.component';
 import { SurveyComponent } from './survey/survey.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { WalletComponent } from './wallet/wallet.component';
-import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LayoutComponent } from './layout/layout.component';
+import { HomeComponent } from './home/home.component';
+import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
 const comps: any[] = [
   AccountComponent,
   ContentComponent,
@@ -70,7 +70,6 @@ const comps: any[] = [
   VouchersComponent,
   RepeatTimesDirective,
   RewardsCollectionComponent,
-  HomeComponent,
   RewardComponent,
   PinRedemptionComponent,
   BcodeRedemptionComponent,
@@ -99,9 +98,10 @@ const comps: any[] = [
   WalletComponent,
   RewardsListTabbedComponent,
   LoyaltySummaryComponent,
-  GamesCollectionComponent,
   RewardsListComponent,
-  LayoutComponent
+  LayoutComponent,
+  HomeComponent,
+  GamesCollectionComponent
 ];
 
 @NgModule({

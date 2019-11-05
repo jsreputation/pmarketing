@@ -1,6 +1,12 @@
 <div class="prize-wrapper">
   <div class="voucher-container">
-    <perx-core-voucher [hideMerchantImg]="false" [hideMerchantName]="false" [hideActions]="true" [voucher]="voucher$">
+    <perx-core-voucher [hideMerchantImg]="false"
+      [hideMerchantName]="false"
+      [hideActions]="true"
+      [voucher]="voucher$"
+      [expiryFn]="expiryLabelFn"
+      [tncLabel]="tncLabel"
+      [descriptionLabel]="descriptionLabel">
     </perx-core-voucher>
   </div>
   <div class="actions-container mat-elevation-z2">
