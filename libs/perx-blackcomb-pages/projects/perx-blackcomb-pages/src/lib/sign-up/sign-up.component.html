@@ -5,8 +5,9 @@
       (totalLength)="setTotalLength($event)"
       (currentPointer)="setCurrentPointer($event)"
     ></perx-core-survey>
-    
+
     <button
+    *ngIf="surveyComplete"
     mat-flat-button
     color="primary"
     (click)="onSubmit()"

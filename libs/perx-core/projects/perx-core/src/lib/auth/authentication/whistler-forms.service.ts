@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { IFormsService } from './iforms.service';
 import { Injectable } from '@angular/core';
 import { pluck, map } from 'rxjs/operators';
-import * as uuid from 'uuid';
 import { IJsonApiItem } from '../../jsonapi.payload';
 import { ICognitoUserAttributes, ICognitoUObject } from '@perx/whistler';
 
@@ -33,7 +32,7 @@ export class WhistlerFormsService implements IFormsService {
     const body = {
       data: {
         type: 'users',
-        attributes: { ...userObj, primary_identifier: uuid.v4().toString() }
+        attributes: { ...userObj }
       }
     };
     return this.http.post<IJsonApiItem<ICognitoUserAttributes>>(
