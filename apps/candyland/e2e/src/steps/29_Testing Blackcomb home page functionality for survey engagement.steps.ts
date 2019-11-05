@@ -160,18 +160,19 @@ Then(/^14_I should be navigated to the reward description page$/, async () => {
   expect(await browser.getCurrentUrl()).to.contain('reward-detail');
 });
 
-// Ensuring functionality of feature rewards card
-/*Given('{int}_I am at the blackcomb home page', function(int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+// Ensuring functionality of rewards card
+Given(/^15_I am at the blackcomb home page$/, async () => {
+  await BlackcombHomeApp.navigateToBlackcombHomeApp();
+});
 
-When('{int}_I click on a reward under the all category', function(int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+When(/^15_I click on a reward under the all category$/, async () => {
+  // waiting for featured reward to load
+  await browser.wait(ec.presenceOf(element.all(by.css('mat-card')).get(3)), 6000);
+  // clicking on the featured reward
+  await element.all(by.css('mat-card')).get(3).click();
+  await browser.sleep(1000);
+});
 
-Then('{int}_I should be navigated to the reward description page', function(int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });*/
+Then(/^15_I should be navigated to the reward description page$/, async () => {
+  expect(await browser.getCurrentUrl()).to.contain('reward-detail');
+});
