@@ -61,11 +61,15 @@ export class StampCardComponent implements OnInit, OnDestroy {
         if (stampCard.displayProperties.errorPopUp) {
           this.errorPopUp.title = stampCard.displayProperties.errorPopUp.headLine || this.errorPopUp.title;
           this.errorPopUp.text = stampCard.displayProperties.errorPopUp.subHeadLine || this.errorPopUp.text;
+          this.errorPopUp.buttonTxt = stampCard.displayProperties.errorPopUp.buttonTxt || this.errorPopUp.buttonTxt;
+          this.errorPopUp.imageUrl = stampCard.displayProperties.errorPopUp.imageURL || this.errorPopUp.imageUrl;
         }
 
         if (stampCard.displayProperties.rewardSuccessPopUp) {
           this.rewardSuccessPopUp.title = stampCard.displayProperties.rewardSuccessPopUp.headLine || this.rewardSuccessPopUp.title;
           this.rewardSuccessPopUp.text = stampCard.displayProperties.rewardSuccessPopUp.subHeadLine || this.rewardSuccessPopUp.text;
+          this.rewardSuccessPopUp.buttonTxt = stampCard.displayProperties.rewardSuccessPopUp.buttonTxt || this.rewardSuccessPopUp.buttonTxt;
+          this.rewardSuccessPopUp.imageUrl = stampCard.displayProperties.rewardSuccessPopUp.imageURL || this.rewardSuccessPopUp.imageUrl;
         }
       },
       () => {

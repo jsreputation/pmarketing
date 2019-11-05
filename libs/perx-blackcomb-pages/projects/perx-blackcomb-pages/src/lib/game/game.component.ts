@@ -58,14 +58,16 @@ export class GameComponent implements OnInit, OnDestroy {
       tap((games: IGame[]) => !games || !games.length && this.router.navigate(['/wallet'])),
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => {
-        const { displayProperties } = game;
-        if (displayProperties && displayProperties.rewardSuccessPopUp) {
-          this.successPopUp.buttonTxt = displayProperties.rewardSuccessPopUp.buttonTxt || this.successPopUp.buttonTxt;
+        if (game) {
+          const { displayProperties } = game;
+          if (displayProperties && displayProperties.rewardSuccessPopUp) {
+            this.successPopUp.buttonTxt = displayProperties.rewardSuccessPopUp.buttonTxt || this.successPopUp.buttonTxt;
+          }
+          if (displayProperties && displayProperties.errorPopUp) {
+            this.errorPopUp.buttonTxt = displayProperties.errorPopUp.buttonTxt || this.errorPopUp.buttonTxt;
+          }
+          this.engagementId = game ? game.id : null;
         }
-        if (displayProperties && displayProperties.errorPopUp) {
-          this.errorPopUp.buttonTxt = displayProperties.errorPopUp.buttonTxt || this.errorPopUp.buttonTxt;
-        }
-        this.engagementId = game ? game.id : null;
       })
     );
   }
