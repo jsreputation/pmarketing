@@ -48,7 +48,8 @@ export class MapComponent implements OnInit, OnChanges {
       displayMode: 'markers',
     };
 
-    const chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+    const div: HTMLDivElement = document.getElementById('chart_div') as HTMLDivElement;
+    const chart = new google.visualization.GeoChart(div);
     if (this.dataTable && this.dataTable.length > 1) {
       const data = google.visualization.arrayToDataTable(this.dataTable);
       chart.draw(data, options);
