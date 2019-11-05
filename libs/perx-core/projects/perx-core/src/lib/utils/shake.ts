@@ -70,7 +70,11 @@ export class Shake implements EventListenerObject {
 
   // calculates if shake did occur
   protected devicemotion(e: DeviceMotionEvent): void {
-    const current: DeviceAcceleration = e.accelerationIncludingGravity;
+    const current: DeviceAcceleration | null = e.accelerationIncludingGravity;
+
+    if (current === null) {
+      return;
+    }
 
     if ((this.lastX === null) || (this.lastY === null) || (this.lastZ === null)) {
       this.lastX = current.x;
