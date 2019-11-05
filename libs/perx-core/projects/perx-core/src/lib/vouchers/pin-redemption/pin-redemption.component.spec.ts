@@ -3,15 +3,21 @@ import { PinRedemptionComponent } from './pin-redemption.component';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { PinService } from '../pin.service';
 import { By } from '@angular/platform-browser';
-import { SimpleChange } from '@angular/core';
+import { SimpleChange, Type } from '@angular/core';
 import { IVoucherService } from '../ivoucher.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
+import { IVoucher, VoucherState } from '../models/voucher.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 describe('PinRedemptionComponent', () => {
   let component: PinRedemptionComponent;
   let fixture: ComponentFixture<PinRedemptionComponent>;
-  const pinServiceMock = jasmine.createSpyObj('PinService', ['getPin']);
-  const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', ['']);
+  const pinServiceMock = {
+    getPin: () => of()
+  };
+  const vouchersServiceMock = {
+    redeemVoucher: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -41,6 +47,68 @@ describe('PinRedemptionComponent', () => {
   it('should always has number type of length', () => {
     component.ngOnInit();
     expect(typeof component.length).toBe('number');
+  });
+
+  it('ngOnChanges should go to else if block and call getPin', () => {
+    const voucher: IVoucher = {
+      id: 1,
+      reward: null,
+      state: VoucherState.issued,
+      expiry: null,
+    };
+    component.voucher = voucher;
+    const pinService: PinService = fixture.debugElement.injector.get<PinService>(PinService as Type<PinService>);
+    const spy = spyOn(pinService, 'getPin').and.returnValue( of('1234') );
+    component.ngOnChanges({
+      voucher: new SimpleChange(null, null, true)
+    });
+    expect(spy).toHaveBeenCalled();
+    expect(component.pinCode).toBe('1234');
+  });
+
+  describe('redeemVoucher', () => {
+    it('should call redeemVoucher and emit full', fakeAsync(() => {
+      const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
+      const spy = spyOn(voucherService, 'redeemVoucher').and.returnValue( of('Redeem success') );
+      const fullEmitSpy = spyOn(component.full, 'emit');
+      component.redeemVoucher();
+      tick();
+      expect(spy).toHaveBeenCalled();
+      expect(fullEmitSpy).toHaveBeenCalled();
+    }));
+
+    it('should throw error', fakeAsync(() => {
+      const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
+      const spy = spyOn(voucherService, 'redeemVoucher').and.returnValue(throwError(new HttpErrorResponse({ status: 401 })));
+      const fullEmitSpy = spyOn(component.hasErrorEmit, 'emit');
+      component.redeemVoucher();
+      tick();
+      expect(spy).toHaveBeenCalled();
+      expect(fullEmitSpy).toHaveBeenCalled();
+    }));
+  });
+
+  describe('validateCode', () => {
+    it('should return false', () => {
+      const isValid = component.validateCode('1234');
+      expect(isValid).toBe(false);
+      expect(component.hasError).toBe('error');
+    });
+
+    it('should return true', () => {
+      component.pinCode = '1234';
+      const isValid = component.validateCode('1234');
+      expect(isValid).toBe(true);
+      expect(component.hasError).toBe('');
+    });
+  });
+
+  it('should reset all', () => {
+    component.resetAll();
+    expect(component.hasError).toBe('');
+    component.controls.forEach(control => {
+      expect(control.value).toBe('');
+    });
   });
 
   it('should update the value once the input value changes detect', () => {
@@ -77,7 +145,8 @@ describe('PinRedemptionComponent', () => {
   }));
 
   it('should get new pin once voucherId from parent changed', () => {
-    const spy = pinServiceMock.getPin.and.returnValue( of('1234') );
+    const pinService: PinService = fixture.debugElement.injector.get<PinService>(PinService as Type<PinService>);
+    const spy = spyOn(pinService, 'getPin').and.returnValue( of('1234') );
     component.ngOnChanges({
       voucherId: new SimpleChange(null, 1, true)
     });
