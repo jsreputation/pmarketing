@@ -28,7 +28,6 @@ export class VoucherComponent implements OnInit {
   public ngOnInit(): void {
     this.firstTime = this.route.snapshot.paramMap.get('win') === 'true';
     this.id = this.route.snapshot.params.id;
-    this.expiryFn = () => 'd MMMM y';
     this.expiryFn = (v: Voucher) => v.expiry ? `Expiry: ${this.datePipe.transform(v.expiry, 'mediumDate')}` : '';
 
     this.configService.readAppConfig().subscribe(
