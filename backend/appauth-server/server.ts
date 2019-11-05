@@ -49,7 +49,6 @@ app.get(`${BASE_HREF}manifest.webmanifest`, manifest(apiConfig));
 
 app.get(`${BASE_HREF}lang`, language());
 
-
 if (process.env.PRODUCTION) {
   const appPath = join(EXPRESS_DIST_FOLDER, '../../perx-microsite');
   console.log('production mode ON');
