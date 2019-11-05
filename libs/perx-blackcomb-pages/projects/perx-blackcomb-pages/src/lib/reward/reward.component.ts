@@ -85,7 +85,7 @@ export class RewardComponent implements OnInit, OnDestroy {
             }
           }),
           catchError(() => {
-            this.dialog.open(PopupComponent, { data: this.dataPopEmpty });
+            this.dialog.open(PopupComponent, { data: this.noRewardsPopUp });
             /* todo display popup and redirect to wallet*/
             this.router.navigate(['/wallet']);
             // next line is actually useless as we will redirected.
