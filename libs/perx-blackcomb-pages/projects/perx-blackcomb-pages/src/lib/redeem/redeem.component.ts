@@ -26,13 +26,17 @@ export class RedeemComponent implements OnInit, OnDestroy {
   public rt: typeof RedemptionType = RedemptionType;
   public headLine: string;
   public subHeadLine: string;
+  public codeInstructionsText: string = `Please input this code when redeeming your reward at the Merchant`;
   public rewardSuccessPopUp: IPopupConfig = {
     title: 'Successfully Redeemed!',
     text: '',
+    buttonTxt: 'Back To Wallet',
+    imageUrl: '',
   };
-  public codeInstructionsText: string = `Please input this code when redeeming your reward at the Merchant`;
   public errorPopUp: IPopupConfig = {
     title: 'Error occur, please try again later',
+    text: '',
+    buttonTxt: 'Back To Wallet',
     imageUrl: '',
   };
 

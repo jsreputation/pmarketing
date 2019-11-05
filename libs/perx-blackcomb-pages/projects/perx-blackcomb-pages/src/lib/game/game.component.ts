@@ -26,7 +26,10 @@ export class GameComponent implements OnInit, OnDestroy {
   };
 
   public errorPopUp: IPopupConfig = {
+    title: 'Thanks for playing',
+    text: 'Unfortunately, you did not win anything this time',
     buttonTxt: 'Back to Wallet',
+    imageUrl: '',
   };
 
   private initTranslate(): void {
@@ -96,24 +99,12 @@ export class GameComponent implements OnInit, OnDestroy {
             this.successPopUp.text = `You earned ${outcome.vouchers.length} rewards`;
             this.dialog.open(PopupComponent, { data: this.successPopUp });
           } else {
-            this.dialog.open(PopupComponent, {
-              data: {
-                title: 'Thanks for playing',
-                text: 'Unfortunately, you did not win anything this time',
-                buttonTxt: 'Go to Wallet',
-              }
-            });
+            this.dialog.open(PopupComponent, {data: this.errorPopUp});
           }
         },
         () => {
           this.router.navigate(['/wallet']);
-          this.dialog.open(PopupComponent, {
-            data: {
-              title: 'Thanks for playing',
-              text: 'Unfortunately, you did not win anything this time',
-              buttonTxt: 'Go to Wallet',
-            }
-          });
+          this.dialog.open(PopupComponent, {data: this.errorPopUp});
         }
       );
   }

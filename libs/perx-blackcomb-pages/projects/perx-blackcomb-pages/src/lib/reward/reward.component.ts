@@ -23,9 +23,13 @@ export class RewardComponent implements OnInit, OnDestroy {
     title: 'We’re sorry, all rewards have been claimed',
     text: 'Look out for more rewards coming your way, soon!',
     buttonTxt: 'Back to Wallet',
+    imageUrl: '',
   };
   public rewardSuccessPopUp: IPopupConfig = {
+    title: 'Successfully !',
+    text: '',
     buttonTxt: 'View Reward',
+    imageUrl: '',
   };
 
   private destroy$: Subject<any> = new Subject();
@@ -98,14 +102,5 @@ export class RewardComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  public rewardClickedHandler(reward: IReward): void {
-    const data = {
-      title: 'Clicked!',
-      text: 'ID: ' + reward.id + '\n' +
-        'Reward Name: ' + reward.name,
-    };
-    this.dialog.open(PopupComponent, { data });
   }
 }
