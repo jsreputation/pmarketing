@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { IVoucherService } from '../ivoucher.service';
 import { IVoucher, VoucherState } from '../models/voucher.model';
 import { Type, SimpleChange } from '@angular/core';
+import { RedemptionType } from '../../rewards/models/reward.model';
 
 describe('BcodeRedemptionComponent', () => {
   let component: BcodeRedemptionComponent;
@@ -31,9 +32,8 @@ describe('BcodeRedemptionComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: null,
+      redemptionType: RedemptionType.none,
       categoryTags: [],
-      inventory: null,
     },
     state: VoucherState.issued,
     code: 'GFY2019',
@@ -81,6 +81,8 @@ describe('BcodeRedemptionComponent', () => {
     fixture.detectChanges();
     tick();
     expect(voucherServiceSpy).toHaveBeenCalled();
+    expect(mockVoucher.reward).not.toBeNull();
+    // @ts-ignore
     expect(fixture.nativeElement.querySelector('h1').innerText).toEqual(mockVoucher.reward.name);
     expect(fixture.nativeElement.querySelector('.bcode').innerText).toEqual(mockVoucher.code);
     expect(fixture.nativeElement.querySelector('.reward-image').src).toEqual(mockVoucher.reward.rewardBanner);

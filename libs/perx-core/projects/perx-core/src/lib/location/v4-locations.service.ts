@@ -45,7 +45,9 @@ export class V4LocationsService extends LocationsService {
           filteredMerchants = merchants.filter(merchant => {
             let found = false;
             if (merchant.tags) {
-              found = tags.some(tag => merchant.tags.map(t => t.name.toLowerCase()).includes(tag.toLowerCase()));
+              const merchantTagNames: string[] = merchant.tags.map(t => t.name.toLowerCase());
+              // @ts-ignore
+              found = tags.some(tag => merchantTagNames.includes(tag.toLowerCase()));
             }
             return found;
           });
@@ -65,7 +67,7 @@ export class V4LocationsService extends LocationsService {
     if (page === undefined) {
       page = 1;
     }
-    if (tags) {
+    if (tags === undefined) {
       tags = [];
     }
     return this.merchantsService.getMerchants(page).pipe(
@@ -74,8 +76,10 @@ export class V4LocationsService extends LocationsService {
         if (tags && tags.length > 0) {
           filteredMerchants = merchants.filter(merchant => {
             let found = false;
-            if (merchant.tags) {
-              found = tags.some(tag => merchant.tags.map(t => t.name.toLowerCase()).includes(tag.toLowerCase()));
+            if (merchant.tags !== undefined) {
+              const tagNames: string[] = merchant.tags.map(t => t.name.toLowerCase());
+              // @ts-ignore
+              found = tags.some(tag => tagNames.includes(tag.toLowerCase()));
             }
             return found;
           });
