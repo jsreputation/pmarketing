@@ -1,7 +1,8 @@
 const fs = require('fs');
-
+const async = require('async');
 // Configure Angular `environment.ts` file path
-const targetPath = `./src/environments/environment.ts`;
+const angularTargetPath = `./src/environments/environment.ts`;
+const appConfigPath = `./src/assets/config/app-config.json`;
 
 // Load node modules
 const colors = require('colors');
@@ -19,13 +20,27 @@ const envConfigFile = `export const environment = {
 };
 `;
 
-console.log(colors.magenta('The file `environment.ts` will be written with the following content: \n'));
-console.log(colors.grey(envConfigFile));
+const appConfigFile = `{
+  "apiHost": "${process.env.APIHOST ? process.env.APIHOST : 'https://api.getperx.io'}",
+  "production": ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
+  "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : false},
+  "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
+  "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
+  "sourceType": "${process.env.SOURCE_TYPE ? process.env.SOURCE_TYPE : ''}"
+}
+`;
 
-fs.writeFile(targetPath, envConfigFile, (err: any) => {
-  if (err) {
-    throw console.error(err);
-  } else {
-    console.log(colors.magenta(`Angular environment.ts file generated correctly at ${targetPath} \n`));
-  }
-});
+async.each([[angularTargetPath, envConfigFile], [appConfigPath, appConfigFile]],
+  (item: [[string, string], [string, string]], callback: any) => {
+
+    console.log(colors.magenta(`The file '${item[0]}' will be written with the following content: \n`));
+    console.log(colors.grey(item[1]));
+
+    fs.writeFile(item[0], item[1], (err: any) => {
+      if (err) {
+        throw console.error(err);
+      }
+      console.log(colors.magenta(`file generated correctly at ${item[0]} \n`));
+      callback();
+    });
+  });
