@@ -8,7 +8,8 @@ import {
   VoucherDetailComponent,
   RewardDetailsComponent,
   ContentComponent,
-  LayoutComponent
+  LayoutComponent,
+  PIComponent
 } from '@perx/blackcomb-pages';
 import { HomeModule } from '../home/home.module';
 
@@ -25,7 +26,8 @@ import { TranslateModule } from '@ngx-translate/core';
     RedeemComponent,
     VoucherDetailComponent,
     RewardDetailsComponent,
-    ContentComponent
+    ContentComponent,
+    PIComponent
   ],
   imports: [
     WalletModule,
