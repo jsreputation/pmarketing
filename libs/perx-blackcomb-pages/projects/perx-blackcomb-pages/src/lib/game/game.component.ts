@@ -25,8 +25,13 @@ export class GameComponent implements OnInit, OnDestroy {
     imageUrl: 'assets/congrats_image.png',
   };
 
+  public errorPopUp: IPopupConfig = {
+    buttonTxt: 'Back to Wallet',
+  };
+
   private initTranslate(): void {
     this.translate.get('VIEW_REWARD').subscribe((text) => this.successPopUp.buttonTxt = text);
+    this.translate.get('BACK_TO_WALLET').subscribe((text) => this.errorPopUp.buttonTxt = text);
   }
 
   constructor(
@@ -53,7 +58,9 @@ export class GameComponent implements OnInit, OnDestroy {
         const { displayProperties } = game;
         if (displayProperties && displayProperties.rewardSuccessPopUp) {
           this.successPopUp.buttonTxt = displayProperties.rewardSuccessPopUp.buttonTxt || this.successPopUp.buttonTxt;
-          this.successPopUp.imageUrl = displayProperties.rewardSuccessPopUp.imageURL || this.successPopUp.imageUrl;
+        }
+        if (displayProperties && displayProperties.errorPopUp) {
+          this.errorPopUp.buttonTxt = displayProperties.errorPopUp.buttonTxt || this.errorPopUp.buttonTxt;
         }
         this.engagementId = game ? game.id : null;
       })
