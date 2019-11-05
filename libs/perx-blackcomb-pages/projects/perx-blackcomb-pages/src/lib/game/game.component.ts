@@ -46,10 +46,10 @@ export class GameComponent implements OnInit, OnDestroy {
         if (
           game &&
           game.displayProperties &&
-          game.displayProperties.successPopUp &&
-          game.displayProperties.successPopUp.imageURL
+          game.displayProperties.rewardSuccessPopUp &&
+          game.displayProperties.rewardSuccessPopUp.imageURL
         ) {
-          this.successPopUp.imageUrl = game.displayProperties.successPopUp.imageURL;
+          this.successPopUp.imageUrl = game.displayProperties.rewardSuccessPopUp.imageURL;
         }
         this.engagementId = game ? game.id : null;
       })

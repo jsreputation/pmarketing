@@ -87,18 +87,3 @@ export interface IStampCard {
   };
   stamps?: IStamp[];
 }
-
-export interface IDisplayProperties {
-  noRewardsPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageURL?: string,
-    buttonTxt?: string,
-  };
-  successPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageURL?: string,
-    buttonTxt?: string,
-  };
-}

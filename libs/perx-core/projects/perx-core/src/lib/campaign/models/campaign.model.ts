@@ -1,4 +1,5 @@
 import { IReward } from '../../rewards/models/reward.model';
+import { IDisplayProperties } from '../../perx-core.models';
 
 export enum CampaignType {
   give_reward = 'give_reward', // instant_outcome
@@ -30,13 +31,4 @@ export interface ICampaign {
 export enum CommChannel {
   sms = 'sms',
   email = 'email'
-}
-
-export interface IDisplayProperties {
-  noRewardsPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageURL?: string,
-    buttonTxt?: string,
-  };
 }

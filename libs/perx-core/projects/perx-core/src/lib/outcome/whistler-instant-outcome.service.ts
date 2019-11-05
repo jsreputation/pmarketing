@@ -1,6 +1,6 @@
 import { IJsonApiPostItem } from './../jsonapi.payload';
 import { InstantOutcomeService } from './instant-outcome.service';
-import { IOutcome, IDisplayProperties } from './models/outcome.model';
+import { IOutcome } from './models/outcome.model';
 import { Observable, combineLatest } from 'rxjs';
 import { map, switchMap, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -16,6 +16,8 @@ import {
   IWOutcomeDisplayProperties,
   ICampaignAttributes
 } from '@perx/whistler';
+
+import { IDisplayProperties } from '../perx-core.models';
 
 interface CampaignProperties {
   engagementId: number;

@@ -4,7 +4,6 @@ import {
   IStampCard,
   IStamp,
   StampCardState,
-  IDisplayProperties
 } from './models/stamp.model';
 import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { Observable, of } from 'rxjs';
@@ -12,6 +11,8 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { StampService } from './stamp.service';
 import { Injectable } from '@angular/core';
+
+import { IDisplayProperties } from '../perx-core.models';
 
 interface AttbsObjEntity {
   urn: string;

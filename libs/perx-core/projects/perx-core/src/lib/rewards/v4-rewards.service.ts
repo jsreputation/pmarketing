@@ -19,10 +19,10 @@ import {
   IPrice,
   ICategoryTags,
   RedemptionType,
-  IDisplayProperties,
 } from './models/reward.model';
 
 import { Config } from '../config/config';
+import { IDisplayProperties } from '../perx-core.models';
 
 export interface IV4Tag {
   id: number;
