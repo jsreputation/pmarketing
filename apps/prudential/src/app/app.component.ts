@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, Location } from '@angular/common';
-import { environment } from '../environments/environment';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, IConfig, ConfigService } from '@perx/core';
 import { Router } from '@angular/router';
 import { VoucherComponent } from './vouchers/voucher/voucher.component';
 import { TncComponent } from './tnc/tnc.component';
@@ -23,11 +22,16 @@ export class AppComponent implements OnInit {
     private location: Location,
     private router: Router,
     private authService: AuthenticationService,
-    @Inject(PLATFORM_ID) private platformId: object) {
-    this.preAuth = environment.preAuth;
-  }
+    private configService: ConfigService,
+    @Inject(PLATFORM_ID) private platformId: object) {}
 
   public ngOnInit(): void {
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig) => {
+        this.preAuth = config.preAuth as boolean;
+      }
+    );
+
     if (this.preAuth && isPlatformBrowser(this.platformId) && !((window as any).primaryIdentifier)) {
       const param = location.search;
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');

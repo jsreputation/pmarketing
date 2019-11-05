@@ -4,7 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DebugElement, Type } from '@angular/core';
-import { AuthenticationModule, AuthenticationService, NotificationService } from '@perx/core';
+import { AuthenticationModule, AuthenticationService, NotificationService, ConfigService } from '@perx/core';
 
 import { LoginComponent } from './login.component';
 
@@ -21,16 +21,21 @@ describe('LoginComponent', () => {
     getInterruptedUrl: () => null,
     login: of({ bearer_token: 'SWWERW' })
   };
+  const configServiceStub = {
+    readAppConfig: () => of()
+  };
   let debugElement: DebugElement;
   let authService: AuthenticationService;
   let router: Router;
   let authSpy;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
-        { provide: Router, useValue: routerSub }
+        { provide: Router, useValue: routerSub },
+        { provide: ConfigService, useValue: configServiceStub }
       ],
       imports: [
         MatCardModule,
