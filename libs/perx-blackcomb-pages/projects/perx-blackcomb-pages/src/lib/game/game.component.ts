@@ -17,7 +17,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private engagementId: number | null = null;
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
-  public congratulationsPopUp: IPopupConfig = {
+  public successPopUp: IPopupConfig = {
     title: 'Congratulations!',
     text: '',
     buttonTxt: 'View Reward',
@@ -46,10 +46,10 @@ export class GameComponent implements OnInit, OnDestroy {
         if (
           game &&
           game.displayProperties &&
-          game.displayProperties.congratulationsPopUp &&
-          game.displayProperties.congratulationsPopUp.imageURL
+          game.displayProperties.successPopUp &&
+          game.displayProperties.successPopUp.imageURL
         ) {
-          this.congratulationsPopUp.imageUrl = game.displayProperties.congratulationsPopUp.imageURL;
+          this.successPopUp.imageUrl = game.displayProperties.successPopUp.imageURL;
         }
         this.engagementId = game ? game.id : null;
       })
@@ -82,8 +82,8 @@ export class GameComponent implements OnInit, OnDestroy {
         ([outcome, _]: [IPlayOutcome, any]) => {
           this.router.navigate(['/wallet']);
           if (outcome.vouchers.length > 0) {
-            this.congratulationsPopUp.text = `You earned ${outcome.vouchers.length} rewards`;
-            this.dialog.open(PopupComponent, { data: this.congratulationsPopUp });
+            this.successPopUp.text = `You earned ${outcome.vouchers.length} rewards`;
+            this.dialog.open(PopupComponent, { data: this.successPopUp });
           } else {
             this.dialog.open(PopupComponent, {
               data: {

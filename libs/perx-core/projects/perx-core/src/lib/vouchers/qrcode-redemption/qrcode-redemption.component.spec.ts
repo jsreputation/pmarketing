@@ -7,6 +7,7 @@ import { IVoucherService } from '../ivoucher.service';
 import { of } from 'rxjs';
 import { IVoucher, VoucherState } from '../models/voucher.model';
 import { Type, SimpleChange } from '@angular/core';
+import { RedemptionType } from '../../rewards/models/reward.model';
 
 describe('QrcodeRedemptionComponent', () => {
   let component: QrcodeRedemptionComponent;
@@ -30,9 +31,8 @@ describe('QrcodeRedemptionComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: null,
+      redemptionType: RedemptionType.none,
       categoryTags: [],
-      inventory: null,
     },
     state: VoucherState.issued,
     code: 'GFY2019',
