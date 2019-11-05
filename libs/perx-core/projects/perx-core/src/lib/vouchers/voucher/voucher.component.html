@@ -14,26 +14,26 @@
         {{voucher.reward.merchantName}}
       </div>
       <div class="voucher-expiry" *ngIf="!hideExpiry && voucher.expiry!==null">
-        Expires on {{voucher.expiry | date: expiryFn().toString()}}
+        {{expiryFn(voucher)}}
       </div>
       <div [ngClass]="'ribbon ' + voucher.state" *ngIf="mapping && showRedeemedIcon && mapping[voucher.state]">
         {{mapping[voucher.state]}}</div>
-<!--      <div *ngFor="let description of voucher.description">-->
-<!--        <div class="section-heading">-->
-<!--          {{description.title}}-->
-<!--        </div>-->
-<!--        <div [ngClass]="description.title == 'Description' ? 'section-content description' : ' section-content'">-->
-<!--          <div [innerHtml]="description.content"></div>-->
-<!--        </div>-->
-<!--      </div>-->
+      <!--      <div *ngFor="let description of voucher.description">-->
+      <!--        <div class="section-heading">-->
+      <!--          {{description.title}}-->
+      <!--        </div>-->
+      <!--        <div [ngClass]="description.title == 'Description' ? 'section-content description' : ' section-content'">-->
+      <!--          <div [innerHtml]="description.content"></div>-->
+      <!--        </div>-->
+      <!--      </div>-->
       <div class="section-heading" *ngIf="voucher.reward.description">
-        Description
+        {{descriptionLabel}}
       </div>
       <div class="section-content" *ngIf="voucher.reward.description">
         <div id="rewardDescription" [innerHtml]="voucher.reward.description"></div>
       </div>
       <div class="section-heading" *ngIf="voucher.reward.termsAndConditions">
-        Terms and Conditions
+        {{tncLabel}}
       </div>
       <div class="section-content" *ngIf="voucher.reward.termsAndConditions">
         <div [innerHtml]="voucher.reward.termsAndConditions"></div>

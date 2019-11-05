@@ -19,6 +19,7 @@ import {
   IPrice,
   ICategoryTags,
   RedemptionType,
+  IDisplayProperties,
 } from './models/reward.model';
 
 import { Config } from '../config/config';
@@ -73,6 +74,7 @@ export interface IV4Reward {
   inventory?: IV4Inventory;
   selling_from?: string;
   merchant_logo_url?: string;
+  display_properties?: IDisplayProperties;
 }
 
 interface IV4Price {
@@ -177,6 +179,7 @@ export class V4RewardsService extends RewardsService {
       howToRedeem: reward.how_to_redeem,
       categoryTags: reward.category_tags,
       inventory,
+      displayProperties: reward.display_properties,
     };
   }
 

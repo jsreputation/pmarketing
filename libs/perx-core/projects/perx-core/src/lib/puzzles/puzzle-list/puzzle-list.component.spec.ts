@@ -4,6 +4,7 @@ import { PuzzleListComponent } from './puzzle-list.component';
 import { MatCardModule, MatRippleModule, MatIconModule } from '@angular/material';
 import { EnvConfig } from '../../shared/env-config';
 import { StampService } from '../../stamp/stamp.service';
+import { UtilsModule } from '../../utils/utils.module';
 
 describe('PuzzleListComponent', () => {
   let component: PuzzleListComponent;
@@ -17,6 +18,7 @@ describe('PuzzleListComponent', () => {
         MatCardModule,
         MatRippleModule,
         MatIconModule,
+        UtilsModule
       ],
       providers: [
         EnvConfig,

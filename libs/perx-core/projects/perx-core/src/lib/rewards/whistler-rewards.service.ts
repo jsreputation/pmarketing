@@ -33,6 +33,10 @@ export class WhistlerRewardsService implements RewardsService {
     if (rt === 'QR Code') {
       return RedemptionType.qr;
     }
+    if (rt === 'Merchant PIN') {
+      return RedemptionType.pin;
+    }
+
     return RedemptionType.none;
   }
 
@@ -61,7 +65,13 @@ export class WhistlerRewardsService implements RewardsService {
         }
       ],
       redemptionType: WhistlerRewardsService.WRedemptionToRT(r.attributes.redemption_type),
-      rawPayload: metaData
+      rawPayload: metaData,
+      displayProperties: {
+        merchantPinText: r.attributes.display_properties.merchantPinText,
+        rewardSuccessPopUp: r.attributes.display_properties.rewardSuccessPopUp,
+        codeInstructionsText: r.attributes.display_properties.codeInstructionsText,
+        errorPopUp: r.attributes.display_properties.errorPopUp,
+      }
     };
   }
 
@@ -77,7 +87,7 @@ export class WhistlerRewardsService implements RewardsService {
         current = current.concat(res);
         subject.next(current);
         // if finished close the stream
-        if (meta.currentPage >= meta.totalPages) {
+        if (!meta.currentPage || !meta.totalPages || meta.currentPage >= meta.totalPages) {
           subject.complete();
         } else {
           // otherwise get next page
