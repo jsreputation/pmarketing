@@ -47,6 +47,12 @@ export interface IDisplayProperties {
     imageUrl?: string,
     buttonTxt?: string,
   };
+  successPopUp?: {
+    headLine?: string,
+    subHeadLine?: string,
+    imageURL?: string,
+    buttonTxt?: string,
+  };
 }
 
 export enum SurveyQuestionType {

@@ -77,18 +77,18 @@ export class GameComponent implements OnInit {
       .subscribe(
         cards => {
           const lockedCards = cards.filter(card => {
-            this.keys += card.stamps.filter(st => st.state === StampState.issued).length;
-            const totalSlots = card.displayProperties.totalSlots || 0;
-            // return card.state === StampCardState.active &&
-            return card.stamps &&
-              card.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots;
+            // this.keys += card.stamps.filter(st => st.state === StampState.issued).length;
+            // const totalSlots = card.displayProperties.totalSlots || 0;
+            return card.state === StampCardState.inactive;
+            // return card.stamps &&
+            //   card.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots;
           });
 
           const unlockedCards = cards.filter(card => {
             const totalSlots = card.displayProperties.totalSlots || 0;
             return card.state === StampCardState.active &&
               card.stamps &&
-              card.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots;
+              card.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots;
           });
 
           const completedCards = cards.filter(card => {
@@ -99,9 +99,9 @@ export class GameComponent implements OnInit {
           });
 
           this.cards = [
-            ...completedCards,
+            ...unlockedCards,
             ...lockedCards,
-            ...unlockedCards
+            ...completedCards
           ];
 
           if (lockedCards.length === 0) {
@@ -186,7 +186,12 @@ export class GameComponent implements OnInit {
   }
 
   public isCurrent(inCard: IStampCard): boolean {
-    return this.cards.find(card => card.state === 'active').id === inCard.id;
+    // handle edge case where user has only completed cards
+    const activeCard = this.cards.find(card => card.state === 'active');
+    if (!activeCard) {
+      return false;
+    }
+    return activeCard.id === inCard.id;
   }
 
   private checkKeys(cardSelected?: IStampCard): void {
