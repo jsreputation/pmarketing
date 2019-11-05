@@ -39,5 +39,7 @@
     "ENTER_PASSWORD": "Entrez votre mot de passe",
     "INVALID_CREDENTIALS": "Données invalides",
     "VOUCHER_EXPIRY": "Expire le {{date}}",
-    "DESCRIPTION": "Description"
+    "DESCRIPTION": "Description",
+    "STAMP_SUCCESS": "",
+    "STAMP_ERROR": ""
 }
