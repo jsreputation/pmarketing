@@ -29,7 +29,7 @@ interface IMetabaseResponse {
   providedIn: 'root'
 })
 export class DataService {
-  public tokenBasePath: string = null; // 'https://api-dev1.uat.whistler.perxtech.io';
+  public tokenBasePath: string | null = null; // 'https://api-dev1.uat.whistler.perxtech.io';
   constructor(
     private datePipe: DatePipe,
     private http: HttpClient, config?: EnvConfig
