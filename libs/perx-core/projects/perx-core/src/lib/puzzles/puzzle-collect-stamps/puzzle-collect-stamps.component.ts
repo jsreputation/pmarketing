@@ -61,8 +61,8 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   @Output()
   private availableStampClicked: EventEmitter<IStamp> = new EventEmitter<IStamp>();
 
-  public currentActiveOrientation: number[] = null;
-  public stampCardImage: string = null;
+  public currentActiveOrientation: number[] | null = null;
+  public stampCardImage: string | null = null;
   public availableStampCount: number = 0;
 
   public ngOnInit(): void {
@@ -75,7 +75,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.nbSlots) {
+    if (changes.nbSlots && this.nbSlots) {
       this.currentActiveOrientation = this.stampsOrientations[this.nbSlots - 3];
     }
     if (changes.stamps && this.stamps) {
