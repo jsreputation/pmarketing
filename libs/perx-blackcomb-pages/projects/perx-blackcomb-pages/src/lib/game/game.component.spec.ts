@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -50,6 +51,7 @@ describe('GameComponent', () => {
         MatDialogModule,
         MatProgressBarModule,
         BrowserAnimationsModule,
+        TranslateModule.forRoot(),
       ],
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
