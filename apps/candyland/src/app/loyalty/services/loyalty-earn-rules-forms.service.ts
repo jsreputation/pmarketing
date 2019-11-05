@@ -4,7 +4,15 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 @Injectable()
 export class LoyaltyEarnRulesFormsService {
 
-  public getForm(): FormGroup {
+  public getRuleForm(): FormGroup {
+    return new FormGroup({
+      id:  new FormControl(null),
+      mathMethod: new FormControl(null),
+      rules: this.getRuleConditionsForm()
+    });
+  }
+
+  public getRuleConditionsForm(): FormGroup {
     return new FormGroup({
       // priority: new FormControl(null),
       name: new FormControl(null,
@@ -39,7 +47,7 @@ export class LoyaltyEarnRulesFormsService {
     return this.conditionGroups[type](type) as FormGroup;
   }
 
-  private conditionGroups: { [key: string]: any } = {
+  public conditionGroups: { [key: string]: any } = {
     transaction: (type) => this.transactionGroup(type),
     amount: (type) => this.amountGroup(type),
     date: (type) => this.dateGroup(type)

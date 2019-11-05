@@ -362,6 +362,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
 
     });
 
+    console.log('dat', data);
     return dialogRef.afterClosed()
       .pipe(
         filter(Boolean),

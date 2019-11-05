@@ -12,7 +12,8 @@ import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 })
 export class PointEarnRulesListComponent {
   @Input() public editable: boolean = false;
-  @Input() public dataSource: Array<any>;
+  @Input() public dataSource: any;
+  @Input() public tier: any;
   @Input() public displayedColumns: string[] = ['priority', 'name', 'conditions', 'pointsEarned'];
   @Output() public rulesAction: EventEmitter<{ action: NewLoyaltyActions, data?: ICustomTireForm }> = new EventEmitter();
   @ViewChild('table', {static: false}) public table: MatTable<any>;
@@ -43,7 +44,8 @@ export class PointEarnRulesListComponent {
   public dropTable(event: CdkDragDrop<any>): void {
     const prevIndex = this.dataSource.findIndex((d) => d === event.item.data);
     moveItemInArray(this.dataSource, prevIndex, event.currentIndex);
+    this.dataSource.map((item, index) => item.priority = (index + 1).toString());
     this.table.renderRows();
-    this.rulesAction.emit({action: NewLoyaltyActions.dropRule, data: rule});
+    // this.rulesAction.emit({action: NewLoyaltyActions.dropRule, data: rule});
   }
 }

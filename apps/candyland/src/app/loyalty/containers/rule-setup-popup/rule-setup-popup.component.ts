@@ -2,7 +2,6 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { LoyaltyEarnRulesFormsService } from '../../services/loyalty-earn-rules-forms.service';
 
 @Component({
@@ -37,7 +36,7 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   constructor(
     public dialogRef: MatDialogRef<RuleSetupPopupComponent>,
     private formsService: LoyaltyEarnRulesFormsService,
-    @Inject(MAT_DIALOG_DATA) public data: { rule: string, tier: ICustomTireForm | null }
+    @Inject(MAT_DIALOG_DATA) public data: { rule: any | null }
   ) {
   }
 
@@ -74,7 +73,7 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
       return;
     }
     // let request;
-    if (this.data.tier) {
+    if (this.data.rule) {
       // request = this.customTierService.updateCustomTier(this.data.tier.id, this.form.value, this.data.basicTierId);
     } else {
       // request = this.customTierService.createCustomTier(this.form.value, this.data.basicTierId);
@@ -83,11 +82,13 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   }
 
   private initForm(): void {
-    this.form = this.formsService.getForm();
+    this.form = this.formsService.getRuleConditionsForm();
   }
 
   private fillForm(): void {
     const pathValue = this.data.rule || this.formsService.getDefaultValue();
+    console.log('pathValue', pathValue);
+    pathValue.conditions.forEach(() => this.addCondition());
     this.form.patchValue(pathValue);
   }
 }

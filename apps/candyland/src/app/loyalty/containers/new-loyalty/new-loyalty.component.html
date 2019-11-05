@@ -17,30 +17,30 @@
   <!--/  buttons-->
 </header>
 <section class="content form-limiter loyalty">
-  <button (click)="createCustomRule()">Rules</button>
   <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0">
     <!--step 1-->
-    <!--    <mat-step completed="false">-->
-    <!--      <ng-template matStepLabel>Loyalty Details</ng-template>-->
-    <!--      <cl-loyalty-form-step-details *ngIf="form && stepOne" [group]="stepOne"-->
-    <!--                                    [pools]="pools"></cl-loyalty-form-step-details>-->
+    <mat-step completed="false">
+      <ng-template matStepLabel>Loyalty Details</ng-template>
+      <cl-loyalty-form-step-details *ngIf="form && stepOne" [group]="stepOne"
+                                    [pools]="pools"></cl-loyalty-form-step-details>
 
-    <!--    </mat-step>-->
+    </mat-step>
     <!--step 2-->
-    <!--    <mat-step completed="false">-->
-    <!--      <ng-template matStepLabel>Tiers & Conversions</ng-template>-->
-    <!--      <cl-loyalty-form-step-tiers-conversions *ngIf="form && stepTwo" [group]="stepTwo"-->
-    <!--                                              [customTierDataSource]="customTierDataSource"-->
-    <!--                                              (tiersConversionsAction)="handleLoyaltyActions($event)"-->
-    <!--                                              [currency]="currency$ | async">-->
+    <mat-step completed="false">
+      <ng-template matStepLabel>Tiers & Conversions</ng-template>
+      <cl-loyalty-form-step-tiers-conversions *ngIf="form && stepTwo" [group]="stepTwo"
+                                              [customTierDataSource]="customTierDataSource"
+                                              (tiersConversionsAction)="handleLoyaltyActions($event)"
+                                              [currency]="currency$ | async">
 
-    <!--      </cl-loyalty-form-step-tiers-conversions>-->
+      </cl-loyalty-form-step-tiers-conversions>
 
-    <!--    </mat-step>-->
+    </mat-step>
     <!--step 3-->
     <mat-step>
       <ng-template matStepLabel>Point Earn Rules</ng-template>
-      <cl-loyalty-form-step-earn-rules [rules]="earnRules" (rulesAction)="handleLoyaltyActions($event)"></cl-loyalty-form-step-earn-rules>
+      <cl-loyalty-form-step-earn-rules [rules]="earnRules"
+                                       (rulesAction)="handleLoyaltyActions($event)"></cl-loyalty-form-step-earn-rules>
       <div>
       </div>
     </mat-step>
