@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import {
   Voucher,
@@ -7,8 +7,6 @@ import {
   RedemptionType,
   IPopupConfig,
   PopupComponent,
-  InstantOutcomeService,
-  IOutcome
 } from '@perx/core';
 import { Observable, Subject } from 'rxjs';
 import { filter, switchMap, takeUntil, map, tap } from 'rxjs/operators';
@@ -44,12 +42,13 @@ export class RedeemComponent implements OnInit, OnDestroy {
     private vouchersService: IVoucherService,
     private dialog: MatDialog,
     private router: Router,
-    private outcomeService: InstantOutcomeService,
     private translate: TranslateService
   ) {
   }
 
   public ngOnInit(): void {
+    this.translate.get('ENTER_CODE').subscribe((text) => this.headLine = text);
+    this.translate.get('REDEMPTION_CODE').subscribe((text) => this.subHeadLine = text);
     this.voucher$ = this.route.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
@@ -59,35 +58,28 @@ export class RedeemComponent implements OnInit, OnDestroy {
         tap((voucher: Voucher) => {
           this.rewardSuccessPopUp.text = `You have redeemed ${voucher.reward.name}`;
           this.redemptionType = voucher.reward.redemptionType;
+          if (voucher.reward.displayProperties && voucher.reward.displayProperties.merchantPinText) {
+            this.headLine = voucher.reward.displayProperties.merchantPinText.headLine || this.headLine;
+            this.subHeadLine = voucher.reward.displayProperties.merchantPinText.subHeadLine || this.subHeadLine;
+          }
+
+          if (voucher.reward.displayProperties && voucher.reward.displayProperties.rewardSuccessPopUp) {
+            this.rewardSuccessPopUp.title = voucher.reward.displayProperties.rewardSuccessPopUp.headLine;
+            this.rewardSuccessPopUp.text = voucher.reward.displayProperties.rewardSuccessPopUp.subHeadLine || this.rewardSuccessPopUp.text;
+            this.rewardSuccessPopUp.imageUrl = voucher.reward.displayProperties.rewardSuccessPopUp.imageURL;
+          }
+
+          if (voucher.reward.displayProperties && voucher.reward.displayProperties.codeInstructionsText) {
+            this.codeInstructionsText = voucher.reward.displayProperties.codeInstructionsText.headLine;
+          }
+
+          if (voucher.reward.displayProperties && voucher.reward.displayProperties.errorPopUp) {
+            this.errorPopUp.title = voucher.reward.displayProperties.errorPopUp.headLine;
+            this.errorPopUp.imageUrl = voucher.reward.displayProperties.errorPopUp.imageURL;
+          }
         }),
         takeUntil(this.destroy$)
       );
-    this.translate.get('ENTER_CODE').subscribe((text) => this.headLine = text);
-    this.translate.get('REDEMPTION_CODE').subscribe((text) => this.subHeadLine = text);
-    this.route.params
-      .pipe(
-        map((params: Params) => params.id),
-        switchMap((id: string) => this.outcomeService.getFromCampaign(+id)),
-      ).subscribe((eng: IOutcome) => {
-        if (eng.displayProperties && eng.displayProperties.merchantPinText) {
-          this.headLine = eng.displayProperties.merchantPinText.headLine;
-          this.subHeadLine = eng.displayProperties.merchantPinText.subHeadLine;
-        }
-
-        if (eng.displayProperties && eng.displayProperties.rewardSuccessPopUp) {
-          this.rewardSuccessPopUp.title = eng.displayProperties.rewardSuccessPopUp.headLine;
-          this.rewardSuccessPopUp.text = eng.displayProperties.rewardSuccessPopUp.subHeadLine;
-          this.rewardSuccessPopUp.imageUrl = eng.displayProperties.rewardSuccessPopUp.imageURL;
-        }
-
-        if (eng.displayProperties && eng.displayProperties.codeInstructionsText) {
-          this.codeInstructionsText = eng.displayProperties.codeInstructionsText.headLine;
-        }
-
-        if (eng.displayProperties && eng.displayProperties.errorPopUp) {
-          this.errorPopUp.imageUrl = eng.displayProperties.errorPopUp.imageURL;
-        }
-      });
 
   }
 
