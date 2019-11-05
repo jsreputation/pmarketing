@@ -9,10 +9,11 @@ import {
   IGame,
   defaultTree,
   GameType,
-  ICampaign
+  ICampaign,
+  ConfigService,
+  IConfig
 } from '@perx/core';
 import { PopupType } from '../vouchers/vouchers.component';
-import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-game',
@@ -38,12 +39,17 @@ export class GameComponent implements OnInit {
   constructor(
     private router: Router,
     private campaignService: ICampaignService,
-    private gameService: IGameService
-  ) {
-    this.isWhistler = environment.isWhistler;
-  }
+    private gameService: IGameService,
+    private configService: ConfigService,
+  ) {}
 
   public ngOnInit(): void {
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig) => {
+        this.isWhistler = config.isWhistler as boolean;
+      }
+    );
+
     this.$game = this.campaignService.getCampaigns()
       .pipe(
         map((campaigns: ICampaign[]) => campaigns.filter(camp => camp.type === CampaignType.game)),
