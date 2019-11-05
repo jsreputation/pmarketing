@@ -1,4 +1,5 @@
 import { IVoucher } from '../vouchers/models/voucher.model';
+import { IDisplayProperties } from '../perx-core.models';
 
 export enum GameType {
   unknown = -1,
@@ -88,19 +89,4 @@ export interface ISlice {
   label_color?: string;
   background_color?: string;
   background_image?: string;
-}
-
-export interface IDisplayProperties {
-  noRewardsPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageURL?: string,
-    buttonTxt?: string,
-  };
-  successPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageURL?: string,
-    buttonTxt?: string,
-  };
 }

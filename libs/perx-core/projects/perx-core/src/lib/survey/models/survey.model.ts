@@ -1,3 +1,5 @@
+import { IDisplayProperties } from '../../perx-core.models';
+
 export interface IAnswer {
   question_id?: string;
   content: any;
@@ -38,21 +40,6 @@ export interface ISurvey {
   background_img_url?: string;
   questions: IQuestion[];
   displayProperties?: IDisplayProperties;
-}
-
-export interface IDisplayProperties {
-  noRewardsPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageUrl?: string,
-    buttonTxt?: string,
-  };
-  successPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageURL?: string,
-    buttonTxt?: string,
-  };
 }
 
 export enum SurveyQuestionType {

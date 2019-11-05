@@ -1,3 +1,5 @@
+import { IDisplayProperties } from '../../perx-core.models';
+
 export enum RedemptionType {
   pin = 'pin',
   txtCode = 'txtCode',
@@ -66,25 +68,4 @@ export interface Inventory {
   rewardTotalBalance?: number | null;
   rewardTotalLimit?: number | null;
   rewardLimitPerUserBalance?: number | null;
-}
-
-export interface IDisplayProperties {
-  merchantPinText?: {
-    headLine?: string,
-    subHeadLine?: string,
-  };
-  rewardSuccessPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageURL?: string,
-  };
-  codeInstructionsText?: {
-    headLine?: string,
-  };
-  errorPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageURL?: string,
-  };
-  CTAButtonTxt?: string;
 }

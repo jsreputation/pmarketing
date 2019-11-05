@@ -8,7 +8,6 @@ import {
   IPinata,
   defaultPinata,
   IPlayOutcome,
-  IDisplayProperties
 } from './game.model';
 import { Observable, combineLatest, of } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -24,6 +23,8 @@ import {
   WAttbsObjEntity,
   WGameType
 } from '@perx/whistler';
+
+import { IDisplayProperties } from '../perx-core.models';
 
 interface AttbsObjTrans {
   urn: string;
