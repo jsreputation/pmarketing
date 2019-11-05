@@ -1,7 +1,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, ConfigService } from '@perx/core';
 import {
   MatSnackBarModule,
   MatIconModule,
@@ -31,6 +31,10 @@ describe('AppComponent', () => {
     back: () => {}
   };
 
+  const configServiceStub = {
+    readAppConfig: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -46,7 +50,8 @@ describe('AppComponent', () => {
       providers: [
         { provide: AuthenticationService, useValue: authenticationStub },
         { provide: Router, useValue: routerStub },
-        { provide: Location, useValue: locationStub }
+        { provide: Location, useValue: locationStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     }).compileComponents();
   }));
