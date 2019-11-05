@@ -51,7 +51,6 @@ if (process.env.PRODUCTION) {
   console.log('production mode ON');
   app.set('view engine', 'html');
   app.set('views', appPath);
-
   // Serve static files from /../../perx-microsite
   app.use(BASE_HREF, express.static(appPath));
   app.get('*.*', express.static(appPath, { maxAge: '1y' }));
