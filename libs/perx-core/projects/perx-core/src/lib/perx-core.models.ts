@@ -11,5 +11,5 @@ export interface IProperties {
   headLine?: string;
   subHeadLine?: string;
   imageURL?: string;
-  buttonTxt?: string,
+  buttonTxt?: string;
 }

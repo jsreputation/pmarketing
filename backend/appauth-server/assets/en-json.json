@@ -42,5 +42,7 @@
     "ENTER_PASSWORD": "Enter Password",
     "INVALID_CREDENTIALS": "Invalid Credentials",
     "VOUCHER_EXPIRY": "Expires on: {{date}}",
-    "DESCRIPTION": "Description"
+    "DESCRIPTION": "Description",
+    "STAMP_SUCCESS": "",
+    "STAMP_ERROR": ""
 }

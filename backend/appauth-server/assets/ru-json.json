@@ -36,5 +36,7 @@
     "GO_TO_LOGIN": "Перейлите на страницу логина",
     "REDEEM_SUCCESSFULLY": "Успешно оплачено",
     "TRY_AGAIN": "Попробуйте еще раз",
-    "TRY_AGAIN_LATER": "Произошла ошибка, попробуйте позже"
+    "TRY_AGAIN_LATER": "Произошла ошибка, попробуйте позже",
+    "STAMP_SUCCESS": "",
+    "STAMP_ERROR": ""
 }

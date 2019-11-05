@@ -50,7 +50,7 @@ interface IV4Inventory {
     available_amount: number;
     limit_error_klass: null;
     limit_type: string;
-  };
+  } | null;
 }
 
 export interface IV4Reward {
@@ -229,7 +229,7 @@ export class V4RewardsService extends RewardsService {
           subject.complete();
         } else {
           // otherwise get next page
-          page ++;
+          page++;
           this.getRewards(page, undefined, tags, categories)
             .subscribe(process);
         }
@@ -286,7 +286,7 @@ export class V4RewardsService extends RewardsService {
           subject.complete();
         } else {
           // otherwise get next page
-          page ++;
+          page++;
           this.getCatalogs(page + 1, pageSize)
             .subscribe(process);
         }

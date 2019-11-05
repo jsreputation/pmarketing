@@ -139,4 +139,8 @@ export class WhistlerStampService implements StampService {
   public stampAll(cardId: number): Observable<IStamp[]> {
     throw new Error(`Method not implemented. ${cardId}`);
   }
+
+  public play(): Observable<boolean> {
+    return of(true);
+  }
 }

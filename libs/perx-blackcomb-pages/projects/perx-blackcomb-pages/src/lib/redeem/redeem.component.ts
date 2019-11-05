@@ -36,6 +36,13 @@ export class RedeemComponent implements OnInit, OnDestroy {
     imageUrl: '',
   };
 
+  private initTranslate(): void {
+    this.translate.get('ENTER_CODE').subscribe((text) => this.headLine = text);
+    this.translate.get('REDEMPTION_CODE').subscribe((text) => this.subHeadLine = text);
+    this.translate.get('REDEEM_SUCCESSFULLY').subscribe((text) => this.rewardSuccessPopUp.title = text);
+    this.translate.get('TRY_AGAIN_LATER').subscribe((text) => this.errorPopUp.title = text);
+  }
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
@@ -47,8 +54,7 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.translate.get('ENTER_CODE').subscribe((text) => this.headLine = text);
-    this.translate.get('REDEMPTION_CODE').subscribe((text) => this.subHeadLine = text);
+    this.initTranslate();
     this.voucher$ = this.route.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
@@ -89,10 +95,7 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public pinInputSuccess(): void {
-    this.translate.get('REDEEM_SUCCESSFULLY').subscribe((text) => {
-      this.rewardSuccessPopUp.title = text;
-      this.popup(this.rewardSuccessPopUp);
-    });
+    this.popup(this.rewardSuccessPopUp);
   }
 
   public errorHandler(status: number): void {
@@ -111,10 +114,7 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public errorPopup(): void {
-    this.translate.get('TRY_AGAIN_LATER').subscribe((qest) => {
-      this.errorPopUp.title = qest;
-      this.popup(this.errorPopUp);
-    });
+    this.popup(this.errorPopUp);
   }
 
   public popup(data: IPopupConfig): MatDialogRef<PopupComponent> {

@@ -42,5 +42,7 @@
     "ENTER_PASSWORD": "Enter Password",
     "INVALID_CREDENTIALS": "Invalid Credentials",
     "VOUCHER_EXPIRY": "Hiệu lực đến: {{date}}",
-    "DESCRIPTION": "Mô tả"
+    "DESCRIPTION": "Mô tả",
+    "STAMP_SUCCESS": "",
+    "STAMP_ERROR": ""
 }

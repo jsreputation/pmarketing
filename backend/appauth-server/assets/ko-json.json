@@ -42,5 +42,7 @@
     "ENTER_PASSWORD": "",
     "INVALID_CREDENTIALS": "",
     "VOUCHER_EXPIRY": "",
-    "DESCRIPTION": ""
+    "DESCRIPTION": "",
+    "STAMP_SUCCESS": "",
+    "STAMP_ERROR": ""
 }

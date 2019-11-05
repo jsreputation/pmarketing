@@ -13,4 +13,5 @@ export abstract class StampService {
 
   public abstract stampAll(cardId: number): Observable<IStamp[]>;
 
+  public abstract play(): Observable<boolean>;
 }
