@@ -4,6 +4,7 @@ import { IGameService, IGame, GameType, IPlayOutcome, PopupComponent, IPopupConf
 import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
 import { Observable, interval, combineLatest, throwError, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-game',
@@ -24,15 +25,21 @@ export class GameComponent implements OnInit, OnDestroy {
     imageUrl: 'assets/congrats_image.png',
   };
 
+  private initTranslate(): void {
+    this.translate.get('VIEW_REWARD').subscribe((text) => this.successPopUp.buttonTxt = text);
+  }
+
   constructor(
     private route: ActivatedRoute,
     private gameService: IGameService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private translate: TranslateService,
   ) {
   }
 
   public ngOnInit(): void {
+    this.initTranslate();
     this.gameData$ = this.route.params.pipe(
       filter((params: Params) => params.id),
       map((params: Params) => params.id),
@@ -43,13 +50,10 @@ export class GameComponent implements OnInit, OnDestroy {
       tap((games: IGame[]) => !games || !games.length && this.router.navigate(['/wallet'])),
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => {
-        if (
-          game &&
-          game.displayProperties &&
-          game.displayProperties.rewardSuccessPopUp &&
-          game.displayProperties.rewardSuccessPopUp.imageURL
-        ) {
-          this.successPopUp.imageUrl = game.displayProperties.rewardSuccessPopUp.imageURL;
+        const { displayProperties } = game;
+        if (displayProperties && displayProperties.rewardSuccessPopUp) {
+          this.successPopUp.buttonTxt = displayProperties.rewardSuccessPopUp.buttonTxt || this.successPopUp.buttonTxt;
+          this.successPopUp.imageUrl = displayProperties.rewardSuccessPopUp.imageURL || this.successPopUp.imageUrl;
         }
         this.engagementId = game ? game.id : null;
       })
