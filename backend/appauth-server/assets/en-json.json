@@ -5,7 +5,7 @@
     "HELLO": "Welcome",
     "MY_WALLET": "My Wallet",
     "STAMP_CARDS": "My Stamp Cards",
-    "MY_HISTORY": "MY_HISTORY",
+    "MY_HISTORY": "My History",
     "ALL": "All",
     "FOOD_BEVERAGE": "Food & Beverage",
     "TRAVEL": "Travel",
@@ -24,6 +24,8 @@
     "PURCHASE": "Purchase",
     "LOGGING_IN": "Logging In...",
     "REDEEM": "Redeem",
+    "VIEW_REWARD": "View Reward",
+    "BACK_TO_WALLET": "Back To Wallet",
     "CONTENT_PAGE": "Content Page Not Found",
     "SEE_MORE": "See more",
     "QR_TO_MERCHANT": "Present this QR code to the merchant",
@@ -33,11 +35,14 @@
     "REEDEM_QUEST": "You need to login to redeem the voucher",
     "GO_TO_LOGIN": "Go to login",
     "REDEEM_SUCCESSFULLY": "Redeem Successfully",
+    "TRY_AGAIN": "Try again",
     "TRY_AGAIN_LATER": "Error occur, please try again later",
     "LOGIN": "Login",
     "ENTER_CUSTOM_ID": "Enter Customer Id",
     "ENTER_PASSWORD": "Enter Password",
     "INVALID_CREDENTIALS": "Invalid Credentials",
     "VOUCHER_EXPIRY": "Expires on: {{date}}",
-    "DESCRIPTION": "Description"
+    "DESCRIPTION": "Description",
+    "STAMP_SUCCESS": "",
+    "STAMP_ERROR": ""
 }

@@ -19,10 +19,10 @@ import {
   IPrice,
   ICategoryTags,
   RedemptionType,
-  IDisplayProperties,
 } from './models/reward.model';
 
 import { Config } from '../config/config';
+import { IRewardDisplayProperties } from '../perx-core.models';
 
 export interface IV4Tag {
   id: number;
@@ -50,7 +50,7 @@ interface IV4Inventory {
     available_amount: number;
     limit_error_klass: null;
     limit_type: string;
-  };
+  } | null;
 }
 
 export interface IV4Reward {
@@ -74,7 +74,7 @@ export interface IV4Reward {
   inventory?: IV4Inventory;
   selling_from?: string;
   merchant_logo_url?: string;
-  display_properties?: IDisplayProperties;
+  display_properties?: IRewardDisplayProperties;
 }
 
 interface IV4Price {
@@ -229,7 +229,7 @@ export class V4RewardsService extends RewardsService {
           subject.complete();
         } else {
           // otherwise get next page
-          page ++;
+          page++;
           this.getRewards(page, undefined, tags, categories)
             .subscribe(process);
         }
@@ -286,7 +286,7 @@ export class V4RewardsService extends RewardsService {
           subject.complete();
         } else {
           // otherwise get next page
-          page ++;
+          page++;
           this.getCatalogs(page + 1, pageSize)
             .subscribe(process);
         }

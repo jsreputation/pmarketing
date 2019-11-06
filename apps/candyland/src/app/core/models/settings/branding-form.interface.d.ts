@@ -6,8 +6,8 @@ declare interface IBrandingForm {
   headerNavbarColor: {labelView: string, color: string};
   logo: string;
   logoType: string;
-  button: {labelView: string, color: string};
-  buttonTextColor: string;
+  buttonBackgroundColor: {labelView: string, color: string};
+  buttonTextColor: {labelView: string, color: string};
   button_background_color?: any;
   button_text_color?: any;
 }

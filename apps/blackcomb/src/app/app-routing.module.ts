@@ -9,14 +9,19 @@ const routes: Routes = [
   },
   {
     path: 'loading',
-    loadChildren: () => import('./loading/loading.module').then((mod) => mod.LoadingModule),
-    canActivate: [PublicGuard]
+    loadChildren: () => import('./loading/loading.module').then((mod) => mod.LoadingModule)
   },
   {
     path: '',
     loadChildren: () => import('./layout/layout.module').then((mod) => mod.LayoutModule),
     canActivate: [ProtectedGuard]
   },
+  {
+    path: '',
+    loadChildren: () => import('./sign-up/sign-up.module').then((mod) => mod.SignUpModule),
+    canActivate: [ProtectedGuard]
+  },
+
   { path: '**', redirectTo: '/wallet' }
 ];
 

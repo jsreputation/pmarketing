@@ -8,7 +8,6 @@ import {
   IPinata,
   defaultPinata,
   IPlayOutcome,
-  IDisplayProperties
 } from './game.model';
 import { Observable, combineLatest, of } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -24,6 +23,8 @@ import {
   WAttbsObjEntity,
   WGameType
 } from '@perx/whistler';
+
+import { ICampaignDisplayProperties } from '../perx-core.models';
 
 interface AttbsObjTrans {
   urn: string;
@@ -154,7 +155,7 @@ export class WhistlerGameService implements IGameService {
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    let disProp: IDisplayProperties = null;
+    let disProp: ICampaignDisplayProperties = null;
     return this.http.get<IJsonApiItemPayload<WAttbsObjEntity>>(`${this.hostName}/campaign/entities/${campaignId}`)
       .pipe(
         map((res: IJsonApiItemPayload<WAttbsObjEntity>) => res.data.attributes),

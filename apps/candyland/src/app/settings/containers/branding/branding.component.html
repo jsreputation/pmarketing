@@ -91,16 +91,16 @@
             <span>Background Color</span>
           </label>
           <mat-form-field color="primary" appearance="outline">
-            <mat-select [formControlName]="'button_background_color'">
+            <mat-select [formControlName]="'buttonBackgroundColor'">
               <mat-select-trigger>
                 <div class="select-color">
                   <div
                     class="select-color-preview"
                     [ngStyle]="{
-                      'background-color': button_background_color.value.color
+                      'background-color': buttonBackgroundColor.value.color
                     }"></div>
                   <p class="select-color-text">
-                    {{ button_background_color.value?.labelView }}
+                    {{ buttonBackgroundColor.value?.labelView }}
                   </p>
                 </div>
               </mat-select-trigger>
@@ -122,16 +122,16 @@
             <span>Text Color</span>
           </label>
           <mat-form-field color="primary" appearance="outline">
-            <mat-select [formControlName]="'button_text_color'">
+            <mat-select [formControlName]="'buttonTextColor'">
               <mat-select-trigger>
                 <div class="select-color">
                   <div
                     class="select-color-preview"
                     [ngStyle]="{
-                      'background-color': button_text_color.value.color
+                      'background-color': buttonTextColor.value.color
                     }"></div>
                   <p class="select-color-text">
-                    {{ button_text_color.value?.labelView }}
+                    {{ buttonTextColor.value?.labelView }}
                   </p>
                 </div>
               </mat-select-trigger>
@@ -188,9 +188,9 @@
 
           <button class="mobile-preview-btn"
                   [ngStyle]="{
-                        backgroundColor: button_background_color.value.color,
+                        backgroundColor: buttonBackgroundColor.value.color,
                         'font-family': font.value,
-                        color: button_text_color.value.color
+                        color: buttonTextColor.value.color
 
           }">
             Log In
@@ -224,9 +224,9 @@
           <div class="quare-code-btn">
             <button class="mobile-preview-btn"
                     [ngStyle]="{
-                        backgroundColor: button_background_color.value.color,
+                        backgroundColor: buttonBackgroundColor.value.color,
                         'font-family': font.value,
-                        color: button_text_color.value.color
+                        color: buttonTextColor.value.color
 
             }">
               My OR
@@ -261,7 +261,7 @@
             'background-image':
               'url(assets/images/reward/card-background/card-bg-1.png)',
             'font-family': font.value,
-            color: button_text_color.value.color
+            color: buttonTextColor.value.color
           }">
           <perx-core-reward [reward]="reward$"></perx-core-reward>
         </div>
@@ -271,9 +271,9 @@
         <button
           class="mobile-preview-btn"
           [ngStyle]="{
-            backgroundColor: button_background_color.value.color,
+            backgroundColor: buttonBackgroundColor.value.color,
             'font-family': font.value,
-            color: button_text_color.value.color
+            color: buttonTextColor.value.color
           }">
           {{ "button text" }}
         </button>

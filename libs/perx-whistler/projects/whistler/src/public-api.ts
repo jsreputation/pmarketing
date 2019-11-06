@@ -43,3 +43,6 @@ export {
   IWPayload,
   WSurveyQuestionType
 } from './lib/survey/question';
+
+/** Cognito */
+export { IWCognitoTenantAttributes } from './lib/cognito/tenants';
