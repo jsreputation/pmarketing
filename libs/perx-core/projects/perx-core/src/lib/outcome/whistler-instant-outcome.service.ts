@@ -1,6 +1,6 @@
 import { IJsonApiPostItem } from './../jsonapi.payload';
 import { InstantOutcomeService } from './instant-outcome.service';
-import { IOutcome, IDisplayProperties } from './models/outcome.model';
+import { IOutcome } from './models/outcome.model';
 import { Observable, combineLatest } from 'rxjs';
 import { map, switchMap, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -17,9 +17,11 @@ import {
   ICampaignAttributes
 } from '@perx/whistler';
 
+import { ICampaignDisplayProperties } from '../perx-core.models';
+
 interface CampaignProperties {
   engagementId: number;
-  display_properties: IDisplayProperties;
+  display_properties: ICampaignDisplayProperties;
 }
 
 @Injectable({
@@ -29,7 +31,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   private baseUrl: string;
 
   constructor(private http: HttpClient, private config: Config, private rewardsService: RewardsService) {
-    this.baseUrl = `${config.apiHost}/instant_outcome/transactions/`;
+    this.baseUrl = `${config.apiHost}/instant-outcome/transactions/`;
   }
 
   private getEngagementId(campaignId: number): Observable<CampaignProperties> {
@@ -47,7 +49,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
 
   // usage is to get return from pipe to call other functions
   public getFromCampaign(campaignId: number): Observable<IOutcome> {
-    let displayProps: IDisplayProperties;
+    let displayProps: ICampaignDisplayProperties;
     return this.getEngagementId(campaignId)
       .pipe(
         switchMap((campaign: CampaignProperties) => {
