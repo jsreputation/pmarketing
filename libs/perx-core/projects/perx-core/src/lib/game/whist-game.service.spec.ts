@@ -141,7 +141,7 @@ describe('WhistlerGameService', () => {
 
     const req = httpTestingController.expectOne('https://blabla/game/engagements/42');
     expect(req.request.method).toEqual('GET');
-    const res: IJsonApiItemPayload<WAttbsObjGame> = {
+    const res: IJsonApiItemPayload<IWAttbsObjGame> = {
       data: mockTap
     };
     req.flush(res);
