@@ -50,8 +50,8 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
   public get isCampaignEnded(): boolean {
     return !(this.campaignData &&
-      this.campaignData.endsAt &&
-      this.campaignData.endsAt > new Date());
+      (!this.campaignData.endsAt ||
+        this.campaignData.endsAt && this.campaignData.endsAt > new Date()));
   }
 
   private goWallet(): void {
