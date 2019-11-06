@@ -16,16 +16,16 @@ describe('WalletComponent', () => {
     navigate: jasmine.createSpy('navigate')
   };
 
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     getAll: () => of([])
   };
 
-  const campaignServiceStub = {
+  const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of([])
   };
 
-  const stampServiceStub = {
-    getCurrentCard: () => of([])
+  const stampServiceStub: Partial<StampService> = {
+    getCurrentCard: () => of()
   };
 
   beforeEach(async(() => {

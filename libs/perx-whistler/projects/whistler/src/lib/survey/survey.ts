@@ -1,11 +1,11 @@
 import { IWQuestion } from './question';
 
 export interface IWSurveyAttributes {
-  id: string;
-  title: string;
-  description: string;
-  image_url: string;
-  properties: IWSurveyProperties;
+  id?: string;
+  title?: string;
+  description?: string;
+  image_url?: string;
+  properties?: IWSurveyProperties;
   display_properties: IWSurveyDisplayProperties;
 }
 

@@ -7,14 +7,14 @@ import {
   MatFormFieldModule,
   MatInputModule,
 } from '@angular/material';
-import { ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { Config } from '@perx/core';
 
 import { PIComponent } from './pi.component';
 
-const configStub = {
+const configStub: Partial<Config> = {
   preAuth: false
 };
 

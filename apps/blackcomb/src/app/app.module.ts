@@ -21,6 +21,7 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { SignUpModule } from './sign-up/sign-up.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { HttpHeaders } from '@angular/common/http';
@@ -63,6 +64,8 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     VouchersModule,
     OutcomeModule,
     AuthenticationModule,
+    SignUpModule,
+    ProfileModule,
     BrowserAnimationsModule,
     PerxMerchantsModule,
     PerxStampModule,
