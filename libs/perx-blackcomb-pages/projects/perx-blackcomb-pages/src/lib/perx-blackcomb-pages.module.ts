@@ -59,6 +59,7 @@ import { StampCardComponent } from './stamp-card/stamp-card.component';
 import { SurveyComponent } from './survey/survey.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { WalletComponent } from './wallet/wallet.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
@@ -68,6 +69,7 @@ const comps: any[] = [
   ContentComponent,
   HistoryComponent,
   VouchersComponent,
+  SignUpComponent,
   RepeatTimesDirective,
   RewardsCollectionComponent,
   RewardComponent,
