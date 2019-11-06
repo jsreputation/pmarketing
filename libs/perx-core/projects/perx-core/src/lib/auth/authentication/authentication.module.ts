@@ -13,6 +13,8 @@ import { Config } from '../../config/config';
 import { ProfileService } from '../../profile/profile.service';
 import { WhistlerAuthenticationService } from './whistler-authentication.service';
 import { LocalTokenStorage } from './local-token-storage.service';
+import { IFormsService } from './iforms.service';
+import { WhistlerFormsService } from './whistler-forms.service';
 
 export function AuthServiceFactory(
   http: HttpClient,
@@ -38,6 +40,10 @@ export function TokenStorageServiceFactory(
   }
 }
 
+export function FormsServiceFactory(config: Config, http: HttpClient): IFormsService {
+  return new WhistlerFormsService(config, http);
+}
+
 @NgModule({
   imports: [AuthModule],
   declarations: [],
@@ -59,7 +65,8 @@ export function TokenStorageServiceFactory(
       provide: AUTH_SERVICE,
       useFactory: AuthServiceFactory,
       deps: [HttpClient, Config, TokenStorage, ProfileService]
-    }
+    },
+    { provide: IFormsService, useFactory: FormsServiceFactory, deps: [Config, HttpClient] }
   ]
 })
 export class AuthenticationModule {

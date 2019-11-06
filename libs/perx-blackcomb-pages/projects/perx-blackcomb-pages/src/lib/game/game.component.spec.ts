@@ -29,12 +29,12 @@ describe('GameComponent', () => {
     texts: {},
     results: {},
   };
-  const gameServiceStub = {
+  const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of([game]),
     play: () => of()
   };
-  const routerStub = {
-    navigate: () => {}
+  const routerStub: Partial<Router> = {
+    navigate: () => Promise.resolve(true)
   };
 
   beforeEach(async(() => {
@@ -55,7 +55,7 @@ describe('GameComponent', () => {
       ],
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
-        { provide: ActivatedRoute, useValue: { params: of({ id: 1}) } },
+        { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: Router, useValue: routerStub },
       ]
     })
@@ -88,7 +88,7 @@ describe('GameComponent', () => {
       tick(1000);
       fixture.detectChanges();
       tick();
-      expect(routerSpy).toHaveBeenCalledWith([ '/wallet' ]);
+      expect(routerSpy).toHaveBeenCalledWith(['/wallet']);
       expect(getGamesFromCampaignSpy).toHaveBeenCalled();
     }));
   });
@@ -141,8 +141,10 @@ describe('GameComponent', () => {
       tick();
       expect(gameServiceSpy).toHaveBeenCalled();
       expect(dialogSpy).toHaveBeenCalledWith(PopupComponent,
-        { data:
-          { title: 'Congratulations!',
+        {
+          data:
+          {
+            title: 'Congratulations!',
             text: 'You earned 1 rewards',
             buttonTxt: 'VIEW_REWARD',
             imageUrl: 'assets/congrats_image.png'
