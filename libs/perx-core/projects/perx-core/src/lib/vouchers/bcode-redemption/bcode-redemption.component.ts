@@ -18,6 +18,7 @@ export class BcodeRedemptionComponent implements OnChanges {
   public showImage: boolean = true;
   public showVoucherName: boolean = true;
   public showAfterInstruction: boolean = false;
+  @Input()
   public showTermsAndCondition: boolean = true;
 
   @Input()
