@@ -148,4 +148,14 @@ describe('WhistlerCampaignService', () => {
 
     httpTestingController.verify();
   });
+
+  it('endDate should be null if end_date_time is null or not defined', () => {
+    const { endsAt } =  WhistlerCampaignService.WhistlerCampaignToCampaign(mockCampaign);
+    expect(endsAt).toEqual(null);
+  });
+
+  it('endDate should be proper Date object if end_date_time is defined', () => {
+    const { endsAt } =  WhistlerCampaignService.WhistlerCampaignToCampaign(mockExpiredCampaign);
+    expect(endsAt).toEqual(yesterday);
+  });
 });
