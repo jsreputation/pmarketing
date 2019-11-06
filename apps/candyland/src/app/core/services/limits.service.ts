@@ -18,7 +18,9 @@ export class LimitsService {
   public getLimits(params: HttpParamsOptions, engagementType: string): Observable<ILimit[]> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.limitsHttpsService.getLimits(httpParams, engagementType).pipe(
-      map((response: IJsonApiListPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>) => response.data),
+      map((response: IJsonApiListPayload<IWInstantOutcomeLimitAttributes |
+                             IWSurveyLimitAttributes |
+                             IWGameLimitAttributes>) => response.data),
       map((response: IJsonApiItem<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>[]) => response.map(
         (limit: IJsonApiItem<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>) =>
           LimitsHttpAdapter.transformAPIResponseToLimit(limit, engagementType)))
