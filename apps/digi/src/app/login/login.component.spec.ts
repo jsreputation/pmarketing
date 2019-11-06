@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, ConfigService } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('LoginComponent', () => {
@@ -10,6 +10,9 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
   const AuthenticationServiceStub = {
     getUserAccessToken: () => of()
+  };
+  const configServiceStub = {
+    readAppConfig: () => of()
   };
 
   beforeEach(async(() => {
@@ -19,7 +22,8 @@ describe('LoginComponent', () => {
       ],
       declarations: [ LoginComponent ],
       providers: [
-        { provide: AuthenticationService, useValue: AuthenticationServiceStub }
+        { provide: AuthenticationService, useValue: AuthenticationServiceStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();

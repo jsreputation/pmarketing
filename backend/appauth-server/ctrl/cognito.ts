@@ -58,6 +58,7 @@ export const users = (apiConfig: ApiConfig) => async (req: Request, res: Respons
     // check body parameter 'url'
     const url = req.body.url;
     const userId = req.body.identifier;
+    const userObj = req.body.profile; // should just be the attributesObj
 
     if (url === undefined) {
       throw new Error('No body parameter "url" specified');
@@ -73,9 +74,7 @@ export const users = (apiConfig: ApiConfig) => async (req: Request, res: Respons
       {
         data: {
           type: 'users',
-          attributes: {
-            primary_identifier: userId
-          }
+          attributes: userObj // {...,}
         }
       },
       {

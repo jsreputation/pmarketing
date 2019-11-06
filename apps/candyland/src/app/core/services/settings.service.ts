@@ -100,8 +100,8 @@ export class SettingsService implements ITableService {
       headerNavbarColor: [null],
       logo: [null, [Validators.required]],
       logoType: ['image'],
-      button_background_color: [null],
-      button_text_color: ['#fff']
+      buttonBackgroundColor: [null],
+      buttonTextColor: ['#fff']
     });
   }
 

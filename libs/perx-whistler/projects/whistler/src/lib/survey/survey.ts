@@ -1,11 +1,11 @@
 import { IWQuestion } from './question';
 
 export interface IWSurveyAttributes {
-  id: string;
-  title: string;
-  description: string;
-  image_url: string;
-  properties: IWSurveyProperties;
+  id?: string;
+  title?: string;
+  description?: string;
+  image_url?: string;
+  properties?: IWSurveyProperties;
   display_properties: IWSurveyDisplayProperties;
 }
 
@@ -21,9 +21,16 @@ export interface IWSurveyDisplayProperties {
   card_background_img_url: string;
   questions: IWQuestion[];
   noRewardsPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageUrl?: string
+    headLine?: string;
+    subHeadLine?: string;
+    imageURL?: string;
+    buttonTxt?: string;
+  };
+  successPopUp?: {
+    headLine?: string;
+    subHeadLine?: string;
+    imageURL?: string;
+    buttonTxt?: string;
   };
 }
 
