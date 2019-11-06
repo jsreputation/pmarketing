@@ -16,6 +16,7 @@ import { Role } from '@cl-helpers/role.enum';
 import { IamUser } from '@cl-core/http-adapters/iam-user';
 import { ITenantProperties, ITimeZone } from '@perx/whistler';
 import { JsonApiQueryData } from 'angular2-jsonapi';
+import { IReward } from '@perx/core';
 
 export enum DefaultSetting {
   style = 'Light',
@@ -99,8 +100,8 @@ export class SettingsService implements ITableService {
       headerNavbarColor: [null],
       logo: [null, [Validators.required]],
       logoType: ['image'],
-      button_background_color: [null],
-      button_text_color: ['#fff']
+      buttonBackgroundColor: [null],
+      buttonTextColor: ['#fff']
     });
   }
 
@@ -177,6 +178,32 @@ export class SettingsService implements ITableService {
     return this.tenants.save().pipe(
       switchMap(() => this.authService.updateUser())
     );
+  }
+
+  public getMockReward(): IReward {
+    return {
+      id: 1,
+      name: 'Starbucks venti $5',
+      subtitle: 'So yummy',
+      description: 'One bought, one offered',
+      validFrom: null,
+      validTo: null,
+      rewardThumbnail: 'https://picsum.photos/300/300',
+      rewardBanner: 'https://picsum.photos/200/300',
+      merchantImg: 'https://picsum.photos/200/300',
+      termsAndConditions: '',
+      howToRedeem: '',
+      rewardPrice: [{
+        id: 23,
+        currencyCode: '44',
+        price: 3
+      }],
+      categoryTags: [{
+        id: 34,
+        title: 'Lifestyle',
+        parent: null
+      }],
+    };
   }
 
 }

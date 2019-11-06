@@ -2,6 +2,7 @@
  * Public API Surface of perx-core
  */
 export { PerxCoreModule } from './lib/perx-core.module';
+export { IRewardDisplayProperties, ICampaignDisplayProperties } from './lib/perx-core.models';
 
 /**
  * Merchants
@@ -43,7 +44,7 @@ export { ICampaignService } from './lib/campaign/icampaign.service';
 export {
   CampaignType,
   CampaignState,
-  ICampaign
+  ICampaign,
 } from './lib/campaign/models/campaign.model';
 
 /**
@@ -55,7 +56,7 @@ export {
   IStampCard,
   IStamp,
   StampCardState,
-  StampState
+  StampState,
 } from './lib/stamp/models/stamp.model';
 export { StampsCardsListComponent } from './lib/stamp/stamps-cards-list/stamps-cards-list.component';
 /**
@@ -71,7 +72,7 @@ export {
   IScratch,
   defaultTree,
   IPlayOutcome,
-  ISlice
+  ISlice,
 } from './lib/game/game.model';
 export { IGameService } from './lib/game/igame.service';
 export { IGameComponent } from './lib/game/igame.component';
@@ -119,7 +120,12 @@ export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-s
  */
 export { RewardsModule } from './lib/rewards/rewards.module';
 export { RewardsService } from './lib/rewards/rewards.service';
-export { IReward, ICatalog, ICategoryTags, IPrice } from './lib/rewards/models/reward.model';
+export {
+  IReward,
+  ICatalog,
+  ICategoryTags,
+  IPrice,
+} from './lib/rewards/models/reward.model';
 export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 export { RewardsCollectionComponent } from './lib/rewards/rewards-collection/rewards-collection.component';
 export { RewardComponent } from './lib/rewards/reward/reward.component';
@@ -147,7 +153,7 @@ export { PuzzlesModule } from './lib/puzzles/puzzles.module';
 export {
   PuzzleCollectStamp,
   PuzzleCollectReward,
-  PuzzleCollectStampState
+  PuzzleCollectStampState,
 } from './lib/puzzles/models/puzzle-stamp.model';
 export { PuzzleCollectStampsComponent } from './lib/puzzles/puzzle-collect-stamps/puzzle-collect-stamps.component';
 
@@ -188,7 +194,11 @@ export { IConfig, IMicrositeSettings } from './lib/config/models/config.model';
 /**
  * Theme
  */
-export { ITheme } from './lib/utils/themes/themes.model';
+export {
+  ITheme,
+  PagesObject,
+  AccountPageObject,
+} from './lib/utils/themes/themes.model';
 export { ThemesService } from './lib/utils/themes/themes.service';
 /**
  * Outcome

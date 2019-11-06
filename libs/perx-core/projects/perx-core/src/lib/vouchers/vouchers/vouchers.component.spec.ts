@@ -11,6 +11,8 @@ import { IMerchantsService } from '../../merchants/imerchants.service';
 import { IVoucherService } from '../ivoucher.service';
 import { RewardsService } from '../../rewards/rewards.service';
 import { By } from '@angular/platform-browser';
+import { DatePipe } from '@angular/common';
+import { RedemptionType } from '../../rewards/models/reward.model';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
@@ -44,9 +46,8 @@ describe('VouchersComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: null,
+      redemptionType: RedemptionType.none,
       categoryTags: [],
-      inventory: null,
     },
   };
 
@@ -71,9 +72,8 @@ describe('VouchersComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: null,
+      redemptionType: RedemptionType.none,
       categoryTags: [],
-      inventory: null,
     },
   };
 
@@ -92,13 +92,10 @@ describe('VouchersComponent', () => {
         ConfigModule.forRoot({})
       ],
       providers: [
+        DatePipe,
         { provide: IVoucherService, useValue: voucherServiceStub },
-        {
-          provide: RewardsService, useValue: rewardsServiceStub
-        },
-        {
-          provide: IMerchantsService, useValue: merchantsServiceStub
-        }
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: IMerchantsService, useValue: merchantsServiceStub }
       ]
     })
       .compileComponents();
@@ -153,9 +150,8 @@ describe('VouchersComponent', () => {
           merchantWebsite: '',
           termsAndConditions: '',
           howToRedeem: '',
-          redemptionType: null,
+          redemptionType: RedemptionType.none,
           categoryTags: [],
-          inventory: null,
         }
       },
       {
@@ -179,9 +175,8 @@ describe('VouchersComponent', () => {
           merchantWebsite: '',
           termsAndConditions: '',
           howToRedeem: '',
-          redemptionType: null,
+          redemptionType: RedemptionType.none,
           categoryTags: [],
-          inventory: null,
         }
       }
     ];
@@ -214,9 +209,8 @@ describe('VouchersComponent', () => {
           merchantWebsite: '',
           termsAndConditions: '',
           howToRedeem: '',
-          redemptionType: null,
+          redemptionType: RedemptionType.none,
           categoryTags: [],
-          inventory: null,
         }
       },
       {
@@ -240,9 +234,8 @@ describe('VouchersComponent', () => {
           merchantWebsite: '',
           termsAndConditions: '',
           howToRedeem: '',
-          redemptionType: null,
+          redemptionType: RedemptionType.none,
           categoryTags: [],
-          inventory: null,
         }
       }
     ];
@@ -275,9 +268,8 @@ describe('VouchersComponent', () => {
           merchantWebsite: '',
           termsAndConditions: '',
           howToRedeem: '',
-          redemptionType: null,
+          redemptionType: RedemptionType.none,
           categoryTags: [],
-          inventory: null,
         }
       },
       {
@@ -301,9 +293,8 @@ describe('VouchersComponent', () => {
           merchantWebsite: '',
           termsAndConditions: '',
           howToRedeem: '',
-          redemptionType: null,
+          redemptionType: RedemptionType.none,
           categoryTags: [],
-          inventory: null,
         }
       }
     ];
@@ -336,9 +327,8 @@ describe('VouchersComponent', () => {
           merchantWebsite: '',
           termsAndConditions: '',
           howToRedeem: '',
-          redemptionType: null,
+          redemptionType: RedemptionType.none,
           categoryTags: [],
-          inventory: null,
         }
       },
       {
@@ -362,16 +352,18 @@ describe('VouchersComponent', () => {
           merchantWebsite: '',
           termsAndConditions: '',
           howToRedeem: '',
-          redemptionType: null,
+          redemptionType: RedemptionType.none,
           categoryTags: [],
-          inventory: null,
         }
       }
     ];
     component.vouchers$ = of(vouchersMock);
     fixture.detectChanges();
     component.vouchers$.subscribe((vouchers: IVoucher[]) => {
+      expect(vouchers.length).toBeGreaterThan(0);
+      // @ts-ignore
       expect(vouchers[0].reward.merchantName).toBe('');
+      // @ts-ignore
       expect(vouchers[0].reward.description).toBe('Test description');
     });
   });
@@ -399,9 +391,8 @@ describe('VouchersComponent', () => {
           merchantWebsite: '',
           termsAndConditions: '',
           howToRedeem: '',
-          redemptionType: null,
+          redemptionType: RedemptionType.none,
           categoryTags: [],
-          inventory: null,
         }
       },
       {
@@ -425,9 +416,8 @@ describe('VouchersComponent', () => {
           merchantWebsite: '',
           termsAndConditions: '',
           howToRedeem: '',
-          redemptionType: null,
+          redemptionType: RedemptionType.none,
           categoryTags: [],
-          inventory: null,
         }
       }
     ];
@@ -470,9 +460,8 @@ describe('VouchersComponent', () => {
           merchantWebsite: '',
           termsAndConditions: '',
           howToRedeem: '',
-          redemptionType: null,
+          redemptionType: RedemptionType.none,
           categoryTags: [],
-          inventory: null,
         }
       },
       {
@@ -496,9 +485,8 @@ describe('VouchersComponent', () => {
           merchantWebsite: '',
           termsAndConditions: '',
           howToRedeem: '',
-          redemptionType: null,
+          redemptionType: RedemptionType.none,
           categoryTags: [],
-          inventory: null,
         }
       }
     ];

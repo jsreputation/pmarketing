@@ -1,9 +1,6 @@
 <div class="main" *ngIf="voucher">
   <div class="contents">
     <div class="app-header">
-      <button class="icon" (click)="back()">
-        <mat-icon>arrow_backward</mat-icon>
-      </button>
       <img [src]="voucher.reward.rewardBanner" class="banner">
     </div>
     <div class="redeem-block">
@@ -21,6 +18,18 @@
                   <input class="code" #codeInput matInput type="text" [value]="voucher.code" readonly>
                   <button mat-button color="primary" (click)="copyCode(codeInput)">Copy the code</button>
                 </ng-template>
+              </div>
+            </div>
+            <div *ngIf="voucher.redemptionType === 'qrcode'">
+              <div class="code-redemption">
+                <p>Please ask cashier to scan QR code</p>
+                <qrcode [qrdata]="voucher.code" [size]="100"></qrcode>
+              </div>
+            </div>
+            <div *ngIf="voucher.redemptionType === 'barcode'">
+              <div class="code-redemption">
+                <p>Please ask cashier to scan barcode</p>
+                <ngx-barcode [bc-value]="voucher.code"></ngx-barcode>
               </div>
             </div>
             <div *ngIf="voucher.redemptionType === 'pin'" class="code-redemption">
@@ -48,7 +57,6 @@
             <app-reward-detail
               [macaron]="macaron"
               [reward]="voucher.reward"
-              [showBackButton]="false"
               [showBannerImage]="false"
               [showMacaron]="false"
               [className]="'voucher'"

@@ -10,7 +10,7 @@ import { IVoucherService } from '../ivoucher.service';
 })
 export class BcodeRedemptionComponent implements OnChanges {
   @Input()
-  public voucherId: number = null;
+  public voucherId: number | null = null;
 
   @Input()
   public instructions: string = 'Present this code to the cashier to complete your transaction.';
@@ -18,6 +18,7 @@ export class BcodeRedemptionComponent implements OnChanges {
   public showImage: boolean = true;
   public showVoucherName: boolean = true;
   public showAfterInstruction: boolean = false;
+  @Input()
   public showTermsAndCondition: boolean = true;
 
   @Input()
@@ -33,7 +34,7 @@ export class BcodeRedemptionComponent implements OnChanges {
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.voucherId) {
+    if (changes.voucherId && this.voucherId !== null) {
       this.voucher$ = this.vouchersService.get(this.voucherId);
     }
 

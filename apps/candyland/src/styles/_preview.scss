@@ -254,6 +254,61 @@ perx-core-reward {
   }
 }
 
+.branding {
+  .mobile {
+    &-preview-background {
+      background: $white;
+      background-image: none !important;
+
+      &::before {
+        background-image: none;
+      }
+    }
+
+    &-preview-card {
+      top: 8rem;
+    }
+
+    &-preview-headline, &-preview-sub-headline {
+      text-align: left;
+      font-weight: 500;
+      font-size: 3.4rem;
+      line-height: 4rem;
+    }
+
+    &-preview-btn {
+      width: 100%;
+      font-weight: 500;
+      font-size: $base-font-size;
+      line-height: 1.6rem;
+    }
+
+    &-additional-info {
+      font-size: 1rem;
+      line-height: 1.6rem;
+      text-align: center;
+      color: $secondary-font-color;
+      margin-top: 1.6rem;
+    }
+
+    &-preview-header {
+      top: 0.5rem;
+
+      .mobile-preview-headline, .mobile-preview-sub-headline {
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 23px;
+        text-align: center;
+        letter-spacing: 0.15px;
+      }
+    }
+  }
+
+  .card-fieldset-title {
+    margin-bottom: 0.5rem;
+  }
+}
+
 .mobile-preview-fullpage .details {
   padding-left: 1.6rem !important;
   padding-right: 1.6rem !important;

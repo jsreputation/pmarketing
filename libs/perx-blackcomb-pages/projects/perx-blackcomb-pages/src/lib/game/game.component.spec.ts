@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -50,6 +51,7 @@ describe('GameComponent', () => {
         MatDialogModule,
         MatProgressBarModule,
         BrowserAnimationsModule,
+        TranslateModule.forRoot(),
       ],
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
@@ -142,7 +144,7 @@ describe('GameComponent', () => {
         { data:
           { title: 'Congratulations!',
             text: 'You earned 1 rewards',
-            buttonTxt: 'View Rewards',
+            buttonTxt: 'VIEW_REWARD',
             imageUrl: 'assets/congrats_image.png'
           }
         }
@@ -164,7 +166,7 @@ describe('GameComponent', () => {
       fixture.detectChanges();
       tick();
       expect(gameServiceSpy).toHaveBeenCalled();
-      expect(dialogSpy).toHaveBeenCalledWith(PopupComponent, { data: Object({ title: 'Thanks for playing', text: 'Unfortunately, you did not win anything this time', buttonTxt: 'Go to Wallet' }) });
+      expect(dialogSpy).toHaveBeenCalledWith(PopupComponent, { data: Object({ title: 'Thanks for playing', text: 'Unfortunately, you did not win anything this time', buttonTxt: 'BACK_TO_WALLET', imageUrl: '' }) });
     }));
 
   });

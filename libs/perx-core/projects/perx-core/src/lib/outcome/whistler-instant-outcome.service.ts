@@ -12,9 +12,17 @@ import { RewardsService } from '../rewards/rewards.service';
 import {
   IInstantOutcomeTransactionAttributes,
   IInstantOutcomeTxnReq,
-  InstantOutcomeEngagementAttributes,
+  IWInstantOutcomeEngagementAttributes,
+  IWOutcomeDisplayProperties,
   ICampaignAttributes
 } from '@perx/whistler';
+
+import { ICampaignDisplayProperties } from '../perx-core.models';
+
+interface CampaignProperties {
+  engagementId: number;
+  display_properties: ICampaignDisplayProperties;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -23,28 +31,35 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   private baseUrl: string;
 
   constructor(private http: HttpClient, private config: Config, private rewardsService: RewardsService) {
-    this.baseUrl = `${config.apiHost}/instant_outcome/transactions/`;
+    this.baseUrl = `${config.apiHost}/instant-outcome/transactions/`;
   }
 
-  private getEngagementId(campaignId: number): Observable<number> {
+  private getEngagementId(campaignId: number): Observable<CampaignProperties> {
     return this.http.get<IJsonApiItemPayload<ICampaignAttributes>>(
       `${this.config.apiHost}/campaign/entities/${campaignId}`
     )
       .pipe(
         map(res => res.data.attributes),
-        map(attributes => Number.parseInt(attributes.engagement_id, 10))
+        map(attributes => ({
+          engagementId: attributes.engagement_id,
+          display_properties: attributes.display_properties
+        })),
       );
   }
 
   // usage is to get return from pipe to call other functions
   public getFromCampaign(campaignId: number): Observable<IOutcome> {
+    let displayProps: ICampaignDisplayProperties;
     return this.getEngagementId(campaignId)
       .pipe(
-        switchMap((engagementId: number) =>
-          this.http.get<IJsonApiItemPayload<InstantOutcomeEngagementAttributes>>(
-            `${this.config.apiHost}/instant_outcome/engagements/${engagementId}`
-          )),
-        map(res => res.data.attributes.display_properties)
+        switchMap((campaign: CampaignProperties) => {
+          displayProps = campaign.display_properties;
+          return this.http.get<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>>(
+            `${this.config.apiHost}/instant-outcome/engagements/${campaign.engagementId}`);
+        }),
+        map(res => res.data.attributes.display_properties),
+        map((outcomeData: IWOutcomeDisplayProperties) =>
+          ({ ...outcomeData, displayProperties: { ...outcomeData.displayProperties, ...displayProps } }))
       );
   }
 
@@ -52,11 +67,11 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   public claim(campaignId: number): Observable<IReward[]> {
     const buildBody: Observable<IJsonApiPostItem<IInstantOutcomeTxnReq>> = this.getEngagementId(campaignId)
       .pipe(
-        map((engagementId: number): IJsonApiPostItem<IInstantOutcomeTxnReq> => ({
+        map((campaign: CampaignProperties): IJsonApiPostItem<IInstantOutcomeTxnReq> => ({
           data: {
             type: 'transactions',
             attributes: {
-              engagement_id: engagementId,
+              engagement_id: campaign.engagementId,
               campaign_entity_id: campaignId
             }
           }

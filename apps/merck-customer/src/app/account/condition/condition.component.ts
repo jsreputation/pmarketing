@@ -16,9 +16,7 @@ export class ConditionComponent implements OnInit, PageAppearence {
   constructor(
     private profileService: ProfileService,
     private notificationService: NotificationService
-  ) {
-
-  }
+  ) {}
 
   public ngOnInit(): void {
     this.profileService.whoAmI().subscribe(res => {
@@ -74,7 +72,7 @@ export class ConditionComponent implements OnInit, PageAppearence {
       header: true,
       backButtonEnabled: true,
       bottomSelectedItem: BarSelectedItem.ACCOUNT,
-      pageTitle: 'Condition'
+      pageTitle: 'STATIC_CONDITION'
     };
   }
 

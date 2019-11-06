@@ -1,5 +1,6 @@
 import { IVoucher } from '../../vouchers/models/voucher.model';
 import { PuzzleCollectReward } from '../../puzzles/models/puzzle-stamp.model';
+import { IProperties } from '../../perx-core.models';
 
 export interface IReward {
   id: number;
@@ -79,6 +80,8 @@ export interface IStampCard {
     };
     rewardPositions?: number[]
     thumbnailImg?: string;
+    noRewardsPopUp?: IProperties;
+    successPopUp?: IProperties;
   };
   stamps?: IStamp[];
 }

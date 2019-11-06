@@ -1,4 +1,5 @@
 import { IReward } from '../../rewards/models/reward.model';
+import { ICampaignDisplayProperties } from '../../perx-core.models';
 
 export enum CampaignType {
   give_reward = 'give_reward', // instant_outcome
@@ -19,11 +20,12 @@ export interface ICampaign {
   description: string;
   type: CampaignType;
   state: CampaignState;
-  endsAt: Date;
+  endsAt: Date | null;
   rewards?: IReward[];
   thumbnailUrl?: string;
   engagementId?: number;
   rawPayload?: any;
+  displayProperties?: ICampaignDisplayProperties;
 }
 
 export enum CommChannel {

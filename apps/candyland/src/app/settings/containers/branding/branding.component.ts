@@ -7,6 +7,7 @@ import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 import { settingsFonts, SettingsService, settingsStyles } from '@cl-core/services';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
+import { IReward } from '@perx/core';
 
 @Component({
   selector: 'cl-branding',
@@ -23,29 +24,9 @@ export class BrandingComponent implements OnInit, OnDestroy {
   }[];
   private destroy$: Subject<void> = new Subject<void>();
   public tenants: Tenants;
-  public reward: Observable<any> = of({
-    id: 1,
-    name: 'Starbucks venti $5',
-    subtitle: 'So yummy',
-    description: 'One bought, one offered',
-    validFrom: null,
-    validTo: null,
-    rewardThumbnail: 'https://picsum.photos/300/300',
-    rewardBanner: 'https://picsum.photos/200/300',
-    merchantImg: 'https://picsum.photos/200/300',
-    termsAndConditions: '',
-    howToRedeem: '',
-    rewardPrice: [{
-      id: 23,
-      currencyCode: '44',
-      price: 3
-    }],
-    categoryTags: [{
-      id: 34,
-      title: 'Lifestyle',
-      parent: null
-    }],
-  });
+  public mockReward: IReward = this.settingsService.getMockReward();
+  public reward$: Observable<any> = of(this.mockReward);
+  public rewards$: Observable<any> = of([this.mockReward, this.mockReward]);
   constructor(private settingsService: SettingsService) {
   }
 
@@ -69,12 +50,12 @@ export class BrandingComponent implements OnInit, OnDestroy {
     return this.formBranding.get('logo');
   }
 
-  public get button_background_color(): AbstractControl {
-    return this.formBranding.get('button_background_color');
+  public get buttonBackgroundColor(): AbstractControl {
+    return this.formBranding.get('buttonBackgroundColor');
   }
 
-  public get button_text_color(): AbstractControl {
-    return this.formBranding.get('button_text_color');
+  public get buttonTextColor(): AbstractControl {
+    return this.formBranding.get('buttonTextColor');
   }
 
   public get font(): AbstractControl {
@@ -108,10 +89,11 @@ export class BrandingComponent implements OnInit, OnDestroy {
     {
       labelView: 'White', color: '#ffffff'
     }];
+
     this.patchValue({
       headerNavbarColor: this.listColors[0],
-      button_background_color: this.listColors[0],
-      button_text_color: this.listColorsText[0]
+      buttonBackgroundColor: this.listColors[0],
+      buttonTextColor: this.listColorsText[0]
     });
     this.subscribeChangeColors();
   }
@@ -169,7 +151,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
       this.setDefaultValue(data);
     } else {
       this.changeDefaultColors(data);
-      const patchFormValue = SettingsHttpAdapter.transformSettingsBrandingToForm(data, this.listColors);
+      const patchFormValue = SettingsHttpAdapter.transformSettingsBrandingToForm(data, this.listColors, this.listColorsText);
       this.patchValue(patchFormValue);
       this.subscribeFormChanges();
     }

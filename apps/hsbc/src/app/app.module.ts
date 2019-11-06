@@ -46,14 +46,14 @@ import {
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { APP_BASE_HREF, DatePipe } from '@angular/common';
 import { SoundModule } from './sound/sound.module';
-import { TncComponent } from './tnc/tnc.component';
-import { FaqComponent } from './faq/faq.component';
 import { ProfileComponent } from './profile/profile.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NavigateToolbarComponent } from './navigate-toolbar/navigate-toolbar.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { AccountComponent } from './account/account.component';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
+import { ContentModule } from './content/content.module';
+import { UnauthorizedInterceptor } from './login/unauthorized.interceptor';
 
 // import { PuzzleListComponent } from './mock/service/puzzle-list/puzzle-list.component';
 // import { of } from 'rxjs';
@@ -113,8 +113,6 @@ import { RewardPopupComponent } from './reward-popup/reward-popup.component';
     RedemptionComponent,
     HomeComponent,
     PuzzlesComponent,
-    TncComponent,
-    FaqComponent,
     ProfileComponent,
     NavigateToolbarComponent,
     WalletComponent,
@@ -154,12 +152,14 @@ import { RewardPopupComponent } from './reward-popup/reward-popup.component';
     FormsModule,
     RewardsModule,
     HttpClientModule,
-    MatDialogModule
+    MatDialogModule,
+    ContentModule
   ],
   providers: [
     Title,
     DatePipe,
     {provide: APP_BASE_HREF, useValue: environment.baseHref },
+    {provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true},
     // { provide: ConfigService, useValue: configServiceStub },
     // { provide: StampService, useValue: stampServiceStub },
     // { provide: ICampaignService, useValue: campaignServiceStub },

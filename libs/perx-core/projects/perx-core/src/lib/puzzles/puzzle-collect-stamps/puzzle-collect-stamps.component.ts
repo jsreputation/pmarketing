@@ -32,50 +32,53 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   private rewards: PuzzleCollectReward[] = [];
 
   @Input()
-  private nbSlots: number = null;
+  private nbSlots: number | null = null;
 
   @Input()
-  private preStampImg: string = null;
+  private preStampImg: string | null = null;
 
   @Input()
-  private postStampImg: string = null;
+  private postStampImg: string | null = null;
 
   @Input()
-  private rewardPreStamp: string = null;
+  private rewardPreStamp: string | null = null;
 
   @Input()
-  private rewardPostStamp: string = null;
+  private rewardPostStamp: string | null = null;
 
   @Input()
-  public backgroundImage: string = null;
+  public backgroundImage: string | null = null;
 
   @Input()
-  public cardBgImage: string = null;
+  public cardBgImage: string | null = null;
 
   @Input()
-  public title: string = null;
+  public title: string | null = null;
 
   @Input()
-  public subTitle: string = null;
+  public subTitle: string | null = null;
 
   @Output()
   private availableStampClicked: EventEmitter<IStamp> = new EventEmitter<IStamp>();
 
-  public currentActiveOrientation: number[] = null;
-  public stampCardImage: string = null;
+  public currentActiveOrientation: number[] | null = null;
+  public stampCardImage: string | null = null;
   public availableStampCount: number = 0;
 
   public ngOnInit(): void {
-    const availableStamps = this.stamps.filter(stamp => stamp.state === 'issued');
+    if (!Array.isArray(this.stamps)) {
+      this.stamps = [];
+    }
+    const availableStamps = this.stamps.filter(stamp => stamp.state === StampState.issued);
     this.availableStampCount = availableStamps.length;
     this.stampCardImage = this.postStampImg;
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.nbSlots) {
+    if (changes.nbSlots && this.nbSlots) {
       this.currentActiveOrientation = this.stampsOrientations[this.nbSlots - 3];
     }
-    if (changes.stamps) {
+    if (changes.stamps && this.stamps) {
       this.availableStampCount = this.stamps.filter(stamp => stamp.state === StampState.issued).length;
     }
   }

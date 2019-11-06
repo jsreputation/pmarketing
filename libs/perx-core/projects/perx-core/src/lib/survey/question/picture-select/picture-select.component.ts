@@ -46,13 +46,14 @@ export class PictureSelectComponent implements OnChanges {
   }
 
   public emitValue(): void {
-    let result = [];
+    let result: string[] = [];
     if (this.payload.multiple) {
-      result = Object.entries(this.selectedChoices).map(data => {
-        if (data[1]) {
-          return data[0];
-        }
-      }).filter(data => data);
+      result = Object.entries(this.selectedChoices)
+        .map(data => {
+          if (data[1]) {
+            return data[0];
+          }
+        }).filter(data => data);
     } else {
       result[0] = this.selectedChoice.toString();
     }

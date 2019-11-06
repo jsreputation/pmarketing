@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
-  MatButtonModule, MatNativeDateModule
+  MatButtonModule, MatNativeDateModule, MatSnackBarModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './auth/auth.module';
@@ -36,7 +36,8 @@ import { GestureConfig } from '@angular/material/core';
     MatNativeDateModule,
     PerxChartModule.forRoot({ tokenBasePath: environment.apiHost }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    JsonApiModule
+    JsonApiModule,
+    MatSnackBarModule
   ],
   providers: [
     LocalStorageService,

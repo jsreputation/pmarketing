@@ -91,16 +91,16 @@
             <span>Background Color</span>
           </label>
           <mat-form-field color="primary" appearance="outline">
-            <mat-select [formControlName]="'button_background_color'">
+            <mat-select [formControlName]="'buttonBackgroundColor'">
               <mat-select-trigger>
                 <div class="select-color">
                   <div
                     class="select-color-preview"
                     [ngStyle]="{
-                      'background-color': button_background_color.value.color
+                      'background-color': buttonBackgroundColor.value.color
                     }"></div>
                   <p class="select-color-text">
-                    {{ button_background_color.value?.labelView }}
+                    {{ buttonBackgroundColor.value?.labelView }}
                   </p>
                 </div>
               </mat-select-trigger>
@@ -122,16 +122,16 @@
             <span>Text Color</span>
           </label>
           <mat-form-field color="primary" appearance="outline">
-            <mat-select [formControlName]="'button_text_color'">
+            <mat-select [formControlName]="'buttonTextColor'">
               <mat-select-trigger>
                 <div class="select-color">
                   <div
                     class="select-color-preview"
                     [ngStyle]="{
-                      'background-color': button_text_color.value.color
+                      'background-color': buttonTextColor.value.color
                     }"></div>
                   <p class="select-color-text">
-                    {{ button_text_color.value?.labelView }}
+                    {{ buttonTextColor.value?.labelView }}
                   </p>
                 </div>
               </mat-select-trigger>
@@ -151,44 +151,100 @@
       </div>
     </mat-card>
   </div>
-  <cl-settings-mobile-preview
-    [tabs]="['Login', 'Home', 'Reward Detail']">
+  <cl-settings-mobile-preview #mobilePreview
+    [tabs]="['Login', 'Home', 'Reward Detail']"
+    class="branding"
+  >
+    <!--LOG IN PAGE-->
     <cl-simple-mobile-view
       class="firs-tab"
       [mobileImageClass]="'mobile-non-header'"
       [headerColor]="headerNavbarColor.value.color"
+      [primaryColor]="primaryColor.value"
+      [backgroundColor]="primaryColor.value"
       [logo]="logo.value"
       [logoType]="logoType.value === 'image'"
       [fontFamily]="font.value">
-      <div class="mobile-preview-btn-wrap mobile-btn-block">
-        <button
-          class="mobile-preview-btn"
-          [ngStyle]="{
-            backgroundColor: button_background_color.value.color,
-            'font-family': font.value,
-            color: button_text_color.value.color
+      <div class="mobile-preview-header">
+        <p class="mobile-preview-headline">
+          Some text for example
+        </p>
+      </div>
+      <div class="plugin-block">
+        <div class="mobile-preview-card"
+             [ngStyle]="{'background-color': '#fffff'}"
+        >
+          <div class="mobile-preview-header-nested">
+            <p class="mobile-preview-headline">
+              Log In
+            </p>
+          </div>
+          <mat-form-field appearance="fill" class="control-input">
+            <input matInput placeholder="Player Code">
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="control-input">
+            <input matInput placeholder="Card last 4 digit">
+          </mat-form-field>
+
+          <button class="mobile-preview-btn"
+                  [ngStyle]="{
+                        backgroundColor: buttonBackgroundColor.value.color,
+                        'font-family': font.value,
+                        color: buttonTextColor.value.color
+
           }">
-          {{ "button text" }}
-        </button>
+            Log In
+          </button>
+          <p class="mobile-additional-info">
+            Other additional info
+          </p>
+        </div>
       </div>
     </cl-simple-mobile-view>
+    <!--HOME PAGE-->
     <cl-simple-mobile-view
       class="second-tab"
       [mobileImageClass]="'mobile-non-header'"
       [headerColor]="headerNavbarColor.value.color"
       [logo]="logo.value"
+      [backgroundColor]="'#E8E8E8'"
       [logoType]="logoType.value === 'image'"
       [fontFamily]="font.value">
-      <div class="mobile-preview-btn-wrap mobile-btn-block">
-        <button
-          class="mobile-preview-btn"
-          [ngStyle]="{
-            backgroundColor: button_background_color.value.color,
-            'font-family': font.value,
-            color: button_text_color.value.color
-          }">
-          {{ "button text" }}
-        </button>
+      <!--Points block-->
+      <div class="plugin-block">
+        <div class="points-block flex justify-content-between">
+          <div class="points">
+            <p class="points-count">
+              0
+            </p>
+            <p class="points-title">
+              Your total points
+            </p>
+          </div>
+          <div class="quare-code-btn">
+            <button class="mobile-preview-btn"
+                    [ngStyle]="{
+                        backgroundColor: buttonBackgroundColor.value.color,
+                        'font-family': font.value,
+                        color: buttonTextColor.value.color
+
+            }">
+              My OR
+            </button>
+          </div>
+        </div>
+        <div class="games-block">
+          <h2 class="card-fieldset-title sub-title">
+            Featured Rewards
+          </h2>
+          <perx-core-rewards-collection [rewardsList]="rewards$"
+                                        clScrollTo
+                                        [shiftTo]="50"
+                                        canRun="true"
+                                        classElement="card-collection-container"
+                                        [emit$]="mobilePreview.animationDone"
+          ></perx-core-rewards-collection>
+        </div>
       </div>
     </cl-simple-mobile-view>
     <cl-simple-mobile-view
@@ -205,9 +261,9 @@
             'background-image':
               'url(assets/images/reward/card-background/card-bg-1.png)',
             'font-family': font.value,
-            color: button_text_color.value.color
+            color: buttonTextColor.value.color
           }">
-          <perx-core-reward [reward]="reward"></perx-core-reward>
+          <perx-core-reward [reward]="reward$"></perx-core-reward>
         </div>
       </div>
 
@@ -215,9 +271,9 @@
         <button
           class="mobile-preview-btn"
           [ngStyle]="{
-            backgroundColor: button_background_color.value.color,
+            backgroundColor: buttonBackgroundColor.value.color,
             'font-family': font.value,
-            color: button_text_color.value.color
+            color: buttonTextColor.value.color
           }">
           {{ "button text" }}
         </button>

@@ -30,14 +30,14 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   public locations: Observable<ILocation[]>;
 
-  public current: ILocation;
+  public current: ILocation | null;
 
   public userMarker: google.maps.Marker;
   public markersArray: google.maps.Marker[] = [];
   public userLocation: Subject<Position> = new Subject();
   private destroy$: Subject<any> = new Subject();
   @Input()
-  public key: string = null;
+  public key: string | null = null;
 
   @ViewChild('gmap', { static: false }) public gmapElement: ElementRef;
   private map: google.maps.Map;
@@ -86,7 +86,7 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
       });
     });
     script.innerHTML = '';
-    let url = 'http://maps.googleapis.com/maps/api/js';
+    let url = 'https://maps.googleapis.com/maps/api/js';
     if (this.key) {
       url += `?key=${this.key}`;
     }
@@ -108,7 +108,7 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
 
     if (!this.userMarker) {
       this.userMarker = new google.maps.Marker({
-        icon: 'http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png',
+        icon: 'https://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png',
         position: location,
         map: this.map,
       });

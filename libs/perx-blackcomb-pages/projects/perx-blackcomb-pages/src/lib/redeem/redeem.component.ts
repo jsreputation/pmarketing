@@ -1,10 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { Voucher, IVoucherService, RedemptionType, IPopupConfig, PopupComponent } from '@perx/core';
+import {
+  Voucher,
+  IVoucherService,
+  RedemptionType,
+  IPopupConfig,
+  PopupComponent,
+} from '@perx/core';
 import { Observable, Subject } from 'rxjs';
 import { filter, switchMap, takeUntil, map, tap } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-redeem',
@@ -17,26 +24,73 @@ export class RedeemComponent implements OnInit, OnDestroy {
   public redemptionType: RedemptionType;
   private destroy$: Subject<void> = new Subject<void>();
   public rt: typeof RedemptionType = RedemptionType;
+  public headLine: string;
+  public subHeadLine: string;
+  public codeInstructionsText: string = `Please input this code when redeeming your reward at the Merchant`;
+  public rewardSuccessPopUp: IPopupConfig = {
+    title: 'Successfully Redeemed!',
+    text: '',
+    buttonTxt: 'Back To Wallet',
+    imageUrl: '',
+  };
+  public errorPopUp: IPopupConfig = {
+    title: 'Error occur, please try again later',
+    text: '',
+    buttonTxt: 'Back To Wallet',
+    imageUrl: '',
+  };
+
+  private initTranslate(): void {
+    this.translate.get('ENTER_CODE').subscribe((text) => this.headLine = text);
+    this.translate.get('REDEMPTION_CODE').subscribe((text) => this.subHeadLine = text);
+    this.translate.get('REDEEM_SUCCESSFULLY').subscribe((text) => this.rewardSuccessPopUp.title = text);
+    this.translate.get('TRY_AGAIN_LATER').subscribe((text) => this.errorPopUp.title = text);
+  }
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private vouchersService: IVoucherService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
   }
 
   public ngOnInit(): void {
+    this.initTranslate();
     this.voucher$ = this.route.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
         map((params: ParamMap) => Number.parseInt(params.get('id'), 10)),
         tap((id: number) => this.voucherId = id),
         switchMap((id: number) => this.vouchersService.get(id)),
-        tap((voucher: Voucher) => this.redemptionType = voucher.reward.redemptionType),
+        tap((voucher: Voucher) => {
+          this.rewardSuccessPopUp.text = `You have redeemed ${voucher.reward.name}`;
+          this.redemptionType = voucher.reward.redemptionType;
+          if (voucher.reward.displayProperties && voucher.reward.displayProperties.merchantPinText) {
+            this.headLine = voucher.reward.displayProperties.merchantPinText.headLine || this.headLine;
+            this.subHeadLine = voucher.reward.displayProperties.merchantPinText.subHeadLine || this.subHeadLine;
+          }
+
+          if (voucher.reward.displayProperties && voucher.reward.displayProperties.rewardSuccessPopUp) {
+            this.rewardSuccessPopUp.title = voucher.reward.displayProperties.rewardSuccessPopUp.headLine;
+            this.rewardSuccessPopUp.text = voucher.reward.displayProperties.rewardSuccessPopUp.subHeadLine || this.rewardSuccessPopUp.text;
+            this.rewardSuccessPopUp.imageUrl = voucher.reward.displayProperties.rewardSuccessPopUp.imageURL;
+          }
+
+          if (voucher.reward.displayProperties && voucher.reward.displayProperties.codeInstructionsText) {
+            this.codeInstructionsText = voucher.reward.displayProperties.codeInstructionsText.headLine;
+          }
+
+          if (voucher.reward.displayProperties && voucher.reward.displayProperties.errorPopUp) {
+            this.errorPopUp.title = voucher.reward.displayProperties.errorPopUp.headLine;
+            this.errorPopUp.imageUrl = voucher.reward.displayProperties.errorPopUp.imageURL;
+          }
+        }),
         takeUntil(this.destroy$)
       );
+
   }
 
   public ngOnDestroy(): void {
@@ -45,10 +99,7 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public pinInputSuccess(): void {
-    this.popup({
-      title: 'Redeem Successfully',
-      text: 'ID: ' + this.voucherId
-    });
+    this.popup(this.rewardSuccessPopUp);
   }
 
   public errorHandler(status: number): void {
@@ -60,18 +111,14 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public needLoginPopup(): void {
-    this.popup({
-      title: 'You need to login to redeem the voucher',
-      buttonTxt: 'Go to login'
-    })
-      .afterClosed()
-      .subscribe(() => this.router.navigate(['/login']));
+    this.translate.get(['REEDEM_QUEST', 'GO_TO_LOGIN']).pipe(map((dictionary) => this.popup({
+      title: dictionary.REEDEM_QUEST,
+      buttonTxt: dictionary.GO_TO_LOGIN
+    }).afterClosed())).subscribe(() => this.router.navigate(['/login']));
   }
 
   public errorPopup(): void {
-    this.popup({
-      title: 'Error occur, please try again later'
-    });
+    this.popup(this.errorPopUp);
   }
 
   public popup(data: IPopupConfig): MatDialogRef<PopupComponent> {

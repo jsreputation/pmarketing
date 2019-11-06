@@ -1,13 +1,25 @@
-import { Observable } from 'rxjs';
-import { ITheme, PagesObject } from './themes.model';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { ITheme, PagesObject, LIGHT, DARK } from './themes.model';
 
 export abstract class ThemesService {
+  protected active: BehaviorSubject<ITheme> = new BehaviorSubject(LIGHT);
+  protected availableThemes: ITheme[] = [LIGHT, DARK];
 
-  public abstract getAvailableThemes(): ITheme[];
+  public getAvailableThemes(): ITheme[] {
+    return this.availableThemes;
+  }
 
-  public abstract getActiveTheme(): ITheme;
+  public getActiveTheme(): Observable<ITheme> {
+    return this.active;
+  }
 
-  public abstract setActiveTheme(theme: ITheme): void;
+  public setActiveTheme(theme: ITheme): void {
+    this.active.next(theme);
+
+    Object.entries(theme.properties).forEach(([k, v]) => {
+      document.documentElement.style.setProperty(k, v);
+    });
+  }
 
   public abstract getThemeSetting(): Observable<ITheme>;
 

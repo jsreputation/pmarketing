@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthenticationService, NotificationService, PopupComponent } from '@perx/core';
-import { environment } from '../environments/environment';
+import { AuthenticationService, NotificationService, PopupComponent, ConfigService, IConfig } from '@perx/core';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -19,11 +18,17 @@ export class AppComponent implements OnInit {
     private authService: AuthenticationService,
     private notificationService: NotificationService,
     private dialog: MatDialog,
-    @Inject(PLATFORM_ID) private platformId: object) {
-    this.preAuth = environment.preAuth;
-  }
+    private configService: ConfigService,
+    @Inject(PLATFORM_ID) private platformId: object) {}
 
   public ngOnInit(): void {
+
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig) => {
+        this.preAuth = config.preAuth as boolean;
+      }
+    );
+
     // initialise notification service
     this.notificationService.$popup.subscribe(data => {
       this.dialog.open(PopupComponent, { data });

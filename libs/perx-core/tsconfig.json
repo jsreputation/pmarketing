@@ -12,14 +12,15 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "importHelpers": true,
+    "strictNullChecks": false,
     "target": "es2015",
     "plugins": [
-      { "transform": "ts-optchain/transform" }
+      {
+        "transform": "ts-optchain/transform"
+      }
     ],
     "typeRoots": [
       "node_modules/@types"
-    ],
-    "types": [
     ],
     "lib": [
       "es2018",

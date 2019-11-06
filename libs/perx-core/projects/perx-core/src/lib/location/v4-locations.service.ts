@@ -10,6 +10,7 @@ import {
   filter,
   scan,
   mergeAll,
+  share
 } from 'rxjs/operators';
 
 import { ILocation } from './ilocation';
@@ -39,12 +40,14 @@ export class V4LocationsService extends LocationsService {
     return forkJoin(allMerchants).pipe(
       mergeMap((merchantsArr: IMerchant[][]) => {
         const merchants: IMerchant[] = merchantsArr[0];
-        let filteredMerchants: IMerchant[] = null;
+        let filteredMerchants: IMerchant[] | null = null;
         if (tags && tags.length > 0) {
           filteredMerchants = merchants.filter(merchant => {
             let found = false;
             if (merchant.tags) {
-              found = tags.some(tag => merchant.tags.map(t => t.name.toLowerCase()).includes(tag.toLowerCase()));
+              const merchantTagNames: string[] = merchant.tags.map(t => t.name.toLowerCase());
+              // @ts-ignore
+              found = tags.some(tag => merchantTagNames.includes(tag.toLowerCase()));
             }
             return found;
           });
@@ -55,7 +58,8 @@ export class V4LocationsService extends LocationsService {
         return filteredMerchants.map((merchant: IMerchant) => this.getFromMerchant(merchant.id));
       }),
       mergeAll(5),
-      scan((acc: ILocation[], curr: ILocation[]) => acc.concat(curr), [])
+      scan((acc: ILocation[], curr: ILocation[]) => acc.concat(curr), []),
+      share()
     );
   }
 
@@ -63,17 +67,19 @@ export class V4LocationsService extends LocationsService {
     if (page === undefined) {
       page = 1;
     }
-    if (tags) {
+    if (tags === undefined) {
       tags = [];
     }
     return this.merchantsService.getMerchants(page).pipe(
       mergeMap((merchants: IMerchant[]) => {
-        let filteredMerchants: IMerchant[];
+        let filteredMerchants: IMerchant[] | undefined;
         if (tags && tags.length > 0) {
           filteredMerchants = merchants.filter(merchant => {
             let found = false;
-            if (merchant.tags) {
-              found = tags.some(tag => merchant.tags.map(t => t.name.toLowerCase()).includes(tag.toLowerCase()));
+            if (merchant.tags !== undefined) {
+              const tagNames: string[] = merchant.tags.map(t => t.name.toLowerCase());
+              // @ts-ignore
+              found = tags.some(tag => tagNames.includes(tag.toLowerCase()));
             }
             return found;
           });
@@ -90,7 +96,8 @@ export class V4LocationsService extends LocationsService {
 
   public getFromMerchant(merchantId: number, page?: number): Observable<ILocation[]> {
     return this.merchantsService.getMerchant(merchantId, true, page).pipe(
-      filter((merchant: IMerchant) => merchant.outlets && merchant.outlets.length > 0),
+      filter((merchant: IMerchant) => (merchant.outlets !== undefined && merchant.outlets.length > 0)),
+      // @ts-ignore
       map((merchant: IMerchant) => merchant.outlets.map((outlet: IOutlet) => ({
         merchantId: merchant.id,
         merchantName: merchant.name,

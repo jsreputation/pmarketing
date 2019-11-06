@@ -113,32 +113,33 @@ export class V4GameService implements IGameService {
     let type = TYPE.unknown;
     let config: ITree | IPinata;
     switch (game.game_type) {
-    case GameType.shakeTheTree:
-      type = TYPE.shakeTheTree;
-      const dpts: TreeDisplayProperties = game.display_properties as TreeDisplayProperties;
-      config = {
-        ...defaultTree(),
-        treeImg: dpts.tree_image.value.image_url || dpts.tree_image.value.file,
-        giftImg: dpts.gift_image.value.image_url || dpts.gift_image.value.file,
-        nbHangedGift: dpts.number_of_gifts_shown,
-        nbGiftsToDrop: dpts.number_of_gifts_to_drop,
-        nbTaps: dpts.number_of_taps || 5,
-        waitingAccessoryImg: oc(dpts).waiting_image.value.image_url() || oc(dpts).waiting_image.value.file(),
-        celebratingAccessoryImg: oc(dpts).celebrating_image.value.image_url() || oc(dpts).celebrating_image.value.file()
-      };
-      break;
-    case GameType.pinata:
-      type = TYPE.pinata;
-      const dpps: PinataDisplayProperties = game.display_properties as PinataDisplayProperties;
-      config = {
-        ...defaultPinata(),
-        stillImg: dpps.still_image.value.image_url || dpps.still_image.value.file,
-        brokenImg: dpps.opened_image.value.image_url || dpps.opened_image.value.file,
-        breakingImg: oc(dpps).cracking_image.value.image_url() || oc(dpps).cracking_image.value.file(),
-        nbTaps: dpps.number_of_taps || 5
-      };
-
-      break;
+      case GameType.shakeTheTree:
+        type = TYPE.shakeTheTree;
+        const dpts: TreeDisplayProperties = game.display_properties as TreeDisplayProperties;
+        config = {
+          ...defaultTree(),
+          treeImg: dpts.tree_image.value.image_url || dpts.tree_image.value.file,
+          giftImg: dpts.gift_image.value.image_url || dpts.gift_image.value.file,
+          nbHangedGift: dpts.number_of_gifts_shown,
+          nbGiftsToDrop: dpts.number_of_gifts_to_drop,
+          nbTaps: dpts.number_of_taps || 5,
+          waitingAccessoryImg: oc(dpts).waiting_image.value.image_url() || oc(dpts).waiting_image.value.file(),
+          celebratingAccessoryImg: oc(dpts).celebrating_image.value.image_url() || oc(dpts).celebrating_image.value.file()
+        };
+        break;
+      case GameType.pinata:
+        type = TYPE.pinata;
+        const dpps: PinataDisplayProperties = game.display_properties as PinataDisplayProperties;
+        config = {
+          ...defaultPinata(),
+          stillImg: dpps.still_image.value.image_url || dpps.still_image.value.file,
+          brokenImg: dpps.opened_image.value.image_url || dpps.opened_image.value.file,
+          breakingImg: oc(dpps).cracking_image.value.image_url() || oc(dpps).cracking_image.value.file(),
+          nbTaps: dpps.number_of_taps || 5
+        };
+        break;
+      default:
+        throw new Error(`${game.game_type} is not mapped yet`);
     }
 
     const texts: { [key: string]: string } = {};
@@ -191,7 +192,7 @@ export class V4GameService implements IGameService {
       .pipe(
         map((res: IV4PlayResponse) => {
           // @ts-ignore
-          const vs: IV4Voucher[] = res.data.outcomes.filter((out) =>  out.outcome_type === 'reward');
+          const vs: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === 'reward');
           return {
             vouchers: vs.map(v => V4VouchersService.v4VoucherToVoucher(v)),
             rawPayload: res

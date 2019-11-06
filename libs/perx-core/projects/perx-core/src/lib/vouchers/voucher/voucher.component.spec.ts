@@ -10,6 +10,8 @@ import { IVoucherService } from '../ivoucher.service';
 import { RewardsService } from '../../rewards/rewards.service';
 import { IVoucher, VoucherState } from '../models/voucher.model';
 import { Type, SimpleChange } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { RedemptionType } from '../../rewards/models/reward.model';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
@@ -34,9 +36,8 @@ describe('VoucherComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: null,
+      redemptionType: RedemptionType.none,
       categoryTags: [],
-      inventory: null,
     },
     state: VoucherState.issued,
     code: 'yo',
@@ -63,13 +64,10 @@ describe('VoucherComponent', () => {
         ConfigModule.forRoot({})
       ],
       providers: [
+        DatePipe,
         { provide: IVoucherService, useValue: voucherServiceStub },
-        {
-          provide: RewardsService, useValue: rewardsServiceStub
-        },
-        {
-          provide: IMerchantsService, useValue: merchantsServiceStub
-        }
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: IMerchantsService, useValue: merchantsServiceStub }
       ]
     })
       .compileComponents();
@@ -98,10 +96,16 @@ describe('VoucherComponent', () => {
     fixture.detectChanges();
     tick();
     expect(voucherServiceSpy).toHaveBeenCalled();
+    expect(mockVoucher.reward).not.toBeNull();
+    // @ts-ignore
     expect(fixture.nativeElement.querySelector('.reward-name').innerText).toEqual(mockVoucher.reward.name);
+    // @ts-ignore
     expect(fixture.nativeElement.querySelector('.merchant-name').innerText).toEqual(mockVoucher.reward.merchantName);
+    // @ts-ignore
     expect(fixture.nativeElement.querySelector('#rewardDescription').innerText).toEqual(mockVoucher.reward.description);
+    // @ts-ignore
     expect(fixture.nativeElement.querySelector('.merchant-image').src).toEqual(mockVoucher.reward.merchantImg);
+    // @ts-ignore
     expect(fixture.nativeElement.querySelector('.reward-image').src).toEqual(mockVoucher.reward.rewardBanner);
   }));
 });
