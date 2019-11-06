@@ -5,7 +5,7 @@ import { IVoucherService } from './ivoucher.service';
 import { Observable, combineLatest, of } from 'rxjs';
 import { IVoucher, IGetVoucherParams, VoucherState } from './models/voucher.model';
 import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
-import { map, switchMap, mergeMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { RewardsService } from '../rewards/rewards.service';
 import { IReward, IRewardParams } from '../rewards/models/reward.model';
 import { IAssignedAttributes, AssignedStatus } from '@perx/whistler';
@@ -40,23 +40,41 @@ export class WhistlerVouchersService implements IVoucherService {
     };
   }
 
+  private static compare(a: IVoucher, b: IVoucher, ): number {
+    const merchantIdA: number = a.reward.merchantId;
+    const merchantIdB: number = b.reward.merchantId;
+
+    if (merchantIdA ? !merchantIdB : merchantIdB) {
+      return !merchantIdA ? 1 : -1;
+    }
+
+    return 0;
+  }
   // @ts-ignore
   public getAll(voucherParams?: IGetVoucherParams): Observable<IVoucher[]> {
-    return this.http.get<IJsonApiListPayload<IAssignedAttributes>>(this.vouchersUrl)
-      .pipe(
-        map((res) => res.data),
-        mergeMap((vouchers: IJsonApiItem<IAssignedAttributes>[]) => combineLatest(...vouchers.map(v => this.getFullVoucher(v)))),
-        map(vouchers => vouchers.sort((elA, elB) => {
-          const merchantIdA: number = elA.reward.merchantId;
-          const merchantIdB: number = elB.reward.merchantId;
+    return new Observable(subscriber => {
+      let vouchers: IVoucher[] = [];
+      const process = (p: number, res: IJsonApiListPayload<IAssignedAttributes>) => {
+        const vsQuerries: Observable<IVoucher>[] = res.data.map(v => this.getFullVoucher(v));
+        combineLatest(vsQuerries)
+          .subscribe((vs: IVoucher[]) => {
+            vouchers = vouchers.concat(vs).sort(WhistlerVouchersService.compare);
+            subscriber.next(vouchers);
+            if (p >= res.meta.page_count) {
+              subscriber.complete();
+            } else {
+              // tslint:disable-next-line: rxjs-no-nested-subscribe
+              this.getPage(p + 1).subscribe(resi => process(p + 1, resi));
+            }
+          });
+      };
+      this.getPage(1).subscribe(vs => process(1, vs));
+    });
+  }
 
-          if (merchantIdA ? !merchantIdB : merchantIdB) {
-            return !merchantIdA ? 1 : -1;
-          }
-
-          return 0;
-        }))
-      );
+  private getPage(page: number): Observable<IJsonApiListPayload<IAssignedAttributes>> {
+    const size = 10;
+    return this.http.get<IJsonApiListPayload<IAssignedAttributes>>(`${this.vouchersUrl}?page[number]=${page}&page[size]=${size}`);
   }
 
   private getFullVoucher(voucher: IJsonApiItem<IAssignedAttributes>): Observable<IVoucher> {
