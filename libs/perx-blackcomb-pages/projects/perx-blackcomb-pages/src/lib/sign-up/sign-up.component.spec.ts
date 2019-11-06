@@ -8,10 +8,14 @@ import { MatSnackBar } from '@angular/material';
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
   let fixture: ComponentFixture<SignUpComponent>;
-  const formSvcStub = {
-    getSignupForm: () => of('')
+  const formSvcStub: Partial<IFormsService> = {
+    getSignupForm: () => of({
+      title: '',
+      questions: []
+    })
   };
-  const matSnackStub = {};
+  const matSnackStub: Partial<MatSnackBar> = {};
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SignUpComponent],
