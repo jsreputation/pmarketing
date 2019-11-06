@@ -10,3 +10,13 @@ export interface IWhistlerProfileAttributes {
   primary_identifier: string;
   properties?: string | null;
 }
+
+export interface IWCognitoLogin {
+  jwt: string;
+}
+
+export interface IWUserJWTRequest {
+  identifier: string;
+  url: string;
+  profile?: IWhistlerProfileAttributes;
+}
