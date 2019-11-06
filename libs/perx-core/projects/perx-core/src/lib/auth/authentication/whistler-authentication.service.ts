@@ -107,7 +107,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     );
   }
 
-  public createUserAndAutoLogin(pi: string, userObj: IProfileAttributes): Observable<any> {
+  public createUserAndAutoLogin(pi: string, userObj?: IProfileAttributes): Observable<any> {
     return this.createUserWithPI(pi, userObj).pipe(
       tap(
         (res: IJsonApiListPayload<ICognitoLogin>) => {
