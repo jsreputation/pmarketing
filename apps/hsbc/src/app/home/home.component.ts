@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   public selectedTab: number = 0;
   private displayCampaignAs: string = 'puzzle';
   public puzzleTextFn: () => string;
+  public titleFn: (index?: number) => string;
 
   constructor(
     private router: Router,
@@ -32,6 +33,7 @@ export class HomeComponent implements OnInit {
         if (config.sourceType === 'hsbc-xmas') {
           this.displayCampaignAs = 'stamp_card';
           this.puzzleTextFn = () => 'new stamps';
+          this.titleFn = (index?: number) => index !== undefined ? `Stamp Card ${this.puzzleIndex(index)} out of 12` : '';
         }
       });
 
@@ -93,5 +95,12 @@ export class HomeComponent implements OnInit {
         text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of puzzle pieces. Don\'t forget to redeem your earned rewards!'
       });
     }
+  }
+
+  public puzzleIndex(index: number): string {
+    if (index < 0) {
+      return '';
+    }
+    return String(++index);
   }
 }
