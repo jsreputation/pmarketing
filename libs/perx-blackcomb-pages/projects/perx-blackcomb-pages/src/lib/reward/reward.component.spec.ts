@@ -10,11 +10,11 @@ describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
 
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getAllRewards: () => of(),
   };
 
-  const instantOutStub = {
+  const instantOutStub: Partial<InstantOutcomeService> = {
 
   };
 

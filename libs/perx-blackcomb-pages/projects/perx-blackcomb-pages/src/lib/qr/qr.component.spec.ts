@@ -24,13 +24,13 @@ import { QRComponent } from './qr.component';
 describe('RedeemComponent', () => {
   let component: QRComponent;
   let fixture: ComponentFixture<QRComponent>;
-  const locationStub = {
-    back: () => {}
+  const locationStub: Partial<Location> = {
+    back: () => { }
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ QRComponent ],
+      declarations: [QRComponent],
       imports: [
         RouterTestingModule,
         QRCodeModule,
@@ -39,7 +39,7 @@ describe('RedeemComponent', () => {
       providers: [
         {
           provide: ProfileService,
-          useValue: { whoAmI: () => of({})}
+          useValue: { whoAmI: () => of({}) }
         },
         {
           provide: ActivatedRoute,
@@ -66,9 +66,9 @@ describe('RedeemComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it ('should set rewardId and reward details onInit', fakeAsync(() => {
+  it('should set rewardId and reward details onInit', fakeAsync(() => {
     const profileService: ProfileService = fixture.debugElement.injector.get<ProfileService>
-    (ProfileService as Type<ProfileService>);
+      (ProfileService as Type<ProfileService>);
     const profileSpy = spyOn(profileService, 'whoAmI').and.returnValue(
       of({
         id: 1,
