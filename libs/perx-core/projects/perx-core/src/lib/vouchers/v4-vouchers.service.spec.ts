@@ -32,12 +32,11 @@ describe('VouchersService', () => {
         merchantWebsite: '',
         termsAndConditions: '',
         howToRedeem: '',
-        redemptionType: null,
+        redemptionType: RedemptionType.none,
         categoryTags: [],
-        inventory: null,
       },
       state: VoucherState.issued,
-      code: null,
+      // code: null,
       expiry: new Date('Fri Jan 31 2020 23:59:00 GMT+0800 (Philippine Standard Time)'),
     }
   ];
@@ -69,7 +68,7 @@ describe('VouchersService', () => {
       merchant_id: 5,
       merchant_name: 'Lumiere Photography',
       merchant_website: 'https://www.lumierephotographysg.com',
-      subtitle: null,
+      subtitle: 'null',
       valid_from: new Date('2019-06-30T16:00:00'),
       valid_to: new Date('2020-01-31T15:59:00'),
       selling_from: '2019-06-23T16:00:00.000Z',
@@ -126,7 +125,7 @@ describe('VouchersService', () => {
       imports: [
         HttpClientTestingModule,
         VouchersModule,
-        ConfigModule.forRoot({...environment})
+        ConfigModule.forRoot({ ...environment })
       ]
     });
     // httpClient = TestBed.get(HttpClient);
