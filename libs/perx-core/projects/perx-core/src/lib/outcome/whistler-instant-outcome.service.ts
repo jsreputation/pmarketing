@@ -31,7 +31,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   private baseUrl: string;
 
   constructor(private http: HttpClient, private config: Config, private rewardsService: RewardsService) {
-    this.baseUrl = `${config.apiHost}/instant_outcome/transactions/`;
+    this.baseUrl = `${config.apiHost}/instant-outcome/transactions/`;
   }
 
   private getEngagementId(campaignId: number): Observable<CampaignProperties> {
