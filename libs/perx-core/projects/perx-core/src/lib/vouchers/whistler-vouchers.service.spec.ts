@@ -6,7 +6,7 @@ import { ConfigModule, RewardsService } from '../../public-api';
 import { of } from 'rxjs';
 import { IReward } from '../rewards/models/reward.model';
 import { IJsonApiItem, IJsonApiItemPayload, IJsonApiListPayload } from '../jsonapi.payload';
-import { IAssignedAttributes, AssignedStatus } from '@perx/whistler';
+import { IWAssignedAttributes, WAssignedStatus } from '@perx/whistler';
 import { IVoucher } from './models/voucher.model';
 import { Type } from '@angular/core';
 
@@ -37,7 +37,7 @@ describe('WhistlerVouchersService', () => {
     getReward: () => of(mockReward)
   };
 
-  const mockVoucherApi: IJsonApiItem<IAssignedAttributes> = {
+  const mockVoucherApi: IJsonApiItem<IWAssignedAttributes> = {
     id: '12',
     type: '',
     links: {
@@ -51,7 +51,7 @@ describe('WhistlerVouchersService', () => {
       source_id: 42,
       source_type: '42',
       valid_from: '42',
-      status: AssignedStatus.issued,
+      status: WAssignedStatus.issued,
       updated_at: '42',
       urn: '42',
     }
@@ -86,7 +86,7 @@ describe('WhistlerVouchersService', () => {
 
     const req = httpTestingController.expectOne('https://blabla/voucher-service/vouchers/42');
     expect(req.request.method).toEqual('GET');
-    const res: IJsonApiItemPayload<IAssignedAttributes> = {
+    const res: IJsonApiItemPayload<IWAssignedAttributes> = {
       data: mockVoucherApi
     };
     req.flush(res);
@@ -103,7 +103,7 @@ describe('WhistlerVouchersService', () => {
 
     const req = httpTestingController.expectOne('https://blabla/voucher-service/vouchers');
     expect(req.request.method).toEqual('GET');
-    const res: IJsonApiListPayload<IAssignedAttributes> = {
+    const res: IJsonApiListPayload<IWAssignedAttributes> = {
       data: [mockVoucherApi]
     };
     req.flush(res);
