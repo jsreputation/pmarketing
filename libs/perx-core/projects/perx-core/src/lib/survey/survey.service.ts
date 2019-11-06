@@ -10,7 +10,8 @@ import { IJsonApiItemPayload } from '../jsonapi.payload';
 
 import {
   IWSurveyAttributes,
-  IWPostAnswerAttributes
+  IWPostAnswerAttributes,
+  WSurveyQuestionType
 } from '@perx/whistler';
 
 import { ICampaignDisplayProperties } from '../perx-core.models';
@@ -29,10 +30,15 @@ export class SurveyService {
     this.baseUrl = config.apiHost || '';
   }
 
-  private static WSurveyToSurvey(survey: IJsonApiItemPayload<IWSurveyAttributes>): ISurvey {
+  private static WQTypeToQType(t: WSurveyQuestionType): SurveyQuestionType {
+    // todo have a smarter mapping
+    return t as unknown as SurveyQuestionType;
+  }
+
+  public static WSurveyToSurvey(survey: IJsonApiItemPayload<IWSurveyAttributes>): ISurvey {
     const dp = survey.data.attributes.display_properties;
     const questions: IQuestion[] = dp.questions.map(q => {
-      const payload = { ...q.payload, type: q.payload.type as unknown as SurveyQuestionType };
+      const payload = { ...q.payload, type: SurveyService.WQTypeToQType(q.payload.type) };
       return { ...q, payload };
     });
     return {
