@@ -3,7 +3,10 @@ import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/fo
 import { CampaignsService, SettingsService, OutcomesService, CommsService, LimitsService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
-import { NewCampaignDonePopupComponent, NewCampaignDonePopupComponentData } from '../new-campaign-done-popup/new-campaign-done-popup.component';
+import {
+  NewCampaignDonePopupComponent,
+  NewCampaignDonePopupComponentData
+} from '../new-campaign-done-popup/new-campaign-done-popup.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
@@ -12,7 +15,7 @@ import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapte
 import { map, switchMap, tap, catchError, takeUntil } from 'rxjs/operators';
 import { combineLatest, iif, of, Observable, Subject } from 'rxjs';
 
-import { ICampaignAttributes, ICommTemplateAttributes } from '@perx/whistler';
+import { ICampaignAttributes, ICommTemplateAttributes, IWhistlerProfileAttributes } from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
@@ -309,7 +312,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const getUsersPis: Observable<string[]> = this.audienceService
       .getAllPoolUser(campaign.audience.select)
       .pipe(
-        map((users: IJsonApiItem<IUserApi>[]) => users.map(u => u.attributes.primary_identifier)),
+        map((users: IJsonApiItem<IWhistlerProfileAttributes>[]) => users.map(u => u.attributes.primary_identifier)),
         takeUntil(this.destroy$)
       );
     return combineLatest(getUsersPis, this.blackcombUrl)

@@ -14,11 +14,18 @@ export { ICampaignAttributes } from './lib/campaign/campaign';
 export { WEngagementType } from './lib/campaign/campaign';
 export { IInstantOutcomeTransactionAttributes, IInstantOutcomeTxnReq } from './lib/instant-outcome/transaction';
 export { IWInstantOutcomeEngagementAttributes, IWOutcomeDisplayProperties } from './lib/instant-outcome/engagement';
-export { IWhistlerProfileAttributes } from './lib/profile/profile';
+export { IWhistlerProfileAttributes, IPoolsAttributes } from './lib/profile/profile';
 export { IMerchant, IMerchantBranchApi } from './lib/merchant/merchant';
 export { ITenantProperties } from './lib/settings/tenant';
 export { ITimeZone } from './lib/settings/time-zone';
 export { ILoyalty, ILoyaltyCard } from './lib/loyalty/loyalty';
+
+export {
+  IMessageResponse,
+  IAppAccessTokenResponse,
+  ILoginResponse,
+  ILoginAttributes
+} from './lib/authentication/authentication';
 
 export {
   WGameType,

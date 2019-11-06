@@ -8,5 +8,9 @@ export interface IWhistlerProfileAttributes {
   phone_number: string | null;
   email_address: string | null;
   primary_identifier: string;
-  properties?: string | null;
+  properties?: string | {} | null;
+}
+
+export interface IPoolsAttributes {
+  name: string;
 }

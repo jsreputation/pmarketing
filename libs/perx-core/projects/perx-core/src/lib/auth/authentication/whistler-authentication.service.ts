@@ -8,8 +8,6 @@ import { AuthenticationService } from './authentication.service';
 import { TokenStorage } from './token-storage.service';
 import { IProfileAttributes } from '../../profile/profile.model';
 import {
-  IAppAccessTokenResponse,
-  IMessageResponse,
   IResetPasswordData,
   ISignUpData,
   IChangePasswordData,
@@ -17,7 +15,11 @@ import {
 } from './models/authentication.model';
 import { Config } from '../../config/config';
 import { IJsonApiListPayload } from '../../jsonapi.payload';
-import { IWhistlerProfileAttributes } from '@perx/whistler';
+import {
+  IWhistlerProfileAttributes,
+  IAppAccessTokenResponse,
+  IMessageResponse
+} from '@perx/whistler';
 
 interface ICognitoLogin {
   jwt: string;
@@ -44,7 +46,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   constructor(
     config: Config,
     private http: HttpClient,
-    private tokenStorage: TokenStorage,
+    private tokenStorage: TokenStorage
   ) {
     super();
     this.apiHost = config.apiHost as string;
@@ -177,7 +179,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
           password: pass
         }
       }
-    }, { observe: 'response' });
+    }, {observe: 'response'});
   }
 
   public getAppToken(): Observable<IAppAccessTokenResponse> {
@@ -195,6 +197,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public logout(): void {
     this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'pi']);
   }
+
   // @ts-ignore
   public forgotPassword(phone: string): Observable<IMessageResponse> {
     return throwError('Not implement yet');
@@ -214,6 +217,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public signup(profile: ISignUpData): Observable<IProfile> {
     return throwError('Not implement yet');
   }
+
   // @ts-ignore
   public requestVerificationToken(phone?: string): Observable<void> {
     return throwError('Not implement yet');

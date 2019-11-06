@@ -65,13 +65,11 @@ export class SettingsService implements ITableService {
   public getCurrency(): Observable<Currency[]> {
     return this.settingsHttpService.getCurrency()
       .pipe(
-        map((data: Currency[]) => {
-          return data.sort((a, b) => {
-            const nameA = a.country.toLowerCase();
-            const nameB = b.country.toLowerCase();
-            return (nameA < nameB) ? -1 : 1;
-          });
-        })
+        map((data: Currency[]) => data.sort((a, b) => {
+          const nameA = a.country.toLowerCase();
+          const nameB = b.country.toLowerCase();
+          return (nameA < nameB) ? -1 : 1;
+        }))
       );
   }
 
@@ -154,11 +152,11 @@ export class SettingsService implements ITableService {
   }
 
   public getAllGroups(): Observable<JsonApiQueryData<Groups>> {
-    return this.dataStore.findAll(Groups, { page: { size: 10, number: 1 } });
+    return this.dataStore.findAll(Groups, {page: {size: 10, number: 1}});
   }
 
   public getTenants(): Observable<Tenants> {
-    return this.dataStore.findAll(Tenants, { page: { size: 10, number: 1 } })
+    return this.dataStore.findAll(Tenants, {page: {size: 10, number: 1}})
       .pipe(
         map(tenants => tenants.getModels()[0]),
         tap(tenant => this.tenants = tenant)
@@ -166,15 +164,15 @@ export class SettingsService implements ITableService {
   }
 
   public getTenantsSettings(): Observable<ITenantProperties> {
-    return this.dataStore.findAll(Tenants, { page: { size: 10, number: 1 } })
+    return this.dataStore.findAll(Tenants, {page: {size: 10, number: 1}})
       .pipe(
-        map(response => SettingsHttpAdapter.getTenantsSettings(response)),
+        map(response => SettingsHttpAdapter.getTenantsSettings(response))
       );
   }
 
   public updateTenants(value: ITenantProperties): Observable<IamUser> {
-    const newProperties = { ...this.tenants.display_properties, ...value };
-    this.tenants.display_properties = { ...newProperties };
+    const newProperties = {...this.tenants.display_properties, ...value};
+    this.tenants.display_properties = {...newProperties};
     return this.tenants.save().pipe(
       switchMap(() => this.authService.updateUser())
     );
@@ -202,7 +200,7 @@ export class SettingsService implements ITableService {
         id: 34,
         title: 'Lifestyle',
         parent: null
-      }],
+      }]
     };
   }
 

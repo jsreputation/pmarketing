@@ -9,12 +9,10 @@ import { IProfile } from '../../profile/profile.model';
 import {
   ISignUpData,
   IResetPasswordData,
-  IMessageResponse,
-  IAppAccessTokenResponse,
   IChangePasswordData,
-  ILoginResponse,
   IChangePhoneData
 } from '../authentication/models/authentication.model';
+import { IMessageResponse, IAppAccessTokenResponse, ILoginResponse } from '@perx/whistler';
 import { ProfileService } from '../../profile/profile.service';
 import { Config } from '../../config/config';
 import { IV4ProfileResponse, V4ProfileService } from '../../profile/v4-profile.service';
@@ -123,9 +121,9 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       url: location.host,
       username: user,
       password: pass,
-      ...mechId && { mech_id: mechId },
-      ...campaignId && { campaign_id: campaignId },
-      ...scope && { scope }
+      ...mechId && {mech_id: mechId},
+      ...campaignId && {campaign_id: campaignId},
+      ...scope && {scope}
     };
     return this.http.post<ILoginResponse>(this.userAuthEndPoint + '/token', authenticateBody);
   }
@@ -165,7 +163,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
 
   public getAppToken(): Observable<IAppAccessTokenResponse> {
     const authenticateRequest: { url: string } = {
-      url: location.host,
+      url: location.host
     };
 
     return this.http.post<IAppAccessTokenResponse>(this.appAuthEndPoint + '/token', authenticateRequest).pipe(
@@ -189,7 +187,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
 
   // @ts-ignore
   public forgotPassword(phone: string): Observable<IMessageResponse> {
-    return this.http.get<IMessageResponse>(`${this.customersEndPoint}/forget_password`, { params: { phone } })
+    return this.http.get<IMessageResponse>(`${this.customersEndPoint}/forget_password`, {params: {phone}})
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -217,7 +215,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
 
   // @ts-ignore
   public resendOTP(phone: string): Observable<IMessageResponse> {
-    return this.http.get<IMessageResponse>(`${this.customersEndPoint}/resend_confirmation`, { params: { phone } })
+    return this.http.get<IMessageResponse>(`${this.customersEndPoint}/resend_confirmation`, {params: {phone}})
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -253,7 +251,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
 
   // @ts-ignore
   public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
-    return this.http.patch<IMessageResponse>(`${this.customersEndPoint}/confirm`, { phone, confirmation_token: otp })
+    return this.http.patch<IMessageResponse>(`${this.customersEndPoint}/confirm`, {phone, confirmation_token: otp})
       .pipe(
         tap( // Log the result or error
           data => console.log(data),

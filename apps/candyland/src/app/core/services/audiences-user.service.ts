@@ -6,6 +6,8 @@ import { map } from 'rxjs/operators';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { HttpParams } from '@angular/common/http';
+import { IWhistlerProfileAttributes, IPoolsAttributes} from '@perx/whistler';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,12 +21,12 @@ export class AudiencesUserService implements ITableService {
     return this.http.getUser(id, params).pipe(map((res: any) => AudiencesHttpAdapter.transformUserWithPools(res)));
   }
 
-  public getAllUsers(params: HttpParamsOptions): Observable<IJsonApiListPayload<IUserApi>> {
+  public getAllUsers(params: HttpParamsOptions): Observable<IJsonApiListPayload<IWhistlerProfileAttributes>> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.http.getAllUsers(httpParams);
   }
 
-  public getAllPoolUser(poolId: string): Observable<IJsonApiItem<IUserApi>[]> {
+  public getAllPoolUser(poolId: string): Observable<IJsonApiItem<IWhistlerProfileAttributes>[]> {
     const httpParams = ClHttpParams.createHttpParams({ include: 'users' });
     return this.http.getAudience(poolId, httpParams)
       .pipe(map(res => res.included));
@@ -37,18 +39,18 @@ export class AudiencesUserService implements ITableService {
       .pipe(map((res: IJsonApiListPayload<any>) => AudiencesHttpAdapter.transformUsersWithPools(res)));
   }
 
-  public createUser(user: IAudiencesUserForm): Observable<IJsonApiPayload<IUserApi>> {
+  public createUser(user: IAudiencesUserForm): Observable<IJsonApiPayload<IWhistlerProfileAttributes>> {
     const formattedUser = AudiencesHttpAdapter.transformFromUserForm(user);
     return this.http.createUser(formattedUser);
   }
 
-  public updateUser(id: string, user: IAudiencesUserForm): Observable<IJsonApiPayload<IUserApi>> {
+  public updateUser(id: string, user: IAudiencesUserForm): Observable<IJsonApiPayload<IWhistlerProfileAttributes>> {
     const formattedUser = AudiencesHttpAdapter.transformFromUserForm(user);
     formattedUser['id'] = id;
     return this.http.updateUser(id, formattedUser);
   }
 
-  public updateUserPools(user: IUser): Observable<IJsonApiListPayload<IPoolsApi>> {
+  public updateUserPools(user: IUser): Observable<IJsonApiListPayload<IPoolsAttributes>> {
     const formattedData = AudiencesHttpAdapter.transformUpdateUserPools(user);
     return this.http.updateUserPools(formattedData);
   }

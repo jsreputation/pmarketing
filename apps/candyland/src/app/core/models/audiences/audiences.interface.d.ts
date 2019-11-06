@@ -10,4 +10,3 @@ declare interface IAudiences {
     properties: string;
     users: any;
 }
-  

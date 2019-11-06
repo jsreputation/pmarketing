@@ -9,6 +9,7 @@ import { UserService } from '@cl-core/services/user.service';
 import { Observable, of } from 'rxjs';
 import { AuthHttpAdapter } from '@cl-core/http-adapters/auth-http-adapter';
 import { catchError, map, tap, filter } from 'rxjs/operators';
+import { ILoginAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +50,7 @@ export class AuthService {
       );
   }
 
-  public signIn(data: ILogin): Observable<IJsonApiPayload<ILoginApi>> {
+  public signIn(data: ILogin): Observable<IJsonApiPayload<ILoginAttributes>> {
     const sendData = AuthHttpAdapter.transformFromLogin(data);
     return this.http.signIn(sendData).pipe(
       tap(res => {
