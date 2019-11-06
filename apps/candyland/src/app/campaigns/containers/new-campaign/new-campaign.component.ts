@@ -18,7 +18,7 @@ import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
-import { IUserApi } from '@perx/whistler';
+import { IUser } from '@perx/whistler';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -310,7 +310,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const getUsersPis: Observable<string[]> = this.audienceService
       .getAllPoolUser(campaign.audience.select)
       .pipe(
-        map((users: IJsonApiItem<IUserApi>[]) => users.map(u => u.attributes.primary_identifier)),
+        map((users: IJsonApiItem<Partial<IUser>>[]) => users.map(u => u.attributes.primary_identifier)),
         takeUntil(this.destroy$)
       );
     return combineLatest(getUsersPis, this.blackcombUrl)

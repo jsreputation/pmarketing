@@ -1,8 +1,8 @@
-import { IAssignedAttributes, IAssignRequestAttributes, IAudiencesUserForm, IUserApi, IUser, IPoolsApi, IPools, IAudiences } from '@perx/whistler';
+import { IAssignedAttributes, IAssignRequestAttributes, IUser, IPoolsApi, IPools, IAudiences } from '@perx/whistler';
 
 export class AudiencesHttpAdapter {
 
-  public static transformFromUserForm(data: IAudiencesUserForm): IJsonApiItem<IUserApi> {
+  public static transformFromUserForm(data: IAudiencesUserForm): IJsonApiItem<Partial<IUser>> {
     const optionalPool = data.audienceList ? { relationships: { pools: { data: data.audienceList } } } : {};
     const mainUserApiObject = {
       type: 'users',
@@ -16,7 +16,6 @@ export class AudiencesHttpAdapter {
       }
     };
     return Object.assign(mainUserApiObject, optionalPool);
-
   }
 
   public static transformUpdateUserPools(data: IUser): IJsonApiItem<any> {
@@ -32,16 +31,16 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformUserWithPools(data: IJsonApiPayload<IUserApi>): IUser {
+  public static transformUserWithPools(data: IJsonApiPayload<Partial<IUser>>): IUser {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const userData = AudiencesHttpAdapter.transformUser(data.data);
     userData.pools = data.data.relationships.pools.data.map((item: IJsonApiItem<IPoolsApi>) => poolMap[item.id]).sort().join(', ');
     return userData;
   }
 
-  public static transformUsersWithPools(data: IJsonApiListPayload<IUserApi>): ITableData<IUser> {
+  public static transformUsersWithPools(data: IJsonApiListPayload<Partial<IUser>>): ITableData<IUser> {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
-    const usersData = data.data.map((item: IJsonApiItem<IUserApi>) => {
+    const usersData = data.data.map((item: IJsonApiItem<Partial<IUser>>) => {
       const formattedUser = AudiencesHttpAdapter.transformUser(item);
       formattedUser.pools = item.relationships.pools.data.map((pool: IJsonApiItem<IPoolsApi>) => poolMap[pool.id]).sort().join(', ');
       return formattedUser;
@@ -87,7 +86,7 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  private static transformUser(data: IJsonApiItem<IUserApi>): IUser {
+  private static transformUser(data: IJsonApiItem<Partial<IUser>>): IUser {
     return {
       id: data.id,
       type: data.type,

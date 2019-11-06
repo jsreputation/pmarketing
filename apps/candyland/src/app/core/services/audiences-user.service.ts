@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { HttpParams } from '@angular/common/http';
-import { IUser, IUserApi, IAudiencesUserForm, IPoolsApi } from '@perx/whistler';
+import { IUser, IPoolsApi } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +20,12 @@ export class AudiencesUserService implements ITableService {
     return this.http.getUser(id, params).pipe(map((res: any) => AudiencesHttpAdapter.transformUserWithPools(res)));
   }
 
-  public getAllUsers(params: HttpParamsOptions): Observable<IJsonApiListPayload<IUserApi>> {
+  public getAllUsers(params: HttpParamsOptions): Observable<IJsonApiListPayload<Partial<IUser>>> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.http.getAllUsers(httpParams);
   }
 
-  public getAllPoolUser(poolId: string): Observable<IJsonApiItem<IUserApi>[]> {
+  public getAllPoolUser(poolId: string): Observable<IJsonApiItem<Partial<IUser>>[]> {
     const httpParams = ClHttpParams.createHttpParams({ include: 'users' });
     return this.http.getAudience(poolId, httpParams)
       .pipe(map(res => res.included));
@@ -38,12 +38,12 @@ export class AudiencesUserService implements ITableService {
       .pipe(map((res: IJsonApiListPayload<any>) => AudiencesHttpAdapter.transformUsersWithPools(res)));
   }
 
-  public createUser(user: IAudiencesUserForm): Observable<IJsonApiPayload<IUserApi>> {
+  public createUser(user: IAudiencesUserForm): Observable<IJsonApiPayload<Partial<IUser>>> {
     const formattedUser = AudiencesHttpAdapter.transformFromUserForm(user);
     return this.http.createUser(formattedUser);
   }
 
-  public updateUser(id: string, user: IAudiencesUserForm): Observable<IJsonApiPayload<IUserApi>> {
+  public updateUser(id: string, user: IAudiencesUserForm): Observable<IJsonApiPayload<Partial<IUser>>> {
     const formattedUser = AudiencesHttpAdapter.transformFromUserForm(user);
     formattedUser['id'] = id;
     return this.http.updateUser(id, formattedUser);
