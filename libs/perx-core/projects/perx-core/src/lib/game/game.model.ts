@@ -1,4 +1,5 @@
 import { IVoucher } from '../vouchers/models/voucher.model';
+import { ICampaignDisplayProperties } from '../perx-core.models';
 
 export enum GameType {
   unknown = -1,
@@ -30,7 +31,7 @@ export interface IGame {
     noOutcome?: IGameOutcome;
   };
   imgUrl?: string;
-  displayProperties?: IDisplayProperties;
+  displayProperties?: ICampaignDisplayProperties;
 }
 
 export function defaultTree(): ITree {
@@ -88,19 +89,4 @@ export interface ISlice {
   label_color?: string;
   background_color?: string;
   background_image?: string;
-}
-
-export interface IDisplayProperties {
-  noRewardsPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageURL?: string,
-    buttonTxt?: string,
-  };
-  successPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageURL?: string,
-    buttonTxt?: string,
-  };
 }

@@ -24,6 +24,8 @@
     "PURCHASE": "",
     "LOGGING_IN": "",
     "REDEEM": "",
+    "VIEW_REWARD": "보상보기",
+    "BACK_TO_WALLET": "월렛으로 돌아 가기",
     "CONTENT_PAGE": "",
     "SEE_MORE": "",
     "QR_TO_MERCHANT": "",
@@ -33,11 +35,14 @@
     "REEDEM_QUEST": "",
     "GO_TO_LOGIN": "",
     "REDEEM_SUCCESSFULLY": "",
+    "TRY_AGAIN": "다시 시도하십시오",
     "TRY_AGAIN_LATER": "",
     "LOGIN": "로긴",
     "ENTER_CUSTOM_ID": "",
     "ENTER_PASSWORD": "",
     "INVALID_CREDENTIALS": "",
     "VOUCHER_EXPIRY": "",
-    "DESCRIPTION": ""
+    "DESCRIPTION": "",
+    "STAMP_SUCCESS": "",
+    "STAMP_ERROR": ""
 }

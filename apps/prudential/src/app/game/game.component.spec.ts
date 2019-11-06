@@ -11,7 +11,8 @@ import {
   defaultTree,
   IGame,
   ConfigModule,
-  ICampaignService
+  ICampaignService,
+  ConfigService
 } from '@perx/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
@@ -28,6 +29,9 @@ describe('GameComponent', () => {
   const gameServiceStub = {};
   const campaignServiceStub = {
     getCampaigns: () => of([])
+  };
+  const configServiceStub = {
+    readAppConfig: () => of()
   };
 
   const fakeGame: IGame = {
@@ -63,7 +67,7 @@ describe('GameComponent', () => {
         { provide: IGameService, useValue: gameServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: Router, useValue: routerStub },
-
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();

@@ -7,7 +7,8 @@
     <div class="pinata-wrapper">
       <perx-core-pinata
         [stillImg]="config.stillImg"
-        [openedImg]="config.openedImg"
+        [movingImg]="config.breakingImg"
+        [openedImg]="config.brokenImg"
         (broken)="gameCompleted()"
         [enabled]="isEnabled"
         [nbTaps]="config.nbTaps">
@@ -16,7 +17,7 @@
   </div>
   <div class="game-footer">
     <button mat-flat-button (click)="isEnabled = true"
-    [hidden]="isEnabled" color="primary">
+      [hidden]="isEnabled" color="primary">
       {{ game.texts.button }}
     </button>
   </div>
