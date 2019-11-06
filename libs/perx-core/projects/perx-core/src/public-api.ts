@@ -36,6 +36,7 @@ export { AuthenticationModule } from './lib/auth/authentication/authentication.m
 export { AuthenticationService } from './lib/auth/authentication/authentication.service';
 export { TokenStorage } from './lib/auth/authentication/token-storage.service';
 export { IChangePasswordData } from './lib/auth/authentication/models/authentication.model';
+export { IFormsService } from './lib/auth/authentication/iforms.service';
 /**
  * Campaigns
  */
@@ -88,7 +89,8 @@ export { ProfileService } from './lib/profile/profile.service';
 export {
   IProfile,
   ICardNumber,
-  ICustomProperties
+  ICustomProperties,
+  IProfileAttributes
 } from './lib/profile/profile.model';
 
 /**
@@ -208,5 +210,5 @@ export { IOutcome } from './lib/outcome/models/outcome.model';
 export { OutcomeModule } from './lib/outcome/outcome.module';
 
 /**
- * Outcome
+ * Tenants
  */
