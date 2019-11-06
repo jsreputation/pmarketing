@@ -29,70 +29,84 @@
 }
 
 .content-container {
-  justify-content: space-around;
   text-align: center;
   padding: 6rem 1.2rem 0;
   top: unset;
   display: flex;
   flex-direction: column;
 
-  .error_msg {
-    flex: 1;
+  .form-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-self: flex-end;
+    flex: 1;
 
-    span {
-      align-self: flex-end;
-    }
-  }
+    .login-form {
+      flex: 1;
+      margin-bottom: 5rem;
+      display: flex;
+      flex-direction: column;
 
-  .login-form {
-    flex: 0;
-    margin-bottom: 5rem;
+      .error_msg {
+        flex: 1;
+        display: flex;
+        justify-content: center;
 
-    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-      background-color: white;
-      border-radius: 5px;
-    }
-  }
-}
+        span {
+          align-self: flex-end;
+        }
 
-.hsbc-xmas {
-  justify-content: start;
-
-  .logo {
-    min-width: 18.5rem;
-  }
-
-  h2 {
-    font-size: 2rem;
-    margin-bottom: 3.2rem;
-  }
-
-  .login-form {
-    box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.15);
-    border-radius: 0.8rem;
-    background-color: #ffffff;
-    padding: 2.4rem 1.5rem;
-
-    h1 {
-      text-align: left;
-      font-size: 3.4rem;
-      margin-top: 0;
-    }
-
-    mat-form-field {
-      &:first-child {
-        padding-bottom: 1.2rem;
+        ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+          background-color: white;
+          border-radius: 5px;
+        }
       }
     }
+  }
 
-    mat-hint {
-      color: #0f69af;
-      font-size: 1.2rem;
+  &.hsbc-xmas {
+    justify-content: start;
+
+    .logo {
+      min-width: 18.5rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 3.2rem;
+    }
+
+    .form-container .login-form {
+      box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.15);
+      border-radius: 0.8rem;
+      background-color: #ffffff;
+      padding: 2.4rem 1.5rem;
+      flex: 0;
+
+      h1 {
+        text-align: left;
+        font-size: 3.4rem;
+        margin-top: 0;
+      }
+
+      .error_msg {
+        flex: 0;
+      }
+
+      mat-form-field {
+        &:first-child {
+          padding-bottom: 1.2rem;
+        }
+      }
+
+      mat-hint {
+        color: #0f69af;
+        font-size: 1.2rem;
+      }
     }
   }
 }
+
 
 .loader {
   display: flex;
