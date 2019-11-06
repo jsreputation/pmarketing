@@ -9,7 +9,7 @@ import {ConfigService, IConfig, IStampCard, NotificationService} from '@perx/cor
 })
 export class PuzzlesComponent implements OnInit {
   public campaignId: number = null;
-  private sourceType: string;
+  public sourceType: string;
   public titleFn: (index?: number) => string;
 
   constructor(
