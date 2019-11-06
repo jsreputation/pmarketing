@@ -25,7 +25,7 @@ describe('TapComponent', () => {
     results: {
     }
   };
-  const gameServiceStub = {
+  const gameServiceStub: Partial<IGameService> = {
     get: () => of(),
     getGamesFromCampaign: () => of()
   };

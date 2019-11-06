@@ -8,7 +8,7 @@ import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
-const configStub = {
+const configStub: Partial<Config> = {
   preAuth: false
 };
 
@@ -16,20 +16,20 @@ describe('LoadingComponent', () => {
   let component: LoadingComponent;
   let fixture: ComponentFixture<LoadingComponent>;
 
-  const authenticationServiceStub = {
-    getUserAccessToken: () => of(''),
+  const authenticationServiceStub: Partial<AuthenticationService> = {
+    getUserAccessToken: () => '',
     autoLogin: () => of()
   };
 
-  const iCampaignSvcStub = {
-    getCampaigns: () => '',
-    getCampaign: (id = 1) => `${id}`
+  const iCampaignSvcStub: Partial<ICampaignService> = {
+    getCampaigns: () => of([]),
+    getCampaign: () => of()
   };
 
-  const iGameSvcStub = {};
+  const iGameSvcStub: Partial<IGameService> = {};
 
   beforeEach(async(() => {
-    const routerStub = { navigate: () => ({}) };
+    const routerStub: Partial<Router> = { navigate: () => Promise.resolve(true) };
 
     TestBed.configureTestingModule({
       declarations: [LoadingComponent],
@@ -40,9 +40,9 @@ describe('LoadingComponent', () => {
       ],
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
-        { provide: ICampaignService, useValue: iCampaignSvcStub},
-        { provide: IGameService, useValue: iGameSvcStub},
-        { provide: Router, useValue: routerStub},
+        { provide: ICampaignService, useValue: iCampaignSvcStub },
+        { provide: IGameService, useValue: iGameSvcStub },
+        { provide: Router, useValue: routerStub },
         { provide: Config, useValue: configStub }
       ]
     })
