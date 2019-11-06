@@ -9,10 +9,10 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('RedeemComponent', () => {
   let component: RedeemComponent;
   let fixture: ComponentFixture<RedeemComponent>;
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     // getAll: () => of([])
   };
-  const outcomeServiceStub = {
+  const outcomeServiceStub: Partial<InstantOutcomeService> = {
     getFromCampaign: () => of()
   };
 

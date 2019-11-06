@@ -7,7 +7,6 @@ import { MatProgressSpinnerModule } from '@angular/material';
 import { Type } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
-// import { Type } from '@angular/core';
 
 describe('ContentComponent', () => {
   let component: ContentComponent;
@@ -49,7 +48,7 @@ describe('ContentComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe ('ngOnInit', () => {
+  describe('ngOnInit', () => {
     beforeEach(() => {
       params.next({ key: 'test' });
     });
@@ -59,17 +58,19 @@ describe('ContentComponent', () => {
         ThemesService as Type<ThemesService>);
 
       const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of(
-        {pages: [{
-          title: '',
-          content_url: 'http://localhost:4200',
-          key: 'test',
-        }]}
+        {
+          pages: [{
+            title: '',
+            content_url: 'http://localhost:4200',
+            key: 'test',
+          }]
+        }
       ));
       component.ngOnInit();
       tick();
       expect(themesServiceSpy).toHaveBeenCalled();
       component.content$.subscribe(
-        () => {},
+        () => { },
         () => {
           fixture.detectChanges();
           expect(component.errorFlag).toBe(true);
@@ -83,11 +84,13 @@ describe('ContentComponent', () => {
         ThemesService as Type<ThemesService>);
 
       const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of(
-        {pages: [{
-          title: '',
-          content_url: '',
-          key: 'test',
-        }]}
+        {
+          pages: [{
+            title: '',
+            content_url: '',
+            key: 'test',
+          }]
+        }
       ));
       component.ngOnInit();
       tick();
@@ -98,7 +101,7 @@ describe('ContentComponent', () => {
           expect(component.isLoading).toBe(false);
           expect(res).toContain('<html>');
         },
-        () => {}
+        () => { }
       );
     }));
 
@@ -107,11 +110,13 @@ describe('ContentComponent', () => {
         ThemesService as Type<ThemesService>);
 
       const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of(
-        {pages: [{
-          title: '',
-          content_url: '', // will get the browser test
-          key: 'test',
-        }]}
+        {
+          pages: [{
+            title: '',
+            content_url: '', // will get the browser test
+            key: 'test',
+          }]
+        }
       ));
       component.ngOnInit();
       tick();
@@ -125,7 +130,7 @@ describe('ContentComponent', () => {
           expect(component.isLoading).toBe(false);
           expect(spinner.length).toBe(0);
         },
-        () => {}
+        () => { }
       );
     }));
 
@@ -150,7 +155,7 @@ describe('ContentComponent', () => {
 
   });
 
-  describe ('ngOnInit', () => {
+  describe('ngOnInit', () => {
     beforeEach(() => {
       params.next({});
     });

@@ -41,13 +41,13 @@ describe('AccountComponent', () => {
   let fixture: ComponentFixture<AccountComponent>;
   let router: Router;
   let auth: AuthenticationService;
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: (): Observable<IProfile> => of(profile)
   };
-  const themeServiceStub = {
+  const themeServiceStub: Partial<ThemesService> = {
     getAccountSettings: (): Observable<PagesObject> => of(pagesObject)
   };
-  const authenticationServiceStub = {
+  const authenticationServiceStub: Partial<AuthenticationService> = {
     logout: () => { }
   };
   beforeEach(async(() => {
