@@ -24,6 +24,8 @@
     "PURCHASE": "Purchase",
     "LOGGING_IN": "Logging In...",
     "REDEEM": "Sử dụng",
+    "VIEW_REWARD": "Xem phần thưởng",
+    "BACK_TO_WALLET": "Quay lại ví",
     "CONTENT_PAGE": "Content Page Not Found",
     "SEE_MORE": "See more",
     "QR_TO_MERCHANT": "Present this QR code to the merchant",
@@ -33,11 +35,14 @@
     "REEDEM_QUEST": "You need to login to redeem the voucher",
     "GO_TO_LOGIN": "Go to login",
     "REDEEM_SUCCESSFULLY": "Redeem Successfully",
+    "TRY_AGAIN": "Thử lại",
     "TRY_AGAIN_LATER": "Error occur, please try again later",
     "LOGIN": "Login",
     "ENTER_CUSTOM_ID": "Enter Customer Id",
     "ENTER_PASSWORD": "Enter Password",
     "INVALID_CREDENTIALS": "Invalid Credentials",
     "VOUCHER_EXPIRY": "Hiệu lực đến: {{date}}",
-    "DESCRIPTION": "Mô tả"
+    "DESCRIPTION": "Mô tả",
+    "STAMP_SUCCESS": "",
+    "STAMP_ERROR": ""
 }

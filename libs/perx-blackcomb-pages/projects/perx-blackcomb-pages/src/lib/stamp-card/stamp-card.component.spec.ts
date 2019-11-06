@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { StampCardComponent } from './stamp-card.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PuzzlesModule, StampService } from '@perx/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CardComponent', () => {
   let component: StampCardComponent;
@@ -18,7 +19,8 @@ describe('CardComponent', () => {
         RouterTestingModule.withRoutes([
           { path: 'wallet', redirectTo: '/' }
         ]),
-        PuzzlesModule
+        PuzzlesModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: StampService, useValue: stampServiceStub },

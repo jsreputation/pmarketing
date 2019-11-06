@@ -49,27 +49,30 @@ export class LoadingComponent implements OnInit, OnDestroy {
   private destroy$: Subject<any> = new Subject();
 
   public get isCampaignEnded(): boolean {
-    return !(this.campaignData &&
-      this.campaignData.endsAt &&
-      this.campaignData.endsAt > new Date());
+    if (!this.campaignData) {
+      return true;
+    }
+    if (!this.campaignData.endsAt) {
+      return false;
+    }
+    const now: number = (new Date()).getTime();
+    const endDate = (new Date(this.campaignData.endsAt)).getTime();
+    return endDate < now;
   }
 
   private goWallet(): void {
     this.router.navigate(['/wallet']);
   }
 
-  private setCampaignId(): void {
-    this.campaignId = (window as any).campaignId;
-  }
-
-  private setCampaignData(): void {
+  private getCampaignData(): void {
     if (this.campaignId) {
       this.campaignSvc.getCampaign(this.campaignId)
         .pipe(
+          tap((campaignData: ICampaign) => { this.campaignData = campaignData; }),
           takeUntil(this.destroy$)
         )
-        .subscribe((campaignData: ICampaign) => {
-          this.campaignData = campaignData;
+        .subscribe(() => {
+          this.redirectAfterLogin();
         });
     }
   }
@@ -83,19 +86,14 @@ export class LoadingComponent implements OnInit, OnDestroy {
     });
   }
 
-  private afterLogin(): void {
-    this.setCampaignId();
-    this.setCampaignData();
-    this.redirectAfterLogin();
-  }
-
   private redirectAfterLogin(): void {
     if (!this.isCampaignEnded) {
       this.prePlay();
     } else if (this.campaignId && this.isCampaignEnded) {
       this.initCampaignEndedPopup();
+    } else {
+      this.goWallet();
     }
-    this.goWallet();
   }
 
   private prePlay(): void {
@@ -142,11 +140,13 @@ export class LoadingComponent implements OnInit, OnDestroy {
   ) {
     this.preAuth = this.config ? this.config.preAuth : false;
   }
+
   public ngOnInit(): void {
     if (this.preAuth && isPlatformBrowser(this.platformId)) {
       const param = location.search;
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
-      (window as any).campaignId = new URLSearchParams(param).get('cid');
+      this.campaignId = Number.parseInt(new URLSearchParams(param).get('cid'), 10);
+      (window as any).campaignId = this.campaignId;
       /*
       * Later when API ready, the logic is:
       * 1. check PI, then will call autoLogin
@@ -176,7 +176,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
         ),
         takeUntil(this.destroy$)
       ).subscribe(
-        () => this.afterLogin(),
+        () => this.getCampaignData(),
         () => this.router.navigate(['/login'])
       );
     }
