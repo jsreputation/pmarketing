@@ -82,7 +82,7 @@ export class GameComponent implements OnInit, OnDestroy {
         ([outcome, _]: [IPlayOutcome, any]) => {
           this.router.navigate(['/wallet']);
           if (outcome.vouchers.length > 0) {
-            this.successPopUp.text = `You earned ${outcome.vouchers.length} rewards`;
+            this.successPopUp.text = this.successPopUp.text ? this.successPopUp.text : `You earned ${outcome.vouchers.length} rewards`;
             this.dialog.open(PopupComponent, { data: this.successPopUp });
           } else {
             this.dialog.open(PopupComponent, {
