@@ -21,7 +21,9 @@ export class LimitsService {
       map((response: IJsonApiListPayload<IWInstantOutcomeLimitAttributes |
                              IWSurveyLimitAttributes |
                              IWGameLimitAttributes>) => response.data),
-      map((response: IJsonApiItem<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>[]) => response.map(
+      map((response: IJsonApiItem<IWInstantOutcomeLimitAttributes |
+                             IWSurveyLimitAttributes |
+                             IWGameLimitAttributes>[]) => response.map(
         (limit: IJsonApiItem<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>) =>
           LimitsHttpAdapter.transformAPIResponseToLimit(limit, engagementType)))
     );
