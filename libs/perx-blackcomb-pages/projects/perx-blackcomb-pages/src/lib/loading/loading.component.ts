@@ -24,12 +24,7 @@ import {
   Config,
   NotificationService,
   ICampaign,
-  ICampaignService,
-  CampaignType,
-  IGameService,
-  // SurveyService,
-  // LoyaltyService,
-  InstantOutcomeService
+  ICampaignService
 } from '@perx/core';
 
 import * as uuid from 'uuid';
@@ -91,36 +86,12 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
   private redirectAfterLogin(): void {
     if (!this.isCampaignEnded) {
-      this.prePlay();
+      this.redirectToEngagementPage(this.campaignData.type);
     } else if (this.campaignId && this.isCampaignEnded) {
       this.initCampaignEndedPopup();
     } else {
       this.goWallet();
     }
-  }
-
-  private prePlay(): void {
-    const { type } = this.campaignData;
-    // Pre-play logic placeholder
-    let prePlay$;
-    switch (type) {
-      case CampaignType.game:
-        prePlay$ = this.gameService.prePlay(this.campaignData.engagementId, this.campaignId);
-        break;
-      // case CampaignType.stamp:
-      //   prePlay$ = this.loyaltyService.prePlay();
-      //   break;
-      // case CampaignType.survey:
-      //   prePlay$ = this.surveyService.prePlay();
-      //   break;
-      case CampaignType.give_reward:
-        prePlay$ = this.instantOutcomeService.prePlay(this.campaignData.engagementId, this.campaignId);
-        break;
-    }
-    prePlay$.subscribe(
-      () => this.redirectToEngagementPage(type)
-    );
-
   }
 
   private redirectToEngagementPage(type: string): void {
@@ -135,10 +106,6 @@ export class LoadingComponent implements OnInit, OnDestroy {
     private campaignSvc: ICampaignService,
     private config: Config,
     private notificationService: NotificationService,
-    private gameService: IGameService,
-    // private surveyService: SurveyService,
-    // private loyaltyService: LoyaltyService,
-    private instantOutcomeService: InstantOutcomeService,
     @Inject(PLATFORM_ID) private platformId: object,
   ) {
     this.preAuth = this.config ? this.config.preAuth : false;
