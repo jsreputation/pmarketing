@@ -63,7 +63,7 @@ module.exports = {
     "guard-for-in": "error",
     "max-classes-per-file": "off",
     "new-parens": "error",
-    // "no-bitwise": "error",
+    "no-bitwise": "error",
     "no-caller": "error",
     "no-cond-assign": "error",
     // "no-console": [

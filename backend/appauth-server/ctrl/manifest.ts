@@ -18,10 +18,10 @@ const cache = cacheManager.caching({ store: 'memory', max: 1, ttl: 0 });
 const themeHasher = (themeObject: string): number => {
   for (let i = 0, h = 0xdeadbeef; i < themeObject.length; i++) {
     // tslint:disable-next-line:no-bitwise
-    h = Math.imul(h ^ themeObject.charCodeAt(i), 2654435761);
+    h = Math.imul(h ^ themeObject.charCodeAt(i), 2654435761); // eslint-disable-line
   }
   // tslint:disable-next-line:no-bitwise
-  return (h ^ (h >>> 16)) >>> 0;
+  return (h ^ (h >>> 16)) >>> 0; // eslint-disable-line
 };
 
 const generateManifest = (
