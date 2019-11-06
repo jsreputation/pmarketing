@@ -1,7 +1,7 @@
 import { ICampaign } from './../campaign/models/campaign.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ISurvey, IQuestion, MaterialColor, IAnswer, IDisplayProperties, SurveyQuestionType } from './models/survey.model';
+import { ISurvey, IQuestion, MaterialColor, IAnswer, SurveyQuestionType } from './models/survey.model';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
@@ -12,6 +12,8 @@ import {
   IWSurveyAttributes,
   IWPostAnswerAttributes
 } from '@perx/whistler';
+
+import { ICampaignDisplayProperties } from '../perx-core.models';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +47,7 @@ export class SurveyService {
   }
 
   public getSurveyFromCampaign(id: number): Observable<ISurvey> {
-    let disProp: IDisplayProperties | undefined;
+    let disProp: ICampaignDisplayProperties | undefined;
     return this.campaignService.getCampaign(id)
       .pipe(
         switchMap(
