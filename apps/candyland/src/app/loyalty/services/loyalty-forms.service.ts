@@ -4,9 +4,13 @@ import { ClValidators } from '@cl-helpers/cl-validators';
 import { LoyaltyPointsExpireTrigger } from '../models/loyalty-points-expire-trigger.enum';
 import { StatusLabel } from '@cl-helpers/status-label.enum';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
+import { LoyaltyEarnRulesFormsService } from './loyalty-earn-rules-forms.service';
 
 @Injectable()
 export class LoyaltyFormsService {
+
+  constructor(private rulesFormsService: LoyaltyEarnRulesFormsService) {
+  }
 
   public getFormLoyalty(): FormGroup {
     return new FormGroup({
@@ -42,7 +46,8 @@ export class LoyaltyFormsService {
           type: new FormControl(null, [Validators.required]),
           trigger: new FormControl(null, [Validators.required])
         })
-      })
+      }),
+      ruleList: this.rulesFormsService.getRuleForm()
     });
   }
 

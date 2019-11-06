@@ -3,9 +3,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClValidators } from '@cl-helpers/cl-validators';
 import { LoyaltyPointsExpireTrigger } from '../models/loyalty-points-expire-trigger.enum';
 import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
+import { LoyaltyEarnRulesFormsService } from './loyalty-earn-rules-forms.service';
 
 @Injectable()
 export class LoyaltyCustomTierFormsService {
+
+  constructor(private rulesFormsService: LoyaltyEarnRulesFormsService) {
+  }
 
   public getTireForm(): FormGroup {
     return new FormGroup({
@@ -27,7 +31,8 @@ export class LoyaltyCustomTierFormsService {
         amount: new FormControl(null, [Validators.required, Validators.min(1)]),
         type: new FormControl(null, [Validators.required]),
         trigger: new FormControl(null, [Validators.required])
-      })
+      }),
+      ruleList: this.rulesFormsService.getRuleForm()
     });
   }
 

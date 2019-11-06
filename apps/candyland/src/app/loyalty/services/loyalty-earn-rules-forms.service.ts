@@ -6,9 +6,9 @@ export class LoyaltyEarnRulesFormsService {
 
   public getRuleForm(): FormGroup {
     return new FormGroup({
-      id:  new FormControl(null),
-      mathMethod: new FormControl(null),
-      rules: this.getRuleConditionsForm()
+      id: new FormControl(null),
+      mathMethod: new FormControl('first'),
+      rules: new FormControl([]),
     });
   }
 

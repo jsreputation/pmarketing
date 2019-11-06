@@ -383,9 +383,9 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   }
 
   private deleteRule(id: string): void {
-    // this.customTierService.deleteCustomTier(id)
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe(() => this.updateCustomTiersDataSource());
+    this.customTierService.deleteCustomTier(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.updateCustomTiersDataSource());
   }
 
   private initPools(): void {
