@@ -33,7 +33,7 @@ deploy:
       chartPath: ros/ingress
       remote: true
       setValueTemplates:
-        hosts[0]: "*-{{.APP}}-{{.TARGET_NAMESPACE}}.{{.TARGET_ENV}}.whistler.perxtech.io"
+        hosts[0]: "{{.INGRESS_HOST}}"
         services[0].name: "microsite-apps-blackcomb"
       overrides:
         services:

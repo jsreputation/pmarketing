@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, ConfigService, IConfig } from '@perx/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -19,12 +18,18 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthenticationService,
+    private configService: ConfigService,
     @Inject(PLATFORM_ID) private platformId: object
-  ) {
-    this.preAuth = environment.preAuth;
-  }
+  ) {}
 
   public ngOnInit(): void {
+
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig) => {
+        this.preAuth = config.preAuth as boolean;
+      }
+    );
+
     this.onSubmit();
   }
 
