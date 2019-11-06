@@ -25,7 +25,7 @@ export class GameComponent implements OnInit, OnDestroy {
     imageUrl: 'assets/congrats_image.png',
   };
 
-  public errorPopUp: IPopupConfig = {
+  public noRewardsPopUp: IPopupConfig = {
     title: 'Thanks for playing',
     text: 'Unfortunately, you did not win anything this time',
     buttonTxt: 'Back to Wallet',
@@ -34,7 +34,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   private initTranslate(): void {
     this.translate.get('VIEW_REWARD').subscribe((text) => this.successPopUp.buttonTxt = text);
-    this.translate.get('BACK_TO_WALLET').subscribe((text) => this.errorPopUp.buttonTxt = text);
+    this.translate.get('BACK_TO_WALLET').subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
   }
 
   constructor(
@@ -60,12 +60,19 @@ export class GameComponent implements OnInit, OnDestroy {
       tap((game: IGame) => {
         if (game) {
           const { displayProperties } = game;
+          if (displayProperties && displayProperties.noRewardsPopUp) {
+            this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine || this.noRewardsPopUp.title;
+            this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine || this.noRewardsPopUp.text;
+            this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
+            this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
+          }
           if (displayProperties && displayProperties.successPopUp) {
+            this.successPopUp.title = displayProperties.successPopUp.headLine || this.successPopUp.title;
+            this.successPopUp.text = displayProperties.successPopUp.subHeadLine || this.successPopUp.text;
+            this.successPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.successPopUp.imageUrl;
             this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
           }
-          if (displayProperties && displayProperties.noRewardsPopUp) {
-            this.errorPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.errorPopUp.buttonTxt;
-          }
+
           this.engagementId = game ? game.id : null;
         }
       })
@@ -101,12 +108,12 @@ export class GameComponent implements OnInit, OnDestroy {
             this.successPopUp.text = `You earned ${outcome.vouchers.length} rewards`;
             this.dialog.open(PopupComponent, { data: this.successPopUp });
           } else {
-            this.dialog.open(PopupComponent, {data: this.errorPopUp});
+            this.dialog.open(PopupComponent, { data: this.noRewardsPopUp });
           }
         },
         () => {
           this.router.navigate(['/wallet']);
-          this.dialog.open(PopupComponent, {data: this.errorPopUp});
+          this.dialog.open(PopupComponent, { data: this.noRewardsPopUp });
         }
       );
   }

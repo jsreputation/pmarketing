@@ -28,6 +28,7 @@ export interface IWOutcomeDisplayProperties {
       headLine?: string;
       subHeadLine?: string;
       imageURL?: string;
+      buttonTxt?: string;
     };
   };
 }

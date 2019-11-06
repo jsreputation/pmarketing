@@ -30,6 +30,7 @@ export interface IWSurveyDisplayProperties {
     headLine?: string;
     subHeadLine?: string;
     imageURL?: string;
+    buttonTxt?: string;
   };
 }
 

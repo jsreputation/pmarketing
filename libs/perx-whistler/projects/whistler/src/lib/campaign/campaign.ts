@@ -31,6 +31,7 @@ export interface ICampaignAttributes {
       headLine?: string;
       subHeadLine?: string;
       imageURL?: string;
+      buttonTxt?: string;
     };
   };
 }

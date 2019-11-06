@@ -25,7 +25,7 @@ export class RewardComponent implements OnInit, OnDestroy {
     buttonTxt: 'Back to Wallet',
     imageUrl: '',
   };
-  public rewardSuccessPopUp: IPopupConfig = {
+  public successPopUp: IPopupConfig = {
     title: 'Successfully !',
     text: '',
     buttonTxt: 'View Reward',
@@ -43,7 +43,7 @@ export class RewardComponent implements OnInit, OnDestroy {
   ) { }
 
   private initTranslate(): void {
-    this.translate.get('VIEW_REWARD').subscribe((text) => this.rewardSuccessPopUp.buttonTxt = text);
+    this.translate.get('VIEW_REWARD').subscribe((text) => this.successPopUp.buttonTxt = text);
     this.translate.get('BACK_TO_WALLET').subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
   }
 
@@ -69,10 +69,10 @@ export class RewardComponent implements OnInit, OnDestroy {
           this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
         }
         if (displayProperties && displayProperties.successPopUp) {
-          this.rewardSuccessPopUp.title = displayProperties.successPopUp.headLine || this.rewardSuccessPopUp.title;
-          this.rewardSuccessPopUp.text = displayProperties.successPopUp.subHeadLine || this.rewardSuccessPopUp.text;
-          this.rewardSuccessPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.rewardSuccessPopUp.imageUrl;
-          this.rewardSuccessPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.rewardSuccessPopUp.buttonTxt;
+          this.successPopUp.title = displayProperties.successPopUp.headLine || this.successPopUp.title;
+          this.successPopUp.text = displayProperties.successPopUp.subHeadLine || this.successPopUp.text;
+          this.successPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.successPopUp.imageUrl;
+          this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
         }
       });
 
@@ -87,6 +87,8 @@ export class RewardComponent implements OnInit, OnDestroy {
             if (rewards.length === 0) {
               throw new Error('empty');
             }
+            this.dialog.open(PopupComponent, { data: this.successPopUp });
+            this.router.navigate(['/wallet']);
           }),
           catchError(() => {
             this.dialog.open(PopupComponent, { data: this.noRewardsPopUp });

@@ -23,7 +23,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public currentPointer: number;
   private destroy$: Subject<any> = new Subject();
 
-  public rewardSuccessPopUp: IPopupConfig = {
+  public successPopUp: IPopupConfig = {
     title: 'Your RSVP is successful!',
     text: 'See you at our event!',
     imageUrl: 'assets/congrats_image.png',
@@ -38,8 +38,8 @@ export class SurveyComponent implements OnInit, OnDestroy {
   };
 
   private initTranslate(): void {
-    this.translate.get('VIEW_REWARD').subscribe((text) => this.rewardSuccessPopUp.buttonTxt = text);
-    this.translate.get('BACK_TO_WALLET').subscribe((text) => this.rewardSuccessPopUp.buttonTxt = text);
+    this.translate.get('VIEW_REWARD').subscribe((text) => this.successPopUp.buttonTxt = text);
+    this.translate.get('BACK_TO_WALLET').subscribe((text) => this.successPopUp.buttonTxt = text);
   }
 
   constructor(
@@ -67,10 +67,10 @@ export class SurveyComponent implements OnInit, OnDestroy {
         this.survey = survey;
         const { displayProperties } = this.survey;
         if (displayProperties && displayProperties.successPopUp) {
-          this.rewardSuccessPopUp.title = displayProperties.successPopUp.headLine || this.rewardSuccessPopUp.title;
-          this.rewardSuccessPopUp.text = displayProperties.successPopUp.subHeadLine || this.rewardSuccessPopUp.text;
-          this.rewardSuccessPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.rewardSuccessPopUp.imageUrl;
-          this.rewardSuccessPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.rewardSuccessPopUp.buttonTxt;
+          this.successPopUp.title = displayProperties.successPopUp.headLine || this.successPopUp.title;
+          this.successPopUp.text = displayProperties.successPopUp.subHeadLine || this.successPopUp.text;
+          this.successPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.successPopUp.imageUrl;
+          this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
         }
         if (displayProperties && displayProperties.noRewardsPopUp) {
           this.errorPopUp.title = displayProperties.noRewardsPopUp.headLine || this.errorPopUp.title;
@@ -103,7 +103,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
         (res) => {
           let popupConfig: IPopupConfig = null;
           if (res.hasOutcomes) {
-            popupConfig = this.rewardSuccessPopUp;
+            popupConfig = this.successPopUp;
           } else {
             popupConfig = this.errorPopUp;
           }

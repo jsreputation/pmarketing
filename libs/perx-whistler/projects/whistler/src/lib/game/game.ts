@@ -44,6 +44,7 @@ export interface WAttbsObjEntity {
       headLine?: string;
       subHeadLine?: string;
       imageURL?: string;
+      buttonTxt?: string;
     };
   };
 }
