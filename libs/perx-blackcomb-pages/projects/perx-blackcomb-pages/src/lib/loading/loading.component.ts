@@ -71,9 +71,12 @@ export class LoadingComponent implements OnInit, OnDestroy {
           tap((campaignData: ICampaign) => { this.campaignData = campaignData; }),
           takeUntil(this.destroy$)
         )
-        .subscribe(() => {
-          this.redirectAfterLogin();
-        });
+        .subscribe(
+          () => this.redirectAfterLogin(),
+          () => this.goWallet()
+        );
+    } else {
+      this.goWallet();
     }
   }
 
