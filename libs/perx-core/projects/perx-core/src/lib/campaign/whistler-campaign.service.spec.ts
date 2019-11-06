@@ -9,7 +9,7 @@ import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsona
 import { ICampaignAttributes, WEngagementType } from '@perx/whistler';
 // import { tap } from 'rxjs/operators';
 
-describe('WhistlerCampaignService', () => {
+fdescribe('WhistlerCampaignService', () => {
   let httpTestingController: HttpTestingController;
   let service: WhistlerCampaignService;
 
@@ -147,5 +147,15 @@ describe('WhistlerCampaignService', () => {
     req1.flush(res);
 
     httpTestingController.verify();
+  });
+
+  it('endDate should be null if end_date_time is null or not defined', () => {
+    const { endsAt } =  WhistlerCampaignService.WhistlerCampaignToCampaign(mockCampaign);
+    expect(endsAt).toEqual(null);
+  });
+
+  it('endDate should be proper Date object if end_date_time is defined', () => {
+    const { endsAt } =  WhistlerCampaignService.WhistlerCampaignToCampaign(mockExpiredCampaign);
+    expect(endsAt).toEqual(yesterday);
   });
 });
