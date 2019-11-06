@@ -3,13 +3,14 @@ import { StampCardComponent } from './stamp-card.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PuzzlesModule, StampService } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
 describe('CardComponent', () => {
   let component: StampCardComponent;
   let fixture: ComponentFixture<StampCardComponent>;
 
-  const stampServiceStub = {
-    getCurrentCard: () => { }
+  const stampServiceStub: Partial<StampService> = {
+    getCurrentCard: () => of()
   };
 
   beforeEach(async(() => {
