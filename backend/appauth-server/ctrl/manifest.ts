@@ -10,9 +10,9 @@ import { Request, Response, NextFunction } from 'express';
 import { fetchTheme } from './themes';
 import { getQueryHost } from './utils';
 
-const PORT = process.env.PORT || 4000;
 const exportedImgDirectory = '/static/generated';
-// max set to 1 so only most recent value will be kept old will be replaced if new settings are different from old
+// max set to 1 so only most recent value will be kept, old will be replaced if new settings
+// refer to https://www.npmjs.com/package/cache-manager under Usage Examples
 const cache = cacheManager.caching({ store: 'memory', max: 1, ttl: 0 });
 
 const themeHasher = (themeObject: string): number => {
