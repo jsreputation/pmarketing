@@ -124,48 +124,55 @@ Then(/^12_I should be navigated to blackcomb home page.$/, async () => {
 });
 
 // Ensuring functionality of rewards filter
-/*Given(/^13_I am at the blackcomb home page$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+Given(/^13_I am at the blackcomb home page$/, async () => {
+  await BlackcombHomeApp.navigateToBlackcombHomeApp();
+});
 
 When(/^13_I click on a category$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+  // waiting for the category filter to load
+  await browser.wait(ec.presenceOf(element(by.css('div.mat-tab-list'))), 5000);
+  // clicking on the f&b tab
+  await element.all(by.css('div.mat-tab-label-content')).get(1).click();
+});
 
 Then(/^13_I should see the relevant rewards under the category.$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+  // waiting for the card to load
+  await browser.wait(ec.presenceOf(element(by.css('h1'))), 6000);
+  // assertion on the presence of the card and the text value of the card
+  expect(await element(by.css('h1')).isDisplayed()).to.equal(true);
+  expect(await element(by.css('h1')).getText()).to.contain('e-enable sticky architectures');
+});
 
-// Ensuring functionality of feature rewards card
+// Ensuring functionality of featured rewards card
 Given(/^14_I am at the blackcomb home page$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
+  await BlackcombHomeApp.navigateToBlackcombHomeApp();
 });
 
 When(/^14_I click on a featured reward$/, async () => {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+  // waiting for featured reward to load
+  await browser.wait(ec.presenceOf(element.all(by.css('mat-card')).get(2)), 6000);
+  // clicking on the featured reward
+  await element.all(by.css('mat-card')).get(2).click();
+  await browser.sleep(1000);
+});
 
-Then('{int}_I should be navigated to the reward description page', function(int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+Then(/^14_I should be navigated to the reward description page$/, async () => {
+  expect(await browser.getCurrentUrl()).to.contain('reward-detail');
+});
 
-Given('{int}_I am at the blackcomb home page', function(int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+// Ensuring functionality of rewards card
+Given(/^15_I am at the blackcomb home page$/, async () => {
+  await BlackcombHomeApp.navigateToBlackcombHomeApp();
+});
 
-When('{int}_I click on a reward under the all category', function(int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });
+When(/^15_I click on a reward under the all category$/, async () => {
+  // waiting for featured reward to load
+  await browser.wait(ec.presenceOf(element.all(by.css('mat-card')).get(3)), 6000);
+  // clicking on the featured reward
+  await element.all(by.css('mat-card')).get(3).click();
+  await browser.sleep(1000);
+});
 
-Then('{int}_I should be navigated to the reward description page', function(int) {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-  });*/
+Then(/^15_I should be navigated to the reward description page$/, async () => {
+  expect(await browser.getCurrentUrl()).to.contain('reward-detail');
+});
