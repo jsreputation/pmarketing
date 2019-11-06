@@ -89,7 +89,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
     {
       labelView: 'White', color: '#ffffff'
     }];
-    // i think is because of ehre ngOnInit went to patch back
+
     this.patchValue({
       headerNavbarColor: this.listColors[0],
       buttonBackgroundColor: this.listColors[0],
@@ -103,7 +103,6 @@ export class BrandingComponent implements OnInit, OnDestroy {
   }
 
   private patchValue(data: Partial<IBrandingForm>): void {
-    console.log(data, 'i am doing patching');
     this.formBranding.patchValue(data);
   }
 
@@ -152,9 +151,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
       this.setDefaultValue(data);
     } else {
       this.changeDefaultColors(data);
-      console.log(data, ' i have data i am patchign differently');
       const patchFormValue = SettingsHttpAdapter.transformSettingsBrandingToForm(data, this.listColors, this.listColorsText);
-      console.log(patchFormValue, 'this is the data that will be patched')
       this.patchValue(patchFormValue);
       this.subscribeFormChanges();
     }

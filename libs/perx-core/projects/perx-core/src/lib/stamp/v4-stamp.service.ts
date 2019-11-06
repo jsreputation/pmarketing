@@ -300,4 +300,8 @@ export class V4StampService implements StampService {
       ))
     );
   }
+
+  public play(): Observable<boolean> {
+    return of(true);
+  }
 }

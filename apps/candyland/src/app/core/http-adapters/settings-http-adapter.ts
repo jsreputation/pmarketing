@@ -89,8 +89,8 @@ export class SettingsHttpAdapter {
       'theme.header_color': data.headerNavbarColor.color,
       'theme.logo': data.logoType === 'image' ? data.logo : '',
       'theme.title': data.logoType === 'text' ? data.logo : '',
-      'theme.button_background_color': data.button_background_color,
-      'theme.button_text_color': data.button_text_color
+      'theme.button_background_color': data.buttonBackgroundColor.color,
+      'theme.button_text_color': data.buttonTextColor.color
     };
   }
 
@@ -104,8 +104,8 @@ export class SettingsHttpAdapter {
       headerNavbarColor: SettingsHttpAdapter.getColorObj(listColors, data['theme.header_color']), // key
       logo: data['theme.logo'] ? data['theme.logo'] : data['theme.title'],
       logoType: logoType,
-      buttonBackgroundColor: SettingsHttpAdapter.getColorObj(listColors, data['theme.button_background_color'].color), // key, just changed here
-      buttonTextColor: SettingsHttpAdapter.getColorObjText(listColorsText, data['theme.button_text_color'].color)
+      buttonBackgroundColor: SettingsHttpAdapter.getColorObj(listColors, data['theme.button_background_color']),
+      buttonTextColor: SettingsHttpAdapter.getColorObjText(listColorsText, data['theme.button_text_color'])
     }
   }
 
@@ -124,8 +124,8 @@ export class SettingsHttpAdapter {
       currency: SettingsHttpAdapter.getTenantProperty('currency', data),
       style: SettingsHttpAdapter.getTenantProperty('theme.style', data),
       accent: SettingsHttpAdapter.getTenantProperty('theme.accent', data),
-      buttonColor: SettingsHttpAdapter.getTenantProperty('theme.button_background_color', data), // change
-      buttonTextColor: SettingsHttpAdapter.getTenantProperty('theme.button_text_color', data), // change
+      buttonColor: SettingsHttpAdapter.getTenantProperty('theme.button_background_color', data),
+      buttonTextColor: SettingsHttpAdapter.getTenantProperty('theme.button_text_color', data),
       font: SettingsHttpAdapter.getTenantProperty('theme.font', data),
       headerColor: SettingsHttpAdapter.getTenantProperty('theme.header_color', data),
       logo: SettingsHttpAdapter.tenantLogo(data),
