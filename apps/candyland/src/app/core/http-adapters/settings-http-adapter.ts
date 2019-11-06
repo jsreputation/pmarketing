@@ -89,28 +89,32 @@ export class SettingsHttpAdapter {
       'theme.header_color': data.headerNavbarColor.color,
       'theme.logo': data.logoType === 'image' ? data.logo : '',
       'theme.title': data.logoType === 'text' ? data.logo : '',
-      'theme.button_background_color': data.button_background_color.color,
+      'theme.button_background_color': data.button_background_color,
       'theme.button_text_color': data.button_text_color
     };
   }
 
-  public static transformSettingsBrandingToForm (data: any, listColors: any[]): IBrandingForm {
+  public static transformSettingsBrandingToForm (data: any, listColors: any[], listColorsText: any[]): IBrandingForm {
     const logoType = data['theme.title'] ? 'text' : 'image';
     return {
       style: data['theme.style'],
       font: data['theme.font'],
       primaryColor: data['theme.primary'],
       secondaryColor: data['theme.accent'],
-      headerNavbarColor: SettingsHttpAdapter.getColorObj(listColors, data['theme.header_color']),
+      headerNavbarColor: SettingsHttpAdapter.getColorObj(listColors, data['theme.header_color']), // key
       logo: data['theme.logo'] ? data['theme.logo'] : data['theme.title'],
       logoType: logoType,
-      button: SettingsHttpAdapter.getColorObj(listColors, data['theme.button_background_color']),
-      buttonTextColor:  data['theme.button_text_color']
+      buttonBackgroundColor: SettingsHttpAdapter.getColorObj(listColors, data['theme.button_background_color']), // key, just changed here
+      buttonTextColor: SettingsHttpAdapter.getColorObjText(listColorsText, data['theme.button_text_color'])
     }
   }
 
   public static getColorObj(listColors: any[], color: string): {labelView: string, color: string} {
     return listColors.find(item => item.color === color);
+  }
+
+  public static getColorObjText(listColorsText: any[], color: string): {labelView: string, color: string} {
+    return listColorsText.find(item => item.color === color);
   }
 
   public static getTenantsSettings(data):ITenantsProperties {
@@ -120,8 +124,8 @@ export class SettingsHttpAdapter {
       currency: SettingsHttpAdapter.getTenantProperty('currency', data),
       style: SettingsHttpAdapter.getTenantProperty('theme.style', data),
       accent: SettingsHttpAdapter.getTenantProperty('theme.accent', data),
-      buttonColor: SettingsHttpAdapter.getTenantProperty('theme.button_background_color', data),
-      buttonTextColor: SettingsHttpAdapter.getTenantProperty('theme.button_text_color', data),
+      buttonColor: SettingsHttpAdapter.getTenantProperty('theme.button_background_color', data), // change
+      buttonTextColor: SettingsHttpAdapter.getTenantProperty('theme.button_text_color', data), // change
       font: SettingsHttpAdapter.getTenantProperty('theme.font', data),
       headerColor: SettingsHttpAdapter.getTenantProperty('theme.header_color', data),
       logo: SettingsHttpAdapter.tenantLogo(data),
