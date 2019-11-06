@@ -18,7 +18,7 @@ commands:
       - run:
           name: Setup app, environment, namespace variables
           command: |
-            REGEX="([[:alnum:]]+)-(uat|staging|production)-?([[:alnum:]-]*)-([0-9]+\.[0-9]+\.[0-9]+-?[0-9]*)"
+            REGEX="([[:alnum:]-]+)-(uat|staging|production)-?([[:alnum:]-]*)-([0-9]+\.[0-9]+\.[0-9]+-?[0-9]*)"
             if [[ "${CIRCLE_TAG}" =~ $REGEX ]]; then
               echo "export APP=${BASH_REMATCH[1]}" >> $BASH_ENV
               echo "export TARGET_ENV=${BASH_REMATCH[2]}" >> $BASH_ENV
