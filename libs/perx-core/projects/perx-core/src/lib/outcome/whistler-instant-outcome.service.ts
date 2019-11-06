@@ -17,11 +17,11 @@ import {
   ICampaignAttributes
 } from '@perx/whistler';
 
-import { IDisplayProperties } from '../perx-core.models';
+import { ICampaignDisplayProperties } from '../perx-core.models';
 
 interface CampaignProperties {
   engagementId: number;
-  display_properties: IDisplayProperties;
+  display_properties: ICampaignDisplayProperties;
 }
 
 @Injectable({
@@ -49,7 +49,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
 
   // usage is to get return from pipe to call other functions
   public getFromCampaign(campaignId: number): Observable<IOutcome> {
-    let displayProps: IDisplayProperties;
+    let displayProps: ICampaignDisplayProperties;
     return this.getEngagementId(campaignId)
       .pipe(
         switchMap((campaign: CampaignProperties) => {

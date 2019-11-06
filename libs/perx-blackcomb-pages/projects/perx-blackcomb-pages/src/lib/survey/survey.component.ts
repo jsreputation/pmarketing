@@ -66,17 +66,17 @@ export class SurveyComponent implements OnInit, OnDestroy {
       (survey: ISurvey) => {
         this.survey = survey;
         const { displayProperties } = this.survey;
-        if (displayProperties && displayProperties.rewardSuccessPopUp) {
-          this.rewardSuccessPopUp.title = displayProperties.rewardSuccessPopUp.headLine || this.rewardSuccessPopUp.title;
-          this.rewardSuccessPopUp.text = displayProperties.rewardSuccessPopUp.subHeadLine || this.rewardSuccessPopUp.text;
-          this.rewardSuccessPopUp.imageUrl = displayProperties.rewardSuccessPopUp.imageURL || this.rewardSuccessPopUp.imageUrl;
-          this.rewardSuccessPopUp.buttonTxt = displayProperties.rewardSuccessPopUp.buttonTxt || this.rewardSuccessPopUp.buttonTxt;
+        if (displayProperties && displayProperties.successPopUp) {
+          this.rewardSuccessPopUp.title = displayProperties.successPopUp.headLine || this.rewardSuccessPopUp.title;
+          this.rewardSuccessPopUp.text = displayProperties.successPopUp.subHeadLine || this.rewardSuccessPopUp.text;
+          this.rewardSuccessPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.rewardSuccessPopUp.imageUrl;
+          this.rewardSuccessPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.rewardSuccessPopUp.buttonTxt;
         }
-        if (displayProperties && displayProperties.errorPopUp) {
-          this.errorPopUp.title = displayProperties.errorPopUp.headLine || this.errorPopUp.title;
-          this.errorPopUp.text = displayProperties.errorPopUp.subHeadLine || this.errorPopUp.text;
-          this.errorPopUp.imageUrl = displayProperties.errorPopUp.imageURL || this.errorPopUp.imageUrl;
-          this.errorPopUp.buttonTxt = displayProperties.errorPopUp.buttonTxt || this.errorPopUp.buttonTxt;
+        if (displayProperties && displayProperties.noRewardsPopUp) {
+          this.errorPopUp.title = displayProperties.noRewardsPopUp.headLine || this.errorPopUp.title;
+          this.errorPopUp.text = displayProperties.noRewardsPopUp.subHeadLine || this.errorPopUp.text;
+          this.errorPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.errorPopUp.imageUrl;
+          this.errorPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.errorPopUp.buttonTxt;
         }
       },
       () => {

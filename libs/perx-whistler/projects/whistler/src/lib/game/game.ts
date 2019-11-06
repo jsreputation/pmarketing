@@ -35,10 +35,16 @@ export interface WAttbsObjEntity {
   urn: string;
   display_properties?: {
     noRewardsPopUp?: {
-      headLine?: string,
-      subHeadLine?: string,
-      imageUrl?: string
-    }
+      headLine?: string;
+      subHeadLine?: string;
+      imageURL?: string;
+      buttonTxt?: string;
+    };
+    successPopUp?: {
+      headLine?: string;
+      subHeadLine?: string;
+      imageURL?: string;
+    };
   };
 }
 

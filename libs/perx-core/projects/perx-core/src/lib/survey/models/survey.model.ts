@@ -1,4 +1,4 @@
-import { IDisplayProperties } from '../../perx-core.models';
+import { ICampaignDisplayProperties } from '../../perx-core.models';
 
 export interface IAnswer {
   question_id?: string;
@@ -39,7 +39,7 @@ export interface ISurvey {
   card_background_img_url?: string;
   background_img_url?: string;
   questions: IQuestion[];
-  displayProperties?: IDisplayProperties;
+  displayProperties?: ICampaignDisplayProperties;
 }
 
 export enum SurveyQuestionType {

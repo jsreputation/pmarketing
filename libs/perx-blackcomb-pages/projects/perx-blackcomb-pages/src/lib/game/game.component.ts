@@ -60,11 +60,11 @@ export class GameComponent implements OnInit, OnDestroy {
       tap((game: IGame) => {
         if (game) {
           const { displayProperties } = game;
-          if (displayProperties && displayProperties.rewardSuccessPopUp) {
-            this.successPopUp.buttonTxt = displayProperties.rewardSuccessPopUp.buttonTxt || this.successPopUp.buttonTxt;
+          if (displayProperties && displayProperties.successPopUp) {
+            this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
           }
-          if (displayProperties && displayProperties.errorPopUp) {
-            this.errorPopUp.buttonTxt = displayProperties.errorPopUp.buttonTxt || this.errorPopUp.buttonTxt;
+          if (displayProperties && displayProperties.noRewardsPopUp) {
+            this.errorPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.errorPopUp.buttonTxt;
           }
           this.engagementId = game ? game.id : null;
         }

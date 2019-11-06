@@ -13,7 +13,7 @@ import {
   IWPostAnswerAttributes
 } from '@perx/whistler';
 
-import { IDisplayProperties } from '../perx-core.models';
+import { ICampaignDisplayProperties } from '../perx-core.models';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +47,7 @@ export class SurveyService {
   }
 
   public getSurveyFromCampaign(id: number): Observable<ISurvey> {
-    let disProp: IDisplayProperties | undefined;
+    let disProp: ICampaignDisplayProperties | undefined;
     return this.campaignService.getCampaign(id)
       .pipe(
         switchMap(

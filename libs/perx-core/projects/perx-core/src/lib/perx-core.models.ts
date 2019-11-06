@@ -1,10 +1,14 @@
-export interface IDisplayProperties {
+export interface IRewardDisplayProperties {
   merchantPinText?: IProperties;
   rewardSuccessPopUp?: IProperties;
-  noRewardsPopUp?: IProperties;
   codeInstructionsText?: IProperties;
   errorPopUp?: IProperties;
   CTAButtonTxt?: string;
+}
+
+export interface ICampaignDisplayProperties {
+  noRewardsPopUp?: IProperties;
+  successPopUp?: IProperties;
 }
 
 export interface IProperties {

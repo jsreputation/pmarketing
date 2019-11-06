@@ -80,8 +80,8 @@ export interface IStampCard {
     };
     rewardPositions?: number[]
     thumbnailImg?: string;
-    errorPopUp?: IProperties;
-    rewardSuccessPopUp?: IProperties;
+    noRewardsPopUp?: IProperties;
+    successPopUp?: IProperties;
   };
   stamps?: IStamp[];
 }

@@ -1,4 +1,4 @@
-import { IDisplayProperties } from '../../perx-core.models';
+import { IRewardDisplayProperties } from '../../perx-core.models';
 
 export enum RedemptionType {
   pin = 'pin',
@@ -30,7 +30,7 @@ export interface IReward {
   inventory?: Inventory;
   redemptionText?: string;
   rawPayload?: any;
-  displayProperties?: IDisplayProperties;
+  displayProperties?: IRewardDisplayProperties;
 }
 
 export interface ICatalog {

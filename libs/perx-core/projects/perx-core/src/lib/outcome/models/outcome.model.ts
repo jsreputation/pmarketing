@@ -1,4 +1,4 @@
-import { IDisplayProperties } from '../../perx-core.models';
+import { ICampaignDisplayProperties } from '../../perx-core.models';
 
 export interface IOutcome {
   title: string;
@@ -7,5 +7,5 @@ export interface IOutcome {
   banner: string;
   background_img_url: string;
   card_background_img_url: string;
-  displayProperties?: IDisplayProperties;
+  displayProperties?: ICampaignDisplayProperties;
 }
