@@ -9,7 +9,7 @@ import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsona
 import { ICampaignAttributes, WEngagementType } from '@perx/whistler';
 // import { tap } from 'rxjs/operators';
 
-fdescribe('WhistlerCampaignService', () => {
+describe('WhistlerCampaignService', () => {
   let httpTestingController: HttpTestingController;
   let service: WhistlerCampaignService;
 
