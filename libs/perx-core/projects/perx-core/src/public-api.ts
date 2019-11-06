@@ -2,6 +2,7 @@
  * Public API Surface of perx-core
  */
 export { PerxCoreModule } from './lib/perx-core.module';
+export { IRewardDisplayProperties, ICampaignDisplayProperties } from './lib/perx-core.models';
 
 /**
  * Merchants
@@ -44,7 +45,6 @@ export {
   CampaignType,
   CampaignState,
   ICampaign,
-  IDisplayProperties as ICampaignDisplayProperties
 } from './lib/campaign/models/campaign.model';
 
 /**
@@ -57,7 +57,6 @@ export {
   IStamp,
   StampCardState,
   StampState,
-  IDisplayProperties as IStampDisplayProperties
 } from './lib/stamp/models/stamp.model';
 export { StampsCardsListComponent } from './lib/stamp/stamps-cards-list/stamps-cards-list.component';
 /**
@@ -74,7 +73,6 @@ export {
   defaultTree,
   IPlayOutcome,
   ISlice,
-  IDisplayProperties as IGameDisplayProperties
 } from './lib/game/game.model';
 export { IGameService } from './lib/game/igame.service';
 export { IGameComponent } from './lib/game/igame.component';
@@ -127,7 +125,6 @@ export {
   ICatalog,
   ICategoryTags,
   IPrice,
-  IDisplayProperties as IRewardDisplayProperties
 } from './lib/rewards/models/reward.model';
 export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 export { RewardsCollectionComponent } from './lib/rewards/rewards-collection/rewards-collection.component';
@@ -175,7 +172,7 @@ export { GeoLocationService } from './lib/location/geolocation.service';
  */
 export { SurveyModule } from './lib/survey/survey.module';
 export { SurveyService } from './lib/survey/survey.service';
-export { ISurvey, SurveyQuestionType, IQuestion, IDisplayProperties as ISurveyDisplayProperties } from './lib/survey/models/survey.model';
+export { ISurvey, SurveyQuestionType, IQuestion } from './lib/survey/models/survey.model';
 export { SurveyComponent } from './lib/survey/survey/survey.component';
 export { QuestionComponent } from './lib/survey/question/question.component';
 export { SelectComponent } from './lib/survey/question/select/select.component';
@@ -207,7 +204,7 @@ export { ThemesService } from './lib/utils/themes/themes.service';
  * Outcome
  */
 export { InstantOutcomeService } from './lib/outcome/instant-outcome.service';
-export { IOutcome, IDisplayProperties as IOutcomeDisplayProperties } from './lib/outcome/models/outcome.model';
+export { IOutcome } from './lib/outcome/models/outcome.model';
 export { OutcomeModule } from './lib/outcome/outcome.module';
 
 /**

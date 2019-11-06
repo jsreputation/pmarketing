@@ -21,9 +21,16 @@ export interface IWSurveyDisplayProperties {
   card_background_img_url: string;
   questions: IWQuestion[];
   noRewardsPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageUrl?: string
+    headLine?: string;
+    subHeadLine?: string;
+    imageURL?: string;
+    buttonTxt?: string;
+  };
+  successPopUp?: {
+    headLine?: string;
+    subHeadLine?: string;
+    imageURL?: string;
+    buttonTxt?: string;
   };
 }
 
