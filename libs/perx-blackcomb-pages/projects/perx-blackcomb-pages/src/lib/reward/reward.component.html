@@ -5,7 +5,7 @@
       <h3>{{this.subTitle}}</h3>
     </div>
     <div class="letMeFlow">
-      <perx-core-rewards-collection [rewardsList]="rewards$">
+      <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="rewardClickedHandler($event)">
       </perx-core-rewards-collection>
     </div>
   </div>

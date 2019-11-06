@@ -87,8 +87,6 @@ export class RewardComponent implements OnInit, OnDestroy {
             if (rewards.length === 0) {
               throw new Error('empty');
             }
-            this.dialog.open(PopupComponent, { data: this.successPopUp });
-            this.router.navigate(['/wallet']);
           }),
           catchError(() => {
             this.dialog.open(PopupComponent, { data: this.noRewardsPopUp });
@@ -99,6 +97,15 @@ export class RewardComponent implements OnInit, OnDestroy {
           }),
           takeUntil(this.destroy$)
         );
+  }
+
+  public rewardClickedHandler(reward: IReward): void {
+    if (reward) {
+      this.dialog.open(PopupComponent, { data: this.successPopUp });
+    } else {
+      this.dialog.open(PopupComponent, { data: this.noRewardsPopUp });
+    }
+    this.router.navigate(['/wallet']);
   }
 
   public ngOnDestroy(): void {
