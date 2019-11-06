@@ -32,6 +32,10 @@ const routes: Routes = [
 
       },
       {
+        path: 'signup',
+        loadChildren: () => import('../sign-up/sign-up.module').then((mod) => mod.SignUpModule)
+      },
+      {
         path: 'stamp/:id',
         loadChildren: (): any => import('../stamp/stamp.module').then((mod: any) => mod.StampModule),
       },
