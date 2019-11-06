@@ -6,7 +6,10 @@ export * from './lib/whistler.module';
 export { IVoucherStatsApi } from './lib/voucher/stats';
 export { IVouchersApi } from './lib/voucher/vouchers-api';
 export { AssignedStatus, IAssignedAttributes, IAssignRequestAttributes } from './lib/voucher/assigneds';
-export { IRewardEntityAttributes } from './lib/reward/reward';
+export {
+  IRewardEntityAttributes,
+  IWMetaData,
+} from './lib/reward/reward';
 export { IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from './lib/limit/limit';
 export { IOutcomeAttributes } from './lib/outcome/outcome';
 export { ICommTemplateAttributes, ICommEventAttributes } from './lib/comm/comm';

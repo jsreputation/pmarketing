@@ -38,6 +38,11 @@ export interface IRewardEntityAttributes {
   organization_id?: string;
 }
 
+export interface IWMetaData {
+  totalPages?: number;
+  currentPage?: number;
+}
+
 interface IProperties {
   headLine?: string;
   subHeadLine?: string;

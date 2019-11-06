@@ -8,12 +8,12 @@ import { IJsonApiItemPayload, IJsonApiItem, IJsonApiListPayload } from '../jsona
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { IMerchant } from '../merchants/models/merchants.model';
 import { IMerchantsService } from '../merchants/imerchants.service';
-import { IRewardEntityAttributes } from '@perx/whistler';
 
-interface IWMetaData {
-  totalPages?: number;
-  currentPage?: number;
-}
+import {
+  IRewardEntityAttributes,
+  IWMetaData,
+} from '@perx/whistler';
+
 @Injectable({
   providedIn: 'root'
 })
