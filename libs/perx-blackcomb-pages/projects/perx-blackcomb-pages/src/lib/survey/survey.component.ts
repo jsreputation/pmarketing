@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NotificationService, ISurvey, SurveyService } from '@perx/core';
+import { NotificationService, ISurvey, SurveyService, IPopupConfig } from '@perx/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { filter, switchMap, takeUntil } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 interface IAnswer {
   question_id: string;
@@ -22,14 +23,35 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public currentPointer: number;
   private destroy$: Subject<any> = new Subject();
 
+  public successPopUp: IPopupConfig = {
+    title: 'Your RSVP is successful!',
+    text: 'See you at our event!',
+    imageUrl: 'assets/congrats_image.png',
+    buttonTxt: 'View Reward',
+  };
+
+  public noRewardsPopUp: IPopupConfig = {
+    title: 'Thank you for your interest. We’re sorry, all places have been taken.',
+    text: 'Nonetheless, we’ve added you to our waiting list for the event and will call you when places are available by 07 October 2019',
+    imageUrl: '',
+    buttonTxt: 'Back to Wallet',
+  };
+
+  private initTranslate(): void {
+    this.translate.get('VIEW_REWARD').subscribe((text) => this.successPopUp.buttonTxt = text);
+    this.translate.get('BACK_TO_WALLET').subscribe((text) => this.successPopUp.buttonTxt = text);
+  }
+
   constructor(
     private notificationService: NotificationService,
     private router: Router,
     private route: ActivatedRoute,
-    private surveyService: SurveyService
+    private surveyService: SurveyService,
+    private translate: TranslateService,
   ) { }
 
   public ngOnInit(): void {
+    this.initTranslate();
     this.data$ = this.route.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
@@ -43,6 +65,19 @@ export class SurveyComponent implements OnInit, OnDestroy {
     this.data$.subscribe(
       (survey: ISurvey) => {
         this.survey = survey;
+        const { displayProperties } = this.survey;
+        if (displayProperties && displayProperties.successPopUp) {
+          this.successPopUp.title = displayProperties.successPopUp.headLine || this.successPopUp.title;
+          this.successPopUp.text = displayProperties.successPopUp.subHeadLine || this.successPopUp.text;
+          this.successPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.successPopUp.imageUrl;
+          this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
+        }
+        if (displayProperties && displayProperties.noRewardsPopUp) {
+          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine || this.noRewardsPopUp.title;
+          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine || this.noRewardsPopUp.text;
+          this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
+          this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
+        }
       },
       () => {
         this.router.navigate(['/wallet']);
@@ -66,27 +101,14 @@ export class SurveyComponent implements OnInit, OnDestroy {
     this.surveyService.postSurveyAnswer(this.answers, this.survey, this.route.snapshot.params.id)
       .subscribe(
         (res) => {
-          let text: string;
-          let title: string;
-          let imageUrl: string;
-          let buttonTxt: string;
+          let popupConfig: IPopupConfig = null;
           if (res.hasOutcomes) {
-            text = 'See you at our event!';
-            title = 'Your RSVP is successful!';
-            buttonTxt = 'To Wallet';
-            imageUrl = 'assets/congrats_image.png';
+            popupConfig = this.successPopUp;
           } else {
-            text = 'Nonetheless, we’ve added you to our waiting list for the event and will call you when places are available by 07 October 2019';
-            title = 'Thank you for your interest. We’re sorry, all places have been taken.';
-            buttonTxt = null;
+            popupConfig = this.noRewardsPopUp;
           }
           this.router.navigate(['/wallet']);
-          this.notificationService.addPopup({
-            text,
-            title,
-            buttonTxt,
-            imageUrl
-          });
+          this.notificationService.addPopup(popupConfig);
         }
       );
   }
