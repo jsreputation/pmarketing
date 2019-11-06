@@ -156,7 +156,8 @@ export class SettingsHttpAdapter {
   /**
    * this method need for get right type of logo img or text in the component
    */
+  // @ts-ignore
   public static tenantTypeLogo(data: Tenants): boolean {
-    return !(SettingsHttpAdapter.getTenantProperty('theme.title', data) as any);
+    return true; // !(SettingsHttpAdapter.getTenantProperty('theme.title', data) as any);
   }
 }
