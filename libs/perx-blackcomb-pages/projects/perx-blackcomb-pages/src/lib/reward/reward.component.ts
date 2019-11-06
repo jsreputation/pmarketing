@@ -99,12 +99,7 @@ export class RewardComponent implements OnInit, OnDestroy {
         );
   }
 
-  public rewardClickedHandler(reward: IReward): void {
-    if (reward) {
-      this.dialog.open(PopupComponent, { data: this.successPopUp });
-    } else {
-      this.dialog.open(PopupComponent, { data: this.noRewardsPopUp });
-    }
+  public rewardClickedHandler(): void {
     this.router.navigate(['/wallet']);
   }
 
