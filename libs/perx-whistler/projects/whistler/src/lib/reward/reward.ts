@@ -27,25 +27,20 @@ export interface IRewardEntityAttributes {
         duration?: string;
       }
     },
-    merchantPinText?: {
-      headLine?: string,
-      subHeadLine?: string,
-    };
-    rewardSuccessPopUp?: {
-      headLine?: string,
-      subHeadLine?: string,
-      imageURL?: string,
-    };
-    codeInstructionsText?: {
-      headLine?: string,
-    };
-    errorPopUp?: {
-      headLine?: string,
-      subHeadLine?: string,
-      imageURL?: string,
-    };
+    merchantPinText?: IProperties;
+    rewardSuccessPopUp?: IProperties;
+    codeInstructionsText?: IProperties;
+    errorPopUp?: IProperties;
+    CTAButtonTxt?: string;
     redemption_text?: string;
     loyalties: any;
   };
   organization_id?: string;
+}
+
+interface IProperties {
+  headLine?: string;
+  subHeadLine?: string;
+  imageURL?: string;
+  buttonTxt?: string;
 }
