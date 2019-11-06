@@ -104,8 +104,8 @@ export class SettingsHttpAdapter {
       headerNavbarColor: SettingsHttpAdapter.getColorObj(listColors, data['theme.header_color']), // key
       logo: data['theme.logo'] ? data['theme.logo'] : data['theme.title'],
       logoType: logoType,
-      buttonBackgroundColor: SettingsHttpAdapter.getColorObj(listColors, data['theme.button_background_color']), // key, just changed here
-      buttonTextColor: SettingsHttpAdapter.getColorObjText(listColorsText, data['theme.button_text_color'])
+      buttonBackgroundColor: SettingsHttpAdapter.getColorObj(listColors, data['theme.button_background_color'].color), // key, just changed here
+      buttonTextColor: SettingsHttpAdapter.getColorObjText(listColorsText, data['theme.button_text_color'].color)
     }
   }
 
