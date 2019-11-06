@@ -30,7 +30,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
     buttonTxt: 'View Reward',
   };
 
-  public errorPopUp: IPopupConfig = {
+  public noRewardsPopUp: IPopupConfig = {
     title: 'Thank you for your interest. We’re sorry, all places have been taken.',
     text: 'Nonetheless, we’ve added you to our waiting list for the event and will call you when places are available by 07 October 2019',
     imageUrl: '',
@@ -73,10 +73,10 @@ export class SurveyComponent implements OnInit, OnDestroy {
           this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
         }
         if (displayProperties && displayProperties.noRewardsPopUp) {
-          this.errorPopUp.title = displayProperties.noRewardsPopUp.headLine || this.errorPopUp.title;
-          this.errorPopUp.text = displayProperties.noRewardsPopUp.subHeadLine || this.errorPopUp.text;
-          this.errorPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.errorPopUp.imageUrl;
-          this.errorPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.errorPopUp.buttonTxt;
+          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine || this.noRewardsPopUp.title;
+          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine || this.noRewardsPopUp.text;
+          this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
+          this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
         }
       },
       () => {
@@ -105,7 +105,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
           if (res.hasOutcomes) {
             popupConfig = this.successPopUp;
           } else {
-            popupConfig = this.errorPopUp;
+            popupConfig = this.noRewardsPopUp;
           }
           this.router.navigate(['/wallet']);
           this.notificationService.addPopup(popupConfig);
