@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import { IRewardEntityAttributes } from '@perx/whistler';
+import { IWRewardEntityAttributes } from '@perx/whistler';
 
 export class RewardHttpAdapter {
 
@@ -23,7 +23,7 @@ export class RewardHttpAdapter {
     }
   }
 
-  public static transformToReward(data: IJsonApiItem<IRewardEntityAttributes>): IRewardEntity {
+  public static transformToReward(data: IJsonApiItem<IWRewardEntityAttributes>): IRewardEntity {
     return {
       id: data.id,
       image: data.attributes.image_url,
@@ -40,7 +40,7 @@ export class RewardHttpAdapter {
     };
   }
 
-  public static transformToRewardForm(data: IJsonApiItem<IRewardEntityAttributes>): IRewardEntityForm {
+  public static transformToRewardForm(data: IJsonApiItem<IWRewardEntityAttributes>): IRewardEntityForm {
     let vouchers;
     if (data.attributes.display_properties.voucher_properties) {
       const voucher_properties = data.attributes.display_properties.voucher_properties;
@@ -100,7 +100,7 @@ export class RewardHttpAdapter {
     };
   }
 
-  public static transformFromRewardForm(data: IRewardEntityForm, loyalties?: any): IJsonApiItem<IRewardEntityAttributes> {
+  public static transformFromRewardForm(data: IRewardEntityForm, loyalties?: any): IJsonApiItem<IWRewardEntityAttributes> {
     return {
       type: 'entities',
       attributes: {
@@ -177,7 +177,7 @@ export class RewardHttpAdapter {
     return moment(date).set({hours, minutes}).utc().toDate();
   }
 
-  public static transformFromReward(data: IRewardEntity): IJsonApiItem<IRewardEntityAttributes> {
+  public static transformFromReward(data: IRewardEntity): IJsonApiItem<IWRewardEntityAttributes> {
     return {
       type: 'entities',
       attributes: {

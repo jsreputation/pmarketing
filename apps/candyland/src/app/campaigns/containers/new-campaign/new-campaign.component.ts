@@ -12,7 +12,7 @@ import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapte
 import { map, switchMap, tap, catchError, takeUntil } from 'rxjs/operators';
 import { combineLatest, iif, of, Observable, Subject } from 'rxjs';
 
-import { ICampaignAttributes, ICommTemplateAttributes } from '@perx/whistler';
+import { IWCampaignAttributes, IWCommTemplateAttributes } from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
@@ -119,9 +119,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const generateLimitData$ = this.updateLimitFn();
 
     saveCampaign$.pipe(
-      tap((res: IJsonApiPayload<ICampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
+      tap((res: IJsonApiPayload<IWCampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
       switchMap(
-        (res: IJsonApiPayload<ICampaignAttributes>) => combineLatest(
+        (res: IJsonApiPayload<IWCampaignAttributes>) => combineLatest(
           iif(hasLimitData, generateLimitData$(res.data), of(res)).pipe(catchError(() => of(null))),
           this.updateOutcomes(res.data).pipe(catchError(() => of(null))),
           this.updateComm(res.data).pipe(catchError(() => of(null)))
@@ -187,7 +187,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       }
 
       return templateAction$.pipe(
-        switchMap((template: IJsonApiPayload<ICommTemplateAttributes>) => eventAction$(template.data.id))
+        switchMap((template: IJsonApiPayload<IWCommTemplateAttributes>) => eventAction$(template.data.id))
       );
     }
     if (channelInfo.eventId) {
