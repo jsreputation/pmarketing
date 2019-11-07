@@ -31,7 +31,7 @@ export {
   IWInstantOutcomeEngagementAttributes,
   IWOutcomeDisplayProperties,
 } from './lib/instant-outcome/engagement';
-export { IWWhistlerProfileAttributes } from './lib/profile/profile';
+export { IWProfileAttributes } from './lib/profile/profile';
 export {
   IWMerchant,
   IWMerchantBranchApi,
