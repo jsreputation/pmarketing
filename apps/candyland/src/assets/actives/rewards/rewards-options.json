@@ -1,35 +1,35 @@
 {
   "rewardType": [
     {
-      "title": "Free",
+      "title": "REWARD_TYPE_OPTIONS.FREE",
       "value": "Free"
     },
     {
-      "title": "Cashback",
+      "title": "REWARD_TYPE_OPTIONS.CASHBACK",
       "value": "Cashback"
     },
     {
-      "title": "Points",
+      "title": "REWARD_TYPE_OPTIONS.POINTS",
       "value": "Points"
     },
     {
-      "title": "Buy X Get Y",
+      "title": "REWARD_TYPE_OPTIONS.BUY_X_GET_Y",
       "value": "Buy X Get Y"
     },
     {
-      "title": "Fixed Discount Amount",
+      "title": "REWARD_TYPE_OPTIONS.FIXED_DISCOUNT_AMOUNT",
       "value": "Fixed Discount Amount"
     },
     {
-      "title": "Fixed Discount Item",
+      "title": "REWARD_TYPE_OPTIONS.FIXED_DISCOUNT_ITEM",
       "value": "Fixed Discount Item"
     },
     {
-      "title": "Percent Discount",
+      "title": "REWARD_TYPE_OPTIONS.PERCENT_DISCOUNT",
       "value": "Percent Discount"
     },
     {
-      "title": "Set Price Coupon",
+      "title": "REWARD_TYPE_OPTIONS.SET_PRICE_COUPON",
       "value": "Set Price Coupon"
     }
   ],
@@ -49,53 +49,53 @@
   ],
   "redemptionType": [
     {
-      "title": "QR Code",
+      "title": "REDEMPTION_TYPE_OPTIONS.QR_CODE",
       "value": "QR Code"
     },
     {
-      "title": "Bar Code",
+      "title": "REDEMPTION_TYPE_OPTIONS.BAR_CODE",
       "value": "Bar Code"
     },
     {
-      "title": "Merchant PIN",
+      "title": "REDEMPTION_TYPE_OPTIONS.MERCHANT_PIN",
       "value": "Merchant PIN"
     },
     {
-      "title": "Promo Code",
+      "title": "REDEMPTION_TYPE_OPTIONS.PROMO_CODE",
       "value": "Promo Code"
     }
   ],
   "category": [
     {
-      "title": "Food & Beverage",
+      "title": "REWARD_CATEGORY_OPTIONS.FOOD_&_BEVERAGE",
       "value": "Food & Beverage"
     },
     {
-      "title": "Travel",
+      "title": "REWARD_CATEGORY_OPTIONS.TRAVEL",
       "value": "Travel"
     },
     {
-      "title": "Electronics",
+      "title": "REWARD_CATEGORY_OPTIONS.ELECTRONICS",
       "value": "Electronics"
     },
     {
-      "title": "Wellness",
+      "title": "REWARD_CATEGORY_OPTIONS.WELLNESS",
       "value": "Wellness"
     },
     {
-      "title": "Entertainment",
+      "title": "REWARD_CATEGORY_OPTIONS.ENTERTAINMENT",
       "value": "Entertainment"
     },
     {
-      "title": "Shopping",
+      "title": "REWARD_CATEGORY_OPTIONS.SHOPPING",
       "value": "Shopping"
     },
     {
-      "title": "Merchant Self",
+      "title": "REWARD_CATEGORY_OPTIONS.MERCHANT_SELF",
       "value": "Merchant Self"
     },
     {
-      "title": "Others",
+      "title": "REWARD_CATEGORY_OPTIONS.OTHERS",
       "value": "Others"
     }
   ],

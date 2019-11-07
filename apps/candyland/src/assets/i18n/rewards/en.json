@@ -1,0 +1,38 @@
+{
+  "SEARCH_FOR_REWARDS": "Search for rewards",
+  "REWARD_NAME": "Reward Name",
+  "REWARD_TYPE": "Reward Type",
+  "CATEGORY": "Category",
+  "VALIDITY": "Validity",
+  "BALANCE": "Balance",
+  "OUR_REWARD_BAG_IS_EMPTY": "Your reward bag is empty",
+  "LETS_BEGIN_BY_CREATING_YOUR_FIRST_REWARD": "Let's begin by creating your first Reward",
+  "ENTER_TITLE_HERE": "Enter title here",
+  "REWARD_INFO": "Reward Info",
+  "REWARD_TYPE_OPTIONS": {
+    "FREE": "Free",
+    "CASHBACK": "Cashback",
+    "POINTS": "Points",
+    "BUY_X_GET_Y": "Buy X Get Y",
+    "FIXED_DISCOUNT_AMOUNT": "Fixed Discount Amount",
+    "FIXED_DISCOUNT_ITEM": "Fixed Discount Item",
+    "PERCENT_DISCOUNT": "Percent Discount",
+    "SET_PRICE_COUPON": "Set Price Coupon"
+  },
+  "REWARD_CATEGORY_OPTIONS": {
+    "FOOD_&_BEVERAGE": "Food & Beverage",
+    "TRAVEL": "Travel",
+    "ELECTRONICS": "Electronics",
+    "WELLNESS": "Wellness",
+    "ENTERTAINMENT": "Entertainment",
+    "SHOPPING": "Shopping",
+    "MERCHANT_SELF": "Merchant Self",
+    "OTHERS": "Others"
+  },
+  "COST_OF_REWARD": "Cost of Reward",
+  "TERMS_&_CONDITION": "Terms & Condition",
+  "POINTS_BURN_RULE": "points (Burn rule:",
+  "POINTS_TO": "points to",
+  "ELIGIBLE_TIERS": "Eligible Tiers",
+  "APPLY_TIER_DISCOUNT": "Apply tier discount ("
+}

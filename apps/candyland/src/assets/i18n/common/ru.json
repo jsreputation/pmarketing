@@ -1,0 +1,25 @@
+{
+  "DASHBOARD": "Dashboard",
+  "REWARDS": "Награды",
+  "ENGAGEMENTS": "Engagements",
+  "CAMPAIGNS": "Campaigns",
+  "LOYALTY": "Loyalty (β)",
+  "MERCHANTS": "Merchants",
+  "AUDIENCE": "Audience",
+  "SETTINGS": "Settings",
+  "BTN_SAVE": "Save",
+  "BTN_CANCEL": "Cancel",
+  "BTN_CREATE_NEW": "Create New",
+  "BTN_EDIT": "Редактировать",
+  "BTN_DUPLICATE": "Дублировать",
+  "BTN_ADD_NEW": "+ Add New",
+
+  "DESCRIPTION": "Description",
+  "POINTS": "points",
+
+
+  "ERROR_MIN_LENGTH": "Минимальная длина",
+  "ERROR_MAX_LENGTH": "максимальная длина",
+  "ERROR_PATTERN": "Только буквенно-цифровые символы",
+  "RECOMMENDED_FORMAT:_.JPG,_.PNG_OR_.GIF": "Recommended format: .JPG, .PNG or .GIF"
+}
