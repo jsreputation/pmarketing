@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { IGameService, IGame, GameType, IPlayOutcome, PopupComponent, IPopupConfig } from '@perx/core';
+import { IGameService, IGame, GameType, IPopupConfig, IGameTransaction } from '@perx/core';
 import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
-import { Observable, interval, combineLatest, throwError, Subject } from 'rxjs';
-import { MatDialog } from '@angular/material';
+import { Observable, interval, throwError, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -16,6 +15,7 @@ export class GameComponent implements OnInit, OnDestroy {
   public gt: typeof GameType = GameType;
   private campaignId: number;
   private engagementId: number | null = null;
+  private transactionId: number | null = null;
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
   private popupData: IPopupConfig;
@@ -42,7 +42,6 @@ export class GameComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private gameService: IGameService,
     private router: Router,
-    private dialog: MatDialog,
     private translate: TranslateService,
   ) {
   }
@@ -85,9 +84,11 @@ export class GameComponent implements OnInit, OnDestroy {
       catchError(err => throwError(err)),
       takeUntil(this.destroy$)
     ).subscribe(
-      (outcome: IPlayOutcome) => {
-        if (outcome.vouchers.length > 0) {
-          this.successPopUp.text = this.successPopUp.text ? this.successPopUp.text : `You earned ${outcome.vouchers.length} rewards`;
+      (gameTransaction: IGameTransaction) => {
+        this.transactionId = gameTransaction.id;
+        if (gameTransaction.voucherIds.length > 0) {
+          this.successPopUp.text =
+            this.successPopUp.text ? this.successPopUp.text : `You earned ${gameTransaction.voucherIds.length} rewards`;
           this.popupData = this.successPopUp;
         } else {
           this.popupData = this.noRewardsPopUp;
@@ -106,6 +107,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   public gameCompleted(): void {
     // display a loader before redirecting to next page
+    const queryParams = { popupData: JSON.stringify(this.popupData), engagementType: 'game', transactionId: this.transactionId };
     const delay = 3000;
     const nbSteps = 60;
     interval(delay / nbSteps)
@@ -115,10 +117,10 @@ export class GameComponent implements OnInit, OnDestroy {
         first()
       ).subscribe(
         () => {
-          this.router.navigate(['/pi'], { queryParams: { popupData: JSON.stringify(this.popupData) } });
+          this.router.navigate(['/pi'], {queryParams });
         },
         () => {
-          this.router.navigate(['/pi'], { queryParams: { popupData: JSON.stringify(this.popupData) } });
+          this.router.navigate(['/pi'], {queryParams });
         }
       );
   }

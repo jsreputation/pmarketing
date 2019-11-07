@@ -125,4 +125,5 @@ export abstract class AuthenticationService implements AuthService {
 
   public abstract savePI(pi: string): void;
 
+  public abstract mergeUserById(fromIds: string[], toId: string): Observable<void>;
 }

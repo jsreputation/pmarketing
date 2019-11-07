@@ -356,4 +356,9 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   public savePI(pi: string): void {
     this.tokenStorage.setAppInfoProperty(pi, 'pi');
   }
+
+  // @ts-ignore
+  public mergeUserById(fromIds: string[], toId: string): Observable<void> {
+    return throwError('Not implement yet');
+  }
 }

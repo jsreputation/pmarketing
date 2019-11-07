@@ -218,7 +218,7 @@ export class V4GameService implements IGameService {
   }
 
   // @ts-ignore
-  public prePlay(engagementId: number, campaignId?: number): Observable<IPlayOutcome> {
+  public prePlay(engagementId: number, campaignId?: number): Observable<IGameTransaction> {
     throw new Error('Not implemented.');
   }
   // @ts-ignore

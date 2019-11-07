@@ -102,6 +102,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
             throw new Error('Get authentication token failed!');
           }
           this.saveUserAccessToken(userBearer);
+          console.log(res);
         }
       )
     );
@@ -262,5 +263,16 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
 
   public savePI(pi: string): void {
     this.tokenStorage.setAppInfoProperty(pi, 'pi');
+  }
+
+  public mergeUserById(fromIds: string[], toId: string): Observable<void> {
+    return this.http.post<any>(this.apiHost + '/chown_requests', {
+      data: {
+        attributes: {
+          from_ids: fromIds,
+          to_id: toId
+        }
+      }
+    });
   }
 }

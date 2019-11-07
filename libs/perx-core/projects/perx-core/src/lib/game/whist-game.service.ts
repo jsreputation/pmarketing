@@ -8,6 +8,7 @@ import {
   IPinata,
   defaultPinata,
   IPlayOutcome,
+  IGameTransaction
 } from './game.model';
 import { Observable, combineLatest, of } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -169,7 +170,7 @@ export class WhistlerGameService implements IGameService {
       );
   }
 
-  public prePlay(engagementId: number, campaignId?: number): Observable<IPlayOutcome> {
+  public prePlay(engagementId: number, campaignId?: number): Observable<IGameTransaction> {
     const body = {
       data: {
         type: 'transactions',
@@ -185,14 +186,12 @@ export class WhistlerGameService implements IGameService {
       body,
       { headers: { 'Content-Type': 'application/vnd.api+json' } }
     ).pipe(
-      mergeMap(res => (
-        combineLatest(...res.data.attributes.results.attributes.results.map(
-          (outcome: IJsonApiItem<IAssignedAttributes>) => this.whistVouchSvc.get(Number.parseInt(outcome.id, 10))
-        )).pipe(
-          map((vouchArr) => vouchArr.reduce((acc, currVouch) =>
-            ({ ...acc, vouchers: [...acc.vouchers, currVouch] }), { vouchers: [], rawPayload: res })
-          ))
-      ))
+      map(res => ({
+        id: Number.parseInt(res.data.id, 10),
+        rewardIds: res.data.attributes.results.attributes.results.map(
+          (outcome: IJsonApiItem<IAssignedAttributes>) => Number.parseInt(outcome.id, 10)
+        )
+      }))
     );
   }
   public prePlayConfirm(transactionId: number): Observable<void> {

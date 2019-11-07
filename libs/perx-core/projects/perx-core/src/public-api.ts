@@ -1,3 +1,4 @@
+import { IGameTransaction } from '@perx/core';
 /*
  * Public API Surface of perx-core
  */
@@ -74,6 +75,7 @@ export {
   defaultTree,
   IPlayOutcome,
   ISlice,
+  IGameTransaction
 } from './lib/game/game.model';
 export { IGameService } from './lib/game/igame.service';
 export { IGameComponent } from './lib/game/igame.component';
