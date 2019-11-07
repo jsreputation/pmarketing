@@ -20,7 +20,9 @@ import { PerxChartModule } from '@perx/chart';
 import { WINDOW_PROVIDERS } from '@cl-core/services/window.service';
 import { GestureConfig } from '@angular/material/core';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { setLanguage, TranslateLoaderService } from '@cl-core/translate-services/translate-loader-service';
+import {
+  setLanguage, TranslateCustomsLoader,
+} from '@cl-core/translate-services/translate-loader-service';
 import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
 
 @NgModule({
@@ -45,7 +47,7 @@ import { TranslateDefaultLanguageService } from '@cl-core/translate-services/tra
       loader: {
         provide: TranslateLoader,
         deps: [HttpClient],
-        useClass: TranslateLoaderService
+        useFactory: (httpClient) => TranslateCustomsLoader(httpClient, '/assets/i18n/')
       }
     }),
   ],

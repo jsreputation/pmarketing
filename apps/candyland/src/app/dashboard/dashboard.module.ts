@@ -25,8 +25,8 @@ import { LinearChartModule, ChartCardModule } from '@cl-shared';
 import { DashboardRewardsPageComponent } from './containers/dashboard-rewards-page/dashboard-rewards-page.component';
 import { DashboardChartsParametersService } from './services/dashboard-charts-parameters.service';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateDashboardLoaderService } from '@cl-core/translate-services/translate-dashboard-loader-service';
 import { HttpClient } from '@angular/common/http';
+import { TranslateCustomsLoader } from '@cl-core/translate-services/translate-loader-service';
 
 @NgModule({
   declarations: [
@@ -61,7 +61,7 @@ import { HttpClient } from '@angular/common/http';
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
-        useClass: TranslateDashboardLoaderService,
+        useFactory: (httpClient) => TranslateCustomsLoader(httpClient, '/assets/i18n/dashboard/'),
         deps: [HttpClient]
       },
       isolate: true

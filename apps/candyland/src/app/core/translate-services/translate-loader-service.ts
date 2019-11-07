@@ -7,27 +7,6 @@ import { environment } from '@cl-environments/environment';
 import { ApiConfig } from '@cl-core/api-config';
 import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
 
-@Injectable()
-export class TranslateLoaderService implements TranslateLoader {
-  private contentHeader: HttpHeaders = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-  });
-  public hostUrl: string = `http://localhost:4200/assets/i18n/`;
-  constructor(public httpClient: HttpClient) {
-    if (environment.production) {
-      this.hostUrl = `${ApiConfig.basePath}/assets/i18n/`;
-    }
-  }
-  public getTranslation(lang: string): Observable<{ [k: string]: string }> {
-    const apiAddress = `${this.hostUrl}${lang}.json`;
-    return this.httpClient.get<{ [k: string]: string }>(apiAddress, { headers: this.contentHeader })
-      .pipe(
-        catchError(() => this.httpClient.get<{ [k: string]: string }>(`${this.hostUrl}assets/en-json.json`))
-      );
-  }
-}
-
 export const setLanguage = (
   translateService: TranslateService,
   translateDefaultLanguage: TranslateDefaultLanguageService
@@ -45,3 +24,30 @@ export const setLanguage = (
   translateService.setDefaultLang(language);
   resolve();
 });
+
+export const TranslateCustomsLoader = (httpClient: HttpClient, path: string) => {
+  return new TranslateLoaderService(httpClient, path);
+};
+
+@Injectable()
+export class TranslateLoaderService implements TranslateLoader {
+  private contentHeader: HttpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  });
+  public hostUrl: string = `http://localhost:4200${this.path}`;
+  constructor(public httpClient: HttpClient,
+              public path: string
+  ) {
+    if (environment.production) {
+      this.hostUrl = `${ApiConfig.basePath}${this.path}`;
+    }
+  }
+  public getTranslation(lang: string): Observable<{ [k: string]: string }> {
+    const apiAddress = `${this.hostUrl}${lang}.json`;
+    return this.httpClient.get<{ [k: string]: string }>(apiAddress, { headers: this.contentHeader })
+      .pipe(
+        catchError(() => this.httpClient.get<{ [k: string]: string }>(`${this.hostUrl}assets/en-json.json`))
+      );
+  }
+}
