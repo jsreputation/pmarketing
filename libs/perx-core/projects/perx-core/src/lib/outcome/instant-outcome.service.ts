@@ -9,6 +9,6 @@ export abstract class InstantOutcomeService {
 
   // @ts-ignore
   public abstract claim(campaignId: number): Observable<IReward[]>;
-  public abstract prePlay(engagementId: number, campaignId?: number): Observable<IReward[]>;
+  public abstract prePlay(campaignId: number): Observable<IReward[]>;
   public abstract prePlayConfirm(transactionId: number): Observable<void>;
 }

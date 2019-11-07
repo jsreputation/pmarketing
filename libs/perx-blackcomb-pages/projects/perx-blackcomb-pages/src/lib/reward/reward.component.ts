@@ -25,12 +25,6 @@ export class RewardComponent implements OnInit, OnDestroy {
     buttonTxt: 'Back to Wallet',
     imageUrl: '',
   };
-  public successPopUp: IPopupConfig = {
-    title: 'Successfully !',
-    text: '',
-    buttonTxt: 'View Reward',
-    imageUrl: '',
-  };
 
   private destroy$: Subject<any> = new Subject();
 
@@ -43,7 +37,6 @@ export class RewardComponent implements OnInit, OnDestroy {
   ) { }
 
   private initTranslate(): void {
-    this.translate.get('VIEW_REWARD').subscribe((text) => this.successPopUp.buttonTxt = text);
     this.translate.get('BACK_TO_WALLET').subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
   }
 
@@ -52,8 +45,8 @@ export class RewardComponent implements OnInit, OnDestroy {
     this.route.params
       .pipe(
         map((params: Params) => params.id),
-        switchMap((id: string) => this.outcomeService.getFromCampaign(+id)),
-        catchError(() => this.router.navigate(['/wallet']))
+        switchMap((id: string) => this.outcomeService.getFromCampaign(parseInt(id, 10))),
+        catchError(() => this.router.navigate(['/pi']))
       )
       .subscribe((eng: IOutcome) => {
         this.title = eng.title;
@@ -68,12 +61,6 @@ export class RewardComponent implements OnInit, OnDestroy {
           this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
           this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
         }
-        if (displayProperties && displayProperties.successPopUp) {
-          this.successPopUp.title = displayProperties.successPopUp.headLine || this.successPopUp.title;
-          this.successPopUp.text = displayProperties.successPopUp.subHeadLine || this.successPopUp.text;
-          this.successPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.successPopUp.imageUrl;
-          this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
-        }
       });
 
     this.rewards$ =
@@ -81,7 +68,7 @@ export class RewardComponent implements OnInit, OnDestroy {
         .pipe(
           // filter((params: Params) => params.id),
           map((params: Params) => params.id),
-          switchMap((campaignId: string) => this.outcomeService.claim(+campaignId)),
+          switchMap((campaignId: string) => this.outcomeService.prePlay(parseInt(campaignId, 10))),
           tap((rewards: IReward[]) => {
             // if reward list is empty make sure to throw, so that we end up in the catchError block
             if (rewards.length === 0) {
@@ -89,9 +76,7 @@ export class RewardComponent implements OnInit, OnDestroy {
             }
           }),
           catchError(() => {
-            this.dialog.open(PopupComponent, { data: this.noRewardsPopUp });
-            /* todo display popup and redirect to wallet*/
-            this.router.navigate(['/wallet']);
+            this.router.navigate(['/pi'], { queryParams: { popupData: this.noRewardsPopUp } });
             // next line is actually useless as we will redirected.
             return of<IReward[]>([]);
           }),
@@ -100,7 +85,7 @@ export class RewardComponent implements OnInit, OnDestroy {
   }
 
   public rewardClickedHandler(): void {
-    this.router.navigate(['/wallet']);
+    this.router.navigate(['/pi']);
   }
 
   public ngOnDestroy(): void {

@@ -30,4 +30,10 @@ export interface IInstantOutcomeTransactionAttributes {
 export interface IInstantOutcomeTxnReq {
   engagement_id: number;
   campaign_entity_id: number;
+  status: WInstantOutcomeStatus;
+}
+
+export enum WInstantOutcomeStatus {
+  reserved = 'reserved',
+  confirmed = 'confirmed'
 }

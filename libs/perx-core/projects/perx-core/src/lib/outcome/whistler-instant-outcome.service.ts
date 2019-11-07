@@ -15,7 +15,8 @@ import {
   IWInstantOutcomeEngagementAttributes,
   IWOutcomeDisplayProperties,
   ICampaignAttributes,
-  IAssignedAttributes
+  IAssignedAttributes,
+  WInstantOutcomeStatus
 } from '@perx/whistler';
 
 import { ICampaignDisplayProperties } from '../perx-core.models';
@@ -72,7 +73,8 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
             type: 'transactions',
             attributes: {
               engagement_id: campaign.engagementId,
-              campaign_entity_id: campaignId
+              campaign_entity_id: campaignId,
+              status: WInstantOutcomeStatus.confirmed
             }
           }
         }))
@@ -98,32 +100,37 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
     );
   }
 
-  public prePlay(engagementId: number, campaignId?: number): Observable<IReward[]> {
-    const body = {
-      data: {
-        type: 'transactions',
-        attributes: {
-          engagement_id: engagementId,
-          campaign_entity_id: campaignId,
-          status: 'reserved'
-        }
-      }
-    };
-    return this.http.post<IJsonApiItemPayload<IInstantOutcomeTransactionAttributes>>(
-      `${this.config.apiHost}/instant-outcome/transactions`,
-      body,
-      { headers: { 'Content-Type': 'application/vnd.api+json' } }
-    ).pipe(
-      mergeMap(res => (
-        combineLatest(...res.data.attributes.results.attributes.results.map(
-          (outcome: IJsonApiItem<IAssignedAttributes>) => this.rewardsService.getReward(Number.parseInt(outcome.id, 10))
-        )).pipe(
-          map((vouchArr) => vouchArr.reduce((acc, currVouch) =>
-            ({ ...acc, vouchers: [...acc.vouchers, currVouch] }), { vouchers: []})
-          ))
-      ))
-    );
+  public prePlay(campaignId?: number): Observable<IReward[]> {
+    return this.getEngagementId(campaignId)
+      .pipe(
+        map((campaign: CampaignProperties): IJsonApiPostItem<IInstantOutcomeTxnReq> => ({
+          data: {
+            type: 'transactions',
+            attributes: {
+              engagement_id: campaign.engagementId,
+              campaign_entity_id: campaignId,
+              status: WInstantOutcomeStatus.reserved
+            }
+          }
+        })),
+        switchMap(
+          (body: IJsonApiPostItem<IInstantOutcomeTxnReq>) => this.http.post<IJsonApiItemPayload<IInstantOutcomeTransactionAttributes>>(
+            `${this.config.apiHost}/instant-outcome/transactions`,
+            body,
+            { headers: { 'Content-Type': 'application/vnd.api+json' } }
+          )
+        ),
+        mergeMap(res => (
+          combineLatest(...res.data.attributes.results.attributes.results.map(
+            (outcome: IJsonApiItem<IAssignedAttributes>) => this.rewardsService.getReward(Number.parseInt(outcome.id, 10))
+          )).pipe(
+            map((vouchArr) => vouchArr.reduce((acc, currVouch) =>
+              ({ ...acc, vouchers: [...acc.vouchers, currVouch] }), { vouchers: [] })
+            ))
+        ))
+      );
   }
+
   public prePlayConfirm(transactionId: number): Observable<void> {
     const body = {
       data: {

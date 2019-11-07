@@ -18,6 +18,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private engagementId: number | null = null;
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
+  private popupData: IPopupConfig;
   public successPopUp: IPopupConfig = {
     title: 'Congratulations!',
     text: '',
@@ -77,6 +78,25 @@ export class GameComponent implements OnInit, OnDestroy {
         }
       })
     );
+    this.gameData$.pipe(
+      switchMap(
+        (game: IGame) => this.gameService.prePlay(game.id, this.campaignId)
+      ),
+      catchError(err => throwError(err)),
+      takeUntil(this.destroy$)
+    ).subscribe(
+      (outcome: IPlayOutcome) => {
+        if (outcome.vouchers.length > 0) {
+          this.successPopUp.text = this.successPopUp.text ? this.successPopUp.text : `You earned ${outcome.vouchers.length} rewards`;
+          this.popupData = this.successPopUp;
+        } else {
+          this.popupData = this.noRewardsPopUp;
+        }
+      },
+      () => {
+        this.popupData = this.noRewardsPopUp;
+      }
+    );
   }
 
   public ngOnDestroy(): void {
@@ -85,35 +105,20 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   public gameCompleted(): void {
-    const r1 = this.gameService.play(this.campaignId, this.engagementId);
     // display a loader before redirecting to next page
     const delay = 3000;
     const nbSteps = 60;
-    const r2: Observable<number[]> = interval(delay / nbSteps)
+    interval(delay / nbSteps)
       .pipe(
         tap(v => this.progressValue = v * 100 / nbSteps),
         bufferCount(nbSteps),
         first()
-      );
-    combineLatest(r1, r2)
-      .pipe(
-        catchError(err => throwError(err)),
-        takeUntil(this.destroy$)
-      )
-      // @ts-ignore
-      .subscribe(
-        ([outcome, _]: [IPlayOutcome, any]) => {
-          this.router.navigate(['/wallet']);
-          if (outcome.vouchers.length > 0) {
-            this.successPopUp.text = this.successPopUp.text ? this.successPopUp.text : `You earned ${outcome.vouchers.length} rewards`;
-            this.dialog.open(PopupComponent, { data: this.successPopUp });
-          } else {
-            this.dialog.open(PopupComponent, { data: this.noRewardsPopUp });
-          }
+      ).subscribe(
+        () => {
+          this.router.navigate(['/pi'], { queryParams: { popupData: JSON.stringify(this.popupData) } });
         },
         () => {
-          this.router.navigate(['/wallet']);
-          this.dialog.open(PopupComponent, { data: this.noRewardsPopUp });
+          this.router.navigate(['/pi'], { queryParams: { popupData: JSON.stringify(this.popupData) } });
         }
       );
   }
