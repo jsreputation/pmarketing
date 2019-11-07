@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatToolbarModule, MatButtonModule } from '@angular/material';
+import { MatToolbarModule, MatCardModule, MatButtonModule } from '@angular/material';
 import { LandingComponent } from './landing.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { UtilsModule } from '@perx/core';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('LandingComponent', () => {
   let component: LandingComponent;
@@ -10,7 +12,14 @@ describe('LandingComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LandingComponent ],
-      imports: [ MatToolbarModule, MatButtonModule, RouterTestingModule]
+      imports: [
+        MatToolbarModule,
+        MatButtonModule,
+        RouterTestingModule,
+        MatCardModule,
+        UtilsModule,
+        HttpClientModule
+      ]
     })
     .compileComponents();
   }));
