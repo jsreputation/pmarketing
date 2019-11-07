@@ -112,19 +112,6 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       }
     );
 
-    if (this.campaignId === null) {
-      this.fetchCampaign();
-    } else if (this.cardId === null || this.card === null) {
-      this.fetchCard(this.campaignId).subscribe(
-        (card: IStampCard) => {
-          this.card = card;
-          this.cardId = card.id;
-          this.fetchStampTransactionCount(this.campaignId);
-          this.fetchCardsCount(this.campaignId);
-        }
-      );
-    }
-
     if (!localStorage.getItem('enableSound')) {
       setTimeout(() => {
         this.soundService.showPopup();

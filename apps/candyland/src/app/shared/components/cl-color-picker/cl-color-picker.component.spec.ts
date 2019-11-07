@@ -1,27 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InfoHintComponent } from './info-hint.component';
-import { MatIconModule } from '@angular/material';
+import { ClColorPickerComponent } from './cl-color-picker.component';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe('InfoHintComponent', () => {
-  let component: InfoHintComponent;
-  let fixture: ComponentFixture<InfoHintComponent>;
+describe('ClColorPickerComponent', () => {
+  let component: ClColorPickerComponent;
+  let fixture: ComponentFixture<ClColorPickerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MatIconModule
-      ],
-      declarations: [InfoHintComponent],
+      declarations: [ClColorPickerComponent],
       schemas: [NO_ERRORS_SCHEMA],
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InfoHintComponent);
+    fixture = TestBed.createComponent(ClColorPickerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

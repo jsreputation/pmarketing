@@ -1,27 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InfoHintComponent } from './info-hint.component';
-import { MatIconModule } from '@angular/material';
+import { DownloadButtonComponent } from './download-button.component';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe('InfoHintComponent', () => {
-  let component: InfoHintComponent;
-  let fixture: ComponentFixture<InfoHintComponent>;
+describe('DownloadButtonComponent', () => {
+  let component: DownloadButtonComponent;
+  let fixture: ComponentFixture<DownloadButtonComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MatIconModule
-      ],
-      declarations: [InfoHintComponent],
+      declarations: [DownloadButtonComponent],
       schemas: [NO_ERRORS_SCHEMA],
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InfoHintComponent);
+    fixture = TestBed.createComponent(DownloadButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
