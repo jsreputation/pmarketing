@@ -9,12 +9,12 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('SurveyComponent', () => {
   let component: SurveyComponent;
   let fixture: ComponentFixture<SurveyComponent>;
-  const iCampaignServiceStub = {};
+  const iCampaignServiceStub: Partial<ICampaignService> = {};
   const surveyServiceStub: Partial<SurveyService> = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SurveyComponent ],
+      declarations: [SurveyComponent],
       imports: [
         ConfigModule.forRoot({}),
         MatCardModule,

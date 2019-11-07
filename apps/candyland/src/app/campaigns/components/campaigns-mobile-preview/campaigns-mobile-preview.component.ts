@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
+import { PuzzleCollectStamp, PuzzleCollectStampState, IReward } from '@perx/core';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-campaigns-mobile-preview',
@@ -12,19 +12,19 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
   @Input() public storeTemplate$: Observable<any>;
   @Input() public tenantSettings: ITenantsProperties;
 
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   public stamps: PuzzleCollectStamp[] = [];
-  public stampsSlotNumberData: {rewardPosition: number}[] = [];
+  public stampsSlotNumberData: { rewardPosition: number }[] = [];
   public questionData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public engagement: any;
-  public reward$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public reward$: BehaviorSubject<IReward[]> = new BehaviorSubject<IReward[]>(null);
   public getQuestionData(): Observable<any> {
     return this.questionData$.asObservable();
   }
   constructor(private cd: ChangeDetectorRef) { }
 
   public ngOnInit(): void {
-   this.subscribeToStore();
+    this.subscribeToStore();
   }
 
   public ngOnDestroy(): void {
@@ -32,9 +32,8 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public getReward$(): Observable<any[]> {
-    return this.reward$
-      .pipe(filter(Boolean));
+  public getReward$(): Observable<IReward[]> {
+    return this.reward$.pipe();
   }
 
   public getBackgroundPlugin(): string {
@@ -43,7 +42,7 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
       return this.engagement.background_img_url;
     }
 
-    return  '/assets/images/stamps/card-background/card-bg-1.png';
+    return '/assets/images/stamps/card-background/card-bg-1.png';
   }
 
   private subscribeToStore(): void {
@@ -68,7 +67,7 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
           state: PuzzleCollectStampState.redeemed
         });
         this.stampsSlotNumberData = this.engagement.slots.map((item: number) => {
-          return {rewardPosition: item - 1};
+          return { rewardPosition: item - 1 };
         });
       }
     } else {
@@ -79,7 +78,7 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
 
   private setSurveyQuestion(data: any): void {
     if (data.attributes_type === 'survey') {
-      this.questionData$.next({questions: [data.questions]});
+      this.questionData$.next({ questions: [data.questions] });
       this.cd.detectChanges();
     }
   }
