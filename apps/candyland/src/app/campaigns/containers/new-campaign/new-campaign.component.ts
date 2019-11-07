@@ -12,7 +12,13 @@ import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapte
 import { map, switchMap, tap, catchError, takeUntil } from 'rxjs/operators';
 import { combineLatest, iif, of, Observable, Subject } from 'rxjs';
 
-import { IWCampaignAttributes, IWCommTemplateAttributes } from '@perx/whistler';
+import {
+  IWCampaignAttributes,
+  IWCommTemplateAttributes,
+  IWInstantOutcomeLimitAttributes,
+  IWSurveyLimitAttributes,
+  IWGameLimitAttributes
+} from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
@@ -33,7 +39,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public tenantSettings: ITenantsProperties;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
 
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   constructor(
     public store: CampaignCreationStoreService,
@@ -107,7 +113,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    let saveCampaign$;
+    let saveCampaign$: Observable<IJsonApiPayload<IWCampaignAttributes>>;
     this.store.updateCampaign(this.form.value);
     if (this.store.currentCampaign.id) {
       saveCampaign$ = this.campaignsService.updateCampaign(this.store.currentCampaign);
@@ -115,7 +121,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       saveCampaign$ = this.campaignsService.createCampaign(this.store.currentCampaign);
     }
 
-    const hasLimitData = () => this.store.currentCampaign.limits && this.store.currentCampaign.limits.times;
+    const hasLimitData = () => this.store.currentCampaign.limits;
     const generateLimitData$ = this.updateLimitFn();
 
     saveCampaign$.pipe(
@@ -138,29 +144,24 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     );
   }
 
-  private updateLimitFn(): (campaign: ICampaign) => Observable<any> {
-    let generateLimitData$;
-
-    const updateLimit$ = campaign => this.limitsService.updateLimits(
+  private updateLimitFn(): (campaign: ICampaign) => Observable<
+    IJsonApiPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes> | void
+  > {
+    const updateLimit$ = (campaign: ICampaign) => this.limitsService.updateLimits(
       this.store.currentCampaign.limits.id,
       this.store.currentCampaign.limits,
       this.store.currentCampaign.template.attributes_type,
-      campaign.id,
+      Number.parseInt(campaign.id, 10),
       this.store.currentCampaign.template.id
     );
-    const createLimit$ = campaign => this.limitsService.createLimits(
+    const createLimit$ = (campaign: ICampaign) => this.limitsService.createLimits(
       this.store.currentCampaign.limits,
       this.store.currentCampaign.template.attributes_type,
-      campaign.id,
+      Number.parseInt(campaign.id, 10),
       this.store.currentCampaign.template.id
     );
 
-    if (this.store.currentCampaign) {
-      generateLimitData$ = this.store.currentCampaign.limits.id ? updateLimit$ : createLimit$;
-    } else {
-      generateLimitData$ = createLimit$;
-    }
-    return generateLimitData$;
+    return (this.store.currentCampaign && this.store.currentCampaign.limits.id) ? updateLimit$ : createLimit$;
   }
 
   private updateComm(campaign: ICampaign): Observable<any> {
