@@ -1,10 +1,10 @@
-export interface IOutcome {
+export interface IWOutcome {
     resultId: number;
     resultType: string;
     probability: number;
     lootBoxId?: number;
 }
-export interface IOutcomeAttributes {
+export interface IWOutcomeAttributes {
     result_id: number;
     result_type: string;
     probability?: number;
