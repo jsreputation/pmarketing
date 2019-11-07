@@ -8,7 +8,7 @@ import { DatePipe } from '@angular/common';
 describe('VoucherDetailComponent', () => {
   let component: VoucherDetailComponent;
   let fixture: ComponentFixture<VoucherDetailComponent>;
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
 
   };
 

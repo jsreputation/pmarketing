@@ -1,17 +1,17 @@
 import * as moment from 'moment';
-import { ICommTemplateAttributes, ICommEventAttributes } from '@perx/whistler';
+import { IWCommTemplateAttributes, IWCommEventAttributes } from '@perx/whistler';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 export class CommsHttpAdapter {
-  public static transformTemplateAPIResponseToComm(data: IJsonApiItem<ICommTemplateAttributes>): IComm {
+  public static transformTemplateAPIResponseToComm(data: IJsonApiItem<IWCommTemplateAttributes>): IComm {
     return {
       templateId: data.id,
       message: data.attributes.content
     };
   }
 
-  public static transformEventAPIResponseToComm(data: IJsonApiItem<ICommEventAttributes>): IComm {
+  public static transformEventAPIResponseToComm(data: IJsonApiItem<IWCommEventAttributes>): IComm {
     return {
       eventId: data.id,
       poolId: data.attributes.target_id && data.attributes.target_id.toString(),
@@ -23,7 +23,7 @@ export class CommsHttpAdapter {
     };
   }
 
-  public static transformFromCommsEvents(data: ICampaign, templateId: string, campaignId: string): IJsonApiItem<ICommEventAttributes> {
+  public static transformFromCommsEvents(data: ICampaign, templateId: string, campaignId: string): IJsonApiItem<IWCommEventAttributes> {
     const sendTime = data.channel.schedule && data.channel.schedule.sendTime ? data.channel.schedule.sendTime : moment().format('LT');
     const sendAt = data.channel.schedule ?
       moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + sendTime).format() :
@@ -44,7 +44,7 @@ export class CommsHttpAdapter {
     };
   }
 
-  public static transformFromCommsTemplates(data: IComm): IJsonApiItem<ICommTemplateAttributes> {
+  public static transformFromCommsTemplates(data: IComm): IJsonApiItem<IWCommTemplateAttributes> {
     return {
       type: 'templates',
       attributes: {
