@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { IGameService, IGame, GameType, IPopupConfig, IGameTransaction } from '@perx/core';
+import { IGameService, IGame, GameType, IPopupConfig, IEngagementTransaction } from '@perx/core';
 import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
 import { Observable, interval, throwError, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -81,7 +81,7 @@ export class GameComponent implements OnInit, OnDestroy {
       catchError(err => throwError(err)),
       takeUntil(this.destroy$)
     ).subscribe(
-      (gameTransaction: IGameTransaction) => {
+      (gameTransaction: IEngagementTransaction) => {
         this.transactionId = gameTransaction.id;
         if (gameTransaction.voucherIds.length > 0) {
           this.successPopUp.text =
@@ -114,10 +114,10 @@ export class GameComponent implements OnInit, OnDestroy {
         first()
       ).subscribe(
         () => {
-          this.router.navigate(['/pi'], {queryParams });
+          this.router.navigate(['/pi'], { queryParams });
         },
         () => {
-          this.router.navigate(['/pi'], {queryParams });
+          this.router.navigate(['/pi'], { queryParams });
         }
       );
   }

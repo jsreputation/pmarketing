@@ -8,9 +8,10 @@ export enum GameType {
   scratch = 'scratch',
 }
 
-export interface IGameTransaction {
+export interface IEngagementTransaction {
   id: number;
-  voucherIds: number[];
+  voucherIds?: number[];
+  rewardIds?: number[];
 }
 export interface IGameOutcome {
   title: string;

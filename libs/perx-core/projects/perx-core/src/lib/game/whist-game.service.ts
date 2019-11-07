@@ -8,7 +8,7 @@ import {
   IPinata,
   defaultPinata,
   IPlayOutcome,
-  IGameTransaction
+  IEngagementTransaction
 } from './game.model';
 import { Observable, combineLatest, of } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -170,7 +170,7 @@ export class WhistlerGameService implements IGameService {
       );
   }
 
-  public prePlay(engagementId: number, campaignId?: number): Observable<IGameTransaction> {
+  public prePlay(engagementId: number, campaignId?: number): Observable<IEngagementTransaction> {
     const body = {
       data: {
         type: 'transactions',

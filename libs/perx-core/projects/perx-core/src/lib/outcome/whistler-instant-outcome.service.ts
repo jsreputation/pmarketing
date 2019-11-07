@@ -1,3 +1,4 @@
+import { IEngagementTransaction } from './../game/game.model';
 import { IJsonApiPostItem } from './../jsonapi.payload';
 import { InstantOutcomeService } from './instant-outcome.service';
 import { IOutcome } from './models/outcome.model';
@@ -100,7 +101,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
     );
   }
 
-  public prePlay(campaignId?: number): Observable<IReward[]> {
+  public prePlay(campaignId?: number): Observable<IEngagementTransaction> {
     return this.getEngagementId(campaignId)
       .pipe(
         map((campaign: CampaignProperties): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
@@ -120,14 +121,12 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
             { headers: { 'Content-Type': 'application/vnd.api+json' } }
           )
         ),
-        mergeMap(res => (
-          combineLatest(...res.data.attributes.results.attributes.results.map(
-            (outcome: IJsonApiItem<IWAssignedAttributes>) => this.rewardsService.getReward(Number.parseInt(outcome.id, 10))
-          )).pipe(
-            map((vouchArr) => vouchArr.reduce((acc, currVouch) =>
-              ({ ...acc, vouchers: [...acc.vouchers, currVouch] }), { vouchers: [] })
-            ))
-        ))
+        map(res => ({
+        id: Number.parseInt(res.data.id, 10),
+        rewardIds: res.data.attributes.results.attributes.results.map(
+          (outcome: IJsonApiItem<IWAssignedAttributes>) => outcome.attributes.source_id
+        )
+      }))
       );
   }
 
