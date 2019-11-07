@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
-import { IWInstantOutcomeEngagementAttributes } from '../../../../../../libs/perx-whistler/dist/whistler';
+import { IWEngagementAttributes } from '@perx/whistler';
+import { IEngagement } from '@cl-core/models/engagement/engagement.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,9 @@ export class EngagementsService {
   public getEngagements(): Observable<IEngagement[]> {
     return this.http.getEngagements()
       .pipe(
-        map((res: IJsonApiListPayload<IWInstantOutcomeEngagementAttributes>) => res.data.map(item => EngagementHttpAdapter.transformEngagementHandler(item))
-          .filter(e => e !== undefined)
+        map((res: IJsonApiListPayload<IWEngagementAttributes>) =>
+          res.data.map(item => EngagementHttpAdapter.transformEngagementHandler(item))
+            .filter(e => e !== undefined)
         )
       );
   }
@@ -25,7 +27,7 @@ export class EngagementsService {
   public getEngagement(id: string, type: string): Observable<IEngagement> {
     const eType = EngagementTypeAPIMapping[type];
     return this.http.getEngagement(id, eType).pipe(
-      map((res: IJsonApiPayload<IWInstantOutcomeEngagementAttributes>) => EngagementHttpAdapter.transformEngagementHandler(res.data, type))
+      map((res: IJsonApiPayload<IWEngagementAttributes>) => EngagementHttpAdapter.transformEngagementHandler(res.data, type))
     );
   }
 

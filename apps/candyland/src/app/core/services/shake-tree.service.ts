@@ -23,12 +23,12 @@ export class ShakeTreeService {
   }
 
   public createShakeTree(data: any): Observable<IResponseApi<IEngagementApi>> {
-    const sendData = EngagementHttpAdapter.transformShakeTheTree(data);
+    const sendData = EngagementHttpAdapter.transformFromShakeTheTreeForm(data);
     return this.shakeHttpService.createShakeTree({data: sendData});
   }
 
   public updateShakeTree(id: string, data: any): Observable<IResponseApi<IEngagementApi>> {
-    const sendData = EngagementHttpAdapter.transformShakeTheTree(data);
+    const sendData = EngagementHttpAdapter.transformFromShakeTheTreeForm(data);
     sendData.id = id;
     return this.shakeHttpService.updateShakeTree(id, {data: sendData});
   }

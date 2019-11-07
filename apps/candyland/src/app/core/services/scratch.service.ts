@@ -24,12 +24,12 @@ export class ScratchService {
   }
 
   public createScratch(data: any): Observable<IResponseApi<IEngagementApi>> {
-    const sendData = EngagementHttpAdapter.transformScratch(data);
+    const sendData = EngagementHttpAdapter.transformFromScratchForm(data);
     return this.scratchHttpService.createScratch({ data: sendData });
   }
 
   public updateScratch(id: string, data: any): Observable<IResponseApi<IEngagementApi>> {
-    const sendData = EngagementHttpAdapter.transformScratch(data);
+    const sendData = EngagementHttpAdapter.transformFromScratchForm(data);
     sendData.id = id;
     return this.scratchHttpService.updateScratch(id, {data: sendData});
   }

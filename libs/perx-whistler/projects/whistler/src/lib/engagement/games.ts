@@ -19,9 +19,15 @@ export interface IWTreeDisplayProperties extends IWGameDisplayProperties {
   nb_gifts_to_drop?: number;
 }
 
-// game pinata engagement
 export interface IWPinataDisplayProperties extends IWGameDisplayProperties {
   closed_pinata_img_url: string;
   cracking_pinata_img_url: string;
   opened_pinata_img_url: string;
+}
+
+export interface IWScratchDisplayProperties extends IWGameDisplayProperties {
+  lastButtonText?: string;
+  pre_scratch_img_url: string;
+  post_scratch_success_img_url: string;
+  post_scratch_fail_img_url: string;
 }

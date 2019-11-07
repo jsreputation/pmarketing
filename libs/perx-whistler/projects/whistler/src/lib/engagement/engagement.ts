@@ -1,10 +1,18 @@
 import { IWSurveyDisplayProperties } from './survey';
 import { IWInstantOutcomeDisplayProperties } from './instant-outcome';
-import { IWGameDisplayProperties, IWPinataDisplayProperties, IWTreeDisplayProperties, WGameType } from './games';
+import {
+  IWGameDisplayProperties,
+  IWPinataDisplayProperties,
+  IWScratchDisplayProperties,
+  IWTreeDisplayProperties,
+  WGameType
+} from './games';
+import { IWStampDisplayProperties } from './stamp';
 
 export enum WEngagementType {
   games = 'game',
   survey = 'survey',
+  stamp = 'stamp',
   instantOutcome = 'instant_outcome',
   loyalty = 'loyalty',
 }
@@ -14,42 +22,48 @@ export interface IWEngagementProperties {
 }
 
 // common engagement
-export interface IWEngagementAttributes {
+export interface IWEngagementAttributes<T = any> {
   id?: string;
   number_of_tries?: number;
   urn?: string;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
   game_type?: WGameType;
   type?: string;
   title: string;
   description: string;
   image_url: string;
   properties: IWEngagementProperties;
-  display_properties:
-    IWSurveyDisplayProperties |
-    IWInstantOutcomeDisplayProperties |
-    IWGameDisplayProperties |
-    IWTreeDisplayProperties |
-    IWPinataDisplayProperties;
+  display_properties: T;
+  // IWSurveyDisplayProperties |
+  // IWInstantOutcomeDisplayProperties |
+  // IWGameDisplayProperties |
+  // IWTreeDisplayProperties |
+  // IWPinataDisplayProperties;
 }
 
-export interface IWGameEngagementAttributes extends IWEngagementAttributes {
-  display_properties: IWGameDisplayProperties | IWTreeDisplayProperties | IWPinataDisplayProperties;
+export interface IWGameEngagementAttributes extends IWEngagementAttributes<IWGameDisplayProperties |
+  IWTreeDisplayProperties |
+  IWPinataDisplayProperties> {
+  game_type: WGameType;
 }
 
-export interface IWTreeGameEngagementAttributes extends IWGameEngagementAttributes {
-  display_properties: IWTreeDisplayProperties;
+export interface IWTreeGameEngagementAttributes extends IWEngagementAttributes<IWTreeDisplayProperties> {
 }
 
-export interface IWPinataGameEngagementAttributes extends IWGameEngagementAttributes {
-  display_properties: IWPinataDisplayProperties;
+export interface IWPinataGameEngagementAttributes extends IWEngagementAttributes<IWPinataDisplayProperties> {
 }
 
-export interface IWInstantOutcomeEngagementAttributes extends IWEngagementAttributes {
-  display_properties: IWInstantOutcomeDisplayProperties;
+export interface IWScratchGameEngagementAttributes extends IWEngagementAttributes<IWScratchDisplayProperties> {
 }
 
-export interface IWSurveyEngagementAttributes extends IWEngagementAttributes {
-  display_properties: IWSurveyDisplayProperties;
+export interface IWInstantOutcomeEngagementAttributes extends IWEngagementAttributes<IWInstantOutcomeDisplayProperties> {
 }
+
+export interface IWSurveyEngagementAttributes extends IWEngagementAttributes<IWSurveyDisplayProperties> {
+}
+
+export interface IWStampEngagementAttributes extends IWEngagementAttributes<IWStampDisplayProperties> {
+}
+
+

@@ -7,6 +7,7 @@ export interface IWSurveyDisplayProperties {
   progress_bar_color: string;
   card_background_img_url: string;
   questions: IWQuestion[];
+  button?: string;
   noRewardsPopUp?: {
     headLine?: string;
     subHeadLine?: string;

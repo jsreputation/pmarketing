@@ -48,14 +48,17 @@ export {
   IWTreeGameEngagementAttributes,
   IWPinataGameEngagementAttributes,
   IWInstantOutcomeEngagementAttributes,
-  IWSurveyEngagementAttributes
+  IWSurveyEngagementAttributes,
+  IWStampEngagementAttributes,
+  IWScratchGameEngagementAttributes
 } from './lib/engagement/engagement';
 
 export {
   WGameType,
   IWGameDisplayProperties,
   IWTreeDisplayProperties,
-  IWPinataDisplayProperties
+  IWPinataDisplayProperties,
+  IWScratchDisplayProperties
 } from './lib/engagement/games';
 
 export {
@@ -79,6 +82,10 @@ export {
   IWPayload,
   WSurveyQuestionType
 } from './lib/engagement/survey-question';
+
+export {
+  IWStampDisplayProperties
+} from './lib/engagement/stamp';
 
 /** Cognito */
 export { IWCognitoTenantAttributes } from './lib/cognito/tenants';
