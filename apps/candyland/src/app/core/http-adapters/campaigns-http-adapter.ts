@@ -3,7 +3,7 @@ import {
   EngagementTypeAPIMapping,
   EngagementTypeFromAPIMapping
 } from '@cl-core/models/engagement/engagement-type.enum';
-import { ICampaignAttributes, WEngagementType } from '@perx/whistler';
+import { IWCampaignAttributes, WEngagementType } from '@perx/whistler';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 export class CampaignsHttpAdapter {
@@ -36,7 +36,7 @@ export class CampaignsHttpAdapter {
     };
   }
 
-  public static transformAPIResponseToCampaign(data: IJsonApiItem<ICampaignAttributes>): ICampaign {
+  public static transformAPIResponseToCampaign(data: IJsonApiItem<IWCampaignAttributes>): ICampaign {
     const campaignData = data.attributes;
     return {
       id: data.id,
@@ -57,7 +57,7 @@ export class CampaignsHttpAdapter {
     };
   }
 
-  public static transformFromCampaign(data: ICampaign): IJsonApiItem<ICampaignAttributes> {
+  public static transformFromCampaign(data: ICampaign): IJsonApiItem<IWCampaignAttributes> {
     const startTime = data.campaignInfo.startTime ? data.campaignInfo.startTime : moment().format('LT');
     const endTime = data.campaignInfo.endTime ? data.campaignInfo.endTime : moment().format('LT');
     const startDate = data.campaignInfo.startDate ?
