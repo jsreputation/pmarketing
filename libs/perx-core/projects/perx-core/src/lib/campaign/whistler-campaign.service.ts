@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { map, tap } from 'rxjs/operators';
 
-import { 
+import {
   IWCampaignAttributes,
   IWJsonApiListPayload,
   IWJsonApiItem,

@@ -77,11 +77,11 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
     const getRewardIds: Observable<number[]> = buildBody.pipe(
       switchMap(
         (body: IWJsonApiPostItem<IWInstantOutcomeTxnReq>): Observable<IWJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>> =>
-        this.http.post<IWJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>>(
-          `${this.baseUrl}`,
-          body,
-          { headers: { 'Content-Type': 'application/vnd.api+json' } }
-        )
+          this.http.post<IWJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>>(
+            `${this.baseUrl}`,
+            body,
+            {headers: {'Content-Type': 'application/vnd.api+json'}}
+          )
       ),
       map((res: IWJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>) => res.data),
       map((data: IWJsonApiItem<IWInstantOutcomeTransactionAttributes>) => data.attributes.results),
