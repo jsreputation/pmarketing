@@ -1,11 +1,11 @@
-export interface ICommTemplateAttributes {
+export interface IWCommTemplateAttributes {
     name?: number;
     description?: string;
     content: any;
     status?: string;
 }
 
-export interface ICommEventAttributes {
+export interface IWCommEventAttributes {
     send_at: string;
     provider_id?: number;
     owner_id?: number;

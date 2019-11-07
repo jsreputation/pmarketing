@@ -19,7 +19,7 @@ import { Config } from '../../config/config';
 import { IJsonApiListPayload } from '../../jsonapi.payload';
 
 import {
-  IWhistlerProfileAttributes,
+  IWProfileAttributes,
   IWCognitoLogin,
   IWUserJWTRequest,
 } from '@perx/whistler';
@@ -127,7 +127,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
-  private createUserWithPI(pi: string, userObj?: IWhistlerProfileAttributes): Observable<IJsonApiListPayload<IWCognitoLogin>> {
+  private createUserWithPI(pi: string, userObj?: IWProfileAttributes): Observable<IJsonApiListPayload<IWCognitoLogin>> {
     const userJWTRequest: IWUserJWTRequest = {
       url: location.host,
       identifier: pi

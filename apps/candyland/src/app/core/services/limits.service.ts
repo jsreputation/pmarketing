@@ -4,7 +4,7 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 import { LimitsHttpsService } from '@cl-core/http-services/limits-https.service';
 import { map } from 'rxjs/operators';
 import { LimitsHttpAdapter } from '@cl-core/http-adapters/limits-http-adapter';
-import { IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from '@perx/whistler';
+import { IWInstantOutcomeLimitAttributes, IWSurveyLimitAttributes, IWGameLimitAttributes } from '@perx/whistler';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 
 @Injectable({
@@ -18,9 +18,13 @@ export class LimitsService {
   public getLimits(params: HttpParamsOptions, engagementType: string): Observable<ILimit[]> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.limitsHttpsService.getLimits(httpParams, engagementType).pipe(
-      map((response: IJsonApiListPayload<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes>) => response.data),
-      map((response: IJsonApiItem<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes>[]) => response.map(
-        (limit: IJsonApiItem<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes>) =>
+      map((response: IJsonApiListPayload<IWInstantOutcomeLimitAttributes |
+                             IWSurveyLimitAttributes |
+                             IWGameLimitAttributes>) => response.data),
+      map((response: IJsonApiItem<IWInstantOutcomeLimitAttributes |
+                             IWSurveyLimitAttributes |
+                             IWGameLimitAttributes>[]) => response.map(
+        (limit: IJsonApiItem<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>) =>
           LimitsHttpAdapter.transformAPIResponseToLimit(limit, engagementType)))
     );
   }

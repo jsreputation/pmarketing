@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  helm-deploy: perxtech/helm-deploy@0.0.4
+  helm-deploy: perxtech/helm-deploy@0.0.5
 executors:
   ubuntu:
     machine:
@@ -201,7 +201,9 @@ jobs:
           command: |
             docker push ${DOCKER_REPO}:${CIRCLE_TAG}
   deploy:
-    executor: helm-deploy/default
+    executor:
+      name: helm-deploy/default
+      docker_tag: '2.15.2'
     parameters:
       docker_tag:
         type: string
@@ -266,7 +268,9 @@ jobs:
           helm_values: image.tag="${DOCKER_TAG}"
           helm_extra_args: --reuse-values --timeout 600
   deploy-whistler:
-    executor: helm-deploy/default
+    executor:
+      name: helm-deploy/default
+      docker_tag: '2.15.2'
     parameters:
       docker_tag:
         type: string

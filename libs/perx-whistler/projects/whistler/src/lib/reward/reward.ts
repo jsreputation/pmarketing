@@ -1,4 +1,4 @@
-export interface IRewardEntityAttributes {
+export interface IWRewardEntityAttributes {
   urn?: string;
   created_at?: string;
   updated_at?: string;
@@ -27,10 +27,10 @@ export interface IRewardEntityAttributes {
         duration?: string;
       }
     },
-    merchantPinText?: IProperties;
-    rewardSuccessPopUp?: IProperties;
-    codeInstructionsText?: IProperties;
-    errorPopUp?: IProperties;
+    merchantPinText?: IWProperties;
+    rewardSuccessPopUp?: IWProperties;
+    codeInstructionsText?: IWProperties;
+    errorPopUp?: IWProperties;
     CTAButtonTxt?: string;
     redemption_text?: string;
     loyalties: any;
@@ -43,7 +43,7 @@ export interface IWMetaData {
   currentPage?: number;
 }
 
-interface IProperties {
+interface IWProperties {
   headLine?: string;
   subHeadLine?: string;
   imageURL?: string;
