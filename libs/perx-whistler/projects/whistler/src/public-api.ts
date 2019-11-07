@@ -23,6 +23,7 @@ export {
 export { IWCampaignAttributes } from './lib/campaign/campaign';
 export { WEngagementType } from './lib/campaign/campaign';
 export { IWAudiences, IWPoolsApi, IWPools, IWUser } from './lib/audiences/audiences.model';
+
 export {
   IWInstantOutcomeTransactionAttributes,
   IWInstantOutcomeTxnReq,
