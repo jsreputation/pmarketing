@@ -55,4 +55,3 @@ export interface IWJsonApiPostData<T> {
   attributes: T;
   relationships?: any;
 }
-
