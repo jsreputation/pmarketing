@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
-import { IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from '@perx/whistler';
+import { IWInstantOutcomeLimitAttributes, IWSurveyLimitAttributes, IWGameLimitAttributes } from '@perx/whistler';
 import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 
 @Injectable({
@@ -13,21 +13,21 @@ export class LimitsHttpsService {
   }
 
   public getLimits(params: HttpParams, engagementType: string):
-    Observable<IJsonApiListPayload<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes>> {
+    Observable<IJsonApiListPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>> {
     const eType = EngagementTypeAPIMapping[engagementType];
-    return this.http.get<IJsonApiListPayload<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes>>(`${ApiConfig.basePath}/${eType}/limits`, { params });
+    return this.http.get<IJsonApiListPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>>(`${ApiConfig.basePath}/${eType}/limits`, { params });
   }
 
   public updateLimits(
     id: string,
-    data: IJsonApiPayload<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes>,
+    data: IJsonApiPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>,
     engagementType: string): Observable<IJsonApiPayload<any>> {
     const eType = EngagementTypeAPIMapping[engagementType];
     return this.http.patch<IJsonApiPayload<any>>(`${ApiConfig.basePath}/${eType}/limits` + '/' + id, data);
   }
 
   public createLimits(
-    data: IJsonApiPayload<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes>,
+    data: IJsonApiPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>,
     engagementType: string): Observable<IJsonApiPayload<any>> {
     const eType = EngagementTypeAPIMapping[engagementType];
     return this.http.post<IJsonApiPayload<any>>(`${ApiConfig.basePath}/${eType}/limits`, data);

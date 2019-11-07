@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiConfig } from '@cl-core/api-config';
-import { IRewardEntityAttributes } from '@perx/whistler';
+import { IWRewardEntityAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,8 @@ export class RewardHttpService {
     return this.http.get(ApiConfig.rewardsPath + '/', { params });
   }
 
-  public getReward(id: string, params: HttpParams): Observable<IJsonApiPayload<IRewardEntityAttributes>> {
-    return this.http.get<IJsonApiPayload<IRewardEntityAttributes>>(ApiConfig.rewardsPath + '/' + id, { params });
+  public getReward(id: string, params: HttpParams): Observable<IJsonApiPayload<IWRewardEntityAttributes>> {
+    return this.http.get<IJsonApiPayload<IWRewardEntityAttributes>>(ApiConfig.rewardsPath + '/' + id, { params });
   }
 
   // public getMockRewardDetail(): Observable<any> {
@@ -38,11 +38,11 @@ export class RewardHttpService {
       );
   }
 
-  public createReward(data: IJsonApiPayload<IRewardEntityAttributes>): Observable<IJsonApiPayload<IRewardEntityAttributes>> {
-    return this.http.post<IJsonApiPayload<IRewardEntityAttributes>>(ApiConfig.rewardsPath + '/', data);
+  public createReward(data: IJsonApiPayload<IWRewardEntityAttributes>): Observable<IJsonApiPayload<IWRewardEntityAttributes>> {
+    return this.http.post<IJsonApiPayload<IWRewardEntityAttributes>>(ApiConfig.rewardsPath + '/', data);
   }
 
-  public updateReward(id: string, data: IJsonApiPayload<IRewardEntityAttributes>): Observable<IJsonApiPayload<IRewardEntityAttributes>> {
-    return this.http.patch<IJsonApiPayload<IRewardEntityAttributes>>(ApiConfig.rewardsPath + '/' + id, data);
+  public updateReward(id: string, data: IJsonApiPayload<IWRewardEntityAttributes>): Observable<IJsonApiPayload<IWRewardEntityAttributes>> {
+    return this.http.patch<IJsonApiPayload<IWRewardEntityAttributes>>(ApiConfig.rewardsPath + '/' + id, data);
   }
 }
