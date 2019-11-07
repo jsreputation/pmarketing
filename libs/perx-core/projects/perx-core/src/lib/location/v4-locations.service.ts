@@ -101,12 +101,12 @@ export class V4LocationsService extends LocationsService {
       map((merchant: IMerchant) => merchant.outlets.map((outlet: IOutlet) => ({
         merchantId: merchant.id,
         merchantName: merchant.name,
-        locationId: outlet.outlet_id,
-        name: outlet.outlet_name,
+        locationId: outlet.outletId,
+        name: outlet.outletName,
         tags: outlet.tags && outlet.tags.map(tag => tag.name),
-        address: outlet.outlet_address1,
-        address2: outlet.outlet_address2,
-        address3: outlet.outlet_address3,
+        address: outlet.outletAddress1,
+        address2: outlet.outletAddress2,
+        address3: outlet.outletAddress3,
         latitude: outlet.coordinates.lat,
         longitude: outlet.coordinates.lng,
         phone: outlet.tel

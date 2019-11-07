@@ -50,13 +50,18 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.answers = answers;
   }
 
+  public snake_caseCamelise(propertyName: string): string {
+    return propertyName.replace(/_\w/g, (m) => m[1].toUpperCase());
+  }
+
   public onSubmit(): void {
     const mapOfObjects = this.answers
-      .map(answer => ({[answer.question_id]:
+      .map(answer => ({[this.snake_caseCamelise(answer.question_id)]:
         (Array.isArray(answer.content)  ? answer.content[0] : answer.content)}));
 
     const userObj: IProfileAttributes = Object.assign.apply(null, mapOfObjects);
-    this.authSvc.createUserAndAutoLogin(userObj.primary_identifier, userObj).subscribe(
+
+    this.authSvc.createUserAndAutoLogin(userObj.primaryIdentifier, userObj).subscribe(
       () => {
         this.snack.open('User successfully created.', 'x', {duration: 2000});
         this.router.navigate(['/wallet']);

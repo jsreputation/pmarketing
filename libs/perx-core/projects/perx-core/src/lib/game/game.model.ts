@@ -86,7 +86,7 @@ export interface IPlayOutcome {
 export interface ISlice {
   id: string;
   label?: string;
-  label_color?: string;
-  background_color?: string;
-  background_image?: string;
+  labelColor?: string;
+  backgroundColor?: string;
+  backgroundImage?: string;
 }
