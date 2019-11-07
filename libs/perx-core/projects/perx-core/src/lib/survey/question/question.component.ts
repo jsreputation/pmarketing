@@ -94,6 +94,11 @@ export class QuestionComponent implements OnChanges {
     this.updateQuestionPointer.emit('back');
   }
 
+  public validateEmail(email: string): boolean {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
   public questionValidation(): void {
     this.errorState = {};
     if (this.question && this.question.required && this.point !== 1) {
@@ -104,6 +109,8 @@ export class QuestionComponent implements OnChanges {
       && this.question.payload['max-length'] < this.question.answer.length) {
       this.errorState.exceedMaxLength = true;
       this.errorState.hasError = true;
+    } else if (this.question.id === 'email_address' && !this.validateEmail(this.question.answer)) {
+      this.errorState.inValidEmail = true;
     }
   }
 }

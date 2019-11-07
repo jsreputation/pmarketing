@@ -30,7 +30,7 @@ Scenario: Ensuring functionality of feature rewards card
   When  14_I click on a featured reward
   Then  14_I should be navigated to the reward description page
 @runThis
-Scenario: Ensuring functionality of feature rewards card
+Scenario: Ensuring functionality of rewards card
   Given 15_I am at the blackcomb home page
   When  15_I click on a reward under the all category
   Then  15_I should be navigated to the reward description page
