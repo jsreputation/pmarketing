@@ -1,6 +1,6 @@
-import { IAssignedAttributes } from './../voucher/assigneds';
+import { IWAssignedAttributes } from './../voucher/assigneds';
 
-export interface IInstantOutcomeTransactionAttributes {
+export interface IWInstantOutcomeTransactionAttributes {
   urn: string;
   created_at: string;
   updated_at: string;
@@ -20,13 +20,13 @@ export interface IInstantOutcomeTransactionAttributes {
       results: {
         id: string;
         type: string;
-        attributes: IAssignedAttributes;
+        attributes: IWAssignedAttributes;
       }[];
     };
   };
 }
 
-export interface IInstantOutcomeTxnReq {
+export interface IWInstantOutcomeTxnReq {
   engagement_id: number;
   campaign_entity_id: number;
 }

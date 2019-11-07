@@ -1,4 +1,4 @@
-export interface ITenantProperties {
+export interface IWTenantProperties {
     timeZone: string;
     color: string;
     currency: any;

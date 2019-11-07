@@ -3,10 +3,23 @@ import { BehaviorSubject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
+export interface ICampaignChoice {
+  title: string;
+  value: string;
+}
+export interface ICampaignConfig {
+  typeFilterConfig: ICampaignChoice[];
+  durationLimits: ICampaignChoice[];
+  days: ICampaignChoice[];
+  shortcodes: ICampaignChoice[];
+  goals: ICampaignChoice[];
+  channelTypes: ICampaignChoice[];
+}
+
 @Injectable()
 export class CampaignCreationStoreService {
   public currentCampaign$: BehaviorSubject<ICampaign> = new BehaviorSubject<ICampaign>(null);
-  public config: any = {
+  public config: ICampaignConfig = {
     typeFilterConfig: [
       { title: 'All', value: null },
       { title: 'Survey', value: 'Survey' },

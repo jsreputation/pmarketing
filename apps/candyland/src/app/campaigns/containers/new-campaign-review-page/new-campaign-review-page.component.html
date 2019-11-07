@@ -15,33 +15,33 @@
         <p class="card-title">Rewards</p>
       </div>
       <div class="card-content">
-        <cl-reward-item-preview 
-          *ngFor="let reward of campaign?.rewardsOptions?.rewards" 
-          class="item" 
-          [data]="reward?.value" 
-          [probability]="reward?.probability" 
+        <cl-reward-item-preview
+          *ngFor="let reward of campaign?.rewardsOptions?.rewards"
+          class="item"
+          [data]="reward?.value"
+          [probability]="reward?.probability"
           [enableProbability]="campaign?.rewardsOptions?.enableProbability">
         </cl-reward-item-preview>
       </div>
     </mat-card>
-     <!--stamp rewards-->
-     <mat-card class="card" *ngIf="stampsHasRewards">
-        <div *ngFor="let rewardsData of campaign?.rewardsListCollection">
-            <div *ngIf="rewardsData?.rewardsOptions?.rewards?.length">
-              <div class="card-header">
-                  <p class="card-title">Rewards for slot {{rewardsData?.stampSlotNumber}}</p>
-              </div>
-              <div class="card-content">
-                  <cl-reward-item-preview 
-                    *ngFor="let reward of rewardsData?.rewardsOptions?.rewards" 
-                    class="item"
-                    [data]="reward?.value"
-                    [probability]="reward?.probability"
-                    [enableProbability]="rewardsData?.rewardsOptions?.enableProbability">
-                  </cl-reward-item-preview>
-              </div>
-            </div>
+    <!--stamp rewards-->
+    <mat-card class="card" *ngIf="stampsHasRewards">
+      <div *ngFor="let rewardsData of campaign?.rewardsListCollection">
+        <div *ngIf="rewardsData?.rewardsOptions?.rewards?.length">
+          <div class="card-header">
+            <p class="card-title">Rewards for slot {{rewardsData?.stampSlotNumber}}</p>
+          </div>
+          <div class="card-content">
+            <cl-reward-item-preview
+              *ngFor="let reward of rewardsData?.rewardsOptions?.rewards"
+              class="item"
+              [data]="reward?.value"
+              [probability]="reward?.probability"
+              [enableProbability]="rewardsData?.rewardsOptions?.enableProbability">
+            </cl-reward-item-preview>
+          </div>
         </div>
+      </div>
     </mat-card>
     <!--limits-->
     <mat-card class="card" *ngIf="campaign?.limits?.times">
@@ -58,7 +58,7 @@
             <div *ngIf="campaign?.limits?.duration">
               <dt class="card-label">Limit per duration</dt>
               <dd class="card-value">{{campaign?.limits?.duration}}</dd>
-            </div>    
+            </div>
           </div>
         </dl>
       </div>
@@ -83,13 +83,13 @@
             <dd class="card-value">
               <span>
                 <span>{{campaign?.campaignInfo?.startDate | date: 'mediumDate' }}</span>
-                <span>&nbsp;{{campaign?.campaignInfo?.startTime}}</span>  
+                <span>&nbsp;{{campaign?.campaignInfo?.startTime}}</span>
               </span>
               <ng-container *ngIf="campaign?.campaignInfo?.endDate">
                 <small>to</small>
                 <span>
                   <span>{{campaign?.campaignInfo?.endDate | date: 'mediumDate' }}</span>
-                  <span>&nbsp;{{campaign?.campaignInfo?.endTime}}</span>  
+                  <span>&nbsp;{{campaign?.campaignInfo?.endTime}}</span>
                 </span>
               </ng-container>
             </dd>
@@ -100,7 +100,7 @@
             <dd class="card-value">
               <span class="card-chip" *ngFor="let label of campaign?.campaignInfo?.labels">{{label}}</span>
             </dd>
-          </div>    
+          </div>
         </dl>
       </div>
     </mat-card>
@@ -127,7 +127,7 @@
           </div>
         </div>
         <!--schedule-->
-        <div class="card-section" *ngIf="campaign?.channel?.sendDate">
+        <div class="card-section" *ngIf="campaign?.channel?.schedule?.sendDate">
           <div class="card-header">
             <h3 class="card-title">
               Schedule date
@@ -137,20 +137,20 @@
           <div class="card-content">
             <!--send date-->
             <div class="card-row">
-              {{campaign?.channel?.sendDate}}&nbsp;&nbsp;&nbsp;&nbsp;{{campaign?.channel?.sendTime}}
+              {{campaign?.channel?.schedule?.sendDate}}&nbsp;&nbsp;&nbsp;&nbsp;{{campaign?.channel?.schedule?.sendTime}}
             </div>
             <!--recurrence-->
-            <div class="card-row stretch" *ngIf="campaign?.channel?.enableRecurrence">
+            <div class="card-row stretch" *ngIf="campaign?.channel?.schedule?.enableRecurrence">
               <div class="row">
                 <div>
                   <label class="card-label">Repeat every</label>
-                  {{campaign?.channel?.recurrence?.period}}&nbsp;{{campaign?.channel?.recurrence?.period}}
+                  {{campaign?.channel?.schedule?.recurrence?.period}}&nbsp;{{campaign?.channel?.schedule?.recurrence?.period}}
                 </div>
                 <div>
                   <!--repeat on-->
-                  <ng-container *ngIf="campaign?.channel?.recurrence?.repeatOn.length > 0">
+                  <ng-container *ngIf="campaign?.channel?.schedule?.recurrence?.repeatOn.length > 0">
                     <label class="card-label">Repeat on</label>
-                    <span *ngFor="let repeatOn of campaign?.channel?.recurrence?.repeatOn">
+                    <span *ngFor="let repeatOn of campaign?.channel?.schedule?.recurrence?.repeatOn">
                       {{repeatOn}},&nbsp;
                     </span>
                   </ng-container>
@@ -161,7 +161,7 @@
         </div>
       </div>
     </mat-card>
-     <!-- TODO: Audience currently we don't have the field in Figma design, hide first -->
+    <!-- TODO: Audience currently we don't have the field in Figma design, hide first -->
   </div>
   <cl-campaigns-mobile-preview [storeTemplate$]="store.template$" [tenantSettings]="tenantSettings">
   </cl-campaigns-mobile-preview>

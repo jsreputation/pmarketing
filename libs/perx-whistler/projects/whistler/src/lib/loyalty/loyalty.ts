@@ -1,11 +1,11 @@
-export interface ILoyalty {
+export interface IWLoyalty {
     name: string;
     unit: string;
     status: string;
     custom_tiers_count: number;
 }
 
-export interface ILoyaltyCard {
+export interface IWLoyaltyCard {
     balance: number;
     user_id: number;
 }
