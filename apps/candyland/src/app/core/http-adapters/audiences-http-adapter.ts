@@ -1,4 +1,4 @@
-import { IAssignedAttributes, IAssignRequestAttributes, IWhistlerProfileAttributes, IPoolsAttributes} from '@perx/whistler';
+import { IWAssignedAttributes, IWAssignRequestAttributes, IWhistlerProfileAttributes, IPoolsAttributes} from '@perx/whistler';
 
 export class AudiencesHttpAdapter {
 
@@ -57,7 +57,7 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformAudiencesVoucher(data: IJsonApiItem<IAssignedAttributes>): Partial<IAudienceVoucher> {
+  public static transformAudiencesVoucher(data: IJsonApiItem<IWAssignedAttributes>): Partial<IAudienceVoucher> {
     return {
       id: data.id,
       endDate: data.attributes.valid_to,
@@ -67,7 +67,7 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformVoucherAssignedToApi(source: string, assigned: string): IJsonApiItem<IAssignRequestAttributes> {
+  public static transformVoucherAssignedToApi(source: string, assigned: string): IJsonApiItem<IWAssignRequestAttributes> {
     return {
       type: 'assigneds',
       attributes: {
@@ -78,7 +78,7 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformVoucherPatchToApi(id: string, endData: string): IJsonApiItem<Partial<IAssignedAttributes>> {
+  public static transformVoucherPatchToApi(id: string, endData: string): IJsonApiItem<Partial<IWAssignedAttributes>> {
     return {
       id, type: 'assigneds',
       attributes: {
