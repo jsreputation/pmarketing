@@ -14,7 +14,7 @@ import {
 import { Subject, throwError } from 'rxjs';
 import { Config, AuthenticationService, PopupComponent, IPopupConfig, InstantOutcomeService, IGameService } from '@perx/core';
 import { MatDialog } from '@angular/material';
-import { switchMap, takeUntil, catchError } from 'rxjs/operators';
+import { switchMap, takeUntil, catchError, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-pages-pi',
@@ -78,10 +78,13 @@ export class PIComponent implements OnInit, OnDestroy {
     this.errorMessage = null;
 
     if (pi) {
+      const oldUserId = this.authService.getUserId();
+      let newUserId;
       (window as any).primaryIdentifier = pi;
       this.authService.autoLogin().pipe(
         catchError(() => throwError('PI_NOT_EXIST')),
-        switchMap(() => this.authService.mergeUserById([1], 2)),
+        tap(() => { newUserId = this.authService.getUserId(); }),
+        switchMap(() => this.authService.mergeUserById([oldUserId], newUserId)),
         catchError(() => throwError('PI_MERGE_FAIL')),
         switchMap(() => {
           if (this.engagementType === 'game' && this.transactionId) {
