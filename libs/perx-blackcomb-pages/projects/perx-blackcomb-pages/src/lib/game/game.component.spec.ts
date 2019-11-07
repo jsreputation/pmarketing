@@ -5,8 +5,8 @@ import { of } from 'rxjs';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
 import { ScratchComponent } from './scratch/scratch.component';
-import { GameModule, IGameService, PopupComponent, GameType, IGame, VoucherState } from '@perx/core';
-import { MatDialogModule, MatProgressBarModule, MatDialog } from '@angular/material';
+import { GameModule, IGameService, PopupComponent, GameType, IGame } from '@perx/core';
+import { MatDialogModule, MatProgressBarModule } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,7 +31,7 @@ describe('GameComponent', () => {
   };
   const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of([game]),
-    play: () => of()
+    prePlay: () => of()
   };
   const routerStub: Partial<Router> = {
     navigate: () => Promise.resolve(true)
@@ -91,85 +91,5 @@ describe('GameComponent', () => {
       expect(routerSpy).toHaveBeenCalledWith(['/wallet']);
       expect(getGamesFromCampaignSpy).toHaveBeenCalled();
     }));
-  });
-
-  describe('gameCompleted', () => {
-    let dialog;
-    let dialogSpy;
-
-    beforeEach(() => {
-      dialog = TestBed.get(MatDialog);
-      dialogSpy = spyOn(dialog, 'open');
-    });
-
-    it('should query gameService/play when the game completes', fakeAsync(() => {
-      const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(
-        IGameService as Type<IGameService>);
-
-      const gameServiceSpy = spyOn(gameService, 'play').and.returnValue(of({
-        vouchers: [],
-        rawPayload: '',
-      }));
-
-      component.gameCompleted();
-      tick(3000);
-      fixture.detectChanges();
-      tick();
-      expect(gameServiceSpy).toHaveBeenCalled();
-    }));
-
-    it('When, the game completes and gameService/play succeeds with one or more voucher, a popup should be displayed with the title Congratulations!', fakeAsync(() => {
-      const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(
-        IGameService as Type<IGameService>);
-      const gameServiceSpy = spyOn(gameService, 'play').and.returnValue(of({
-        vouchers: [{
-          id: 1,
-          reward: null,
-          state: VoucherState.issued,
-          code: '',
-          expiry: new Date(),
-          redemptionDate: new Date(),
-        }],
-        rawPayload: '',
-      }));
-
-      dialogSpy = dialogSpy.and.returnValue({ afterClosed: () => of(true) });
-
-      component.gameCompleted();
-      tick(3000);
-      fixture.detectChanges();
-      tick();
-      expect(gameServiceSpy).toHaveBeenCalled();
-      expect(dialogSpy).toHaveBeenCalledWith(PopupComponent,
-        {
-          data:
-          {
-            title: 'Congratulations!',
-            text: 'You earned 1 rewards',
-            buttonTxt: 'VIEW_REWARD',
-            imageUrl: 'assets/congrats_image.png'
-          }
-        }
-      );
-    }));
-
-    it('should query gameService/play when the game completes', fakeAsync(() => {
-      const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(
-        IGameService as Type<IGameService>);
-      const gameServiceSpy = spyOn(gameService, 'play').and.returnValue(of({
-        vouchers: [],
-        rawPayload: '',
-      }));
-
-      dialogSpy = dialogSpy.and.returnValue({ afterClosed: () => of(true) });
-
-      component.gameCompleted();
-      tick(3000);
-      fixture.detectChanges();
-      tick();
-      expect(gameServiceSpy).toHaveBeenCalled();
-      expect(dialogSpy).toHaveBeenCalledWith(PopupComponent, { data: Object({ title: 'Thanks for playing', text: 'Unfortunately, you did not win anything this time', buttonTxt: 'BACK_TO_WALLET', imageUrl: '' }) });
-    }));
-
   });
 });
