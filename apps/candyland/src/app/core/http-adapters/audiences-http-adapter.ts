@@ -1,8 +1,8 @@
-import { IWAssignedAttributes, IWAssignRequestAttributes, IWhistlerProfileAttributes, IPoolsAttributes} from '@perx/whistler';
+import { IWAssignedAttributes, IWAssignRequestAttributes, IWProfileAttributes, IPoolsAttributes} from '@perx/whistler';
 
 export class AudiencesHttpAdapter {
 
-  public static transformFromUserForm(data: IAudiencesUserForm): IJsonApiItem<IWhistlerProfileAttributes> {
+  public static transformFromUserForm(data: IAudiencesUserForm): IJsonApiItem<IWProfileAttributes> {
     const optionalPool = data.audienceList ? { relationships: { pools: { data: data.audienceList } } } : {};
     const mainUserApiObject = {
       type: 'users',
@@ -32,16 +32,16 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformUserWithPools(data: IJsonApiPayload<IWhistlerProfileAttributes>): IUser {
+  public static transformUserWithPools(data: IJsonApiPayload<IWProfileAttributes>): IUser {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const userData = AudiencesHttpAdapter.transformUser(data.data);
     userData.pools = data.data.relationships.pools.data.map((item: IJsonApiItem<IPoolsAttributes>) => poolMap[item.id]).sort().join(', ');
     return userData;
   }
 
-  public static transformUsersWithPools(data: IJsonApiListPayload<IWhistlerProfileAttributes>): ITableData<IUser> {
+  public static transformUsersWithPools(data: IJsonApiListPayload<IWProfileAttributes>): ITableData<IUser> {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
-    const usersData = data.data.map((item: IJsonApiItem<IWhistlerProfileAttributes>) => {
+    const usersData = data.data.map((item: IJsonApiItem<IWProfileAttributes>) => {
       const formattedUser = AudiencesHttpAdapter.transformUser(item);
       formattedUser.pools = item.relationships.pools.data.map((pool: IJsonApiItem<IPoolsAttributes>) => poolMap[pool.id]).sort().join(', ');
       return formattedUser;
@@ -87,7 +87,7 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  private static transformUser(data: IJsonApiItem<IWhistlerProfileAttributes>): IUser {
+  private static transformUser(data: IJsonApiItem<IWProfileAttributes>): IUser {
     return {
       id: data.id,
       type: data.type,

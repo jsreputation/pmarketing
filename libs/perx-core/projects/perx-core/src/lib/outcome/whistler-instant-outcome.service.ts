@@ -13,7 +13,7 @@ import {
   IWInstantOutcomeTransactionAttributes,
   IWInstantOutcomeTxnReq,
   IWInstantOutcomeEngagementAttributes,
-  IWOutcomeDisplayProperties,
+  IWInstantOutcomeDisplayProperties,
   IWCampaignAttributes
 } from '@perx/whistler';
 
@@ -58,7 +58,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
             `${this.config.apiHost}/instant-outcome/engagements/${campaign.engagementId}`);
         }),
         map(res => res.data.attributes.display_properties),
-        map((outcomeData: IWOutcomeDisplayProperties) =>
+        map((outcomeData: IWInstantOutcomeDisplayProperties) =>
           ({ ...outcomeData, displayProperties: { ...outcomeData.displayProperties, ...displayProps } }))
       );
   }

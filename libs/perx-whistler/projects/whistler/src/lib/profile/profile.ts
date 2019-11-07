@@ -11,6 +11,6 @@ export interface IWProfileAttributes {
   properties?: string | {} | null;
 }
 
-export interface IPoolsAttributes {
+export interface IWPoolsAttributes {
   name: string;
 }

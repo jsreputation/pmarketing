@@ -12,7 +12,7 @@ import {
   IChangePasswordData,
   IChangePhoneData
 } from '../authentication/models/authentication.model';
-import { IMessageResponse, IAppAccessTokenResponse, ILoginResponse } from '@perx/whistler';
+import { IWMessageResponse, IWAppAccessTokenResponse, IWLoginResponse } from '@perx/whistler';
 import { ProfileService } from '../../profile/profile.service';
 import { Config } from '../../config/config';
 import { IV4ProfileResponse, V4ProfileService } from '../../profile/v4-profile.service';
@@ -101,7 +101,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   public login(user: string, pass: string, mechId?: string, campaignId?: string, scope?: string): Observable<any> {
     return this.authenticateUser(user, pass, mechId, campaignId, scope).pipe(
       tap(
-        (res: ILoginResponse) => {
+        (res: IWLoginResponse) => {
           const userBearer = res && res.bearer_token;
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
@@ -116,7 +116,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     );
   }
 
-  public authenticateUser(user: string, pass: string, mechId?: string, campaignId?: string, scope?: string): Observable<ILoginResponse> {
+  public authenticateUser(user: string, pass: string, mechId?: string, campaignId?: string, scope?: string): Observable<IWLoginResponse> {
     const authenticateBody: IV4AuthenticateUserRequest = {
       url: location.host,
       username: user,
@@ -125,14 +125,14 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       ...campaignId && {campaign_id: campaignId},
       ...scope && {scope}
     };
-    return this.http.post<ILoginResponse>(this.userAuthEndPoint + '/token', authenticateBody);
+    return this.http.post<IWLoginResponse>(this.userAuthEndPoint + '/token', authenticateBody);
   }
 
   public autoLogin(): Observable<any> {
     const user = (window as any).primaryIdentifier;
     return this.authenticateUserWithPI(user).pipe(
       tap(
-        (res: ILoginResponse) => {
+        (res: IWLoginResponse) => {
           const userBearer = res && res.bearer_token;
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
@@ -152,21 +152,21 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     return throwError('Not implement yet');
   }
 
-  public authenticateUserWithPI(user: string): Observable<ILoginResponse> {
+  public authenticateUserWithPI(user: string): Observable<IWLoginResponse> {
     const authenticatePiRequest: IV4AuthenticatePiRequest = {
       url: location.host,
       identifier: user
     };
 
-    return this.http.post<ILoginResponse>(this.userAuthEndPoint + '/token', authenticatePiRequest);
+    return this.http.post<IWLoginResponse>(this.userAuthEndPoint + '/token', authenticatePiRequest);
   }
 
-  public getAppToken(): Observable<IAppAccessTokenResponse> {
+  public getAppToken(): Observable<IWAppAccessTokenResponse> {
     const authenticateRequest: { url: string } = {
       url: location.host
     };
 
-    return this.http.post<IAppAccessTokenResponse>(this.appAuthEndPoint + '/token', authenticateRequest).pipe(
+    return this.http.post<IWAppAccessTokenResponse>(this.appAuthEndPoint + '/token', authenticateRequest).pipe(
       tap((resp) => {
         this.saveAppAccessToken(resp.access_token);
       })
@@ -186,8 +186,8 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   // @ts-ignore
-  public forgotPassword(phone: string): Observable<IMessageResponse> {
-    return this.http.get<IMessageResponse>(`${this.customersEndPoint}/forget_password`, {params: {phone}})
+  public forgotPassword(phone: string): Observable<IWMessageResponse> {
+    return this.http.get<IWMessageResponse>(`${this.customersEndPoint}/forget_password`, {params: {phone}})
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -196,8 +196,8 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       );
   }
 
-  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
-    return this.http.patch<IMessageResponse>(
+  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IWMessageResponse> {
+    return this.http.patch<IWMessageResponse>(
       `${this.customersEndPoint}/reset_password`,
       {
         phone: resetPasswordInfo.phone,
@@ -214,8 +214,8 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   // @ts-ignore
-  public resendOTP(phone: string): Observable<IMessageResponse> {
-    return this.http.get<IMessageResponse>(`${this.customersEndPoint}/resend_confirmation`, {params: {phone}})
+  public resendOTP(phone: string): Observable<IWMessageResponse> {
+    return this.http.get<IWMessageResponse>(`${this.customersEndPoint}/resend_confirmation`, {params: {phone}})
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -250,8 +250,8 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   // @ts-ignore
-  public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
-    return this.http.patch<IMessageResponse>(`${this.customersEndPoint}/confirm`, {phone, confirmation_token: otp})
+  public verifyOTP(phone: string, otp: string): Observable<IWMessageResponse> {
+    return this.http.patch<IWMessageResponse>(`${this.customersEndPoint}/confirm`, {phone, confirmation_token: otp})
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -284,10 +284,10 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     );
   }
 
-  public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
+  public changePassword(changePasswordData: IChangePasswordData): Observable<IWMessageResponse> {
     return this.profileService.whoAmI().pipe(
       mergeMap(
-        (profile: IProfile) => this.http.patch<IMessageResponse>(
+        (profile: IProfile) => this.http.patch<IWMessageResponse>(
           `${this.customersEndPoint}/${profile.id}/change_password`,
           {
             old_password: changePasswordData.oldPassword,

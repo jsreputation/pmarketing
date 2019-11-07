@@ -3,6 +3,12 @@ import {
   IEngagementInstantReward, IEngagementShakeType, IEngagementStamps, IEngagementSurvey, IEngagementTapType
 } from '@cl-core/models/engagement/engagement-interfaces';
 import { ControlsName } from 'src/app/models/controls-name';
+import {
+  IWInstantOutcomeEngagementAttributes,
+  IWGameEngagementAttributes,
+  IWTreeGameAttributes,
+  IWPinataGameAttributes
+} from '@perx/whistler';
 
 export class EngagementHttpAdapter {
 
@@ -39,7 +45,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformEngagementHandler(data: IEngagementApi, type?: string): any | undefined {
+  public static transformEngagementHandler(data: IJsonApiItem<IWGameEngagementAttributes | IWInstantOutcomeEngagementAttributes>, type?: string): IEngagement[] | undefined {
     const engagementType = type ? type : data.attributes.type;
 
     switch (engagementType) {
@@ -54,7 +60,7 @@ export class EngagementHttpAdapter {
     }
   }
 
-  public static transformToInstantReward(data: any, engagementType?: string): IEngagementInstantReward {
+  public static transformToInstantReward(data: IJsonApiItem<IWInstantOutcomeEngagementAttributes>, engagementType?: string): IEngagementInstantReward {
     return {
       id: data.id,
       type: data.type,
@@ -73,7 +79,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformToSurveyType(data: any, engagementType?: string): IEngagementSurvey {
+  public static transformToSurveyType(data: IJsonApiItem<IWInstantOutcomeEngagementAttributes>, engagementType?: string): IEngagementSurvey {
     return {
       id: data.id,
       type: data.type,
@@ -97,7 +103,7 @@ export class EngagementHttpAdapter {
     return data[0];
   }
 
-  public static transformToStampType(data: any, engagementType?: string): IEngagementStamps {
+  public static transformToStampType(data: IJsonApiItem<IWInstantOutcomeEngagementAttributes>, engagementType?: string): IEngagementStamps {
     return {
       id: data.id,
       type: data.type,
@@ -121,7 +127,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformGameHandler(data: IEngagementApi, engagementType?: string): IEngagementShakeType | IEngagementTapType | undefined {
+  public static transformGameHandler(data: IJsonApiItem<IWGameEngagementAttributes>, engagementType?: string): IEngagementShakeType | IEngagementTapType | undefined {
     switch (data.attributes.game_type) {
       case 'shake':
         return EngagementHttpAdapter.transformToShackType(data, engagementType);
@@ -130,7 +136,7 @@ export class EngagementHttpAdapter {
     }
   }
 
-  public static transformToShackType(data: any, engagementType?: string): IEngagementShakeType {
+  public static transformToShackType(data: IJsonApiItem<IWTreeGameAttributes>, engagementType?: string): IEngagementShakeType {
     return {
       id: data.id,
       type: data.type,
@@ -151,7 +157,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformToPinataType(data: any, engagementType?: string): IEngagementTapType {
+  public static transformToPinataType(data: IJsonApiItem<IWPinataGameAttributes>, engagementType?: string): IEngagementTapType {
     return {
       id: data.id,
       type: data.type,
@@ -227,7 +233,7 @@ export class EngagementHttpAdapter {
           cracking_pinata_img_url: 'https://picsum.photos/200/300',
           opened_pinata_img_url: 'https://picsum.photos/200/300',
           closed_pinata_img_url: ImageControlValue.getImagePath(data.pinata),
-          background_img_url: ImageControlValue.getImagePath(data.background),
+          background_img_url: ImageControlValue.getImagePath(data.background)
         }
       }
     };
@@ -247,7 +253,7 @@ export class EngagementHttpAdapter {
           pre_scratch_img_url: ImageControlValue.getImagePath(data.preScratchImage),
           post_scratch_success_img_url: ImageControlValue.getImagePath(data.postScratchSuccessImage),
           post_scratch_fail_img_url: ImageControlValue.getImagePath(data.postScratchFailImage),
-          background_img_url: ImageControlValue.getImagePath(data.background),
+          background_img_url: ImageControlValue.getImagePath(data.background)
         }
       }
     };
@@ -316,7 +322,7 @@ export class EngagementHttpAdapter {
       background: data.attributes.display_properties.background_img_url,
       gameGift: data.attributes.display_properties.nb_hanged_gifts,
       giftBox: data.attributes.display_properties.gift_box_img_url,
-      treeType: data.attributes.display_properties.tree_img_url,
+      treeType: data.attributes.display_properties.tree_img_url
     };
   }
 
@@ -331,7 +337,7 @@ export class EngagementHttpAdapter {
       buttonText: data.attributes.display_properties.button,
       background: data.attributes.display_properties.background_img_url,
       pinata: data.attributes.display_properties.closed_pinata_img_url,
-      image_url: data.attributes.image_url,
+      image_url: data.attributes.image_url
       // opened_pinata_img_url: data.attributes.display_properties.opened_pinata_img_url,
       // cracking_pinata_img_url: data.attributes.display_properties.cracking_pinata_img_url
     };
@@ -351,7 +357,7 @@ export class EngagementHttpAdapter {
       preScratchImage: data.attributes.display_properties.pre_scratch_img_url,
       postScratchSuccessImage: data.attributes.display_properties.post_scratch_success_img_url,
       postScratchFailImage: data.attributes.display_properties.post_scratch_fail_img_url,
-      image_url: data.attributes.image_url,
+      image_url: data.attributes.image_url
     };
   }
 }

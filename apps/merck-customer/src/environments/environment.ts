@@ -1,5 +1,5 @@
 export const environment = {
-  apiHost: 'https://api.perxtech.io',
+  apiHost: 'https://api.getperx.io',
   production: false,
   preAuth: false,
   isWhistler: false,

@@ -17,8 +17,8 @@ import { Config } from '../../config/config';
 import { IJsonApiListPayload } from '../../jsonapi.payload';
 import {
   IWProfileAttributes,
-  IAppAccessTokenResponse,
-  IMessageResponse
+  IWAppAccessTokenResponse,
+  IWMessageResponse
 } from '@perx/whistler';
 
 interface ICognitoLogin {
@@ -182,7 +182,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     }, { observe: 'response' });
   }
 
-  public getAppToken(): Observable<IAppAccessTokenResponse> {
+  public getAppToken(): Observable<IWAppAccessTokenResponse> {
     return throwError('Not implement yet');
   }
 
@@ -199,17 +199,17 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   // @ts-ignore
-  public forgotPassword(phone: string): Observable<IMessageResponse> {
+  public forgotPassword(phone: string): Observable<IWMessageResponse> {
     return throwError('Not implement yet');
   }
 
   // @ts-ignore
-  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
+  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IWMessageResponse> {
     return throwError('Not implement yet');
   }
 
   // @ts-ignore
-  public resendOTP(phone: string): Observable<IMessageResponse> {
+  public resendOTP(phone: string): Observable<IWMessageResponse> {
     return throwError('Not implement yet');
   }
 
@@ -229,12 +229,12 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   // @ts-ignore
-  public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
+  public verifyOTP(phone: string, otp: string): Observable<IWMessageResponse> {
     return throwError('Not implement yet');
   }
 
   // @ts-ignore
-  public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
+  public changePassword(changePasswordData: IChangePasswordData): Observable<IWMessageResponse> {
     return throwError('Not implement yet');
   }
 

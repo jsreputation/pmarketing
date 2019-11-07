@@ -15,7 +15,7 @@ import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapte
 import { map, switchMap, tap, catchError, takeUntil } from 'rxjs/operators';
 import { combineLatest, iif, of, Observable, Subject } from 'rxjs';
 
-import { IWCampaignAttributes, IWCommTemplateAttributes, IWhistlerProfileAttributes } from '@perx/whistler';
+import { IWCampaignAttributes, IWCommTemplateAttributes, IWProfileAttributes } from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
@@ -312,7 +312,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const getUsersPis: Observable<string[]> = this.audienceService
       .getAllPoolUser(campaign.audience.select)
       .pipe(
-        map((users: IJsonApiItem<IWhistlerProfileAttributes>[]) => users.map(u => u.attributes.primary_identifier)),
+        map((users: IJsonApiItem<IWProfileAttributes>[]) => users.map(u => u.attributes.primary_identifier)),
         takeUntil(this.destroy$)
       );
     return combineLatest(getUsersPis, this.blackcombUrl)

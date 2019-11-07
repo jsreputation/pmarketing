@@ -1,77 +1,84 @@
 /*
 * Public API Surface of whistler
 */
-
 export * from './lib/whistler.module';
 export { IWVoucherStatsApi } from './lib/voucher/stats';
 export { IWVouchersApi } from './lib/voucher/vouchers-api';
 export {
   WAssignedStatus,
   IWAssignedAttributes,
-  IWAssignRequestAttributes,
+  IWAssignRequestAttributes
 } from './lib/voucher/assigneds';
 export { IWRewardEntityAttributes } from './lib/reward/reward';
 export {
   IWInstantOutcomeLimitAttributes,
   IWSurveyLimitAttributes,
-  IWGameLimitAttributes,
+  IWGameLimitAttributes
 } from './lib/limit/limit';
 export { IWOutcomeAttributes } from './lib/outcome/outcome';
 export {
   IWCommTemplateAttributes,
-  IWCommEventAttributes,
+  IWCommEventAttributes
 } from './lib/comm/comm';
 export { IWCampaignAttributes } from './lib/campaign/campaign';
-export { WEngagementType } from './lib/campaign/campaign';
-export {
-  IWInstantOutcomeTransactionAttributes,
-  IWInstantOutcomeTxnReq,
-} from './lib/instant-outcome/transaction';
-export {
-  IWInstantOutcomeEngagementAttributes,
-  IWOutcomeDisplayProperties,
-} from './lib/instant-outcome/engagement';
-export { IWProfileAttributes, IPoolsAttributes } from './lib/profile/profile';
+export { IWProfileAttributes, IWPoolsAttributes } from './lib/profile/profile';
 export {
   IWMerchant,
-  IWMerchantBranchApi,
+  IWMerchantBranchApi
 } from './lib/merchant/merchant';
 export { IWTenantProperties } from './lib/settings/tenant';
 export { IWTimeZone } from './lib/settings/time-zone';
 export {
   IWLoyalty,
-  IWLoyaltyCard,
+  IWLoyaltyCard
 } from './lib/loyalty/loyalty';
 
 export {
-  IMessageResponse,
-  IAppAccessTokenResponse,
-  ILoginResponse,
-  ILoginAttributes
+  IWMessageResponse,
+  IWAppAccessTokenResponse,
+  IWLoginResponse,
+  IWLoginAttributes
 } from './lib/authentication/authentication';
 
 export {
+  WEngagementType,
+  IWEngagementProperties,
+  IWEngagementAttributes,
+  IWGameEngagementAttributes,
+  IWTreeGameEngagementAttributes,
+  IWPinataGameEngagementAttributes,
+  IWInstantOutcomeEngagementAttributes,
+  IWSurveyEngagementAttributes
+} from './lib/engagement/engagement';
+
+export {
   WGameType,
-  IWAttbsObjGame,
-  IWAttbsObjEntity,
   IWGameDisplayProperties,
   IWTreeDisplayProperties,
-  IWPinataDisplayProperties,
-} from './lib/game/game';
+  IWPinataDisplayProperties
+} from './lib/engagement/games';
+
+export {
+  IWInstantOutcomeDisplayProperties
+} from './lib/engagement/instant-outcome';
+
+export {
+  IWInstantOutcomeTransactionAttributes,
+  IWInstantOutcomeTxnReq
+} from './lib/engagement/instant-outcome-transaction';
 
 /** Survey */
 export {
-  IWSurveyAttributes,
-  IWSurveyProperties,
   IWSurveyDisplayProperties,
   IWPostAnswerAttributes,
   IWOutcomes
-} from './lib/survey/survey';
+} from './lib/engagement/survey';
+
 export {
   IWQuestion,
   IWPayload,
   WSurveyQuestionType
-} from './lib/survey/question';
+} from './lib/engagement/survey-question';
 
 /** Cognito */
 export { IWCognitoTenantAttributes } from './lib/cognito/tenants';
