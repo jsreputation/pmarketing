@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { ITheme, DARK, LIGHT, WhistlerISetting, WhistlerITenant, PagesObject } from './themes.model';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
-import { IJsonApiListPayload } from '../../jsonapi.payload';
 import { map, tap } from 'rxjs/operators';
 import { ThemesService } from './themes.service';
+
+import { IWJsonApiListPayload } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +59,7 @@ export class WhistlerThemesService extends ThemesService {
       url: location.host
     };
 
-    return this.http.post<IJsonApiListPayload<WhistlerITenant>>(this.themeSettingEndpoint, themesRequest).pipe(
+    return this.http.post<IWJsonApiListPayload<WhistlerITenant>>(this.themeSettingEndpoint, themesRequest).pipe(
       map(res => res.data && res.data[0].attributes.display_properties),
       map((setting) => WhistlerThemesService.WThemeToTheme(setting)),
       tap((theme) => this.setActiveTheme(theme))
@@ -72,7 +73,7 @@ export class WhistlerThemesService extends ThemesService {
     const accountSettingRequest: { url: string } = {
       url: location.host
     };
-    return this.http.post<IJsonApiListPayload<WhistlerITenant>>(this.themeSettingEndpoint, accountSettingRequest).pipe(
+    return this.http.post<IWJsonApiListPayload<WhistlerITenant>>(this.themeSettingEndpoint, accountSettingRequest).pipe(
       map(res => res.data && res.data[0].attributes.display_properties),
       map((displayProps) => displayProps.account || { pages: [] }),
       map((account) => this.settings = account)

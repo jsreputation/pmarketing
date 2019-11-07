@@ -5,10 +5,15 @@ import { ConfigModule } from '../../public-api';
 import { ICampaignService } from '../campaign/icampaign.service';
 import { HttpClient } from '@angular/common/http';
 import { ISurvey } from './models/survey.model';
-import { IWSurveyAttributes, IWPostAnswerAttributes } from '@perx/whistler';
-import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { of } from 'rxjs';
 import { ICampaign, CampaignType, CampaignState } from '../campaign/models/campaign.model';
+
+import {
+  IWSurveyAttributes,
+  IWPostAnswerAttributes,
+  IWJsonApiItemPayload,
+  IWJsonApiItem,
+} from '@perx/whistler';
 
 describe('SurveyService', () => {
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
@@ -25,7 +30,7 @@ describe('SurveyService', () => {
   const iCampaignServiceStub = {
     getCampaign: () => of(mockCampaign)
   };
-  const noQuestionMockSurvey: IJsonApiItem<IWSurveyAttributes> = {
+  const noQuestionMockSurvey: IWJsonApiItem<IWSurveyAttributes> = {
     id: '',
     type: '',
     links: {
@@ -75,7 +80,7 @@ describe('SurveyService', () => {
   });
 
   it('should get a survey from a campaign id', (done: DoneFn) => {
-    const res: IJsonApiItemPayload<IWSurveyAttributes> = {
+    const res: IWJsonApiItemPayload<IWSurveyAttributes> = {
       data: noQuestionMockSurvey,
     };
     httpClientSpy.get.and.returnValue(of(res));
@@ -95,7 +100,7 @@ describe('SurveyService', () => {
   });
 
   it('should post a survey answers', (done: DoneFn) => {
-    const res: IJsonApiItemPayload<IWPostAnswerAttributes> = {
+    const res: IWJsonApiItemPayload<IWPostAnswerAttributes> = {
       data: {
         id: '',
         type: '',

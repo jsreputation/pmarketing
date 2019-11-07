@@ -5,9 +5,12 @@ import { Observable } from 'rxjs';
 import { IFormsService } from './iforms.service';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { IJsonApiListPayload } from '../../jsonapi.payload';
-import { IWCognitoTenantAttributes } from '@perx/whistler';
 import { SurveyService } from '../../survey/survey.service';
+
+import {
+  IWCognitoTenantAttributes,
+  IWJsonApiListPayload,
+} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +23,7 @@ export class WhistlerFormsService implements IFormsService {
   }
 
   public getSignupForm(): Observable<ISurvey | undefined> {
-    return this.http.get<IJsonApiListPayload<IWCognitoTenantAttributes>>(`${this.baseUrl}/cognito/tenants/`)
+    return this.http.get<IWJsonApiListPayload<IWCognitoTenantAttributes>>(`${this.baseUrl}/cognito/tenants/`)
       .pipe(
         map(res => res.data),
         map(res => res[0]),

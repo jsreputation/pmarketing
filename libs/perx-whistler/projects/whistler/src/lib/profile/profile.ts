@@ -18,5 +18,5 @@ export interface IWCognitoLogin {
 export interface IWUserJWTRequest {
   identifier: string;
   url: string;
-  profile?: IWhistlerProfileAttributes;
+  profile?: IWProfileAttributes;
 }

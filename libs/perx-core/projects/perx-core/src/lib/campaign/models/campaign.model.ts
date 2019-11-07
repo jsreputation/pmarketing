@@ -1,5 +1,5 @@
 import { IReward } from '../../rewards/models/reward.model';
-import { ICampaignDisplayProperties } from '../../perx-core.models';
+import { IWCampaignDisplayProperties } from '@perx/whistler';
 
 export enum CampaignType {
   give_reward = 'give_reward', // instant_outcome
@@ -25,7 +25,7 @@ export interface ICampaign {
   thumbnailUrl?: string;
   engagementId?: number;
   rawPayload?: any;
-  displayProperties?: ICampaignDisplayProperties;
+  displayProperties?: IWCampaignDisplayProperties;
 }
 
 export enum CommChannel {

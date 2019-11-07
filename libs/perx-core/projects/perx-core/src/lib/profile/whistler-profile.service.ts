@@ -1,16 +1,20 @@
-import { IJsonApiItem, IJsonApiListPayload } from './../jsonapi.payload';
 import { ProfileService } from './profile.service';
 import { Observable, throwError } from 'rxjs';
 import {
   IProfile,
   ICustomProperties,
 } from './profile.model';
-import { IWProfileAttributes } from '@perx/whistler';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { TokenStorage } from '../auth/authentication/token-storage.service';
+
+import {
+  IWProfileAttributes,
+  IWJsonApiItem,
+  IWJsonApiListPayload,
+} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +31,7 @@ export class WhistlerProfileService extends ProfileService {
     this.apiHost = config.apiHost as string;
   }
 
-  public static WhistlerProfileToProfile(profile: IJsonApiItem<IWProfileAttributes>): IProfile {
+  public static WhistlerProfileToProfile(profile: IWJsonApiItem<IWProfileAttributes>): IProfile {
     return {
       id: +profile.id,
       identifier: profile.attributes.primary_identifier,
@@ -46,15 +50,15 @@ export class WhistlerProfileService extends ProfileService {
       'filter[primary_identifier]': pi
     };
 
-    return this.http.get<IJsonApiListPayload<IWProfileAttributes>>(url, { params })
+    return this.http.get<IWJsonApiListPayload<IWProfileAttributes>>(url, { params })
       .pipe(
-        map((res: IJsonApiListPayload<IWProfileAttributes>) => {
+        map((res: IWJsonApiListPayload<IWProfileAttributes>) => {
           if (res.data.length > 0) {
             return res.data[0];
           }
           throw new Error(`There is no user with pi '${pi}'`);
         }),
-        map((JsonApiUser: IJsonApiItem<IWProfileAttributes>) => WhistlerProfileService.WhistlerProfileToProfile(JsonApiUser))
+        map((JsonApiUser: IWJsonApiItem<IWProfileAttributes>) => WhistlerProfileService.WhistlerProfileToProfile(JsonApiUser))
       );
   }
 

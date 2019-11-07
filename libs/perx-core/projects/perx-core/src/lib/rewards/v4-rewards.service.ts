@@ -22,7 +22,7 @@ import {
 } from './models/reward.model';
 
 import { Config } from '../config/config';
-import { IRewardDisplayProperties } from '../perx-core.models';
+import { IWRewardDisplayProperties } from '@perx/whistler';
 
 export interface IV4Tag {
   id: number;
@@ -74,7 +74,7 @@ export interface IV4Reward {
   inventory?: IV4Inventory;
   selling_from?: string;
   merchant_logo_url?: string;
-  display_properties?: IRewardDisplayProperties;
+  display_properties?: IWRewardDisplayProperties;
 }
 
 interface IV4Price {

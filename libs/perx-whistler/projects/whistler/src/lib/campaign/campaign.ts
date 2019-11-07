@@ -1,5 +1,5 @@
 export enum WEngagementType {
-  games = 'game',
+  game = 'game',
   survey = 'survey',
   instantOutcome = 'instant_outcome',
   loyalty = 'loyalty',

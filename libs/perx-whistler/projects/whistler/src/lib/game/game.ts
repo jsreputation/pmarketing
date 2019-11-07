@@ -1,4 +1,6 @@
-import { WEngagementType } from '../campaign/campaign';
+import { IWJsonApiItem } from '../jsonapi.payload';
+
+import { IWAssignedAttributes } from '../../public-api';
 
 export const enum WGameType {
   shakeTheTree = 'shake',
@@ -20,35 +22,6 @@ export interface IWAttbsObjGame {
   display_properties: IWGameDisplayProperties;
 }
 
-export interface IWAttbsObjEntity {
-  comm_channel: null;
-  created_at: string;
-  end_date_time: null;
-  engagement_id: number;
-  engagement_type: WEngagementType;
-  goal: null;
-  name: string;
-  pool_id: null;
-  start_date_time: null;
-  status: string;
-  updated_at: string;
-  urn: string;
-  display_properties?: {
-    noRewardsPopUp?: {
-      headLine?: string;
-      subHeadLine?: string;
-      imageURL?: string;
-      buttonTxt?: string;
-    };
-    successPopUp?: {
-      headLine?: string;
-      subHeadLine?: string;
-      imageURL?: string;
-      buttonTxt?: string;
-    };
-  };
-}
-
 export interface IWGameDisplayProperties {
   title: string;
   button: string;
@@ -68,4 +41,24 @@ export interface IWPinataDisplayProperties extends IWGameDisplayProperties {
   closed_pinata_img_url: string;
   cracking_pinata_img_url: string;
   opened_pinata_img_url: string;
+}
+
+export interface IWAttbsObjTrans {
+  urn: string;
+  created_at: string;
+  updated_at: string;
+  engagement_id: number;
+  campaign_entity_id: number;
+  user_id: number;
+  results: IWJsonApiItem<IWResultsObj>;
+}
+
+export interface IWResultsObj {
+  campaign_entity_id: number;
+  source_type: number;
+  source_id: number;
+  urn: string;
+  created_at: string;
+  updated_at: string;
+  results: IWJsonApiItem<IWAssignedAttributes>[];
 }

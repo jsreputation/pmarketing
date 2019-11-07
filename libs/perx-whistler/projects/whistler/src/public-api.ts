@@ -3,6 +3,9 @@
 */
 
 export * from './lib/whistler.module';
+export * from './lib/jsonapi.payload';
+export * from './lib/whistler.models';
+
 export { IWVoucherStatsApi } from './lib/voucher/stats';
 export { IWVouchersApi } from './lib/voucher/vouchers-api';
 export {
@@ -19,13 +22,19 @@ export {
   IWSurveyLimitAttributes,
   IWGameLimitAttributes,
 } from './lib/limit/limit';
-export { IWOutcomeAttributes } from './lib/outcome/outcome';
+export {
+  IWOutcomeAttributes,
+  IWCampaignProperties,
+} from './lib/outcome/outcome';
+export { IWAttbsObjStamp } from './lib/stamp/stamp';
 export {
   IWCommTemplateAttributes,
   IWCommEventAttributes,
 } from './lib/comm/comm';
-export { IWCampaignAttributes } from './lib/campaign/campaign';
-export { WEngagementType } from './lib/campaign/campaign';
+export {
+  IWCampaignAttributes,
+  WEngagementType,
+} from './lib/campaign/campaign';
 export {
   IWInstantOutcomeTransactionAttributes,
   IWInstantOutcomeTxnReq,
@@ -53,10 +62,10 @@ export {
 export {
   WGameType,
   IWAttbsObjGame,
-  IWAttbsObjEntity,
   IWGameDisplayProperties,
   IWTreeDisplayProperties,
   IWPinataDisplayProperties,
+  IWAttbsObjTrans,
 } from './lib/game/game';
 
 /** Survey */
