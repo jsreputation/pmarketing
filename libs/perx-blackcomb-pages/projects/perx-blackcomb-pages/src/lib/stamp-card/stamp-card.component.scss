@@ -5,6 +5,7 @@
 
   .game-wrapper {
     @include game-wrap;
+    @include game-wrap-card;
 
     h1 {
       @include game-headline;
@@ -16,7 +17,7 @@
   }
 }
 
-button {
+.game-footer {
   @include game-cta;
 }
 
