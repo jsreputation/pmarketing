@@ -1,28 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InfoHintComponent } from './info-hint.component';
-import { MatIconModule } from '@angular/material';
+import { VouchersProgressBarComponent } from './vouchers-progress-bar.component';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe('InfoHintComponent', () => {
-  let component: InfoHintComponent;
-  let fixture: ComponentFixture<InfoHintComponent>;
+describe('VouchersProgressBarComponent', () => {
+  let component: VouchersProgressBarComponent;
+  let fixture: ComponentFixture<VouchersProgressBarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MatIconModule
-      ],
-      declarations: [InfoHintComponent],
+      declarations: [VouchersProgressBarComponent],
       schemas: [NO_ERRORS_SCHEMA],
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InfoHintComponent);
+    fixture = TestBed.createComponent(VouchersProgressBarComponent);
     component = fixture.componentInstance;
+    component.options = [{ type: 'test', value: 5 }];
     fixture.detectChanges();
   });
 
