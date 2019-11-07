@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
-import { ICommTemplateAttributes, ICommEventAttributes } from '@perx/whistler';
+import { IWCommTemplateAttributes, IWCommEventAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -11,19 +11,19 @@ export class CommsHttpsService {
   constructor(private http: HttpClient) {
   }
 
-  public getCommsTemplates(params: HttpParams): Observable<IJsonApiListPayload<ICommTemplateAttributes>> {
-    return this.http.get<IJsonApiListPayload<ICommTemplateAttributes>>(ApiConfig.commsTemplatesPath, { params });
+  public getCommsTemplates(params: HttpParams): Observable<IJsonApiListPayload<IWCommTemplateAttributes>> {
+    return this.http.get<IJsonApiListPayload<IWCommTemplateAttributes>>(ApiConfig.commsTemplatesPath, { params });
   }
 
-  public getCommsEvents(params: HttpParams): Observable<IJsonApiListPayload<ICommEventAttributes>> {
-    return this.http.get<IJsonApiListPayload<ICommEventAttributes>>(ApiConfig.commsEventsPath, { params });
+  public getCommsEvents(params: HttpParams): Observable<IJsonApiListPayload<IWCommEventAttributes>> {
+    return this.http.get<IJsonApiListPayload<IWCommEventAttributes>>(ApiConfig.commsEventsPath, { params });
   }
 
-  public updateCommsEvent(id: string, data: IJsonApiPayload<ICommEventAttributes>): Observable<IJsonApiPayload<ICommEventAttributes>> {
+  public updateCommsEvent(id: string, data: IJsonApiPayload<IWCommEventAttributes>): Observable<IJsonApiPayload<IWCommEventAttributes>> {
     return this.http.patch<IJsonApiPayload<any>>(ApiConfig.commsEventsPath + '/' + id, data);
   }
 
-  public createCommsEvent(data: IJsonApiPayload<ICommEventAttributes>): Observable<IJsonApiPayload<ICommEventAttributes>> {
+  public createCommsEvent(data: IJsonApiPayload<IWCommEventAttributes>): Observable<IJsonApiPayload<IWCommEventAttributes>> {
     return this.http.post<IJsonApiPayload<any>>(ApiConfig.commsEventsPath, data);
   }
 
@@ -33,12 +33,12 @@ export class CommsHttpsService {
 
   public updateCommsTemplate(
     id: string,
-    data: IJsonApiPayload<ICommTemplateAttributes>
-  ): Observable<IJsonApiPayload<ICommTemplateAttributes>> {
+    data: IJsonApiPayload<IWCommTemplateAttributes>
+  ): Observable<IJsonApiPayload<IWCommTemplateAttributes>> {
     return this.http.patch<IJsonApiPayload<any>>(ApiConfig.commsTemplatesPath + '/' + id, data);
   }
 
-  public createCommsTemplate(data: IJsonApiPayload<ICommTemplateAttributes>): Observable<IJsonApiPayload<ICommTemplateAttributes>> {
+  public createCommsTemplate(data: IJsonApiPayload<IWCommTemplateAttributes>): Observable<IJsonApiPayload<IWCommTemplateAttributes>> {
     return this.http.post<IJsonApiPayload<any>>(ApiConfig.commsTemplatesPath, data);
   }
 
