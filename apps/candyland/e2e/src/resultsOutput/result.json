@@ -1,0 +1,2662 @@
+[
+  {
+    "description": "Engagements tab is visible to customer.",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given 1_I am on the dashboard page.",
+        "category": "Initiate creation of engagement campaign: Engagements tab is visible to customer.",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/1_InitiateCreateEngagementCpgn.feature",
+          "line": 11,
+          "column": 3
+        },
+        "progress": {
+          "step": 1,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When 1_I take no action.",
+        "category": "Initiate creation of engagement campaign: Engagements tab is visible to customer.",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/1_InitiateCreateEngagementCpgn.feature",
+          "line": 12,
+          "column": 3
+        },
+        "progress": {
+          "step": 2,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "Then 1_I should see the engagment tab.",
+        "category": "Initiate creation of engagement campaign: Engagements tab is visible to customer.",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/1_InitiateCreateEngagementCpgn.feature",
+          "line": 13,
+          "column": 3
+        },
+        "progress": {
+          "step": 3,
+          "steps": 3
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given 1_I am on the dashboard page.",
+          "category": "Initiate creation of engagement campaign: Engagements tab is visible to customer.",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/1_InitiateCreateEngagementCpgn.feature",
+            "line": 11,
+            "column": 3
+          },
+          "progress": {
+            "step": 1,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When 1_I take no action.",
+          "category": "Initiate creation of engagement campaign: Engagements tab is visible to customer.",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/1_InitiateCreateEngagementCpgn.feature",
+            "line": 12,
+            "column": 3
+          },
+          "progress": {
+            "step": 2,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "Then 1_I should see the engagment tab.",
+          "category": "Initiate creation of engagement campaign: Engagements tab is visible to customer.",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/1_InitiateCreateEngagementCpgn.feature",
+            "line": 13,
+            "column": 3
+          },
+          "progress": {
+            "step": 3,
+            "steps": 3
+          }
+        }
+      ]
+    ],
+    "duration": 11146
+  },
+  {
+    "description": "Ensure that campaign tab is present",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given 1_I am on dashboard page",
+        "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign tab is present",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          "line": 7,
+          "column": 3
+        },
+        "progress": {
+          "step": 1,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When 1_I do nothing",
+        "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign tab is present",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          "line": 8,
+          "column": 3
+        },
+        "progress": {
+          "step": 2,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "Then 1_The campaign tab should be present.",
+        "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign tab is present",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          "line": 9,
+          "column": 3
+        },
+        "progress": {
+          "step": 3,
+          "steps": 3
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given 1_I am on dashboard page",
+          "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign tab is present",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+            "line": 7,
+            "column": 3
+          },
+          "progress": {
+            "step": 1,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When 1_I do nothing",
+          "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign tab is present",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+            "line": 8,
+            "column": 3
+          },
+          "progress": {
+            "step": 2,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "Then 1_The campaign tab should be present.",
+          "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign tab is present",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+            "line": 9,
+            "column": 3
+          },
+          "progress": {
+            "step": 3,
+            "steps": 3
+          }
+        }
+      ]
+    ],
+    "duration": 2905
+  },
+  {
+    "description": "Ensure that clicking on the campaign tab leads to the campaign page",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given 2_I am on dashboard page",
+        "category": "Testing Initiate creating survey campaign flow.: Ensure that clicking on the campaign tab leads to the campaign page",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          "line": 12,
+          "column": 3
+        },
+        "progress": {
+          "step": 1,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When 2_I click on the campaign tab",
+        "category": "Testing Initiate creating survey campaign flow.: Ensure that clicking on the campaign tab leads to the campaign page",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          "line": 13,
+          "column": 3
+        },
+        "progress": {
+          "step": 2,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "Then 2_I should be navigated to the campaign page.",
+        "category": "Testing Initiate creating survey campaign flow.: Ensure that clicking on the campaign tab leads to the campaign page",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          "line": 14,
+          "column": 3
+        },
+        "progress": {
+          "step": 3,
+          "steps": 3
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given 2_I am on dashboard page",
+          "category": "Testing Initiate creating survey campaign flow.: Ensure that clicking on the campaign tab leads to the campaign page",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+            "line": 12,
+            "column": 3
+          },
+          "progress": {
+            "step": 1,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When 2_I click on the campaign tab",
+          "category": "Testing Initiate creating survey campaign flow.: Ensure that clicking on the campaign tab leads to the campaign page",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+            "line": 13,
+            "column": 3
+          },
+          "progress": {
+            "step": 2,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "Then 2_I should be navigated to the campaign page.",
+          "category": "Testing Initiate creating survey campaign flow.: Ensure that clicking on the campaign tab leads to the campaign page",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+            "line": 14,
+            "column": 3
+          },
+          "progress": {
+            "step": 3,
+            "steps": 3
+          }
+        }
+      ]
+    ],
+    "duration": 8831
+  },
+  {
+    "description": "Ensure that campaign page have relevant element",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given 3_I am on the campaign page",
+        "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign page have relevant element",
+        "durationMillis": 2,
+        "sourceLocation": {
+          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          "line": 17,
+          "column": 3
+        },
+        "progress": {
+          "step": 1,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When 3_I do nothing",
+        "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign page have relevant element",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          "line": 18,
+          "column": 3
+        },
+        "progress": {
+          "step": 2,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "Then 3_I should see the relevant elements.",
+        "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign page have relevant element",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          "line": 19,
+          "column": 3
+        },
+        "progress": {
+          "step": 3,
+          "steps": 3
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given 3_I am on the campaign page",
+          "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign page have relevant element",
+          "durationMillis": 2,
+          "sourceLocation": {
+            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+            "line": 17,
+            "column": 3
+          },
+          "progress": {
+            "step": 1,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When 3_I do nothing",
+          "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign page have relevant element",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+            "line": 18,
+            "column": 3
+          },
+          "progress": {
+            "step": 2,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "Then 3_I should see the relevant elements.",
+          "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign page have relevant element",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+            "line": 19,
+            "column": 3
+          },
+          "progress": {
+            "step": 3,
+            "steps": 3
+          }
+        }
+      ]
+    ],
+    "duration": 4108
+  },
+  {
+    "description": "Ensure that create new campaign button is functional",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given 4_I am on the campaign page",
+        "category": "Testing Initiate creating survey campaign flow.: Ensure that create new campaign button is functional",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          "line": 22,
+          "column": 3
+        },
+        "progress": {
+          "step": 1,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When 4_I click on the create new button",
+        "category": "Testing Initiate creating survey campaign flow.: Ensure that create new campaign button is functional",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          "line": 23,
+          "column": 3
+        },
+        "progress": {
+          "step": 2,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "Then 4_I should be on the create new campaign page.",
+        "category": "Testing Initiate creating survey campaign flow.: Ensure that create new campaign button is functional",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          "line": 24,
+          "column": 3
+        },
+        "progress": {
+          "step": 3,
+          "steps": 3
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given 4_I am on the campaign page",
+          "category": "Testing Initiate creating survey campaign flow.: Ensure that create new campaign button is functional",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+            "line": 22,
+            "column": 3
+          },
+          "progress": {
+            "step": 1,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When 4_I click on the create new button",
+          "category": "Testing Initiate creating survey campaign flow.: Ensure that create new campaign button is functional",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+            "line": 23,
+            "column": 3
+          },
+          "progress": {
+            "step": 2,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "Then 4_I should be on the create new campaign page.",
+          "category": "Testing Initiate creating survey campaign flow.: Ensure that create new campaign button is functional",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+            "line": 24,
+            "column": 3
+          },
+          "progress": {
+            "step": 3,
+            "steps": 3
+          }
+        }
+      ]
+    ],
+    "duration": 9453
+  },
+  {
+    "description": "Verifying that functionality of launch button",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given 17_that I am on the campaign review page.",
+        "category": "Functionality flow for campaign info form.: Verifying that functionality of launch button",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/13_Functionality flow for campaign info form.feature",
+          "line": 27,
+          "column": 3
+        },
+        "progress": {
+          "step": 1,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When 17_I click on the launch button.",
+        "category": "Functionality flow for campaign info form.: Verifying that functionality of launch button",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/13_Functionality flow for campaign info form.feature",
+          "line": 28,
+          "column": 3
+        },
+        "progress": {
+          "step": 2,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "Then 17_I should see url link for campaign.",
+        "category": "Functionality flow for campaign info form.: Verifying that functionality of launch button",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/13_Functionality flow for campaign info form.feature",
+          "line": 29,
+          "column": 3
+        },
+        "progress": {
+          "step": 3,
+          "steps": 3
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given 17_that I am on the campaign review page.",
+          "category": "Functionality flow for campaign info form.: Verifying that functionality of launch button",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/13_Functionality flow for campaign info form.feature",
+            "line": 27,
+            "column": 3
+          },
+          "progress": {
+            "step": 1,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When 17_I click on the launch button.",
+          "category": "Functionality flow for campaign info form.: Verifying that functionality of launch button",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/13_Functionality flow for campaign info form.feature",
+            "line": 28,
+            "column": 3
+          },
+          "progress": {
+            "step": 2,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "Then 17_I should see url link for campaign.",
+          "category": "Functionality flow for campaign info form.: Verifying that functionality of launch button",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/13_Functionality flow for campaign info form.feature",
+            "line": 29,
+            "column": 3
+          },
+          "progress": {
+            "step": 3,
+            "steps": 3
+          }
+        }
+      ]
+    ],
+    "duration": 15027
+  },
+  {
+    "description": "Ensure that hit the pinata engagement type option is present.",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given 1_I am on engagement page",
+        "category": "Testing Initiate creation of pinata game.: Ensure that hit the pinata engagement type option is present.",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/20_Testing Initiate creation of pinata game.feature",
+          "line": 6,
+          "column": 3
+        },
+        "progress": {
+          "step": 1,
+          "steps": 4
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "And 1_I click on the create new button",
+        "category": "Testing Initiate creation of pinata game.: Ensure that hit the pinata engagement type option is present.",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/20_Testing Initiate creation of pinata game.feature",
+          "line": 7,
+          "column": 3
+        },
+        "progress": {
+          "step": 2,
+          "steps": 4
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When 1_I Click on the game option.",
+        "category": "Testing Initiate creation of pinata game.: Ensure that hit the pinata engagement type option is present.",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/20_Testing Initiate creation of pinata game.feature",
+          "line": 8,
+          "column": 3
+        },
+        "progress": {
+          "step": 3,
+          "steps": 4
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "Then 1_The hit the pinata game should be present.",
+        "category": "Testing Initiate creation of pinata game.: Ensure that hit the pinata engagement type option is present.",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/20_Testing Initiate creation of pinata game.feature",
+          "line": 9,
+          "column": 3
+        },
+        "progress": {
+          "step": 4,
+          "steps": 4
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given 1_I am on engagement page",
+          "category": "Testing Initiate creation of pinata game.: Ensure that hit the pinata engagement type option is present.",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/20_Testing Initiate creation of pinata game.feature",
+            "line": 6,
+            "column": 3
+          },
+          "progress": {
+            "step": 1,
+            "steps": 4
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "And 1_I click on the create new button",
+          "category": "Testing Initiate creation of pinata game.: Ensure that hit the pinata engagement type option is present.",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/20_Testing Initiate creation of pinata game.feature",
+            "line": 7,
+            "column": 3
+          },
+          "progress": {
+            "step": 2,
+            "steps": 4
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When 1_I Click on the game option.",
+          "category": "Testing Initiate creation of pinata game.: Ensure that hit the pinata engagement type option is present.",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/20_Testing Initiate creation of pinata game.feature",
+            "line": 8,
+            "column": 3
+          },
+          "progress": {
+            "step": 3,
+            "steps": 4
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "Then 1_The hit the pinata game should be present.",
+          "category": "Testing Initiate creation of pinata game.: Ensure that hit the pinata engagement type option is present.",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/20_Testing Initiate creation of pinata game.feature",
+            "line": 9,
+            "column": 3
+          },
+          "progress": {
+            "step": 4,
+            "steps": 4
+          }
+        }
+      ]
+    ],
+    "duration": 5078
+  },
+  {
+    "description": "Ensure functionality of headline and and sub-headline message",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given 4_I am on the hit the pinata creation page",
+        "category": "Functionality flow for hit the pinata engagement.: Ensure functionality of headline and and sub-headline message",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/21_ Functionality flow for hit the pinata engagement.feature",
+          "line": 6,
+          "column": 3
+        },
+        "progress": {
+          "step": 1,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When 4_I input a test string in the headlline and sub headline field.",
+        "category": "Functionality flow for hit the pinata engagement.: Ensure functionality of headline and and sub-headline message",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/21_ Functionality flow for hit the pinata engagement.feature",
+          "line": 7,
+          "column": 3
+        },
+        "progress": {
+          "step": 2,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "Then 4_I should see the test string in the preview element.",
+        "category": "Functionality flow for hit the pinata engagement.: Ensure functionality of headline and and sub-headline message",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/21_ Functionality flow for hit the pinata engagement.feature",
+          "line": 8,
+          "column": 3
+        },
+        "progress": {
+          "step": 3,
+          "steps": 3
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given 4_I am on the hit the pinata creation page",
+          "category": "Functionality flow for hit the pinata engagement.: Ensure functionality of headline and and sub-headline message",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/21_ Functionality flow for hit the pinata engagement.feature",
+            "line": 6,
+            "column": 3
+          },
+          "progress": {
+            "step": 1,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When 4_I input a test string in the headlline and sub headline field.",
+          "category": "Functionality flow for hit the pinata engagement.: Ensure functionality of headline and and sub-headline message",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/21_ Functionality flow for hit the pinata engagement.feature",
+            "line": 7,
+            "column": 3
+          },
+          "progress": {
+            "step": 2,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "Then 4_I should see the test string in the preview element.",
+          "category": "Functionality flow for hit the pinata engagement.: Ensure functionality of headline and and sub-headline message",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/21_ Functionality flow for hit the pinata engagement.feature",
+            "line": 8,
+            "column": 3
+          },
+          "progress": {
+            "step": 3,
+            "steps": 3
+          }
+        }
+      ]
+    ],
+    "duration": 5750
+  },
+  {
+    "description": "Ensuring home page has the relevant elements",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given 9_I am at the blackcomb home page",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring home page has the relevant elements",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 4,
+          "column": 3
+        },
+        "progress": {
+          "step": 1,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When 9_I do nothing",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring home page has the relevant elements",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 5,
+          "column": 3
+        },
+        "progress": {
+          "step": 2,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "Then 9_I see the welcome message ,relevant headers, qr button and category tabs.",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring home page has the relevant elements",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 6,
+          "column": 3
+        },
+        "progress": {
+          "step": 3,
+          "steps": 3
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given 9_I am at the blackcomb home page",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring home page has the relevant elements",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 4,
+            "column": 3
+          },
+          "progress": {
+            "step": 1,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When 9_I do nothing",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring home page has the relevant elements",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 5,
+            "column": 3
+          },
+          "progress": {
+            "step": 2,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "Then 9_I see the welcome message ,relevant headers, qr button and category tabs.",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring home page has the relevant elements",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 6,
+            "column": 3
+          },
+          "progress": {
+            "step": 3,
+            "steps": 3
+          }
+        }
+      ]
+    ],
+    "duration": 13589
+  },
+  {
+    "description": "Ensuring functionality of qr button.",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given 10_I am at the blackcomb home page",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of qr button.",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 9,
+          "column": 3
+        },
+        "progress": {
+          "step": 1,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When 10_I click on the qr button",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of qr button.",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 10,
+          "column": 3
+        },
+        "progress": {
+          "step": 2,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "Then 10_I should be navigated to the qr card page.",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of qr button.",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 11,
+          "column": 3
+        },
+        "progress": {
+          "step": 3,
+          "steps": 3
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given 10_I am at the blackcomb home page",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of qr button.",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 9,
+            "column": 3
+          },
+          "progress": {
+            "step": 1,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When 10_I click on the qr button",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of qr button.",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 10,
+            "column": 3
+          },
+          "progress": {
+            "step": 2,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "Then 10_I should be navigated to the qr card page.",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of qr button.",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 11,
+            "column": 3
+          },
+          "progress": {
+            "step": 3,
+            "steps": 3
+          }
+        }
+      ]
+    ],
+    "duration": 3643
+  },
+  {
+    "description": "Ensuring qr page has the relevant elements.",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given 11_I am at the blackcomb qr page.",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring qr page has the relevant elements.",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 14,
+          "column": 3
+        },
+        "progress": {
+          "step": 1,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When 11_I do nothing",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring qr page has the relevant elements.",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 15,
+          "column": 3
+        },
+        "progress": {
+          "step": 2,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "Then 11_I should see the qr code and the message text below the qr code.",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring qr page has the relevant elements.",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 16,
+          "column": 3
+        },
+        "progress": {
+          "step": 3,
+          "steps": 3
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given 11_I am at the blackcomb qr page.",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring qr page has the relevant elements.",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 14,
+            "column": 3
+          },
+          "progress": {
+            "step": 1,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When 11_I do nothing",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring qr page has the relevant elements.",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 15,
+            "column": 3
+          },
+          "progress": {
+            "step": 2,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "Then 11_I should see the qr code and the message text below the qr code.",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring qr page has the relevant elements.",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 16,
+            "column": 3
+          },
+          "progress": {
+            "step": 3,
+            "steps": 3
+          }
+        }
+      ]
+    ],
+    "duration": 3999
+  },
+  {
+    "description": "Ensuring functionality of cancel button for the qr code page",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given 12_I am at the blackcomb qr page.",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of cancel button for the qr code page",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 19,
+          "column": 3
+        },
+        "progress": {
+          "step": 1,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When 12_I click on the cancel button",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of cancel button for the qr code page",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 20,
+          "column": 3
+        },
+        "progress": {
+          "step": 2,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "Then 12_I should be navigated to blackcomb home page.",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of cancel button for the qr code page",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 21,
+          "column": 3
+        },
+        "progress": {
+          "step": 3,
+          "steps": 3
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given 12_I am at the blackcomb qr page.",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of cancel button for the qr code page",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 19,
+            "column": 3
+          },
+          "progress": {
+            "step": 1,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When 12_I click on the cancel button",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of cancel button for the qr code page",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 20,
+            "column": 3
+          },
+          "progress": {
+            "step": 2,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "Then 12_I should be navigated to blackcomb home page.",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of cancel button for the qr code page",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 21,
+            "column": 3
+          },
+          "progress": {
+            "step": 3,
+            "steps": 3
+          }
+        }
+      ]
+    ],
+    "duration": 5322
+  },
+  {
+    "description": "Ensuring functionality of rewards filter",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given 13_I am at the blackcomb home page",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards filter",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 24,
+          "column": 3
+        },
+        "progress": {
+          "step": 1,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When 13_I click on a category",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards filter",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 25,
+          "column": 3
+        },
+        "progress": {
+          "step": 2,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "Then 13_I should see the relevant rewards under the category.",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards filter",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 26,
+          "column": 3
+        },
+        "progress": {
+          "step": 3,
+          "steps": 3
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given 13_I am at the blackcomb home page",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards filter",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 24,
+            "column": 3
+          },
+          "progress": {
+            "step": 1,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When 13_I click on a category",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards filter",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 25,
+            "column": 3
+          },
+          "progress": {
+            "step": 2,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "Then 13_I should see the relevant rewards under the category.",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards filter",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 26,
+            "column": 3
+          },
+          "progress": {
+            "step": 3,
+            "steps": 3
+          }
+        }
+      ]
+    ],
+    "duration": 2797
+  },
+  {
+    "description": "Ensuring functionality of feature rewards card",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given 14_I am at the blackcomb home page",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of feature rewards card",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 29,
+          "column": 3
+        },
+        "progress": {
+          "step": 1,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When 14_I click on a featured reward",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of feature rewards card",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 30,
+          "column": 3
+        },
+        "progress": {
+          "step": 2,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "Then 14_I should be navigated to the reward description page",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of feature rewards card",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 31,
+          "column": 3
+        },
+        "progress": {
+          "step": 3,
+          "steps": 3
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given 14_I am at the blackcomb home page",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of feature rewards card",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 29,
+            "column": 3
+          },
+          "progress": {
+            "step": 1,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When 14_I click on a featured reward",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of feature rewards card",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 30,
+            "column": 3
+          },
+          "progress": {
+            "step": 2,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "Then 14_I should be navigated to the reward description page",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of feature rewards card",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 31,
+            "column": 3
+          },
+          "progress": {
+            "step": 3,
+            "steps": 3
+          }
+        }
+      ]
+    ],
+    "duration": 3753
+  },
+  {
+    "description": "Ensuring functionality of rewards card",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given 15_I am at the blackcomb home page",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards card",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 34,
+          "column": 3
+        },
+        "progress": {
+          "step": 1,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When 15_I click on a reward under the all category",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards card",
+        "durationMillis": 0,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 35,
+          "column": 3
+        },
+        "progress": {
+          "step": 2,
+          "steps": 3
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "Then 15_I should be navigated to the reward description page",
+        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards card",
+        "durationMillis": 1,
+        "sourceLocation": {
+          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          "line": 36,
+          "column": 3
+        },
+        "progress": {
+          "step": 3,
+          "steps": 3
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given 15_I am at the blackcomb home page",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards card",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 34,
+            "column": 3
+          },
+          "progress": {
+            "step": 1,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When 15_I click on a reward under the all category",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards card",
+          "durationMillis": 0,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 35,
+            "column": 3
+          },
+          "progress": {
+            "step": 2,
+            "steps": 3
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "Then 15_I should be navigated to the reward description page",
+          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards card",
+          "durationMillis": 1,
+          "sourceLocation": {
+            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+            "line": 36,
+            "column": 3
+          },
+          "progress": {
+            "step": 3,
+            "steps": 3
+          }
+        }
+      ]
+    ],
+    "duration": 3639
+  }
+]

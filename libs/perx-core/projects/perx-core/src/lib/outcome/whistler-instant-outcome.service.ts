@@ -10,13 +10,13 @@ import { IReward } from '../rewards/models/reward.model';
 import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { RewardsService } from '../rewards/rewards.service';
 import {
-  IInstantOutcomeTransactionAttributes,
-  IInstantOutcomeTxnReq,
+  IWInstantOutcomeTransactionAttributes,
+  IWInstantOutcomeTxnReq,
   IWInstantOutcomeEngagementAttributes,
   IWOutcomeDisplayProperties,
-  ICampaignAttributes,
-  IAssignedAttributes,
+  IWAssignedAttributes,
   WInstantOutcomeStatus
+  IWCampaignAttributes
 } from '@perx/whistler';
 
 import { ICampaignDisplayProperties } from '../perx-core.models';
@@ -37,7 +37,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   }
 
   private getEngagementId(campaignId: number): Observable<CampaignProperties> {
-    return this.http.get<IJsonApiItemPayload<ICampaignAttributes>>(
+    return this.http.get<IJsonApiItemPayload<IWCampaignAttributes>>(
       `${this.config.apiHost}/campaign/entities/${campaignId}`
     )
       .pipe(
@@ -66,9 +66,9 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   }
 
   public claim(campaignId: number): Observable<IReward[]> {
-    const buildBody: Observable<IJsonApiPostItem<IInstantOutcomeTxnReq>> = this.getEngagementId(campaignId)
+    const buildBody: Observable<IJsonApiPostItem<IWInstantOutcomeTxnReq>> = this.getEngagementId(campaignId)
       .pipe(
-        map((campaign: CampaignProperties): IJsonApiPostItem<IInstantOutcomeTxnReq> => ({
+        map((campaign: CampaignProperties): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
           data: {
             type: 'transactions',
             attributes: {
@@ -81,15 +81,15 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       );
 
     const getRewardIds: Observable<number[]> = buildBody.pipe(
-      switchMap((body: IJsonApiPostItem<IInstantOutcomeTxnReq>): Observable<IJsonApiItemPayload<IInstantOutcomeTransactionAttributes>> =>
-        this.http.post<IJsonApiItemPayload<IInstantOutcomeTransactionAttributes>>(
+      switchMap((body: IJsonApiPostItem<IWInstantOutcomeTxnReq>): Observable<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>> =>
+        this.http.post<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>>(
           `${this.baseUrl}`,
           body,
           { headers: { 'Content-Type': 'application/vnd.api+json' } }
         )
       ),
-      map((res: IJsonApiItemPayload<IInstantOutcomeTransactionAttributes>) => res.data),
-      map((data: IJsonApiItem<IInstantOutcomeTransactionAttributes>) => data.attributes.results),
+      map((res: IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>) => res.data),
+      map((data: IJsonApiItem<IWInstantOutcomeTransactionAttributes>) => data.attributes.results),
       map(results => results.attributes.results),
       map((results): number[] => results.map(result => result.attributes.source_id))
     );
@@ -103,7 +103,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   public prePlay(campaignId?: number): Observable<IReward[]> {
     return this.getEngagementId(campaignId)
       .pipe(
-        map((campaign: CampaignProperties): IJsonApiPostItem<IInstantOutcomeTxnReq> => ({
+        map((campaign: CampaignProperties): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
           data: {
             type: 'transactions',
             attributes: {
@@ -114,7 +114,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
           }
         })),
         switchMap(
-          (body: IJsonApiPostItem<IInstantOutcomeTxnReq>) => this.http.post<IJsonApiItemPayload<IInstantOutcomeTransactionAttributes>>(
+          (body: IJsonApiPostItem<IWInstantOutcomeTxnReq>) => this.http.post<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>>(
             `${this.config.apiHost}/instant-outcome/transactions`,
             body,
             { headers: { 'Content-Type': 'application/vnd.api+json' } }
@@ -122,7 +122,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
         ),
         mergeMap(res => (
           combineLatest(...res.data.attributes.results.attributes.results.map(
-            (outcome: IJsonApiItem<IAssignedAttributes>) => this.rewardsService.getReward(Number.parseInt(outcome.id, 10))
+            (outcome: IJsonApiItem<IWAssignedAttributes>) => this.rewardsService.getReward(Number.parseInt(outcome.id, 10))
           )).pipe(
             map((vouchArr) => vouchArr.reduce((acc, currVouch) =>
               ({ ...acc, vouchers: [...acc.vouchers, currVouch] }), { vouchers: [] })
@@ -141,7 +141,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
         }
       }
     };
-    return this.http.patch<IJsonApiItemPayload<IInstantOutcomeTransactionAttributes>>(
+    return this.http.patch<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>>(
       `${this.config.apiHost}/instant-outcome/transactions/${transactionId}`,
       body,
       { headers: { 'Content-Type': 'application/vnd.api+json' } }
