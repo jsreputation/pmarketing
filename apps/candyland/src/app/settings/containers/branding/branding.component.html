@@ -153,9 +153,9 @@
   </div>
   <cl-settings-mobile-preview #mobilePreview
     [tabs]="['Login', 'Home', 'Reward Detail']"
-    class="branding"
-  >
+    class="branding">
     <!--LOG IN PAGE-->
+    <!-- [logoType]="logoType.value === 'image'" -->
     <cl-simple-mobile-view
       class="firs-tab"
       [mobileImageClass]="'mobile-non-header'"
@@ -163,7 +163,6 @@
       [primaryColor]="primaryColor.value"
       [backgroundColor]="primaryColor.value"
       [logo]="logo.value"
-      [logoType]="logoType.value === 'image'"
       [fontFamily]="font.value">
       <div class="mobile-preview-header">
         <p class="mobile-preview-headline">
@@ -172,8 +171,7 @@
       </div>
       <div class="plugin-block">
         <div class="mobile-preview-card"
-             [ngStyle]="{'background-color': '#fffff'}"
-        >
+          [ngStyle]="{'background-color': '#fffff'}">
           <div class="mobile-preview-header-nested">
             <p class="mobile-preview-headline">
               Log In
@@ -187,7 +185,7 @@
           </mat-form-field>
 
           <button class="mobile-preview-btn"
-                  [ngStyle]="{
+            [ngStyle]="{
                         backgroundColor: buttonBackgroundColor.value.color,
                         'font-family': font.value,
                         color: buttonTextColor.value.color
@@ -223,7 +221,7 @@
           </div>
           <div class="quare-code-btn">
             <button class="mobile-preview-btn"
-                    [ngStyle]="{
+              [ngStyle]="{
                         backgroundColor: buttonBackgroundColor.value.color,
                         'font-family': font.value,
                         color: buttonTextColor.value.color
@@ -238,12 +236,11 @@
             Featured Rewards
           </h2>
           <perx-core-rewards-collection [rewardsList]="rewards$"
-                                        clScrollTo
-                                        [shiftTo]="50"
-                                        canRun="true"
-                                        classElement="card-collection-container"
-                                        [emit$]="mobilePreview.animationDone"
-          ></perx-core-rewards-collection>
+            clScrollTo
+            [shiftTo]="50"
+            canRun="true"
+            classElement="card-collection-container"
+            [emit$]="mobilePreview.animationDone"></perx-core-rewards-collection>
         </div>
       </div>
     </cl-simple-mobile-view>
