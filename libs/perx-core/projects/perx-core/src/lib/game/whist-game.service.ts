@@ -188,8 +188,8 @@ export class WhistlerGameService implements IGameService {
     ).pipe(
       map(res => ({
         id: Number.parseInt(res.data.id, 10),
-        rewardIds: res.data.attributes.results.attributes.results.map(
-          (outcome: IJsonApiItem<IAssignedAttributes>) => Number.parseInt(outcome.id, 10)
+        voucherIds: res.data.attributes.results.attributes.results.map(
+          (outcome: IJsonApiItem<IWAssignedAttributes>) => Number.parseInt(outcome.id, 10)
         )
       }))
     );

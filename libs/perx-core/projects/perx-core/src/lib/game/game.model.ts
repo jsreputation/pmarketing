@@ -10,7 +10,7 @@ export enum GameType {
 
 export interface IGameTransaction {
   id: number;
-  rewardIds: number[];
+  voucherIds: number[];
 }
 export interface IGameOutcome {
   title: string;

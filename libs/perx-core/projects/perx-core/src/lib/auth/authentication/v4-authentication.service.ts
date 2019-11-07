@@ -358,7 +358,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   // @ts-ignore
-  public mergeUserById(fromIds: string[], toId: string): Observable<void> {
+  public mergeUserById(fromIds: number[], toId: number): Observable<void> {
     return throwError('Not implement yet');
   }
 }

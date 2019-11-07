@@ -1,8 +1,7 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { InstantOutcomeService, IReward, PopupComponent, IOutcome, IPopupConfig } from '@perx/core';
-import { MatDialog } from '@angular/material';
+import { InstantOutcomeService, IReward, IOutcome, IPopupConfig } from '@perx/core';
 import { map, switchMap, catchError, tap, takeUntil, } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -30,7 +29,6 @@ export class RewardComponent implements OnInit, OnDestroy {
 
   constructor(
     private outcomeService: InstantOutcomeService,
-    private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
     private translate: TranslateService,

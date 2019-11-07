@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IGameService } from './igame.service';
-import { IGame, GameType as TYPE, defaultTree, ITree, IPinata, defaultPinata, IGameOutcome, IPlayOutcome } from './game.model';
+import { IGame, GameType as TYPE, defaultTree, ITree, IPinata, defaultPinata, IGameOutcome, IPlayOutcome, IGameTransaction } from './game.model';
 import { map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { Config } from '../config/config';

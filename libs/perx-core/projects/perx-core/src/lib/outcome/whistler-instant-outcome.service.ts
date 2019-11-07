@@ -15,7 +15,7 @@ import {
   IWInstantOutcomeEngagementAttributes,
   IWOutcomeDisplayProperties,
   IWAssignedAttributes,
-  WInstantOutcomeStatus
+  WInstantOutcomeStatus,
   IWCampaignAttributes
 } from '@perx/whistler';
 

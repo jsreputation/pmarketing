@@ -27,7 +27,6 @@ export class PIComponent implements OnInit, OnDestroy {
   public preAuth: boolean;
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
-  private anonymousPI: string;
   private popupData: IPopupConfig;
   private engagementType: string;
   private transactionId: number;
@@ -67,7 +66,6 @@ export class PIComponent implements OnInit, OnDestroy {
         this.transactionId = JSON.parse(params.transactionId);
       }
     });
-    this.anonymousPI = this.authService.getPI();
   }
 
   public ngOnDestroy(): void {
@@ -83,8 +81,6 @@ export class PIComponent implements OnInit, OnDestroy {
       (window as any).primaryIdentifier = pi;
       this.authService.autoLogin().pipe(
         catchError(() => throwError('PI_NOT_EXIST')),
-        switchMap(() => this.authService.updatePI([this.anonymousPI], pi)),
-        catchError(() => throwError('PI_UPDATE_FAIL')),
         switchMap(() => this.authService.mergeUserById([1], 2)),
         catchError(() => throwError('PI_MERGE_FAIL')),
         switchMap(() => {
@@ -102,7 +98,10 @@ export class PIComponent implements OnInit, OnDestroy {
           this.router.navigate(['/wallet']);
           this.dialog.open(PopupComponent, { data: this.popupData });
         },
-        (error) => console.log(error)
+        (error) => {
+          console.log(error);
+          this.translate.get(error).subscribe(res => this.errorMessage = res);
+        }
       );
     }
   }

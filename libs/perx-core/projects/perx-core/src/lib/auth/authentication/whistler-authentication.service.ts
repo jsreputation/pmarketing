@@ -265,7 +265,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     this.tokenStorage.setAppInfoProperty(pi, 'pi');
   }
 
-  public mergeUserById(fromIds: string[], toId: string): Observable<void> {
+  public mergeUserById(fromIds: number[], toId: number): Observable<void> {
     return this.http.post<any>(this.apiHost + '/chown_requests', {
       data: {
         attributes: {

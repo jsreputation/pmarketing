@@ -14,7 +14,6 @@ export class GameComponent implements OnInit, OnDestroy {
   public gameData$: Observable<IGame>;
   public gt: typeof GameType = GameType;
   private campaignId: number;
-  private engagementId: number | null = null;
   private transactionId: number | null = null;
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
@@ -72,8 +71,6 @@ export class GameComponent implements OnInit, OnDestroy {
             this.successPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.successPopUp.imageUrl;
             this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
           }
-
-          this.engagementId = game ? game.id : null;
         }
       })
     );

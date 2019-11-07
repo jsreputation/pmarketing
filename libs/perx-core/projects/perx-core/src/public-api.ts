@@ -1,4 +1,3 @@
-import { IGameTransaction } from '@perx/core';
 /*
  * Public API Surface of perx-core
  */
