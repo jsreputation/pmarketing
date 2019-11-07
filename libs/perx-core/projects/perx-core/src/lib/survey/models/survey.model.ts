@@ -59,6 +59,7 @@ export interface IErrors {
   exceedMaxLength?: boolean;
   isValidPhoneNumber?: boolean;
   isValidDateRange?: boolean;
+  inValidEmail?: boolean;
 }
 
 export interface IPayload {

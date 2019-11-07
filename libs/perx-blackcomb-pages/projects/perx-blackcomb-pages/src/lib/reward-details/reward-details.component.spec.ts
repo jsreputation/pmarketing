@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('RewardComponent', () => {
   let component: RewardDetailsComponent;
   let fixture: ComponentFixture<RewardDetailsComponent>;
-  const rewardsServiceStub = {};
+  const rewardsServiceStub: Partial<RewardsService> = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
