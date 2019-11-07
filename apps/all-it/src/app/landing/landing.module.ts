@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LandingComponent } from './landing.component';
 import { LandingRoutingModule } from './landing-routing.module';
 import { MatToolbarModule, MatButtonModule } from '@angular/material';
+import { UtilsModule } from '@perx/core';
 
 @NgModule({
   declarations: [LandingComponent],
@@ -10,7 +11,8 @@ import { MatToolbarModule, MatButtonModule } from '@angular/material';
     CommonModule,
     LandingRoutingModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    UtilsModule
   ]
 })
 export class LandingModule { }
