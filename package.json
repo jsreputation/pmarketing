@@ -5,6 +5,7 @@
     "build": "lerna run build:lib && lerna run build -- ",
     "build:abenson:prod": "lerna run build:lib && lerna run build:abenson:prod --",
     "build:blackcomb:prod": "lerna run build:lib && lerna run build:blackcomb:prod --",
+    "build:all-it:prod": "lerna run build:lib && lerna run build:all-it:prod --",
     "build:bpi:prod": "lerna run build:lib && lerna run build:bpi:prod --",
     "build:candyland:prod": "lerna run build:lib && lerna run build:candyland:prod --",
     "build:digi:prod": "lerna run build:lib && lerna run build:digi:prod --",
