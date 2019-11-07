@@ -117,6 +117,10 @@ export class PuzzleComponent implements OnInit, OnDestroy {
     this.soundService.pause(false);
   }
 
+  private currentCard(campaignId: number): Observable<IStampCard> {
+    return this.stampService.getCurrentCard(campaignId);
+  }
+
   private fetchCampaign(): void {
     this.campaignService.getCampaigns()
       .pipe(
@@ -155,10 +159,6 @@ export class PuzzleComponent implements OnInit, OnDestroy {
 
         this.fetchCardsCount(card.campaignId);
       });
-  }
-
-  private currentCard(campaignId: number): Observable<IStampCard> {
-    return this.stampService.getCurrentCard(campaignId);
   }
 
   private fetchCard(): void {
