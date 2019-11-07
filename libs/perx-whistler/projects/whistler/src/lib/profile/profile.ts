@@ -1,4 +1,4 @@
-export interface IWhistlerProfileAttributes {
+export interface IWProfileAttributes {
   urn?: string;
   created_at?: string;
   updated_at?: string;

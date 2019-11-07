@@ -5,7 +5,7 @@ export enum WEngagementType {
   loyalty = 'loyalty',
 }
 
-export interface ICampaignAttributes {
+export interface IWCampaignAttributes {
   id?: string;
   name: string;
   created_at?: string;
