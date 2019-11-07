@@ -47,6 +47,11 @@
       display: flex;
       flex-direction: column;
 
+      &.hsbc-xmas {
+        position: relative;
+        top: 15vh;
+      }
+
       .error_msg {
         flex: 1;
         display: flex;
