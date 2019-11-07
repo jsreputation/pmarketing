@@ -1,8 +1,8 @@
-import { IVoucherStatsApi, IVouchersApi } from '@perx/whistler';
+import { IWVoucherStatsApi, IWVouchersApi } from '@perx/whistler';
 
 export class VouchersHttpAdapter {
   // tslint:disable
-  public static transformCreateVoucher(data: any): IJsonApiItem<IVouchersApi> {
+  public static transformCreateVoucher(data: any): IJsonApiItem<IWVouchersApi> {
     switch (data.code_type) {
       case 'single_code':
         return VouchersHttpAdapter.transformVoucherToApiSingleForm(data);
@@ -11,7 +11,7 @@ export class VouchersHttpAdapter {
     }
   }
 
-  public static transformVoucherToApiSingleForm(data: IVouchersApi): IJsonApiItem<IVouchersApi> {
+  public static transformVoucherToApiSingleForm(data: IWVouchersApi): IJsonApiItem<IWVouchersApi> {
     return {
       type: 'batch',
       attributes: {
@@ -25,7 +25,7 @@ export class VouchersHttpAdapter {
     };
   }
 
-  public static transformVoucherToApiSystemForm(data: IVouchersApi): IJsonApiItem<IVouchersApi> {
+  public static transformVoucherToApiSystemForm(data: IWVouchersApi): IJsonApiItem<IWVouchersApi> {
     return {
       type: 'batch',
       attributes: {
@@ -41,7 +41,7 @@ export class VouchersHttpAdapter {
     };
   }
 
-  public static transformToVoucherStatsObj(res: IJsonApiPayload<IVoucherStatsApi>): { [k: string]: number } {
+  public static transformToVoucherStatsObj(res: IJsonApiPayload<IWVoucherStatsApi>): { [k: string]: number } {
     const { code, voucher } = res.data.attributes;
     const result = {};
 

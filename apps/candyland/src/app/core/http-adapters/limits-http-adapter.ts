@@ -1,4 +1,4 @@
-import { IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from '@perx/whistler';
+import { IWInstantOutcomeLimitAttributes, IWSurveyLimitAttributes, IWGameLimitAttributes } from '@perx/whistler';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 
 enum LimitsDurationToAPIMapping {
@@ -14,12 +14,12 @@ enum LimitsDurationFromAPIMapping {
 }
 export class LimitsHttpAdapter {
   public static transformAPIResponseToLimit(
-    data: IJsonApiItem<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes>,
+    data: IJsonApiItem<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>,
     type: string): ILimit {
     let dataAtt;
     switch (type) {
       case 'game':
-        dataAtt = data.attributes as IGameLimitAttributes;
+        dataAtt = data.attributes as IWGameLimitAttributes;
         return {
           id: data.id,
           times: dataAtt.max_plays_in_period,
@@ -28,7 +28,7 @@ export class LimitsHttpAdapter {
       case 'survey':
       case 'instant_reward':
       case 'stamps':
-        dataAtt = data.attributes as ISurveyLimitAttributes | IInstantOutcomeLimitAttributes;
+        dataAtt = data.attributes as IWSurveyLimitAttributes | IWInstantOutcomeLimitAttributes;
         return {
           id: data.id,
           times: dataAtt.max_responses_per_user
@@ -41,7 +41,7 @@ export class LimitsHttpAdapter {
     type: string,
     campaignId: number,
     engagementId: number
-  ): IJsonApiItem<IInstantOutcomeLimitAttributes | ISurveyLimitAttributes | IGameLimitAttributes> {
+  ): IJsonApiItem<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes> {
     switch (type) {
       case 'game':
         return {

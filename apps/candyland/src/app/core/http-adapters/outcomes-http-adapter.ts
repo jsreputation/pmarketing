@@ -1,8 +1,8 @@
-import { IOutcomeAttributes } from '@perx/whistler';
+import { IWOutcomeAttributes } from '@perx/whistler';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 
 export class OutcomesHttpAdapter {
-  public static transformAPIResponseToOutcome(data: IJsonApiItem<IOutcomeAttributes>): IOutcome {
+  public static transformAPIResponseToOutcome(data: IJsonApiItem<IWOutcomeAttributes>): IOutcome {
     return {
       id: data.id,
       resultId: data.attributes.result_id,
@@ -17,7 +17,7 @@ export class OutcomesHttpAdapter {
     enableProbability: boolean,
     campaignId: string,
     slotNumber: number
-  ): IJsonApiItem<IOutcomeAttributes> {
+  ): IJsonApiItem<IWOutcomeAttributes> {
     return {
       type: 'possible_outcomes',
       attributes: {

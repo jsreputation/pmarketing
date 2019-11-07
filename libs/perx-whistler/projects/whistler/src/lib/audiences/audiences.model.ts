@@ -1,4 +1,4 @@
-export interface IAudiences {
+export interface IWAudiences {
   id: number;
   type: string;
   self: string;
@@ -10,15 +10,15 @@ export interface IAudiences {
   users: any;
 }
 
-export interface IPoolsApi {
+export interface IWPoolsApi {
   name: string;
 }
 
-export interface IPools {
+export interface IWPools {
   [id: string]: { name: string };
 }
 
-export interface IUser {
+export interface IWUser {
   id?: string;
   type: string;
   self: string;

@@ -47,6 +47,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
   }
 
   public get logo(): AbstractControl {
+    // console.log(this.formBranding.get('logo'));
     return this.formBranding.get('logo');
   }
 
