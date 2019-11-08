@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PopupComponent } from './popup/popup.component';
-import { MatButtonModule, MatDialogModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatCardModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -16,6 +16,7 @@ import { ThemesService } from './themes/themes.service';
 import { WhistlerThemesService } from './themes/whistler-themes.service';
 import { Config } from '../config/config';
 import { V4ThemesService } from './themes/v4-themes.service';
+import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 
 export function themesServiceFactory(http: HttpClient, config: Config): ThemesService {
   if (config.isWhistler) {
@@ -33,13 +34,15 @@ const directives = [
 const components = [
   PopupComponent,
   PinInputComponent,
+  NewsfeedComponent
 ];
 
 @NgModule({
   declarations: [
     ...directives,
     ...components,
-    DistancePipe
+    DistancePipe,
+    NewsfeedComponent
   ],
   entryComponents: [
     ...components,
@@ -49,6 +52,7 @@ const components = [
     MatDialogModule,
     MatButtonModule,
     ReactiveFormsModule,
+    MatCardModule
   ],
   exports: [
     ...directives,

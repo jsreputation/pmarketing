@@ -10,10 +10,11 @@
       </p>
       <div class="row" *ngFor="let rowItemsCount of currentActiveOrientation; let rowNum = index">
         <div class="dummy-container" *ngFor="let box of counter(rowItemsCount); let i = index">
-          <img [src]="getStampImage(i, rowNum)" />
-          <div (click)="onAvailableStampClicked(i, rowNum)" *ngIf="isIssued(i, rowNum)" class="add">
-            <span>+</span>
-          </div>
+          <img class="add" *ngIf="isIssued(i, rowNum); else notAvailable" (click)="onAvailableStampClicked(i, rowNum)" [src]="getStampImage(i, rowNum)" />
+
+          <ng-template #notAvailable>
+            <img [src]="getStampImage(i, rowNum)" />
+          </ng-template>
         </div>
       </div>
     </div>

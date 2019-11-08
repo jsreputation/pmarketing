@@ -64,15 +64,8 @@
 }
 
 .add {
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: auto;
-  bottom: 10%;
-  font-size: 3rem;
-  text-align: center;
-  color: #2665EE;
-  height: 100%;
+  border: 2px solid #db0010;
+  border-radius: 5rem;
 }
 
 .add span {
