@@ -1,0 +1,15 @@
+{
+  "MERCHANT_LOGO": "Merchant Logo",
+  "MERCHANT_NAME": "Merchant Name",
+  "DATE_CREATED": "Date Created",
+  "CONTACT_NUMBER": "Contact number",
+  "BRANCHES": "Branches",
+  "CREATE_MERCHANT": "Create Merchant",
+  "EDIT_MERCHANT": "Edit Merchant",
+  "DEFAULT_COUNTRY_CODE": "Default Country Code",
+  "ADDRESS": "Address",
+  "CITY": "City",
+  "STATE/PROVINCE": "State/Province",
+  "POSTAL_CODE": "Postal code",
+  "BRANCH_NAME": "Branch Name"
+}

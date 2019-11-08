@@ -35,15 +35,15 @@
   ],
   "durationLimits": [
     {
-      "title": "Day",
+      "title": "DAY",
       "value": "day"
     },
     {
-      "title": "Week",
+      "title": "WEEK",
       "value": "week"
     },
     {
-      "title": "Month",
+      "title": "MONTH",
       "value": "month"
     }
   ],
@@ -115,24 +115,24 @@
   ],
   "voucherCodeTypes": [
     {
-      "title": "Single code",
+      "title": "VOUCHER_CODE_OPTIONS.SINGLE_CODE",
       "value": "single_code"
     },
     {
-      "title": "Unique codes: System generated",
+      "title": "VOUCHER_CODE_OPTIONS.UNIQUE_CODES:_SYSTEM_GENERATED",
       "value": "system_generated"
     },    {
-      "title": "Unique codes: User upload",
+      "title": "VOUCHER_CODE_OPTIONS.UNIQUE_CODES:_USER_UPLOAD",
       "value": "user_uploaded"
     }
   ],
   "voucherValidityType": [
     {
-      "title": "Period",
+      "title": "VOUCHER_VALIDITY_OPTIONS.PERIOD",
       "value": "period"
     },
     {
-      "title": "Issuance date",
+      "title": "VOUCHER_VALIDITY_OPTIONS.ISSUANCE_DATE",
       "value": "issuance_date"
     }
   ],

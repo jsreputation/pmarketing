@@ -13,13 +13,30 @@
   "BTN_EDIT": "Редактировать",
   "BTN_DUPLICATE": "Дублировать",
   "BTN_ADD_NEW": "+ Add New",
+  "ADD_IMAGE": "+ Add Image",
+  "BTN_ADD_MERCHANT": "Add Merchant",
+  "BTN_DELETE": "Delete",
+  "ADD_NEW_BRANCH": "+ Add new branch",
+  "BTN_DOWNLOAD_A_SAMPLE_FILE": "Download a sample file",
+  "BTN_UPLOAD-FILE_A_LIST": "+ upload-file a list",
 
   "DESCRIPTION": "Description",
   "POINTS": "points",
 
-
+  "ERROR_REQUIRED": "Required field",
   "ERROR_MIN_LENGTH": "Минимальная длина",
   "ERROR_MAX_LENGTH": "максимальная длина",
   "ERROR_PATTERN": "Только буквенно-цифровые символы",
-  "RECOMMENDED_FORMAT:_.JPG,_.PNG_OR_.GIF": "Recommended format: .JPG, .PNG or .GIF"
+  "RECOMMENDED_FORMAT:_.JPG,_.PNG_OR_.GIF": "Recommended format: .JPG, .PNG or .GIF",
+  "WRONG_PATTERN_WEB_LINK": "Wrong pattern web link",
+
+
+  "WEBLINK": "Weblink",
+  "TO": "to",
+  "DAY": "Day",
+  "WEEK": "Week",
+  "MONTH": "Month",
+  "YEAR": "Year",
+  "CHOOSE_DATE": "Choose date",
+  "TIME": "Time"
 }
