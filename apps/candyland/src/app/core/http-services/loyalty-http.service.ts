@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import {IWLoyaltyAttributes, IWBasicTierAttributes, IWCustomTierAttributes } from '@perx/whistler';
+import { IWLoyaltyAttributes, IWBasicTierAttributes, IWCustomTierAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -44,23 +44,24 @@ export class LoyaltyHttpService {
     return this.http.delete<IJsonApiPayload<any>>(ApiConfig.loyaltyBasicTierPath + '/' + id);
   }
 
-  public getCustomTier(id: string, params: HttpParams): Observable<IJsonApiPayload<IWCustomTierAttributes >> {
-    return this.http.get<IJsonApiPayload<IWCustomTierAttributes >>(`${ApiConfig.getLoyaltyCustomTierPath}/${id}`, {params});
+  public getCustomTier(id: string, params: HttpParams): Observable<IJsonApiPayload<IWCustomTierAttributes>> {
+    return this.http.get<IJsonApiPayload<IWCustomTierAttributes>>(`${ApiConfig.getLoyaltyCustomTierPath}/${id}`, {params});
   }
 
-  public getCustomTiers(params: HttpParams): Observable<IJsonApiListPayload<IWCustomTierAttributes >> {
-    return this.http.get<IJsonApiListPayload<IWCustomTierAttributes >>(ApiConfig.getLoyaltyCustomTierPath, {params});
+  public getCustomTiers(params: HttpParams): Observable<IJsonApiListPayload<IWCustomTierAttributes>> {
+    return this.http.get<IJsonApiListPayload<IWCustomTierAttributes>>(ApiConfig.getLoyaltyCustomTierPath, {params});
   }
 
-  public createCustomTier(data: IJsonApiPayload<IWCustomTierAttributes >): Observable<IJsonApiPayload<IWCustomTierAttributes >> {
-    return this.http.post<IJsonApiPayload<IWCustomTierAttributes >>(ApiConfig.getLoyaltyCustomTierPath, data);
+  public createCustomTier(data: IJsonApiPayload<IWCustomTierAttributes>): Observable<IJsonApiPayload<IWCustomTierAttributes>> {
+    return this.http.post<IJsonApiPayload<IWCustomTierAttributes>>(ApiConfig.getLoyaltyCustomTierPath, data);
   }
 
-  public updateCustomTier(id: string, data: IJsonApiPayload<IWCustomTierAttributes >): Observable<IJsonApiPayload<IWCustomTierAttributes >> {
-    return this.http.patch<IJsonApiPayload<IWCustomTierAttributes >>(ApiConfig.getLoyaltyCustomTierPath + '/' + id, data);
+  public updateCustomTier(id: string, data: IJsonApiPayload<IWCustomTierAttributes>):
+    Observable<IJsonApiPayload<IWCustomTierAttributes>> {
+    return this.http.patch<IJsonApiPayload<IWCustomTierAttributes>>(ApiConfig.getLoyaltyCustomTierPath + '/' + id, data);
   }
 
-  public deleteCustomTier(id: string): Observable<IJsonApiPayload<IWCustomTierAttributes >> {
-    return this.http.delete<IJsonApiPayload<IWCustomTierAttributes >>(ApiConfig.getLoyaltyCustomTierPath + '/' + id);
+  public deleteCustomTier(id: string): Observable<IJsonApiPayload<IWCustomTierAttributes>> {
+    return this.http.delete<IJsonApiPayload<IWCustomTierAttributes>>(ApiConfig.getLoyaltyCustomTierPath + '/' + id);
   }
 }

@@ -35,11 +35,6 @@ export interface IWEngagementAttributes<T = any> {
   image_url?: string;
   properties?: IWEngagementProperties;
   display_properties: T;
-  // IWSurveyDisplayProperties |
-  // IWInstantOutcomeDisplayProperties |
-  // IWGameDisplayProperties |
-  // IWTreeDisplayProperties |
-  // IWPinataDisplayProperties;
 }
 
 export interface IWGameEngagementAttributes extends IWEngagementAttributes<IWGameDisplayProperties |
@@ -48,22 +43,27 @@ export interface IWGameEngagementAttributes extends IWEngagementAttributes<IWGam
   game_type: WGameType;
 }
 
+// Made to further expand the interfaces for each of the engagements types
 export interface IWTreeGameEngagementAttributes extends IWEngagementAttributes<IWTreeDisplayProperties> {
+  display_properties: IWTreeDisplayProperties;
 }
 
 export interface IWPinataGameEngagementAttributes extends IWEngagementAttributes<IWPinataDisplayProperties> {
+  display_properties: IWPinataDisplayProperties;
 }
 
 export interface IWScratchGameEngagementAttributes extends IWEngagementAttributes<IWScratchDisplayProperties> {
+  display_properties: IWScratchDisplayProperties;
 }
 
 export interface IWInstantOutcomeEngagementAttributes extends IWEngagementAttributes<IWInstantOutcomeDisplayProperties> {
+  display_properties: IWInstantOutcomeDisplayProperties;
 }
 
 export interface IWSurveyEngagementAttributes extends IWEngagementAttributes<IWSurveyDisplayProperties> {
+  display_properties: IWSurveyDisplayProperties;
 }
 
 export interface IWStampEngagementAttributes extends IWEngagementAttributes<IWStampDisplayProperties> {
+  display_properties: IWStampDisplayProperties;
 }
-
-

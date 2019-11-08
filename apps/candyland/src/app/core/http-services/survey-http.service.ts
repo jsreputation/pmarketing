@@ -45,7 +45,8 @@ export class SurveyHttpService {
     return this.http.post<IJsonApiPayload<IWSurveyEngagementAttributes>>(ApiConfig.engagementsPath + '/', data);
   }
 
-  public updateSurvey(id: string, data: IJsonApiPayload<IWSurveyEngagementAttributes>): Observable<IJsonApiPayload<IWSurveyEngagementAttributes>> {
+  public updateSurvey(id: string, data: IJsonApiPayload<IWSurveyEngagementAttributes>):
+    Observable<IJsonApiPayload<IWSurveyEngagementAttributes>> {
     return this.http.patch<IJsonApiPayload<IWSurveyEngagementAttributes>>(ApiConfig.engagementsPath + '/survey/' + id, data);
   }
 

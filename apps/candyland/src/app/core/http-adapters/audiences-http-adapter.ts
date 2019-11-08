@@ -1,9 +1,14 @@
-import { IWAssignedAttributes, IWAssignRequestAttributes, IWProfileAttributes, IWPoolsAttributes} from '@perx/whistler';
+import {
+  IWAssignedAttributes,
+  IWAssignRequestAttributes,
+  IWProfileAttributes,
+  IWPoolsAttributes
+} from '@perx/whistler';
 
 export class AudiencesHttpAdapter {
 
   public static transformFromUserForm(data: IAudiencesUserForm): IJsonApiItem<IWProfileAttributes> {
-    const optionalPool = data.audienceList ? { relationships: { pools: { data: data.audienceList } } } : {};
+    const optionalPool = data.audienceList ? {relationships: {pools: {data: data.audienceList}}} : {};
     const mainUserApiObject = {
       type: 'users',
       attributes: {
@@ -12,7 +17,7 @@ export class AudiencesHttpAdapter {
         last_name: data.lastName,
         phone_number: data.phone,
         email_address: data.email,
-        primary_identifier: data.firstName + 'identifier',
+        primary_identifier: data.firstName + 'identifier'
       }
     };
     return Object.assign(mainUserApiObject, optionalPool);
@@ -43,7 +48,8 @@ export class AudiencesHttpAdapter {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const usersData = data.data.map((item: IJsonApiItem<IWProfileAttributes>) => {
       const formattedUser = AudiencesHttpAdapter.transformUser(item);
-      formattedUser.pools = item.relationships.pools.data.map((pool: IJsonApiItem<IWPoolsAttributes>) => poolMap[pool.id]).sort().join(', ');
+      formattedUser.pools = item.relationships.pools.data.map(
+        (pool: IJsonApiItem<IWPoolsAttributes>) => poolMap[pool.id]).sort().join(', ');
       return formattedUser;
     });
     return {
