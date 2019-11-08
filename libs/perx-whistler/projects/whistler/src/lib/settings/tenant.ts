@@ -9,21 +9,6 @@ export interface IWTenantAttributes {
   display_properties: IWTenantDisplayProperties;
 }
 
-// export interface IWTenantProperties {
-//   timeZone: string;
-//   color: string;
-//   currency: any;
-//   style: string;
-//   accent: string;
-//   buttonColor: string;
-//   buttonTextColor: string;
-//   font: string;
-//   headerColor: string;
-//   logo: string;
-//   primary: string;
-//   logoType: boolean;
-// }
-
 export interface IWTenantDisplayProperties {
   'time_zone': string;
   'theme.color': string;
