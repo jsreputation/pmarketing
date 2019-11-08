@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable, of } from 'rxjs';
-import { GeneralStaticDataService } from '@perx/core';
-import { WSurveyQuestionType } from '@perx/whistler';
+import { GeneralStaticDataService, ICountryCode } from '@perx/core';
+import { IWSurveyEngagementAttributes, WSurveyQuestionType } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +13,14 @@ export class SurveyHttpService {
   constructor(
     private http: HttpClient,
     private generalStaticDataService: GeneralStaticDataService
-  ) { }
+  ) {
+  }
 
   public getQuestionType(): Observable<any> {
     return this.http.get('assets/actives/engagement-question/question-type.json');
   }
 
-  public getCountriesList(): Observable<any> {
+  public getCountriesList(): Observable<ICountryCode[]> {
     // return this.http.get('assets/actives/apac-phone-prefix-list/phone-list.json');
     return this.generalStaticDataService.getCountriesList();
   }
@@ -36,16 +37,16 @@ export class SurveyHttpService {
     return this.http.get<any>('assets/actives/survey/survey-data.json');
   }
 
-  public getSurvey(id: string): Observable<IResponseApi<IEngagementApi>> {
-    return this.http.get<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/survey/' + id);
+  public getSurvey(id: string): Observable<IJsonApiPayload<IWSurveyEngagementAttributes>> {
+    return this.http.get<IJsonApiPayload<IWSurveyEngagementAttributes>>(ApiConfig.engagementsPath + '/survey/' + id);
   }
 
-  public createSurvey(data: IJsonApiPayload<any>): Observable<IResponseApi<IEngagementApi>> {
-    return this.http.post<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/', data);
+  public createSurvey(data: IJsonApiPayload<IWSurveyEngagementAttributes>): Observable<IJsonApiPayload<IWSurveyEngagementAttributes>> {
+    return this.http.post<IJsonApiPayload<IWSurveyEngagementAttributes>>(ApiConfig.engagementsPath + '/', data);
   }
 
-  public updateSurvey(id: string, data: IJsonApiPayload<any>): Observable<IResponseApi<IEngagementApi>> {
-    return this.http.patch<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/survey/' + id, data);
+  public updateSurvey(id: string, data: IJsonApiPayload<IWSurveyEngagementAttributes>): Observable<IJsonApiPayload<IWSurveyEngagementAttributes>> {
+    return this.http.patch<IJsonApiPayload<IWSurveyEngagementAttributes>>(ApiConfig.engagementsPath + '/survey/' + id, data);
   }
 
   public getSurveyReport(id: string): Observable<IBaseQuestionReport> {
@@ -54,7 +55,7 @@ export class SurveyHttpService {
       summaryInfo: [
         {
           title: 'Responses',
-          value: id,
+          value: id
         },
         {
           title: 'Completion rate',
@@ -72,19 +73,19 @@ export class SurveyHttpService {
           right_label: 'Very much',
           payload: [
             {
-              amount: 350,
+              amount: 350
             },
             {
-              amount: 150,
+              amount: 150
             },
             {
-              amount: 50,
+              amount: 50
             },
             {
-              amount: 10,
+              amount: 10
             },
             {
-              amount: 0,
+              amount: 0
             }
           ]
         },
@@ -98,28 +99,28 @@ export class SurveyHttpService {
                 img_url: 'global/assets/stamps/pre-stamp-1.png',
                 text: 'A'
               },
-              amount: 350,
+              amount: 350
             },
             {
               choices: {
                 img_url: 'global/assets/stamps/pre-stamp-1.png',
-                text: 'B',
+                text: 'B'
               },
-              amount: 200,
+              amount: 200
             },
             {
               choices: {
                 img_url: 'global/assets/stamps/pre-stamp-1.png',
-                text: 'C',
+                text: 'C'
               },
-              amount: 150,
+              amount: 150
             },
             {
               choices: {
                 img_url: 'global/assets/stamps/pre-stamp-1.png',
-                text: 'D',
+                text: 'D'
               },
-              amount: 50,
+              amount: 50
             }
           ]
         },
@@ -132,25 +133,25 @@ export class SurveyHttpService {
               choices: {
                 text: 'Choice A'
               },
-              amount: 350,
+              amount: 350
             },
             {
               choices: {
-                text: 'Choice B',
+                text: 'Choice B'
               },
-              amount: 200,
+              amount: 200
             },
             {
               choices: {
-                text: 'Choice C',
+                text: 'Choice C'
               },
-              amount: 150,
+              amount: 150
             },
             {
               choices: {
-                text: 'Choice D',
+                text: 'Choice D'
               },
-              amount: 50,
+              amount: 50
             }
           ]
         },
@@ -163,43 +164,43 @@ export class SurveyHttpService {
               choices: {
                 text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!'
               },
-              amount: 350,
+              amount: 350
             },
             {
               choices: {
-                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!'
               },
-              amount: 200,
+              amount: 200
             },
             {
               choices: {
-                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!'
               },
-              amount: 150,
+              amount: 150
             },
             {
               choices: {
-                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!'
               },
-              amount: 150,
+              amount: 150
             },
             {
               choices: {
-                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!'
               },
-              amount: 150,
+              amount: 150
             },
             {
               choices: {
-                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!'
               },
-              amount: 150,
+              amount: 150
             },
             {
               choices: {
-                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!'
               },
-              amount: 50,
+              amount: 50
             }
           ]
         },
@@ -216,19 +217,19 @@ export class SurveyHttpService {
               right_label: 'Very much',
               payload: [
                 {
-                  amount: 350,
+                  amount: 350
                 },
                 {
-                  amount: 150,
+                  amount: 150
                 },
                 {
-                  amount: 50,
+                  amount: 50
                 },
                 {
-                  amount: 10,
+                  amount: 10
                 },
                 {
-                  amount: 0,
+                  amount: 0
                 }
               ]
             },
@@ -242,28 +243,28 @@ export class SurveyHttpService {
                     img_url: 'global/assets/stamps/pre-stamp-1.png',
                     text: 'A'
                   },
-                  amount: 350,
+                  amount: 350
                 },
                 {
                   choices: {
                     img_url: 'global/assets/stamps/pre-stamp-1.png',
-                    text: 'B',
+                    text: 'B'
                   },
-                  amount: 200,
+                  amount: 200
                 },
                 {
                   choices: {
                     img_url: 'global/assets/stamps/pre-stamp-1.png',
-                    text: 'C',
+                    text: 'C'
                   },
-                  amount: 150,
+                  amount: 150
                 },
                 {
                   choices: {
                     img_url: 'global/assets/stamps/pre-stamp-1.png',
-                    text: 'D',
+                    text: 'D'
                   },
-                  amount: 50,
+                  amount: 50
                 }
               ]
             },
@@ -276,25 +277,25 @@ export class SurveyHttpService {
                   choices: {
                     text: 'Choice A'
                   },
-                  amount: 350,
+                  amount: 350
                 },
                 {
                   choices: {
-                    text: 'Choice B',
+                    text: 'Choice B'
                   },
-                  amount: 200,
+                  amount: 200
                 },
                 {
                   choices: {
-                    text: 'Choice C',
+                    text: 'Choice C'
                   },
-                  amount: 150,
+                  amount: 150
                 },
                 {
                   choices: {
-                    text: 'Choice D',
+                    text: 'Choice D'
                   },
-                  amount: 50,
+                  amount: 50
                 }
               ]
             },
@@ -307,46 +308,46 @@ export class SurveyHttpService {
                   choices: {
                     text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!'
                   },
-                  amount: 350,
+                  amount: 350
                 },
                 {
                   choices: {
-                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!'
                   },
-                  amount: 200,
+                  amount: 200
                 },
                 {
                   choices: {
-                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!'
                   },
-                  amount: 150,
+                  amount: 150
                 },
                 {
                   choices: {
-                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!'
                   },
-                  amount: 150,
+                  amount: 150
                 },
                 {
                   choices: {
-                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!'
                   },
-                  amount: 150,
+                  amount: 150
                 },
                 {
                   choices: {
-                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!'
                   },
-                  amount: 150,
+                  amount: 150
                 },
                 {
                   choices: {
-                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!',
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda corporis deserunt incidunt laudantium magnam modi natus quos saepe ullam voluptatem! Consectetur esse explicabo illum incidunt minima, odit repellat similique sit!'
                   },
-                  amount: 50,
+                  amount: 50
                 }
               ]
-            },
+            }
           ]
         }
       ]

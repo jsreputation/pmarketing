@@ -4,6 +4,7 @@ declare interface IAMUser {
   type: string;
   links: string;
   urn: string;
+  name?: string;
   created_at: string;
   update_at: string;
   username: string;
@@ -19,5 +20,6 @@ declare interface IAMUser {
   };
   relationships_groups_id: number | null;
   role?: string;
+  roleId?: string;
   email?: string;
 }

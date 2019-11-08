@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
+import { IWIAMUserAttributes, IWTenantAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -31,20 +32,20 @@ export class SettingsHttpService {
     return this.http.get(ApiConfig.allCredentialPath, params);
   }
 
-  public getAllIMAUsers(params: HttpParams): Observable<any> {
-    return this.http.get(ApiConfig.IAMUsersPath, { params });
+  public getAllIMAUsers(params: HttpParams): Observable<IJsonApiListPayload<IWIAMUserAttributes>> {
+    return this.http.get<IJsonApiListPayload<IWIAMUserAttributes>>(ApiConfig.IAMUsersPath, { params });
   }
 
-  public inviteNewUser(body: IJsonApiPayload<any>): Observable<any> {
-    return this.http.post(ApiConfig.IAMUsersPath, { data: body });
+  public inviteNewUser(body: IJsonApiPayload<IWIAMUserAttributes>): Observable<IJsonApiPayload<IWIAMUserAttributes>> {
+    return this.http.post<IJsonApiPayload<IWIAMUserAttributes>>(ApiConfig.IAMUsersPath, { data: body });
   }
 
-  public patchUser(id: string, patchValue: IJsonApiPayload<any>): Observable<any> {
-    return this.http.patch(`${ApiConfig.IAMUsersPath}/${id}`, { data: patchValue });
+  public patchUser(id: string, patchValue: IJsonApiPayload<IWIAMUserAttributes>): Observable<IJsonApiPayload<IWIAMUserAttributes>> {
+    return this.http.patch<IJsonApiPayload<IWIAMUserAttributes>>(`${ApiConfig.IAMUsersPath}/${id}`, { data: patchValue });
   }
 
-  public deleteUser(id: string): Observable<any> {
-    return this.http.delete(`${ApiConfig.IAMUsersPath}/${id}`);
+  public deleteUser(id: string): Observable<IJsonApiPayload<IWIAMUserAttributes>> {
+    return this.http.delete<IJsonApiPayload<IWIAMUserAttributes>>(`${ApiConfig.IAMUsersPath}/${id}`);
   }
 
   public getAllGroups(): Observable<any> {
@@ -55,7 +56,7 @@ export class SettingsHttpService {
     return this.http.patch(`${ApiConfig.tenantsPath}`, { data });
   }
 
-  public getTenants(): Observable<any> {
-    return this.http.get(ApiConfig.tenantsPath);
+  public getTenants(): Observable<IJsonApiListPayload<IWTenantAttributes>> {
+    return this.http.get<IJsonApiListPayload<IWTenantAttributes>>(ApiConfig.tenantsPath);
   }
 }

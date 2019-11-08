@@ -13,7 +13,8 @@ export { IWRewardEntityAttributes } from './lib/reward/reward';
 export {
   IWInstantOutcomeLimitAttributes,
   IWSurveyLimitAttributes,
-  IWGameLimitAttributes
+  IWGameLimitAttributes,
+  IWLimitAttributes
 } from './lib/limit/limit';
 export { IWOutcomeAttributes } from './lib/outcome/outcome';
 export {
@@ -23,14 +24,24 @@ export {
 export { IWCampaignAttributes } from './lib/campaign/campaign';
 export { IWProfileAttributes, IWPoolsAttributes } from './lib/profile/profile';
 export {
-  IWMerchant,
-  IWMerchantBranchApi
+  IWMerchantAttributes,
+  IWMerchantBranchAttributes
 } from './lib/merchant/merchant';
-export { IWTenantProperties } from './lib/settings/tenant';
+export {
+  IWTenantAttributes,
+  IWTenantDisplayProperties,
+  IWAccountPageItem,
+  IWAccountPage
+} from './lib/settings/tenant';
+export { IWIAMUserAttributes } from './lib/settings/user';
 export { IWTimeZone } from './lib/settings/time-zone';
 export {
   IWLoyalty,
-  IWLoyaltyCard
+  IWLoyaltyCard,
+  IWLoyaltyAttributes,
+  IWBasicTierAttributes,
+  IWCustomTierAttributes,
+  IWJoinMethod
 } from './lib/loyalty/loyalty';
 
 export {

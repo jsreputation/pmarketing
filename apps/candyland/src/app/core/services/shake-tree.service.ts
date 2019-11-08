@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ShakeHttpService } from '@cl-core/http-services/shake-http.service';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
+import { IWTreeGameEngagementAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +23,12 @@ export class ShakeTreeService {
     );
   }
 
-  public createShakeTree(data: any): Observable<IResponseApi<IEngagementApi>> {
+  public createShakeTree(data: any): Observable<IJsonApiPayload<IWTreeGameEngagementAttributes>> {
     const sendData = EngagementHttpAdapter.transformFromShakeTheTreeForm(data);
     return this.shakeHttpService.createShakeTree({data: sendData});
   }
 
-  public updateShakeTree(id: string, data: any): Observable<IResponseApi<IEngagementApi>> {
+  public updateShakeTree(id: string, data: any): Observable<IJsonApiPayload<IWTreeGameEngagementAttributes>> {
     const sendData = EngagementHttpAdapter.transformFromShakeTheTreeForm(data);
     sendData.id = id;
     return this.shakeHttpService.updateShakeTree(id, {data: sendData});

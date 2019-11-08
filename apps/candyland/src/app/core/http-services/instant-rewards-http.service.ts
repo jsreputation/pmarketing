@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IWInstantOutcomeEngagementAttributes } from '../../../../../../libs/perx-whistler/dist/whistler';
+import { IWInstantOutcomeEngagementAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class InstantRewardsHttpService {
     return this.http.post<IJsonApiPayload<IWInstantOutcomeEngagementAttributes>>(ApiConfig.engagementsPath + '/', data);
   }
 
-  public updateInstantReward(id: string, data: IResponseApi<any>):
+  public updateInstantReward(id: string, data: IJsonApiPayload<IWInstantOutcomeEngagementAttributes>):
     Observable<IJsonApiPayload<IWInstantOutcomeEngagementAttributes>> {
     return this.http.patch<IJsonApiPayload<IWInstantOutcomeEngagementAttributes>>
     (ApiConfig.engagementsPath + '/instant_reward/' + id, data);

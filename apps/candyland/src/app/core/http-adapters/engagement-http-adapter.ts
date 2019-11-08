@@ -13,11 +13,10 @@ import {
 import {
   IEngagementInstantReward,
   IEngagementSurvey,
-  IEngagement,
   IEngagementStamps,
   IEngagementTapType,
   IEngagementShakeType,
-  IEngagementForm
+  IEngagementType
 } from '@cl-core/models/engagement/engagement.interface';
 export class EngagementHttpAdapter {
 
@@ -54,7 +53,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformEngagementHandler(data: IJsonApiItem<IWEngagementAttributes>, type?: string): IEngagement | undefined {
+  public static transformEngagementHandler(data: IJsonApiItem<IWEngagementAttributes>, type?: string): IEngagementType | undefined {
     const engagementType = type ? type : data.attributes.type;
 
     switch (engagementType) {
@@ -186,7 +185,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformFromInstantRewardForm(data: IRewardForm): IJsonApiSendData<IWInstantOutcomeEngagementAttributes> {
+  public static transformFromInstantRewardForm(data: IRewardForm): IJsonApiItem<IWInstantOutcomeEngagementAttributes> {
     return {
       type: 'engagements',
       attributes: {
@@ -206,7 +205,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformFromShakeTheTreeForm(data: IShakeTreeForm): IJsonApiSendData<IWTreeGameEngagementAttributes> {
+  public static transformFromShakeTheTreeForm(data: IShakeTreeForm): IJsonApiItem<IWTreeGameEngagementAttributes> {
     return {
       type: 'engagements',
       attributes: {
@@ -228,7 +227,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformFromPinataForm(data: IPinataForm): IJsonApiSendData<IWPinataGameEngagementAttributes> {
+  public static transformFromPinataForm(data: IPinataForm): IJsonApiItem<IWPinataGameEngagementAttributes> {
     return {
       type: 'engagements',
       attributes: {
@@ -249,7 +248,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformFromScratchForm(data: IScratchForm): IJsonApiSendData<IWScratchGameEngagementAttributes> {
+  public static transformFromScratchForm(data: IScratchForm): IJsonApiItem<IWScratchGameEngagementAttributes> {
     return {
       type: 'engagements',
       attributes: {
@@ -270,9 +269,10 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformStamp(data: any): IJsonApiSendData<IWStampEngagementAttributes> {
+  public static transformStamp(data: IStampsEntityForm): IJsonApiItem<IWStampEngagementAttributes> {
     return {
-      type: 'engagements', attributes: {
+      type: 'engagements',
+      attributes: {
         type: 'stamps',
         title: data.name,
         image_url: data.image_url,

@@ -31,9 +31,9 @@ export interface IWEngagementAttributes<T = any> {
   game_type?: WGameType;
   type?: string;
   title: string;
-  description: string;
-  image_url: string;
-  properties: IWEngagementProperties;
+  description?: string;
+  image_url?: string;
+  properties?: IWEngagementProperties;
   display_properties: T;
   // IWSurveyDisplayProperties |
   // IWInstantOutcomeDisplayProperties |

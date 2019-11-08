@@ -4,10 +4,11 @@ import { EngagementsGridComponent } from './engagements-grid.component';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
+import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 
 describe('EngagementsGridComponent', () => {
   let component: EngagementsGridComponent;
-  let dataSource: MatTableDataSource<IEngagement>;
+  let dataSource: MatTableDataSource<IEngagementType>;
   let fixture: ComponentFixture<EngagementsGridComponent>;
 
   beforeEach(async(() => {
@@ -22,7 +23,7 @@ describe('EngagementsGridComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EngagementsGridComponent);
-    dataSource = new MatTableDataSource<IEngagement>();
+    dataSource = new MatTableDataSource<IEngagementType>();
     component = fixture.componentInstance;
     component.dataSource = dataSource;
     fixture.detectChanges();

@@ -1,4 +1,4 @@
-import { IWAssignedAttributes, IWAssignRequestAttributes, IWProfileAttributes, IPoolsAttributes} from '@perx/whistler';
+import { IWAssignedAttributes, IWAssignRequestAttributes, IWProfileAttributes, IWPoolsAttributes} from '@perx/whistler';
 
 export class AudiencesHttpAdapter {
 
@@ -35,7 +35,7 @@ export class AudiencesHttpAdapter {
   public static transformUserWithPools(data: IJsonApiPayload<IWProfileAttributes>): IUser {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const userData = AudiencesHttpAdapter.transformUser(data.data);
-    userData.pools = data.data.relationships.pools.data.map((item: IJsonApiItem<IPoolsAttributes>) => poolMap[item.id]).sort().join(', ');
+    userData.pools = data.data.relationships.pools.data.map((item: IJsonApiItem<IWPoolsAttributes>) => poolMap[item.id]).sort().join(', ');
     return userData;
   }
 
@@ -43,7 +43,7 @@ export class AudiencesHttpAdapter {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const usersData = data.data.map((item: IJsonApiItem<IWProfileAttributes>) => {
       const formattedUser = AudiencesHttpAdapter.transformUser(item);
-      formattedUser.pools = item.relationships.pools.data.map((pool: IJsonApiItem<IPoolsAttributes>) => poolMap[pool.id]).sort().join(', ');
+      formattedUser.pools = item.relationships.pools.data.map((pool: IJsonApiItem<IWPoolsAttributes>) => poolMap[pool.id]).sort().join(', ');
       return formattedUser;
     });
     return {
@@ -105,10 +105,10 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  private static createPoolMap(data?: IJsonApiItem<IPoolsAttributes>[]): IPools {
+  private static createPoolMap(data?: IJsonApiItem<IWPoolsAttributes>[]): IPools {
     const mapPool = {};
     if (data) {
-      data.forEach((element: IJsonApiItem<IPoolsAttributes>) => {
+      data.forEach((element: IJsonApiItem<IWPoolsAttributes>) => {
         mapPool[element.id] = element.attributes.name;
       });
     }

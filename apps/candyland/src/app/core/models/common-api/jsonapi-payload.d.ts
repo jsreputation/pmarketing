@@ -38,6 +38,7 @@ declare interface IJsonApiPostItem<T> {
 }
 
 declare interface IJsonApiPostData<T> {
+  id?: string;
   type?: string;
   attributes: T;
   relationships?: IJsonApiRelationships;

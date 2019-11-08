@@ -64,7 +64,7 @@ export class CampaignsService implements ITableService {
       );
   }
 
-  public deleteCampaign(id: string): Observable<any> {
+  public deleteCampaign(id: string): Observable<IJsonApiPayload<IWCampaignAttributes>> {
     return this.campaignsHttpsService.deleteCampaign(id);
   }
 

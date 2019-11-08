@@ -1,6 +1,6 @@
 import { IWQuestion } from '@perx/whistler';
 
-declare type  IEngagement = IEngagementShakeType |
+declare type  IEngagementType = IEngagementShakeType |
   IEngagementTapType |
   IEngagementStamps |
   IEngagementSurvey |
@@ -92,35 +92,3 @@ declare interface IEngagementInstantReward extends IEngagementCommon {
   card_background_img_url: string;
   attributes_type: string;
 }
-
-// tslint:disable
-declare interface IEngagementForm {
-  id: string;
-  current_type: string;
-  urn: string;
-  created_at: string;
-  updated_at: string;
-  game_type: string;
-  title: string;
-  description: string;
-  image_url: string;
-  attributes_type: string;
-  fontName: string;
-  fontColor: string;
-  headerColor: string;
-  headerTitle: string;
-  headlineText: string;
-  mainShapeType: string;
-  backgroundColor: string;
-  headerLogoImage: string;
-  subHeadlineText: string;
-  callToActionText: string;
-  loadingHeadlineText: string;
-  loadingSubHeadlineText: string;
-  background: string;
-  cardBackground: string;
-  buttonText?: string;
-  nb_of_slots?: number;
-  slots?: number[];
-}
-

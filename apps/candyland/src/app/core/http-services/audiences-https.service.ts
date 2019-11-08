@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IWAssignedAttributes, IWAssignRequestAttributes, IWProfileAttributes, IPoolsAttributes} from '@perx/whistler';
+import { IWAssignedAttributes, IWAssignRequestAttributes, IWProfileAttributes, IWPoolsAttributes} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -39,8 +39,8 @@ export class AudiencesHttpsService {
     return this.http.post<IJsonApiPayload<IWProfileAttributes>>(ApiConfig.getAllUsers + '/' + id, { data });
   }
 
-  public updateUserPools(data: IJsonApiItem<any>): Observable<IJsonApiListPayload<IPoolsAttributes>> {
-    return this.http.patch<IJsonApiListPayload<IPoolsAttributes>>(`${ApiConfig.getAllUsers}/${data.id}`, { data });
+  public updateUserPools(data: IJsonApiItem<any>): Observable<IJsonApiListPayload<IWPoolsAttributes>> {
+    return this.http.patch<IJsonApiListPayload<IWPoolsAttributes>>(`${ApiConfig.getAllUsers}/${data.id}`, { data });
   }
 
   public getAssignedVouchers(params: HttpParams): Observable<IJsonApiListPayload<IWAssignedAttributes>> {

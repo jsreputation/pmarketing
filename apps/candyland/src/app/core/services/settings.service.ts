@@ -14,7 +14,7 @@ import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { Role } from '@cl-helpers/role.enum';
 import { IamUser } from '@cl-core/http-adapters/iam-user';
-import { IWTenantProperties } from '@perx/whistler';
+import { IWIAMUserAttributes } from '@perx/whistler';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { IReward } from '@perx/core';
 
@@ -135,19 +135,19 @@ export class SettingsService implements ITableService {
       );
   }
 
-  public inviteNewUser(newUser: FormGroup): Observable<IAMUser> {
+  public inviteNewUser(newUser: IAMUser): Observable<IJsonApiPayload<IWIAMUserAttributes>> {
     const formattedNewUser = SettingsHttpAdapter.transformInviteUser(newUser);
     return this.settingsHttpService.inviteNewUser(formattedNewUser);
   }
 
-  public patchUser(currentUser: IAMUser, updatedUser: FormGroup): Observable<IAMUser> {
+  public patchUser(currentUser: IAMUser, updatedUser: IAMUser): Observable<IJsonApiPayload<IWIAMUserAttributes>> {
     const id = currentUser.id;
     const userChanges = Utils.nestedObjectAssign(currentUser, updatedUser);
     const formattedUserChanges = SettingsHttpAdapter.transformInviteUser(userChanges);
     return this.settingsHttpService.patchUser(id, formattedUserChanges);
   }
 
-  public deleteUser(id: string): Observable<IAMUser> {
+  public deleteUser(id: string): Observable<IJsonApiPayload<IWIAMUserAttributes>> {
     return this.settingsHttpService.deleteUser(id);
   }
 
@@ -163,14 +163,14 @@ export class SettingsService implements ITableService {
       );
   }
 
-  public getTenantsSettings(): Observable<IWTenantProperties> {
+  public getTenantsSettings(): Observable<ITenantsProperties> {
     return this.dataStore.findAll(Tenants, { page: { size: 10, number: 1 } })
       .pipe(
         map(response => SettingsHttpAdapter.getTenantsSettings(response))
       );
   }
 
-  public updateTenants(value: IWTenantProperties): Observable<IamUser> {
+  public updateTenants(value: ITenantsProperties): Observable<IamUser> {
     const newProperties = {...this.tenants.display_properties, ...value};
     this.tenants.display_properties = {...newProperties};
     return this.tenants.save().pipe(
