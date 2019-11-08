@@ -44,5 +44,16 @@
     "VOUCHER_EXPIRY": "",
     "DESCRIPTION": "",
     "STAMP_SUCCESS": "",
-    "STAMP_ERROR": ""
+    "STAMP_ERROR": "",
+    "NO_REWARDS_TITLE_GAME": "",
+    "NO_REWARDS_TEXT_GAME": "",
+    "SUCCESS_TITLE_GAME": "",
+    "SUCCESS_TEXT_GAME": "",
+    "REDEEM_SUCCESS_TEXT": "",
+    "NO_REWARDS_TITLE": "",
+    "NO_REWARDS_TEXT": "",
+    "SURVEY_SUCCESS_TITLE": "",
+    "SURVEY_SUCCESS_TEXT": "",
+    "NO_REWARDS_TITLE_SURVEY": "",
+    "NO_REWARDS_TEXT_SURVEY": ""
 }

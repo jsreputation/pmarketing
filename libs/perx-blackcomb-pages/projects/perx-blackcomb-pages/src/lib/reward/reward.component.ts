@@ -20,15 +20,15 @@ export class RewardComponent implements OnInit, OnDestroy {
   public cardBackground: string;
   public rewards$: Observable<IReward[]>;
   public noRewardsPopUp: IPopupConfig = {
-    title: 'We’re sorry, all rewards have been claimed',
-    text: 'Look out for more rewards coming your way, soon!',
-    buttonTxt: 'Back to Wallet',
+    title: 'NO_REWARDS_TITLE',
+    text: 'NO_REWARDS_TEXT',
+    buttonTxt: 'BACK_TO_WALLET',
     imageUrl: '',
   };
   public successPopUp: IPopupConfig = {
-    title: 'Successfully !',
+    title: 'REDEEM_SUCCESSFULLY',
     text: '',
-    buttonTxt: 'View Reward',
+    buttonTxt: 'VIEW_REWARD',
     imageUrl: '',
   };
 
@@ -43,8 +43,11 @@ export class RewardComponent implements OnInit, OnDestroy {
   ) { }
 
   private initTranslate(): void {
-    this.translate.get('VIEW_REWARD').subscribe((text) => this.successPopUp.buttonTxt = text);
-    this.translate.get('BACK_TO_WALLET').subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
+    this.translate.get(this.successPopUp.title).subscribe((text) => this.successPopUp.title = text);
+    this.translate.get(this.successPopUp.buttonTxt).subscribe((text) => this.successPopUp.buttonTxt = text);
+    this.translate.get(this.noRewardsPopUp.title).subscribe((text) => this.noRewardsPopUp.title = text);
+    this.translate.get(this.noRewardsPopUp.text).subscribe((text) => this.noRewardsPopUp.text = text);
+    this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
   }
 
   public ngOnInit(): void {

@@ -19,22 +19,26 @@ export class GameComponent implements OnInit, OnDestroy {
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
   public successPopUp: IPopupConfig = {
-    title: 'Congratulations!',
-    text: '',
-    buttonTxt: 'View Reward',
+    title: 'SUCCESS_TITLE_GAME',
+    text: 'SUCCESS_TEXT_GAME',
+    buttonTxt: 'VIEW_REWARD',
     imageUrl: 'assets/congrats_image.png',
   };
 
   public noRewardsPopUp: IPopupConfig = {
-    title: 'Thanks for playing',
-    text: 'Unfortunately, you did not win anything this time',
-    buttonTxt: 'Back to Wallet',
+    title: 'NO_REWARDS_TITLE_GAME',
+    text: 'NO_REWARDS_TEXT_GAME',
+    buttonTxt: 'BACK_TO_WALLET',
     imageUrl: '',
   };
 
   private initTranslate(): void {
-    this.translate.get('VIEW_REWARD').subscribe((text) => this.successPopUp.buttonTxt = text);
-    this.translate.get('BACK_TO_WALLET').subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
+    this.translate.get(this.successPopUp.title).subscribe((text) => this.successPopUp.title = text);
+    this.translate.get(this.successPopUp.text).subscribe((text) => this.successPopUp.text = text);
+    this.translate.get(this.successPopUp.buttonTxt).subscribe((text) => this.successPopUp.buttonTxt = text);
+    this.translate.get(this.noRewardsPopUp.title).subscribe((text) => this.noRewardsPopUp.title = text);
+    this.translate.get(this.noRewardsPopUp.text).subscribe((text) => this.noRewardsPopUp.text = text);
+    this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
   }
 
   constructor(
@@ -105,7 +109,7 @@ export class GameComponent implements OnInit, OnDestroy {
         ([outcome, _]: [IPlayOutcome, any]) => {
           this.router.navigate(['/wallet']);
           if (outcome.vouchers.length > 0) {
-            this.successPopUp.text = this.successPopUp.text ? this.successPopUp.text : `You earned ${outcome.vouchers.length} rewards`;
+            this.successPopUp.text = this.successPopUp.text.replace('{{rewards}}', `${outcome.vouchers.length}`);
             this.dialog.open(PopupComponent, { data: this.successPopUp });
           } else {
             this.dialog.open(PopupComponent, { data: this.noRewardsPopUp });

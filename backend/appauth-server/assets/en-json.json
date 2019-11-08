@@ -34,7 +34,7 @@
     "ENTER_CODE": "Merchant to enter the code",
     "REEDEM_QUEST": "You need to login to redeem the voucher",
     "GO_TO_LOGIN": "Go to login",
-    "REDEEM_SUCCESSFULLY": "Redeem Successfully",
+    "REDEEM_SUCCESSFULLY": "Successfully Redeemed!",
     "TRY_AGAIN": "Try again",
     "TRY_AGAIN_LATER": "Error occur, please try again later",
     "LOGIN": "Login",
@@ -44,5 +44,16 @@
     "VOUCHER_EXPIRY": "Expires on: {{date}}",
     "DESCRIPTION": "Description",
     "STAMP_SUCCESS": "",
-    "STAMP_ERROR": ""
+    "STAMP_ERROR": "",
+    "NO_REWARDS_TITLE_GAME": "Thanks for playing",
+    "NO_REWARDS_TEXT_GAME": "Unfortunately, you did not win anything this time",
+    "SUCCESS_TITLE_GAME": "Congratulations!",
+    "SUCCESS_TEXT_GAME": "You earned {{rewards}} rewards",
+    "REDEEM_SUCCESS_TEXT": "You have redeemed {{reward}}",
+    "NO_REWARDS_TITLE": "We’re sorry, all rewards have been claimed",
+    "NO_REWARDS_TEXT": "Look out for more rewards coming your way, soon!",
+    "SURVEY_SUCCESS_TITLE": "Your RSVP is successful!",
+    "SURVEY_SUCCESS_TEXT": "See you at our event!",
+    "NO_REWARDS_TITLE_SURVEY": "Thank you for your interest. We’re sorry, all places have been taken.",
+    "NO_REWARDS_TEXT_SURVEY": "Nonetheless, we’ve added you to our waiting list for the event and will call you when places are available by 07 October 2019"
 }
