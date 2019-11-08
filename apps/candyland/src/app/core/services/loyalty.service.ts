@@ -45,7 +45,7 @@ export class LoyaltyService implements ITableService {
   }
 
   public createLoyalty(data: ILoyaltyForm): Observable<ILoyaltyForm> {
-    const sendData: any = LoyaltyHttpAdapter.transformFromLoyaltyForm(data);
+    const sendData = LoyaltyHttpAdapter.transformFromLoyaltyForm(data);
     return this.loyaltyHttpService.createLoyalty({data: sendData}).pipe(
       map(response => LoyaltyHttpAdapter.transformToLoyaltyForm(response.data))
     );
