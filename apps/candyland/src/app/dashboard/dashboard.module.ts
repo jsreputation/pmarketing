@@ -62,7 +62,7 @@ import { translateLoader } from '@cl-core/translate-services/multiple-translate-
       loader: {
         provide: TranslateLoader,
         useFactory: (httpClient) => translateLoader(httpClient, [
-          { prefix: './assets/i18n/dashboard/', suffix: '.json' },
+          { prefix: '/assets/i18n/dashboard/', suffix: '.json' },
           { prefix: '/assets/i18n/common/', suffix: '.json'}
         ]),
         deps: [HttpClient]

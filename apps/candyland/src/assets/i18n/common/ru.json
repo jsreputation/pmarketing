@@ -19,6 +19,8 @@
   "ADD_NEW_BRANCH": "+ Add new branch",
   "BTN_DOWNLOAD_A_SAMPLE_FILE": "Download a sample file",
   "BTN_UPLOAD-FILE_A_LIST": "+ upload-file a list",
+  "BTN_NEXT": "Next",
+  "ADD_QUESTION": "+ Add Question",
 
   "DESCRIPTION": "Description",
   "POINTS": "points",
@@ -38,5 +40,15 @@
   "MONTH": "Month",
   "YEAR": "Year",
   "CHOOSE_DATE": "Choose date",
-  "TIME": "Time"
+  "TIME": "Time",
+  "ENTER_TITLE_HERE": "Enter title here",
+  "QUESTIONS": "Questions",
+  "QUESTION": "Question",
+  "REQUIRED_FIELD": "Required field",
+  "PRIMARY": "Primary",
+  "ACCENT": "Accent",
+  "WARN": "Warn",
+  "primary": "Primary",
+  "accent": "Accent",
+  "warn": "Warn"
 }

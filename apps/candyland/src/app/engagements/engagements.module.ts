@@ -25,6 +25,9 @@ import { EngagementItemModule } from '@cl-shared/components/engagement-item/enga
 import { EngagementsListComponent } from './components/engagements-list/engagements-list.component';
 import { EngagementsGridComponent } from './components/engagements-grid/engagements-grid.component';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { translateLoader } from '@cl-core/translate-services/multiple-translate-loader-service';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -57,6 +60,17 @@ import { DirectivesModule } from '@cl-shared/directives/directives.module';
     EngagementItemModule,
     ConfirmModalModule,
     DirectivesModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (httpClient) => translateLoader(httpClient, [
+          { prefix: '/assets/i18n/engagements/', suffix: '.json' },
+          { prefix: '/assets/i18n/common/', suffix: '.json'}
+        ]),
+        deps: [HttpClient]
+      },
+      isolate: true
+    })
   ],
   entryComponents: [
     EngagementsListPageComponent,
