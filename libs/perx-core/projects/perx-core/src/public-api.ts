@@ -34,8 +34,9 @@ export { QrcodeRedemptionComponent } from './lib/vouchers/qrcode-redemption/qrco
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
 export { AuthenticationService } from './lib/auth/authentication/authentication.service';
 export { TokenStorage } from './lib/auth/authentication/token-storage.service';
-export { IChangePasswordData } from './lib/auth/authentication/models/authentication.model';
+export { IChangePasswordData, ISignUpData } from './lib/auth/authentication/models/authentication.model';
 export { IFormsService } from './lib/auth/authentication/iforms.service';
+
 /**
  * Campaigns
  */
@@ -147,6 +148,7 @@ export { FeedReaderService, FeedItem } from './lib/utils/feed-reader.service';
 export { GeneralStaticDataService } from './lib/utils/general-static-data/general-static-data.service';
 export { ICountryCode } from './lib/utils/general-static-data/country-code';
 export { RepeatTimesDirective } from './lib/utils/directives/repeat-times.directive';
+export { NewsfeedComponent } from './lib/utils/newsfeed/newsfeed.component';
 /**
  * Puzzles
  */

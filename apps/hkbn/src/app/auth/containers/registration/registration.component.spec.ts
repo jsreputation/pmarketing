@@ -28,7 +28,7 @@ const mockUser: ISignUpData = {
   firstName: 'den',
   lastName: 'gen',
   password: '666',
-  password_confirmation: '666'
+  passwordConfirmation: '666'
 };
 describe('RegistrationComponent', () => {
   let component: RegistrationComponent;

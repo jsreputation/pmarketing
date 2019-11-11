@@ -1,19 +1,17 @@
-import { HttpClient } from '@angular/common/http';
-import { map, switchMap, mergeMap, tap } from 'rxjs/operators';
-import {
-  IGame,
-  GameType as TYPE,
-  defaultTree,
-  ITree,
-  IPinata,
-  defaultPinata,
-  IPlayOutcome,
-} from './game.model';
-import { Observable, combineLatest, of } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { IGameService } from './igame.service';
-import { Config } from '../config/config';
-import { IVoucherService } from '../vouchers/ivoucher.service';
+import { HttpClient } from '@angular/common/http';
+
+import {
+  map,
+  switchMap,
+  mergeMap,
+  tap,
+} from 'rxjs/operators';
+import {
+  Observable,
+  combineLatest,
+  of,
+} from 'rxjs';
 
 import {
   IWAssignedAttributes,
@@ -25,9 +23,25 @@ import {
   IJsonApiItemPayload,
   IJsonApiItem,
   IWAttbsObjTrans,
+  IWScratchDisplayProperties,
+  IWCampaignDisplayProperties,
 } from '@perx/whistler';
 
-import { IWCampaignDisplayProperties } from '@perx/whistler';
+import {
+  IGame,
+  GameType as TYPE,
+  defaultTree,
+  ITree,
+  IPinata,
+  IScratch,
+  defaultScratch,
+  defaultPinata,
+  IPlayOutcome,
+} from './game.model';
+import { IGameService } from './igame.service';
+
+import { Config } from '../config/config';
+import { IVoucherService } from '../vouchers/ivoucher.service';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +61,7 @@ export class WhistlerGameService implements IGameService {
 
   private static WGameToGame(game: IJsonApiItem<IWAttbsObjGame>): IGame {
     let type = TYPE.unknown;
-    let config: ITree | IPinata;
+    let config: ITree | IPinata | IScratch;
     const { attributes } = game;
     if (attributes.game_type === WGameType.shakeTheTree) {
       type = TYPE.shakeTheTree;
@@ -70,7 +84,13 @@ export class WhistlerGameService implements IGameService {
       };
     } else if (attributes.game_type === WGameType.scratch) {
       type = TYPE.scratch;
-      // todo
+      const scratchdp: IWScratchDisplayProperties = attributes.display_properties as IWScratchDisplayProperties;
+      config = {
+        ...defaultScratch(),
+        // underlyingImg: scratchdp.post_scratch_fail_img_url,
+        underlyingImg: scratchdp.post_scratch_success_img_url,
+        coverImg: scratchdp.pre_scratch_img_url
+      };
     }
 
     const texts: { [key: string]: string } = {};

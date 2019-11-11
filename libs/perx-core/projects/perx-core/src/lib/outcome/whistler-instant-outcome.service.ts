@@ -55,8 +55,13 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
         }),
         map(res => res.data.attributes.display_properties),
         map((outcomeData: IWOutcomeDisplayProperties) =>
-          ({ ...outcomeData, displayProperties: { ...outcomeData.displayProperties, ...displayProps } }))
-      );
+          ({
+            title: outcomeData.title, subTitle: outcomeData.sub_title, button: outcomeData.button,
+            banner: outcomeData.banner, backgroundImgUrl: outcomeData.background_img_url,
+            cardBackgroundImgUrl: outcomeData.card_background_img_url,
+            displayProperties: { ...outcomeData.displayProperties, ...displayProps }
+          })
+        ));
   }
 
   // @ts-ignore

@@ -30,7 +30,10 @@ import {
 import { AuthenticationService } from './authentication.service';
 import { TokenStorage } from './token-storage.service';
 
-import { IProfile } from '../../profile/profile.model';
+import {
+  IProfile,
+  IProfileAttributes,
+} from '../../profile/profile.model';
 import { IProfileAttributes } from '../../profile/profile.model';
 import { Config } from '../../config/config';
 

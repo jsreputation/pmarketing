@@ -28,7 +28,7 @@ interface IV4SignUpData {
   birthday?: string;
   gender?: string;
   password: string;
-  password_confirmation: string;
+  password_confirmation?: string;
 }
 
 interface IV4AuthenticateUserRequest {

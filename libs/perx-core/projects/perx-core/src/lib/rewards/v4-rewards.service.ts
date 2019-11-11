@@ -148,24 +148,24 @@ export class V4RewardsService extends RewardsService {
     const sellingFrom = reward.selling_from ? new Date(reward.selling_from) : undefined;
 
     const v4Invent = reward.inventory;
-    const inventory = {
+    const inventory = v4Invent ? {
       rewardTotalBalance: v4Invent.reward_total_balance !== undefined ? v4Invent.reward_total_balance : null,
       rewardTotalLimit: v4Invent.reward_total_limit !== undefined ? v4Invent.reward_total_limit : null,
       rewardLimitPerUserBalance: v4Invent.reward_limit_per_user_balance !== undefined && v4Invent.reward_limit_per_user_balance !== null ?
         v4Invent.reward_limit_per_user_balance.available_amount : null
-    };
+    } : null;
     return {
       id: reward.id,
       name: reward.name,
       subtitle: reward.subtitle,
       description: reward.description,
-      rewardPrice: reward.reward_price.map(price => ({
+      rewardPrice: reward.reward_price ? reward.reward_price.map(price => ({
         id: price.id,
         currencyCode: price.currency_code,
         price: price.price,
         points: price.points,
         identifier: price.identifier
-      })),
+      })) : null,
       rewardThumbnail: thumbnailImg,
       rewardBanner,
       validFrom: new Date(reward.valid_from),

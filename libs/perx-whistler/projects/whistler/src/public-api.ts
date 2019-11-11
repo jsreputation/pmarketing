@@ -1,7 +1,6 @@
 /*
 * Public API Surface of whistler
 */
-
 export * from './lib/whistler.module';
 export * from './lib/jsonapi.payload';
 export * from './lib/whistler.models';
@@ -36,6 +35,12 @@ export {
   WEngagementType,
 } from './lib/campaign/campaign';
 export {
+  IWAudiences,
+  IWPoolsApi,
+  IWPools,
+  IWUser,
+} from './lib/audiences/audiences.model';
+export {
   IWInstantOutcomeTransactionAttributes,
   IWInstantOutcomeTxnReq,
 } from './lib/instant-outcome/transaction';
@@ -66,6 +71,7 @@ export {
   IWTreeDisplayProperties,
   IWPinataDisplayProperties,
   IWAttbsObjTrans,
+  IWScratchDisplayProperties,
 } from './lib/game/game';
 
 /** Survey */

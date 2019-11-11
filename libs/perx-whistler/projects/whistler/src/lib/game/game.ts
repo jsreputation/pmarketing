@@ -42,6 +42,12 @@ export interface IWPinataDisplayProperties extends IWGameDisplayProperties {
   opened_pinata_img_url: string;
 }
 
+export interface IWScratchDisplayProperties extends IWGameDisplayProperties {
+  post_scratch_fail_img_url: string;
+  post_scratch_success_img_url: string;
+  pre_scratch_img_url: string;
+}
+
 export interface IWAttbsObjTrans {
   urn: string;
   created_at: string;
