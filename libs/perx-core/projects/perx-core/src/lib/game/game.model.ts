@@ -51,6 +51,16 @@ export function defaultPinata(): IPinata {
     nbTaps: 5
   };
 }
+
+export function defaultScratch(): IScratch {
+  return {
+    coverImg: '',
+    underlyingImg: '',
+    uncoverPortionToTrigger: 90,
+    nbTaps: 5
+  };
+}
+
 export interface ITree {
   stillImg?: string;
   openedImg?: string;
