@@ -69,5 +69,22 @@
   "fesm5": "./dist/perx-core/fesm5/perx-core.js",
   "fesm2015": "./dist/perx-core/fesm2015/perx-core.js",
   "typings": "./dist/perx-core/perx-core.d.ts",
-  "metadata": "./dist/perx-core/perx-core.metadata.json"
+  "metadata": "./dist/perx-core/perx-core.metadata.json",
+  "eslintConfig": {
+    "extends": [
+      "../../.eslintrc"
+    ],
+    "rules": {},
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts?(x)"
+        ],
+        "excludedFiles": ["**/*.service.spec.ts", "**/*.service.ts", "**/*.component.ts"],
+        "rules": {
+          "camelcase": ["error", {"ignoreDestructuring": true}]
+        }
+      }
+    ]
+  }
 }

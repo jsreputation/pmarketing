@@ -24,6 +24,7 @@ import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
+import { IWUser } from '@perx/whistler';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -147,14 +148,14 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private updateLimitFn(): (campaign: ICampaign) => Observable<
     IJsonApiPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes> | void
   > {
-    const updateLimit$ = (campaign: ICampaign) => this.limitsService.updateLimits(
+    const updateLimit$ = (campaign: ICampaign) => this.limitsService.updateLimit(
       this.store.currentCampaign.limits.id,
       this.store.currentCampaign.limits,
       this.store.currentCampaign.template.attributes_type,
       Number.parseInt(campaign.id, 10),
       this.store.currentCampaign.template.id
     );
-    const createLimit$ = (campaign: ICampaign) => this.limitsService.createLimits(
+    const createLimit$ = (campaign: ICampaign) => this.limitsService.createLimit(
       this.store.currentCampaign.limits,
       this.store.currentCampaign.template.attributes_type,
       Number.parseInt(campaign.id, 10),
@@ -310,7 +311,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const getUsersPis: Observable<string[]> = this.audienceService
       .getAllPoolUser(campaign.audience.select)
       .pipe(
-        map((users: IJsonApiItem<IUserApi>[]) => users.map(u => u.attributes.primary_identifier)),
+        map((users: IJsonApiItem<Partial<IWUser>>[]) => users.map(u => u.attributes.primary_identifier)),
         takeUntil(this.destroy$)
       );
     return combineLatest(getUsersPis, this.blackcombUrl)
