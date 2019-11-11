@@ -32,7 +32,7 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
     this.writeValue(setValue);
   }
   private data: string[] = [];
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   private onChange: any = noop;
   private changeSubscription: Subscription;
   // @ts-ignore

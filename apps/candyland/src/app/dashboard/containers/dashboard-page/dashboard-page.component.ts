@@ -16,7 +16,7 @@ import { UserService } from '@cl-core/services/user.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardPageComponent implements OnInit, OnDestroy {
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public dateRange: FormControl = new FormControl();
   public gameCard$: Observable<DashboardGameCard[]>;
