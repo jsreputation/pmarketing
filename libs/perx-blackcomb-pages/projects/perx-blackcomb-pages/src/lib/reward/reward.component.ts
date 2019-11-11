@@ -75,7 +75,7 @@ export class RewardComponent implements OnInit, OnDestroy {
           switchMap((campaignId: string) => this.outcomeService.prePlay(parseInt(campaignId, 10))),
           tap((outcomeTransaction: IEngagementTransaction) => {
             this.transactionId = outcomeTransaction.id;
-            if (outcomeTransaction.voucherIds.length === 0) {
+            if (outcomeTransaction.rewardIds.length === 0) {
               throw new Error('empty');
             }
           }),
@@ -84,7 +84,7 @@ export class RewardComponent implements OnInit, OnDestroy {
               {
                 queryParams:
                 {
-                  popupData: this.noRewardsPopUp,
+                  popupData: JSON.stringify(this.noRewardsPopUp),
                   engagementType: 'instant_outcome',
                   transactionId: this.transactionId
                 }
@@ -105,7 +105,7 @@ export class RewardComponent implements OnInit, OnDestroy {
               if (outcomeTransaction.rewardIds.length === 0) {
                 return of<IReward[]>([]);
               }
-              return combineLatest(...outcomeTransaction.voucherIds.map(
+              return combineLatest(...outcomeTransaction.rewardIds.map(
                 (id: number) => this.rewardService.getReward(id)
               ));
             }
