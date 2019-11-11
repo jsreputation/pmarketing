@@ -11,7 +11,7 @@ import { DashboardChartsParametersService } from '../../services/dashboard-chart
   styleUrls: ['./dashboard-rewards-page.component.scss']
 })
 export class DashboardRewardsPageComponent implements OnInit, OnDestroy {
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public params: { [key: string]: string };
 

@@ -18,7 +18,7 @@ import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.
 import Utils from '@cl-helpers/utils';
 import { StatusLabel } from '@cl-helpers/status-label.enum';
 import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { IBasicTierApi } from '@perx/core';
+import { IWBasicTierAttributes } from '@perx/whistler';
 import { IWPools } from '@perx/whistler';
 
 @Component({
@@ -249,7 +249,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
       });
   }
 
-  private getLoyaltyWithBasicTierRequest(): Observable<IJsonApiPayload<IBasicTierApi>> {
+  private getLoyaltyWithBasicTierRequest(): Observable<IJsonApiPayload<IWBasicTierAttributes>> {
     const newLoyalty = this.form.value;
     return this.loyaltyService.getLoyaltyRequest(newLoyalty, this.loyaltyId)
       .pipe(

@@ -58,6 +58,12 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   @Input()
   public subTitle: string | null = null;
 
+  @Input()
+  public availableStampImg: string | null = null;
+
+  @Input()
+  public availableRewardImg: string | null = null;
+
   @Output()
   private availableStampClicked: EventEmitter<IStamp> = new EventEmitter<IStamp>();
 
@@ -104,10 +110,13 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
     const stamped: boolean = (itemIndex < this.stamps.length && this.stamps[itemIndex].state === StampState.redeemed);
 
     if (this.isIndexPresentInRewards(itemIndex)) {
-      return stamped ? this.rewardPostStamp : this.rewardPreStamp;
+      const rewardPreStampImage = this.availableRewardImg && this.availableStampCount > 0 ? this.availableRewardImg : this.rewardPreStamp;
+      return stamped ? this.rewardPostStamp : rewardPreStampImage;
     }
 
-    return stamped ? this.postStampImg : this.preStampImg;
+    const preStampImage = this.isIssued(index, rowNum) ? this.availableStampImg : this.preStampImg;
+
+    return stamped ? this.postStampImg : preStampImage;
   }
 
   public isIssued(index: number, rowNum: number): boolean {
@@ -119,6 +128,9 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   }
 
   public onAvailableStampClicked(index: number, rowNum: number): void {
+    if (!this.isIssued(index, rowNum)) {
+      return;
+    }
     const itemIndex = this.getItemIndex(index, rowNum);
     if (itemIndex < this.stamps.length) {
       //   this.stamps[itemIndex].state = StampState.redeemed;

@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
+import { IWPinataGameEngagementAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PinataHttpService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   public getPinataData(): Observable<{
     pinata: IGraphic[],
@@ -20,15 +22,16 @@ export class PinataHttpService {
     }>('assets/actives/pinata/pinata-data.json');
   }
 
-  public createPinata(data: any): Observable<IResponseApi<IEngagementApi>> {
-    return this.http.post<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/', data);
+  public createPinata(data: any): Observable<IJsonApiPayload<IWPinataGameEngagementAttributes>> {
+    return this.http.post<IJsonApiPayload<IWPinataGameEngagementAttributes>>(ApiConfig.engagementsPath + '/', data);
   }
 
-  public updatePinata(id: string, data: IResponseApi<any>): Observable<IResponseApi<IEngagementApi>> {
-    return this.http.patch<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/game/' + id, data);
+  public updatePinata(id: string, data: IJsonApiPayload<IWPinataGameEngagementAttributes>):
+    Observable<IJsonApiPayload<IWPinataGameEngagementAttributes>> {
+    return this.http.patch<IJsonApiPayload<IWPinataGameEngagementAttributes>>(ApiConfig.engagementsPath + '/game/' + id, data);
   }
 
-  public getPinata(id: string): Observable<IResponseApi<IEngagementApi>> {
-    return this.http.get<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/game/' + id);
+  public getPinata(id: string): Observable<IJsonApiPayload<IWPinataGameEngagementAttributes>> {
+    return this.http.get<IJsonApiPayload<IWPinataGameEngagementAttributes>>(ApiConfig.engagementsPath + '/game/' + id);
   }
 }
