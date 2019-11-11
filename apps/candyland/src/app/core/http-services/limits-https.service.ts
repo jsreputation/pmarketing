@@ -43,6 +43,6 @@ export class LimitsHttpsService {
     const eType = EngagementTypeAPIMapping[engagementType];
     return this.http.delete(`${ApiConfig.basePath}/${eType}/limits/${limitId}`)
       // convert to a void observable in case of success
-      .pipe(map(() => { }));
+      .pipe(map(() => { return; }));
   }
 }
