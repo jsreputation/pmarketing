@@ -201,6 +201,10 @@ export class V4StampService implements StampService {
   }
 
   public getCards(campaignId: number): Observable<IStampCard[]> {
+    if (!campaignId) {
+      return;
+    }
+
     return this.http.get<IV4GetStampCardsResponse>(
       `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`, {
         params: {

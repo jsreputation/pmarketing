@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { LimitsHttpsService } from '@cl-core/http-services/limits-https.service';
 import { map } from 'rxjs/operators';
@@ -19,24 +19,46 @@ export class LimitsService {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.limitsHttpsService.getLimits(httpParams, engagementType).pipe(
       map((response: IJsonApiListPayload<IWInstantOutcomeLimitAttributes |
-                             IWSurveyLimitAttributes |
-                             IWGameLimitAttributes>) => response.data),
+        IWSurveyLimitAttributes |
+        IWGameLimitAttributes>) => response.data),
       map((response: IJsonApiItem<IWInstantOutcomeLimitAttributes |
-                             IWSurveyLimitAttributes |
-                             IWGameLimitAttributes>[]) => response.map(
-        (limit: IJsonApiItem<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>) =>
-          LimitsHttpAdapter.transformAPIResponseToLimit(limit, engagementType)))
+        IWSurveyLimitAttributes |
+        IWGameLimitAttributes>[]) => response.map(
+          (limit: IJsonApiItem<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>) =>
+            LimitsHttpAdapter.transformAPIResponseToLimit(limit, engagementType)))
     );
   }
 
-  public updateLimits(id: string, data: any, type: string, campaignId: number, engagementId: number): Observable<any> {
+  public updateLimits(
+    id: string,
+    data: { times?: number, duration: string },
+    type: string,
+    campaignId: number,
+    engagementId: number
+  ): Observable<IJsonApiPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes> | void> {
+    // if times is empty, limit should actually be deleted
+    if (!data.times || data.times === null) {
+      return this.limitsHttpsService.deleteLimit(type, id);
+    }
     const sendData = LimitsHttpAdapter.transformFromLimits(data, type, campaignId, engagementId);
     return this.limitsHttpsService.updateLimits(id, { data: { id, ...sendData } }, type);
   }
 
-  public createLimits(data: any, type: string, campaignId: number, engagementId: number): Observable<any> {
+  public createLimits(
+    data: { times?: number, duration: string },
+    type: string,
+    campaignId: number,
+    engagementId: number
+  ): Observable<IJsonApiPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes> | void> {
+    // if times is empty limit should actully not be created
+    if (!data.times || data.times === null) {
+      return of();
+    }
     const sendData = LimitsHttpAdapter.transformFromLimits(data, type, campaignId, engagementId);
     return this.limitsHttpsService.createLimits({ data: sendData }, type);
   }
 
+  public deleteLimit(type: string, limitId: number): Observable<void> {
+    return this.limitsHttpsService.deleteLimit(type, limitId);
+  }
 }
