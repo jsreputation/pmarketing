@@ -11,16 +11,16 @@ import { IWVoucherStatsApi, IWVouchersApi } from '@perx/whistler';
 export class VouchersHttpService {
   constructor(private http: HttpClient) { }
 
-  public getVouchers(params: HttpParams): Observable<any> {
-    return this.http.get(ApiConfig.vouchersEntitiesPath + '/', { params });
+  public getVouchers(params: HttpParams): Observable<IJsonApiListPayload<IWVouchersApi>> {
+    return this.http.get<IJsonApiListPayload<IWVouchersApi>>(ApiConfig.vouchersEntitiesPath + '/', { params });
   }
 
-  public getVoucher(id: string): Observable<any> {
-    return this.http.get<any>(ApiConfig.vouchersEntitiesPath + '/' + id);
+  public getVoucher(id: string): Observable<IJsonApiPayload<IWVouchersApi>> {
+    return this.http.get<IJsonApiPayload<IWVouchersApi>>(ApiConfig.vouchersEntitiesPath + '/' + id);
   }
 
-  public createVoucher(data: IJsonApiPayload<IWVouchersApi>): Observable<any> {
-    return this.http.post<any>(ApiConfig.voucherBatchPath, data);
+  public createVoucher(data: IJsonApiPayload<IWVouchersApi>): Observable<IJsonApiPayload<IWVouchersApi>> {
+    return this.http.post<IJsonApiPayload<IWVouchersApi>>(ApiConfig.voucherBatchPath, data);
   }
 
   public getStats(rewardId: string): Observable<IJsonApiPayload<IWVoucherStatsApi>> {
