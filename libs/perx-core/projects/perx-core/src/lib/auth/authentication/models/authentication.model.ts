@@ -7,7 +7,7 @@ export interface ISignUpData {
     birthDay?: string;
     gender?: string;
     password: string;
-    password_confirmation: string;
+    passwordConfirmation: string;
 }
 
 export interface IResetPasswordData {

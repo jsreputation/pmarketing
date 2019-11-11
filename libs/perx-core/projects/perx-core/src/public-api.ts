@@ -3,7 +3,6 @@
  */
 export { PerxCoreModule } from './lib/perx-core.module';
 export { IRewardDisplayProperties, ICampaignDisplayProperties } from './lib/perx-core.models';
-
 /**
  * Merchants
  */
@@ -35,8 +34,9 @@ export { QrcodeRedemptionComponent } from './lib/vouchers/qrcode-redemption/qrco
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
 export { AuthenticationService } from './lib/auth/authentication/authentication.service';
 export { TokenStorage } from './lib/auth/authentication/token-storage.service';
-export { IChangePasswordData } from './lib/auth/authentication/models/authentication.model';
+export { IChangePasswordData, ISignUpData } from './lib/auth/authentication/models/authentication.model';
 export { IFormsService } from './lib/auth/authentication/iforms.service';
+
 /**
  * Campaigns
  */

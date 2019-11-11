@@ -1,3 +1,4 @@
+import { IWAudiences, IWUser } from '@perx/whistler';
 import {
   Component,
   ChangeDetectionStrategy,
@@ -30,8 +31,8 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public tabs: FormControl;
   public search: FormControl;
   public searchKey: string = 'query';
-  public dataSource: CustomDataSource<IUser>;
-  public audiencesDataSource: CustomDataSource<IAudiences>;
+  public dataSource: CustomDataSource<IWUser>;
+  public audiencesDataSource: CustomDataSource<IWAudiences>;
   public dataSourceStates: typeof DataSourceStates = DataSourceStates;
 
   public tabsFilterConfig: OptionConfig[] = [
@@ -48,8 +49,8 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     public dialog: MatDialog,
     public snack: MatSnackBar
   ) {
-    this.dataSource = new CustomDataSource<IUser>(this.audiencesUserService);
-    this.audiencesDataSource = new CustomDataSource<IAudiences>(this.audiencesService);
+    this.dataSource = new CustomDataSource<IWUser>(this.audiencesUserService);
+    this.audiencesDataSource = new CustomDataSource<IWAudiences>(this.audiencesService);
     this.tabs = new FormControl('users');
     this.search = new FormControl('');
   }
@@ -99,14 +100,14 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
       case 'audience':
         this.searchKey = 'id';
 
-        this.audiencesDataSource = new CustomDataSource<IAudiences>(this.audiencesService);
+        this.audiencesDataSource = new CustomDataSource<IWAudiences>(this.audiencesService);
         const params: HttpParamsOptions = {include: 'users'};
         this.audiencesDataSource.params = params;
         break;
       case 'users':
       default:
         this.searchKey = 'query';
-        this.dataSource = new CustomDataSource<IUser>(this.audiencesUserService);
+        this.dataSource = new CustomDataSource<IWUser>(this.audiencesUserService);
     }
     this.currentTab = tab;
     this.cd.detectChanges();

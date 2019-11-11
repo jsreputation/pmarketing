@@ -44,10 +44,10 @@ export class SurveyService {
     return {
       id: survey.data.id,
       title: survey.data.attributes.title,
-      sub_title: dp.sub_title,
-      progress_bar_color: MaterialColor[dp.progress_bar_color],
-      card_background_img_url: dp.card_background_img_url,
-      background_img_url: dp.background_img_url,
+      subTitle: dp.sub_title,
+      progressBarColor: MaterialColor[dp.progress_bar_color],
+      cardBackgroundImgUrl: dp.card_background_img_url,
+      backgroundImgUrl: dp.background_img_url,
       questions
     };
   }

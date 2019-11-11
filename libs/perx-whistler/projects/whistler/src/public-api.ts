@@ -22,6 +22,7 @@ export {
   IWCommEventAttributes
 } from './lib/comm/comm';
 export { IWCampaignAttributes } from './lib/campaign/campaign';
+export { IWAudiences, IWPoolsApi, IWPools, IWUser } from './lib/audiences/audiences.model';
 export { IWProfileAttributes, IWPoolsAttributes } from './lib/profile/profile';
 export {
   IWMerchantAttributes,

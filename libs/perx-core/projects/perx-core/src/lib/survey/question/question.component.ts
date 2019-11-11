@@ -57,22 +57,22 @@ export class QuestionComponent implements OnChanges {
 
   public updateAnswer(answer: IAnswer): void {
     this.question.answer = String(answer.content);
-    const questionId = answer.question_id ? answer.question_id : this.question.id;
-    this.updateAnswers.emit({ question_id: questionId, content: answer.content });
+    const questionId = answer.questionId ? answer.questionId : this.question.id;
+    this.updateAnswers.emit({ questionId, content: answer.content });
     this.updateNonGroupPoint();
     this.questionValidation();
   }
 
   public updateGroupPoint(point: number): void {
     this.point = point;
-    this.updatePoints.emit({ question_id: this.question.id, point });
+    this.updatePoints.emit({ questionId: this.question.id, point });
   }
 
   public updateNonGroupPoint(): void {
     if (this.question.payload.type !== SurveyQuestionType.questionGroup) {
       this.point = this.question && this.question.required ?
         (this.question.answer === 0 || (this.question.answer && this.question.answer.length > 0) ? 1 : 0) : 1;
-      this.updatePoints.emit({ question_id: this.question.id, point: this.point });
+      this.updatePoints.emit({ questionId: this.question.id, point: this.point });
     }
   }
 

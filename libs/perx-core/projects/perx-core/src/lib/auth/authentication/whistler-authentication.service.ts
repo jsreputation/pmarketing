@@ -3,10 +3,9 @@ import { Injectable } from '@angular/core';
 import { of, Observable, throwError, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { IProfile } from '../../profile/profile.model';
+import { IProfile, IProfileAttributes } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
 import { TokenStorage } from './token-storage.service';
-import { IProfileAttributes } from '../../profile/profile.model';
 import {
   IResetPasswordData,
   ISignUpData,
@@ -16,7 +15,6 @@ import {
 import { Config } from '../../config/config';
 import { IJsonApiListPayload } from '../../jsonapi.payload';
 import {
-  IWProfileAttributes,
   IWAppAccessTokenResponse,
   IWMessageResponse
 } from '@perx/whistler';
@@ -28,7 +26,7 @@ interface ICognitoLogin {
 interface IUserJWTRequest {
   identifier: string;
   url: string;
-  profile?: IWProfileAttributes;
+  profile?: IProfileAttributes;
 }
 
 @Injectable({
@@ -134,7 +132,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
-  private createUserWithPI(pi: string, userObj?: IWProfileAttributes): Observable<IJsonApiListPayload<ICognitoLogin>> {
+  private createUserWithPI(pi: string, userObj?: IProfileAttributes): Observable<IJsonApiListPayload<ICognitoLogin>> {
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: pi
@@ -217,7 +215,6 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public signup(profile: ISignUpData): Observable<IProfile> {
     return throwError('Not implement yet');
   }
-
   // @ts-ignore
   public requestVerificationToken(phone?: string): Observable<void> {
     return throwError('Not implement yet');

@@ -41,7 +41,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private campaign: ICampaign;
   private campaignBaseURL: string;
   public tenantSettings: ITenantsProperties;
-  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
+  @ViewChild('stepper', {static: false}) private stepper: MatStepper;
 
   private destroy$: Subject<void> = new Subject();
 
@@ -58,7 +58,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private commsService: CommsService,
     private outcomesService: OutcomesService,
     private limitsService: LimitsService,
-    private audienceService: AudiencesUserService,
+    private audienceService: AudiencesUserService
   ) {
     store.resetCampaign();
   }
@@ -148,9 +148,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     );
   }
 
-  private updateLimitFn(): (campaign: ICampaign) => Observable<
-    IJsonApiPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes> | void
-  > {
+  private updateLimitFn(): (campaign: ICampaign) => Observable<IJsonApiPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes> | void> {
     const updateLimit$ = (campaign: ICampaign) => this.limitsService.updateLimits(
       this.store.currentCampaign.limits.id,
       this.store.currentCampaign.limits,
@@ -319,8 +317,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       );
     return combineLatest(getUsersPis, this.blackcombUrl)
       .pipe(map(([pis, url]: [string[], string]) => {
-        return pis.reduce((p: string, v: string) => `${p}${v},${url}&pi=${v},\n`, 'identifier,urls,\n');
-      }),
+          return pis.reduce((p: string, v: string) =>
+            `${p}${v},${url}&pi=${v},\n`, 'identifier,urls,\n');
+        }),
         takeUntil(this.destroy$)
       );
   }
@@ -332,7 +331,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private openDialog(): void {
     this.getDialogData(this.store.currentCampaign)
       .pipe(
-        switchMap((config) => this.dialog.open(NewCampaignDonePopupComponent, { data: config }).afterClosed())
+        switchMap((config) => this.dialog.open(NewCampaignDonePopupComponent, {data: config}).afterClosed())
       )
       .subscribe(() => this.router.navigate(['/campaigns']));
   }
@@ -353,7 +352,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const campaignId = this.route.snapshot.params.id;
     const paramsComm: HttpParamsOptions = {
       'filter[owner_id]': campaignId,
-      include: 'template',
+      include: 'template'
     };
     const paramsPO: HttpParamsOptions = {
       'filter[campaign_entity_id]': campaignId
@@ -366,15 +365,15 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       ).pipe(
         map(
           ([campaign, commEvent, outcomes]:
-            [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
-              ...campaign,
-              audience: { select: commEvent && commEvent.poolId || null },
-              channel: {
-                type: commEvent && commEvent.channel || 'weblink',
-                ...commEvent
-              },
-              rewardsList: outcomes
-            }))
+             [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
+            ...campaign,
+            audience: {select: commEvent && commEvent.poolId || null},
+            channel: {
+              type: commEvent && commEvent.channel || 'weblink',
+              ...commEvent
+            },
+            rewardsList: outcomes
+          }))
       ).subscribe(
         campaign => {
           this.campaign = Object.assign({}, campaign);

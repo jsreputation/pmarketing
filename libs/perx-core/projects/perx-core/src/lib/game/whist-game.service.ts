@@ -6,6 +6,8 @@ import {
   defaultTree,
   ITree,
   IPinata,
+  IScratch,
+  defaultScratch,
   defaultPinata,
   IPlayOutcome,
 } from './game.model';
@@ -20,8 +22,9 @@ import {
   IWGameEngagementAttributes,
   IWTreeDisplayProperties,
   IWPinataDisplayProperties,
+  IWCampaignAttributes,
   WGameType,
-  IWCampaignAttributes
+  IWScratchDisplayProperties
 } from '@perx/whistler';
 
 import { ICampaignDisplayProperties } from '../perx-core.models';
@@ -64,7 +67,7 @@ export class WhistlerGameService implements IGameService {
 
   private static WGameToGame(game: IJsonApiItem<IWGameEngagementAttributes>): IGame {
     let type = TYPE.unknown;
-    let config: ITree | IPinata;
+    let config: ITree | IPinata | IScratch;
     const { attributes } = game;
     if (attributes.game_type === WGameType.shakeTheTree) {
       type = TYPE.shakeTheTree;
@@ -87,7 +90,13 @@ export class WhistlerGameService implements IGameService {
       };
     } else if (attributes.game_type === WGameType.scratch) {
       type = TYPE.scratch;
-      // todo
+      const scratchdp: IWScratchDisplayProperties = attributes.display_properties as IWScratchDisplayProperties;
+      config = {
+        ...defaultScratch(),
+        // underlyingImg: scratchdp.post_scratch_fail_img_url,
+        underlyingImg: scratchdp.post_scratch_success_img_url,
+        coverImg: scratchdp.pre_scratch_img_url
+      };
     }
 
     const texts: { [key: string]: string } = {};
