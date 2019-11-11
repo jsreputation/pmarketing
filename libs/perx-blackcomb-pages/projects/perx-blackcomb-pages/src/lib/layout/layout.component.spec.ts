@@ -6,8 +6,8 @@ import { MatDialogModule, MatToolbarModule, MatIconModule } from '@angular/mater
 import { ThemesService, AuthenticationService, ConfigModule } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 
-const themesServiceStub = {};
-const authServiceStub = {};
+const themesServiceStub: Partial<ThemesService> = {};
+const authServiceStub: Partial<AuthenticationService> = {};
 
 describe('LayoutComponent', () => {
   beforeEach(async(() => {

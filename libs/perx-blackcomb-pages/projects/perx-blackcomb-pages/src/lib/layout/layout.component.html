@@ -9,7 +9,7 @@
     <router-outlet (activate)="onActivate($event)"></router-outlet>
   </div>
   <mat-toolbar class="navbar mat-elevation-z2" *ngIf="showToolbar">
-    <a [routerLink]="[ '/home' ]" routerLinkActive="active">
+    <a [routerLink]="[ '/home' ]" routerLinkActive="active" *ngIf="theme.properties['showHomePage']">
       <div class="nav-item">
         <mat-icon aria-hidden="false">home</mat-icon>
         <span translate>HOME</span>

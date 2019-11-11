@@ -8,7 +8,8 @@ import {
   VoucherDetailComponent,
   ContentComponent,
   RewardDetailsComponent,
-  LayoutComponent
+  LayoutComponent,
+  PIComponent
 } from '@perx/blackcomb-pages';
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'history', component: HistoryComponent },
       { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
+      { path: 'pi', component: PIComponent },
       {
         path: 'qr', loadChildren: (): any => import('../qr/qr.module').then((mod: any) => mod.QRModule)
 
@@ -28,6 +30,10 @@ const routes: Routes = [
       {
         path: 'account', loadChildren: (): any => import('../account/account.module').then((mod: any) => mod.AccountModule)
 
+      },
+      {
+        path: 'signup',
+        loadChildren: () => import('../sign-up/sign-up.module').then((mod) => mod.SignUpModule)
       },
       {
         path: 'stamp/:id',

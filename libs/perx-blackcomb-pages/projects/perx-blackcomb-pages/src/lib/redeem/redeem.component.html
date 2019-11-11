@@ -15,15 +15,19 @@
       </perx-core-pin-redemption>
     </div>
     <div *ngIf="redemptionType === rt.txtCode || redemptionType === rt.offline" class="code-container">
-      <perx-core-bcode-redemption [instructions]="codeInstructionsText" [voucherId]="voucherId"></perx-core-bcode-redemption>
+      <perx-core-bcode-redemption
+        [instructions]="codeInstructionsText"
+        [voucherId]="voucherId"
+        [showTermsAndCondition]="false">
+      </perx-core-bcode-redemption>
       <div class="button-container">
-        <button mat-stroked-button color="default" (click)="goBack()">{{ "CANCEL" | translate }}</button>
+        <button mat-stroked-button color="primary" (click)="goBack()">{{ "CANCEL" | translate }}</button>
       </div>
     </div>
     <div *ngIf="redemptionType === rt.qr" class="code-container">
       <perx-core-qrcode-redemption [voucherId]="voucherId"></perx-core-qrcode-redemption>
       <div class="button-container">
-        <button mat-stroked-button color="default" (click)="goBack()">>{{ "CANCEL" | translate }}</button>
+        <button mat-stroked-button color="primary" (click)="goBack()">>{{ "CANCEL" | translate }}</button>
       </div>
     </div>
   </div>

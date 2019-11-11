@@ -6,7 +6,7 @@ import { IMerchantsService } from './imerchants.service';
 import { IMerchant } from './models/merchants.model';
 import { Config } from '../config/config';
 import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload, IMeta } from './../jsonapi.payload';
-import { IMerchant as IWMerchant } from '@perx/whistler';
+import { IWMerchant } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'

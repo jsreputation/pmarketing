@@ -11,7 +11,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
 
-  public puzzles: IStampCard[];
+  public puzzles: IStampCard[] | null;
 
   public repeatGhostCount: number = 10;
 
@@ -37,8 +37,10 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   private destroy$: Subject<any> = new Subject();
 
   private initTotal(): void {
-    if (this.puzzles.length > 0) {
-      this.total = this.puzzles[0].displayProperties.totalSlots;
+    if (this.puzzles !== null && this.puzzles.length > 0) {
+      this.total = this.puzzles[0].displayProperties.totalSlots || null;
+    } else {
+      this.total = null;
     }
   }
 
@@ -47,7 +49,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
 
   public ngOnInit(): void {
     if (!this.titleFn) {
-      this.titleFn = (index) => `Stamp Card ${this.puzzleIndex(index)} out of 12`;
+      this.titleFn = (index?: number) => 'Puzzle #' + this.indexToLetter(index);
     }
 
     if (!this.puzzleTextFn) {
@@ -109,12 +111,11 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
       return false;
     }
 
-    const totalSlots = puzzle.displayProperties.totalSlots;
+    const totalSlots = puzzle.displayProperties.totalSlots || 0;
 
     // if there is no more available stamp return false
     if (puzzle.displayProperties.displayCampaignAs === 'puzzle') {
-
-      if (puzzle.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots) {
+      if (puzzle.stamps && puzzle.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots) {
         return false;
       }
 
@@ -135,8 +136,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     if (puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
-
-      if (puzzle.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots) {
+      if (puzzle.stamps && puzzle.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots) {
         return false;
       }
 
@@ -155,6 +155,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
         return true;
       }
     }
+    return false;
   }
 
   public indexToLetter(index: number): string {
@@ -163,13 +164,6 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
       return '';
     }
     return base[index % base.length];
-  }
-
-  public puzzleIndex(index: number): string {
-    if (index < 0) {
-      return '';
-    }
-    return String(++index);
   }
 
   public nbAvailableStamps(puzzle: IStampCard): number {

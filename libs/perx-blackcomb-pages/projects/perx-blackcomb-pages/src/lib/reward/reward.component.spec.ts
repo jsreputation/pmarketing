@@ -4,16 +4,17 @@ import { RewardComponent } from './reward.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { GameModule, RewardsModule, RewardsService, InstantOutcomeService } from '@perx/core';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
 
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getAllRewards: () => of(),
   };
 
-  const instantOutStub = {
+  const instantOutStub: Partial<InstantOutcomeService> = {
 
   };
 
@@ -26,7 +27,8 @@ describe('RewardComponent', () => {
         ]),
         GameModule,
         RewardsModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        TranslateModule.forRoot(),
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },

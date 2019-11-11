@@ -42,6 +42,12 @@ export class VoucherComponent implements OnChanges, OnInit {
   @Input()
   public expiryFn: (v: IVoucher) => string;
 
+  @Input()
+  public descriptionLabel: string = 'Description';
+
+  @Input()
+  public tncLabel: string = 'Terms and Conditions';
+
   constructor(private vouchersService: IVoucherService, private datePipe: DatePipe) {
   }
 

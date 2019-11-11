@@ -19,26 +19,16 @@ export interface IWOutcomeDisplayProperties {
   card_background_img_url: string;
   displayProperties?: {
     noRewardsPopUp?: {
-      headLine?: string,
-      subHeadLine?: string,
-      imageURL?: string,
+      headLine?: string;
+      subHeadLine?: string;
+      imageURL?: string;
+      buttonTxt?: string;
     };
-    merchantPinText?: {
-      headLine?: string,
-      subHeadLine?: string,
-    };
-    rewardSuccessPopUp?: {
-      headLine?: string,
-      subHeadLine?: string,
-      imageURL?: string,
-    };
-    codeInstructionsText?: {
-      headLine?: string,
-    };
-    errorPopUp?: {
-      headLine?: string,
-      subHeadLine?: string,
-      imageURL?: string,
+    successPopUp?: {
+      headLine?: string;
+      subHeadLine?: string;
+      imageURL?: string;
+      buttonTxt?: string;
     };
   };
 }

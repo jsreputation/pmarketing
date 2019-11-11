@@ -23,14 +23,15 @@ exports.config = {
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
   seleniumAddress: 'http://localhost:4444/wd/hub/',
+  resultJsonOutputFile:'./src/resultsOutput/result.json',
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   cucumberOpts: {
     require: [
       './src/steps/**/*.steps.ts',
-      'features/'
+      './src/features/'
     ],
-    // tags: ['@demo','@runThis'],
+    tags: ['@demo','@runThis'],
     ui:       'bdd',
     reporter: 'dot',
     strict: true,

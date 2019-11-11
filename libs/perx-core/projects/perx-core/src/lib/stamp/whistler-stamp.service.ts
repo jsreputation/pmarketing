@@ -4,7 +4,6 @@ import {
   IStampCard,
   IStamp,
   StampCardState,
-  IDisplayProperties
 } from './models/stamp.model';
 import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { Observable, of } from 'rxjs';
@@ -12,6 +11,8 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { StampService } from './stamp.service';
 import { Injectable } from '@angular/core';
+
+import { ICampaignDisplayProperties, IProperties } from '../perx-core.models';
 
 interface AttbsObjEntity {
   urn: string;
@@ -26,7 +27,7 @@ interface AttbsObjEntity {
   engagement_type: WEngagementType;
   engagement_id: number;
   pool_id: null;
-  display_properties?: IDisplayProperties;
+  display_properties?: ICampaignDisplayProperties;
 }
 
 interface AttbsObjStamp {
@@ -50,11 +51,8 @@ interface AttbsObjStamp {
     card_background_img_url: string;
     background_img_url: string;
     display_campaign_as: string;
-    noRewardsPopUp?: {
-      headLine?: string,
-      subHeadLine?: string,
-      imageURL?: string,
-    };
+    noRewardsPopUp?: IProperties;
+    successPopUp?: IProperties;
   };
 }
 
@@ -106,7 +104,7 @@ export class WhistlerStampService implements StampService {
   }
 
   public getCurrentCard(campaignId: number): Observable<IStampCard> {
-    let disProp: IDisplayProperties;
+    let disProp: ICampaignDisplayProperties;
     if (this.cache[campaignId]) {
       return of(this.cache[campaignId]);
     }
@@ -137,5 +135,9 @@ export class WhistlerStampService implements StampService {
 
   public stampAll(cardId: number): Observable<IStamp[]> {
     throw new Error(`Method not implemented. ${cardId}`);
+  }
+
+  public play(): Observable<boolean> {
+    return of(true);
   }
 }

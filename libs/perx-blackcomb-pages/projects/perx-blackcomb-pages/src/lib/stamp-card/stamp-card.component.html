@@ -16,10 +16,8 @@
         [rewardPostStamp]="stampCard.displayProperties.rewardPostStamp">
       </perx-core-puzzle-collect-stamps>
     </div>
-    <div class="button-Stamp">
-      <a mat-raised-button [routerLink]="['/wallet']">
-        {{stampCard.buttonText}}
-      </a>
-    </div>
+    <button mat-raised-button [routerLink]="['/wallet']">
+      {{stampCard.buttonText}}
+    </button>
   </div>
 </div>

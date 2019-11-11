@@ -21,6 +21,7 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { SignUpModule } from './sign-up/sign-up.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { HttpHeaders } from '@angular/common/http';
@@ -34,17 +35,17 @@ export class CustomTranslateLoader implements TranslateLoader {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
   });
-  private hostUrl: string = 'http://localhost:4000/assets/';
+  private hostUrl: string = 'http://localhost:4000/';
   constructor(private httpClient: HttpClient) {
     if (environment.production) {
-      this.hostUrl = environment.baseHref + '/assets/';
+      this.hostUrl = `${environment.baseHref}`;
     }
   }
-  public getTranslation(lang: string): Observable<any> {
-    const apiAddress = this.hostUrl + `${lang}-json.json`;
-    return this.httpClient.get(apiAddress, { headers: this.contentHeader })
+  public getTranslation(lang: string): Observable<{ [k: string]: string }> {
+    const apiAddress = `${this.hostUrl}lang?default=${lang}`;
+    return this.httpClient.get<{ [k: string]: string }>(apiAddress, { headers: this.contentHeader })
       .pipe(
-        catchError(() => this.httpClient.get(`/assets/i18n/en.json`))
+        catchError(() => this.httpClient.get<{ [k: string]: string }>(`${this.hostUrl}assets/en-json.json`))
       );
   }
 }
@@ -63,6 +64,8 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     VouchersModule,
     OutcomeModule,
     AuthenticationModule,
+    SignUpModule,
+    ProfileModule,
     BrowserAnimationsModule,
     PerxMerchantsModule,
     PerxStampModule,

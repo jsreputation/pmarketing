@@ -1,7 +1,7 @@
 import { ICampaign } from './../campaign/models/campaign.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ISurvey, IQuestion, MaterialColor, IAnswer, IDisplayProperties, SurveyQuestionType } from './models/survey.model';
+import { ISurvey, IQuestion, MaterialColor, IAnswer, SurveyQuestionType } from './models/survey.model';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
@@ -10,8 +10,11 @@ import { IJsonApiItemPayload } from '../jsonapi.payload';
 
 import {
   IWSurveyAttributes,
-  IWPostAnswerAttributes
+  IWPostAnswerAttributes,
+  WSurveyQuestionType
 } from '@perx/whistler';
+
+import { ICampaignDisplayProperties } from '../perx-core.models';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +30,15 @@ export class SurveyService {
     this.baseUrl = config.apiHost || '';
   }
 
-  private static WSurveyToSurvey(survey: IJsonApiItemPayload<IWSurveyAttributes>): ISurvey {
+  private static WQTypeToQType(t: WSurveyQuestionType): SurveyQuestionType {
+    // todo have a smarter mapping
+    return t as unknown as SurveyQuestionType;
+  }
+
+  public static WSurveyToSurvey(survey: IJsonApiItemPayload<IWSurveyAttributes>): ISurvey {
     const dp = survey.data.attributes.display_properties;
     const questions: IQuestion[] = dp.questions.map(q => {
-      const payload = { ...q.payload, type: q.payload.type as unknown as SurveyQuestionType };
+      const payload = { ...q.payload, type: SurveyService.WQTypeToQType(q.payload.type) };
       return { ...q, payload };
     });
     return {
@@ -45,7 +53,7 @@ export class SurveyService {
   }
 
   public getSurveyFromCampaign(id: number): Observable<ISurvey> {
-    let disProp: IDisplayProperties | undefined;
+    let disProp: ICampaignDisplayProperties | undefined;
     return this.campaignService.getCampaign(id)
       .pipe(
         switchMap(
