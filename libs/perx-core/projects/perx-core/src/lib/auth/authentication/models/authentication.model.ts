@@ -7,7 +7,7 @@ export interface ISignUpData {
     birthDay?: string;
     gender?: string;
     password: string;
-    password_confirmation: string;
+    passwordConfirmation: string;
 }
 
 export interface IMessageResponse {
@@ -21,14 +21,14 @@ export interface IResetPasswordData {
     otp: string;
     passwordConfirmation: string;
 }
-
+/* eslint-disable */
 export interface IAppAccessTokenResponse {
     access_token: string;
     token_type: string;
     expires_in: number;
     created_at: number;
 }
-
+/* eslint-enable */
 export interface IChangePasswordData {
     newPassword: string;
     passwordConfirmation: string;
@@ -42,7 +42,7 @@ export interface IChangePhoneData {
 }
 
 export interface ILoginResponse {
-    bearer_token?: string;
+    bearer_token?: string; // eslint-disable-line
 }
 
 export enum TokenType {

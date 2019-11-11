@@ -97,17 +97,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
         if (this.campaignId === null) {
           this.fetchCampaign();
         } else if (this.cardId === null || this.card === null) {
-          /* eslint-disable rxjs-no-nested-subscribe */
-          /* tslint:disable rxjs-no-nested-subscribe */
-          this.fetchCard(this.campaignId).subscribe(
-            (card: IStampCard) => {
-              this.card = card;
-              this.cardId = card.id;
-              this.fetchStampTransactionCount(this.campaignId);
-              this.fetchCardsCount(this.campaignId);
-            }
-          );
-
+          this.fetchCard();
         }
       }
     );
@@ -127,13 +117,17 @@ export class PuzzleComponent implements OnInit, OnDestroy {
     this.soundService.pause(false);
   }
 
+  private currentCard(campaignId: number): Observable<IStampCard> {
+    return this.stampService.getCurrentCard(campaignId);
+  }
+
   private fetchCampaign(): void {
     this.campaignService.getCampaigns()
       .pipe(
         map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp)),
         mergeMap(
           (campaigns: ICampaign[]) => from(campaigns).pipe(
-            mergeMap((campaign: ICampaign) => this.fetchCard(campaign.id)),
+            mergeMap((campaign: ICampaign) => this.currentCard(campaign.id)),
             toArray(),
             map((stampCards: IStampCard[]) => {
               return stampCards.filter(
@@ -174,8 +168,15 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       });
   }
 
-  private fetchCard(campaignId: number): Observable<IStampCard> {
-    return this.stampService.getCurrentCard(campaignId);
+  private fetchCard(): void {
+    this.currentCard(this.campaignId).subscribe(
+      (card: IStampCard) => {
+        this.card = card;
+        this.cardId = card.id;
+        this.fetchStampTransactionCount(this.campaignId);
+        this.fetchCardsCount(this.campaignId);
+      }
+    );
   }
 
   private fetchCardsCount(campaignId: number): void {

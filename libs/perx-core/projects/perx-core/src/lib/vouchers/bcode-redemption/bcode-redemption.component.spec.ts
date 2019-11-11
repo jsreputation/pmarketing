@@ -88,4 +88,18 @@ describe('BcodeRedemptionComponent', () => {
     expect(fixture.nativeElement.querySelector('.reward-image').src).toEqual(mockVoucher.reward.rewardBanner);
 
   }));
+
+  it('should use useMinimalStyle', fakeAsync(() => {
+    component.useMinimalStyle = true;
+    component.ngOnChanges({
+      useMinimalStyle: new SimpleChange(null, 1, true)
+    });
+    fixture.detectChanges();
+    tick();
+    expect(component.useMinimalStyle).toBe(true);
+    expect(component.showImage).toBe(false);
+    expect(component.showVoucherName).toBe(false);
+    expect(component.showTermsAndCondition).toBe(false);
+    expect(component.showAfterInstruction).toBe(true);
+  }));
 });

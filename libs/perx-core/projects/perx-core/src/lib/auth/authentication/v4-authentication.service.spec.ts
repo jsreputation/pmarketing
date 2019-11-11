@@ -303,7 +303,7 @@ describe('V4AuthenticationService', () => {
         lastName: 'name',
         password: '1234',
         phone: '1234',
-        password_confirmation: '1234'
+        passwordConfirmation: '1234'
       }).subscribe(() => { });
       tick();
       expect(spyLog).toHaveBeenCalled();
@@ -313,7 +313,7 @@ describe('V4AuthenticationService', () => {
           lastName: 'name',
           password: '1234',
           phone: '1234',
-          password_confirmation: '1234'
+          passwordConfirmation: '1234'
         }).subscribe(() => { });
         tick();
       } catch {

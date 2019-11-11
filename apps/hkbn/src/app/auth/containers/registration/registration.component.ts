@@ -1,7 +1,7 @@
 import { AuthenticationService, IProfile, ICountryCode, GeneralStaticDataService } from '@perx/core';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
+import { ISignUpData } from '@perx/core';
 
 const countries = ['China', 'Hong Kong', 'Macau'];
 
