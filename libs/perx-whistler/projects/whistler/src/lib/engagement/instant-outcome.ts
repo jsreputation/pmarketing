@@ -1,16 +1,4 @@
-export interface IWInstantOutcomeEngagementAttributes {
-  urn: string;
-  created_at: string;
-  updated_at: string;
-  game_type: string;
-  title: string;
-  description: string;
-  image_url: string;
-  properties?: {};
-  display_properties?: IWOutcomeDisplayProperties;
-}
-
-export interface IWOutcomeDisplayProperties {
+export interface IWInstantOutcomeDisplayProperties {
   title: string;
   button: string;
   sub_title: string;

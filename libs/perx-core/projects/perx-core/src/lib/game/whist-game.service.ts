@@ -19,10 +19,10 @@ import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import {
   IWAssignedAttributes,
-  IWAttbsObjGame,
+  IWGameEngagementAttributes,
   IWTreeDisplayProperties,
   IWPinataDisplayProperties,
-  IWAttbsObjEntity,
+  IWCampaignAttributes,
   WGameType,
   IWScratchDisplayProperties
 } from '@perx/whistler';
@@ -65,7 +65,7 @@ export class WhistlerGameService implements IGameService {
     this.hostName = config.apiHost as string;
   }
 
-  private static WGameToGame(game: IJsonApiItem<IWAttbsObjGame>): IGame {
+  private static WGameToGame(game: IJsonApiItem<IWGameEngagementAttributes>): IGame {
     let type = TYPE.unknown;
     let config: ITree | IPinata | IScratch;
     const { attributes } = game;
@@ -155,7 +155,7 @@ export class WhistlerGameService implements IGameService {
     if (this.cache[engagementId]) {
       return of(this.cache[engagementId]);
     }
-    return this.http.get<IJsonApiItemPayload<IWAttbsObjGame>>(`${this.hostName}/game/engagements/${engagementId}`)
+    return this.http.get<IJsonApiItemPayload<IWGameEngagementAttributes>>(`${this.hostName}/game/engagements/${engagementId}`)
       .pipe(
         map(res => res.data),
         map(game => WhistlerGameService.WGameToGame(game)),
@@ -165,10 +165,10 @@ export class WhistlerGameService implements IGameService {
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
     let disProp: ICampaignDisplayProperties = null;
-    return this.http.get<IJsonApiItemPayload<IWAttbsObjEntity>>(`${this.hostName}/campaign/entities/${campaignId}`)
+    return this.http.get<IJsonApiItemPayload<IWCampaignAttributes>>(`${this.hostName}/campaign/entities/${campaignId}`)
       .pipe(
-        map((res: IJsonApiItemPayload<IWAttbsObjEntity>) => res.data.attributes),
-        map((entity: IWAttbsObjEntity) => {
+        map((res: IJsonApiItemPayload<IWCampaignAttributes>) => res.data.attributes),
+        map((entity: IWCampaignAttributes) => {
           disProp = entity.display_properties;
           return entity.engagement_id;
         }),
