@@ -3,7 +3,7 @@ import { WhistlerGameService } from './whist-game.service';
 import { TestBed } from '@angular/core/testing';
 import { ConfigModule } from '../config/config.module';
 import { IVoucherService } from '../vouchers/ivoucher.service';
-import { IJsonApiItem } from 'perx-core/lib/jsonapi.payload';
+import { IJsonApiItem } from '../jsonapi.payload';
 import { IWAttbsObjGame, WGameType } from '@perx/whistler';
 import { IJsonApiItemPayload } from '../jsonapi.payload';
 import { Type } from '@angular/core';

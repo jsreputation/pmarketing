@@ -7,7 +7,7 @@ import { of } from 'rxjs';
 import { IJsonApiItem, IJsonApiListPayload } from '../jsonapi.payload';
 import { IWRewardEntityAttributes } from '@perx/whistler';
 import { IReward } from './models/reward.model';
-import { IJsonApiItemPayload } from 'perx-core/lib/jsonapi.payload';
+import { IJsonApiItemPayload } from '../jsonapi.payload';
 import { IMerchant } from '../merchants/models/merchants.model';
 import { HttpClient } from '@angular/common/http';
 import { takeLast } from 'rxjs/operators';

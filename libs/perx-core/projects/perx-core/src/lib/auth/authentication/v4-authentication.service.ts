@@ -227,15 +227,12 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   private signUpDataToV4SignUpData(data: ISignUpData): IV4SignUpData {
-    const res = {
-      last_name: data.lastName,
+    return {
+      last_name: data.lastName || '',
       first_name: data.firstName,
       birthday: data.birthDay,
       ...data
     };
-    res.lastName = undefined;
-    res.firstName = undefined;
-    return res;
   }
 
   // @ts-ignore
@@ -319,7 +316,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
    * localStorage
    */
   public getUserAccessToken(): string {
-    return this.tokenStorage.getAppInfoProperty('userAccessToken');
+    return this.tokenStorage.getAppInfoProperty('userAccessToken') || '';
   }
 
   /**
@@ -337,7 +334,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
    * localStorage
    */
   public getAppAccessToken(): string {
-    return this.tokenStorage.getAppInfoProperty('appAccessToken');
+    return this.tokenStorage.getAppInfoProperty('appAccessToken') || '';
   }
 
   /**
@@ -350,7 +347,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   public getPI(): string {
-    return this.tokenStorage.getAppInfoProperty('pi');
+    return this.tokenStorage.getAppInfoProperty('pi') || '';
   }
 
   public savePI(pi: string): void {
