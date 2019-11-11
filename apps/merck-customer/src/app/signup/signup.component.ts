@@ -83,7 +83,7 @@ export class SignupComponent implements PageAppearence {
         birthDay: '',
         gender: '',
         password: passwordString,
-        password_confirmation: confirmPassword
+        passwordConfirmation: confirmPassword
       };
 
       this.authService.signup(signUpData).subscribe(

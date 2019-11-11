@@ -56,8 +56,8 @@ export class ExistingCardComponent implements OnInit {
   public onSubmit(): void {
     const cardNumber: number = (this.existingCardForm.get('cardNumber').value as number);
     const cardNumberData = {
-      card_number: cardNumber,
-      loyalty_program_id: this.loyaltyId,
+      cardNumber,
+      loyaltyProgramId: this.loyaltyId,
     };
 
     try {

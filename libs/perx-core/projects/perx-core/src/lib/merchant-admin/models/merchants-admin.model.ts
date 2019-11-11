@@ -1,27 +1,27 @@
 export interface IMerchantAdminTransaction {
     id: number;
-    user_account_id: number;
-    updated_at: Date;
-    transaction_type: string;
+    userAccountId: number;
+    updatedAt: Date;
+    transactionType: string;
     amount: number;
-    transaction_date: Date;
+    transactionDate: Date;
     currency: string;
-    workflow_id?: number | null;
-    created_at: Date;
+    workflowId?: number | null;
+    createdAt: Date;
     properties?: string | null;
-    transaction_reference: string;
+    transactionReference: string;
 }
 
 export interface IMerchantAccount {
     id: number;
-    customer_id: number | null;
+    customerId: number | null;
     name: string;
     state: string;
     logo: string | null;
     url: string | null;
     type: string | null;
     favourite: string | null;
-    is_featured: boolean;
+    isFeatured: boolean;
     tags: IMerchantTag[];
 }
 
@@ -37,7 +37,7 @@ export interface IMerchantProfile {
   mobile: string;
   locationId: number;
   merchantAccountId?: number;
-  merchant_account?: IMerchantAccount;
+  merchantAccount?: IMerchantAccount;
   createdAt: Date;
   updatedAt: Date;
   state: string;

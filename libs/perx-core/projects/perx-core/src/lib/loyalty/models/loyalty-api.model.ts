@@ -1,3 +1,5 @@
+// api related
+/* eslint-disable */
 export interface ILoyaltyApi {
   name: string;
   unit: string;
