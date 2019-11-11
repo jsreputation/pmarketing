@@ -5,7 +5,7 @@ import { ConfigModule, RewardsService } from '../../public-api';
 import { of } from 'rxjs';
 import { IReward } from '../rewards/models/reward.model';
 import { IJsonApiItem, IJsonApiItemPayload, IJsonApiListPayload } from '../jsonapi.payload';
-import { IAssignedAttributes, AssignedStatus } from '@perx/whistler';
+import { IWAssignedAttributes, WAssignedStatus } from '@perx/whistler';
 import { IVoucher } from './models/voucher.model';
 import { HttpClient } from '@angular/common/http';
 import { last } from 'rxjs/operators';
@@ -39,7 +39,7 @@ describe('WhistlerVouchersService', () => {
     getReward: () => of(mockReward)
   };
 
-  const mockVoucherApi: IJsonApiItem<IAssignedAttributes> = {
+  const mockVoucherApi: IJsonApiItem<IWAssignedAttributes> = {
     id: '12',
     type: '',
     links: {
@@ -53,7 +53,7 @@ describe('WhistlerVouchersService', () => {
       source_id: 42,
       source_type: '42',
       valid_from: '42',
-      status: AssignedStatus.issued,
+      status: WAssignedStatus.issued,
       updated_at: '42',
       urn: '42',
     }
@@ -81,7 +81,7 @@ describe('WhistlerVouchersService', () => {
   });
 
   it('should get a voucher from its number', (done: DoneFn) => {
-    const res: IJsonApiItemPayload<IAssignedAttributes> = {
+    const res: IJsonApiItemPayload<IWAssignedAttributes> = {
       data: mockVoucherApi
     };
     httpClientSpy.get.and.returnValue(of(res));
@@ -97,7 +97,7 @@ describe('WhistlerVouchersService', () => {
   });
 
   it('should get all vouchers', (done: DoneFn) => {
-    const res: IJsonApiListPayload<IAssignedAttributes> = {
+    const res: IJsonApiListPayload<IWAssignedAttributes> = {
       data: [mockVoucherApi],
       meta: {
         page_count: 2
