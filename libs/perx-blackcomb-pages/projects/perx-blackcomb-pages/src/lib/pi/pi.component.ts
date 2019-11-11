@@ -63,7 +63,7 @@ export class PIComponent implements OnInit, OnDestroy {
         this.engagementType = params.engagementType;
       }
       if (params && params.transactionId) {
-        this.transactionId = params.transactionId;
+        this.transactionId = parseInt(params.transactionId, 10);
       }
     });
   }
