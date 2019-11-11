@@ -104,6 +104,11 @@
     "rxjs-no-wholesale": false,
     "rxjs-no-create": true,
     "rxjs-no-unsafe-takeuntil": true,
+    "rxjs-ban-operators": {
+      "options": [{
+        "pluck": true
+      }]
+    },
     "naming-convention": [
       true,
       {
