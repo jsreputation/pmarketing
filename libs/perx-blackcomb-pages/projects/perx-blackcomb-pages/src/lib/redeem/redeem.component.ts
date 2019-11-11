@@ -76,10 +76,10 @@ export class RedeemComponent implements OnInit, OnDestroy {
           if (voucher.reward.displayProperties && voucher.reward.displayProperties.rewardSuccessPopUp) {
             this.rewardSuccessPopUp.title = voucher.reward.displayProperties.rewardSuccessPopUp.headLine;
             this.rewardSuccessPopUp.text = voucher.reward.displayProperties.rewardSuccessPopUp.subHeadLine;
-            this.rewardSuccessPopUp.imageUrl = voucher.reward.displayProperties.rewardSuccessPopUp.imageURL ||
-              this.rewardSuccessPopUp.imageUrl;
-            this.rewardSuccessPopUp.buttonTxt = voucher.reward.displayProperties.rewardSuccessPopUp.buttonTxt ||
-              this.rewardSuccessPopUp.buttonTxt;
+            this.rewardSuccessPopUp.imageUrl = voucher.reward.displayProperties.rewardSuccessPopUp.imageURL
+              || this.rewardSuccessPopUp.imageUrl;
+            this.rewardSuccessPopUp.buttonTxt = voucher.reward.displayProperties.rewardSuccessPopUp.buttonTxt
+              || this.rewardSuccessPopUp.buttonTxt;
           }
 
           if (voucher.reward.displayProperties && voucher.reward.displayProperties.codeInstructionsText) {
