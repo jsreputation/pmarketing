@@ -14,7 +14,6 @@ import { tap } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
 
 import {
-  IWProfileAttributes,
   IWCognitoLogin,
   IJsonApiListPayload,
 } from '@perx/whistler';
@@ -39,7 +38,7 @@ import { Config } from '../../config/config';
 interface IUserJWTRequest {
   identifier: string;
   url: string;
-  profile?: IWProfileAttributes;
+  profile?: IProfileAttributes;
 }
 
 @Injectable({
@@ -145,7 +144,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
-  private createUserWithPI(pi: string, userObj?: IWProfileAttributes): Observable<IJsonApiListPayload<IWCognitoLogin>> {
+  private createUserWithPI(pi: string, userObj?: IProfileAttributes): Observable<IJsonApiListPayload<IWCognitoLogin>> {
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: pi
