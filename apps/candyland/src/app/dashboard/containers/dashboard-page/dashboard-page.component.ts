@@ -8,8 +8,6 @@ import { map, takeUntil } from 'rxjs/operators';
 
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
 import { UserService } from '@cl-core/services/user.service';
-import { TranslateService } from '@ngx-translate/core';
-import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
 
 @Component({
   selector: 'cl-dashboard-page',
@@ -43,14 +41,11 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private chartsParametersService: DashboardChartsParametersService,
     @Inject(DOCUMENT) private document: Document,
-    private renderer: Renderer2,
-    private readonly translate: TranslateService,
-    private translateDefaultLanguage: TranslateDefaultLanguageService
+    private renderer: Renderer2
   ) {
   }
 
   public ngOnInit(): void {
-    this.setTranslateLanguage();
     this.userName$ = this.userService.userName$;
     this.getGameCard();
     this.handelDateRangeChanges();
@@ -62,13 +57,6 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     this.renderer.removeClass(this.document.body, 'no-cta');
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  private setTranslateLanguage(): void {
-    this.translateDefaultLanguage.defaultLanguage$
-      .subscribe((language: string) => {
-        this.translate.setDefaultLang(language);
-      });
   }
 
   private handelDateRangeChanges(): void {

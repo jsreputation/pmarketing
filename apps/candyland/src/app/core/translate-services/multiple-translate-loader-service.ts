@@ -7,7 +7,9 @@ import { ApiConfig } from '@cl-core/api-config';
 import { Injectable } from '@angular/core';
 import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
 
-export const translateLoader = (http: HttpClient, resources: { prefix: string, suffix: string }[]) => {
+export const translateLoader = (
+  http: HttpClient,
+  resources: { prefix: string, suffix: string }[]) => {
   return new MultiTranslateHttpLoader(http, resources);
 };
 
@@ -41,10 +43,7 @@ export class MultiTranslateHttpLoader implements TranslateLoader {
   }
 }
 
-export const setLanguage = (
-  translateService: TranslateService,
-  translateDefaultLanguage: TranslateDefaultLanguageService
-) => () => new Promise((resolve) => {
+export const getDefaultLanguage = () => {
   const listLanguages = ['en', 'ru'];
   let language: string;
   if (navigator) {
@@ -53,6 +52,14 @@ export const setLanguage = (
       language = 'en';
     }
   }
+  return language;
+};
+
+export const setLanguage = (
+  translateService: TranslateService,
+  translateDefaultLanguage: TranslateDefaultLanguageService
+) => () => new Promise((resolve) => {
+  const language = getDefaultLanguage();
 
   translateDefaultLanguage.setDefaultLanguage(language);
   translateService.setDefaultLang(language);

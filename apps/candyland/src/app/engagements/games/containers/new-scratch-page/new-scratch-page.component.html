@@ -1,25 +1,25 @@
 <article class="scratch-wrap" *ngIf="scratchData" [formGroup]="form">
   <header class="page-header full-with">
     <mat-form-field class="pagetitle-input" floatLabel="never">
-      <input type="text" matInput formControlName="name" placeholder="Enter title here">
-      <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
-      <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
-      <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+      <input type="text" matInput formControlName="name" [placeholder]="'ENTER_TITLE_HERE' | translate">
+      <mat-error *ngIf="name.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
+      <mat-error *ngIf="name.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 1</mat-error>
+      <mat-error *ngIf="name.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
     </mat-form-field>
     <div class="btn-group">
       <cl-button [classList]="'secondary'"
                  class="scratch-btn-cancel"
                  (click)="comeBack()"
       >
-        <span>
-          Cancel
+       <span translate>
+          BTN_CANCEL
         </span>
       </cl-button>
       <cl-button [classList]="'primary'"
                  (click)="save()"
       >
-        <span>
-          Save
+        <span translate>
+          BTN_SAVE
         </span>
       </cl-button>
     </div>
@@ -28,40 +28,40 @@
     <div class="phonepreview-wrapper">
       <div class="scratch-form">
         <mat-card class="card-fieldset">
-          <h2 class="card-fieldset-title sub-title">
-            Messages
+          <h2 class="card-fieldset-title sub-title" translate>
+            MESSAGES
           </h2>
           <div class="scratch-form">
             <div class="control-input">
-              <mat-form-field class="mat-form-field">
-                <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
+              <mat-form-field class="messages-input">
+                <input type="text" [placeholder]="'HEADLINE_MESSAGE' | translate" matInput formControlName="headlineMessage">
                 <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
-                <mat-error *ngIf="headlineMessage.hasError('required')">Required field</mat-error>
-                <mat-error *ngIf="headlineMessage.hasError('minlength')">Min 5 characters</mat-error>
-                <mat-error *ngIf="headlineMessage.hasError('maxlength')">Max 60 characters</mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 5</mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
               </mat-form-field>
             </div>
             <div class="control-input">
-              <mat-form-field class="mat-form-field">
-                <input type="text" matInput [placeholder]="'Sub-Headline message'" formControlName="subHeadlineMessage">
-                <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/250</mat-hint>
-                <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
-                <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min 5 characters</mat-error>
-                <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max 250 characters</mat-error>
+              <mat-form-field class="messages-input">
+                <input type="text" matInput [placeholder]="'SUB-HEADLINE_MESSAGE' | translate" formControlName="subHeadlineMessage">
+                <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>
+                <mat-error *ngIf="subHeadlineMessage.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 5</mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
               </mat-form-field>
             </div>
           </div>
         </mat-card>
 
         <mat-card class="card-fieldset">
-          <h2 class="card-fieldset-title sub-title">
-            Game Details
+          <h2 class="card-fieldset-title sub-title" translate>
+            GAME_DETAILS
           </h2>
           <div class="game-form">
 
             <div class="control-img_asset">
-              <h3 class="card-fieldset-label">
-                Pre-Scratch Image
+              <h3 class="card-fieldset-label" translate>
+                PRE-SCRATCH_IMAGE
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap
@@ -76,8 +76,8 @@
             </div>
 
             <div class="control-img_asset">
-              <h3 class="card-fieldset-label">
-                Post-Scratch Image (Success)
+              <h3 class="card-fieldset-label" translate>
+                POST-SCRATCH_IMAGE_(SUCCESS)
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap
@@ -93,8 +93,8 @@
             </div>
 
             <div class="control-img_asset">
-              <h3 class="card-fieldset-label">
-                Post-Scratch Image (Fail)
+              <h3 class="card-fieldset-label" translate>
+                POST-SCRATCH_IMAGE_(FAIL)
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap
@@ -109,8 +109,8 @@
               </div>
             </div>
             <div class="control-img_asset">
-              <h3 class="card-fieldset-label">
-                Background
+              <h3 class="card-fieldset-label" translate>
+                BACKGROUND
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap
@@ -128,27 +128,27 @@
 
         <mat-card class="card-fieldset">
           <div class="messages-wrap">
-            <p class="sub-title">
-              Call to Action
+            <p class="sub-title" translate>
+              CALL_TO_ACTION
             </p>
           </div>
           <div class="messages-form">
             <div class="control-input">
               <mat-form-field class="messages-input">
-                <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
+                <input type="text" [placeholder]="'BUTTON_TEXT' | translate" matInput formControlName="buttonText">
                 <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
-                <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
-                <mat-error *ngIf="buttonText.hasError('minlength')">Min 2 characters</mat-error>
-                <mat-error *ngIf="buttonText.hasError('maxlength')">Max 20 characters</mat-error>
+                <mat-error *ngIf="buttonText.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
+                <mat-error *ngIf="buttonText.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 2</mat-error>
+                <mat-error *ngIf="buttonText.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 20</mat-error>
               </mat-form-field>
             </div>
             <div class="control-input">
               <mat-form-field class="messages-input">
-                <input type="text" [placeholder]="'Last Button text'" matInput formControlName="lastButtonText">
+                <input type="text" [placeholder]="'LAST_BUTTON_TEXT' | translate" matInput formControlName="lastButtonText">
                 <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
-                <mat-error *ngIf="buttonText.hasError('required')">Required field</mat-error>
-                <mat-error *ngIf="buttonText.hasError('minlength')">Min 2 characters</mat-error>
-                <mat-error *ngIf="buttonText.hasError('maxlength')">Max 20 characters</mat-error>
+                <mat-error *ngIf="buttonText.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
+                <mat-error *ngIf="buttonText.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 2</mat-error>
+                <mat-error *ngIf="buttonText.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 20</mat-error>
               </mat-form-field>
             </div>
           </div>
