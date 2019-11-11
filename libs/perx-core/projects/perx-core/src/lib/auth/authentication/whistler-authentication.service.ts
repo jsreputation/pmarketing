@@ -275,13 +275,16 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public mergeUserById(fromIds: number[], toId: number): Observable<void> {
-    return this.http.post<any>(this.apiHost + '/chown_requests', {
+    return this.http.post<any>(this.apiHost + '/cognito/chown_requests', {
       data: {
+        type: 'chown_requests',
         attributes: {
           from_ids: fromIds,
           to_id: toId
         }
       }
-    });
+    },
+      { headers: { 'Content-Type': 'application/vnd.api+json' } }
+    );
   }
 }

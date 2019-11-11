@@ -60,10 +60,10 @@ export class PIComponent implements OnInit, OnDestroy {
         this.popupData = JSON.parse(params.popupData);
       }
       if (params && params.engagementType) {
-        this.engagementType = JSON.parse(params.engagementType);
+        this.engagementType = params.engagementType;
       }
       if (params && params.transactionId) {
-        this.transactionId = JSON.parse(params.transactionId);
+        this.transactionId = params.transactionId;
       }
     });
   }
@@ -86,6 +86,7 @@ export class PIComponent implements OnInit, OnDestroy {
         tap(() => { newUserId = this.authService.getUserId(); }),
         switchMap(() => this.authService.mergeUserById([oldUserId], newUserId)),
         catchError(() => throwError('PI_MERGE_FAIL')),
+        tap(() => this.authService.savePI(pi)),
         switchMap(() => {
           if (this.engagementType === 'game' && this.transactionId) {
             return this.gameService.prePlayConfirm(this.transactionId);
@@ -102,7 +103,6 @@ export class PIComponent implements OnInit, OnDestroy {
           this.dialog.open(PopupComponent, { data: this.popupData });
         },
         (error) => {
-          console.log(error);
           this.updateErrorMessage(error);
         }
       );
