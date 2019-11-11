@@ -1,8 +1,8 @@
-import { IWAssignedAttributes, IWAssignRequestAttributes } from '@perx/whistler';
+import { IWAssignedAttributes, IWAssignRequestAttributes, IWUser, IWPoolsApi, IWPools, IWAudiences } from '@perx/whistler';
 
 export class AudiencesHttpAdapter {
 
-  public static transformFromUserForm(data: IAudiencesUserForm): IJsonApiItem<IUserApi> {
+  public static transformFromUserForm(data: IAudiencesUserForm): IJsonApiItem<Partial<IWUser>> {
     const optionalPool = data.audienceList ? { relationships: { pools: { data: data.audienceList } } } : {};
     const mainUserApiObject = {
       type: 'users',
@@ -16,10 +16,9 @@ export class AudiencesHttpAdapter {
       }
     };
     return Object.assign(mainUserApiObject, optionalPool);
-
   }
 
-  public static transformUpdateUserPools(data: IUser): IJsonApiItem<any> {
+  public static transformUpdateUserPools(data: IWUser): IJsonApiItem<any> {
     return {
       type: data.type,
       id: data.id,
@@ -32,18 +31,18 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformUserWithPools(data: IJsonApiPayload<IUserApi>): IUser {
+  public static transformUserWithPools(data: IJsonApiPayload<Partial<IWUser>>): IWUser {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const userData = AudiencesHttpAdapter.transformUser(data.data);
-    userData.pools = data.data.relationships.pools.data.map((item: IJsonApiItem<IPoolsApi>) => poolMap[item.id]).sort().join(', ');
+    userData.pools = data.data.relationships.pools.data.map((item: IJsonApiItem<IWPoolsApi>) => poolMap[item.id]).sort().join(', ');
     return userData;
   }
 
-  public static transformUsersWithPools(data: IJsonApiListPayload<IUserApi>): ITableData<IUser> {
+  public static transformUsersWithPools(data: IJsonApiListPayload<Partial<IWUser>>): ITableData<IWUser> {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
-    const usersData = data.data.map((item: IJsonApiItem<IUserApi>) => {
+    const usersData = data.data.map((item: IJsonApiItem<Partial<IWUser>>) => {
       const formattedUser = AudiencesHttpAdapter.transformUser(item);
-      formattedUser.pools = item.relationships.pools.data.map((pool: IJsonApiItem<IPoolsApi>) => poolMap[pool.id]).sort().join(', ');
+      formattedUser.pools = item.relationships.pools.data.map((pool: IJsonApiItem<IWPoolsApi>) => poolMap[pool.id]).sort().join(', ');
       return formattedUser;
     });
     return {
@@ -51,7 +50,7 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformAudiencesTableData(data: any): ITableData<IAudiences> {
+  public static transformAudiencesTableData(data: any): ITableData<IWAudiences> {
     return {
       data: data.data.map(item => AudiencesHttpAdapter.transformAudiences(item)), meta: data.meta
     };
@@ -87,7 +86,7 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  private static transformUser(data: IJsonApiItem<IUserApi>): IUser {
+  private static transformUser(data: IJsonApiItem<Partial<IWUser>>): IWUser {
     return {
       id: data.id,
       type: data.type,
@@ -105,10 +104,10 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  private static createPoolMap(data?: IJsonApiItem<IPoolsApi>[]): IPools {
+  private static createPoolMap(data?: IJsonApiItem<IWPoolsApi>[]): IWPools {
     const mapPool = {};
     if (data) {
-      data.forEach((element: IJsonApiItem<IPoolsApi>) => {
+      data.forEach((element: IJsonApiItem<IWPoolsApi>) => {
         mapPool[element.id] = element.attributes.name;
       });
     }
@@ -116,7 +115,7 @@ export class AudiencesHttpAdapter {
   }
 
   // Audiences List
-  private static transformAudiences(data: any): IAudiences {
+  private static transformAudiences(data: any): IWAudiences {
     return {
       id: data.id, type: data.type, self: data.links.self, urn: data.attributes.urn,
       created_at: data.attributes.created_at, updated_at: data.attributes.updated_at, name: data.attributes.name,
