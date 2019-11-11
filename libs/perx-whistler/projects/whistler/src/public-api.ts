@@ -24,8 +24,8 @@ export {
 export { IWCampaignAttributes } from './lib/campaign/campaign';
 export { WEngagementType } from './lib/campaign/campaign';
 export {
-  IJsonApiListPayload, IJsonApiItemPayload, IMeta, IJsonApiItem,
-  IJsonApiPatchItem, IJsonApiPatchData, IJsonApiPostItem, IJsonApiPostData
+  IWJsonApiListPayload, IWJsonApiItemPayload, IWMeta, IWJsonApiItem,
+  IWJsonApiPatchItem, IWJsonApiPatchData, IWJsonApiPostItem, IWJsonApiPostData
 } from './lib/jsonapi.payload';
 
 export {
