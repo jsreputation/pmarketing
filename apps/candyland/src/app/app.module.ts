@@ -21,7 +21,10 @@ import { WINDOW_PROVIDERS } from '@cl-core/services/window.service';
 import { GestureConfig } from '@angular/material/core';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
-import { setLanguage, translateLoader } from '@cl-core/translate-services/multiple-translate-loader-service';
+import {
+  setLanguage,
+  translateLoader
+} from '@cl-core/translate-services/multiple-translate-loader-service';
 
 @NgModule({
   declarations: [
@@ -45,8 +48,12 @@ import { setLanguage, translateLoader } from '@cl-core/translate-services/multip
       loader: {
         provide: TranslateLoader,
         deps: [HttpClient],
-        useFactory: (httpClient) => translateLoader(httpClient, [
+        useFactory: (httpClient) => translateLoader(httpClient,  [
           { prefix: './assets/i18n/', suffix: '.json' },
+          { prefix: '/assets/i18n/dashboard/', suffix: '.json' },
+          { prefix: '/assets/i18n/engagements/', suffix: '.json' },
+          { prefix: '/assets/i18n/rewards/', suffix: '.json' },
+          { prefix: '/assets/i18n/engagements/', suffix: '.json' },
           { prefix: '/assets/i18n/common/', suffix: '.json'}
         ])
       }

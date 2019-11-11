@@ -54,9 +54,7 @@ import { TagListModule } from '@cl-shared/components/tag-list/tag-list.module';
 import { RewardLoyaltyFormGroupComponent } from './components/reward-loyalty-form-group/reward-loyalty-form-group.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RewardLoyaltySetupGroupComponent } from './components/reward-loyalty-setup-group/reward-loyalty-setup-group.component';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { translateLoader } from '@cl-core/translate-services/multiple-translate-loader-service';
-import { HttpClient } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   providers: [
@@ -120,18 +118,7 @@ import { HttpClient } from '@angular/common/http';
     PipesModule,
     TagListModule,
     MatTabsModule,
-    TranslateModule.forChild({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (httpClient) => translateLoader(httpClient, [
-          { prefix: '/assets/i18n/rewards/', suffix: '.json' },
-          { prefix: '/assets/i18n/merchants/', suffix: '.json' },
-          { prefix: '/assets/i18n/common/', suffix: '.json'}
-        ]),
-        deps: [HttpClient]
-      },
-      isolate: true
-    })
+    TranslateModule
   ],
   entryComponents: [
     RewardReplenishPopupComponent
