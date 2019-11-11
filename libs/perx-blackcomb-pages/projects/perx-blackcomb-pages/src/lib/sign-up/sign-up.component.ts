@@ -50,7 +50,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.answers = answers;
   }
 
-  public snake_caseCamelise(propertyName: string): string {
+  private snake_caseCamelise(propertyName: string): string {
     return propertyName.replace(/_\w/g, (m) => m[1].toUpperCase());
   }
 
