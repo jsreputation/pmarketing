@@ -25,6 +25,6 @@ export class LandingComponent implements OnInit {
   }
 
   public onSignUp(): void {
-    console.log('Sign Up clicked');
+    this.router.navigateByUrl('/signup');
   }
 }
