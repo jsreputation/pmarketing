@@ -50,7 +50,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   private onTouched: any = noop;
   private isFirstInit: boolean;
   private noOutCome: { probability: 0, outcomeId: '' };
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public get enableProbability(): AbstractControl {
     return this.group.get('enableProbability');

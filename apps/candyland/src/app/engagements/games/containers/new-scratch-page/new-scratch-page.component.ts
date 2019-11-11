@@ -57,7 +57,7 @@ import { IWScratchGameEngagementAttributes } from '@perx/whistler';
 export class NewScratchPageComponent implements OnInit, OnDestroy {
   @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public id: string;
   public form: FormGroup;

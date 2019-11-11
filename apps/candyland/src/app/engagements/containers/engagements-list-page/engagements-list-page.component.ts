@@ -27,7 +27,7 @@ import { IEngagementType } from '@cl-core/models/engagement/engagement.interface
 })
 export class EngagementsListPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private static CAMPAIGN_ACTION: string = 'campaign';
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public dataSource: MatTableDataSource<IEngagementType> = new MatTableDataSource<IEngagementType>();
   public tabsFilterConfig: OptionConfig[];

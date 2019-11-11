@@ -13,7 +13,7 @@ import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
   styleUrls: ['./general.component.scss']
 })
 export class GeneralComponent implements OnInit, OnDestroy {
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public timeZones$: Observable<ITimeZone[]>;
   public currency$: Observable<Currency[]>;
