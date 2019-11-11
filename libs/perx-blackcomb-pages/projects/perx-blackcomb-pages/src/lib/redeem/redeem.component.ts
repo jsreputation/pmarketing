@@ -75,8 +75,11 @@ export class RedeemComponent implements OnInit, OnDestroy {
 
           if (voucher.reward.displayProperties && voucher.reward.displayProperties.rewardSuccessPopUp) {
             this.rewardSuccessPopUp.title = voucher.reward.displayProperties.rewardSuccessPopUp.headLine;
-            this.rewardSuccessPopUp.text = voucher.reward.displayProperties.rewardSuccessPopUp.subHeadLine || this.rewardSuccessPopUp.text;
-            this.rewardSuccessPopUp.imageUrl = voucher.reward.displayProperties.rewardSuccessPopUp.imageURL;
+            this.rewardSuccessPopUp.text = voucher.reward.displayProperties.rewardSuccessPopUp.subHeadLine;
+            this.rewardSuccessPopUp.imageUrl = voucher.reward.displayProperties.rewardSuccessPopUp.imageURL ||
+              this.rewardSuccessPopUp.imageUrl;
+            this.rewardSuccessPopUp.buttonTxt = voucher.reward.displayProperties.rewardSuccessPopUp.buttonTxt ||
+              this.rewardSuccessPopUp.buttonTxt;
           }
 
           if (voucher.reward.displayProperties && voucher.reward.displayProperties.codeInstructionsText) {
@@ -85,7 +88,9 @@ export class RedeemComponent implements OnInit, OnDestroy {
 
           if (voucher.reward.displayProperties && voucher.reward.displayProperties.errorPopUp) {
             this.errorPopUp.title = voucher.reward.displayProperties.errorPopUp.headLine;
-            this.errorPopUp.imageUrl = voucher.reward.displayProperties.errorPopUp.imageURL;
+            this.errorPopUp.text = voucher.reward.displayProperties.errorPopUp.subHeadLine;
+            this.errorPopUp.buttonTxt = voucher.reward.displayProperties.errorPopUp.buttonTxt || this.errorPopUp.buttonTxt;
+            this.errorPopUp.imageUrl = voucher.reward.displayProperties.errorPopUp.imageURL || this.errorPopUp.imageUrl;
           }
         }),
         takeUntil(this.destroy$)

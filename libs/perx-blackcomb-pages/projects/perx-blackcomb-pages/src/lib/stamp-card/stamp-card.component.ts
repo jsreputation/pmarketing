@@ -59,15 +59,15 @@ export class StampCardComponent implements OnInit, OnDestroy {
         this.background = stampCard.displayProperties.bgImage;
         this.cardBackground = stampCard.displayProperties.cardBgImage;
         if (stampCard.displayProperties.noRewardsPopUp) {
-          this.errorPopUp.title = stampCard.displayProperties.noRewardsPopUp.headLine || this.errorPopUp.title;
-          this.errorPopUp.text = stampCard.displayProperties.noRewardsPopUp.subHeadLine || this.errorPopUp.text;
+          this.errorPopUp.title = stampCard.displayProperties.noRewardsPopUp.headLine;
+          this.errorPopUp.text = stampCard.displayProperties.noRewardsPopUp.subHeadLine;
           this.errorPopUp.buttonTxt = stampCard.displayProperties.noRewardsPopUp.buttonTxt || this.errorPopUp.buttonTxt;
           this.errorPopUp.imageUrl = stampCard.displayProperties.noRewardsPopUp.imageURL || this.errorPopUp.imageUrl;
         }
 
         if (stampCard.displayProperties.successPopUp) {
-          this.rewardSuccessPopUp.title = stampCard.displayProperties.successPopUp.headLine || this.rewardSuccessPopUp.title;
-          this.rewardSuccessPopUp.text = stampCard.displayProperties.successPopUp.subHeadLine || this.rewardSuccessPopUp.text;
+          this.rewardSuccessPopUp.title = stampCard.displayProperties.successPopUp.headLine;
+          this.rewardSuccessPopUp.text = stampCard.displayProperties.successPopUp.subHeadLine;
           this.rewardSuccessPopUp.buttonTxt = stampCard.displayProperties.successPopUp.buttonTxt || this.rewardSuccessPopUp.buttonTxt;
           this.rewardSuccessPopUp.imageUrl = stampCard.displayProperties.successPopUp.imageURL || this.rewardSuccessPopUp.imageUrl;
         }
