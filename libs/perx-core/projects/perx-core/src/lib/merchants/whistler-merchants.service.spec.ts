@@ -4,7 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { ConfigModule } from '../config/config.module';
 import { IMerchant } from './models/merchants.model';
 import { IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
-import { IMerchant as IWMerchant } from '@perx/whistler';
+import { IWMerchant } from '@perx/whistler';
 import { Type } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';

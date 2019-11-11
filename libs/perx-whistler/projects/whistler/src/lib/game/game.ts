@@ -6,7 +6,7 @@ export const enum WGameType {
   scratch = 'scratch'
 }
 
-export interface WAttbsObjGame {
+export interface IWAttbsObjGame {
   number_of_tries?: number;
   urn: string;
   created_at: string;
@@ -17,10 +17,10 @@ export interface WAttbsObjGame {
   description: string;
   image_url: string;
   properties: {};
-  display_properties: WGameDisplayProperties;
+  display_properties: IWGameDisplayProperties;
 }
 
-export interface WAttbsObjEntity {
+export interface IWAttbsObjEntity {
   comm_channel: null;
   created_at: string;
   end_date_time: null;
@@ -49,14 +49,14 @@ export interface WAttbsObjEntity {
   };
 }
 
-export interface WGameDisplayProperties {
+export interface IWGameDisplayProperties {
   title: string;
   button: string;
   sub_title: string;
   background_img_url?: string;
 }
 
-export interface WTreeDisplayProperties extends WGameDisplayProperties {
+export interface IWTreeDisplayProperties extends IWGameDisplayProperties {
   tree_img_url: string;
   nb_hanged_gifts: number;
   gift_box_img_url: string;
@@ -64,8 +64,14 @@ export interface WTreeDisplayProperties extends WGameDisplayProperties {
   nb_gifts_to_drop?: number;
 }
 
-export interface WPinataDisplayProperties extends WGameDisplayProperties {
+export interface IWPinataDisplayProperties extends IWGameDisplayProperties {
   closed_pinata_img_url: string;
   cracking_pinata_img_url: string;
   opened_pinata_img_url: string;
+}
+
+export interface IWScratchDisplayProperties extends IWGameDisplayProperties {
+  post_scratch_fail_img_url: string;
+  post_scratch_success_img_url: string;
+  pre_scratch_img_url: string;
 }
