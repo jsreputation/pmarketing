@@ -49,11 +49,6 @@
       display: flex;
       flex-direction: column;
 
-      &.hsbc-xmas {
-        position: relative;
-        top: 15vh;
-      }
-
       .error_msg {
         flex: 1;
         display: flex;
@@ -80,6 +75,7 @@
 
     h2 {
       font-size: 2rem;
+      margin-top: 8vh;
       margin-bottom: 3.2rem;
     }
 
@@ -89,6 +85,11 @@
       background-color: #ffffff;
       padding: 2.4rem 1.5rem;
       flex: 0;
+
+      &.hsbc-xmas {
+        position: relative;
+        top: 5vh;
+      }
 
       h1 {
         text-align: left;
