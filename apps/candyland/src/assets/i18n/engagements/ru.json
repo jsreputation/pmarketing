@@ -51,5 +51,15 @@
   "POST-SCRATCH_IMAGE_(SUCCESS)": "Post-Scratch Image (Success)",
   "POST-SCRATCH_IMAGE_(FAIL)": "Post-Scratch Image (Fail)",
   "CALL_TO_ACTION": "Call to Action",
-  "LAST_BUTTON_TEXT": "Last Button text"
+  "LAST_BUTTON_TEXT": "Last Button text",
+  "TOTAL_NUMBER_OF_STAMPS_ON_A_CARD": "Total number of stamps on a card",
+  "REWARD_SLOT": "Reward slot",
+  "PRE-STAMP": "Pre-stamp",
+  "REWARD_PRE-STAMP": "Reward Pre-stamp",
+  "YOU_CAN_SET_THE_REWARDS_WHEN": "You can set the rewards when",
+  "YOU_CREATE_A_CAMPAIGN": "you create a campaign",
+  "POST-STAMP": "Post-stamp",
+  "REWARD_POST-STAMP": "Reward Post-stamp",
+  "SINGLE_REWARD": "Single Reward",
+  "MULTIPLE_REWARDS": "Multiple Rewards"
 }
