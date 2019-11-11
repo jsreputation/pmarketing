@@ -64,7 +64,7 @@ import { HttpClient } from '@angular/common/http';
       loader: {
         provide: TranslateLoader,
         useFactory: (httpClient) => translateLoader(httpClient, [
-          { prefix: '/assets/i18n/engagements/', suffix: '.json' },
+          { prefix: '/assets/i18n/campaigns/', suffix: '.json' },
           { prefix: '/assets/i18n/common/', suffix: '.json'}
         ]),
         deps: [HttpClient]

@@ -1,16 +1,16 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {OrderComponent} from './order.component';
-import {HeaderComponent} from '../header/header.component';
-import {OrderQuantityComponent} from '../order/order-quantity/order-quantity.component';
-import {MatIconModule, MatToolbarModule, MatListModule, MatDividerModule} from '@angular/material';
-import {FormsModule} from '@angular/forms';
-import {Router} from '@angular/router';
-import {ProductService} from '../services/product.service';
-import {from, of} from 'rxjs';
-import {Type} from '@angular/core';
-import {IMerchantAdminService, NotificationService, TokenStorage} from '@perx/core';
-import {Location} from '@angular/common';
+import { OrderComponent } from './order.component';
+import { HeaderComponent } from '../header/header.component';
+import { OrderQuantityComponent } from '../order/order-quantity/order-quantity.component';
+import { MatIconModule, MatToolbarModule, MatListModule, MatDividerModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ProductService } from '../services/product.service';
+import { from, of } from 'rxjs';
+import { Type } from '@angular/core';
+import { IMerchantAdminService, NotificationService, TokenStorage } from '@perx/core';
+import { Location } from '@angular/common';
 
 describe('OrderComponent', () => {
   let component: OrderComponent;
@@ -21,7 +21,8 @@ describe('OrderComponent', () => {
     }
   };
   const tokenStorageStub = {
-    getAppInfoProperty: () => {}
+    getAppInfoProperty: () => {
+    }
   };
   const routerStub = {
     navigate: () => ({}),
@@ -46,7 +47,7 @@ describe('OrderComponent', () => {
     transaction_type: 'Glucophage XR Tab',
     updated_at: new Date('2019-10-04T17:50:48.102Z'),
     user_account_id: 1,
-    workflow_id: null,
+    workflow_id: null
   };
 
   const merchantAdminServiceStub = {
@@ -61,7 +62,7 @@ describe('OrderComponent', () => {
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
       price: 100,
-      currency: 'HKD',
+      currency: 'HKD'
     },
     {
       name: 'Glucophage XR Tab',
@@ -69,7 +70,7 @@ describe('OrderComponent', () => {
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
       price: 50,
-      currency: 'HKD',
+      currency: 'HKD'
     },
     {
       name: 'Glucophage XR Tab',
@@ -77,7 +78,7 @@ describe('OrderComponent', () => {
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
       price: 75,
-      currency: 'HKD',
+      currency: 'HKD'
     },
     {
       name: 'Glucovance Tab',
@@ -85,7 +86,7 @@ describe('OrderComponent', () => {
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
       price: 50,
-      currency: 'HKD',
+      currency: 'HKD'
     },
     {
       name: 'Glucovance Tab',
@@ -93,7 +94,7 @@ describe('OrderComponent', () => {
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
       price: 100,
-      currency: 'HKD',
+      currency: 'HKD'
     },
     {
       name: 'Concor Tab',
@@ -101,7 +102,7 @@ describe('OrderComponent', () => {
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
       price: 50,
-      currency: 'HKD',
+      currency: 'HKD'
     },
     {
       name: 'Concor Tab',
@@ -109,7 +110,7 @@ describe('OrderComponent', () => {
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
       price: 100,
-      currency: 'HKD',
+      currency: 'HKD'
     }
   ];
   const productServiceStub = {
@@ -118,26 +119,26 @@ describe('OrderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        OrderComponent,
-        HeaderComponent,
-        OrderQuantityComponent
-      ],
-      imports: [MatIconModule, MatToolbarModule, FormsModule, MatListModule, MatDividerModule],
-      providers: [
-        {provide: Router, useValue: routerStub},
-        {provide: ProductService, useValue: productServiceStub},
-        {provide: Location, useValue: locationStub},
-        {provide: IMerchantAdminService, useValue: merchantAdminServiceStub},
-        {
-          provide: NotificationService, useValue: {
-            addSnack: () => {
+        declarations: [
+          OrderComponent,
+          HeaderComponent,
+          OrderQuantityComponent
+        ],
+        imports: [MatIconModule, MatToolbarModule, FormsModule, MatListModule, MatDividerModule],
+        providers: [
+          {provide: Router, useValue: routerStub},
+          {provide: ProductService, useValue: productServiceStub},
+          {provide: Location, useValue: locationStub},
+          {provide: IMerchantAdminService, useValue: merchantAdminServiceStub},
+          {
+            provide: NotificationService, useValue: {
+              addSnack: () => {
+              }
             }
-          }
-        },
-        { provide: TokenStorage, useValue: tokenStorageStub}
-      ]
-    })
+          },
+          {provide: TokenStorage, useValue: tokenStorageStub}
+        ]
+      })
       .compileComponents();
   }));
 
@@ -165,14 +166,14 @@ describe('OrderComponent', () => {
         imageUrl: 'https://picsum.photos/200',
         pointsPerUnit: 5,
         price: 100,
-        currency: 'HKD',
+        currency: 'HKD'
       }, {
         name: 'Glucophage XR Tab',
         description: '500mg 60\'s',
         imageUrl: 'https://picsum.photos/200',
         pointsPerUnit: 5,
         price: 50,
-        currency: 'HKD',
+        currency: 'HKD'
       }];
       const productServiceSpy = spyOn(productService, 'getProducts').and.returnValue(of(productsStub));
       component.ngOnInit();

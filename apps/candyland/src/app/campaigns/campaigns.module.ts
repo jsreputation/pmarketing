@@ -78,6 +78,9 @@ import { SimpleMobileViewModule, PipesModule } from '@cl-shared';
 import { SurveyModule as PerxSurveyModule, GameModule, ConfigModule, PuzzlesModule, RewardsModule as PerxRewardsModule } from '@perx/core';
 import { environment } from '@cl-environments/environment';
 import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-preview/campaigns-mobile-preview.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { translateLoader } from '@cl-core/translate-services/multiple-translate-loader-service';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   providers: [
@@ -157,6 +160,17 @@ import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-p
     GameModule,
     PuzzlesModule,
     PerxRewardsModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (httpClient) => translateLoader(httpClient, [
+          { prefix: '/assets/i18n/campaigns/', suffix: '.json' },
+          { prefix: '/assets/i18n/common/', suffix: '.json'}
+        ]),
+        deps: [HttpClient]
+      },
+      isolate: true
+    })
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

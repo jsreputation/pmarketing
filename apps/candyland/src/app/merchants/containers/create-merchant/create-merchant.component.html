@@ -1,10 +1,10 @@
 <article class="create-merchant-form" [formGroup]="formMerchant">
   <header class="page-header full-with">
     <mat-form-field class="pagetitle-input" floatLabel="never">
-      <input type="text" matInput formControlName="name" placeholder="Enter title here">
-      <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
-      <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
-      <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+      <input type="text" matInput formControlName="name" [placeholder]="'MERCHANTS' | translate">
+      <mat-error *ngIf="name.hasError('required')">{{'ERROR_REQUIRED' | translate}}</mat-error>
+      <mat-error *ngIf="name.hasError('minlength')">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
+      <mat-error *ngIf="name.hasError('maxlength')">{{'ERROR_MAX_LENGTH' | translate}} 60</mat-error>
     </mat-form-field>
     <div class="btn-group">
       <cl-button [classList]="'secondary'"
@@ -12,14 +12,14 @@
                  (click)="comeBack()"
       >
         <span>
-          Cancel
+          {{'BTN_CANCEL' | translate}}
         </span>
       </cl-button>
       <cl-button [classList]="'primary cta cta-save'"
                  (click)="save()"
       >
         <span>
-          Save
+          {{'BTN_SAVE' | translate}}
         </span>
       </cl-button>
     </div>
@@ -30,7 +30,7 @@
         <mat-card class="card-fieldset">
           <div class="merchant-wrap">
             <p class="merchant-title">
-              Merchant Info
+              {{'MERCHANT_INFO' | translate}}
             </p>
           </div>
           <cl-create-merchant-form [formMerchant]="formMerchant"></cl-create-merchant-form>

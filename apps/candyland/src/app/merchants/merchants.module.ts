@@ -14,6 +14,9 @@ import { ListMerchantViewModule } from '../shared/components/list-merchant-view/
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { CreateMerchantPopupModule } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.module';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { translateLoader } from '@cl-core/translate-services/multiple-translate-loader-service';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,19 @@ import { CreateMerchantPopupModule } from '@cl-shared/containers/create-merchant
     SearchFilterModule,
     TableFiltersModule,
     PaginationModule,
-    NoDataModule
+    NoDataModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (httpClient) => translateLoader(httpClient, [
+          {prefix: '/assets/i18n/merchants/', suffix: '.json'},
+          {prefix: '/assets/i18n/common/', suffix: '.json'}
+        ]),
+        deps: [HttpClient]
+      },
+      isolate: true
+    })
   ]
 })
-export class MerchantsModule { }
+export class MerchantsModule {
+}
