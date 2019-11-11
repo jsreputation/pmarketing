@@ -61,6 +61,9 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   @Input()
   public availableStampImg: string | null = null;
 
+  @Input()
+  public availableRewardImg: string | null = null;
+
   @Output()
   private availableStampClicked: EventEmitter<IStamp> = new EventEmitter<IStamp>();
 
@@ -107,7 +110,8 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
     const stamped: boolean = (itemIndex < this.stamps.length && this.stamps[itemIndex].state === StampState.redeemed);
 
     if (this.isIndexPresentInRewards(itemIndex)) {
-      return stamped ? this.rewardPostStamp : this.rewardPreStamp;
+      const rewardPreStampImage = this.availableRewardImg ? this.availableRewardImg : this.rewardPreStamp;
+      return stamped ? this.rewardPostStamp : rewardPreStampImage;
     }
 
     const preStampImage = this.isIssued(index, rowNum) ? this.availableStampImg : this.preStampImg;
