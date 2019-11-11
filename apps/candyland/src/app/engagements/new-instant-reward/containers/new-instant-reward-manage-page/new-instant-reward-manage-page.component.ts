@@ -20,10 +20,10 @@ import { MockRewardsMobilePreview } from '../../../../../assets/actives/reward/r
 import {
   AvailableNewEngagementService, InstantRewardsService, RoutingStateService, SettingsService
 } from '@cl-core/services';
-import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
+import { IWEngagementAttributes } from '@perx/whistler';
 
 @Component({
   selector: 'cl-new-instant-reward-manage-page',
@@ -32,7 +32,7 @@ import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-v
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild(SimpleMobileViewComponent, { static: false }) public simpleMobileViewComponent: SimpleMobileViewComponent;
+  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<any> = new Subject();
 
@@ -119,12 +119,15 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
       .pipe(switchMap((imageUrl: IUploadedFile) => {
         if (this.id) {
           return this.instantRewardsService.updateInstantReward(this.id,
-            { ...(this.form.value as IRewardForm), image_url: imageUrl.url });
+            {...(this.form.value as IRewardForm), image_url: imageUrl.url});
         }
-        return this.instantRewardsService.createRewardGame({ ...this.form.value, image_url: imageUrl.url }).pipe(
-          map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
-          tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
-        );
+        return this.instantRewardsService.createRewardGame({...this.form.value, image_url: imageUrl.url})
+          .pipe(
+            tap(
+              (engagement: IJsonApiPayload<IWEngagementAttributes>) =>
+                this.availableNewEngagementService.transformAndSetNewEngagement(engagement)
+            )
+          );
       })).pipe(takeUntil(this.destroy$))
       .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
@@ -136,8 +139,8 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
   private initRewardForm(): void {
     this.form = this.fb.group({
       name: [null, [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]
+        Validators.minLength(1),
+        Validators.maxLength(60)]
       ],
       headlineMessage: [null, [
         Validators.required,
@@ -190,7 +193,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
     return this.instantRewardsService.getInstantRewardData()
       .pipe(
         tap(data => this.rewardData = data),
-        takeUntil(this.destroy$),
+        takeUntil(this.destroy$)
       );
   }
 
@@ -204,7 +207,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
         }
         return of(null);
       }),
-      takeUntil(this.destroy$),
+      takeUntil(this.destroy$)
     );
   }
 }
