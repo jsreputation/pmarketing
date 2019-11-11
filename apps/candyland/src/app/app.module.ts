@@ -51,9 +51,10 @@ import {
         useFactory: (httpClient) => translateLoader(httpClient,  [
           { prefix: './assets/i18n/', suffix: '.json' },
           { prefix: '/assets/i18n/dashboard/', suffix: '.json' },
-          { prefix: '/assets/i18n/engagements/', suffix: '.json' },
+          { prefix: '/assets/i18n/merchants/', suffix: '.json' },
           { prefix: '/assets/i18n/rewards/', suffix: '.json' },
           { prefix: '/assets/i18n/engagements/', suffix: '.json' },
+          { prefix: '/assets/i18n/audience/', suffix: '.json' },
           { prefix: '/assets/i18n/common/', suffix: '.json'}
         ])
       }

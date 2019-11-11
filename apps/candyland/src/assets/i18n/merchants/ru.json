@@ -11,5 +11,8 @@
   "CITY": "City",
   "STATE/PROVINCE": "State/Province",
   "POSTAL_CODE": "Postal code",
-  "BRANCH_NAME": "Branch Name"
+  "BRANCH_NAME": "Branch Name",
+  "SEARCH_FOR_MERCHANTS": "Search for merchants",
+  "YOU_NEED_MERCHANT": "You need Merchants to build your eco-system!",
+  "NO_DATA_MERCHANT": "Let's begin by creating your first Merchant"
 }
