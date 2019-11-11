@@ -37,16 +37,16 @@ describe('OrderComponent', () => {
   };
   const transaction = {
     amount: 5,
-    created_at: new Date('2019-10-04T17:50:48.102Z'),
+    createdAt: new Date('2019-10-04T17:50:48.102Z'),
     currency: 'points',
     id: 36,
     properties: null,
-    transaction_date: new Date('2019-10-04T17:50:48.092Z'),
-    transaction_reference: 'generatedRef',
-    transaction_type: 'Glucophage XR Tab',
-    updated_at: new Date('2019-10-04T17:50:48.102Z'),
-    user_account_id: 1,
-    workflow_id: null,
+    transactionDate: new Date('2019-10-04T17:50:48.092Z'),
+    transactionReference: 'generatedRef',
+    transactionType: 'Glucophage XR Tab',
+    updatedAt: new Date('2019-10-04T17:50:48.102Z'),
+    userAccountId: 1,
+    workflowId: null,
   };
 
   const merchantAdminServiceStub = {

@@ -8,15 +8,15 @@ import { ISlice } from '@perx/core';
 })
 export class SpinComponent  {
   public mockSlices: ISlice[] = [
-    {id: '1', label: 'abc', background_color: '#49875b', label_color: 'black'},
-    {id: '2', label: 'bcd', background_color: '#f6ff80', label_color: 'blue'},
-    {id: '3', label: 'cde', background_color: '#f578a4', label_color: 'black'},
-    {id: '4', label: 'def', background_color: '#147dd3'},
-    {id: '5', label: 'efg', background_color: '#7b1b9e', label_color: '#ffffff'},
-    {id: '6', label: 'abc', background_color: '#9b99c7', label_color: 'green'},
-    {id: '7', label: 'bcd', background_color: '#8c383e', label_color: '#ffffff'},
-    {id: '8', label: 'cde', background_color: '#fca562', label_color: '#000000'},
-    {id: '9', label: 'def', background_color: '#4ab5b0', label_color: '#000000'},
-    {id: '10', label: 'efg', background_color: '#fc58b8', label_color: 'black'},
+    {id: '1', label: 'abc', backgroundColor: '#49875b', labelColor: 'black'},
+    {id: '2', label: 'bcd', backgroundColor: '#f6ff80', labelColor: 'blue'},
+    {id: '3', label: 'cde', backgroundColor: '#f578a4', labelColor: 'black'},
+    {id: '4', label: 'def', backgroundColor: '#147dd3'},
+    {id: '5', label: 'efg', backgroundColor: '#7b1b9e', labelColor: '#ffffff'},
+    {id: '6', label: 'abc', backgroundColor: '#9b99c7', labelColor: 'green'},
+    {id: '7', label: 'bcd', backgroundColor: '#8c383e', labelColor: '#ffffff'},
+    {id: '8', label: 'cde', backgroundColor: '#fca562', labelColor: '#000000'},
+    {id: '9', label: 'def', backgroundColor: '#4ab5b0', labelColor: '#000000'},
+    {id: '10', label: 'efg', backgroundColor: '#fc58b8', labelColor: 'black'},
   ];
 }

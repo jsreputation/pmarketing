@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IWAssignedAttributes, IWAssignRequestAttributes } from '@perx/whistler';
+import { IWAssignedAttributes, IWAssignRequestAttributes, IWUser , IWPoolsApi } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,8 @@ export class AudiencesHttpsService {
   constructor(private http: HttpClient) {
   }
 
-  public getUser(id: string, params: HttpParams): Observable<IJsonApiPayload<IUserApi>> {
-    return this.http.get<IJsonApiPayload<IUserApi>>(`${ApiConfig.getAllUsers}/${id}`, { params });
+  public getUser(id: string, params: HttpParams): Observable<IJsonApiPayload<Partial<IWUser>>> {
+    return this.http.get<IJsonApiPayload<Partial<IWUser>>>(`${ApiConfig.getAllUsers}/${id}`, { params });
   }
 
   public getAudiences(params: HttpParams): Observable<IJsonApiPayload<any>> {
@@ -31,16 +31,16 @@ export class AudiencesHttpsService {
     return this.http.get<IJsonApiListPayload<any>>(ApiConfig.getAllUsers, { params });
   }
 
-  public createUser(data: IJsonApiItem<IUserApi>): Observable<IJsonApiPayload<IUserApi>> {
-    return this.http.post<IJsonApiPayload<IUserApi>>(ApiConfig.getAllUsers, { data });
+  public createUser(data: IJsonApiItem<Partial<IWUser>>): Observable<IJsonApiPayload<Partial<IWUser>>> {
+    return this.http.post<IJsonApiPayload<Partial<IWUser>>>(ApiConfig.getAllUsers, { data });
   }
 
-  public updateUser(id: string, data: IJsonApiItem<any>): Observable<IJsonApiPayload<IUserApi>> {
-    return this.http.post<IJsonApiPayload<IUserApi>>(ApiConfig.getAllUsers + '/' + id, { data });
+  public updateUser(id: string, data: IJsonApiItem<any>): Observable<IJsonApiPayload<Partial<IWUser>>> {
+    return this.http.post<IJsonApiPayload<Partial<IWUser>>>(ApiConfig.getAllUsers + '/' + id, { data });
   }
 
-  public updateUserPools(data: IJsonApiItem<any>): Observable<IJsonApiListPayload<IPoolsApi>> {
-    return this.http.patch<IJsonApiListPayload<IPoolsApi>>(`${ApiConfig.getAllUsers}/${data.id}`, { data });
+  public updateUserPools(data: IJsonApiItem<any>): Observable<IJsonApiListPayload<IWPoolsApi>> {
+    return this.http.patch<IJsonApiListPayload<IWPoolsApi>>(`${ApiConfig.getAllUsers}/${data.id}`, { data });
   }
 
   public getAssignedVouchers(params: HttpParams): Observable<IJsonApiListPayload<IWAssignedAttributes>> {

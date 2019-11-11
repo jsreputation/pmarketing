@@ -2,6 +2,7 @@ import { IReward } from '../../rewards/models/reward.model';
 import { ICampaignDisplayProperties } from '../../perx-core.models';
 
 export enum CampaignType {
+  // eslint-disable-next-line
   give_reward = 'give_reward', // instant_outcome
   stamp = 'stamp', // loyalty
   game = 'game',
