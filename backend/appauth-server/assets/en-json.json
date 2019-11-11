@@ -45,8 +45,8 @@
     "DESCRIPTION": "Description",
     "STAMP_SUCCESS": "",
     "STAMP_ERROR": "",
-    "PI_NOT_EXIST": "",
-    "PI_MERGE_FAIL": "",
-    "PI_NO_TRANSACTION_MATCH": "",
-    "PI_TRANSACTION_CONFIRM_FAIL": ""
+    "PI_NOT_EXIST": "PI is not exist",
+    "PI_MERGE_FAIL": "PI update failed",
+    "PI_NO_TRANSACTION_MATCH": "There is no matching transaction found",
+    "PI_TRANSACTION_CONFIRM_FAIL": "Failed to claim the rewards"
 }
