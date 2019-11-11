@@ -57,6 +57,7 @@ export class LimitsHttpAdapter {
       case 'survey':
       case 'instant_reward':
       case 'stamps':
+      default:
         return {
           type: 'limits',
           attributes: {

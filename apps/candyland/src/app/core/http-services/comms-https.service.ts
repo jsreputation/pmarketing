@@ -27,22 +27,22 @@ export class CommsHttpsService {
     return this.http.post<IJsonApiPayload<any>>(ApiConfig.commsEventsPath, data);
   }
 
-  public deleteCommsEvent(id: string): Observable<any> {
-    return this.http.delete(`${ApiConfig.commsEventsPath}/${id}`);
+  public deleteCommsEvent(id: string): Observable<IJsonApiPayload<IWCommEventAttributes>> {
+    return this.http.delete<IJsonApiPayload<IWCommEventAttributes>>(`${ApiConfig.commsEventsPath}/${id}`);
   }
 
   public updateCommsTemplate(
     id: string,
     data: IJsonApiPayload<IWCommTemplateAttributes>
   ): Observable<IJsonApiPayload<IWCommTemplateAttributes>> {
-    return this.http.patch<IJsonApiPayload<any>>(ApiConfig.commsTemplatesPath + '/' + id, data);
+    return this.http.patch<IJsonApiPayload<IWCommTemplateAttributes>>(ApiConfig.commsTemplatesPath + '/' + id, data);
   }
 
   public createCommsTemplate(data: IJsonApiPayload<IWCommTemplateAttributes>): Observable<IJsonApiPayload<IWCommTemplateAttributes>> {
-    return this.http.post<IJsonApiPayload<any>>(ApiConfig.commsTemplatesPath, data);
+    return this.http.post<IJsonApiPayload<IWCommTemplateAttributes>>(ApiConfig.commsTemplatesPath, data);
   }
 
-  public deleteCommsTemplate(id: string): Observable<any> {
-    return this.http.delete(`${ApiConfig.commsTemplatesPath}/${id}`);
+  public deleteCommsTemplate(id: string): Observable<IJsonApiPayload<IWCommTemplateAttributes>> {
+    return this.http.delete<IJsonApiPayload<IWCommTemplateAttributes>>(`${ApiConfig.commsTemplatesPath}/${id}`);
   }
 }
