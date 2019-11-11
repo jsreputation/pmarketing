@@ -200,7 +200,7 @@ export { IConfig, IMicrositeSettings } from './lib/config/models/config.model';
 export {
   ITheme,
   PagesObject,
-  ITenantAttributes,
+  WhistlerITenant,
   AccountPageObject,
 } from './lib/utils/themes/themes.model';
 export { ThemesService } from './lib/utils/themes/themes.service';

@@ -1,9 +1,9 @@
 import cacheManager from 'cache-manager';
 import Jimp from 'jimp';
 import {
-  IJsonApiItem
+  IWJsonApiItem
 } from '@perx/whistler';
-import { ITenantAttributes } from '@perx/core';
+import { WhistlerITenant } from '@perx/core';
 import { Manifest, DARK, LIGHT } from '../types/manifest-model';
 import { ApiConfig } from '../types/apiConfig';
 import { Request, Response, NextFunction } from 'express';
@@ -16,7 +16,8 @@ const exportedImgDirectory = '/static/generated';
 const cache = cacheManager.caching({ store: 'memory', max: 1, ttl: 0 });
 
 const themeHasher = (themeObject: string): number => {
-  for (let i = 0, h = 0xdeadbeef; i < themeObject.length; i++) {
+  let h = 0xdeadbeef ;
+  for (let i = 0 ; i < themeObject.length; i++) {
     // tslint:disable-next-line:no-bitwise
     h = Math.imul(h ^ themeObject.charCodeAt(i), 2654435761); // eslint-disable-line
   }
@@ -25,7 +26,7 @@ const themeHasher = (themeObject: string): number => {
 };
 
 const generateManifest = (
-  tenantObj: IJsonApiItem<ITenantAttributes>,
+  tenantObj: IWJsonApiItem<WhistlerITenant>,
   endpointUrl: string,
   hash: string
 ): Manifest => {
@@ -39,14 +40,14 @@ const generateManifest = (
   const imageSizes = [16, 32, 64, 192, 512];
   imageSizes.forEach(size =>
     Jimp.read(displayProperties['theme.logo'])
-      .then(image => {
+      .then((image) => {
         // Do stuff with the image.
         image
           .clone()
           .contain(size, size)
           .write(`${endpointUrl}/${exportedImgDirectory}/${hash}/${size}x${size}.png`); // use a name, which includes the hash
       })
-      .catch(err => {
+      .catch((err: Error) => {
         console.log(err);
       })
   );
@@ -81,7 +82,7 @@ export const manifest = (apiConfig: ApiConfig) => async (
 
     const endpointTargetUrl = endpoint.target_url;
     const endpointRequest = await fetchTheme(url, apiConfig);
-    const tenantObj: IJsonApiItem<ITenantAttributes> = endpointRequest.data.data[0];
+    const tenantObj: IWJsonApiItem<WhistlerITenant> = endpointRequest.data.data[0];
     const displayProperties = tenantObj.attributes.display_properties;
     const hashedTheme = themeHasher(JSON.stringify(displayProperties)).toString(
       12
@@ -89,7 +90,7 @@ export const manifest = (apiConfig: ApiConfig) => async (
     // we could peek instd so its 'most-recentness' isn't updated
     res.type('application/manifest+json');
 
-    cache.get(hashedTheme, (_, result) => {
+    cache.get(hashedTheme, (_: Error, result: Manifest) => {
       // can be dont match or dont exist // doesnt matter -> we regenerate
       if (!result) {
         // try to fetch if no have or if the key change, then set, 0 for ttl everlast
