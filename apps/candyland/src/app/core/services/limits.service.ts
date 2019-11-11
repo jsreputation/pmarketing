@@ -29,7 +29,7 @@ export class LimitsService {
     );
   }
 
-  public updateLimits(
+  public updateLimit(
     id: string,
     data: { times?: number, duration: string },
     type: string,
@@ -41,10 +41,10 @@ export class LimitsService {
       return this.limitsHttpsService.deleteLimit(type, id);
     }
     const sendData = LimitsHttpAdapter.transformFromLimits(data, type, campaignId, engagementId);
-    return this.limitsHttpsService.updateLimits(id, { data: { id, ...sendData } }, type);
+    return this.limitsHttpsService.updateLimit(id, { data: { id, ...sendData } }, type);
   }
 
-  public createLimits(
+  public createLimit(
     data: { times?: number, duration: string },
     type: string,
     campaignId: number,
@@ -52,10 +52,10 @@ export class LimitsService {
   ): Observable<IJsonApiPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes> | void> {
     // if times is empty limit should actully not be created
     if (!data.times || data.times === null) {
-      return of();
+      return of(void 0);
     }
     const sendData = LimitsHttpAdapter.transformFromLimits(data, type, campaignId, engagementId);
-    return this.limitsHttpsService.createLimits({ data: sendData }, type);
+    return this.limitsHttpsService.createLimit({ data: sendData }, type);
   }
 
   public deleteLimit(type: string, limitId: number): Observable<void> {
