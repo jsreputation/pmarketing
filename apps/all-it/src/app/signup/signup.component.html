@@ -1,0 +1,103 @@
+<div class="main-container">
+        <img src="assets/header_logo.png">
+        <div class="content-container">
+            <div class="main-heading">Sign Up</div>
+            <div class="subtitle"><ng-container>Have an account? </ng-container><span class="link" (click)="goToLogin()">Sign In</span></div>
+            <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                <mat-form-field appearance="fill" class="full-width__input">
+                    <mat-label>Title</mat-label>
+                    <mat-select placeholder="Title" formControlName="title">
+                        <mat-option value="Mr">Mr</mat-option>
+                        <mat-option value="Mrs">Mrs</mat-option>                        
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width__input">
+                    <mat-label>Full Name</mat-label>
+                    <input matInput placeholder="Name" formControlName="name" required>
+                    <mat-error *ngIf="signupForm.get('name').hasError('required')">
+                        <span>Name is </span><strong>REQUIRED</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width__input">
+                    <mat-label>NRIC</mat-label>
+                    <input matInput placeholder="NRIC" formControlName="nric" type="number" required>
+                    <mat-error *ngIf="signupForm.get('nric').hasError('required')">
+                        <span>NRIC is </span><strong>REQUIRED</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width__input">
+                    <mat-label>Date of Birth</mat-label>
+                    <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dob">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width__input">
+                    <mat-label>Postcode</mat-label>
+                    <input matInput placeholder="Postcode" formControlName="postcode" type="number" required>
+                    <mat-error *ngIf="signupForm.get('postcode').hasError('required')">
+                        <span>Postcode is </span><strong>REQUIRED</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width__input">
+                    <mat-label>1 Year Membership</mat-label>
+                    <input matInput placeholder="1 Year Membership" formControlName="yearMembership" required>
+                    <mat-error *ngIf="signupForm.get('yearMembership').hasError('required')">
+                        <span>Membership is</span><strong>REQUIRED</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width__input">
+                    <mat-label>Country code</mat-label>
+                    <mat-select formControlName="countryCode">
+                        <mat-option default value="65"><ng-container>Singapore</ng-container> (+65)</mat-option>
+                        <mat-option value="852"><ng-container>Hong Kong Island</ng-container>(+852)</mat-option>
+                        <mat-option value="853"><ng-container>Macau</ng-container> (+853)</mat-option>
+                        <mat-option value="86"><ng-container>China</ng-container> (+86)</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width__input">
+                    <mat-label>Mobile No</mat-label>
+                    <input matInput placeholder="Mobile No" formControlName="mobileNo" type="number" required>
+                    <mat-error *ngIf="signupForm.get('mobileNo').hasError('required')">
+                        <span>Mobile No is </span><strong>REQUIRED</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width__input">
+                    <mat-label>Email Address</mat-label>
+                    <input matInput placeholder="Email Address" formControlName="email" required>
+                    <mat-error *ngIf="signupForm.get('email').hasError('required')">
+                        <span>Email is</span><strong>REQUIRED</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width__input">
+                    <mat-label>Password</mat-label>
+                    <input matInput placeholder="Password" formControlName="password" type="password" required>
+                    <mat-error *ngIf="signupForm.get('password').hasError('required')">
+                        <span>Password is </span><strong>REQUIRED</strong>
+                    </mat-error>
+                    <mat-error *ngIf="signupForm.get('password').hasError('minlength')">
+                        <span>Password should be atleast six characters long</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width__input">
+                    <mat-label>Confirm Password</mat-label>
+                    <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password" required>
+                    <mat-error *ngIf="signupForm.get('confirmPassword').hasError('required')">
+                        <span>Confirm Password is </span><strong>REQUIRED</strong>
+                    </mat-error>
+                    <mat-error *ngIf="signupForm.get('confirmPassword').hasError('minlength')">
+                        <span>Password should be atleast six characters long</span>
+                    </mat-error>
+                </mat-form-field>
+                <div class="checkbox-container">
+                    <mat-checkbox formControlName="accept_terms"></mat-checkbox>
+                    <span class="wrap-checkbox-text">* I agree to the <span class="terms">terms and conditions.</span></span>
+                </div>
+                <div class="checkbox-container">
+                    <mat-checkbox formControlName="accept_marketing"></mat-checkbox>
+                     <span class="wrap-checkbox-text">I agree to receive marketing materials.</span>
+                </div>
+                <button [disabled]="!signupForm.valid" mat-flat-button type="submit" class="full-width__button">Sign Up</button>
+            </form>
+        </div>
+    </div>
+    
