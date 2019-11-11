@@ -11,9 +11,9 @@ import { takeLast } from 'rxjs/operators';
 
 import {
   IWRewardEntityAttributes,
-  IWJsonApiItem,
-  IWJsonApiListPayload,
-  IWJsonApiItemPayload,
+  IJsonApiItem,
+  IJsonApiListPayload,
+  IJsonApiItemPayload,
 } from '@perx/whistler';
 
 describe('WhistlerRewardsService', () => {
@@ -36,7 +36,7 @@ describe('WhistlerRewardsService', () => {
     baseHref: '/'
   };
 
-  const mockReward: IWJsonApiItem<IWRewardEntityAttributes> = {
+  const mockReward: IJsonApiItem<IWRewardEntityAttributes> = {
     id: '1',
     type: '',
     links: { self: '' },
@@ -53,7 +53,7 @@ describe('WhistlerRewardsService', () => {
     }
   };
 
-  const mockRewardWithMerchant: IWJsonApiItem<IWRewardEntityAttributes> = {
+  const mockRewardWithMerchant: IJsonApiItem<IWRewardEntityAttributes> = {
     id: '1',
     type: '',
     links: { self: '' },
@@ -91,7 +91,7 @@ describe('WhistlerRewardsService', () => {
   });
 
   it('should get a reward from its id without merchant', (done: DoneFn) => {
-    const res: IWJsonApiItemPayload<IWRewardEntityAttributes> = {
+    const res: IJsonApiItemPayload<IWRewardEntityAttributes> = {
       data: mockReward
     };
     httpClientSpy.get.and.returnValue(of(res));
@@ -108,7 +108,7 @@ describe('WhistlerRewardsService', () => {
   });
 
   it('should get a reward from its id with merchant', (done: DoneFn) => {
-    const res: IWJsonApiItemPayload<IWRewardEntityAttributes> = {
+    const res: IJsonApiItemPayload<IWRewardEntityAttributes> = {
       data: mockRewardWithMerchant
     };
     httpClientSpy.get.and.returnValue(of(res));
@@ -125,7 +125,7 @@ describe('WhistlerRewardsService', () => {
   });
 
   it('should get a page of rewards', (done: DoneFn) => {
-    const res: IWJsonApiListPayload<IWRewardEntityAttributes> = {
+    const res: IJsonApiListPayload<IWRewardEntityAttributes> = {
       data: [mockReward, mockRewardWithMerchant]
     };
     httpClientSpy.get.and.returnValue(of(res));
@@ -149,7 +149,7 @@ describe('WhistlerRewardsService', () => {
   });
 
   it('should get all rewards', (done: DoneFn) => {
-    const res: IWJsonApiListPayload<IWRewardEntityAttributes> = {
+    const res: IJsonApiListPayload<IWRewardEntityAttributes> = {
       data: [mockReward, mockRewardWithMerchant],
       meta: {
         page_count: 2

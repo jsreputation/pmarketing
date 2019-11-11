@@ -11,7 +11,7 @@ import {
   IWSurveyAttributes,
   IWPostAnswerAttributes,
   WSurveyQuestionType,
-  IWJsonApiItemPayload
+  IJsonApiItemPayload
 } from '@perx/whistler';
 
 import { IWCampaignDisplayProperties } from '@perx/whistler';
@@ -35,7 +35,7 @@ export class SurveyService {
     return t as unknown as SurveyQuestionType;
   }
 
-  public static WSurveyToSurvey(survey: IWJsonApiItemPayload<IWSurveyAttributes>): ISurvey {
+  public static WSurveyToSurvey(survey: IJsonApiItemPayload<IWSurveyAttributes>): ISurvey {
     const dp = survey.data.attributes.display_properties;
     const questions: IQuestion[] = dp.questions.map(q => {
       const payload = { ...q.payload, type: SurveyService.WQTypeToQType(q.payload.type) };
@@ -59,13 +59,13 @@ export class SurveyService {
         switchMap(
           (campaign: ICampaign) => {
             disProp = campaign.displayProperties;
-            return this.http.get<IWJsonApiItemPayload<IWSurveyAttributes>>(
+            return this.http.get<IJsonApiItemPayload<IWSurveyAttributes>>(
               `${this.baseUrl}/survey/engagements/${campaign.engagementId}?campaign_id=${id}`
             );
           }
         ),
         tap(s => console.error('got survey', s)),
-        map((res: IWJsonApiItemPayload<IWSurveyAttributes>) => {
+        map((res: IJsonApiItemPayload<IWSurveyAttributes>) => {
           const surveyData = SurveyService.WSurveyToSurvey(res);
           return { ...surveyData, displayProperties: { ...surveyData.displayProperties, ...disProp } };
         })
@@ -84,7 +84,7 @@ export class SurveyService {
       }
     };
 
-    return this.http.post<IWJsonApiItemPayload<IWPostAnswerAttributes>>(this.baseUrl + '/survey/answers', body, {
+    return this.http.post<IJsonApiItemPayload<IWPostAnswerAttributes>>(this.baseUrl + '/survey/answers', body, {
       headers: { 'Content-Type': 'application/vnd.api+json' }
     }).pipe(
       map((res) => {

@@ -22,8 +22,8 @@ import {
   IWPinataDisplayProperties,
   IWAttbsObjEntity,
   WGameType,
-  IWJsonApiItemPayload,
-  IWJsonApiItem,
+  IJsonApiItemPayload,
+  IJsonApiItem,
   IWAttbsObjTrans,
 } from '@perx/whistler';
 
@@ -45,7 +45,7 @@ export class WhistlerGameService implements IGameService {
     this.hostName = config.apiHost as string;
   }
 
-  private static WGameToGame(game: IWJsonApiItem<IWAttbsObjGame>): IGame {
+  private static WGameToGame(game: IJsonApiItem<IWAttbsObjGame>): IGame {
     let type = TYPE.unknown;
     let config: ITree | IPinata;
     const { attributes } = game;
@@ -109,14 +109,14 @@ export class WhistlerGameService implements IGameService {
         }
       }
     };
-    return this.http.post<IWJsonApiItemPayload<IWAttbsObjTrans>>(
+    return this.http.post<IJsonApiItemPayload<IWAttbsObjTrans>>(
       `${this.hostName}/game/transactions`,
       body,
       { headers: { 'Content-Type': 'application/vnd.api+json' } }
     ).pipe(
       mergeMap(res => (
         combineLatest(...res.data.attributes.results.attributes.results.map(
-          (outcome: IWJsonApiItem<IWAssignedAttributes>) => this.whistVouchSvc.get(Number.parseInt(outcome.id, 10))
+          (outcome: IJsonApiItem<IWAssignedAttributes>) => this.whistVouchSvc.get(Number.parseInt(outcome.id, 10))
         )).pipe(
           map((vouchArr) => vouchArr.reduce((acc, currVouch) =>
             ({ ...acc, vouchers: [...acc.vouchers, currVouch] }), { vouchers: [], rawPayload: res })
@@ -129,7 +129,7 @@ export class WhistlerGameService implements IGameService {
     if (this.cache[engagementId]) {
       return of(this.cache[engagementId]);
     }
-    return this.http.get<IWJsonApiItemPayload<IWAttbsObjGame>>(`${this.hostName}/game/engagements/${engagementId}`)
+    return this.http.get<IJsonApiItemPayload<IWAttbsObjGame>>(`${this.hostName}/game/engagements/${engagementId}`)
       .pipe(
         map(res => res.data),
         map(game => WhistlerGameService.WGameToGame(game)),
@@ -139,9 +139,9 @@ export class WhistlerGameService implements IGameService {
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
     let disProp: IWCampaignDisplayProperties = null;
-    return this.http.get<IWJsonApiItemPayload<IWAttbsObjEntity>>(`${this.hostName}/campaign/entities/${campaignId}`)
+    return this.http.get<IJsonApiItemPayload<IWAttbsObjEntity>>(`${this.hostName}/campaign/entities/${campaignId}`)
       .pipe(
-        map((res: IWJsonApiItemPayload<IWAttbsObjEntity>) => res.data.attributes),
+        map((res: IJsonApiItemPayload<IWAttbsObjEntity>) => res.data.attributes),
         map((entity: IWAttbsObjEntity) => {
           disProp = entity.display_properties;
           return entity.engagement_id;

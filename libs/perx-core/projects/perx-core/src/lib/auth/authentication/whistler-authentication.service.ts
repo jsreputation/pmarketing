@@ -1,12 +1,24 @@
-import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
-import { of, Observable, throwError, Subject } from 'rxjs';
+import {
+  HttpClient,
+  HttpErrorResponse,
+} from '@angular/common/http';
+
+import {
+  of,
+  Observable,
+  throwError,
+  Subject,
+} from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { IProfile } from '../../profile/profile.model';
-import { AuthenticationService } from './authentication.service';
-import { TokenStorage } from './token-storage.service';
-import { IProfileAttributes } from '../../profile/profile.model';
+import { AuthService } from 'ngx-auth';
+
+import {
+  IWProfileAttributes,
+  IWCognitoLogin,
+  IJsonApiListPayload,
+} from '@perx/whistler';
+
 import {
   IAppAccessTokenResponse,
   IMessageResponse,
@@ -15,14 +27,18 @@ import {
   IChangePasswordData,
   IChangePhoneData
 } from './models/authentication.model';
+import { AuthenticationService } from './authentication.service';
+import { TokenStorage } from './token-storage.service';
+
+import { IProfile } from '../../profile/profile.model';
+import { IProfileAttributes } from '../../profile/profile.model';
 import { Config } from '../../config/config';
 
-import {
-  IWProfileAttributes,
-  IWCognitoLogin,
-  IWUserJWTRequest,
-  IWJsonApiListPayload,
-} from '@perx/whistler';
+interface IUserJWTRequest {
+  identifier: string;
+  url: string;
+  profile?: IWProfileAttributes;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -91,7 +107,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public autoLogin(): Observable<any> {
     return this.getUserWithPI().pipe(
       tap(
-        (res: IWJsonApiListPayload<IWCognitoLogin>) => {
+        (res: IJsonApiListPayload<IWCognitoLogin>) => {
           const userBearer = res.data[0].attributes.jwt;
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
@@ -105,7 +121,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public createUserAndAutoLogin(pi: string, userObj?: IProfileAttributes): Observable<any> {
     return this.createUserWithPI(pi, userObj).pipe(
       tap(
-        (res: IWJsonApiListPayload<IWCognitoLogin>) => {
+        (res: IJsonApiListPayload<IWCognitoLogin>) => {
           const userBearer = res.data[0].attributes.jwt;
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
@@ -117,18 +133,18 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     );
   }
 
-  private getUserWithPI(): Observable<IWJsonApiListPayload<IWCognitoLogin>> {
+  private getUserWithPI(): Observable<IJsonApiListPayload<IWCognitoLogin>> {
     const user = (window as any).primaryIdentifier || this.getPI();
-    const userJWTRequest: IWUserJWTRequest = {
+    const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: user
     };
 
-    return this.http.post<IWJsonApiListPayload<IWCognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
+    return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
-  private createUserWithPI(pi: string, userObj?: IWProfileAttributes): Observable<IWJsonApiListPayload<IWCognitoLogin>> {
-    const userJWTRequest: IWUserJWTRequest = {
+  private createUserWithPI(pi: string, userObj?: IWProfileAttributes): Observable<IJsonApiListPayload<IWCognitoLogin>> {
+    const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: pi
     };
@@ -136,7 +152,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
       userJWTRequest.profile = userObj;
     }
 
-    return this.http.post<IWJsonApiListPayload<IWCognitoLogin>>(this.createUsersEndPoint, userJWTRequest);
+    return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.createUsersEndPoint, userJWTRequest);
   }
 
   public refreshShouldHappen(response: HttpErrorResponse): boolean {

@@ -11,9 +11,9 @@ import { IMerchantsService } from '../merchants/imerchants.service';
 import {
   IWRewardEntityAttributes,
   IWMetaData,
-  IWJsonApiItemPayload,
-  IWJsonApiItem,
-  IWJsonApiListPayload,
+  IJsonApiItemPayload,
+  IJsonApiItem,
+  IJsonApiListPayload,
 } from '@perx/whistler';
 
 @Injectable({
@@ -42,7 +42,7 @@ export class WhistlerRewardsService implements RewardsService {
     return RedemptionType.none;
   }
 
-  private static WRewardToReward(r: IWJsonApiItem<IWRewardEntityAttributes>, merchant: IMerchant | null, metaData?: IWMetaData): IReward {
+  private static WRewardToReward(r: IJsonApiItem<IWRewardEntityAttributes>, merchant: IMerchant | null, metaData?: IWMetaData): IReward {
     return {
       // @ts-ignore
       id: (typeof r.id) === 'string' ? Number.parseInt(r.id, 10) : r.id,
@@ -122,12 +122,12 @@ export class WhistlerRewardsService implements RewardsService {
       params['filter[category]'] = categoriesString;
     }
 
-    return this.http.get<IWJsonApiListPayload<IWRewardEntityAttributes>>(`${this.baseUrl}`,
+    return this.http.get<IJsonApiListPayload<IWRewardEntityAttributes>>(`${this.baseUrl}`,
       {
         params
       }
     ).pipe(
-      tap((res: IWJsonApiListPayload<IWRewardEntityAttributes>) => {
+      tap((res: IJsonApiListPayload<IWRewardEntityAttributes>) => {
         metaData = {
           currentPage: page,
           totalPages: res.meta && res.meta.page_count
@@ -144,7 +144,7 @@ export class WhistlerRewardsService implements RewardsService {
           obj.mIds.length > 0 ? combineLatest(...obj.mIds.map(id => this.merchantService.getMerchant(Number.parseInt(id, 10)))) : of([])
         )
       ),
-      map(([rewards, merchants]: [IWJsonApiItem<IWRewardEntityAttributes>[], IMerchant[]]) => rewards.map(
+      map(([rewards, merchants]: [IJsonApiItem<IWRewardEntityAttributes>[], IMerchant[]]) => rewards.map(
         r => WhistlerRewardsService.WRewardToReward(
           r,
           merchants.find(m => m.id === Number.parseInt(r.attributes.organization_id, 10)),
@@ -163,9 +163,9 @@ export class WhistlerRewardsService implements RewardsService {
       return of(this.rewards[id]);
     }
 
-    return this.http.get<IWJsonApiItemPayload<IWRewardEntityAttributes>>(`${this.baseUrl}/${id}`)
+    return this.http.get<IJsonApiItemPayload<IWRewardEntityAttributes>>(`${this.baseUrl}/${id}`)
       .pipe(
-        switchMap((reward: IWJsonApiItemPayload<IWRewardEntityAttributes>) => {
+        switchMap((reward: IJsonApiItemPayload<IWRewardEntityAttributes>) => {
           if (!reward.data.attributes.organization_id || reward.data.attributes.organization_id === null) {
             return of([reward, null]);
           }
@@ -175,7 +175,7 @@ export class WhistlerRewardsService implements RewardsService {
               .pipe(catchError(() => of(null)))
           );
         }),
-        map(([reward, merchant]: [IWJsonApiItemPayload<IWRewardEntityAttributes>, IMerchant | null]) =>
+        map(([reward, merchant]: [IJsonApiItemPayload<IWRewardEntityAttributes>, IMerchant | null]) =>
           WhistlerRewardsService.WRewardToReward(reward.data, merchant)),
         // save reward in local cache
         tap((reward: IReward) => this.rewards[id] = reward)

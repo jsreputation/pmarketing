@@ -1,5 +1,4 @@
-import { IWJsonApiItem } from '../jsonapi.payload';
-
+import { IJsonApiItem } from '../jsonapi.payload';
 import { IWAssignedAttributes } from '../../public-api';
 
 export const enum WGameType {
@@ -50,7 +49,7 @@ export interface IWAttbsObjTrans {
   engagement_id: number;
   campaign_entity_id: number;
   user_id: number;
-  results: IWJsonApiItem<IWResultsObj>;
+  results: IJsonApiItem<IWResultsObj>;
 }
 
 export interface IWResultsObj {
@@ -60,5 +59,5 @@ export interface IWResultsObj {
   urn: string;
   created_at: string;
   updated_at: string;
-  results: IWJsonApiItem<IWAssignedAttributes>[];
+  results: IJsonApiItem<IWAssignedAttributes>[];
 }

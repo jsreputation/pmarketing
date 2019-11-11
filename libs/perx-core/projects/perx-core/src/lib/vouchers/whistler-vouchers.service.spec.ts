@@ -11,9 +11,9 @@ import { last } from 'rxjs/operators';
 import {
   IWAssignedAttributes,
   WAssignedStatus,
-  IWJsonApiItem,
-  IWJsonApiItemPayload,
-  IWJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiItemPayload,
+  IJsonApiListPayload,
 } from '@perx/whistler';
 
 describe('WhistlerVouchersService', () => {
@@ -45,7 +45,7 @@ describe('WhistlerVouchersService', () => {
     getReward: () => of(mockReward)
   };
 
-  const mockVoucherApi: IWJsonApiItem<IWAssignedAttributes> = {
+  const mockVoucherApi: IJsonApiItem<IWAssignedAttributes> = {
     id: '12',
     type: '',
     links: {
@@ -87,7 +87,7 @@ describe('WhistlerVouchersService', () => {
   });
 
   it('should get a voucher from its number', (done: DoneFn) => {
-    const res: IWJsonApiItemPayload<IWAssignedAttributes> = {
+    const res: IJsonApiItemPayload<IWAssignedAttributes> = {
       data: mockVoucherApi
     };
     httpClientSpy.get.and.returnValue(of(res));
@@ -103,7 +103,7 @@ describe('WhistlerVouchersService', () => {
   });
 
   it('should get all vouchers', (done: DoneFn) => {
-    const res: IWJsonApiListPayload<IWAssignedAttributes> = {
+    const res: IJsonApiListPayload<IWAssignedAttributes> = {
       data: [mockVoucherApi],
       meta: {
         page_count: 2

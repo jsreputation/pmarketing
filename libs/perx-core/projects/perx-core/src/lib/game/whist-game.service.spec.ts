@@ -9,8 +9,8 @@ import { IGame, GameType } from './game.model';
 import {
   IWAttbsObjGame,
   WGameType,
-  IWJsonApiItem,
-  IWJsonApiItemPayload
+  IJsonApiItem,
+  IJsonApiItemPayload
 } from '@perx/whistler';
 
 describe('WhistlerGameService', () => {
@@ -26,7 +26,7 @@ describe('WhistlerGameService', () => {
     baseHref: '/'
   };
 
-  const mockTree: IWJsonApiItem<IWAttbsObjGame> = {
+  const mockTree: IJsonApiItem<IWAttbsObjGame> = {
     id: '2',
     type: '',
     links: {
@@ -49,7 +49,7 @@ describe('WhistlerGameService', () => {
     }
   };
 
-  const mockTap: IWJsonApiItem<IWAttbsObjGame> = {
+  const mockTap: IJsonApiItem<IWAttbsObjGame> = {
     id: '2',
     type: '',
     links: {
@@ -72,7 +72,7 @@ describe('WhistlerGameService', () => {
     }
   };
 
-  const mockScratch: IWJsonApiItem<IWAttbsObjGame> = {
+  const mockScratch: IJsonApiItem<IWAttbsObjGame> = {
     id: '2',
     type: '',
     links: {
@@ -124,7 +124,7 @@ describe('WhistlerGameService', () => {
 
     const req = httpTestingController.expectOne('https://blabla/game/engagements/42');
     expect(req.request.method).toEqual('GET');
-    const res: IWJsonApiItemPayload<IWAttbsObjGame> = {
+    const res: IJsonApiItemPayload<IWAttbsObjGame> = {
       data: mockTree
     };
     req.flush(res);
@@ -145,7 +145,7 @@ describe('WhistlerGameService', () => {
 
     const req = httpTestingController.expectOne('https://blabla/game/engagements/42');
     expect(req.request.method).toEqual('GET');
-    const res: IWJsonApiItemPayload<IWAttbsObjGame> = {
+    const res: IJsonApiItemPayload<IWAttbsObjGame> = {
       data: mockTap
     };
     req.flush(res);
@@ -166,7 +166,7 @@ describe('WhistlerGameService', () => {
 
     const req = httpTestingController.expectOne('https://blabla/game/engagements/42');
     expect(req.request.method).toEqual('GET');
-    const res: IWJsonApiItemPayload<IWAttbsObjGame> = {
+    const res: IJsonApiItemPayload<IWAttbsObjGame> = {
       data: mockScratch
     };
     req.flush(res);

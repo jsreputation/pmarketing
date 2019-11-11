@@ -9,7 +9,7 @@ import { SurveyService } from '../../survey/survey.service';
 
 import {
   IWCognitoTenantAttributes,
-  IWJsonApiListPayload,
+  IJsonApiListPayload,
 } from '@perx/whistler';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class WhistlerFormsService implements IFormsService {
   }
 
   public getSignupForm(): Observable<ISurvey | undefined> {
-    return this.http.get<IWJsonApiListPayload<IWCognitoTenantAttributes>>(`${this.baseUrl}/cognito/tenants/`)
+    return this.http.get<IJsonApiListPayload<IWCognitoTenantAttributes>>(`${this.baseUrl}/cognito/tenants/`)
       .pipe(
         map(res => res.data),
         map(res => res[0]),

@@ -8,10 +8,10 @@ import { Config } from '../config/config';
 
 import {
   IWMerchant,
-  IWJsonApiListPayload,
-  IWJsonApiItem,
-  IWJsonApiItemPayload,
-  IWMeta,
+  IJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiItemPayload,
+  IMeta,
 } from '@perx/whistler';
 
 @Injectable({
@@ -19,7 +19,7 @@ import {
 })
 export class WhistlerMerchantsService implements IMerchantsService {
   private merchants: { [k: number]: IMerchant } = {};
-  private historyMeta: IWMeta = {};
+  private historyMeta: IMeta = {};
 
   constructor(
     private http: HttpClient,
@@ -27,7 +27,7 @@ export class WhistlerMerchantsService implements IMerchantsService {
   ) {
   }
 
-  private static WMerchantToMerchant(merchant: IWJsonApiItem<IWMerchant>): IMerchant {
+  private static WMerchantToMerchant(merchant: IJsonApiItem<IWMerchant>): IMerchant {
     return {
       id: (typeof merchant.id === 'string') ? Number.parseInt(merchant.id, 10) : merchant.id,
       name: merchant.attributes.name,
@@ -56,13 +56,13 @@ export class WhistlerMerchantsService implements IMerchantsService {
     });
   }
 
-  private getMerchantsPage(page: number): Observable<IWJsonApiListPayload<IWMerchant>> {
+  private getMerchantsPage(page: number): Observable<IJsonApiListPayload<IWMerchant>> {
     const pageSize: number = 10;
     const params = {
       page_number: `${page}`,
       page_size: `${pageSize}`
     };
-    return this.http.get<IWJsonApiListPayload<IWMerchant>>(
+    return this.http.get<IJsonApiListPayload<IWMerchant>>(
       `${this.config.apiHost}/organization/orgs`,
       { params }
     );
@@ -71,7 +71,7 @@ export class WhistlerMerchantsService implements IMerchantsService {
   public getMerchants(page: number = 1): Observable<IMerchant[]> {
     const pageSize: number = 10;
 
-    return this.http.get<IWJsonApiListPayload<IWMerchant>>(
+    return this.http.get<IJsonApiListPayload<IWMerchant>>(
       `${this.config.apiHost}/organization/orgs`,
       {
         params: {
@@ -80,7 +80,7 @@ export class WhistlerMerchantsService implements IMerchantsService {
         }
       }
     ).pipe(
-      map((res: IWJsonApiListPayload<IWMerchant>) => {
+      map((res: IJsonApiListPayload<IWMerchant>) => {
         if (res.meta) {
           this.historyMeta = {
             ...this.historyMeta,
@@ -90,7 +90,7 @@ export class WhistlerMerchantsService implements IMerchantsService {
 
         return res.data;
       }),
-      map((merchants: IWJsonApiItem<IWMerchant>[]) => merchants.map(
+      map((merchants: IJsonApiItem<IWMerchant>[]) => merchants.map(
         res => WhistlerMerchantsService.WMerchantToMerchant(res)
       ))
     );
@@ -101,10 +101,10 @@ export class WhistlerMerchantsService implements IMerchantsService {
       return of(this.merchants[merchantId]);
     }
 
-    return this.http.get<IWJsonApiItemPayload<IWMerchant>>(
+    return this.http.get<IJsonApiItemPayload<IWMerchant>>(
       `${this.config.apiHost}/organization/orgs/${merchantId}`
     ).pipe(
-      map((res: IWJsonApiItemPayload<IWMerchant>) => WhistlerMerchantsService.WMerchantToMerchant(res.data)),
+      map((res: IJsonApiItemPayload<IWMerchant>) => WhistlerMerchantsService.WMerchantToMerchant(res.data)),
       tap((merchant: IMerchant) => this.merchants[merchantId] = merchant)
     );
   }

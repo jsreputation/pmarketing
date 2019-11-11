@@ -9,9 +9,9 @@ import { Type } from '@angular/core';
 import {
   IWCampaignAttributes,
   WEngagementType,
-  IWJsonApiListPayload,
-  IWJsonApiItem,
-  IWJsonApiItemPayload,
+  IJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiItemPayload,
 } from '@perx/whistler';
 
 describe('WhistlerCampaignService', () => {
@@ -26,7 +26,7 @@ describe('WhistlerCampaignService', () => {
     baseHref: '/'
   };
 
-  const mockCampaign: IWJsonApiItem<IWCampaignAttributes> = {
+  const mockCampaign: IJsonApiItem<IWCampaignAttributes> = {
     id: '2',
     type: '',
     links: {
@@ -44,7 +44,7 @@ describe('WhistlerCampaignService', () => {
   const now = new Date();
   const tomorrow = (new Date());
   tomorrow.setDate(now.getDate() + 1);
-  const mockFutureCampaign: IWJsonApiItem<IWCampaignAttributes> = {
+  const mockFutureCampaign: IJsonApiItem<IWCampaignAttributes> = {
     id: '2',
     type: '',
     links: {
@@ -61,7 +61,7 @@ describe('WhistlerCampaignService', () => {
 
   const yesterday = (new Date());
   yesterday.setDate(now.getDate() - 1);
-  const mockExpiredCampaign: IWJsonApiItem<IWCampaignAttributes> = {
+  const mockExpiredCampaign: IJsonApiItem<IWCampaignAttributes> = {
     id: '2',
     type: '',
     links: {
@@ -100,7 +100,7 @@ describe('WhistlerCampaignService', () => {
 
     const req = httpTestingController.expectOne('https://blabla/campaign/entities?page[number]=1');
     expect(req.request.method).toEqual('GET');
-    const res: IWJsonApiListPayload<IWCampaignAttributes> = {
+    const res: IJsonApiListPayload<IWCampaignAttributes> = {
       data: [],
       meta: {
         page_count: 1
@@ -121,7 +121,7 @@ describe('WhistlerCampaignService', () => {
 
     const req1 = httpTestingController.expectOne('https://blabla/campaign/entities?page[number]=1');
     expect(req1.request.method).toEqual('GET');
-    const res: IWJsonApiListPayload<IWCampaignAttributes> = {
+    const res: IJsonApiListPayload<IWCampaignAttributes> = {
       data: [
         mockCampaign,
         mockFutureCampaign,
@@ -146,7 +146,7 @@ describe('WhistlerCampaignService', () => {
 
     const req1 = httpTestingController.expectOne('https://blabla/campaign/entities/42');
     expect(req1.request.method).toEqual('GET');
-    const res: IWJsonApiItemPayload<IWCampaignAttributes> = {
+    const res: IJsonApiItemPayload<IWCampaignAttributes> = {
       data: mockCampaign
     };
     req1.flush(res);

@@ -8,9 +8,9 @@ import { map } from 'rxjs/operators';
 import {
   IWLoyalty,
   IWLoyaltyCard,
-  IWJsonApiListPayload,
-  IWJsonApiItem,
-  IWJsonApiItemPayload,
+  IJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiItemPayload,
 } from '@perx/whistler';
 
 const DEFAULT_PAGE_COUNT: number = 10;
@@ -28,7 +28,7 @@ export class WhistlerLoyaltyService {
     this.hostName = config.apiHost as string;
   }
 
-  public static WLoyaltyToLoyalty(loyalty: IWJsonApiItem<IWLoyalty>, cards: IWJsonApiItem<IWLoyaltyCard>[]): ILoyalty {
+  public static WLoyaltyToLoyalty(loyalty: IJsonApiItem<IWLoyalty>, cards: IJsonApiItem<IWLoyaltyCard>[]): ILoyalty {
     const card = cards && cards.find(cardTemp =>
       cardTemp.type === 'cards' &&
       loyalty.relationships.cards.data.filter(rCard => rCard.type === 'cards' && rCard.id === cardTemp.id).length > 0
@@ -41,7 +41,7 @@ export class WhistlerLoyaltyService {
   }
 
   public getLoyalties(page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT): Observable<ILoyalty[]> {
-    return this.http.get<IWJsonApiListPayload<IWLoyalty, IWLoyaltyCard>>(
+    return this.http.get<IJsonApiListPayload<IWLoyalty, IWLoyaltyCard>>(
       `${this.hostName}/loyalty/programs`,
       {
         params: {
@@ -51,7 +51,7 @@ export class WhistlerLoyaltyService {
         }
       }
     ).pipe(
-      map((loyalty: IWJsonApiListPayload<IWLoyalty, IWLoyaltyCard>) =>
+      map((loyalty: IJsonApiListPayload<IWLoyalty, IWLoyaltyCard>) =>
         loyalty.data.map(
           res => WhistlerLoyaltyService.WLoyaltyToLoyalty(res, loyalty.included)
         )
@@ -60,10 +60,10 @@ export class WhistlerLoyaltyService {
   }
 
   public getLoyalty(id?: number): Observable<ILoyalty> {
-    return this.http.get<IWJsonApiItemPayload<IWLoyalty, IWLoyaltyCard>>(
+    return this.http.get<IJsonApiItemPayload<IWLoyalty, IWLoyaltyCard>>(
       `${this.hostName}/loyalty/programs/${id}?include=cards`
     ).pipe(
-      map((res: IWJsonApiItemPayload<IWLoyalty>) => WhistlerLoyaltyService.WLoyaltyToLoyalty(res.data, res.included))
+      map((res: IJsonApiItemPayload<IWLoyalty>) => WhistlerLoyaltyService.WLoyaltyToLoyalty(res.data, res.included))
     );
   }
 

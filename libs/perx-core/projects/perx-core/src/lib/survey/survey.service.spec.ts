@@ -11,8 +11,8 @@ import { ICampaign, CampaignType, CampaignState } from '../campaign/models/campa
 import {
   IWSurveyAttributes,
   IWPostAnswerAttributes,
-  IWJsonApiItemPayload,
-  IWJsonApiItem,
+  IJsonApiItemPayload,
+  IJsonApiItem,
 } from '@perx/whistler';
 
 describe('SurveyService', () => {
@@ -30,7 +30,7 @@ describe('SurveyService', () => {
   const iCampaignServiceStub = {
     getCampaign: () => of(mockCampaign)
   };
-  const noQuestionMockSurvey: IWJsonApiItem<IWSurveyAttributes> = {
+  const noQuestionMockSurvey: IJsonApiItem<IWSurveyAttributes> = {
     id: '',
     type: '',
     links: {
@@ -80,7 +80,7 @@ describe('SurveyService', () => {
   });
 
   it('should get a survey from a campaign id', (done: DoneFn) => {
-    const res: IWJsonApiItemPayload<IWSurveyAttributes> = {
+    const res: IJsonApiItemPayload<IWSurveyAttributes> = {
       data: noQuestionMockSurvey,
     };
     httpClientSpy.get.and.returnValue(of(res));
@@ -100,7 +100,7 @@ describe('SurveyService', () => {
   });
 
   it('should post a survey answers', (done: DoneFn) => {
-    const res: IWJsonApiItemPayload<IWPostAnswerAttributes> = {
+    const res: IJsonApiItemPayload<IWPostAnswerAttributes> = {
       data: {
         id: '',
         type: '',

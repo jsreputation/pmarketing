@@ -11,9 +11,9 @@ import { IReward, IRewardParams } from '../rewards/models/reward.model';
 import {
   IWAssignedAttributes,
   WAssignedStatus,
-  IWJsonApiListPayload,
-  IWJsonApiItem,
-  IWJsonApiItemPayload,
+  IJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiItemPayload,
 } from '@perx/whistler';
 
 @Injectable({
@@ -36,7 +36,7 @@ export class WhistlerVouchersService implements IVoucherService {
     }
   }
 
-  private static WVoucherToVoucher(voucher: IWJsonApiItem<IWAssignedAttributes>, reward: IReward): IVoucher {
+  private static WVoucherToVoucher(voucher: IJsonApiItem<IWAssignedAttributes>, reward: IReward): IVoucher {
     return {
       id: (typeof voucher.id === 'string') ? Number.parseInt(voucher.id, 10) : voucher.id,
       reward,
@@ -60,7 +60,7 @@ export class WhistlerVouchersService implements IVoucherService {
   public getAll(voucherParams?: IGetVoucherParams): Observable<IVoucher[]> {
     return new Observable(subscriber => {
       let vouchers: IVoucher[] = [];
-      const process = (p: number, res: IWJsonApiListPayload<IWAssignedAttributes>) => {
+      const process = (p: number, res: IJsonApiListPayload<IWAssignedAttributes>) => {
         const vsQuerries: Observable<IVoucher>[] = res.data.map(v => this.getFullVoucher(v));
         combineLatest(vsQuerries)
           .subscribe((vs: IVoucher[]) => {
@@ -78,24 +78,24 @@ export class WhistlerVouchersService implements IVoucherService {
     });
   }
 
-  private getPage(page: number): Observable<IWJsonApiListPayload<IWAssignedAttributes>> {
+  private getPage(page: number): Observable<IJsonApiListPayload<IWAssignedAttributes>> {
     const size = 10;
-    return this.http.get<IWJsonApiListPayload<IWAssignedAttributes>>(`${this.vouchersUrl}?page[number]=${page}&page[size]=${size}`);
+    return this.http.get<IJsonApiListPayload<IWAssignedAttributes>>(`${this.vouchersUrl}?page[number]=${page}&page[size]=${size}`);
   }
 
-  private getFullVoucher(voucher: IWJsonApiItem<IWAssignedAttributes>): Observable<IVoucher> {
+  private getFullVoucher(voucher: IJsonApiItem<IWAssignedAttributes>): Observable<IVoucher> {
     return combineLatest(of(voucher), this.rewardsService.getReward(voucher.attributes.source_id))
       .pipe(
-        map(([v, reward]: [IWJsonApiItem<IWAssignedAttributes>, IReward]) => WhistlerVouchersService.WVoucherToVoucher(v, reward))
+        map(([v, reward]: [IJsonApiItem<IWAssignedAttributes>, IReward]) => WhistlerVouchersService.WVoucherToVoucher(v, reward))
       );
   }
 
   // @ts-ignore
   public get(id: number, useCache?: boolean): Observable<IVoucher> {
-    return this.http.get<IWJsonApiItemPayload<IWAssignedAttributes>>(`${this.vouchersUrl}/${id}`)
+    return this.http.get<IJsonApiItemPayload<IWAssignedAttributes>>(`${this.vouchersUrl}/${id}`)
       .pipe(
         map((res) => res.data),
-        switchMap((voucher: IWJsonApiItem<IWAssignedAttributes>) => this.getFullVoucher(voucher))
+        switchMap((voucher: IJsonApiItem<IWAssignedAttributes>) => this.getFullVoucher(voucher))
       );
   }
 

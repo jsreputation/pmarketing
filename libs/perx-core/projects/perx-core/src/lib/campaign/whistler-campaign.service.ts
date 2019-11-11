@@ -1,34 +1,53 @@
 import { Injectable } from '@angular/core';
-import { ICampaignService } from './icampaign.service';
-import { Observable, of } from 'rxjs';
-import { ICampaign, CampaignType, CampaignState } from './models/campaign.model';
 import { HttpClient } from '@angular/common/http';
-import { Config } from '../config/config';
-import { map, tap } from 'rxjs/operators';
+
+import {
+  Observable,
+  of,
+} from 'rxjs';
+import {
+  map,
+  tap,
+} from 'rxjs/operators';
 
 import {
   IWCampaignAttributes,
-  IWJsonApiListPayload,
-  IWJsonApiItem,
-  IWJsonApiItemPayload,
-  WEngagementType,
+  IJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiItemPayload,
 } from '@perx/whistler';
+
+import {
+  ICampaign,
+  CampaignType,
+  CampaignState,
+} from './models/campaign.model';
+import { ICampaignService } from './icampaign.service';
+
+import { Config } from '../config/config';
+
+enum WhistlerCampaignType {
+  survey = 'survey',
+  loyalty = 'stamp',
+  instant_outcome = 'give_reward',
+  game = 'game'
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class WhistlerCampaignService implements ICampaignService {
   private baseUrl: string;
-  private pagesCache: { [p: number]: IWJsonApiListPayload<IWCampaignAttributes> } = {};
+  private pagesCache: { [p: number]: IJsonApiListPayload<IWCampaignAttributes> } = {};
   constructor(private http: HttpClient, config: Config) {
     this.baseUrl = config.apiHost as string;
   }
 
   private static WhistlerTypeToType(ty: string): CampaignType {
-    return WEngagementType[ty];
+    return WhistlerCampaignType[ty];
   }
 
-  public static WhistlerCampaignToCampaign(campaign: IWJsonApiItem<IWCampaignAttributes>): ICampaign {
+  public static WhistlerCampaignToCampaign(campaign: IJsonApiItem<IWCampaignAttributes>): ICampaign {
     const cAttributes = campaign.attributes;
     return {
       id: Number.parseInt(campaign.id, 10),
@@ -43,7 +62,7 @@ export class WhistlerCampaignService implements ICampaignService {
     };
   }
 
-  private static startsAfter(c: IWJsonApiItem<IWCampaignAttributes>, ts: number): boolean {
+  private static startsAfter(c: IJsonApiItem<IWCampaignAttributes>, ts: number): boolean {
     if (c.attributes.start_date_time === null) {
       return true;
     }
@@ -51,7 +70,7 @@ export class WhistlerCampaignService implements ICampaignService {
     return start < ts;
   }
 
-  private static expiresBefore(c: IWJsonApiItem<IWCampaignAttributes>, ts: number): boolean {
+  private static expiresBefore(c: IJsonApiItem<IWCampaignAttributes>, ts: number): boolean {
     if (!c.attributes.end_date_time || c.attributes.end_date_time === null) {
       return true;
     }
@@ -63,7 +82,7 @@ export class WhistlerCampaignService implements ICampaignService {
     return new Observable(subject => {
       let current: ICampaign[] = [];
       const now: number = (new Date()).getTime();
-      const process = (p: number, cs: IWJsonApiListPayload<IWCampaignAttributes>) => {
+      const process = (p: number, cs: IJsonApiListPayload<IWCampaignAttributes>) => {
         const campaigns = cs.data
           // filter out by campaign date
           .filter(c => WhistlerCampaignService.startsAfter(c, now) && WhistlerCampaignService.expiresBefore(c, now))
@@ -80,19 +99,19 @@ export class WhistlerCampaignService implements ICampaignService {
     });
   }
 
-  private getPage(n: number): Observable<IWJsonApiListPayload<IWCampaignAttributes>> {
+  private getPage(n: number): Observable<IJsonApiListPayload<IWCampaignAttributes>> {
     if (this.pagesCache[n]) {
       return of(this.pagesCache[n]);
     }
-    return this.http.get<IWJsonApiListPayload<IWCampaignAttributes>>(`${this.baseUrl}/campaign/entities?page[number]=${n}`)
+    return this.http.get<IJsonApiListPayload<IWCampaignAttributes>>(`${this.baseUrl}/campaign/entities?page[number]=${n}`)
       .pipe(tap(page => this.pagesCache[n] = page));
   }
 
   public getCampaign(id: number): Observable<ICampaign> {
-    return this.http.get<IWJsonApiItemPayload<IWCampaignAttributes>>(`${this.baseUrl}/campaign/entities/${id}`)
+    return this.http.get<IJsonApiItemPayload<IWCampaignAttributes>>(`${this.baseUrl}/campaign/entities/${id}`)
       .pipe(
-        map((campaigns: IWJsonApiItemPayload<IWCampaignAttributes>) => campaigns.data),
-        map((campaign: IWJsonApiItem<IWCampaignAttributes>) => WhistlerCampaignService.WhistlerCampaignToCampaign(campaign)),
+        map((campaigns: IJsonApiItemPayload<IWCampaignAttributes>) => campaigns.data),
+        map((campaign: IJsonApiItem<IWCampaignAttributes>) => WhistlerCampaignService.WhistlerCampaignToCampaign(campaign)),
       );
   }
 }

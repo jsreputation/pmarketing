@@ -11,8 +11,8 @@ import { StampService } from './stamp.service';
 import { Injectable } from '@angular/core';
 
 import {
-  IWJsonApiItemPayload,
-  IWJsonApiItem,
+  IJsonApiItemPayload,
+  IJsonApiItem,
   IWCampaignDisplayProperties,
   IWAttbsObjStamp,
   IWAttbsObjEntity,
@@ -32,7 +32,7 @@ export class WhistlerStampService implements StampService {
     this.baseUrl = `${config.apiHost}`;
   }
 
-  private static WStampCardToStampCard(stampCard: IWJsonApiItem<IWAttbsObjStamp>): IStampCard {
+  private static WStampCardToStampCard(stampCard: IJsonApiItem<IWAttbsObjStamp>): IStampCard {
     const attributesObj = stampCard.attributes as IWAttbsObjStamp;
     return {
       title: attributesObj.display_properties.title,
@@ -70,12 +70,12 @@ export class WhistlerStampService implements StampService {
     if (this.cache[campaignId]) {
       return of(this.cache[campaignId]);
     }
-    return this.http.get<IWJsonApiItemPayload<IWAttbsObjEntity>>(`${this.baseUrl}/campaign/entities/${campaignId}`)
+    return this.http.get<IJsonApiItemPayload<IWAttbsObjEntity>>(`${this.baseUrl}/campaign/entities/${campaignId}`)
       .pipe(
         map(res => res.data.attributes),
         switchMap(correctEntityAttribute => {
           disProp = correctEntityAttribute.display_properties;
-          return this.http.get<IWJsonApiItemPayload<IWAttbsObjStamp>>(
+          return this.http.get<IJsonApiItemPayload<IWAttbsObjStamp>>(
             `${this.baseUrl}/loyalty/engagements/${correctEntityAttribute.engagement_id}`
           );
         }),
