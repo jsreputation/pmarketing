@@ -23,7 +23,7 @@ export class CampaignsService implements ITableService {
     );
   }
 
-  public getCampaigns(params: HttpParamsOptions): Observable<any> {
+  public getCampaigns(params: HttpParamsOptions): Observable<IJsonApiListPayload<IWCampaignAttributes>> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.campaignsHttpsService.getCampaigns(httpParams);
   }
@@ -64,7 +64,7 @@ export class CampaignsService implements ITableService {
       );
   }
 
-  public deleteCampaign(id: string): Observable<any> {
+  public deleteCampaign(id: string): Observable<IJsonApiPayload<IWCampaignAttributes>> {
     return this.campaignsHttpsService.deleteCampaign(id);
   }
 
