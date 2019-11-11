@@ -31,8 +31,8 @@ export class SurveyComponent implements OnInit, OnDestroy {
   };
 
   public noRewardsPopUp: IPopupConfig = {
-    title: 'NO_REWARDS_TITLE_SURVEY',
-    text: 'NO_REWARDS_TEXT_SURVEY',
+    title: 'SURVEY_NO_REWARDS_TITLE',
+    text: 'SURVEY_NO_REWARDS_TEXT',
     imageUrl: '',
     buttonTxt: 'BACK_TO_WALLET',
   };

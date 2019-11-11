@@ -19,15 +19,15 @@ export class GameComponent implements OnInit, OnDestroy {
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
   public successPopUp: IPopupConfig = {
-    title: 'SUCCESS_TITLE_GAME',
-    text: 'SUCCESS_TEXT_GAME',
+    title: 'GAME_SUCCESS_TITLE',
+    text: 'GAME_SUCCESS_TEXT',
     buttonTxt: 'VIEW_REWARD',
     imageUrl: 'assets/congrats_image.png',
   };
 
   public noRewardsPopUp: IPopupConfig = {
-    title: 'NO_REWARDS_TITLE_GAME',
-    text: 'NO_REWARDS_TEXT_GAME',
+    title: 'GAME_NO_REWARDS_TITLE',
+    text: 'GAME_NO_REWARDS_TEXT',
     buttonTxt: 'BACK_TO_WALLET',
     imageUrl: '',
   };
@@ -109,7 +109,7 @@ export class GameComponent implements OnInit, OnDestroy {
         ([outcome, _]: [IPlayOutcome, any]) => {
           this.router.navigate(['/wallet']);
           if (outcome.vouchers.length > 0) {
-            this.successPopUp.text = this.successPopUp.text.replace('{{rewards}}', `${outcome.vouchers.length}`);
+            this.successPopUp.text = this.successPopUp.text.replace('{{rewards}}', outcome.vouchers.length.toString());
             this.dialog.open(PopupComponent, { data: this.successPopUp });
           } else {
             this.dialog.open(PopupComponent, { data: this.noRewardsPopUp });

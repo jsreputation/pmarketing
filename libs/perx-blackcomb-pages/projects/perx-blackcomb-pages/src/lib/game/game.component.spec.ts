@@ -144,8 +144,8 @@ describe('GameComponent', () => {
         {
           data:
           {
-            title: 'SUCCESS_TITLE_GAME',
-            text: 'SUCCESS_TEXT_GAME',
+            title: 'GAME_SUCCESS_TITLE',
+            text: 'GAME_SUCCESS_TEXT',
             buttonTxt: 'VIEW_REWARD',
             imageUrl: 'assets/congrats_image.png'
           }
@@ -171,8 +171,8 @@ describe('GameComponent', () => {
       expect(dialogSpy).toHaveBeenCalledWith(PopupComponent,
         {
           data: Object({
-            title: 'NO_REWARDS_TITLE_GAME',
-            text: 'NO_REWARDS_TEXT_GAME',
+            title: 'GAME_NO_REWARDS_TITLE',
+            text: 'GAME_NO_REWARDS_TEXT',
             buttonTxt: 'BACK_TO_WALLET',
             imageUrl: ''
           })

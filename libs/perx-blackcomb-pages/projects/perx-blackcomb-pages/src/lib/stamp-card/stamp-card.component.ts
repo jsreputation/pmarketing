@@ -21,11 +21,11 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public stampCard$: Observable<IStampCard>;
   private destroy$: Subject<any> = new Subject();
   private rewardSuccessPopUp: IPopupConfig = {
-    title: 'STAMP_SUCCESS',
+    title: 'STAMP_SUCCESS_TITLE',
     buttonTxt: 'VIEW_REWARD'
   };
   private errorPopUp: IPopupConfig = {
-    title: 'STAMP_ERROR',
+    title: 'STAMP_ERROR_TITLE',
     buttonTxt: 'TRY_AGAIN'
   };
 

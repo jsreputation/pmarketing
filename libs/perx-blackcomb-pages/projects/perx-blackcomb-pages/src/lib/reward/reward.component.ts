@@ -20,8 +20,8 @@ export class RewardComponent implements OnInit, OnDestroy {
   public cardBackground: string;
   public rewards$: Observable<IReward[]>;
   public noRewardsPopUp: IPopupConfig = {
-    title: 'NO_REWARDS_TITLE',
-    text: 'NO_REWARDS_TEXT',
+    title: 'INSTANT_OUTCOME_NO_REWARDS_TITLE',
+    text: 'INSTANT_OUTCOME_NO_REWARDS_TEXT',
     buttonTxt: 'BACK_TO_WALLET',
     imageUrl: '',
   };
