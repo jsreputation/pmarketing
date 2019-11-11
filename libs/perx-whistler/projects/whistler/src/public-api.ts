@@ -50,6 +50,7 @@ export {
   IWGameDisplayProperties,
   IWTreeDisplayProperties,
   IWPinataDisplayProperties,
+  IWScratchDisplayProperties
 } from './lib/game/game';
 
 /** Survey */
