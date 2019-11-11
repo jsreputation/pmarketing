@@ -94,13 +94,13 @@
         </mat-card>
 
         <mat-card class="card-fieldset">
-          <h2 class="card-fieldset-title sub-title">
-            Graphics
+          <h2 class="card-fieldset-title sub-title" translate>
+            GRAPHICS
           </h2>
           <div class="game-form" *ngIf="color">
             <div class="control-input">
               <mat-form-field color="primary">
-                <mat-label>Progress Bar Color</mat-label>
+                <mat-label><span translate>PROGRESS_BAR_COLOR</span></mat-label>
                 <mat-select [formControlName]="'color'">
                   <mat-select-trigger>
                     <div class="select-color">
@@ -115,8 +115,8 @@
                     <div class="select-color">
                       <div class="select-color-preview primary-material">
                       </div>
-                      <span class="select-color-text">
-                      Primary
+                      <span class="select-color-text" translate>
+                      PRIMARY
                     </span>
                     </div>
                   </mat-option>
@@ -124,8 +124,8 @@
                     <div class="select-color">
                       <div class="select-color-preview accent-material">
                       </div>
-                      <span class="select-color-text">
-                      Accent
+                      <span class="select-color-text" translate>
+                      ACCENT
                     </span>
                     </div>
                   </mat-option>
@@ -133,8 +133,8 @@
                     <div class="select-color">
                       <div class="select-color-preview warn-material">
                       </div>
-                      <span class="select-color-text">
-                      Warn
+                      <span class="select-color-text" translate>
+                      WARN
                     </span>
                     </div>
                   </mat-option>
@@ -142,8 +142,8 @@
               </mat-form-field>
             </div>
             <div class="control-img_asset">
-              <h3 class="card-fieldset-label">
-                Card Background
+              <h3 class="card-fieldset-label" translate>
+                CARD_BACKGROUND
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap
@@ -157,8 +157,8 @@
             </div>
 
             <div class="control-img_asset">
-              <h3 class="card-fieldset-label">
-                Background
+              <h3 class="card-fieldset-label" translate>
+                BACKGROUND
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap
@@ -173,13 +173,13 @@
           </div>
         </mat-card>
         <mat-card class="card-fieldset">
-          <h2 class="card-fieldset-title sub-title">
-            Button
+          <h2 class="card-fieldset-title sub-title" translate>
+            BUTTON
           </h2>
           <div class="messages-form">
             <div class="control-input">
               <mat-form-field class="messages-input">
-                <input type="text" [placeholder]="'Button text'" matInput formControlName="buttonText">
+                <input type="text" [placeholder]="'BUTTON_TEXT' | translate" matInput formControlName="buttonText">
                 <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
                 <mat-error *ngIf="buttonText.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
                 <mat-error *ngIf="buttonText.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 2</mat-error>
