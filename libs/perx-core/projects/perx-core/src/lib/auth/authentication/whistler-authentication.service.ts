@@ -151,7 +151,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public verifyTokenRequest(url: string): boolean {
-    return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token') || url.endsWith('/v2/cognito/login');
+    return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token') || url.endsWith('/cognito/login');
   }
 
   // @ts-ignore
