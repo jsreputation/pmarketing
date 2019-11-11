@@ -5,16 +5,6 @@ export class DashboardAppPage {
     return browser.get('dashboard') as Promise<string>;
   }
 
-  public getH1Text(): Promise<string> {
-    return element(by.css('h1')).getText() as Promise<string>;
-  }
-  public getTitleText(): Promise<string> {
-    return browser.getTitle() as Promise<string>;
-}
-  public getSubHeaderText(): Promise<string> {
-    return element(by.css('p')).getText() as Promise<string>;
-  }
-
 }
 
 export class EngagementAppPage {

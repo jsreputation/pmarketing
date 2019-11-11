@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { ApiConfig } from '@cl-core/api-config';
 import { IWRewardEntityAttributes } from '@perx/whistler';
 
@@ -13,8 +12,8 @@ export class RewardHttpService {
   constructor(private http: HttpClient) {
   }
 
-  public getRewards(params: HttpParams): Observable<any> {
-    return this.http.get(ApiConfig.rewardsPath + '/', { params });
+  public getRewards(params: HttpParams): Observable<IJsonApiListPayload<IWRewardEntityAttributes>> {
+    return this.http.get<IJsonApiListPayload<IWRewardEntityAttributes>>(ApiConfig.rewardsPath + '/', { params });
   }
 
   public getReward(id: string, params: HttpParams): Observable<IJsonApiPayload<IWRewardEntityAttributes>> {
@@ -29,14 +28,14 @@ export class RewardHttpService {
     return this.http.get<OptionConfig[]>('assets/actives/rewards/rewards-options.json');
   }
 
-  public getSingleReward(id: string): Observable<any> {
-    return this.http.get('assets/actives/rewards/rewards.json')
-      .pipe(
-        map((res: any[]) => {
-          return res.filter((item) => item.id === id)[0];
-        })
-      );
-  }
+  // public getSingleReward(id: string): Observable<any> {
+  //   return this.http.get('assets/actives/rewards/rewards.json')
+  //     .pipe(
+  //       map((res: any[]) => {
+  //         return res.filter((item) => item.id === id)[0];
+  //       })
+  //     );
+  // }
 
   public createReward(data: IJsonApiPayload<IWRewardEntityAttributes>): Observable<IJsonApiPayload<IWRewardEntityAttributes>> {
     return this.http.post<IJsonApiPayload<IWRewardEntityAttributes>>(ApiConfig.rewardsPath + '/', data);

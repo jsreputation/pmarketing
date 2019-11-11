@@ -8,6 +8,7 @@ import { settingsFonts, SettingsService, settingsStyles } from '@cl-core/service
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { IReward } from '@perx/core';
+import { IWTenantDisplayProperties } from '@perx/whistler';
 
 @Component({
   selector: 'cl-branding',
@@ -147,7 +148,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
       });
   }
 
-  private handlerValue(data: any): void {
+  private handlerValue(data: IWTenantDisplayProperties): void {
     if (!data['theme.primary'] || !data['theme.style']) {
       this.setDefaultValue(data);
     } else {

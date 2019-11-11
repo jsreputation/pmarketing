@@ -20,6 +20,7 @@ import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 
 @Component({
   selector: 'cl-review-campaign',
@@ -28,7 +29,7 @@ import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 })
 export class ReviewCampaignComponent implements OnInit, OnDestroy {
   public tenantSettings: ITenantsProperties;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public campaign: any;
 
@@ -114,7 +115,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         }),
         map(([campaign, engagement, limits, rewards]:
           [
-            ICampaign | null, IEngagement | null, ILimit | null,
+            ICampaign | null, IEngagementType | null, ILimit | null,
             { value: IRewardEntity, probability?: number, stampsSlotNumber?: number }[] | null
           ]) => {
           let rewardsOptions = null;

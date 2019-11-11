@@ -3,9 +3,7 @@
 </div>
 
 <div *ngIf="!isLoading" style="height:100%">
-  <div class="login-bg">
-    <img [src]="loginBackgroundUrl"/>
-  </div>
+  <div class="login-bg" [ngStyle]="{backgroundImage: 'url(' + loginBackgroundUrl + ')'}"></div>
   <div [ngClass]="'content-container ' + sourceType">
     <div *ngIf="sourceType !== 'hsbc-xmas'" class="login-image">
       <img class="logo" src='assets/hsbc-logo-black.svg' />

@@ -1,5 +1,5 @@
 import { ImageControlValue } from '@cl-helpers/image-control-value';
-import { WSurveyQuestionType } from '@perx/whistler';
+import { IWSurveyEngagementAttributes, WSurveyQuestionType } from '@perx/whistler';
 import { ISurveyForm } from '@cl-core/models/survey/survey-common.interface';
 
 export class SurveyHttpAdapter {
@@ -39,12 +39,12 @@ export class SurveyHttpAdapter {
     return res;
   }
 
-  public static transformToSurveyForm(data: any): ISurveyForm {
+  public static transformToSurveyForm(data: IJsonApiItem<IWSurveyEngagementAttributes>): ISurveyForm {
     return {
       id: data.id,
       type: data.attributes.type,
-      created_at: data.attributes.display_properties.created_at,
-      updated_at: data.attributes.display_properties.updated_at,
+      created_at: data.attributes.created_at,
+      updated_at: data.attributes.updated_at,
       name: data.attributes.title,
       attribute_type: data.attributes.type,
       headlineMessage: data.attributes.display_properties.title,
@@ -54,7 +54,7 @@ export class SurveyHttpAdapter {
       cardBackground: data.attributes.display_properties.card_background_img_url,
       background: data.attributes.display_properties.background_img_url,
       buttonText: data.attributes.display_properties.button,
-      description: data.attributes.display_properties.description,
+      description: data.attributes.description,
     };
   }
 

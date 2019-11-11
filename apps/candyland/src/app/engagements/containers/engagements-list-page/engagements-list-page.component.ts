@@ -17,6 +17,7 @@ import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { AvailableNewEngagementService, EngagementsService } from '@cl-core/services';
 import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 import { IEngagementItemMenuOption } from '@cl-shared/components/engagement-item/engagement-item.component';
+import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 
 @Component({
   selector: 'cl-engagements-list-page',
@@ -26,9 +27,9 @@ import { IEngagementItemMenuOption } from '@cl-shared/components/engagement-item
 })
 export class EngagementsListPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private static CAMPAIGN_ACTION: string = 'campaign';
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
-  public dataSource: MatTableDataSource<IEngagement> = new MatTableDataSource<IEngagement>();
+  public dataSource: MatTableDataSource<IEngagementType> = new MatTableDataSource<IEngagementType>();
   public tabsFilterConfig: OptionConfig[];
   public hasData: boolean;
   public noData: boolean;
@@ -94,7 +95,7 @@ export class EngagementsListPageComponent implements OnInit, AfterViewInit, OnDe
         }),
         takeUntil(this.destroy$),
       )
-      .subscribe((res: IEngagement[]) => {
+      .subscribe((res: IEngagementType[]) => {
         this.hasData = res && res.length > 0;
         this.noData = res && res.length === 0;
         this.dataSource.data = res;
@@ -104,14 +105,14 @@ export class EngagementsListPageComponent implements OnInit, AfterViewInit, OnDe
       });
   }
 
-  public menuOptionTapped(event: { engagement: IEngagement, action: string }): void {
+  public menuOptionTapped(event: { engagement: IEngagementType, action: string }): void {
     switch (event.action) {
       case EngagementsListPageComponent.CAMPAIGN_ACTION:
         this.launchCampaign(event.engagement);
     }
   }
 
-  private launchCampaign(e?: IEngagement): void {
+  private launchCampaign(e?: IEngagementType): void {
     if (e !== undefined) {
       this.availableNewEngagementService.setNewEngagement(e);
     }
