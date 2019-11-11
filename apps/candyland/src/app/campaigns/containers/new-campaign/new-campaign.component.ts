@@ -148,14 +148,14 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private updateLimitFn(): (campaign: ICampaign) => Observable<
     IJsonApiPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes> | void
   > {
-    const updateLimit$ = (campaign: ICampaign) => this.limitsService.updateLimits(
+    const updateLimit$ = (campaign: ICampaign) => this.limitsService.updateLimit(
       this.store.currentCampaign.limits.id,
       this.store.currentCampaign.limits,
       this.store.currentCampaign.template.attributes_type,
       Number.parseInt(campaign.id, 10),
       this.store.currentCampaign.template.id
     );
-    const createLimit$ = (campaign: ICampaign) => this.limitsService.createLimits(
+    const createLimit$ = (campaign: ICampaign) => this.limitsService.createLimit(
       this.store.currentCampaign.limits,
       this.store.currentCampaign.template.attributes_type,
       Number.parseInt(campaign.id, 10),

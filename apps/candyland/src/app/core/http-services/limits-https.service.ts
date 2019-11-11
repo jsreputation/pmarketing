@@ -18,7 +18,7 @@ export class LimitsHttpsService {
     return this.http.get<IJsonApiListPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>>(`${ApiConfig.basePath}/${eType}/limits`, { params });
   }
 
-  public updateLimits(
+  public updateLimit(
     id: string,
     data: IJsonApiPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>,
     engagementType: string
@@ -28,7 +28,7 @@ export class LimitsHttpsService {
     return this.http.patch<IJsonApiPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>>(url, data);
   }
 
-  public createLimits(
+  public createLimit(
     data: IJsonApiPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>,
     engagementType: string
   ): Observable<IJsonApiPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes>> {
