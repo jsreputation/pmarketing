@@ -48,11 +48,12 @@ export class CardComponent implements OnInit, AfterViewInit {
       }
       matbox.change.subscribe((value) => {
         const sourceIdStr = value.source.id;
-        const numId = sourceIdStr.substr(sourceIdStr.lastIndexOf('-') + 1);
+        const checkboxStr = sourceIdStr.substr(sourceIdStr.lastIndexOf('-') + 1);
+        const checkboxId: number = +checkboxStr - 1;
         if (value.checked) {
-          this.rewardArr.push({ rewardPosition: +numId - 1});
+          this.rewardArr.push({ rewardPosition: checkboxId - 1});
         } else {
-          this.rewardArr = this.rewardArr.filter(reward => reward.rewardPosition !== +numId - 1);
+          this.rewardArr = this.rewardArr.filter(reward => reward.rewardPosition !== checkboxId - 1);
         }
       });
     });
