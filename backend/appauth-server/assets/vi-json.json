@@ -47,5 +47,9 @@
     "STAMP_ERROR": "",
     "PI_INSTRUCTIONS": "Để đăng nhập vào giỏ quà, Quý Khách vui lòng nhập số điện thoại mà Quý Khách đã đăng ký với Dai-ichi Life Việt Nam",
     "PI_TEXT_LABEL": "Số điện thoại",
-    "PI_BUTTON_LABEL": "Đăng nhập"
+    "PI_BUTTON_LABEL": "Đăng nhập",
+    "PI_NOT_EXIST": "",
+    "PI_MERGE_FAIL": "",
+    "PI_NO_TRANSACTION_MATCH": "",
+    "PI_TRANSACTION_CONFIRM_FAIL": ""
 }

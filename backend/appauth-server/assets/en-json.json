@@ -44,5 +44,9 @@
     "VOUCHER_EXPIRY": "Expires on: {{date}}",
     "DESCRIPTION": "Description",
     "STAMP_SUCCESS": "",
-    "STAMP_ERROR": ""
+    "STAMP_ERROR": "",
+    "PI_NOT_EXIST": "",
+    "PI_MERGE_FAIL": "",
+    "PI_NO_TRANSACTION_MATCH": "",
+    "PI_TRANSACTION_CONFIRM_FAIL": ""
 }
