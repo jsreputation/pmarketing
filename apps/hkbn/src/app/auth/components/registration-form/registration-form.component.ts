@@ -2,8 +2,7 @@ import { Component, EventEmitter, Output, ViewEncapsulation, Input, OnInit } fro
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
-import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
-import { ICountryCode } from '@perx/core';
+import { ICountryCode, ISignUpData } from '@perx/core';
 
 @Component({
   selector: 'hkbn-registration-form',
@@ -28,10 +27,10 @@ export class RegistrationFormComponent implements OnInit {
     code: new FormControl('+852', [HkbnValidators.required]),
     email: new FormControl(null, [HkbnValidators.required, HkbnValidators.email]),
     password: new FormControl(null, [HkbnValidators.required, Validators.minLength(6)]),
-    password_confirmation: new FormControl(null, [HkbnValidators.required, Validators.minLength(6)]),
+    passwordConfirmation: new FormControl(null, [HkbnValidators.required, Validators.minLength(6)]),
     terms: new FormControl(null, [HkbnValidators.requiredTrue]),
     promo: new FormControl(null)
-  }, [HkbnValidators.equalityValidator('password', 'password_confirmation')]);
+  }, [HkbnValidators.equalityValidator('password', 'passwordConfirmation')]);
 
   constructor(
     private dataTransfer: DataTransferService

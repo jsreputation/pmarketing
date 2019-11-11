@@ -6,8 +6,8 @@ export interface IJsonApiListPayload<T, S = any> {
 }
 
 export interface IMeta {
-  record_count?: number;
-  page_count?: number;
+  record_count?: number; // eslint-disable-line
+  page_count?: number; // eslint-disable-line
 }
 
 export interface IJsonApiItemPayload<T, S = any> {

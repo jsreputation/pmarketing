@@ -33,17 +33,9 @@ export const DARK: ITheme = {
   }
 };
 
-export interface WhistlerITenant {
-  account_id: string;
-  alias: string;
-  created_at: string;
-  name: string;
-  display_properties: WhistlerISetting;
-}
-
 export interface AccountPageObject {
   title: string;
-  content_url: string;
+  content_url: string;  // eslint-disable-line
   key: string;
 }
 
@@ -51,6 +43,8 @@ export interface PagesObject {
   pages: AccountPageObject[];
 }
 
+// Whistler settings should be moved to whistler folder, sep branch
+/* eslint-disable */
 export interface WhistlerISetting {
   currency: number;
   time_zone: number;
@@ -66,43 +60,11 @@ export interface WhistlerISetting {
   'account': PagesObject;
 }
 
-export interface ITenantAttributes {
-  urn: string;
-  created_at: string;
-  updated_at: string;
-  account_id: number;
-  root_id: number;
+export interface WhistlerITenant {
+  account_id: string;
   alias: string;
+  created_at: string;
   name: string;
-  display_properties: {
-      account: {
-          pages: [
-              {
-                  key: string;
-                  title: string;
-                  content_url: string;
-              },
-              {
-                  key: string;
-                  title: string;
-                  content_url: string;
-              }
-          ]
-      };
-      currency: string;
-      time_zone: number,
-      'theme.logo': string;
-      'theme.font': string;
-      'theme.style': string;
-      'theme.title': string;
-      'theme.accent': string;
-      'theme.primary': string;
-      'campaign_base_url': string;
-      'theme.header_color': string;
-      'theme.button_text_color': {
-          color: string;
-          labelView: string;
-      },
-      'theme.button_background_color': string;
-  };
+  display_properties: WhistlerISetting;
 }
+/* eslint-enable */
