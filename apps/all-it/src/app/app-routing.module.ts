@@ -13,6 +13,11 @@ const routes: Routes = [
     canActivate: [PublicGuard]
   },
   {
+    path: 'signup',
+    loadChildren: () => import('./signup/signup.module').then((mod) => mod.SignupModule),
+    canActivate: [PublicGuard]
+  },
+  {
     path: 'loading',
     loadChildren: () => import('./loading/loading.module').then((mod) => mod.LoadingModule)
   },
