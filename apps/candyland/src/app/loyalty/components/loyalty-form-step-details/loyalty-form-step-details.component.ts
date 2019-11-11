@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IPools } from '@perx/whistler';
+import { IWPools } from '@perx/whistler';
 
 @Component({
   selector: 'cl-loyalty-form-step-details',
@@ -9,7 +9,7 @@ import { IPools } from '@perx/whistler';
 })
 export class LoyaltyFormStepDetailsComponent implements OnInit {
   @Input() public group: FormGroup;
-  @Input() public pools: IPools;
+  @Input() public pools: IWPools;
 
   public ngOnInit(): void {
   }

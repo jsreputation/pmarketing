@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { MatSort } from '@angular/material';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
-import { IUser } from '@perx/whistler';
+import { IWUser } from '@perx/whistler';
 
 @Component({
   selector: 'cl-audiences-users-list',
@@ -19,7 +19,7 @@ import { IUser } from '@perx/whistler';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AudiencesUsersListComponent implements AfterViewInit, OnDestroy {
-  @Input() public dataSource: CustomDataSource<IUser>;
+  @Input() public dataSource: CustomDataSource<IWUser>;
   @Input() public displayedColumns: string[] = ['id', 'name', 'email', 'primary_identifier', 'phone', 'audienceList', 'actions']; // 'state'
   @Input() public config: any;
   @ViewChild(MatSort, { static: false }) private sort: MatSort;
