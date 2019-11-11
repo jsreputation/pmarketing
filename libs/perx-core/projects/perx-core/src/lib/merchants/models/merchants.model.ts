@@ -19,20 +19,22 @@ export interface IImage {
 }
 
 export interface IOutlet {
-    outlet_id: number;
-    outlet_name: string;
-    outlet_address1: string;
-    outlet_address2: string;
-    outlet_address3: string;
-    postal_code: string;
+    outletId: number;
+    outletName: string;
+    outletAddress1: string;
+    outletAddress2: string;
+    outletAddress3: string;
+    postalCode: string;
     tel: string;
-    coordinates: { lat: number, lng: number, distance?: number, unit_of_measure: string };
+    coordinates: { lat: number, lng: number, distance?: number, unitOfMeasure: string };
     tags?: ITag[];
 }
 
 export interface IMeta {
+  /* eslint-disable */
     count?: number;
     size?: number;
     total_pages?: number;
     page?: number;
 }
+/* eslint-enable */
