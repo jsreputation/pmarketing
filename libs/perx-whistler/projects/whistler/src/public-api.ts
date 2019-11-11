@@ -28,15 +28,6 @@ export {
   IWJsonApiPatchItem, IWJsonApiPatchData, IWJsonApiPostItem, IWJsonApiPostData
 } from './lib/jsonapi.payload';
 
-export {
-  IWInstantOutcomeTransactionAttributes,
-  IWInstantOutcomeTxnReq,
-} from './lib/instant-outcome/transaction';
-export {
-  IWInstantOutcomeEngagementAttributes,
-  IWOutcomeDisplayProperties,
-} from './lib/instant-outcome/engagement';
-
 export { IWProfileAttributes, IWPoolsAttributes } from './lib/profile/profile';
 
 export {
