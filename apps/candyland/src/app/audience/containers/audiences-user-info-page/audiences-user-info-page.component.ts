@@ -13,7 +13,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { map, switchMap, tap, filter, distinct, takeUntil } from 'rxjs/operators';
-import { IAssignedAttributes } from '@perx/whistler';
+import { IWAssignedAttributes } from '@perx/whistler';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
@@ -62,7 +62,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     this.destroy$.complete();
   }
 
-  public openChangeExpiryDateDialog(item: IJsonApiItem<Partial<IAssignedAttributes>>): void {
+  public openChangeExpiryDateDialog(item: IJsonApiItem<Partial<IWAssignedAttributes>>): void {
     const dialogRef = this.dialog.open(ChangeExpiryDatePopupComponent, {
       panelClass: 'change-expiry-date-dialog',
       data: item

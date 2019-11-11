@@ -1,4 +1,4 @@
-export interface IRewardEntityAttributes {
+export interface IWRewardEntityAttributes {
   urn?: string;
   created_at?: string;
   updated_at?: string;
@@ -27,25 +27,20 @@ export interface IRewardEntityAttributes {
         duration?: string;
       }
     },
-    merchantPinText?: {
-      headLine?: string,
-      subHeadLine?: string,
-    };
-    rewardSuccessPopUp?: {
-      headLine?: string,
-      subHeadLine?: string,
-      imageURL?: string,
-    };
-    codeInstructionsText?: {
-      headLine?: string,
-    };
-    errorPopUp?: {
-      headLine?: string,
-      subHeadLine?: string,
-      imageURL?: string,
-    };
+    merchantPinText?: IWProperties;
+    rewardSuccessPopUp?: IWProperties;
+    codeInstructionsText?: IWProperties;
+    errorPopUp?: IWProperties;
+    CTAButtonTxt?: string;
     redemption_text?: string;
     loyalties: any;
   };
   organization_id?: string;
+}
+
+interface IWProperties {
+  headLine?: string;
+  subHeadLine?: string;
+  imageURL?: string;
+  buttonTxt?: string;
 }

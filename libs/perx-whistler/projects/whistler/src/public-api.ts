@@ -1,32 +1,57 @@
 /*
 * Public API Surface of whistler
 */
-
 export * from './lib/whistler.module';
-export { IVoucherStatsApi } from './lib/voucher/stats';
-export { IVouchersApi } from './lib/voucher/vouchers-api';
-export { AssignedStatus, IAssignedAttributes, IAssignRequestAttributes } from './lib/voucher/assigneds';
-export { IRewardEntityAttributes } from './lib/reward/reward';
-export { IInstantOutcomeLimitAttributes, ISurveyLimitAttributes, IGameLimitAttributes } from './lib/limit/limit';
-export { IOutcomeAttributes } from './lib/outcome/outcome';
-export { ICommTemplateAttributes, ICommEventAttributes } from './lib/comm/comm';
-export { ICampaignAttributes } from './lib/campaign/campaign';
+export { IWVoucherStatsApi } from './lib/voucher/stats';
+export { IWVouchersApi } from './lib/voucher/vouchers-api';
+export {
+  WAssignedStatus,
+  IWAssignedAttributes,
+  IWAssignRequestAttributes,
+} from './lib/voucher/assigneds';
+export { IWRewardEntityAttributes } from './lib/reward/reward';
+export {
+  IWInstantOutcomeLimitAttributes,
+  IWSurveyLimitAttributes,
+  IWGameLimitAttributes,
+} from './lib/limit/limit';
+export { IWOutcomeAttributes } from './lib/outcome/outcome';
+export {
+  IWCommTemplateAttributes,
+  IWCommEventAttributes,
+} from './lib/comm/comm';
+export { IWCampaignAttributes } from './lib/campaign/campaign';
 export { WEngagementType } from './lib/campaign/campaign';
-export { IInstantOutcomeTransactionAttributes, IInstantOutcomeTxnReq } from './lib/instant-outcome/transaction';
-export { IWInstantOutcomeEngagementAttributes, IWOutcomeDisplayProperties } from './lib/instant-outcome/engagement';
-export { IWhistlerProfileAttributes } from './lib/profile/profile';
-export { IMerchant, IMerchantBranchApi } from './lib/merchant/merchant';
-export { ITenantProperties } from './lib/settings/tenant';
-export { ITimeZone } from './lib/settings/time-zone';
-export { ILoyalty, ILoyaltyCard } from './lib/loyalty/loyalty';
+export { IWAudiences, IWPoolsApi, IWPools, IWUser } from './lib/audiences/audiences.model';
+
+export {
+  IWInstantOutcomeTransactionAttributes,
+  IWInstantOutcomeTxnReq,
+} from './lib/instant-outcome/transaction';
+export {
+  IWInstantOutcomeEngagementAttributes,
+  IWOutcomeDisplayProperties,
+} from './lib/instant-outcome/engagement';
+export { IWProfileAttributes } from './lib/profile/profile';
+export {
+  IWMerchant,
+  IWMerchantBranchApi,
+} from './lib/merchant/merchant';
+export { IWTenantProperties } from './lib/settings/tenant';
+export { IWTimeZone } from './lib/settings/time-zone';
+export {
+  IWLoyalty,
+  IWLoyaltyCard,
+} from './lib/loyalty/loyalty';
 
 export {
   WGameType,
-  WAttbsObjGame,
-  WAttbsObjEntity,
-  WGameDisplayProperties,
-  WTreeDisplayProperties,
-  WPinataDisplayProperties
+  IWAttbsObjGame,
+  IWAttbsObjEntity,
+  IWGameDisplayProperties,
+  IWTreeDisplayProperties,
+  IWPinataDisplayProperties,
+  IWScratchDisplayProperties
 } from './lib/game/game';
 
 /** Survey */
@@ -42,3 +67,6 @@ export {
   IWPayload,
   WSurveyQuestionType
 } from './lib/survey/question';
+
+/** Cognito */
+export { IWCognitoTenantAttributes } from './lib/cognito/tenants';

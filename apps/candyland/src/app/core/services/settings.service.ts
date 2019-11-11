@@ -14,7 +14,7 @@ import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { Role } from '@cl-helpers/role.enum';
 import { IamUser } from '@cl-core/http-adapters/iam-user';
-import { ITenantProperties, ITimeZone } from '@perx/whistler';
+import { IWTenantProperties } from '@perx/whistler';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { IReward } from '@perx/core';
 
@@ -100,8 +100,8 @@ export class SettingsService implements ITableService {
       headerNavbarColor: [null],
       logo: [null, [Validators.required]],
       logoType: ['image'],
-      button_background_color: [null],
-      button_text_color: ['#fff']
+      buttonBackgroundColor: [null],
+      buttonTextColor: ['#fff']
     });
   }
 
@@ -165,14 +165,14 @@ export class SettingsService implements ITableService {
       );
   }
 
-  public getTenantsSettings(): Observable<ITenantProperties> {
+  public getTenantsSettings(): Observable<IWTenantProperties> {
     return this.dataStore.findAll(Tenants, { page: { size: 10, number: 1 } })
       .pipe(
         map(response => SettingsHttpAdapter.getTenantsSettings(response)),
       );
   }
 
-  public updateTenants(value: ITenantProperties): Observable<IamUser> {
+  public updateTenants(value: IWTenantProperties): Observable<IamUser> {
     const newProperties = { ...this.tenants.display_properties, ...value };
     this.tenants.display_properties = { ...newProperties };
     return this.tenants.save().pipe(

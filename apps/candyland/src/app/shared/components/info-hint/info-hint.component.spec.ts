@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InfoHintComponent } from './info-hint.component';
 import { MatIconModule } from '@angular/material';
+// tslint:disable
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('InfoHintComponent', () => {
   let component: InfoHintComponent;
@@ -12,9 +14,10 @@ describe('InfoHintComponent', () => {
       imports: [
         MatIconModule
       ],
-      declarations: [ InfoHintComponent ]
+      declarations: [InfoHintComponent],
+      schemas: [NO_ERRORS_SCHEMA],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

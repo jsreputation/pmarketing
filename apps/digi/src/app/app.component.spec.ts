@@ -2,11 +2,15 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { AuthenticationModule, UtilsModule, AuthenticationService } from '@perx/core';
+import { AuthenticationModule, UtilsModule, AuthenticationService, ConfigService } from '@perx/core';
 import { MatDialogModule } from '@angular/material';
+import { of } from 'rxjs';
 
 describe('AppComponent', () => {
   const authServiceStub = {};
+  const configServiceStub = {
+    readAppConfig: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,7 +22,8 @@ describe('AppComponent', () => {
       ],
       declarations: [AppComponent],
       providers: [
-        {provide: AuthenticationService, useValue: authServiceStub}
+        {provide: AuthenticationService, useValue: authServiceStub},
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     }).compileComponents();
   }));

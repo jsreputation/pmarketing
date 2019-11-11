@@ -112,19 +112,6 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       }
     );
 
-    if (this.campaignId === null) {
-      this.fetchCampaign();
-    } else if (this.cardId === null || this.card === null) {
-      this.fetchCard(this.campaignId).subscribe(
-        (card: IStampCard) => {
-          this.card = card;
-          this.cardId = card.id;
-          this.fetchStampTransactionCount(this.campaignId);
-          this.fetchCardsCount(this.campaignId);
-        }
-      );
-    }
-
     if (!localStorage.getItem('enableSound')) {
       setTimeout(() => {
         this.soundService.showPopup();
@@ -154,11 +141,18 @@ export class PuzzleComponent implements OnInit, OnDestroy {
                   card.displayProperties.displayCampaignAs === this.displayCampaignAs);
             }),
             map((cards: IStampCard[]) => cards[0]),
-            tap((card: IStampCard) => this.campaignId = card.campaignId)
+            tap((card: IStampCard) => {
+              if (card) {
+                this.campaignId = card.campaignId;
+              }
+            })
           )
         ),
       )
       .subscribe((card: IStampCard) => {
+        if (!card) {
+          return;
+        }
         this.fetchStampTransactionCount(card.campaignId);
         this.cardId = card.id;
         this.card = card;
