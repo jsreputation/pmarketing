@@ -13,8 +13,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { IWQuestion, WSurveyQuestionType } from '@perx/whistler';
-import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
+import { IWEngagementAttributes, IWQuestion, WSurveyQuestionType } from '@perx/whistler';
 
 @Component({
   selector: 'cl-new-survey',
@@ -23,13 +22,13 @@ import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-ad
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewSurveyComponent implements OnInit, OnDestroy {
-  @ViewChild(SimpleMobileViewComponent, { static: false }) public simpleMobileViewComponent: SimpleMobileViewComponent;
+  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<any> = new Subject();
 
   public id: string;
   public form: FormGroup;
-  public surveyQuestionType: IEngagementType[];
+  public surveyQuestionType: IEngagementQuestionType[];
   public surveyData: any;
   public level: number = 0;
   public subHeadlineMaxLength: number = 250;
@@ -128,7 +127,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   public patchForm(data?): void {
 
     // patch first simple fields fo the form
-    this.form.patchValue(data, { emitEvent: false });
+    this.form.patchValue(data, {emitEvent: false});
 
     // patch other form fields
     if (data.questions) {
@@ -183,11 +182,13 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((imageUrl: IUploadedFile) => {
           if (this.id) {
-            return this.surveyService.updateSurvey(this.id, { ...this.form.value, image_url: imageUrl.url });
+            return this.surveyService.updateSurvey(this.id, {...this.form.value, image_url: imageUrl.url});
           }
-          return this.surveyService.createSurvey({ ...this.form.value, image_url: imageUrl.url }).pipe(
-            map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
-            tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
+          return this.surveyService.createSurvey({...this.form.value, image_url: imageUrl.url}).pipe(
+            tap(
+              (engagement: IJsonApiPayload<IWEngagementAttributes>) =>
+                this.availableNewEngagementService.transformAndSetNewEngagement(engagement)
+            )
           );
         })
       )
@@ -240,7 +241,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
     this.form.valueChanges
       .pipe(debounceTime(500), takeUntil(this.destroy$))
       .subscribe((val) => {
-        this.questionData$.next({ questions: [val.questions[0]] });
+        this.questionData$.next({questions: [val.questions[0]]});
         this.cd.detectChanges();
       });
   }

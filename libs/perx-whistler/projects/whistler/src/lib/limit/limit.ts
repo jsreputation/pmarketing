@@ -1,3 +1,5 @@
+export type IWLimitAttributes = IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes;
+
 export interface IWInstantOutcomeLimitAttributes {
     engagement_id: number;
     campaign_entity_id: number;
