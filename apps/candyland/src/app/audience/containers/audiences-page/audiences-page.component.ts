@@ -25,7 +25,7 @@ import { CustomDataSource, DataSourceStates } from '@cl-shared/table/data-source
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy {
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public currentTab: string;
   public tabs: FormControl;
