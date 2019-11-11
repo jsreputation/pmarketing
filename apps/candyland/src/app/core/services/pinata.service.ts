@@ -3,13 +3,15 @@ import { PinataHttpService } from '@cl-core/http-services/pinata-http.service';
 import { Observable } from 'rxjs';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { map } from 'rxjs/operators';
+import { IWPinataGameEngagementAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PinataService {
 
-  constructor(private pinataHttpService: PinataHttpService) { }
+  constructor(private pinataHttpService: PinataHttpService) {
+  }
 
   public getPinataData(): Observable<IGameDefaultData> {
     return this.pinataHttpService.getPinataData();
@@ -21,13 +23,13 @@ export class PinataService {
     );
   }
 
-  public createPinata(data: any): Observable<IResponseApi<IEngagementApi>> {
-    const sendData = EngagementHttpAdapter.transformPinata(data);
-    return this.pinataHttpService.createPinata({ data: sendData });
+  public createPinata(data: IPinataForm): Observable<IJsonApiPayload<IWPinataGameEngagementAttributes>> {
+    const sendData = EngagementHttpAdapter.transformFromPinataForm(data);
+    return this.pinataHttpService.createPinata({data: sendData});
   }
 
-  public updatePinata(id: string, data: any): Observable<IResponseApi<IEngagementApi>> {
-    const sendData = EngagementHttpAdapter.transformPinata(data);
+  public updatePinata(id: string, data: IPinataForm): Observable<IJsonApiPayload<IWPinataGameEngagementAttributes>> {
+    const sendData = EngagementHttpAdapter.transformFromPinataForm(data);
     sendData.id = id;
     return this.pinataHttpService.updatePinata(id, {data: sendData});
   }

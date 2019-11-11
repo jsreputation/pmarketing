@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { VouchersHttpService } from '@cl-core/http-services/vouchers-https.service';
 import { VouchersHttpAdapter } from '@cl-core/http-adapters/vouchers-http-adapter';
 import { map } from 'rxjs/operators';
+import { IWVouchersApi } from '../../../../../../libs/perx-whistler/dist/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,8 @@ export class VouchersService {
     return this.vouchersHttp.getVouchers(params);
   }
 
-  public getVoucher(id: string): Observable<IRewardEntityForm> {
-    return this.vouchersHttp
-      .getVoucher(id);
+  public getVoucher(id: string): Observable<IJsonApiPayload<IWVouchersApi>> {
+    return this.vouchersHttp.getVoucher(id);
   }
 
   public createVoucher(data: any): Observable<any> {

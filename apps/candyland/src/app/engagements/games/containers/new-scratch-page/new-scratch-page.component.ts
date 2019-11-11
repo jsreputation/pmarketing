@@ -5,57 +5,57 @@ import {
   OnDestroy,
   ChangeDetectorRef,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from '@angular/forms';
 import {
   ActivatedRoute,
   ParamMap,
-  Router,
+  Router
 } from '@angular/router';
 
 import {
   tap,
   map,
   switchMap,
-  takeUntil,
+  takeUntil
 } from 'rxjs/operators';
 import {
   combineLatest,
   Observable,
   of,
-  Subject,
+  Subject
 } from 'rxjs';
 
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import {
   AvailableNewEngagementService,
   ScratchService,
   RoutingStateService,
-  SettingsService,
+  SettingsService
 } from '@cl-core/services';
 
 import { ControlsName } from '../../../../models/controls-name';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
+import { IWScratchGameEngagementAttributes } from '@perx/whistler';
 
 @Component({
   selector: 'cl-new-scratch-page',
   templateUrl: './new-scratch-page.component.html',
   styleUrls: ['./new-scratch-page.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewScratchPageComponent implements OnInit, OnDestroy {
-  @ViewChild(SimpleMobileViewComponent, { static: false }) public simpleMobileViewComponent: SimpleMobileViewComponent;
+  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<any> = new Subject();
 
@@ -114,7 +114,7 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private settingsService: SettingsService,
+    private settingsService: SettingsService
   ) {
   }
 
@@ -151,12 +151,14 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((imageUrl: IUploadedFile) => {
           if (this.id) {
-            return this.scratchService.updateScratch(this.id, { ...this.form.value, image_url: imageUrl.url });
+            return this.scratchService.updateScratch(this.id, {...this.form.value, image_url: imageUrl.url});
           }
-          return this.scratchService.createScratch({ ...this.form.value, image_url: imageUrl.url })
+          return this.scratchService.createScratch({...this.form.value, image_url: imageUrl.url})
             .pipe(
-              map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
-              tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
+              tap(
+                (engagement: IJsonApiPayload<IWScratchGameEngagementAttributes>) =>
+                  this.availableNewEngagementService.transformAndSetNewEngagement(engagement)
+              )
             );
         })
       )
@@ -183,8 +185,8 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
   private initScratchForm(): void {
     this.form = this.fb.group({
       name: ['Scratch the Card Template', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]
+        Validators.minLength(1),
+        Validators.maxLength(60)]
       ],
       headlineMessage: ['Scratch the Card and Win!', [
         Validators.required,
@@ -208,7 +210,7 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
       preScratchImage: [null, [Validators.required]],
       postScratchSuccessImage: [null, [Validators.required]],
       postScratchFailImage: [null, [Validators.required]],
-      background: [null, []],
+      background: [null, []]
     });
   }
 
@@ -250,7 +252,7 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
         return of(null);
       }),
       tap(scratch => this.checkGameType(scratch)),
-      takeUntil(this.destroy$),
+      takeUntil(this.destroy$)
     );
   }
 

@@ -12,8 +12,8 @@ import {
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
+import { IWEngagementAttributes } from '@perx/whistler';
 
 @Component({
   selector: 'cl-new-pinata-page',
@@ -22,7 +22,7 @@ import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-v
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewPinataPageComponent implements OnInit, OnDestroy {
-  @ViewChild(SimpleMobileViewComponent, { static: false }) public simpleMobileViewComponent: SimpleMobileViewComponent;
+  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<any> = new Subject();
 
@@ -100,11 +100,13 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((imageUrl: IUploadedFile) => {
           if (this.id) {
-            return this.pinataService.updatePinata(this.id, { ...this.form.value, image_url: imageUrl.url });
+            return this.pinataService.updatePinata(this.id, {...this.form.value, image_url: imageUrl.url});
           }
-          return this.pinataService.createPinata({ ...this.form.value, image_url: imageUrl.url }).pipe(
-            map((engagement: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagement(engagement.data)),
-            tap((data: IEngagement) => this.availableNewEngagementService.setNewEngagement(data))
+          return this.pinataService.createPinata({...this.form.value, image_url: imageUrl.url}).pipe(
+            tap(
+              (engagement: IJsonApiPayload<IWEngagementAttributes>) =>
+                this.availableNewEngagementService.transformAndSetNewEngagement(engagement)
+            )
           );
         })
       ).pipe(takeUntil(this.destroy$))
@@ -122,8 +124,8 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   private createPinataForm(): void {
     this.form = this.fb.group({
       name: ['Hit the Pinata Template', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]
+        Validators.minLength(1),
+        Validators.maxLength(60)]
       ],
       headlineMessage: ['Tap the Piñata and Win!', [
         Validators.required,
@@ -135,8 +137,7 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
         Validators.maxLength(60)
       ]],
       pinata: [null, [Validators.required]],
-      background: [null, [
-      ]],
+      background: [null, []],
       buttonText: ['start playing', [
         Validators.required,
         Validators.minLength(2),
@@ -180,7 +181,7 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
         return of(null);
       }),
       tap(pinata => this.checkGameType(pinata)),
-      takeUntil(this.destroy$),
+      takeUntil(this.destroy$)
     );
   }
 

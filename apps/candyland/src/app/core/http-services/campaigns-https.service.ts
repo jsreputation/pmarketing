@@ -27,7 +27,7 @@ export class CampaignsHttpsService {
     return this.http.post<IJsonApiPayload<IWCampaignAttributes>>(ApiConfig.campaignsPath, data);
   }
 
-  public deleteCampaign(id: string): Observable<any> {
-    return this.http.delete(`${ApiConfig.campaignsPath}/${id}`);
+  public deleteCampaign(id: string): Observable<IJsonApiPayload<IWCampaignAttributes>> {
+    return this.http.delete<IJsonApiPayload<IWCampaignAttributes>>(`${ApiConfig.campaignsPath}/${id}`);
   }
 }

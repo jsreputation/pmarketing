@@ -1,13 +1,27 @@
 import { ImageControlValue } from '@cl-helpers/image-control-value';
-import {
-  IEngagementInstantReward, IEngagementShakeType, IEngagementStamps, IEngagementSurvey, IEngagementTapType
-} from '@cl-core/models/engagement/engagement-interfaces';
 import { ControlsName } from 'src/app/models/controls-name';
-
+import {
+  IWInstantOutcomeEngagementAttributes,
+  IWEngagementAttributes,
+  IWPinataGameEngagementAttributes,
+  IWTreeGameEngagementAttributes,
+  IWSurveyEngagementAttributes,
+  IWStampEngagementAttributes,
+  WGameType,
+  IWScratchGameEngagementAttributes
+} from '@perx/whistler';
+import {
+  IEngagementInstantReward,
+  IEngagementSurvey,
+  IEngagementStamps,
+  IEngagementTapType,
+  IEngagementShakeType,
+  IEngagementType
+} from '@cl-core/models/engagement/engagement.interface';
 export class EngagementHttpAdapter {
 
   // tslint:disable
-  public static transformEngagement(data: IEngagementApi): IEngagement {
+  public static transformEngagement(data: IJsonApiItem<IWEngagementAttributes>): IEngagementForm {
     return {
       id: data.id,
       current_type: data.type,
@@ -39,7 +53,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformEngagementHandler(data: IEngagementApi, type?: string): any | undefined {
+  public static transformEngagementHandler(data: IJsonApiItem<IWEngagementAttributes>, type?: string): IEngagementType | undefined {
     const engagementType = type ? type : data.attributes.type;
 
     switch (engagementType) {
@@ -54,7 +68,7 @@ export class EngagementHttpAdapter {
     }
   }
 
-  public static transformToInstantReward(data: any, engagementType?: string): IEngagementInstantReward {
+  public static transformToInstantReward(data: IJsonApiItem<IWInstantOutcomeEngagementAttributes>, engagementType?: string): IEngagementInstantReward {
     return {
       id: data.id,
       type: data.type,
@@ -73,7 +87,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformToSurveyType(data: any, engagementType?: string): IEngagementSurvey {
+  public static transformToSurveyType(data: IJsonApiItem<IWSurveyEngagementAttributes>, engagementType?: string): IEngagementSurvey {
     return {
       id: data.id,
       type: data.type,
@@ -97,7 +111,7 @@ export class EngagementHttpAdapter {
     return data[0];
   }
 
-  public static transformToStampType(data: any, engagementType?: string): IEngagementStamps {
+  public static transformToStampType(data: IJsonApiItem<IWStampEngagementAttributes>, engagementType?: string): IEngagementStamps {
     return {
       id: data.id,
       type: data.type,
@@ -121,16 +135,16 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformGameHandler(data: IEngagementApi, engagementType?: string): IEngagementShakeType | IEngagementTapType | undefined {
+  public static transformGameHandler(data: IJsonApiItem<IWEngagementAttributes>, engagementType?: string): IEngagementShakeType | IEngagementTapType | undefined {
     switch (data.attributes.game_type) {
-      case 'shake':
-        return EngagementHttpAdapter.transformToShackType(data, engagementType);
-      case 'tap':
-        return EngagementHttpAdapter.transformToPinataType(data, engagementType);
+      case WGameType.shakeTheTree:
+        return EngagementHttpAdapter.transformToShackType(data as IJsonApiItem<IWTreeGameEngagementAttributes>, engagementType);
+      case WGameType.pinata:
+        return EngagementHttpAdapter.transformToPinataType(data as IJsonApiItem<IWPinataGameEngagementAttributes>, engagementType);
     }
   }
 
-  public static transformToShackType(data: any, engagementType?: string): IEngagementShakeType {
+  public static transformToShackType(data: IJsonApiItem<IWTreeGameEngagementAttributes>, engagementType?: string): IEngagementShakeType {
     return {
       id: data.id,
       type: data.type,
@@ -151,7 +165,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformToPinataType(data: any, engagementType?: string): IEngagementTapType {
+  public static transformToPinataType(data: IJsonApiItem<IWPinataGameEngagementAttributes>, engagementType?: string): IEngagementTapType {
     return {
       id: data.id,
       type: data.type,
@@ -171,7 +185,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformInstantReward(data: IRewardForm): IEngagementApi {
+  public static transformFromInstantRewardForm(data: IRewardForm): IJsonApiItem<IWInstantOutcomeEngagementAttributes> {
     return {
       type: 'engagements',
       attributes: {
@@ -191,14 +205,14 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformShakeTheTree(data: IShakeTreeForm): IEngagementApi {
+  public static transformFromShakeTheTreeForm(data: IShakeTreeForm): IJsonApiItem<IWTreeGameEngagementAttributes> {
     return {
       type: 'engagements',
       attributes: {
         type: 'game',
         title: data.name,
         description: 'Spin and win',
-        game_type: 'shake',
+        game_type: WGameType.shakeTheTree,
         image_url: data.image_url,
         display_properties: {
           title: data.headlineMessage,
@@ -213,12 +227,13 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformPinata(data: IPinataForm): IEngagementApi {
+  public static transformFromPinataForm(data: IPinataForm): IJsonApiItem<IWPinataGameEngagementAttributes> {
     return {
-      type: 'engagements', attributes: {
+      type: 'engagements',
+      attributes: {
         type: 'game',
         title: data.name,
-        game_type: 'tap',
+        game_type: WGameType.pinata,
         image_url: data.image_url,
         display_properties: {
           title: data.headlineMessage,
@@ -227,18 +242,19 @@ export class EngagementHttpAdapter {
           cracking_pinata_img_url: 'https://picsum.photos/200/300',
           opened_pinata_img_url: 'https://picsum.photos/200/300',
           closed_pinata_img_url: ImageControlValue.getImagePath(data.pinata),
-          background_img_url: ImageControlValue.getImagePath(data.background),
+          background_img_url: ImageControlValue.getImagePath(data.background)
         }
       }
     };
   }
 
-  public static transformScratch(data: IScratchForm): IEngagementApi {
+  public static transformFromScratchForm(data: IScratchForm): IJsonApiItem<IWScratchGameEngagementAttributes> {
     return {
-      type: 'engagements', attributes: {
+      type: 'engagements',
+      attributes: {
         type: 'game',
         title: data.name,
-        game_type: 'scratch',
+        game_type: WGameType.scratch,
         image_url: data.image_url,
         display_properties: {
           title: data.headlineMessage,
@@ -247,25 +263,26 @@ export class EngagementHttpAdapter {
           pre_scratch_img_url: ImageControlValue.getImagePath(data.preScratchImage),
           post_scratch_success_img_url: ImageControlValue.getImagePath(data.postScratchSuccessImage),
           post_scratch_fail_img_url: ImageControlValue.getImagePath(data.postScratchFailImage),
-          background_img_url: ImageControlValue.getImagePath(data.background),
+          background_img_url: ImageControlValue.getImagePath(data.background)
         }
       }
     };
   }
 
-  public static transformStamp(data: any): IEngagementApi {
+  public static transformStamp(data: IStampsEntityForm): IJsonApiItem<IWStampEngagementAttributes> {
     return {
-      type: 'engagements', attributes: {
+      type: 'engagements',
+      attributes: {
         type: 'stamps',
         title: data.name,
         image_url: data.image_url,
         display_properties: {
-          'nb_of_slots': data.stampsNumber,
+          nb_of_slots: data.stampsNumber,
           slots: data.stampsSlotNumber,
-          'pre_stamp_img_url': ImageControlValue.getImagePath(data.preStamp),
-          'reward_pre_stamp_img_url': ImageControlValue.getImagePath(data.rewardPreStamps),
-          'post_stamp_img_url': ImageControlValue.getImagePath(data.postStamps),
-          'reward_post_stamp_img_url': ImageControlValue.getImagePath(data.rewardPostStamps),
+          pre_stamp_img_url: ImageControlValue.getImagePath(data.preStamp),
+          reward_pre_stamp_img_url: ImageControlValue.getImagePath(data.rewardPreStamps),
+          post_stamp_img_url: ImageControlValue.getImagePath(data.postStamps),
+          reward_post_stamp_img_url: ImageControlValue.getImagePath(data.rewardPostStamps),
           title: data.headlineMessage,
           button: data.buttonText,
           sub_title: data.subHeadlineMessage,
@@ -276,7 +293,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformStampForm(data: IEngagementApi): Partial<IStampsEntityForm> {
+  public static transformStampForm(data:  IJsonApiItem<IWStampEngagementAttributes>): Partial<IStampsEntityForm> {
     return {
       name: data.attributes.title,
       headlineMessage: data.attributes.display_properties.title,
@@ -293,7 +310,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformRewardForm(data: IEngagementApi): IRewardForm {
+  public static transformRewardForm(data: IJsonApiItem<IWInstantOutcomeEngagementAttributes>): IRewardForm {
     return {
       name: data.attributes.title,
       headlineMessage: data.attributes.display_properties.title,
@@ -306,7 +323,7 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformShakeTreeForm(data: IEngagementApi): IShakeTree {
+  public static transformShakeTreeForm(data: IJsonApiItem<IWTreeGameEngagementAttributes>): IShakeTree {
     return {
       name: data.attributes.title,
       gameType: data.attributes.game_type,
@@ -316,11 +333,11 @@ export class EngagementHttpAdapter {
       background: data.attributes.display_properties.background_img_url,
       gameGift: data.attributes.display_properties.nb_hanged_gifts,
       giftBox: data.attributes.display_properties.gift_box_img_url,
-      treeType: data.attributes.display_properties.tree_img_url,
+      treeType: data.attributes.display_properties.tree_img_url
     };
   }
 
-  public static transformPinataForm(data: IEngagementApi): IPinataForm {
+  public static transformPinataForm(data:  IJsonApiItem<IWPinataGameEngagementAttributes>): IPinataForm {
     return {
       id: data.id,
       type: data.type,
@@ -331,13 +348,13 @@ export class EngagementHttpAdapter {
       buttonText: data.attributes.display_properties.button,
       background: data.attributes.display_properties.background_img_url,
       pinata: data.attributes.display_properties.closed_pinata_img_url,
-      image_url: data.attributes.image_url,
+      image_url: data.attributes.image_url
       // opened_pinata_img_url: data.attributes.display_properties.opened_pinata_img_url,
       // cracking_pinata_img_url: data.attributes.display_properties.cracking_pinata_img_url
     };
   }
 
-  public static transformScratchForm(data: IEngagementApi): IScratchForm {
+  public static transformScratchForm(data: IJsonApiItem<IWScratchGameEngagementAttributes>): IScratchForm {
     return {
       id: data.id,
       type: data.type,
@@ -351,7 +368,7 @@ export class EngagementHttpAdapter {
       preScratchImage: data.attributes.display_properties.pre_scratch_img_url,
       postScratchSuccessImage: data.attributes.display_properties.post_scratch_success_img_url,
       postScratchFailImage: data.attributes.display_properties.post_scratch_fail_img_url,
-      image_url: data.attributes.image_url,
+      image_url: data.attributes.image_url
     };
   }
 }
