@@ -1,6 +1,6 @@
 export interface ISignUpData {
     firstName?: string;
-    lastName: string;
+    lastName?: string;
     middleName?: string;
     phone: string;
     email?: string;

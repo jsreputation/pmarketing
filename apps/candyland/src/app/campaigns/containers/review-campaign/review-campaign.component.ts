@@ -29,7 +29,7 @@ import { IEngagementType } from '@cl-core/models/engagement/engagement.interface
 })
 export class ReviewCampaignComponent implements OnInit, OnDestroy {
   public tenantSettings: ITenantsProperties;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public campaign: any;
 

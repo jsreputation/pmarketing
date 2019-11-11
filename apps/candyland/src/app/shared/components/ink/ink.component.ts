@@ -28,7 +28,7 @@ export class InkComponent implements AfterViewInit, AfterContentInit, OnDestroy 
   @ContentChildren(InkListenerDirective, {descendants: true}) public inkListener: QueryList<InkListenerDirective>;
   @ViewChild(InkBarDirective, {static: false}) public inkBar: InkBarDirective;
 
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public ngAfterViewInit(): void {
     this.getHost();
