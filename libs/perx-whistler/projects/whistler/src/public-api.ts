@@ -1,7 +1,6 @@
 /*
 * Public API Surface of whistler
 */
-
 export * from './lib/whistler.module';
 export { IWVoucherStatsApi } from './lib/voucher/stats';
 export { IWVouchersApi } from './lib/voucher/vouchers-api';
@@ -23,6 +22,8 @@ export {
 } from './lib/comm/comm';
 export { IWCampaignAttributes } from './lib/campaign/campaign';
 export { WEngagementType } from './lib/campaign/campaign';
+export { IWAudiences, IWPoolsApi, IWPools, IWUser } from './lib/audiences/audiences.model';
+
 export {
   IWInstantOutcomeTransactionAttributes,
   IWInstantOutcomeTxnReq,
