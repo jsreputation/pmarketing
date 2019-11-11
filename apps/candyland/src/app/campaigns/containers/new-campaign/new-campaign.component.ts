@@ -149,14 +149,14 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   private updateLimitFn(): (campaign: ICampaign) => Observable<IJsonApiPayload<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes> | void> {
-    const updateLimit$ = (campaign: ICampaign) => this.limitsService.updateLimits(
+    const updateLimit$ = (campaign: ICampaign) => this.limitsService.updateLimit(
       this.store.currentCampaign.limits.id,
       this.store.currentCampaign.limits,
       this.store.currentCampaign.template.attributes_type,
       Number.parseInt(campaign.id, 10),
       this.store.currentCampaign.template.id
     );
-    const createLimit$ = (campaign: ICampaign) => this.limitsService.createLimits(
+    const createLimit$ = (campaign: ICampaign) => this.limitsService.createLimit(
       this.store.currentCampaign.limits,
       this.store.currentCampaign.template.attributes_type,
       Number.parseInt(campaign.id, 10),
@@ -352,7 +352,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const campaignId = this.route.snapshot.params.id;
     const paramsComm: HttpParamsOptions = {
       'filter[owner_id]': campaignId,
-      include: 'template'
+      include: 'template',
     };
     const paramsPO: HttpParamsOptions = {
       'filter[campaign_entity_id]': campaignId

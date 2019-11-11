@@ -18,7 +18,7 @@ export class LimitsHttpsService {
     return this.http.get<IJsonApiListPayload<IWLimitAttributes>>(`${ApiConfig.basePath}/${eType}/limits`, { params });
   }
 
-  public updateLimits(
+  public updateLimit(
     id: string,
     data: IJsonApiPayload<IWLimitAttributes>,
     engagementType: string
@@ -28,7 +28,7 @@ export class LimitsHttpsService {
     return this.http.patch<IJsonApiPayload<IWLimitAttributes>>(url, data);
   }
 
-  public createLimits(
+  public createLimit(
     data: IJsonApiPayload<IWLimitAttributes>,
     engagementType: string
   ): Observable<IJsonApiPayload<IWLimitAttributes>> {
@@ -43,6 +43,6 @@ export class LimitsHttpsService {
     const eType = EngagementTypeAPIMapping[engagementType];
     return this.http.delete(`${ApiConfig.basePath}/${eType}/limits/${limitId}`)
       // convert to a void observable in case of success
-      .pipe(map(() => { }));
+      .pipe(map(() => { return; }));
   }
 }
