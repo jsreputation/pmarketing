@@ -33,17 +33,9 @@ export const DARK: ITheme = {
   }
 };
 
-export interface WhistlerITenant {
-  account_id: string;
-  alias: string;
-  created_at: string;
-  name: string;
-  display_properties: WhistlerISetting;
-}
-
 export interface AccountPageObject {
   title: string;
-  content_url: string;
+  content_url: string;  // eslint-disable-line
   key: string;
 }
 
@@ -51,6 +43,8 @@ export interface PagesObject {
   pages: AccountPageObject[];
 }
 
+// Whistler settings should be moved to whistler folder, sep branch
+/* eslint-disable */
 export interface WhistlerISetting {
   currency: number;
   time_zone: number;
@@ -65,3 +59,12 @@ export interface WhistlerISetting {
   'theme.title': string;
   'account': PagesObject;
 }
+
+export interface WhistlerITenant {
+  account_id: string;
+  alias: string;
+  created_at: string;
+  name: string;
+  display_properties: WhistlerISetting;
+}
+/* eslint-enable */
