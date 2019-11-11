@@ -3,7 +3,7 @@
     <div *ngFor="let ctrl of controls; let i = index">
       <input type="tel" maxlength="1" [formControl]="ctrl" id="{{'input_'+i}}" (keyup)="onKey($event)"
              (blur)="onBlur()" (focus)="onFocus()"
-             [attr.autofocus]="i === 0" autocomplete="off">
+             autofocus="{{i === 0 ? true : null}}" autocomplete="off">
     </div>
   </div>
   <div class="error-label">{{errorMessage}}</div>
