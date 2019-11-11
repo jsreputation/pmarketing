@@ -34,7 +34,6 @@ import {
   IProfile,
   IProfileAttributes,
 } from '../../profile/profile.model';
-import { IProfileAttributes } from '../../profile/profile.model';
 import { Config } from '../../config/config';
 
 interface IUserJWTRequest {
