@@ -27,9 +27,8 @@ import {
   IJsonApiItem,
   IWAttbsObjTrans,
   IWScratchDisplayProperties,
+  IWCampaignDisplayProperties,
 } from '@perx/whistler';
-
-import { ICampaignDisplayProperties } from '../perx-core.models';
 
 @Injectable({
   providedIn: 'root'
@@ -146,7 +145,7 @@ export class WhistlerGameService implements IGameService {
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    let disProp: ICampaignDisplayProperties = null;
+    let disProp: IWCampaignDisplayProperties = null;
     return this.http.get<IJsonApiItemPayload<IWCampaignAttributes>>(`${this.hostName}/campaign/entities/${campaignId}`)
       .pipe(
         map((res: IJsonApiItemPayload<IWCampaignAttributes>) => res.data.attributes),
