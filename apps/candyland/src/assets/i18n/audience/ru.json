@@ -32,6 +32,16 @@
    "UPLOAD_BY_FILE": "Upload by file",
    "GOLD_USERS": "Gold users",
    "SILVER_TIER": "Silver tier",
-   "BRONZE_TIER": "Bronze tier"
+   "BRONZE_TIER": "Bronze tier",
+   "CONTACT_NO": "Contact no.",
+   "REWARD_NAME": "Reward Name",
+   "ISSUED_DATE": "Issued Date",
+   "EXPIRY_DATE": "Expiry Date",
+   "REDEMPTION_TYPE": "Redemption Type",
+   "CHANGE_EXPIRY_DATE": "Change expiry date",
+   "MERCHANT": "Merchant",
+   "CAMPAIGN": "Campaign",
+   "SEARCH_VOUCHERS": "Search vouchers",
+   "ISSUE_VOUCHER": "Issue Voucher"
  }
 }
