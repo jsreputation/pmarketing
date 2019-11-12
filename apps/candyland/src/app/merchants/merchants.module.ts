@@ -14,9 +14,6 @@ import { ListMerchantViewModule } from '../shared/components/list-merchant-view/
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { CreateMerchantPopupModule } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.module';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { translateLoader } from '@cl-core/translate-services/multiple-translate-loader-service';
-import { HttpClient } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
