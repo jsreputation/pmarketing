@@ -20,6 +20,7 @@
   "BTN_DOWNLOAD_A_SAMPLE_FILE": "Download a sample file",
   "BTN_UPLOAD-FILE_A_LIST": "+ upload-file a list",
   "BTN_NEXT": "Next",
+  "BTN_ADD": "Add",
 
 
   "DESCRIPTION": "Description",
@@ -31,7 +32,8 @@
   "ERROR_PATTERN": "Only alphanumerics",
   "RECOMMENDED_FORMAT:_.JPG,_.PNG_OR_.GIF": "Recommended format: .JPG, .PNG or .GIF",
   "WRONG_PATTERN_WEB_LINK": "Wrong pattern web link",
-
+  "ERROR_WRONG_FORMAT_OF_EMAIL": "Wrong format of email",
+  
 
   "WEBLINK": "Weblink",
   "TO": "to",
