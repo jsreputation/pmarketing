@@ -17,6 +17,7 @@ import { CreateMerchantPopupModule } from '@cl-shared/containers/create-merchant
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { translateLoader } from '@cl-core/translate-services/multiple-translate-loader-service';
 import { HttpClient } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -41,17 +42,7 @@ import { HttpClient } from '@angular/common/http';
     TableFiltersModule,
     PaginationModule,
     NoDataModule,
-    TranslateModule.forChild({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (httpClient) => translateLoader(httpClient, [
-          {prefix: '/assets/i18n/merchants/', suffix: '.json'},
-          {prefix: '/assets/i18n/common/', suffix: '.json'}
-        ]),
-        deps: [HttpClient]
-      },
-      isolate: true
-    })
+    TranslateModule,
   ]
 })
 export class MerchantsModule {
