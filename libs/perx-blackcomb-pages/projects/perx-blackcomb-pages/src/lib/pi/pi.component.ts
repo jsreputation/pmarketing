@@ -80,7 +80,7 @@ export class PIComponent implements OnInit, OnDestroy {
     if (pi) {
       const oldUserId = this.authService.getUserId();
       const oldPI = this.authService.getPI();
-      const oldToken = `Bearer ${this.authService.getUserAccessToken()}`;
+      const oldToken = this.authService.getUserAccessToken();
       let newUserId;
       let newToken;
       (window as any).primaryIdentifier = pi;
