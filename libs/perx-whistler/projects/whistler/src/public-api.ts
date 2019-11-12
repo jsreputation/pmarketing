@@ -85,7 +85,8 @@ export {
 
 export {
   IWInstantOutcomeTransactionAttributes,
-  IWInstantOutcomeTxnReq
+  IWInstantOutcomeTxnReq,
+  WInstantOutcomeStatus
 } from './lib/engagement/instant-outcome-transaction';
 
 /** Survey */

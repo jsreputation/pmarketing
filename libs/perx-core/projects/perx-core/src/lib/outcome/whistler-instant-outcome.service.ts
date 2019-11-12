@@ -14,6 +14,8 @@ import {
   IWInstantOutcomeTransactionAttributes,
   IWInstantOutcomeTxnReq,
   IWInstantOutcomeEngagementAttributes,
+  IWAssignedAttributes,
+  WInstantOutcomeStatus,
   IWInstantOutcomeDisplayProperties,
   IWCampaignAttributes
 } from '@perx/whistler';
