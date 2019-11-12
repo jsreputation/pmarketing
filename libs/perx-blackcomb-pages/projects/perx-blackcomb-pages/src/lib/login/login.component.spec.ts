@@ -21,7 +21,8 @@ describe('LoginComponent', () => {
   };
 
   const themeServiceStub: Partial<ThemesService> = {
-    getActiveTheme: () => of()
+    getActiveTheme: () => of(),
+    getThemeSetting: () => of()
   };
 
   beforeEach(async(() => {
