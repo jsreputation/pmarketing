@@ -16,6 +16,7 @@ export {
   IWRewardEntityAttributes,
   IWMetaData,
 } from './lib/reward/reward';
+export { IWAttbsObjTrans } from './lib/game/game';
 export {
   IWInstantOutcomeLimitAttributes,
   IWSurveyLimitAttributes,
@@ -71,7 +72,6 @@ export {
   IWLoginResponse,
   IWLoginAttributes
 } from './lib/authentication/authentication';
-
 export {
   WEngagementType,
   IWEngagementProperties,
@@ -84,7 +84,6 @@ export {
   IWStampEngagementAttributes,
   IWScratchGameEngagementAttributes
 } from './lib/engagement/engagement';
-
 export {
   WGameType,
   IWGameDisplayProperties,
@@ -92,11 +91,9 @@ export {
   IWPinataDisplayProperties,
   IWScratchDisplayProperties
 } from './lib/engagement/games';
-
 export {
   IWInstantOutcomeDisplayProperties
 } from './lib/engagement/instant-outcome';
-
 export {
   IWInstantOutcomeTransactionAttributes,
   IWInstantOutcomeTxnReq

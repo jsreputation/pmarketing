@@ -31,26 +31,6 @@ import {
 
 import { ICampaignDisplayProperties } from '../perx-core.models';
 
-interface AttbsObjTrans {
-  urn: string;
-  created_at: string;
-  updated_at: string;
-  engagement_id: number;
-  campaign_entity_id: number;
-  user_id: number;
-  results: IJsonApiItem<ResultsObj>;
-}
-
-interface ResultsObj {
-  campaign_entity_id: number;
-  source_type: number;
-  source_id: number;
-  urn: string;
-  created_at: string;
-  updated_at: string;
-  results: IJsonApiItem<IWAssignedAttributes>[];
-}
-
 @Injectable({
   providedIn: 'root'
 })
