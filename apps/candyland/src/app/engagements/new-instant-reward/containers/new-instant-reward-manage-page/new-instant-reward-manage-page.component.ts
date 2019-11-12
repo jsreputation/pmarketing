@@ -34,7 +34,7 @@ import { IWEngagementAttributes } from '@perx/whistler';
 export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public currentSelectedMobileTab: number = 0;
   public form: FormGroup;

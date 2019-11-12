@@ -11,7 +11,7 @@ interface IAppInfo {
 }
 
 const appInfo: IAppInfo = {
-  appAccessToken: null,
+  appAccessToken: undefined,
   userAccessToken: 'test'
 };
 describe('LocalStorageService', () => {
@@ -34,10 +34,10 @@ describe('LocalStorageService', () => {
     it('should call getappinfo', inject([LocalTokenStorage], (localTokenStorage: LocalTokenStorage) => {
       localStorage.setItem('appInfo', JSON.stringify(appInfo));
       localTokenStorage.getAppInfo();
-      expect(localTokenStorage.appInfo).toEqual(appInfo);
+      expect(localTokenStorage.appInfo.userAccessToken).toEqual('test');
       localStorage.removeItem('appInfo');
       localTokenStorage.getAppInfo();
-      expect(localTokenStorage.appInfo).toEqual({ appAccessToken: '', userAccessToken: '' });
+      expect(localTokenStorage.appInfo.userAccessToken).toEqual('');
     }));
 
     it('should get appinfo key', inject([LocalTokenStorage], (localTokenStorage: LocalTokenStorage) => {

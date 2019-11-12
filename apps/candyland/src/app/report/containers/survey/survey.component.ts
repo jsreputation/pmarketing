@@ -12,7 +12,7 @@ import { RoutingStateService, SurveyService } from '@cl-core-services';
   styleUrls: ['./survey.component.scss']
 })
 export class SurveyComponent implements OnInit, OnDestroy {
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public data: IBaseQuestionReport;
   constructor(private surveyService: SurveyService,

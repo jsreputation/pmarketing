@@ -61,7 +61,7 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
   // @ts-ignore
   private onTouched: any = noop;
 
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   constructor(public cd: ChangeDetectorRef,
               public dialog: MatDialog,
