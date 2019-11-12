@@ -3,7 +3,6 @@ import { AuthenticationService } from './authentication.service';
 import { Type } from '@angular/core';
 
 describe('AuthenticationService', () => {
-
   beforeEach(() => TestBed.configureTestingModule({
     providers: [AuthenticationService]
   }));

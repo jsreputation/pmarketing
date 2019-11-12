@@ -8,9 +8,9 @@ import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 
 import {
-  IWMerchant,
   IJsonApiItem,
   IJsonApiItemPayload,
+  IWMerchantAttributes,
 } from '@perx/whistler';
 
 describe('WhistlerMerchantsService', () => {
@@ -24,7 +24,7 @@ describe('WhistlerMerchantsService', () => {
     baseHref: '/'
   };
 
-  const mockMerchant: IJsonApiItem<IWMerchant> = {
+  const mockMerchant: IJsonApiItem<IWMerchantAttributes> = {
     id: '42',
     type: '',
     links: {
@@ -69,7 +69,7 @@ describe('WhistlerMerchantsService', () => {
 
     const req = httpTestingController.expectOne('https://blabla/organization/orgs/42');
     expect(req.request.method).toEqual('GET');
-    const res: IJsonApiItemPayload<IWMerchant> = {
+    const res: IJsonApiItemPayload<IWMerchantAttributes> = {
       data: mockMerchant
     };
     req.flush(res);

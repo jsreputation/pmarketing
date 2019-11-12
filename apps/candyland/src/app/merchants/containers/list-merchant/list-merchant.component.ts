@@ -16,7 +16,7 @@ import { MerchantsService } from '@cl-core-services';
   styleUrls: ['./list-merchant.component.scss']
 })
 export class ListMerchantComponent implements OnDestroy {
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   public dataSource: CustomDataSource<Merchant>;
   public dataSourceStates: typeof DataSourceStates = DataSourceStates;
 

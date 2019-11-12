@@ -73,7 +73,7 @@ export class CommsService {
     return this.commsHttpsService.createCommsTemplate({ data: sendData });
   }
 
-  public deleteCommsTemplate(id: string): Observable<any> {
+  public deleteCommsTemplate(id: string): Observable<IJsonApiPayload<IWCommTemplateAttributes>> {
     return this.commsHttpsService.deleteCommsTemplate(id);
   }
 }

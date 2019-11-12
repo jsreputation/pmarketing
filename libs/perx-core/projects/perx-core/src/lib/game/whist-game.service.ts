@@ -1,32 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-import {
-  map,
-  switchMap,
-  mergeMap,
-  tap,
-} from 'rxjs/operators';
-import {
-  Observable,
-  combineLatest,
-  of,
-} from 'rxjs';
-
-import {
-  IWAssignedAttributes,
-  IWAttbsObjGame,
-  IWTreeDisplayProperties,
-  IWPinataDisplayProperties,
-  IWAttbsObjEntity,
-  WGameType,
-  IJsonApiItemPayload,
-  IJsonApiItem,
-  IWAttbsObjTrans,
-  IWScratchDisplayProperties,
-  IWCampaignDisplayProperties,
-} from '@perx/whistler';
-
+import { map, switchMap, mergeMap, tap } from 'rxjs/operators';
 import {
   IGame,
   GameType as TYPE,
@@ -38,10 +11,45 @@ import {
   defaultPinata,
   IPlayOutcome,
 } from './game.model';
+import { Observable, combineLatest, of } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { IGameService } from './igame.service';
-
 import { Config } from '../config/config';
 import { IVoucherService } from '../vouchers/ivoucher.service';
+import {
+  IWGameEngagementAttributes,
+  IWCampaignAttributes,
+  IWAssignedAttributes,
+  IWTreeDisplayProperties,
+  IWPinataDisplayProperties,
+  WGameType,
+  IJsonApiItemPayload,
+  IJsonApiItem,
+  IWAttbsObjTrans,
+  IWScratchDisplayProperties,
+} from '@perx/whistler';
+
+import { ICampaignDisplayProperties } from '../perx-core.models';
+
+interface AttbsObjTrans {
+  urn: string;
+  created_at: string;
+  updated_at: string;
+  engagement_id: number;
+  campaign_entity_id: number;
+  user_id: number;
+  results: IJsonApiItem<ResultsObj>;
+}
+
+interface ResultsObj {
+  campaign_entity_id: number;
+  source_type: number;
+  source_id: number;
+  urn: string;
+  created_at: string;
+  updated_at: string;
+  results: IJsonApiItem<IWAssignedAttributes>[];
+}
 
 @Injectable({
   providedIn: 'root'
@@ -59,7 +67,7 @@ export class WhistlerGameService implements IGameService {
     this.hostName = config.apiHost as string;
   }
 
-  private static WGameToGame(game: IJsonApiItem<IWAttbsObjGame>): IGame {
+  private static WGameToGame(game: IJsonApiItem<IWGameEngagementAttributes>): IGame {
     let type = TYPE.unknown;
     let config: ITree | IPinata | IScratch;
     const { attributes } = game;
@@ -149,7 +157,7 @@ export class WhistlerGameService implements IGameService {
     if (this.cache[engagementId]) {
       return of(this.cache[engagementId]);
     }
-    return this.http.get<IJsonApiItemPayload<IWAttbsObjGame>>(`${this.hostName}/game/engagements/${engagementId}`)
+    return this.http.get<IJsonApiItemPayload<IWGameEngagementAttributes>>(`${this.hostName}/game/engagements/${engagementId}`)
       .pipe(
         map(res => res.data),
         map(game => WhistlerGameService.WGameToGame(game)),
@@ -158,11 +166,11 @@ export class WhistlerGameService implements IGameService {
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    let disProp: IWCampaignDisplayProperties = null;
-    return this.http.get<IJsonApiItemPayload<IWAttbsObjEntity>>(`${this.hostName}/campaign/entities/${campaignId}`)
+    let disProp: ICampaignDisplayProperties = null;
+    return this.http.get<IJsonApiItemPayload<IWCampaignAttributes>>(`${this.hostName}/campaign/entities/${campaignId}`)
       .pipe(
-        map((res: IJsonApiItemPayload<IWAttbsObjEntity>) => res.data.attributes),
-        map((entity: IWAttbsObjEntity) => {
+        map((res: IJsonApiItemPayload<IWCampaignAttributes>) => res.data.attributes),
+        map((entity: IWCampaignAttributes) => {
           disProp = entity.display_properties;
           return entity.engagement_id;
         }),

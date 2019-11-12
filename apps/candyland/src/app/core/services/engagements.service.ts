@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
+import { IWEngagementAttributes } from '@perx/whistler';
+import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +14,20 @@ export class EngagementsService {
   constructor(private http: EngagementsHttpsService) {
   }
 
-  public getEngagements(): Observable<IEngagement[]> {
+  public getEngagements(): Observable<IEngagementType[]> {
     return this.http.getEngagements()
       .pipe(
-        map((res: IResponseApi<IEngagementApi[]>) => res.data.map(item => EngagementHttpAdapter.transformEngagementHandler(item))
-          .filter(e => e !== undefined)
-        ),
+        map((res: IJsonApiListPayload<IWEngagementAttributes>) =>
+          res.data.map(item => EngagementHttpAdapter.transformEngagementHandler(item))
+            .filter(e => e !== undefined)
+        )
       );
   }
 
-  public getEngagement(id: string, type: string): Observable<IEngagement> {
+  public getEngagement(id: string, type: string): Observable<IEngagementType> {
     const eType = EngagementTypeAPIMapping[type];
     return this.http.getEngagement(id, eType).pipe(
-      map((res: IResponseApi<IEngagementApi>) => EngagementHttpAdapter.transformEngagementHandler(res.data, type)),
+      map((res: IJsonApiPayload<IWEngagementAttributes>) => EngagementHttpAdapter.transformEngagementHandler(res.data, type))
     );
   }
 

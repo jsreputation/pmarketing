@@ -1,9 +1,4 @@
-export enum WEngagementType {
-  game = 'game',
-  survey = 'survey',
-  instantOutcome = 'instant_outcome',
-  loyalty = 'loyalty',
-}
+import { WEngagementType } from '../engagement/engagement';
 
 export interface IWCampaignAttributes {
   id?: string;
@@ -14,11 +9,13 @@ export interface IWCampaignAttributes {
   status?: string;
   start_date_time: string;
   end_date_time: string;
-  goal?: string;
+  goal?: string | null;
   engagement_type: WEngagementType;
   engagement_id: number;
   possible_outcomes?: any;
   comm?: any;
+  comm_channel?: null;
+  pool_id?: string | null;
   labels?: string[];
   display_properties?: {
     noRewardsPopUp?: {

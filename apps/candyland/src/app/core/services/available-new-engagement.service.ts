@@ -1,21 +1,29 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { IWEngagementAttributes } from '@perx/whistler';
+import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
+import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AvailableNewEngagementService {
-  private newEngagementSubject: BehaviorSubject<IEngagement> = new BehaviorSubject<IEngagement>(null);
+  private newEngagementSubject: BehaviorSubject<IEngagementType> = new BehaviorSubject<IEngagementType>(null);
 
-  public setNewEngagement(engagement: IEngagement): void {
+  public setNewEngagement(engagement: IEngagementType): void {
     this.newEngagementSubject.next(engagement);
   }
 
-  public get newEngagement(): IEngagement {
+  public transformAndSetNewEngagement(engagement: IJsonApiPayload<IWEngagementAttributes>): void {
+    const formattedEngagement = EngagementHttpAdapter.transformEngagementHandler(engagement.data);
+    this.newEngagementSubject.next(formattedEngagement);
+  }
+
+  public get newEngagement(): IEngagementType {
     return this.newEngagementSubject.value;
   }
 
-  public get newEngagement$(): Observable<IEngagement> {
+  public get newEngagement$(): Observable<IEngagementType> {
     return this.newEngagementSubject.asObservable();
   }
 

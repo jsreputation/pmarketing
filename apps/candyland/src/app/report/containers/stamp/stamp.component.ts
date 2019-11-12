@@ -12,7 +12,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
   styleUrls: ['./stamp.component.scss']
 })
 export class StampComponent implements OnInit, OnDestroy {
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public params: {start_date: string, end_date: string} = {
     start_date: '2019-07-01',

@@ -10,7 +10,7 @@ export { IWVouchersApi } from './lib/voucher/vouchers-api';
 export {
   WAssignedStatus,
   IWAssignedAttributes,
-  IWAssignRequestAttributes,
+  IWAssignRequestAttributes
 } from './lib/voucher/assigneds';
 export {
   IWRewardEntityAttributes,
@@ -20,6 +20,7 @@ export {
   IWInstantOutcomeLimitAttributes,
   IWSurveyLimitAttributes,
   IWGameLimitAttributes,
+  IWLimitAttributes
 } from './lib/limit/limit';
 export {
   IWOutcomeAttributes,
@@ -28,12 +29,9 @@ export {
 export { IWAttbsObjStamp } from './lib/stamp/stamp';
 export {
   IWCommTemplateAttributes,
-  IWCommEventAttributes,
+  IWCommEventAttributes
 } from './lib/comm/comm';
-export {
-  IWCampaignAttributes,
-  WEngagementType,
-} from './lib/campaign/campaign';
+export { IWCampaignAttributes } from './lib/campaign/campaign';
 export {
   IWAudiences,
   IWPoolsApi,
@@ -41,52 +39,85 @@ export {
   IWUser,
 } from './lib/audiences/audiences.model';
 export {
-  IWInstantOutcomeTransactionAttributes,
-  IWInstantOutcomeTxnReq,
-} from './lib/instant-outcome/transaction';
-export {
-  IWInstantOutcomeEngagementAttributes,
-  IWOutcomeDisplayProperties,
-} from './lib/instant-outcome/engagement';
-export {
   IWProfileAttributes,
+  IWPoolsAttributes,
   IWCognitoLogin,
   IWUserJWTRequest,
 } from './lib/profile/profile';
 export {
-  IWMerchant,
-  IWMerchantBranchApi,
+  IWMerchantAttributes,
+  IWMerchantBranchAttributes
 } from './lib/merchant/merchant';
-export { IWTenantProperties } from './lib/settings/tenant';
+export {
+  IWTenantAttributes,
+  IWTenantDisplayProperties,
+  IWAccountPageItem,
+  IWAccountPage
+} from './lib/settings/tenant';
+export { IWIAMUserAttributes } from './lib/settings/user';
 export { IWTimeZone } from './lib/settings/time-zone';
 export {
   IWLoyalty,
   IWLoyaltyCard,
+  IWLoyaltyAttributes,
+  IWBasicTierAttributes,
+  IWCustomTierAttributes,
+  IWJoinMethod
 } from './lib/loyalty/loyalty';
 
 export {
+  IWMessageResponse,
+  IWAppAccessTokenResponse,
+  IWLoginResponse,
+  IWLoginAttributes
+} from './lib/authentication/authentication';
+
+export {
+  WEngagementType,
+  IWEngagementProperties,
+  IWEngagementAttributes,
+  IWGameEngagementAttributes,
+  IWTreeGameEngagementAttributes,
+  IWPinataGameEngagementAttributes,
+  IWInstantOutcomeEngagementAttributes,
+  IWSurveyEngagementAttributes,
+  IWStampEngagementAttributes,
+  IWScratchGameEngagementAttributes
+} from './lib/engagement/engagement';
+
+export {
   WGameType,
-  IWAttbsObjGame,
   IWGameDisplayProperties,
   IWTreeDisplayProperties,
   IWPinataDisplayProperties,
-  IWAttbsObjTrans,
-  IWScratchDisplayProperties,
-} from './lib/game/game';
+  IWScratchDisplayProperties
+} from './lib/engagement/games';
+
+export {
+  IWInstantOutcomeDisplayProperties
+} from './lib/engagement/instant-outcome';
+
+export {
+  IWInstantOutcomeTransactionAttributes,
+  IWInstantOutcomeTxnReq
+} from './lib/engagement/instant-outcome-transaction';
 
 /** Survey */
 export {
-  IWSurveyAttributes,
-  IWSurveyProperties,
   IWSurveyDisplayProperties,
   IWPostAnswerAttributes,
   IWOutcomes
-} from './lib/survey/survey';
+} from './lib/engagement/survey';
+
 export {
   IWQuestion,
   IWPayload,
   WSurveyQuestionType
-} from './lib/survey/question';
+} from './lib/engagement/survey-question';
+
+export {
+  IWStampDisplayProperties
+} from './lib/engagement/stamp';
 
 /** Cognito */
 export { IWCognitoTenantAttributes } from './lib/cognito/tenants';

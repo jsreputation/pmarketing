@@ -20,14 +20,20 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public isEnabled: boolean = false;
   public stampCard$: Observable<IStampCard>;
   private destroy$: Subject<any> = new Subject();
-  private rewardSuccessPopUp: IPopupConfig = {};
-  private errorPopUp: IPopupConfig = {};
+  private rewardSuccessPopUp: IPopupConfig = {
+    title: 'STAMP_SUCCESS_TITLE',
+    buttonTxt: 'VIEW_REWARD'
+  };
+  private errorPopUp: IPopupConfig = {
+    title: 'STAMP_ERROR_TITLE',
+    buttonTxt: 'TRY_AGAIN'
+  };
 
   private initTranslate(): void {
-    this.translate.get('STAMP_SUCCESS').subscribe((text) => this.rewardSuccessPopUp.title = text);
-    this.translate.get('STAMP_ERROR').subscribe((text) => this.errorPopUp.title = text);
-    this.translate.get('VIEW_REWARD').subscribe((text) => this.rewardSuccessPopUp.buttonTxt = text);
-    this.translate.get('TRY_AGAIN').subscribe((text) => this.errorPopUp.buttonTxt = text);
+    this.translate.get(this.rewardSuccessPopUp.title).subscribe((text) => this.rewardSuccessPopUp.title = text);
+    this.translate.get(this.errorPopUp.title).subscribe((text) => this.errorPopUp.title = text);
+    this.translate.get(this.rewardSuccessPopUp.buttonTxt).subscribe((text) => this.rewardSuccessPopUp.buttonTxt = text);
+    this.translate.get(this.errorPopUp.buttonTxt).subscribe((text) => this.errorPopUp.buttonTxt = text);
   }
 
   constructor(

@@ -6,7 +6,7 @@ import {
   ILoyaltyForm,
   ILoyaltyTiersConversions
 } from '@cl-core/models/loyalty/loyalty-form.model';
-import { IBasicTierApi, ICustomTierApi, IJoinMethod, ILoyaltyApi } from '@perx/core';
+import { IWBasicTierAttributes, IWCustomTierAttributes , IWJoinMethod, IWLoyaltyAttributes } from '@perx/whistler';
 
 export class LoyaltyHttpAdapter {
 
@@ -28,7 +28,7 @@ export class LoyaltyHttpAdapter {
     return {data: formatData, meta: data.meta};
   }
 
-  public static transformFromLoyaltyForm(data: ILoyaltyForm): IJsonApiItem<ILoyaltyApi> {
+  public static transformFromLoyaltyForm(data: ILoyaltyForm): IJsonApiItem<IWLoyaltyAttributes> {
     return {
       type: 'programs',
       attributes: {
@@ -39,7 +39,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformLoyaltyStatus(status: string): IJsonApiItem<Partial<ILoyaltyApi>> {
+  public static transformLoyaltyStatus(status: string): IJsonApiItem<Partial<IWLoyaltyAttributes>> {
     return {
       type: 'programs',
       attributes: {
@@ -48,7 +48,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformFromBasicTierForm(data: ILoyaltyForm, loyaltyId: string): IJsonApiItem<IBasicTierApi> {
+  public static transformFromBasicTierForm(data: ILoyaltyForm, loyaltyId: string): IJsonApiItem<IWBasicTierAttributes> {
     return {
       type: 'basic_tiers',
       attributes: {
@@ -73,7 +73,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformFromCustomTierForm(data: ICustomTireForm, basicTierId: string): IJsonApiItem<ICustomTierApi> {
+  public static transformFromCustomTierForm(data: ICustomTireForm, basicTierId: string): IJsonApiItem<IWCustomTierAttributes > {
     return {
       type: 'custom_tiers',
       attributes: {
@@ -97,12 +97,12 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformToTableDataCustomTierForm(data: IJsonApiListPayload<ICustomTierApi>): ITableData<ICustomTireForm> {
+  public static transformToTableDataCustomTierForm(data: IJsonApiListPayload<IWCustomTierAttributes >): ITableData<ICustomTireForm> {
     const formatData = data.data.map((item) => LoyaltyHttpAdapter.transformToCustomTierForm(item));
     return {data: formatData, meta: data.meta};
   }
 
-  public static transformToCustomTierForm(data: IJsonApiItem<ICustomTierApi>): ICustomTireForm {
+  public static transformToCustomTierForm(data: IJsonApiItem<IWCustomTierAttributes >): ICustomTireForm {
     return {
       id: data.id,
       name: data.attributes.name,
@@ -119,8 +119,8 @@ export class LoyaltyHttpAdapter {
   }
 
   public static setIncludedToLoyaltyForm(
-    data: IJsonApiPayload<ILoyaltyApi>,
-    item: IJsonApiItem<ILoyaltyApi>,
+    data: IJsonApiPayload<IWLoyaltyAttributes>,
+    item: IJsonApiItem<IWLoyaltyAttributes>,
     formLoyalty: ILoyaltyForm
   ): ILoyaltyForm {
     if (data.included && data.included.length) {
@@ -168,7 +168,7 @@ export class LoyaltyHttpAdapter {
 
   public static setPoolIdToLoyalty(
     included: IJsonApiItem<{ id: string, type: string }>,
-    item: IJsonApiItem<ILoyaltyApi>, index: number
+    item: IJsonApiItem<IWLoyaltyAttributes>, index: number
   ): string {
     if (item.relationships.pool
       && item.relationships.pool.data
@@ -194,14 +194,14 @@ export class LoyaltyHttpAdapter {
     }
   }
 
-  private static transformJoinMethodToApi(joinMethod: IJoinMethod): any {
+  private static transformJoinMethodToApi(joinMethod: IWJoinMethod): any {
     const chosenMethods = Utils.filterObj(joinMethod, (item) => !!item);
     const apiJoinMethod = {};
     Object.keys(chosenMethods).forEach(key => apiJoinMethod[LoyaltyJoinMethodMap[key].apiName] = chosenMethods[key]);
     return apiJoinMethod;
   }
 
-  private static transformJoinMethodFromApi(apiJoinMethod: any): IJoinMethod {
+  private static transformJoinMethodFromApi(apiJoinMethod: any): IWJoinMethod {
     const result = {};
     Object.entries(apiJoinMethod).map(([apiKey, apiValue]) => {
       Object.entries(LoyaltyJoinMethodMap).forEach(([key, value]) => {
@@ -214,7 +214,7 @@ export class LoyaltyHttpAdapter {
     return result;
   }
 
-  public static transformToLoyaltyForm(data: IJsonApiItem<ILoyaltyApi>): ILoyaltyForm {
+  public static transformToLoyaltyForm(data: IJsonApiItem<IWLoyaltyAttributes>): ILoyaltyForm {
     return {
       id: data.id,
       customTiersCount: data.attributes.custom_tiers_count,
@@ -225,14 +225,14 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static getDetailsAndConversionsFormGroup(data: IBasicTierApi, currentLoyalty: ILoyaltyApi): Partial<ILoyaltyForm> {
+  public static getDetailsAndConversionsFormGroup(data: IWBasicTierAttributes, currentLoyalty: IWLoyaltyAttributes): Partial<ILoyaltyForm> {
     return {
       details: LoyaltyHttpAdapter.formatToDetailFormGroup(data, currentLoyalty),
       tiersConversions: LoyaltyHttpAdapter.transformToTiersConversionsFormGroup(data)
     };
   }
 
-  private static formatToDetailFormGroup(data: IBasicTierApi, currentLoyalty: ILoyaltyApi): ILoyaltyDetails {
+  private static formatToDetailFormGroup(data: IWBasicTierAttributes, currentLoyalty: IWLoyaltyAttributes): ILoyaltyDetails {
     return {
       pointsName: currentLoyalty.unit,
       imageUrl: data.image_url,
@@ -241,7 +241,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  private static transformToTiersConversionsFormGroup(data: IBasicTierApi): ILoyaltyTiersConversions {
+  private static transformToTiersConversionsFormGroup(data: IWBasicTierAttributes): ILoyaltyTiersConversions {
     return {
       globalEarnRule: {
         amount: data.earn_ratio_money,

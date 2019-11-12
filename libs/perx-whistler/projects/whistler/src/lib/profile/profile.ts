@@ -8,7 +8,11 @@ export interface IWProfileAttributes {
   phone_number: string | null;
   email_address: string | null;
   primary_identifier: string;
-  properties?: string | null;
+  properties?: string | {} | null;
+}
+
+export interface IWPoolsAttributes {
+  name: string;
 }
 
 export interface IWCognitoLogin {

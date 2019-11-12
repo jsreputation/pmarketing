@@ -1,3 +1,4 @@
+import { IJsonApiPostItem } from './../jsonapi.payload';
 import { InstantOutcomeService } from './instant-outcome.service';
 import { IOutcome } from './models/outcome.model';
 import { Observable, combineLatest } from 'rxjs';
@@ -8,6 +9,7 @@ import { Config } from '../config/config';
 import { IReward } from '../rewards/models/reward.model';
 import { RewardsService } from '../rewards/rewards.service';
 import {
+  IWInstantOutcomeDisplayProperties,
   IWInstantOutcomeTransactionAttributes,
   IWInstantOutcomeTxnReq,
   IWInstantOutcomeEngagementAttributes,
@@ -54,7 +56,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
             `${this.config.apiHost}/instant-outcome/engagements/${campaign.engagementId}`);
         }),
         map(res => res.data.attributes.display_properties),
-        map((outcomeData: IWOutcomeDisplayProperties) =>
+        map((outcomeData: IWInstantOutcomeDisplayProperties) =>
           ({
             title: outcomeData.title, subTitle: outcomeData.sub_title, button: outcomeData.button,
             banner: outcomeData.banner, backgroundImgUrl: outcomeData.background_img_url,

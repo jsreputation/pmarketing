@@ -10,7 +10,8 @@ import {
   IWAttbsObjGame,
   WGameType,
   IJsonApiItem,
-  IJsonApiItemPayload
+  IJsonApiItemPayload,
+  IWGameEngagementAttributes,
 } from '@perx/whistler';
 
 describe('WhistlerGameService', () => {
@@ -26,7 +27,7 @@ describe('WhistlerGameService', () => {
     baseHref: '/'
   };
 
-  const mockTree: IJsonApiItem<IWAttbsObjGame> = {
+  const mockTree: IJsonApiItem<IWGameEngagementAttributes> = {
     id: '2',
     type: '',
     links: {
@@ -49,7 +50,7 @@ describe('WhistlerGameService', () => {
     }
   };
 
-  const mockTap: IJsonApiItem<IWAttbsObjGame> = {
+  const mockTap: IJsonApiItem<IWGameEngagementAttributes> = {
     id: '2',
     type: '',
     links: {
@@ -72,7 +73,7 @@ describe('WhistlerGameService', () => {
     }
   };
 
-  const mockScratch: IJsonApiItem<IWAttbsObjGame> = {
+  const mockScratch: IJsonApiItem<IWGameEngagementAttributes> = {
     id: '2',
     type: '',
     links: {
@@ -124,7 +125,7 @@ describe('WhistlerGameService', () => {
 
     const req = httpTestingController.expectOne('https://blabla/game/engagements/42');
     expect(req.request.method).toEqual('GET');
-    const res: IJsonApiItemPayload<IWAttbsObjGame> = {
+    const res: IJsonApiItemPayload<IWGameEngagementAttributes> = {
       data: mockTree
     };
     req.flush(res);
@@ -145,7 +146,7 @@ describe('WhistlerGameService', () => {
 
     const req = httpTestingController.expectOne('https://blabla/game/engagements/42');
     expect(req.request.method).toEqual('GET');
-    const res: IJsonApiItemPayload<IWAttbsObjGame> = {
+    const res: IJsonApiItemPayload<IWGameEngagementAttributes> = {
       data: mockTap
     };
     req.flush(res);
@@ -166,7 +167,7 @@ describe('WhistlerGameService', () => {
 
     const req = httpTestingController.expectOne('https://blabla/game/engagements/42');
     expect(req.request.method).toEqual('GET');
-    const res: IJsonApiItemPayload<IWAttbsObjGame> = {
+    const res: IJsonApiItemPayload<IWGameEngagementAttributes> = {
       data: mockScratch
     };
     req.flush(res);

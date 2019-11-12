@@ -13,6 +13,7 @@ import {
   IWPostAnswerAttributes,
   IJsonApiItemPayload,
   IJsonApiItem,
+  IWSurveyEngagementAttributes,
 } from '@perx/whistler';
 
 describe('SurveyService', () => {
@@ -30,7 +31,7 @@ describe('SurveyService', () => {
   const iCampaignServiceStub = {
     getCampaign: () => of(mockCampaign)
   };
-  const noQuestionMockSurvey: IJsonApiItem<IWSurveyAttributes> = {
+  const noQuestionMockSurvey: IJsonApiItem<IWSurveyEngagementAttributes> = {
     id: '',
     type: '',
     links: {
@@ -80,7 +81,7 @@ describe('SurveyService', () => {
   });
 
   it('should get a survey from a campaign id', (done: DoneFn) => {
-    const res: IJsonApiItemPayload<IWSurveyAttributes> = {
+    const res: IJsonApiItemPayload<IWSurveyEngagementAttributes> = {
       data: noQuestionMockSurvey,
     };
     httpClientSpy.get.and.returnValue(of(res));

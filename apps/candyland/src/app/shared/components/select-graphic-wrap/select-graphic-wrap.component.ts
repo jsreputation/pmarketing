@@ -48,7 +48,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   public selectedGraphic: IGraphic;
   public controlUpload: AbstractControl;
   public controlDefault: AbstractControl;
-  public destroy$: Subject<boolean> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   public lock: boolean;
 
   public onChange: any = () => {
