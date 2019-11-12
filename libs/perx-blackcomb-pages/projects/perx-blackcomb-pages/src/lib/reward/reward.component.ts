@@ -5,6 +5,8 @@ import { InstantOutcomeService, IReward, PopupComponent, IOutcome, IPopupConfig 
 import { MatDialog } from '@angular/material';
 import { map, switchMap, catchError, tap, takeUntil, } from 'rxjs/operators';
 
+import { TranslateService } from '@ngx-translate/core';
+
 @Component({
   selector: 'perx-blackcomb-reward',
   templateUrl: './reward.component.html',
@@ -17,22 +19,36 @@ export class RewardComponent implements OnInit, OnDestroy {
   public background: string;
   public cardBackground: string;
   public rewards$: Observable<IReward[]>;
-  public dataPopEmpty: IPopupConfig = {
+  public noRewardsPopUp: IPopupConfig = {
     title: 'We’re sorry, all rewards have been claimed',
     text: 'Look out for more rewards coming your way, soon!',
     buttonTxt: 'Back to Wallet',
+    imageUrl: '',
   };
+  public successPopUp: IPopupConfig = {
+    title: 'Successfully !',
+    text: '',
+    buttonTxt: 'View Reward',
+    imageUrl: '',
+  };
+
   private destroy$: Subject<any> = new Subject();
 
   constructor(
     private outcomeService: InstantOutcomeService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    private router: Router
-  ) {
+    private router: Router,
+    private translate: TranslateService,
+  ) { }
+
+  private initTranslate(): void {
+    this.translate.get('VIEW_REWARD').subscribe((text) => this.successPopUp.buttonTxt = text);
+    this.translate.get('BACK_TO_WALLET').subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
   }
 
   public ngOnInit(): void {
+    this.initTranslate();
     this.route.params
       .pipe(
         map((params: Params) => params.id),
@@ -41,15 +57,22 @@ export class RewardComponent implements OnInit, OnDestroy {
       )
       .subscribe((eng: IOutcome) => {
         this.title = eng.title;
-        this.subTitle = eng.sub_title;
+        this.subTitle = eng.subTitle;
         this.button = eng.button;
-        this.background = eng.background_img_url;
-        this.cardBackground = eng.card_background_img_url;
-        if (eng.displayProperties && eng.displayProperties.noRewardsPopUp) {
-          this.dataPopEmpty.title = eng.displayProperties.noRewardsPopUp.headLine;
-          this.dataPopEmpty.text = eng.displayProperties.noRewardsPopUp.subHeadLine;
-          this.dataPopEmpty.imageUrl = eng.displayProperties.noRewardsPopUp.imageURL;
-          this.dataPopEmpty.buttonTxt = eng.displayProperties.noRewardsPopUp.buttonTxt;
+        this.background = eng.backgroundImgUrl;
+        this.cardBackground = eng.cardBackgroundImgUrl;
+        const { displayProperties } = eng;
+        if (displayProperties && displayProperties.noRewardsPopUp) {
+          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine || this.noRewardsPopUp.title;
+          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine || this.noRewardsPopUp.text;
+          this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
+          this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
+        }
+        if (displayProperties && displayProperties.successPopUp) {
+          this.successPopUp.title = displayProperties.successPopUp.headLine || this.successPopUp.title;
+          this.successPopUp.text = displayProperties.successPopUp.subHeadLine || this.successPopUp.text;
+          this.successPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.successPopUp.imageUrl;
+          this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
         }
       });
 
@@ -66,7 +89,7 @@ export class RewardComponent implements OnInit, OnDestroy {
             }
           }),
           catchError(() => {
-            this.dialog.open(PopupComponent, { data: this.dataPopEmpty });
+            this.dialog.open(PopupComponent, { data: this.noRewardsPopUp });
             /* todo display popup and redirect to wallet*/
             this.router.navigate(['/wallet']);
             // next line is actually useless as we will redirected.
@@ -76,17 +99,12 @@ export class RewardComponent implements OnInit, OnDestroy {
         );
   }
 
+  public rewardClickedHandler(): void {
+    this.router.navigate(['/wallet']);
+  }
+
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  public rewardClickedHandler(reward: IReward): void {
-    const data = {
-      title: 'Clicked!',
-      text: 'ID: ' + reward.id + '\n' +
-        'Reward Name: ' + reward.name,
-    };
-    this.dialog.open(PopupComponent, { data });
   }
 }

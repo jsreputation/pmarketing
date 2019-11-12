@@ -14,6 +14,7 @@ import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-eng
 import { ActivatedRoute } from '@angular/router';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
+import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 
 @Component({
   selector: 'cl-new-campaign-select-engagement-page',
@@ -23,7 +24,7 @@ import { ILimit } from '@cl-core/models/limit/limit.interface';
 export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
   public form: FormGroup;
-  public dataSource: MatTableDataSource<IEngagement> = new MatTableDataSource<IEngagement>();
+  public dataSource: MatTableDataSource<IEngagementType> = new MatTableDataSource<IEngagementType>();
   public defaultSearchValue: any = null;
   public defaultTypeValue: any = null;
   public typeFilterConfig: OptionConfig[];
@@ -91,7 +92,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
           this.typeFilterConfig = PrepareTableFilters.prepareOptionsConfig(counterObject);
         })
       )
-      .subscribe((res: IEngagement[]) => {
+      .subscribe((res: IEngagementType[]) => {
         this.hasData = res && res.length > 0;
         this.noData = res && res.length === 0;
         this.dataSource.data = res;
@@ -108,7 +109,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
       });
   }
 
-  private initSelectedTemplate(res: IEngagement[]): void {
+  private initSelectedTemplate(res: IEngagementType[]): void {
     if (this.availableNewEngagementService.isAvailable) {
       this.initSelectedNewCreateTemplate(res, this.availableNewEngagementService.newEngagement.id);
     } else if (this.route.snapshot.params.id) {
@@ -116,14 +117,14 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     }
   }
 
-  private initSelectedNewCreateTemplate(res: IEngagement[], id: string): void {
+  private initSelectedNewCreateTemplate(res: IEngagementType[], id: string): void {
     if (id) {
       this.templateIndex = res.findIndex(template => template.id === id);
       this.template.patchValue(res[this.templateIndex]);
     }
   }
 
-  private initSelectedTemplateFromEdit(res: IEngagement[]): void {
+  private initSelectedTemplateFromEdit(res: IEngagementType[]): void {
     this.store.currentCampaign$
       .asObservable()
       .pipe(takeUntil(this.destroy$))
@@ -141,7 +142,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
 
   }
 
-  private getLimits(campaignData: ICampaign, findTemplate: IEngagement): void {
+  private getLimits(campaignData: ICampaign, findTemplate: IEngagementType): void {
     const params: HttpParamsOptions = {
       'filter[campaign_entity_id]': campaignData.id
     };

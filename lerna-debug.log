@@ -1,0 +1,75 @@
+0 silly argv { _: [ 'clean' ],
+0 silly argv   yes: true,
+0 silly argv   y: true,
+0 silly argv   lernaVersion: '3.15.0',
+0 silly argv   '$0': 'node_modules\\lerna\\cli.js' }
+1 notice cli v3.15.0
+2 verbose rootPath C:\projects\microsite-apps-ng
+3 info versioning independent
+4 info clean removing C:\projects\microsite-apps-ng\apps\abenson\node_modules
+5 silly rimrafDir C:\projects\microsite-apps-ng\apps\abenson\node_modules
+6 info clean removing C:\projects\microsite-apps-ng\apps\all-it\node_modules
+7 silly rimrafDir C:\projects\microsite-apps-ng\apps\all-it\node_modules
+8 info clean removing C:\projects\microsite-apps-ng\apps\blackcomb\node_modules
+9 silly rimrafDir C:\projects\microsite-apps-ng\apps\blackcomb\node_modules
+10 info clean removing C:\projects\microsite-apps-ng\apps\bpi\node_modules
+11 silly rimrafDir C:\projects\microsite-apps-ng\apps\bpi\node_modules
+12 info clean removing C:\projects\microsite-apps-ng\apps\candyland\node_modules
+13 silly rimrafDir C:\projects\microsite-apps-ng\apps\candyland\node_modules
+14 info clean removing C:\projects\microsite-apps-ng\apps\components-demo\node_modules
+15 silly rimrafDir C:\projects\microsite-apps-ng\apps\components-demo\node_modules
+16 info clean removing C:\projects\microsite-apps-ng\apps\digi\node_modules
+17 silly rimrafDir C:\projects\microsite-apps-ng\apps\digi\node_modules
+18 info clean removing C:\projects\microsite-apps-ng\apps\feature-demo\node_modules
+19 silly rimrafDir C:\projects\microsite-apps-ng\apps\feature-demo\node_modules
+20 info clean removing C:\projects\microsite-apps-ng\apps\hkbn\node_modules
+21 silly rimrafDir C:\projects\microsite-apps-ng\apps\hkbn\node_modules
+22 info clean removing C:\projects\microsite-apps-ng\apps\hsbc-rewards\node_modules
+23 silly rimrafDir C:\projects\microsite-apps-ng\apps\hsbc-rewards\node_modules
+24 info clean removing C:\projects\microsite-apps-ng\apps\hsbc\node_modules
+25 silly rimrafDir C:\projects\microsite-apps-ng\apps\hsbc\node_modules
+26 info clean removing C:\projects\microsite-apps-ng\apps\merck-customer\node_modules
+27 silly rimrafDir C:\projects\microsite-apps-ng\apps\merck-customer\node_modules
+28 info clean removing C:\projects\microsite-apps-ng\apps\merck-merchant\node_modules
+29 silly rimrafDir C:\projects\microsite-apps-ng\apps\merck-merchant\node_modules
+30 verbose rimrafDir removed C:\projects\microsite-apps-ng\apps\blackcomb\node_modules
+31 info clean removing C:\projects\microsite-apps-ng\apps\oracle-pay\node_modules
+32 silly rimrafDir C:\projects\microsite-apps-ng\apps\oracle-pay\node_modules
+33 verbose rimrafDir removed C:\projects\microsite-apps-ng\apps\bpi\node_modules
+34 info clean removing C:\projects\microsite-apps-ng\apps\prudential\node_modules
+35 silly rimrafDir C:\projects\microsite-apps-ng\apps\prudential\node_modules
+36 verbose rimrafDir removed C:\projects\microsite-apps-ng\apps\abenson\node_modules
+37 info clean removing C:\projects\microsite-apps-ng\apps\starhub\node_modules
+38 silly rimrafDir C:\projects\microsite-apps-ng\apps\starhub\node_modules
+39 verbose rimrafDir removed C:\projects\microsite-apps-ng\apps\digi\node_modules
+40 info clean removing C:\projects\microsite-apps-ng\backend\api-proxy\node_modules
+41 silly rimrafDir C:\projects\microsite-apps-ng\backend\api-proxy\node_modules
+42 verbose rimrafDir removed C:\projects\microsite-apps-ng\apps\candyland\node_modules
+43 info clean removing C:\projects\microsite-apps-ng\backend\appauth-server\node_modules
+44 silly rimrafDir C:\projects\microsite-apps-ng\backend\appauth-server\node_modules
+45 verbose rimrafDir removed C:\projects\microsite-apps-ng\apps\hkbn\node_modules
+46 info clean removing C:\projects\microsite-apps-ng\libs\perx-blackcomb-pages\node_modules
+47 silly rimrafDir C:\projects\microsite-apps-ng\libs\perx-blackcomb-pages\node_modules
+48 verbose rimrafDir removed C:\projects\microsite-apps-ng\apps\hsbc-rewards\node_modules
+49 info clean removing C:\projects\microsite-apps-ng\libs\perx-chart\node_modules
+50 silly rimrafDir C:\projects\microsite-apps-ng\libs\perx-chart\node_modules
+51 verbose rimrafDir removed C:\projects\microsite-apps-ng\apps\hsbc\node_modules
+52 info clean removing C:\projects\microsite-apps-ng\libs\perx-core\node_modules
+53 silly rimrafDir C:\projects\microsite-apps-ng\libs\perx-core\node_modules
+54 verbose rimrafDir removed C:\projects\microsite-apps-ng\apps\merck-merchant\node_modules
+55 info clean removing C:\projects\microsite-apps-ng\libs\perx-whistler\node_modules
+56 silly rimrafDir C:\projects\microsite-apps-ng\libs\perx-whistler\node_modules
+57 verbose rimrafDir removed C:\projects\microsite-apps-ng\apps\merck-customer\node_modules
+58 verbose rimrafDir removed C:\projects\microsite-apps-ng\apps\components-demo\node_modules
+59 verbose rimrafDir removed C:\projects\microsite-apps-ng\apps\oracle-pay\node_modules
+60 verbose rimrafDir removed C:\projects\microsite-apps-ng\apps\prudential\node_modules
+61 verbose rimrafDir removed C:\projects\microsite-apps-ng\libs\perx-core\node_modules
+62 verbose rimrafDir removed C:\projects\microsite-apps-ng\backend\appauth-server\node_modules
+63 verbose rimrafDir removed C:\projects\microsite-apps-ng\apps\feature-demo\node_modules
+64 verbose rimrafDir removed C:\projects\microsite-apps-ng\libs\perx-chart\node_modules
+65 verbose rimrafDir removed C:\projects\microsite-apps-ng\libs\perx-blackcomb-pages\node_modules
+66 verbose rimrafDir removed C:\projects\microsite-apps-ng\apps\starhub\node_modules
+67 verbose rimrafDir removed C:\projects\microsite-apps-ng\backend\api-proxy\node_modules
+68 error Error: Command failed: C:\Program Files\nodejs\node.exe C:\projects\microsite-apps-ng\node_modules\rimraf\bin.js --no-glob C:\projects\microsite-apps-ng\libs\perx-whistler\node_modules\
+68 error     at makeError (C:\projects\microsite-apps-ng\node_modules\execa\index.js:174:9)
+68 error     at Promise.all.then.arr (C:\projects\microsite-apps-ng\node_modules\execa\index.js:278:16)

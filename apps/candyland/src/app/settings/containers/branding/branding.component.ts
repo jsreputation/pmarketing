@@ -8,6 +8,7 @@ import { settingsFonts, SettingsService, settingsStyles } from '@cl-core/service
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { IReward } from '@perx/core';
+import { IWTenantDisplayProperties } from '@perx/whistler';
 
 @Component({
   selector: 'cl-branding',
@@ -47,15 +48,16 @@ export class BrandingComponent implements OnInit, OnDestroy {
   }
 
   public get logo(): AbstractControl {
+    // console.log(this.formBranding.get('logo'));
     return this.formBranding.get('logo');
   }
 
-  public get button_background_color(): AbstractControl {
-    return this.formBranding.get('button_background_color');
+  public get buttonBackgroundColor(): AbstractControl {
+    return this.formBranding.get('buttonBackgroundColor');
   }
 
-  public get button_text_color(): AbstractControl {
-    return this.formBranding.get('button_text_color');
+  public get buttonTextColor(): AbstractControl {
+    return this.formBranding.get('buttonTextColor');
   }
 
   public get font(): AbstractControl {
@@ -89,10 +91,11 @@ export class BrandingComponent implements OnInit, OnDestroy {
     {
       labelView: 'White', color: '#ffffff'
     }];
+
     this.patchValue({
       headerNavbarColor: this.listColors[0],
-      button_background_color: this.listColors[0],
-      button_text_color: this.listColorsText[0]
+      buttonBackgroundColor: this.listColors[0],
+      buttonTextColor: this.listColorsText[0]
     });
     this.subscribeChangeColors();
   }
@@ -145,12 +148,12 @@ export class BrandingComponent implements OnInit, OnDestroy {
       });
   }
 
-  private handlerValue(data: any): void {
+  private handlerValue(data: IWTenantDisplayProperties): void {
     if (!data['theme.primary'] || !data['theme.style']) {
       this.setDefaultValue(data);
     } else {
       this.changeDefaultColors(data);
-      const patchFormValue = SettingsHttpAdapter.transformSettingsBrandingToForm(data, this.listColors);
+      const patchFormValue = SettingsHttpAdapter.transformSettingsBrandingToForm(data, this.listColors, this.listColorsText);
       this.patchValue(patchFormValue);
       this.subscribeFormChanges();
     }

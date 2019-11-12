@@ -2,13 +2,15 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { StampCardComponent } from './stamp-card.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PuzzlesModule, StampService } from '@perx/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
 describe('CardComponent', () => {
   let component: StampCardComponent;
   let fixture: ComponentFixture<StampCardComponent>;
 
-  const stampServiceStub = {
-    getCurrentCard: () => { }
+  const stampServiceStub: Partial<StampService> = {
+    getCurrentCard: () => of()
   };
 
   beforeEach(async(() => {
@@ -18,7 +20,8 @@ describe('CardComponent', () => {
         RouterTestingModule.withRoutes([
           { path: 'wallet', redirectTo: '/' }
         ]),
-        PuzzlesModule
+        PuzzlesModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: StampService, useValue: stampServiceStub },

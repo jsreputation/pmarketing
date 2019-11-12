@@ -49,7 +49,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
 
   public ngOnInit(): void {
     if (!this.titleFn) {
-      this.titleFn = (index?: number) => index !== undefined ? `Stamp Card ${this.puzzleIndex(index)} out of 12` : '';
+      this.titleFn = (index?: number) => 'Puzzle #' + this.indexToLetter(index);
     }
 
     if (!this.puzzleTextFn) {
@@ -164,13 +164,6 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
       return '';
     }
     return base[index % base.length];
-  }
-
-  public puzzleIndex(index: number): string {
-    if (index < 0) {
-      return '';
-    }
-    return String(++index);
   }
 
   public nbAvailableStamps(puzzle: IStampCard): number {

@@ -1,6 +1,8 @@
 import { IReward } from '../../rewards/models/reward.model';
+import { ICampaignDisplayProperties } from '../../perx-core.models';
 
 export enum CampaignType {
+  // eslint-disable-next-line
   give_reward = 'give_reward', // instant_outcome
   stamp = 'stamp', // loyalty
   game = 'game',
@@ -24,19 +26,10 @@ export interface ICampaign {
   thumbnailUrl?: string;
   engagementId?: number;
   rawPayload?: any;
-  displayProperties?: IDisplayProperties;
+  displayProperties?: ICampaignDisplayProperties;
 }
 
 export enum CommChannel {
   sms = 'sms',
   email = 'email'
-}
-
-export interface IDisplayProperties {
-  noRewardsPopUp?: {
-    headLine?: string,
-    subHeadLine?: string,
-    imageURL?: string,
-    buttonTxt?: string,
-  };
 }

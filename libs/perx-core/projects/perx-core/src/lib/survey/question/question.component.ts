@@ -57,22 +57,22 @@ export class QuestionComponent implements OnChanges {
 
   public updateAnswer(answer: IAnswer): void {
     this.question.answer = String(answer.content);
-    const questionId = answer.question_id ? answer.question_id : this.question.id;
-    this.updateAnswers.emit({ question_id: questionId, content: answer.content });
+    const questionId = answer.questionId ? answer.questionId : this.question.id;
+    this.updateAnswers.emit({ questionId, content: answer.content });
     this.updateNonGroupPoint();
     this.questionValidation();
   }
 
   public updateGroupPoint(point: number): void {
     this.point = point;
-    this.updatePoints.emit({ question_id: this.question.id, point });
+    this.updatePoints.emit({ questionId: this.question.id, point });
   }
 
   public updateNonGroupPoint(): void {
     if (this.question.payload.type !== SurveyQuestionType.questionGroup) {
       this.point = this.question && this.question.required ?
         (this.question.answer === 0 || (this.question.answer && this.question.answer.length > 0) ? 1 : 0) : 1;
-      this.updatePoints.emit({ question_id: this.question.id, point: this.point });
+      this.updatePoints.emit({ questionId: this.question.id, point: this.point });
     }
   }
 
@@ -94,6 +94,11 @@ export class QuestionComponent implements OnChanges {
     this.updateQuestionPointer.emit('back');
   }
 
+  public validateEmail(email: string): boolean {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
   public questionValidation(): void {
     this.errorState = {};
     if (this.question && this.question.required && this.point !== 1) {
@@ -104,6 +109,8 @@ export class QuestionComponent implements OnChanges {
       && this.question.payload['max-length'] < this.question.answer.length) {
       this.errorState.exceedMaxLength = true;
       this.errorState.hasError = true;
+    } else if (this.question.id === 'email_address' && !this.validateEmail(this.question.answer)) {
+      this.errorState.inValidEmail = true;
     }
   }
 }
