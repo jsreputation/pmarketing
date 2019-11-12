@@ -15,24 +15,28 @@
     flex-direction: row;
     overflow-x: scroll;
 
-    .macaron-container {
-      position: absolute;
-      top: 0;
-      right: 0;
-      border-radius: 5rem;
-      padding: 0.5rem 1rem;
-      font-size: 1.2rem;
-      text-transform: lowercase;
+    .featured-image {
+      position: relative;
 
-      span {
-        display: inline-block;
+      .macaron-container {
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-radius: 5rem;
+        padding: 0.5rem 1rem;
+        font-size: 1.2rem;
+        text-transform: lowercase;
+
+        span {
+          display: inline-block;
+        }
+
+        span::first-letter {
+          text-transform: uppercase;
+        }
       }
 
-      span::first-letter {
-        text-transform: uppercase;
-      }
+      @include macaronStyles();
     }
-
-    @include macaronStyles();
   }
 }
