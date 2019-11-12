@@ -242,7 +242,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public getUserAccessToken(): string {
-    return this.tokenStorage.getAppInfoProperty('userAccessToken');
+    return this.tokenStorage.getAppInfoProperty('userAccessToken') || '';
   }
 
   public saveUserAccessToken(accessToken: string): void {
@@ -250,7 +250,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public getAppAccessToken(): string {
-    return this.tokenStorage.getAppInfoProperty('appAccessToken');
+    return this.tokenStorage.getAppInfoProperty('appAccessToken') || '';
   }
 
   public saveAppAccessToken(accessToken: string): void {
@@ -258,7 +258,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public getPI(): string {
-    return this.tokenStorage.getAppInfoProperty('pi');
+    return this.tokenStorage.getAppInfoProperty('pi') || '';
   }
 
   public savePI(pi: string): void {

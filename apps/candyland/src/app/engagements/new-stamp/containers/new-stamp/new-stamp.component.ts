@@ -24,7 +24,7 @@ import { IWEngagementAttributes } from '@perx/whistler';
 export class NewStampComponent implements OnInit, OnDestroy {
   @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public id: string;
   public formStamp: FormGroup;
