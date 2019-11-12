@@ -22,7 +22,11 @@ commands:
             if [[ "${CIRCLE_TAG}" =~ $REGEX ]]; then
               echo "export APP=${BASH_REMATCH[1]}" >> $BASH_ENV
               echo "export TARGET_ENV=${BASH_REMATCH[2]}" >> $BASH_ENV
-              echo "export TARGET_NAMESPACE=${BASH_REMATCH[3]}" >> $BASH_ENV
+              if [[ ${BASH_REMATCH[3]} == "" ]]; then
+                echo "export TARGET_NAMESPACE=master" >> $BASH_ENV
+              else
+                echo "export TARGET_NAMESPACE=${BASH_REMATCH[3]}" >> $BASH_ENV
+              fi
               echo "export SEM_VER=${BASH_REMATCH[4]}" >> $BASH_ENV
             else
               echo "Error! Unrecognized tag"
@@ -42,7 +46,7 @@ commands:
               if [ ${TARGET_ENV} == 'uat' ]; then
                 APIHOST="https://api-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
               elif [ ${TARGET_ENV} == 'staging' ]; then
-                APIHOST="https://api-master.${TARGET_ENV}.whistler.perxtech.io"
+                APIHOST="https://api.${TARGET_ENV}.whistler.perxtech.io"
               elif [ ${TARGET_ENV} == 'production' ]; then
                 APIHOST="https://api.whistler.perxtech.io"
               fi
@@ -387,7 +391,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /(\w+-)+uat-(\w+)-\d+\.\d+\.\d+.*/
+              only: /(candyland|blackcomb)-uat-(\w+)-\d+\.\d+\.\d+.*/
       - deploy-whistler:
           name: deploy_to_whistler_staging
           docker_tag: "${CIRCLE_TAG}"
@@ -400,7 +404,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /(\w+-)+staging-(\w+)-\d+\.\d+\.\d+.*/
+              only: /(candyland|blackcomb)-staging-\d+\.\d+\.\d+.*/
       - deploy-whistler:
           name: deploy_to_whistler_production
           docker_tag: "${CIRCLE_TAG}"
@@ -416,7 +420,7 @@ workflows:
               ignore: /.*/
             tags:
               # semver v2
-              only: /(\w+-)+production-(\w+)-\d+\.\d+\.\d+.*/
+              only: /(candyland|blackcomb)-production-\d+\.\d+\.\d+.*/
       - deploy:
           name: deploy_to_staging
           docker_tag: "${CIRCLE_TAG}"
