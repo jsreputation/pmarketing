@@ -25,7 +25,7 @@ export class QuestionFormFieldComponent implements OnInit, OnChanges, OnDestroy 
   public required: boolean = false;
   public closed: boolean = true;
   public surveyQuestionType: any = WSurveyQuestionType;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   constructor(
     private questionFormFieldService: QuestionFormFieldService,

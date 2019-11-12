@@ -1,17 +1,4 @@
-import { IWQuestion } from './question';
-
-export interface IWSurveyAttributes {
-  id?: string;
-  title?: string;
-  description?: string;
-  image_url?: string;
-  properties?: IWSurveyProperties;
-  display_properties: IWSurveyDisplayProperties;
-}
-
-export interface IWSurveyProperties {
-  [key: string]: any;
-}
+import { IWQuestion } from './survey-question';
 
 export interface IWSurveyDisplayProperties {
   title: string;
@@ -20,6 +7,7 @@ export interface IWSurveyDisplayProperties {
   progress_bar_color: string;
   card_background_img_url: string;
   questions: IWQuestion[];
+  button?: string;
   noRewardsPopUp?: {
     headLine?: string;
     subHeadLine?: string;

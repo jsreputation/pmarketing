@@ -19,7 +19,7 @@ export abstract class TokenStorage {
   /**
    * Get appInfo property
    */
-  public abstract getAppInfoProperty(key: string): string;
+  public abstract getAppInfoProperty(key: string): string | undefined;
 
   /**
    * Set appInfo property
