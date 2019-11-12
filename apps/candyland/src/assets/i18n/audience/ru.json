@@ -14,6 +14,24 @@
    "LIST_NAME": "List Name",
    "LAST_UPDATED": "Last Updated",
    "STATUS": "Status",
-   "NO_OF_USERS": "No. of users"
+   "NO_OF_USERS": "No. of users",
+   "NO_DATA_TITLE": "Slice and dice your target audience",
+   "NO_DATA_TEXT": "Let's begin by creating your first Audience List",
+   "USER_DETAILS": "User details",
+   "FIRST_NAME": "First Name*",
+   "LAST_NAME": "Last Name*",
+   "EMAIL_ADDRESS": "Email Address*",
+   "MOBILE_NUMBER": "Mobile Number*",
+   "GENDER": "Gender",
+   "BIRTHDAY": "Birthday",
+   "RACE": "Race",
+   "COUNTRY": "Country",
+   "NATIONALITY": "Nationality",
+   "CITY": "City",
+   "ADD_TO_AUDIENCE_LIST": "Add to Audience List",
+   "UPLOAD_BY_FILE": "Upload by file",
+   "GOLD_USERS": "Gold users",
+   "SILVER_TIER": "Silver tier",
+   "BRONZE_TIER": "Bronze tier"
  }
 }
