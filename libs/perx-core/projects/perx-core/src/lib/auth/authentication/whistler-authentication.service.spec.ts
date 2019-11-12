@@ -159,18 +159,18 @@ describe('WhistlerAuthenticationService', () => {
 
   it('getAccessToken', fakeAsync(inject([WhistlerAuthenticationService], (auth: WhistlerAuthenticationService) => {
     auth.getAccessToken().subscribe((token) => {
-      expect(token).toBe(auth.getUserAccessToken() ? auth.getUserAccessToken() : auth.getUserAccessToken())
-    })
+      expect(token).toBe(auth.getUserAccessToken() ? auth.getUserAccessToken() : auth.getUserAccessToken());
+    });
     tick();
     spyOn(auth, 'getUserAccessToken').and.returnValue('token');
     auth.getAccessToken().subscribe((token) => {
       expect(token).toBe('token');
-    })
+    });
     tick();
   })));
 
   it('should call tokenStorage', inject([WhistlerAuthenticationService, TokenStorage],
-    (auth: WhistlerAuthenticationService, tokenStorage: TokenStorage)=>{
+    (auth: WhistlerAuthenticationService, tokenStorage: TokenStorage) => {
       const setAppInfoProperty = spyOn(tokenStorage, 'setAppInfoProperty');
       auth.saveAppAccessToken('token');
       expect(setAppInfoProperty).toHaveBeenCalledWith('token', 'appAccessToken');

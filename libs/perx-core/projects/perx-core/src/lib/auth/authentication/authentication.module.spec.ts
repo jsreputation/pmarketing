@@ -1,4 +1,4 @@
-import { TestBed, inject } from "@angular/core/testing";
+import { TestBed, inject } from '@angular/core/testing';
 import { AuthServiceFactory, FormsServiceFactory, TokenStorageServiceFactory } from './authentication.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
@@ -31,18 +31,18 @@ describe('should create module', () => {
             let service = AuthServiceFactory(http, { isWhistler: true }, token, profile);
             expect(service instanceof WhistlerAuthenticationService);
             service = AuthServiceFactory(http, { isWhistler: false }, token, profile);
-            expect(service instanceof V4AuthenticationService)
+            expect(service instanceof V4AuthenticationService);
         }));
 
-    it('should create formsService', inject([HttpClient],(http: HttpClient) => {
-        let service = FormsServiceFactory({},http);
+    it('should create formsService', inject([HttpClient], (http: HttpClient) => {
+        const service = FormsServiceFactory({}, http);
         expect(service instanceof WhistlerFormsService).toBeTruthy();
     }));
 
-    it('should create tokenService', ()=>{
-        let service = TokenStorageServiceFactory({storageType: TokenType.local});
+    it('should create tokenService', () => {
+        let service = TokenStorageServiceFactory({ storageType: TokenType.local });
         expect(service instanceof LocalTokenStorage).toBeTruthy();
-        service = TokenStorageServiceFactory({storageType: null});
+        service = TokenStorageServiceFactory({ storageType: null });
         expect(service instanceof LocalTokenStorage).toBeTruthy();
-    })
+    });
 });
