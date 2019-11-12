@@ -22,11 +22,12 @@ export class LocalTokenStorage extends TokenStorage {
     }
   }
   public getAppInfo(): Observable<IAppInfo> {
-    this.appInfo = JSON.parse(localStorage.getItem('appInfo')) || { appAccessToken: '', userAccessToken: '' };
+    const appInfo = localStorage.getItem('appInfo');
+    this.appInfo = appInfo ? JSON.parse(appInfo) : { appAccessToken: '', userAccessToken: '' };
     return of(this.appInfo);
   }
 
-  public getAppInfoProperty(key: string): string {
+  public getAppInfoProperty(key: string): string | undefined {
     this.getAppInfo();
     return this.appInfo[key];
   }

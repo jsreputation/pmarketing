@@ -31,6 +31,7 @@ describe('WhistlerAuthenticationService', () => {
   });
 
   it('should create with config', () => {
+    // @ts-ignore
     const service: WhistlerAuthenticationService = new WhistlerAuthenticationService({ production: true }, null, null);
     expect(service).toBeTruthy();
   });

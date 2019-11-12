@@ -17,7 +17,7 @@ import { VouchersService } from '@cl-core/services/vouchers.service';
   styleUrls: ['./reward-detail-page.component.scss']
 })
 export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestroy {
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   public id: string;

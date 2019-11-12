@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IMerchantAdminService } from './imerchant-admin.service';
-import { IMerchantAdminTransaction, IMerchantProfile } from './models/merchants-admin.model';
+import { IMerchantAdminTransaction, IMerchantProfile, IMerchantAccount } from './models/merchants-admin.model';
 
 import { Config } from '../config/config';
 import {
@@ -118,16 +118,16 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   public static v4TransactionToTransaction(transaction: IV4MerchantAdminTransaction): IMerchantAdminTransaction {
     return {
       id: transaction.id,
-      user_account_id: transaction.user_account_id,
-      updated_at: new Date(transaction.updated_at),
-      transaction_type: transaction.transaction_type,
+      userAccountId: transaction.user_account_id,
+      updatedAt: new Date(transaction.updated_at),
+      transactionType: transaction.transaction_type,
       amount: transaction.amount,
-      transaction_date: new Date(transaction.transaction_date),
+      transactionDate: new Date(transaction.transaction_date),
       currency: transaction.currency,
-      workflow_id: transaction.workflow_id,
-      created_at: new Date(transaction.created_at),
+      workflowId: transaction.workflow_id,
+      createdAt: new Date(transaction.created_at),
       properties: transaction.properties,
-      transaction_reference: transaction.transaction_reference
+      transactionReference: transaction.transaction_reference
     };
   }
 
@@ -152,7 +152,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       mobile: profile.mobile,
       locationId: profile.location_id,
       merchantAccountId: profile.merchant_account_id,
-      merchant_account: profile.merchant_account,
+      merchantAccount: (profile.merchant_account as unknown as IMerchantAccount),
       createdAt: new Date(profile.created_at),
       updatedAt: new Date(profile.updated_at),
       state: profile.state
