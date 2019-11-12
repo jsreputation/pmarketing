@@ -47,6 +47,7 @@ export class WhistlerThemesService extends ThemesService {
         '--button_text_color': setting['theme.button_text_color'],
         '--button_background_color': setting['theme.button_background_color'],
         '--header_color': setting['theme.header_color'],
+        '--login_background_colour': setting['theme.login_background_colour'],
         '--background': backgroundColor,
         '--font_color': fontColor,
       }
