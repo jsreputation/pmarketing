@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  helm-deploy: perxtech/helm-deploy@0.0.4
+  helm-deploy: perxtech/helm-deploy@0.0.5
 executors:
   ubuntu:
     machine:
@@ -42,7 +42,7 @@ commands:
               if [ ${TARGET_ENV} == 'uat' ]; then
                 APIHOST="https://api-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
               elif [ ${TARGET_ENV} == 'staging' ]; then
-                APIHOST="https://api.${TARGET_ENV}.whistler.perxtech.io"
+                APIHOST="https://api-master.${TARGET_ENV}.whistler.perxtech.io"
               elif [ ${TARGET_ENV} == 'production' ]; then
                 APIHOST="https://api.whistler.perxtech.io"
               fi
@@ -201,7 +201,9 @@ jobs:
           command: |
             docker push ${DOCKER_REPO}:${CIRCLE_TAG}
   deploy:
-    executor: helm-deploy/default
+    executor:
+      name: helm-deploy/default
+      docker_tag: '2.15.2'
     parameters:
       docker_tag:
         type: string
@@ -266,7 +268,9 @@ jobs:
           helm_values: image.tag="${DOCKER_TAG}"
           helm_extra_args: --reuse-values --timeout 600
   deploy-whistler:
-    executor: helm-deploy/default
+    executor:
+      name: helm-deploy/default
+      docker_tag: '2.15.2'
     parameters:
       docker_tag:
         type: string
@@ -293,6 +297,23 @@ jobs:
             echo 'export SKAFFOLD_DEFAULT_REPO=perxtech' >> $BASH_ENV
             echo 'export HELM_REPO_URL=https://rails-on-services.github.io/helm-charts' >> $BASH_ENV
             echo 'export HELM_APP="$APP"' >> $BASH_ENV
+            if [ $APP == 'candyland' ]; then
+              if [ $TARGET_NAMESPACE == 'master' ]; then
+                INGRESS_HOST="candyland.${TARGET_ENV}.whistler.perxtech.io"
+              else
+                INGRESS_HOST="candyland-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
+              fi
+            elif [ $APP == 'blackcomb' ]; then
+              if [ $TARGET_NAMESPACE == 'master' ]; then
+                INGRESS_HOST="*-blackcomb.${TARGET_ENV}.whistler.perxtech.io"
+              else
+                INGRESS_HOST="*-blackcomb-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
+              fi
+            fi
+            echo "export APIHOST=$APIHOST" >> $BASH_ENV
+            echo "export INGRESS_HOST=$INGRESS_HOST" >> $BASH_ENV
+            echo $APIHOST
+            echo $INGRESS_HOST
       - helm-deploy/add-helm-repo:
           helm_repo_name: ros
       - helm-deploy/configure-kubectl:

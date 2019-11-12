@@ -15,7 +15,7 @@
       <mat-form-field floatLabel="never">
         <input type="number" [min]="0" matInput formControlName="points">
       </mat-form-field>
-      <span class="loyalty-currency">{{currency}}</span>
+      <span class="loyalty-currency">{{currency || 'SGD'}}</span>
       <span>in reward value.</span>
     </div>
   </div>

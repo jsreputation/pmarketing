@@ -1,10 +1,16 @@
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+import { IWIAMUserAttributes, IWTenantDisplayProperties } from '@perx/whistler';
+
+export interface IColor {
+  labelView: string;
+  color: string;
+}
 
 export class SettingsHttpAdapter {
 
   // tslint:disable
-  public static transformInviteUser(data: any): any {
-    const res = {
+  public static transformInviteUser(data: IAMUser): IJsonApiPayload<IWIAMUserAttributes> {
+    const res: any = {
       type: 'users',
       attributes: {
         username: data.name,
@@ -16,17 +22,18 @@ export class SettingsHttpAdapter {
       },
       relationships: {
         groups: {
-          data: [{id: data.roleId, type: "groups"}]
+          data: [{id: data.roleId, type: 'groups'}]
         }
       }
     };
     if (data.id) {
-      res['id'] = data.id;
+      res.id = data.id;
     }
+
     return res;
   }
 
-  public static transformToIAMUser(data: any): IAMUser {
+  public static transformToIAMUser(data: IJsonApiItem<IWIAMUserAttributes>): IAMUser {
     return {
       id: data.id,
       type: data.type,
@@ -61,7 +68,7 @@ export class SettingsHttpAdapter {
       }
       return user;
     });
-    return { data: formatData, meta: data.meta}
+    return {data: formatData, meta: data.meta};
   }
 
   private static setGroupId(data: any): number | null {
@@ -75,12 +82,12 @@ export class SettingsHttpAdapter {
 
   public static transformGeneralSettings(data: any): any {
     return {
-      'time_zone': data.timeZone,
+      time_zone: data.timeZone,
       currency: data.currency
     };
   }
 
-  public static transformSettingsBrandingFormToAPI (data: any): any {
+  public static transformSettingsBrandingFormToAPI(data: IBrandingForm): any {
     return {
       'theme.style': data.style,
       'theme.font': data.font,
@@ -89,31 +96,38 @@ export class SettingsHttpAdapter {
       'theme.header_color': data.headerNavbarColor.color,
       'theme.logo': data.logoType === 'image' ? data.logo : '',
       'theme.title': data.logoType === 'text' ? data.logo : '',
-      'theme.button_background_color': data.button_background_color.color,
-      'theme.button_text_color': data.button_text_color
+      'theme.button_background_color': data.buttonBackgroundColor.color,
+      'theme.button_text_color': data.buttonTextColor.color
     };
   }
 
-  public static transformSettingsBrandingToForm (data: any, listColors: any[]): IBrandingForm {
-    const logoType = data['theme.title'] ? 'text' : 'image';
+  public static transformSettingsBrandingToForm(data: IWTenantDisplayProperties, listColors: any[], listColorsText: any[]): IBrandingForm {
+    const logoType = 'image'; // data['theme.title'] ? 'text' : 'image';
     return {
       style: data['theme.style'],
       font: data['theme.font'],
       primaryColor: data['theme.primary'],
       secondaryColor: data['theme.accent'],
-      headerNavbarColor: SettingsHttpAdapter.getColorObj(listColors, data['theme.header_color']),
+      headerNavbarColor: SettingsHttpAdapter.getColorObj(listColors, data['theme.header_color']), // key
       logo: data['theme.logo'] ? data['theme.logo'] : data['theme.title'],
-      logoType: logoType,
-      button: SettingsHttpAdapter.getColorObj(listColors, data['theme.button_background_color']),
-      buttonTextColor:  data['theme.button_text_color']
+      logoType,
+      buttonBackgroundColor: SettingsHttpAdapter.getColorObj(listColors, data['theme.button_background_color']),
+      buttonTextColor: SettingsHttpAdapter.getColorObj(listColorsText, data['theme.button_text_color'])
+    };
+  }
+
+  public static getColorObj(listColors: IColor[], color: string): IColor {
+    const col: IColor = listColors.find(item => item.color === color);
+    if (col !== undefined) {
+      return col;
     }
+    if (listColors.length > 0) {
+      return listColors[0];
+    }
+    return {labelView: 'Primary Color', color: '#ffffff'};
   }
 
-  public static getColorObj(listColors: any[], color: string): {labelView: string, color: string} {
-    return listColors.find(item => item.color === color);
-  }
-
-  public static getTenantsSettings(data):ITenantsProperties {
+  public static getTenantsSettings(data: any): ITenantsProperties {
     return {
       timeZone: SettingsHttpAdapter.getTenantProperty('time_zone', data),
       color: SettingsHttpAdapter.getTenantProperty('theme.color', data),
@@ -126,15 +140,15 @@ export class SettingsHttpAdapter {
       headerColor: SettingsHttpAdapter.getTenantProperty('theme.header_color', data),
       logo: SettingsHttpAdapter.tenantLogo(data),
       primary: SettingsHttpAdapter.getTenantProperty('theme.primary', data),
-      logoType: SettingsHttpAdapter.tenantTypeLogo(data),
-    }
+      logoType: SettingsHttpAdapter.tenantTypeLogo(data)
+    };
   }
 
   public static getTenantProperty(property: string, data: Tenants): any {
-    return data && data.display_properties  ? data.display_properties[property] : null;
+    return data && data.display_properties ? data.display_properties[property] : null;
   }
 
-  public static tenantLogo(data: Tenants): any {
+  public static tenantLogo(data: Tenants): string {
     const logo = SettingsHttpAdapter.getTenantProperty('theme.logo', data);
     const title = SettingsHttpAdapter.getTenantProperty('theme.title', data);
     if (title) {
@@ -148,7 +162,8 @@ export class SettingsHttpAdapter {
   /**
    * this method need for get right type of logo img or text in the component
    */
+  // @ts-ignore
   public static tenantTypeLogo(data: Tenants): boolean {
-    return !(SettingsHttpAdapter.getTenantProperty('theme.title', data) as any);
+    return true; // !(SettingsHttpAdapter.getTenantProperty('theme.title', data) as any);
   }
 }

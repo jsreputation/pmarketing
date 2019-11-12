@@ -36,7 +36,7 @@ describe('ScratchComponent', () => {
     results: {
     }
   };
-  const gameServiceStub = {
+  const gameServiceStub: Partial<IGameService> = {
     get: () => of(),
     getGamesFromCampaign: () => of()
   };

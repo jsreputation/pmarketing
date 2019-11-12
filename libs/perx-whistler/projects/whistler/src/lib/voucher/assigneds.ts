@@ -1,9 +1,9 @@
-export enum AssignedStatus {
+export enum WAssignedStatus {
   issued = 'issued',
   assigned = 'assigned'
 }
 
-export interface IAssignedAttributes {
+export interface IWAssignedAttributes {
   assigned_to_id: number;
   value: string;
   created_at: string;
@@ -11,12 +11,12 @@ export interface IAssignedAttributes {
   source_id: number;
   source_type: string;
   valid_from: string;
-  status: AssignedStatus;
+  status: WAssignedStatus;
   updated_at: string;
   urn: string;
 }
 
-export interface IAssignRequestAttributes {
+export interface IWAssignRequestAttributes {
   assigned_to_id?: string;
   source_id: string;
   source_type: string;

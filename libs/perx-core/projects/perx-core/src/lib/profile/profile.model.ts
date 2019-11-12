@@ -29,6 +29,20 @@ export interface IProfileProperty {
 }
 
 export interface ICardNumber {
-  card_number: number;
-  loyalty_program_id: number;
+  cardNumber: number;
+  loyaltyProgramId: number;
+}
+
+// todo remoev and reuse/leverage IProfileProperty
+export interface IProfileAttributes {
+  urn?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  title: string;
+  firstName: string | null;
+  lastName: string | null;
+  phoneNumber: string | null;
+  emailAddress: string | null;
+  primaryIdentifier: string;
+  properties?: string | null;
 }

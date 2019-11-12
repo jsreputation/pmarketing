@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule } from '@angular/material';
 import { MatDialog } from '@angular/material';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import { AuthenticationService, NotificationService, ConfigService } from '@perx/core';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 
@@ -17,6 +17,10 @@ describe('AppComponent', () => {
     const matDialogStub = { open: () => ({}) };
     const authenticationServiceStub = { $failedAuth: of(true) };
     const routerStub = { navigateByUrl: () => ({}) };
+    const configServiceStub = {
+      readAppConfig: () => of()
+    };
+
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
@@ -36,7 +40,8 @@ describe('AppComponent', () => {
               buttonTxt: 'Button'
             })
           }
-        }
+        },
+        { provide: ConfigService, useValue: configServiceStub }
       ],
       declarations: [AppComponent]
     }).compileComponents();

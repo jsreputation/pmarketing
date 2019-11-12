@@ -1,8 +1,8 @@
 import { MerchantBranch } from './merchant';
-import { IMerchant, IMerchantBranchApi} from '@perx/whistler';
+import { IWMerchantAttributes, IWMerchantBranchAttributes } from '@perx/whistler';
 
 export class MerchantHttpAdapter {
-  public static transformToMerchantForm(data: IMerchant): IMerchantForm {
+  public static transformToMerchantForm(data: IWMerchantAttributes): IMerchantForm {
     return {
       name: data.name,
       type: data.type,
@@ -27,7 +27,7 @@ export class MerchantHttpAdapter {
     };
   }
 
-  public static transformFromMerchantForm(data: IMerchantForm): IJsonApiItem<IMerchant> {
+  public static transformFromMerchantForm(data: IMerchantForm): IJsonApiItem<IWMerchantAttributes> {
     return {
       type: 'orgs',
       attributes: {
@@ -47,7 +47,7 @@ export class MerchantHttpAdapter {
     };
   }
 
-  public static transformFromMerchantBranchForm(data: MerchantBranch, merchantId?: string): IJsonApiItem<IMerchantBranchApi> {
+  public static transformFromMerchantBranchForm(data: MerchantBranch, merchantId?: string): IJsonApiItem<IWMerchantBranchAttributes> {
     return {
       type: 'branches',
       attributes: {

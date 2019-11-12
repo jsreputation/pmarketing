@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -28,12 +29,12 @@ describe('GameComponent', () => {
     texts: {},
     results: {},
   };
-  const gameServiceStub = {
+  const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of([game]),
     play: () => of()
   };
-  const routerStub = {
-    navigate: () => {}
+  const routerStub: Partial<Router> = {
+    navigate: () => Promise.resolve(true)
   };
 
   beforeEach(async(() => {
@@ -50,10 +51,11 @@ describe('GameComponent', () => {
         MatDialogModule,
         MatProgressBarModule,
         BrowserAnimationsModule,
+        TranslateModule.forRoot(),
       ],
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
-        { provide: ActivatedRoute, useValue: { params: of({ id: 1}) } },
+        { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: Router, useValue: routerStub },
       ]
     })
@@ -86,7 +88,7 @@ describe('GameComponent', () => {
       tick(1000);
       fixture.detectChanges();
       tick();
-      expect(routerSpy).toHaveBeenCalledWith([ '/wallet' ]);
+      expect(routerSpy).toHaveBeenCalledWith(['/wallet']);
       expect(getGamesFromCampaignSpy).toHaveBeenCalled();
     }));
   });
@@ -139,10 +141,12 @@ describe('GameComponent', () => {
       tick();
       expect(gameServiceSpy).toHaveBeenCalled();
       expect(dialogSpy).toHaveBeenCalledWith(PopupComponent,
-        { data:
-          { title: 'Congratulations!',
+        {
+          data:
+          {
+            title: 'Congratulations!',
             text: 'You earned 1 rewards',
-            buttonTxt: 'View Reward',
+            buttonTxt: 'VIEW_REWARD',
             imageUrl: 'assets/congrats_image.png'
           }
         }
@@ -164,7 +168,7 @@ describe('GameComponent', () => {
       fixture.detectChanges();
       tick();
       expect(gameServiceSpy).toHaveBeenCalled();
-      expect(dialogSpy).toHaveBeenCalledWith(PopupComponent, { data: Object({ title: 'Thanks for playing', text: 'Unfortunately, you did not win anything this time', buttonTxt: 'Go to Wallet' }) });
+      expect(dialogSpy).toHaveBeenCalledWith(PopupComponent, { data: Object({ title: 'Thanks for playing', text: 'Unfortunately, you did not win anything this time', buttonTxt: 'BACK_TO_WALLET', imageUrl: '' }) });
     }));
 
   });

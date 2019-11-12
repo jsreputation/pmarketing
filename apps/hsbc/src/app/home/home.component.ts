@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ICampaignService, CampaignType, NotificationService, IStampCard, IConfig, ConfigService, ICampaign, StampService } from '@perx/core';
-import { map, mergeMap, toArray } from 'rxjs/operators';
+import {map, mergeMap, tap, toArray} from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
 
 @Component({
@@ -10,10 +10,12 @@ import { from, Observable } from 'rxjs';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  public campaigns: ICampaign[];
   public campaignId: number;
   public selectedTab: number = 0;
   private displayCampaignAs: string = 'puzzle';
   public puzzleTextFn: () => string;
+  public titleFn: (index?: number) => string;
 
   constructor(
     private router: Router,
@@ -31,6 +33,7 @@ export class HomeComponent implements OnInit {
         if (config.sourceType === 'hsbc-xmas') {
           this.displayCampaignAs = 'stamp_card';
           this.puzzleTextFn = () => 'new stamps';
+          this.titleFn = (index?: number) => index !== undefined ? `Stamp Card ${this.puzzleIndex(index)} out of 12` : '';
         }
       });
 
@@ -48,6 +51,13 @@ export class HomeComponent implements OnInit {
     this.campaignService.getCampaigns()
       .pipe(
         map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp)),
+        map(campaigns => {
+          if (this.displayCampaignAs === 'puzzle') {
+            return campaigns.filter(camp => camp.type === CampaignType.stamp).slice(0, 1);
+          }
+          return campaigns;
+        }),
+        tap((campaigns: ICampaign[]) => this.campaigns = campaigns),
         mergeMap(
           (campaigns: ICampaign[]) => from(campaigns).pipe(
             mergeMap((campaign: ICampaign) => this.fetchCard(campaign.id)),
@@ -85,5 +95,12 @@ export class HomeComponent implements OnInit {
         text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of puzzle pieces. Don\'t forget to redeem your earned rewards!'
       });
     }
+  }
+
+  public puzzleIndex(index: number): string {
+    if (index < 0) {
+      return '';
+    }
+    return String(++index);
   }
 }

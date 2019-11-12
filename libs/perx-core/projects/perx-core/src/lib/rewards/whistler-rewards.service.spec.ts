@@ -5,9 +5,9 @@ import { ConfigModule } from '../config/config.module';
 import { IMerchantsService } from '../merchants/imerchants.service';
 import { of } from 'rxjs';
 import { IJsonApiItem, IJsonApiListPayload } from '../jsonapi.payload';
-import { IRewardEntityAttributes } from '@perx/whistler';
+import { IWRewardEntityAttributes } from '@perx/whistler';
 import { IReward } from './models/reward.model';
-import { IJsonApiItemPayload } from 'perx-core/lib/jsonapi.payload';
+import { IJsonApiItemPayload } from '../jsonapi.payload';
 import { IMerchant } from '../merchants/models/merchants.model';
 import { HttpClient } from '@angular/common/http';
 import { takeLast } from 'rxjs/operators';
@@ -32,7 +32,7 @@ describe('WhistlerRewardsService', () => {
     baseHref: '/'
   };
 
-  const mockReward: IJsonApiItem<IRewardEntityAttributes> = {
+  const mockReward: IJsonApiItem<IWRewardEntityAttributes> = {
     id: '1',
     type: '',
     links: { self: '' },
@@ -49,7 +49,7 @@ describe('WhistlerRewardsService', () => {
     }
   };
 
-  const mockRewardWithMerchant: IJsonApiItem<IRewardEntityAttributes> = {
+  const mockRewardWithMerchant: IJsonApiItem<IWRewardEntityAttributes> = {
     id: '1',
     type: '',
     links: { self: '' },
@@ -87,7 +87,7 @@ describe('WhistlerRewardsService', () => {
   });
 
   it('should get a reward from its id without merchant', (done: DoneFn) => {
-    const res: IJsonApiItemPayload<IRewardEntityAttributes> = {
+    const res: IJsonApiItemPayload<IWRewardEntityAttributes> = {
       data: mockReward
     };
     httpClientSpy.get.and.returnValue(of(res));
@@ -104,7 +104,7 @@ describe('WhistlerRewardsService', () => {
   });
 
   it('should get a reward from its id with merchant', (done: DoneFn) => {
-    const res: IJsonApiItemPayload<IRewardEntityAttributes> = {
+    const res: IJsonApiItemPayload<IWRewardEntityAttributes> = {
       data: mockRewardWithMerchant
     };
     httpClientSpy.get.and.returnValue(of(res));
@@ -121,7 +121,7 @@ describe('WhistlerRewardsService', () => {
   });
 
   it('should get a page of rewards', (done: DoneFn) => {
-    const res: IJsonApiListPayload<IRewardEntityAttributes> = {
+    const res: IJsonApiListPayload<IWRewardEntityAttributes> = {
       data: [mockReward, mockRewardWithMerchant]
     };
     httpClientSpy.get.and.returnValue(of(res));
@@ -145,7 +145,7 @@ describe('WhistlerRewardsService', () => {
   });
 
   it('should get all rewards', (done: DoneFn) => {
-    const res: IJsonApiListPayload<IRewardEntityAttributes> = {
+    const res: IJsonApiListPayload<IWRewardEntityAttributes> = {
       data: [mockReward, mockRewardWithMerchant],
       meta: {
         page_count: 2

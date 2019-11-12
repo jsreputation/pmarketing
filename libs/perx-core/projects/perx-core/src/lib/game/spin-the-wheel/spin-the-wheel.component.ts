@@ -112,7 +112,7 @@ export class SpinTheWheelComponent implements OnInit {
   }
 
   public loadImg(): void {
-    const slicesWithImg: ISlice[] = this.slices.filter(item => item.background_image);
+    const slicesWithImg: ISlice[] = this.slices.filter(item => item.backgroundImage);
     let count: number = 0;
     const images: ImageForPattern[] = [];
 
@@ -123,7 +123,7 @@ export class SpinTheWheelComponent implements OnInit {
 
     slicesWithImg.forEach((item) => {
       const image: HTMLImageElement = new Image();
-      image.src = item.background_image;
+      image.src = item.backgroundImage;
       images.push({ id: item.id, image });
       image.onload = () => {
         count++;
@@ -146,13 +146,13 @@ export class SpinTheWheelComponent implements OnInit {
     this.slices.forEach((slice: ISlice, i: number) => {
       const angle = this.startAngle + i * this.arc;
 
-      if (slice.background_image) {
+      if (slice.backgroundImage) {
         const currentPattern = this.patternImg.find(item => item.id === slice.id);
         if (currentPattern) {
           this.ctx.fillStyle = currentPattern.pattern;
         }
       } else {
-        this.ctx.fillStyle = slice.background_color || 'white';
+        this.ctx.fillStyle = slice.backgroundColor || 'white';
       }
 
       this.ctx.beginPath();
@@ -165,7 +165,7 @@ export class SpinTheWheelComponent implements OnInit {
       this.ctx.shadowOffsetX = -1;
       this.ctx.shadowOffsetY = -1;
       this.ctx.shadowBlur = 0;
-      this.ctx.fillStyle = slice.label_color || 'black';
+      this.ctx.fillStyle = slice.labelColor || 'black';
       this.ctx.translate(
         this.size / 2 + Math.cos(angle + this.arc / 2) * textRadius,
         this.size / 2 + Math.sin(angle + this.arc / 2) * textRadius

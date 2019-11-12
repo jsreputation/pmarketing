@@ -48,7 +48,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, Contro
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   constructor(private cd: ChangeDetectorRef) {
   }
