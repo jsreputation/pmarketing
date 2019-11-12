@@ -16,10 +16,7 @@ export {
   IWRewardEntityAttributes,
   IWMetaData,
 } from './lib/reward/reward';
-export {
-  IWAttbsObjTrans,
-  IWAttbsObjGame,
-} from './lib/game/game';
+export { IWAttbsObjTrans } from './lib/game/game';
 export {
   IWInstantOutcomeLimitAttributes,
   IWSurveyLimitAttributes,
