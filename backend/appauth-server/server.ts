@@ -1,7 +1,7 @@
 // These are important and needed before anything else
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
-import 'regenerator-runtime'; // this is a import required by node-cache due to disabling of callback-based api in v5 and webpack polyfill step
+import 'regenerator-runtime'; // import required by node-cache due callback-based updateand wp polyfill step
 
 import express from 'express';
 import { readFileSync } from 'fs';
@@ -71,7 +71,7 @@ const server = app.listen(PORT, () => {
 });
 
 const processInterruption = (signals: NodeJS.Signals) => {
-  server.close((err) => {
+  server.close(err => {
     console.log('Server terminated', err, signals);
   });
 };
