@@ -89,7 +89,7 @@
       padding: 0;
       margin: 0;
 
-      cl-button:first-child {
+      cl-button:not(:last-child) {
         display: none;
       }
     }

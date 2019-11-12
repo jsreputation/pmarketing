@@ -29,12 +29,12 @@ describe('GameComponent', () => {
     texts: {},
     results: {},
   };
-  const gameServiceStub = {
+  const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of([game]),
     play: () => of()
   };
-  const routerStub = {
-    navigate: () => {}
+  const routerStub: Partial<Router> = {
+    navigate: () => Promise.resolve(true)
   };
 
   beforeEach(async(() => {
@@ -55,7 +55,7 @@ describe('GameComponent', () => {
       ],
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
-        { provide: ActivatedRoute, useValue: { params: of({ id: 1}) } },
+        { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: Router, useValue: routerStub },
       ]
     })
@@ -88,7 +88,7 @@ describe('GameComponent', () => {
       tick(1000);
       fixture.detectChanges();
       tick();
-      expect(routerSpy).toHaveBeenCalledWith([ '/wallet' ]);
+      expect(routerSpy).toHaveBeenCalledWith(['/wallet']);
       expect(getGamesFromCampaignSpy).toHaveBeenCalled();
     }));
   });
@@ -141,9 +141,11 @@ describe('GameComponent', () => {
       tick();
       expect(gameServiceSpy).toHaveBeenCalled();
       expect(dialogSpy).toHaveBeenCalledWith(PopupComponent,
-        { data:
-          { title: 'Congratulations!',
-            text: 'You earned 1 rewards',
+        {
+          data:
+          {
+            title: 'GAME_SUCCESS_TITLE',
+            text: 'GAME_SUCCESS_TEXT',
             buttonTxt: 'VIEW_REWARD',
             imageUrl: 'assets/congrats_image.png'
           }
@@ -166,7 +168,15 @@ describe('GameComponent', () => {
       fixture.detectChanges();
       tick();
       expect(gameServiceSpy).toHaveBeenCalled();
-      expect(dialogSpy).toHaveBeenCalledWith(PopupComponent, { data: Object({ title: 'Thanks for playing', text: 'Unfortunately, you did not win anything this time', buttonTxt: 'BACK_TO_WALLET', imageUrl: '' }) });
+      expect(dialogSpy).toHaveBeenCalledWith(PopupComponent,
+        {
+          data: Object({
+            title: 'GAME_NO_REWARDS_TITLE',
+            text: 'GAME_NO_REWARDS_TEXT',
+            buttonTxt: 'BACK_TO_WALLET',
+            imageUrl: ''
+          })
+        });
     }));
 
   });

@@ -8,7 +8,8 @@
       (click)="isActive(puzzle) && puzzleSelected(puzzle)">
       <div class="puzzle-content">
         <div class="puzzle-img__wrapper">
-          <img [ngClass]="isActive(puzzle) ? 'puzzle-img' : 'puzzle-img grayscale' " src="{{puzzle.displayProperties.thumbnailImg}}">
+          <img [ngClass]="isActive(puzzle) ? 'puzzle-img' : 'puzzle-img grayscale' "
+               src="{{puzzle.displayProperties.thumbnailImg ? puzzle.displayProperties.thumbnailImg : puzzle.displayProperties.cardImage.value.imageUrl}}">
         </div>
         <div class="puzzle-details">
           <h1>

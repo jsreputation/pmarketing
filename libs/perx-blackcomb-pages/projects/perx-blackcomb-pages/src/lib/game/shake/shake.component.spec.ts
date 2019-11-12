@@ -26,7 +26,7 @@ describe('ShakeComponent', () => {
     }
   };
 
-  const gameServiceStub = {
+  const gameServiceStub: Partial<IGameService> = {
     get: () => of(),
     getGamesFromCampaign: () => of()
   };

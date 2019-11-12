@@ -1,4 +1,4 @@
-export interface IVoucherStatsApi {
+export interface IWVoucherStatsApi {
   urn: string;
   created_at: string;
   updated_at: string;

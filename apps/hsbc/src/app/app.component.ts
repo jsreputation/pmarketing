@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
   public currentPage: string;
   public failedAuthSubscriber: Subscription;
   private soundToggleSubscription: Subscription;
+  private sourceType: string;
   @ViewChild('drawer', { static: false }) public drawer: MatSidenav;
 
   public onLeftActionClick: () => void = () => { };
@@ -67,19 +68,6 @@ export class AppComponent implements OnInit {
     this.notificationService.$popup.subscribe(data => {
       this.dialog.open(PopupComponent, { data });
     });
-
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig) => {
-        let title = '';
-        const sourceType = config.sourceType as string;
-        if (sourceType === 'hsbc-xmas') {
-          title = 'HSBC Xmas';
-        } else {
-          title = 'HSBC Collect 2.0';
-        }
-        this.titleService.setTitle(title);
-      }
-    );
   }
 
   private goHome(): void {
@@ -96,6 +84,22 @@ export class AppComponent implements OnInit {
 
   public onActivate(ref: any): void {
     const dummy = () => { };
+
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig) => {
+        let title = '';
+        this.sourceType = config.sourceType as string;
+        if (this.sourceType === 'hsbc-xmas') {
+          title = 'HSBC Xmas';
+        } else {
+          title = 'HSBC Collect 2.0';
+        }
+        this.titleService.setTitle(title);
+
+        this.rightIconToShow = ref instanceof PuzzleComponent ? this.soundService.icon :
+          ref instanceof HomeComponent && this.sourceType === 'hsbc-collect2' ? 'account_circle' : '';
+      }
+    );
 
     this.drawer.close();
 
@@ -143,9 +147,6 @@ export class AppComponent implements OnInit {
         this.rightIconToShow = this.soundService.icon;
       });
     }
-
-    this.rightIconToShow = ref instanceof PuzzleComponent ? this.soundService.icon :
-      ref instanceof HomeComponent ? 'account_circle' : '';
 
     const soundToggle = () => {
       this.soundService.toggle();
