@@ -18,7 +18,7 @@ export enum DictionaryTotal {
   styleUrls: ['./dashboard-campaign-page.component.scss']
 })
 export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public params: { [key: string]: string };
   public activeTab: string = 'survey';

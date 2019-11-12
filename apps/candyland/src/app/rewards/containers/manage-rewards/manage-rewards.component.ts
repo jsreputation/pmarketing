@@ -20,7 +20,7 @@ import { TranslateDefaultLanguageService } from '@cl-core/translate-services/tra
   styleUrls: ['./manage-rewards.component.scss']
 })
 export class ManageRewardsComponent implements OnInit, OnDestroy {
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public id: string;
   public reward: IRewardEntityForm;

@@ -6,6 +6,8 @@ import {
   defaultTree,
   ITree,
   IPinata,
+  IScratch,
+  defaultScratch,
   defaultPinata,
   IPlayOutcome,
 } from './game.model';
@@ -17,11 +19,12 @@ import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import {
   IWAssignedAttributes,
-  IWAttbsObjGame,
+  IWGameEngagementAttributes,
   IWTreeDisplayProperties,
   IWPinataDisplayProperties,
-  IWAttbsObjEntity,
-  WGameType
+  IWCampaignAttributes,
+  WGameType,
+  IWScratchDisplayProperties
 } from '@perx/whistler';
 
 import { ICampaignDisplayProperties } from '../perx-core.models';
@@ -62,9 +65,9 @@ export class WhistlerGameService implements IGameService {
     this.hostName = config.apiHost as string;
   }
 
-  private static WGameToGame(game: IJsonApiItem<IWAttbsObjGame>): IGame {
+  private static WGameToGame(game: IJsonApiItem<IWGameEngagementAttributes>): IGame {
     let type = TYPE.unknown;
-    let config: ITree | IPinata;
+    let config: ITree | IPinata | IScratch;
     const { attributes } = game;
     if (attributes.game_type === WGameType.shakeTheTree) {
       type = TYPE.shakeTheTree;
@@ -87,7 +90,13 @@ export class WhistlerGameService implements IGameService {
       };
     } else if (attributes.game_type === WGameType.scratch) {
       type = TYPE.scratch;
-      // todo
+      const scratchdp: IWScratchDisplayProperties = attributes.display_properties as IWScratchDisplayProperties;
+      config = {
+        ...defaultScratch(),
+        // underlyingImg: scratchdp.post_scratch_fail_img_url,
+        underlyingImg: scratchdp.post_scratch_success_img_url,
+        coverImg: scratchdp.pre_scratch_img_url
+      };
     }
 
     const texts: { [key: string]: string } = {};
@@ -146,7 +155,7 @@ export class WhistlerGameService implements IGameService {
     if (this.cache[engagementId]) {
       return of(this.cache[engagementId]);
     }
-    return this.http.get<IJsonApiItemPayload<IWAttbsObjGame>>(`${this.hostName}/game/engagements/${engagementId}`)
+    return this.http.get<IJsonApiItemPayload<IWGameEngagementAttributes>>(`${this.hostName}/game/engagements/${engagementId}`)
       .pipe(
         map(res => res.data),
         map(game => WhistlerGameService.WGameToGame(game)),
@@ -156,10 +165,10 @@ export class WhistlerGameService implements IGameService {
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
     let disProp: ICampaignDisplayProperties = null;
-    return this.http.get<IJsonApiItemPayload<IWAttbsObjEntity>>(`${this.hostName}/campaign/entities/${campaignId}`)
+    return this.http.get<IJsonApiItemPayload<IWCampaignAttributes>>(`${this.hostName}/campaign/entities/${campaignId}`)
       .pipe(
-        map((res: IJsonApiItemPayload<IWAttbsObjEntity>) => res.data.attributes),
-        map((entity: IWAttbsObjEntity) => {
+        map((res: IJsonApiItemPayload<IWCampaignAttributes>) => res.data.attributes),
+        map((entity: IWCampaignAttributes) => {
           disProp = entity.display_properties;
           return entity.engagement_id;
         }),

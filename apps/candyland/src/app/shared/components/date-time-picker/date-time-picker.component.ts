@@ -37,7 +37,7 @@ export class DateTimePickerComponent implements OnInit, OnDestroy, ControlValueA
 
   public timeForm: FormGroup;
   public disabledState: boolean;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;

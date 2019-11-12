@@ -17,6 +17,9 @@
   height: 100%;
   width: 100%;
   z-index: -1;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
 
   img {
     position: relative;
@@ -38,7 +41,6 @@
   .form-container {
     display: flex;
     flex-direction: column;
-    align-self: flex-end;
     flex: 1;
 
     .login-form {
@@ -73,6 +75,7 @@
 
     h2 {
       font-size: 2rem;
+      margin-top: 8vh;
       margin-bottom: 3.2rem;
     }
 
@@ -82,6 +85,11 @@
       background-color: #ffffff;
       padding: 2.4rem 1.5rem;
       flex: 0;
+
+      &.hsbc-xmas {
+        position: relative;
+        top: 5vh;
+      }
 
       h1 {
         text-align: left;

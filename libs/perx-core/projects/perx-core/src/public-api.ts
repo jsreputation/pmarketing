@@ -3,7 +3,6 @@
  */
 export { PerxCoreModule } from './lib/perx-core.module';
 export { IRewardDisplayProperties, ICampaignDisplayProperties } from './lib/perx-core.models';
-
 /**
  * Merchants
  */
@@ -35,8 +34,9 @@ export { QrcodeRedemptionComponent } from './lib/vouchers/qrcode-redemption/qrco
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
 export { AuthenticationService } from './lib/auth/authentication/authentication.service';
 export { TokenStorage } from './lib/auth/authentication/token-storage.service';
-export { IChangePasswordData } from './lib/auth/authentication/models/authentication.model';
+export { IChangePasswordData, ISignUpData } from './lib/auth/authentication/models/authentication.model';
 export { IFormsService } from './lib/auth/authentication/iforms.service';
+
 /**
  * Campaigns
  */
@@ -108,12 +108,6 @@ export {
   TransactionDetailType,
   IJoinMethod
 } from './lib/loyalty/models/loyalty.model';
-export {
-  ILoyaltyApi,
-  IBasicTierApi,
-  ICustomTierApi,
-  IJoinMethodApi
-} from './lib/loyalty/models/loyalty-api.model';
 export { TransactionPipe } from './lib/loyalty/loyalty-transactions-list/transaction.pipe';
 export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-summary.component';
 
@@ -148,6 +142,7 @@ export { FeedReaderService, FeedItem } from './lib/utils/feed-reader.service';
 export { GeneralStaticDataService } from './lib/utils/general-static-data/general-static-data.service';
 export { ICountryCode } from './lib/utils/general-static-data/country-code';
 export { RepeatTimesDirective } from './lib/utils/directives/repeat-times.directive';
+export { NewsfeedComponent } from './lib/utils/newsfeed/newsfeed.component';
 /**
  * Puzzles
  */
@@ -199,6 +194,7 @@ export { IConfig, IMicrositeSettings } from './lib/config/models/config.model';
 export {
   ITheme,
   PagesObject,
+  WhistlerITenant,
   AccountPageObject,
 } from './lib/utils/themes/themes.model';
 export { ThemesService } from './lib/utils/themes/themes.service';

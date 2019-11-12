@@ -81,7 +81,7 @@ export class OrderComponent implements OnInit {
           mergeMap((product: IProduct) => {
             return this.merchantAdminService.createTransaction(
               this.payload.id, merchantUsername, product.price, product.currency,
-              'purchase', dateStamp + '-' + this.payload.id, merchantProfile.merchant_account.name, product.name);
+              'purchase', dateStamp + '-' + this.payload.id, merchantProfile.merchantAccount.name, product.name);
           })
         ))
       )
