@@ -11,7 +11,7 @@ import {
   FormGroup,
 } from '@angular/forms';
 
-import { Subject, throwError } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Config, AuthenticationService, PopupComponent, IPopupConfig, InstantOutcomeService, IGameService } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { switchMap, takeUntil, catchError, tap } from 'rxjs/operators';
@@ -82,10 +82,12 @@ export class PIComponent implements OnInit, OnDestroy {
       let newUserId;
       (window as any).primaryIdentifier = pi;
       this.authService.autoLogin().pipe(
-        catchError(() => throwError('PI_NOT_EXIST')),
+        catchError(() => { throw new Error('PI_NOT_EXIST'); }),
         tap(() => { newUserId = this.authService.getUserId(); }),
         switchMap(() => this.authService.mergeUserById([oldUserId], newUserId)),
-        catchError(() => throwError('PI_MERGE_FAIL')),
+        catchError((err: Error) => {
+          throw err.message.startsWith('PI_') ? err : new Error('PI_MERGE_FAIL');
+        }),
         tap(() => this.authService.savePI(pi)),
         switchMap(() => {
           if (this.engagementType === 'game' && this.transactionId) {
@@ -94,22 +96,25 @@ export class PIComponent implements OnInit, OnDestroy {
           if (this.engagementType === 'instant_outcome' && this.transactionId) {
             return this.instantOutcomeService.prePlayConfirm(this.transactionId);
           }
-          return throwError('PI_NO_TRANSACTION_MATCH');
+          throw new Error('PI_NO_TRANSACTION_MATCH');
         }),
-        catchError(() => throwError('PI_TRANSACTION_CONFIRM_FAIL')),
+        catchError((err: Error) => {
+          throw err.message.startsWith('PI_') ? err : new Error('PI_TRANSACTION_CONFIRM_FAIL');
+        }),
       ).subscribe(
         () => {
           this.router.navigate(['/wallet']);
           this.dialog.open(PopupComponent, { data: this.popupData });
         },
-        (error) => {
-          this.updateErrorMessage(error);
+        (error: Error) => {
+          this.updateErrorMessage(error.message);
         }
       );
     }
   }
 
   public updateErrorMessage(error: string): void {
+    console.log(error);
     this.translate.get(error).subscribe(res => this.errorMessage = res);
   }
 }
