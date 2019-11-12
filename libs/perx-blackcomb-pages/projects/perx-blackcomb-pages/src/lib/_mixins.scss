@@ -1,0 +1,67 @@
+$app-max-width: 28.8rem;
+$app-margin: 2.4em;
+$app-padding: 1.6rem;
+$card-border-radius: 0.8rem;
+$button-height-min: 4.8rem;
+
+@mixin main-wrap {
+  box-sizing: border-box;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 100%;
+  padding: $app-margin;
+  background-size: cover;
+  background-position: center;
+}
+
+@mixin game-wrap {
+  box-sizing: border-box;
+  max-width: $app-max-width;
+  margin-top: auto;
+  margin-bottom: $app-margin;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+@mixin game-wrap-card {
+  padding: $app-padding;
+  border-radius: $card-border-radius;
+  background-color: white;
+}
+
+@mixin game-cta {
+  margin-top: auto;
+  width: 100%;
+  max-width: $app-max-width;
+
+  button {
+    width: 100%;
+    line-height: $button-height-min;
+  }
+}
+
+@mixin game-headline {
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.015rem;
+  text-align: center;
+}
+
+@mixin game-subheadline {
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  letter-spacing: 0.025rem;
+  text-align: center;
+  margin: 0;
+  color: #666666;
+}
