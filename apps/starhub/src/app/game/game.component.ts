@@ -119,6 +119,7 @@ export class GameComponent implements OnInit {
           this.showNoRewardsPopUp();
         } else {
           this.gameOutcomeService.setVouchersList(vouchs);
+          this.gameOutcomeService.setOutcome(this.game.results.outcome);
           this.router.navigate(['/congrats']);
         }
         },
