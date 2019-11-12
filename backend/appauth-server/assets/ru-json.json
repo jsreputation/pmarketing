@@ -42,5 +42,18 @@
     "PI_NOT_EXIST": "",
     "PI_MERGE_FAIL": "",
     "PI_NO_TRANSACTION_MATCH": "",
-    "PI_TRANSACTION_CONFIRM_FAIL": ""
+    "PI_TRANSACTION_CONFIRM_FAIL": "",
+    "STAMP_SUCCESS_TITLE": "",
+    "STAMP_ERROR_TITLE": "",
+    "GAME_NO_REWARDS_TITLE": "Спасибо за игру",
+    "GAME_NO_REWARDS_TEXT": "К сожалению, Вы ничего не выиграли в этот раз",
+    "GAME_SUCCESS_TITLE": "Поздравляем!",
+    "GAME_SUCCESS_TEXT": "Вы получили {{rewards}} наград",
+    "REDEEM_SUCCESS_TEXT": "Вы выкупили {{reward}}",
+    "INSTANT_OUTCOME_NO_REWARDS_TITLE": "К сожалению, все награды были востребованы",
+    "INSTANT_OUTCOME_NO_REWARDS_TEXT": "Скоро вас ждут другие награды!",
+    "SURVEY_SUCCESS_TITLE": "Ваш RSVP успешен!",
+    "SURVEY_SUCCESS_TEXT": "До встречи на нашем мероприятии!",
+    "SURVEY_NO_REWARDS_TITLE": "Спасибо за Ваш интерес. К сожалению, все места заняты.",
+    "SURVEY_NO_REWARDS_TEXT": "Тем не менее, мы добавили вас в наш лист ожидания на мероприятие и позвоним вам, когда места будут доступны до 07 октября 2019 г."
 }

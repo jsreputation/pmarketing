@@ -19,22 +19,26 @@ export class GameComponent implements OnInit, OnDestroy {
   private destroy$: Subject<any> = new Subject();
   private popupData: IPopupConfig;
   public successPopUp: IPopupConfig = {
-    title: 'Congratulations!',
-    text: '',
-    buttonTxt: 'View Reward',
+    title: 'GAME_SUCCESS_TITLE',
+    text: 'GAME_SUCCESS_TEXT',
+    buttonTxt: 'VIEW_REWARD',
     imageUrl: 'assets/congrats_image.png',
   };
 
   public noRewardsPopUp: IPopupConfig = {
-    title: 'Thanks for playing',
-    text: 'Unfortunately, you did not win anything this time',
-    buttonTxt: 'Back to Wallet',
+    title: 'GAME_NO_REWARDS_TITLE',
+    text: 'GAME_NO_REWARDS_TEXT',
+    buttonTxt: 'BACK_TO_WALLET',
     imageUrl: '',
   };
 
   private initTranslate(): void {
-    this.translate.get('VIEW_REWARD').subscribe((text) => this.successPopUp.buttonTxt = text);
-    this.translate.get('BACK_TO_WALLET').subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
+    this.translate.get(this.successPopUp.title).subscribe((text) => this.successPopUp.title = text);
+    this.translate.get(this.successPopUp.text).subscribe((text) => this.successPopUp.text = text);
+    this.translate.get(this.successPopUp.buttonTxt).subscribe((text) => this.successPopUp.buttonTxt = text);
+    this.translate.get(this.noRewardsPopUp.title).subscribe((text) => this.noRewardsPopUp.title = text);
+    this.translate.get(this.noRewardsPopUp.text).subscribe((text) => this.noRewardsPopUp.text = text);
+    this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
   }
 
   constructor(
