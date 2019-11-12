@@ -1,4 +1,3 @@
-import { IJsonApiPostItem } from './../jsonapi.payload';
 import { InstantOutcomeService } from './instant-outcome.service';
 import { IOutcome } from './models/outcome.model';
 import { Observable, combineLatest } from 'rxjs';
@@ -13,7 +12,6 @@ import {
   IWInstantOutcomeTransactionAttributes,
   IWInstantOutcomeTxnReq,
   IWInstantOutcomeEngagementAttributes,
-  IWOutcomeDisplayProperties,
   IWCampaignAttributes,
   IJsonApiItemPayload,
   IJsonApiItem,
