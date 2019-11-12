@@ -20,7 +20,7 @@ import {
   map,
   retry,
   switchMap,
-  mergeMap,
+  mergeMap, last,
 } from 'rxjs/operators';
 
 import {
@@ -121,6 +121,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.campaingService.getCampaigns()
         .pipe(
           map((cs: ICampaign[]) => cs.filter(c => c.type === CampaignType.game)),
+          tap(cs => console.log(cs)),
           map((cs: ICampaign[]) => cs.filter(c => gameByCid[c.id] === undefined)),
           switchMap((arrOfCampaigns: ICampaign[]) => {
             let gameIds = arrOfCampaigns.map(c => c.engagementId);
@@ -144,9 +145,10 @@ export class HomeComponent implements OnInit, OnDestroy {
                   })
                 ))
             );
-          })
-        ).subscribe((games) => {
-          this.showGames = games.length > 0;
+          }),
+          tap((games) => this.showGames = games.length > 0),
+          last()
+        ).subscribe(() => {
           return subject.complete();
         });
     }));
