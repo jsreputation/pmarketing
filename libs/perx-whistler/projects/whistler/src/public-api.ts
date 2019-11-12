@@ -23,7 +23,13 @@ export {
 } from './lib/comm/comm';
 export { IWCampaignAttributes } from './lib/campaign/campaign';
 export { IWAudiences, IWPoolsApi, IWPools, IWUser } from './lib/audiences/audiences.model';
+export {
+  IWJsonApiListPayload, IWJsonApiItemPayload, IWMeta, IWJsonApiItem,
+  IWJsonApiPatchItem, IWJsonApiPatchData, IWJsonApiPostItem, IWJsonApiPostData
+} from './lib/jsonapi.payload';
+
 export { IWProfileAttributes, IWPoolsAttributes } from './lib/profile/profile';
+
 export {
   IWMerchantAttributes,
   IWMerchantBranchAttributes
