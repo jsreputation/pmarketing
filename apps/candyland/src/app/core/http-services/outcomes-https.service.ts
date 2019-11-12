@@ -12,19 +12,19 @@ export class OutcomesHttpsService {
   }
 
   public getOutcomes(params: HttpParams): Observable<IJsonApiListPayload<IWOutcomeAttributes>> {
-    return this.http.get<IJsonApiListPayload<IWOutcomeAttributes>>(ApiConfig.outcomesPath, { params });
+    return this.http.get<IJsonApiListPayload<IWOutcomeAttributes>>(ApiConfig.outcomesPath, {params});
   }
 
   public updateOutcome(id: string, data: IJsonApiPayload<IWOutcomeAttributes>): Observable<IJsonApiPayload<IWOutcomeAttributes>> {
-    return this.http.patch<IJsonApiPayload<any>>(ApiConfig.outcomesPath + '/' + id, data);
+    return this.http.patch<IJsonApiPayload<IWOutcomeAttributes>>(ApiConfig.outcomesPath + '/' + id, data);
   }
 
   public createOutcome(data: IJsonApiPayload<IWOutcomeAttributes>): Observable<IJsonApiPayload<IWOutcomeAttributes>> {
-    return this.http.post<IJsonApiPayload<any>>(ApiConfig.outcomesPath, data);
+    return this.http.post<IJsonApiPayload<IWOutcomeAttributes>>(ApiConfig.outcomesPath, data);
   }
 
-  public deleteOutcome(id: string): Observable<any> {
-    return this.http.delete(`${ApiConfig.outcomesPath}/${id}`);
+  public deleteOutcome(id: string): Observable<IJsonApiPayload<IWOutcomeAttributes>> {
+    return this.http.delete<IJsonApiPayload<IWOutcomeAttributes>>(`${ApiConfig.outcomesPath}/${id}`);
   }
 
 }

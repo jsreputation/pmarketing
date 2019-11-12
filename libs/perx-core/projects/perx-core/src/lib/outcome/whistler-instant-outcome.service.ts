@@ -14,9 +14,7 @@ import {
   IWInstantOutcomeTransactionAttributes,
   IWInstantOutcomeTxnReq,
   IWInstantOutcomeEngagementAttributes,
-  IWOutcomeDisplayProperties,
-  IWAssignedAttributes,
-  WInstantOutcomeStatus,
+  IWInstantOutcomeDisplayProperties,
   IWCampaignAttributes
 } from '@perx/whistler';
 
@@ -61,9 +59,14 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
             `${this.config.apiHost}/instant-outcome/engagements/${campaign.engagementId}`);
         }),
         map(res => res.data.attributes.display_properties),
-        map((outcomeData: IWOutcomeDisplayProperties) =>
-          ({ ...outcomeData, displayProperties: { ...outcomeData.displayProperties, ...displayProps } }))
-      );
+        map((outcomeData: IWInstantOutcomeDisplayProperties) =>
+          ({
+            title: outcomeData.title, subTitle: outcomeData.sub_title, button: outcomeData.button,
+            banner: outcomeData.banner, backgroundImgUrl: outcomeData.background_img_url,
+            cardBackgroundImgUrl: outcomeData.card_background_img_url,
+            displayProperties: { ...outcomeData.displayProperties, ...displayProps }
+          })
+        ));
   }
 
   public claim(campaignId: number): Observable<IReward[]> {

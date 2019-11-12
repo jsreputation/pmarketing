@@ -55,10 +55,10 @@ export class RewardComponent implements OnInit, OnDestroy {
       )
       .subscribe((eng: IOutcome) => {
         this.title = eng.title;
-        this.subTitle = eng.sub_title;
+        this.subTitle = eng.subTitle;
         this.button = eng.button;
-        this.background = eng.background_img_url;
-        this.cardBackground = eng.card_background_img_url;
+        this.background = eng.backgroundImgUrl;
+        this.cardBackground = eng.cardBackgroundImgUrl;
         const { displayProperties } = eng;
         if (displayProperties && displayProperties.noRewardsPopUp) {
           this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine || this.noRewardsPopUp.title;

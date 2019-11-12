@@ -23,7 +23,7 @@ export class RewardsService implements ITableService {
     );
   }
 
-  public getRewards(params: HttpParamsOptions): Observable<IRewardEntity[]> {
+  public getRewards(params: HttpParamsOptions): Observable<IJsonApiListPayload<IWRewardEntityAttributes>> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.rewardHttp.getRewards(httpParams);
   }
@@ -60,8 +60,8 @@ export class RewardsService implements ITableService {
     return this.rewardHttp.createReward({data: sendData});
   }
 
-  public updateReward(id: string, data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[])
-    : Observable<IJsonApiPayload<IWRewardEntityAttributes>> {
+  public updateReward(id: string, data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]):
+    Observable<IJsonApiPayload<IWRewardEntityAttributes>> {
     const sendData: IJsonApiItem<IWRewardEntityAttributes> = RewardHttpAdapter.transformFromRewardForm(data, loyalties);
     sendData.id = id;
     return this.rewardHttp.updateReward(id, {data: sendData});

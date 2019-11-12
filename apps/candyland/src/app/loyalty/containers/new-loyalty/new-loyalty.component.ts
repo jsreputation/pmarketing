@@ -18,7 +18,8 @@ import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.
 import Utils from '@cl-helpers/utils';
 import { StatusLabel } from '@cl-helpers/status-label.enum';
 import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { IBasicTierApi } from '@perx/core';
+import { IWBasicTierAttributes } from '@perx/whistler';
+import { IWPools } from '@perx/whistler';
 
 @Component({
   selector: 'cl-new-loyalty',
@@ -34,7 +35,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   public basicTierId: string;
   public form: FormGroup;
   public customTierDataSource: CustomDataSource<ICustomTireForm>;
-  public pools: IPools;
+  public pools: IWPools;
   public isEditPage: boolean = false;
   public showDraftButton: boolean = true;
   public prevFormValue: ILoyaltyForm;
@@ -243,12 +244,12 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   private initPools(): void {
     this.audiencesService.getAudiencesList()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((data: IPools) => {
+      .subscribe((data: IWPools) => {
         this.pools = data;
       });
   }
 
-  private getLoyaltyWithBasicTierRequest(): Observable<IJsonApiPayload<IBasicTierApi>> {
+  private getLoyaltyWithBasicTierRequest(): Observable<IJsonApiPayload<IWBasicTierAttributes>> {
     const newLoyalty = this.form.value;
     return this.loyaltyService.getLoyaltyRequest(newLoyalty, this.loyaltyId)
       .pipe(

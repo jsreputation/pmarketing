@@ -18,7 +18,7 @@ import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
   styleUrls: ['./manage-rewards.component.scss']
 })
 export class ManageRewardsComponent implements OnInit, OnDestroy {
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public id: string;
   public reward: IRewardEntityForm;

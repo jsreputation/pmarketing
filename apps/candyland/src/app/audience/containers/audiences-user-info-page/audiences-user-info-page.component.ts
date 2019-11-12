@@ -28,7 +28,7 @@ import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, OnDestroy {
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public userId: string;
   public user: any;

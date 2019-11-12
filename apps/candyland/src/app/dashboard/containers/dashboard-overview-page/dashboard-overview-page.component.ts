@@ -12,7 +12,7 @@ import { DashboardChartsParametersService } from '../../services/dashboard-chart
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public params: { [key: string]: string };
   public activeTab: any = 'activeCustomers';

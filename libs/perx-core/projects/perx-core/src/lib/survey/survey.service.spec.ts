@@ -5,7 +5,7 @@ import { ConfigModule } from '../../public-api';
 import { ICampaignService } from '../campaign/icampaign.service';
 import { HttpClient } from '@angular/common/http';
 import { ISurvey } from './models/survey.model';
-import { IWSurveyAttributes, IWPostAnswerAttributes } from '@perx/whistler';
+import { IWSurveyEngagementAttributes, IWPostAnswerAttributes } from '@perx/whistler';
 import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { of } from 'rxjs';
 import { ICampaign, CampaignType, CampaignState } from '../campaign/models/campaign.model';
@@ -25,7 +25,7 @@ describe('SurveyService', () => {
   const iCampaignServiceStub = {
     getCampaign: () => of(mockCampaign)
   };
-  const noQuestionMockSurvey: IJsonApiItem<IWSurveyAttributes> = {
+  const noQuestionMockSurvey: IJsonApiItem<IWSurveyEngagementAttributes> = {
     id: '',
     type: '',
     links: {
@@ -75,7 +75,7 @@ describe('SurveyService', () => {
   });
 
   it('should get a survey from a campaign id', (done: DoneFn) => {
-    const res: IJsonApiItemPayload<IWSurveyAttributes> = {
+    const res: IJsonApiItemPayload<IWSurveyEngagementAttributes> = {
       data: noQuestionMockSurvey,
     };
     httpClientSpy.get.and.returnValue(of(res));
