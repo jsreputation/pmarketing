@@ -9,6 +9,7 @@ export interface IWProfileAttributes {
   email_address: string | null;
   primary_identifier: string;
   properties?: string | {} | null;
+  anonymous?: boolean;
 }
 
 export interface IWPoolsAttributes {
