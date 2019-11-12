@@ -9,7 +9,6 @@ import { of } from 'rxjs';
 import { ICampaign, CampaignType, CampaignState } from '../campaign/models/campaign.model';
 
 import {
-  IWSurveyAttributes,
   IWPostAnswerAttributes,
   IJsonApiItemPayload,
   IJsonApiItem,

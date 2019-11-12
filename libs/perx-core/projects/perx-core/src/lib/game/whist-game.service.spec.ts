@@ -7,7 +7,6 @@ import { Type } from '@angular/core';
 import { IGame, GameType } from './game.model';
 
 import {
-  IWAttbsObjGame,
   WGameType,
   IJsonApiItem,
   IJsonApiItemPayload,
