@@ -79,16 +79,29 @@ export class PIComponent implements OnInit, OnDestroy {
 
     if (pi) {
       const oldUserId = this.authService.getUserId();
+      const oldPI = this.authService.getPI();
+      const oldToken = `Bearer ${this.authService.getUserAccessToken()}`;
       let newUserId;
+      let newToken;
       (window as any).primaryIdentifier = pi;
       this.authService.autoLogin().pipe(
         catchError(() => { throw new Error('PI_NOT_EXIST'); }),
-        tap(() => { newUserId = this.authService.getUserId(); }),
+        tap(() => {
+          newUserId = this.authService.getUserId();
+          newToken = this.authService.getUserAccessToken();
+          this.authService.savePI(oldPI);
+          this.authService.saveUserId(oldUserId);
+          this.authService.saveUserAccessToken(oldToken);
+        }),
         switchMap(() => this.authService.mergeUserById([oldUserId], newUserId)),
         catchError((err: Error) => {
           throw err.message.startsWith('PI_') ? err : new Error('PI_MERGE_FAIL');
         }),
-        tap(() => this.authService.savePI(pi)),
+        tap(() => {
+          this.authService.savePI(pi);
+          this.authService.saveUserId(newUserId);
+          this.authService.saveUserAccessToken(newToken);
+        }),
         switchMap(() => {
           if (this.engagementType === 'game' && this.transactionId) {
             return this.gameService.prePlayConfirm(this.transactionId);

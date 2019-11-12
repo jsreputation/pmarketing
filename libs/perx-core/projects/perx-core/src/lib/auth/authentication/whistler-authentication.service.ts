@@ -130,7 +130,9 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
       url: location.host,
       identifier: user
     };
-
+    if (user) {
+      this.savePI(user);
+    }
     return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
@@ -284,7 +286,11 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
         }
       }
     },
-      { headers: { 'Content-Type': 'application/vnd.api+json' } }
+      {
+        headers: {
+          'Content-Type': 'application/vnd.api+json'
+        }
+      }
     );
   }
 }
