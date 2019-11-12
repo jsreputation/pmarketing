@@ -11,8 +11,8 @@
     <cl-button classList="tertiary" *ngIf="isEditPage" (click)="navigateToList()">Back</cl-button>
     <cl-button classList="secondary" *ngIf="!isLastStep && showDraftButton" (click)="saveAsDraft()">Save as a draft
     </cl-button>
-    <cl-button classList="primary" *ngIf="!isLastStep" (click)="goNext()">Next</cl-button>
-    <cl-button *ngIf="isLastStep" classList="primary" (click)="launch()">Launch</cl-button>
+    <cl-button classList="primary cta cta-next" *ngIf="!isLastStep" (click)="goNext()">Next</cl-button>
+    <cl-button *ngIf="isLastStep" classList="primary cta cta-save cta-save-launch" (click)="launch()">Launch</cl-button>
   </div>
   <!--/  buttons-->
 </header>
