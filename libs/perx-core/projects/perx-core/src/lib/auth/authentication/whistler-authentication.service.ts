@@ -26,6 +26,7 @@ interface ICognitoLogin {
 interface IUserJWTRequest {
   identifier: string;
   url: string;
+  anonymous?: boolean;
   profile?: IProfileAttributes;
 }
 
@@ -107,8 +108,8 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     );
   }
 
-  public createUserAndAutoLogin(pi: string, userObj?: IProfileAttributes): Observable<any> {
-    return this.createUserWithPI(pi, userObj).pipe(
+  public createUserAndAutoLogin(pi: string, userObj?: IProfileAttributes, anonymous?: boolean): Observable<any> {
+    return this.createUserWithPI(pi, userObj, anonymous).pipe(
       tap(
         (res: IJsonApiListPayload<ICognitoLogin>) => {
           const userBearer = res.data[0].attributes.jwt;
@@ -132,10 +133,11 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
-  private createUserWithPI(pi: string, userObj?: IProfileAttributes): Observable<IJsonApiListPayload<ICognitoLogin>> {
+  private createUserWithPI(pi: string, userObj?: IProfileAttributes, anonymous?: boolean): Observable<IJsonApiListPayload<ICognitoLogin>> {
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
-      identifier: pi
+      identifier: pi,
+      anonymous
     };
     if (userObj) {
       userJWTRequest.profile = userObj;
