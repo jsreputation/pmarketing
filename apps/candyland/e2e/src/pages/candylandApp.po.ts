@@ -27,6 +27,9 @@ export class EngagementAppPage {
    public activeEngagementTypeOption(): ElementFinder {
     return element(by.css('button.engagement-selector.active'));
    }
+  public engagementNextButton(): ElementFinder {
+    return element.all(by.className('btn mat-flat-button primary')).get(1);
+  }
 }
 
 export class CreateShakeTheTreeAppPage {
@@ -45,9 +48,6 @@ export class CreateShakeTheTreeAppPage {
   }
   public shakeTreeLaunchButton(): ElementFinder {
     return element.all(by.css('button.btn.mat-flat-button.primary')).last();
-  }
-  public shakeTreeGetButton(): ElementFinder {
-    return element.all(by.className('btn mat-flat-button primary')).get(1);
   }
   public shakeTreeGamesButton(): ElementFinder {
     return element(by.className('btn mat-flat-button primary'));

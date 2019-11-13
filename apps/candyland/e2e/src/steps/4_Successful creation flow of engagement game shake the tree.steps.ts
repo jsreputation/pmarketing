@@ -38,7 +38,7 @@ Given(/^27_I click on shake the tree.$/, () => {});
 
 Given(/^27_I click on the next button.$/, async () => {
   // clicking on the next button
-  await PageShakeTheTree.shakeTreeGetButton().click();
+  await PageEngagement.engagementNextButton().click();
 });
 
 Given(/^27_I type the test string$/, async () => {
@@ -88,7 +88,7 @@ Given(/^28_I click on games button.$/, async () => {
 Given(/^28_I click on shake the tree.$/, () => {});
 
 Given(/^28_I click on the next button.$/, async () => {
-  await PageShakeTheTree.shakeTreeGetButton().click();
+  await PageEngagement.engagementNextButton().click();
 });
 
 Given(/^28_I type the test string$/, async () => {
