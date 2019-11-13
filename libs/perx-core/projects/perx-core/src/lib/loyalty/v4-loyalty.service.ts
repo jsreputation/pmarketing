@@ -1,8 +1,8 @@
-import {Injectable, Optional} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
-import {map, mergeMap, concatAll, reduce} from 'rxjs/operators';
-import {LoyaltyService} from './loyalty.service';
+import { Injectable, Optional } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { map, mergeMap, concatAll, reduce } from 'rxjs/operators';
+import { LoyaltyService } from './loyalty.service';
 import {
   ILoyalty,
   IPurchaseTransactionHistory, IRewardTransactionHistory,
@@ -10,10 +10,10 @@ import {
   TransactionDetailType,
   ITransactionHistory
 } from './models/loyalty.model';
-import {Config} from '../config/config';
-import {IV4Reward, IV4Tag} from '../rewards/v4-rewards.service';
-import {ICustomProperties} from '../profile/profile.model';
-import {oc} from 'ts-optchain';
+import { Config } from '../config/config';
+import { IV4Reward, IV4Tag } from '../rewards/v4-rewards.service';
+import { ICustomProperties } from '../profile/profile.model';
+import { oc } from 'ts-optchain';
 
 const DEFAULT_PAGE_COUNT: number = 10;
 
@@ -213,10 +213,15 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  public getLoyalties(page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT): Observable<ILoyalty[]> {
+  public getLoyalties(page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT, locale: string = 'en'): Observable<ILoyalty[]> {
+    const headers = new HttpHeaders();
+    if (locale) {
+      headers.set('accept-languages', locale);
+    }
     return this.http.get<IV4GetLoyaltiesResponse>(
       `${this.apiHost}/v4/loyalty`,
       {
+        headers,
         params: {
           page: `${page}`,
           size: `${pageSize}`
@@ -230,30 +235,37 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getLoyalty(id?: number): Observable<ILoyalty> {
+  public getLoyalty(id?: number, locale?: string): Observable<ILoyalty> {
     if (!id) {
       id = 1;
     }
+    const headers = new HttpHeaders();
+    if (locale) {
+      headers.set('accept-languages', locale);
+    }
     return this.http.get<IV4GetLoyaltyResponse>(
-      `${this.apiHost}/v4/loyalty/${id}`
+      `${this.apiHost}/v4/loyalty/${id}`,
+      {
+        headers
+      }
     ).pipe(
       map((res: IV4GetLoyaltyResponse) => V4LoyaltyService.v4LoyaltyToLoyalty(res.data))
     );
   }
 
-  public getAllTransactions(loyaltyId?: number): Observable<ITransaction[]> {
+  public getAllTransactions(loyaltyId?: number, locale: string = 'en'): Observable<ITransaction[]> {
     if (!loyaltyId) {
       loyaltyId = 1;
     }
 
     const pageSize = 100;
-    return this.getTransactions(loyaltyId, 1, pageSize).pipe(
+    return this.getTransactions(loyaltyId, 1, pageSize, locale).pipe(
       mergeMap((histories: ITransaction[]) => {
         const streams = [
           of(histories)
         ];
         for (let i = 2; i <= this.historyMeta.total_pages; i++) {
-          const stream = this.getTransactions(loyaltyId, i, pageSize);
+          const stream = this.getTransactions(loyaltyId, i, pageSize, locale);
           streams.push(stream);
         }
         return streams;
@@ -263,10 +275,15 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getTransactions(loyaltyId: number, page: number = 1, pageSize: number = 10): Observable<ITransaction[]> {
+  public getTransactions(loyaltyId: number, page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<ITransaction[]> {
+    const headers = new HttpHeaders();
+    if (locale) {
+      headers.set('accept-languages', locale);
+    }
     return this.http.get<IV4GetLoyaltyResponse>(
       `${this.apiHost}/v4/loyalty/${loyaltyId}/transactions`,
       {
+        headers,
         params: {
           page: `${page}`,
           size: `${pageSize}`
@@ -289,7 +306,11 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getTransactionHistory(page: number = 1, pageSize: number = 10): Observable<ITransactionHistory[]> {
+  public getTransactionHistory(page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<ITransactionHistory[]> {
+    const headers = new HttpHeaders();
+    if (locale) {
+      headers.set('accept-languages', locale);
+    }
     return this.http.get<IV4TransactionHistoryResponse>(
       `${this.apiHost}/v4/loyalty/transactions_history`,
       {
