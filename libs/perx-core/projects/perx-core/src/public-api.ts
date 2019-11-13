@@ -2,7 +2,7 @@
  * Public API Surface of perx-core
  */
 export { PerxCoreModule } from './lib/perx-core.module';
-export { IRewardDisplayProperties, ICampaignDisplayProperties } from './lib/perx-core.models';
+
 /**
  * Merchants
  */
