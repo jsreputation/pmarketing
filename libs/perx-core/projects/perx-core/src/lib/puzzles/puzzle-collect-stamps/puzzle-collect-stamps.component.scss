@@ -57,22 +57,15 @@
 .dummy-container {
   position: relative;
   max-width: 50%;
+
+  .add {
+    height: 6rem;
+    width: 6rem;
+  }
 }
 
 .dummy-container > img {
   width: 100%;
-}
-
-.add {
-  border: 2px solid #db0010;
-  border-radius: 5rem;
-}
-
-.add span {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
 
 .button-stamp button {

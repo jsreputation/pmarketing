@@ -20,12 +20,13 @@
   align-items: flex-start;
 
   &-field {
-    @include typo-input;
+    @include typo-input-alt;
 
     flex: 1;
     margin-right: ($horizontal-padding * 0.25);
     padding: 0;
-    background: $lightest-gray;
+    background: $light-gray;
+    border-radius: $border-radius;
   }
 
   &-btn {

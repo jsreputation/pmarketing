@@ -3,11 +3,15 @@ import { WhistlerGameService } from './whist-game.service';
 import { TestBed } from '@angular/core/testing';
 import { ConfigModule } from '../config/config.module';
 import { IVoucherService } from '../vouchers/ivoucher.service';
-import { IJsonApiItem } from 'perx-core/lib/jsonapi.payload';
-import { IWAttbsObjGame, WGameType } from '@perx/whistler';
-import { IJsonApiItemPayload } from '../jsonapi.payload';
 import { Type } from '@angular/core';
 import { IGame, GameType } from './game.model';
+
+import {
+  WGameType,
+  IJsonApiItem,
+  IJsonApiItemPayload,
+  IWGameEngagementAttributes,
+} from '@perx/whistler';
 
 describe('WhistlerGameService', () => {
   let httpTestingController: HttpTestingController;
@@ -22,7 +26,7 @@ describe('WhistlerGameService', () => {
     baseHref: '/'
   };
 
-  const mockTree: IJsonApiItem<IWAttbsObjGame> = {
+  const mockTree: IJsonApiItem<IWGameEngagementAttributes> = {
     id: '2',
     type: '',
     links: {
@@ -45,7 +49,7 @@ describe('WhistlerGameService', () => {
     }
   };
 
-  const mockTap: IJsonApiItem<IWAttbsObjGame> = {
+  const mockTap: IJsonApiItem<IWGameEngagementAttributes> = {
     id: '2',
     type: '',
     links: {
@@ -68,7 +72,7 @@ describe('WhistlerGameService', () => {
     }
   };
 
-  const mockScratch: IJsonApiItem<IWAttbsObjGame> = {
+  const mockScratch: IJsonApiItem<IWGameEngagementAttributes> = {
     id: '2',
     type: '',
     links: {
@@ -120,7 +124,7 @@ describe('WhistlerGameService', () => {
 
     const req = httpTestingController.expectOne('https://blabla/game/engagements/42');
     expect(req.request.method).toEqual('GET');
-    const res: IJsonApiItemPayload<IWAttbsObjGame> = {
+    const res: IJsonApiItemPayload<IWGameEngagementAttributes> = {
       data: mockTree
     };
     req.flush(res);
@@ -141,7 +145,7 @@ describe('WhistlerGameService', () => {
 
     const req = httpTestingController.expectOne('https://blabla/game/engagements/42');
     expect(req.request.method).toEqual('GET');
-    const res: IJsonApiItemPayload<IWAttbsObjGame> = {
+    const res: IJsonApiItemPayload<IWGameEngagementAttributes> = {
       data: mockTap
     };
     req.flush(res);
@@ -162,7 +166,7 @@ describe('WhistlerGameService', () => {
 
     const req = httpTestingController.expectOne('https://blabla/game/engagements/42');
     expect(req.request.method).toEqual('GET');
-    const res: IJsonApiItemPayload<IWAttbsObjGame> = {
+    const res: IJsonApiItemPayload<IWGameEngagementAttributes> = {
       data: mockScratch
     };
     req.flush(res);

@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initForm();
-    this.theme = this.themesService.getActiveTheme();
+    this.theme = this.themesService.getThemeSetting();
   }
 
   public ngOnDestroy(): void {
@@ -51,6 +51,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       customerID: ['', Validators.required],
       password: ['', Validators.required]
     });
+  }
+
+  public goToSignup(): void {
+    this.router.navigateByUrl('/signup');
   }
 
   public onSubmit(): void {

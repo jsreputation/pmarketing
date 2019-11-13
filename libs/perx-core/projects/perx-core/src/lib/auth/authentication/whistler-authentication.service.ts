@@ -7,19 +7,18 @@ import { IProfile, IProfileAttributes } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
 import { TokenStorage } from './token-storage.service';
 import {
-  IAppAccessTokenResponse,
-  IMessageResponse,
   IResetPasswordData,
   ISignUpData,
   IChangePasswordData,
   IChangePhoneData
 } from './models/authentication.model';
 import { Config } from '../../config/config';
-import { IJsonApiListPayload } from '../../jsonapi.payload';
-
-interface ICognitoLogin {
-  jwt: string;
-}
+import {
+  IWAppAccessTokenResponse,
+  IWMessageResponse,
+  IWCognitoLogin,
+  IJsonApiListPayload,
+} from '@perx/whistler';
 
 interface IUserJWTRequest {
   identifier: string;
@@ -42,7 +41,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   constructor(
     config: Config,
     private http: HttpClient,
-    private tokenStorage: TokenStorage,
+    private tokenStorage: TokenStorage
   ) {
     super();
     this.apiHost = config.apiHost as string;
@@ -94,7 +93,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public autoLogin(): Observable<any> {
     return this.getUserWithPI().pipe(
       tap(
-        (res: IJsonApiListPayload<ICognitoLogin>) => {
+        (res: IJsonApiListPayload<IWCognitoLogin>) => {
           const userBearer = res.data[0].attributes.jwt;
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
@@ -108,7 +107,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public createUserAndAutoLogin(pi: string, userObj?: IProfileAttributes): Observable<any> {
     return this.createUserWithPI(pi, userObj).pipe(
       tap(
-        (res: IJsonApiListPayload<ICognitoLogin>) => {
+        (res: IJsonApiListPayload<IWCognitoLogin>) => {
           const userBearer = res.data[0].attributes.jwt;
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
@@ -120,17 +119,17 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     );
   }
 
-  private getUserWithPI(): Observable<IJsonApiListPayload<ICognitoLogin>> {
+  private getUserWithPI(): Observable<IJsonApiListPayload<IWCognitoLogin>> {
     const user = (window as any).primaryIdentifier || this.getPI();
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: user
     };
 
-    return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
+    return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
-  private createUserWithPI(pi: string, userObj?: IProfileAttributes): Observable<IJsonApiListPayload<ICognitoLogin>> {
+  private createUserWithPI(pi: string, userObj?: IProfileAttributes): Observable<IJsonApiListPayload<IWCognitoLogin>> {
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: pi
@@ -139,7 +138,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
       userJWTRequest.profile = userObj;
     }
 
-    return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.createUsersEndPoint, userJWTRequest);
+    return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.createUsersEndPoint, userJWTRequest);
   }
 
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
@@ -178,7 +177,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     }, { observe: 'response' });
   }
 
-  public getAppToken(): Observable<IAppAccessTokenResponse> {
+  public getAppToken(): Observable<IWAppAccessTokenResponse> {
     return throwError('Not implement yet');
   }
 
@@ -193,18 +192,19 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public logout(): void {
     this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'pi']);
   }
+
   // @ts-ignore
-  public forgotPassword(phone: string): Observable<IMessageResponse> {
+  public forgotPassword(phone: string): Observable<IWMessageResponse> {
     return throwError('Not implement yet');
   }
 
   // @ts-ignore
-  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
+  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IWMessageResponse> {
     return throwError('Not implement yet');
   }
 
   // @ts-ignore
-  public resendOTP(phone: string): Observable<IMessageResponse> {
+  public resendOTP(phone: string): Observable<IWMessageResponse> {
     return throwError('Not implement yet');
   }
 
@@ -223,12 +223,12 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   // @ts-ignore
-  public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
+  public verifyOTP(phone: string, otp: string): Observable<IWMessageResponse> {
     return throwError('Not implement yet');
   }
 
   // @ts-ignore
-  public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
+  public changePassword(changePasswordData: IChangePasswordData): Observable<IWMessageResponse> {
     return throwError('Not implement yet');
   }
 
@@ -239,7 +239,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public getUserAccessToken(): string {
-    return this.tokenStorage.getAppInfoProperty('userAccessToken');
+    return this.tokenStorage.getAppInfoProperty('userAccessToken') || '';
   }
 
   public saveUserAccessToken(accessToken: string): void {
@@ -247,7 +247,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public getAppAccessToken(): string {
-    return this.tokenStorage.getAppInfoProperty('appAccessToken');
+    return this.tokenStorage.getAppInfoProperty('appAccessToken') || '';
   }
 
   public saveAppAccessToken(accessToken: string): void {
@@ -255,7 +255,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public getPI(): string {
-    return this.tokenStorage.getAppInfoProperty('pi');
+    return this.tokenStorage.getAppInfoProperty('pi') || '';
   }
 
   public savePI(pi: string): void {

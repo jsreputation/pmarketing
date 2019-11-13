@@ -45,7 +45,6 @@ describe('V4AuthenticationService', () => {
   });
 
   it('should be created', () => {
-
     expect(service).toBeTruthy();
   });
 
@@ -108,6 +107,7 @@ describe('V4AuthenticationService', () => {
   });
 
   it('should create service with config production', () => {
+    // @ts-ignore
     const serviceWithConfig = new V4AuthenticationService({ baseHref: 'test', production: true }, null, null, null);
     expect(serviceWithConfig).toBeTruthy();
   });
@@ -166,11 +166,13 @@ describe('V4AuthenticationService', () => {
 
   it('should handle error', fakeAsync(inject([V4AuthenticationService], (authService: V4AuthenticationService) => {
     const spyAuth = spyOn(authService, 'authenticateUser');
-    spyAuth.and.returnValue(of(null));
-    let error = null;
-    authService.login('user', 'pass').subscribe(() => { }, (err: Error) => {
-      error = err;
-    });
+    // api returning something not complete should yield an error
+    spyAuth.and.returnValue(of({}));
+    let error: Error | null = null;
+    authService.login('user', 'pass').subscribe(
+      () => { },
+      (err: Error) => error = err
+    );
     tick();
     expect(error).toBeTruthy();
     spyAuth.and.returnValue(throwError(null));
@@ -181,7 +183,8 @@ describe('V4AuthenticationService', () => {
 
   it('should throw err', fakeAsync(inject([V4AuthenticationService, HttpClient],
     (authService: V4AuthenticationService, http: HttpClient) => {
-      spyOn(http, 'post').and.returnValue(of(null));
+      // api returning something not complete should yield an error
+      spyOn(http, 'post').and.returnValue(of({}));
       (window as any).primaryIdentifier = 'user';
       const fun = { err: () => { } };
       const spy = spyOn(fun, 'err');
@@ -202,7 +205,7 @@ describe('V4AuthenticationService', () => {
 
   it('should handle error response', fakeAsync(inject([V4AuthenticationService, HttpClient],
     (authService: V4AuthenticationService, http: HttpClient) => {
-      authService.$failedAuthObservable = null;
+      // authService.$failedAuthObservable = null;
       spyOn(http, 'post').and.returnValue(throwError(null));
       authService.autoLogin().subscribe(() => { });
       tick();
@@ -277,7 +280,7 @@ describe('V4AuthenticationService', () => {
 
   it('should resend otp', fakeAsync(inject([V4AuthenticationService, HttpClient],
     (authService: V4AuthenticationService, http: HttpClient) => {
-      const spy = spyOn(http, 'get').and.returnValue(of(null));
+      const spy = spyOn(http, 'get').and.returnValue(of({}));
       const spyLog = spyOn(console, 'log');
       spy.and.returnValue(of('test'));
       authService.resendOTP('999').subscribe(() => { });
@@ -348,7 +351,7 @@ describe('V4AuthenticationService', () => {
   it('changePassword', fakeAsync(inject([V4AuthenticationService, HttpClient, ProfileService],
     (auth: V4AuthenticationService, http: HttpClient, profile: ProfileService) => {
       spyOn(profile, 'whoAmI').and.returnValue(of({ id: 1, firstName: '123', lastName: '123' }));
-      const spy = spyOn(http, 'patch').and.returnValue(of(null));
+      const spy = spyOn(http, 'patch').and.returnValue(of({}));
       auth.changePassword({ oldPassword: '123', passwordConfirmation: '123', otp: '123', newPassword: '123' }).subscribe(() => { });
       tick();
       tick();
@@ -358,7 +361,7 @@ describe('V4AuthenticationService', () => {
   it('requestVerificationToken', fakeAsync(inject([V4AuthenticationService, HttpClient, ProfileService],
     (auth: V4AuthenticationService, http: HttpClient, profile: ProfileService) => {
       spyOn(profile, 'whoAmI').and.returnValue(of({ id: 1, firstName: '123', lastName: '123' }));
-      const spy = spyOn(http, 'get').and.returnValue(of(null));
+      const spy = spyOn(http, 'get').and.returnValue(of({}));
       auth.requestVerificationToken().subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
@@ -370,7 +373,7 @@ describe('V4AuthenticationService', () => {
   it('changePhone', fakeAsync(inject([V4AuthenticationService, HttpClient, ProfileService],
     (auth: V4AuthenticationService, http: HttpClient, profile: ProfileService) => {
       spyOn(profile, 'whoAmI').and.returnValue(of({ id: 1, firstName: '123', lastName: '123' }));
-      const spy = spyOn(http, 'patch').and.returnValue(of(null));
+      const spy = spyOn(http, 'patch').and.returnValue(of({}));
       auth.changePhone({ otp: '123', phone: '123' }).subscribe(() => { });
       expect(spy).toHaveBeenCalled();
     })));

@@ -37,7 +37,7 @@ export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAcces
 
   public theme: NgxMaterialTimepickerTheme = customTimepickerTheme;
   public disabledState: boolean = false;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;

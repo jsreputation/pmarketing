@@ -4,13 +4,17 @@ import { WhistlerRewardsService } from './whistler-rewards.service';
 import { ConfigModule } from '../config/config.module';
 import { IMerchantsService } from '../merchants/imerchants.service';
 import { of } from 'rxjs';
-import { IJsonApiItem, IJsonApiListPayload } from '../jsonapi.payload';
-import { IWRewardEntityAttributes } from '@perx/whistler';
 import { IReward } from './models/reward.model';
-import { IJsonApiItemPayload } from 'perx-core/lib/jsonapi.payload';
 import { IMerchant } from '../merchants/models/merchants.model';
 import { HttpClient } from '@angular/common/http';
 import { takeLast } from 'rxjs/operators';
+
+import {
+  IWRewardEntityAttributes,
+  IJsonApiItem,
+  IJsonApiListPayload,
+  IJsonApiItemPayload,
+} from '@perx/whistler';
 
 describe('WhistlerRewardsService', () => {
   let httpClientSpy: { get: jasmine.Spy };

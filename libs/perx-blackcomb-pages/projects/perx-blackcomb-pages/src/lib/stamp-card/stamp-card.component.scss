@@ -1,46 +1,24 @@
-.background {
-  z-index: 0;
-  object-fit: cover;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
+@import "../mixins";
 
 .main-puzzle-container {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  height: 100%;
+  @include main-wrap;
 
   .game-wrapper {
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    width: 34.5rem;
-    background-color: white;
-    border-radius: 0.8rem;
-    padding: 1rem;
+    @include game-wrap;
+    @include game-wrap-card;
 
     h1 {
-      font-style: normal;
-      font-weight: 500;
-      font-size: 20px;
-      font-family: Roboto, sans-serif;
-      text-align: center;
+      @include game-headline;
     }
 
     h3 {
-      text-align: center;
-      margin: 0;
-      color: #666666;
+      @include game-subheadline;
     }
   }
 }
 
-button {
-  width: 100%;
+.game-footer {
+  @include game-cta;
 }
 
 .stamp {
