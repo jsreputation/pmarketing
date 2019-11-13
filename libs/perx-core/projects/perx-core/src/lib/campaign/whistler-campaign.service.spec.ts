@@ -26,6 +26,10 @@ describe('WhistlerCampaignService', () => {
     baseHref: '/'
   };
 
+  const now = new Date();
+  const tomorrow = (new Date());
+  tomorrow.setDate(now.getDate() + 1);
+
   const mockCampaign: IJsonApiItem<IWCampaignAttributes> = {
     id: '2',
     type: '',
@@ -34,16 +38,12 @@ describe('WhistlerCampaignService', () => {
     },
     attributes: {
       name: 'I love that stuff',
-      start_date_time: null,
-      end_date_time: null,
+      start_date_time: now.toISOString(),
       engagement_type: WEngagementType.survey,
       engagement_id: 1
     }
   };
 
-  const now = new Date();
-  const tomorrow = (new Date());
-  tomorrow.setDate(now.getDate() + 1);
   const mockFutureCampaign: IJsonApiItem<IWCampaignAttributes> = {
     id: '2',
     type: '',
@@ -53,7 +53,6 @@ describe('WhistlerCampaignService', () => {
     attributes: {
       name: '',
       start_date_time: tomorrow.toISOString(),
-      end_date_time: null,
       engagement_type: WEngagementType.survey,
       engagement_id: 1
     }
@@ -69,7 +68,7 @@ describe('WhistlerCampaignService', () => {
     },
     attributes: {
       name: '',
-      start_date_time: null,
+      start_date_time: yesterday.toISOString(),
       end_date_time: yesterday.toISOString(),
       engagement_type: WEngagementType.survey,
       engagement_id: 1
