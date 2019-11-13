@@ -144,8 +144,8 @@ describe('GameComponent', () => {
         {
           data:
           {
-            title: 'Congratulations!',
-            text: 'You earned 1 rewards',
+            title: 'GAME_SUCCESS_TITLE',
+            text: 'GAME_SUCCESS_TEXT',
             buttonTxt: 'VIEW_REWARD',
             imageUrl: 'assets/congrats_image.png'
           }
@@ -168,7 +168,15 @@ describe('GameComponent', () => {
       fixture.detectChanges();
       tick();
       expect(gameServiceSpy).toHaveBeenCalled();
-      expect(dialogSpy).toHaveBeenCalledWith(PopupComponent, { data: Object({ title: 'Thanks for playing', text: 'Unfortunately, you did not win anything this time', buttonTxt: 'BACK_TO_WALLET', imageUrl: '' }) });
+      expect(dialogSpy).toHaveBeenCalledWith(PopupComponent,
+        {
+          data: Object({
+            title: 'GAME_NO_REWARDS_TITLE',
+            text: 'GAME_NO_REWARDS_TEXT',
+            buttonTxt: 'BACK_TO_WALLET',
+            imageUrl: ''
+          })
+        });
     }));
 
   });

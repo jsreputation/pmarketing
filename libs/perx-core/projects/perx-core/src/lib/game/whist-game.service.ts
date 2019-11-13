@@ -15,39 +15,20 @@ import { Observable, combineLatest, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { IGameService } from './igame.service';
 import { Config } from '../config/config';
-import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import {
-  IWAssignedAttributes,
   IWGameEngagementAttributes,
+  IWCampaignAttributes,
+  IWAssignedAttributes,
   IWTreeDisplayProperties,
   IWPinataDisplayProperties,
-  IWCampaignAttributes,
   WGameType,
-  IWScratchDisplayProperties
+  IJsonApiItemPayload,
+  IJsonApiItem,
+  IWAttbsObjTrans,
+  IWScratchDisplayProperties,
+  IWCampaignDisplayProperties,
 } from '@perx/whistler';
-
-import { ICampaignDisplayProperties } from '../perx-core.models';
-
-interface AttbsObjTrans {
-  urn: string;
-  created_at: string;
-  updated_at: string;
-  engagement_id: number;
-  campaign_entity_id: number;
-  user_id: number;
-  results: IJsonApiItem<ResultsObj>;
-}
-
-interface ResultsObj {
-  campaign_entity_id: number;
-  source_type: number;
-  source_id: number;
-  urn: string;
-  created_at: string;
-  updated_at: string;
-  results: IJsonApiItem<IWAssignedAttributes>[];
-}
 
 @Injectable({
   providedIn: 'root'
@@ -135,7 +116,7 @@ export class WhistlerGameService implements IGameService {
         }
       }
     };
-    return this.http.post<IJsonApiItemPayload<AttbsObjTrans>>(
+    return this.http.post<IJsonApiItemPayload<IWAttbsObjTrans>>(
       `${this.hostName}/game/transactions`,
       body,
       { headers: { 'Content-Type': 'application/vnd.api+json' } }
@@ -164,7 +145,7 @@ export class WhistlerGameService implements IGameService {
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    let disProp: ICampaignDisplayProperties = null;
+    let disProp: IWCampaignDisplayProperties = null;
     return this.http.get<IJsonApiItemPayload<IWCampaignAttributes>>(`${this.hostName}/campaign/entities/${campaignId}`)
       .pipe(
         map((res: IJsonApiItemPayload<IWCampaignAttributes>) => res.data.attributes),

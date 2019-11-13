@@ -1,3 +1,5 @@
+import { IWCampaignDisplayProperties } from '../../public-api';
+
 export interface IWOutcome {
     resultId: number;
     resultType: string;
@@ -11,4 +13,9 @@ export interface IWOutcomeAttributes {
     loot_box_id?: number;
     no_outcome?: boolean;
     campaign_entity_id?: number;
+}
+
+export interface IWCampaignProperties {
+  engagementId: number;
+  display_properties: IWCampaignDisplayProperties;
 }

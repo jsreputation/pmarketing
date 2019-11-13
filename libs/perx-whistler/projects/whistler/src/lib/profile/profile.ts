@@ -14,3 +14,13 @@ export interface IWProfileAttributes {
 export interface IWPoolsAttributes {
   name: string;
 }
+
+export interface IWCognitoLogin {
+  jwt: string;
+}
+
+export interface IWUserJWTRequest {
+  identifier: string;
+  url: string;
+  profile?: IWProfileAttributes;
+}

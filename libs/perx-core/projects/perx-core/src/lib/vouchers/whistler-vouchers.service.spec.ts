@@ -4,11 +4,17 @@ import { WhistlerVouchersService } from './whistler-vouchers.service';
 import { ConfigModule, RewardsService } from '../../public-api';
 import { of } from 'rxjs';
 import { IReward } from '../rewards/models/reward.model';
-import { IJsonApiItem, IJsonApiItemPayload, IJsonApiListPayload } from '../jsonapi.payload';
-import { IWAssignedAttributes, WAssignedStatus } from '@perx/whistler';
 import { IVoucher } from './models/voucher.model';
 import { HttpClient } from '@angular/common/http';
 import { last } from 'rxjs/operators';
+
+import {
+  IWAssignedAttributes,
+  WAssignedStatus,
+  IJsonApiItem,
+  IJsonApiItemPayload,
+  IJsonApiListPayload,
+} from '@perx/whistler';
 
 describe('WhistlerVouchersService', () => {
   let httpClientSpy: { get: jasmine.Spy };
