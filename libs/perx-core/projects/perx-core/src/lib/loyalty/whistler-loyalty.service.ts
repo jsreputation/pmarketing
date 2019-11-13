@@ -4,8 +4,14 @@ import { ILoyalty, ITransaction, ITransactionHistory } from './models/loyalty.mo
 import { Observable } from 'rxjs';
 import { Config } from '../config/config';
 import { map } from 'rxjs/operators';
-import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
-import { IWLoyalty, IWLoyaltyCard} from '@perx/whistler';
+
+import {
+  IWLoyalty,
+  IWLoyaltyCard,
+  IJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiItemPayload,
+} from '@perx/whistler';
 
 const DEFAULT_PAGE_COUNT: number = 10;
 
