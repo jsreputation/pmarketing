@@ -57,6 +57,11 @@
 .dummy-container {
   position: relative;
   max-width: 50%;
+
+  .add {
+    height: 6rem;
+    width: 6rem;
+  }
 }
 
 .dummy-container > img {
