@@ -133,7 +133,8 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
             const locations: ILocation[] = locationsArr[0];
             this.clearMarkers();
             locations.map((location: ILocation) => {
-              const latLng: google.maps.LatLng = new google.maps.LatLng({ lat: location.latitude, lng: location.longitude });
+              const latLng: google.maps.LatLng = new google.maps
+                .LatLng({ lat: location.latitude ? location.latitude : 0, lng: location.longitude ? location.longitude : 0 });
               const marker = new google.maps.Marker({
                 position: latLng,
                 map: this.map,
@@ -155,11 +156,22 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
 
   private updateBoundingBox(): void {
     let bbox: google.maps.LatLngBounds = new google.maps.LatLngBounds();
+    let extendedMarkPosition;
     this.markersArray.forEach((marker: google.maps.Marker) => {
-      bbox = bbox.extend(marker.getPosition());
+      if (marker.getPosition()) {
+        extendedMarkPosition = marker.getPosition();
+      } else {
+        extendedMarkPosition = { lat: 0, lng: 0};
+      }
+      bbox = bbox.extend(extendedMarkPosition);
     });
     if (this.userMarker) {
-      bbox.extend(this.userMarker.getPosition());
+      if (this.userMarker.getPosition()) {
+        extendedMarkPosition = this.userMarker.getPosition();
+      } else {
+        extendedMarkPosition = { lat: 0, lng: 0};
+      }
+      bbox.extend(extendedMarkPosition);
     }
     this.map.fitBounds(bbox);
   }
