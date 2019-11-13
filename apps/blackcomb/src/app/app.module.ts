@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -13,9 +13,8 @@ import {
   VouchersModule,
   OutcomeModule,
   ProfileModule,
-  RewardsModule
+  RewardsModule,
 } from '@perx/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
@@ -28,6 +27,14 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { registerLocaleData } from '@angular/common';
+import zh from '@angular/common/locales/zh';
+import localeZhExtra from '@angular/common/locales/extra/zh';
+import ru from '@angular/common/locales/ru';
+import localesRuExtra from '@angular/common/locales/extra/ru';
+
+registerLocaleData(zh, 'zh', localeZhExtra);
+registerLocaleData(ru, 'ru', localesRuExtra);
 
 @Injectable()
 export class CustomTranslateLoader implements TranslateLoader {
@@ -85,7 +92,8 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
   ],
   bootstrap: [AppComponent],
   providers: [
-    { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true }
+    { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true },
+    { provide: LOCALE_ID, useValue: environment.defaultLang }
   ],
 })
 export class AppModule { }

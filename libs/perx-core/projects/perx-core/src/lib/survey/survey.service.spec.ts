@@ -5,10 +5,15 @@ import { ConfigModule } from '../../public-api';
 import { ICampaignService } from '../campaign/icampaign.service';
 import { HttpClient } from '@angular/common/http';
 import { ISurvey } from './models/survey.model';
-import { IWSurveyEngagementAttributes, IWPostAnswerAttributes } from '@perx/whistler';
-import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { of } from 'rxjs';
 import { ICampaign, CampaignType, CampaignState } from '../campaign/models/campaign.model';
+
+import {
+  IWPostAnswerAttributes,
+  IJsonApiItemPayload,
+  IJsonApiItem,
+  IWSurveyEngagementAttributes,
+} from '@perx/whistler';
 
 describe('SurveyService', () => {
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
