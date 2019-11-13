@@ -11,11 +11,8 @@ jobs:
           kubeconfig: ${{ secrets.BUILDER_KUBE_CONFIG }}
       - name: Check branch name
         run: |
-          echo ${GITHUB_REF}
-          echo ${GITHUB_SHA}
-          echo ${GITHUB_HEAD_REF}
-          echo ${GITHUB_BASE_REF}
-          echo ${GITHUB_REF} | grep -E '^refs/heads/PW-\d+\s*'
+          echo "Branch Name: ${GITHUB_HEAD_REF}"
+          echo ${GITHUB_HEAD_REF} | grep -E '^PW-\d+\s*'
       - name: Output branch naming violation
         if: failure()
         run:
