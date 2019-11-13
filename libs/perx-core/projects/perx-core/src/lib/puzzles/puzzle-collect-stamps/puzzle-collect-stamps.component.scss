@@ -54,15 +54,6 @@
   margin-top: 1rem;
 }
 
-.dummy-container {
-  position: relative;
-  max-width: 50%;
-}
-
-.dummy-container > img {
-  width: 100%;
-}
-
 .add {
   position: absolute;
   left: 0;
@@ -80,6 +71,15 @@
     left: 0;
     right: 0;
   }
+}
+
+.dummy-container {
+  position: relative;
+  max-width: 50%;
+}
+
+.dummy-container > img {
+  width: 100%;
 }
 
 .button-stamp button {
