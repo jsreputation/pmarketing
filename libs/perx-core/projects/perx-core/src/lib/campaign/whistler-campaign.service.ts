@@ -1,12 +1,30 @@
 import { Injectable } from '@angular/core';
-import { ICampaignService } from './icampaign.service';
-import { Observable, of } from 'rxjs';
-import { ICampaign, CampaignType, CampaignState } from './models/campaign.model';
 import { HttpClient } from '@angular/common/http';
+
+import {
+  Observable,
+  of,
+} from 'rxjs';
+import {
+  map,
+  tap,
+} from 'rxjs/operators';
+
+import {
+  IWCampaignAttributes,
+  IJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiItemPayload,
+} from '@perx/whistler';
+
+import {
+  ICampaign,
+  CampaignType,
+  CampaignState,
+} from './models/campaign.model';
+import { ICampaignService } from './icampaign.service';
+
 import { Config } from '../config/config';
-import { map, tap } from 'rxjs/operators';
-import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
-import { IWCampaignAttributes } from '@perx/whistler';
 
 enum WhistlerCampaignType {
   survey = 'survey',
