@@ -1,16 +1,20 @@
-import { IJsonApiItem, IJsonApiListPayload } from './../jsonapi.payload';
 import { ProfileService } from './profile.service';
 import { Observable, throwError } from 'rxjs';
 import {
   IProfile,
   ICustomProperties,
 } from './profile.model';
-import { IWProfileAttributes } from '@perx/whistler';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { TokenStorage } from '../auth/authentication/token-storage.service';
+
+import {
+  IWProfileAttributes,
+  IJsonApiItem,
+  IJsonApiListPayload,
+} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'

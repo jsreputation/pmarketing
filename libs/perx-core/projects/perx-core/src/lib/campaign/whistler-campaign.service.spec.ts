@@ -5,9 +5,14 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { ConfigModule } from '../config/config.module';
 import { ICampaign } from './models/campaign.model';
 import { Type } from '@angular/core';
-import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
-import { IWCampaignAttributes, WEngagementType } from '@perx/whistler';
-// import { tap } from 'rxjs/operators';
+
+import {
+  IWCampaignAttributes,
+  WEngagementType,
+  IJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiItemPayload,
+} from '@perx/whistler';
 
 describe('WhistlerCampaignService', () => {
   let httpTestingController: HttpTestingController;

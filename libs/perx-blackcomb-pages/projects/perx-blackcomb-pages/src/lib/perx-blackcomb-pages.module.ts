@@ -64,6 +64,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
 import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
+
 const comps: any[] = [
   AccountComponent,
   ContentComponent,
