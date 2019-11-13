@@ -132,21 +132,21 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
           (locationsArr: ILocation[][]) => {
             const locations: ILocation[] = locationsArr[0];
             this.clearMarkers();
-            locations.map((location: ILocation) => {
-              const latLng: google.maps.LatLng = new google.maps
-                .LatLng({ lat: location.latitude ? location.latitude : 0, lng: location.longitude ? location.longitude : 0 });
-              const marker = new google.maps.Marker({
-                position: latLng,
-                map: this.map,
-                title: location.name
-              });
+            locations
+              .filter((location: ILocation) => location.latitude !== null && location.longitude !== null)
+              .forEach((location: ILocation) => {
+                const latLng: google.maps.LatLng = new google.maps.LatLng({ lat: location.latitude || 0, lng: location.longitude || 0 });
+                const marker = new google.maps.Marker({
+                  position: latLng,
+                  map: this.map,
+                  title: location.name
+                });
               marker.addListener('click', () => {
                 this.current = location;
               });
               marker.setClickable(true);
               marker.setCursor('pointer');
               this.markersArray.push(marker);
-              return marker;
             });
             this.updateBoundingBox();
           }
