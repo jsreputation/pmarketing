@@ -248,7 +248,7 @@ export class V4RewardsService extends RewardsService {
     categories?: string[],
     locale: string = 'en'
   ): Observable<IReward[]> {
-    const headers = new HttpHeaders().set('accept-languages', locale);
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', pageSize.toString());
@@ -272,7 +272,7 @@ export class V4RewardsService extends RewardsService {
   public getReward(id: number, userId: string = '', locale: string = 'en'): Observable<IReward> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json')
       .set('user-id', userId)
-      .set('accept-languages', locale);
+      .set('Accept-Language', locale);
     return this.http.get<IV4GetRewardResponse>(
       `${this.apiHost}/v4/rewards/${id}`, { headers }
     ).pipe(
@@ -306,7 +306,7 @@ export class V4RewardsService extends RewardsService {
   }
 
   private getCatalogs(page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<ICatalog[]> {
-    const headers = new HttpHeaders().set('accept-languages', locale);
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4GetCatalogsResponse>(
       `${this.apiHost}/v4/catalogs`,
       {
@@ -325,7 +325,7 @@ export class V4RewardsService extends RewardsService {
   }
 
   public getCatalog(id: number, locale: string = 'en'): Observable<ICatalog> {
-    const headers = new HttpHeaders().set('accept-languages', locale);
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4GetCatalogResponse>(
       `${this.apiHost}/v4/catalogs/${id}`,
       { headers }
@@ -336,7 +336,7 @@ export class V4RewardsService extends RewardsService {
   }
 
   public getRewardPricesOptions(id: number, locale: string = 'en'): Observable<IPrice[]> {
-    const headers = new HttpHeaders().set('accept-languages', locale);
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4GetRewardPricesResponse>(
       `${this.apiHost}/v4/rewards/${id}/prices`, { headers }
     ).pipe(

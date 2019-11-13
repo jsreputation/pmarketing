@@ -102,7 +102,7 @@ export class V4VouchersService implements IVoucherService {
   }
 
   public getAll(voucherParams?: IGetVoucherParams, locale: string = 'en'): Observable<IVoucher[]> {
-    const headers = new HttpHeaders().set('accept-languages', locale);
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     if (this.vouchers.length > 0) {
       return of(this.vouchers);
     }
@@ -140,7 +140,7 @@ export class V4VouchersService implements IVoucherService {
   }
 
   public getAllFromPage(page: number, voucherParams?: IGetVoucherParams, locale: string = 'en'): Observable<IV4Voucher[]> {
-    const headers = new HttpHeaders().set('accept-languages', locale);
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     let params = new HttpParams()
       .set('page', page.toString())
       .set('sort_by', 'id')
@@ -163,7 +163,7 @@ export class V4VouchersService implements IVoucherService {
   }
 
   public get(id: number, useCache: boolean = true, voucherParams?: IGetVoucherParams, locale: string = 'en'): Observable<IVoucher> {
-    const headers = new HttpHeaders().set('accept-languages', locale);
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     if (useCache) {
       const found = this.vouchers.find(v => `${v.id}` === `${id}`);
       if (found) {
@@ -188,7 +188,7 @@ export class V4VouchersService implements IVoucherService {
   }
 
   public redeemVoucher(id: number, options?: IRedeemOptions, locale: string = 'en'): Observable<any> {
-    const headers = new HttpHeaders().set('accept-languages', locale);
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     const url = `${this.config.apiHost}/v4/vouchers/${id}/redeem`;
     const post: IRedeemOptions | null = !options ? null : options;
 
@@ -271,7 +271,7 @@ export class V4VouchersService implements IVoucherService {
 
   public reserveReward(rewardId: number, rewardParams?: IRewardParams, locale: string = 'en'): Observable<IVoucher> {
     let params = new HttpParams();
-    const headers = new HttpHeaders().set('accept-languages', locale);
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     if (oc(rewardParams).locationId()) {
       params = params.set('location_id', rewardParams.locationId.toString());
     }
@@ -290,7 +290,7 @@ export class V4VouchersService implements IVoucherService {
   }
 
   public issueReward(rewardId: number, sourceType?: string, locale: string = 'en'): Observable<IVoucher> {
-    const headers = new HttpHeaders().set('accept-languages', locale);
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     let params = new HttpParams();
     if (sourceType) {
       params = params.set('source_type', sourceType);
