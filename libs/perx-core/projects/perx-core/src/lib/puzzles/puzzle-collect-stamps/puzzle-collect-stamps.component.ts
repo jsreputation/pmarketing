@@ -114,7 +114,8 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
       return stamped ? this.rewardPostStamp : rewardPreStampImage;
     }
 
-    const preStampImage = this.isIssued(index, rowNum) ? this.availableStampImg : this.preStampImg;
+    const preImage = this.availableStampImg ? this.availableStampImg : this.preStampImg;
+    const preStampImage = this.isIssued(index, rowNum) ? preImage : this.preStampImg;
 
     return stamped ? this.postStampImg : preStampImage;
   }
@@ -146,5 +147,9 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
       }
     }
     return itemIndex;
+  }
+
+  public hasCustomStamp(): boolean {
+    return this.availableStampImg != null;
   }
 }
