@@ -246,10 +246,10 @@ perx-core-reward {
     }
 
     &-preview-headline, &-preview-sub-headline {
+      @include typo-h5;
+
       text-align: left;
       margin-bottom: 1.6rem;
-
-      @include typo-h5;
     }
 
     &-preview-btn {
@@ -257,20 +257,20 @@ perx-core-reward {
     }
 
     &-additional-info {
+      @include typo-caption;
+
       text-align: center;
       color: $secondary-font-color;
       margin-top: 1.6rem;
-
-      @include typo-caption;
     }
 
     &-preview-header {
       top: 0.8rem;
 
       .mobile-preview-headline, .mobile-preview-sub-headline {
-        text-align: center;
-
         @include typo-h6;
+
+        text-align: center;
       }
     }
   }
@@ -283,6 +283,18 @@ perx-core-reward {
 .mobile-preview-fullpage .details {
   padding-left: 1.6rem !important;
   padding-right: 1.6rem !important;
+
+  .reward-name,
+  .merchant-name,
+  .section-heading,
+  .section-content {
+    color: $base-font-color;
+  }
+
+  .reward-name,
+  .section-heading {
+    font-weight: 500 !important;
+  }
 
   .reward-subtitle {
     @include typo-body2;
