@@ -3,11 +3,15 @@ import { WhistlerGameService } from './whist-game.service';
 import { TestBed } from '@angular/core/testing';
 import { ConfigModule } from '../config/config.module';
 import { IVoucherService } from '../vouchers/ivoucher.service';
-import { IJsonApiItem } from 'perx-core/lib/jsonapi.payload';
-import { IWGameEngagementAttributes, WGameType } from '@perx/whistler';
-import { IJsonApiItemPayload } from '../jsonapi.payload';
 import { Type } from '@angular/core';
 import { IGame, GameType } from './game.model';
+
+import {
+  WGameType,
+  IJsonApiItem,
+  IJsonApiItemPayload,
+  IWGameEngagementAttributes,
+} from '@perx/whistler';
 
 describe('WhistlerGameService', () => {
   let httpTestingController: HttpTestingController;
