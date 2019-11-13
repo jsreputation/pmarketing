@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, OnDestroy, Input, Output, EventEmitter } 
 import {
   trigger, state, style, animate, transition
 } from '@angular/animations';
-import { IamUser } from '@cl-core/http-adapters/iam-user';
+// import { IamUser } from '@cl-core/http-adapters/iam-user';
 
 export function fnTransition(stateChangeExpr: string, time: string): any {
   return transition(stateChangeExpr, [
@@ -40,7 +40,8 @@ export function fnTransition(stateChangeExpr: string, time: string): any {
 })
 export class SidenavComponent implements OnDestroy {
   @Input() public isVisible: boolean = true;
-  @Input() public user: IamUser;
+  // @Input() public user: IamUser;
+  @Input() public user: any;
   public isOpen: boolean = true;
   public visibility: string = 'shown';
   public sideNavOpened: boolean = true;

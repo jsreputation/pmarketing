@@ -7,7 +7,7 @@ import { IUploadFileService } from '../../models/upload-service.interface';
 import { Observable, of } from 'rxjs';
 import { IUploadedFile } from '../../models/uploaded-file.interface';
 
-@Injectable({})
+@Injectable()
 export class UploadFileService implements IUploadFileService {
   public upload(): Observable<IUploadedFile | string | null> {
     return of(null);

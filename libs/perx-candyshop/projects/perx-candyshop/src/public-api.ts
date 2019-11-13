@@ -2,11 +2,11 @@
  * Public API Surface of perx-candyshop
  */
 
-
 export { IGraphic } from './models/graphic.interface';
 export { StatusType } from './models/status-type.enum';
 export { DatepickerRangeValue } from './models/datepicker-range-value.interface';
 export { IUploadedFile } from './models/uploaded-file.interface';
+export { OptionConfig } from './models/option-config.interface';
 
 export { EnvConfig } from './lib/env.config';
 export { ButtonComponent } from './lib/button/button.component';

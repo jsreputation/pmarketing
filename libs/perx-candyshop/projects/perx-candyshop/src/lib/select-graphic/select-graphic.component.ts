@@ -1,7 +1,7 @@
 import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ImageControlValue } from '@cl-helpers/image-control-value';
+// import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { IGraphic } from '../../models/graphic.interface';
 
 @Component({
@@ -28,7 +28,7 @@ export class SelectGraphicComponent implements ControlValueAccessor {
 
   public set setGraphic(val: IGraphic) {
     if (val !== undefined && this.selectedGraphic !== val) {
-      this.selectedGraphic = val ? ImageControlValue.getPrepareValue(val, this.graphicList) : null;
+      // this.selectedGraphic = val ? ImageControlValue.getPrepareValue(val, this.graphicList) : null;
     }
   }
 

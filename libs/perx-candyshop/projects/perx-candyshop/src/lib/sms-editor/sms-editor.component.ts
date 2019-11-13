@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { OptionConfig } from '../../models/option-config.interface';
 
 @Component({
   selector: 'cs-sms-editor',

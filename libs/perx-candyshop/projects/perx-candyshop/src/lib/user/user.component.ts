@@ -7,5 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class UserComponent {
   @Input() public isOpen: boolean;
-  @Input() public user: IAMUser;
+  @Input() public user: any;
+  // @Input() public user: IAMUser;
 }

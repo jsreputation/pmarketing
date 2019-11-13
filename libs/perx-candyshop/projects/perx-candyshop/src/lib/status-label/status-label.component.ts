@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { IStatusLabelConfig, StatusLabelConfigItem } from './status-label.interface';
-import { StatusType } from './status-type.enum';
+import { StatusType } from '../../models/status-type.enum';
 
 export const DEFAULT_STATUS_LABEL_CONFIG: IStatusLabelConfig  = {
   [StatusType.DRAFT]: {title: 'Draft', class: 'draft'},
@@ -22,7 +22,7 @@ export const DEFAULT_STATUS_LABEL_CONFIG: IStatusLabelConfig  = {
 
 export class StatusLabelComponent implements OnChanges {
   @Input() public status: StatusType = StatusType.DRAFT;
-  @Input() public config: IStatusLabelConfig = DEFAULT_STATUS_LABEL_CONFIG
+  @Input() public config: IStatusLabelConfig = DEFAULT_STATUS_LABEL_CONFIG;
   public statusConfig: StatusLabelConfigItem;
 
   public ngOnChanges(): void {

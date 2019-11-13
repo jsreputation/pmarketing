@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 
 import { AbstractControl, ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ImageControlValue } from '@cl-helpers/image-control-value';
+// import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { IGraphic } from '../../models/graphic.interface';
@@ -35,10 +35,13 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
 
   public set setGraphic(val: any) {
     if (val !== undefined && this.selectedGraphic !== val) {
-      const currentValue = ImageControlValue.getPrepareValue(val, this.graphicList);
+
+      // const currentValue = ImageControlValue.getPrepareValue(val, this.graphicList);
+      const currentValue = null;
+
       this.handlerPatchUploadImage(currentValue);
       this.patchDefaultControl(currentValue);
-      this.selectedGraphic = currentValue;
+      // this.selectedGraphic = currentValue;
     }
   }
 
@@ -103,7 +106,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   }
 
   private createControl(): void {
-    this.controlUpload = this.showUpload ? this.fb.control(null) : null;
+    // this.controlUpload = this.showUpload ? this.fb.control(null) : null;
   }
 
   private createDefaultControl(): void {

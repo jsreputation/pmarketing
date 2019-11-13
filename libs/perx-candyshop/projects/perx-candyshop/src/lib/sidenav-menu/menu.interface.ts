@@ -4,4 +4,5 @@ export interface IMenu {
   link: string;
   open: boolean;
   sub?: IMenu;
+  active?: boolean;
 }
