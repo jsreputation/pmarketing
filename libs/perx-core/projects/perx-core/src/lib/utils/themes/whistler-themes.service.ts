@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { ITheme, DARK, LIGHT, WhistlerISetting, WhistlerITenant, PagesObject } from './themes.model';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
-import { IJsonApiListPayload } from '../../jsonapi.payload';
 import { map, tap } from 'rxjs/operators';
 import { ThemesService } from './themes.service';
+
+import { IJsonApiListPayload } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
