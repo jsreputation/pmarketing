@@ -1,15 +1,15 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import {Observable,  ReplaySubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GeoLocationService implements OnDestroy {
-  private subject: BehaviorSubject<Position | null>;
+  private subject: ReplaySubject<Position>;
   private watchId: number;
 
   constructor() {
-    this.subject = new BehaviorSubject<Position>(null);
+    this.subject = new ReplaySubject<Position>(1);
 
     this.newPosition = this.newPosition.bind(this);
 
