@@ -17,6 +17,7 @@ interface IThemeProperties {
     'showHomePage'?: boolean;
     'showSubtitleLogin'?: boolean;
     'showHistoryPage'?: boolean;
+    'showNewsfeedOnHomepage'?: boolean;
     '--login_background_colour'?: string;
 }
 
