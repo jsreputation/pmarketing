@@ -12,9 +12,9 @@ jobs:
           kubeconfig: ${{ secrets.BUILDER_KUBE_CONFIG }}
       - name: Check branch name
         run: |
-          echo ${GITHUB_REF} | grep -E '^refs/heads/PW-\d+\s*'
-          if [ $? -ne 0 ]; then
-            echo "Branch name ${GITHUB_REF} doesn't meet naming convention"
+          REGEX="PW-[[:digit:]]+"
+          if [[ ! ${GITHUB_HEAD_REF} =~ ${REGEX} ]]; then
+            echo "Branch name ${GITHUB_HEAD_REF} doesn't meet naming convention: ${REGEX}"
             exit 1
           fi
       - name: Download tekton cli and install parallel
