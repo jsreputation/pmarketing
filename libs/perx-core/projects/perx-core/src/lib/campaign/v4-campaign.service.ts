@@ -61,7 +61,7 @@ export class V4CampaignService implements ICampaignService {
       description: campaign.description,
       type: campaign.campaign_type,
       state: campaign.state,
-      endsAt: new Date(campaign.ends_at) || undefined,
+      endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null ,
       rewards,
       thumbnailUrl
     };
