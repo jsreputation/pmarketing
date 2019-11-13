@@ -8,10 +8,12 @@
       "--primary": "#ffffff",
       "--button_text_color": "#ffffff",
       "--button_background_color": "#0088CF",
-      "--header_color": "#ffffff",
+      "--header_color": "#000000",
       "--background": "#1f2935",
       "--font_color": "#212121",
       "--login_background_colour": "#000",
-      "showSubtitleLogin": true
+      "showSubtitleLogin": true,
+      "showHomePage": true,
+      "showHistoryPage": false
     }
 }
