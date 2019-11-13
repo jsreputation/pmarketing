@@ -55,6 +55,8 @@ import {
           { prefix: '/assets/i18n/rewards/', suffix: '.json' },
           { prefix: '/assets/i18n/engagements/', suffix: '.json' },
           { prefix: '/assets/i18n/audience/', suffix: '.json' },
+          { prefix: '/assets/i18n/settings/', suffix: '.json' },
+          { prefix: '/assets/i18n/loyalty/', suffix: '.json' },
           { prefix: '/assets/i18n/common/', suffix: '.json'}
         ])
       }

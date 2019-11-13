@@ -8,6 +8,7 @@ import { settingsFonts, SettingsService, settingsStyles } from '@cl-core/service
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { IReward } from '@perx/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'cl-branding',
@@ -22,12 +23,14 @@ export class BrandingComponent implements OnInit, OnDestroy {
   public listColorsText: {
     labelView: string, color: string
   }[];
-  private destroy$: Subject<void> = new Subject<void>();
   public tenants: Tenants;
   public mockReward: IReward = this.settingsService.getMockReward();
   public reward$: Observable<any> = of(this.mockReward);
   public rewards$: Observable<any> = of([this.mockReward, this.mockReward]);
-  constructor(private settingsService: SettingsService) {
+  public tabsLabels: string[];
+  private destroy$: Subject<void> = new Subject<void>();
+  constructor(private settingsService: SettingsService,
+              private translate: TranslateService) {
   }
 
   public get headerNavbarColor(): AbstractControl {
@@ -47,7 +50,6 @@ export class BrandingComponent implements OnInit, OnDestroy {
   }
 
   public get logo(): AbstractControl {
-    // console.log(this.formBranding.get('logo'));
     return this.formBranding.get('logo');
   }
 
@@ -67,14 +69,8 @@ export class BrandingComponent implements OnInit, OnDestroy {
     return this.formBranding.get('style');
   }
 
-  // public resetLogo(): void {
-  //   this.logo.reset();
-  //   this.logo.setValidators([Validators.required]);
-  //   this.formBranding.updateValueAndValidity();
-  //   this.logo.markAsUntouched({onlySelf: true});
-  // }
-
   public ngOnInit(): void {
+    this.getTranslationTabsLable();
     this.createFormBranding();
     this.getTenants();
     this.listColors = [{
@@ -97,6 +93,14 @@ export class BrandingComponent implements OnInit, OnDestroy {
       buttonTextColor: this.listColorsText[0]
     });
     this.subscribeChangeColors();
+  }
+
+  private getTranslationTabsLable(): void {
+    this.translate.get('SETTINGS_FEATURE')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((translates: any) => {
+        this.tabsLabels = [translates.LOGIN, translates.HOME, translates.REWARD_DETAIL];
+      });
   }
 
   private createFormBranding(): void {

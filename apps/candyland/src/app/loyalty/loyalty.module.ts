@@ -46,6 +46,7 @@ import { ViewSchemeInfoComponent } from './components/view-scheme-info/view-sche
 import { ViewLoyaltyComponent } from './components/view-loyalty/view-loyalty.component';
 import { ViewGlobalEarnBurnRulesComponent } from './components/view-global-earn-burn-rules/view-global-earn-burn-rules.component';
 import { LoyaltyReviewComponent } from './containers/loyalty-review/loyalty-review.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { LoyaltyReviewComponent } from './containers/loyalty-review/loyalty-revi
     MatTabsModule,
     MatTableModule,
     DatePickerModule,
-    PipesModule
+    PipesModule,
+    TranslateModule
   ],
   providers: [
     LoyaltyFormsService

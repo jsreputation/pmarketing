@@ -22,6 +22,9 @@
   "BTN_NEXT": "Next",
   "ADD_QUESTION": "+ Add Question",
   "BTN_ADD": "Add",
+  "BTN_BACK": "Back",
+  "BTN_SAVE_AS_DRAFT": "Save as a draft",
+  "BNT_LAUNCH": "Launch",
 
 
   "DESCRIPTION": "Description",
@@ -34,6 +37,7 @@
   "RECOMMENDED_FORMAT:_.JPG,_.PNG_OR_.GIF": "Recommended format: .JPG, .PNG or .GIF",
   "WRONG_PATTERN_WEB_LINK": "Wrong pattern web link",
   "ERROR_WRONG_FORMAT_OF_EMAIL": "Wrong format of email",
+  "ERROR_SELECT_AT_LEAST_ONE": "At least one option must be selected.",
 
 
   "WEBLINK": "Weblink",
@@ -55,5 +59,18 @@
   "accent": "Accent",
   "warn": "Warn",
   "Male": "Male",
-  "Female": "Female"
+  "Female": "Female",
+  "PAUSE": "Pause",
+  "ACTIVE": "Active",
+  "STATUSES_TYPE": {
+    "ACTIVE": "Active",
+    "DRAFT": "Draft",
+    "PROCESSED": "Processed",
+    "FAILED": "Failed",
+    "INACTIVE": "Inactive",
+    "PENDING": "Pending",
+    "SCHEDULED": "Scheduled",
+    "PAUSED": "Paused",
+    "ENDED": "Ended"
+  }
 }

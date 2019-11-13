@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
 import {ILoyaltyApi, IBasicTierApi, ICustomTierApi} from '@perx/core';
+import { StatusLabelConfig } from '@cl-shared';
 
 @Injectable({
   providedIn: 'root'
@@ -62,5 +63,9 @@ export class LoyaltyHttpService {
 
   public deleteCustomTier(id: string): Observable<IJsonApiPayload<ICustomTierApi>> {
     return this.http.delete<IJsonApiPayload<ICustomTierApi>>(ApiConfig.getLoyaltyCustomTierPath + '/' + id);
+  }
+
+  public getStatusLable(): Observable<{ [key: string]: StatusLabelConfig }> {
+    return this.http.get<{ [key: string]: StatusLabelConfig }>(`/assets/actives/statuses-type/statuses-type.json`);
   }
 }
