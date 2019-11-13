@@ -9,7 +9,7 @@
       "--button_text_color": "#ffffff",
       "--button_background_color": "#0088CF",
       "--header_color": "#000000",
-      "--background": "#1f2935",
+      "--background": "#ffffff",
       "--font_color": "#212121",
       "--login_background_colour": "#000",
       "showSubtitleLogin": true,
