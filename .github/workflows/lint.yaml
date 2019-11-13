@@ -10,6 +10,13 @@ jobs:
       - uses: azure/k8s-actions/k8s-set-context@master
         with:
           kubeconfig: ${{ secrets.BUILDER_KUBE_CONFIG }}
+      - name: Check branch name
+        run: |
+          echo ${GITHUB_REF} | grep -E '^refs/heads/PW-\d+\s*'
+          if [ $? -ne 0 ]; then
+            echo "Branch name ${GITHUB_REF} doesn't meet naming convention"
+            exit 1
+          fi
       - name: Download tekton cli and install parallel
         run: |
           curl -L https://github.com/tektoncd/cli/releases/download/v0.4.0/tkn_0.4.0_Linux_x86_64.tar.gz \
