@@ -1,23 +1,6 @@
 @import '~@angular/material/theming';
 @import "variables";
 
-.preview {
-  flex-shrink: 0;
-  width: $mobile-preview-width;
-  height: 63.8rem;
-  background: linear-gradient(158.21deg, #8B929B 12.03%, #B9BFC7 89.87%);
-
-  &-mobile {
-    width: $mobile-preview-width;
-    height: 63.8rem;
-    background: url("/assets/images/mobile-game/mobile_.png") no-repeat 123% 100%;
-  }
-}
-
-.create-button {
-  margin-right: 4rem;
-}
-
 // MOBILE PHONE PREVIEW PANELS
 .mat-horizontal-stepper-header-container + .mat-horizontal-content-container {
   padding: 0;
@@ -63,10 +46,6 @@
     background: linear-gradient(158.21deg, #8B929B 12.03%, #B9BFC7 89.87%);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
     position: relative;
-
-    &-headline, &-sub-headline {
-      text-align: center;
-    }
   }
 
   &-preview-header {
@@ -108,6 +87,7 @@
   &-preview-headline {
     @include typo-subtitle1-alt;
 
+    text-align: center;
     color: #091816;
 
     &.light {
@@ -118,8 +98,9 @@
   &-preview-sub-headline {
     @include typo-caption;
 
-    margin-top: 0.4rem;
+    text-align: center;
     color: rgba(51, 51, 51, 0.5);
+    margin-top: 0.4rem;
 
     &.light {
       color: $white;
@@ -152,15 +133,16 @@
   }
 
   &-preview-background {
-    width: 24.1rem;
-    height: 45.7rem;
+    width: 24rem;
+    height: 45.35rem;
     display: block;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     position: absolute;
-    top: 11.2rem;
-    left: 5.4rem;
+    top: 11.3rem;
+    left: 50%;
+    transform: translateX(-50%);
     border-bottom-right-radius: 2.4rem;
     border-bottom-left-radius: 2.4rem;
     z-index: 2;
@@ -180,8 +162,8 @@
     position: absolute;
     top: 5rem;
     left: 0;
-    width: 24.1rem;
-    height: 32rem;
+    width: 24rem;
+    height: 100%;
     display: block;
     z-index: 3;
     transform: scale(0.75);
@@ -208,12 +190,6 @@
     z-index: 3;
 
     @include mat-elevation(2);
-  }
-
-  &-preview-mobile {
-    width: $mobile-preview-width;
-    height: 63.8rem;
-    background: url("assets/images/mobile-game/mobile_.png") no-repeat 123% 100%;
   }
 }
 
@@ -270,36 +246,31 @@ perx-core-reward {
     }
 
     &-preview-headline, &-preview-sub-headline {
+      @include typo-h5;
+
       text-align: left;
-      font-weight: 500;
-      font-size: 3.4rem;
-      line-height: 4rem;
+      margin-bottom: 1.6rem;
     }
 
     &-preview-btn {
       width: 100%;
-      font-weight: 500;
-      font-size: $base-font-size;
-      line-height: 1.6rem;
     }
 
     &-additional-info {
-      font-size: 1rem;
-      line-height: 1.6rem;
+      @include typo-caption;
+
       text-align: center;
       color: $secondary-font-color;
       margin-top: 1.6rem;
     }
 
     &-preview-header {
-      top: 0.5rem;
+      top: 0.8rem;
 
       .mobile-preview-headline, .mobile-preview-sub-headline {
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 23px;
+        @include typo-h6;
+
         text-align: center;
-        letter-spacing: 0.15px;
       }
     }
   }
@@ -312,4 +283,25 @@ perx-core-reward {
 .mobile-preview-fullpage .details {
   padding-left: 1.6rem !important;
   padding-right: 1.6rem !important;
+
+  .reward-name,
+  .merchant-name,
+  .section-heading,
+  .section-content {
+    color: $base-font-color;
+  }
+
+  .reward-name,
+  .section-heading {
+    font-weight: 500 !important;
+  }
+
+  .reward-subtitle {
+    @include typo-body2;
+  }
+}
+
+.mobile-preview-card .content {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
