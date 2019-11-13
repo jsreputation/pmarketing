@@ -37,16 +37,16 @@
 .header-logo-mobile {
   overflow: hidden;
   position: absolute;
-  bottom: 0;
+  bottom: 4px;
   left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.4rem;
   width: 100%;
-  height: 38px;
+  height: 3.8rem;
+  max-height: 3rem;
   max-width: 24rem;
-  max-height: 3.8rem;
 
   img {
     max-height: 100%;
