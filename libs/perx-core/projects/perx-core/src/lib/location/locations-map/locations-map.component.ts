@@ -156,22 +156,17 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
 
   private updateBoundingBox(): void {
     let bbox: google.maps.LatLngBounds = new google.maps.LatLngBounds();
-    let extendedMarkPosition;
     this.markersArray.forEach((marker: google.maps.Marker) => {
-      if (marker.getPosition()) {
-        extendedMarkPosition = marker.getPosition();
-      } else {
-        extendedMarkPosition = { lat: 0, lng: 0};
+      const position = marker.getPosition();
+      if (position) {
+        bbox = bbox.extend(position);
       }
-      bbox = bbox.extend(extendedMarkPosition);
     });
     if (this.userMarker) {
-      if (this.userMarker.getPosition()) {
-        extendedMarkPosition = this.userMarker.getPosition();
-      } else {
-        extendedMarkPosition = { lat: 0, lng: 0};
+      const position = this.userMarker.getPosition();
+      if (position) {
+        bbox.extend(position);
       }
-      bbox.extend(extendedMarkPosition);
     }
     this.map.fitBounds(bbox);
   }
