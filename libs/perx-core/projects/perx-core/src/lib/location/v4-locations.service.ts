@@ -118,20 +118,12 @@ export class V4LocationsService extends LocationsService {
     return allMerchants.pipe(
       map((merchants: IMerchant[]) => merchants.filter((merchant: IMerchant) => merchant.tags && merchant.tags.length > 0)),
       filter((merchants: IMerchant[]) => merchants.length > 0),
-      map((merchants: IMerchant[]) => (
-        [...merchants.map((merchant: IMerchant) => {
-          if (merchant && merchant.tags) {
-            return merchant.tags.map(tag => tag.name);
-          }
-          return 'dumbString';
-        })])
-      ),
-      scan((acc: string[], curr: string[]) => {
-        if (curr.includes('dumbString')) {
-          return acc;
-        } // contains dumbString dont concat it, emit original array
-        return acc.concat(...curr);
-      }, []),
+      // eslint-disable-next-line arrow-body-style
+      map((merchants: IMerchant[]): string[] => {
+        return merchants.map((merchant: IMerchant) => merchant.tags ? merchant.tags.map(tag => tag.name) : [])
+          .reduce((p, v) => v.concat(p), []);
+      }),
+      scan((acc: string[], curr: string[]) => acc.concat(...curr), []),
       map((tags: string[]) => [...new Set(tags)])
     );
   }
