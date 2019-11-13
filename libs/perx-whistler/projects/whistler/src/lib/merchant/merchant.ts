@@ -1,5 +1,5 @@
 
-export interface IMerchant {
+export interface IWMerchantAttributes {
     id?: string;
     name: string;
     type?: string;
@@ -20,7 +20,7 @@ export interface IMerchant {
     branches?: any;
 }
 
-export interface IMerchantBranchApi {
+export interface IWMerchantBranchAttributes {
     name: string;
     properties: {
         phone: string;

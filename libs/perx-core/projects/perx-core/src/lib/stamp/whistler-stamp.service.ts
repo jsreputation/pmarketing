@@ -1,60 +1,22 @@
 import { switchMap, map, tap } from 'rxjs/operators';
-import { WEngagementType } from '@perx/whistler';
 import {
   IStampCard,
   IStamp,
   StampCardState,
 } from './models/stamp.model';
-import { IJsonApiItemPayload, IJsonApiItem } from '../jsonapi.payload';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { StampService } from './stamp.service';
 import { Injectable } from '@angular/core';
 
-import { ICampaignDisplayProperties, IProperties } from '../perx-core.models';
-
-interface AttbsObjEntity {
-  urn: string;
-  created_at: string;
-  updated_at: string;
-  name: string;
-  status: string;
-  goal: null;
-  start_date_time: null;
-  end_date_time: null;
-  comm_channel: null;
-  engagement_type: WEngagementType;
-  engagement_id: number;
-  pool_id: null;
-  display_properties?: ICampaignDisplayProperties;
-}
-
-interface AttbsObjStamp {
-  urn: string;
-  created_at: string;
-  updated_at: string;
-  title: string;
-  description: string;
-  image_url: string;
-  properties: object;
-  display_properties: {
-    slots: number[];
-    title: string;
-    sub_title?: string;
-    button: string;
-    nb_of_slots: number;
-    pre_stamp_img_url: string;
-    post_stamp_img_url: string;
-    reward_pre_stamp_img_url: string;
-    reward_post_stamp_img_url: string;
-    card_background_img_url: string;
-    background_img_url: string;
-    display_campaign_as: string;
-    noRewardsPopUp?: IProperties;
-    successPopUp?: IProperties;
-  };
-}
+import {
+  IJsonApiItemPayload,
+  IJsonApiItem,
+  IWCampaignDisplayProperties,
+  IWAttbsObjStamp,
+  IWAttbsObjEntity,
+} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -70,8 +32,8 @@ export class WhistlerStampService implements StampService {
     this.baseUrl = `${config.apiHost}`;
   }
 
-  private static WStampCardToStampCard(stampCard: IJsonApiItem<AttbsObjStamp>): IStampCard {
-    const attributesObj = stampCard.attributes as AttbsObjStamp;
+  private static WStampCardToStampCard(stampCard: IJsonApiItem<IWAttbsObjStamp>): IStampCard {
+    const attributesObj = stampCard.attributes as IWAttbsObjStamp;
     return {
       title: attributesObj.display_properties.title,
       subTitle: attributesObj.display_properties.sub_title ? attributesObj.display_properties.sub_title : null,
@@ -104,16 +66,16 @@ export class WhistlerStampService implements StampService {
   }
 
   public getCurrentCard(campaignId: number): Observable<IStampCard> {
-    let disProp: ICampaignDisplayProperties;
+    let disProp: IWCampaignDisplayProperties;
     if (this.cache[campaignId]) {
       return of(this.cache[campaignId]);
     }
-    return this.http.get<IJsonApiItemPayload<AttbsObjEntity>>(`${this.baseUrl}/campaign/entities/${campaignId}`)
+    return this.http.get<IJsonApiItemPayload<IWAttbsObjEntity>>(`${this.baseUrl}/campaign/entities/${campaignId}`)
       .pipe(
         map(res => res.data.attributes),
         switchMap(correctEntityAttribute => {
           disProp = correctEntityAttribute.display_properties;
-          return this.http.get<IJsonApiItemPayload<AttbsObjStamp>>(
+          return this.http.get<IJsonApiItemPayload<IWAttbsObjStamp>>(
             `${this.baseUrl}/loyalty/engagements/${correctEntityAttribute.engagement_id}`
           );
         }),

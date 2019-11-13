@@ -1,12 +1,12 @@
-import { ICampaignDisplayProperties } from '../../perx-core.models';
+import { IWCampaignDisplayProperties } from '@perx/whistler';
 
 export interface IAnswer {
-  question_id?: string;
+  questionId?: string;
   content: any;
 }
 
 export interface IPoints {
-  question_id?: string;
+  questionId?: string;
   point: number;
 }
 
@@ -34,12 +34,12 @@ export enum MaterialColor {
 export interface ISurvey {
   id?: string;
   title: string;
-  sub_title?: string;
-  progress_bar_color?: MaterialColor;
-  card_background_img_url?: string;
-  background_img_url?: string;
+  subTitle?: string;
+  progressBarColor?: MaterialColor;
+  cardBackgroundImgUrl?: string;
+  backgroundImgUrl?: string;
   questions: IQuestion[];
-  displayProperties?: ICampaignDisplayProperties;
+  displayProperties?: IWCampaignDisplayProperties;
 }
 
 export enum SurveyQuestionType {
@@ -66,7 +66,7 @@ export interface IPayload {
   type: SurveyQuestionType;
   [key: string]: any;
 }
-
+/* eslint-disable */
 export enum SurveyRatingIcons {
   star = 'star_border',
   star_selected = 'star',
@@ -75,3 +75,4 @@ export enum SurveyRatingIcons {
   circle = 'panorama_fish_eye',
   circle_selected = 'brightness_1',
 }
+/* eslint-enable */

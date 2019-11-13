@@ -3,11 +3,15 @@ import { WhistlerMerchantsService } from './whistler-merchants.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ConfigModule } from '../config/config.module';
 import { IMerchant } from './models/merchants.model';
-import { IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
-import { IMerchant as IWMerchant } from '@perx/whistler';
 import { Type } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
+
+import {
+  IJsonApiItem,
+  IJsonApiItemPayload,
+  IWMerchantAttributes,
+} from '@perx/whistler';
 
 describe('WhistlerMerchantsService', () => {
   let httpTestingController: HttpTestingController;
@@ -20,7 +24,7 @@ describe('WhistlerMerchantsService', () => {
     baseHref: '/'
   };
 
-  const mockMerchant: IJsonApiItem<IWMerchant> = {
+  const mockMerchant: IJsonApiItem<IWMerchantAttributes> = {
     id: '42',
     type: '',
     links: {
@@ -65,7 +69,7 @@ describe('WhistlerMerchantsService', () => {
 
     const req = httpTestingController.expectOne('https://blabla/organization/orgs/42');
     expect(req.request.method).toEqual('GET');
-    const res: IJsonApiItemPayload<IWMerchant> = {
+    const res: IJsonApiItemPayload<IWMerchantAttributes> = {
       data: mockMerchant
     };
     req.flush(res);

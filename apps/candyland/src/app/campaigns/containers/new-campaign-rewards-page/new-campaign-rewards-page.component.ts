@@ -86,8 +86,6 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
   private subscribeFormValueChange(): void {
     this.form.valueChanges
       .pipe(takeUntil(this.destroy$))
-      .subscribe((val) => {
-        this.store.updateCampaign(val);
-      });
+      .subscribe((val: ICampaign) => this.store.updateCampaign(val));
   }
 }

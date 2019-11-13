@@ -21,6 +21,7 @@ import {
   retry,
   switchMap,
   mergeMap,
+  takeLast,
 } from 'rxjs/operators';
 
 import {
@@ -114,6 +115,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
   public titleFn: (profile: IProfile) => string;
+  public showGames: boolean = false;
   private initCampaign(): void {
     this.games$ = (new Observable((subject: Subscriber<IGame[]>) => {
       const gameByCid: { [cid: number]: IGame } = {};
@@ -143,7 +145,9 @@ export class HomeComponent implements OnInit, OnDestroy {
                   })
                 ))
             );
-          })
+          }),
+          tap((games) => this.showGames = games.length > 0),
+          takeLast(1)
         ).subscribe(() => subject.complete());
     }));
   }

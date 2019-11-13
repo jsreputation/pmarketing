@@ -97,7 +97,7 @@ Then(/^11_I should see the qr code and the message text below the qr code.$/, as
   // doing an assertion on the presence of the elements
   expect(await element.all(by.css('img')).get(1).isDisplayed()).to.equal(true);
   expect(await element(by.css('h4')).isDisplayed()).to.equal(true);
-  expect(await element(by.css('h4')).getText()).to.contain('Present this QR code to the merchant');
+  expect(await element(by.tagName('h4')).getText()).to.contain('QR');
 });
 
 // Ensuring functionality of cancel button for the qr code page

@@ -1,5 +1,5 @@
 import { IVoucher } from '../vouchers/models/voucher.model';
-import { ICampaignDisplayProperties } from '../perx-core.models';
+import { IWCampaignDisplayProperties } from '@perx/whistler';
 
 export enum GameType {
   unknown = -1,
@@ -31,7 +31,7 @@ export interface IGame {
     noOutcome?: IGameOutcome;
   };
   imgUrl?: string;
-  displayProperties?: ICampaignDisplayProperties;
+  displayProperties?: IWCampaignDisplayProperties;
 }
 
 export function defaultTree(): ITree {
@@ -51,6 +51,16 @@ export function defaultPinata(): IPinata {
     nbTaps: 5
   };
 }
+
+export function defaultScratch(): IScratch {
+  return {
+    coverImg: '',
+    underlyingImg: '',
+    uncoverPortionToTrigger: 90,
+    nbTaps: 5
+  };
+}
+
 export interface ITree {
   stillImg?: string;
   openedImg?: string;
@@ -86,7 +96,7 @@ export interface IPlayOutcome {
 export interface ISlice {
   id: string;
   label?: string;
-  label_color?: string;
-  background_color?: string;
-  background_image?: string;
+  labelColor?: string;
+  backgroundColor?: string;
+  backgroundImage?: string;
 }

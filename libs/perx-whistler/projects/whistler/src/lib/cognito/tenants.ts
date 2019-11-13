@@ -1,4 +1,4 @@
-import { IWSurveyDisplayProperties } from './../survey/survey';
+import { IWSurveyDisplayProperties } from '../engagement/survey';
 
 export interface IWCognitoTenantAttributes {
   properties: {

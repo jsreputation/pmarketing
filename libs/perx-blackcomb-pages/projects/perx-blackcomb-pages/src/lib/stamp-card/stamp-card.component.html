@@ -1,5 +1,4 @@
-<img class="background" [src]="background" *ngIf="background">
-<div class="main-puzzle-container" *ngIf="stampCard$ | async as stampCard">
+<div class="main-puzzle-container" *ngIf="stampCard$ | async as stampCard" [ngStyle]="{'background-image': background? 'url(' + background + ')': '' }">
   <div class="game-wrapper" [ngStyle]="{'background-image': cardBackground? 'url(' + cardBackground + ')': '' }">
     <div>
       <h1>{{this.title}}</h1>
@@ -16,6 +15,8 @@
         [rewardPostStamp]="stampCard.displayProperties.rewardPostStamp">
       </perx-core-puzzle-collect-stamps>
     </div>
+  </div>
+  <div class="game-footer">
     <button mat-raised-button [routerLink]="['/wallet']">
       {{stampCard.buttonText}}
     </button>

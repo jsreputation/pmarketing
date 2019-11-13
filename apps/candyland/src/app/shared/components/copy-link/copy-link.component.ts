@@ -14,7 +14,7 @@ export class CopyLinkComponent {
     inputElement.select();
     document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);
-    this.snack.showSnackBar('Link copied to clipboard!', 'x');
+    this.snack.showSnackBar('Link copied to clipboard!', 'success');
   }
 
 }
