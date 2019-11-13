@@ -1,0 +1,48 @@
+{
+  "roleTypes": [
+    {
+      "title": "Admin",
+      "value": "Administrators",
+      "id": 1,
+      "description": "Has full access to the internal group settings provided by the Super Admin, can invite users to the group"
+    },
+    {
+      "title": "Creator",
+      "value": "creator",
+      "id": 2,
+      "description": "Has access to customer support features and view only"
+    },
+    {
+      "title": "Customer Support",
+      "value": "customer",
+      "id": 3,
+      "description": "Has access to create, update within the scope of module provided access to. Manager can launch campaigns"
+    },
+    {
+      "title": "Manager",
+      "value": "manager",
+      "id": 4,
+      "description": "Has access to create, update within the scope of modules provided access to. Creator may not launch campaigns"
+    },
+    {
+      "title": "Viewer",
+      "value": "viewer",
+      "id": 5,
+      "description": "Has access to view only"
+    }
+  ],
+  "durationLimits": [
+    {
+      "title": "Day",
+      "value": "day"
+    },
+    {
+      "title": "Week",
+      "value": "week"
+    },
+    {
+      "title": "Month",
+      "value": "month"
+    }
+  ]
+}

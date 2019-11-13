@@ -1,0 +1,32 @@
+<h2>Button</h2>
+<cs-button>asaersaerfawed</cs-button>
+
+<h2>Copy Link</h2>
+<cs-copy-link link="http://test-link" (copied)="log('copy')">
+  <cs-button classList="primary" class="copy-link-btn">Copy</cs-button>
+</cs-copy-link>
+
+<h2>Line Progress (horizontal)</h2>
+<cs-custom-line-progress [total]="100" [amount]="80"></cs-custom-line-progress>
+
+<h2>Line Progress (vertical)</h2>
+<cs-custom-line-progress [vertical]="true" [total]="100" [amount]="80"></cs-custom-line-progress>
+
+<h2>Progress bar</h2>
+<cs-progress-bar [total]="100" [current]="80"></cs-progress-bar>
+
+<h2>Download Buttonr</h2>
+<cs-download-button file="http://www.orimi.com/pdf-test.pdf">Download</cs-download-button>
+
+<!--<cs-download-button file="test.pdf" link="http://www.orimi.com/pdf-test.pdf">Download</cs-download-button>-->
+<h2>Download Link</h2>
+<cs-download-link file="test.pdf" link="http://www.orimi.com/pdf-test.pdf"></cs-download-link>
+
+<h2>Info Hint</h2>
+<cs-info-hint>
+  <span class="info-text">You can set the rewards when&nbsp;</span>
+  <span class="info-text">you create a campaign</span>
+</cs-info-hint>
+
+<h2>Logo</h2>
+<cs-logo></cs-logo>

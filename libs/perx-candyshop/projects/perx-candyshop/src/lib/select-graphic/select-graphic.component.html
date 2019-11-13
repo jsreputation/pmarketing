@@ -1,0 +1,10 @@
+<div class="graphic-wrap" *ngIf="graphicList"
+     [class.field-lock]="lock"
+>
+  <cs-images-preview *ngFor="let graphic of graphicList"
+                     [img]="graphic"
+                     class="graphic-image-preview"
+                     (selectPreview)="setSelectedGraphic($event)"
+                     [selected]="selectedGraphic"
+  ></cs-images-preview>
+</div>

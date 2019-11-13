@@ -1,0 +1,56 @@
+@import "../../styles/variables";
+
+:host {
+  display: flex;
+  flex-shrink: 0;
+  width: 100%;
+  position: relative;
+}
+
+.ink-bar-wrap {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.border {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.cl-ink-bar {
+  position: absolute;
+  bottom: 0;
+  height: 0.2rem;
+  transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+  background-color: $primary-color;
+}
+
+.cl-triangle-bar {
+  position: absolute;
+  bottom: 1px;
+  transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+  display: flex;
+  visibility: hidden;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    display: block;
+    left: 50%;
+    transform: translateX(-75%);
+    border: 10px solid transparent;
+    transition: 0.2s;
+  }
+
+  &::before {
+    bottom: -0.1rem;
+    z-index: 5;
+    border-bottom: 8px solid $white;
+  }
+
+  &::after {
+    bottom: 0;
+    border-bottom: 8px solid rgba(0, 0, 0, 0.1);
+  }
+}

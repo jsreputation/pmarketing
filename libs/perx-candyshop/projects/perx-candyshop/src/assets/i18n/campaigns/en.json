@@ -1,0 +1,22 @@
+{
+  "MERCHANT": {
+    "MERCHANT_LOGO": "Merchant Logo",
+    "MERCHANT_NAME": "Merchant Name",
+    "DATE_CREATED": "Date Created",
+    "CONTACT_NUMBER": "Contact number",
+    "BRANCHES": "Branches",
+    "CREATE_MERCHANT": "Create Merchant",
+    "EDIT_MERCHANT": "Edit Merchant",
+    "DEFAULT_COUNTRY_CODE": "Default Country Code",
+    "ADDRESS": "Address",
+    "CITY": "City",
+    "STATE/PROVINCE": "State/Province",
+    "POSTAL_CODE": "Postal code",
+    "BRANCH_NAME": "Branch Name",
+    "SEARCH_PLACEHOLDER": "Search for campaign",
+    "NO_DATA_TITLE": "You need Merchants to build your eco-system!",
+    "NO_DATA_TEXT": " Let's begin by creating your first Merchant",
+    "NAME_PLACEHOLDER": "Enter title here",
+    "MERCHANT_INFO": "Merchant Info"
+  }
+}

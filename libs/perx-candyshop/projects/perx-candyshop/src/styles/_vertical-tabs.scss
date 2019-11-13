@@ -1,0 +1,51 @@
+@import '~@angular/material/theming';
+@import "../../styles/variables";
+
+.item-tab-view {
+  width: 100%;
+  justify-content: space-between;
+  position: relative;
+  border-bottom: 1px solid $border-color;
+  display: block;
+  border-radius: 0 !important;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
+.tabs-list {
+  display: flex;
+  flex-direction: column;
+  border-radius: $border-radius;
+  border: 1px solid $border-color;
+  width: 100%;
+
+  & > .mat-radio-button {
+    @extend .item-tab-view;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .mat-radio-label-content {
+      padding: 0;
+      width: 100%;
+    }
+  }
+
+  .mat-radio-container {
+    display: none;
+  }
+
+  .mat-radio-checked {
+    @include mat-elevation(4);
+
+    &.mat-radio-button {
+      background: $lightest-gray;
+      border-radius: $border-radius 0 0 $border-radius !important;
+    }
+
+    .tab-item::after {
+      visibility: visible !important;
+    }
+  }
+}

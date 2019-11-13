@@ -1,0 +1,5 @@
+<div class="ink-bar-wrap"
+     [ngClass]="{border: border}">
+  <ng-content></ng-content>
+  <cs-ink-bar *ngIf="inkHost || inkListener.length" [triangle]="triangle"></cs-ink-bar>
+</div>

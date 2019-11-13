@@ -1,0 +1,171 @@
+{
+  "rewardType": [
+    {
+      "title": "REWARD_TYPE_OPTIONS.FREE",
+      "value": "Free"
+    },
+    {
+      "title": "REWARD_TYPE_OPTIONS.CASHBACK",
+      "value": "Cashback"
+    },
+    {
+      "title": "REWARD_TYPE_OPTIONS.POINTS",
+      "value": "Points"
+    },
+    {
+      "title": "REWARD_TYPE_OPTIONS.BUY_X_GET_Y",
+      "value": "Buy X Get Y"
+    },
+    {
+      "title": "REWARD_TYPE_OPTIONS.FIXED_DISCOUNT_AMOUNT",
+      "value": "Fixed Discount Amount"
+    },
+    {
+      "title": "REWARD_TYPE_OPTIONS.FIXED_DISCOUNT_ITEM",
+      "value": "Fixed Discount Item"
+    },
+    {
+      "title": "REWARD_TYPE_OPTIONS.PERCENT_DISCOUNT",
+      "value": "Percent Discount"
+    },
+    {
+      "title": "REWARD_TYPE_OPTIONS.SET_PRICE_COUPON",
+      "value": "Set Price Coupon"
+    }
+  ],
+  "durationLimits": [
+    {
+      "title": "DAY",
+      "value": "day"
+    },
+    {
+      "title": "WEEK",
+      "value": "week"
+    },
+    {
+      "title": "MONTH",
+      "value": "month"
+    }
+  ],
+  "redemptionType": [
+    {
+      "title": "REDEMPTION_TYPE_OPTIONS.QR_CODE",
+      "value": "QR Code"
+    },
+    {
+      "title": "REDEMPTION_TYPE_OPTIONS.BAR_CODE",
+      "value": "Bar Code"
+    },
+    {
+      "title": "REDEMPTION_TYPE_OPTIONS.MERCHANT_PIN",
+      "value": "Merchant PIN"
+    },
+    {
+      "title": "REDEMPTION_TYPE_OPTIONS.PROMO_CODE",
+      "value": "Promo Code"
+    }
+  ],
+  "category": [
+    {
+      "title": "REWARD_CATEGORY_OPTIONS.FOOD_&_BEVERAGE",
+      "value": "Food & Beverage"
+    },
+    {
+      "title": "REWARD_CATEGORY_OPTIONS.TRAVEL",
+      "value": "Travel"
+    },
+    {
+      "title": "REWARD_CATEGORY_OPTIONS.ELECTRONICS",
+      "value": "Electronics"
+    },
+    {
+      "title": "REWARD_CATEGORY_OPTIONS.WELLNESS",
+      "value": "Wellness"
+    },
+    {
+      "title": "REWARD_CATEGORY_OPTIONS.ENTERTAINMENT",
+      "value": "Entertainment"
+    },
+    {
+      "title": "REWARD_CATEGORY_OPTIONS.SHOPPING",
+      "value": "Shopping"
+    },
+    {
+      "title": "REWARD_CATEGORY_OPTIONS.MERCHANT_SELF",
+      "value": "Merchant Self"
+    },
+    {
+      "title": "REWARD_CATEGORY_OPTIONS.OTHERS",
+      "value": "Others"
+    }
+  ],
+  "voucherCodeFormat": [
+    {
+      "title": "Alphanumeric  (eg.ABC123)",
+      "value": "alphanumeric"
+    },
+    {
+      "title": "Numeric (eg.123456)",
+      "value": "numeric"
+    },
+    {
+      "title": "Alphabet (eg.ABCDEF)",
+      "value": "alphabet"
+    }
+  ],
+  "voucherCodeTypes": [
+    {
+      "title": "VOUCHER_CODE_OPTIONS.SINGLE_CODE",
+      "value": "single_code"
+    },
+    {
+      "title": "VOUCHER_CODE_OPTIONS.UNIQUE_CODES:_SYSTEM_GENERATED",
+      "value": "system_generated"
+    },    {
+      "title": "VOUCHER_CODE_OPTIONS.UNIQUE_CODES:_USER_UPLOAD",
+      "value": "user_uploaded"
+    }
+  ],
+  "voucherValidityType": [
+    {
+      "title": "VOUCHER_VALIDITY_OPTIONS.PERIOD",
+      "value": "period"
+    },
+    {
+      "title": "VOUCHER_VALIDITY_OPTIONS.ISSUANCE_DATE",
+      "value": "issuance_date"
+    }
+  ],
+  "goals": [
+    {
+      "title": "Build awareness",
+      "value": "Build awareness"
+    },
+    {
+      "title": "Acquire customers",
+      "value": "Acquire customers"
+    },
+    {
+      "title": "Drive sales",
+      "value": "Drive sales"
+    },
+    {
+      "title": "Re-engage audience",
+      "value": "Re-engage audience"
+    },
+    {
+      "title": "Surprise & Delight",
+      "value": "Surprise & Delight"
+    }
+  ],
+  "channelTypes": [
+    {
+      "title": "Weblink",
+      "value": "weblink"
+    },
+    {
+      "title": "SMS",
+      "value": "sms"
+    }
+  ]
+}

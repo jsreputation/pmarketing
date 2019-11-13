@@ -1,0 +1,40 @@
+<div class="upload-file"
+     [class.invalid]="isRequired || message">
+  <div class="upload-file-head">
+    <div class="upload-file-label">
+      {{label}}
+    </div>
+    <cl-download-button file="assets/files/Users_template.csv"><span translate>BTN_DOWNLOAD_A_SAMPLE_FILE</span></cl-download-button>
+  </div>
+
+  <div class="upload-file-wrap"
+       [class.field-lock]="lock">
+
+    <input #fileInput type="file"
+           *ngIf="!file"
+           class="upload-file-input"
+           accept='text/csv'
+           (change)="preview(fileInput.files)"/>
+
+    <button class="upload-file-btn" *ngIf="!file" (click)="fileInput.click()"><span translate>BTN_UPLOAD-FILE_A_LIST</span></button>
+
+    <div class="upload-file-file" *ngIf="file">
+      <div class="upload-file-file-icon">
+        <i class="icon full-with check-icon"></i>
+      </div>
+      <span class="upload-file-file-name">{{file.name}}</span>
+      <button mat-icon-button (click)="clear()">
+        <i class="icon full-with delete-action"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="error upload-file-error" *ngIf="isRequired || message">
+    <div>
+      <p *ngIf="isRequired"><span translate>ERROR_REQUIRED</span></p>
+      <p>{{message}}</p>
+    </div>
+  </div>
+</div>
+
+

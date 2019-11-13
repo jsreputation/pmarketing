@@ -1,0 +1,37 @@
+[
+  {
+    "value": "rating",
+    "viewValue": "QUESTION_TYPE.RATING",
+    "img": "assets/images/engagement-question/question-type-icon/rating.svg"
+  },
+  {
+    "value": "picture-select",
+    "viewValue": "QUESTION_TYPE.PICTURE_CHOICE",
+    "img": "assets/images/engagement-question/question-type-icon/picture-choice.svg"
+  },
+  {
+    "value": "long-text",
+    "viewValue": "QUESTION_TYPE.LONG_TEXT",
+    "img": "assets/images/engagement-question/question-type-icon/long-text.svg"
+  },
+  {
+    "value": "select",
+    "viewValue": "QUESTION_TYPE.MULTIPLE_CHOICE",
+    "img": "assets/images/engagement-question/question-type-icon/multiple-choice.svg"
+  },
+  {
+    "value": "group",
+    "viewValue": "QUESTION_TYPE.QUESTION_GROUP",
+    "img": "assets/images/engagement-question/question-type-icon/question-group.svg"
+  },
+  {
+    "value": "date",
+    "viewValue": "QUESTION_TYPE.DATE",
+    "img": "assets/images/engagement-question/question-type-icon/date.svg"
+  },
+  {
+    "value": "phone",
+    "viewValue": "QUESTION_TYPE.PHONE",
+    "img": "assets/images/engagement-question/question-type-icon/phone.svg"
+  }
+]

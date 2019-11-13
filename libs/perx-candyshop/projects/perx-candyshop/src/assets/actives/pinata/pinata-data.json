@@ -1,0 +1,61 @@
+{
+  "pinata": [
+    {
+      "id": 1,
+      "type": "state1",
+      "title": "icon",
+      "img": "global/assets/game/mini_pinata_1.png",
+      "fullImg": "global/assets/game/full_pinata_1.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 2,
+      "type": "state2",
+      "title": "icon",
+      "img": "global/assets/game/mini_pinata_2.png",
+      "fullImg": "global/assets/game/full_pinata_2.png",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 3,
+      "type": "state3",
+      "title": "icon",
+      "img": "global/assets/game/mini_pinata_3.png",
+      "fullImg": "global/assets/game/full_pinata_3.png",
+      "format": ".png",
+      "active": "false"
+    }
+  ],
+  "background": [
+    {
+      "id": 1,
+      "type": "bg1",
+      "title": "icon",
+      "img": "global/assets/background/stamp-bg-7.png",
+      "fullImg": "global/assets/background/full_bg_7.jpg",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 2,
+      "type": "bg2",
+      "title": "icon",
+      "img": "global/assets/background/stamp-bg-8.png",
+      "fullImg": "global/assets/background/full_bg_8.jpg",
+      "format": ".png",
+      "active": "false"
+    },
+    {
+      "id": 3,
+      "type": "bg3",
+      "title": "icon",
+      "img": "global/assets/background/stamp-bg-9.png",
+      "fullImg": "global/assets/background/full_bg_9.jpg",
+      "format": ".png",
+      "active": "false"
+    }
+  ]
+
+}
