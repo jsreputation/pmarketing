@@ -114,6 +114,5 @@ describe('V4CampaignService', () => {
     expect(mapCampaign.description).toBe('UAT description');
     expect(mapCampaign.type).toBe('game');
     expect(mapCampaign.state).toBe('active');
-
   });
 });
