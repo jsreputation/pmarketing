@@ -8,7 +8,7 @@ export interface IWCampaignAttributes {
   urn?: string;
   status?: string;
   start_date_time: string;
-  end_date_time: string | undefined;
+  end_date_time?: string;
   goal?: string | null;
   engagement_type: WEngagementType;
   engagement_id: number;
