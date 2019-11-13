@@ -52,7 +52,7 @@ export class WhistlerCampaignService implements ICampaignService {
     return {
       id: Number.parseInt(campaign.id, 10),
       name: cAttributes.name,
-      description: cAttributes.goal ? cAttributes.goal : null,
+      description: cAttributes.goal || null,
       type: WhistlerCampaignService.WhistlerTypeToType(cAttributes.engagement_type),
       state: cAttributes.status as CampaignState,
       endsAt: cAttributes.end_date_time ? new Date(cAttributes.end_date_time) : null,
