@@ -52,7 +52,7 @@ export class WhistlerCampaignService implements ICampaignService {
     return {
       id: Number.parseInt(campaign.id, 10),
       name: cAttributes.name,
-      description: cAttributes.goal,
+      description: cAttributes.goal || null,
       type: WhistlerCampaignService.WhistlerTypeToType(cAttributes.engagement_type),
       state: cAttributes.status as CampaignState,
       endsAt: cAttributes.end_date_time ? new Date(cAttributes.end_date_time) : null,
@@ -89,7 +89,7 @@ export class WhistlerCampaignService implements ICampaignService {
           .map(WhistlerCampaignService.WhistlerCampaignToCampaign);
         current = current.concat(campaigns);
         subject.next(current);
-        if (p >= cs.meta.page_count) {
+        if (!cs.meta || !cs.meta.page_count || p >= cs.meta.page_count) {
           subject.complete();
         } else {
           this.getPage(p + 1).subscribe(res => process(p + 1, res));
