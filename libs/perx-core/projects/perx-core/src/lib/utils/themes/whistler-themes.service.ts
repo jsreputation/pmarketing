@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { ITheme, DARK, LIGHT, WhistlerISetting, WhistlerITenant, PagesObject } from './themes.model';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
-import { IJsonApiListPayload } from '../../jsonapi.payload';
 import { map, tap } from 'rxjs/operators';
 import { ThemesService } from './themes.service';
+
+import { IJsonApiListPayload } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,7 @@ export class WhistlerThemesService extends ThemesService {
         '--button_text_color': setting['theme.button_text_color'],
         '--button_background_color': setting['theme.button_background_color'],
         '--header_color': setting['theme.header_color'],
+        '--login_background_colour': setting['theme.login_background_colour'],
         '--background': backgroundColor,
         '--font_color': fontColor,
       }

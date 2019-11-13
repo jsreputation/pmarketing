@@ -15,6 +15,8 @@ interface IThemeProperties {
     '--background': string;
     '--font_color': string;
     'showHomePage'?: boolean;
+    'showSubtitleLogin'?: boolean;
+    '--login_background_colour'?: string;
 }
 
 export const LIGHT: ITheme = {
@@ -57,6 +59,7 @@ export interface WhistlerISetting {
   'theme.primary': string;
   'theme.style': string;
   'theme.title': string;
+  'theme.login_background_colour'?: string;
   'account': PagesObject;
 }
 
