@@ -5,9 +5,12 @@ import { Observable } from 'rxjs';
 import { IFormsService } from './iforms.service';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { IJsonApiListPayload } from '../../jsonapi.payload';
-import { IWCognitoTenantAttributes } from '@perx/whistler';
 import { SurveyService } from '../../survey/survey.service';
+
+import {
+  IWCognitoTenantAttributes,
+  IJsonApiListPayload,
+} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'

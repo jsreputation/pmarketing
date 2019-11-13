@@ -4,16 +4,18 @@ import { RewardsService } from './rewards.service';
 import { Observable, combineLatest, of } from 'rxjs';
 import { IReward, ICatalog, IPrice, RedemptionType } from './models/reward.model';
 import { Config } from '../config/config';
-import { IJsonApiItemPayload, IJsonApiItem, IJsonApiListPayload } from '../jsonapi.payload';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { IMerchant } from '../merchants/models/merchants.model';
 import { IMerchantsService } from '../merchants/imerchants.service';
-import { IWRewardEntityAttributes } from '@perx/whistler';
 
-interface IWMetaData {
-  totalPages?: number;
-  currentPage?: number;
-}
+import {
+  IWRewardEntityAttributes,
+  IWMetaData,
+  IJsonApiItemPayload,
+  IJsonApiItem,
+  IJsonApiListPayload,
+} from '@perx/whistler';
+
 @Injectable({
   providedIn: 'root'
 })

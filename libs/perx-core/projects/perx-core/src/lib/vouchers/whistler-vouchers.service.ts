@@ -4,11 +4,17 @@ import { Config } from '../config/config';
 import { IVoucherService } from './ivoucher.service';
 import { Observable, combineLatest, of } from 'rxjs';
 import { IVoucher, IGetVoucherParams, VoucherState } from './models/voucher.model';
-import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
 import { map, switchMap } from 'rxjs/operators';
 import { RewardsService } from '../rewards/rewards.service';
 import { IReward, IRewardParams } from '../rewards/models/reward.model';
-import { IWAssignedAttributes, WAssignedStatus } from '@perx/whistler';
+
+import {
+  IWAssignedAttributes,
+  WAssignedStatus,
+  IJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiItemPayload,
+} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'

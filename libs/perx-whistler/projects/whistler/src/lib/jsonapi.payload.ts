@@ -1,4 +1,5 @@
-import { IJsonApiItem } from './jsonapi.payload';
+/* tslint:disable:naming-convention */
+
 export interface IJsonApiListPayload<T, S = any> {
   data: IJsonApiItem<T>[];
   included?: IJsonApiItem<S>[];
@@ -6,8 +7,8 @@ export interface IJsonApiListPayload<T, S = any> {
 }
 
 export interface IMeta {
-  record_count?: number; // eslint-disable-line
-  page_count?: number; // eslint-disable-line
+  record_count?: number;
+  page_count?: number;
 }
 
 export interface IJsonApiItemPayload<T, S = any> {

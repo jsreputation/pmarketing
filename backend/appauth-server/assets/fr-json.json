@@ -43,6 +43,17 @@
     "INVALID_CREDENTIALS": "Données invalides",
     "VOUCHER_EXPIRY": "Expire le {{date}}",
     "DESCRIPTION": "Description",
-    "STAMP_SUCCESS": "",
-    "STAMP_ERROR": ""
+    "STAMP_SUCCESS_TITLE": "",
+    "STAMP_ERROR_TITLE": "",
+    "GAME_NO_REWARDS_TITLE": "Merci d'avoir joué",
+    "GAME_NO_REWARDS_TEXT": "Malheureusement, vous n'avez rien gagné cette fois-ci",
+    "GAME_SUCCESS_TITLE": "Congratulations!",
+    "GAME_SUCCESS_TEXT": "Vous avez gagné {{rewards}} récompenses",
+    "REDEEM_SUCCESS_TEXT": "Vous avez racheté {{reward}}",
+    "INSTANT_OUTCOME_NO_REWARDS_TITLE": "Nous sommes désolés, toutes les récompenses ont été réclamées.",
+    "INSTANT_OUTCOME_NO_REWARDS_TEXT": "Cherchez d'autres récompenses à venir, bientôt!",
+    "SURVEY_SUCCESS_TITLE": "Votre RSVP est réussie!",
+    "SURVEY_SUCCESS_TEXT": "Rendez-vous à notre événement!",
+    "SURVEY_NO_REWARDS_TITLE": "Merci pour ton intérêt. Nous sommes désolés, toutes les places ont été prises.",
+    "SURVEY_NO_REWARDS_TEXT": "Néanmoins, nous vous avons ajouté à notre liste d'attente pour l'événement et nous vous rappellerons dès que des places seront disponibles avant le 07 octobre 2019."
 }
