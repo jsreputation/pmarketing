@@ -118,3 +118,5 @@ export {
 
 /** Cognito */
 export { IWCognitoTenantAttributes } from './lib/cognito/tenants';
+
+export { IWSetting, IWTenant, IWAccountPageObject, IWPagesObject } from './lib/tenant/settings';
