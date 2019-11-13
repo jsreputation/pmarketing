@@ -6,15 +6,15 @@ import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { IJsonApiItemPayload } from '../jsonapi.payload';
 
 import {
   IWSurveyEngagementAttributes,
   IWPostAnswerAttributes,
-  WSurveyQuestionType
+  WSurveyQuestionType,
+  IJsonApiItemPayload
 } from '@perx/whistler';
 
-import { ICampaignDisplayProperties } from '../perx-core.models';
+import { IWCampaignDisplayProperties } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +53,7 @@ export class SurveyService {
   }
 
   public getSurveyFromCampaign(id: number): Observable<ISurvey> {
-    let disProp: ICampaignDisplayProperties | undefined;
+    let disProp: IWCampaignDisplayProperties | undefined;
     return this.campaignService.getCampaign(id)
       .pipe(
         switchMap(
