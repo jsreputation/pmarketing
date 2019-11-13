@@ -11,11 +11,15 @@ jobs:
           kubeconfig: ${{ secrets.BUILDER_KUBE_CONFIG }}
       - name: Check branch name
         run: |
+          echo ${GITHUB_REF}
+          echo ${GITHUB_SHA}
+          echo ${GITHUB_HEAD_REF}
+          echo ${GITHUB_BASE_REF}
           echo ${GITHUB_REF} | grep -E '^refs/heads/PW-\d+\s*'
-          if [ $? -ne 0 ]; then
-            echo "Branch name ${GITHUB_REF} doesn't meet naming convention"
-            exit 1
-          fi
+      - name: Output branch naming violation
+        if: failure()
+        run:
+          echo "Branch name ${GITHUB_REF} doesn't meet naming convention" && exit 1
       - name: Get list of apps
         run: |
           APP_FOLDERS=$(ls -d apps/*)
