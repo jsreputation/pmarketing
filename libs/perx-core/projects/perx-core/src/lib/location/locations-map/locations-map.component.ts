@@ -141,13 +141,13 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
                   map: this.map,
                   title: location.name
                 });
-              marker.addListener('click', () => {
-                this.current = location;
+                marker.addListener('click', () => {
+                  this.current = location;
+                });
+                marker.setClickable(true);
+                marker.setCursor('pointer');
+                this.markersArray.push(marker);
               });
-              marker.setClickable(true);
-              marker.setCursor('pointer');
-              this.markersArray.push(marker);
-            });
             this.updateBoundingBox();
           }
         );
