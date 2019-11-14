@@ -15,6 +15,7 @@ import {
   ProfileService,
   NotificationService,
   LoyaltyService,
+  isEmptyArray,
 } from '@perx/core';
 
 @Component({
@@ -47,7 +48,7 @@ export class ExistingCardComponent implements OnInit {
 
   private initLoyaltyId(): void {
     this.loyaltyService.getLoyalties().pipe(
-      map(loyalties => loyalties && loyalties.length > 0 && loyalties[0])
+      map(loyalties => !isEmptyArray(loyalties) && loyalties[0])
     ).subscribe( (loyalty) => {
       this.loyaltyId = loyalty.id;
     });
