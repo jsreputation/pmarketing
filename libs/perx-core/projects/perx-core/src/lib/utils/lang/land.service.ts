@@ -1,9 +1,10 @@
 import { TranslateLoader } from '@ngx-translate/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 import { Config } from '../../config/config';
 import { Injectable } from '@angular/core';
+import { TokenStorage } from '../../auth/authentication/token-storage.service';
 
 @Injectable()
 export class CustomTranslateLoader implements TranslateLoader {
@@ -14,7 +15,8 @@ export class CustomTranslateLoader implements TranslateLoader {
   private hostUrl: string = 'http://localhost:4000/';
   constructor(
     private httpClient: HttpClient,
-    private config: Config
+    private config: Config,
+    public tokenStorage: TokenStorage
   ) {
     if (this.config.production) {
       this.hostUrl = `${this.config.baseHref}`;
@@ -22,8 +24,10 @@ export class CustomTranslateLoader implements TranslateLoader {
   }
   public getTranslation(lang: string): Observable<{ [k: string]: string }> {
     const apiAddress = `${this.hostUrl}lang?default=${lang}`;
-    return this.httpClient.get<{ [k: string]: string }>(apiAddress, { headers: this.contentHeader })
+    return this.httpClient.get<{ [k: string]: string }>(apiAddress, { headers: this.contentHeader, observe: 'response' })
       .pipe(
+        tap((req) => this.tokenStorage.setAppInfoProperty(req.headers.get('content-language'), 'lang')),
+        map((res) => res.body),
         catchError(() => this.httpClient.get<{ [k: string]: string }>(`${this.hostUrl}assets/en-json.json`))
       );
   }
