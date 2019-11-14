@@ -41,8 +41,7 @@ const components = [
   declarations: [
     ...directives,
     ...components,
-    DistancePipe,
-    NewsfeedComponent
+    DistancePipe
   ],
   entryComponents: [
     ...components,
