@@ -1,6 +1,6 @@
 export interface IShakeOptions {
-  threshold?: number; // velocity threshold for shake to register
-  timeout?: number; // interval between events
+  threshold: number; // velocity threshold for shake to register
+  timeout: number; // interval between events
 }
 
 /**
@@ -20,7 +20,7 @@ export class Shake implements EventListenerObject {
   private lastZ: number | null = null;
   private event: Event;
 
-  constructor(options?: IShakeOptions) {
+  constructor(options?: Partial<IShakeOptions>) {
     // feature detect
     this.hasDeviceMotion = 'ondevicemotion' in window;
 
@@ -72,7 +72,7 @@ export class Shake implements EventListenerObject {
   protected devicemotion(e: DeviceMotionEvent): void {
     const current: DeviceAcceleration | null = e.accelerationIncludingGravity;
 
-    if (current === null) {
+    if (current === null || current.x === null || current.y === null || current.z === null) {
       return;
     }
 
