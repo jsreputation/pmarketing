@@ -1,0 +1,20 @@
+{
+    "name": "Dark",
+    "properties": {
+      "--font": "Roboto",
+      "--logo": "assets/header_logo.png",
+      "--title": "all-it",
+      "--accent": "#ff0000",
+      "--primary": "#ffffff",
+      "--button_text_color": "#ffffff",
+      "--button_background_color": "#0088CF",
+      "--header_color": "#000000",
+      "--background": "#ffffff",
+      "--font_color": "#212121",
+      "--login_background_colour": "#000",
+      "showSubtitleLogin": true,
+      "showHomePage": true,
+      "showHistoryPage": false,
+      "showNewsfeedOnHomepage": true
+    }
+}

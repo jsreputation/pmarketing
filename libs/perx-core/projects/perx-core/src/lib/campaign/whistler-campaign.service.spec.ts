@@ -5,9 +5,14 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { ConfigModule } from '../config/config.module';
 import { ICampaign } from './models/campaign.model';
 import { Type } from '@angular/core';
-import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
-import { ICampaignAttributes, WEngagementType } from '@perx/whistler';
-// import { tap } from 'rxjs/operators';
+
+import {
+  IWCampaignAttributes,
+  WEngagementType,
+  IJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiItemPayload,
+} from '@perx/whistler';
 
 describe('WhistlerCampaignService', () => {
   let httpTestingController: HttpTestingController;
@@ -21,7 +26,11 @@ describe('WhistlerCampaignService', () => {
     baseHref: '/'
   };
 
-  const mockCampaign: IJsonApiItem<ICampaignAttributes> = {
+  const now = new Date();
+  const tomorrow = (new Date());
+  tomorrow.setDate(now.getDate() + 1);
+
+  const mockCampaign: IJsonApiItem<IWCampaignAttributes> = {
     id: '2',
     type: '',
     links: {
@@ -29,17 +38,13 @@ describe('WhistlerCampaignService', () => {
     },
     attributes: {
       name: 'I love that stuff',
-      start_date_time: null,
-      end_date_time: null,
+      start_date_time: now.toISOString(),
       engagement_type: WEngagementType.survey,
       engagement_id: 1
     }
   };
 
-  const now = new Date();
-  const tomorrow = (new Date());
-  tomorrow.setDate(now.getDate() + 1);
-  const mockFutureCampaign: IJsonApiItem<ICampaignAttributes> = {
+  const mockFutureCampaign: IJsonApiItem<IWCampaignAttributes> = {
     id: '2',
     type: '',
     links: {
@@ -48,7 +53,6 @@ describe('WhistlerCampaignService', () => {
     attributes: {
       name: '',
       start_date_time: tomorrow.toISOString(),
-      end_date_time: null,
       engagement_type: WEngagementType.survey,
       engagement_id: 1
     }
@@ -56,7 +60,7 @@ describe('WhistlerCampaignService', () => {
 
   const yesterday = (new Date());
   yesterday.setDate(now.getDate() - 1);
-  const mockExpiredCampaign: IJsonApiItem<ICampaignAttributes> = {
+  const mockExpiredCampaign: IJsonApiItem<IWCampaignAttributes> = {
     id: '2',
     type: '',
     links: {
@@ -64,7 +68,7 @@ describe('WhistlerCampaignService', () => {
     },
     attributes: {
       name: '',
-      start_date_time: null,
+      start_date_time: yesterday.toISOString(),
       end_date_time: yesterday.toISOString(),
       engagement_type: WEngagementType.survey,
       engagement_id: 1
@@ -95,7 +99,7 @@ describe('WhistlerCampaignService', () => {
 
     const req = httpTestingController.expectOne('https://blabla/campaign/entities?page[number]=1');
     expect(req.request.method).toEqual('GET');
-    const res: IJsonApiListPayload<ICampaignAttributes> = {
+    const res: IJsonApiListPayload<IWCampaignAttributes> = {
       data: [],
       meta: {
         page_count: 1
@@ -116,7 +120,7 @@ describe('WhistlerCampaignService', () => {
 
     const req1 = httpTestingController.expectOne('https://blabla/campaign/entities?page[number]=1');
     expect(req1.request.method).toEqual('GET');
-    const res: IJsonApiListPayload<ICampaignAttributes> = {
+    const res: IJsonApiListPayload<IWCampaignAttributes> = {
       data: [
         mockCampaign,
         mockFutureCampaign,
@@ -141,11 +145,21 @@ describe('WhistlerCampaignService', () => {
 
     const req1 = httpTestingController.expectOne('https://blabla/campaign/entities/42');
     expect(req1.request.method).toEqual('GET');
-    const res: IJsonApiItemPayload<ICampaignAttributes> = {
+    const res: IJsonApiItemPayload<IWCampaignAttributes> = {
       data: mockCampaign
     };
     req1.flush(res);
 
     httpTestingController.verify();
+  });
+
+  it('endDate should be null if end_date_time is null or not defined', () => {
+    const { endsAt } =  WhistlerCampaignService.WhistlerCampaignToCampaign(mockCampaign);
+    expect(endsAt).toEqual(null);
+  });
+
+  it('endDate should be proper Date object if end_date_time is defined', () => {
+    const { endsAt } =  WhistlerCampaignService.WhistlerCampaignToCampaign(mockExpiredCampaign);
+    expect(endsAt).toEqual(yesterday);
   });
 });

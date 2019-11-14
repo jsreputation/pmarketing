@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
+import { IWTreeGameEngagementAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +16,17 @@ export class ShakeHttpService {
     return this.http.get<IGameDefaultData>('assets/actives/shake-tree/data.json');
   }
 
-  public createShakeTree(data: IJsonApiPayload<any>): Observable<IResponseApi<IEngagementApi>> {
-    return this.http.post<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/', data);
+  public createShakeTree(data: IJsonApiPayload<IWTreeGameEngagementAttributes>):
+    Observable<IJsonApiPayload<IWTreeGameEngagementAttributes>> {
+    return this.http.post<IJsonApiPayload<IWTreeGameEngagementAttributes>>(ApiConfig.engagementsPath + '/', data);
   }
 
-  public updateShakeTree(id: string, data: IResponseApi<any>): Observable<IResponseApi<IEngagementApi>> {
-    return this.http.patch<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/game/' + id, data);
+  public updateShakeTree(id: string, data: IJsonApiPayload<IWTreeGameEngagementAttributes>):
+    Observable<IJsonApiPayload<IWTreeGameEngagementAttributes>> {
+    return this.http.patch<IJsonApiPayload<IWTreeGameEngagementAttributes>>(ApiConfig.engagementsPath + '/game/' + id, data);
   }
 
-  public getShakeTree(id: string): Observable<IResponseApi<IEngagementApi>> {
-    return this.http.get<IResponseApi<IEngagementApi>>(ApiConfig.engagementsPath + '/game/' + id);
+  public getShakeTree(id: string): Observable<IJsonApiPayload<IWTreeGameEngagementAttributes>> {
+    return this.http.get<IJsonApiPayload<IWTreeGameEngagementAttributes>>(ApiConfig.engagementsPath + '/game/' + id);
   }
 }

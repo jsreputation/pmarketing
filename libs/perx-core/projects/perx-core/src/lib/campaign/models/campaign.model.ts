@@ -1,7 +1,8 @@
 import { IReward } from '../../rewards/models/reward.model';
-import { ICampaignDisplayProperties } from '../../perx-core.models';
+import { IWCampaignDisplayProperties } from '@perx/whistler';
 
 export enum CampaignType {
+  // eslint-disable-next-line
   give_reward = 'give_reward', // instant_outcome
   stamp = 'stamp', // loyalty
   game = 'game',
@@ -17,7 +18,7 @@ export enum CampaignState {
 export interface ICampaign {
   id: number;
   name: string;
-  description: string;
+  description: string | null;
   type: CampaignType;
   state: CampaignState;
   endsAt: Date | null;
@@ -25,7 +26,8 @@ export interface ICampaign {
   thumbnailUrl?: string;
   engagementId?: number;
   rawPayload?: any;
-  displayProperties?: ICampaignDisplayProperties;
+  displayProperties?: IWCampaignDisplayProperties;
+  isComingSoon?: boolean | null;
 }
 
 export enum CommChannel {

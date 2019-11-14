@@ -24,22 +24,26 @@ export class SurveyComponent implements OnInit, OnDestroy {
   private destroy$: Subject<any> = new Subject();
 
   public successPopUp: IPopupConfig = {
-    title: 'Your RSVP is successful!',
-    text: 'See you at our event!',
+    title: 'SURVEY_SUCCESS_TITLE',
+    text: 'SURVEY_SUCCESS_TEXT',
     imageUrl: 'assets/congrats_image.png',
-    buttonTxt: 'View Reward',
+    buttonTxt: 'VIEW_REWARD',
   };
 
   public noRewardsPopUp: IPopupConfig = {
-    title: 'Thank you for your interest. We’re sorry, all places have been taken.',
-    text: 'Nonetheless, we’ve added you to our waiting list for the event and will call you when places are available by 07 October 2019',
+    title: 'SURVEY_NO_REWARDS_TITLE',
+    text: 'SURVEY_NO_REWARDS_TEXT',
     imageUrl: '',
-    buttonTxt: 'Back to Wallet',
+    buttonTxt: 'BACK_TO_WALLET',
   };
 
   private initTranslate(): void {
-    this.translate.get('VIEW_REWARD').subscribe((text) => this.successPopUp.buttonTxt = text);
-    this.translate.get('BACK_TO_WALLET').subscribe((text) => this.successPopUp.buttonTxt = text);
+    this.translate.get(this.successPopUp.title).subscribe((text) => this.successPopUp.title = text);
+    this.translate.get(this.successPopUp.text).subscribe((text) => this.successPopUp.text = text);
+    this.translate.get(this.successPopUp.buttonTxt).subscribe((text) => this.successPopUp.buttonTxt = text);
+    this.translate.get(this.noRewardsPopUp.title).subscribe((text) => this.noRewardsPopUp.title = text);
+    this.translate.get(this.noRewardsPopUp.text).subscribe((text) => this.noRewardsPopUp.text = text);
+    this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
   }
 
   constructor(
@@ -67,14 +71,14 @@ export class SurveyComponent implements OnInit, OnDestroy {
         this.survey = survey;
         const { displayProperties } = this.survey;
         if (displayProperties && displayProperties.successPopUp) {
-          this.successPopUp.title = displayProperties.successPopUp.headLine || this.successPopUp.title;
-          this.successPopUp.text = displayProperties.successPopUp.subHeadLine || this.successPopUp.text;
+          this.successPopUp.title = displayProperties.successPopUp.headLine;
+          this.successPopUp.text = displayProperties.successPopUp.subHeadLine;
           this.successPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.successPopUp.imageUrl;
           this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
         }
         if (displayProperties && displayProperties.noRewardsPopUp) {
-          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine || this.noRewardsPopUp.title;
-          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine || this.noRewardsPopUp.text;
+          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
+          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
           this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
           this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
         }

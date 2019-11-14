@@ -5,10 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationService, Config, ThemesService } from '@perx/core';
-import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
-const configStub = {
+const configStub: Partial<Config> = {
   preAuth: false
 };
 
@@ -16,12 +16,13 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
-  const authenticationServiceStub = {
-    getUserAccessToken: () => of()
+  const authenticationServiceStub: Partial<AuthenticationService> = {
+    getUserAccessToken: () => ''
   };
 
-  const themeServiceStub = {
-    getActiveTheme: () => { }
+  const themeServiceStub: Partial<ThemesService> = {
+    getActiveTheme: () => of(),
+    getThemeSetting: () => of()
   };
 
   beforeEach(async(() => {

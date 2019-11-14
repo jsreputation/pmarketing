@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { oc } from 'ts-optchain';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import {
   map,
   flatMap,
   mergeAll,
   scan,
-  tap
+  tap,
+  filter
 } from 'rxjs/operators';
 
 import {
@@ -164,7 +165,10 @@ export class V4StampService implements StampService {
   }
 
   private static v4StampCardToStampCard(stampCard: IV4StampCard): IStampCard {
-
+    const cardImageUrl = oc(stampCard).display_properties.card_image.value.image_url();
+    const cardImage = cardImageUrl ? { value: { imageUrl: cardImageUrl } } : undefined;
+    const backgroundImgUrl = oc(stampCard).display_properties.background_img.value.image_url();
+    const backgroundImg = backgroundImgUrl ? { value: { imageUrl: backgroundImgUrl } } : undefined;
     return {
       id: stampCard.id,
       userAccountId: stampCard.user_account_id,
@@ -172,41 +176,32 @@ export class V4StampService implements StampService {
       campaignId: stampCard.campaign_id,
       cardNumber: stampCard.card_number,
       campaignConfig: {
-        totalSlots: oc(stampCard).campaign_config.total_slots(),
-        rewards: (oc(stampCard) as unknown as IV4StampCard).campaign_config.rewards.map
-        ((rewards: IV4Reward) => V4StampService.v4RewardToReward(rewards)),
+        totalSlots: oc(stampCard).campaign_config.total_slots(0),
+        rewards: oc(stampCard).campaign_config.rewards([])
+          .map((rewards: IV4Reward) => V4StampService.v4RewardToReward(rewards)),
       },
       displayProperties: {
         numberOfCols: stampCard.display_properties.number_of_cols,
         numberOfRows: stampCard.display_properties.number_of_rows,
-        cardImage: {
-          value: {
-            imageUrl: oc(stampCard).display_properties.card_image.value.image_url(),
-          }
-        },
+        cardImage,
         totalSlots: stampCard.display_properties.total_slots,
         displayCampaignAs: stampCard.display_properties.display_campaign_as,
-        backgroundImg: {
-          value: {
-            imageUrl: stampCard.display_properties.background_img ?
-              stampCard.display_properties.background_img.value.image_url : null,
-          }
-        },
+        backgroundImg,
         rewardPositions: stampCard.display_properties.reward_positions,
-        thumbnailImg: stampCard.display_properties.thumbnail_img ?
-          stampCard.display_properties.thumbnail_img.value.image_url : null
+        thumbnailImg: oc(stampCard).display_properties.thumbnail_img.value.image_url()
       },
-      stamps: stampCard.stamps.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp))
+      stamps: stampCard.stamps ? stampCard.stamps.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp)) : undefined
     };
   }
 
   public getCards(campaignId: number): Observable<IStampCard[]> {
+    if (!campaignId) {
+      return throwError('Invalid campaign Id');
+    }
+
     return this.http.get<IV4GetStampCardsResponse>(
-      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`, {
-        params: {
-          size: '100'
-        }
-      }
+      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`,
+      { params: { size: '100' } }
     ).pipe(
       map((res: IV4GetStampCardsResponse) => res.data),
       map((stampCards: IV4StampCard[]) => stampCards.map(
@@ -225,11 +220,8 @@ export class V4StampService implements StampService {
 
   public getStamps(campaignId: number): Observable<IStamp[]> {
     return this.http.get<IV4GetStampTransactionsResponse>(
-      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_transactions`, {
-        params: {
-          size: '100'
-        }
-      }
+      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_transactions`,
+      { params: { size: '100' } }
     ).pipe(
       flatMap((resp: IV4GetStampTransactionsResponse) => {
         const streams = [
@@ -264,7 +256,7 @@ export class V4StampService implements StampService {
       );
   }
 
-  public putStamp(stampId: number, sourceType?: string ): Observable<IStamp> {
+  public putStamp(stampId: number, sourceType?: string): Observable<IStamp> {
     let params = new HttpParams();
     if (sourceType) {
       params = params.set('source_type', sourceType);
@@ -288,16 +280,13 @@ export class V4StampService implements StampService {
       null
     ).pipe(
       map(res => res.data.stamps),
-      tap((res) => {
-        res.map(r => {
-          if (r.vouchers && r.vouchers.length > 0) {
-            this.vouchersService.reset();
-          }
-        });
+      filter(stamps => stamps !== undefined),
+      tap((stamps: IV4Stamp[]) => {
+        if (stamps.some(s => s.vouchers !== undefined && s.vouchers.length > 0)) {
+          this.vouchersService.reset();
+        }
       }),
-      map((stamps: IV4Stamp[]) => stamps.map(
-        (stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp)
-      ))
+      map((stamps: IV4Stamp[]) => stamps.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp)))
     );
   }
 

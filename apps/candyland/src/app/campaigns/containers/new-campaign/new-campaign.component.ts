@@ -3,7 +3,10 @@ import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/fo
 import { CampaignsService, SettingsService, OutcomesService, CommsService, LimitsService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
-import { NewCampaignDonePopupComponent, NewCampaignDonePopupComponentData } from '../new-campaign-done-popup/new-campaign-done-popup.component';
+import {
+  NewCampaignDonePopupComponent,
+  NewCampaignDonePopupComponentData
+} from '../new-campaign-done-popup/new-campaign-done-popup.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
@@ -12,7 +15,12 @@ import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapte
 import { map, switchMap, tap, catchError, takeUntil } from 'rxjs/operators';
 import { combineLatest, iif, of, Observable, Subject } from 'rxjs';
 
-import { ICampaignAttributes, ICommTemplateAttributes } from '@perx/whistler';
+import {
+  IWCampaignAttributes,
+  IWCommTemplateAttributes,
+  IWLimitAttributes,
+  IWProfileAttributes
+} from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
@@ -31,9 +39,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private campaign: ICampaign;
   private campaignBaseURL: string;
   public tenantSettings: ITenantsProperties;
-  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
+  @ViewChild('stepper', {static: false}) private stepper: MatStepper;
 
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   constructor(
     public store: CampaignCreationStoreService,
@@ -48,7 +56,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private commsService: CommsService,
     private outcomesService: OutcomesService,
     private limitsService: LimitsService,
-    private audienceService: AudiencesUserService,
+    private audienceService: AudiencesUserService
   ) {
     store.resetCampaign();
   }
@@ -107,7 +115,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    let saveCampaign$;
+    let saveCampaign$: Observable<IJsonApiPayload<IWCampaignAttributes>>;
     this.store.updateCampaign(this.form.value);
     if (this.store.currentCampaign.id) {
       saveCampaign$ = this.campaignsService.updateCampaign(this.store.currentCampaign);
@@ -115,13 +123,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       saveCampaign$ = this.campaignsService.createCampaign(this.store.currentCampaign);
     }
 
-    const hasLimitData = () => this.store.currentCampaign.limits && this.store.currentCampaign.limits.times;
+    const hasLimitData = () => this.store.currentCampaign.limits;
     const generateLimitData$ = this.updateLimitFn();
 
     saveCampaign$.pipe(
-      tap((res: IJsonApiPayload<ICampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
+      tap((res: IJsonApiPayload<IWCampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
       switchMap(
-        (res: IJsonApiPayload<ICampaignAttributes>) => combineLatest(
+        (res: IJsonApiPayload<IWCampaignAttributes>) => combineLatest(
           iif(hasLimitData, generateLimitData$(res.data), of(res)).pipe(catchError(() => of(null))),
           this.updateOutcomes(res.data).pipe(catchError(() => of(null))),
           this.updateComm(res.data).pipe(catchError(() => of(null)))
@@ -138,29 +146,22 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     );
   }
 
-  private updateLimitFn(): (campaign: ICampaign) => Observable<any> {
-    let generateLimitData$;
-
-    const updateLimit$ = campaign => this.limitsService.updateLimits(
+  private updateLimitFn(): (campaign: ICampaign) => Observable<IJsonApiPayload<IWLimitAttributes> | void> {
+    const updateLimit$ = (campaign: ICampaign) => this.limitsService.updateLimit(
       this.store.currentCampaign.limits.id,
       this.store.currentCampaign.limits,
       this.store.currentCampaign.template.attributes_type,
-      campaign.id,
+      Number.parseInt(campaign.id, 10),
       this.store.currentCampaign.template.id
     );
-    const createLimit$ = campaign => this.limitsService.createLimits(
+    const createLimit$ = (campaign: ICampaign) => this.limitsService.createLimit(
       this.store.currentCampaign.limits,
       this.store.currentCampaign.template.attributes_type,
-      campaign.id,
+      Number.parseInt(campaign.id, 10),
       this.store.currentCampaign.template.id
     );
 
-    if (this.store.currentCampaign) {
-      generateLimitData$ = this.store.currentCampaign.limits.id ? updateLimit$ : createLimit$;
-    } else {
-      generateLimitData$ = createLimit$;
-    }
-    return generateLimitData$;
+    return (this.store.currentCampaign && this.store.currentCampaign.limits.id) ? updateLimit$ : createLimit$;
   }
 
   private updateComm(campaign: ICampaign): Observable<any> {
@@ -187,7 +188,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       }
 
       return templateAction$.pipe(
-        switchMap((template: IJsonApiPayload<ICommTemplateAttributes>) => eventAction$(template.data.id))
+        switchMap((template: IJsonApiPayload<IWCommTemplateAttributes>) => eventAction$(template.data.id))
       );
     }
     if (channelInfo.eventId) {
@@ -309,12 +310,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const getUsersPis: Observable<string[]> = this.audienceService
       .getAllPoolUser(campaign.audience.select)
       .pipe(
-        map((users: IJsonApiItem<IUserApi>[]) => users.map(u => u.attributes.primary_identifier)),
+        map((users: IJsonApiItem<IWProfileAttributes>[]) => users.map(u => u.attributes.primary_identifier)),
         takeUntil(this.destroy$)
       );
     return combineLatest(getUsersPis, this.blackcombUrl)
       .pipe(map(([pis, url]: [string[], string]) => {
-        return pis.reduce((p: string, v: string) => `${p}${v},${url}&pi=${v},\n`, 'identifier,urls,\n');
+        return pis.reduce((p: string, v: string) =>
+          `${p}${v},${url}&pi=${v},\n`, 'identifier,urls,\n');
       }),
         takeUntil(this.destroy$)
       );
@@ -327,7 +329,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private openDialog(): void {
     this.getDialogData(this.store.currentCampaign)
       .pipe(
-        switchMap((config) => this.dialog.open(NewCampaignDonePopupComponent, { data: config }).afterClosed())
+        switchMap((config) => this.dialog.open(NewCampaignDonePopupComponent,
+          {data: config}).afterClosed())
       )
       .subscribe(() => this.router.navigate(['/campaigns']));
   }
@@ -348,7 +351,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const campaignId = this.route.snapshot.params.id;
     const paramsComm: HttpParamsOptions = {
       'filter[owner_id]': campaignId,
-      include: 'template',
+      include: 'template'
     };
     const paramsPO: HttpParamsOptions = {
       'filter[campaign_entity_id]': campaignId
@@ -361,15 +364,15 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       ).pipe(
         map(
           ([campaign, commEvent, outcomes]:
-            [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
-              ...campaign,
-              audience: { select: commEvent && commEvent.poolId || null },
-              channel: {
-                type: commEvent && commEvent.channel || 'weblink',
-                ...commEvent
-              },
-              rewardsList: outcomes
-            }))
+             [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
+            ...campaign,
+            audience: {select: commEvent && commEvent.poolId || null},
+            channel: {
+              type: commEvent && commEvent.channel || 'weblink',
+              ...commEvent
+            },
+            rewardsList: outcomes
+          }))
       ).subscribe(
         campaign => {
           this.campaign = Object.assign({}, campaign);

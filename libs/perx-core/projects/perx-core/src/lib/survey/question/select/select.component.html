@@ -10,15 +10,15 @@
     </ng-container>
     <ng-template #elseBlock>
         <div class="choice-container">
-            <mat-radio-group 
+            <mat-radio-group
                 class="selection-radio-group"
-                aria-labelledby="single-selection" 
+                aria-labelledby="single-selection"
                 [(ngModel)]="selectedChoice"
                 (change)="emitValue()">
-                <mat-radio-button 
-                    class="selection-radio-button" 
-                    *ngFor="let choice of payload?.choices; let i = index" 
-                    [value]="i">
+                <mat-radio-button
+                    class="selection-radio-button"
+                    *ngFor="let choice of payload?.choices; let i = index"
+                    [value]="choice">
                     {{choice}}
                 </mat-radio-button>
             </mat-radio-group>

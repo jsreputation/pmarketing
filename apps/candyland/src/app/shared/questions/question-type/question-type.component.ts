@@ -23,7 +23,7 @@ export const EPANDED_TEXTAREA_VALUE_ACCESSOR = {
 })
 export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDestroy {
   @Input() public addQuestionType = false;
-  @Input() typeList: IEngagementType[];
+  @Input() typeList: IEngagementQuestionType[];
   @Input() currentIndex: string;
   @Input() level: number;
   @Input() public set setTypeQuestion(typeQuestion: string) {
@@ -31,7 +31,7 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
   }
   @Input() public onlyView: boolean = false;
 
-  @Output() selectTypeQuestion = new EventEmitter<IEngagementType>();
+  @Output() selectTypeQuestion = new EventEmitter<IEngagementQuestionType>();
 
   @ViewChild('matSelect', { static: true }) public matSelect: any;
   public type = new FormControl();

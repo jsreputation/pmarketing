@@ -5,8 +5,14 @@ import { map, tap, expand, finalize } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
 import { IMerchant } from './models/merchants.model';
 import { Config } from '../config/config';
-import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload, IMeta } from './../jsonapi.payload';
-import { IMerchant as IWMerchant } from '@perx/whistler';
+
+import {
+  IJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiItemPayload,
+  IMeta,
+  IWMerchantAttributes,
+} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -21,17 +27,17 @@ export class WhistlerMerchantsService implements IMerchantsService {
   ) {
   }
 
-  private static WMerchantToMerchant(merchant: IJsonApiItem<IWMerchant>): IMerchant {
+  private static WMerchantToMerchant(merchant: IJsonApiItem<IWMerchantAttributes>): IMerchant {
     return {
       id: (typeof merchant.id === 'string') ? Number.parseInt(merchant.id, 10) : merchant.id,
       name: merchant.attributes.name,
       description: merchant.attributes.description,
-      images: [
+      images: merchant.attributes.properties.logo_image ? [
         {
           type: 'banner',
           url: merchant.attributes.properties.logo_image
         }
-      ]
+      ] : []
     };
   }
 
@@ -40,7 +46,9 @@ export class WhistlerMerchantsService implements IMerchantsService {
     const current = {};
     return new Observable((sub) => {
       this.getMerchantsPage(i).pipe(
-        expand((response) => i < (response.meta && response.meta.page_count) ? this.getMerchantsPage(++i) : EMPTY),
+        expand((response) =>
+          (response.meta && response.meta.page_count && response.meta.page_count > i) ? this.getMerchantsPage(++i) : EMPTY
+        ),
         map((value) => value.data.map((el) => WhistlerMerchantsService.WMerchantToMerchant(el))),
         tap((data) => data.forEach((el) => current[el.id] = el)),
         finalize(() => this.merchants = current)
@@ -50,13 +58,13 @@ export class WhistlerMerchantsService implements IMerchantsService {
     });
   }
 
-  private getMerchantsPage(page: number): Observable<IJsonApiListPayload<IWMerchant>> {
+  private getMerchantsPage(page: number): Observable<IJsonApiListPayload<IWMerchantAttributes>> {
     const pageSize: number = 10;
     const params = {
       page_number: `${page}`,
       page_size: `${pageSize}`
     };
-    return this.http.get<IJsonApiListPayload<IWMerchant>>(
+    return this.http.get<IJsonApiListPayload<IWMerchantAttributes>>(
       `${this.config.apiHost}/organization/orgs`,
       { params }
     );
@@ -65,7 +73,7 @@ export class WhistlerMerchantsService implements IMerchantsService {
   public getMerchants(page: number = 1): Observable<IMerchant[]> {
     const pageSize: number = 10;
 
-    return this.http.get<IJsonApiListPayload<IWMerchant>>(
+    return this.http.get<IJsonApiListPayload<IWMerchantAttributes>>(
       `${this.config.apiHost}/organization/orgs`,
       {
         params: {
@@ -74,7 +82,7 @@ export class WhistlerMerchantsService implements IMerchantsService {
         }
       }
     ).pipe(
-      map((res: IJsonApiListPayload<IWMerchant>) => {
+      map((res: IJsonApiListPayload<IWMerchantAttributes>) => {
         if (res.meta) {
           this.historyMeta = {
             ...this.historyMeta,
@@ -84,7 +92,7 @@ export class WhistlerMerchantsService implements IMerchantsService {
 
         return res.data;
       }),
-      map((merchants: IJsonApiItem<IWMerchant>[]) => merchants.map(
+      map((merchants: IJsonApiItem<IWMerchantAttributes>[]) => merchants.map(
         res => WhistlerMerchantsService.WMerchantToMerchant(res)
       ))
     );
@@ -95,10 +103,10 @@ export class WhistlerMerchantsService implements IMerchantsService {
       return of(this.merchants[merchantId]);
     }
 
-    return this.http.get<IJsonApiItemPayload<IWMerchant>>(
+    return this.http.get<IJsonApiItemPayload<IWMerchantAttributes>>(
       `${this.config.apiHost}/organization/orgs/${merchantId}`
     ).pipe(
-      map((res: IJsonApiItemPayload<IWMerchant>) => WhistlerMerchantsService.WMerchantToMerchant(res.data)),
+      map((res: IJsonApiItemPayload<IWMerchantAttributes>) => WhistlerMerchantsService.WMerchantToMerchant(res.data)),
       tap((merchant: IMerchant) => this.merchants[merchantId] = merchant)
     );
   }

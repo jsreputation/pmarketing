@@ -20,15 +20,15 @@ export class RewardComponent implements OnInit, OnDestroy {
   public cardBackground: string;
   public rewards$: Observable<IReward[]>;
   public noRewardsPopUp: IPopupConfig = {
-    title: 'We’re sorry, all rewards have been claimed',
-    text: 'Look out for more rewards coming your way, soon!',
-    buttonTxt: 'Back to Wallet',
+    title: 'INSTANT_OUTCOME_NO_REWARDS_TITLE',
+    text: 'INSTANT_OUTCOME_NO_REWARDS_TEXT',
+    buttonTxt: 'BACK_TO_WALLET',
     imageUrl: '',
   };
   public successPopUp: IPopupConfig = {
-    title: 'Successfully !',
+    title: 'REDEEM_SUCCESSFULLY',
     text: '',
-    buttonTxt: 'View Reward',
+    buttonTxt: 'VIEW_REWARD',
     imageUrl: '',
   };
 
@@ -43,8 +43,11 @@ export class RewardComponent implements OnInit, OnDestroy {
   ) { }
 
   private initTranslate(): void {
-    this.translate.get('VIEW_REWARD').subscribe((text) => this.successPopUp.buttonTxt = text);
-    this.translate.get('BACK_TO_WALLET').subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
+    this.translate.get(this.successPopUp.title).subscribe((text) => this.successPopUp.title = text);
+    this.translate.get(this.successPopUp.buttonTxt).subscribe((text) => this.successPopUp.buttonTxt = text);
+    this.translate.get(this.noRewardsPopUp.title).subscribe((text) => this.noRewardsPopUp.title = text);
+    this.translate.get(this.noRewardsPopUp.text).subscribe((text) => this.noRewardsPopUp.text = text);
+    this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
   }
 
   public ngOnInit(): void {
@@ -57,20 +60,20 @@ export class RewardComponent implements OnInit, OnDestroy {
       )
       .subscribe((eng: IOutcome) => {
         this.title = eng.title;
-        this.subTitle = eng.sub_title;
+        this.subTitle = eng.subTitle;
         this.button = eng.button;
-        this.background = eng.background_img_url;
-        this.cardBackground = eng.card_background_img_url;
+        this.background = eng.backgroundImgUrl;
+        this.cardBackground = eng.cardBackgroundImgUrl;
         const { displayProperties } = eng;
         if (displayProperties && displayProperties.noRewardsPopUp) {
-          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine || this.noRewardsPopUp.title;
-          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine || this.noRewardsPopUp.text;
+          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
+          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
           this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
           this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
         }
         if (displayProperties && displayProperties.successPopUp) {
-          this.successPopUp.title = displayProperties.successPopUp.headLine || this.successPopUp.title;
-          this.successPopUp.text = displayProperties.successPopUp.subHeadLine || this.successPopUp.text;
+          this.successPopUp.title = displayProperties.successPopUp.headLine;
+          this.successPopUp.text = displayProperties.successPopUp.subHeadLine;
           this.successPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.successPopUp.imageUrl;
           this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
         }

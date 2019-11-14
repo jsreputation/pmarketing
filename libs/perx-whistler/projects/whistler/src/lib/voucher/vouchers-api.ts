@@ -1,4 +1,4 @@
-export interface IVouchersApi {
+export interface IWVouchersApi {
     amount: string;
     start_date: string;
     source_type?: any;

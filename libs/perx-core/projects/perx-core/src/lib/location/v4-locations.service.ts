@@ -101,12 +101,12 @@ export class V4LocationsService extends LocationsService {
       map((merchant: IMerchant) => merchant.outlets.map((outlet: IOutlet) => ({
         merchantId: merchant.id,
         merchantName: merchant.name,
-        locationId: outlet.outlet_id,
-        name: outlet.outlet_name,
+        locationId: outlet.outletId,
+        name: outlet.outletName,
         tags: outlet.tags && outlet.tags.map(tag => tag.name),
-        address: outlet.outlet_address1,
-        address2: outlet.outlet_address2,
-        address3: outlet.outlet_address3,
+        address: outlet.outletAddress1,
+        address2: outlet.outletAddress2,
+        address3: outlet.outletAddress3,
         latitude: outlet.coordinates.lat,
         longitude: outlet.coordinates.lng,
         phone: outlet.tel
@@ -118,10 +118,10 @@ export class V4LocationsService extends LocationsService {
     return allMerchants.pipe(
       map((merchants: IMerchant[]) => merchants.filter((merchant: IMerchant) => merchant.tags && merchant.tags.length > 0)),
       filter((merchants: IMerchant[]) => merchants.length > 0),
-      map((merchants: IMerchant[]) => {
-        let tags = [];
-        tags = [...merchants.map((merchant: IMerchant) => merchant.tags.map(tag => tag.name))];
-        return tags;
+      // eslint-disable-next-line arrow-body-style
+      map((merchants: IMerchant[]): string[] => {
+        return merchants.map((merchant: IMerchant) => merchant.tags ? merchant.tags.map(tag => tag.name) : [])
+          .reduce((p, v) => v.concat(p), []);
       }),
       scan((acc: string[], curr: string[]) => acc.concat(...curr), []),
       map((tags: string[]) => [...new Set(tags)])

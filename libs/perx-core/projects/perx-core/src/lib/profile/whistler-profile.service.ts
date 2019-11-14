@@ -1,16 +1,20 @@
-import { IJsonApiItem, IJsonApiListPayload } from './../jsonapi.payload';
 import { ProfileService } from './profile.service';
 import { Observable, throwError } from 'rxjs';
 import {
   IProfile,
   ICustomProperties,
 } from './profile.model';
-import { IWhistlerProfileAttributes } from '@perx/whistler';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { TokenStorage } from '../auth/authentication/token-storage.service';
+
+import {
+  IWProfileAttributes,
+  IJsonApiItem,
+  IJsonApiListPayload,
+} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -27,34 +31,35 @@ export class WhistlerProfileService extends ProfileService {
     this.apiHost = config.apiHost as string;
   }
 
-  public static WhistlerProfileToProfile(profile: IJsonApiItem<IWhistlerProfileAttributes>): IProfile {
+  public static WhistlerProfileToProfile(profile: IJsonApiItem<IWProfileAttributes>): IProfile {
     return {
       id: +profile.id,
       identifier: profile.attributes.primary_identifier,
-      firstName: profile.attributes.first_name,
-      lastName: profile.attributes.last_name,
-      phone: profile.attributes.phone_number,
-      email: profile.attributes.email_address,
+      firstName: profile.attributes.first_name || '',
+      lastName: profile.attributes.last_name || '',
+      phone: profile.attributes.phone_number || '',
+      email: profile.attributes.email_address || '',
       joinedDate: profile.attributes.created_at // not sure correct?
     };
   }
 
   public whoAmI(): Observable<IProfile> {
-    const pi = this.tokenStorage.getAppInfoProperty('pi');
-    const url = `${this.apiHost}/cognito/users`;
-    const params = {
-      'filter[primary_identifier]': pi
-    };
+    const pi: string | undefined = this.tokenStorage.getAppInfoProperty('pi');
+    const url: string = `${this.apiHost}/cognito/users`;
+    const params: { [k: string]: string } = {};
+    if (pi) {
+      params['filter[primary_identifier]'] = pi;
+    }
 
-    return this.http.get<IJsonApiListPayload<IWhistlerProfileAttributes>>(url, { params })
+    return this.http.get<IJsonApiListPayload<IWProfileAttributes>>(url, { params })
       .pipe(
-        map((res: IJsonApiListPayload<IWhistlerProfileAttributes>) => {
+        map((res: IJsonApiListPayload<IWProfileAttributes>) => {
           if (res.data.length > 0) {
             return res.data[0];
           }
           throw new Error(`There is no user with pi '${pi}'`);
         }),
-        map((JsonApiUser: IJsonApiItem<IWhistlerProfileAttributes>) => WhistlerProfileService.WhistlerProfileToProfile(JsonApiUser))
+        map((JsonApiUser: IJsonApiItem<IWProfileAttributes>) => WhistlerProfileService.WhistlerProfileToProfile(JsonApiUser))
       );
   }
 

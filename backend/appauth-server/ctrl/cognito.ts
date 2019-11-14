@@ -2,6 +2,7 @@ import axios from 'axios';
 import { ApiConfig } from '../types/apiConfig';
 import { Request, Response } from 'express';
 import { NextFunction } from 'express';
+import { IWProfileAttributes } from '@perx/whistler';
 
 export const login = (apiConfig: ApiConfig) => async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -58,6 +59,9 @@ export const users = (apiConfig: ApiConfig) => async (req: Request, res: Respons
     // check body parameter 'url'
     const url = req.body.url;
     const userId = req.body.identifier;
+    const anonymous = req.body.anonymous;
+    // should just be the attributesObj
+    const userObj: IWProfileAttributes = req.body.profile ? req.body.profile : { primary_identifier: userId, anonymous };
 
     if (url === undefined) {
       throw new Error('No body parameter "url" specified');
@@ -73,9 +77,7 @@ export const users = (apiConfig: ApiConfig) => async (req: Request, res: Respons
       {
         data: {
           type: 'users',
-          attributes: {
-            primary_identifier: userId
-          }
+          attributes: userObj // {...,}
         }
       },
       {

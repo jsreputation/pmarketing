@@ -2,13 +2,15 @@ import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   ISignUpData,
-  IMessageResponse,
   IResetPasswordData,
-  IAppAccessTokenResponse,
   IChangePasswordData,
   IChangePhoneData
 } from './models/authentication.model';
-import { IProfile } from '../../profile/profile.model';
+import {
+  IWMessageResponse,
+  IWAppAccessTokenResponse
+} from '@perx/whistler';
+import { IProfile, IProfileAttributes } from '../../profile/profile.model';
 import { AuthService } from 'ngx-auth';
 
 export abstract class AuthenticationService implements AuthService {
@@ -48,12 +50,14 @@ export abstract class AuthenticationService implements AuthService {
   public abstract login(user: string, pass: string, mechId?: string, campaignId?: string, scope?: string): Observable<any>;
 
   public abstract autoLogin(): Observable<any>;
-  public abstract createUserAndAutoLogin(pi: string): Observable<any>;
+
+  public abstract createUserAndAutoLogin(pi: string, userObj?: IProfileAttributes, anonymous?: boolean): Observable<any>;
+
   /**
    * This is important, for those public pages, API require app level access token in request header
    * Please add this call in every first page of the app to make sure those public page's API call works
    */
-  public abstract getAppToken(): Observable<IAppAccessTokenResponse>;
+  public abstract getAppToken(): Observable<IWAppAccessTokenResponse>;
 
   public abstract setInterruptedUrl(url: string): void;
 
@@ -65,21 +69,21 @@ export abstract class AuthenticationService implements AuthService {
    * This method will send an OTP to the user. This otp should be used as input
    * of method resetPassword.
    */
-  public abstract forgotPassword(phone: string): Observable<IMessageResponse>;
+  public abstract forgotPassword(phone: string): Observable<IWMessageResponse>;
 
-  public abstract resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse>;
+  public abstract resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IWMessageResponse>;
 
-  public abstract resendOTP(phone: string): Observable<IMessageResponse>;
+  public abstract resendOTP(phone: string): Observable<IWMessageResponse>;
 
   public abstract signup(profile: ISignUpData): Observable<IProfile>;
 
-  public abstract verifyOTP(phone: string, otp: string): Observable<IMessageResponse>;
+  public abstract verifyOTP(phone: string, otp: string): Observable<IWMessageResponse>;
 
   public abstract requestVerificationToken(phone?: string): Observable<void>;
 
   public abstract changePhone(changePhoneData: IChangePhoneData): Observable<void>;
 
-  public abstract changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse>;
+  public abstract changePassword(changePasswordData: IChangePasswordData): Observable<IWMessageResponse>;
 
   /**
    * Get access token

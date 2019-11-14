@@ -21,6 +21,7 @@ import {
   retry,
   switchMap,
   mergeMap,
+  takeLast,
 } from 'rxjs/operators';
 
 import {
@@ -33,6 +34,10 @@ import {
   IGame,
   CampaignType,
   IProfile,
+  FeedReaderService,
+  FeedItem,
+  ThemesService,
+  ITheme
 } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -108,12 +113,14 @@ const stubTabs: ITabConfigExtended[] = [
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
-
+  public theme: ITheme;
+  public newsFeedItems: Observable<FeedItem[]>;
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
   public titleFn: (profile: IProfile) => string;
+  public showGames: boolean = false;
   private initCampaign(): void {
     this.games$ = (new Observable((subject: Subscriber<IGame[]>) => {
       const gameByCid: { [cid: number]: IGame } = {};
@@ -143,9 +150,14 @@ export class HomeComponent implements OnInit, OnDestroy {
                   })
                 ))
             );
-          })
+          }),
+          tap((games) => this.showGames = games.length > 0),
+          takeLast(1)
         ).subscribe(() => subject.complete());
     }));
+
+    this.newsFeedItems = this.feedService.getFromUrl('https://cdn.perxtech.io/content/starhub/rss.xml');
+
   }
 
   constructor(
@@ -153,7 +165,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     private rewardsService: RewardsService,
     private gamesService: IGameService,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private feedService: FeedReaderService,
+    private themesService: ThemesService,
   ) {
   }
 
@@ -165,6 +179,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.initCampaign();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.getTabedList();
+
+    this.themesService.getThemeSetting().subscribe(
+      theme => this.theme = theme
+    );
   }
 
   public ngOnDestroy(): void {

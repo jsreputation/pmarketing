@@ -4,11 +4,17 @@ import { Config } from '../config/config';
 import { IVoucherService } from './ivoucher.service';
 import { Observable, combineLatest, of } from 'rxjs';
 import { IVoucher, IGetVoucherParams, VoucherState } from './models/voucher.model';
-import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
-import { map, switchMap, mergeMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { RewardsService } from '../rewards/rewards.service';
 import { IReward, IRewardParams } from '../rewards/models/reward.model';
-import { IAssignedAttributes, AssignedStatus } from '@perx/whistler';
+
+import {
+  IWAssignedAttributes,
+  WAssignedStatus,
+  IJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiItemPayload,
+} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -20,17 +26,17 @@ export class WhistlerVouchersService implements IVoucherService {
     private rewardsService: RewardsService,
   ) { }
 
-  private static WVoucherStatusToState(stat: AssignedStatus): VoucherState {
+  private static WVoucherStatusToState(stat: WAssignedStatus): VoucherState {
     switch (stat) {
-      case AssignedStatus.assigned:
-      case AssignedStatus.issued:
+      case WAssignedStatus.assigned:
+      case WAssignedStatus.issued:
         return VoucherState.issued;
       default:
         return VoucherState.redeemed;
     }
   }
 
-  private static WVoucherToVoucher(voucher: IJsonApiItem<IAssignedAttributes>, reward: IReward): IVoucher {
+  private static WVoucherToVoucher(voucher: IJsonApiItem<IWAssignedAttributes>, reward: IReward): IVoucher {
     return {
       id: (typeof voucher.id === 'string') ? Number.parseInt(voucher.id, 10) : voucher.id,
       reward,
@@ -40,38 +46,56 @@ export class WhistlerVouchersService implements IVoucherService {
     };
   }
 
+  private static compare(a: IVoucher, b: IVoucher, ): number {
+    const merchantIdA: number = a.reward.merchantId;
+    const merchantIdB: number = b.reward.merchantId;
+
+    if (merchantIdA ? !merchantIdB : merchantIdB) {
+      return !merchantIdA ? 1 : -1;
+    }
+
+    return 0;
+  }
   // @ts-ignore
   public getAll(voucherParams?: IGetVoucherParams): Observable<IVoucher[]> {
-    return this.http.get<IJsonApiListPayload<IAssignedAttributes>>(this.vouchersUrl)
-      .pipe(
-        map((res) => res.data),
-        mergeMap((vouchers: IJsonApiItem<IAssignedAttributes>[]) => combineLatest(...vouchers.map(v => this.getFullVoucher(v)))),
-        map(vouchers => vouchers.sort((elA, elB) => {
-          const merchantIdA: number = elA.reward.merchantId;
-          const merchantIdB: number = elB.reward.merchantId;
-
-          if (merchantIdA ? !merchantIdB : merchantIdB) {
-            return !merchantIdA ? 1 : -1;
-          }
-
-          return 0;
-        }))
-      );
+    return new Observable(subscriber => {
+      let vouchers: IVoucher[] = [];
+      const process = (p: number, res: IJsonApiListPayload<IWAssignedAttributes>) => {
+        const vsQuerries: Observable<IVoucher>[] = res.data.map(v => this.getFullVoucher(v));
+        combineLatest(vsQuerries)
+          .subscribe((vs: IVoucher[]) => {
+            vouchers = vouchers.concat(vs).sort(WhistlerVouchersService.compare);
+            subscriber.next(vouchers);
+            if (p >= res.meta.page_count) {
+              subscriber.complete();
+            } else {
+              // tslint:disable-next-line: rxjs-no-nested-subscribe
+              this.getPage(p + 1).subscribe(resi => process(p + 1, resi));
+            }
+          });
+      };
+      this.getPage(1).subscribe(vs => process(1, vs));
+    });
   }
 
-  private getFullVoucher(voucher: IJsonApiItem<IAssignedAttributes>): Observable<IVoucher> {
+  private getPage(page: number): Observable<IJsonApiListPayload<IWAssignedAttributes>> {
+    const size = 10;
+    return this.http.get<IJsonApiListPayload<IWAssignedAttributes>>(`${this.vouchersUrl}?page[number]=${page}&page[size]=${size}`);
+  }
+
+  private getFullVoucher(voucher: IJsonApiItem<IWAssignedAttributes>): Observable<IVoucher> {
     return combineLatest(of(voucher), this.rewardsService.getReward(voucher.attributes.source_id))
       .pipe(
-        map(([v, reward]: [IJsonApiItem<IAssignedAttributes>, IReward]) => WhistlerVouchersService.WVoucherToVoucher(v, reward))
+        map(([v, reward]: [IJsonApiItem<IWAssignedAttributes>, IReward]) => WhistlerVouchersService.WVoucherToVoucher(v, reward))
       );
   }
 
   // @ts-ignore
   public get(id: number, useCache?: boolean): Observable<IVoucher> {
-    return this.http.get<IJsonApiItemPayload<IAssignedAttributes>>(`${this.vouchersUrl}/${id}`)
+    return this.http.get<IJsonApiItemPayload<IWAssignedAttributes>>(`${this.vouchersUrl}/${id}`)
       .pipe(
         map((res) => res.data),
-        switchMap((voucher: IJsonApiItem<IAssignedAttributes>) => this.getFullVoucher(voucher))
+        switchMap((voucher: IJsonApiItem<IWAssignedAttributes>) => this.getFullVoucher(voucher))
       );
   }
 

@@ -3,6 +3,7 @@ import { StampHttpService } from '@cl-core/http-services/stamp-http.service';
 import { Observable } from 'rxjs';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { map } from 'rxjs/operators';
+import { IWStampEngagementAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +23,12 @@ export class StampsService {
     );
   }
 
-  public createStamp(data: IStampsEntityForm): Observable<IResponseApi<IEngagementApi>> {
+  public createStamp(data: IStampsEntityForm): Observable<IJsonApiPayload<IWStampEngagementAttributes>> {
     const sentData = EngagementHttpAdapter.transformStamp(data);
     return this.stampHttpService.createStamp({data: sentData});
   }
 
-  public updateStamp(id: string, data: any): Observable<IResponseApi<IEngagementApi>> {
+  public updateStamp(id: string, data: IStampsEntityForm): Observable<IJsonApiPayload<IWStampEngagementAttributes>> {
     const sendData = EngagementHttpAdapter.transformStamp(data);
     sendData.id = id;
     return this.stampHttpService.updateStamp(id, {data: sendData});
