@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public redirectAfterLogin(): void {
-    var navigateAfterLogin = (this.currentTheme && this.currentTheme.properties.showHomePage) ? 'home': 'wallet';
+    const navigateAfterLogin = (this.currentTheme && this.currentTheme.properties.showHomePage) ? 'home' : 'wallet';
     this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : navigateAfterLogin);
   }
 
