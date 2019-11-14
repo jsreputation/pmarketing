@@ -124,8 +124,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
       * 3. If no PI and no token found, then call autoLoginWithoutPI to create new account and auto login
       * */
 
-      const getUserToken$ = this.authService.autoLogin();
-      const PIHandler$ = pi => getUserToken$.pipe(tap(() => this.authService.savePI(pi)));
+      const PIHandler$ = this.authService.autoLogin();
       const createUserAndAutoLogin$ = pi => this.authService.createUserAndAutoLogin(pi, null, true);
       const autoLoginWithoutPI$ = of(uuid.v4()).pipe(
         switchMap(newPI => createUserAndAutoLogin$(newPI)),
@@ -142,7 +141,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
       getPI$.pipe(
         switchMap(
-          pi => iif(() => !!pi, PIHandler$(pi), noPIHandler$)
+          pi => iif(() => !!pi, PIHandler$, noPIHandler$)
         ),
         takeUntil(this.destroy$)
       ).subscribe(
