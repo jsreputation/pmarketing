@@ -1,8 +1,7 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
-import { InstantOutcomeService, IReward, PopupComponent, IOutcome, IPopupConfig } from '@perx/core';
-import { MatDialog } from '@angular/material';
+import { Observable, of, Subject, combineLatest } from 'rxjs';
+import { InstantOutcomeService, IReward, IOutcome, IPopupConfig, IEngagementTransaction, RewardsService } from '@perx/core';
 import { map, switchMap, catchError, tap, takeUntil, } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -19,6 +18,8 @@ export class RewardComponent implements OnInit, OnDestroy {
   public background: string;
   public cardBackground: string;
   public rewards$: Observable<IReward[]>;
+  public transaction$: Observable<IEngagementTransaction>;
+  private transactionId: number | null = null;
   public noRewardsPopUp: IPopupConfig = {
     title: 'INSTANT_OUTCOME_NO_REWARDS_TITLE',
     text: 'INSTANT_OUTCOME_NO_REWARDS_TEXT',
@@ -36,10 +37,10 @@ export class RewardComponent implements OnInit, OnDestroy {
 
   constructor(
     private outcomeService: InstantOutcomeService,
-    private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
     private translate: TranslateService,
+    private rewardService: RewardsService
   ) { }
 
   private initTranslate(): void {
@@ -55,8 +56,12 @@ export class RewardComponent implements OnInit, OnDestroy {
     this.route.params
       .pipe(
         map((params: Params) => params.id),
-        switchMap((id: string) => this.outcomeService.getFromCampaign(+id)),
-        catchError(() => this.router.navigate(['/wallet']))
+        switchMap((id: string) => this.outcomeService.getFromCampaign(parseInt(id, 10))),
+        catchError(() => this.router.navigate(['/pi'],
+          {
+            queryParams: { engagementType: 'instant_outcome', transactionId: this.transactionId }
+          }
+        ))
       )
       .subscribe((eng: IOutcome) => {
         this.title = eng.title;
@@ -71,39 +76,58 @@ export class RewardComponent implements OnInit, OnDestroy {
           this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
           this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
         }
-        if (displayProperties && displayProperties.successPopUp) {
-          this.successPopUp.title = displayProperties.successPopUp.headLine;
-          this.successPopUp.text = displayProperties.successPopUp.subHeadLine;
-          this.successPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.successPopUp.imageUrl;
-          this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
-        }
       });
 
-    this.rewards$ =
+    this.transaction$ =
       this.route.params
         .pipe(
-          // filter((params: Params) => params.id),
           map((params: Params) => params.id),
-          switchMap((campaignId: string) => this.outcomeService.claim(+campaignId)),
-          tap((rewards: IReward[]) => {
-            // if reward list is empty make sure to throw, so that we end up in the catchError block
-            if (rewards.length === 0) {
+          switchMap((campaignId: string) => this.outcomeService.prePlay(parseInt(campaignId, 10))),
+          tap((outcomeTransaction: IEngagementTransaction) => {
+            this.transactionId = outcomeTransaction.id;
+            if (outcomeTransaction.rewardIds.length === 0) {
               throw new Error('empty');
             }
           }),
           catchError(() => {
-            this.dialog.open(PopupComponent, { data: this.noRewardsPopUp });
-            /* todo display popup and redirect to wallet*/
-            this.router.navigate(['/wallet']);
+            this.router.navigate(['/pi'],
+              {
+                queryParams:
+                {
+                  popupData: JSON.stringify(this.noRewardsPopUp),
+                  engagementType: 'instant_outcome',
+                  transactionId: this.transactionId
+                }
+              });
             // next line is actually useless as we will redirected.
-            return of<IReward[]>([]);
-          }),
+            return of<IEngagementTransaction>({
+              rewardIds: [],
+              id: null
+            });
+          })
+        );
+
+    this.rewards$ =
+      this.transaction$
+        .pipe(
+          switchMap(
+            (outcomeTransaction: IEngagementTransaction) => {
+              if (outcomeTransaction.rewardIds.length === 0) {
+                return of<IReward[]>([]);
+              }
+              return combineLatest(...outcomeTransaction.rewardIds.map(
+                (id: number) => this.rewardService.getReward(id)
+              ));
+            }
+          ),
           takeUntil(this.destroy$)
         );
   }
 
   public rewardClickedHandler(): void {
-    this.router.navigate(['/wallet']);
+    this.router.navigate(['/pi'], {
+      queryParams: { engagementType: 'instant_outcome', transactionId: this.transactionId }
+    });
   }
 
   public ngOnDestroy(): void {
