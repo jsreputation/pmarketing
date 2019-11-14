@@ -132,14 +132,14 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   }
 
   public static v4VoucherToVoucher(v: IV4MerchantAdminVoucher): IVoucher {
-    const reward: IV4Reward = v.reward;
+    const reward: (IV4Reward | undefined) = v.reward; // this is a opt property according to the interface
 
     return {
       id: v.id,
-      reward: V4RewardsService.v4RewardToReward(reward),
+      reward: reward ? V4RewardsService.v4RewardToReward(reward) : null,
       state: v.state,
       code: v.voucher_code,
-      expiry: reward.valid_to !== null ? new Date(reward.valid_to) : null,
+      expiry: reward ? (reward.valid_to !== null ? new Date(reward.valid_to) : null) : null,
       redemptionDate: v.redemption_date !== null ? new Date(v.redemption_date) : null,
     };
   }
