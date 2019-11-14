@@ -118,7 +118,9 @@ export class PIComponent implements OnInit, OnDestroy {
       ).subscribe(
         () => {
           this.router.navigate(['/wallet']);
-          this.dialog.open(PopupComponent, { data: this.popupData });
+          if (this.popupData) {
+            this.dialog.open(PopupComponent, { data: this.popupData });
+          }
         },
         (error: Error) => {
           this.updateErrorMessage(error.message);
