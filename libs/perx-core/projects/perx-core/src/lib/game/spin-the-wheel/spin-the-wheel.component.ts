@@ -135,57 +135,58 @@ export class SpinTheWheelComponent implements OnInit {
   }
 
   public createPatterns(arr: ImageForPattern[]): void {
-    this.patternImg = arr.map(item => ({ id: item.id, pattern: this.ctx.createPattern(item.image, 'no-repeat') }));
+    this.patternImg = arr.map(item => ({ id: item.id, pattern: this.ctx && this.ctx.createPattern(item.image, 'no-repeat') }));
     this.drawWheel();
   }
 
   public drawWheel(): void {
     const outsideRadius = this.size / 2 - 5;
     const textRadius = this.size / 3;
+    if (this.ctx) {
+      this.slices.forEach((slice: ISlice, i: number) => {
+        const angle = this.startAngle + i * this.arc;
 
-    this.slices.forEach((slice: ISlice, i: number) => {
-      const angle = this.startAngle + i * this.arc;
-
-      if (slice.backgroundImage) {
-        const currentPattern = this.patternImg.find(item => item.id === slice.id);
-        if (currentPattern) {
-          this.ctx.fillStyle = currentPattern.pattern;
+        if (slice.backgroundImage) {
+          const currentPattern = this.patternImg.find(item => item.id === slice.id);
+          if (currentPattern) {
+            this.ctx.fillStyle = currentPattern.pattern;
+          }
+        } else {
+          this.ctx.fillStyle = slice.backgroundColor || 'white';
         }
-      } else {
-        this.ctx.fillStyle = slice.backgroundColor || 'white';
-      }
 
-      this.ctx.beginPath();
-      this.ctx.arc(this.size / 2, this.size / 2, outsideRadius, angle, angle + this.arc, false);
-      this.ctx.arc(this.size / 2, this.size / 2, 0, angle + this.arc, angle, true);
-      this.ctx.stroke();
-      this.ctx.fill();
+        this.ctx.beginPath();
+        this.ctx.arc(this.size / 2, this.size / 2, outsideRadius, angle, angle + this.arc, false);
+        this.ctx.arc(this.size / 2, this.size / 2, 0, angle + this.arc, angle, true);
+        this.ctx.stroke();
+        this.ctx.fill();
 
-      this.ctx.save();
-      this.ctx.shadowOffsetX = -1;
-      this.ctx.shadowOffsetY = -1;
-      this.ctx.shadowBlur = 0;
-      this.ctx.fillStyle = slice.labelColor || 'black';
-      this.ctx.translate(
-        this.size / 2 + Math.cos(angle + this.arc / 2) * textRadius,
-        this.size / 2 + Math.sin(angle + this.arc / 2) * textRadius
-      );
-      this.ctx.rotate(angle + this.arc / 2 + Math.PI);
-      this.ctx.font = 'bold 15px Helvetica, Arial';
-
-      const text = slice.label || '';
-
-      const textArray = text.split(' ');
-      for (let index = 0; index < textArray.length; index++) {
-        const element = textArray[index];
-        this.ctx.fillText(
-          element,
-          -this.ctx.measureText(element).width / 2,
-          index * 15
+        this.ctx.save();
+        this.ctx.shadowOffsetX = -1;
+        this.ctx.shadowOffsetY = -1;
+        this.ctx.shadowBlur = 0;
+        this.ctx.fillStyle = slice.labelColor || 'black';
+        this.ctx.translate(
+          this.size / 2 + Math.cos(angle + this.arc / 2) * textRadius,
+          this.size / 2 + Math.sin(angle + this.arc / 2) * textRadius
         );
-      }
-      this.ctx.restore();
-    });
+        this.ctx.rotate(angle + this.arc / 2 + Math.PI);
+        this.ctx.font = 'bold 15px Helvetica, Arial';
+
+        const text = slice.label || '';
+
+        const textArray = text.split(' ');
+        for (let index = 0; index < textArray.length; index++) {
+          const element = textArray[index];
+          this.ctx.fillText(
+            element,
+            -this.ctx.measureText(element).width / 2,
+            index * 15
+          );
+        }
+        this.ctx.restore();
+      });
+    }
 
     const canvasArrow = document.getElementById('wheel-canvas-stop') as HTMLCanvasElement;
     if (canvasArrow.getContext) {
@@ -229,6 +230,7 @@ export class SpinTheWheelComponent implements OnInit {
   }
 
   public stopRotateWheel(): void {
+    if (!this.ctx) { return; }
     clearTimeout(this.spinTimeout);
     const degrees = this.startAngle * 180 / Math.PI + 180;
     const arcd = this.arc * 180 / Math.PI;
