@@ -2,10 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import {
   // LOCALE_ID,
   NgModule,
-  APP_INITIALIZER
+  APP_INITIALIZER,
+  Injectable
 } from '@angular/core';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -59,10 +59,29 @@ import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.
 import { ConditionComponent } from './account/condition/condition.component';
 import { TransactionPipe } from './account/transaction-history/transaction.pipe';
 import {TransactionHistoryPipe} from './account/transaction-history/transaction-history.pipe';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http);
+@Injectable()
+export class CustomTranslateLoader implements TranslateLoader {
+  private contentHeader: HttpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  });
+  private hostUrl: string = 'http://localhost:4000/';
+  constructor(private httpClient: HttpClient) {
+    if (environment.production) {
+      this.hostUrl = `${environment.baseHref}`;
+    }
+  }
+  public getTranslation(lang: string): Observable<{ [k: string]: string }> {
+    const apiAddress = `${this.hostUrl}lang?default=${lang}`;
+    return this.httpClient.get<{ [k: string]: string }>(apiAddress, { headers: this.contentHeader })
+      .pipe(
+        catchError(() => this.httpClient.get<{ [k: string]: string }>(`${this.hostUrl}assets/en-json.json`))
+      );
+  }
 }
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
@@ -130,7 +149,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
+        useClass: CustomTranslateLoader,
         deps: [HttpClient]
       }
     })

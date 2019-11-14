@@ -71,14 +71,14 @@ export class SurveyComponent implements OnInit, OnDestroy {
         this.survey = survey;
         const { displayProperties } = this.survey;
         if (displayProperties && displayProperties.successPopUp) {
-          this.successPopUp.title = displayProperties.successPopUp.headLine || this.successPopUp.title;
-          this.successPopUp.text = displayProperties.successPopUp.subHeadLine || this.successPopUp.text;
+          this.successPopUp.title = displayProperties.successPopUp.headLine;
+          this.successPopUp.text = displayProperties.successPopUp.subHeadLine;
           this.successPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.successPopUp.imageUrl;
           this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
         }
         if (displayProperties && displayProperties.noRewardsPopUp) {
-          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine || this.noRewardsPopUp.title;
-          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine || this.noRewardsPopUp.text;
+          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
+          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
           this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
           this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
         }
