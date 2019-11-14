@@ -14,9 +14,9 @@ export class CustomTranslateLoader implements TranslateLoader {
   private hostUrl: string = 'http://localhost:4000/';
   constructor(
     private httpClient: HttpClient,
-    private config: ConfigService
+    private configService: ConfigService
   ) {
-    this.config.readAppConfig().subscribe((config) => {
+    this.configService.readAppConfig().subscribe((config) => {
       if (config.production) {
         this.hostUrl = `${config.baseHref}`;
       }
