@@ -52,6 +52,8 @@ export class WhistlerThemesService extends ThemesService {
         '--login_background_colour': setting['theme.login_background_colour'],
         '--background': backgroundColor,
         '--font_color': fontColor,
+        showHistoryPage: setting['showHistoryPage'] || null,
+        showHomePage: setting['showHomePage'] || null,
       }
     };
   }
