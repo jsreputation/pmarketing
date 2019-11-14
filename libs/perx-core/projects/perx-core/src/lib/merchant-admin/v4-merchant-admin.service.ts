@@ -139,7 +139,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       reward: reward ? V4RewardsService.v4RewardToReward(reward) : null,
       state: v.state,
       code: v.voucher_code,
-      expiry: reward ? (reward.valid_to !== null ? new Date(reward.valid_to) : null) : null,
+      expiry: (reward && reward.valid_to !== null) ? new Date(reward.valid_to) : null,
       redemptionDate: v.redemption_date !== null ? new Date(v.redemption_date) : null,
     };
   }
