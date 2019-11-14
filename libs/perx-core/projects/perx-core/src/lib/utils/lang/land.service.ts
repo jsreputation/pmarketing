@@ -2,9 +2,9 @@ import { TranslateLoader } from '@ngx-translate/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
-import { Config } from '../../config/config';
 import { Injectable } from '@angular/core';
 import { TokenStorage } from '../../auth/authentication/token-storage.service';
+import { ConfigService } from '../../config/config.service';
 
 @Injectable()
 export class CustomTranslateLoader implements TranslateLoader {
@@ -15,12 +15,15 @@ export class CustomTranslateLoader implements TranslateLoader {
   private hostUrl: string = 'http://localhost:4000/';
   constructor(
     private httpClient: HttpClient,
-    private config: Config,
-    public tokenStorage: TokenStorage
+    private configService: ConfigService,
+    private tokenStorage: TokenStorage
+   
   ) {
-    if (this.config.production) {
-      this.hostUrl = `${this.config.baseHref}`;
-    }
+    this.configService.readAppConfig().subscribe((config) => {
+      if (config.production) {
+        this.hostUrl = `${config.baseHref}`;
+      }
+    });
   }
   public getTranslation(lang: string): Observable<{ [k: string]: string }> {
     const apiAddress = `${this.hostUrl}lang?default=${lang}`;

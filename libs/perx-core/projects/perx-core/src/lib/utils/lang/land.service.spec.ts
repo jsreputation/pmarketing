@@ -2,7 +2,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { CustomTranslateLoader } from './land.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Config } from '../../config/config';
+import { ConfigService } from '../../config/config.service';
+import { of } from 'rxjs';
 
 describe('CustomTranslateLoader', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -11,7 +12,12 @@ describe('CustomTranslateLoader', () => {
     ],
     providers: [
       CustomTranslateLoader,
-      { provide: Config, useValue: { production: true } }
+      {
+        provide: ConfigService,
+        useValue: {
+          readAppConfig: () => of({ production: true })
+        }
+      }
     ]
   }));
 
