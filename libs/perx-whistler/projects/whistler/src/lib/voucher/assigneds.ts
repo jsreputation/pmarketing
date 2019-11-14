@@ -1,6 +1,8 @@
 export enum WAssignedStatus {
   issued = 'issued',
-  assigned = 'assigned'
+  assigned = 'assigned',
+  reserved = 'reserved',
+  expired = 'expired',
 }
 
 export interface IWAssignedAttributes {
