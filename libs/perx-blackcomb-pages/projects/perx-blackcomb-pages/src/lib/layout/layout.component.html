@@ -21,7 +21,7 @@
         <span translate>WALLET</span>
       </div>
     </a>
-    <a [routerLink]="[ '/history' ]" routerLinkActive="active">
+    <a [routerLink]="[ '/history' ]" routerLinkActive="active" *ngIf="theme.properties['showHistoryPage']">
       <div class="nav-item">
         <mat-icon aria-hidden="false">list</mat-icon>
         <span translate>HISTORY</span>
