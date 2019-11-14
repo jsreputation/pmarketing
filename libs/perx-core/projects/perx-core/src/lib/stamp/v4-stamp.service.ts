@@ -200,11 +200,8 @@ export class V4StampService implements StampService {
     }
 
     return this.http.get<IV4GetStampCardsResponse>(
-      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`, {
-      params: {
-        size: '100'
-      }
-    }
+      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_cards`,
+      { params: { size: '100' } }
     ).pipe(
       map((res: IV4GetStampCardsResponse) => res.data),
       map((stampCards: IV4StampCard[]) => stampCards.map(
@@ -223,11 +220,8 @@ export class V4StampService implements StampService {
 
   public getStamps(campaignId: number): Observable<IStamp[]> {
     return this.http.get<IV4GetStampTransactionsResponse>(
-      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_transactions`, {
-      params: {
-        size: '100'
-      }
-    }
+      `${this.baseUrl}/v4/campaigns/${campaignId}/stamp_transactions`,
+      { params: { size: '100' } }
     ).pipe(
       flatMap((resp: IV4GetStampTransactionsResponse) => {
         const streams = [
