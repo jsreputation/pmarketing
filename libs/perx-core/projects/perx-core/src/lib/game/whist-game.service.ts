@@ -10,6 +10,7 @@ import {
   defaultScratch,
   defaultPinata,
   IPlayOutcome,
+  IEngagementTransaction
 } from './game.model';
 import { Observable, combineLatest, of } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -112,7 +113,8 @@ export class WhistlerGameService implements IGameService {
         type: 'transactions',
         attributes: {
           engagement_id: gameId,
-          campaign_entity_id: campaignId
+          campaign_entity_id: campaignId,
+          status: 'confirmed'
         }
       }
     };
@@ -157,4 +159,49 @@ export class WhistlerGameService implements IGameService {
         map((game: IGame) => ([{ ...game, campaignId, displayProperties: { ...game.displayProperties, ...disProp } }]))
       );
   }
+
+  public prePlay(engagementId: number, campaignId?: number): Observable<IEngagementTransaction> {
+    const body = {
+      data: {
+        type: 'transactions',
+        attributes: {
+          engagement_id: engagementId,
+          campaign_entity_id: campaignId,
+          status: 'reserved'
+        }
+      }
+    };
+    return this.http.post<IJsonApiItemPayload<IWAttbsObjTrans>>(
+      `${this.hostName}/game/transactions`,
+      body,
+      { headers: { 'Content-Type': 'application/vnd.api+json' } }
+    ).pipe(
+      map(res => ({
+        id: Number.parseInt(res.data.id, 10),
+        voucherIds: res.data.attributes.results.attributes.results.map(
+          (outcome: IJsonApiItem<IWAssignedAttributes>) => Number.parseInt(outcome.id, 10)
+        )
+      }))
+    );
+  }
+  public prePlayConfirm(transactionId: number): Observable<void> {
+    const body = {
+      data: {
+        type: 'transactions',
+        id: transactionId,
+        attributes: {
+          status: 'confirmed'
+        }
+      }
+    };
+    return this.http.patch<IJsonApiItemPayload<IWAttbsObjTrans>>(
+      `${this.hostName}/game/transactions/${transactionId}`,
+      body,
+      { headers: { 'Content-Type': 'application/vnd.api+json' } }
+    ).pipe(
+      // @
+      map(() => void 0)
+    );
+  }
+
 }
