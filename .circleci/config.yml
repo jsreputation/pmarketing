@@ -186,6 +186,9 @@ jobs:
             if [ $APP == 'candyland' ]
             then
               export APP="candyland"
+            elif [ $APP == 'hsbc-xmas' ]
+            then
+              export APP="hsbc"
             fi
             echo "after second set APP: ${APP}"
 
