@@ -36,7 +36,7 @@ export class CampaignsComponent implements OnInit {
           this.games = games;
           this.campaigns = this.campaigns.filter(
             (campaign) => {
-              return ((games.filter((game) => game.campaignId === campaign.id).length) > 0);
+              return campaign.isComingSoon || ((games.filter((game) => game.campaignId === campaign.id).length) > 0);
             }
           );
       });
