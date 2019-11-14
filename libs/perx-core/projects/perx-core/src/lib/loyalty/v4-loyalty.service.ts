@@ -164,7 +164,7 @@ export class V4LoyaltyService extends LoyaltyService {
   public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4TransactionHistory): ITransactionHistory {
 
     const transactionDetails = oc(transactionHistory).transaction_details.data();
-    let data: IPurchaseTransactionHistory | IRewardTransactionHistory;
+    let data: IPurchaseTransactionHistory | IRewardTransactionHistory | undefined;
 
     if (transactionDetails) {
       switch (transactionHistory.transaction_details.type) {
@@ -251,8 +251,8 @@ export class V4LoyaltyService extends LoyaltyService {
         const streams = [
           of(histories)
         ];
-        for (let i = 2; i <= this.historyMeta.total_pages; i++) {
-          const stream = this.getTransactions(loyaltyId, i, pageSize, locale);
+        for (let i = 2; i <= ((this.historyMeta && this.historyMeta.total_pages) ? this.historyMeta.total_pages : 0); i++) {
+          const stream = this.getTransactions((loyaltyId ? loyaltyId : 1), i, pageSize);
           streams.push(stream);
         }
         return streams;
@@ -284,7 +284,7 @@ export class V4LoyaltyService extends LoyaltyService {
 
         return res.data;
       }),
-      map((loyalty: IV4Loyalty) => loyalty.points_history.map(
+      map((loyalty: IV4Loyalty) => oc(loyalty).points_history([]).map(
         (history: IV4PointHistory) => V4LoyaltyService.v4PointHistoryToPointHistory(history)
       ))
     );
