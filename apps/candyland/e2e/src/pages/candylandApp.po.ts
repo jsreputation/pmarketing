@@ -368,4 +368,12 @@ export class ElementApp {
   public static matCheckboxArray(): ElementArrayFinder {
     return element.all(by.css('mat-checkbox'));
   }
+
+  public static matTabBody(): ElementFinder {
+    return element(by.css('mat-tab-body'));
+  }
+
+  public static matError(): ElementFinder {
+    return element(by.css('mat-error'));
+  }
 }
