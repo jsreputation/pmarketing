@@ -127,7 +127,6 @@ export class PIComponent implements OnInit, OnDestroy {
   }
 
   public updateErrorMessage(error: string): void {
-    console.log(error);
     this.translate.get(error).subscribe(res => this.errorMessage = res);
   }
 }
