@@ -352,6 +352,14 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     this.tokenStorage.setAppInfoProperty(pi, 'pi');
   }
 
+  public getAnonymous(): boolean {
+    return !!this.tokenStorage.getAppInfoProperty('anonymous');
+  }
+
+  public saveAnonymous(anonymous: boolean): void {
+    this.tokenStorage.setAppInfoProperty(anonymous, 'anonymous');
+  }
+
   public getUserId(): number {
     return Number.parseInt(this.tokenStorage.getAppInfoProperty('id'), 10);
   }

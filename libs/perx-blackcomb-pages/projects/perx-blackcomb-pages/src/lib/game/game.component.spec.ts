@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
 import { ScratchComponent } from './scratch/scratch.component';
-import { GameModule, IGameService, PopupComponent, GameType, IGame } from '@perx/core';
+import { GameModule, IGameService, PopupComponent, GameType, IGame, AuthenticationService } from '@perx/core';
 import { MatDialogModule, MatProgressBarModule } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
@@ -37,6 +37,10 @@ describe('GameComponent', () => {
     navigate: () => Promise.resolve(true)
   };
 
+  const authServiceStub: Partial<AuthenticationService> = {
+    getAnonymous: () => true,
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -57,6 +61,7 @@ describe('GameComponent', () => {
         { provide: IGameService, useValue: gameServiceStub },
         { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: Router, useValue: routerStub },
+        { provide: AuthenticationService, useValue: authServiceStub }
       ]
     })
       .overrideModule(BrowserDynamicTestingModule, { set: { entryComponents: [PopupComponent] } })
