@@ -148,10 +148,11 @@ export class RewardComponent implements OnInit, OnDestroy {
 
     if (this.isAnonymousUser) {
       this.router.navigate(['/pi'], { queryParams });
-    }
-    this.router.navigate(['/wallet']);
-    if (this.popupData) {
-      this.dialog.open(PopupComponent, { data: this.popupData });
+    } else {
+      this.router.navigate(['/wallet']);
+      if (this.popupData) {
+        this.dialog.open(PopupComponent, { data: this.popupData });
+      }
     }
 
   }

@@ -131,11 +131,11 @@ export class GameComponent implements OnInit, OnDestroy {
 
   private redirectUrlAndPopUp(): void {
     const queryParams = { popupData: JSON.stringify(this.popupData), engagementType: 'game', transactionId: this.transactionId };
-
     if (this.isAnonymousUser) {
       this.router.navigate(['/pi'], { queryParams });
+    } else {
+      this.router.navigate(['/wallet']);
+      this.dialog.open(PopupComponent, { data: this.popupData });
     }
-    this.router.navigate(['/wallet']);
-    this.dialog.open(PopupComponent, { data: this.popupData });
   }
 }
