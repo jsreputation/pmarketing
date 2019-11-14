@@ -4,19 +4,21 @@ export interface ITheme {
 }
 
 interface IThemeProperties {
-  '--font'?: string;
-  '--logo'?: string;
-  '--title'?: string;
-  '--accent'?: string;
-  '--primary'?: string;
-  '--button_text_color'?: string;
-  '--button_background_color'?: string;
-  '--header_color'?: string;
-  '--background': string;
-  '--font_color': string;
-  'showHomePage'?: boolean;
-  'showSubtitleLogin'?: boolean;
-  '--login_background_colour'?: string;
+    '--font'?: string;
+    '--logo'?: string;
+    '--title'?: string;
+    '--accent'?: string;
+    '--primary'?: string;
+    '--button_text_color'?: string;
+    '--button_background_color'?: string;
+    '--header_color'?: string;
+    '--background': string;
+    '--font_color': string;
+    'showHomePage'?: boolean;
+    'showSubtitleLogin'?: boolean;
+    'showHistoryPage'?: boolean;
+    'showNewsfeedOnHomepage'?: boolean;
+    '--login_background_colour'?: string;
 }
 
 export const LIGHT: ITheme = {
