@@ -2,9 +2,14 @@ import { NgModule } from '@angular/core';
 import { WalletComponent } from '@perx/blackcomb-pages';
 import { SharedModule } from '../shared/shared.module';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { VouchersModule } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
+
+const routes: Routes = [{
+  path: '',
+  component: WalletComponent
+}];
 
 @NgModule({
   declarations: [
@@ -13,7 +18,7 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [
     SharedModule,
     CommonModule,
-    RouterModule,
+    RouterModule.forChild(routes),
     VouchersModule,
     TranslateModule
   ]

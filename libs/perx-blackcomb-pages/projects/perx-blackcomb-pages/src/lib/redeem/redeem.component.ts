@@ -28,23 +28,26 @@ export class RedeemComponent implements OnInit, OnDestroy {
   public subHeadLine: string;
   public codeInstructionsText: string = `Please input this code when redeeming your reward at the Merchant`;
   public rewardSuccessPopUp: IPopupConfig = {
-    title: 'Successfully Redeemed!',
-    text: '',
-    buttonTxt: 'Back To Wallet',
+    title: 'REDEEM_SUCCESSFULLY',
+    text: 'REDEEM_SUCCESS_TEXT',
+    buttonTxt: 'BACK_TO_WALLET',
     imageUrl: '',
   };
   public errorPopUp: IPopupConfig = {
-    title: 'Error occur, please try again later',
+    title: 'TRY_AGAIN_LATER',
     text: '',
-    buttonTxt: 'Back To Wallet',
+    buttonTxt: 'BACK_TO_WALLET',
     imageUrl: '',
   };
 
   private initTranslate(): void {
     this.translate.get('ENTER_CODE').subscribe((text) => this.headLine = text);
     this.translate.get('REDEMPTION_CODE').subscribe((text) => this.subHeadLine = text);
-    this.translate.get('REDEEM_SUCCESSFULLY').subscribe((text) => this.rewardSuccessPopUp.title = text);
-    this.translate.get('TRY_AGAIN_LATER').subscribe((text) => this.errorPopUp.title = text);
+    this.translate.get(this.rewardSuccessPopUp.title).subscribe((text) => this.rewardSuccessPopUp.title = text);
+    this.translate.get(this.rewardSuccessPopUp.text).subscribe((text) => this.rewardSuccessPopUp.text = text);
+    this.translate.get(this.rewardSuccessPopUp.buttonTxt).subscribe((text) => this.rewardSuccessPopUp.buttonTxt = text);
+    this.translate.get(this.errorPopUp.title).subscribe((text) => this.errorPopUp.title = text);
+    this.translate.get(this.errorPopUp.buttonTxt).subscribe((text) => this.errorPopUp.buttonTxt = text);
   }
 
   constructor(
@@ -66,7 +69,7 @@ export class RedeemComponent implements OnInit, OnDestroy {
         tap((id: number) => this.voucherId = id),
         switchMap((id: number) => this.vouchersService.get(id)),
         tap((voucher: Voucher) => {
-          this.rewardSuccessPopUp.text = `You have redeemed ${voucher.reward.name}`;
+          this.rewardSuccessPopUp.text = this.rewardSuccessPopUp.text.replace('{{reward}}', voucher.reward.name);
           this.redemptionType = voucher.reward.redemptionType;
           if (voucher.reward.displayProperties && voucher.reward.displayProperties.merchantPinText) {
             this.headLine = voucher.reward.displayProperties.merchantPinText.headLine || this.headLine;
@@ -75,8 +78,11 @@ export class RedeemComponent implements OnInit, OnDestroy {
 
           if (voucher.reward.displayProperties && voucher.reward.displayProperties.rewardSuccessPopUp) {
             this.rewardSuccessPopUp.title = voucher.reward.displayProperties.rewardSuccessPopUp.headLine;
-            this.rewardSuccessPopUp.text = voucher.reward.displayProperties.rewardSuccessPopUp.subHeadLine || this.rewardSuccessPopUp.text;
-            this.rewardSuccessPopUp.imageUrl = voucher.reward.displayProperties.rewardSuccessPopUp.imageURL;
+            this.rewardSuccessPopUp.text = voucher.reward.displayProperties.rewardSuccessPopUp.subHeadLine;
+            this.rewardSuccessPopUp.imageUrl = voucher.reward.displayProperties.rewardSuccessPopUp.imageURL
+              || this.rewardSuccessPopUp.imageUrl;
+            this.rewardSuccessPopUp.buttonTxt = voucher.reward.displayProperties.rewardSuccessPopUp.buttonTxt
+              || this.rewardSuccessPopUp.buttonTxt;
           }
 
           if (voucher.reward.displayProperties && voucher.reward.displayProperties.codeInstructionsText) {
@@ -85,7 +91,9 @@ export class RedeemComponent implements OnInit, OnDestroy {
 
           if (voucher.reward.displayProperties && voucher.reward.displayProperties.errorPopUp) {
             this.errorPopUp.title = voucher.reward.displayProperties.errorPopUp.headLine;
-            this.errorPopUp.imageUrl = voucher.reward.displayProperties.errorPopUp.imageURL;
+            this.errorPopUp.text = voucher.reward.displayProperties.errorPopUp.subHeadLine;
+            this.errorPopUp.buttonTxt = voucher.reward.displayProperties.errorPopUp.buttonTxt || this.errorPopUp.buttonTxt;
+            this.errorPopUp.imageUrl = voucher.reward.displayProperties.errorPopUp.imageURL || this.errorPopUp.imageUrl;
           }
         }),
         takeUntil(this.destroy$)

@@ -13,15 +13,12 @@ import {
   IChangePhoneData
 } from './models/authentication.model';
 import { Config } from '../../config/config';
-import { IJsonApiListPayload } from '../../jsonapi.payload';
 import {
   IWAppAccessTokenResponse,
-  IWMessageResponse
+  IWMessageResponse,
+  IWCognitoLogin,
+  IJsonApiListPayload,
 } from '@perx/whistler';
-
-interface ICognitoLogin {
-  jwt: string;
-}
 
 interface IUserJWTRequest {
   identifier: string;
@@ -97,7 +94,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public autoLogin(): Observable<any> {
     return this.getUserWithPI().pipe(
       tap(
-        (res: IJsonApiListPayload<ICognitoLogin>) => {
+        (res: IJsonApiListPayload<IWCognitoLogin>) => {
           const userBearer = res.data[0].attributes.jwt;
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
@@ -111,7 +108,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public createUserAndAutoLogin(pi: string, userObj?: IProfileAttributes, anonymous?: boolean): Observable<any> {
     return this.createUserWithPI(pi, userObj, anonymous).pipe(
       tap(
-        (res: IJsonApiListPayload<ICognitoLogin>) => {
+        (res: IJsonApiListPayload<IWCognitoLogin>) => {
           const userBearer = res.data[0].attributes.jwt;
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
@@ -123,17 +120,17 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     );
   }
 
-  private getUserWithPI(): Observable<IJsonApiListPayload<ICognitoLogin>> {
+  private getUserWithPI(): Observable<IJsonApiListPayload<IWCognitoLogin>> {
     const user = (window as any).primaryIdentifier || this.getPI();
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: user
     };
 
-    return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
+    return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
-  private createUserWithPI(pi: string, userObj?: IProfileAttributes, anonymous?: boolean): Observable<IJsonApiListPayload<ICognitoLogin>> {
+  private createUserWithPI(pi: string, userObj?: IProfileAttributes, anonymous?: boolean): Observable<IJsonApiListPayload<IWCognitoLogin>> {
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: pi,
@@ -143,7 +140,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
       userJWTRequest.profile = userObj;
     }
 
-    return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.createUsersEndPoint, userJWTRequest);
+    return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.createUsersEndPoint, userJWTRequest);
   }
 
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
