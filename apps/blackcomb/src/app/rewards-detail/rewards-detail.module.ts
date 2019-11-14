@@ -1,26 +1,26 @@
 import { NgModule } from '@angular/core';
-import { WalletComponent } from '@perx/blackcomb-pages';
-import { SharedModule } from '../shared/shared.module';
 import { CommonModule } from '@angular/common';
+import { RewardDetailsComponent } from '@perx/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
-import { VouchersModule } from '@perx/core';
+import { RewardsModule } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material';
 
 const routes: Routes = [{
   path: '',
-  component: WalletComponent
+  component: RewardDetailsComponent
 }];
 
 @NgModule({
   declarations: [
-    WalletComponent
+    RewardDetailsComponent,
   ],
   imports: [
-    SharedModule,
     CommonModule,
     RouterModule.forChild(routes),
-    VouchersModule,
-    TranslateModule
+    RewardsModule,
+    TranslateModule,
+    MatButtonModule
   ]
 })
-export class WalletModule { }
+export class RewardsDetailModule {}

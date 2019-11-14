@@ -1,6 +1,7 @@
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { ITheme, DARK, LIGHT, WhistlerISetting, WhistlerITenant, PagesObject } from './themes.model';
+import { ITheme, DARK, LIGHT, PagesObject } from './themes.model';
+import { IWSetting, IWTenant, } from '@perx/whistler';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
 import { map, tap } from 'rxjs/operators';
@@ -27,7 +28,7 @@ export class WhistlerThemesService extends ThemesService {
     }
   }
 
-  private static WThemeToTheme(setting: WhistlerISetting): ITheme {
+  private static WThemeToTheme(setting: IWSetting): ITheme {
     if (!setting) {
       return LIGHT;
     }
@@ -48,6 +49,7 @@ export class WhistlerThemesService extends ThemesService {
         '--button_text_color': setting['theme.button_text_color'],
         '--button_background_color': setting['theme.button_background_color'],
         '--header_color': setting['theme.header_color'],
+        '--login_background_colour': setting['theme.login_background_colour'],
         '--background': backgroundColor,
         '--font_color': fontColor,
       }
@@ -59,7 +61,7 @@ export class WhistlerThemesService extends ThemesService {
       url: location.host
     };
 
-    return this.http.post<IJsonApiListPayload<WhistlerITenant>>(this.themeSettingEndpoint, themesRequest).pipe(
+    return this.http.post<IJsonApiListPayload<IWTenant>>(this.themeSettingEndpoint, themesRequest).pipe(
       map(res => res.data && res.data[0].attributes.display_properties),
       map((setting) => WhistlerThemesService.WThemeToTheme(setting)),
       tap((theme) => this.setActiveTheme(theme))
@@ -73,7 +75,7 @@ export class WhistlerThemesService extends ThemesService {
     const accountSettingRequest: { url: string } = {
       url: location.host
     };
-    return this.http.post<IJsonApiListPayload<WhistlerITenant>>(this.themeSettingEndpoint, accountSettingRequest).pipe(
+    return this.http.post<IJsonApiListPayload<IWTenant>>(this.themeSettingEndpoint, accountSettingRequest).pipe(
       map(res => res.data && res.data[0].attributes.display_properties),
       map((displayProps) => displayProps.account || { pages: [] }),
       map((account) => this.settings = account)
