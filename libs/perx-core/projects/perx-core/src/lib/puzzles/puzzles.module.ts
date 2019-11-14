@@ -24,4 +24,4 @@ import { UtilsModule } from '../utils/utils.module';
     PuzzleCollectStampsComponent
   ]
 })
-export class PuzzlesModule {}
+export class PuzzlesModule { }
