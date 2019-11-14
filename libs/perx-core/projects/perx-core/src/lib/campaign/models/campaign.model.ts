@@ -27,6 +27,7 @@ export interface ICampaign {
   engagementId?: number;
   rawPayload?: any;
   displayProperties?: IWCampaignDisplayProperties;
+  isComingSoon?: boolean | null;
 }
 
 export enum CommChannel {
