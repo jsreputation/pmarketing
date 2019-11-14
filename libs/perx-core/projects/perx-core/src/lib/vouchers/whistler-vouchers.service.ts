@@ -32,6 +32,10 @@ export class WhistlerVouchersService implements IVoucherService {
       case WAssignedStatus.assigned:
       case WAssignedStatus.issued:
         return VoucherState.issued;
+      case WAssignedStatus.reserved:
+        return VoucherState.reserved;
+      case WAssignedStatus.expired:
+        return VoucherState.expired;
       default:
         return VoucherState.redeemed;
     }

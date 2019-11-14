@@ -74,6 +74,7 @@ export {
   defaultTree,
   IPlayOutcome,
   ISlice,
+  IEngagementTransaction
 } from './lib/game/game.model';
 export { IGameService } from './lib/game/igame.service';
 export { IGameComponent } from './lib/game/igame.component';
