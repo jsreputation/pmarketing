@@ -127,11 +127,11 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
           )
         ),
         map(res => ({
-        id: Number.parseInt(res.data.id, 10),
-        rewardIds: res.data.attributes.results.attributes.results.map(
-          (outcome: IJsonApiItem<IWAssignedAttributes>) => outcome.attributes.source_id
-        )
-      }))
+          id: Number.parseInt(res.data.id, 10),
+          rewardIds: res.data.attributes.results.attributes.results.map(
+            (outcome: IJsonApiItem<IWAssignedAttributes>) => outcome.attributes.source_id
+          )
+        }))
       );
   }
 
@@ -149,9 +149,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       `${this.config.apiHost}/instant-outcome/transactions/${transactionId}`,
       body,
       { headers: { 'Content-Type': 'application/vnd.api+json' } }
-    ).pipe(
-      map(() => { return; })
-    );
+    ).pipe(map(() => void 0));
   }
 
 }

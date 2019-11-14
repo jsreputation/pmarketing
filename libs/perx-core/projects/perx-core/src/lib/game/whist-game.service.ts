@@ -218,7 +218,8 @@ export class WhistlerGameService implements IGameService {
       body,
       { headers: { 'Content-Type': 'application/vnd.api+json' } }
     ).pipe(
-      map(() => { return; })
+      // @
+      map(() => void 0)
     );
   }
 
