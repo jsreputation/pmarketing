@@ -132,21 +132,22 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
           (locationsArr: ILocation[][]) => {
             const locations: ILocation[] = locationsArr[0];
             this.clearMarkers();
-            locations.map((location: ILocation) => {
-              const latLng: google.maps.LatLng = new google.maps.LatLng({ lat: location.latitude, lng: location.longitude });
-              const marker = new google.maps.Marker({
-                position: latLng,
-                map: this.map,
-                title: location.name
+            locations
+              .filter((location: ILocation) => location.latitude !== null && location.longitude !== null)
+              .forEach((location: ILocation) => {
+                const latLng: google.maps.LatLng = new google.maps.LatLng({ lat: location.latitude || 0, lng: location.longitude || 0 });
+                const marker = new google.maps.Marker({
+                  position: latLng,
+                  map: this.map,
+                  title: location.name
+                });
+                marker.addListener('click', () => {
+                  this.current = location;
+                });
+                marker.setClickable(true);
+                marker.setCursor('pointer');
+                this.markersArray.push(marker);
               });
-              marker.addListener('click', () => {
-                this.current = location;
-              });
-              marker.setClickable(true);
-              marker.setCursor('pointer');
-              this.markersArray.push(marker);
-              return marker;
-            });
             this.updateBoundingBox();
           }
         );
@@ -156,10 +157,16 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
   private updateBoundingBox(): void {
     let bbox: google.maps.LatLngBounds = new google.maps.LatLngBounds();
     this.markersArray.forEach((marker: google.maps.Marker) => {
-      bbox = bbox.extend(marker.getPosition());
+      const position = marker.getPosition();
+      if (position) {
+        bbox = bbox.extend(position);
+      }
     });
     if (this.userMarker) {
-      bbox.extend(this.userMarker.getPosition());
+      const position = this.userMarker.getPosition();
+      if (position) {
+        bbox.extend(position);
+      }
     }
     this.map.fitBounds(bbox);
   }
