@@ -2,7 +2,7 @@
  * Public API Surface of perx-core
  */
 export { PerxCoreModule } from './lib/perx-core.module';
-export { IRewardDisplayProperties, ICampaignDisplayProperties } from './lib/perx-core.models';
+
 /**
  * Merchants
  */
@@ -195,7 +195,6 @@ export { IConfig, IMicrositeSettings } from './lib/config/models/config.model';
 export {
   ITheme,
   PagesObject,
-  WhistlerITenant,
   AccountPageObject,
 } from './lib/utils/themes/themes.model';
 export { ThemesService } from './lib/utils/themes/themes.service';

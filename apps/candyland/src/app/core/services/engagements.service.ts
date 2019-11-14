@@ -25,7 +25,7 @@ export class EngagementsService {
   }
 
   public getEngagement(id: string, type: string): Observable<IEngagementType> {
-    const eType = EngagementTypeAPIMapping[type];
+    const eType = EngagementTypeAPIMapping[type].replace('_', '-');
     return this.http.getEngagement(id, eType).pipe(
       map((res: IJsonApiPayload<IWEngagementAttributes>) => EngagementHttpAdapter.transformEngagementHandler(res.data, type))
     );

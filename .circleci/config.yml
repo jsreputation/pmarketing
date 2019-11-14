@@ -186,9 +186,6 @@ jobs:
             if [ $APP == 'candyland' ]
             then
               export APP="candyland"
-            elif [ $APP == 'hsbc-xmas' ]
-            then
-              export APP="hsbc"
             fi
             echo "after second set APP: ${APP}"
 
@@ -433,7 +430,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /(\w+-)+staging-\d+\.\d+\.\d+.*/
+              only: /^(?!blackcomb|candyland)(\w+-)+staging-\d+\.\d+\.\d+.*/
       - deploy:
           name: deploy_to_production
           docker_tag: "${CIRCLE_TAG}"
@@ -449,7 +446,7 @@ workflows:
               ignore: /.*/
             tags:
               # semver v2
-              only: /(\w+-)+production-\d+\.\d+\.\d+.*/
+              only: /^(?!blackcomb|candyland)(\w+-)+production-\d+\.\d+\.\d+.*/
       - build_proxy_docker_image:
           filters:
             # need to sepcify this otherwise the job will run even if there's no tag

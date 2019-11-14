@@ -1,4 +1,4 @@
-import { ICampaignDisplayProperties } from '../../perx-core.models';
+import { IWCampaignDisplayProperties } from '@perx/whistler';
 
 export interface IOutcome {
   title: string;
@@ -7,5 +7,5 @@ export interface IOutcome {
   banner: string;
   backgroundImgUrl: string;
   cardBackgroundImgUrl: string;
-  displayProperties?: ICampaignDisplayProperties;
+  displayProperties?: IWCampaignDisplayProperties;
 }

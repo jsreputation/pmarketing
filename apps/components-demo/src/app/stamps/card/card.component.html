@@ -18,7 +18,12 @@
     #nbStampsRedeemed
   ></mat-slider>
 </div>
-<mat-checkbox name="toggler" (click)="toggleShow()">Show stamps left</mat-checkbox>
+<mat-checkbox
+  id="toggle"
+  (click)="toggleShow()"
+>
+  Show stamps left
+</mat-checkbox>
 <perx-core-puzzle-collect-stamps
   [nbSlots]="nbSlots.value"
   [stamps]="stamps"
@@ -34,7 +39,11 @@
 <p>Reward Position</p>
 <div #cbContainer class="checkboxContainer">
   <mat-checkbox
+    id="mat-checkbox-{{i}}"
     *ngFor="let slot of arrayFromNumber(nbSlots.value); let i = index"
-    >{{ i + 1 }}</mat-checkbox
+    (change)="checkboxOnChange($event)"
+  >
+    {{ i + 1 }}
+  </mat-checkbox
   >
 </div>

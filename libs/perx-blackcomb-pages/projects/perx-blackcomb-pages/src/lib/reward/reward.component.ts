@@ -71,8 +71,8 @@ export class RewardComponent implements OnInit, OnDestroy {
         this.cardBackground = eng.cardBackgroundImgUrl;
         const { displayProperties } = eng;
         if (displayProperties && displayProperties.noRewardsPopUp) {
-          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine || this.noRewardsPopUp.title;
-          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine || this.noRewardsPopUp.text;
+          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
+          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
           this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
           this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
         }
