@@ -20,7 +20,12 @@
   "BTN_DOWNLOAD_A_SAMPLE_FILE": "Download a sample file",
   "BTN_UPLOAD-FILE_A_LIST": "+ upload-file a list",
   "BTN_NEXT": "Next",
+  "ADD_QUESTION": "+ Add Question",
   "BTN_ADD": "Add",
+  "BTN_BACK": "Back",
+  "BTN_SAVE_AS_DRAFT": "Save as a draft",
+  "BNT_LAUNCH": "Launch",
+  "BNT_APPLY": "Apply",
 
 
   "DESCRIPTION": "Description",
