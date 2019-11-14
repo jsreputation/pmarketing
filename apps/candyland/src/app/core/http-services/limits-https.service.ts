@@ -14,7 +14,7 @@ export class LimitsHttpsService {
 
   public getLimits(params: HttpParams, engagementType: string):
     Observable<IJsonApiListPayload<IWLimitAttributes>> {
-    const eType = EngagementTypeAPIMapping[engagementType];
+    const eType = this.getEngagementTypeLink(engagementType);
     return this.http.get<IJsonApiListPayload<IWLimitAttributes>>(`${ApiConfig.basePath}/${eType}/limits`, { params });
   }
 
@@ -23,7 +23,7 @@ export class LimitsHttpsService {
     data: IJsonApiPayload<IWLimitAttributes>,
     engagementType: string
   ): Observable<IJsonApiPayload<IWLimitAttributes>> {
-    const eType = EngagementTypeAPIMapping[engagementType];
+    const eType = this.getEngagementTypeLink(engagementType);
     const url = `${ApiConfig.basePath}/${eType}/limits/${id}`;
     return this.http.patch<IJsonApiPayload<IWLimitAttributes>>(url, data);
   }
@@ -32,7 +32,7 @@ export class LimitsHttpsService {
     data: IJsonApiPayload<IWLimitAttributes>,
     engagementType: string
   ): Observable<IJsonApiPayload<IWLimitAttributes>> {
-    const eType = EngagementTypeAPIMapping[engagementType];
+    const eType = this.getEngagementTypeLink(engagementType);
     return this.http.post<IJsonApiPayload<IWLimitAttributes>>(
       `${ApiConfig.basePath}/${eType}/limits`,
       data
@@ -40,9 +40,13 @@ export class LimitsHttpsService {
   }
 
   public deleteLimit(engagementType: string, limitId: number | string): Observable<void> {
-    const eType = EngagementTypeAPIMapping[engagementType];
+    const eType = this.getEngagementTypeLink(engagementType);
     return this.http.delete(`${ApiConfig.basePath}/${eType}/limits/${limitId}`)
       // convert to a void observable in case of success
       .pipe(map(() => { return; }));
+  }
+
+  private getEngagementTypeLink(type: string): string {
+    return EngagementTypeAPIMapping[type].replace('_', '-');
   }
 }
