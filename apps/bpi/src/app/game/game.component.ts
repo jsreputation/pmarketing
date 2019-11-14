@@ -77,7 +77,7 @@ export class GameComponent implements OnInit {
       .subscribe(
         cards => {
           const lockedCards = cards.filter(card => {
-            // this.keys += card.stamps.filter(st => st.state === StampState.issued).length;
+            this.keys += card.stamps.filter(st => st.state === StampState.issued).length;
             // const totalSlots = card.displayProperties.totalSlots || 0;
             return card.state === StampCardState.inactive;
             // return card.stamps &&

@@ -27,6 +27,15 @@ export class AppComponent implements OnInit {
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => {
         this.preAuth = config.preAuth as boolean;
+
+        if (this.preAuth && isPlatformBrowser(this.platformId) && !((window as any).primaryIdentifier)) {
+          const param = location.search;
+          (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
+          if ((window as any).primaryIdentifier) {
+            this.authService.logout();
+            this.router.navigate(['']);
+          }
+        }
       }
     );
 
@@ -41,14 +50,5 @@ export class AppComponent implements OnInit {
         }
       }
     );
-
-    if (this.preAuth && isPlatformBrowser(this.platformId) && !((window as any).primaryIdentifier)) {
-      const param = location.search;
-      (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
-      if ((window as any).primaryIdentifier) {
-        this.authService.logout();
-        this.router.navigate(['']);
-      }
-    }
   }
 }
