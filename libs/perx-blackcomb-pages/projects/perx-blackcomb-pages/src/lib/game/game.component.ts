@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { IGameService, IGame, GameType, IPopupConfig, IEngagementTransaction } from '@perx/core';
+import { IGameService, IGame, GameType, IPopupConfig, IEngagementTransaction, AuthenticationService, PopupComponent } from '@perx/core';
 import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
-import { Observable, interval, throwError, Subject } from 'rxjs';
+import { Observable, interval, throwError, Subject, of, combineLatest } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'perx-blackcomb-pages-game',
@@ -18,6 +19,7 @@ export class GameComponent implements OnInit, OnDestroy {
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
   private popupData: IPopupConfig;
+  private isAnonymousUser: boolean;
   public successPopUp: IPopupConfig = {
     title: 'GAME_SUCCESS_TITLE',
     text: 'GAME_SUCCESS_TEXT',
@@ -45,12 +47,15 @@ export class GameComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private gameService: IGameService,
     private router: Router,
+    private dialog: MatDialog,
+    private auth: AuthenticationService,
     private translate: TranslateService,
   ) {
   }
 
   public ngOnInit(): void {
     this.initTranslate();
+    this.isAnonymousUser = this.auth.getAnonymous();
     this.gameData$ = this.route.params.pipe(
       filter((params: Params) => params.id),
       map((params: Params) => params.id),
@@ -109,21 +114,28 @@ export class GameComponent implements OnInit, OnDestroy {
 
   public gameCompleted(): void {
     // display a loader before redirecting to next page
-    const queryParams = { popupData: JSON.stringify(this.popupData), engagementType: 'game', transactionId: this.transactionId };
     const delay = 3000;
     const nbSteps = 60;
-    interval(delay / nbSteps)
+    const processBar$ = interval(delay / nbSteps)
       .pipe(
         tap(v => this.progressValue = v * 100 / nbSteps),
         bufferCount(nbSteps),
         first()
-      ).subscribe(
-        () => {
-          this.router.navigate(['/pi'], { queryParams });
-        },
-        () => {
-          this.router.navigate(['/pi'], { queryParams });
-        }
       );
+    const userAction$: Observable<void> = this.isAnonymousUser ? of(void 0) : this.gameService.prePlayConfirm(this.transactionId);
+    combineLatest(processBar$, userAction$).subscribe(
+      () => this.redirectUrlAndPopUp(),
+      () => this.redirectUrlAndPopUp()
+    );
+  }
+
+  private redirectUrlAndPopUp(): void {
+    const queryParams = { popupData: JSON.stringify(this.popupData), engagementType: 'game', transactionId: this.transactionId };
+    if (this.isAnonymousUser) {
+      this.router.navigate(['/pi'], { queryParams });
+    } else {
+      this.router.navigate(['/wallet']);
+      this.dialog.open(PopupComponent, { data: this.popupData });
+    }
   }
 }

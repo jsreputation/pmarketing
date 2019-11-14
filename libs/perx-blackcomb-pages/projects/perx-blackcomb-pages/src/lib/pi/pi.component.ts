@@ -101,6 +101,7 @@ export class PIComponent implements OnInit, OnDestroy {
           this.authService.savePI(pi);
           this.authService.saveUserId(newUserId);
           this.authService.saveUserAccessToken(newToken);
+          this.authService.saveAnonymous(false);
         }),
         switchMap(() => {
           if (this.engagementType === 'game' && this.transactionId) {
@@ -117,7 +118,9 @@ export class PIComponent implements OnInit, OnDestroy {
       ).subscribe(
         () => {
           this.router.navigate(['/wallet']);
-          this.dialog.open(PopupComponent, { data: this.popupData });
+          if (this.popupData) {
+            this.dialog.open(PopupComponent, { data: this.popupData });
+          }
         },
         (error: Error) => {
           this.updateErrorMessage(error.message);
