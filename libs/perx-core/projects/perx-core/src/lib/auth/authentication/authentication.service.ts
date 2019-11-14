@@ -129,4 +129,13 @@ export abstract class AuthenticationService implements AuthService {
 
   public abstract savePI(pi: string): void;
 
+  public abstract getAnonymous(): boolean;
+
+  public abstract saveAnonymous(anonymous: boolean): void;
+
+  public abstract getUserId(): number;
+
+  public abstract saveUserId(id: number): void;
+
+  public abstract mergeUserById(fromIds: number[], toId: number): Observable<void>;
 }
