@@ -1,16 +1,16 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams, HttpHeaders} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
-import {oc} from 'ts-optchain';
-import {interval, Observable, of} from 'rxjs';
-import {filter, flatMap, map, mergeAll, scan, switchMap, tap} from 'rxjs/operators';
+import { oc } from 'ts-optchain';
+import { interval, Observable, of } from 'rxjs';
+import { filter, flatMap, map, mergeAll, scan, switchMap, tap, mergeMap } from 'rxjs/operators';
 
-import {IVoucherService} from './ivoucher.service';
-import {IGetVoucherParams, IRedeemOptions, IVoucher, RedemptionType, VoucherState} from './models/voucher.model';
+import { IVoucherService } from './ivoucher.service';
+import { IGetVoucherParams, IRedeemOptions, IVoucher, RedemptionType, VoucherState } from './models/voucher.model';
 
-import {Config} from '../config/config';
-import {IRewardParams} from '../rewards/models/reward.model';
-import {IV4Reward, V4RewardsService} from '../rewards/v4-rewards.service';
+import { Config } from '../config/config';
+import { IRewardParams } from '../rewards/models/reward.model';
+import { IV4Reward, V4RewardsService } from '../rewards/v4-rewards.service';
 
 interface IV4Meta {
   count?: number;
@@ -91,12 +91,12 @@ export class V4VouchersService implements IVoucherService {
       id: v.id,
       reward: reward ? V4RewardsService.v4RewardToReward(reward) : null,
       state: v.state,
-      code: v.voucher_code,
+      code: (typeof v.voucher_code === 'string') ? v.voucher_code : undefined,
       expiry: reward && reward.valid_to !== null ? new Date(reward.valid_to) : null,
       redemptionDate: v.redemption_date !== null ? new Date(v.redemption_date) : null,
       redemptionType:
         v.redemption_type !== null &&
-        (v.redemption_type.type !== null && v.redemption_type.type !== 'offline') ? v.redemption_type.type :
+          (v.redemption_type.type !== null && v.redemption_type.type !== 'offline') ? v.redemption_type.type :
           v.voucher_type.toString() === 'code' ? RedemptionType.txtCode : v.voucher_type
     };
   }
@@ -110,11 +110,11 @@ export class V4VouchersService implements IVoucherService {
       .set('sort_by', 'id')
       .set('order', 'desc');
 
-    if (oc(voucherParams).type()) {
+    if (voucherParams && voucherParams.type) {
       params = params.set('type', voucherParams.type);
     }
 
-    if (oc(voucherParams).sourceType()) {
+    if (voucherParams && voucherParams.sourceType) {
       params = params.set('source_type', voucherParams.sourceType);
     }
 
@@ -134,7 +134,7 @@ export class V4VouchersService implements IVoucherService {
         mergeAll(),
         map((resp: IV4Voucher[]) => resp.map(v => V4VouchersService.v4VoucherToVoucher(v))),
         scan((acc: IVoucher[], curr: IVoucher[]) => acc.concat(curr), []),
-        map((vouchers: IVoucher[]) => vouchers.sort((v1, v2) => v1.reward.id - v2.reward.id)),
+        map((vouchers: IVoucher[]) => vouchers.sort((v1, v2) => oc(v1).reward.id(0) - oc(v2).reward.id(0))),
         tap(vouchers => this.vouchers = vouchers)
       );
   }
@@ -146,13 +146,15 @@ export class V4VouchersService implements IVoucherService {
       .set('sort_by', 'id')
       .set('order', 'desc');
 
-    if (oc(voucherParams).type()) {
+    if (voucherParams && voucherParams.type) {
       params = params.set('type', voucherParams.type);
     }
-    if (oc(voucherParams).sourceType()) {
+
+    if (voucherParams && voucherParams.sourceType) {
       params = params.set('source_type', voucherParams.sourceType);
     }
-    return this.http.get<IV4VouchersResponse>(this.vouchersUrl, {headers, params})
+
+    return this.http.get<IV4VouchersResponse>(this.vouchersUrl, { headers, params })
       .pipe(
         map(res => res.data)
       );
@@ -166,25 +168,26 @@ export class V4VouchersService implements IVoucherService {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     if (useCache) {
       const found = this.vouchers.find(v => `${v.id}` === `${id}`);
-      if (found) {
+      if (found !== undefined) {
         return of(found);
       }
     }
     let params = new HttpParams();
-    if (voucherParams && oc(voucherParams).sourceType) {
+    if (voucherParams && voucherParams.sourceType) {
       params = params.set('source_type', voucherParams.sourceType);
     }
     const url = `${this.config.apiHost}/v4/vouchers/${id}`;
-    return this.http.get<IV4VoucherResponse>(url, {headers, params}).pipe(
-      map(resp => resp.data),
-      map((v: IV4Voucher) => V4VouchersService.v4VoucherToVoucher(v)),
-      // if the vouchers list was not empty but we are here, it means it is a new voucher, so let's add it.
-      tap((v: IVoucher) => {
-        if (this.vouchers.length > 0 && !this.vouchers.some((voucher) => voucher.id === v.id)) {
-          this.vouchers.unshift(v);
-        }
-      })
-    );
+    return this.http.get<IV4VoucherResponse>(url, { headers, params })
+      .pipe(
+        map(resp => resp.data),
+        map((v: IV4Voucher) => V4VouchersService.v4VoucherToVoucher(v)),
+        // if the vouchers list was not empty but we are here, it means it is a new voucher, so let's add it.
+        tap((v: IVoucher) => {
+          if (this.vouchers.length > 0 && !this.vouchers.some((voucher) => voucher.id === v.id)) {
+            this.vouchers.unshift(v);
+          }
+        })
+      );
   }
 
   public redeemVoucher(id: number, options?: IRedeemOptions, locale: string = 'en'): Observable<any> {
@@ -210,7 +213,7 @@ export class V4VouchersService implements IVoucherService {
     return interval(intervalPeriod).pipe(
       map(val => {
         current = val;
-        return this.getAllFromPage(1, null, locale);
+        return this.getAllFromPage(1, undefined, locale);
       }),
       mergeAll(1),
       map((v4Vouchers: IV4Voucher[]) => v4Vouchers.map((v4Voucher: IV4Voucher) => V4VouchersService.v4VoucherToVoucher(v4Voucher))),
@@ -249,7 +252,7 @@ export class V4VouchersService implements IVoucherService {
     return interval(intervalPeriod).pipe(
       map(val => {
         current = val;
-        return this.get(voucherId, false, null, locale);
+        return this.get(voucherId, false, undefined, locale);
       }),
       mergeAll(1),
       filter((voucher: IVoucher) => {
@@ -271,22 +274,21 @@ export class V4VouchersService implements IVoucherService {
 
   public reserveReward(rewardId: number, rewardParams?: IRewardParams, locale: string = 'en'): Observable<IVoucher> {
     let params = new HttpParams();
-    const headers = new HttpHeaders().set('Accept-Language', locale);
-    if (oc(rewardParams).locationId()) {
+    const headers = (new HttpHeaders()).set('Accept-Language', locale);
+    if (rewardParams && rewardParams.locationId) {
       params = params.set('location_id', rewardParams.locationId.toString());
     }
-    if (oc(rewardParams).priceId()) {
+    if (rewardParams && rewardParams.priceId) {
       params = params.set('price_id', rewardParams.priceId.toString());
     }
-    if (oc(rewardParams).sourceType()) {
+    if (rewardParams && rewardParams.sourceType) {
       params = params.set('source_type', rewardParams.sourceType);
     }
-    return this.http.post<IV4ReserveRewardResponse>(
-      `${this.config.apiHost}/v4/rewards/${rewardId}/reserve`, null, {headers, params}
-    ).pipe(
-      map(res => res.data),
-      switchMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id, null, null, locale)),
-    );
+    return this.http.post<IV4ReserveRewardResponse>(`${this.config.apiHost}/v4/rewards/${rewardId}/reserve`, null, { headers, params })
+      .pipe(
+        map((res: IV4ReserveRewardResponse) => res.data),
+        mergeMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id, undefined, undefined, locale))
+      );
   }
 
   public issueReward(rewardId: number, sourceType?: string, locale: string = 'en'): Observable<IVoucher> {
@@ -295,11 +297,10 @@ export class V4VouchersService implements IVoucherService {
     if (sourceType) {
       params = params.set('source_type', sourceType);
     }
-    return this.http.post<IV4ReserveRewardResponse>(
-      `${this.config.apiHost}/v4/rewards/${rewardId}/issue`, {headers, params}
-    ).pipe(
-      map(res => res.data),
-      switchMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id, null, null, locale)),
-    );
+    return this.http.post<IV4ReserveRewardResponse>(`${this.config.apiHost}/v4/rewards/${rewardId}/issue`, { headers, params })
+      .pipe(
+        map(res => res.data),
+        switchMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id, undefined, undefined, locale)),
+      );
   }
 }

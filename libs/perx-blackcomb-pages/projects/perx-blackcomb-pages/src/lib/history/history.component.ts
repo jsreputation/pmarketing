@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Voucher, IVoucherService, VoucherState } from '@perx/core';
+import { Voucher, IVoucherService, VoucherState, StatusLabelMapping } from '@perx/core';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -10,6 +10,13 @@ import { Observable } from 'rxjs';
 export class HistoryComponent implements OnInit {
   public vouchers$: Observable<Voucher[]>;
   public filter: string[];
+  public mapping: StatusLabelMapping = {
+    issued: 'Approved',
+    redeemed: 'Redeemed',
+    expired: 'Expired',
+    reserved: 'Pending',
+    released: 'Declined',
+  };
 
   constructor(private vouchersService: IVoucherService) { }
 
