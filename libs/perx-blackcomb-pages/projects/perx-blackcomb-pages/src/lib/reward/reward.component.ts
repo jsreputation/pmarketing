@@ -72,26 +72,25 @@ export class RewardComponent implements OnInit, OnDestroy {
       .pipe(
         map((params: Params) => params.id),
         switchMap((id: string) => this.outcomeService.getFromCampaign(parseInt(id, 10))),
-        catchError(() => this.router.navigate(['/pi'],
-          {
-            queryParams: { engagementType: 'instant_outcome', transactionId: this.transactionId }
-          }
-        ))
+        catchError((err: Error) => { throw err; })
       )
-      .subscribe((eng: IOutcome) => {
-        this.title = eng.title;
-        this.subTitle = eng.subTitle;
-        this.button = eng.button;
-        this.background = eng.backgroundImgUrl;
-        this.cardBackground = eng.cardBackgroundImgUrl;
-        const { displayProperties } = eng;
-        if (displayProperties && displayProperties.noRewardsPopUp) {
-          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
-          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
-          this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
-          this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
-        }
-      });
+      .subscribe(
+        (eng: IOutcome) => {
+          this.title = eng.title;
+          this.subTitle = eng.subTitle;
+          this.button = eng.button;
+          this.background = eng.backgroundImgUrl;
+          this.cardBackground = eng.cardBackgroundImgUrl;
+          const { displayProperties } = eng;
+          if (displayProperties && displayProperties.noRewardsPopUp) {
+            this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
+            this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
+            this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
+            this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
+          }
+        },
+        () => this.redirectUrlAndPopUp()
+      );
 
     this.transaction$ =
       this.route.params
@@ -133,14 +132,11 @@ export class RewardComponent implements OnInit, OnDestroy {
   }
 
   public rewardClickedHandler(): void {
-    const userAction$ = this.isAnonymousUser ? of(true) : this.outcomeService.prePlayConfirm(this.transactionId);
+    const userAction$: Observable<void> = this.isAnonymousUser ? of(void 0) : this.outcomeService.prePlayConfirm(this.transactionId);
     userAction$.subscribe(
       () => this.redirectUrlAndPopUp(),
       () => this.redirectUrlAndPopUp()
     );
-    this.router.navigate(['/pi'], {
-      queryParams: { engagementType: 'instant_outcome', transactionId: this.transactionId }
-    });
   }
 
   private redirectUrlAndPopUp(): void {

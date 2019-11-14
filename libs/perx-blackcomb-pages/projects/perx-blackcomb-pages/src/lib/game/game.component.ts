@@ -122,7 +122,7 @@ export class GameComponent implements OnInit, OnDestroy {
         bufferCount(nbSteps),
         first()
       );
-    const userAction$ = this.isAnonymousUser ? of(true) : this.gameService.prePlayConfirm(this.transactionId);
+    const userAction$: Observable<void> = this.isAnonymousUser ? of(void 0) : this.gameService.prePlayConfirm(this.transactionId);
     combineLatest(processBar$, userAction$).subscribe(
       () => this.redirectUrlAndPopUp(),
       () => this.redirectUrlAndPopUp()
