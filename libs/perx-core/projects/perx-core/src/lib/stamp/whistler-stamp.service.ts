@@ -17,6 +17,7 @@ import {
   IWAttbsObjStamp,
   IWAttbsObjEntity,
 } from '@perx/whistler';
+import { oc } from 'ts-optchain';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,7 @@ export class WhistlerStampService implements StampService {
     const attributesObj = stampCard.attributes as IWAttbsObjStamp;
     return {
       title: attributesObj.display_properties.title,
-      subTitle: attributesObj.display_properties.sub_title ? attributesObj.display_properties.sub_title : null,
+      subTitle: oc(attributesObj).display_properties.sub_title(),
       buttonText: attributesObj.display_properties.button,
       id: +stampCard.id,
       state: StampCardState.active,
@@ -66,7 +67,7 @@ export class WhistlerStampService implements StampService {
   }
 
   public getCurrentCard(campaignId: number): Observable<IStampCard> {
-    let disProp: IWCampaignDisplayProperties;
+    let disProp: IWCampaignDisplayProperties | undefined;
     if (this.cache[campaignId]) {
       return of(this.cache[campaignId]);
     }
@@ -75,12 +76,12 @@ export class WhistlerStampService implements StampService {
         map(res => res.data.attributes),
         switchMap(correctEntityAttribute => {
           disProp = correctEntityAttribute.display_properties;
-          return this.http.get<IJsonApiItemPayload<IWAttbsObjStamp>>(
+          return this.http.get<IJsonApiItemPayload<IWAttbsObjStamp, void>>(
             `${this.baseUrl}/loyalty/engagements/${correctEntityAttribute.engagement_id}`
           );
         }),
-        map((res) => {
-          const stampData = WhistlerStampService.WStampCardToStampCard(res.data);
+        map((res: IJsonApiItemPayload<IWAttbsObjStamp, void>) => {
+          const stampData: IStampCard = WhistlerStampService.WStampCardToStampCard(res.data);
           return { ...stampData, campaignId, displayProperties: { ...stampData.displayProperties, ...disProp } };
         }),
         tap(sc => this.cache[campaignId] = sc)
