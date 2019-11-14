@@ -60,7 +60,6 @@ import { ConditionComponent } from './account/condition/condition.component';
 import { TransactionPipe } from './account/transaction-history/transaction.pipe';
 import {TransactionHistoryPipe} from './account/transaction-history/transaction-history.pipe';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { LocalStorageService } from './services/local-storage.service';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -138,7 +137,6 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
   ],
   providers: [
     // { provide: LOCALE_ID, useValue: 'zh' },
-    LocalStorageService,
     { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true }
   ],
   bootstrap: [AppComponent],

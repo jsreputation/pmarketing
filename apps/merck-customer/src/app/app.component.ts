@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { NotificationService, IConfig, ConfigService } from '@perx/core';
+import { NotificationService, IConfig, ConfigService, TokenStorage } from '@perx/core';
 import {
   PageProperties,
   BarSelectedItem,
@@ -11,7 +11,6 @@ import { MatSnackBar } from '@angular/material';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 import { Location } from '@angular/common';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
-import { LocalStorageService } from './services/local-storage.service';
 
 @Component({
   selector: 'mc-root',
@@ -40,7 +39,7 @@ export class AppComponent implements OnInit {
     private location: Location,
     private configService: ConfigService,
     private translateService: TranslateService,
-    private store: LocalStorageService
+    private store: TokenStorage
   ) {
     this.notificationService.$snack.subscribe((message: string) => {
       this.snackBar.openFromComponent(CustomSnackbarComponent, {
@@ -56,9 +55,9 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
 
     const lang = this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
-    this.store.set('merck-customer', lang);
+    this.store.setAppInfoProperty(lang, 'merck-customer');
     this.translateService.onLangChange.subscribe((change: LangChangeEvent) => {
-      this.store.set('merck-customer', change.lang);
+      this.store.setAppInfoProperty(change.lang, 'merck-customer');
     });
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => {
