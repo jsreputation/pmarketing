@@ -27,10 +27,10 @@ export class LoginComponent implements OnInit {
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => {
         this.preAuth = config.preAuth as boolean;
+        this.onSubmit();
       }
     );
 
-    this.onSubmit();
   }
 
   public onSubmit(): void {
