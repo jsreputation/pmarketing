@@ -17,7 +17,6 @@ export class CustomTranslateLoader implements TranslateLoader {
     private httpClient: HttpClient,
     private configService: ConfigService,
     private tokenStorage: TokenStorage
-   
   ) {
     this.configService.readAppConfig().subscribe((config) => {
       if (config.production) {
