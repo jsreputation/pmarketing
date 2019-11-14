@@ -5,6 +5,7 @@
   height: 63.8rem;
   z-index: 5;
   position: relative;
+  cursor: default;
 
   &::after {
     content: "";
