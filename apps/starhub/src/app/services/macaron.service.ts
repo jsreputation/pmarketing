@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IReward } from '@perx/core';
+import {ICampaign, IReward} from '@perx/core';
 
 export interface IMacaron {
   label: string;
@@ -78,6 +78,17 @@ export class MacaronService {
         label: 'Just added',
         class: 'just-added',
         isButtonEnabled: true
+      };
+    }
+    return null;
+  }
+
+  public getCampaignMacaron(campaign: ICampaign): IMacaron | null {
+    if (campaign.isComingSoon) {
+      return {
+        label: 'Coming Soon',
+        class: 'coming-soon',
+        isButtonEnabled: false
       };
     }
     return null;

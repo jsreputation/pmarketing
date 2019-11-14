@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { ICampaign, CampaignType, ICampaignService, IGameService, IGame } from '@perx/core';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
+import {IMacaron, MacaronService} from '../../services/macaron.service';
 
 @Component({
   selector: 'app-campaigns',
@@ -17,7 +18,8 @@ export class CampaignsComponent implements OnInit {
 
   constructor(
     private campaignService: ICampaignService,
-    private gameService: IGameService
+    private gameService: IGameService,
+    private macaronService: MacaronService,
   ) {}
 
   public ngOnInit(): void {
@@ -34,7 +36,7 @@ export class CampaignsComponent implements OnInit {
           this.games = games;
           this.campaigns = this.campaigns.filter(
             (campaign) => {
-              return ((games.filter((game) => game.campaignId === campaign.id).length) > 0);
+              return campaign.isComingSoon || ((games.filter((game) => game.campaignId === campaign.id).length) > 0);
             }
           );
       });
@@ -46,6 +48,10 @@ export class CampaignsComponent implements OnInit {
     if (gameWithCampaign) {
       this.tapped.emit(gameWithCampaign.id);
     }
+  }
+
+  public getCampaignMacaron(campaign: ICampaign): IMacaron | null {
+      return this.macaronService.getCampaignMacaron(campaign);
   }
 
 }
