@@ -2,12 +2,23 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ICampaignService, LoyaltyModule, RewardsModule, RewardsService, LoyaltyService, ProfileService, IGameService } from '@perx/core';
+import {
+  ICampaignService,
+  LoyaltyModule,
+  RewardsModule,
+  UtilsModule,
+  RewardsService,
+  LoyaltyService,
+  ProfileService,
+  IGameService,
+  ThemesService
+} from '@perx/core';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material';
 import { GamesCollectionComponent } from './games-collection/games-collection.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { profile } from '../mock/profile.mock';
+import { HttpClientModule } from '@angular/common/http';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getAllRewards: () => of([])
@@ -22,6 +33,8 @@ const loyaltyServiceStub: Partial<LoyaltyService> = {
 };
 
 const gameSvcStub: Partial<IGameService> = {};
+
+const themesServiceStub = { getThemeSetting: () => of({})};
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -39,6 +52,8 @@ describe('HomeComponent', () => {
         MatCardModule,
         LoyaltyModule,
         RewardsModule,
+        UtilsModule,
+        HttpClientModule,
         RouterTestingModule.withRoutes([]),
         TranslateModule.forRoot()
       ],
@@ -47,7 +62,8 @@ describe('HomeComponent', () => {
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: ProfileService, useValue: profileService },
-        { provide: IGameService, useValue: gameSvcStub }
+        { provide: IGameService, useValue: gameSvcStub },
+        { provide: ThemesService, useValue: themesServiceStub }
       ]
     })
       .compileComponents();
