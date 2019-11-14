@@ -42,7 +42,8 @@ import {
   VoucherComponent,
   RewardsListTabbedComponent,
   RewardsListComponent,
-  LoyaltySummaryComponent
+  LoyaltySummaryComponent,
+  NewsfeedComponent
 } from '@perx/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -104,7 +105,8 @@ const comps: any[] = [
   RewardsListComponent,
   LayoutComponent,
   HomeComponent,
-  GamesCollectionComponent
+  GamesCollectionComponent,
+  NewsfeedComponent
 ];
 
 @NgModule({
