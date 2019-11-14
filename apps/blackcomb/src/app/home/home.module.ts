@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { MatCardModule, MatButtonModule } from '@angular/material';
-import { LoyaltyModule, RewardsModule } from '@perx/core';
+import { LoyaltyModule, RewardsModule, UtilsModule } from '@perx/core';
 import { HomeComponent, GamesCollectionComponent } from '@perx/blackcomb-pages';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -21,6 +21,7 @@ const routes: Routes = [{
     RouterModule,
     MatCardModule,
     LoyaltyModule,
+    UtilsModule,
     RewardsModule,
     MatCardModule,
     MatButtonModule,
