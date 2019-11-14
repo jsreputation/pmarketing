@@ -88,8 +88,9 @@ export class GameComponent implements OnInit, OnDestroy {
       (gameTransaction: IEngagementTransaction) => {
         this.transactionId = gameTransaction.id;
         if (gameTransaction.voucherIds.length > 0) {
+          const count = gameTransaction.voucherIds.length.toString();
           this.successPopUp.text =
-            this.successPopUp.text ? this.successPopUp.text : `You earned ${gameTransaction.voucherIds.length} rewards`;
+            this.successPopUp.text ? this.successPopUp.text.replace('{{rewards}}', count) : `You earned ${count} rewards`;
           this.popupData = this.successPopUp;
         } else {
           this.popupData = this.noRewardsPopUp;
