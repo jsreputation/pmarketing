@@ -126,7 +126,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
       const getUserToken$ = this.authService.autoLogin();
       const PIHandler$ = pi => getUserToken$.pipe(tap(() => this.authService.savePI(pi)));
-      const createUserAndAutoLogin$ = pi => this.authService.createUserAndAutoLogin(pi);
+      const createUserAndAutoLogin$ = pi => this.authService.createUserAndAutoLogin(pi, null, true);
       const autoLoginWithoutPI$ = of(uuid.v4()).pipe(
         switchMap(newPI => createUserAndAutoLogin$(newPI)),
         takeUntil(this.destroy$)

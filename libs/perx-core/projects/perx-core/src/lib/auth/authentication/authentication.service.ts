@@ -51,7 +51,7 @@ export abstract class AuthenticationService implements AuthService {
 
   public abstract autoLogin(): Observable<any>;
 
-  public abstract createUserAndAutoLogin(pi: string, userObj?: IProfileAttributes): Observable<any>;
+  public abstract createUserAndAutoLogin(pi: string, userObj?: IProfileAttributes, anonymous?: boolean): Observable<any>;
 
   /**
    * This is important, for those public pages, API require app level access token in request header

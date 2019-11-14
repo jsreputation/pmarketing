@@ -121,9 +121,9 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       url: location.host,
       username: user,
       password: pass,
-      ...mechId && {mech_id: mechId},
-      ...campaignId && {campaign_id: campaignId},
-      ...scope && {scope}
+      ...mechId && { mech_id: mechId },
+      ...campaignId && { campaign_id: campaignId },
+      ...scope && { scope }
     };
     return this.http.post<IWLoginResponse>(this.userAuthEndPoint + '/token', authenticateBody);
   }
@@ -148,7 +148,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   // @ts-ignore
-  public createUserAndAutoLogin(pi: string): Observable<any> {
+  public createUserAndAutoLogin(pi: string, userObj?: any, anonymous?: boolean): Observable<any> {
     return throwError('Not implement yet');
   }
 
@@ -187,7 +187,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
 
   // @ts-ignore
   public forgotPassword(phone: string): Observable<IWMessageResponse> {
-    return this.http.get<IWMessageResponse>(`${this.customersEndPoint}/forget_password`, {params: {phone}})
+    return this.http.get<IWMessageResponse>(`${this.customersEndPoint}/forget_password`, { params: { phone } })
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -215,7 +215,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
 
   // @ts-ignore
   public resendOTP(phone: string): Observable<IWMessageResponse> {
-    return this.http.get<IWMessageResponse>(`${this.customersEndPoint}/resend_confirmation`, {params: {phone}})
+    return this.http.get<IWMessageResponse>(`${this.customersEndPoint}/resend_confirmation`, { params: { phone } })
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -248,7 +248,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
 
   // @ts-ignore
   public verifyOTP(phone: string, otp: string): Observable<IWMessageResponse> {
-    return this.http.patch<IWMessageResponse>(`${this.customersEndPoint}/confirm`, {phone, confirmation_token: otp})
+    return this.http.patch<IWMessageResponse>(`${this.customersEndPoint}/confirm`, { phone, confirmation_token: otp })
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
