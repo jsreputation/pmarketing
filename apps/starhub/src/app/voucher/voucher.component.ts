@@ -1,9 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import {Voucher, ILocation, IVoucherService, IReward, ICategoryTags, isEmptyArray} from '@perx/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
-import { AnalyticsService, PageType } from '../analytics.service';
-import { IMacaron, MacaronService } from '../services/macaron.service';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  Params,
+} from '@angular/router';
+
+import {
+  filter,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
+
+import {
+  Voucher,
+  ILocation,
+  IVoucherService,
+  IReward,
+  ICategoryTags,
+  isEmptyArray,
+} from '@perx/core';
+
+import {
+  AnalyticsService,
+  PageType,
+} from '../analytics.service';
+import {
+  IMacaron,
+  MacaronService,
+} from '../services/macaron.service';
 
 @Component({
   selector: 'app-voucher',
