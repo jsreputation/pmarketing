@@ -12,7 +12,6 @@
     "build:feature-demo:prod": "echo 'skipping feature-demo build'",
     "build:hsbc:prod": "echo 'skipping hsbc build'",
     "build:hsbc-xmas:prod": "lerna run build:lib && lerna run build:hsbc-xmas:prod --",
-    "build:hsbc-reward:prod": "lerna run build:lib && lerna run build:hsbc-reward:prod --",
     "build:prudential:prod": "echo 'skipping prudential build'",
     "build:merck-core:prod": "lerna run build:lib && lerna run build:merck-core:prod --",
     "build:starhub:prod": "lerna run build:lib && lerna run build:starhub:prod --",
