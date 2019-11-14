@@ -15,7 +15,7 @@ import {
   ProfileModule,
   RewardsModule,
   CustomTranslateLoader,
-  Config
+  ConfigService
 } from '@perx/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -50,7 +50,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, Config],
+        deps: [HttpClient, ConfigService],
         useClass: CustomTranslateLoader
       }
     }),

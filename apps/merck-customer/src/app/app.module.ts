@@ -36,7 +36,7 @@ import {
   MerchantsModule,
   ConfigModule,
   CustomTranslateLoader,
-  Config
+  ConfigService
 } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -128,7 +128,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
       loader: {
         provide: TranslateLoader,
         useClass: CustomTranslateLoader,
-        deps: [HttpClient, Config]
+        deps: [HttpClient, ConfigService]
       }
     })
   ],
