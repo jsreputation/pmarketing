@@ -53,13 +53,13 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
           Object.keys(values).forEach((key: string) => {
             const newKey = key.replace(/-/gi, '.');
             res[newKey] = values[key] && (typeof values[key] === 'string') ? values[key].trim() : values[key];
+          });
           return JSON.stringify(res);
         }),
         distinctUntilChanged(),
         debounceTime(500),
         takeUntil(this.destroy$)
-      )
-      .subscribe((value: any) => {
+      ).subscribe((value: any) => {
         this.dataSource.filter = value;
       });
   }
