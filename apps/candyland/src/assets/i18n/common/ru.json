@@ -24,8 +24,9 @@
   "BTN_ADD": "Add",
   "BTN_BACK": "Back",
   "BTN_SAVE_AS_DRAFT": "Save as a draft",
-  "BNT_LAUNCH": "Launch",
-  "BNT_APPLY": "Apply",
+  "BTN_LAUNCH": "Launch",
+  "BTN_APPLY": "Apply",
+  "BTN_REPORT": "Report",
 
 
   "DESCRIPTION": "Description",
@@ -39,7 +40,7 @@
   "WRONG_PATTERN_WEB_LINK": "Wrong pattern web link",
   "ERROR_WRONG_FORMAT_OF_EMAIL": "Wrong format of email",
   "ERROR_SELECT_AT_LEAST_ONE": "At least one option must be selected.",
-
+  "ERROR_CHOOSE_TEMPLATE": "Please, choose template.",
 
   "WEBLINK": "Weblink",
   "TO": "to",
@@ -64,6 +65,7 @@
   "PAUSE": "Pause",
   "ACTIVE": "Active",
   "STATUSES_TYPE": {
+    "ALL": "All",
     "ACTIVE": "Active",
     "DRAFT": "Draft",
     "PROCESSED": "Processed",
@@ -73,5 +75,6 @@
     "SCHEDULED": "Scheduled",
     "PAUSED": "Paused",
     "ENDED": "Ended"
-  }
+  },
+  "NAME": "Name"
 }

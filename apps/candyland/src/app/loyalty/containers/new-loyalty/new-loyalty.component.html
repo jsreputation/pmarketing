@@ -11,7 +11,7 @@
     <cl-button classList="tertiary" *ngIf="isEditPage" (click)="navigateToList()">{{'BTN_BACK' | translate}}</cl-button>
     <cl-button classList="secondary" *ngIf="!isLastStep && showDraftButton" (click)="saveAsDraft()">{{'BTN_SAVE_AS_DRAFT' | translate}}</cl-button>
     <cl-button classList="primary" *ngIf="!isLastStep" (click)="goNext()">{{'BTN_NEXT' | translate}}</cl-button>
-    <cl-button *ngIf="isLastStep" classList="primary" (click)="launch()">{{'BNT_LAUNCH' | translate}}</cl-button>
+    <cl-button *ngIf="isLastStep" classList="primary" (click)="launch()">{{'BTN_LAUNCH' | translate}}</cl-button>
   </div>
   <!--/  buttons-->
 </header>

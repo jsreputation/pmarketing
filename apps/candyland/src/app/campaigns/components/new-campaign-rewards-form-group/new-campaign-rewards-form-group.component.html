@@ -1,10 +1,12 @@
 <div class="card-header">
   <h2 class="card-title">{{title}}</h2>
-  <cl-button classList="tertiary ph-0" (click)="openDialogSelectReward()">+ Add Rewards</cl-button>
+  <cl-button classList="tertiary ph-0" (click)="openDialogSelectReward()">{{'CAMPAIGN.ADD_REWARDS' | translate}}+ Add Rewards</cl-button>
 </div>
 <div class="card-content" *ngIf="group && rewards?.controls?.length > 0">
   <div>
-    <mat-checkbox color="primary" [formControl]="enableProbability">Include Probability</mat-checkbox>
+    <mat-checkbox color="primary" [formControl]="enableProbability">
+      {{'CAMPAIGN.INCLUDE_PROBABILITY' | translate}}
+    </mat-checkbox>
   </div>
   <div>
     <div [formGroup]="rewards">
@@ -14,7 +16,7 @@
                       (clickDelete)="removeReward(i)">
       </cl-reward-item>
       <mat-error class="error" *ngIf="sumMoreThanError">
-        The total probability exceeds 100%. Please make it 100%.
+        {{'CAMPAIGN.THE_TOTAL_PROBABILITY' | translate}}
       </mat-error>
     </div>
   </div>
