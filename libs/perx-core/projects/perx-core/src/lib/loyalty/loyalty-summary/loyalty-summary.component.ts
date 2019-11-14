@@ -21,7 +21,7 @@ export class LoyaltySummaryComponent implements OnInit {
   public profile$: Observable<IProfile> | undefined;
 
   @Input('loyalty')
-  public loyalty$: Observable<ILoyalty | false> | undefined;
+  public loyalty$: Observable<ILoyalty | false>;
 
   @Input()
   public subTitleFn: (loyalty: ILoyalty) => string;

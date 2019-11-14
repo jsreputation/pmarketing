@@ -18,7 +18,7 @@ export enum CampaignState {
 export interface ICampaign {
   id: number;
   name: string;
-  description: string;
+  description: string | null;
   type: CampaignType;
   state: CampaignState;
   endsAt: Date | null;
