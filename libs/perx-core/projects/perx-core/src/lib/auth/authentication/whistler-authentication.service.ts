@@ -117,6 +117,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
             throw new Error('Get authentication token failed!');
           }
           this.savePI(pi);
+          this.saveAnonymous(anonymous);
           this.saveUserId(Number.parseInt(res.data[0].id, 10));
           this.saveUserAccessToken(userBearer);
         }
@@ -266,6 +267,14 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
 
   public savePI(pi: string): void {
     this.tokenStorage.setAppInfoProperty(pi, 'pi');
+  }
+
+  public getAnonymous(): boolean {
+    return !!this.tokenStorage.getAppInfoProperty('anonymous');
+  }
+
+  public saveAnonymous(anonymous: boolean): void {
+    this.tokenStorage.setAppInfoProperty(anonymous, 'anonymous');
   }
 
   public getUserId(): number {
