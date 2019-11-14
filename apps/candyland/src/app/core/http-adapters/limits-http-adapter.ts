@@ -4,13 +4,15 @@ import { ILimit } from '@cl-core/models/limit/limit.interface';
 enum LimitsDurationToAPIMapping {
   day = 'days',
   week = 'weeks',
-  month = 'months'
+  month = 'months',
+  campaign = 'campaign'
 }
 
 enum LimitsDurationFromAPIMapping {
   days = 'day',
   weeks = 'week',
-  months = 'month'
+  months = 'month',
+  campaign = 'campaign'
 }
 export class LimitsHttpAdapter {
   public static transformAPIResponseToLimit(
