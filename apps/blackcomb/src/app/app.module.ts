@@ -14,6 +14,8 @@ import {
   OutcomeModule,
   ProfileModule,
   RewardsModule,
+  CustomTranslateLoader,
+  Config,
 } from '@perx/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,10 +25,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { SignUpModule } from './sign-up/sign-up.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-import { HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import localeZhExtra from '@angular/common/locales/extra/zh';
@@ -35,27 +33,6 @@ import localesRuExtra from '@angular/common/locales/extra/ru';
 
 registerLocaleData(zh, 'zh', localeZhExtra);
 registerLocaleData(ru, 'ru', localesRuExtra);
-
-@Injectable()
-export class CustomTranslateLoader implements TranslateLoader {
-  private contentHeader: HttpHeaders = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-  });
-  private hostUrl: string = 'http://localhost:4000/';
-  constructor(private httpClient: HttpClient) {
-    if (environment.production) {
-      this.hostUrl = `${environment.baseHref}`;
-    }
-  }
-  public getTranslation(lang: string): Observable<{ [k: string]: string }> {
-    const apiAddress = `${this.hostUrl}lang?default=${lang}`;
-    return this.httpClient.get<{ [k: string]: string }>(apiAddress, { headers: this.contentHeader })
-      .pipe(
-        catchError(() => this.httpClient.get<{ [k: string]: string }>(`${this.hostUrl}assets/en-json.json`))
-      );
-  }
-}
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
   translateService.setDefaultLang(environment.defaultLang);
@@ -84,7 +61,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient],
+        deps: [HttpClient , Config],
         useClass: CustomTranslateLoader
       }
     }),
