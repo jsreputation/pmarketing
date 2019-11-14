@@ -24,7 +24,7 @@ export abstract class TokenStorage {
   /**
    * Set appInfo property
    */
-  public abstract setAppInfoProperty(value: string, key: string): void;
+  public abstract setAppInfoProperty(value: string | number | boolean, key: string): void;
 
   /**
    * Remove appInfo property

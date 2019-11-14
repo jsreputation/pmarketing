@@ -49,7 +49,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
 
   public ngOnInit(): void {
     if (!this.titleFn) {
-      this.titleFn = (index?: number) => 'Puzzle #' + this.indexToLetter(index);
+      this.titleFn = (index: number) => 'Puzzle #' + this.indexToLetter(index);
     }
 
     if (!this.puzzleTextFn) {

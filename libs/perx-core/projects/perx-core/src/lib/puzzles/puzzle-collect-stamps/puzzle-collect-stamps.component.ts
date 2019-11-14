@@ -103,11 +103,14 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
     return isPresent;
   }
 
-  public getStampImage(index: number, rowNum: number): string {
-
+  public getStampImage(index: number, rowNum: number): string | null {
     const itemIndex = this.getItemIndex(index, rowNum);
 
-    const stamped: boolean = (itemIndex < this.stamps.length && this.stamps[itemIndex].state === StampState.redeemed);
+    const stamped: boolean = (
+      this.stamps !== null &&
+      itemIndex < this.stamps.length &&
+      this.stamps[itemIndex].state === StampState.redeemed
+    );
 
     const isIssued = this.isIssued(index, rowNum);
 
@@ -125,7 +128,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
 
   public isIssued(index: number, rowNum: number): boolean {
     const itemIndex = this.getItemIndex(index, rowNum);
-    if (itemIndex < this.stamps.length) {
+    if (this.stamps && itemIndex < this.stamps.length) {
       return this.stamps[itemIndex].state === StampState.issued;
     }
     return false;
@@ -136,7 +139,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
       return;
     }
     const itemIndex = this.getItemIndex(index, rowNum);
-    if (itemIndex < this.stamps.length) {
+    if (this.stamps && itemIndex < this.stamps.length) {
       //   this.stamps[itemIndex].state = StampState.redeemed;
       this.availableStampClicked.emit(this.stamps[itemIndex]);
     }
@@ -144,6 +147,9 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
 
   private getItemIndex(index: number, rowNum: number): number {
     let itemIndex = index;
+    if (this.currentActiveOrientation === null) {
+      return itemIndex;
+    }
     for (let i = 0; i < this.currentActiveOrientation.length; i++) {
       if (rowNum > i) {
         itemIndex += this.currentActiveOrientation[i];

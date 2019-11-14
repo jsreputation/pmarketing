@@ -4,6 +4,7 @@ import { ILoyalty, ITransaction, ITransactionHistory } from './models/loyalty.mo
 import { Observable } from 'rxjs';
 import { Config } from '../config/config';
 import { map } from 'rxjs/operators';
+import {oc} from 'ts-optchain';
 
 import {
   IWLoyalty,
@@ -28,10 +29,10 @@ export class WhistlerLoyaltyService {
     this.hostName = config.apiHost as string;
   }
 
-  public static WLoyaltyToLoyalty(loyalty: IJsonApiItem<IWLoyalty>, cards: IJsonApiItem<IWLoyaltyCard>[]): ILoyalty {
+  public static WLoyaltyToLoyalty(loyalty: IJsonApiItem<IWLoyalty>, cards?: IJsonApiItem<IWLoyaltyCard>[]): ILoyalty {
     const card = cards && cards.find(cardTemp =>
       cardTemp.type === 'cards' &&
-      loyalty.relationships.cards.data.filter(rCard => rCard.type === 'cards' && rCard.id === cardTemp.id).length > 0
+      oc(loyalty).relationships.cards.data([]).filter(rCard => rCard.type === 'cards' && rCard.id === cardTemp.id).length > 0
     );
     return {
       id: Number.parseInt(loyalty.id, 10),
