@@ -60,7 +60,7 @@ export class WalletComponent implements OnInit, OnDestroy {
         ));
     this.translate.get('MY_WALLET').subscribe(text => this.rewardsHeadline = text);
     this.vouchers$ = this.vouchersService.getAll();
-    this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
+    this.filter = [VoucherState.issued, VoucherState.released];
     this.translate.get('VOUCHER_EXPIRY')
       .subscribe((text: string) => {
         this.expiryLabelFn = (v: Voucher) => {

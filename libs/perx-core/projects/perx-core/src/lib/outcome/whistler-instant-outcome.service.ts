@@ -18,7 +18,10 @@ import {
   IWCampaignProperties,
   IWCampaignDisplayProperties,
   IJsonApiPostItem,
+  WInstantOutcomeStatus,
+  IWAssignedAttributes
 } from '@perx/whistler';
+import { IEngagementTransaction } from '../game/game.model';
 
 @Injectable({
   providedIn: 'root'
@@ -64,7 +67,6 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
         ));
   }
 
-  // @ts-ignore
   public claim(campaignId: number): Observable<IReward[]> {
     const buildBody: Observable<IJsonApiPostItem<IWInstantOutcomeTxnReq>> = this.getEngagementId(campaignId)
       .pipe(
@@ -73,7 +75,8 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
             type: 'transactions',
             attributes: {
               engagement_id: campaign.engagementId,
-              campaign_entity_id: campaignId
+              campaign_entity_id: campaignId,
+              status: WInstantOutcomeStatus.confirmed
             }
           }
         }))
@@ -99,4 +102,51 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       mergeMap((queries: Observable<IReward>[]): Observable<IReward[]> => combineLatest(...queries))
     );
   }
+
+  public prePlay(campaignId?: number): Observable<IEngagementTransaction> {
+    return this.getEngagementId(campaignId)
+      .pipe(
+        map((campaign: IWCampaignProperties): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
+          data: {
+            type: 'transactions',
+            attributes: {
+              engagement_id: campaign.engagementId,
+              campaign_entity_id: campaignId,
+              status: WInstantOutcomeStatus.reserved
+            }
+          }
+        })),
+        switchMap(
+          (body: IJsonApiPostItem<IWInstantOutcomeTxnReq>) => this.http.post<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>>(
+            `${this.config.apiHost}/instant-outcome/transactions`,
+            body,
+            { headers: { 'Content-Type': 'application/vnd.api+json' } }
+          )
+        ),
+        map(res => ({
+          id: Number.parseInt(res.data.id, 10),
+          rewardIds: res.data.attributes.results.attributes.results.map(
+            (outcome: IJsonApiItem<IWAssignedAttributes>) => outcome.attributes.source_id
+          )
+        }))
+      );
+  }
+
+  public prePlayConfirm(transactionId: number): Observable<void> {
+    const body = {
+      data: {
+        type: 'transactions',
+        id: transactionId,
+        attributes: {
+          status: 'confirmed'
+        }
+      }
+    };
+    return this.http.patch<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>>(
+      `${this.config.apiHost}/instant-outcome/transactions/${transactionId}`,
+      body,
+      { headers: { 'Content-Type': 'application/vnd.api+json' } }
+    ).pipe(map(() => void 0));
+  }
+
 }
