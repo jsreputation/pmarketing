@@ -56,7 +56,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   private cardsCount: number = 0;
   private currentStampId: number = 0;
   public title: string = 'Stamp Card';
-  public subTitle: string = 'Earn rewards by collecting stamps';
+  public subTitle: string = 'Tap the stamps to earn your reward!';
   private displayCampaignAs: string = 'puzzle';
   public sourceType: string;
 
