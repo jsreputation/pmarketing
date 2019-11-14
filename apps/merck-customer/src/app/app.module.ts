@@ -35,7 +35,8 @@ import {
   LocationModule,
   VouchersModule,
   MerchantsModule,
-  ConfigModule
+  ConfigModule,
+  TokenStorage
 } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -58,10 +59,10 @@ import { TransactionHistoryComponent } from './account/transaction-history/trans
 import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.component';
 import { ConditionComponent } from './account/condition/condition.component';
 import { TransactionPipe } from './account/transaction-history/transaction.pipe';
-import {TransactionHistoryPipe} from './account/transaction-history/transaction-history.pipe';
+import { TransactionHistoryPipe } from './account/transaction-history/transaction-history.pipe';
 import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 
 @Injectable()
 export class CustomTranslateLoader implements TranslateLoader {
@@ -70,15 +71,20 @@ export class CustomTranslateLoader implements TranslateLoader {
     'Access-Control-Allow-Origin': '*',
   });
   private hostUrl: string = 'http://localhost:4000/';
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    private httpClient: HttpClient,
+    private tokenStorage: TokenStorage
+  ) {
     if (environment.production) {
       this.hostUrl = `${environment.baseHref}`;
     }
   }
   public getTranslation(lang: string): Observable<{ [k: string]: string }> {
     const apiAddress = `${this.hostUrl}lang?default=${lang}`;
-    return this.httpClient.get<{ [k: string]: string }>(apiAddress, { headers: this.contentHeader })
+    return this.httpClient.get<{ [k: string]: string }>(apiAddress, { headers: this.contentHeader, observe: 'response' })
       .pipe(
+        tap((req) => this.tokenStorage.setAppInfoProperty(req.headers.get('content-language'), 'lang')),
+        map((res) => res.body),
         catchError(() => this.httpClient.get<{ [k: string]: string }>(`${this.hostUrl}assets/en-json.json`))
       );
   }
@@ -150,7 +156,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
       loader: {
         provide: TranslateLoader,
         useClass: CustomTranslateLoader,
-        deps: [HttpClient]
+        deps: [HttpClient, TokenStorage]
       }
     })
   ],

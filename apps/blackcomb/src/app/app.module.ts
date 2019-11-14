@@ -14,6 +14,7 @@ import {
   OutcomeModule,
   ProfileModule,
   RewardsModule,
+  TokenStorage,
 } from '@perx/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,7 +26,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
@@ -43,15 +44,20 @@ export class CustomTranslateLoader implements TranslateLoader {
     'Access-Control-Allow-Origin': '*',
   });
   private hostUrl: string = 'http://localhost:4000/';
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    private httpClient: HttpClient,
+    private tokenStorage: TokenStorage
+  ) {
     if (environment.production) {
       this.hostUrl = `${environment.baseHref}`;
     }
   }
   public getTranslation(lang: string): Observable<{ [k: string]: string }> {
     const apiAddress = `${this.hostUrl}lang?default=${lang}`;
-    return this.httpClient.get<{ [k: string]: string }>(apiAddress, { headers: this.contentHeader })
+    return this.httpClient.get<{ [k: string]: string }>(apiAddress, { headers: this.contentHeader, observe: 'response' })
       .pipe(
+        tap((req) => this.tokenStorage.setAppInfoProperty(req.headers.get('content-language'), 'lang')),
+        map((res) => res.body),
         catchError(() => this.httpClient.get<{ [k: string]: string }>(`${this.hostUrl}assets/en-json.json`))
       );
   }
@@ -84,7 +90,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient],
+        deps: [HttpClient, TokenStorage],
         useClass: CustomTranslateLoader
       }
     }),
