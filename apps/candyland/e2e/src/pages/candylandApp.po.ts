@@ -274,8 +274,24 @@ export class BrandingSettingsAppPage {
 
 export class AudienceAppPage {
 
-  public navigateToAudience(): Promise<string> {
+  public static navigateToAudience(): Promise<string> {
     return browser.get('audience') as Promise<string> ;
+  }
+
+  public static audienceList(): ElementFinder {
+    return element(by.css('mat-select[formcontrolname=audienceList]'));
+  }
+
+  public static audienceSpan(): ElementFinder {
+    return element(by.xpath('(//*[@href="/audience/1"][1]/span)[2]'));
+  }
+
+  public static audienceCheckboxContainer(): ElementArrayFinder {
+    return element.all(by.css('div.mat-checkbox-inner-container'));
+  }
+
+  public static audienceColumnList(): ElementArrayFinder {
+    return element.all(by.css('td.column-audiencelist'));
   }
 
 }
@@ -294,4 +310,62 @@ export class BlackcombHomeAppPage {
     return browser.get('https://generic-blackcomb-dev1.uat.whistler.perxtech.io/home') as Promise<string> ;
   }
 
+}
+
+export class ElementApp {
+  public static h3Array(): ElementArrayFinder {
+    return element.all(by.css('h3'));
+  }
+
+  public static inputText(): ElementFinder {
+    return element(by.css('input[type=text]'));
+  }
+
+  public static inputTextArray(): ElementArrayFinder {
+    return element.all(by.css('input[type=text]'));
+  }
+
+  public static inputEmail(): ElementFinder {
+    return element(by.css('input[type=email]'));
+  }
+
+  public static inputTel(): ElementFinder {
+    return element(by.css('input[type=tel]'));
+  }
+
+  public static clButton(): ElementFinder {
+    return element(by.css('cl-button'));
+  }
+
+  public static clButtonArray(): ElementArrayFinder {
+    return element.all(by.css('cl-button'));
+  }
+
+  public static matSelectCountry(): ElementFinder {
+    return element(by.css('mat-select[formcontrolname=country]'));
+  }
+
+  public static matPseudoCheckbox(): ElementArrayFinder {
+    return element.all(by.css('mat-pseudo-checkbox'));
+  }
+
+  public static spanMatOptionText(): ElementArrayFinder {
+    return element.all(by.css('span.mat-option-text'));
+  }
+
+  public static matRowInserted(): ElementArrayFinder {
+    return element.all(by.css('tr.mat-row.ng-star-inserted'));
+  }
+
+  public static matIconButton(): ElementArrayFinder {
+    return element.all(by.css('button.mat-icon-button'));
+  }
+
+  public static menuItemButton(): ElementFinder {
+    return element(by.css('button[role=menuitem]'));
+  }
+
+  public static matCheckboxArray(): ElementArrayFinder {
+    return element.all(by.css('mat-checkbox'));
+  }
 }
