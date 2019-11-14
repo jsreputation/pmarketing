@@ -1,4 +1,10 @@
-import { browser, by, element, ElementFinder, ElementArrayFinder } from 'protractor';
+import {
+  browser,
+  by,
+  element,
+  ElementFinder,
+  ElementArrayFinder,
+} from 'protractor';
 
 export class DashboardAppPage {
   public navigateToDashboard(): Promise<string> {
@@ -13,20 +19,20 @@ export class EngagementAppPage {
     return browser.get('engagements') as Promise<string> ;
   }
   public engagementTabOption(): ElementFinder {
-   return element.all(by.css('h3')).get(2);
+    return element.all(by.css('h3')).get(2);
   }
   public engagementCreateNewButton(): ElementFinder {
     return element(by.css('cl-button'));
-   }
+  }
   public selectEngagementTypeDialog(): ElementFinder {
     return element(by.css('mat-dialog-content'));
-   }
+  }
   public engagementTypeOptions(): ElementArrayFinder {
     return element.all(by.css('cl-type-item'));
-   }
-   public activeEngagementTypeOption(): ElementFinder {
+  }
+  public activeEngagementTypeOption(): ElementFinder {
     return element(by.css('button.engagement-selector.active'));
-   }
+  }
   public engagementNextButton(): ElementFinder {
     return element.all(by.className('btn mat-flat-button primary')).get(1);
   }
@@ -36,7 +42,7 @@ export class CreateShakeTheTreeAppPage {
 
   public navigateToShakeTheTree(): Promise<string> {
     return browser.get('engagements/games/new-shake') as Promise<string> ;
- }
+  }
   public shakeTreeCreateNewButton(): ElementFinder {
     return element.all(by.css('button')).get(2);
   }
@@ -104,7 +110,7 @@ export class CreateShakeTheTreeAppPage {
     return element(by.css('h2.dialog-title'));
   }
   public dropdownList(): ElementFinder {
-     return element(by.css('div.mat-select-arrow'));
+    return element(by.css('div.mat-select-arrow'));
   }
   public selectOption(): ElementFinder {
     return element.all(by.className('mat-option ng-star-inserted')).get(1);
@@ -168,7 +174,7 @@ export class LoginAppPage {
 
   public navigateToLogin(): Promise<string> {
     return browser.get('login') as Promise<string> ;
- }
+  }
   public accountIDField(): ElementFinder {
     return element.all(by.css('input')).first();
 
@@ -186,7 +192,7 @@ export class LoginAppPage {
   }
 
   public getAccountId(): string {
-   return 'generic';
+    return 'generic';
   }
 
   public getUserAccount(): string {
@@ -199,7 +205,7 @@ export class CreateSurveyAppPage {
 
   public navigateToSurvey(): Promise<string> {
     return browser.get('engagements/new-survey/questions') as Promise<string> ;
- }
+  }
 
 }
 
@@ -207,14 +213,14 @@ export class CreateHitThePinataAppPage {
 
   public navigateToHitThePinata(): Promise<string> {
     return browser.get('engagements/games/new-pinata') as Promise<string> ;
- }
+  }
 
 }
 export class CreateInstantRewardAppPage {
 
   public navigateToCreateInstantReward(): Promise<string> {
     return browser.get('engagements/new-instant-reward') as Promise<string> ;
- }
+  }
 
 }
 
@@ -222,7 +228,7 @@ export class RewardAppPage {
 
   public navigateToReward(): Promise<string> {
     return browser.get('rewards') as Promise<string> ;
- }
+  }
 
 }
 
@@ -230,7 +236,7 @@ export class CreateRewardAppPage {
 
   public navigateToRewardCreate(): Promise<string> {
     return browser.get('rewards/new-reward') as Promise<string> ;
- }
+  }
 
 }
 
@@ -238,7 +244,7 @@ export class CampaignAppPage {
 
   public navigateToCampaign(): Promise<string> {
     return browser.get('campaigns') as Promise<string> ;
- }
+  }
 
 }
 
@@ -246,7 +252,7 @@ export class CreateCampaignAppPage {
 
   public navigateToCreateCampaign(): Promise<string> {
     return browser.get('campaigns/new-campaign') as Promise<string> ;
- }
+  }
 
 }
 
@@ -254,7 +260,7 @@ export class GeneralSettingsAppPage {
 
   public navigateToGeneralSettings(): Promise<string> {
     return browser.get('settings/general') as Promise<string> ;
- }
+  }
 
 }
 
@@ -262,7 +268,7 @@ export class BrandingSettingsAppPage {
 
   public navigateToBrandingSettings(): Promise<string> {
     return browser.get('settings/branding') as Promise<string> ;
- }
+  }
 
 }
 
@@ -270,7 +276,7 @@ export class AudienceAppPage {
 
   public navigateToAudience(): Promise<string> {
     return browser.get('audience') as Promise<string> ;
- }
+  }
 
 }
 
@@ -278,7 +284,7 @@ export class BlackcombWalletAppPage {
 
   public navigateBlackcombWalletApp(): Promise<string> {
     return browser.get('https://generic-blackcomb-dev1.uat.whistler.perxtech.io/wallet') as Promise<string> ;
- }
+  }
 
 }
 
@@ -286,6 +292,6 @@ export class BlackcombHomeAppPage {
 
   public navigateToBlackcombHomeApp(): Promise<string> {
     return browser.get('https://generic-blackcomb-dev1.uat.whistler.perxtech.io/home') as Promise<string> ;
- }
+  }
 
 }
