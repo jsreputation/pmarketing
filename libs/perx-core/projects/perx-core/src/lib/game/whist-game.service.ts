@@ -108,7 +108,7 @@ export class WhistlerGameService implements IGameService {
       texts.button = attributes.display_properties.button;
     }
 
-    const imgUrl: string | null = attributes.image_url;
+    const imgUrl: string | undefined = attributes.image_url ? attributes.image_url : undefined;
 
     const backgroundImg: string | undefined = attributes.display_properties.background_img_url ?
       attributes.display_properties.background_img_url : undefined;
