@@ -1,10 +1,20 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, of, Subject, combineLatest } from 'rxjs';
-import { InstantOutcomeService, IReward, IOutcome, IPopupConfig, IEngagementTransaction, RewardsService } from '@perx/core';
+import {
+  InstantOutcomeService,
+  IReward,
+  IOutcome,
+  IPopupConfig,
+  IEngagementTransaction,
+  RewardsService,
+  AuthenticationService,
+  PopupComponent
+} from '@perx/core';
 import { map, switchMap, catchError, tap, takeUntil, } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'perx-blackcomb-reward',
@@ -20,6 +30,8 @@ export class RewardComponent implements OnInit, OnDestroy {
   public rewards$: Observable<IReward[]>;
   public transaction$: Observable<IEngagementTransaction>;
   private transactionId: number | null = null;
+  private isAnonymousUser: boolean;
+  private popupData: IPopupConfig;
   public noRewardsPopUp: IPopupConfig = {
     title: 'INSTANT_OUTCOME_NO_REWARDS_TITLE',
     text: 'INSTANT_OUTCOME_NO_REWARDS_TEXT',
@@ -39,6 +51,8 @@ export class RewardComponent implements OnInit, OnDestroy {
     private outcomeService: InstantOutcomeService,
     private route: ActivatedRoute,
     private router: Router,
+    private dialog: MatDialog,
+    private auth: AuthenticationService,
     private translate: TranslateService,
     private rewardService: RewardsService
   ) { }
@@ -53,6 +67,7 @@ export class RewardComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initTranslate();
+    this.isAnonymousUser = this.auth.getAnonymous();
     this.route.params
       .pipe(
         map((params: Params) => params.id),
@@ -90,15 +105,8 @@ export class RewardComponent implements OnInit, OnDestroy {
             }
           }),
           catchError(() => {
-            this.router.navigate(['/pi'],
-              {
-                queryParams:
-                {
-                  popupData: JSON.stringify(this.noRewardsPopUp),
-                  engagementType: 'instant_outcome',
-                  transactionId: this.transactionId
-                }
-              });
+            this.popupData = this.noRewardsPopUp;
+            this.redirectUrlAndPopUp();
             // next line is actually useless as we will redirected.
             return of<IEngagementTransaction>({
               rewardIds: [],
@@ -125,9 +133,31 @@ export class RewardComponent implements OnInit, OnDestroy {
   }
 
   public rewardClickedHandler(): void {
+    const userAction$ = this.isAnonymousUser ? of(true) : this.outcomeService.prePlayConfirm(this.transactionId);
+    userAction$.subscribe(
+      () => this.redirectUrlAndPopUp(),
+      () => this.redirectUrlAndPopUp()
+    );
     this.router.navigate(['/pi'], {
       queryParams: { engagementType: 'instant_outcome', transactionId: this.transactionId }
     });
+  }
+
+  private redirectUrlAndPopUp(): void {
+    const queryParams = {
+      popupData: JSON.stringify(this.popupData),
+      engagementType: 'instant_outcome',
+      transactionId: this.transactionId
+    };
+
+    if (this.isAnonymousUser) {
+      this.router.navigate(['/pi'], { queryParams });
+    }
+    this.router.navigate(['/wallet']);
+    if (this.popupData) {
+      this.dialog.open(PopupComponent, { data: this.popupData });
+    }
+
   }
 
   public ngOnDestroy(): void {

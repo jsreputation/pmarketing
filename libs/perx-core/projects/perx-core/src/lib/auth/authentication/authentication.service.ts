@@ -129,6 +129,10 @@ export abstract class AuthenticationService implements AuthService {
 
   public abstract savePI(pi: string): void;
 
+  public abstract getAnonymous(): boolean;
+
+  public abstract saveAnonymous(anonymous: boolean): void;
+
   public abstract getUserId(): number;
 
   public abstract saveUserId(id: number): void;

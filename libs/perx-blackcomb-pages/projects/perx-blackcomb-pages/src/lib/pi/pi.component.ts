@@ -101,6 +101,7 @@ export class PIComponent implements OnInit, OnDestroy {
           this.authService.savePI(pi);
           this.authService.saveUserId(newUserId);
           this.authService.saveUserAccessToken(newToken);
+          this.authService.saveAnonymous(false);
         }),
         switchMap(() => {
           if (this.engagementType === 'game' && this.transactionId) {
