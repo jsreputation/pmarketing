@@ -23,6 +23,7 @@ import {
 
 import { Config } from '../config/config';
 import { IWRewardDisplayProperties } from '@perx/whistler';
+import { oc } from 'ts-optchain';
 
 export interface IV4Tag {
   id: number;
@@ -143,8 +144,8 @@ export class V4RewardsService extends RewardsService {
     }
     const thumbnailImg = thumbnail && thumbnail.url;
     const banner = images.find((image: IV4Image) => image.type === 'reward_banner');
-    const rewardBanner = banner && banner.url;
-    const merchantImg = reward.merchant_logo_url ? reward.merchant_logo_url : null;
+    const rewardBanner: string = oc(banner).url('');
+    const merchantImg = oc(reward).merchant_logo_url();
     const sellingFrom = reward.selling_from ? new Date(reward.selling_from) : undefined;
 
     const v4Invent = reward.inventory;
@@ -153,7 +154,7 @@ export class V4RewardsService extends RewardsService {
       rewardTotalLimit: v4Invent.reward_total_limit !== undefined ? v4Invent.reward_total_limit : null,
       rewardLimitPerUserBalance: v4Invent.reward_limit_per_user_balance !== undefined && v4Invent.reward_limit_per_user_balance !== null ?
         v4Invent.reward_limit_per_user_balance.available_amount : null
-    } : null;
+    } : undefined;
     return {
       id: reward.id,
       name: reward.name,
@@ -165,7 +166,7 @@ export class V4RewardsService extends RewardsService {
         price: price.price,
         points: price.points,
         identifier: price.identifier
-      })) : null,
+      })) : undefined,
       rewardThumbnail: thumbnailImg,
       rewardBanner,
       validFrom: new Date(reward.valid_from),
@@ -175,8 +176,8 @@ export class V4RewardsService extends RewardsService {
       merchantName: reward.merchant_name,
       merchantImg,
       merchantWebsite: reward.merchant_website,
-      termsAndConditions: reward.terms_and_conditions,
-      howToRedeem: reward.how_to_redeem,
+      termsAndConditions: oc(reward).terms_and_conditions(''),
+      howToRedeem: oc(reward).how_to_redeem(''),
       categoryTags: reward.category_tags,
       inventory,
       displayProperties: reward.display_properties,
@@ -189,9 +190,9 @@ export class V4RewardsService extends RewardsService {
     if (thumbnail === undefined) {
       thumbnail = images.find((image: IV4Image) => image.type === 'catalog_logo');
     }
-    const thumbnailImg = thumbnail && thumbnail.url;
+    const thumbnailImg = oc(thumbnail).url('');
     const banner = images.find((image: IV4Image) => image.type === 'catalog_banner');
-    const catalogBanner = banner && banner.url;
+    const catalogBanner = oc(banner).url('');
     const rewards = catalog.rewards && catalog.rewards.map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward));
     return {
       id: catalog.id,
