@@ -7,13 +7,14 @@ export class NumericCharacterDirective {
   public onlyNumbersRegExp: RegExp = new RegExp('^\\d+$');
 
   @HostListener('paste', ['$event']) public pasteClipboard(e: ClipboardEvent): boolean {
-    // debugger;
+    if (!e.clipboardData) {
+      return false;
+    }
     const data = e.clipboardData.getData('text');
     return this.onlyNumbersRegExp.test(data) ? true : false;
   }
 
   @HostListener('keydown', ['$event']) public onKeyDown(e: KeyboardEvent): boolean {
-    // debugger;
     return (e.ctrlKey ||
       e.metaKey ||
       e.code === 'Backspace' ||
