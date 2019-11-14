@@ -18,7 +18,10 @@ import {
   IWCampaignProperties,
   IWCampaignDisplayProperties,
   IJsonApiPostItem,
+  WInstantOutcomeStatus,
+  IWAssignedAttributes
 } from '@perx/whistler';
+import { IEngagementTransaction } from '../game/game.model';
 
 @Injectable({
   providedIn: 'root'
@@ -103,7 +106,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   public prePlay(campaignId?: number): Observable<IEngagementTransaction> {
     return this.getEngagementId(campaignId)
       .pipe(
-        map((campaign: CampaignProperties): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
+        map((campaign: IWCampaignProperties): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
           data: {
             type: 'transactions',
             attributes: {

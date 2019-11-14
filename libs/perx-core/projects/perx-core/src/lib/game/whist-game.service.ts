@@ -171,7 +171,7 @@ export class WhistlerGameService implements IGameService {
         }
       }
     };
-    return this.http.post<IJsonApiItemPayload<AttbsObjTrans>>(
+    return this.http.post<IJsonApiItemPayload<IWAttbsObjTrans>>(
       `${this.hostName}/game/transactions`,
       body,
       { headers: { 'Content-Type': 'application/vnd.api+json' } }
@@ -194,7 +194,7 @@ export class WhistlerGameService implements IGameService {
         }
       }
     };
-    return this.http.patch<IJsonApiItemPayload<AttbsObjTrans>>(
+    return this.http.patch<IJsonApiItemPayload<IWAttbsObjTrans>>(
       `${this.hostName}/game/transactions/${transactionId}`,
       body,
       { headers: { 'Content-Type': 'application/vnd.api+json' } }
