@@ -5,7 +5,7 @@ import { LoyaltyService } from '../loyalty.service';
 import { ProfileService } from '../../profile/profile.service';
 import { IProfile } from '../../profile/profile.model';
 import { ILoyalty } from '../models/loyalty.model';
-import { map } from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -68,7 +68,8 @@ export class LoyaltySummaryComponent implements OnInit {
     if (!this.loyalty$) {
       this.loyalty$ = this.loyaltyId === undefined ?
         this.loyaltyService.getLoyalties().pipe(
-          map(loyalties => loyalties && loyalties.length > 0 && loyalties[0])
+          filter(loyalties => loyalties && loyalties.length > 0),
+          map(loyalties => loyalties[0])
         ) : this.loyaltyService.getLoyalty(this.loyaltyId);
     }
   }
