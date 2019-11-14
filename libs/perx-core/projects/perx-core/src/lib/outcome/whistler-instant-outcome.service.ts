@@ -1,6 +1,6 @@
 import { InstantOutcomeService } from './instant-outcome.service';
 import { IOutcome } from './models/outcome.model';
-import { Observable, combineLatest } from 'rxjs';
+import {Observable, combineLatest, throwError} from 'rxjs';
 import { map, switchMap, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -30,16 +30,20 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
     this.baseUrl = `${config.apiHost}/instant-outcome/transactions/`;
   }
 
-  private getEngagementId(campaignId: number): Observable<IWCampaignProperties> {
+  private getEngagementId(campaignId: number): Observable<IWCampaignProperties | never> {
     return this.http.get<IJsonApiItemPayload<IWCampaignAttributes>>(
       `${this.config.apiHost}/campaign/entities/${campaignId}`
     )
       .pipe(
-        map(res => res.data.attributes),
-        map(attributes => ({
-          engagementId: attributes.engagement_id,
-          display_properties: attributes.display_properties
-        })),
+        map(res => {
+          if (!(res.data && res.data.attributes)) {
+            throwError(`can't find response`);
+          }
+          return ({
+            engagementId: res.data.attributes.engagement_id,
+            display_properties: res.data.attributes.display_properties || {}
+          });
+        })
       );
   }
 
@@ -49,7 +53,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
     return this.getEngagementId(campaignId)
       .pipe(
         switchMap((campaign: IWCampaignProperties) => {
-          displayProps = campaign.display_properties;
+          displayProps = campaign.display_properties || {};
           return this.http.get<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>>(
             `${this.config.apiHost}/instant-outcome/engagements/${campaign.engagementId}`);
         }),
