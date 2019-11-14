@@ -99,6 +99,8 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
           }
+          const pi = (window as any).primaryIdentifier || this.getPI();
+          this.savePI(pi);
           this.saveUserId(Number.parseInt(res.data[0].id, 10));
           this.saveUserAccessToken(userBearer);
         }
@@ -128,9 +130,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
       url: location.host,
       identifier: user
     };
-    if (user) {
-      this.savePI(user);
-    }
+
     return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
