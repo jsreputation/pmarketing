@@ -16,7 +16,7 @@ interface IAnswer {
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit, OnDestroy {
-  public data$: Observable<ISurvey>;
+  public data$: Observable<ISurvey | undefined>;
   public destroy$: Subject<void> = new Subject();
   public survey: ISurvey;
   public answers: IAnswer[];
@@ -56,14 +56,16 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   public onSubmit(): void {
     const mapOfObjects = this.answers
-      .map(answer => ({[this.snake_caseCamelise(answer.question_id)]:
-        (Array.isArray(answer.content)  ? answer.content[0] : answer.content)}));
+      .map(answer => ({
+        [this.snake_caseCamelise(answer.question_id)]:
+          (Array.isArray(answer.content) ? answer.content[0] : answer.content)
+      }));
 
     const userObj: IProfileAttributes = Object.assign.apply(null, mapOfObjects);
 
     this.authSvc.createUserAndAutoLogin(userObj.primaryIdentifier, userObj).subscribe(
       () => {
-        this.snack.open('User successfully created.', 'x', {duration: 2000});
+        this.snack.open('User successfully created.', 'x', { duration: 2000 });
         this.router.navigate(['/wallet']);
       },
       (err) => console.error(err)
