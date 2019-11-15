@@ -339,14 +339,102 @@ export class RewardAppPage {
   public navigateToReward(): Promise<string> {
     return browser.get('rewards') as Promise<string> ;
  }
+ public rewardTab(): ElementFinder {
+    return element.all(by.css('h3')).get(1);
+ }
+ public searchBar(): ElementFinder {
+    return element(by.css('input'));
+ }
+ public rewardList(): ElementFinder {
+    return element(by.css('table'));
+ }
+ public createNewButton(): ElementFinder {
+    return element(by.css('cl-button'));
+ }
+ public filterItems(): ElementFinder {
+    return element(by.className('name-cell__link'));
+ }
 
 }
 
 export class CreateRewardAppPage {
 
   public navigateToRewardCreate(): Promise<string> {
-    return browser.get('rewards/new-reward') as Promise<string> ;
- }
+    return browser.get('rewards/new-reward') as Promise<string>;
+  }
+  public headerField(): ElementFinder {
+    return element.all(by.css('input[ng-reflect-type="text"]')).get(0);
+  }
+  public voucherCodeField(): ElementFinder {
+    return element.all(by.css('input[ng-reflect-type="text"]')).get(1);
+  }
+  public textField(): ElementArrayFinder {
+    return element.all(by.css('textarea'));
+  }
+  public selectField(): ElementArrayFinder {
+    return element.all(by.css('div.mat-select-trigger'));
+  }
+  public rewardOptions(): ElementArrayFinder {
+    return element.all(by.css('span.mat-option-text'));
+  }
+  public loadRadioButton(): ElementFinder {
+    return element.all(by.className('mat-radio-ripple mat-ripple')).get(4);
+  }
+  public radioButton(): ElementFinder {
+    return element.all(by.css('div.mat-radio-outer-circle')).get(4);
+  }
+  public radioPrimaryButton(): ElementFinder {
+    return element.all(by.className('mat-radio-button mat-primary ng-star-inserted')).get(2);
+  }
+  public fileUploadField(): ElementFinder {
+    return element.all(by.css('input[type=file]')).get(1);
+  }
+  public checkboxField(): ElementArrayFinder {
+    return element.all(by.css('input[type=checkbox]'));
+  }
+  public numberField(): ElementArrayFinder {
+    return element.all(by.css('input[type=number]'));
+  }
+  public slider(): ElementArrayFinder {
+    return element.all(by.className('mat-slide-toggle-thumb-container'));
+  }
+  public inputFileField(): ElementFinder {
+    return element(by.css('input[type=file]'));
+  }
+  public fileUploaded(): ElementFinder {
+    return element(by.css('div.image-wrap.ng-star-inserted>img'));
+  }
+  public errorUploadFile(): ElementFinder {
+    return element(by.css('span.upload-error'));
+  }
+  public fileName(): ElementFinder {
+    return element(by.css('span.upload-file-file-name'));
+  }
+  public errorMessage(): ElementFinder {
+    return element(by.className('error upload-file-error ng-star-inserted'));
+  }
+  public uploadSection(): ElementFinder {
+    return element(by.css('input.upload-file-input.ng-star-inserted'));
+  }
+  public merchantButton(): ElementFinder {
+    return element.all(by.css('mat-radio-button')).get(0);
+  }
+  public firstMerchantsRow(): ElementFinder {
+    return element.all(by.css('tr.merchant-row.mat-row.ng-star-inserted')).get(0);
+  }
+  public addMerchantButton(): ElementFinder {
+    return element.all(by.css('cl-button')).last();
+  }
+  public dropDownMenu(): ElementArrayFinder {
+    return element.all(by.className('mat-select-arrow-wrapper'));
+  }
+  public saveButton(): ElementFinder {
+    return element.all(by.css('cl-button')).get(1);
+  }
+  public closeButton(): ElementFinder {
+    return element.all(by.css('cl-button')).get(0);
+  }
+
 
 }
 
