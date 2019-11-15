@@ -1,7 +1,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { AuthenticationService, ConfigService } from '@perx/core';
+import { AuthenticationService, ConfigService, TokenStorage } from '@perx/core';
 import {
   MatSnackBarModule,
   MatIconModule,
@@ -12,6 +12,11 @@ import { Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+
+const tokenStorageStub = {
+  getAppInfoProperty: () => null,
+  setAppInfoProperty: () => { }
+};
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -51,7 +56,8 @@ describe('AppComponent', () => {
         { provide: AuthenticationService, useValue: authenticationStub },
         { provide: Router, useValue: routerStub },
         { provide: Location, useValue: locationStub },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: TokenStorage, useValue: tokenStorageStub }
       ]
     }).compileComponents();
   }));
