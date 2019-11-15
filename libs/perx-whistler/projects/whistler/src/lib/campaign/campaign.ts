@@ -33,3 +33,9 @@ export interface IWCampaignAttributes {
     };
   };
 }
+
+export enum WInformationCollectionSettingType {
+  not_required = 'not_required',
+  pi_required = 'pi_required',
+  signup_required = 'signup_required'
+}

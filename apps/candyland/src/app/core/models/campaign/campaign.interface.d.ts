@@ -12,8 +12,8 @@ export interface ICampaign {
     };
     engagement_type?: string;
     engagement_id?: string;
-    informationCollectionSetting?: InformationCollectionSettingType;
     campaignInfo?: {
+        informationCollectionSetting?: InformationCollectionSettingType;
         goal: string;
         startDate: Date;
         startTime: string;
