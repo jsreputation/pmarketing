@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { UploadFileService } from '@cl-core-services';
+import { IUploadedFile } from '../../models/uploaded-file.interface';
+import { UploadFileService } from './upload-file.service';
 
 @Component({
   selector: 'cs-upload-file',
@@ -17,10 +18,14 @@ import { UploadFileService } from '@cl-core-services';
 })
 export class UploadFileComponent implements ControlValueAccessor {
   public MAX_SIZE: number = 1;
+  @ViewChild('fileInput', {static: false}) public fileInput: HTMLInputElement;
   @Input() public selectGraphic: any;
   @Input() public selectedGraphic: any;
-  @Input() public label: string = '';
   @Input() public isRequired: boolean;
+  @Input() public label: string = '';
+  @Input() public downloadButtonText: string = 'Download a sample file';
+  @Input() public uploadButtonText: string = 'Upload file a list';
+  @Input() public requiredErrorText: string = 'Required field';
   @Output() public deleteFile: EventEmitter<any> = new EventEmitter();
   @Output() public uploadFile: EventEmitter<any> = new EventEmitter();
 
@@ -28,8 +33,8 @@ export class UploadFileComponent implements ControlValueAccessor {
   public fileName: string;
   public fileURL: string;
   public file: any;
-  public message: string;
-  public loadedFile: boolean = false;
+  public message: string | null;
+  public loadedFile: boolean | null = false;
 
   public onChange: any = () => {
   }
@@ -57,7 +62,7 @@ export class UploadFileComponent implements ControlValueAccessor {
 
     const fileSize = this.bitsToMBytes(files[0].size);
     if (fileSize > this.MAX_SIZE) {
-      this.setError( `File\'s size is ${fileSize.toFixed(1)}Mb more than ${this.MAX_SIZE}Mb`);
+      this.setError(`File\'s size is ${fileSize.toFixed(1)}Mb more than ${this.MAX_SIZE}Mb`);
       return;
     }
 

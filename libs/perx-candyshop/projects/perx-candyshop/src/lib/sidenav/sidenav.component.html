@@ -23,7 +23,7 @@
               [routerLink]="['/login']"
       >
         <i class="icon logout" matListIcon></i>
-        <span class="btn-text" (click)="clickLogout()" translate>LOG_OUT</span>
+        <span class="btn-text" (click)="clickLogout()">{{logOutButtonText}}</span>
       </button>
       <button class="sidenav-compress"
               (click)="toggle()">

@@ -1,9 +1,12 @@
-import { NgModule } from '@angular/core';
+import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UploadFileComponent } from './upload-file.component';
-import { DownloadButtonModule } from '@cl-shared/components/download-button/download-button.module';
 import { MatButtonModule, MatIconModule } from '@angular/material';
-import { TranslateModule } from '@ngx-translate/core';
+import { DownloadButtonModule } from '../download-button/download-button.module';
+import { IUploadFileConfig } from './upload-file-config.interface';
+import { UploadFileService } from './upload-file.service';
+
+const uploadFileUrl = new InjectionToken<string>('uploadFileUrl');
 
 @NgModule({
   declarations: [
@@ -17,8 +20,22 @@ import { TranslateModule } from '@ngx-translate/core';
     MatIconModule,
     MatButtonModule,
     DownloadButtonModule,
-    TranslateModule
   ]
 })
 export class UploadFileModule {
+  public static forRoot(config: IUploadFileConfig): ModuleWithProviders {
+    return {
+      ngModule: UploadFileModule,
+      providers: [
+        {
+          provide: uploadFileUrl,
+          useValue: config.url || 'https://api-dev1.uat.whistler.perxtech.io/storage/documents'
+        },
+        {
+          provide: UploadFileService,
+          useValue: config.service || UploadFileService
+        }
+      ]
+    };
+  }
 }

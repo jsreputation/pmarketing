@@ -5,7 +5,7 @@
               'secondaryMenu': secondaryMenu,
               'primary': !secondaryMenu}"
 >
-  <mat-list-item *ngIf = "menu.link==false"
+  <mat-list-item *ngIf = "!menu?.link"
                  (click)="openLink()"
                  class="mat-list-item"
   >
@@ -24,7 +24,7 @@
     </mat-icon>
   </mat-list-item>
 
-  <a mat-list-item *ngIf = "menu.link!=false"
+  <a mat-list-item *ngIf = "menu?.link"
                  [routerLink]="[menu.link]"
                  class="mat-list-item"
                  [class.active]="menu.active"
@@ -36,7 +36,7 @@
         [@openClose]="isOpen ? 'open' : 'closed'"
         *ngIf="isOpen"
     >
-      {{ menu.name | translate}}
+      {{menu.name}}
     </h3>
   </a>
 

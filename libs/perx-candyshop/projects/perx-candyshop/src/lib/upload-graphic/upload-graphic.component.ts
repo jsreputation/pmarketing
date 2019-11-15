@@ -1,9 +1,17 @@
-import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Inject, Input, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IGraphic } from '../../models/graphic.interface';
 import { IUploadedFile } from '../../models/uploaded-file.interface';
-import { IUploadFileService } from '../../models/upload-service.interface';
+import { UploadImageService } from './upload-image.service';
 
 @Component({
   selector: 'cs-upload-graphic',
@@ -18,8 +26,9 @@ import { IUploadFileService } from '../../models/upload-service.interface';
   ]
 })
 export class UploadGraphicComponent implements ControlValueAccessor {
-  @Input() public placeholder: string = 'RECOMMENDED_FORMAT:_.JPG,_.PNG_OR_.GIF';
-  @Input() public btnLabel: string = 'BTN_ADD_NEW';
+  @ViewChild('fileInput', {static: false}) public fileInput: HTMLInputElement;
+  @Input() public placeholder: string = 'Recommended format: .JPG, .PNG OR .GIF';
+  @Input() public btnLabel: string = '+ add new';
   @Input() public classList: string = '';
   @Input() public isRequired: boolean;
 
@@ -55,7 +64,7 @@ export class UploadGraphicComponent implements ControlValueAccessor {
 
   constructor(private sanitizer: DomSanitizer,
               private cd: ChangeDetectorRef,
-              @Inject('UploadFileService') private uploadFileService: IUploadFileService ) {
+              private uploadFileService: UploadImageService) {
   }
 
   public preview(files): void {
@@ -113,7 +122,7 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   }
 
   private uploadImage(file: File): void {
-    this.uploadFileService.upload(file)
+    this.uploadFileService.uploadImage(file)
       .subscribe((res: IUploadedFile) => {
           this.imgURL = res.url;
           this.loadedImg = true;

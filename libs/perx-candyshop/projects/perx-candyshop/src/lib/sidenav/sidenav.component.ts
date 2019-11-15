@@ -1,8 +1,9 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { ChangeDetectorRef, Component, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import {
   trigger, state, style, animate, transition
 } from '@angular/animations';
+import { MatSidenav } from '@angular/material/sidenav';
 // import { IamUser } from '@cl-core/http-adapters/iam-user';
 
 export function fnTransition(stateChangeExpr: string, time: string): any {
@@ -42,12 +43,14 @@ export class SidenavComponent implements OnDestroy {
   @Input() public isVisible: boolean = true;
   // @Input() public user: IamUser;
   @Input() public user: any;
+  @Input() public logOutButtonText: string = 'Log Out';
   public isOpen: boolean = true;
   public visibility: string = 'shown';
   public sideNavOpened: boolean = true;
   public mobileQuery: MediaQueryList;
   private myMobileQueryListener: () => void;
   @Output() public logout: EventEmitter<void> = new EventEmitter<void>();
+  @ViewChild('snav', {static: false}) public snav: MatSidenav;
 
   constructor(changeDetectorRef: ChangeDetectorRef,
               media: MediaMatcher) {

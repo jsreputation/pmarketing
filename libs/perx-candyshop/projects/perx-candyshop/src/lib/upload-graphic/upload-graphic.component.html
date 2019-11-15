@@ -20,7 +20,7 @@
   <div class="upload-wrap-btn" *ngIf="!imgURL">
     <button class="upload-btn" (click)="fileInput.click()" [attr.aria-label]="btnLabel">
       <ng-content></ng-content>
-      <span>{{btnLabel | translate}}</span>
+      <span>{{btnLabel}}</span>
     </button>
   </div>
   <div class="upload-error-wrap">
@@ -29,7 +29,7 @@
   </div>
   <div class="upload-type-wrap" *ngIf="!message && !isRequired">
     <span class="upload-type">
-      {{placeholder | translate}}
+      {{placeholder}}
     </span>
   </div>
 </div>

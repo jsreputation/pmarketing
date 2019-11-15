@@ -30,7 +30,7 @@ import { DatepickerRangeValue } from '../../models/datepicker-range-value.interf
 })
 export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() public control: AbstractControl = new FormControl(null, []);
-  @Input() public placeholder: string = 'TIME';
+  @Input() public placeholder: string = 'time';
 
   @Input() set disabled(value: boolean) {
     this.setDisabledState(value);

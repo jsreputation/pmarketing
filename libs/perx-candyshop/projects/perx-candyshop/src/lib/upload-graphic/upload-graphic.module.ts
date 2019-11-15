@@ -1,18 +1,12 @@
-import { Injectable, ModuleWithProviders, NgModule } from '@angular/core';
+import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UploadGraphicComponent } from './upload-graphic.component';
 import { MatIconModule } from '@angular/material';
-import { TranslateModule } from '@ngx-translate/core';
-import { IUploadFileService } from '../../models/upload-service.interface';
-import { Observable, of } from 'rxjs';
-import { IUploadedFile } from '../../models/uploaded-file.interface';
+import { HttpClientModule } from '@angular/common/http';
+import { IUploadGraphicConfig } from './upload-graphic-config.interface';
+import { UploadImageService } from './upload-image.service';
 
-@Injectable()
-export class UploadFileService implements IUploadFileService {
-  public upload(): Observable<IUploadedFile | string | null> {
-    return of(null);
-  }
-}
+const uploadImageUrl = new InjectionToken<string>('uploadImageUrl');
 
 @NgModule({
   declarations: [
@@ -24,18 +18,22 @@ export class UploadFileService implements IUploadFileService {
   imports: [
     CommonModule,
     MatIconModule,
-    TranslateModule
+    HttpClientModule
   ]
 })
 export class UploadGraphicModule {
-  public static forRoot(uploadFileService: IUploadFileService): ModuleWithProviders {
+  public static forRoot(config: IUploadGraphicConfig): ModuleWithProviders {
     return {
       ngModule: UploadGraphicModule,
       providers: [
         {
-          provide: UploadFileService,
-          useValue: uploadFileService
-        }
+          provide: uploadImageUrl,
+          useValue: config.url || 'https://api-dev1.uat.whistler.perxtech.io/storage/images'
+        },
+        {
+          provide: UploadImageService,
+          useValue: config.service || UploadImageService
+        },
       ],
     };
   }
