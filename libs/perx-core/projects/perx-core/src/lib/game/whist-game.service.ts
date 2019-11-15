@@ -49,7 +49,7 @@ export class WhistlerGameService implements IGameService {
 
   private static WGameToGame(game: IJsonApiItem<IWGameEngagementAttributes>): IGame {
     let type = TYPE.unknown;
-    let config: ITree | IPinata | IScratch;
+    let config: ITree | IPinata | IScratch | null = null;
     const { attributes } = game;
     if (attributes.game_type === WGameType.shakeTheTree) {
       type = TYPE.shakeTheTree;
@@ -90,7 +90,7 @@ export class WhistlerGameService implements IGameService {
       texts.button = attributes.display_properties.button;
     }
 
-    const imgUrl: string = attributes.image_url;
+    const imgUrl: string | undefined = attributes.image_url ? attributes.image_url : undefined;
 
     const backgroundImg: string | undefined = attributes.display_properties.background_img_url ?
       attributes.display_properties.background_img_url : undefined;
@@ -147,12 +147,12 @@ export class WhistlerGameService implements IGameService {
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    let disProp: IWCampaignDisplayProperties = null;
+    let disProp: IWCampaignDisplayProperties | null = null;
     return this.http.get<IJsonApiItemPayload<IWCampaignAttributes>>(`${this.hostName}/campaign/entities/${campaignId}`)
       .pipe(
         map((res: IJsonApiItemPayload<IWCampaignAttributes>) => res.data.attributes),
         map((entity: IWCampaignAttributes) => {
-          disProp = entity.display_properties;
+          disProp = { ...entity.display_properties };
           return entity.engagement_id;
         }),
         switchMap((correctId: number) => this.get(correctId)),
