@@ -86,16 +86,16 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   public claim(campaignId: number): Observable<IReward[]> {
     const buildBody: Observable<IJsonApiPostItem<IWInstantOutcomeTxnReq>> =
     this.getEngagementId(campaignId).pipe(map((campaign: IWCampaignProperties ): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
-          data: {
-            type: 'transactions',
-            attributes: {
-              engagement_id: campaign.engagementId,
-              campaign_entity_id: campaignId,
-              status: WInstantOutcomeStatus.confirmed
-            }
-          }
-        })
-      )
+      data: {
+        type: 'transactions',
+        attributes: {
+          engagement_id: campaign.engagementId,
+          campaign_entity_id: campaignId,
+          status: WInstantOutcomeStatus.confirmed
+        }
+      }
+    })
+    )
     );
 
     const getRewardIds: Observable<number[]> = buildBody.pipe(
@@ -127,15 +127,15 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
 
     return this.getEngagementId(campaignId).pipe(
       map((campaign: IWCampaignProperties): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
-          data: {
-            type: 'transactions',
-            attributes: {
-              engagement_id: campaign.engagementId,
-              campaign_entity_id: campaignId,
-              status: WInstantOutcomeStatus.reserved
-            }
+        data: {
+          type: 'transactions',
+          attributes: {
+            engagement_id: campaign.engagementId,
+            campaign_entity_id: campaignId,
+            status: WInstantOutcomeStatus.reserved
           }
-        })
+        }
+      })
       ),
       switchMap((body: IJsonApiPostItem<IWInstantOutcomeTxnReq>) =>
         this.http.post<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>>(
