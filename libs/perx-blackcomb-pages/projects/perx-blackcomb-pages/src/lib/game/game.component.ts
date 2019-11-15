@@ -5,6 +5,7 @@ import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil 
 import { Observable, interval, throwError, Subject, of, combineLatest } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'perx-blackcomb-pages-game',
@@ -61,7 +62,14 @@ export class GameComponent implements OnInit, OnDestroy {
       map((params: Params) => params.id),
       map((id: string) => Number.parseInt(id, 10)),
       tap((id: number) => this.campaignId = id),
-      switchMap((id: number) => this.gameService.getGamesFromCampaign(id)),
+      switchMap((id: number) => this.gameService.getGamesFromCampaign(id).pipe(
+        catchError((err: HttpErrorResponse) => {
+          if (err.status === 403) {
+            this.router.navigate(['/wallet']);
+          }
+          throw err;
+        }))
+      ),
       first(),
       tap((games: IGame[]) => !games || !games.length && this.router.navigate(['/wallet'])),
       map((games: IGame[]) => games[0]),
