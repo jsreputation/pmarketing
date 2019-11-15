@@ -172,31 +172,32 @@ export class CreateShakeTheTreeAppPage {
 }
 export class LoginAppPage {
 
-  public navigateToLogin(): Promise<string> {
+  public static navigateToLogin(): Promise<string> {
     return browser.get('login') as Promise<string> ;
   }
-  public accountIDField(): ElementFinder {
-    return element.all(by.css('input')).first();
 
+  public static accountIDField(): ElementFinder {
+    return element.all(by.css('input')).first();
   }
-  public userAccountField(): ElementFinder {
+
+  public static userAccountField(): ElementFinder {
     return element.all(by.css('input')).get(1);
   }
 
-  public pwField(): ElementFinder {
+  public static pwField(): ElementFinder {
     return element.all(by.css('input')).get(2);
   }
 
-  public getPassword(): string {
-    return 'asdfjkl;';
-  }
-
-  public getAccountId(): string {
+  public static getAccountId(): string {
     return 'generic';
   }
 
-  public getUserAccount(): string {
+  public static getUserAccount(): string {
     return 'Admin';
+  }
+
+  public static getPassword(): string {
+    return 'asdfjkl;';
   }
 
 }
@@ -407,5 +408,13 @@ export class ElementApp {
 
   public static spanUploadError(): ElementFinder {
     return element(by.css('span.upload-error'));
+  }
+
+  public static matFormFieldFlex(): ElementArrayFinder {
+    return element.all(by.css('div.mat-form-field-flex'));
+  }
+
+  public static matSelectArrowWrapper(): ElementArrayFinder {
+    return element.all(by.css('div.mat-select-arrow-wrapper'));
   }
 }
