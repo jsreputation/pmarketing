@@ -2,7 +2,7 @@
  * Public API Surface of perx-core
  */
 export { PerxCoreModule } from './lib/perx-core.module';
-export { IRewardDisplayProperties, ICampaignDisplayProperties } from './lib/perx-core.models';
+
 /**
  * Merchants
  */
@@ -74,6 +74,7 @@ export {
   defaultTree,
   IPlayOutcome,
   ISlice,
+  IEngagementTransaction
 } from './lib/game/game.model';
 export { IGameService } from './lib/game/igame.service';
 export { IGameComponent } from './lib/game/igame.component';
@@ -143,6 +144,7 @@ export { GeneralStaticDataService } from './lib/utils/general-static-data/genera
 export { ICountryCode } from './lib/utils/general-static-data/country-code';
 export { RepeatTimesDirective } from './lib/utils/directives/repeat-times.directive';
 export { NewsfeedComponent } from './lib/utils/newsfeed/newsfeed.component';
+export { CustomTranslateLoader } from './lib/utils/lang/land.service';
 /**
  * Puzzles
  */
@@ -194,7 +196,6 @@ export { IConfig, IMicrositeSettings } from './lib/config/models/config.model';
 export {
   ITheme,
   PagesObject,
-  WhistlerITenant,
   AccountPageObject,
 } from './lib/utils/themes/themes.model';
 export { ThemesService } from './lib/utils/themes/themes.service';
@@ -204,7 +205,6 @@ export { ThemesService } from './lib/utils/themes/themes.service';
 export { InstantOutcomeService } from './lib/outcome/instant-outcome.service';
 export { IOutcome } from './lib/outcome/models/outcome.model';
 export { OutcomeModule } from './lib/outcome/outcome.module';
-
 /**
  * Tenants
  */

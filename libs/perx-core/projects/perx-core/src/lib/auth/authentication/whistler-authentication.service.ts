@@ -13,19 +13,17 @@ import {
   IChangePhoneData
 } from './models/authentication.model';
 import { Config } from '../../config/config';
-import { IJsonApiListPayload } from '../../jsonapi.payload';
 import {
   IWAppAccessTokenResponse,
-  IWMessageResponse
+  IWMessageResponse,
+  IWCognitoLogin,
+  IJsonApiListPayload,
 } from '@perx/whistler';
-
-interface ICognitoLogin {
-  jwt: string;
-}
 
 interface IUserJWTRequest {
   identifier: string;
   url: string;
+  anonymous?: boolean;
   profile?: IProfileAttributes;
 }
 
@@ -96,52 +94,61 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public autoLogin(): Observable<any> {
     return this.getUserWithPI().pipe(
       tap(
-        (res: IJsonApiListPayload<ICognitoLogin>) => {
+        (res: IJsonApiListPayload<IWCognitoLogin>) => {
           const userBearer = res.data[0].attributes.jwt;
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
           }
+          const pi = (window as any).primaryIdentifier || this.getPI();
+          this.savePI(pi);
+          this.saveUserId(Number.parseInt(res.data[0].id, 10));
           this.saveUserAccessToken(userBearer);
         }
       )
     );
   }
 
-  public createUserAndAutoLogin(pi: string, userObj?: IProfileAttributes): Observable<any> {
-    return this.createUserWithPI(pi, userObj).pipe(
+  public createUserAndAutoLogin(pi: string, userObj?: IProfileAttributes, anonymous?: boolean): Observable<any> {
+    return this.createUserWithPI(pi, userObj, anonymous).pipe(
       tap(
-        (res: IJsonApiListPayload<ICognitoLogin>) => {
+        (res: IJsonApiListPayload<IWCognitoLogin>) => {
           const userBearer = res.data[0].attributes.jwt;
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
+          }
+          if (anonymous === undefined) {
+            anonymous = false;
           }
           this.savePI(pi);
+          this.saveAnonymous(anonymous);
+          this.saveUserId(Number.parseInt(res.data[0].id, 10));
           this.saveUserAccessToken(userBearer);
         }
       )
     );
   }
 
-  private getUserWithPI(): Observable<IJsonApiListPayload<ICognitoLogin>> {
+  private getUserWithPI(): Observable<IJsonApiListPayload<IWCognitoLogin>> {
     const user = (window as any).primaryIdentifier || this.getPI();
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: user
     };
 
-    return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
+    return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
-  private createUserWithPI(pi: string, userObj?: IProfileAttributes): Observable<IJsonApiListPayload<ICognitoLogin>> {
+  private createUserWithPI(pi: string, userObj?: IProfileAttributes, anonymous?: boolean): Observable<IJsonApiListPayload<IWCognitoLogin>> {
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
-      identifier: pi
+      identifier: pi,
+      anonymous
     };
     if (userObj) {
       userJWTRequest.profile = userObj;
     }
 
-    return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.createUsersEndPoint, userJWTRequest);
+    return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.createUsersEndPoint, userJWTRequest);
   }
 
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
@@ -149,7 +156,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public verifyTokenRequest(url: string): boolean {
-    return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token') || url.endsWith('/v2/cognito/login');
+    return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token') || url.endsWith('/cognito/login');
   }
 
   // @ts-ignore
@@ -263,5 +270,41 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
 
   public savePI(pi: string): void {
     this.tokenStorage.setAppInfoProperty(pi, 'pi');
+  }
+
+  public getAnonymous(): boolean {
+    return !!this.tokenStorage.getAppInfoProperty('anonymous');
+  }
+
+  public saveAnonymous(anonymous: boolean): void {
+    this.tokenStorage.setAppInfoProperty(anonymous, 'anonymous');
+  }
+
+  public getUserId(): number | null {
+    const id: string | undefined = this.tokenStorage.getAppInfoProperty('id');
+    return id ? Number.parseInt(id, 10) : null;
+  }
+
+  public saveUserId(id: number): void {
+    this.tokenStorage.setAppInfoProperty(id, 'id');
+  }
+
+  public mergeUserById(fromIds: number[], toId: number): Observable<void> {
+    return this.http.post<any>(this.apiHost + '/cognito/chown_requests',
+      {
+        data: {
+          type: 'chown_requests',
+          attributes: {
+            from_ids: fromIds,
+            to_id: toId
+          }
+        }
+      },
+      {
+        headers: {
+          'Content-Type': 'application/vnd.api+json'
+        }
+      }
+    );
   }
 }

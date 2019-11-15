@@ -5,8 +5,14 @@ import { map, tap, expand, finalize } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
 import { IMerchant } from './models/merchants.model';
 import { Config } from '../config/config';
-import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload, IMeta } from './../jsonapi.payload';
-import { IWMerchantAttributes } from '@perx/whistler';
+
+import {
+  IJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiItemPayload,
+  IMeta,
+  IWMerchantAttributes,
+} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -26,12 +32,12 @@ export class WhistlerMerchantsService implements IMerchantsService {
       id: (typeof merchant.id === 'string') ? Number.parseInt(merchant.id, 10) : merchant.id,
       name: merchant.attributes.name,
       description: merchant.attributes.description,
-      images: [
+      images: merchant.attributes.properties.logo_image ? [
         {
           type: 'banner',
           url: merchant.attributes.properties.logo_image
         }
-      ]
+      ] : []
     };
   }
 
@@ -40,7 +46,9 @@ export class WhistlerMerchantsService implements IMerchantsService {
     const current = {};
     return new Observable((sub) => {
       this.getMerchantsPage(i).pipe(
-        expand((response) => i < (response.meta && response.meta.page_count) ? this.getMerchantsPage(++i) : EMPTY),
+        expand((response) =>
+          (response.meta && response.meta.page_count && response.meta.page_count > i) ? this.getMerchantsPage(++i) : EMPTY
+        ),
         map((value) => value.data.map((el) => WhistlerMerchantsService.WMerchantToMerchant(el))),
         tap((data) => data.forEach((el) => current[el.id] = el)),
         finalize(() => this.merchants = current)

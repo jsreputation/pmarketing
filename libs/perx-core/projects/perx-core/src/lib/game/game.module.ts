@@ -11,7 +11,7 @@ import { IVoucherService } from '../vouchers/ivoucher.service';
 import { ScratchCardComponent } from './scratch-card/scratch-card.component';
 import { SpinTheWheelComponent } from './spin-the-wheel/spin-the-wheel.component';
 
-export function gameServiceFactory(http: HttpClient, config: Config, vouchSvc?: IVoucherService): IGameService {
+export function gameServiceFactory(http: HttpClient, config: Config, vouchSvc: IVoucherService): IGameService {
   // Make decision on what to instantiate base on config
   if (config.isWhistler) {
     return new WhistlerGameService(http, config, vouchSvc);

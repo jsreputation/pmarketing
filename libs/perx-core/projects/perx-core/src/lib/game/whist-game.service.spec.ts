@@ -3,11 +3,15 @@ import { WhistlerGameService } from './whist-game.service';
 import { TestBed } from '@angular/core/testing';
 import { ConfigModule } from '../config/config.module';
 import { IVoucherService } from '../vouchers/ivoucher.service';
-import { IJsonApiItem } from 'perx-core/lib/jsonapi.payload';
-import { IWGameEngagementAttributes, WGameType } from '@perx/whistler';
-import { IJsonApiItemPayload } from '../jsonapi.payload';
 import { Type } from '@angular/core';
 import { IGame, GameType } from './game.model';
+
+import {
+  WGameType,
+  IJsonApiItem,
+  IJsonApiItemPayload,
+  IWGameEngagementAttributes,
+} from '@perx/whistler';
 
 describe('WhistlerGameService', () => {
   let httpTestingController: HttpTestingController;
@@ -108,7 +112,7 @@ describe('WhistlerGameService', () => {
   });
 
   it('should get a tree from its id', (done: DoneFn) => {
-    service.get(42)
+    service.get(42, 1)
       .subscribe(
         (g: IGame) => {
           expect(`${g.id}`).toEqual(mockTree.id);
@@ -118,7 +122,7 @@ describe('WhistlerGameService', () => {
         fail
       );
 
-    const req = httpTestingController.expectOne('https://blabla/game/engagements/42');
+    const req = httpTestingController.expectOne('https://blabla/game/engagements/42?campaign_id=1');
     expect(req.request.method).toEqual('GET');
     const res: IJsonApiItemPayload<IWGameEngagementAttributes> = {
       data: mockTree
@@ -129,7 +133,7 @@ describe('WhistlerGameService', () => {
   });
 
   it('should get a pinata from its id', (done: DoneFn) => {
-    service.get(42)
+    service.get(42, 1)
       .subscribe(
         (g: IGame) => {
           expect(`${g.id}`).toEqual(mockTree.id);
@@ -139,7 +143,7 @@ describe('WhistlerGameService', () => {
         fail
       );
 
-    const req = httpTestingController.expectOne('https://blabla/game/engagements/42');
+    const req = httpTestingController.expectOne('https://blabla/game/engagements/42?campaign_id=1');
     expect(req.request.method).toEqual('GET');
     const res: IJsonApiItemPayload<IWGameEngagementAttributes> = {
       data: mockTap
@@ -150,7 +154,7 @@ describe('WhistlerGameService', () => {
   });
 
   it('should get a scratch card from its id', (done: DoneFn) => {
-    service.get(42)
+    service.get(42, 1)
       .subscribe(
         (g: IGame) => {
           expect(`${g.id}`).toEqual(mockTree.id);
@@ -160,7 +164,7 @@ describe('WhistlerGameService', () => {
         fail
       );
 
-    const req = httpTestingController.expectOne('https://blabla/game/engagements/42');
+    const req = httpTestingController.expectOne('https://blabla/game/engagements/42?campaign_id=1');
     expect(req.request.method).toEqual('GET');
     const res: IJsonApiItemPayload<IWGameEngagementAttributes> = {
       data: mockScratch

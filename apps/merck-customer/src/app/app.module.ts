@@ -2,10 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import {
   // LOCALE_ID,
   NgModule,
-  APP_INITIALIZER
+  APP_INITIALIZER,
 } from '@angular/core';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -35,7 +34,10 @@ import {
   LocationModule,
   VouchersModule,
   MerchantsModule,
-  ConfigModule
+  ConfigModule,
+  CustomTranslateLoader,
+  TokenStorage,
+  ConfigService
 } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -58,12 +60,8 @@ import { TransactionHistoryComponent } from './account/transaction-history/trans
 import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.component';
 import { ConditionComponent } from './account/condition/condition.component';
 import { TransactionPipe } from './account/transaction-history/transaction.pipe';
-import {TransactionHistoryPipe} from './account/transaction-history/transaction-history.pipe';
+import { TransactionHistoryPipe } from './account/transaction-history/transaction-history.pipe';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http);
-}
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
   translateService.setDefaultLang(environment.defaultLang);
@@ -130,8 +128,8 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
+        useClass: CustomTranslateLoader,
+        deps: [HttpClient, ConfigService, TokenStorage]
       }
     })
   ],

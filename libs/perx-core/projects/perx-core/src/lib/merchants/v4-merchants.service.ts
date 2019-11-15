@@ -41,7 +41,7 @@ export class V4MerchantsService implements IMerchantsService {
           subject.complete();
         } else {
           // otherwise get next page
-          page ++;
+          page++;
           this.getMerchants(page, false)
             .subscribe(process);
         }
@@ -76,24 +76,23 @@ export class V4MerchantsService implements IMerchantsService {
     if (useCache === undefined) {
       useCache = true;
     }
-    if (page === undefined) {
-      page = 1;
-    }
+    page = page || 1;
 
     if (useCache && this.merchants[merchantId] && this.merchants[merchantId][page]) {
       return of(this.merchants[merchantId][page]);
     }
 
-    return this.http.get<IV4GetMerchantResponse>(
-      `${this.config.apiHost}/v4/merchants/${merchantId}?page=${page}`
-    ).pipe(
-      map(res => res.data),
-      tap((merchant: IMerchant) => {
-        if (!this.merchants[merchantId]) {
-          this.merchants[merchantId] = {};
-        }
-        this.merchants[merchant.id][page] = merchant;
-      })
-    );
+    return this.http.get<IV4GetMerchantResponse>(`${this.config.apiHost}/v4/merchants/${merchantId}?page=${page}`)
+      .pipe(
+        map(res => res.data),
+        tap((merchant: IMerchant) => {
+          if (!this.merchants[merchantId]) {
+            this.merchants[merchantId] = {};
+          }
+          //  make sure that page is a number
+          page = page || 1;
+          this.merchants[merchant.id][page] = merchant;
+        })
+      );
   }
 }

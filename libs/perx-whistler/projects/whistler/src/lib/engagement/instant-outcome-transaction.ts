@@ -7,13 +7,14 @@ export interface IWInstantOutcomeTransactionAttributes {
   engagement_id: number;
   campaign_entity_id: number;
   user_id: number;
-  results: {
+  results?: {
     id: string;
     type: string;
     attributes: {
       campaign_entity_id: number;
       source_type: string;
       source_id: number;
+      status: string;
       urn: string;
       created_at: string;
       updated_at: string;
@@ -29,4 +30,10 @@ export interface IWInstantOutcomeTransactionAttributes {
 export interface IWInstantOutcomeTxnReq {
   engagement_id: number;
   campaign_entity_id: number;
+  status: WInstantOutcomeStatus;
+}
+
+export enum WInstantOutcomeStatus {
+  reserved = 'reserved',
+  confirmed = 'confirmed'
 }
