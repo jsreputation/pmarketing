@@ -11,27 +11,30 @@ interface IAppInfo {
 }
 
 const appInfo: IAppInfo = {
-  appAccessToken: undefined,
+  // appAccessToken: undefined,
   userAccessToken: 'test'
 };
-describe('LocalStorageService', () => {
+
+describe('LocalTokenStorageService', () => {
   describe('LocalStorageService with config', () => {
     let service: LocalTokenStorage;
-    beforeEach(() => TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        ProfileModule,
-        ConfigModule.forRoot({})
-      ],
-      providers: [LocalTokenStorage]
-    }));
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          HttpClientTestingModule,
+          ProfileModule,
+          ConfigModule.forRoot({})
+        ],
+        providers: [LocalTokenStorage]
+      });
+    });
 
     it('should be created', () => {
       service = TestBed.get(LocalTokenStorage);
       expect(service).toBeTruthy();
     });
 
-    it('should call getappinfo', inject([LocalTokenStorage], (localTokenStorage: LocalTokenStorage) => {
+    fit('should call getappinfo', inject([LocalTokenStorage], (localTokenStorage: LocalTokenStorage) => {
       localStorage.setItem('appInfo', JSON.stringify(appInfo));
       localTokenStorage.getAppInfo();
       expect(localTokenStorage.appInfo.userAccessToken).toEqual('test');
