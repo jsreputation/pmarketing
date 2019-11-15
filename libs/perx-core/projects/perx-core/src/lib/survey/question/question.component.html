@@ -1,7 +1,7 @@
 <div class="question-container" [ngClass]="{ hidden : !isActive }">
     <div class="question-content" *ngIf="question">
         <div class="question">
-            {{question?.question}}
+            {{(alpha ? alpha + '. ' :  id + 1 + '. ' ) + question?.question}}
             <span class="required-star">
                 {{question?.required ? '*': ''}}
             </span>

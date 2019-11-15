@@ -1,7 +1,8 @@
 <ng-container
  *ngIf="payload">
-    <div *ngFor="let question of payload?.questions">
-        <perx-core-question 
+    <div *ngFor="let question of payload?.questions; let i = index">
+      <perx-core-question
+            [alpha]="getCharCode(i)"
             [id]="id"
             [questionPointer]="questionPointer"
             [isSubQuestion]="true"

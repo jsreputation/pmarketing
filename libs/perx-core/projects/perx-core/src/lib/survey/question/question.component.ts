@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, Optional} from '@angular/core';
 import { IQuestion, SurveyQuestionType, IAnswer, IPoints, IErrors } from '../models/survey.model';
 
 @Component({
@@ -19,6 +19,9 @@ export class QuestionComponent implements OnChanges {
 
   @Input()
   public question: IQuestion;
+
+  @Input() @Optional()
+  public alpha: string;
 
   @Input()
   public isSubQuestion: boolean;
