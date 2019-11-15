@@ -8,7 +8,7 @@ import { IVoucher, VoucherState, RedemptionType } from './models/voucher.model';
 
 import { ConfigModule } from '../../public-api';
 
-describe('VouchersService', () => {
+describe('V4VouchersService', () => {
   let httpTestingController: HttpTestingController;
   let service: V4VouchersService;
 
@@ -158,7 +158,7 @@ describe('VouchersService', () => {
       .subscribe((updateVoucher: IVoucher) => {
         expect(updateVoucher.id).toEqual(21);
         expect(updateVoucher.state).toEqual('issued');
-        expect(updateVoucher.code).toEqual(null);
+        expect(updateVoucher.code).not.toBeDefined();
         expect(updateVoucher.redemptionDate).toEqual(null);
         done();
       });
@@ -238,8 +238,7 @@ describe('VouchersService', () => {
     const updateVoucher = V4VouchersService.v4VoucherToVoucher(voucher);
     expect(updateVoucher.id).toEqual(21);
     expect(updateVoucher.state).toEqual('issued');
-    expect(updateVoucher.code).toEqual(null);
+    expect(updateVoucher.code).not.toBeDefined();
     expect(updateVoucher.redemptionDate).toEqual(null);
   });
-
 });

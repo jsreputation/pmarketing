@@ -1,6 +1,6 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
-import { browser, element, by, protractor } from 'protractor';
+import { browser, protractor } from 'protractor';
 import { EngagementAppPage, CreateShakeTheTreeAppPage } from '../pages/candylandApp.po';
 // initializing page objects variables
 let PageEngagement: EngagementAppPage;
@@ -23,15 +23,15 @@ Given(/^6_I am on the customer engagment dialog box$/, async () => {
 
 When(/^6_I click on the games option$/,  async () => {
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.elementToBeClickable(element(by.className('btn mat-flat-button primary'))), 5000);
+  await browser.wait(ec.elementToBeClickable(PageShakeTheTree.shakeTreeGamesButton()), 5000);
   // clicking on the create new button
-  await element(by.className('btn mat-flat-button primary')).click();
-  await element.all(by.tagName('cl-type-item')).get(1).click();
+  await PageShakeTheTree.shakeTreeGamesButton().click();
+  await PageShakeTheTree.shakeTreeTypeOptions().click();
 });
 
 Then(/^6_The two options for the games are present.$/, async () => {
-  expect(await element.all(by.css('img[alt=game-icon]')).count()).to.equal(2);
-  expect(await element(by.css('h2.dialog-title')).getText()).to.equal('Select Engagement Type');
+  expect(await PageShakeTheTree.firstPresentOption().count()).to.equal(2);
+  expect(await PageShakeTheTree.secondPresentOption().getText()).to.equal('Select Engagement Type');
 });
 
 // Scenario: Verifying the correct url when page redirects to template page.
@@ -44,13 +44,13 @@ Given(/^7_I am on the engagement creation dialog box$/, async () => {
 
 When(/^7_I click the next button$/, async () => {
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.elementToBeClickable(element(by.className('btn mat-flat-button primary'))), 5000);
+  await browser.wait(ec.elementToBeClickable(PageShakeTheTree.shakeTreeGamesButton()), 5000);
   // clicking on the create new button
-  await element(by.className('btn mat-flat-button primary')).click();
+  await PageShakeTheTree.shakeTreeGamesButton().click();
   // clicking on the games option
-  await element.all(by.tagName('cl-type-item')).get(1).click();
+  await PageShakeTheTree.shakeTreeTypeOptions().click();
   // clicking on the next button
-  await element.all(by.css('cl-button')).get(2).click();
+  await PageShakeTheTree.shakeTreeNextButton().click();
   await browser.sleep(3000);
   });
 
@@ -69,18 +69,18 @@ When(/^8_I do nothing$/, () => {});
 Then('8_The relevant text input fields are present.', async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for element to load
-  await browser.wait(ec.presenceOf(element.all(by.css('input')).first()), 5000);
-  await browser.wait(ec.presenceOf(element.all(by.css('input')).get(1)), 5000);
-  await browser.wait(ec.presenceOf(element.all(by.css('input')).get(2)), 5000);
-  await browser.wait(ec.presenceOf(element.all(by.css('input')).last()), 5000);
+  await browser.wait(ec.presenceOf(PageShakeTheTree.engagementTitleField()), 5000);
+  await browser.wait(ec.presenceOf(PageShakeTheTree.headlineField()), 5000);
+  await browser.wait(ec.presenceOf(PageShakeTheTree.subHeadlineField()), 5000);
+  await browser.wait(ec.presenceOf(PageShakeTheTree.buttonTextField()), 5000);
   // Verifying whether engagement title text input exists
-  expect(await element.all(by.css('input')).first().isPresent()).to.equal(true);
+  expect(await PageShakeTheTree.engagementTitleField().isPresent()).to.equal(true);
   // Verifying whether headline message text input exists
-  expect(await element.all(by.css('input')).get(1).isPresent()).to.equal(true);
+  expect(await PageShakeTheTree.headlineField().isPresent()).to.equal(true);
   // Verifying whether sub-headline message text input exists
-  expect(await element.all(by.css('input')).get(2).isPresent()).to.equal(true);
+  expect(await PageShakeTheTree.subHeadlineField().isPresent()).to.equal(true);
   // Verifying whether button text input exists
-  expect(await element.all(by.css('input')).last().isPresent()).to.equal(true);
+  expect(await PageShakeTheTree.buttonTextField().isPresent()).to.equal(true);
 });
 
 // Verifying the presence of the preview element.
@@ -94,7 +94,7 @@ When(/^9_I do nothing$/, () => {});
 Then(/^9_the preview section element is present.$/, async () => {
   // checking whether mobile preview exist
   expect(await browser.getCurrentUrl()).to.contain('new-shake');
-  expect(await element(by.className('mobile-preview mobile-content-multiple')).isPresent()).to.equal(true);
+  expect(await PageShakeTheTree.mobilePreviewCheck().isPresent()).to.equal(true);
 });
 
 // Verifiying that headline message field takes null value
@@ -104,16 +104,16 @@ Given(/^10_that I am on the shake the tree creation page.$/, async () => {
 });
 
 When(/^10_I entered a empty text string in the headline text box.$/, async () => {
-  await element.all(by.css('input[type=text]')).get(1).clear();
-  await element.all(by.css('input[type=text]')).get(1).sendKeys(protractor.Key.SPACE);
+  await PageShakeTheTree.headlineField().clear();
+  await PageShakeTheTree.headlineField().sendKeys(protractor.Key.SPACE);
 
 });
 
 Then(/^10_the empty string entered is reflected in the preview element.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for preview headline to load
-  await browser.wait(ec.presenceOf(element(by.className('mobile-preview-headline'))), 6000);
-  expect(await element(by.css('p.mobile-preview-headline')).getText()).to.be.equal('');
+  await browser.wait(ec.presenceOf(PageShakeTheTree.shakeTreePreviewHeadline()), 6000);
+  expect(await PageShakeTheTree.shakeTreePreviewEmptyHeadline().getText()).to.be.equal('');
 });
 
 // Verifiying that headline message is reflected in the preview element
@@ -124,15 +124,15 @@ Given(/^11_that I am on the shake the tree creation page.$/, async () => {
 });
 
 When(/^11_I entered a pseudo random text string in the headline text box.$/, async () => {
-  await element.all(by.css('input')).get(1).clear();
-  await element.all(by.css('input')).get(1).sendKeys('This is a test string!');
+  await PageShakeTheTree.headlineField().clear();
+  await PageShakeTheTree.headlineField().sendKeys('This is a test string!');
   await browser.sleep(3000);
 });
 
 Then(/^11_the random string entered is reflected in the preview element.$/, async () => {
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.elementToBeClickable(element(by.className('mobile-preview-headline'))), 6000);
-  expect(await element(by.className('mobile-preview-headline')).getText()).to.be.equal('This is a test string!');
+  await browser.wait(ec.elementToBeClickable(PageShakeTheTree.shakeTreePreviewHeadline()), 6000);
+  expect(await PageShakeTheTree.shakeTreePreviewHeadline().getText()).to.be.equal('This is a test string!');
 });
 
 // Verifiying that sub-headline message field takes null value
@@ -143,12 +143,12 @@ Given(/^12_that I am on the shake the tree creation page.$/, async () => {
 });
 
 When(/^12_I entered a empty text string in the sub-headline text box.$/, async () => {
-  await element(by.css('input#mat-input-2')).clear();
-  await element(by.css('input#mat-input-2')).sendKeys(' ');
+  await PageShakeTheTree.subHeadlineField().clear();
+  await PageShakeTheTree.subHeadlineField().sendKeys(' ');
 });
 
 Then(/^12_the empty string entered is reflected in the preview element.$/, async () => {
-  expect(await element(by.className('mobile-preview-sub-headline')).getText()).to.be.equal('');
+  expect(await PageShakeTheTree.shakeTreePreviewSubHeadline().getText()).to.be.equal('');
 });
 
 // Verifiying that sub-headline message is reflected in the preview element
@@ -158,15 +158,15 @@ Given(/^13_that I am on the shake the tree creation page.$/, async () => {
 });
 
 When(/^13_I entered a pseudo random text string in the sub-headline text box.$/, async () => {
-  await element.all(by.css('input')).get(2).clear();
-  await element.all(by.css('input')).get(2).sendKeys('This is a test string!');
+  await PageShakeTheTree.subHeadlineField().clear();
+  await PageShakeTheTree.subHeadlineField().sendKeys('This is a test string!');
   await browser.sleep(3000);
 });
 
 Then(/^13_the random string entered is reflected in the preview element.$/, async () => {
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.elementToBeClickable(element(by.className('mobile-preview-sub-headline'))), 6000);
-  expect(await element(by.className('mobile-preview-sub-headline')).getText()).to.be.equal('This is a test string!');
+  await browser.wait(ec.elementToBeClickable(PageShakeTheTree.shakeTreePreviewSubHeadline()), 6000);
+  expect(await PageShakeTheTree.shakeTreePreviewSubHeadline().getText()).to.be.equal('This is a test string!');
 });
 
 //  Verifiying that button text message message field takes null value
@@ -176,12 +176,12 @@ Given(/^14_that I am on the shake the tree creation page.$/, async () => {
 });
 
 When(/^14_I entered a empty text string in the button text message box.$/, async () => {
-  await element(by.css('input#mat-input-3')).clear();
-  await element(by.css('input#mat-input-3')).sendKeys(' ');
+  await PageShakeTheTree.buttonTextField().clear();
+  await PageShakeTheTree.buttonTextField().sendKeys(' ');
 });
 
 Then(/^14_the empty string entered is reflected in the preview element.$/, async () => {
-  expect(await element(by.className('mobile-preview-btn')).getText()).to.be.equal('');
+  expect(await PageShakeTheTree.shakeTreePreviewButton().getText()).to.be.equal('');
 });
 
 // Verifiying that button text message is reflected in the preview element
@@ -191,15 +191,15 @@ Given(/^15_that I am on the shake the tree creation page.$/, async () => {
 });
 
 When(/^15_I entered a pseudo random text string in the button text box.$/, async () => {
-  await element.all(by.css('input')).last().clear();
-  await element.all(by.css('input')).last().sendKeys('This is a test string!');
+  await PageShakeTheTree.buttonTextField().clear();
+  await PageShakeTheTree.buttonTextField().sendKeys('This is a test string!');
   await browser.sleep(3000);
 });
 
 Then(/^15_the random string entered is reflected in the preview element.$/, async () => {
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.elementToBeClickable(element(by.className('mobile-preview-btn'))), 6000);
-  expect(await element(by.className('mobile-preview-btn')).getText()).to.be.equal('This is a test string!');
+  await browser.wait(ec.elementToBeClickable(PageShakeTheTree.shakeTreePreviewButton()), 6000);
+  expect(await PageShakeTheTree.shakeTreePreviewButton().getText()).to.be.equal('This is a test string!');
 });
 
 // Verifiying that header message is not reflected in the preview element
@@ -209,17 +209,17 @@ Given(/^16_that I am on the shake the tree creation page.$/, async () => {
 });
 
 When(/^16_I entered a pseudo random text string in the engagement title text box.$/, async () => {
-  await element(by.css('input#mat-input-0')).clear();
-  await element(by.css('input#mat-input-0')).sendKeys('This is a test string!');
+  await PageShakeTheTree.engagementTitleField().clear();
+  await PageShakeTheTree.engagementTitleField().sendKeys('This is a test string!');
 });
 
 Then(/^16_the random string entered is not reflected in the preview element.$/, async () => {
   // verifying that string is not present in the headline
-  expect(await element(by.className('mobile-preview-headline')).getText()).to.be.not.equal('This is a test string!');
+  expect(await PageShakeTheTree.shakeTreePreviewHeadline().getText()).to.be.not.equal('This is a test string!');
   // verifying that string is not present in the sub-headline
-  expect(await element(by.className('mobile-preview-sub-headline')).getText()).to.be.not.equal('This is a test string!');
+  expect(await PageShakeTheTree.shakeTreePreviewSubHeadline().getText()).to.be.not.equal('This is a test string!');
   // verifying that string is not present in the button text
-  expect(await element(by.className('mobile-preview-btn')).getText()).to.be.not.equal('This is a test string!');
+  expect(await PageShakeTheTree.shakeTreePreviewButton().getText()).to.be.not.equal('This is a test string!');
 });
 
 // Verifying that the tree design choice is reflected in the preview element
@@ -233,11 +233,11 @@ Given('17_that I am on the shake the tree creation page.', async () => {
 
 When(/^17_you select one of the the tree design.$/, async () => {
 // clicking the second tree
- await element.all(by.tagName('cl-images-preview')).get(1).click();
+ await PageShakeTheTree.shakeTreeDesign().click();
  });
 
 Then(/^17_that selected tree design is reflected in the preview element.$/, async () => {
-  const TreeElement = element(by.className('tree__img ng-star-inserted'));
+  const TreeElement = PageShakeTheTree.treeDesignPreview();
   const previewTreeElementRegex = /full_tree_2.png/;
   // Doing an assertion on the src attribute
   expect(await TreeElement.getAttribute('src')).to.match(previewTreeElementRegex);
@@ -253,11 +253,11 @@ Given(/^18_that I am on the shake the tree creation page.$/, async () =>  {
 
 When(/^18_you select one of the the background design.$/, async () => {
   // clicking on the third option for the background image
-  await element.all(by.tagName('cl-images-preview')).last().click();
+  await PageShakeTheTree.shakeTreeBackgroundDesign().click();
 });
 
 Then(/^18_that selected background design design is reflected in the preview element.$/, async () => {
-  const BkgrdElement = element(by.className('mobile-preview-background'));
+  const BkgrdElement = PageShakeTheTree.shakeTreePreviewBackground();
   const previewBkgrdElementRegex = /full_bg_6.jpg/;
   // Doing an assertion on the src attribute
   expect(await BkgrdElement.getAttribute('style')).to.match(previewBkgrdElementRegex);
@@ -271,13 +271,13 @@ Given(/^19_that I am on the shake the tree creation page.$/, async () => {
 
 When(/^19_you select one of the options for the gift amount$/, async () => {
   // selecting the dropdown list and clicking it
-  await element(by.css('div.mat-select-arrow')).click();
+  await PageShakeTheTree.dropdownList().click();
   // selecting the 4 gifts option
-  await element.all(by.className('mat-option ng-star-inserted')).get(1).click();
+  await PageShakeTheTree.selectOption().click();
 });
 
 Then(/^19_the selected amount would be present in the preview element.$/, async () => {
-    expect(await element.all(by.css('img.gift-img')).count()).to.be.equal(4);
+    expect(await PageShakeTheTree.selectedAmountPreview().count()).to.be.equal(4);
 });
 
 // Verifying the choice of gift design is reflected in the preview element
@@ -288,11 +288,11 @@ Given(/^20_that I am on the shake the tree creation page.$/, async () => {
 
 When(/^20_I click on the gift design of my choics$/, async () => {
     // selecting the second option for gift design
-    await element.all(by.className('image-wrap')).get(4).click();
+    await PageShakeTheTree.giftDesign().click();
 });
 
 Then(/^20_The preview element should reflect my choice.$/, async () => {
-   const giftElement = element(by.className('gift-img gift-img__1 ng-star-inserted'));
+   const giftElement = PageShakeTheTree.previewMyChoice();
    // doing an asssertion base on the url in src
    expect(await giftElement.getAttribute('src')).to.contain('assets/images/gifts/state2.png');
   });

@@ -93,11 +93,10 @@ export class V4ProfileService extends ProfileService {
   }
 
   public getCustomProperties(): Observable<ICustomProperties> {
-    return this.whoAmI().pipe(
-      map(
-        (profile: IProfile) => profile.customProperties
-      )
-    );
+    return this.whoAmI()
+      .pipe(
+        map((profile: IProfile) => profile.customProperties || {})
+      );
   }
 
   public updateUserInfo(data: IProfileProperty): Observable<void> {
