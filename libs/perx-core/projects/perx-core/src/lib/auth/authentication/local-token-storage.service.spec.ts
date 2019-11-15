@@ -3,6 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LocalTokenStorage } from './local-token-storage.service';
 import { ProfileModule } from '../../profile/profile.module';
 import { ConfigModule } from '../../config/config.module';
+import { Config } from '../../config/config';
 
 interface IAppInfo {
   appAccessToken?: string;
@@ -14,7 +15,9 @@ const appInfo: IAppInfo = {
   // appAccessToken: undefined,
   userAccessToken: 'test'
 };
-
+const localTokenStorageFactory = function (config?: Config) {
+  return new LocalTokenStorage(config || null);
+}
 describe('LocalTokenStorageService', () => {
   describe('LocalStorageService with config', () => {
     let service: LocalTokenStorage;
@@ -25,7 +28,11 @@ describe('LocalTokenStorageService', () => {
           ProfileModule,
           ConfigModule.forRoot({})
         ],
-        providers: [LocalTokenStorage]
+        providers: [{
+          provide: LocalTokenStorage,
+          useFactory: localTokenStorageFactory,
+          deps: [Config]
+        }]
       });
     });
 
@@ -34,7 +41,7 @@ describe('LocalTokenStorageService', () => {
       expect(service).toBeTruthy();
     });
 
-    fit('should call getappinfo', inject([LocalTokenStorage], (localTokenStorage: LocalTokenStorage) => {
+    it('should call getappinfo', inject([LocalTokenStorage], (localTokenStorage: LocalTokenStorage) => {
       localStorage.setItem('appInfo', JSON.stringify(appInfo));
       localTokenStorage.getAppInfo();
       expect(localTokenStorage.appInfo.userAccessToken).toEqual('test');
