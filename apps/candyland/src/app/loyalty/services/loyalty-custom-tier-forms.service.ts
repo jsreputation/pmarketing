@@ -32,7 +32,7 @@ export class LoyaltyCustomTierFormsService {
         type: new FormControl(null, [Validators.required]),
         trigger: new FormControl(null, [Validators.required])
       }),
-      ruleList: this.rulesFormsService.getRuleForm()
+      ruleSet: this.rulesFormsService.getRuleForm()
     });
   }
 
@@ -42,7 +42,8 @@ export class LoyaltyCustomTierFormsService {
       joinMethod: {
         inviteOnly: true
       },
-      imageUrl: null,
+      // imageUrl: null,
+      imageUrl: 'https://remontka.pro/images/make-screenshot-windows-10.png',
       earnBonus: 0,
       burnDiscount: 0,
       pointsExpiry: {

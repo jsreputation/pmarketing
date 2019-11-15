@@ -1,7 +1,8 @@
 import { environment } from '@cl-environments/environment';
 
 export class ApiConfig {
-  public static basePath: string = environment.apiHost;
+  // public static basePath: string = environment.apiHost;
+  public static basePath: string = 'http://25f2f653.ngrok.io';
   public static baseAPIPath: string = `${ApiConfig.basePath}/iam`;
   public static engagementsPath: string = `${ApiConfig.basePath}/engagements`;
   public static campaignsPath: string = `${ApiConfig.basePath}/campaign/entities`;
@@ -30,4 +31,6 @@ export class ApiConfig {
   public static loyaltyPath: string = `${ApiConfig.basePath}/loyalty/programs`;
   public static loyaltyBasicTierPath: string = `${ApiConfig.basePath}/loyalty/basic_tiers`;
   public static getLoyaltyCustomTierPath: string = `${ApiConfig.basePath}/loyalty/custom_tiers`;
+  public static getLoyaltyRuleSetPath: string = `${ApiConfig.basePath}/outcome/rule_sets`;
+  public static getLoyaltyRulePath: string = `${ApiConfig.basePath}/outcome/rules`;
 }

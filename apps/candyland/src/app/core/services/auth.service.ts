@@ -76,10 +76,10 @@ export class AuthService {
   }
 
   public logout(): void {
-    this.sessionService.remove();
-    this.userService.user = null;
-    this.localStorage.remove('userId');
-    this.localStorage.remove('authToken');
-    this.router.navigate(['/login']);
+    // this.sessionService.remove();
+    // this.userService.user = null;
+    // this.localStorage.remove('userId');
+    // this.localStorage.remove('authToken');
+    // this.router.navigate(['/login']);
   }
 }

@@ -21,17 +21,18 @@ import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-f
 import { IWBasicTierAttributes } from '@perx/whistler';
 import { IWPools } from '@perx/whistler';
 import { RuleSetupPopupComponent } from '../rule-setup-popup/rule-setup-popup.component';
+import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 
 @Component({
-  selector: 'cl-new-loyalty',
-  templateUrl: './new-loyalty.component.html',
-  styleUrls: ['./new-loyalty.component.scss'],
+  selector: 'cl-manage-loyalty-page',
+  templateUrl: './manage-loyalty-page.component.html',
+  styleUrls: ['./manage-loyalty-page.component.scss'],
   providers: [{
     provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
   }]
 })
 
-export class NewLoyaltyComponent implements OnInit, OnDestroy {
+export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   public loyaltyId: string;
   public basicTierId: string;
   public form: FormGroup;
@@ -168,6 +169,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
   constructor(
     private loyaltyFormsService: LoyaltyFormsService,
     private loyaltyService: LoyaltyService,
+    private ruleService: LoyaltyRuleService,
     private customTierService: LoyaltyCustomTierService,
     private userService: UserService,
     private audiencesService: AudiencesService,
@@ -320,7 +322,7 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
 
   private updateCustomTiersDataSource(): void {
     this.customTierDataSource.updateData();
-    this.customTiersCount.patchValue(this.customTierDataSource.length || 0);
+    // this.customTiersCount.patchValue(this.customTierDataSource.length || 0);
   }
 
   private editCustomTire(data: ICustomTireForm): void {
@@ -408,6 +410,8 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
         switchMap(() => this.loyaltyService.getBasicTierRequest(newLoyalty, this.loyaltyId, this.basicTierId)),
         filter(Boolean),
         tap(basicTier => this.setBasicTierId(basicTier.data.id)),
+        switchMap(() => this.initRules()),
+        filter(Boolean),
         takeUntil(this.destroy$)
       );
   }
@@ -452,5 +456,10 @@ export class NewLoyaltyComponent implements OnInit, OnDestroy {
 
   private isNotChangedFormValue(): boolean {
     return Utils.isEqual(this.form.value, this.prevFormValue);
+  }
+
+  private initRules(): Observable<any> {
+    return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', this.basicTierId)
+      .pipe(tap(data => console.log(data)));
   }
 }

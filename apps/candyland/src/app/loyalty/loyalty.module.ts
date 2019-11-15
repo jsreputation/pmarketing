@@ -23,7 +23,7 @@ import { LoyaltyListPageComponent } from './containers/loyalty-list-page/loyalty
 import { LoyaltyComponent } from './containers/loyalty/loyalty.component';
 import { LoyaltyRoutingModule } from './loyalty-routing.module';
 import { LoyaltyFormsService } from './services/loyalty-forms.service';
-import { NewLoyaltyComponent } from './containers/new-loyalty/new-loyalty.component';
+import { ManageLoyaltyPageComponent } from './containers/manage-loyalty-page/manage-loyalty-page.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { LoyaltyFormStepDetailsComponent } from './components/loyalty-form-step-details/loyalty-form-step-details.component';
 import { LoyaltyFormStepTiersConversionsComponent } from './components/loyalty-form-step-tiers-conversions/loyalty-form-step-tiers-conversions.component';
@@ -44,7 +44,7 @@ import { MatTableModule } from '@angular/material/table';
 import { ViewSchemeInfoComponent } from './components/view-scheme-info/view-scheme-info.component';
 import { ViewLoyaltyComponent } from './components/view-loyalty/view-loyalty.component';
 import { ViewGlobalEarnBurnRulesComponent } from './components/view-global-earn-burn-rules/view-global-earn-burn-rules.component';
-import { LoyaltyReviewComponent } from './containers/loyalty-review/loyalty-review.component';
+import { LoyaltyReviewPageComponent } from './containers/loyalty-review-page/loyalty-review-page.component';
 import { LoyaltyFormStepEarnRulesComponent } from './components/loyalty-form-step-earn-rules/loyalty-form-step-earn-rules.component';
 import { PointEarnRulesGroupComponent } from './components/point-earn-rules-group/point-earn-rules-group.component';
 import { PointEarnRulesListComponent } from './components/point-earn-rules-list/point-earn-rules-list.component';
@@ -63,7 +63,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     LoyaltyListPageComponent,
     LoyaltyGridComponent,
     LoyaltyItemComponent,
-    NewLoyaltyComponent,
+    ManageLoyaltyPageComponent,
     LoyaltyFormStepDetailsComponent,
     LoyaltyFormStepTiersConversionsComponent,
     LoyaltyFormStepReviewComponent,
@@ -80,7 +80,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ViewSchemeInfoComponent,
     ViewLoyaltyComponent,
     ViewGlobalEarnBurnRulesComponent,
-    LoyaltyReviewComponent,
+    LoyaltyReviewPageComponent,
     LoyaltyFormStepEarnRulesComponent,
     PointEarnRulesGroupComponent,
     PointEarnRulesListComponent,

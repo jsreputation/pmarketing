@@ -8,11 +8,11 @@ import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { ILoyaltyForm, ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Component({
-  selector: 'cl-loyalty-review',
-  templateUrl: './loyalty-review.component.html',
-  styleUrls: ['./loyalty-review.component.scss']
+  selector: 'cl-loyalty-review-page',
+  templateUrl: './loyalty-review-page.component.html',
+  styleUrls: ['./loyalty-review-page.component.scss']
 })
-export class LoyaltyReviewComponent implements OnInit, OnDestroy {
+export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
   public loyalty: ILoyaltyForm;
   public customTierDataSource: CustomDataSource<ICustomTireForm>;
   protected destroy$: Subject<void> = new Subject();

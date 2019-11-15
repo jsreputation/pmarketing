@@ -47,7 +47,7 @@ export class LoyaltyFormsService {
           trigger: new FormControl(null, [Validators.required])
         })
       }),
-      ruleList: this.rulesFormsService.getRuleForm()
+      ruleSet: this.rulesFormsService.getRuleForm()
     });
   }
 
