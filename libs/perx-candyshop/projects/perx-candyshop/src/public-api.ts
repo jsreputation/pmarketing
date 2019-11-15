@@ -8,7 +8,6 @@ export { DatepickerRangeValue } from './models/datepicker-range-value.interface'
 export { IUploadedFile } from './models/uploaded-file.interface';
 export { OptionConfig } from './models/option-config.interface';
 
-export { EnvConfig } from './lib/env.config';
 export { ButtonComponent } from './lib/button/button.component';
 export { ButtonModule } from './lib/button/button.module';
 
@@ -36,6 +35,9 @@ export { ProgressBarComponent } from './lib/progress-bar/progress-bar.component'
 export { DatePickerModule } from './lib/date-picker/date-picker.module';
 export { DatePickerComponent } from './lib/date-picker/date-picker.component';
 
+export { RangeDatePickerModule } from './lib/range-date-picker/range-date-picker.module';
+export { RangeDatePickerComponent } from './lib/range-date-picker/range-date-picker.component';
+
 export { InkModule } from './lib/ink/ink.module';
 export { InkComponent } from './lib/ink/ink.component';
 export { InkBarDirective } from './lib/ink/directives/ink-bar.directive';
@@ -44,9 +46,6 @@ export { InkListenerDirective } from './lib/ink/directives/ink-listener.directiv
 
 export { ItemListModule } from './lib/item-list/item-list.module';
 export { ItemListComponent } from './lib/item-list/item-list.component';
-
-export { RangeDatePickerModule } from './lib/range-date-picker/range-date-picker.module';
-export { RangeDatePickerComponent } from './lib/range-date-picker/range-date-picker.component';
 
 export { RoleLabelModule } from './lib/role-label/role-label.module';
 export { RoleLabelComponent, DEFAULT_ROLE_CONFIG } from './lib/role-label/role-label.component';
@@ -64,6 +63,13 @@ export { SelectGraphicWrapComponent } from './lib/select-graphic-wrap/select-gra
 
 export { UploadGraphicModule } from './lib/upload-graphic/upload-graphic.module';
 export { UploadGraphicComponent } from './lib/upload-graphic/upload-graphic.component';
+export { IUploadGraphicConfig } from './lib/upload-graphic/upload-graphic-config.interface';
+export { IUploadImageService } from './lib/upload-graphic/upload-image-service.interface';
+
+export { UploadFileModule } from './lib/upload-file/upload-file.module';
+export { UploadFileComponent } from './lib/upload-file/upload-file.component';
+export { IUploadFileConfig } from './lib/upload-file/upload-file-config.interface';
+export { IUploadFileService } from './lib/upload-file/upload-file-service.interface';
 
 export { SidenavModule } from './lib/sidenav/sidenav.module';
 export { SidenavComponent } from './lib/sidenav/sidenav.component';
@@ -90,4 +96,3 @@ export { UserComponent } from './lib/user/user.component';
 
 export { VouchersProgressBarModule } from './lib/vouchers-progress-bar/vouchers-progress-bar.module';
 export { VouchersProgressBarComponent } from './lib/vouchers-progress-bar/vouchers-progress-bar.component';
-

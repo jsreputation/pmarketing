@@ -22,7 +22,7 @@ const uploadImageUrl = new InjectionToken<string>('uploadImageUrl');
   ]
 })
 export class UploadGraphicModule {
-  public static forRoot(config: IUploadGraphicConfig): ModuleWithProviders {
+  public static forRoot(config: IUploadGraphicConfig = {}): ModuleWithProviders {
     return {
       ngModule: UploadGraphicModule,
       providers: [
@@ -33,8 +33,8 @@ export class UploadGraphicModule {
         {
           provide: UploadImageService,
           useValue: config.service || UploadImageService
-        },
-      ],
+        }
+      ]
     };
   }
 }

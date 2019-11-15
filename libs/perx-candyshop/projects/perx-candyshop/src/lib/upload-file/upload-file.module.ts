@@ -22,8 +22,9 @@ const uploadFileUrl = new InjectionToken<string>('uploadFileUrl');
     DownloadButtonModule,
   ]
 })
+
 export class UploadFileModule {
-  public static forRoot(config: IUploadFileConfig): ModuleWithProviders {
+  public static forRoot(config: IUploadFileConfig = {}): ModuleWithProviders {
     return {
       ngModule: UploadFileModule,
       providers: [

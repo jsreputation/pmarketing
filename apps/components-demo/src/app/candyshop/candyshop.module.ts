@@ -13,7 +13,25 @@ import {
   DownloadLinkModule,
   InfoHintModule,
   LogoModule,
-  ProgressBarModule
+  ProgressBarModule,
+  DatePickerModule,
+  RangeDatePickerModule,
+  InkModule,
+  ItemListModule,
+  RoleLabelModule,
+  ImagesPreviewModule,
+  SelectGraphicModule,
+  SelectGraphicWrapModule,
+  UploadGraphicModule,
+  // UploadFileModule,
+  SidenavModule,
+  SidenavMenuModule,
+  SmsEditorModule,
+  StatusLabelModule,
+  TagListModule,
+  TimePickerModule,
+  UserModule,
+  VouchersProgressBarModule
 } from '@perx/candyshop';
 
 @NgModule({
@@ -33,7 +51,25 @@ import {
     DownloadLinkModule,
     InfoHintModule,
     LogoModule,
-    ProgressBarModule
+    ProgressBarModule,
+    DatePickerModule,
+    RangeDatePickerModule,
+    InkModule,
+    ItemListModule,
+    RoleLabelModule,
+    ImagesPreviewModule,
+    SelectGraphicModule,
+    SelectGraphicWrapModule,
+    UploadGraphicModule.forRoot({}),
+    // UploadFileModule.forRoot({}),
+    SidenavModule,
+    SidenavMenuModule,
+    SmsEditorModule,
+    StatusLabelModule,
+    TagListModule,
+    TimePickerModule,
+    UserModule,
+    VouchersProgressBarModule
   ]
 })
 export class CandyshopModule {
