@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { IVoucher, VoucherState } from '../models/voucher.model';
 import { Type, SimpleChange } from '@angular/core';
 import { RedemptionType } from '../../rewards/models/reward.model';
+import { oc } from 'ts-optchain';
 
 describe('QrcodeRedemptionComponent', () => {
   let component: QrcodeRedemptionComponent;
@@ -79,6 +80,6 @@ describe('QrcodeRedemptionComponent', () => {
     fixture.detectChanges();
     tick();
     expect(voucherServiceSpy).toHaveBeenCalled();
-    expect(fixture.nativeElement.querySelector('.voucher-name').innerText).toEqual(mockVoucher.reward.name);
+    expect(fixture.nativeElement.querySelector('.voucher-name').innerText).toEqual(oc(mockVoucher).reward.name());
   }));
 });
