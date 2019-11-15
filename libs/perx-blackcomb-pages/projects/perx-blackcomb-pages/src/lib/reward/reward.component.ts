@@ -1,11 +1,20 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
-import { InstantOutcomeService, IReward, PopupComponent, IOutcome, IPopupConfig } from '@perx/core';
-import { MatDialog } from '@angular/material';
+import { Observable, of, Subject, combineLatest } from 'rxjs';
+import {
+  InstantOutcomeService,
+  IReward,
+  IOutcome,
+  IPopupConfig,
+  IEngagementTransaction,
+  RewardsService,
+  AuthenticationService,
+  PopupComponent
+} from '@perx/core';
 import { map, switchMap, catchError, tap, takeUntil, } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'perx-blackcomb-reward',
@@ -19,16 +28,20 @@ export class RewardComponent implements OnInit, OnDestroy {
   public background: string;
   public cardBackground: string;
   public rewards$: Observable<IReward[]>;
+  public transaction$: Observable<IEngagementTransaction>;
+  private transactionId: number | null = null;
+  private isAnonymousUser: boolean;
+  private popupData: IPopupConfig;
   public noRewardsPopUp: IPopupConfig = {
-    title: 'We’re sorry, all rewards have been claimed',
-    text: 'Look out for more rewards coming your way, soon!',
-    buttonTxt: 'Back to Wallet',
+    title: 'INSTANT_OUTCOME_NO_REWARDS_TITLE',
+    text: 'INSTANT_OUTCOME_NO_REWARDS_TEXT',
+    buttonTxt: 'BACK_TO_WALLET',
     imageUrl: '',
   };
   public successPopUp: IPopupConfig = {
-    title: 'Successfully !',
+    title: 'REDEEM_SUCCESSFULLY',
     text: '',
-    buttonTxt: 'View Reward',
+    buttonTxt: 'VIEW_REWARD',
     imageUrl: '',
   };
 
@@ -36,71 +49,112 @@ export class RewardComponent implements OnInit, OnDestroy {
 
   constructor(
     private outcomeService: InstantOutcomeService,
-    private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
+    private dialog: MatDialog,
+    private auth: AuthenticationService,
     private translate: TranslateService,
+    private rewardService: RewardsService
   ) { }
 
   private initTranslate(): void {
-    this.translate.get('VIEW_REWARD').subscribe((text) => this.successPopUp.buttonTxt = text);
-    this.translate.get('BACK_TO_WALLET').subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
+    this.translate.get(this.successPopUp.title).subscribe((text) => this.successPopUp.title = text);
+    this.translate.get(this.successPopUp.buttonTxt).subscribe((text) => this.successPopUp.buttonTxt = text);
+    this.translate.get(this.noRewardsPopUp.title).subscribe((text) => this.noRewardsPopUp.title = text);
+    this.translate.get(this.noRewardsPopUp.text).subscribe((text) => this.noRewardsPopUp.text = text);
+    this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
   }
 
   public ngOnInit(): void {
     this.initTranslate();
+    this.isAnonymousUser = this.auth.getAnonymous();
     this.route.params
       .pipe(
         map((params: Params) => params.id),
-        switchMap((id: string) => this.outcomeService.getFromCampaign(+id)),
-        catchError(() => this.router.navigate(['/wallet']))
+        switchMap((id: string) => this.outcomeService.getFromCampaign(parseInt(id, 10))),
+        catchError((err: Error) => { throw err; })
       )
-      .subscribe((eng: IOutcome) => {
-        this.title = eng.title;
-        this.subTitle = eng.subTitle;
-        this.button = eng.button;
-        this.background = eng.backgroundImgUrl;
-        this.cardBackground = eng.cardBackgroundImgUrl;
-        const { displayProperties } = eng;
-        if (displayProperties && displayProperties.noRewardsPopUp) {
-          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine || this.noRewardsPopUp.title;
-          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine || this.noRewardsPopUp.text;
-          this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
-          this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
-        }
-        if (displayProperties && displayProperties.successPopUp) {
-          this.successPopUp.title = displayProperties.successPopUp.headLine || this.successPopUp.title;
-          this.successPopUp.text = displayProperties.successPopUp.subHeadLine || this.successPopUp.text;
-          this.successPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.successPopUp.imageUrl;
-          this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
-        }
-      });
+      .subscribe(
+        (eng: IOutcome) => {
+          this.title = eng.title;
+          this.subTitle = eng.subTitle;
+          this.button = eng.button;
+          this.background = eng.backgroundImgUrl;
+          this.cardBackground = eng.cardBackgroundImgUrl;
+          const { displayProperties } = eng;
+          if (displayProperties && displayProperties.noRewardsPopUp) {
+            this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
+            this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
+            this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
+            this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
+          }
+        },
+        () => this.redirectUrlAndPopUp()
+      );
 
-    this.rewards$ =
+    this.transaction$ =
       this.route.params
         .pipe(
-          // filter((params: Params) => params.id),
           map((params: Params) => params.id),
-          switchMap((campaignId: string) => this.outcomeService.claim(+campaignId)),
-          tap((rewards: IReward[]) => {
-            // if reward list is empty make sure to throw, so that we end up in the catchError block
-            if (rewards.length === 0) {
+          switchMap((campaignId: string) => this.outcomeService.prePlay(parseInt(campaignId, 10))),
+          tap((outcomeTransaction: IEngagementTransaction) => {
+            this.transactionId = outcomeTransaction.id;
+            if (outcomeTransaction.rewardIds.length === 0) {
               throw new Error('empty');
             }
           }),
           catchError(() => {
-            this.dialog.open(PopupComponent, { data: this.noRewardsPopUp });
-            /* todo display popup and redirect to wallet*/
-            this.router.navigate(['/wallet']);
+            this.popupData = this.noRewardsPopUp;
+            this.redirectUrlAndPopUp();
             // next line is actually useless as we will redirected.
-            return of<IReward[]>([]);
-          }),
+            return of<IEngagementTransaction>({
+              rewardIds: [],
+              id: null
+            });
+          })
+        );
+
+    this.rewards$ =
+      this.transaction$
+        .pipe(
+          switchMap(
+            (outcomeTransaction: IEngagementTransaction) => {
+              if (outcomeTransaction.rewardIds.length === 0) {
+                return of<IReward[]>([]);
+              }
+              return combineLatest(...outcomeTransaction.rewardIds.map(
+                (id: number) => this.rewardService.getReward(id)
+              ));
+            }
+          ),
           takeUntil(this.destroy$)
         );
   }
 
   public rewardClickedHandler(): void {
-    this.router.navigate(['/wallet']);
+    const userAction$: Observable<void> = this.isAnonymousUser ? of(void 0) : this.outcomeService.prePlayConfirm(this.transactionId);
+    userAction$.subscribe(
+      () => this.redirectUrlAndPopUp(),
+      () => this.redirectUrlAndPopUp()
+    );
+  }
+
+  private redirectUrlAndPopUp(): void {
+    const queryParams = {
+      popupData: JSON.stringify(this.popupData),
+      engagementType: 'instant_outcome',
+      transactionId: this.transactionId
+    };
+
+    if (this.isAnonymousUser) {
+      this.router.navigate(['/pi'], { queryParams });
+    } else {
+      this.router.navigate(['/wallet']);
+      if (this.popupData) {
+        this.dialog.open(PopupComponent, { data: this.popupData });
+      }
+    }
+
   }
 
   public ngOnDestroy(): void {

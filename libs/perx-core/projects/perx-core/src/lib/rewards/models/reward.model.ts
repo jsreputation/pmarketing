@@ -1,4 +1,4 @@
-import { IRewardDisplayProperties } from '../../perx-core.models';
+import { IWRewardDisplayProperties } from '@perx/whistler';
 
 export enum RedemptionType {
   pin = 'pin',
@@ -14,11 +14,11 @@ export interface IReward {
   description: string;
   subtitle: string;
   validFrom: Date;
-  validTo: Date;
+  validTo: Date | null;
   sellingFrom?: Date;
   rewardThumbnail?: string;
   rewardBanner: string;
-  merchantImg: string;
+  merchantImg?: string;
   rewardPrice?: IPrice[];
   merchantId?: number;
   merchantName?: string;
@@ -30,7 +30,7 @@ export interface IReward {
   inventory?: Inventory;
   redemptionText?: string;
   rawPayload?: any;
-  displayProperties?: IRewardDisplayProperties;
+  displayProperties?: IWRewardDisplayProperties;
 }
 
 export interface ICatalog {

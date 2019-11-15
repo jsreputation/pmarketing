@@ -1,5 +1,5 @@
 import { IVoucher } from '../vouchers/models/voucher.model';
-import { ICampaignDisplayProperties } from '../perx-core.models';
+import { IWCampaignDisplayProperties } from '@perx/whistler';
 
 export enum GameType {
   unknown = -1,
@@ -8,6 +8,11 @@ export enum GameType {
   scratch = 'scratch',
 }
 
+export interface IEngagementTransaction {
+  id: number;
+  voucherIds?: number[];
+  rewardIds?: number[];
+}
 export interface IGameOutcome {
   title: string;
   subTitle: string;
@@ -31,7 +36,7 @@ export interface IGame {
     noOutcome?: IGameOutcome;
   };
   imgUrl?: string;
-  displayProperties?: ICampaignDisplayProperties;
+  displayProperties?: IWCampaignDisplayProperties;
 }
 
 export function defaultTree(): ITree {

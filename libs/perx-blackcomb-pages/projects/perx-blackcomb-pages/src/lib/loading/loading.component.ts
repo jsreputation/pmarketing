@@ -24,12 +24,7 @@ import {
   Config,
   NotificationService,
   ICampaign,
-  ICampaignService,
-  // CampaignType,
-  // IGameService,
-  // SurveyService,
-  // LoyaltyService,
-  // InstantOutcomeService
+  ICampaignService
 } from '@perx/core';
 
 import * as uuid from 'uuid';
@@ -91,37 +86,12 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
   private redirectAfterLogin(): void {
     if (!this.isCampaignEnded) {
-      this.prePlay();
+      this.redirectToEngagementPage(this.campaignData.type);
     } else if (this.campaignId && this.isCampaignEnded) {
       this.initCampaignEndedPopup();
     } else {
       this.goWallet();
     }
-  }
-
-  private prePlay(): void {
-    const { type } = this.campaignData;
-    // Pre-play logic placeholder
-    // let prePlay$;
-    // switch (type) {
-    //   case CampaignType.game:
-    //     prePlay$ = this.gameService.prePlay();
-    //     break;
-    //   case CampaignType.stamp:
-    //     prePlay$ = this.loyaltyService.prePlay();
-    //     break;
-    //   case CampaignType.survey:
-    //     prePlay$ = this.surveyService.prePlay();
-    //     break;
-    //   case CampaignType.give_reward:
-    //     prePlay$ = this.instantOutcomeService.prePlay();
-    //     break;
-    // }
-    // prePlay$.subscribe(
-    //   () => this.redirectToEngagementPage(type)
-    // );
-
-    this.redirectToEngagementPage(type);
   }
 
   private redirectToEngagementPage(type: string): void {
@@ -154,9 +124,8 @@ export class LoadingComponent implements OnInit, OnDestroy {
       * 3. If no PI and no token found, then call autoLoginWithoutPI to create new account and auto login
       * */
 
-      const getUserToken$ = this.authService.autoLogin();
-      const PIHandler$ = pi => getUserToken$.pipe(tap(() => this.authService.savePI(pi)));
-      const createUserAndAutoLogin$ = pi => this.authService.createUserAndAutoLogin(pi);
+      const PIHandler$ = this.authService.autoLogin();
+      const createUserAndAutoLogin$ = pi => this.authService.createUserAndAutoLogin(pi, null, true);
       const autoLoginWithoutPI$ = of(uuid.v4()).pipe(
         switchMap(newPI => createUserAndAutoLogin$(newPI)),
         takeUntil(this.destroy$)
@@ -172,7 +141,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
       getPI$.pipe(
         switchMap(
-          pi => iif(() => !!pi, PIHandler$(pi), noPIHandler$)
+          pi => iif(() => !!pi, PIHandler$, noPIHandler$)
         ),
         takeUntil(this.destroy$)
       ).subscribe(

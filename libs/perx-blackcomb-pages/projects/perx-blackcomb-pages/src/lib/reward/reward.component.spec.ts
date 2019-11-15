@@ -2,7 +2,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardComponent } from './reward.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { GameModule, RewardsModule, RewardsService, InstantOutcomeService } from '@perx/core';
+import { GameModule, RewardsModule, RewardsService, InstantOutcomeService, AuthenticationService } from '@perx/core';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -16,6 +16,10 @@ describe('RewardComponent', () => {
 
   const instantOutStub: Partial<InstantOutcomeService> = {
 
+  };
+
+  const authServiceStub: Partial<AuthenticationService> = {
+    getAnonymous: () => true,
   };
 
   beforeEach(async(() => {
@@ -32,7 +36,8 @@ describe('RewardComponent', () => {
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
-        { provide: InstantOutcomeService, useValue: instantOutStub }
+        { provide: InstantOutcomeService, useValue: instantOutStub },
+        { provide: AuthenticationService, useValue: authServiceStub }
       ]
     })
       .compileComponents();

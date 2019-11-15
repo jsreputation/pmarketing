@@ -2,7 +2,7 @@
  * Public API Surface of perx-core
  */
 export { PerxCoreModule } from './lib/perx-core.module';
-export { IRewardDisplayProperties, ICampaignDisplayProperties } from './lib/perx-core.models';
+
 /**
  * Merchants
  */
@@ -74,6 +74,7 @@ export {
   defaultTree,
   IPlayOutcome,
   ISlice,
+  IEngagementTransaction
 } from './lib/game/game.model';
 export { IGameService } from './lib/game/igame.service';
 export { IGameComponent } from './lib/game/igame.component';
@@ -194,7 +195,6 @@ export { IConfig, IMicrositeSettings } from './lib/config/models/config.model';
 export {
   ITheme,
   PagesObject,
-  WhistlerITenant,
   AccountPageObject,
 } from './lib/utils/themes/themes.model';
 export { ThemesService } from './lib/utils/themes/themes.service';

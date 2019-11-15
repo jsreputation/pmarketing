@@ -59,8 +59,9 @@ export const users = (getCredentials: ((url: string) => Promise<ICredentials>)) 
     const url = req.body.url;
     const endpointCredential: ICredentials = await getCredentials(url);
     const userId = req.body.identifier;
+    const anonymous = req.body.anonymous;
     // should just be the attributesObj
-    const userObj: IWProfileAttributes = req.body.profile ? req.body.profile : { primary_identifier: userId };
+    const userObj: IWProfileAttributes = req.body.profile ? req.body.profile : { primary_identifier: userId, anonymous };
 
     const endpointCreateUserRequest = await axios.post(
       `${endpointCredential.target_url}/cognito/users`,

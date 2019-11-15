@@ -1,9 +1,6 @@
 import cacheManager from 'cache-manager';
 import Jimp from 'jimp';
-import {
-  IWJsonApiItem
-} from '@perx/whistler';
-import { WhistlerITenant } from '@perx/core';
+import { IJsonApiItem, IWTenant } from '@perx/whistler';
 import { Manifest, DARK, LIGHT } from '../types/manifest-model';
 import { ICredentials } from '../types/apiConfig';
 import { Request, Response, NextFunction } from 'express';
@@ -26,7 +23,7 @@ const themeHasher = (themeObject: string): number => {
 };
 
 const generateManifest = (
-  tenantObj: IWJsonApiItem<WhistlerITenant>,
+  tenantObj: IJsonApiItem<IWTenant>,
   endpointUrl: string,
   hash: string
 ): Manifest => {
@@ -78,11 +75,9 @@ export const manifest = (getCredentials: ((url: string) => Promise<ICredentials>
 
     const endpointTargetUrl = endpointCredential.target_url;
     const endpointRequest = await fetchTheme(endpointCredential);
-    const tenantObj: IWJsonApiItem<WhistlerITenant> = endpointRequest.data.data[0];
+    const tenantObj: IJsonApiItem<IWTenant> = endpointRequest.data.data[0];
     const displayProperties = tenantObj.attributes.display_properties;
-    const hashedTheme = themeHasher(JSON.stringify(displayProperties)).toString(
-      12
-    );
+    const hashedTheme = themeHasher(JSON.stringify(displayProperties)).toString(12);
     // we could peek instd so its 'most-recentness' isn't updated
     res.type('application/manifest+json');
 
