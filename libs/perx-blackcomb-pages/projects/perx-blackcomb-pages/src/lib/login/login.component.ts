@@ -19,7 +19,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
   public theme: Observable<ITheme>;
-  public currentTheme: ITheme;
 
   constructor(
     private router: Router,
@@ -36,8 +35,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.initForm();
     this.theme = this.themesService.getThemeSetting();
-
-    this.theme.subscribe( theme => this.currentTheme = theme);
   }
 
   public ngOnDestroy(): void {
@@ -46,8 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public redirectAfterLogin(): void {
-    const navigateAfterLogin = (this.currentTheme && this.currentTheme.properties.showHomePage) ? 'home' : 'wallet';
-    this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : navigateAfterLogin);
+    this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'wallet');
   }
 
   public initForm(): void {
