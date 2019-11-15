@@ -1,9 +1,6 @@
 import cacheManager from 'cache-manager';
 import Jimp from 'jimp';
-import {
-  IWJsonApiItem
-} from '@perx/whistler';
-import { WhistlerITenant } from '@perx/core';
+import { IJsonApiItem, IWTenant } from '@perx/whistler';
 import { Manifest, DARK, LIGHT } from '../types/manifest-model';
 import { ApiConfig } from '../types/apiConfig';
 import { Request, Response, NextFunction } from 'express';
@@ -16,8 +13,8 @@ const exportedImgDirectory = '/static/generated';
 const cache = cacheManager.caching({ store: 'memory', max: 1, ttl: 0 });
 
 const themeHasher = (themeObject: string): number => {
-  let h = 0xdeadbeef ;
-  for (let i = 0 ; i < themeObject.length; i++) {
+  let h = 0xdeadbeef;
+  for (let i = 0; i < themeObject.length; i++) {
     // tslint:disable-next-line:no-bitwise
     h = Math.imul(h ^ themeObject.charCodeAt(i), 2654435761); // eslint-disable-line
   }
@@ -26,7 +23,7 @@ const themeHasher = (themeObject: string): number => {
 };
 
 const generateManifest = (
-  tenantObj: IWJsonApiItem<WhistlerITenant>,
+  tenantObj: IJsonApiItem<IWTenant>,
   endpointUrl: string,
   hash: string
 ): Manifest => {
@@ -82,7 +79,7 @@ export const manifest = (apiConfig: ApiConfig) => async (
 
     const endpointTargetUrl = endpoint.target_url;
     const endpointRequest = await fetchTheme(url, apiConfig);
-    const tenantObj: IWJsonApiItem<WhistlerITenant> = endpointRequest.data.data[0];
+    const tenantObj: IJsonApiItem<IWTenant> = endpointRequest.data.data[0];
     const displayProperties = tenantObj.attributes.display_properties;
     const hashedTheme = themeHasher(JSON.stringify(displayProperties)).toString(
       12

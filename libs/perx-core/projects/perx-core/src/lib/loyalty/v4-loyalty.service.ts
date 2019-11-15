@@ -1,8 +1,8 @@
-import {Injectable, Optional} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
-import {map, mergeMap, concatAll, reduce} from 'rxjs/operators';
-import {LoyaltyService} from './loyalty.service';
+import { Injectable, Optional } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { map, mergeMap, concatAll, reduce } from 'rxjs/operators';
+import { LoyaltyService } from './loyalty.service';
 import {
   ILoyalty,
   IPurchaseTransactionHistory, IRewardTransactionHistory,
@@ -10,10 +10,10 @@ import {
   TransactionDetailType,
   ITransactionHistory
 } from './models/loyalty.model';
-import {Config} from '../config/config';
-import {IV4Reward, IV4Tag} from '../rewards/v4-rewards.service';
-import {ICustomProperties} from '../profile/profile.model';
-import {oc} from 'ts-optchain';
+import { Config } from '../config/config';
+import { IV4Reward, IV4Tag } from '../rewards/v4-rewards.service';
+import { ICustomProperties } from '../profile/profile.model';
+import { oc } from 'ts-optchain';
 
 const DEFAULT_PAGE_COUNT: number = 10;
 
@@ -164,7 +164,7 @@ export class V4LoyaltyService extends LoyaltyService {
   public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4TransactionHistory): ITransactionHistory {
 
     const transactionDetails = oc(transactionHistory).transaction_details.data();
-    let data: IPurchaseTransactionHistory | IRewardTransactionHistory;
+    let data: IPurchaseTransactionHistory | IRewardTransactionHistory | undefined;
 
     if (transactionDetails) {
       switch (transactionHistory.transaction_details.type) {
@@ -213,10 +213,12 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  public getLoyalties(page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT): Observable<ILoyalty[]> {
+  public getLoyalties(page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT, locale: string = 'en'): Observable<ILoyalty[]> {
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4GetLoyaltiesResponse>(
       `${this.apiHost}/v4/loyalty`,
       {
+        headers,
         params: {
           page: `${page}`,
           size: `${pageSize}`
@@ -230,30 +232,27 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getLoyalty(id?: number): Observable<ILoyalty> {
-    if (!id) {
-      id = 1;
-    }
+  public getLoyalty(id: number = 1, locale: string = 'en'): Observable<ILoyalty> {
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4GetLoyaltyResponse>(
-      `${this.apiHost}/v4/loyalty/${id}`
+      `${this.apiHost}/v4/loyalty/${id}`,
+      {
+        headers
+      }
     ).pipe(
       map((res: IV4GetLoyaltyResponse) => V4LoyaltyService.v4LoyaltyToLoyalty(res.data))
     );
   }
 
-  public getAllTransactions(loyaltyId?: number): Observable<ITransaction[]> {
-    if (!loyaltyId) {
-      loyaltyId = 1;
-    }
-
+  public getAllTransactions(loyaltyId: number = 1, locale: string = 'en'): Observable<ITransaction[]> {
     const pageSize = 100;
-    return this.getTransactions(loyaltyId, 1, pageSize).pipe(
+    return this.getTransactions(loyaltyId, 1, pageSize, locale).pipe(
       mergeMap((histories: ITransaction[]) => {
         const streams = [
           of(histories)
         ];
-        for (let i = 2; i <= this.historyMeta.total_pages; i++) {
-          const stream = this.getTransactions(loyaltyId, i, pageSize);
+        for (let i = 2; i <= ((this.historyMeta && this.historyMeta.total_pages) ? this.historyMeta.total_pages : 0); i++) {
+          const stream = this.getTransactions((loyaltyId ? loyaltyId : 1), i, pageSize);
           streams.push(stream);
         }
         return streams;
@@ -263,10 +262,12 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getTransactions(loyaltyId: number, page: number = 1, pageSize: number = 10): Observable<ITransaction[]> {
+  public getTransactions(loyaltyId: number, page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<ITransaction[]> {
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4GetLoyaltyResponse>(
       `${this.apiHost}/v4/loyalty/${loyaltyId}/transactions`,
       {
+        headers,
         params: {
           page: `${page}`,
           size: `${pageSize}`
@@ -283,16 +284,18 @@ export class V4LoyaltyService extends LoyaltyService {
 
         return res.data;
       }),
-      map((loyalty: IV4Loyalty) => loyalty.points_history.map(
+      map((loyalty: IV4Loyalty) => oc(loyalty).points_history([]).map(
         (history: IV4PointHistory) => V4LoyaltyService.v4PointHistoryToPointHistory(history)
       ))
     );
   }
 
-  public getTransactionHistory(page: number = 1, pageSize: number = 10): Observable<ITransactionHistory[]> {
+  public getTransactionHistory(page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<ITransactionHistory[]> {
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4TransactionHistoryResponse>(
       `${this.apiHost}/v4/loyalty/transactions_history`,
       {
+        headers,
         params: {
           page: `${page}`,
           size: `${pageSize}`

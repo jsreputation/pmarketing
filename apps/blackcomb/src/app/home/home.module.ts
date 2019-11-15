@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { MatCardModule, MatButtonModule } from '@angular/material';
-import { LoyaltyModule, RewardsModule } from '@perx/core';
+import { LoyaltyModule, RewardsModule, UtilsModule } from '@perx/core';
 import { HomeComponent, GamesCollectionComponent } from '@perx/blackcomb-pages';
 import { TranslateModule } from '@ngx-translate/core';
+
+const routes: Routes = [{
+  path: '',
+  component: HomeComponent
+}];
 
 @NgModule({
   declarations: [
@@ -16,10 +21,12 @@ import { TranslateModule } from '@ngx-translate/core';
     RouterModule,
     MatCardModule,
     LoyaltyModule,
+    UtilsModule,
     RewardsModule,
     MatCardModule,
     MatButtonModule,
     TranslateModule.forChild(),
+    RouterModule.forChild(routes),
   ],
   exports: [
     HomeComponent,

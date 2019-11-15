@@ -42,7 +42,8 @@ import {
   VoucherComponent,
   RewardsListTabbedComponent,
   RewardsListComponent,
-  LoyaltySummaryComponent
+  LoyaltySummaryComponent,
+  NewsfeedComponent
 } from '@perx/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -64,6 +65,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
 import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
+
 const comps: any[] = [
   AccountComponent,
   ContentComponent,
@@ -103,7 +105,8 @@ const comps: any[] = [
   RewardsListComponent,
   LayoutComponent,
   HomeComponent,
-  GamesCollectionComponent
+  GamesCollectionComponent,
+  NewsfeedComponent
 ];
 
 @NgModule({

@@ -6,6 +6,7 @@ import { ICampaign, CampaignType, CampaignState } from './models/campaign.model'
 import { ICampaignService } from './icampaign.service';
 import { V4RewardsService, IV4Reward } from '../rewards/v4-rewards.service';
 import { Config } from '../config/config';
+import {oc} from 'ts-optchain';
 
 interface IV4Image {
   type: string;
@@ -27,6 +28,7 @@ interface IV4Campaign {
   tags: any[];
   state: CampaignState;
   rewards?: IV4Reward[];
+  is_coming_soon?: boolean | null;
 }
 
 interface IV4CampaignResponse {
@@ -63,7 +65,8 @@ export class V4CampaignService implements ICampaignService {
       state: campaign.state,
       endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null,
       rewards,
-      thumbnailUrl
+      thumbnailUrl,
+      isComingSoon: oc(campaign).is_coming_soon()
     };
   }
 

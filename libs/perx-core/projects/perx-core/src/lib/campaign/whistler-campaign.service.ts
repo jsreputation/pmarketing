@@ -1,12 +1,30 @@
 import { Injectable } from '@angular/core';
-import { ICampaignService } from './icampaign.service';
-import { Observable, of } from 'rxjs';
-import { ICampaign, CampaignType, CampaignState } from './models/campaign.model';
 import { HttpClient } from '@angular/common/http';
+
+import {
+  Observable,
+  of,
+} from 'rxjs';
+import {
+  map,
+  tap,
+} from 'rxjs/operators';
+
+import {
+  IWCampaignAttributes,
+  IJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiItemPayload,
+} from '@perx/whistler';
+
+import {
+  ICampaign,
+  CampaignType,
+  CampaignState,
+} from './models/campaign.model';
+import { ICampaignService } from './icampaign.service';
+
 import { Config } from '../config/config';
-import { map, tap } from 'rxjs/operators';
-import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
-import { IWCampaignAttributes } from '@perx/whistler';
 
 enum WhistlerCampaignType {
   survey = 'survey',
@@ -34,7 +52,7 @@ export class WhistlerCampaignService implements ICampaignService {
     return {
       id: Number.parseInt(campaign.id, 10),
       name: cAttributes.name,
-      description: cAttributes.goal,
+      description: cAttributes.goal || null,
       type: WhistlerCampaignService.WhistlerTypeToType(cAttributes.engagement_type),
       state: cAttributes.status as CampaignState,
       endsAt: cAttributes.end_date_time ? new Date(cAttributes.end_date_time) : null,
@@ -71,7 +89,7 @@ export class WhistlerCampaignService implements ICampaignService {
           .map(WhistlerCampaignService.WhistlerCampaignToCampaign);
         current = current.concat(campaigns);
         subject.next(current);
-        if (p >= cs.meta.page_count) {
+        if (!cs.meta || !cs.meta.page_count || p >= cs.meta.page_count) {
           subject.complete();
         } else {
           this.getPage(p + 1).subscribe(res => process(p + 1, res));
