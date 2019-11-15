@@ -4,7 +4,8 @@ import {
   EngagementTypeFromAPIMapping
 } from '@cl-core/models/engagement/engagement-type.enum';
 import { IWCampaignAttributes, WEngagementType } from '@perx/whistler';
-import { ICampaignTableData, ICampaign, InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
 
 export class CampaignsHttpAdapter {
   public static transformToCampaign(data: any): ICampaignTableData {

@@ -1,4 +1,5 @@
 import { ISchedule } from '../comm/schedule';
+import { InformationCollectionSettingType } from './campaign.enum';
 
 export interface ICampaign {
     id?: string;
@@ -40,13 +41,6 @@ export interface ICampaign {
     rewardsListCollection?: any;
     limits?: any;
     displayProperties?: any;
-}
-
-export enum InformationCollectionSettingType {
-    notRequired = 'not_required',
-    piRequired = 'pi_required',
-    signupRequired = 'signup_required'
-
 }
 
 export interface ICampaignTableData {
