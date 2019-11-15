@@ -35,7 +35,7 @@ export class RatingComponent implements OnChanges {
 
   public surveyRatingIcons(index: number): string {
     const iconName = index <= this.selectedChoice ? this.payload.shape + '_selected' : this.payload.shape;
-    return SurveyRatingIcons[iconName];
+    return SurveyRatingIcons[iconName || 'star']; // default icon if is undefined
   }
 
   public onSelect(index: number): void {
