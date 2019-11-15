@@ -434,8 +434,6 @@ export class CreateRewardAppPage {
   public closeButton(): ElementFinder {
     return element.all(by.css('cl-button')).get(0);
   }
-
-
 }
 
 export class CampaignAppPage {
