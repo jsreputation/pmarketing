@@ -62,6 +62,11 @@
             <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>
           </ng-container>
         </mat-radio-group>
+        <mat-radio-group color="primary" [formControl]="campaignInfo.get('informationCollectionSetting')">
+          <ng-container *ngFor="let type of config?.informationCollectionSettingTypes">
+            <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>
+          </ng-container>
+        </mat-radio-group>
       </div>
       <!--Message-->
       <div class="card-section" *ngIf="channel.get('message').enabled">

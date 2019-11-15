@@ -18,7 +18,8 @@ export class NewCampaignDetailFormService {
         endDate: [null, [Validators.required]],
         endTime: [null, [Validators.required]],
         disabledEndDate: [false],
-        labels: []
+        labels: [],
+        informationCollectionSetting: ['not_required'],
       }),
       channel: this.fb.group({
         eventId: [],

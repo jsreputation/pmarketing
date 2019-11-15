@@ -11,6 +11,7 @@ export interface ICampaign {
     };
     engagement_type?: string;
     engagement_id?: string;
+    informationCollectionSetting?: InformationCollectionSettingType;
     campaignInfo?: {
         goal: string;
         startDate: Date;
@@ -38,6 +39,14 @@ export interface ICampaign {
     rewardsOptions?: any;
     rewardsListCollection?: any;
     limits?: any;
+    displayProperties?: any;
+}
+
+export enum InformationCollectionSettingType {
+    notRequired = 'not_required',
+    piRequired = 'pi_required',
+    signupRequired = 'signup_required'
+
 }
 
 export interface ICampaignTableData {

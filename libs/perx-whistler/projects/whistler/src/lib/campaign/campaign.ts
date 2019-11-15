@@ -18,6 +18,7 @@ export interface IWCampaignAttributes {
   pool_id?: string | null;
   labels?: string[];
   display_properties?: {
+    informationCollectionSetting?: string;
     noRewardsPopUp?: {
       headLine?: string;
       subHeadLine?: string;

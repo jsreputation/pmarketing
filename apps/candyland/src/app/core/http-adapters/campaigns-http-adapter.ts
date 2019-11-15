@@ -4,7 +4,7 @@ import {
   EngagementTypeFromAPIMapping
 } from '@cl-core/models/engagement/engagement-type.enum';
 import { IWCampaignAttributes, WEngagementType } from '@perx/whistler';
-import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaignTableData, ICampaign, InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.interface';
 
 export class CampaignsHttpAdapter {
   public static transformToCampaign(data: any): ICampaignTableData {
@@ -43,6 +43,7 @@ export class CampaignsHttpAdapter {
       name: campaignData.name,
       engagement_id: `${campaignData.engagement_id}`,
       engagement_type: EngagementTypeFromAPIMapping[campaignData.engagement_type],
+      informationCollectionSetting: InformationCollectionSettingType[campaignData.display_properties.informationCollectionSetting],
       campaignInfo: {
         goal: campaignData.goal,
         startDate: campaignData.start_date_time ? new Date(campaignData.start_date_time) : null,
@@ -53,7 +54,8 @@ export class CampaignsHttpAdapter {
         labels: campaignData.labels
       },
       template: {},
-      rewardsList: []
+      rewardsList: [],
+      displayProperties: { ...campaignData.display_properties }
     };
   }
 
@@ -74,6 +76,7 @@ export class CampaignsHttpAdapter {
         end_date_time: endDate,
         goal: data.campaignInfo.goal,
         labels: data.campaignInfo.labels || [],
+        display_properties: { ...data.displayProperties, informationCollectionSetting: data.informationCollectionSetting }
       }
     };
   }
