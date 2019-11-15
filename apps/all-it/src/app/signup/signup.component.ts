@@ -20,23 +20,31 @@ export class SignupComponent {
 
   private initForm(): void {
     this.signupForm = this.fb.group({
+      title: ['', Validators.required],
       name: ['', Validators.required],
       nric: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
-      accept_terms: [false, Validators.required],
-      accept_marketing: [false, Validators.required],
-      title: ['', Validators.required],
       dob: ['', Validators.required],
       postcode: ['', Validators.required],
       yearMembership: ['', Validators.required],
-      email: ['', Validators.required],
+      countryCode: ['60', Validators.required],
       mobileNo: ['', Validators.required],
-      countryCode: ['65', Validators.required]
+      email: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
+      accept_terms: [false, Validators.required],
+      accept_marketing: [false, Validators.required]
     });
   }
 
-  public onSubmit(): void {}
+  public onSubmit(): void {
+    const passwordString = this.signupForm.get('password').value as string;
+    const confirmPassword = this.signupForm.get('confirmPassword').value as string;
+    if (passwordString !== confirmPassword) {
+      console.log('Password fields do not match');
+      return;
+    }
+
+  }
 
   public goToLogin(): void {
     this.router.navigateByUrl('/signin');
