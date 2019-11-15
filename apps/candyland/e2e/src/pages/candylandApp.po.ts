@@ -258,7 +258,7 @@ export class CreateCampaignAppPage {
 
 export class GeneralSettingsAppPage {
 
-  public navigateToGeneralSettings(): Promise<string> {
+  public static navigateToGeneralSettings(): Promise<string> {
     return browser.get('settings/general') as Promise<string> ;
   }
 
@@ -266,7 +266,7 @@ export class GeneralSettingsAppPage {
 
 export class BrandingSettingsAppPage {
 
-  public navigateToBrandingSettings(): Promise<string> {
+  public static navigateToBrandingSettings(): Promise<string> {
     return browser.get('settings/branding') as Promise<string> ;
   }
 
@@ -333,6 +333,10 @@ export class ElementApp {
     return element(by.css('input[type=tel]'));
   }
 
+  public static inputFile(): ElementFinder {
+    return element(by.css('input[type=file]'));
+  }
+
   public static clButton(): ElementFinder {
     return element(by.css('cl-button'));
   }
@@ -375,5 +379,33 @@ export class ElementApp {
 
   public static matError(): ElementFinder {
     return element(by.css('mat-error'));
+  }
+
+  public static matTabLinkArray(): ElementArrayFinder {
+    return element.all(by.css('a.mat-tab-link'));
+  }
+
+  public static matSelectValueArray(): ElementArrayFinder {
+    return element.all(by.css('div.mat-select-value'));
+  }
+
+  public static matTabGroup(): ElementFinder {
+    return element(by.css('mat-tab-group'));
+  }
+
+  public static clSimpleMobileView(): ElementFinder {
+    return element(by.css('cl-simple-mobile-view'));
+  }
+
+  public static pickerButton(): ElementArrayFinder {
+    return element.all(by.css('button.picker-btn'));
+  }
+
+  public static matRadioInnerCircle(): ElementArrayFinder {
+    return element.all(by.css('div.mat-radio-inner-circle'));
+  }
+
+  public static spanUploadError(): ElementFinder {
+    return element(by.css('span.upload-error'));
   }
 }
