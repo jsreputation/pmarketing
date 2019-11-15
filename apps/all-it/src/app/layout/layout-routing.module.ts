@@ -11,6 +11,8 @@ import {
   LayoutComponent,
   PIComponent
 } from '@perx/blackcomb-pages';
+import { WalletGuard } from '../wallet.guard';
+
 const routes: Routes = [
   {
     path: '',
@@ -18,7 +20,7 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'home', component: HomeComponent },
-      { path: 'wallet', component: WalletComponent },
+      { path: 'wallet', component: WalletComponent, canActivate: [ WalletGuard ] },
       { path: 'history', component: HistoryComponent },
       { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
