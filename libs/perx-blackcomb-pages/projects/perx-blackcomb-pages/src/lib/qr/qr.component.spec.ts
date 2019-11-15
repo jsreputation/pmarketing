@@ -17,7 +17,7 @@ import { of } from 'rxjs';
 import { QRCodeModule } from 'angularx-qrcode';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { ProfileService } from '@perx/core';
+import { ProfileService, ThemesService } from '@perx/core';
 
 import { QRComponent } from './qr.component';
 
@@ -26,6 +26,10 @@ describe('RedeemComponent', () => {
   let fixture: ComponentFixture<QRComponent>;
   const locationStub: Partial<Location> = {
     back: () => { }
+  };
+
+  const themesServiceStub = {
+    getThemeSetting: () => of({ name: '' , properties: []})
   };
 
   beforeEach(async(() => {
@@ -50,7 +54,8 @@ describe('RedeemComponent', () => {
             }
           }
         },
-        { provide: Location, useValue: locationStub }
+        { provide: Location, useValue: locationStub },
+        { provide: ThemesService, useValue: themesServiceStub }
       ]
     })
       .compileComponents();

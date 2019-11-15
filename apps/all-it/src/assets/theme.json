@@ -4,7 +4,7 @@
       "--font": "Roboto",
       "--logo": "assets/header_logo.png",
       "--title": "all-it",
-      "--accent": "#ff0000",
+      "--accent": "#0088D1",
       "--primary": "#ffffff",
       "--button_text_color": "#ffffff",
       "--button_background_color": "#0088CF",
@@ -15,6 +15,7 @@
       "showSubtitleLogin": true,
       "showHomePage": true,
       "showHistoryPage": false,
-      "showNewsfeedOnHomepage": true
+      "showNewsfeedOnHomepage": true,
+      "showQrPageSubtitle": true
     }
 }

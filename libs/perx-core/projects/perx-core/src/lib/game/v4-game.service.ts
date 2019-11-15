@@ -2,7 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IGameService } from './igame.service';
-import { IGame, GameType as TYPE, defaultTree, ITree, IPinata, defaultPinata, IGameOutcome, IPlayOutcome } from './game.model';
+import {
+  IGame,
+  GameType as TYPE,
+  defaultTree,
+  ITree,
+  IPinata,
+  defaultPinata,
+  IGameOutcome,
+  IPlayOutcome,
+  IEngagementTransaction
+} from './game.model';
 import { map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { Config } from '../config/config';
@@ -112,34 +122,33 @@ export class V4GameService implements IGameService {
   private static v4GameToGame(game: Game): IGame {
     let type = TYPE.unknown;
     let config: ITree | IPinata;
-    switch (game.game_type) {
-      case GameType.shakeTheTree:
-        type = TYPE.shakeTheTree;
-        const dpts: TreeDisplayProperties = game.display_properties as TreeDisplayProperties;
-        config = {
-          ...defaultTree(),
-          treeImg: dpts.tree_image.value.image_url || dpts.tree_image.value.file,
-          giftImg: dpts.gift_image.value.image_url || dpts.gift_image.value.file,
-          nbHangedGift: dpts.number_of_gifts_shown,
-          nbGiftsToDrop: dpts.number_of_gifts_to_drop,
-          nbTaps: dpts.number_of_taps || 5,
-          waitingAccessoryImg: oc(dpts).waiting_image.value.image_url() || oc(dpts).waiting_image.value.file(),
-          celebratingAccessoryImg: oc(dpts).celebrating_image.value.image_url() || oc(dpts).celebrating_image.value.file()
-        };
-        break;
-      case GameType.pinata:
-        type = TYPE.pinata;
-        const dpps: PinataDisplayProperties = game.display_properties as PinataDisplayProperties;
-        config = {
-          ...defaultPinata(),
-          stillImg: dpps.still_image.value.image_url || dpps.still_image.value.file,
-          brokenImg: dpps.opened_image.value.image_url || dpps.opened_image.value.file,
-          breakingImg: oc(dpps).cracking_image.value.image_url() || oc(dpps).cracking_image.value.file(),
-          nbTaps: dpps.number_of_taps || 5
-        };
-        break;
-      default:
-        throw new Error(`${game.game_type} is not mapped yet`);
+
+    if (game.game_type === GameType.shakeTheTree) {
+      type = TYPE.shakeTheTree;
+      const dpts: TreeDisplayProperties = game.display_properties as TreeDisplayProperties;
+      const defaultTr = defaultTree();
+      config = {
+        ...defaultTr,
+        treeImg: dpts.tree_image.value.image_url || dpts.tree_image.value.file,
+        giftImg: dpts.gift_image.value.image_url || dpts.gift_image.value.file,
+        nbHangedGift: oc(dpts).number_of_gifts_shown(defaultTr.nbHangedGift),
+        nbGiftsToDrop: dpts.number_of_gifts_to_drop,
+        nbTaps: dpts.number_of_taps || 5,
+        waitingAccessoryImg: oc(dpts).waiting_image.value.image_url() || oc(dpts).waiting_image.value.file(),
+        celebratingAccessoryImg: oc(dpts).celebrating_image.value.image_url() || oc(dpts).celebrating_image.value.file()
+      };
+    } else if (game.game_type === GameType.pinata) {
+      type = TYPE.pinata;
+      const dpps: PinataDisplayProperties = game.display_properties as PinataDisplayProperties;
+      config = {
+        ...defaultPinata(),
+        stillImg: dpps.still_image.value.image_url || dpps.still_image.value.file,
+        brokenImg: dpps.opened_image.value.image_url || dpps.opened_image.value.file,
+        breakingImg: oc(dpps).cracking_image.value.image_url() || oc(dpps).cracking_image.value.file(),
+        nbTaps: dpps.number_of_taps || 5
+      };
+    } else {
+      throw new Error(`${game.game_type} is not mapped yet`);
     }
 
     const texts: { [key: string]: string } = {};
@@ -216,4 +225,14 @@ export class V4GameService implements IGameService {
         map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game)))
       );
   }
+
+  // @ts-ignore
+  public prePlay(engagementId: number, campaignId?: number): Observable<IEngagementTransaction> {
+    throw new Error('Not implemented.');
+  }
+  // @ts-ignore
+  public prePlayConfirm(transactionId: number): Observable<void> {
+    throw new Error('Not implemented.');
+  }
+
 }

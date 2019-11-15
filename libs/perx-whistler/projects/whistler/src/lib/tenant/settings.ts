@@ -11,7 +11,9 @@ export interface IWSetting {
   'theme.style': string;
   'theme.title': string;
   'theme.login_background_colour'?: string;
-  'account': IWPagesObject;
+  account: IWPagesObject;
+  showHistoryPage: boolean;
+  showHomePage: boolean;
 }
 
 export interface IWTenant {

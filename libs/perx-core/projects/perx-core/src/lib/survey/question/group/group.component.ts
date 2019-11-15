@@ -48,9 +48,12 @@ export class GroupComponent implements OnChanges {
   }
 
   public updatePoint(point: IPoints): void {
-    this.pointsTracker[point.questionId] = point.point;
-    const currentPoint = this.calculatePoints();
-    this.updatePoints.emit(currentPoint);
+    if (point.questionId) {
+      this.pointsTracker[point.questionId] = point.point;
+      const currentPoint = this.calculatePoints();
+      this.updatePoints.emit(currentPoint);
+    }
+    return;
   }
 
   public calculatePoints(): number {
