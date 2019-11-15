@@ -35,14 +35,10 @@ export class SelectComponent implements OnChanges {
 
   public emitValue(): void {
     let result: string[] = [];
-    if (this.payload.multiple) {
+    if (this.payload.multiple && this.selectedChoices) {
       result = Object.entries(this.selectedChoices)
-        .map(data => {
-          if (data[1]) {
-            return data[0];
-          }
-        })
-        .filter(data => data);
+        .filter(([key, value]) => key !== undefined && value !== undefined)
+        .map(data => data[0]);
     } else {
       result[0] = this.selectedChoice.toString();
     }
