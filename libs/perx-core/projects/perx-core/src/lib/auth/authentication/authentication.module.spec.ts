@@ -42,7 +42,7 @@ describe('should create module', () => {
   it('should create tokenService', () => {
     let service = TokenStorageServiceFactory({ storageType: TokenType.local });
     expect(service instanceof LocalTokenStorage).toBeTruthy();
-    service = TokenStorageServiceFactory({ storageType: null });
+    service = TokenStorageServiceFactory({});
     expect(service instanceof LocalTokenStorage).toBeTruthy();
   });
 });

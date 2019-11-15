@@ -24,7 +24,7 @@ describe('WhistlerFormsService', () => {
   it('should create form ', fakeAsync(inject([HttpClient, WhistlerFormsService],
     (http: HttpClient, formService: WhistlerFormsService) => {
       const spy = spyOn(http, 'get').and.returnValue(of({ data: [{ attributes: { properties: { signup: {} } } }] }));
-      spyOn(SurveyService, 'WSurveyToSurvey').and.returnValue(null);
+      spyOn(SurveyService, 'WSurveyToSurvey').and.returnValue({ title: '', questions: [] });
       formService.getSignupForm().subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
