@@ -85,18 +85,18 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
 
   public claim(campaignId: number): Observable<IReward[]> {
     const buildBody: Observable<IJsonApiPostItem<IWInstantOutcomeTxnReq>> =
-    this.getEngagementId(campaignId).pipe(map((campaign: IWCampaignProperties ): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
-          data: {
-            type: 'transactions',
-            attributes: {
-              engagement_id: campaign.engagementId,
-              campaign_entity_id: campaignId,
-              status: WInstantOutcomeStatus.confirmed
-            }
+      this.getEngagementId(campaignId).pipe(map((campaign: IWCampaignProperties): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
+        data: {
+          type: 'transactions',
+          attributes: {
+            engagement_id: campaign.engagementId,
+            campaign_entity_id: campaignId,
+            status: WInstantOutcomeStatus.confirmed
           }
-        })
+        }
+      })
       )
-    );
+      );
 
     const getRewardIds: Observable<number[]> = buildBody.pipe(
       switchMap(
@@ -104,7 +104,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
           this.http.post<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>>(
             `${this.baseUrl}`,
             body,
-            {headers: { 'Content-Type': 'application/vnd.api+json' }}
+            { headers: { 'Content-Type': 'application/vnd.api+json' } }
           )
       ),
       map((res: IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>) => res.data),
@@ -127,21 +127,21 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
 
     return this.getEngagementId(campaignId).pipe(
       map((campaign: IWCampaignProperties): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
-          data: {
-            type: 'transactions',
-            attributes: {
-              engagement_id: campaign.engagementId,
-              campaign_entity_id: campaignId,
-              status: WInstantOutcomeStatus.reserved
-            }
+        data: {
+          type: 'transactions',
+          attributes: {
+            engagement_id: campaign.engagementId,
+            campaign_entity_id: campaignId,
+            status: WInstantOutcomeStatus.reserved
           }
-        })
+        }
+      })
       ),
       switchMap((body: IJsonApiPostItem<IWInstantOutcomeTxnReq>) =>
         this.http.post<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>>(
           `${this.config.apiHost}/instant-outcome/transactions`,
           body,
-          {headers: { 'Content-Type': 'application/vnd.api+json' }}
+          { headers: { 'Content-Type': 'application/vnd.api+json' } }
         )
       ),
       map(res => {

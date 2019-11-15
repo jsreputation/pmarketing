@@ -15,7 +15,7 @@ const appInfo: IAppInfo = {
   // appAccessToken: undefined,
   userAccessToken: 'test'
 };
-const localTokenStorageFactory = function (config?: Config) {
+function localTokenStorageFactory(config?: Config): LocalTokenStorage {
   return new LocalTokenStorage(config || null);
 }
 describe('LocalTokenStorageService', () => {
