@@ -23,6 +23,7 @@ export class SpinTheWheelComponent implements OnInit {
   @Input()
   public spinDuration: number = 3;
 
+  // tslint:disable-next-line:variable-name
   private ctx_: CanvasRenderingContext2D | null = null;
   public ctxArrow: CanvasRenderingContext2D | null;
   public canvas: HTMLCanvasElement;
@@ -117,7 +118,7 @@ export class SpinTheWheelComponent implements OnInit {
         this.loadImg();
       }
     }
-    return this.ctx_;
+    return (this.ctx_ as CanvasRenderingContext2D);
   }
 
   public loadImg(): void {
@@ -132,7 +133,7 @@ export class SpinTheWheelComponent implements OnInit {
 
     slicesWithImg.forEach((item) => {
       const image: HTMLImageElement = new Image();
-      image.src = item.backgroundImage;
+      image.src = item.backgroundImage ? item.backgroundImage : '';
       images.push({ id: item.id, image });
       image.onload = () => {
         count++;
@@ -144,8 +145,17 @@ export class SpinTheWheelComponent implements OnInit {
   }
 
   public createPatterns(arr: ImageForPattern[]): void {
-    this.patternImg = arr.map(item => ({ id: item.id, pattern: this.ctx && this.ctx.createPattern(item.image, 'no-repeat') }))
-      .filter(item => item.pattern !== null);
+    const patternImg = arr.filter(({id, image}) => id  && image)
+      .map(item => (
+        {
+          id: item.id,
+          pattern: this.ctx && this.ctx.createPattern(item.image, 'no-repeat')
+        })).filter((imagePattern) => {
+        if (imagePattern.pattern) {
+          return imagePattern;
+        }
+      });
+    this.patternImg = (patternImg as Pattern[]);
     this.drawWheel();
   }
 

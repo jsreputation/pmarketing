@@ -26,7 +26,7 @@ export class ScratchCardComponent implements AfterViewInit {
   public underlyingImg: string;
 
   @Input()
-  public uncoverPortionToTrigger?: number = 90;
+  public uncoverPortionToTrigger: number = 90;
 
   @Input()
   public enabled: boolean = true;
@@ -53,10 +53,11 @@ export class ScratchCardComponent implements AfterViewInit {
 
     image.src = this.coverImg;
     image.crossOrigin = 'Anonymous';
+    const canvas2dContext = this.canvas.getContext('2d');
     image.onload = () => {
-      if (this.canvas) {
-        this.canvas.getContext('2d').imageSmoothingEnabled = false;
-        this.canvas.getContext('2d').drawImage(image, 0, 0, container.offsetWidth, container.offsetHeight);
+      if (this.canvas && canvas2dContext) {
+        canvas2dContext.imageSmoothingEnabled = false;
+        canvas2dContext.drawImage(image, 0, 0, container.offsetWidth, container.offsetHeight);
       }
       // Show the form when Image is loaded.
       this.underImg.nativeElement.style.visibility = 'visible';
@@ -93,25 +94,29 @@ export class ScratchCardComponent implements AfterViewInit {
     return Math.atan2(point2.x - point1.x, point2.y - point1.y);
   }
 
-  public getFilledInPixels(stride: number): number {
+  public getFilledInPixels(stride: number): (number | undefined) {
     if (!this.canvas) {
       return 0;
     }
     if (!stride || stride < 1) { stride = 1; }
 
-    const pixels = this.canvas.getContext('2d').getImageData(0, 0, this.canvas.width, this.canvas.height);
-    const pdata = pixels.data;
-    const l = pdata.length;
-    const total = (l / stride);
-    let count = 0;
+    const canvas2dContext = this.canvas.getContext('2d');
+    if (canvas2dContext) {
+      const pixels = canvas2dContext.getImageData(0, 0, this.canvas.width, this.canvas.height);
+      const pdata = pixels.data;
+      const l = pdata.length;
+      const total = (l / stride);
+      let count = 0;
 
-    // Iterate over all pixels
-    for (let i = 0; i < l; i += stride) {
-      if (pdata[i] === 0) {
-        count++;
+      // Iterate over all pixels
+      for (let i = 0; i < l; i += stride) {
+        if (pdata[i] === 0) {
+          count++;
+        }
       }
+      return Math.round((count / total) * 100);
     }
-    return Math.round((count / total) * 100);
+
   }
 
   public getMouse(e: any, canvas: HTMLElement): Coords {
@@ -135,8 +140,8 @@ export class ScratchCardComponent implements AfterViewInit {
 
     filledInPixels = filledInPixels || 0;
     // console.log(filledInPixels + '%');
-    if (filledInPixels > this.uncoverPortionToTrigger && cont.children.length > 1 && this.canvas) {
-      this.canvas.parentNode.removeChild(this.canvas);
+    if (filledInPixels > this.uncoverPortionToTrigger && (cont as HTMLElement).children.length > 1 && this.canvas) {
+      (this.canvas.parentNode as Node).removeChild(this.canvas);
       this.completed.emit();
     }
   }
@@ -147,7 +152,7 @@ export class ScratchCardComponent implements AfterViewInit {
   }
 
   public handleMouseMove(e: TouchEvent): void {
-    if (!this.isDrawing || !this.enabled || this.canvas) {
+    if (!this.isDrawing || !this.enabled || !this.canvas) {
       return;
     }
 
@@ -156,19 +161,24 @@ export class ScratchCardComponent implements AfterViewInit {
     const currentPoint: Coords = this.getMouse(e, this.canvas);
     const dist: number = this.distanceBetween(this.lastPoint, currentPoint);
     const angle: number = this.angleBetween(this.lastPoint, currentPoint);
+
     let x: number;
     let y: number;
+    const canvas2dContext = this.canvas.getContext('2d');
 
-    for (let i = 0; i < dist; i++) {
-      x = this.lastPoint.x + (Math.sin(angle) * i) - 25;
-      y = this.lastPoint.y + (Math.cos(angle) * i) - 25;
-
-      this.canvas.getContext('2d').globalCompositeOperation = 'destination-out';
-      this.canvas.getContext('2d').drawImage(this.brush, x, y);
+    if (canvas2dContext) {
+      for (let i = 0; i < dist; i++) {
+        x = this.lastPoint.x + (Math.sin(angle) * i) - 25;
+        y = this.lastPoint.y + (Math.cos(angle) * i) - 25;
+        canvas2dContext.globalCompositeOperation = 'destination-out';
+        canvas2dContext.drawImage(this.brush, x, y);
+      }
     }
-
     this.lastPoint = currentPoint;
-    this.handlePercentage(this.getFilledInPixels(32));
+    const constFilledInPixels = this.getFilledInPixels(32);
+    if (constFilledInPixels) {
+      this.handlePercentage(constFilledInPixels);
+    }
   }
 
   public handleMouseUp(): void {
