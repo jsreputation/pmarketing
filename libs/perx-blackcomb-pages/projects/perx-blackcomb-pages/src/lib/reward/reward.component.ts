@@ -15,6 +15,7 @@ import { map, switchMap, catchError, tap, takeUntil, } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'perx-blackcomb-reward',
@@ -72,7 +73,12 @@ export class RewardComponent implements OnInit, OnDestroy {
       .pipe(
         map((params: Params) => params.id),
         switchMap((id: string) => this.outcomeService.getFromCampaign(parseInt(id, 10))),
-        catchError((err: Error) => { throw err; })
+        catchError((err: HttpErrorResponse) => {
+          if (err.status === 403) {
+            this.router.navigate(['/wallet']);
+          }
+          throw err;
+        })
       )
       .subscribe(
         (eng: IOutcome) => {

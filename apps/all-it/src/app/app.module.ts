@@ -14,6 +14,7 @@ import {
   OutcomeModule,
   ProfileModule,
   RewardsModule,
+  TokenStorage,
   CustomTranslateLoader,
   ConfigService
 } from '@perx/core';
@@ -50,7 +51,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService],
+        deps: [HttpClient, ConfigService, TokenStorage],
         useClass: CustomTranslateLoader
       }
     }),

@@ -3,6 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LocalTokenStorage } from './local-token-storage.service';
 import { ProfileModule } from '../../profile/profile.module';
 import { ConfigModule } from '../../config/config.module';
+import { Config } from '../../config/config';
 
 interface IAppInfo {
   appAccessToken?: string;
@@ -11,20 +12,29 @@ interface IAppInfo {
 }
 
 const appInfo: IAppInfo = {
-  appAccessToken: undefined,
+  // appAccessToken: undefined,
   userAccessToken: 'test'
 };
-describe('LocalStorageService', () => {
+function localTokenStorageFactory(config?: Config): LocalTokenStorage {
+  return new LocalTokenStorage(config || null);
+}
+describe('LocalTokenStorageService', () => {
   describe('LocalStorageService with config', () => {
     let service: LocalTokenStorage;
-    beforeEach(() => TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        ProfileModule,
-        ConfigModule.forRoot({})
-      ],
-      providers: [LocalTokenStorage]
-    }));
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          HttpClientTestingModule,
+          ProfileModule,
+          ConfigModule.forRoot({})
+        ],
+        providers: [{
+          provide: LocalTokenStorage,
+          useFactory: localTokenStorageFactory,
+          deps: [Config]
+        }]
+      });
+    });
 
     it('should be created', () => {
       service = TestBed.get(LocalTokenStorage);

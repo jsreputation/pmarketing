@@ -1,9 +1,14 @@
 import { TranslateLoader } from '@ngx-translate/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { TokenStorage } from '../../auth/authentication/token-storage.service';
 import { ConfigService } from '../../config/config.service';
+
+interface IDictionary {
+  [k: string]: string;
+}
 
 @Injectable()
 export class CustomTranslateLoader implements TranslateLoader {
@@ -14,7 +19,8 @@ export class CustomTranslateLoader implements TranslateLoader {
   private hostUrl: string = 'http://localhost:4000/';
   constructor(
     private httpClient: HttpClient,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private tokenStorage: TokenStorage
   ) {
     this.configService.readAppConfig().subscribe((config) => {
       if (config.production) {
@@ -22,11 +28,17 @@ export class CustomTranslateLoader implements TranslateLoader {
       }
     });
   }
-  public getTranslation(lang: string): Observable<{ [k: string]: string }> {
+  public getTranslation(lang: string): Observable<IDictionary> {
     const apiAddress = `${this.hostUrl}lang?default=${lang}`;
-    return this.httpClient.get<{ [k: string]: string }>(apiAddress, { headers: this.contentHeader })
+    return this.httpClient.get<IDictionary>(apiAddress, { headers: this.contentHeader, observe: 'response' })
       .pipe(
-        catchError(() => this.httpClient.get<{ [k: string]: string }>(`${this.hostUrl}assets/en-json.json`))
+        tap((res: HttpResponse<IDictionary>) => {
+          const l: string | null = res.headers.get('content-language');
+          this.tokenStorage.setAppInfoProperty(l || lang, 'lang');
+        }),
+        map((res: HttpResponse<IDictionary>) => res.body),
+        catchError(() => this.httpClient.get<IDictionary>(`${this.hostUrl}assets/en-json.json`)),
+        map((res: IDictionary | null) => res !== null ? res : {})
       );
   }
 }
