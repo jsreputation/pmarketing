@@ -17,27 +17,34 @@ export class EngagementAppPage {
   public navigateToEngagement(): Promise<string> {
     return browser.get('engagements') as Promise<string>;
   }
+
   public engagementTabOption(): ElementFinder {
     return element.all(by.css('h3')).get(2);
   }
+
   public engagementCreateNewButton(): ElementFinder {
     return element(by.css('cl-button'));
   }
+
   public selectEngagementTypeDialog(): ElementFinder {
     return element(by.css('mat-dialog-content'));
   }
+
   public engagementTypeOptions(): ElementArrayFinder {
     return element.all(by.css('cl-type-item'));
   }
+
   public activeEngagementTypeOption(): ElementFinder {
     return element(by.css('button.engagement-selector.active'));
   }
   public engagementNextButton(): ElementFinder {
     return element.all(by.className('btn mat-flat-button primary')).get(1);
   }
+
   public itemName(): ElementFinder {
     return element.all(by.css('p.engagement-item-name')).first();
   }
+
   public itemInfo(): ElementFinder {
     return element.all(by.css('div.engagement-item-info>p.engagement-item-name')).first();
   }
