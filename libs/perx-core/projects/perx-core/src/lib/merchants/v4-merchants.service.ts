@@ -54,6 +54,27 @@ export class V4MerchantsService implements IMerchantsService {
   ) {
   }
 
+  public static v4OutletsToOutlets(outlets: IV4Outlet[] | undefined): IOutlet[] {
+    if (!outlets) {
+      throw new Error('Data to map outlet is not valid');
+    }
+    return outlets.map(
+      (outlet: IV4Outlet) => {
+        return {
+          outletId: outlet.outlet_id,
+          outletName: outlet.outlet_name,
+          outletAddress1: outlet.outlet_address1,
+          outletAddress2: oc(outlet).outlet_address2(),
+          outletAddress3: oc(outlet).outlet_address3(),
+          postalCode: oc(outlet).postal_code(),
+          tel: outlet.tel,
+          coordinates: outlet.coordinates,
+          tags: oc(outlet).tags()
+        };
+      }
+    );
+  }
+
   public getAllMerchants(): Observable<IMerchant[]> {
     return new Observable(subject => {
       let current: IMerchant[] = [];
