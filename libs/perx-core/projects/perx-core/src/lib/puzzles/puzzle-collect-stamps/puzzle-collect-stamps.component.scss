@@ -54,9 +54,33 @@
   margin-top: 1rem;
 }
 
+.add {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  bottom: 10%;
+  font-size: 3rem;
+  text-align: center;
+  color: #2665EE;
+  height: 100%;
+
+  span {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
 .dummy-container {
   position: relative;
   max-width: 50%;
+
+  .add {
+    height: 6rem;
+    width: 6rem;
+  }
 }
 
 .dummy-container > img {

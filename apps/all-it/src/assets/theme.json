@@ -4,14 +4,18 @@
       "--font": "Roboto",
       "--logo": "assets/header_logo.png",
       "--title": "all-it",
-      "--accent": "#ff0000",
+      "--accent": "#0088D1",
       "--primary": "#ffffff",
       "--button_text_color": "#ffffff",
       "--button_background_color": "#0088CF",
-      "--header_color": "#ffffff",
-      "--background": "#1f2935",
+      "--header_color": "#000000",
+      "--background": "#ffffff",
       "--font_color": "#212121",
       "--login_background_colour": "#000",
-      "showSubtitleLogin": true
+      "showSubtitleLogin": true,
+      "showHomePage": true,
+      "showHistoryPage": false,
+      "showNewsfeedOnHomepage": true,
+      "showQrPageSubtitle": true
     }
 }

@@ -8,6 +8,11 @@ export enum GameType {
   scratch = 'scratch',
 }
 
+export interface IEngagementTransaction {
+  id: number;
+  voucherIds?: number[];
+  rewardIds?: number[];
+}
 export interface IGameOutcome {
   title: string;
   subTitle: string;
@@ -19,7 +24,7 @@ export interface IGame {
   campaignId?: number;
   type: GameType;
   remainingNumberOfTries: number;
-  config: ITree | IPinata | IScratch;
+  config: ITree | IPinata | IScratch | null;
   backgroundImg?: string;
   texts: {
     title?: string;
@@ -55,7 +60,8 @@ export function defaultPinata(): IPinata {
 export function defaultScratch(): IScratch {
   return {
     coverImg: '',
-    underlyingImg: '',
+    underlyingFailImg: '',
+    underlyingSuccessImg: '',
     uncoverPortionToTrigger: 90,
     nbTaps: 5
   };
@@ -83,7 +89,8 @@ export interface IPinata {
 
 export interface IScratch {
   coverImg: string;
-  underlyingImg: string;
+  underlyingSuccessImg: string;
+  underlyingFailImg: string;
   uncoverPortionToTrigger: number;
   nbTaps: number;
 }

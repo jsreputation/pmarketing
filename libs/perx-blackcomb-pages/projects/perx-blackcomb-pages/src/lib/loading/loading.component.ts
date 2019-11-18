@@ -24,12 +24,7 @@ import {
   Config,
   NotificationService,
   ICampaign,
-  ICampaignService,
-  // CampaignType,
-  // IGameService,
-  // SurveyService,
-  // LoyaltyService,
-  // InstantOutcomeService
+  ICampaignService
 } from '@perx/core';
 
 import * as uuid from 'uuid';
@@ -43,8 +38,8 @@ import * as uuid from 'uuid';
 export class LoadingComponent implements OnInit, OnDestroy {
   public preAuth: boolean;
 
-  private campaignId: number = null;
-  private campaignData: ICampaign = null;
+  private campaignId: number | null = null;
+  private campaignData: ICampaign | null = null;
 
   private destroy$: Subject<any> = new Subject();
 
@@ -90,38 +85,13 @@ export class LoadingComponent implements OnInit, OnDestroy {
   }
 
   private redirectAfterLogin(): void {
-    if (!this.isCampaignEnded) {
-      this.prePlay();
+    if (this.campaignData && !this.isCampaignEnded) {
+      this.redirectToEngagementPage(this.campaignData.type);
     } else if (this.campaignId && this.isCampaignEnded) {
       this.initCampaignEndedPopup();
     } else {
       this.goWallet();
     }
-  }
-
-  private prePlay(): void {
-    const { type } = this.campaignData;
-    // Pre-play logic placeholder
-    // let prePlay$;
-    // switch (type) {
-    //   case CampaignType.game:
-    //     prePlay$ = this.gameService.prePlay();
-    //     break;
-    //   case CampaignType.stamp:
-    //     prePlay$ = this.loyaltyService.prePlay();
-    //     break;
-    //   case CampaignType.survey:
-    //     prePlay$ = this.surveyService.prePlay();
-    //     break;
-    //   case CampaignType.give_reward:
-    //     prePlay$ = this.instantOutcomeService.prePlay();
-    //     break;
-    // }
-    // prePlay$.subscribe(
-    //   () => this.redirectToEngagementPage(type)
-    // );
-
-    this.redirectToEngagementPage(type);
   }
 
   private redirectToEngagementPage(type: string): void {
@@ -138,14 +108,16 @@ export class LoadingComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     @Inject(PLATFORM_ID) private platformId: object,
   ) {
-    this.preAuth = this.config ? this.config.preAuth : false;
+    this.preAuth = this.config && this.config.preAuth ? this.config.preAuth : false;
   }
 
   public ngOnInit(): void {
     if (this.preAuth && isPlatformBrowser(this.platformId)) {
       const param = location.search;
-      (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
-      this.campaignId = Number.parseInt(new URLSearchParams(param).get('cid'), 10);
+      const params = new URLSearchParams(param);
+      (window as any).primaryIdentifier = params.get('pi');
+      const cid: string | null = params.get('cid');
+      this.campaignId = cid ? Number.parseInt(cid, 10) : null;
       (window as any).campaignId = this.campaignId;
       /*
       * Later when API ready, the logic is:
@@ -154,9 +126,8 @@ export class LoadingComponent implements OnInit, OnDestroy {
       * 3. If no PI and no token found, then call autoLoginWithoutPI to create new account and auto login
       * */
 
-      const getUserToken$ = this.authService.autoLogin();
-      const PIHandler$ = pi => getUserToken$.pipe(tap(() => this.authService.savePI(pi)));
-      const createUserAndAutoLogin$ = pi => this.authService.createUserAndAutoLogin(pi);
+      const PIHandler$ = this.authService.autoLogin();
+      const createUserAndAutoLogin$ = pi => this.authService.createUserAndAutoLogin(pi, undefined, true);
       const autoLoginWithoutPI$ = of(uuid.v4()).pipe(
         switchMap(newPI => createUserAndAutoLogin$(newPI)),
         takeUntil(this.destroy$)
@@ -172,7 +143,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
       getPI$.pipe(
         switchMap(
-          pi => iif(() => !!pi, PIHandler$(pi), noPIHandler$)
+          pi => iif(() => !!pi, PIHandler$, noPIHandler$)
         ),
         takeUntil(this.destroy$)
       ).subscribe(

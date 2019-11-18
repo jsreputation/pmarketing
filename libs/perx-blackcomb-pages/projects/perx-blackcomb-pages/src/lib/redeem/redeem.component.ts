@@ -43,11 +43,15 @@ export class RedeemComponent implements OnInit, OnDestroy {
   private initTranslate(): void {
     this.translate.get('ENTER_CODE').subscribe((text) => this.headLine = text);
     this.translate.get('REDEMPTION_CODE').subscribe((text) => this.subHeadLine = text);
-    this.translate.get(this.rewardSuccessPopUp.title).subscribe((text) => this.rewardSuccessPopUp.title = text);
-    this.translate.get(this.rewardSuccessPopUp.text).subscribe((text) => this.rewardSuccessPopUp.text = text);
-    this.translate.get(this.rewardSuccessPopUp.buttonTxt).subscribe((text) => this.rewardSuccessPopUp.buttonTxt = text);
-    this.translate.get(this.errorPopUp.title).subscribe((text) => this.errorPopUp.title = text);
-    this.translate.get(this.errorPopUp.buttonTxt).subscribe((text) => this.errorPopUp.buttonTxt = text);
+    [
+      this.rewardSuccessPopUp.title,
+      this.rewardSuccessPopUp.text,
+      this.rewardSuccessPopUp.buttonTxt,
+      this.errorPopUp.title,
+      this.errorPopUp.buttonTxt
+    ]
+      .filter(k => k !== undefined && k !== null)
+      .forEach((k: string) => this.translate.get(k).subscribe((text) => k = text));
   }
 
   constructor(
@@ -65,30 +69,40 @@ export class RedeemComponent implements OnInit, OnDestroy {
     this.voucher$ = this.route.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
-        map((params: ParamMap) => Number.parseInt(params.get('id'), 10)),
+        map((params: ParamMap) => params.get('id')),
+        map((id: string) => Number.parseInt(id, 10)),
         tap((id: number) => this.voucherId = id),
         switchMap((id: number) => this.vouchersService.get(id)),
         tap((voucher: Voucher) => {
-          this.rewardSuccessPopUp.text = this.rewardSuccessPopUp.text.replace('{{reward}}', voucher.reward.name);
-          this.redemptionType = voucher.reward.redemptionType;
-          if (voucher.reward.displayProperties && voucher.reward.displayProperties.merchantPinText) {
-            this.headLine = voucher.reward.displayProperties.merchantPinText.headLine || this.headLine;
-            this.subHeadLine = voucher.reward.displayProperties.merchantPinText.subHeadLine || this.subHeadLine;
+          if (this.rewardSuccessPopUp.text && voucher.reward) {
+            this.rewardSuccessPopUp.text = this.rewardSuccessPopUp.text.replace('{{reward}}', voucher.reward.name);
           }
+          this.redemptionType = voucher.reward && voucher.reward.redemptionType ? voucher.reward.redemptionType : RedemptionType.none;
+          if (voucher.reward) {
+            if (voucher.reward.displayProperties && voucher.reward.displayProperties.merchantPinText) {
+              this.headLine = voucher.reward.displayProperties.merchantPinText.headLine || this.headLine;
+              this.subHeadLine = voucher.reward.displayProperties.merchantPinText.subHeadLine || this.subHeadLine;
+            }
 
-          if (voucher.reward.displayProperties && voucher.reward.displayProperties.rewardSuccessPopUp) {
-            this.rewardSuccessPopUp.title = voucher.reward.displayProperties.rewardSuccessPopUp.headLine;
-            this.rewardSuccessPopUp.text = voucher.reward.displayProperties.rewardSuccessPopUp.subHeadLine || this.rewardSuccessPopUp.text;
-            this.rewardSuccessPopUp.imageUrl = voucher.reward.displayProperties.rewardSuccessPopUp.imageURL;
-          }
+            if (voucher.reward.displayProperties && voucher.reward.displayProperties.rewardSuccessPopUp) {
+              this.rewardSuccessPopUp.title = voucher.reward.displayProperties.rewardSuccessPopUp.headLine;
+              this.rewardSuccessPopUp.text = voucher.reward.displayProperties.rewardSuccessPopUp.subHeadLine;
+              this.rewardSuccessPopUp.imageUrl = voucher.reward.displayProperties.rewardSuccessPopUp.imageURL
+                || this.rewardSuccessPopUp.imageUrl;
+              this.rewardSuccessPopUp.buttonTxt = voucher.reward.displayProperties.rewardSuccessPopUp.buttonTxt
+                || this.rewardSuccessPopUp.buttonTxt;
+            }
 
-          if (voucher.reward.displayProperties && voucher.reward.displayProperties.codeInstructionsText) {
-            this.codeInstructionsText = voucher.reward.displayProperties.codeInstructionsText.headLine;
-          }
+            if (voucher.reward.displayProperties && voucher.reward.displayProperties.codeInstructionsText) {
+              this.codeInstructionsText = voucher.reward.displayProperties.codeInstructionsText.headLine || '';
+            }
 
-          if (voucher.reward.displayProperties && voucher.reward.displayProperties.errorPopUp) {
-            this.errorPopUp.title = voucher.reward.displayProperties.errorPopUp.headLine;
-            this.errorPopUp.imageUrl = voucher.reward.displayProperties.errorPopUp.imageURL;
+            if (voucher.reward.displayProperties && voucher.reward.displayProperties.errorPopUp) {
+              this.errorPopUp.title = voucher.reward.displayProperties.errorPopUp.headLine;
+              this.errorPopUp.text = voucher.reward.displayProperties.errorPopUp.subHeadLine;
+              this.errorPopUp.buttonTxt = voucher.reward.displayProperties.errorPopUp.buttonTxt || this.errorPopUp.buttonTxt;
+              this.errorPopUp.imageUrl = voucher.reward.displayProperties.errorPopUp.imageURL || this.errorPopUp.imageUrl;
+            }
           }
         }),
         takeUntil(this.destroy$)

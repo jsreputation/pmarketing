@@ -99,7 +99,6 @@ describe('V4CampaignService', () => {
       name: 'UAT GAME',
       description: 'UAT description',
       begins_at: '2019-06-26T08:46:06.000Z',
-      ends_at: null,
       enrolled: true,
       campaign_type: CampaignType.game,
       images: [],

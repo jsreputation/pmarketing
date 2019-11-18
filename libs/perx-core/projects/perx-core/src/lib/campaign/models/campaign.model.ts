@@ -18,7 +18,7 @@ export enum CampaignState {
 export interface ICampaign {
   id: number;
   name: string;
-  description: string;
+  description: string | null;
   type: CampaignType;
   state: CampaignState;
   endsAt: Date | null;
@@ -27,6 +27,7 @@ export interface ICampaign {
   engagementId?: number;
   rawPayload?: any;
   displayProperties?: IWCampaignDisplayProperties;
+  isComingSoon?: boolean | null;
 }
 
 export enum CommChannel {

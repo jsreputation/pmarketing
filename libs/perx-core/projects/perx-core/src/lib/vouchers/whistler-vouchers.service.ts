@@ -15,6 +15,7 @@ import {
   IJsonApiItem,
   IJsonApiItemPayload,
 } from '@perx/whistler';
+import { oc } from 'ts-optchain';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,10 @@ export class WhistlerVouchersService implements IVoucherService {
       case WAssignedStatus.assigned:
       case WAssignedStatus.issued:
         return VoucherState.issued;
+      case WAssignedStatus.reserved:
+        return VoucherState.reserved;
+      case WAssignedStatus.expired:
+        return VoucherState.expired;
       default:
         return VoucherState.redeemed;
     }
@@ -46,9 +51,9 @@ export class WhistlerVouchersService implements IVoucherService {
     };
   }
 
-  private static compare(a: IVoucher, b: IVoucher, ): number {
-    const merchantIdA: number = a.reward.merchantId;
-    const merchantIdB: number = b.reward.merchantId;
+  private static compare(a: IVoucher, b: IVoucher): number {
+    const merchantIdA: number | undefined = oc(a).reward.merchantId();
+    const merchantIdB: number | undefined = oc(b).reward.merchantId();
 
     if (merchantIdA ? !merchantIdB : merchantIdB) {
       return !merchantIdA ? 1 : -1;
@@ -56,6 +61,7 @@ export class WhistlerVouchersService implements IVoucherService {
 
     return 0;
   }
+
   // @ts-ignore
   public getAll(voucherParams?: IGetVoucherParams): Observable<IVoucher[]> {
     return new Observable(subscriber => {
@@ -66,7 +72,7 @@ export class WhistlerVouchersService implements IVoucherService {
           .subscribe((vs: IVoucher[]) => {
             vouchers = vouchers.concat(vs).sort(WhistlerVouchersService.compare);
             subscriber.next(vouchers);
-            if (p >= res.meta.page_count) {
+            if (!res.meta || !res.meta.page_count || p >= res.meta.page_count) {
               subscriber.complete();
             } else {
               // tslint:disable-next-line: rxjs-no-nested-subscribe

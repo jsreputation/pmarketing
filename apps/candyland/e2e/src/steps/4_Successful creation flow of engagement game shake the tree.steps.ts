@@ -1,6 +1,6 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
-import { browser, element, by , protractor } from 'protractor';
+import { browser, protractor } from 'protractor';
 import { EngagementAppPage, CreateShakeTheTreeAppPage } from '../pages/candylandApp.po';
 import * as moment from 'moment';
 // initializing instances of the pages
@@ -26,48 +26,48 @@ Given(/^27_I am on the engagment page.$/, async () => {
 });
 
 Given(/^27_I click on create new button.$/, async () => {
-  await element.all(by.css('button')).get(2).click();
+  await PageShakeTheTree.shakeTreeCreateNewButton().click();
 });
 
 Given(/^27_I click on games button.$/, async () => {
   // clicking on the games option
-  await element.all(by.tagName('cl-type-item')).get(1).click();
+  await PageShakeTheTree.shakeTreeTypeOptions().click();
 });
 
 Given(/^27_I click on shake the tree.$/, () => {});
 
 Given(/^27_I click on the next button.$/, async () => {
   // clicking on the next button
-  await element.all(by.className('btn mat-flat-button primary')).get(1).click();
+  await PageEngagement.engagementNextButton().click();
 });
 
 Given(/^27_I type the test string$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for main headline field to load
-  await browser.wait(ec.presenceOf(element.all(by.css('input[type=text]')).get(1)), 6000);
+  await browser.wait(ec.presenceOf(PageShakeTheTree.headlineField()), 6000);
   // typing test string in the main headline text field
-  await element.all(by.css('input[type=text]')).get(0).clear();
-  await element.all(by.css('input[type=text]')).get(0).sendKeys('Test - launch now');
+  await PageShakeTheTree.mainHeadlineField().clear();
+  await PageShakeTheTree.mainHeadlineField().sendKeys('Test - launch now');
 });
 
 Given(/^27_I press save button$/, async () => {
   // clicking on the save button
-  await element(by.css('button.btn.mat-flat-button.primary')).click();
+  await PageShakeTheTree.shakeTreeSaveButton().click();
 });
 
 When(/^27_I press launch now button$/, async () => {
   // clicking on the launch now button
-  await element.all(by.css('button.btn.mat-flat-button.primary')).last().click();
+  await PageShakeTheTree.shakeTreeLaunchButton().click();
 });
 
 Then(/^27_Game is present under the engagment category .$/, async () => {
   // Verifying that the latest card has the correct item name
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.presenceOf(element.all(by.css('p.engagement-item-name')).first()), 5000);
-  expect(await element.all(by.css('div.engagement-item-info>p.engagement-item-name')).first().getText()).to.contain('Test - launch now');
+  await browser.wait(ec.presenceOf(PageEngagement.itemName()), 5000);
+  expect(await PageEngagement.itemInfo().getText()).to.contain('Test - launch now');
   // Verifying the current date of transaction
-  await browser.wait(ec.presenceOf(element.all(by.css('p.engagement-item-date')).first()), 5000);
-  expect(await element.all(by.css('p.engagement-item-date')).first().
+  await browser.wait(ec.presenceOf(PageShakeTheTree.transactionDate()), 5000);
+  expect(await PageShakeTheTree.transactionDate().
     getText()).to.equal(moment(now).format('DD MMM YYYY'));
 });
 
@@ -78,44 +78,44 @@ Given(/^28_I am on the engagment page.$/, async () => {
 });
 
 Given(/^28_I click on create new button.$/, async () => {
-  await element.all(by.css('button')).get(2).click();
+  await PageShakeTheTree.shakeTreeCreateNewButton().click();
 });
 
 Given(/^28_I click on games button.$/, async () => {
-  await element.all(by.tagName('cl-type-item')).get(1).click();
+  await PageShakeTheTree.shakeTreeTypeOptions().click();
 });
 
 Given(/^28_I click on shake the tree.$/, () => {});
 
 Given(/^28_I click on the next button.$/, async () => {
-  await element.all(by.className('btn mat-flat-button primary')).get(1).click();
+  await PageEngagement.engagementNextButton().click();
 });
 
 Given(/^28_I type the test string$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for main headline field to load
-  await browser.wait(ec.presenceOf(element.all(by.css('input[type=text]')).get(1)), 6000);
+  await browser.wait(ec.presenceOf(PageShakeTheTree.headlineField()), 6000);
   // typing test string in the main headline text field
-  await element.all(by.css('input[type=text]')).get(0).clear();
-  await element.all(by.css('input[type=text]')).get(0).sendKeys('Test - launch later');
+  await PageShakeTheTree.mainHeadlineField().clear();
+  await PageShakeTheTree.mainHeadlineField().sendKeys('Test - launch later');
 });
 
 Given(/^28_I press save button$/, async () => {
-  await element(by.css('button.btn.mat-flat-button.primary')).click();
+  await PageShakeTheTree.shakeTreeSaveButton().click();
          });
 
 When(/^28_I press launch later button$/, async () => {
-  await element(by.css('cl-button.actions-close')).click();
+  await PageShakeTheTree.launchLaterBtn().click();
 });
 
 Then(/^28_Game is present under the engagment category .$/, async () => {
   // Verifying that the latest card has the correct item name
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.presenceOf(element.all(by.css('p.engagement-item-name')).first()), 5000);
-  expect(await element.all(by.css('div.engagement-item-info>p.engagement-item-name')).first().getText()).to.contain('Test - launch later');
+  await browser.wait(ec.presenceOf(PageEngagement.itemName()), 5000);
+  expect(await PageEngagement.itemInfo().getText()).to.contain('Test - launch later');
   // Verifying the current date of transaction
-  await browser.wait(ec.presenceOf(element.all(by.css('p.engagement-item-date')).first()), 5000);
-  expect(await element.all(by.css('p.engagement-item-date')).first().
+  await browser.wait(ec.presenceOf(PageShakeTheTree.transactionDate()), 5000);
+  expect(await PageShakeTheTree.transactionDate().
     getText()).to.equal(moment(now).format('DD MMM YYYY'));
 });
 
@@ -125,11 +125,11 @@ Given(/^29_I am on the shake a tree game creation page$/, async () => {
 });
 
 When(/^29_I press the save button$/, async () => {
-  await element(by.css('button.btn.mat-flat-button.primary')).click();
+  await PageShakeTheTree.shakeTreeSaveButton().click();
 });
 
 Then(/^29_The file dialog box is present.$/, async () => {
-  expect(await element(by.css('cl-confirm-modal')).isPresent()).to.equal(true);
+  expect(await PageShakeTheTree.fileDialog().isPresent()).to.equal(true);
 });
 
 // Dialog box has 2 options present when save button is pressed.
@@ -138,14 +138,14 @@ Given(/^30_I am on the shake a tree game creation page$/, async () => {
 });
 
 When(/^30_I press the save button$/, async () => {
-  await element(by.css('button.btn.mat-flat-button.primary')).click();
+  await PageShakeTheTree.shakeTreeSaveButton().click();
 });
 
 Then(/^30_Both options are present.$/, async () => {
   // doing an assertion on the presence of both elements in the dialog
   // waiting for the dialog element to load
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.presenceOf(element(by.css('cl-confirm-modal'))), 6000);
-  expect(await element.all(by.css('cl-button')).get(1).isPresent()).to.equal(true);
-  expect(await element.all(by.css('cl-button')).get(2).isPresent()).to.equal(true);
+  await browser.wait(ec.presenceOf(PageShakeTheTree.fileDialog()), 6000);
+  expect(await PageShakeTheTree.firstDialogEl()).to.equal(true);
+  expect(await PageShakeTheTree.secondDialogEl().isPresent()).to.equal(true);
 });

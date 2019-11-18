@@ -16,7 +16,8 @@ export const language = () => (req: Request, res: Response, next: NextFunction) 
     langs.push('en');
     langs = langs.map(l => l.split(';')[0])
       .map(l => l.split('-')[0]);
-    const lang = langs.find(l => fs.existsSync(join(EXPRESS_DIST_FOLDER, `/assets/${l}-json.json`)));
+    const lang: string = langs.find(l => fs.existsSync(join(EXPRESS_DIST_FOLDER, `/assets/${l}-json.json`))) || '';
+    res.setHeader('content-language', lang);
     res.sendFile(join(EXPRESS_DIST_FOLDER, `/assets/${lang}-json.json`));
   } catch (e) {
     next(e);

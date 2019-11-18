@@ -40,26 +40,24 @@ export class VouchersComponent implements OnInit, OnChanges {
   public mapping?: StatusLabelMapping;
 
   @Input()
-  public expiryLabelFn: ((tr: IVoucher) => string) | undefined;
+  public expiryLabelFn: ((tr: IVoucher) => string);
 
   public repeatGhostCount: number = 10;
 
   public ghostTimeOut: boolean;
 
-  constructor(private vouchersService: IVoucherService, private datePipe: DatePipe) { }
+  constructor(private vouchersService: IVoucherService, private datePipe: DatePipe) {
+    this.expiryLabelFn = (v: IVoucher) => v.expiry ? `Expiry: ${this.datePipe.transform(v.expiry, 'shortDate')}` : '';
+  }
 
   public ngOnInit(): void {
     if (this.showRedeemedIcon && !this.mapping) {
-      console.error(`Error: 'mapping' is not defined`);
+      console.warn(`'mapping' is not defined`);
     }
 
     of(true).pipe(delay(2000)).subscribe(
       () => this.ghostTimeOut = true
     );
-
-    if (this.expiryLabelFn === undefined) {
-      this.expiryLabelFn = (v: IVoucher) => v.expiry ? `Expiry: ${this.datePipe.transform(v.expiry, 'shortDate')}` : '';
-    }
   }
 
   public ngOnChanges(): void {
@@ -68,7 +66,7 @@ export class VouchersComponent implements OnInit, OnChanges {
     }
   }
 
-  public isVoucherQueryComplete(vouchers: IVoucher[]): boolean {
+  public isVoucherQueryComplete(vouchers: IVoucher[] | null): boolean {
     return Array.isArray(vouchers) || this.ghostTimeOut;
   }
 

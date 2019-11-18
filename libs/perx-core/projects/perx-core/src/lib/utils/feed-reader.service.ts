@@ -9,7 +9,7 @@ export interface FeedItem {
   link: string | null;
   image?: string | null;
   guid: string | null;
-  pubDate: Date;
+  pubDate: Date | null;
 }
 
 @Injectable({
@@ -43,6 +43,7 @@ export class FeedReaderService {
 
     const items = Array.from(channel.querySelectorAll('item'));
     return items.map((item: Element) => {
+      const dateStr = item.getElementsByTagName('pubDate')[0].textContent;
       const imageTag = item.getElementsByTagName('image')[0];
       const image: string | null = imageTag ? imageTag.textContent : channelImgUrl;
       const it: FeedItem = {
@@ -51,7 +52,7 @@ export class FeedReaderService {
         link: item.getElementsByTagName('link')[0].textContent,
         image,
         guid: item.getElementsByTagName('guid')[0].textContent,
-        pubDate: new Date(item.getElementsByTagName('pubDate')[0].textContent)
+        pubDate: dateStr ? new Date(dateStr) : null
       };
       // cure the content
       for (const k in it) {

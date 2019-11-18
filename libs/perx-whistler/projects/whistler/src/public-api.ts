@@ -96,7 +96,8 @@ export {
 } from './lib/engagement/instant-outcome';
 export {
   IWInstantOutcomeTransactionAttributes,
-  IWInstantOutcomeTxnReq
+  IWInstantOutcomeTxnReq,
+  WInstantOutcomeStatus
 } from './lib/engagement/instant-outcome-transaction';
 
 /** Survey */
@@ -118,3 +119,5 @@ export {
 
 /** Cognito */
 export { IWCognitoTenantAttributes } from './lib/cognito/tenants';
+
+export { IWSetting, IWTenant, IWAccountPageObject, IWPagesObject } from './lib/tenant/settings';
