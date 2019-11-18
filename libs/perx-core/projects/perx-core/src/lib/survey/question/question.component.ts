@@ -12,6 +12,9 @@ export class QuestionComponent implements OnChanges {
   public id: number;
 
   @Input()
+  public hideIndex: boolean = false;
+
+  @Input()
   public questionPointer: number;
 
   @Input()

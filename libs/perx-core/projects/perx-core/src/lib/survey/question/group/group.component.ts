@@ -12,6 +12,8 @@ interface IPayloadGroup {
 })
 
 export class GroupComponent implements OnChanges {
+  @Input()
+  public hideIndex: boolean = false;
 
   @Input()
   public id: number;
