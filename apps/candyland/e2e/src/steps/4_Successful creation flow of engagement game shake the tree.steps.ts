@@ -63,8 +63,8 @@ When(/^27_I press launch now button$/, async () => {
 Then(/^27_Game is present under the engagment category .$/, async () => {
   // Verifying that the latest card has the correct item name
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.presenceOf(PageShakeTheTree.itemName()), 5000);
-  expect(await PageShakeTheTree.itemInfo().getText()).to.contain('Test - launch now');
+  await browser.wait(ec.presenceOf(PageEngagement.itemName()), 5000);
+  expect(await PageEngagement.itemInfo().getText()).to.contain('Test - launch now');
   // Verifying the current date of transaction
   await browser.wait(ec.presenceOf(PageShakeTheTree.transactionDate()), 5000);
   expect(await PageShakeTheTree.transactionDate().
@@ -111,8 +111,8 @@ When(/^28_I press launch later button$/, async () => {
 Then(/^28_Game is present under the engagment category .$/, async () => {
   // Verifying that the latest card has the correct item name
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.presenceOf(PageShakeTheTree.itemName()), 5000);
-  expect(await PageShakeTheTree.itemInfo().getText()).to.contain('Test - launch later');
+  await browser.wait(ec.presenceOf(PageEngagement.itemName()), 5000);
+  expect(await PageEngagement.itemInfo().getText()).to.contain('Test - launch later');
   // Verifying the current date of transaction
   await browser.wait(ec.presenceOf(PageShakeTheTree.transactionDate()), 5000);
   expect(await PageShakeTheTree.transactionDate().
