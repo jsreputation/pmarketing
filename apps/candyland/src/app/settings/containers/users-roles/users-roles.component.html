@@ -7,12 +7,12 @@
           <ng-container *clTableFilter="'username'; let filter">
             <cl-search-filter class="search-block" [control]="filter" [placeholder]="'SETTINGS_FEATURE.SEARCH_FOR_USERS' | translate"></cl-search-filter>
           </ng-container>
-          <ng-container *clTableFilter="'name'; value: ''; let filter">
+          <ng-container *clTableFilter="'groups'; value: ''; let filter">
             <mat-form-field appearance="outline" class="type-block half-block">
               <mat-select [formControl]="filter" [placeholder]="'SETTINGS_FEATURE.ALL' | translate">
                 <mat-option value="">{{'SETTINGS_FEATURE.ALL' | translate}}</mat-option>
                 <ng-container *ngFor="let option of config?.roleTypes">
-                  <mat-option [value]="option.value">{{option.title | translate}}</mat-option>
+                  <mat-option [value]="option.id">{{option.title | translate}}</mat-option>
                 </ng-container>
               </mat-select>
             </mat-form-field>
