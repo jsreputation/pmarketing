@@ -1,6 +1,6 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, of, Subject, combineLatest } from 'rxjs';
+import { Observable, of, Subject, combineLatest, throwError } from 'rxjs';
 import {
   InstantOutcomeService,
   IReward,
@@ -11,10 +11,11 @@ import {
   AuthenticationService,
   PopupComponent
 } from '@perx/core';
-import { map, switchMap, catchError, tap, takeUntil, } from 'rxjs/operators';
+import { map, switchMap, catchError, tap, takeUntil, mergeMap, } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'perx-blackcomb-reward',
@@ -58,11 +59,17 @@ export class RewardComponent implements OnInit, OnDestroy {
   ) { }
 
   private initTranslate(): void {
-    this.translate.get(this.successPopUp.title).subscribe((text) => this.successPopUp.title = text);
-    this.translate.get(this.successPopUp.buttonTxt).subscribe((text) => this.successPopUp.buttonTxt = text);
-    this.translate.get(this.noRewardsPopUp.title).subscribe((text) => this.noRewardsPopUp.title = text);
-    this.translate.get(this.noRewardsPopUp.text).subscribe((text) => this.noRewardsPopUp.text = text);
-    this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
+    [
+      this.successPopUp.title,
+      this.successPopUp.buttonTxt,
+      this.noRewardsPopUp.title,
+      this.noRewardsPopUp.text,
+      this.noRewardsPopUp.buttonTxt
+    ]
+      .filter((k) => k !== undefined && k !== null)
+      .forEach((k: string) => {
+        this.translate.get(k).subscribe((text: string) => k = text);
+      });
   }
 
   public ngOnInit(): void {
@@ -72,7 +79,12 @@ export class RewardComponent implements OnInit, OnDestroy {
       .pipe(
         map((params: Params) => params.id),
         switchMap((id: string) => this.outcomeService.getFromCampaign(parseInt(id, 10))),
-        catchError((err: Error) => { throw err; })
+        catchError((err: HttpErrorResponse) => {
+          if (err.status === 403) {
+            this.router.navigate(['/wallet']);
+          }
+          throw err;
+        })
       )
       .subscribe(
         (eng: IOutcome) => {
@@ -99,18 +111,18 @@ export class RewardComponent implements OnInit, OnDestroy {
           switchMap((campaignId: string) => this.outcomeService.prePlay(parseInt(campaignId, 10))),
           tap((outcomeTransaction: IEngagementTransaction) => {
             this.transactionId = outcomeTransaction.id;
-            if (outcomeTransaction.rewardIds.length === 0) {
-              throw new Error('empty');
+          }),
+          mergeMap((outcomeTransaction: IEngagementTransaction) => {
+            if (!outcomeTransaction.rewardIds || outcomeTransaction.rewardIds.length === 0) {
+              return throwError('empty');
             }
+            return of(outcomeTransaction);
           }),
           catchError(() => {
             this.popupData = this.noRewardsPopUp;
             this.redirectUrlAndPopUp();
             // next line is actually useless as we will redirected.
-            return of<IEngagementTransaction>({
-              rewardIds: [],
-              id: null
-            });
+            return of({ id: -1 });
           })
         );
 
@@ -119,7 +131,7 @@ export class RewardComponent implements OnInit, OnDestroy {
         .pipe(
           switchMap(
             (outcomeTransaction: IEngagementTransaction) => {
-              if (outcomeTransaction.rewardIds.length === 0) {
+              if (!outcomeTransaction.rewardIds || outcomeTransaction.rewardIds.length === 0) {
                 return of<IReward[]>([]);
               }
               return combineLatest(...outcomeTransaction.rewardIds.map(
@@ -132,7 +144,10 @@ export class RewardComponent implements OnInit, OnDestroy {
   }
 
   public rewardClickedHandler(): void {
-    const userAction$: Observable<void> = this.isAnonymousUser ? of(void 0) : this.outcomeService.prePlayConfirm(this.transactionId);
+    const userAction$: Observable<void> = this.isAnonymousUser || this.transactionId === null ?
+      of(void 0) :
+      this.outcomeService.prePlayConfirm(this.transactionId);
+
     userAction$.subscribe(
       () => this.redirectUrlAndPopUp(),
       () => this.redirectUrlAndPopUp()

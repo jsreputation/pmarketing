@@ -67,7 +67,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
         >(
           `${this.config.apiHost}/instant-outcome/engagements/${
             campaign.engagementId
-          }`
+          }?campaign_id=${campaignId}`
         );
       }),
       map(res => res.data.attributes.display_properties),
@@ -84,13 +84,10 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   }
 
   public claim(campaignId: number): Observable<IReward[]> {
-    const buildBody: Observable<
-      IJsonApiPostItem<IWInstantOutcomeTxnReq>
-    > = this.getEngagementId(campaignId).pipe(
-      map(
-        (
-          campaign: IWCampaignProperties
-        ): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
+    const buildBody: Observable<IJsonApiPostItem<IWInstantOutcomeTxnReq>> =
+    this.getEngagementId(campaignId)
+      .pipe(
+        map((campaign: IWCampaignProperties ): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
           data: {
             type: 'transactions',
             attributes: {
@@ -99,80 +96,63 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
               status: WInstantOutcomeStatus.confirmed
             }
           }
-        })
-      )
-    );
+        }))
+      );
 
     const getRewardIds: Observable<number[]> = buildBody.pipe(
       switchMap(
-        (
-          body: IJsonApiPostItem<IWInstantOutcomeTxnReq>
-        ): Observable<
-          IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>
-        > =>
-          this.http.post<
-            IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>
-          >(`${this.baseUrl}`, body, {
-            headers: { 'Content-Type': 'application/vnd.api+json' }
-          })
+        (body: IJsonApiPostItem<IWInstantOutcomeTxnReq>): Observable<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>> =>
+          this.http.post<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>>(
+            `${this.baseUrl}`,
+            body,
+            { headers: { 'Content-Type': 'application/vnd.api+json' } }
+          )
       ),
-      map(
-        (res: IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>) =>
-          res.data
-      ),
-      map(
-        (data: IJsonApiItem<IWInstantOutcomeTransactionAttributes>) =>
-          data.attributes.results
-      ),
+      map((res: IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>) => res.data),
+      map((data: IJsonApiItem<IWInstantOutcomeTransactionAttributes>) => data.attributes.results),
+      switchMap(results => results !== undefined ? of(results) : throwError('Empty results object')),
       map(results => results.attributes.results),
-      map(
-        (results): number[] =>
-          results.map(result => result.attributes.source_id)
-      )
+      map((results): number[] => results.map(result => result.attributes.source_id))
     );
 
     return getRewardIds.pipe(
-      map(
-        (ids: number[]): Observable<IReward>[] =>
-          ids.map(id => this.rewardsService.getReward(id))
-      ),
-      mergeMap(
-        (queries: Observable<IReward>[]): Observable<IReward[]> =>
-          combineLatest(...queries)
-      )
+      map((ids: number[]): Observable<IReward>[] => ids.map(id => this.rewardsService.getReward(id))),
+      mergeMap((queries: Observable<IReward>[]): Observable<IReward[]> => combineLatest(...queries))
     );
   }
 
   public prePlay(campaignId?: number): Observable<IEngagementTransaction> {
+    if (!campaignId) {
+      return throwError('Missing campaign Id');
+    }
+
     return this.getEngagementId(campaignId).pipe(
-      map(
-        (
-          campaign: IWCampaignProperties
-        ): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
-          data: {
-            type: 'transactions',
-            attributes: {
-              engagement_id: campaign.engagementId,
-              campaign_entity_id: campaignId,
-              status: WInstantOutcomeStatus.reserved
-            }
+      map((campaign: IWCampaignProperties): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
+        data: {
+          type: 'transactions',
+          attributes: {
+            engagement_id: campaign.engagementId,
+            campaign_entity_id: campaignId,
+            status: WInstantOutcomeStatus.reserved
           }
-        })
+        }
+      })
       ),
       switchMap((body: IJsonApiPostItem<IWInstantOutcomeTxnReq>) =>
-        this.http.post<
-          IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>
-        >(`${this.config.apiHost}/instant-outcome/transactions`, body, {
-          headers: { 'Content-Type': 'application/vnd.api+json' }
-        })
-      ),
-      map(res => ({
-        id: Number.parseInt(res.data.id, 10),
-        rewardIds: res.data.attributes.results.attributes.results.map(
-          (outcome: IJsonApiItem<IWAssignedAttributes>) =>
-            outcome.attributes.source_id
+        this.http.post<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>>(
+          `${this.config.apiHost}/instant-outcome/transactions`,
+          body,
+          { headers: { 'Content-Type': 'application/vnd.api+json' } }
         )
-      }))
+      ),
+      map(res => {
+        const rewardIds: number[] = res.data.attributes.results ? res.data.attributes.results.attributes.results.map(
+          (outcome: IJsonApiItem<IWAssignedAttributes>) => outcome.attributes.source_id) : [];
+        return {
+          id: Number.parseInt(res.data.id, 10),
+          rewardIds
+        };
+      })
     );
   }
 

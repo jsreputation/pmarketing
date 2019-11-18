@@ -30,7 +30,7 @@ export class AccountComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
   ) {
-    this.preAuth = config.preAuth;
+    this.preAuth = config.preAuth || false;
   }
 
   public ngOnInit(): void {
