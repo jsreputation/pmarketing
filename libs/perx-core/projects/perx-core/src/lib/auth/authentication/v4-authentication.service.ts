@@ -351,4 +351,26 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   public savePI(pi: string): void {
     this.tokenStorage.setAppInfoProperty(pi, 'pi');
   }
+
+  public getAnonymous(): boolean {
+    return !!this.tokenStorage.getAppInfoProperty('anonymous');
+  }
+
+  public saveAnonymous(anonymous: boolean): void {
+    this.tokenStorage.setAppInfoProperty(anonymous, 'anonymous');
+  }
+
+  public getUserId(): number | null {
+    const id: string | undefined = this.tokenStorage.getAppInfoProperty('id');
+    return id ? Number.parseInt(id, 10) : null;
+  }
+
+  public saveUserId(id: number): void {
+    this.tokenStorage.setAppInfoProperty(id, 'id');
+  }
+
+  // @ts-ignore
+  public mergeUserById(fromIds: number[], toId: number): Observable<void> {
+    return throwError('Not implement yet');
+  }
 }

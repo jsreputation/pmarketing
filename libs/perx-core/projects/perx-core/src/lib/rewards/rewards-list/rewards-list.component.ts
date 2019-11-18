@@ -29,11 +29,11 @@ export class RewardsListComponent implements OnInit {
   public ngOnInit(): void {
     if (!this.displayPriceFn) {
       this.displayPriceFn = (rewardPrice: IPrice) => {
-        if (rewardPrice.price > 0) {
+        if (rewardPrice.price && rewardPrice.price > 0) {
           return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
         }
 
-        if (rewardPrice.points > 0) {
+        if (rewardPrice.points && rewardPrice.points > 0) {
           return `${rewardPrice.points} points`;
         }
         return '0 points'; // is actually 0 or invalid value default

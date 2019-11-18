@@ -41,7 +41,7 @@ export class LayoutComponent implements OnInit {
     private config: Config
   ) {
     if (config) {
-      this.preAuth = this.config.preAuth;
+      this.preAuth = this.config.preAuth || false;
     }
   }
 
@@ -73,7 +73,8 @@ export class LayoutComponent implements OnInit {
           '/tnc',
           '/contact-us',
           '/reward-detail',
-          '/c'
+          '/c',
+          '/qr'
         ];
         // if current url starts with any of the above segments, use arrow_backward
         this.leftIcon = urlsWithBack.some(test => url.startsWith(test)) ? 'arrow_backward' : '';

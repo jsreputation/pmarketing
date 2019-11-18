@@ -2,10 +2,11 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { ProfileService } from '@perx/core';
+import { ProfileService, ThemesService, ITheme } from '@perx/core';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-qr',
@@ -14,17 +15,27 @@ import { ProfileService } from '@perx/core';
 })
 export class QRComponent implements OnInit {
 
-  public rewardDetails: string = null;
-  public rewardId: number = null;
+  public rewardDetails: string | null = null;
+  public rewardId: number | null = null;
+  public theme: ITheme;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private themesService: ThemesService,
   ) { }
 
   public ngOnInit(): void {
-    this.rewardId = +this.route.snapshot.paramMap.get('rewardId');
+    this.themesService.getThemeSetting().subscribe(
+      theme => this.theme = theme
+    );
+
+    this.route.paramMap.pipe(
+      filter((params: ParamMap) => params.has('rewardId')),
+      map((params: ParamMap) => params.get('rewardId')),
+      map((id: string) => Number.parseInt(id, 10))
+    ).subscribe((id: number) => this.rewardId = id);
 
     this.profileService.whoAmI().subscribe(
       (profile) => {

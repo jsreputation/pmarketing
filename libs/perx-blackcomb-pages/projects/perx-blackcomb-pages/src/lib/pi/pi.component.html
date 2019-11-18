@@ -3,23 +3,23 @@
     <div class="error_msg">
       <span>{{errorMessage}}</span>
     </div>
+    <div class="pi-label">
+      {{'PI_INSTRUCTIONS' | translate}}
+    </div>
     <form
       [formGroup]="PIForm"
-      (ngSubmit)="onSubmit()"
-    >
+      (ngSubmit)="onSubmit()">
       <mat-form-field
         appearance="fill"
-        class="full-width__input"
-      >
+        class="full-width__input">
         <mat-label>
-          Enter your PI
+          {{'PI_TEXT_LABEL' | translate}}
         </mat-label>
         <input
           matInput
-          placeholder="Enter your PI"
-          formControlName="pi"
-        >
-        <mat-error *ngIf="PIForm.get('pi').hasError('required')">
+          [placeholder]="'PI_TEXT_LABEL' | translate"
+          formControlName="pi">
+        <mat-error *ngIf="piField.hasError('required')">
           PI is <strong>required</strong>
         </mat-error>
       </mat-form-field>
@@ -27,9 +27,8 @@
         mat-flat-button
         type="submit"
         color="primary"
-        class="full-width__button"
-      >
-        Get PI
+        class="full-width__button">
+        {{'PI_BUTTON_LABEL' | translate}}
       </button>
     </form>
   </div>

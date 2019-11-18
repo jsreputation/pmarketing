@@ -5,14 +5,14 @@
         [matRippleDisabled]="notClickable(voucher)" (click)="onClick(voucher)">
         <div [ngClass]="'voucher-content ' + imageSize">
           <div class="voucher-img__wrapper">
-            <img class="voucher-thumbnail" src="{{voucher.reward.rewardThumbnail}}">
+            <img class="voucher-thumbnail" src="{{voucher?.reward?.rewardThumbnail}}">
           </div>
           <div class="voucher-details">
             <h1 *ngIf="showTitle">
-              {{voucher.reward.name}}
+              {{voucher?.reward?.name}}
             </h1>
             <p *ngIf="showMerchant">
-              {{voucher.reward.merchantName}}
+              {{voucher?.reward?.merchantName}}
             </p>
             <p *ngIf="showExpireDate && voucher.expiry && voucher.expiry !== null">
               {{expiryLabelFn(voucher)}}
