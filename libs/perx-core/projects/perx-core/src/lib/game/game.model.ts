@@ -60,7 +60,8 @@ export function defaultPinata(): IPinata {
 export function defaultScratch(): IScratch {
   return {
     coverImg: '',
-    underlyingImg: '',
+    underlyingFailImg: '',
+    underlyingSuccessImg: '',
     uncoverPortionToTrigger: 90,
     nbTaps: 5
   };
@@ -88,7 +89,8 @@ export interface IPinata {
 
 export interface IScratch {
   coverImg: string;
-  underlyingImg: string;
+  underlyingSuccessImg: string;
+  underlyingFailImg: string;
   uncoverPortionToTrigger: number;
   nbTaps: number;
 }
