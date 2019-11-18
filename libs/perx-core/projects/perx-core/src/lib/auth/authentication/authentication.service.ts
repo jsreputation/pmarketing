@@ -133,7 +133,7 @@ export abstract class AuthenticationService implements AuthService {
 
   public abstract saveAnonymous(anonymous: boolean): void;
 
-  public abstract getUserId(): number;
+  public abstract getUserId(): number | null;
 
   public abstract saveUserId(id: number): void;
 
