@@ -6,7 +6,7 @@ export { PerxCoreModule } from './lib/perx-core.module';
 /**
  * Shared
  */
-export * from './lib/utils/shared/helpers.util';
+export { isEmptyArray } from './lib/utils/shared/helpers.util';
 
 /**
  * Merchants
