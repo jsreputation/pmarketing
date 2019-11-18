@@ -73,5 +73,6 @@
   "PER_CAMPAIGN_PER": "per campaign, per",
   "ISSUANCE_LIMITS_PER_USER": "Issuance Limits Per User",
   "TIMES": "Times",
-  "REDEMPTION_LIMITS_PER_USER": "Redemption Limits Per User"
+  "REDEMPTION_LIMITS_PER_USER": "Redemption Limits Per User",
+  "REWARD_IMAGE": "Reward Image"
 }

@@ -12,11 +12,9 @@
   "STATE/PROVINCE": "State/Province",
   "POSTAL_CODE": "Postal code",
   "BRANCH_NAME": "Branch Name",
-
-  "SEARCH_PLACEHOLDER": "Search for merchants",
-  "NO_DATA_TITLE": "You need Merchants to build your eco-system!",
-  "NO_DATA_TEXT": " Let's begin by creating your first Merchant",
-
-  "NAME_PLACEHOLDER": "Enter title here",
+  "SEARCH_FOR_MERCHANTS": "Search for merchants",
+  "YOU_NEED_MERCHANT": "You need Merchants to build your eco-system!",
+  "NO_DATA_MERCHANT": "Let's begin by creating your first Merchant",
+  "ENTER_TITLE_HERE": "Enter title here",
   "MERCHANT_INFO": "Merchant Info"
 }

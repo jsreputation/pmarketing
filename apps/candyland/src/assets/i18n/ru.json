@@ -7,20 +7,17 @@
     "LOGIN_BUTTON": "Войти",
     "COPYRIGHT": " © 2019 2019 Perx Technologies. Все права защищены.",
     "MAIN_TITLE": "Лояльность переопределена.",
-    "MAIN_DESCRIPTION": "Богатые, интерактивные, управляемые данными взаимодействия, которые приносят прибыль",
-    "ERROR_REQUIRED": "Обязательное поле",
-    "ERROR_MIN_LENGTH": "Минимальная длина 3",
-    "ERROR_PATTERN": "Только буквы и цифры"
+    "MAIN_DESCRIPTION": "Богатые, интерактивные, управляемые данными взаимодействия, которые приносят прибыль"
   },
   "MAIN_MENU": {
-    "DASHBOARD": "Приборная панель",
-    "REWARDS": "Rewards",
-    "ENGAGEMENTS": "Engagements",
-    "CAMPAIGNS": "Campaigns",
-    "LOYALTY": "Loyalty (β)",
-    "MERCHANTS": "Merchants",
-    "AUDIENCE": "Audience",
-    "SETTINGS": "Settings"
+    "DASHBOARD": "Доска",
+    "REWARDS": "Награды",
+    "ENGAGEMENTS": "Активности",
+    "CAMPAIGNS": "Кампании",
+    "LOYALTY": "Лояльность (β)",
+    "MERCHANTS": "Торговцы",
+    "AUDIENCE": "Аудитория",
+    "SETTINGS": "Настройки"
   },
   "LOG_OUT": "Выход"
 }

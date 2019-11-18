@@ -20,6 +20,13 @@
   "BTN_DOWNLOAD_A_SAMPLE_FILE": "Download a sample file",
   "BTN_UPLOAD-FILE_A_LIST": "+ upload-file a list",
   "BTN_NEXT": "Next",
+  "ADD_QUESTION": "+ Add Question",
+  "BTN_ADD": "Add",
+  "BTN_BACK": "Back",
+  "BTN_SAVE_AS_DRAFT": "Save as a draft",
+  "BTN_LAUNCH": "Launch",
+  "BTN_APPLY": "Apply",
+  "BTN_REPORT": "Report",
 
 
   "DESCRIPTION": "Description",
@@ -31,6 +38,10 @@
   "ERROR_PATTERN": "Only alphanumerics",
   "RECOMMENDED_FORMAT:_.JPG,_.PNG_OR_.GIF": "Recommended format: .JPG, .PNG or .GIF",
   "WRONG_PATTERN_WEB_LINK": "Wrong pattern web link",
+  "ERROR_WRONG_FORMAT_OF_EMAIL": "Wrong format of email",
+  "ERROR_SELECT_AT_LEAST_ONE": "At least one option must be selected.",
+  "ERROR_CHOOSE_TEMPLATE": "Please, choose template.",
+  "ERROR_THIS_FIELD_IS_REQUIRED": "This field is required",
 
 
   "WEBLINK": "Weblink",
@@ -40,5 +51,32 @@
   "MONTH": "Month",
   "YEAR": "Year",
   "CHOOSE_DATE": "Choose date",
-  "TIME": "Time"
+  "TIME": "Time",
+  "ENTER_TITLE_HERE": "Enter title here",
+  "QUESTIONS": "Questions",
+  "QUESTION": "Question",
+  "REQUIRED_FIELD": "Required field",
+  "PRIMARY": "Primary",
+  "ACCENT": "Accent",
+  "WARN": "Warn",
+  "primary": "Primary",
+  "accent": "Accent",
+  "warn": "Warn",
+  "Male": "Male",
+  "Female": "Female",
+  "PAUSE": "Pause",
+  "ACTIVE": "Active",
+  "STATUSES_TYPE": {
+    "ALL": "All",
+    "ACTIVE": "Active",
+    "DRAFT": "Draft",
+    "PROCESSED": "Processed",
+    "FAILED": "Failed",
+    "INACTIVE": "Inactive",
+    "PENDING": "Pending",
+    "SCHEDULED": "Scheduled",
+    "PAUSED": "Paused",
+    "ENDED": "Ended"
+  },
+  "NAME": "Name"
 }

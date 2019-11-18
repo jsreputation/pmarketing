@@ -1,7 +1,7 @@
 <article class="create-merchant-form" [formGroup]="formMerchant">
   <header class="page-header full-with">
     <mat-form-field class="pagetitle-input" floatLabel="never">
-      <input type="text" matInput formControlName="name" [placeholder]="'MERCHANTS' | translate">
+      <input type="text" matInput formControlName="name" [placeholder]="'ENTER_TITLE_HERE' | translate">
       <mat-error *ngIf="name.hasError('required')">{{'ERROR_REQUIRED' | translate}}</mat-error>
       <mat-error *ngIf="name.hasError('minlength')">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
       <mat-error *ngIf="name.hasError('maxlength')">{{'ERROR_MAX_LENGTH' | translate}} 60</mat-error>
