@@ -14,12 +14,9 @@ interface IPayloadDate {
   styleUrls: ['./date.component.scss']
 })
 export class DateComponent implements OnChanges, OnInit {
-  @ViewChild('picker', { static: false }) public picker: MatDatepicker<Date>;
-  @ViewChild('pickerFrom', { static: false }) public pickerFrom: MatDatepicker<Date>;
-  @ViewChild('pickerTo', { static: false }) public pickerTo: MatDatepicker<Date>;
-  @ViewChild('pickerInput', { static: false }) public pickerInput: ElementRef;
-  @ViewChild('pickerToInput', { static: false }) public pickerToInput: ElementRef;
-  @ViewChild('pickerFromInput', { static: false }) public pickerFromInput: ElementRef;
+  @ViewChild('pickerInput', { static: false }) private pickerInput: ElementRef;
+  @ViewChild('pickerToInput', { static: false }) private pickerToInput: ElementRef;
+  @ViewChild('pickerFromInput', { static: false }) private pickerFromInput: ElementRef;
 
   @Input()
   public payload: IPayloadDate;
@@ -42,8 +39,8 @@ export class DateComponent implements OnChanges, OnInit {
     }
   }
 
-  public openCalendar(): void {
-    this.picker.open();
+  public openCalendar(picker: MatDatepicker<Date>): void {
+    picker.open();
     setTimeout(() => this.pickerInput.nativeElement.focus());
   }
 
@@ -51,8 +48,8 @@ export class DateComponent implements OnChanges, OnInit {
     setTimeout(() => this.pickerInput.nativeElement.blur());
   }
 
-  public openCalendarTo(): void {
-    this.pickerTo.open();
+  public openCalendarTo(picker: MatDatepicker<Date>): void {
+    picker.open();
     setTimeout(() => this.pickerToInput.nativeElement.focus());
   }
 
@@ -60,8 +57,8 @@ export class DateComponent implements OnChanges, OnInit {
     setTimeout(() => this.pickerToInput.nativeElement.blur());
   }
 
-  public openCalendarFrom(): void {
-    this.picker.open();
+  public openCalendarFrom(picker: MatDatepicker<Date>): void {
+    picker.open();
     setTimeout(() => this.pickerFromInput.nativeElement.focus());
   }
 

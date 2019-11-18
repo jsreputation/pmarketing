@@ -61,7 +61,7 @@ describe('OrderComponent', () => {
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
       price: 100,
-      currency: 'HKD'
+      currency: 'HKD',
     },
     {
       name: 'Glucophage XR Tab',
