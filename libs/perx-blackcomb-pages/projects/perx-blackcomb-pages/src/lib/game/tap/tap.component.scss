@@ -1,36 +1,28 @@
 @import "../../mixins";
 
 .main-puzzle-container {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  height: 100%;
-  // replace above with mixin ??
+  @include main-wrap;
 
   h1 {
-    text-align: center;
-    font-family: Roboto, sans-serif;
-    // replace above with mixin ??
-    padding-top: $app-margin;
+    @include game-headline;
+
+    margin-top: $app-margin;
     color: white;
   }
 
   h3 {
-    text-align: center;
-    margin: 0;
-    // replace above with mixin ??
+    @include game-subheadline;
+
     color: white;
   }
 }
 
 .game-wrapper {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  width: 100%;
-  // replace above with mixin ??
+  @include game-wrap;
+}
+
+.game-footer {
+  @include game-cta;
 }
 
 .pinata-wrapper {
@@ -39,21 +31,4 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-}
-
-.game-footer {
-  bottom: 0;
-  padding: 1.6rem;
-  width: 100%;
-  box-sizing: border-box;
-  // replace above with mixin ??
-
-  button {
-    width: 100%;
-    min-width: 50%;
-    font-size: 1.5rem;
-    padding: 1.6rem;
-    margin: 0;
-    // replace with mixin ??
-  }
 }

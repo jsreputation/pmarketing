@@ -1,9 +1,11 @@
 import { IWQuestion } from '@perx/whistler';
 
-declare type  IEngagementType = IEngagementShakeType |
+declare type  IEngagementType =
+  IEngagementShakeType |
   IEngagementTapType |
   IEngagementStamps |
   IEngagementSurvey |
+  IEngagementScratchType |
   IEngagementInstantReward;
 
 declare interface IEngagementCommon {
@@ -13,6 +15,22 @@ declare interface IEngagementCommon {
   created_at: string;
   updated_at: string;
   fontName?: string;
+}
+
+declare interface IEngagementScratchType extends IEngagementCommon {
+  game_type: string;
+  title: string;
+  description: string;
+  image_url: string;
+  title_display: string;
+  button: string;
+  sub_title: string;
+  pre_scratch_img_url: string;
+  post_scratch_fail_img_url: string;
+  post_scratch_success_img_url: string;
+  attributes_type: string;
+  created_at: string;
+  updated_at: string;
 }
 
 declare interface IEngagementShakeType extends IEngagementCommon {

@@ -42,7 +42,7 @@ export class LayoutComponent implements OnInit {
     private config: Config
   ) {
     if (config) {
-      this.preAuth = this.config.preAuth;
+      this.preAuth = this.config.preAuth || false;
     }
   }
 
