@@ -9,13 +9,13 @@ jobs:
       - uses: azure/k8s-actions/k8s-set-context@master
         with:
           kubeconfig: ${{ secrets.BUILDER_KUBE_CONFIG }}
-      - name: Check branch name
-        run: |
-          REGEX="PW-[[:digit:]]+"
-          if [[ ! ${GITHUB_HEAD_REF} =~ ${REGEX} ]]; then
-            echo "Branch name ${GITHUB_HEAD_REF} doesn't meet naming convention: ${REGEX}"
-            exit 1
-          fi
+      # - name: Check branch name
+      #   run: |
+      #     REGEX="PW-[[:digit:]]+"
+      #     if [[ ! ${GITHUB_HEAD_REF} =~ ${REGEX} ]]; then
+      #       echo "Branch name ${GITHUB_HEAD_REF} doesn't meet naming convention: ${REGEX}"
+      #       exit 1
+      #     fi
       - name: Get list of apps
         run: |
           APP_FOLDERS=$(ls -d apps/*)
