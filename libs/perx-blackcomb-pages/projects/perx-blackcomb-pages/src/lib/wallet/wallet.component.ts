@@ -65,7 +65,7 @@ export class WalletComponent implements OnInit, OnDestroy {
       .subscribe((text: string) => {
         this.expiryLabelFn = (v: Voucher) => {
           const dateStr = this.datePipe.transform(v.expiry, 'shortDate');
-          return text.replace('{{date}}', dateStr);
+          return text.replace('{{date}}', dateStr || '~');
         };
       });
   }

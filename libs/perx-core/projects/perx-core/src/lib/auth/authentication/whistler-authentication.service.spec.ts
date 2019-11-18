@@ -79,15 +79,17 @@ describe('WhistlerAuthenticationService', () => {
     (auth: WhistlerAuthenticationService, http: HttpClient) => {
       const spy = spyOn(auth, 'savePI');
       spyOn(http, 'post').and.returnValue(of({ data: [{ attributes: { jwt: 'token' } }] }));
-      auth.createUserAndAutoLogin('test',
+      auth.createUserAndAutoLogin(
+        'test',
         {
           title: 'test',
           firstName: 'test',
           lastName: 'test',
           phoneNumber: '999',
           emailAddress: 'test',
-          primaryIdentifier: null
-        }).subscribe(() => { });
+          primaryIdentifier: 'null'
+        }
+      ).subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
     })));
@@ -135,13 +137,15 @@ describe('WhistlerAuthenticationService', () => {
     const checkError = (err) => expect(err).toBe('Not implement yet');
     whService.getAppToken().subscribe(() => { }, checkError);
     whService.forgotPassword('').subscribe(() => { }, checkError);
-    whService.resetPassword(null).subscribe(() => { }, checkError);
+    whService.resetPassword({ phone: 'string', newPassword: 'string', otp: 'string', passwordConfirmation: 'string' })
+      .subscribe(() => { }, checkError);
     whService.resendOTP('99').subscribe(() => { }, checkError);
-    whService.signup(null).subscribe(() => { }, checkError);
+    whService.signup({ phone: 'string;', password: 'string;', passwordConfirmation: 'string;' }).subscribe(() => { }, checkError);
     whService.requestVerificationToken('').subscribe(() => { }, checkError);
-    whService.changePhone(null).subscribe(() => { }, checkError);
+    whService.changePhone({ phone: '', otp: '' }).subscribe(() => { }, checkError);
     whService.verifyOTP('', '').subscribe(() => { }, checkError);
-    whService.changePassword(null).subscribe(() => { }, checkError);
+    whService.changePassword({ newPassword: 'string;', passwordConfirmation: 'string;', oldPassword: 'string;', otp: 'string;', })
+      .subscribe(() => { }, checkError);
   })));
 
   it('handle InterruptedUrl', inject([WhistlerAuthenticationService], (whService: WhistlerAuthenticationService) => {
