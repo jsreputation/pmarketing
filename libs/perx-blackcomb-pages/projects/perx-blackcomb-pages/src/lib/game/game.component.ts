@@ -21,6 +21,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private destroy$: Subject<any> = new Subject();
   private popupData: IPopupConfig;
   private isAnonymousUser: boolean;
+  private informationCollectionSetting: string;
   public successPopUp: IPopupConfig = {
     title: 'GAME_SUCCESS_TITLE',
     text: 'GAME_SUCCESS_TEXT',
@@ -80,6 +81,9 @@ export class GameComponent implements OnInit, OnDestroy {
       tap((game: IGame) => {
         if (game) {
           const { displayProperties } = game;
+          if (displayProperties && displayProperties.informationCollectionSetting) {
+            this.informationCollectionSetting = displayProperties.informationCollectionSetting;
+          }
           if (displayProperties && displayProperties.noRewardsPopUp) {
             this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
             this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
@@ -144,9 +148,16 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   private redirectUrlAndPopUp(): void {
-    const queryParams = { popupData: JSON.stringify(this.popupData), engagementType: 'game', transactionId: this.transactionId };
-    if (this.isAnonymousUser) {
+    const queryParams = {
+      popupData: JSON.stringify(this.popupData),
+      engagementType: 'game',
+      transactionId: this.transactionId,
+      collectInfo: true
+    };
+    if (this.isAnonymousUser && this.informationCollectionSetting !== 'pi_required') {
       this.router.navigate(['/pi'], { queryParams });
+    } else if (this.isAnonymousUser && this.informationCollectionSetting !== 'signup_required') {
+      this.router.navigate(['/signup'], { queryParams });
     } else {
       this.router.navigate(['/wallet']);
       this.dialog.open(PopupComponent, { data: this.popupData });

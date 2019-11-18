@@ -1,4 +1,7 @@
 <div class="sign-up">
+    <div class="error_msg">
+        <span>{{errorMessage}}</span>
+      </div>
     <perx-core-survey
       [data]="data$"
       (surveyDone)="updateSurveyStatus($event)"

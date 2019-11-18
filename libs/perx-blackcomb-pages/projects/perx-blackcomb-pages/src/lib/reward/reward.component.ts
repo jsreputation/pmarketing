@@ -32,6 +32,7 @@ export class RewardComponent implements OnInit, OnDestroy {
   public transaction$: Observable<IEngagementTransaction>;
   private transactionId: number | null = null;
   private isAnonymousUser: boolean;
+  private informationCollectionSetting: string;
   private popupData: IPopupConfig;
   public noRewardsPopUp: IPopupConfig = {
     title: 'INSTANT_OUTCOME_NO_REWARDS_TITLE',
@@ -94,6 +95,10 @@ export class RewardComponent implements OnInit, OnDestroy {
           this.background = eng.backgroundImgUrl;
           this.cardBackground = eng.cardBackgroundImgUrl;
           const { displayProperties } = eng;
+
+          if (displayProperties && displayProperties.informationCollectionSetting) {
+            this.informationCollectionSetting = displayProperties.informationCollectionSetting;
+          }
           if (displayProperties && displayProperties.noRewardsPopUp) {
             this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
             this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
@@ -160,16 +165,16 @@ export class RewardComponent implements OnInit, OnDestroy {
       engagementType: 'instant_outcome',
       transactionId: this.transactionId
     };
-
-    if (this.isAnonymousUser) {
+    if (this.isAnonymousUser && this.informationCollectionSetting !== 'pi_required') {
       this.router.navigate(['/pi'], { queryParams });
+    } else if (this.isAnonymousUser && this.informationCollectionSetting !== 'signup_required') {
+      this.router.navigate(['/signup'], { queryParams });
     } else {
       this.router.navigate(['/wallet']);
       if (this.popupData) {
         this.dialog.open(PopupComponent, { data: this.popupData });
       }
     }
-
   }
 
   public ngOnDestroy(): void {
