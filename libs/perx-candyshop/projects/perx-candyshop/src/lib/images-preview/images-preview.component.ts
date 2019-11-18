@@ -9,6 +9,7 @@ import { IGraphic } from '../../models/graphic.interface';
 export class ImagesPreviewComponent {
   @Input() public img: IGraphic;
   @Input() public selected: IGraphic;
+  @Input() public selectable: boolean = false;
   @Output() public selectPreview: EventEmitter<IGraphic> = new EventEmitter<IGraphic>();
 
   public handlerClick(): void {

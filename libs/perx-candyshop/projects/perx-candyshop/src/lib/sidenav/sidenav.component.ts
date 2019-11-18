@@ -4,6 +4,7 @@ import {
   trigger, state, style, animate, transition
 } from '@angular/animations';
 import { MatSidenav } from '@angular/material/sidenav';
+import {IMenu} from '../sidenav-menu/menu.interface';
 // import { IamUser } from '@cl-core/http-adapters/iam-user';
 
 export function fnTransition(stateChangeExpr: string, time: string): any {
@@ -42,6 +43,7 @@ export function fnTransition(stateChangeExpr: string, time: string): any {
 export class SidenavComponent implements OnDestroy {
   @Input() public isVisible: boolean = true;
   // @Input() public user: IamUser;
+  @Input() public menus: IMenu[];
   @Input() public user: any;
   @Input() public logOutButtonText: string = 'Log Out';
   public isOpen: boolean = true;

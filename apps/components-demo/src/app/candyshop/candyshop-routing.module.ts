@@ -11,8 +11,8 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'simple', pathMatch: 'full' },
       { path: 'simple', component: CandyshopSimpleComponent },
-      { path: 'forms', component:  CandyshopFormsComponent},
       { path: 'menu', component:  CandyshopMenuComponent},
+      { path: 'forms', component:  CandyshopFormsComponent},
     ],
   },
 ];

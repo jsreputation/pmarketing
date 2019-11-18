@@ -5,8 +5,7 @@
   <mat-dialog-content>
     <div class="dialog-content">
       <cl-ink [border]="true" [triangle]="true">
-        <cl-engagement-type #engagementHost
-                            [clInkHost]="engagementHost"
+        <cl-engagement-type clInkHost
                             (selectType)="setType($event)"
                             [selectedType]="selectedType"
                             [graphicList]="engagementType$ | async"
@@ -24,15 +23,15 @@
   </mat-dialog-content>
   <div class="dialog-actions">
     <cl-button [classList]="'secondary'"
-        class="actions-close"
-        (click)="close()"
-        [disableRipple]="true">
+               class="actions-close"
+               (click)="close()"
+               [disableRipple]="true">
       <span translate>BTN_CANCEL</span>
     </cl-button>
 
     <cl-button [classList]="'primary'"
-        (click)="next()"
-        [disableRipple]="true">
+               (click)="next()"
+               [disableRipple]="true">
       <span translate>BTN_NEXT</span>
     </cl-button>
   </div>

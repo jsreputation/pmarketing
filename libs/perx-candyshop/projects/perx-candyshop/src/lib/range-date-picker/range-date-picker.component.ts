@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'cs-range-date-picker-filter',
+  selector: 'cs-range-date-picker',
   templateUrl: './range-date-picker.component.html',
   styleUrls: ['./range-date-picker.component.scss']
 })

@@ -1,7 +1,6 @@
 /*
  * Public API Surface of perx-candyshop
  */
-
 export { IGraphic } from './models/graphic.interface';
 export { StatusType } from './models/status-type.enum';
 export { DatepickerRangeValue } from './models/datepicker-range-value.interface';
@@ -96,3 +95,6 @@ export { UserComponent } from './lib/user/user.component';
 
 export { VouchersProgressBarModule } from './lib/vouchers-progress-bar/vouchers-progress-bar.module';
 export { VouchersProgressBarComponent } from './lib/vouchers-progress-bar/vouchers-progress-bar.component';
+
+export {SepareteRangeDatePickerComponent} from './lib/separate-range-date-picker/separate-range-date-picker.component';
+export {SeparateRangeDatePickerModule} from './lib/separate-range-date-picker/separate-range-date-picker.module';

@@ -1,16 +1,16 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { OrderComponent } from './order.component';
-import { HeaderComponent } from '../header/header.component';
-import { OrderQuantityComponent } from '../order/order-quantity/order-quantity.component';
-import { MatIconModule, MatToolbarModule, MatListModule, MatDividerModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ProductService } from '../services/product.service';
-import { from, of } from 'rxjs';
-import { Type } from '@angular/core';
-import { IMerchantAdminService, NotificationService, TokenStorage } from '@perx/core';
-import { Location } from '@angular/common';
+import {OrderComponent} from './order.component';
+import {HeaderComponent} from '../header/header.component';
+import {OrderQuantityComponent} from '../order/order-quantity/order-quantity.component';
+import {MatIconModule, MatToolbarModule, MatListModule, MatDividerModule} from '@angular/material';
+import {FormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
+import {ProductService} from '../services/product.service';
+import {from, of} from 'rxjs';
+import {Type} from '@angular/core';
+import {IMerchantAdminService, NotificationService, TokenStorage} from '@perx/core';
+import {Location} from '@angular/common';
 
 describe('OrderComponent', () => {
   let component: OrderComponent;
@@ -21,8 +21,7 @@ describe('OrderComponent', () => {
     }
   };
   const tokenStorageStub = {
-    getAppInfoProperty: () => {
-    }
+    getAppInfoProperty: () => {}
   };
   const routerStub = {
     navigate: () => ({}),
