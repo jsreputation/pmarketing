@@ -1,19 +1,5 @@
 @import "../../styles/variables";
 
-:host {
-  width: 100%;
-
-  @include typo-body2;
-}
-
-::ng-deep {
-  .copy-link {
-    .mat-form-field-wrapper {
-      padding-bottom: 0;
-    }
-  }
-}
-
 .copy-link {
   position: relative;
   width: 100%;
@@ -27,5 +13,18 @@
     margin-right: ($horizontal-padding * 0.25);
     padding: 0;
   }
+}
 
+::ng-deep {
+  .copy-link {
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+  }
+}
+
+:host {
+  width: 100%;
+
+  @include typo-body2;
 }

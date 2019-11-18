@@ -36,10 +36,10 @@ export class UploadFileComponent implements ControlValueAccessor {
   public loadedFile: boolean | null = false;
 
   public onChange: any = () => {
-  };
+  }
 
   public onTouched: any = () => {
-  };
+  }
 
   constructor(private sanitizer: DomSanitizer,
               private uploadFileService: UploadFileService,
