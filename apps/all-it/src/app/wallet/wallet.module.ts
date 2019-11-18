@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { WalletComponent } from '@perx/blackcomb-pages';
+import { WalletHistoryComponent } from '@perx/blackcomb-pages';
 import { SharedModule } from '../shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
-    WalletComponent
+    WalletHistoryComponent
   ],
   imports: [
     SharedModule,
