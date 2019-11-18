@@ -16,6 +16,8 @@ import {
   styleUrls: ['./scratch.component.scss']
 })
 export class ScratchComponent {
+  @Input() public willWin: boolean = false;
+
   @Input() public game: IGame;
 
   @Output() public broken: EventEmitter<void> = new EventEmitter();
