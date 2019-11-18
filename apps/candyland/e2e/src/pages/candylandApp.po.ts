@@ -337,7 +337,7 @@ export class CreateRewardAppPage {
 
 export class CampaignAppPage {
 
-  public navigateToCampaign(): Promise<string> {
+  public static navigateToCampaign(): Promise<string> {
     return browser.get('campaigns') as Promise<string> ;
   }
 
@@ -620,5 +620,9 @@ export class ElementApp {
 
   public static matTabLabelContent(): ElementArrayFinder {
     return element.all(by.css('div.mat-tab-label-content'));
+  }
+
+  public static inputArray(): ElementArrayFinder {
+    return element.all(by.css('input'));
   }
 }
