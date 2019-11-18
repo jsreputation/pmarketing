@@ -12,7 +12,7 @@ export interface ITabConfig {
 }
 
 export interface ITabConfigExtended extends ITabConfig {
-  rewardsType: string;
+  rewardsType: string | null;
 }
 
 @Component({
