@@ -16,10 +16,10 @@ describe('DownloadLinkComponent', () => {
         BrowserDynamicTestingModule,
         MatSnackBarModule
       ],
-      declarations: [ CopyLinkComponent ],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      declarations: [CopyLinkComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

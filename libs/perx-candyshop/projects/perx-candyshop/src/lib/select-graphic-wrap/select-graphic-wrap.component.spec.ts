@@ -18,9 +18,9 @@ describe('SelectGraphicWrapComponent', () => {
         SelectGraphicModule,
         ReactiveFormsModule,
       ],
-      declarations: [ SelectGraphicWrapComponent ]
+      declarations: [SelectGraphicWrapComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

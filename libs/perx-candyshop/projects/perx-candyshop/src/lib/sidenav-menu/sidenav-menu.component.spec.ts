@@ -24,7 +24,7 @@ describe('SidenavMenuComponent', () => {
         SidenavMenuItemComponent
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

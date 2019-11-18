@@ -12,9 +12,9 @@ describe('UserComponent', () => {
       imports: [
         MatIconModule
       ],
-      declarations: [ UserComponent ]
+      declarations: [UserComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

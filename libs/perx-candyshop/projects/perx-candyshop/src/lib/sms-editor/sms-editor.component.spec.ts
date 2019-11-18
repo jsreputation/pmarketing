@@ -9,10 +9,10 @@ describe('SmsEditorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SmsEditorComponent ],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      declarations: [SmsEditorComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

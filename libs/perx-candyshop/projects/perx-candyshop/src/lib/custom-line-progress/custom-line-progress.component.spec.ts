@@ -8,9 +8,9 @@ describe('CustomLineProgressComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CustomLineProgressComponent ]
+      declarations: [CustomLineProgressComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -10,10 +10,10 @@ describe('DownloadLinkComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        declarations: [DownloadLinkComponent],
-        imports: [],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      declarations: [DownloadLinkComponent],
+      imports: [],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

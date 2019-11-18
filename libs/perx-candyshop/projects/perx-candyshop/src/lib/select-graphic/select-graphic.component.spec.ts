@@ -14,9 +14,9 @@ describe('SelectGraphicComponent', () => {
         ImagesPreviewModule,
         UploadGraphicModule,
       ],
-      declarations: [ SelectGraphicComponent ]
+      declarations: [SelectGraphicComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

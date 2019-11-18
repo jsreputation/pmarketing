@@ -22,9 +22,9 @@ describe('RangeDatePickerComponent', () => {
         MatFormFieldModule,
         MatIconModule
       ],
-      declarations: [ RangeDatePickerComponent ]
+      declarations: [RangeDatePickerComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

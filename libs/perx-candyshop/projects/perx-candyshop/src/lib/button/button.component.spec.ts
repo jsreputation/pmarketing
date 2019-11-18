@@ -12,9 +12,9 @@ describe('ButtonComponent', () => {
       imports: [
         MatButtonModule
       ],
-      declarations: [ ButtonComponent ]
+      declarations: [ButtonComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

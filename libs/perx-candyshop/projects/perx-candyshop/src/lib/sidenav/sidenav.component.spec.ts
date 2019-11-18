@@ -27,9 +27,9 @@ describe('SideNavComponent', () => {
         HttpClientModule
       ],
       providers: [],
-      declarations: [ SidenavComponent ]
+      declarations: [SidenavComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
