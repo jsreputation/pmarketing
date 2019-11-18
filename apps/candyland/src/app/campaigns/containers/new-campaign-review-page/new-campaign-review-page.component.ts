@@ -36,7 +36,7 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
   }
 
   public get informationCollectionSettingTitle(): string {
-    const informationCollectionSetting = oc(this.campaign).campaignInfo.informationCollectionSetting;
+    const informationCollectionSetting = oc(this.campaign).campaignInfo.informationCollectionSetting();
     if (informationCollectionSetting) {
       return this.config.informationCollectionSettingTypes.find(types => types.value === informationCollectionSetting).title;
     }
