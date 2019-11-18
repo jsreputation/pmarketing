@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { of, Observable, throwError, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { IProfile, IProfileAttributes } from '../../profile/profile.model';
+import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
 import { TokenStorage } from './token-storage.service';
 import {
@@ -24,7 +24,7 @@ interface IUserJWTRequest {
   identifier: string;
   url: string;
   anonymous?: boolean;
-  profile?: IProfileAttributes;
+  profile?: { [key: string]: any };
 }
 
 @Injectable({
@@ -108,7 +108,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     );
   }
 
-  public createUserAndAutoLogin(pi: string, userObj?: IProfileAttributes, anonymous?: boolean): Observable<any> {
+  public createUserAndAutoLogin(pi: string, userObj?: { [key: string]: any }, anonymous?: boolean): Observable<any> {
     return this.createUserWithPI(pi, userObj, anonymous).pipe(
       tap(
         (res: IJsonApiListPayload<IWCognitoLogin>) => {
@@ -138,7 +138,11 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
-  private createUserWithPI(pi: string, userObj?: IProfileAttributes, anonymous?: boolean): Observable<IJsonApiListPayload<IWCognitoLogin>> {
+  private createUserWithPI(
+    pi: string,
+    userObj?: { [key: string]: any },
+    anonymous?: boolean
+  ): Observable<IJsonApiListPayload<IWCognitoLogin>> {
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: pi,
@@ -147,7 +151,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     if (userObj) {
       userJWTRequest.profile = userObj;
     }
-
+    console.log(userJWTRequest);
     return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.createUsersEndPoint, userJWTRequest);
   }
 

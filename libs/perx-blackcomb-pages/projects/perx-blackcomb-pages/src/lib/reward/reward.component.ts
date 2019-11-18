@@ -149,7 +149,8 @@ export class RewardComponent implements OnInit, OnDestroy {
   }
 
   public rewardClickedHandler(): void {
-    const userAction$: Observable<void> = this.isAnonymousUser || this.transactionId === null ?
+    const isCollectDataRequired = !!(this.informationCollectionSetting === 'pi_required' || this.informationCollectionSetting === 'signup_required');
+    const userAction$: Observable<void> = isCollectDataRequired || !this.transactionId ?
       of(void 0) :
       this.outcomeService.prePlayConfirm(this.transactionId);
 
@@ -165,9 +166,9 @@ export class RewardComponent implements OnInit, OnDestroy {
       engagementType: 'instant_outcome',
       transactionId: this.transactionId
     };
-    if (this.isAnonymousUser && this.informationCollectionSetting !== 'pi_required') {
+    if (this.isAnonymousUser && this.informationCollectionSetting === 'pi_required') {
       this.router.navigate(['/pi'], { queryParams });
-    } else if (this.isAnonymousUser && this.informationCollectionSetting !== 'signup_required') {
+    } else if (this.isAnonymousUser && this.informationCollectionSetting === 'signup_required') {
       this.router.navigate(['/signup'], { queryParams });
     } else {
       this.router.navigate(['/wallet']);

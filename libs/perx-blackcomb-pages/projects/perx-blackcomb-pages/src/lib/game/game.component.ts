@@ -138,7 +138,8 @@ export class GameComponent implements OnInit, OnDestroy {
         bufferCount(nbSteps),
         first()
       );
-    const userAction$: Observable<void> = this.isAnonymousUser || !this.transactionId ?
+    const isCollectDataRequired = !!(this.informationCollectionSetting === 'pi_required' || this.informationCollectionSetting === 'signup_required');
+    const userAction$: Observable<void> = isCollectDataRequired || !this.transactionId ?
       of(void 0) :
       this.gameService.prePlayConfirm(this.transactionId);
     combineLatest(processBar$, userAction$).subscribe(
@@ -154,9 +155,9 @@ export class GameComponent implements OnInit, OnDestroy {
       transactionId: this.transactionId,
       collectInfo: true
     };
-    if (this.isAnonymousUser && this.informationCollectionSetting !== 'pi_required') {
+    if (this.isAnonymousUser && this.informationCollectionSetting === 'pi_required') {
       this.router.navigate(['/pi'], { queryParams });
-    } else if (this.isAnonymousUser && this.informationCollectionSetting !== 'signup_required') {
+    } else if (this.isAnonymousUser && this.informationCollectionSetting === 'signup_required') {
       this.router.navigate(['/signup'], { queryParams });
     } else {
       this.router.navigate(['/wallet']);

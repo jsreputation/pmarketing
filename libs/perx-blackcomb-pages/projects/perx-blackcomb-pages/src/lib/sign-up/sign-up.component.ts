@@ -8,15 +8,24 @@ import {
   IGameService,
   InstantOutcomeService
 } from '@perx/core';
-import { ISurvey, IProfileAttributes } from '@perx/core';
+import { ISurvey, IAnswer } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject, iif, of } from 'rxjs';
 import { takeUntil, catchError, tap, switchMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
-interface IAnswer {
-  question_id: string;
-  content: any;
+enum APIAttributesMap {
+  fistName = 'first_name',
+  first_name = 'first_name',
+  lastName = 'last_name',
+  last_name = 'last_name',
+  primary_identifier = 'primary_identifier',
+  primaryIdentifier = 'primary_identifier',
+  title = 'title'
+}
+
+interface ISignupAttributes {
+  [key: string]: any;
 }
 
 @Component({
@@ -90,18 +99,18 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.answers = answers;
   }
 
-  private snake_caseCamelise(propertyName: string): string {
-    return propertyName.replace(/_\w/g, (m) => m[1].toUpperCase());
-  }
-
   public onSubmit(): void {
     const mapOfObjects = this.answers
-      .map(answer => ({
-        [this.snake_caseCamelise(answer.question_id)]:
-          (Array.isArray(answer.content) ? answer.content[0] : answer.content)
-      }));
+      .map(answer => {
+        if (answer.questionId !== undefined) {
+          return {
+            [APIAttributesMap[answer.questionId]]:
+              (Array.isArray(answer.content) ? answer.content[0] : answer.content)
+          };
+        }
+      }).filter(answer => answer !== undefined && Object.entries(answer)[0] !== undefined);
 
-    const userObj: IProfileAttributes = Object.assign.apply(null, mapOfObjects);
+    const userObj: ISignupAttributes = Object.assign.apply(null, mapOfObjects);
 
     if (this.collectInfo) {
       this.submitDataAndCollectInformation(userObj);
@@ -109,9 +118,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.submitData(userObj);
   }
 
-  private submitData(userObj: IProfileAttributes): void {
+  private submitData(userObj: ISignupAttributes): void {
 
-    this.authService.createUserAndAutoLogin(userObj.primaryIdentifier, userObj).subscribe(
+    this.authService.createUserAndAutoLogin(userObj.primary_identifier, userObj).subscribe(
       () => {
         this.snack.open('User successfully created.', 'x', { duration: 2000 });
         this.router.navigate(['/wallet']);
@@ -120,7 +129,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     );
   }
 
-  private submitDataAndCollectInformation(userObj: IProfileAttributes): void {
+  private submitDataAndCollectInformation(userObj: ISignupAttributes): void {
     this.errorMessage = null;
 
     if (userObj) {
