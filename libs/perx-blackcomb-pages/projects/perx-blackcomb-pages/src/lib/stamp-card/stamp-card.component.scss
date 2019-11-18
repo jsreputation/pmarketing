@@ -2,7 +2,7 @@
 
 .main-puzzle-container {
   @include main-wrap;
-  
+
   h1 {
     @include game-headline;
   }
