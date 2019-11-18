@@ -4,7 +4,8 @@ import {
   trigger, state, style, animate, transition
 } from '@angular/animations';
 import { MatSidenav } from '@angular/material/sidenav';
-import {IMenu} from '../sidenav-menu/menu.interface';
+import { IMenu } from '../sidenav-menu/menu.interface';
+
 // import { IamUser } from '@cl-core/http-adapters/iam-user';
 
 export function fnTransition(stateChangeExpr: string, time: string): any {
@@ -54,8 +55,7 @@ export class SidenavComponent implements OnDestroy {
   @Output() public logout: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('snav', {static: false}) public snav: MatSidenav;
 
-  constructor(changeDetectorRef: ChangeDetectorRef,
-              media: MediaMatcher) {
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     this.mobileQuery = media.matchMedia('(max-width: 768px)');
     this.myMobileQueryListener = () => changeDetectorRef.detectChanges();
     // tslint:disable-next-line: deprecation

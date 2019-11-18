@@ -102,17 +102,17 @@ export class UploadFileComponent implements ControlValueAccessor {
   private fetchFile(file: File): void {
     this.uploadFileService.uploadFile(file)
       .subscribe((res: IUploadedFile) => {
-          this.file = res;
-          this.fileURL = res.url;
-          this.loadedFile = true;
-          this.setSelectedFile(res.url);
-          this.message = null;
-          this.cd.markForCheck();
-        },
-        (err: Error) => {
-          this.setError('File haven\'t loaded successfully!', err.message);
-          this.cd.markForCheck();
-        });
+        this.file = res;
+        this.fileURL = res.url;
+        this.loadedFile = true;
+        this.setSelectedFile(res.url);
+        this.message = null;
+        this.cd.markForCheck();
+      },
+      (err: Error) => {
+        this.setError('File haven\'t loaded successfully!', err.message);
+        this.cd.markForCheck();
+      });
   }
 
   private setError(message: string, serverError?: string): void {

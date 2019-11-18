@@ -22,7 +22,7 @@ describe('SidenaveMenuItemComponent', () => {
       ],
       declarations: [ SidenavMenuItemComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

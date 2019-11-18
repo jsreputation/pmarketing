@@ -124,16 +124,16 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   private uploadImage(file: File): void {
     this.uploadFileService.uploadImage(file)
       .subscribe((res: IUploadedFile) => {
-          this.imgURL = res.url;
-          this.loadedImg = true;
-          this.setSelectedGraphic(res.url);
-          this.message = null;
-          this.cd.markForCheck();
-        },
-        (err: Error) => {
-          this.setError('Image haven\'t loaded successfully!', err.message);
-          this.cd.markForCheck();
-        });
+        this.imgURL = res.url;
+        this.loadedImg = true;
+        this.setSelectedGraphic(res.url);
+        this.message = null;
+        this.cd.markForCheck();
+      },
+      (err: Error) => {
+        this.setError('Image haven\'t loaded successfully!', err.message);
+        this.cd.markForCheck();
+      });
   }
 
   private setError(message: string, serverError?: string) {
