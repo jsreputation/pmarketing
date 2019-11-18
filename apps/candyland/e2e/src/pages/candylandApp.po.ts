@@ -10,7 +10,6 @@ export class DashboardAppPage {
   public navigateToDashboard(): Promise<string> {
     return browser.get('dashboard') as Promise<string>;
   }
-
 }
 
 export class EngagementAppPage {
