@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'cl-new-campaign-review-page',
@@ -32,6 +33,14 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
       .subscribe((data: ICampaign) => {
         this.checkStampsHasRewards(data);
       });
+  }
+
+  public get informationCollectionSettingTitle(): string {
+    const informationCollectionSetting = (this.campaign).campaignInfo.informationCollectionSetting;
+    if (informationCollectionSetting) {
+      return this.config.informationCollectionSettingTypes.find(types => types.value === informationCollectionSetting).title;
+    }
+    return '';
   }
 
   public checkStampsHasRewards(campaign: ICampaign): void {
