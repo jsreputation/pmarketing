@@ -3,7 +3,6 @@ import {
   // LOCALE_ID,
   NgModule,
   APP_INITIALIZER,
-  Injectable
 } from '@angular/core';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -35,7 +34,10 @@ import {
   LocationModule,
   VouchersModule,
   MerchantsModule,
-  ConfigModule
+  ConfigModule,
+  CustomTranslateLoader,
+  TokenStorage,
+  ConfigService
 } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -58,31 +60,8 @@ import { TransactionHistoryComponent } from './account/transaction-history/trans
 import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.component';
 import { ConditionComponent } from './account/condition/condition.component';
 import { TransactionPipe } from './account/transaction-history/transaction.pipe';
-import {TransactionHistoryPipe} from './account/transaction-history/transaction-history.pipe';
-import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-
-@Injectable()
-export class CustomTranslateLoader implements TranslateLoader {
-  private contentHeader: HttpHeaders = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-  });
-  private hostUrl: string = 'http://localhost:4000/';
-  constructor(private httpClient: HttpClient) {
-    if (environment.production) {
-      this.hostUrl = `${environment.baseHref}`;
-    }
-  }
-  public getTranslation(lang: string): Observable<{ [k: string]: string }> {
-    const apiAddress = `${this.hostUrl}lang?default=${lang}`;
-    return this.httpClient.get<{ [k: string]: string }>(apiAddress, { headers: this.contentHeader })
-      .pipe(
-        catchError(() => this.httpClient.get<{ [k: string]: string }>(`${this.hostUrl}assets/en-json.json`))
-      );
-  }
-}
+import { TransactionHistoryPipe } from './account/transaction-history/transaction-history.pipe';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
   translateService.setDefaultLang(environment.defaultLang);
@@ -150,7 +129,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
       loader: {
         provide: TranslateLoader,
         useClass: CustomTranslateLoader,
-        deps: [HttpClient]
+        deps: [HttpClient, ConfigService, TokenStorage]
       }
     })
   ],

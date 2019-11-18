@@ -14,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
-  public errorMessage: string;
+  public errorMessage: string | null;
   public preAuth: boolean;
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private config: Config,
     public translate: TranslateService
   ) {
-    this.preAuth = this.config ? this.config.preAuth : false;
+    this.preAuth = this.config.preAuth ? this.config.preAuth : false;
   }
 
   public ngOnInit(): void {
@@ -58,8 +58,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
-    const username = (this.loginForm.get('customerID').value as string);
-    const password: string = this.loginForm.get('password').value;
+    const customerIdField = this.loginForm.get('customerID');
+    const username: string = customerIdField !== null && customerIdField.value ? customerIdField.value : '';
+    const pwdField = this.loginForm.get('password');
+    const password: string = pwdField ? pwdField.value : '';
     this.errorMessage = null;
     this.authService.login(username, password, '2')
       .pipe(

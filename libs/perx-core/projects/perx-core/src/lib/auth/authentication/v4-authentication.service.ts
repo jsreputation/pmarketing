@@ -360,8 +360,9 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     this.tokenStorage.setAppInfoProperty(anonymous, 'anonymous');
   }
 
-  public getUserId(): number {
-    return Number.parseInt(this.tokenStorage.getAppInfoProperty('id'), 10);
+  public getUserId(): number | null {
+    const id: string | undefined = this.tokenStorage.getAppInfoProperty('id');
+    return id ? Number.parseInt(id, 10) : null;
   }
 
   public saveUserId(id: number): void {
