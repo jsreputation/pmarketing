@@ -112,7 +112,7 @@ describe('WhistlerGameService', () => {
   });
 
   it('should get a tree from its id', (done: DoneFn) => {
-    service.get(42)
+    service.get(42, 1)
       .subscribe(
         (g: IGame) => {
           expect(`${g.id}`).toEqual(mockTree.id);
@@ -122,7 +122,7 @@ describe('WhistlerGameService', () => {
         fail
       );
 
-    const req = httpTestingController.expectOne('https://blabla/game/engagements/42');
+    const req = httpTestingController.expectOne('https://blabla/game/engagements/42?campaign_id=1');
     expect(req.request.method).toEqual('GET');
     const res: IJsonApiItemPayload<IWGameEngagementAttributes> = {
       data: mockTree
@@ -133,7 +133,7 @@ describe('WhistlerGameService', () => {
   });
 
   it('should get a pinata from its id', (done: DoneFn) => {
-    service.get(42)
+    service.get(42, 1)
       .subscribe(
         (g: IGame) => {
           expect(`${g.id}`).toEqual(mockTree.id);
@@ -143,7 +143,7 @@ describe('WhistlerGameService', () => {
         fail
       );
 
-    const req = httpTestingController.expectOne('https://blabla/game/engagements/42');
+    const req = httpTestingController.expectOne('https://blabla/game/engagements/42?campaign_id=1');
     expect(req.request.method).toEqual('GET');
     const res: IJsonApiItemPayload<IWGameEngagementAttributes> = {
       data: mockTap
@@ -154,7 +154,7 @@ describe('WhistlerGameService', () => {
   });
 
   it('should get a scratch card from its id', (done: DoneFn) => {
-    service.get(42)
+    service.get(42, 1)
       .subscribe(
         (g: IGame) => {
           expect(`${g.id}`).toEqual(mockTree.id);
@@ -164,7 +164,7 @@ describe('WhistlerGameService', () => {
         fail
       );
 
-    const req = httpTestingController.expectOne('https://blabla/game/engagements/42');
+    const req = httpTestingController.expectOne('https://blabla/game/engagements/42?campaign_id=1');
     expect(req.request.method).toEqual('GET');
     const res: IJsonApiItemPayload<IWGameEngagementAttributes> = {
       data: mockScratch
