@@ -61,7 +61,7 @@ import { ConditionComponent } from './account/condition/condition.component';
 import { TransactionPipe } from './account/transaction-history/transaction.pipe';
 import { TransactionHistoryPipe } from './account/transaction-history/transaction-history.pipe';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { CustomTranslateLoader } from './custom-translate.service';
+import { PerxTranslateLoader } from './custom-translate.service';
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
   translateService.setDefaultLang(environment.defaultLang);
@@ -128,7 +128,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useClass: CustomTranslateLoader,
+        useClass: PerxTranslateLoader,
         deps: [HttpClient, ConfigService, TokenStorage]
       }
     })
