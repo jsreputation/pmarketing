@@ -1,8 +1,9 @@
 import { Observable, of } from 'rxjs';
 import { TokenStorage } from './token-storage.service';
 import { Injectable } from '@angular/core';
-import { TokenType } from './models/authentication.model';
+
 import { Config } from '../../config/config';
+import { TokenType } from './models/token-storage.model';
 
 interface IAppInfo {
   appAccessToken?: string;
