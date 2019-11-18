@@ -36,7 +36,8 @@ import {
   MerchantsModule,
   ConfigModule,
   TokenStorage,
-  ConfigService
+  ConfigService,
+  LanguageInterceptor
 } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -62,7 +63,6 @@ import { TransactionPipe } from './account/transaction-history/transaction.pipe'
 import { TransactionHistoryPipe } from './account/transaction-history/transaction-history.pipe';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CustomTranslateLoader } from './custom-translate.service';
-import { LanguageInterceptor } from './language.interceptor';
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
   translateService.setDefaultLang(environment.defaultLang);

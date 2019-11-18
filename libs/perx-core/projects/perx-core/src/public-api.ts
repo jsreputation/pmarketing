@@ -145,6 +145,7 @@ export { ICountryCode } from './lib/utils/general-static-data/country-code';
 export { RepeatTimesDirective } from './lib/utils/directives/repeat-times.directive';
 export { NewsfeedComponent } from './lib/utils/newsfeed/newsfeed.component';
 export { LanguageService } from './lib/utils/language/language.service';
+export { LanguageInterceptor } from './lib/utils/language.interceptor';
 /**
  * Puzzles
  */
