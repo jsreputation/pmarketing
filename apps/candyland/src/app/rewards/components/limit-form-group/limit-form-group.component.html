@@ -38,7 +38,7 @@
   <div class="card-header">
     <div class="row">
       <h2 class="card-title">
-        Issuance Limits Per User
+        {{'ISSUANCE_LIMITS_PER_USER' | translate}}
       </h2>
       <mat-slide-toggle color="primary" [formControl]="formGroup.get('enabledIssuancePerUser')"></mat-slide-toggle>
     </div>
@@ -53,7 +53,9 @@
           step="1"
           [formControl]="formGroup.get('issuancePerUser.times')"
           matInput>
-        <span matSuffix><span translate>Times</span></span>
+        <span matSuffix>
+          {{'TIMES' | translate}}
+        </span>
       </mat-form-field>
       <!--/input number-->
 

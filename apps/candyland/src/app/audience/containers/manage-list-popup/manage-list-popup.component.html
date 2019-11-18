@@ -1,14 +1,18 @@
 <aside class="dialog" role="dialog" aria-labelledby="dialogTitle-manageList">
   <header class="dialog-header-wrap">
     <!--<h2 mat-dialog-title class="dialog-title">Create Engagement</h2>-->
-    <h2 class="dialog-title" id="dialogTitle-manageList">Manage List</h2>
+    <h2 class="dialog-title" id="dialogTitle-manageList">
+      {{'AUDIENCE_FEATURE.MANAGE_LIST' | translate}}
+    </h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
   </header>
   <mat-dialog-content>
     <div class="dialog-content">
-      <label class="dialog-content-title">Audience lists</label>
+      <label class="dialog-content-title">
+        {{'AUDIENCE_FEATURE.AUDIENCE_LIST' | translate}}
+      </label>
       <div *ngFor="let pool of pools">
         <mat-checkbox color="primary" [checked]="pool.checked" (change)="changePools(pool.value, $event.checked)" class="dialog-row">{{pool.name}}</mat-checkbox>
       </div>
@@ -20,7 +24,7 @@
                (click)="close()"
                [disableRipple]="true">
         <span>
-          Cancel
+          {{'BTN_CANCEL' | translate}}
         </span>
     </cl-button>
 
@@ -28,7 +32,7 @@
                (click)="save()"
                [disableRipple]="true">
         <span>
-          Save
+          {{'BTN_SAVE' | translate}}
         </span>
     </cl-button>
   </footer>

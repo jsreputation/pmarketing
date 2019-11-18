@@ -7,10 +7,7 @@
     "LOGIN_BUTTON": "Log in",
     "COPYRIGHT": "© 2019 Perx Technologies. All rights reserved.",
     "MAIN_TITLE": "Loyalty Re-defined.",
-    "MAIN_DESCRIPTION": "Rich, Interactive, Data-led Engagements That Drive Revenue",
-    "ERROR_REQUIRED": "Required field",
-    "ERROR_MIN_LENGTH": "Min length 3",
-    "ERROR_PATTERN": "Only alphanumerics"
+    "MAIN_DESCRIPTION": "Rich, Interactive, Data-led Engagements That Drive Revenue"
   },
   "MAIN_MENU": {
     "DASHBOARD": "Dashboard",
