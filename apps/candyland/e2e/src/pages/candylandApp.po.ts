@@ -403,14 +403,12 @@ export class BlackcombWalletAppPage {
   public navigateBlackcombWalletApp(): Promise<string> {
     return browser.get('https://generic-blackcomb-dev1.uat.whistler.perxtech.io/wallet') as Promise<string> ;
   }
-
 }
 
 export class BlackcombHomeAppPage {
   public static navigateToBlackcombHomeApp(): Promise<string> {
     return browser.get('https://generic-blackcomb-dev1.uat.whistler.perxtech.io/home') as Promise<string> ;
   }
-
 }
 
 export class ElementApp {
