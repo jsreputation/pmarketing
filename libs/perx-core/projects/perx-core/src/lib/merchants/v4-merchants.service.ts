@@ -3,15 +3,42 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
-import { IMerchant } from './models/merchants.model';
+import {IImage, IMerchant, IOutlet, ITag} from './models/merchants.model';
 import { Config } from '../config/config';
+import {oc} from 'ts-optchain';
 
 interface IV4GetMerchantsResponse {
-  data: IMerchant[];
+  data: IV4Merchant[];
 }
 
 interface IV4GetMerchantResponse {
-  data: IMerchant;
+  data: IV4Merchant;
+}
+
+interface IV4Merchant {
+  id: number;
+  name: string;
+  description?: string;
+  website?: string;
+  tags?: ITag[];
+  images?: IImage[];
+  outlets?: IV4Outlet[];
+}
+
+interface IV4Outlet {
+  outlet_id: number;
+  outlet_name: string;
+  outlet_address1: string;
+  outlet_address2?: string;
+  outlet_address3?: string;
+  state?: string;
+  city?: string;
+  shopping_mall?: string;
+  postal_code?: string;
+  country: string;
+  tel: string;
+  coordinates: { lat: number, lng: number, distance?: number, unitOfMeasure: string };
+  tags?: ITag[];
 }
 
 @Injectable({
