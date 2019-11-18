@@ -36,6 +36,7 @@
     "NO_DATA_TITLE": "You need Merchants to build your eco-system!",
     "NO_DATA_TEXT": "Let's begin by creating your first Merchant",
     "NAME": "Name",
+    "EMAIL_ADDRESS": "Email Address",
     "ROLE": "Role",
     "INVITED_DATE": "Invited Date"
   },

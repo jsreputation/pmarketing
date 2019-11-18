@@ -1,6 +1,6 @@
 <aside class="dialog invite-new-users" role="dialog" aria-labelledby="dialogTitle-inviteNewUsers">
   <header class="dialog-header-wrap">
-    <h2 class="dialog-title" id="dialogTitle-inviteNewUsers">{{'SETTINGS_FEATURE.INVITE_NEW_USERS' | translate}}</h2>
+    <h2 class="dialog-title" id="dialogTitle-inviteNewUsers">{{'SETTINGS_FEATURE.INVITE_NEW_USER' | translate}}</h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
       <mat-icon>close</mat-icon>
     </button>
@@ -119,7 +119,7 @@
                 (click)="invite()"
                 [disable]="this.form.invalid"
                 [disableRipple]="true">
-      <span>{{'SETTINGS_FEATURE.INVITE' | translate}}</span>
+      <span>{{'SETTINGS_FEATURE.INVITE_NEW_USER' | translate}}</span>
     </cl-button>
   </footer>
   <!--  <div class="dialog-actions">-->

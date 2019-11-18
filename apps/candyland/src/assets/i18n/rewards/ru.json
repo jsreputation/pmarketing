@@ -2,6 +2,7 @@
   "SEARCH_FOR_REWARDS": "Поиск наград",
   "REWARD_NAME": "Название награды",
   "REWARD_TYPE": "Тип вознаграждения",
+  "REDEMPTION_TYPE": "Тип погашения",
   "CATEGORY": "Категория",
   "VALIDITY": "Срок действия",
   "BALANCE": "Баланс",
@@ -9,7 +10,6 @@
   "LETS_BEGIN_BY_CREATING_YOUR_FIRST_REWARD": "Давайте начнем с создания вашей первой награды",
   "ENTER_TITLE_HERE": "Введите название здесь",
   "REWARD_INFO": "Информация о вознаграждении",
-  "REDEMPTION_TYPE": "Тип погашения",
   "REWARD_TYPE_OPTIONS": {
     "FREE": "Бесплатно",
     "CASHBACK": "Кэшбэк",

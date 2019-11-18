@@ -17,6 +17,7 @@
    "SIGN_UP": "Регистрация",
    "BY_INVITE": "По приглашению",
    "SELECT_AUDIENCE": "Выберите аудиторию",
+   "GLOBAL_EARN_RULE": "Глобальное правило заработка",
    "GLOBAL_BURN_RULE": "Глобальное правило сгорания",
    "FOR_EVERY_TRANSACTION_AMOUNT_EQUAL_TO": "Для каждой транзакции сумма равна",
    "USER_WILL_EARN": "пользователь заработает",
@@ -49,7 +50,7 @@
    "LOYALTY_SCHEME_INFO": "Информация о схеме лояльности",
    "CREATED_ON": "Создано",
    "JOINING_METHOD": "Метод объединения",
-   "GLOBAL_EARN_AND_BURN_RULES": "Глобальные правила зароботка и сожжения",
+   "GLOBAL_EARN_AND_BURN_RULES": "Глобальные правила зароботка и сгорания",
    "POINTS_EARNING_CONVERSION_RATE": "Ставка перевода заработанных очков",
    "SPENDING": "трата",
    "POINTS_BURNING_CONVERSION_RATE": "Ставка перевода сожжения очков"
