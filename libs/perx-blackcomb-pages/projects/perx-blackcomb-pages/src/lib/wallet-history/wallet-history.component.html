@@ -1,1 +1,25 @@
-<p>wallet-history works!</p>
+<div class="page">
+  <mat-tab-group mat-stretch-tabs>
+    <mat-tab label="My Wallet">
+      <div class="voucher-list">
+        <div class="list-heading">My Rewards</div>
+        <perx-core-vouchers (tapped)="voucherSelected($event)"
+                            [data]="vouchers$"
+                            [mapping]="mapping"
+                            [filter]="walletFilter"
+        ></perx-core-vouchers>
+      </div>
+    </mat-tab>
+    <mat-tab label="History">
+      <div class="voucher-list">
+        <div class="list-heading">Redeemed</div>
+        <perx-core-vouchers (tapped)="voucherSelected($event)"
+                            [data]="vouchers$"
+                            [mapping]="mapping"
+                            [filter]="historyFilter"
+        ></perx-core-vouchers>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+  
