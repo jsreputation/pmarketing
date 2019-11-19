@@ -56,6 +56,10 @@ export class NewCampaignDetailFormService {
         condition: form.get('channel.type').value === 'sms',
         controls: [form.get('channel.message'), form.get('channel.schedule')]
       },
+      {
+        condition: form.get('channel.type').value === 'weblink',
+        controls: [form.get('campaignInfo.informationCollectionSetting')]
+      },
       // {
       //   condition: form.get('channel.schedule.enableRecurrence').value === true,
       //   controls: [form.get('channel.schedule.recurrence')]
