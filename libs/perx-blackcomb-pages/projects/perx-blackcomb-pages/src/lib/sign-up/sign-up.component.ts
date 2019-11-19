@@ -21,6 +21,10 @@ enum APIAttributesMap {
   last_name = 'last_name',
   primary_identifier = 'primary_identifier',
   primaryIdentifier = 'primary_identifier',
+  phone_number = 'phone_number',
+  phoneNumber = 'phone_number',
+  email_address = 'email_address',
+  emailAddress = 'email_address',
   title = 'title'
 }
 
@@ -120,7 +124,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   private submitData(userObj: ISignupAttributes): void {
 
-    this.authService.createUserAndAutoLogin(userObj.primary_identifier, userObj).subscribe(
+    this.authService.createUserAndAutoLogin(userObj.phone_number.split(' ')[1], userObj).subscribe(
       () => {
         this.snack.open('User successfully created.', 'x', { duration: 2000 });
         this.router.navigate(['/wallet']);

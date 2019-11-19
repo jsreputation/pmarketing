@@ -151,7 +151,6 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     if (userObj) {
       userJWTRequest.profile = userObj;
     }
-    console.log(userJWTRequest);
     return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.createUsersEndPoint, userJWTRequest);
   }
 
