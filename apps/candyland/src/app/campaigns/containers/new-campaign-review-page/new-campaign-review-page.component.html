@@ -139,6 +139,14 @@
           {{campaign?.channel?.type}}
         </h3>
         <!--Message-->
+        <div class="card-section" *ngIf="campaign?.campaignInfo?.informationCollectionSetting">
+          <div class="card-header">
+            <h3 class="card-title">
+              {{ informationCollectionSettingTitle }}
+            </h3>
+          </div>
+        </div>
+        <!--Message-->
         <div class="card-section" *ngIf="campaign?.channel?.message">
           <div class="card-header">
             <h3 class="card-title">

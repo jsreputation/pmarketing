@@ -32,7 +32,7 @@ export {
   IWCommTemplateAttributes,
   IWCommEventAttributes
 } from './lib/comm/comm';
-export { IWCampaignAttributes } from './lib/campaign/campaign';
+export { IWCampaignAttributes, WInformationCollectionSettingType } from './lib/campaign/campaign';
 export {
   IWAudiences,
   IWPoolsApi,

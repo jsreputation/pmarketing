@@ -18,6 +18,7 @@ export interface IWCampaignAttributes {
   pool_id?: string | null;
   labels?: string[];
   display_properties?: {
+    informationCollectionSetting?: string;
     noRewardsPopUp?: {
       headLine?: string;
       subHeadLine?: string;
@@ -31,4 +32,10 @@ export interface IWCampaignAttributes {
       buttonTxt?: string;
     };
   };
+}
+
+export enum WInformationCollectionSettingType {
+  not_required = 'not_required',
+  pi_required = 'pi_required',
+  signup_required = 'signup_required'
 }
