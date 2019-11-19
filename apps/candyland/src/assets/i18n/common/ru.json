@@ -16,7 +16,7 @@
   "ADD_IMAGE": "+ Добавить изображение",
   "BTN_ADD_MERCHANT": "Добавить продавца",
   "BTN_DELETE": "Удалить",
-  "ADD_NEW_BRANCH": "+ Добавить новое отделение",
+  "ADD_NEW_BRANCH": "+ Добавить новый филиал",
   "BTN_DOWNLOAD_A_SAMPLE_FILE": "Загрузить файл",
   "BTN_UPLOAD-FILE_A_LIST": "+ Загрузить файл со списком",
   "BTN_NEXT": "Далее",
@@ -44,7 +44,7 @@
   "ERROR_THIS_FIELD_IS_REQUIRED": "Это поле обязательно для заполнения",
 
   "WEBLINK": "Веб-ссылка",
-  "TO": "к",
+  "TO": "по",
   "DAY": "День",
   "WEEK": "Неделя",
   "MONTH": "Месяц",
