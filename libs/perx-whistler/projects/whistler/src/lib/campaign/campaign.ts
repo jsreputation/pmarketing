@@ -1,4 +1,5 @@
 import { WEngagementType } from '../engagement/engagement';
+import { IWProperties } from '../whistler.models';
 
 export interface IWCampaignAttributes {
   id?: string;
@@ -17,21 +18,13 @@ export interface IWCampaignAttributes {
   comm_channel?: null;
   pool_id?: string | null;
   labels?: string[];
-  display_properties?: {
-    informationCollectionSetting?: string;
-    noRewardsPopUp?: {
-      headLine?: string;
-      subHeadLine?: string;
-      imageURL?: string;
-      buttonTxt?: string;
-    };
-    successPopUp?: {
-      headLine?: string;
-      subHeadLine?: string;
-      imageURL?: string;
-      buttonTxt?: string;
-    };
-  };
+  display_properties?: IWCampaignDisplayProperties;
+}
+
+export interface IWCampaignDisplayProperties {
+  informationCollectionSetting?: WInformationCollectionSettingType;
+  noRewardsPopUp?: IWProperties;
+  successPopUp?: IWProperties;
 }
 
 export enum WInformationCollectionSettingType {
