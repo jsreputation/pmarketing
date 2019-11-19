@@ -27,7 +27,8 @@ describe('RewardComponent', () => {
       declarations: [RewardComponent],
       imports: [
         RouterTestingModule.withRoutes([
-          { path: 'wallet', redirectTo: '/' }
+          { path: 'wallet', redirectTo: '/' },
+          { path: 'pi', redirectTo: '/' },
         ]),
         GameModule,
         RewardsModule,
