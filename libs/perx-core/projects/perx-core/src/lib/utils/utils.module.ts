@@ -17,6 +17,7 @@ import { WhistlerThemesService } from './themes/whistler-themes.service';
 import { Config } from '../config/config';
 import { V4ThemesService } from './themes/v4-themes.service';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
+import { StorageModule } from './storage/storage.module';
 
 export function themesServiceFactory(http: HttpClient, config: Config): ThemesService {
   if (config.isWhistler) {
@@ -51,7 +52,8 @@ const components = [
     MatDialogModule,
     MatButtonModule,
     ReactiveFormsModule,
-    MatCardModule
+    MatCardModule,
+    StorageModule
   ],
   exports: [
     ...directives,
