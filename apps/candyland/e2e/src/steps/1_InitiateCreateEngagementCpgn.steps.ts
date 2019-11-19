@@ -5,7 +5,6 @@ import { DashboardAppPage, EngagementAppPage, LoginAppPage } from '../pages/cand
 
 let DashboardPage: DashboardAppPage;
 let EngagementPage: EngagementAppPage;
-let LoginApp: LoginAppPage;
 const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 
 // setting step timeout time
@@ -14,23 +13,22 @@ Before( () => {
   // initializing page objects instances
   DashboardPage = new DashboardAppPage();
   EngagementPage = new EngagementAppPage();
-  LoginApp = new LoginAppPage();
 });
 
 // Engagements tab is visible to customer
 Given(/^1_I am on the dashboard page.$/, async () => {
   // login process
-  await LoginApp.navigateToLogin();
+  await LoginAppPage.navigateToLogin();
   // Waiting for account id field to load
-  await browser.wait(ec.elementToBeClickable(LoginApp.accountIDField()), 5000);
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
   // entering correct account id
-  await LoginApp.accountIDField().sendKeys(LoginApp.getAccountId());
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
   // entering correct testUserAccount
-  await LoginApp.userAccountField().sendKeys(LoginApp.getUserAccount());
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
   // entering correct pw
-  await LoginApp.pwField().sendKeys(LoginApp.getPassword());
-   // pressing the enter key on the accountID field to log in
-  await LoginApp.accountIDField().sendKeys(protractor.Key.ENTER);
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
   await browser.sleep(3000);
   // await browser.executeScript('WalkMeAPI.stopFlow()');
   await DashboardPage.navigateToDashboard();
@@ -41,7 +39,7 @@ Given(/^1_I am on the dashboard page.$/, async () => {
 When(/^1_I take no action.$/, () => {});
 
 Then(/^1_I should see the engagment tab.$/, async () => {
- // doing an assertion based on the text string of the tab
+  // doing an assertion based on the text string of the tab
   await browser.wait(ec.elementToBeClickable(EngagementPage.engagementTabOption()), 5000);
   expect(await EngagementPage.engagementTabOption().getText()).to.be.equal('Engagements');
 });

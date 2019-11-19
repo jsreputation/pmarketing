@@ -2,13 +2,13 @@ export interface IWProfileAttributes {
   urn?: string;
   created_at?: string;
   updated_at?: string;
-  title: string;
+  title: string | null;
   first_name: string | null;
   last_name: string | null;
   phone_number: string | null;
   email_address: string | null;
   primary_identifier: string;
-  properties?: string | {} | null;
+  properties?: IWCustomProperties | null;
   anonymous?: boolean;
 }
 
@@ -18,6 +18,10 @@ export interface IWPoolsAttributes {
 
 export interface IWCognitoLogin {
   jwt: string;
+}
+
+interface IWCustomProperties {
+  [key: string]: string | number | boolean;
 }
 
 export interface IWUserJWTRequest {
