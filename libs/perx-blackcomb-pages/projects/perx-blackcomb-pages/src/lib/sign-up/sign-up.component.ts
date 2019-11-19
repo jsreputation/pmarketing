@@ -14,20 +14,6 @@ import { Observable, Subject, iif, of } from 'rxjs';
 import { takeUntil, catchError, tap, switchMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
-enum APIAttributesMap {
-  fistName = 'first_name',
-  first_name = 'first_name',
-  lastName = 'last_name',
-  last_name = 'last_name',
-  primary_identifier = 'primary_identifier',
-  primaryIdentifier = 'primary_identifier',
-  phone_number = 'phone_number',
-  phoneNumber = 'phone_number',
-  email_address = 'email_address',
-  emailAddress = 'email_address',
-  title = 'title'
-}
-
 interface ISignupAttributes {
   [key: string]: any;
 }
@@ -103,28 +89,32 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.answers = answers;
   }
 
-  public onSubmit(): void {
-    const mapOfObjects = this.answers
-      .map(answer => {
-        if (answer.questionId !== undefined) {
-          return {
-            [APIAttributesMap[answer.questionId]]:
-              (Array.isArray(answer.content) ? answer.content[0] : answer.content)
-          };
-        }
-      }).filter(answer => answer !== undefined && Object.entries(answer)[0] !== undefined);
-
-    const userObj: ISignupAttributes = Object.assign.apply(null, mapOfObjects);
-
-    if (this.collectInfo) {
-      this.submitDataAndCollectInformation(userObj);
+  private getPI(userObj: ISignupAttributes): string | null {
+    const PISource = userObj['phone_number'] || userObj['phoneNumber'];
+    if (!PISource) {
+      return null;
     }
-    this.submitData(userObj);
+    return PISource.split(' ')[1];
   }
 
-  private submitData(userObj: ISignupAttributes): void {
+  public onSubmit(): void {
+    const userObj: ISignupAttributes = {};
+    this.answers.forEach(answer => {
+      if (answer.questionId !== undefined) {
+        userObj[answer.questionId] = answer.content;
+      }
+    });
+    const PI = this.getPI(userObj);
+    if (PI) {
+      if (this.collectInfo) {
+        this.submitDataAndCollectInformation(PI, userObj);
+      }
+      this.submitData(PI, userObj);
+    }
+  }
 
-    this.authService.createUserAndAutoLogin(userObj.phone_number.split(' ')[1], userObj).subscribe(
+  private submitData(PI: string, userObj: ISignupAttributes): void {
+    this.authService.createUserAndAutoLogin(PI, userObj).subscribe(
       () => {
         this.snack.open('User successfully created.', 'x', { duration: 2000 });
         this.router.navigate(['/wallet']);
@@ -133,7 +123,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     );
   }
 
-  private submitDataAndCollectInformation(userObj: ISignupAttributes): void {
+  private submitDataAndCollectInformation(PI: string, userObj: ISignupAttributes): void {
     this.errorMessage = null;
 
     if (userObj) {
@@ -146,7 +136,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
       const oldAnonymousStatus = this.authService.getAnonymous();
       let newUserId;
       let newToken;
-      this.authService.createUserAndAutoLogin(userObj.primaryIdentifier, userObj, false).pipe(
+      this.authService.createUserAndAutoLogin(PI, userObj, false).pipe(
         catchError(() => { throw new Error(''); }),
         tap(() => {
           if (oldAnonymousStatus) {
@@ -163,7 +153,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
         }),
         tap(() => {
           if (oldAnonymousStatus) {
-            this.authService.savePI(userObj.primaryIdentifier);
+            this.authService.savePI(PI);
             this.authService.saveUserId(newUserId);
             this.authService.saveUserAccessToken(newToken);
             this.authService.saveAnonymous(false);
