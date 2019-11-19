@@ -3,8 +3,8 @@ import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { TokenStorage } from '../../auth/authentication/token-storage.service';
 import { ConfigService } from '../../config/config.service';
+import { TokenStorage } from '../storage/token-storage.service';
 
 interface IDictionary {
   [k: string]: string;
