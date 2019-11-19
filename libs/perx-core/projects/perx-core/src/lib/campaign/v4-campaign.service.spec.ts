@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 import { Type } from '@angular/core';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
@@ -6,6 +6,9 @@ import { V4CampaignService } from './v4-campaign.service';
 import { ICampaign, CampaignType, CampaignState } from './models/campaign.model';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { ConfigModule } from '../config/config.module';
+import { HttpClient } from '@angular/common/http';
+import { of } from 'rxjs';
+import { IV4Reward } from '../rewards/v4-rewards.service';
 
 describe('V4CampaignService', () => {
   let httpTestingController: HttpTestingController;
@@ -113,6 +116,22 @@ describe('V4CampaignService', () => {
     expect(mapCampaign.description).toBe('UAT description');
     expect(mapCampaign.type).toBe('game');
     expect(mapCampaign.state).toBe('active');
-
   });
+
+  it('getCampaign', fakeAsync(inject([V4CampaignService, HttpClient], (campaingService: V4CampaignService, http: HttpClient) => {
+    const spy = spyOn(http, 'get').and.returnValue(of({data: {
+      images: [{
+        type: 'campaign_thumbnail',
+        url: 'test'
+      }],
+      rewards: [{
+        id: 1,
+        description: 'test'
+      } as IV4Reward],
+      ends_at: '11.12.2020'
+    }}));
+    campaingService.getCampaign(1).subscribe(() => { });
+    tick();
+    expect(spy).toHaveBeenCalled();
+  })));
 });

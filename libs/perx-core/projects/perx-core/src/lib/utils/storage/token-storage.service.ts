@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { TokenType } from './models/authentication.model';
+import { TokenType } from './models/token-storage.model';
 
 interface IAppInfo {
   appAccessToken?: string;

@@ -14,11 +14,14 @@ import {
 import { SoundModule } from './sound/sound.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent } from './profile/profile.component';
-import { AuthenticationService, ProfileModule } from '@perx/core';
+import { AuthenticationService, ProfileModule, ThemesService } from '@perx/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
   const authenticationServiceStub = {};
+  const themesServiceStub = {
+    getThemeSetting: () => {}
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -42,7 +45,8 @@ describe('AppComponent', () => {
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: [] }
+        { provide: MAT_DIALOG_DATA, useValue: [] },
+        { provide: ThemesService, useValue: themesServiceStub }
       ],
     }).compileComponents();
   }));

@@ -3,18 +3,18 @@
 .main-puzzle-container {
   @include main-wrap;
 
-  .game-wrapper {
-    @include game-wrap;
-    @include game-wrap-card;
-
-    h1 {
-      @include game-headline;
-    }
-
-    h3 {
-      @include game-subheadline;
-    }
+  h1 {
+    @include game-headline;
   }
+
+  h3 {
+    @include game-subheadline;
+  }
+}
+
+.game-wrapper {
+  @include game-wrap;
+  @include game-wrap-card;
 }
 
 .game-footer {
