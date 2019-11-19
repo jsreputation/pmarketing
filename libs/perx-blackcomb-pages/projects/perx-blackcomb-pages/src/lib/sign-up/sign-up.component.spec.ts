@@ -7,7 +7,6 @@ import { MatSnackBar, MatInputModule, MatDialogModule } from '@angular/material'
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-
 const configStub: Partial<Config> = {
   preAuth: false
 };

@@ -89,14 +89,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.answers = answers;
   }
 
-  private getPI(userObj: ISignupAttributes): string | null {
-    const PISource = userObj['phone_number'] || userObj['phoneNumber'];
-    if (!PISource) {
-      return null;
-    }
-    return PISource.split(' ')[1];
-  }
-
   public onSubmit(): void {
     const userObj: ISignupAttributes = {};
     this.answers.forEach(answer => {
@@ -104,7 +96,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
         userObj[answer.questionId] = answer.content;
       }
     });
-    const PI = this.getPI(userObj);
+    const PI = userObj.primary_identifier;
     if (PI) {
       if (this.collectInfo) {
         this.submitDataAndCollectInformation(PI, userObj);
