@@ -3,6 +3,7 @@
         <span>{{errorMessage}}</span>
       </div>
     <perx-core-survey
+      [hideIndex]="true"
       [data]="data$"
       (surveyDone)="updateSurveyStatus($event)"
       (totalLength)="setTotalLength($event)"
