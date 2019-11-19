@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { tap, mergeMap, catchError, map } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { TokenStorage } from './token-storage.service';
 import { AuthenticationService } from './authentication.service';
 import { IProfile } from '../../profile/profile.model';
 import {
@@ -16,6 +15,7 @@ import { IWMessageResponse, IWAppAccessTokenResponse, IWLoginResponse } from '@p
 import { ProfileService } from '../../profile/profile.service';
 import { Config } from '../../config/config';
 import { IV4ProfileResponse, V4ProfileService } from '../../profile/v4-profile.service';
+import { TokenStorage } from '../../utils/storage/token-storage.service';
 
 interface IV4SignUpData {
   first_name?: string;

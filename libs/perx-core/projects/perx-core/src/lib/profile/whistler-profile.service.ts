@@ -8,13 +8,13 @@ import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { TokenStorage } from '../auth/authentication/token-storage.service';
 
 import {
   IWProfileAttributes,
   IJsonApiItem,
   IJsonApiListPayload,
 } from '@perx/whistler';
+import { TokenStorage } from '../utils/storage/token-storage.service';
 
 @Injectable({
   providedIn: 'root'
