@@ -4,6 +4,7 @@ import { UploadFileComponent } from './upload-file.component';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('UploadFileComponent', () => {
   let component: UploadFileComponent;
@@ -13,7 +14,8 @@ describe('UploadFileComponent', () => {
     TestBed.configureTestingModule({
       declarations: [UploadFileComponent],
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
       ],
       schemas: [NO_ERRORS_SCHEMA],
     })

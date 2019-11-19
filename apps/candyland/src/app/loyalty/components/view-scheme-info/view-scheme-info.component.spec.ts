@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ViewSchemeInfoComponent } from './view-scheme-info.component';
 import { PipesModule } from '@cl-shared/pipes/pipes.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ViewSchemeInfoComponent', () => {
   let component: ViewSchemeInfoComponent;
@@ -10,7 +11,7 @@ describe('ViewSchemeInfoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [PipesModule],
+      imports: [PipesModule, TranslateModule.forRoot(),],
       declarations: [ ViewSchemeInfoComponent ],
       schemas: [NO_ERRORS_SCHEMA]
     })

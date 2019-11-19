@@ -10,21 +10,21 @@
     <div class="login-form-control">
       <mat-form-field>
         <input matInput formControlName="account_id" [placeholder]="'LOGIN_PAGE.ACCOUNT_ID' | translate">
-        <mat-error *ngIf="accountId.hasError('required')" translate>LOGIN_PAGE.ERROR_REQUIRED</mat-error>
-        <mat-error *ngIf="accountId.hasError('minlength')" translate>LOGIN_PAGE.ERROR_MIN_LENGTH </mat-error>
-        <mat-error *ngIf="accountId.hasError('pattern')" translate>LOGIN_PAGE.ERROR_PATTERN</mat-error>
+        <mat-error *ngIf="accountId.hasError('required')" translate>ERROR_REQUIRED</mat-error>
+        <mat-error *ngIf="accountId.hasError('minlength')" translate>ERROR_MIN_LENGTH </mat-error>
+        <mat-error *ngIf="accountId.hasError('pattern')" translate>ERROR_PATTERN</mat-error>
       </mat-form-field>
     </div>
     <div class="login-form-control">
       <mat-form-field>
         <input matInput formControlName="username" [placeholder]="'LOGIN_PAGE.USER_NAME' | translate">
-        <mat-error *ngIf="username.hasError('required')" translate>LOGIN_PAGE.ERROR_REQUIRED</mat-error>
+        <mat-error *ngIf="username.hasError('required')" translate>ERROR_REQUIRED</mat-error>
       </mat-form-field>
     </div>
     <div class="login-form-control">
       <mat-form-field>
         <input matInput formControlName="password" [placeholder]="'LOGIN_PAGE.PASSWORD' | translate" [type]="hide ? 'password' : 'text'">
-        <mat-error *ngIf="password.hasError('required')" translate>LOGIN_PAGE.ERROR_REQUIRED</mat-error>
+        <mat-error *ngIf="password.hasError('required')" translate>ERROR_REQUIRED</mat-error>
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
     </div>
