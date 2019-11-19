@@ -82,6 +82,9 @@ export class CampaignsHttpAdapter {
     const startDate = data.campaignInfo.startDate ?
       moment(moment(data.campaignInfo.startDate).format('l') + ' ' + startTime).format() : null;
     const endDate = data.campaignInfo.endDate ? moment(moment(data.campaignInfo.endDate).format('l') + ' ' + endTime).format() : null;
+    // When user not select weblink, default the information collection setting back to not required. Double confirm with Nocolas
+    const informationCollectionSetting = data.channel.type === 'weblink' ?
+      data.campaignInfo.informationCollectionSetting : InformationCollectionSettingType.notRequired;
     return {
       type: 'entities',
       attributes: {
@@ -93,7 +96,7 @@ export class CampaignsHttpAdapter {
         end_date_time: endDate,
         goal: data.campaignInfo.goal,
         labels: data.campaignInfo.labels || [],
-        display_properties: { ...data.displayProperties, informationCollectionSetting: data.campaignInfo.informationCollectionSetting }
+        display_properties: { ...data.displayProperties, informationCollectionSetting }
       }
     };
   }
