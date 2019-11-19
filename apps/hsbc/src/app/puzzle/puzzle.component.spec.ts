@@ -10,7 +10,10 @@ import {
   ICampaignService,
   StampService,
   IStampCard,
-  StampCardState, AuthenticationService
+  StampCardState,
+  AuthenticationService,
+  IVoucherService,
+  ThemesService
 } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SoundModule } from '../sound/sound.module';
@@ -77,7 +80,9 @@ describe('PuzzleComponent', () => {
               paramMap: convertToParamMap({ campaignId: 1 })
             }
           }
-        }
+        },
+        { provide: IVoucherService, useValue: {} },
+        { provide: ThemesService, useValue: {} }
       ]
     })
       .compileComponents();

@@ -20,6 +20,18 @@ interface IThemeProperties {
     'showNewsfeedOnHomepage'?: boolean;
     'showQrPageSubtitle'?: boolean;
     '--login_background_colour'?: string;
+    'stampCard'?: IStampCardTheme;
+}
+
+interface IStampCardTheme {
+  '--pre_stamp_image'?: string;
+  '--post_stamp_image'?: string;
+  '--reward_pre_stamp_image'?: string;
+  '--reward_post_stamp_image'?: string;
+  '--available_stamp_image'?: string;
+  '--available_reward_image'?: string;
+  '--background_image'?: string;
+  '--card_background_image'?: string;
 }
 
 export const LIGHT: ITheme = {
