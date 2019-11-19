@@ -58,3 +58,15 @@ mat-toolbar {
     width: 100%;
   }
 }
+
+.pinata-wrapper {
+  max-height: 80%;
+}
+
+:host ::ng-deep .pinata-wrapper {
+  height: 100%;
+
+  div {
+    height: 100%;
+  }
+}
