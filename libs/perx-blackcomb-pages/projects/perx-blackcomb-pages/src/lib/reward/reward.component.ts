@@ -150,7 +150,7 @@ export class RewardComponent implements OnInit, OnDestroy {
 
   public rewardClickedHandler(): void {
     const isCollectDataRequired = !!(this.informationCollectionSetting === 'pi_required' || this.informationCollectionSetting === 'signup_required');
-    const userAction$: Observable<void> = isCollectDataRequired || !this.transactionId ?
+    const userAction$: Observable<void> = !this.transactionId || (this.isAnonymousUser && isCollectDataRequired) ?
       of(void 0) :
       this.outcomeService.prePlayConfirm(this.transactionId);
 
