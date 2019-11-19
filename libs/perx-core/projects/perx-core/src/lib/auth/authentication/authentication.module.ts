@@ -5,16 +5,16 @@ import {
   PUBLIC_FALLBACK_PAGE_URI,
   AUTH_SERVICE
 } from 'ngx-auth';
-import { TokenStorage } from './token-storage.service';
 import { AuthenticationService } from './authentication.service';
 import { V4AuthenticationService } from './v4-authentication.service';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
 import { ProfileService } from '../../profile/profile.service';
 import { WhistlerAuthenticationService } from './whistler-authentication.service';
-import { LocalTokenStorage } from './local-token-storage.service';
 import { IFormsService } from './iforms.service';
 import { WhistlerFormsService } from './whistler-forms.service';
+import { TokenStorage } from '../../utils/storage/token-storage.service';
+import { UtilsModule } from '../../utils/utils.module';
 
 export function AuthServiceFactory(
   http: HttpClient,
@@ -29,31 +29,15 @@ export function AuthServiceFactory(
   return new V4AuthenticationService(config, http, tokenStorage, profileService);
 }
 
-export function TokenStorageServiceFactory(
-  config: Config
-): TokenStorage {
-  switch (config.storageType) {
-    case 'local':
-      return new LocalTokenStorage(config);
-    default:
-      return new LocalTokenStorage(null);
-  }
-}
-
 export function FormsServiceFactory(config: Config, http: HttpClient): IFormsService {
   return new WhistlerFormsService(config, http);
 }
 
 @NgModule({
-  imports: [AuthModule],
+  imports: [AuthModule, UtilsModule],
   declarations: [],
   exports: [],
   providers: [
-    {
-      provide: TokenStorage,
-      useFactory: TokenStorageServiceFactory,
-      deps: [Config]
-    },
     { provide: PROTECTED_FALLBACK_PAGE_URI, useValue: '/' },
     { provide: PUBLIC_FALLBACK_PAGE_URI, useValue: '/login' },
     {

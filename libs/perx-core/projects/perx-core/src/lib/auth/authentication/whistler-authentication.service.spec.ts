@@ -1,11 +1,11 @@
 import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { WhistlerAuthenticationService } from './whistler-authentication.service';
-import { TokenStorage } from './token-storage.service';
 import { ProfileModule } from '../../profile/profile.module';
 import { ConfigModule } from '../../config/config.module';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { TokenStorage } from '../../utils/storage/token-storage.service';
 
 const tokenStorageStub = {
   getAppInfoProperty: () => { },

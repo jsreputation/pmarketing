@@ -3,13 +3,15 @@ import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { V4AuthenticationService } from './v4-authentication.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
-import { TokenStorage } from './token-storage.service';
+
 import { ProfileModule } from '../../profile/profile.module';
 import { ConfigModule } from '../../config/config.module';
-import { LocalTokenStorage } from './local-token-storage.service';
+
 import { Observable, of, throwError } from 'rxjs';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { ProfileService } from '../../profile/profile.service';
+import { TokenStorage } from '../../utils/storage/token-storage.service';
+import { LocalTokenStorage } from '../../utils/storage/local-token-storage.service';
 
 function fakeFactory(): TokenStorage {
   return new LocalTokenStorage({});
