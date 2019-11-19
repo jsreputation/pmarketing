@@ -20,7 +20,7 @@ export interface IWCognitoLogin {
   jwt: string;
 }
 
-export interface IWCustomProperties {
+interface IWCustomProperties {
   [key: string]: string | number | boolean;
 }
 

@@ -96,7 +96,6 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
         profile.properties[field[0]] = field[1];
       }
     });
-    console.log(profile);
     return profile;
   }
   public isAuthorized(): Observable<boolean> {
