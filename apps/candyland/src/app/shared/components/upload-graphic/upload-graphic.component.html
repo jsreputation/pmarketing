@@ -11,7 +11,7 @@
     (click)="setActive()"
     [ngClass]="{active: imgURL === _selectGraphic}"
     *ngIf="imgURL">
-    <img [src]="imgURL" class="image" alt="upload">
+    <img [src]="imgURL" alt="upload">
     <button class="image-clear" (click)="clear()" [attr.aria-label]="btnLabel">
       <mat-icon>edit</mat-icon>
     </button>

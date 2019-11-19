@@ -22,3 +22,4 @@ export { WalletComponent } from './lib/wallet/wallet.component';
 export { GamesCollectionComponent } from './lib/home/games-collection/games-collection.component';
 export { SignUpComponent } from './lib/sign-up/sign-up.component';
 export { LayoutComponent } from './lib/layout/layout.component';
+export { WalletHistoryComponent } from './lib/wallet-history/wallet-history.component';

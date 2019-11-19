@@ -16,6 +16,7 @@ import { HomeComponent } from '../home/home.component';
 import { HistoryComponent } from '../history/history.component';
 import { AccountComponent } from '../account/account.component';
 import { WalletComponent } from '../wallet/wallet.component';
+import { WalletHistoryComponent } from '../wallet-history/wallet-history.component';
 
 @Component({
   selector: 'perx-blackcomb-games-layout',
@@ -41,7 +42,7 @@ export class LayoutComponent implements OnInit {
     private config: Config
   ) {
     if (config) {
-      this.preAuth = this.config.preAuth;
+      this.preAuth = this.config.preAuth || false;
     }
   }
 
@@ -87,7 +88,8 @@ export class LayoutComponent implements OnInit {
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||
-      ref instanceof WalletComponent;
+      ref instanceof WalletComponent ||
+      ref instanceof WalletHistoryComponent;
     this.cd.detectChanges();
   }
 

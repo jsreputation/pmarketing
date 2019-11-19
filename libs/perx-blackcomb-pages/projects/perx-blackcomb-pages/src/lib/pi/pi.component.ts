@@ -9,6 +9,7 @@ import {
   Validators,
   FormBuilder,
   FormGroup,
+  AbstractControl,
 } from '@angular/forms';
 
 import { Subject } from 'rxjs';
@@ -23,7 +24,7 @@ import { switchMap, takeUntil, catchError, tap } from 'rxjs/operators';
 })
 export class PIComponent implements OnInit, OnDestroy {
   public PIForm: FormGroup;
-  public errorMessage: string;
+  public errorMessage: string | null = null;
   public preAuth: boolean;
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
@@ -48,7 +49,7 @@ export class PIComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private authService: AuthenticationService
   ) {
-    this.preAuth = this.config ? this.config.preAuth : false;
+    this.preAuth = this.config.preAuth || false;
   }
 
   public ngOnInit(): void {
@@ -73,12 +74,19 @@ export class PIComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  public get piField(): AbstractControl {
+    return this.PIForm.get('pi') as AbstractControl;
+  }
+
   public onSubmit(): void {
-    const pi: string = (this.PIForm.get('pi').value as string);
+    const pi: string | null = this.piField.value as string;
     this.errorMessage = null;
 
     if (pi) {
       const oldUserId = this.authService.getUserId();
+      if (!oldUserId) {
+        throw new Error('should not be here');
+      }
       const oldPI = this.authService.getPI();
       const oldToken = this.authService.getUserAccessToken();
       let newUserId;
@@ -122,9 +130,7 @@ export class PIComponent implements OnInit, OnDestroy {
             this.dialog.open(PopupComponent, { data: this.popupData });
           }
         },
-        (error: Error) => {
-          this.updateErrorMessage(error.message);
-        }
+        (error: Error) => this.updateErrorMessage(error.message)
       );
     }
   }
