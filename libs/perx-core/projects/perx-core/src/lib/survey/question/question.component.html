@@ -1,12 +1,12 @@
 <div class="question-container" [ngClass]="{ hidden : !isActive }">
     <div class="question-content" *ngIf="question">
         <div class="question">
-          <div *ngIf="!hideIndex">
+          <span *ngIf="!hideIndex">
             {{(alpha ? alpha + '. ' :  id + 1 + '. ' ) + question?.question}}
-          </div>
-          <div *ngIf="hideIndex">
+          </span>
+          <span *ngIf="hideIndex">
             {{ (question?.question) }}
-          </div>
+          </span>
             <span class="required-star">
                 {{question?.required ? '*': ''}}
             </span>

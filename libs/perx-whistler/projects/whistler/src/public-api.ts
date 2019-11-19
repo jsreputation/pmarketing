@@ -2,8 +2,17 @@
 * Public API Surface of whistler
 */
 export * from './lib/whistler.module';
-export * from './lib/jsonapi.payload';
-export * from './lib/whistler.models';
+export {
+  IJsonApiListPayload,
+  IMeta,
+  IJsonApiItemPayload,
+  IJsonApiItem,
+  IJsonApiPatchItem,
+  IJsonApiPatchData,
+  IJsonApiPostItem,
+  IJsonApiPostData
+} from './lib/jsonapi.payload';
+export { IWRewardDisplayProperties, IWProperties, IWAttbsObjEntity } from './lib/whistler.models';
 
 export { IWVoucherStatsApi } from './lib/voucher/stats';
 export { IWVouchersApi } from './lib/voucher/vouchers-api';
@@ -32,7 +41,7 @@ export {
   IWCommTemplateAttributes,
   IWCommEventAttributes
 } from './lib/comm/comm';
-export { IWCampaignAttributes, WInformationCollectionSettingType } from './lib/campaign/campaign';
+export { IWCampaignAttributes, IWCampaignDisplayProperties, WInformationCollectionSettingType } from './lib/campaign/campaign';
 export {
   IWAudiences,
   IWPoolsApi,
