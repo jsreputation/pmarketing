@@ -28,7 +28,3 @@ export interface IChangePhoneData {
   phone: string;
   otp: string;
 }
-
-export enum TokenType {
-  local = 'local'
-}

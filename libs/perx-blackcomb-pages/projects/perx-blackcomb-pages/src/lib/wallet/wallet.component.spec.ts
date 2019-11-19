@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { WalletComponent } from './wallet.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Router } from '@angular/router';
 import { IVoucherService, VouchersModule, ICampaignService, StampService } from '@perx/core';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material';
@@ -12,9 +11,6 @@ import { DatePipe } from '@angular/common';
 describe('WalletComponent', () => {
   let component: WalletComponent;
   let fixture: ComponentFixture<WalletComponent>;
-  const router = {
-    navigate: jasmine.createSpy('navigate')
-  };
 
   const vouchersServiceStub: Partial<IVoucherService> = {
     getAll: () => of([])
@@ -40,7 +36,7 @@ describe('WalletComponent', () => {
       ],
       providers: [
         DatePipe,
-        { provide: Router, useValue: router },
+        // { provide: Router, useValue: router },
         { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: StampService, useValue: stampServiceStub }

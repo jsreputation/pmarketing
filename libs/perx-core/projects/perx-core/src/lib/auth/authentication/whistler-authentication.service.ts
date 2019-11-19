@@ -5,7 +5,6 @@ import { tap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IProfile, IProfileAttributes } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
-import { TokenStorage } from './token-storage.service';
 import {
   IResetPasswordData,
   ISignUpData,
@@ -19,6 +18,7 @@ import {
   IWCognitoLogin,
   IJsonApiListPayload,
 } from '@perx/whistler';
+import { TokenStorage } from '../../utils/storage/token-storage.service';
 
 interface IUserJWTRequest {
   identifier: string;

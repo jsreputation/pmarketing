@@ -75,8 +75,8 @@ export class WhistlerGameService implements IGameService {
       const scratchdp: IWScratchDisplayProperties = attributes.display_properties as IWScratchDisplayProperties;
       config = {
         ...defaultScratch(),
-        // underlyingImg: scratchdp.post_scratch_fail_img_url,
-        underlyingImg: scratchdp.post_scratch_success_img_url,
+        underlyingSuccessImg: scratchdp.post_scratch_success_img_url,
+        underlyingFailImg: scratchdp.post_scratch_fail_img_url,
         coverImg: scratchdp.pre_scratch_img_url
       };
     }
@@ -134,11 +134,15 @@ export class WhistlerGameService implements IGameService {
     );
   }
 
-  public get(engagementId: number): Observable<IGame> {
+  public get(engagementId: number, campaignId?: number): Observable<IGame> {
+    let campaignIdParams;
+    if (campaignId) {
+      campaignIdParams = `?campaign_id=${campaignId}`;
+    }
     if (this.cache[engagementId]) {
       return of(this.cache[engagementId]);
     }
-    return this.http.get<IJsonApiItemPayload<IWGameEngagementAttributes>>(`${this.hostName}/game/engagements/${engagementId}`)
+    return this.http.get<IJsonApiItemPayload<IWGameEngagementAttributes>>(`${this.hostName}/game/engagements/${engagementId}${campaignIdParams}`)
       .pipe(
         map(res => res.data),
         map(game => WhistlerGameService.WGameToGame(game)),
@@ -155,7 +159,7 @@ export class WhistlerGameService implements IGameService {
           disProp = { ...entity.display_properties };
           return entity.engagement_id;
         }),
-        switchMap((correctId: number) => this.get(correctId)),
+        switchMap((correctId: number) => this.get(correctId, campaignId)),
         map((game: IGame) => ([{ ...game, campaignId, displayProperties: { ...game.displayProperties, ...disProp } }]))
       );
   }

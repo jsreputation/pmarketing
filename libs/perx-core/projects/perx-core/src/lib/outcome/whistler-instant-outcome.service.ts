@@ -67,7 +67,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
         >(
           `${this.config.apiHost}/instant-outcome/engagements/${
             campaign.engagementId
-          }`
+          }?campaign_id=${campaignId}`
         );
       }),
       map(res => res.data.attributes.display_properties),

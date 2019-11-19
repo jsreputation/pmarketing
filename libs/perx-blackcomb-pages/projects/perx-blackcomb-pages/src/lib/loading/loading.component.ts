@@ -38,8 +38,8 @@ import * as uuid from 'uuid';
 export class LoadingComponent implements OnInit, OnDestroy {
   public preAuth: boolean;
 
-  private campaignId: number = null;
-  private campaignData: ICampaign = null;
+  private campaignId: number | null = null;
+  private campaignData: ICampaign | null = null;
 
   private destroy$: Subject<any> = new Subject();
 
@@ -85,7 +85,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
   }
 
   private redirectAfterLogin(): void {
-    if (!this.isCampaignEnded) {
+    if (this.campaignData && !this.isCampaignEnded) {
       this.redirectToEngagementPage(this.campaignData.type);
     } else if (this.campaignId && this.isCampaignEnded) {
       this.initCampaignEndedPopup();
@@ -108,14 +108,16 @@ export class LoadingComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     @Inject(PLATFORM_ID) private platformId: object,
   ) {
-    this.preAuth = this.config ? this.config.preAuth : false;
+    this.preAuth = this.config && this.config.preAuth ? this.config.preAuth : false;
   }
 
   public ngOnInit(): void {
     if (this.preAuth && isPlatformBrowser(this.platformId)) {
       const param = location.search;
-      (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
-      this.campaignId = Number.parseInt(new URLSearchParams(param).get('cid'), 10);
+      const params = new URLSearchParams(param);
+      (window as any).primaryIdentifier = params.get('pi');
+      const cid: string | null = params.get('cid');
+      this.campaignId = cid ? Number.parseInt(cid, 10) : null;
       (window as any).campaignId = this.campaignId;
       /*
       * Later when API ready, the logic is:
@@ -125,7 +127,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
       * */
 
       const PIHandler$ = this.authService.autoLogin();
-      const createUserAndAutoLogin$ = pi => this.authService.createUserAndAutoLogin(pi, null, true);
+      const createUserAndAutoLogin$ = pi => this.authService.createUserAndAutoLogin(pi, undefined, true);
       const autoLoginWithoutPI$ = of(uuid.v4()).pipe(
         switchMap(newPI => createUserAndAutoLogin$(newPI)),
         takeUntil(this.destroy$)
