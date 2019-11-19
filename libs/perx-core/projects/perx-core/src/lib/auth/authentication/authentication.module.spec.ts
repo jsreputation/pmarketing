@@ -1,19 +1,22 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { AuthServiceFactory, FormsServiceFactory, TokenStorageServiceFactory } from './authentication.module';
+import { AuthServiceFactory, FormsServiceFactory } from './authentication.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
-import { TokenStorage } from './token-storage.service';
 import { ProfileService } from '../../profile/profile.service';
 import { WhistlerAuthenticationService } from './whistler-authentication.service';
 import { V4AuthenticationService } from './v4-authentication.service';
 import { WhistlerFormsService } from './whistler-forms.service';
-import { TokenType } from './models/authentication.model';
-import { LocalTokenStorage } from './local-token-storage.service';
+import { TokenStorage } from '../../utils/storage/token-storage.service';
+import { UtilsModule } from '../../utils/utils.module';
+import { LocalTokenStorage } from '../../utils/storage/local-token-storage.service';
+import { TokenType } from '../../utils/storage/models/token-storage.model';
+import { TokenStorageServiceFactory } from '../../utils/storage/storage.module';
 
 describe('should create module', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
-      HttpClientTestingModule
+      HttpClientTestingModule,
+      UtilsModule
     ],
     providers: [
       {

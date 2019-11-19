@@ -7,10 +7,11 @@
 }
 
 mat-slider {
-  width: 38rem;
-  margin: 10px;
+  width: 100%;
+  max-width: 38rem;
+  margin: 0;
 }
 
 .reward-slot {
-  width: 30.1rem;
+  width: 100%;
 }
