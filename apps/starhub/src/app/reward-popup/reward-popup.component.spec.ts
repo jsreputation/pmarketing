@@ -19,21 +19,21 @@ describe('RewardPopupComponent', () => {
   let fixture: ComponentFixture<RewardPopupComponent>;
   const dataMock: IRewardPopupConfig = {
     timerCallbacks: {
-      timerExpired: () => {},
-      timerExpiring: () => {}
+      timerExpired: () => { },
+      timerExpiring: () => { }
     }
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardPopupComponent, ExpireTimerComponent ],
-      imports: [ MatDialogModule ],
+      declarations: [RewardPopupComponent, ExpireTimerComponent],
+      imports: [MatDialogModule],
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: dataMock }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -46,17 +46,17 @@ describe('RewardPopupComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it ('should call timerExpired', () => {
-    if(!component.data.timerCallbacks) {
+  it('should call timerExpired', () => {
+    if (!component.data.timerCallbacks) {
       return;
     }
-    spyOn(component.data.timerCallbacks , 'timerExpired');
+    spyOn(component.data.timerCallbacks, 'timerExpired');
     component.onTimerExpired();
     expect(component.data.timerCallbacks.timerExpired).toHaveBeenCalled();
   });
 
-  it ('should call timerExpiring', () => {
-    if(!component.data.timerCallbacks) {
+  it('should call timerExpiring', () => {
+    if (!component.data.timerCallbacks) {
       return;
     }
     spyOn(component.data.timerCallbacks, 'timerExpiring');

@@ -93,8 +93,8 @@ describe('RewardDetailComponent', () => {
     component.macaron = undefined;
     component.onExpiring();
     tick();
-    if(component.macaron) {
-      expect(component.macaron).toEqual({label: 'Expiring', class: '', isButtonEnabled: false });
+    if (component.macaron) {
+      expect(component.macaron).toEqual({ label: 'Expiring', class: '', isButtonEnabled: false });
     }
   }));
 

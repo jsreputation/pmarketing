@@ -126,7 +126,7 @@ describe('CampaignsComponent', () => {
         },
         results: {}
       }
-    ]
+    ];
     spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
     spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of(games));
     component.ngOnInit();

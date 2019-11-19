@@ -49,10 +49,10 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
       this.fetchRewards();
     } else {
       const catalogId = this.activeRoute.snapshot.queryParamMap.get('catalog');
-      if(!catalogId) {
+      if (!catalogId) {
         return;
       }
-      this.rewards = this.rewardsService.getCatalog(parseInt(catalogId)).pipe(
+      this.rewards = this.rewardsService.getCatalog(parseInt(catalogId, 10)).pipe(
         map((catalog: ICatalog) => {
           this.selectedCategory = catalog.name;
           this.analytics.addEvent({
