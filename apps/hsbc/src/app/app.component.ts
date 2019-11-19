@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
-import { AuthenticationService, PopupComponent, NotificationService, ConfigService, IConfig } from '@perx/core';
+import { AuthenticationService, PopupComponent, NotificationService, ConfigService, IConfig, ThemesService, ITheme } from '@perx/core';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatSidenav } from '@angular/material';
 import { PuzzleComponent } from './puzzle/puzzle.component';
@@ -16,6 +16,7 @@ import { AccountComponent } from './account/account.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { Title } from '@angular/platform-browser';
 import { ContentComponent } from './content/content.component';
+import { flatMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -45,6 +46,7 @@ export class AppComponent implements OnInit {
     private soundService: SoundService,
     private titleService: Title,
     private configService: ConfigService,
+    private themesService: ThemesService,
     @Inject(DOCUMENT) private document: any
   ) {
   }
@@ -85,21 +87,18 @@ export class AppComponent implements OnInit {
   public onActivate(ref: any): void {
     const dummy = () => { };
 
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig) => {
-        let title = '';
-        this.sourceType = config.sourceType as string;
-        if (this.sourceType === 'hsbc-xmas') {
-          title = 'HSBC Xmas';
-        } else {
-          title = 'HSBC Collect 2.0';
-        }
+    this.configService.readAppConfig()
+      .pipe(
+        tap((config: IConfig) => {
+          this.sourceType = config.sourceType as string;
+          this.rightIconToShow = ref instanceof PuzzleComponent ? this.soundService.icon :
+            ref instanceof HomeComponent && this.sourceType === 'hsbc-collect2' ? 'account_circle' : '';
+        }),
+        flatMap((config: IConfig) => this.themesService.getThemeSetting(config))
+      ).subscribe((res: ITheme) => {
+        const title: string = res.properties['--title'] ? res.properties['--title'] : 'HSBC Collect 2.0';
         this.titleService.setTitle(title);
-
-        this.rightIconToShow = ref instanceof PuzzleComponent ? this.soundService.icon :
-          ref instanceof HomeComponent && this.sourceType === 'hsbc-collect2' ? 'account_circle' : '';
-      }
-    );
+      });
 
     this.drawer.close();
 

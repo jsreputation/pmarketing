@@ -3,15 +3,42 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
-import { IMerchant } from './models/merchants.model';
+import {IImage, IMerchant, IOutlet, ITag} from './models/merchants.model';
 import { Config } from '../config/config';
+import {oc} from 'ts-optchain';
 
 interface IV4GetMerchantsResponse {
-  data: IMerchant[];
+  data: IV4Merchant[];
 }
 
 interface IV4GetMerchantResponse {
-  data: IMerchant;
+  data: IV4Merchant;
+}
+
+interface IV4Merchant {
+  id: number;
+  name: string;
+  description?: string;
+  website?: string;
+  tags?: ITag[];
+  images?: IImage[];
+  outlets?: IV4Outlet[];
+}
+
+interface IV4Outlet {
+  outlet_id: number;
+  outlet_name: string;
+  outlet_address1: string;
+  outlet_address2?: string;
+  outlet_address3?: string;
+  state?: string;
+  city?: string;
+  shopping_mall?: string;
+  postal_code?: string;
+  country: string;
+  tel: string;
+  coordinates: { lat: number, lng: number, distance?: number, unitOfMeasure: string };
+  tags?: ITag[];
 }
 
 @Injectable({
@@ -19,12 +46,31 @@ interface IV4GetMerchantResponse {
 })
 export class V4MerchantsService implements IMerchantsService {
   private merchants: { [id: number]: { [page: number]: IMerchant } } = {};
-  private merchantsWithoutId: IMerchant[] = [];
+  private merchantsWithoutId: IV4Merchant[] = [];
 
   constructor(
     private http: HttpClient,
     private config: Config
   ) {
+  }
+
+  public static v4OutletsToOutlets(outlets: IV4Outlet[] | undefined): IOutlet[] {
+    if (!outlets) {
+      throw new Error('Data to map outlet is not valid');
+    }
+    return outlets.map(
+      (outlet: IV4Outlet) => ({
+        outletId: outlet.outlet_id,
+        outletName: outlet.outlet_name,
+        outletAddress1: outlet.outlet_address1,
+        outletAddress2: oc(outlet).outlet_address2(),
+        outletAddress3: oc(outlet).outlet_address3(),
+        postalCode: oc(outlet).postal_code(),
+        tel: outlet.tel,
+        coordinates: outlet.coordinates,
+        tags: oc(outlet).tags()
+      })
+    );
   }
 
   public getAllMerchants(): Observable<IMerchant[]> {
@@ -54,7 +100,10 @@ export class V4MerchantsService implements IMerchantsService {
 
   public getMerchants(page: number = 1, useCache: boolean = true): Observable<IMerchant[]> {
     if (useCache && this.merchantsWithoutId.length > 0) {
-      return of(this.merchantsWithoutId);
+      return of(this.merchantsWithoutId.map((merchant: IV4Merchant) => ({
+        ...merchant,
+        outlets: V4MerchantsService.v4OutletsToOutlets(merchant.outlets)
+      })));
     }
 
     return this.http.get<IV4GetMerchantsResponse>(
@@ -68,7 +117,11 @@ export class V4MerchantsService implements IMerchantsService {
       map((res: IV4GetMerchantsResponse) => {
         this.merchantsWithoutId = res.data;
         return res.data;
-      })
+      }),
+      map( (merchants: IV4Merchant[]) => merchants.map((merchant: IV4Merchant) => ({
+        ...merchant,
+        outlets: V4MerchantsService.v4OutletsToOutlets(merchant.outlets)
+      }))),
     );
   }
 
@@ -85,6 +138,10 @@ export class V4MerchantsService implements IMerchantsService {
     return this.http.get<IV4GetMerchantResponse>(`${this.config.apiHost}/v4/merchants/${merchantId}?page=${page}`)
       .pipe(
         map(res => res.data),
+        map( (merchant: IV4Merchant) => ({
+          ...merchant,
+          outlets: V4MerchantsService.v4OutletsToOutlets(merchant.outlets)
+        })),
         tap((merchant: IMerchant) => {
           if (!this.merchants[merchantId]) {
             this.merchants[merchantId] = {};

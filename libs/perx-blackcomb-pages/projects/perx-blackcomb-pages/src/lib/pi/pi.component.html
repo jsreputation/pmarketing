@@ -19,7 +19,7 @@
           matInput
           [placeholder]="'PI_TEXT_LABEL' | translate"
           formControlName="pi">
-        <mat-error *ngIf="PIForm.get('pi').hasError('required')">
+        <mat-error *ngIf="piField.hasError('required')">
           PI is <strong>required</strong>
         </mat-error>
       </mat-form-field>

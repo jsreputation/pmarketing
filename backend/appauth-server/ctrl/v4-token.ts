@@ -1,20 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
-import { ApiConfig } from '../types/apiConfig';
+import { ICredentials } from '../types/apiConfig';
 import axios from 'axios';
+import { getQueryHost } from '../utils/utils';
 
-export const v4Token = (apiConfig: ApiConfig) => async (req: Request, res: Response, next: NextFunction) => {
+export const v4Token = (getCredentials: ((url: string) => Promise<ICredentials>)) => async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const url = req.body.url;
-    if (url === undefined) {
-      throw new Error('No body parameter "url" specified');
-    }
-
-    const endpoint = apiConfig.endpoints[url];
-    if (endpoint === undefined) {
-      throw new Error(`No endpoints found: ${url}`);
-    }
-
-    const endpointCredential = apiConfig.credentials[endpoint.account_id];
+    const url = getQueryHost(req);
+    const endpointCredential: ICredentials = await getCredentials(url);
 
     const username = req.body.username;
     const password = req.body.password;
@@ -24,7 +20,7 @@ export const v4Token = (apiConfig: ApiConfig) => async (req: Request, res: Respo
     const scope = req.body.scope;
 
     const endpointRequest = await axios.post(
-      `${endpoint.target_url}/v4/oauth/token`,
+      `${endpointCredential.target_url}/v4/oauth/token`,
       {
         username,
         password,

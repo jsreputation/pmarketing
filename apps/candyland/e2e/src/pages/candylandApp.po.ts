@@ -36,27 +36,6 @@ export class EngagementAppPage {
   public itemInfo(): ElementFinder {
     return element.all(by.css('div.engagement-item-info>p.engagement-item-name')).first();
   }
-  public gameOptions(): ElementFinder {
-    return element.all(by.css('cl-game')).get(1);
-  }
-  public nextLaunchNowButton(): ElementFinder {
-    return element.all(by.css('cl-button')).get(2);
-  }
-  public confirmModal(): ElementFinder {
-    return element(by.css('cl-confirm-modal'));
-  }
-  public inputTextField(): ElementArrayFinder {
-    return element.all(by.css('input[type=text]'));
-  }
-  public inputFileField(): ElementFinder {
-    return element(by.css('input[type=file]'));
-  }
-  public saveButton(): ElementFinder {
-    return element.all(by.css('cl-button')).get(1);
-  }
-  public engagementCreated(): ElementFinder {
-    return element.all(by.css('p.engagement-item-name.linkable')).get(0);
-  }
 
 }
 
@@ -291,6 +270,7 @@ export class CreateSurveyAppPage {
   public questionTextField(): ElementFinder {
     return element.all(by.css('div.mat-form-field-infix>input')).get(3);
   }
+
 }
 
 export class CreateHitThePinataAppPage {

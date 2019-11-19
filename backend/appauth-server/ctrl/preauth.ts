@@ -1,23 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
 import axios from 'axios';
-import { ApiConfig } from '../types/apiConfig';
+import { ICredentials } from '../types/apiConfig';
+import { getQueryHost } from '../utils/utils';
 
-export const preauth = (apiConfig: ApiConfig) => async (req: Request, res: Response, next: NextFunction) => {
+export const preauth = (getCredentials: ((url: string) => Promise<ICredentials>)) => async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // check query parameter 'url'
-    const url = req.query.url;
-    if (url === undefined) {
-      throw new Error('No query parameter "url" specified');
-    }
-    const endpoint = apiConfig.endpoints[url];
-    if (endpoint === undefined) {
-      throw new Error(`No endpoints found for ${url}`);
-    }
+    const url = getQueryHost(req);
 
-    const endpointCredential = apiConfig.credentials[endpoint.account_id];
+    const endpointCredential: ICredentials = await getCredentials(url);
 
     const endpointRequest = await axios(
-      endpoint.target_url,
+      endpointCredential.target_url,
       {
         headers: {
           Authorization: `Basic ${endpointCredential.perx_access_key_id}:${endpointCredential.perx_secret_access_key}`

@@ -12,6 +12,9 @@ export class SurveyComponent implements OnInit, OnDestroy {
   @Input('data')
   public data$: Observable<ISurvey>;
 
+  @Input()
+  public hideIndex: boolean = false;
+
   @Output()
   public totalLength: EventEmitter<number> = new EventEmitter();
 

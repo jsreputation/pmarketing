@@ -46,11 +46,7 @@ Given(/^12_I type the test string.$/, async () => {
 When(/^12_I press save button.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // clicking on the save button
-  await PageEngagement.saveButton().click();
-  // Wait for engagement tab to appear
-  await browser.wait(ec.presenceOf(PageEngagement.confirmModal()), 6000);
-  // clicking on the launch now button
-  await PageEngagement.nextLaunchNowButton().click();
+
 });
 
 Then(/^12_Game is present under the engagment category .$/, async () => {

@@ -22,9 +22,9 @@ export interface IOutlet {
     outletId: number;
     outletName: string;
     outletAddress1: string;
-    outletAddress2: string;
-    outletAddress3: string;
-    postalCode: string;
+    outletAddress2?: string;
+    outletAddress3?: string;
+    postalCode?: string;
     tel: string;
     coordinates: { lat: number, lng: number, distance?: number, unitOfMeasure: string };
     tags?: ITag[];
