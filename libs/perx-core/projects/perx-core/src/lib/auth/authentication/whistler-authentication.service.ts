@@ -93,7 +93,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
         if (!profile.properties) {
           profile.properties = {};
         }
-        profile.properties[APIAttributesMap[field[0]]] = field[1];
+        profile.properties[field[0]] = field[1];
       }
     });
     console.log(profile);
