@@ -15,7 +15,7 @@ describe('CampaignsComponent', () => {
   };
 
   const gameServiceStub = {
-    getGamesFromCampaign: () => of()
+    getGamesFromCampaign: () => of(game)
   };
 
   beforeEach(async(() => {
@@ -93,11 +93,13 @@ describe('CampaignsComponent', () => {
       component.ngOnInit();
       tick();
       expect(campaignsServiceSpy).toHaveBeenCalled();
+      expect(component.games).toEqual(game);
+      expect(component.campaigns).toEqual([campaigns[0]]);
     }));
   });
 
-  it('should emit hasExpired with value true', () => {
-    const campaign = {
+  it('should getCampaignMacaron', () => {
+    const campaignMacaron = component.getCampaignMacaron({
       id: 1,
       name: 'abc',
       description: 'abc',
@@ -106,10 +108,44 @@ describe('CampaignsComponent', () => {
       endsAt: undefined,
       rewards: [],
       thumbnailUrl: '',
-    };
-    component.games = game;
-    spyOn(component.tapped, 'emit');
-    component.selected(campaign);
-    expect(component.tapped.emit).toHaveBeenCalledWith(1);
+      isComingSoon: true
+    });
+    expect(campaignMacaron).toEqual({label: 'Coming Soon', class: 'coming-soon', isButtonEnabled: false});
+  });
+
+  describe('selected', () => {
+    it('should emit hasExpired with value true', () => {
+      const campaign = {
+        id: 1,
+        name: 'abc',
+        description: 'abc',
+        type: CampaignType.game,
+        state: CampaignState.active,
+        endsAt: undefined,
+        rewards: [],
+        thumbnailUrl: '',
+      };
+      component.games = game;
+      spyOn(component.tapped, 'emit');
+      component.selected(campaign);
+      expect(component.tapped.emit).toHaveBeenCalledWith(1);
+    });
+
+    it('should not emit', () => {
+      const campaign = {
+        id: 2,
+        name: 'abc',
+        description: 'abc',
+        type: CampaignType.game,
+        state: CampaignState.active,
+        endsAt: undefined,
+        rewards: [],
+        thumbnailUrl: '',
+      };
+      component.games = game;
+      spyOn(component.tapped, 'emit');
+      component.selected(campaign);
+      expect(component.tapped.emit).not.toHaveBeenCalled();
+    });
   });
 });
