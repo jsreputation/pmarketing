@@ -1,7 +1,12 @@
 <div class="question-container" [ngClass]="{ hidden : !isActive }">
     <div class="question-content" *ngIf="question">
         <div class="question">
-            {{question?.question}}
+          <div *ngIf="!hideIndex">
+            {{(alpha ? alpha + '. ' :  id + 1 + '. ' ) + question?.question}}
+          </div>
+          <div *ngIf="hideIndex">
+            {{ (question?.question) }}
+          </div>
             <span class="required-star">
                 {{question?.required ? '*': ''}}
             </span>
@@ -10,6 +15,7 @@
         <perx-core-group
             *ngIf="question.payload.type === surveyQuestionType.questionGroup"
             [id]="id"
+            [hideIndex]="hideIndex"
             [questionPointer]="questionPointer"
             [payload]="question.payload"
             [flush]="flush"
