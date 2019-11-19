@@ -37,12 +37,6 @@ export { DatePickerComponent } from './lib/date-picker/date-picker.component';
 export { RangeDatePickerModule } from './lib/range-date-picker/range-date-picker.module';
 export { RangeDatePickerComponent } from './lib/range-date-picker/range-date-picker.component';
 
-export { InkModule } from './lib/ink/ink.module';
-export { InkComponent } from './lib/ink/ink.component';
-export { InkBarDirective } from './lib/ink/directives/ink-bar.directive';
-export { InkHostDirective } from './lib/ink/directives/ink-host.directive';
-export { InkListenerDirective } from './lib/ink/directives/ink-listener.directive';
-
 export { ItemListModule } from './lib/item-list/item-list.module';
 export { ItemListComponent } from './lib/item-list/item-list.component';
 
