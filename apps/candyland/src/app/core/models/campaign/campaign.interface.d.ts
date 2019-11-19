@@ -1,4 +1,5 @@
 import { ISchedule } from '../comm/schedule';
+import { InformationCollectionSettingType } from './campaign.enum';
 
 export interface ICampaign {
     id?: string;
@@ -12,6 +13,7 @@ export interface ICampaign {
     engagement_type?: string;
     engagement_id?: string;
     campaignInfo?: {
+        informationCollectionSetting?: InformationCollectionSettingType;
         goal: string;
         startDate: Date;
         startTime: string;
@@ -38,6 +40,7 @@ export interface ICampaign {
     rewardsOptions?: any;
     rewardsListCollection?: any;
     limits?: any;
+    displayProperties?: any;
 }
 
 export interface ICampaignTableData {

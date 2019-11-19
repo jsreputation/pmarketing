@@ -21,6 +21,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private destroy$: Subject<any> = new Subject();
   private popupData: IPopupConfig;
   private isAnonymousUser: boolean;
+  public willWin: boolean;
   public successPopUp: IPopupConfig = {
     title: 'GAME_SUCCESS_TITLE',
     text: 'GAME_SUCCESS_TEXT',
@@ -106,10 +107,12 @@ export class GameComponent implements OnInit, OnDestroy {
         this.transactionId = gameTransaction.id;
         if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
           const count = gameTransaction.voucherIds.length.toString();
+          this.willWin = true;
           this.successPopUp.text =
             this.successPopUp.text ? this.successPopUp.text.replace('{{rewards}}', count) : `You earned ${count} rewards`;
           this.popupData = this.successPopUp;
         } else {
+          this.willWin = false;
           this.popupData = this.noRewardsPopUp;
         }
       },
