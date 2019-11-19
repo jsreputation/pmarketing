@@ -12,7 +12,7 @@ import {
   AbstractControl,
 } from '@angular/forms';
 
-import { Subject } from 'rxjs';
+import { Subject, iif, of } from 'rxjs';
 import { Config, AuthenticationService, PopupComponent, IPopupConfig, InstantOutcomeService, IGameService } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { switchMap, takeUntil, catchError, tap } from 'rxjs/operators';
@@ -89,27 +89,32 @@ export class PIComponent implements OnInit, OnDestroy {
       }
       const oldPI = this.authService.getPI();
       const oldToken = this.authService.getUserAccessToken();
+      const oldAnonymousStatus = this.authService.getAnonymous();
       let newUserId;
       let newToken;
       (window as any).primaryIdentifier = pi;
       this.authService.autoLogin().pipe(
         catchError(() => { throw new Error('PI_NOT_EXIST'); }),
         tap(() => {
-          newUserId = this.authService.getUserId();
-          newToken = this.authService.getUserAccessToken();
-          this.authService.savePI(oldPI);
-          this.authService.saveUserId(oldUserId);
-          this.authService.saveUserAccessToken(oldToken);
+          if (oldAnonymousStatus) {
+            newUserId = this.authService.getUserId();
+            newToken = this.authService.getUserAccessToken();
+            this.authService.savePI(oldPI);
+            this.authService.saveUserId(oldUserId);
+            this.authService.saveUserAccessToken(oldToken);
+          }
         }),
-        switchMap(() => this.authService.mergeUserById([oldUserId], newUserId)),
+        switchMap((res) => iif(() => this.authService.getAnonymous(), this.authService.mergeUserById([oldUserId], newUserId), of(res))),
         catchError((err: Error) => {
           throw err.message.startsWith('PI_') ? err : new Error('PI_MERGE_FAIL');
         }),
         tap(() => {
-          this.authService.savePI(pi);
-          this.authService.saveUserId(newUserId);
-          this.authService.saveUserAccessToken(newToken);
-          this.authService.saveAnonymous(false);
+          if (oldAnonymousStatus) {
+            this.authService.savePI(pi);
+            this.authService.saveUserId(newUserId);
+            this.authService.saveUserAccessToken(newToken);
+            this.authService.saveAnonymous(false);
+          }
         }),
         switchMap(() => {
           if (this.engagementType === 'game' && this.transactionId) {

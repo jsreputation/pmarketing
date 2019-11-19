@@ -62,9 +62,9 @@ export class QuestionComponent implements OnChanges {
   }
 
   public updateAnswer(answer: IAnswer): void {
-    this.question.answer = String(answer.content);
+    this.question.answer = answer.content.toString();
     const questionId = answer.questionId ? answer.questionId : this.question.id;
-    this.updateAnswers.emit({ questionId, content: answer.content });
+    this.updateAnswers.emit({ questionId, content: answer.content.toString() });
     this.updateNonGroupPoint();
     this.questionValidation();
   }
