@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { CampaignsComponent } from './campaigns.component';
 import { MatCardModule, MatIconModule } from '@angular/material';
 import { of } from 'rxjs';
-import { ICampaignService, CampaignType, CampaignState, IGameService } from '@perx/core';
+import { ICampaignService, CampaignType, CampaignState, IGameService, ICampaign } from '@perx/core';
 import { Type } from '@angular/core';
 import { game } from '../../game.mock';
 
@@ -97,13 +97,13 @@ describe('CampaignsComponent', () => {
   });
 
   it('should emit hasExpired with value true', () => {
-    const campaign = {
+    const campaign: ICampaign = {
       id: 1,
       name: 'abc',
       description: 'abc',
       type: CampaignType.game,
       state: CampaignState.active,
-      endsAt: undefined,
+      endsAt: null,
       rewards: [],
       thumbnailUrl: '',
     };

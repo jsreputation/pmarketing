@@ -48,8 +48,11 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
       });
       this.fetchRewards();
     } else {
-      const catalogId = +this.activeRoute.snapshot.queryParamMap.get('catalog');
-      this.rewards = this.rewardsService.getCatalog(catalogId).pipe(
+      const catalogId = this.activeRoute.snapshot.queryParamMap.get('catalog');
+      if(!catalogId) {
+        return;
+      }
+      this.rewards = this.rewardsService.getCatalog(parseInt(catalogId)).pipe(
         map((catalog: ICatalog) => {
           this.selectedCategory = catalog.name;
           this.analytics.addEvent({
@@ -58,7 +61,7 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
             siteSectionLevel2: 'rewards:discover',
             siteSectionLevel3: `rewards:discover:${catalog.name}`
           });
-          return catalog.rewards;
+          return catalog.rewards || [];
         })
       );
     }
@@ -83,7 +86,7 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
       return;
     }
 
-    this.rewards = this.rewardsService.getAllRewards(null, [this.selectedCategory]);
+    this.rewards = this.rewardsService.getAllRewards(undefined, [this.selectedCategory]);
   }
 
   public selected(reward: IReward): void {

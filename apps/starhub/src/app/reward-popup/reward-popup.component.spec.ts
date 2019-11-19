@@ -47,12 +47,18 @@ describe('RewardPopupComponent', () => {
   });
 
   it ('should call timerExpired', () => {
-    spyOn(component.data.timerCallbacks, 'timerExpired');
+    if(!component.data.timerCallbacks) {
+      return;
+    }
+    spyOn(component.data.timerCallbacks , 'timerExpired');
     component.onTimerExpired();
     expect(component.data.timerCallbacks.timerExpired).toHaveBeenCalled();
   });
 
   it ('should call timerExpiring', () => {
+    if(!component.data.timerCallbacks) {
+      return;
+    }
     spyOn(component.data.timerCallbacks, 'timerExpiring');
     component.onExpiring();
     expect(component.data.timerCallbacks.timerExpiring).toHaveBeenCalled();
