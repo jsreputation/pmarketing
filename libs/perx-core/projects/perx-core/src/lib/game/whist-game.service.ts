@@ -75,8 +75,8 @@ export class WhistlerGameService implements IGameService {
       const scratchdp: IWScratchDisplayProperties = attributes.display_properties as IWScratchDisplayProperties;
       config = {
         ...defaultScratch(),
-        // underlyingImg: scratchdp.post_scratch_fail_img_url,
-        underlyingImg: scratchdp.post_scratch_success_img_url,
+        underlyingSuccessImg: scratchdp.post_scratch_success_img_url,
+        underlyingFailImg: scratchdp.post_scratch_fail_img_url,
         coverImg: scratchdp.pre_scratch_img_url
       };
     }

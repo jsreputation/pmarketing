@@ -77,7 +77,8 @@ describe('NewCampaignDetailPageComponent', () => {
                 endDate: [null, [Validators.required]],
                 endTime: [null, [Validators.required]],
                 disabledEndDate: [false],
-                labels: []
+                labels: [],
+                informationCollectionSetting: ['not_required'],
             }),
             channel: fb.group({
                 eventId: [],
