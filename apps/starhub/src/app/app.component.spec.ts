@@ -50,7 +50,7 @@ describe('AppComponent', () => {
       description: 'abc',
       type: CampaignType.game,
       state: CampaignState.active,
-      endsAt: undefined,
+      endsAt: null,
       rewards: [],
       thumbnailUrl: '',
     },
@@ -60,7 +60,7 @@ describe('AppComponent', () => {
       description: 'abc',
       type: CampaignType.give_reward,
       state: CampaignState.active,
-      endsAt: undefined,
+      endsAt: null,
       rewards: [
         {
           id: 1,
@@ -69,7 +69,7 @@ describe('AppComponent', () => {
           subtitle: '',
           validFrom: new Date(),
           validTo: new Date(),
-          sellingFrom: null,
+          sellingFrom: undefined,
           rewardThumbnail: '',
           rewardBanner: '',
           merchantImg: '',
@@ -80,7 +80,7 @@ describe('AppComponent', () => {
           termsAndConditions: '',
           howToRedeem: '',
           categoryTags: [],
-          inventory: null,
+          inventory: undefined,
         }
       ],
       thumbnailUrl: '',
@@ -99,7 +99,7 @@ describe('AppComponent', () => {
     open: () => { }
   };
   const tokenStorageStub: Partial<TokenStorage> = {
-    getAppInfoProperty: () => null,
+    getAppInfoProperty: () => undefined,
     setAppInfoProperty: () => { }
   };
 
@@ -220,12 +220,12 @@ describe('AppComponent', () => {
       component.reward = rewards[0];
       component.dialogClosed();
       expect(routerSpy).toHaveBeenCalledWith([`/reward`], { queryParams: { id: component.reward.id } });
-      component.reward = null;
+      component.reward = undefined;
       component.game = game[0];
       component.dialogClosed();
       expect(routerSpy).toHaveBeenCalledWith([`/game`], { queryParams: { id: 1 } });
-      component.reward = null;
-      component.game = null;
+      component.reward = undefined;
+      component.game = undefined;
       const spyLog = spyOn(console, 'error');
       component.dialogClosed();
       expect(spyLog).toHaveBeenCalledWith('Something fishy, we should not be here, without any reward or game');
