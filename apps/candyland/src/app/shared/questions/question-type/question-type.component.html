@@ -6,7 +6,7 @@
     </button>
   </ng-container>
   <mat-select #matSelect [disabled]="onlyView" [formControl]="type" class="question-select-type">
-    <mat-optgroup class="view-group-label" label="Select question type">
+    <mat-optgroup class="view-group-label" [label]="'SELECT_QUESTION_TYPE' | translate">
       <ng-container *ngFor="let type of typeList">
         <mat-option *ngIf="hideQuestionGroup(type.value)"
           [value]="type.value"
@@ -16,7 +16,7 @@
             <mat-icon class="view-mat-icon">
               <img [src]="type?.img" alt="icon">
             </mat-icon>
-            <div class="view-text">{{type.viewValue}}
+            <div class="view-text">{{type.viewValue | translate}}
             </div>
           </div>
         </mat-option>

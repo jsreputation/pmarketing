@@ -11,6 +11,8 @@ import { CreateMerchantPopupComponent, SelectMerchantPopupComponent, ToggleContr
 import { Merchant } from '@cl-core/http-adapters/merchant';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
 
 @Component({
   selector: 'cl-manage-rewards',
@@ -43,6 +45,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     private newRewardFormService: NewRewardFormService,
     private toggleControlService: ToggleControlService,
     private loyaltyService: LoyaltyService,
+    private readonly translate: TranslateService,
+    private translateDefaultLanguage: TranslateDefaultLanguageService
   ) {
   }
 
@@ -53,6 +57,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.handleMerchantIdChanges();
     this.handleRouteParams();
     this.handlerLoyalty();
+    this.setTranslateLanguage();
   }
 
   public ngOnDestroy(): void {
@@ -291,5 +296,12 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       };
     });
     return result;
+  }
+
+  private setTranslateLanguage(): void {
+    this.translateDefaultLanguage.defaultLanguage$
+      .subscribe((language: string) => {
+        this.translate.setDefaultLang(language);
+      });
   }
 }

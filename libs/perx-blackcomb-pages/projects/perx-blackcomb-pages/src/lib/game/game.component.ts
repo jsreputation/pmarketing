@@ -1,10 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { IGameService, IGame, GameType, IPopupConfig, IEngagementTransaction, AuthenticationService, PopupComponent } from '@perx/core';
+import {
+  IGameService,
+  IGame,
+  GameType,
+  IPopupConfig,
+  IEngagementTransaction,
+  AuthenticationService,
+  NotificationService
+} from '@perx/core';
 import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
 import { Observable, interval, throwError, Subject, of, combineLatest } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { MatDialog } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -21,6 +28,8 @@ export class GameComponent implements OnInit, OnDestroy {
   private destroy$: Subject<any> = new Subject();
   private popupData: IPopupConfig;
   private isAnonymousUser: boolean;
+  private informationCollectionSetting: string;
+  public willWin: boolean;
   public successPopUp: IPopupConfig = {
     title: 'GAME_SUCCESS_TITLE',
     text: 'GAME_SUCCESS_TEXT',
@@ -35,24 +44,11 @@ export class GameComponent implements OnInit, OnDestroy {
     imageUrl: '',
   };
 
-  private initTranslate(): void {
-    [
-      this.successPopUp.title,
-      this.successPopUp.text,
-      this.successPopUp.buttonTxt,
-      this.noRewardsPopUp.title,
-      this.noRewardsPopUp.text,
-      this.noRewardsPopUp.buttonTxt
-    ]
-      .filter(k => k !== undefined && k !== null)
-      .forEach((k: string) => this.translate.get(k).subscribe((text) => k = text));
-  }
-
   constructor(
     private route: ActivatedRoute,
     private gameService: IGameService,
     private router: Router,
-    private dialog: MatDialog,
+    private notificationService: NotificationService,
     private auth: AuthenticationService,
     private translate: TranslateService,
   ) {
@@ -80,6 +76,9 @@ export class GameComponent implements OnInit, OnDestroy {
       tap((game: IGame) => {
         if (game) {
           const { displayProperties } = game;
+          if (displayProperties && displayProperties.informationCollectionSetting) {
+            this.informationCollectionSetting = displayProperties.informationCollectionSetting;
+          }
           if (displayProperties && displayProperties.noRewardsPopUp) {
             this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
             this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
@@ -106,10 +105,12 @@ export class GameComponent implements OnInit, OnDestroy {
         this.transactionId = gameTransaction.id;
         if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
           const count = gameTransaction.voucherIds.length.toString();
+          this.willWin = true;
           this.successPopUp.text =
             this.successPopUp.text ? this.successPopUp.text.replace('{{rewards}}', count) : `You earned ${count} rewards`;
           this.popupData = this.successPopUp;
         } else {
+          this.willWin = false;
           this.popupData = this.noRewardsPopUp;
         }
       },
@@ -134,7 +135,8 @@ export class GameComponent implements OnInit, OnDestroy {
         bufferCount(nbSteps),
         first()
       );
-    const userAction$: Observable<void> = this.isAnonymousUser || !this.transactionId ?
+    const isCollectDataRequired = !!(this.informationCollectionSetting === 'pi_required' || this.informationCollectionSetting === 'signup_required');
+    const userAction$: Observable<void> = !this.transactionId || (this.isAnonymousUser && isCollectDataRequired) ?
       of(void 0) :
       this.gameService.prePlayConfirm(this.transactionId);
     combineLatest(processBar$, userAction$).subscribe(
@@ -144,12 +146,32 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   private redirectUrlAndPopUp(): void {
-    const queryParams = { popupData: JSON.stringify(this.popupData), engagementType: 'game', transactionId: this.transactionId };
-    if (this.isAnonymousUser) {
+    const queryParams = {
+      popupData: JSON.stringify(this.popupData),
+      engagementType: 'game',
+      transactionId: this.transactionId,
+      collectInfo: true
+    };
+    if (this.isAnonymousUser && this.informationCollectionSetting === 'pi_required') {
       this.router.navigate(['/pi'], { queryParams });
+    } else if (this.isAnonymousUser && this.informationCollectionSetting === 'signup_required') {
+      this.router.navigate(['/signup'], { queryParams });
     } else {
       this.router.navigate(['/wallet']);
-      this.dialog.open(PopupComponent, { data: this.popupData });
+      this.notificationService.addPopup(this.popupData);
     }
+  }
+
+  private initTranslate(): void {
+    [
+      this.successPopUp.title,
+      this.successPopUp.text,
+      this.successPopUp.buttonTxt,
+      this.noRewardsPopUp.title,
+      this.noRewardsPopUp.text,
+      this.noRewardsPopUp.buttonTxt
+    ]
+      .filter(k => k !== undefined && k !== null)
+      .forEach((k: string) => this.translate.get(k).subscribe((text) => k = text));
   }
 }

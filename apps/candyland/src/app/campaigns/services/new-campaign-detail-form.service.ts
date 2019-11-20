@@ -18,7 +18,8 @@ export class NewCampaignDetailFormService {
         endDate: [null, [Validators.required]],
         endTime: [null, [Validators.required]],
         disabledEndDate: [false],
-        labels: []
+        labels: [],
+        informationCollectionSetting: ['not_required'],
       }),
       channel: this.fb.group({
         eventId: [],
@@ -54,6 +55,10 @@ export class NewCampaignDetailFormService {
       {
         condition: form.get('channel.type').value === 'sms',
         controls: [form.get('channel.message'), form.get('channel.schedule')]
+      },
+      {
+        condition: form.get('channel.type').value === 'weblink',
+        controls: [form.get('campaignInfo.informationCollectionSetting')]
       },
       // {
       //   condition: form.get('channel.schedule.enableRecurrence').value === true,

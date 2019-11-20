@@ -7,35 +7,42 @@ import { TableFiltersModule } from '@cl-shared';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule, MatDialogRef } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('EngagementsListPageComponent', () => {
-    let component: EngagementsListPageComponent;
-    let fixture: ComponentFixture<EngagementsListPageComponent>;
+  let component: EngagementsListPageComponent;
+  let fixture: ComponentFixture<EngagementsListPageComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                TableFiltersModule,
-                HttpClientTestingModule,
-                RouterTestingModule,
-                MatDialogModule
-            ],
-            providers: [
-                { provide: MatDialogRef, useValue: { close: () => {} } }
-            ],
-            declarations: [EngagementsListPageComponent],
-            schemas: [ NO_ERRORS_SCHEMA ]
-        })
-            .compileComponents();
-    }));
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+        imports: [
+          TableFiltersModule,
+          HttpClientTestingModule,
+          RouterTestingModule,
+          MatDialogModule,
+          TranslateModule.forRoot()
+        ],
+        providers: [
+          {
+            provide: MatDialogRef, useValue: {
+              close: () => {
+              }
+            }
+          }
+        ],
+        declarations: [EngagementsListPageComponent],
+        schemas: [NO_ERRORS_SCHEMA]
+      })
+      .compileComponents();
+  }));
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(EngagementsListPageComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(EngagementsListPageComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -1,0 +1,50 @@
+<mat-nav-list [style.maxHeight]="(menu.open)?'1200px':'56px'"
+              *ngIf="menu"
+              class="menu-item"
+              [ngClass]="{
+              'secondaryMenu': secondaryMenu,
+              'primary': !secondaryMenu}"
+>
+  <mat-list-item *ngIf = "!menu?.link"
+                 (click)="openLink()"
+                 class="mat-list-item"
+  >
+    <i class="icon icon-menu" [ngClass]="menu.icon">
+
+    </i>
+    <mat-icon matListIcon>{{menu.icon}}</mat-icon>
+    <h3 matLine [@openClose]="isOpen ? 'open' : 'closed'"
+        class="menu-link"
+        *ngIf="isOpen">{{ menu.name }}
+    </h3>
+    <mat-icon *ngIf="checkForChildMenu()"
+              class="sidenav-dropdown-indicator rotate"
+              [ngClass]="{'indicateOpen': menu.open}">
+      expand_more
+    </mat-icon>
+  </mat-list-item>
+
+  <a mat-list-item *ngIf = "menu?.link"
+                 [routerLink]="[menu.link]"
+                 class="mat-list-item"
+                 [class.active]="menu.active"
+                 [routerLinkActive]="'active'"
+  >
+    <i class="icon" matListIcon [ngClass]="menu.icon"></i>
+    <h3 matLine
+        class="menu-link"
+        [@openClose]="isOpen ? 'open' : 'closed'"
+        *ngIf="isOpen"
+    >
+      {{menu.name}}
+    </h3>
+  </a>
+
+  <cs-sidenave-menu-item
+    *ngFor="let submenu of menu?.sub"
+    [isOpen]="isOpen"
+    [menu]="submenu"
+    [secondaryMenu]="true">
+  </cs-sidenave-menu-item>
+
+</mat-nav-list>
