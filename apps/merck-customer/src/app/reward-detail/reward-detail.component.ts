@@ -22,8 +22,9 @@ export class RewardDetailComponent implements OnInit, PageAppearence {
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      if (params.get('rewardId')) {
-        this.rewardId = +params.get('rewardId');
+      const stringId : string | null = params.get('rewardId');
+      if (stringId) {
+        this.rewardId = parseInt(stringId, 10);
         this.getReward();
       }
     });

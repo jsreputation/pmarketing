@@ -11,38 +11,40 @@ import { ProfileService } from '@perx/core';
 })
 export class RedeemComponent implements OnInit, PageAppearence {
 
-  public rewardDetails: string = null;
-  public rewardId: number = null;
+  public rewardDetails?: string;
+  public rewardId?: number;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private profileService: ProfileService
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
-
-    this.rewardId = +this.route.snapshot.paramMap.get('rewardId');
+    const stringId : string | null = this.route.snapshot.paramMap.get('rewardId')
+    if (stringId) {
+      this.rewardId = parseInt(stringId, 10);
+    }
 
     this.profileService.whoAmI().subscribe(
-        (profile) => {
-          if (this.rewardId) {
-            this.rewardDetails = JSON.stringify(
-              {
-                id: profile.id,
-                name: profile.lastName,
-                identifier: profile.identifier,
-                rewardId: this.rewardId
-              });
-          } else {
-            this.rewardDetails = JSON.stringify(
+      (profile) => {
+        if (this.rewardId) {
+          this.rewardDetails = JSON.stringify(
+            {
+              id: profile.id,
+              name: profile.lastName,
+              identifier: profile.identifier,
+              rewardId: this.rewardId
+            });
+        } else {
+          this.rewardDetails = JSON.stringify(
             {
               id: profile.id,
               name: profile.lastName,
               identifier: profile.identifier
             });
-          }
         }
+      }
     );
   }
 
