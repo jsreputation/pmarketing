@@ -4,6 +4,11 @@
 export { PerxCoreModule } from './lib/perx-core.module';
 
 /**
+ * Shared
+ */
+export { isEmptyString } from './lib/utils/shared/helpers.util';
+
+/**
  * Merchants
  */
 export { MerchantsModule } from './lib/merchants/merchants.module';

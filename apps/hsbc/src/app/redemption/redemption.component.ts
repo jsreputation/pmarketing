@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ConfigService, IConfig } from '@perx/core';
+import { ConfigService, IConfig, isEmptyString } from '@perx/core';
 
 @Component({
   selector: 'app-redemption',
@@ -21,7 +21,11 @@ export class RedemptionComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.voucherId = parseInt(this.route.snapshot.paramMap.get('id'), 10);
+    if (isEmptyString(this.route.snapshot.paramMap.get('id'))) {
+      throw new Error(`id is required`);
+    }
+
+    this.voucherId = parseInt(this.route.snapshot.paramMap.get('id') as string, 10);
 
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => {

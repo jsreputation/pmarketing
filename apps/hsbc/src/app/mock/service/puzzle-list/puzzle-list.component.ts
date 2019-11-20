@@ -10,10 +10,10 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./puzzle-list.component.scss']
 })
 export class PuzzleListComponent implements OnChanges, OnDestroy {
-  public puzzles: IStampCard[];
+  public puzzles: IStampCard[] | null;
 
   @Input()
-  public campaignId: number = null;
+  public campaignId: number | null = null;
   @Input()
   public iconDisplay: string;
 
@@ -67,7 +67,11 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
   }
 
   // in the UX only mark the 1st active puzzle as active
-  public isActive(puzzle: IStampCard): boolean {
+  public isActive(puzzle: IStampCard): boolean | undefined {
+    if (!puzzle.stamps) {
+      throw new Error(`puzzle.stamps is required`);
+    }
+
     // if there is no puzzle in list, it should never happen but return false
     if (!Array.isArray(this.puzzles)) {
       console.log('no card', puzzle.id);
@@ -85,6 +89,9 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
     }
 
     const totalSlots = puzzle.displayProperties.totalSlots;
+    if (!totalSlots) {
+      throw new Error(`totalSlots is required`);
+    }
 
     // if there is no more available stamp return false
     if (puzzle.displayProperties.displayCampaignAs === 'puzzle') {
@@ -146,7 +153,7 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
     return base[index % base.length];
   }
 
-  public nbAvailableStamps(puzzle: IStampCard): number {
+  public nbAvailableStamps(puzzle: IStampCard): number | undefined {
     if (puzzle.displayProperties.displayCampaignAs === 'puzzle') {
       if (puzzle.stamps === undefined) {
         return 0;

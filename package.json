@@ -3,6 +3,7 @@
   "scripts": {
     "build:lib": "lerna run build:lib",
     "build": "lerna run build:lib && lerna run build -- ",
+    "build:hsbc": "lerna run build:lib && lerna run build:hsbc -- ",
     "build:abenson:prod": "lerna run build:lib && lerna run build:abenson:prod --",
     "build:blackcomb:prod": "lerna run build:lib && lerna run build:blackcomb:prod --",
     "build:all-it:prod": "lerna run build:lib && lerna run build:all-it:prod --",
