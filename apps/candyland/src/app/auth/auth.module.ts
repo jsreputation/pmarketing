@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { LogoModule } from '../shared/components/logo/logo.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { LogoModule } from '../shared/components/logo/logo.module';
     LogoModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    TranslateModule
   ],
   exports: [
     LoginComponent,

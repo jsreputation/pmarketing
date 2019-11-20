@@ -4,6 +4,7 @@ import { MerchantBranchComponent } from './merchant-branch.component';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('MerchantBranchComponent', () => {
   let component: MerchantBranchComponent;
@@ -12,6 +13,7 @@ describe('MerchantBranchComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [MerchantBranchComponent],
+      imports: [   TranslateModule.forRoot(),],
       schemas: [NO_ERRORS_SCHEMA],
     })
       .compileComponents();

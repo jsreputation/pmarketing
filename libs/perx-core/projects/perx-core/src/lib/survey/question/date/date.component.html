@@ -2,11 +2,11 @@
   <ng-container *ngIf="payload?.duration; else elseBlock">
     <mat-form-field class="full-width">
       <input
-        matInput 
-        [matDatepicker]="pickerFrom"  
-        placeholder="From" 
-        (focus)="openCalendarFrom(pickerFrom)" 
-        (click)="openCalendarFrom(pickerFrom)"
+        matInput
+        [matDatepicker]="pickerFrom"
+        placeholder="From"
+        (focus)="openCalendarFrom()"
+        (click)="openCalendarFrom()"
         (change)="updateInputFrom($event.target.value)"
         (dateChange)="updateInputFrom($event.target.value)"
         #pickerFromInput
@@ -15,34 +15,34 @@
       <mat-datepicker #pickerFrom (closed)="eventCloseHandlerFrom()"></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="full-width">
-        <input
-          matInput 
-          [matDatepicker]="pickerTo"  
-          placeholder="To" 
-          (focus)="openCalendarTo(pickerTo)" 
-          (click)="openCalendarTo(pickerTo)"
-          (change)="updateInputTo($event.target.value)"
-          (dateChange)="updateInputTo($event.target.value)"
-          #pickerToInput
-          readonly>
-        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-        <mat-datepicker #pickerTo (closed)="eventCloseHandlerTo()"></mat-datepicker>
-      </mat-form-field>
+      <input
+        matInput
+        [matDatepicker]="pickerTo"
+        placeholder="To"
+        (focus)="openCalendarTo()"
+        (click)="openCalendarTo()"
+        (change)="updateInputTo($event.target.value)"
+        (dateChange)="updateInputTo($event.target.value)"
+        #pickerToInput
+        readonly>
+      <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+      <mat-datepicker #pickerTo (closed)="eventCloseHandlerTo()"></mat-datepicker>
+    </mat-form-field>
   </ng-container>
   <ng-template #elseBlock>
-      <mat-form-field class="full-width">
-          <input
-            matInput 
-            [matDatepicker]="picker"  
-            placeholder="Choose a date" 
-            (focus)="openCalendar(picker)" 
-            (click)="openCalendar(picker)"
-            (change)="updateInput($event.target.value)"
-            (dateChange)="updateInput($event.target.value)"
-            #pickerInput
-            readonly>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker (closed)="eventCloseHandler()"></mat-datepicker>
-        </mat-form-field>
+    <mat-form-field class="full-width">
+      <input
+        matInput
+        [matDatepicker]="picker"
+        placeholder="Choose a date"
+        (focus)="openCalendar()"
+        (click)="openCalendar()"
+        (change)="updateInput($event.target.value)"
+        (dateChange)="updateInput($event.target.value)"
+        #pickerInput
+        readonly>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker (closed)="eventCloseHandler()"></mat-datepicker>
+    </mat-form-field>
   </ng-template>
 </div>

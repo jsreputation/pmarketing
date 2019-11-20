@@ -1,0 +1,19 @@
+<div class="sms-editor">
+  <div class="sms-editor-shortcode-wrapper">
+    <mat-form-field appearance="outline" class="sms-editor-shortcode">
+      <mat-select placeholder="Add Shortcode" (selectionChange)="selectShortCode($event.source.value)">
+        <mat-option *ngFor="let option of options" [value]="option?.value">{{option?.title}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field class="sms-editor-message">
+    <mat-label>Content</mat-label>
+    <input type="text" [formControl]="control" matInput>
+  </mat-form-field>
+
+  <!-- <button mat-button class="sms-editor-send">
+    <mat-icon class="sms-editor-send-icon">send</mat-icon>
+    <span>Send a test SMS</span>
+  </button> -->
+</div>

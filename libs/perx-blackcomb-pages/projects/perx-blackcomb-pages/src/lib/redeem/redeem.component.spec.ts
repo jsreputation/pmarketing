@@ -4,13 +4,11 @@ import { RedeemComponent } from './redeem.component';
 import { VouchersModule, IVoucherService, InstantOutcomeService } from '@perx/core';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-// import { of } from 'rxjs';
 
 describe('RedeemComponent', () => {
   let component: RedeemComponent;
   let fixture: ComponentFixture<RedeemComponent>;
   const vouchersServiceStub: Partial<IVoucherService> = {
-    // getAll: () => of([])
   };
   const outcomeServiceStub: Partial<InstantOutcomeService> = {
     getFromCampaign: () => of()

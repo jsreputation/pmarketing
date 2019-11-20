@@ -1,0 +1,179 @@
+@import "./variables";
+
+.icon {
+  display: block;
+  background-color: rgba(255, 255, 255, 0.51);
+  width: 18px;
+  height: 18px;
+  padding: 0 0 0 ($horizontal-padding * 0.5);
+  box-sizing: content-box;
+
+  &.full-with {
+    height: 100% !important;
+    width: auto !important;
+  }
+
+  &.dashboard {
+    mask: url("assets/images/icons/dashboard.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.51);
+  }
+
+  &.rewards {
+    mask: url("assets/images/icons/rewards.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.51);
+  }
+
+  &.campaign {
+    mask: url("assets/images/icons/campaign.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.51);
+  }
+
+  &.loyalty {
+    mask: url("assets/images/icons/loyalty.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.51);
+  }
+
+  &.engagement {
+    mask: url("assets/images/icons/engagement.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.51);
+  }
+
+  &.users {
+    mask: url("assets/images/icons/users.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.51);
+  }
+
+  &.merchant {
+    mask: url("assets/images/icons/merchant.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.51);
+  }
+
+  &.settings {
+    mask: url("assets/images/icons/settings.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.51);
+  }
+
+  &.logout {
+    height: ($vertical-padding * 0.75);
+    mask: url("assets/images/icons/icon-logout.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+
+  &.rating {
+    mask: url("assets/images/engagement-question/question-type-icon/bxs-star.svg") no-repeat 50% 50%;
+    width: ($horizontal-padding * 0.5);
+    height: ($vertical-padding * 0.5);
+  }
+
+  &.picture-select {
+    mask: url("assets/images/engagement-question/question-type-icon/bxs-image.svg") no-repeat 50% 50%;
+    width: ($horizontal-padding * 0.5);
+    height: ($vertical-padding * 0.5);
+  }
+
+  &.long-text {
+    mask: url("assets/images/engagement-question/question-type-icon/long-text-min.svg") no-repeat 50% 50%;
+    width: ($horizontal-padding * 0.5);
+    height: ($vertical-padding * 0.5);
+  }
+
+  &.select {
+    mask: url("assets/images/engagement-question/question-type-icon/bxs-spreadsheet.svg") no-repeat 50% 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &.group {
+    mask: url("assets/images/engagement-question/question-type-icon/bxs-folder-open.svg") no-repeat 50% 50%;
+    width: ($horizontal-padding * 0.5);
+    height: ($vertical-padding * 0.5);
+  }
+
+  &.date {
+    mask: url("assets/images/engagement-question/question-type-icon/calendar.svg") no-repeat 50% 50%;
+    width: ($horizontal-padding * 0.5);
+    height: ($vertical-padding * 0.5);
+  }
+
+  &.phone {
+    mask: url("assets/images/engagement-question/question-type-icon/phone-min.svg") no-repeat 50% 50%;
+    width: ($horizontal-padding * 0.5);
+    height: ($vertical-padding * 0.5);
+  }
+
+  &.drag-icon {
+    mask: url("assets/images/icons/drag-dots.svg") no-repeat 50% 50%;
+    width: ($horizontal-padding * 0.5);
+    height: 18px;
+    background: #d8d8d8;
+  }
+
+  &.delete {
+    mask: url("assets/images/icons/delete.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: $secondary-color;
+  }
+
+  &.delete-action {
+    mask: url("/assets/images/icons/delete-action.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: $secondary-color;
+  }
+
+  &.date-icon {
+    mask: url("/assets/images/icons/date.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: $secondary-color;
+  }
+
+  &.time-icon {
+    mask: url("/assets/images/icons/time.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: $secondary-color;
+  }
+
+  &.check-icon {
+    mask: url("/assets/images/icons/check.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: $secondary-color;
+  }
+
+  &.link-icon {
+    mask: url("/assets/images/icons/link.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: $secondary-color;
+  }
+
+  &.download-icon {
+    mask: url("/assets/images/icons/download.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: $primary-color;
+  }
+
+  &.select-merchant-icon {
+    mask: url("/assets/images/icons/select-merchant.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: $secondary-color;
+  }
+
+  &.create-merchant-icon {
+    mask: url("/assets/images/icons/create-merchant.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: $secondary-color;
+  }
+}
+
+.active {
+  .icon {
+    background-color: $white;
+  }
+}
