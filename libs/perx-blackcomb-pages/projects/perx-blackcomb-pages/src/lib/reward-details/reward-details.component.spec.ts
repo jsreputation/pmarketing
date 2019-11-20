@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardDetailsComponent } from './reward-details.component';
-import { RewardsModule, RewardsService, ThemesService } from '@perx/core';
+import { RewardsModule, RewardsService, ConfigService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
@@ -10,8 +10,8 @@ describe('RewardComponent', () => {
   let component: RewardDetailsComponent;
   let fixture: ComponentFixture<RewardDetailsComponent>;
   const rewardsServiceStub: Partial<RewardsService> = {};
-  const themeServiceStub: Partial<ThemesService> = {
-    getThemeSetting: () => of()
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of()
   };
 
   beforeEach(async(() => {
@@ -24,7 +24,7 @@ describe('RewardComponent', () => {
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
-        { provide: ThemesService, useValue: themeServiceStub }
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();

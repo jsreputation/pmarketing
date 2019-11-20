@@ -1,4 +1,4 @@
-<div class="page" *ngIf="theme && theme.properties">
+<div class="page" *ngIf="theme && theme.properties && appConfig">
   <div class="loyalty-block">
     <perx-core-loyalty-summary [titleFn]="titleFn"></perx-core-loyalty-summary>
     <div class="loyalty-item loyalty-item-qr">
@@ -12,7 +12,7 @@
       </a>
     </div>
   </div>
-  <perx-core-newsfeed [items$]="newsFeedItems" *ngIf="theme.properties['showNewsfeedOnHomepage']"></perx-core-newsfeed>
+  <perx-core-newsfeed [items$]="newsFeedItems" *ngIf="appConfig.showNewsfeedOnHomepage"></perx-core-newsfeed>
   <div class="games">
     <div *ngIf="showGames" class="title" translate>GAMES</div>
     <perx-blackcomb-games-collection [games]="games$"></perx-blackcomb-games-collection>
