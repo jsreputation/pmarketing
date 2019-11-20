@@ -9,7 +9,7 @@ import {
   NotificationService,
   PopupComponent
 } from '@perx/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap, takeUntil, tap, last } from 'rxjs/operators';
 import { Observable, Subject, of, combineLatest } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -54,7 +54,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
     private activeRoute: ActivatedRoute,
     private translate: TranslateService,
     private notificationService: NotificationService,
-    // private router: Router,
+    private router: Router,
     private dialog: MatDialog
   ) { }
 
@@ -117,7 +117,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   }
 
   public dialogClosed(): void {
-    // this.router.navigate(['/wallet']);
+    this.router.navigate(['/wallet']);
   }
 
   private exchangePoints(): Observable<void> {
