@@ -25,9 +25,9 @@ export interface IReward {
   merchantWebsite?: string;
   termsAndConditions: string;
   howToRedeem: string;
-  redemptionType?: RedemptionType;
+  redemptionType?: RedemptionType | null;
   categoryTags?: ICategoryTags[];
-  inventory?: Inventory;
+  inventory?: Inventory | null;
   redemptionText?: string;
   rawPayload?: any;
   displayProperties?: IWRewardDisplayProperties;
