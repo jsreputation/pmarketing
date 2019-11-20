@@ -13,6 +13,7 @@ import {
 } from '@angular/material';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters
     MatTableModule,
     MatSelectModule,
     MatMenuModule,
-    PipesModule
+    PipesModule,
+    TranslateModule
   ]
 })
 export class ListMerchantViewModule { }

@@ -11,7 +11,7 @@
     (click)="setActive()"
     [ngClass]="{active: imgURL === _selectGraphic}"
     *ngIf="imgURL">
-    <img [src]="imgURL" class="image" alt="upload">
+    <img [src]="imgURL" alt="upload">
     <button class="image-clear" (click)="clear()" [attr.aria-label]="btnLabel">
       <mat-icon>edit</mat-icon>
     </button>
@@ -20,7 +20,7 @@
   <div class="upload-wrap-btn" *ngIf="!imgURL">
     <button class="upload-btn" (click)="fileInput.click()" [attr.aria-label]="btnLabel">
       <ng-content></ng-content>
-      <span>{{btnLabel}}</span>
+      <span>{{btnLabel | translate}}</span>
     </button>
   </div>
   <div class="upload-error-wrap">
@@ -29,7 +29,7 @@
   </div>
   <div class="upload-type-wrap" *ngIf="!message && !isRequired">
     <span class="upload-type">
-      {{placeholder}}
+      {{placeholder | translate}}
     </span>
   </div>
 </div>

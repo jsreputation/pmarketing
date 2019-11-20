@@ -1,5 +1,5 @@
 <div class="main-app-container" *ngIf="theme && theme.properties">
-  <mat-toolbar class="toolbar mat-elevation-z2" *ngIf="showHeader">
+  <mat-toolbar class="toolbar mat-elevation-z3" *ngIf="showHeader">
     <mat-icon class="backArrow" (click)="leftClick()">{{leftIcon}}</mat-icon>
     <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
     <!-- ghost stuff-->

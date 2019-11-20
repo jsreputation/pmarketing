@@ -2,7 +2,7 @@
 <div class="card-row radio-group-row">
   <mat-radio-group color="primary" [formControl]="formGroup.get('type')">
     <ng-container *ngFor="let type of config?.voucherValidityType">
-      <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>
+      <mat-radio-button [value]="type?.value">{{type?.title | translate}}</mat-radio-button>
     </ng-container>
   </mat-radio-group>
 </div>
@@ -14,18 +14,18 @@
                     [max]="formGroup.get('period.endDate').value"></cl-date-picker>
     <cl-time-picker [formControl]="formGroup.get('period.startTime')"></cl-time-picker>
   </div>
-  <span>to</span>
+  <span translate="">TO</span>
   <div class="input-group">
     <cl-date-picker [formControl]="formGroup.get('period.endDate')"
                     [min]="formGroup.get('period.startDate').value"></cl-date-picker>
     <cl-time-picker [formControl]="formGroup.get('period.endTime')"></cl-time-picker>
   </div>
-  <mat-checkbox color="primary" [formControl]="formGroup.get('period.disabledEndDate')">Does not end</mat-checkbox>
+  <mat-checkbox color="primary" [formControl]="formGroup.get('period.disabledEndDate')"><span translate>DOES_NOT_END</span></mat-checkbox>
 </div>
 <!--/ Voucher Validity Period-->
 <!-- Voucher Validity Isuance date-->
 <div class="input-group" *ngIf="formGroup.get('issuanceDate').enabled">
-  <span>Valid for</span>
+  <span translate>VALID_FOR</span>
   <!--input number-->
   <mat-form-field class="validate-input">
     <input
@@ -33,7 +33,7 @@
       min="0"
       step="1"
       matInput
-      placeholder="eg. 10"
+      [placeholder]="'EG_10' | translate"
       [formControl]="formGroup.get('issuanceDate.times')">
   </mat-form-field>
   <!--/ input number-->
@@ -41,11 +41,11 @@
   <mat-form-field class="validate-input">
     <mat-select [formControl]="formGroup.get('issuanceDate.duration')">
       <ng-container *ngFor="let option of config?.durationLimits">
-        <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+        <mat-option [value]="option?.value">{{option?.title | translate}}</mat-option>
       </ng-container>
     </mat-select>
   </mat-form-field>
   <!--/ duration Limits-->
-  <span>After issuance</span>
+  <span translate>AFTER_ISSUANCE</span>
 </div>
 <!--/ Voucher Validity Issuance date-->

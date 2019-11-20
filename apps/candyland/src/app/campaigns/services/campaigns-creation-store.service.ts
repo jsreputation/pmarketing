@@ -14,6 +14,7 @@ export interface ICampaignConfig {
   shortcodes: ICampaignChoice[];
   goals: ICampaignChoice[];
   channelTypes: ICampaignChoice[];
+  informationCollectionSettingTypes: ICampaignChoice[];
 }
 
 @Injectable()
@@ -28,10 +29,10 @@ export class CampaignCreationStoreService {
       { title: 'Instant Reward', value: 'Instant Reward' }
     ],
     durationLimits: [
-      { title: 'Day', value: 'day' },
-      { title: 'Week', value: 'week' },
-      { title: 'Month', value: 'month' },
-      { title: 'Campaign', value: 'campaign' }
+      { title: 'DAY', value: 'day' },
+      { title: 'WEEK', value: 'week' },
+      { title: 'MONTH', value: 'month' },
+      { title: 'CAMPAIGN', value: 'campaign' }
     ],
     days: [
       { title: 'S', value: 'sunday' },
@@ -59,6 +60,11 @@ export class CampaignCreationStoreService {
     channelTypes: [
       { title: 'Weblink', value: 'weblink' },
       { title: 'SMS', value: 'sms' },
+    ],
+    informationCollectionSettingTypes: [
+      { title: 'No information collection required', value: 'not_required' },
+      { title: 'PI information collection required', value: 'pi_required' },
+      { title: 'Signup information collection required', value: 'signup_required' },
     ]
   };
 

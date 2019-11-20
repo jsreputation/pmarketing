@@ -9,12 +9,11 @@ import {
   IEngagementTransaction,
   RewardsService,
   AuthenticationService,
-  PopupComponent
+  NotificationService
 } from '@perx/core';
 import { map, switchMap, catchError, tap, takeUntil, mergeMap, } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';
-import { MatDialog } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -32,6 +31,7 @@ export class RewardComponent implements OnInit, OnDestroy {
   public transaction$: Observable<IEngagementTransaction>;
   private transactionId: number | null = null;
   private isAnonymousUser: boolean;
+  private informationCollectionSetting: string;
   private popupData: IPopupConfig;
   public noRewardsPopUp: IPopupConfig = {
     title: 'INSTANT_OUTCOME_NO_REWARDS_TITLE',
@@ -52,7 +52,7 @@ export class RewardComponent implements OnInit, OnDestroy {
     private outcomeService: InstantOutcomeService,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog,
+    private notificationService: NotificationService,
     private auth: AuthenticationService,
     private translate: TranslateService,
     private rewardService: RewardsService
@@ -94,6 +94,10 @@ export class RewardComponent implements OnInit, OnDestroy {
           this.background = eng.backgroundImgUrl;
           this.cardBackground = eng.cardBackgroundImgUrl;
           const { displayProperties } = eng;
+
+          if (displayProperties && displayProperties.informationCollectionSetting) {
+            this.informationCollectionSetting = displayProperties.informationCollectionSetting;
+          }
           if (displayProperties && displayProperties.noRewardsPopUp) {
             this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
             this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
@@ -144,7 +148,8 @@ export class RewardComponent implements OnInit, OnDestroy {
   }
 
   public rewardClickedHandler(): void {
-    const userAction$: Observable<void> = this.isAnonymousUser || this.transactionId === null ?
+    const isCollectDataRequired = !!(this.informationCollectionSetting === 'pi_required' || this.informationCollectionSetting === 'signup_required');
+    const userAction$: Observable<void> = !this.transactionId || (this.isAnonymousUser && isCollectDataRequired) ?
       of(void 0) :
       this.outcomeService.prePlayConfirm(this.transactionId);
 
@@ -160,16 +165,16 @@ export class RewardComponent implements OnInit, OnDestroy {
       engagementType: 'instant_outcome',
       transactionId: this.transactionId
     };
-
-    if (this.isAnonymousUser) {
+    if (this.isAnonymousUser && this.informationCollectionSetting === 'pi_required') {
       this.router.navigate(['/pi'], { queryParams });
+    } else if (this.isAnonymousUser && this.informationCollectionSetting === 'signup_required') {
+      this.router.navigate(['/signup'], { queryParams });
     } else {
       this.router.navigate(['/wallet']);
       if (this.popupData) {
-        this.dialog.open(PopupComponent, { data: this.popupData });
+        this.notificationService.addPopup(this.popupData);
       }
     }
-
   }
 
   public ngOnDestroy(): void {

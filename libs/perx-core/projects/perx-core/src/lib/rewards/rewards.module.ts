@@ -8,6 +8,7 @@ import { RewardsListTabbedComponent } from './rewards-list-tabbed/rewards-list-t
 import { MaterialModule } from '../shared/material.module';
 import { RewardComponent } from './reward/reward.component';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
+import { EllipsisModule } from 'ngx-ellipsis';
 import { UtilsModule } from '../utils/utils.module';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
@@ -39,6 +40,7 @@ export function rewardsServiceFactory(http: HttpClient, config: Config, merchant
     CommonModule,
     MaterialModule,
     NgxMultiLineEllipsisModule,
+    EllipsisModule,
     UtilsModule
   ],
   exports: [

@@ -5,20 +5,20 @@
       <div class="row">
         <cl-table-filters [dataSource]="dataSource">
           <ng-container *clTableFilter="'username'; let filter">
-            <cl-search-filter class="search-block" [control]="filter" placeholder="Search for users"></cl-search-filter>
+            <cl-search-filter class="search-block" [control]="filter" [placeholder]="'SETTINGS_FEATURE.SEARCH_FOR_USERS' | translate"></cl-search-filter>
           </ng-container>
           <ng-container *clTableFilter="'groups'; value: ''; let filter">
             <mat-form-field appearance="outline" class="type-block half-block">
-              <mat-select [formControl]="filter" placeholder="All">
-                <mat-option value="">All</mat-option>
+              <mat-select [formControl]="filter" [placeholder]="'SETTINGS_FEATURE.ALL' | translate">
+                <mat-option value="">{{'SETTINGS_FEATURE.ALL' | translate}}</mat-option>
                 <ng-container *ngFor="let option of config?.roleTypes">
-                  <mat-option [value]="option.id">{{option.title}}</mat-option>
+                  <mat-option [value]="option.id">{{option.title | translate}}</mat-option>
                 </ng-container>
               </mat-select>
             </mat-form-field>
           </ng-container>
         </cl-table-filters>
-        <cl-button classList="primary cta cta-new cta-new-invitenew" (click)="openDialogInviteNewUsers()">Invite New User</cl-button>
+        <cl-button classList="primary cta cta-new cta-new-invitenew" (click)="openDialogInviteNewUsers()">{{'SETTINGS_FEATURE.INVITE_NEW_USER' | translate}}</cl-button>
       </div>
       <div class="table-card">
         <!--table-->
@@ -38,10 +38,10 @@
     <cl-no-data *ngSwitchCase="dataSourceStates.noDataApi">
       <img class="no-data-img" src="/assets/images/no-data/merchants-empty-illustration.svg" alt="">
       <h2 class="no-data-title">
-        You need Merchants to build your eco-system!
+        {{'SETTINGS_FEATURE.NO_DATA_TITLE' | translate}}
       </h2>
       <p class="no-data-text">
-        Let&rsquo;s begin by creating your first Merchant
+        {{'SETTINGS_FEATURE.NO_DATA_TEXT' | translate}}
       </p>
     </cl-no-data>
   </ng-container>

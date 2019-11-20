@@ -1,9 +1,8 @@
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { StampService, IStampCard, IPopupConfig, PopupComponent } from '@perx/core';
+import { StampService, IStampCard, IPopupConfig, NotificationService } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { filter, switchMap, takeUntil, map } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
-import { MatDialog, MatDialogRef } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -44,7 +43,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
     private stampService: StampService,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog,
+    private notificationService: NotificationService,
     private translate: TranslateService
   ) {
   }
@@ -96,13 +95,10 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public handleStamp(): void {
     this.stampService.play().subscribe((res) => {
       if (res) {
-        return this.popup(this.rewardSuccessPopUp);
+        this.notificationService.addPopup(this.rewardSuccessPopUp);
+      } else {
+        this.notificationService.addPopup(this.errorPopUp);
       }
-      return this.popup(this.errorPopUp);
     });
-  }
-
-  private popup(data: IPopupConfig): MatDialogRef<PopupComponent> {
-    return this.dialog.open(PopupComponent, { data });
   }
 }

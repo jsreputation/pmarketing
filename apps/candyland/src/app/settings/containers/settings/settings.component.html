@@ -1,5 +1,5 @@
 <header class="page-header full-with">
-  <h1 class="title">Settings</h1>
+  <h1 class="title">{{'SETTINGS_FEATURE.SETTINGS' | translate}}</h1>
 </header>
 
 <section class="content form-limiter">
@@ -10,7 +10,7 @@
         routerLinkActive #rla="routerLinkActive"
         [routerLinkActiveOptions]="{exact: true}"
         [active]="rla.isActive">
-      {{link.label}}
+      {{link.label | translate}}
     </a>
   </nav>
   <router-outlet></router-outlet>

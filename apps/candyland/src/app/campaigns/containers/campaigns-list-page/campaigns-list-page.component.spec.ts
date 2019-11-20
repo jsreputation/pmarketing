@@ -9,38 +9,40 @@ import { MatFormFieldModule, MatSnackBarModule, MatInputModule, MatSelectModule 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CampaignsListPageComponent', () => {
-    let component: CampaignsListPageComponent;
-    let fixture: ComponentFixture<CampaignsListPageComponent>;
+  let component: CampaignsListPageComponent;
+  let fixture: ComponentFixture<CampaignsListPageComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                TableFiltersModule,
-                BrowserDynamicTestingModule,
-                MatFormFieldModule,
-                MatInputModule,
-                MatSelectModule,
-                HttpClientTestingModule,
-                RouterTestingModule,
-                MatSnackBarModule,
-                BrowserAnimationsModule,
-                NoopAnimationsModule
-            ],
-            declarations: [CampaignsListPageComponent],
-            schemas: [ NO_ERRORS_SCHEMA ]
-        })
-            .compileComponents();
-    }));
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+        imports: [
+          TableFiltersModule,
+          BrowserDynamicTestingModule,
+          MatFormFieldModule,
+          MatInputModule,
+          MatSelectModule,
+          HttpClientTestingModule,
+          RouterTestingModule,
+          MatSnackBarModule,
+          BrowserAnimationsModule,
+          NoopAnimationsModule,
+          TranslateModule.forRoot(),
+        ],
+        declarations: [CampaignsListPageComponent],
+        schemas: [NO_ERRORS_SCHEMA]
+      })
+      .compileComponents();
+  }));
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(CampaignsListPageComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CampaignsListPageComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

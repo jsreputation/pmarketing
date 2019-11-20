@@ -7,6 +7,7 @@ import { UploadImageComponent } from '@cl-shared/questions/question-picture-choi
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('QuestionPictureChoiceFieldComponent', () => {
   let component: QuestionPictureChoiceFieldComponent;
@@ -22,7 +23,8 @@ describe('QuestionPictureChoiceFieldComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        TranslateModule.forRoot()
       ],
       declarations: [
         QuestionPictureChoiceFieldComponent,

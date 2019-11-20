@@ -38,7 +38,7 @@ export { QrcodeRedemptionComponent } from './lib/vouchers/qrcode-redemption/qrco
  */
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
 export { AuthenticationService } from './lib/auth/authentication/authentication.service';
-export { TokenStorage } from './lib/auth/authentication/token-storage.service';
+export { TokenStorage } from './lib/utils/storage/token-storage.service';
 export { IChangePasswordData, ISignUpData } from './lib/auth/authentication/models/authentication.model';
 export { IFormsService } from './lib/auth/authentication/iforms.service';
 
@@ -95,8 +95,7 @@ export { ProfileService } from './lib/profile/profile.service';
 export {
   IProfile,
   ICardNumber,
-  ICustomProperties,
-  IProfileAttributes
+  ICustomProperties
 } from './lib/profile/profile.model';
 
 /**
@@ -149,7 +148,7 @@ export { GeneralStaticDataService } from './lib/utils/general-static-data/genera
 export { ICountryCode } from './lib/utils/general-static-data/country-code';
 export { RepeatTimesDirective } from './lib/utils/directives/repeat-times.directive';
 export { NewsfeedComponent } from './lib/utils/newsfeed/newsfeed.component';
-export { CustomTranslateLoader } from './lib/utils/lang/land.service';
+export { LanguageService } from './lib/utils/language/language.service';
 /**
  * Puzzles
  */
@@ -176,7 +175,7 @@ export { GeoLocationService } from './lib/location/geolocation.service';
  */
 export { SurveyModule } from './lib/survey/survey.module';
 export { SurveyService } from './lib/survey/survey.service';
-export { ISurvey, SurveyQuestionType, IQuestion } from './lib/survey/models/survey.model';
+export { ISurvey, SurveyQuestionType, IQuestion, IAnswer } from './lib/survey/models/survey.model';
 export { SurveyComponent } from './lib/survey/survey/survey.component';
 export { QuestionComponent } from './lib/survey/question/question.component';
 export { SelectComponent } from './lib/survey/question/select/select.component';

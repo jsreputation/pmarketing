@@ -1,0 +1,10 @@
+<button mat-flat-button
+        class="btn"
+        [ngClass]="classList"
+        [class.disable]="disable"
+        [disabled]="disable"
+        [attr.form]="formId"
+        [disableRipple]="disableRipple"
+>
+  <ng-content></ng-content>
+</button>
