@@ -21,6 +21,8 @@ export class GameComponent implements OnInit, OnDestroy {
   private destroy$: Subject<any> = new Subject();
   private popupData: IPopupConfig;
   private isAnonymousUser: boolean;
+  private informationCollectionSetting: string;
+  public willWin: boolean;
   public successPopUp: IPopupConfig = {
     title: 'GAME_SUCCESS_TITLE',
     text: 'GAME_SUCCESS_TEXT',
@@ -80,6 +82,9 @@ export class GameComponent implements OnInit, OnDestroy {
       tap((game: IGame) => {
         if (game) {
           const { displayProperties } = game;
+          if (displayProperties && displayProperties.informationCollectionSetting) {
+            this.informationCollectionSetting = displayProperties.informationCollectionSetting;
+          }
           if (displayProperties && displayProperties.noRewardsPopUp) {
             this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
             this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
@@ -106,10 +111,12 @@ export class GameComponent implements OnInit, OnDestroy {
         this.transactionId = gameTransaction.id;
         if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
           const count = gameTransaction.voucherIds.length.toString();
+          this.willWin = true;
           this.successPopUp.text =
             this.successPopUp.text ? this.successPopUp.text.replace('{{rewards}}', count) : `You earned ${count} rewards`;
           this.popupData = this.successPopUp;
         } else {
+          this.willWin = false;
           this.popupData = this.noRewardsPopUp;
         }
       },
@@ -134,7 +141,8 @@ export class GameComponent implements OnInit, OnDestroy {
         bufferCount(nbSteps),
         first()
       );
-    const userAction$: Observable<void> = this.isAnonymousUser || !this.transactionId ?
+    const isCollectDataRequired = !!(this.informationCollectionSetting === 'pi_required' || this.informationCollectionSetting === 'signup_required');
+    const userAction$: Observable<void> = !this.transactionId || (this.isAnonymousUser && isCollectDataRequired) ?
       of(void 0) :
       this.gameService.prePlayConfirm(this.transactionId);
     combineLatest(processBar$, userAction$).subscribe(
@@ -144,9 +152,16 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   private redirectUrlAndPopUp(): void {
-    const queryParams = { popupData: JSON.stringify(this.popupData), engagementType: 'game', transactionId: this.transactionId };
-    if (this.isAnonymousUser) {
+    const queryParams = {
+      popupData: JSON.stringify(this.popupData),
+      engagementType: 'game',
+      transactionId: this.transactionId,
+      collectInfo: true
+    };
+    if (this.isAnonymousUser && this.informationCollectionSetting === 'pi_required') {
       this.router.navigate(['/pi'], { queryParams });
+    } else if (this.isAnonymousUser && this.informationCollectionSetting === 'signup_required') {
+      this.router.navigate(['/signup'], { queryParams });
     } else {
       this.router.navigate(['/wallet']);
       this.dialog.open(PopupComponent, { data: this.popupData });

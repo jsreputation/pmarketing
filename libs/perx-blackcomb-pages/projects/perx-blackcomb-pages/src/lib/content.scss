@@ -4,7 +4,9 @@
 }
 
 .content {
-  margin: 1.5rem;
+  margin: 2.4rem;
+  font-size: 1.4rem;
+  line-height: 2.5rem;
 
   h1 {
     font-size: 2rem;
@@ -14,5 +16,13 @@
     font-size: 1.4rem;
     white-space: pre-line;
     color: #666666;
+  }
+
+  li {
+    margin-bottom: 1.6rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }

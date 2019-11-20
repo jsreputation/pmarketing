@@ -1,8 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-
 import { ConfigService } from './config.service';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {AuthenticationService} from '../auth/authentication/authentication.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { AuthenticationService } from '../auth/authentication/authentication.service';
 import { Type } from '@angular/core';
 import { of } from 'rxjs';
 
@@ -49,4 +48,14 @@ describe('ConfigService', () => {
     httpTestingController.verify();
   });
 
+  it('v4MicrositeSettingsToMicrositeSettings', () => {
+    const convertObject = {
+      id: 1,
+      key: 'key',
+      string_value: 'key',
+      json_value: {}
+    };
+    const val = ConfigService.v4MicrositeSettingsToMicrositeSettings(convertObject);
+    expect(val.id).toBe(convertObject.id);
+  });
 });

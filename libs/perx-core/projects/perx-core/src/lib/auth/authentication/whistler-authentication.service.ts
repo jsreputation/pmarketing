@@ -3,9 +3,8 @@ import { Injectable } from '@angular/core';
 import { of, Observable, throwError, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { IProfile, IProfileAttributes } from '../../profile/profile.model';
+import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
-import { TokenStorage } from './token-storage.service';
 import {
   IResetPasswordData,
   ISignUpData,
@@ -18,13 +17,29 @@ import {
   IWMessageResponse,
   IWCognitoLogin,
   IJsonApiListPayload,
+  IWProfileAttributes,
 } from '@perx/whistler';
+import { TokenStorage } from '../../utils/storage/token-storage.service';
 
 interface IUserJWTRequest {
   identifier: string;
   url: string;
   anonymous?: boolean;
-  profile?: IProfileAttributes;
+  profile?: { [key: string]: any };
+}
+
+enum APIAttributesMap {
+  fistName = 'first_name',
+  first_name = 'first_name',
+  lastName = 'last_name',
+  last_name = 'last_name',
+  primary_identifier = 'primary_identifier',
+  primaryIdentifier = 'primary_identifier',
+  phone_number = 'phone_number',
+  phoneNumber = 'phone_number',
+  email_address = 'email_address',
+  emailAddress = 'email_address',
+  title = 'title'
 }
 
 @Injectable({
@@ -60,6 +75,29 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return this.$failedAuthObservableSubject;
   }
 
+  private static UsertoWUser(userObj: { [key: string]: any }, PI: string): IWProfileAttributes {
+    const profile: IWProfileAttributes = {
+      title: null,
+      first_name: null,
+      last_name: null,
+      phone_number: null,
+      email_address: null,
+      primary_identifier: PI,
+      properties: {}
+    };
+
+    Object.entries(userObj).forEach(field => {
+      if (APIAttributesMap[field[0]] !== undefined) {
+        profile[APIAttributesMap[field[0]]] = field[1];
+      } else {
+        if (!profile.properties) {
+          profile.properties = {};
+        }
+        profile.properties[field[0]] = field[1];
+      }
+    });
+    return profile;
+  }
   public isAuthorized(): Observable<boolean> {
     const token = this.tokenStorage
       .getAppInfoProperty('userAccessToken');
@@ -108,7 +146,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     );
   }
 
-  public createUserAndAutoLogin(pi: string, userObj?: IProfileAttributes, anonymous?: boolean): Observable<any> {
+  public createUserAndAutoLogin(pi: string, userObj?: { [key: string]: any }, anonymous?: boolean): Observable<any> {
     return this.createUserWithPI(pi, userObj, anonymous).pipe(
       tap(
         (res: IJsonApiListPayload<IWCognitoLogin>) => {
@@ -138,16 +176,19 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
-  private createUserWithPI(pi: string, userObj?: IProfileAttributes, anonymous?: boolean): Observable<IJsonApiListPayload<IWCognitoLogin>> {
+  private createUserWithPI(
+    pi: string,
+    userObj?: { [key: string]: any },
+    anonymous?: boolean
+  ): Observable<IJsonApiListPayload<IWCognitoLogin>> {
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: pi,
       anonymous
     };
     if (userObj) {
-      userJWTRequest.profile = userObj;
+      userJWTRequest.profile = WhistlerAuthenticationService.UsertoWUser(userObj, pi);
     }
-
     return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.createUsersEndPoint, userJWTRequest);
   }
 
