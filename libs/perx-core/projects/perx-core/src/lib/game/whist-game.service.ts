@@ -135,7 +135,7 @@ export class WhistlerGameService implements IGameService {
   }
 
   public get(engagementId: number, campaignId?: number): Observable<IGame> {
-    let campaignIdParams;
+    let campaignIdParams = '';
     if (campaignId) {
       campaignIdParams = `?campaign_id=${campaignId}`;
     }
