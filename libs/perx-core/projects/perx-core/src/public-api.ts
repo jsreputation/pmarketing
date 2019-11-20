@@ -143,7 +143,7 @@ export { GeneralStaticDataService } from './lib/utils/general-static-data/genera
 export { ICountryCode } from './lib/utils/general-static-data/country-code';
 export { RepeatTimesDirective } from './lib/utils/directives/repeat-times.directive';
 export { NewsfeedComponent } from './lib/utils/newsfeed/newsfeed.component';
-export { CustomTranslateLoader } from './lib/utils/lang/land.service';
+export { LanguageService } from './lib/utils/language/language.service';
 /**
  * Puzzles
  */
