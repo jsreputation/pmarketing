@@ -36,7 +36,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, Contro
     }
   }
 
-  @Input() public placeholder: string = 'Choose date';
+  @Input() public placeholder: string = 'CHOOSE_DATE';
   @Input() public max: Date | null = null;
   @Input() public min: Date | null = null;
   public disabledState: boolean = false;

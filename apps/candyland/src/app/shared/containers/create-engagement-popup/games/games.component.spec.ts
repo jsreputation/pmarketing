@@ -5,6 +5,7 @@ import { GameComponent } from './game/game.component';
 import { MatFormFieldModule, MatRadioModule, MatSelectModule } from '@angular/material';
 import { ButtonModule } from '../../../components/button/button.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('GamesComponent', () => {
   let component: GamesComponent;
@@ -18,6 +19,7 @@ describe('GamesComponent', () => {
         ButtonModule,
         MatRadioModule,
         ReactiveFormsModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [
         GamesComponent,

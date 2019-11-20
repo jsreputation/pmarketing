@@ -23,6 +23,7 @@ import {ButtonModule} from '../../../shared/components/button/button.module';
 import {NoDataModule} from '../../../shared/table/no-data/no-data.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RewardsCampaignsListComponent', () => {
   let component: EngagementsListComponent;
@@ -46,7 +47,8 @@ describe('RewardsCampaignsListComponent', () => {
         MatButtonModule,
         ButtonModule,
         NoDataModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [EngagementsListComponent],
       schemas: [NO_ERRORS_SCHEMA]

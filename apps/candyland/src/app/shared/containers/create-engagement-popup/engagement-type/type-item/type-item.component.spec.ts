@@ -3,6 +3,7 @@ import { TypeItemComponent } from './type-item.component';
 import { MatFormFieldModule, MatIconModule, MatRadioModule, MatSelectModule } from '@angular/material';
 import { ButtonModule } from '../../../../components/button/button.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TypeItemComponent', () => {
   let component: TypeItemComponent;
@@ -17,6 +18,7 @@ describe('TypeItemComponent', () => {
         ButtonModule,
         MatRadioModule,
         ReactiveFormsModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [ TypeItemComponent ]
     })

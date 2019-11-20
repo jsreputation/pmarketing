@@ -1,12 +1,12 @@
 <section class="phonepreview-wrapper">
-  <div class="branding-form" [formGroup]="formBranding">
+  <div [formGroup]="formBranding" class="branding-form">
     <mat-card class="card-fieldset">
       <h2 class="card-fieldset-title sub-title">
-        Theme
+        {{'SETTINGS_FEATURE.THEME' | translate}}
       </h2>
       <div class="control-input">
         <mat-form-field class="branding-select">
-          <mat-select formControlName="font" placeholder="Font Type">
+          <mat-select formControlName="font" [placeholder]="'SETTINGS_FEATURE.FONT_TYPE' | translate">
             <mat-option *ngFor="let font of fonts" [value]="font.value">
               {{ font.value }}
             </mat-option>
@@ -16,13 +16,17 @@
       <div class="control-input-splitter">
         <div class="control-input">
           <label class="card-fieldset-label">
-            <span>Primary Color</span>
+            <span>
+              {{'SETTINGS_FEATURE.PRIMARY_COLOR' | translate}}
+            </span>
           </label>
           <cl-color-picker [formControlName]="'primaryColor'" aria-label="pick primary color"></cl-color-picker>
         </div>
         <div class="control-input">
           <label class="card-fieldset-label">
-            <span>Secondary Color</span>
+            <span>
+              {{'SETTINGS_FEATURE.SECONDARY_COLOR' | translate}}
+            </span>
           </label>
           <cl-color-picker
             [formControlName]="'secondaryColor'" aria-label="pick secondary color"></cl-color-picker>
@@ -32,21 +36,23 @@
 
     <mat-card class="card-fieldset">
       <h2 class="card-fieldset-title sub-title">
-        Header & Navbar
+        {{'SETTINGS_FEATURE.HEADER_NAVBAR' | translate}}
       </h2>
       <div class="control-input">
         <label class="card-fieldset-label">
-          <span>Color</span>
+          <span>
+            {{'SETTINGS_FEATURE.COLOR' | translate}}
+          </span>
         </label>
-        <mat-form-field color="primary" appearance="outline">
+        <mat-form-field appearance="outline" color="primary">
           <mat-select [formControlName]="'headerNavbarColor'">
             <mat-select-trigger>
               <div class="select-color">
                 <div
-                  class="select-color-preview"
                   [ngStyle]="{
                     'background-color': headerNavbarColor.value?.color
-                  }"></div>
+                  }"
+                  class="select-color-preview"></div>
                 <p class="select-color-text">
                   {{ headerNavbarColor.value?.labelView }}
                 </p>
@@ -55,8 +61,8 @@
             <mat-option *ngFor="let color of listColors" [value]="color">
               <div class="select-color">
                 <div
-                  class="select-color-preview"
-                  [ngStyle]="{ 'background-color': color.color }"></div>
+                  [ngStyle]="{ 'background-color': color.color }"
+                  class="select-color-preview"></div>
                 <span class="select-color-text">
                   {{ color.labelView }}
                 </span>
@@ -68,14 +74,16 @@
       <div class="control-input-splitter">
         <div class="control-input">
           <label class="card-fieldset-label">
-            <span>Image Logo</span>
+            <span>
+              {{'SETTINGS_FEATURE.IMAGE_LOGO' | translate}}
+            </span>
           </label>
           <div class="logo-header-wrap">
             <cl-upload-graphic
+              [isRequired]="logo.hasError('required') && logo.touched"
               classList="stretch"
-              placeholder="Recommended size: 250px by 50px"
               formControlName="logo"
-              [isRequired]="logo.hasError('required') && logo.touched">
+              [placeholder]="'SETTINGS_FEATURE.RECOMMENDED_SIZE' | translate">
             </cl-upload-graphic>
           </div>
         </div>
@@ -83,32 +91,34 @@
     </mat-card>
     <mat-card class="card-fieldset">
       <h2 class="card-fieldset-title sub-title">
-        Button
+        {{'SETTINGS_FEATURE.BUTTON' | translate}}
       </h2>
       <div class="control-input-splitter">
         <div class="control-input">
           <label class="card-fieldset-label">
-            <span>Background Color</span>
+            <span>
+              {{'SETTINGS_FEATURE.BACKGROUND_COLOR' | translate}}
+            </span>
           </label>
-          <mat-form-field color="primary" appearance="outline">
+          <mat-form-field appearance="outline" color="primary">
             <mat-select [formControlName]="'buttonBackgroundColor'">
               <mat-select-trigger>
                 <div class="select-color">
                   <div
-                    class="select-color-preview"
                     [ngStyle]="{
                       'background-color': buttonBackgroundColor.value.color
-                    }"></div>
+                    }"
+                    class="select-color-preview"></div>
                   <p class="select-color-text">
                     {{ buttonBackgroundColor.value?.labelView }}
                   </p>
                 </div>
               </mat-select-trigger>
-              <mat-option [value]="color" *ngFor="let color of listColors">
+              <mat-option *ngFor="let color of listColors" [value]="color">
                 <div class="select-color">
                   <div
-                    class="select-color-preview"
-                    [ngStyle]="{ 'background-color': color.color }"></div>
+                    [ngStyle]="{ 'background-color': color.color }"
+                    class="select-color-preview"></div>
                   <span class="select-color-text">
                     {{ color.labelView }}
                   </span>
@@ -119,27 +129,29 @@
         </div>
         <div class="control-input">
           <label class="card-fieldset-label">
-            <span>Text Color</span>
+            <span>
+              {{'SETTINGS_FEATURE.TEXT_COLOR' | translate}}
+            </span>
           </label>
-          <mat-form-field color="primary" appearance="outline">
+          <mat-form-field appearance="outline" color="primary">
             <mat-select [formControlName]="'buttonTextColor'">
               <mat-select-trigger>
                 <div class="select-color">
                   <div
-                    class="select-color-preview"
                     [ngStyle]="{
                       'background-color': buttonTextColor.value.color
-                    }"></div>
+                    }"
+                    class="select-color-preview"></div>
                   <p class="select-color-text">
                     {{ buttonTextColor.value?.labelView }}
                   </p>
                 </div>
               </mat-select-trigger>
-              <mat-option [value]="color" *ngFor="let color of listColorsText">
+              <mat-option *ngFor="let color of listColorsText" [value]="color">
                 <div class="select-color">
                   <div
-                    class="select-color-preview"
-                    [ngStyle]="{ 'background-color': color.color }"></div>
+                    [ngStyle]="{ 'background-color': color.color }"
+                    class="select-color-preview"></div>
                   <span class="select-color-text">
                     {{ color.labelView }}
                   </span>
@@ -152,62 +164,62 @@
     </mat-card>
   </div>
   <cl-settings-mobile-preview #mobilePreview
-    [tabs]="['Login', 'Home', 'Reward Detail']"
-    class="branding">
+                              [tabs]="tabsLabels"
+                              class="branding">
     <!--LOG IN PAGE-->
     <!-- [logoType]="logoType.value === 'image'" -->
     <cl-simple-mobile-view
-      class="firs-tab"
-      [mobileImageClass]="'mobile-non-header'"
-      [headerColor]="headerNavbarColor.value.color"
-      [primaryColor]="primaryColor.value"
       [backgroundColor]="primaryColor.value"
+      [fontFamily]="font.value"
+      [headerColor]="headerNavbarColor.value.color"
       [logo]="logo.value"
-      [fontFamily]="font.value">
+      [mobileImageClass]="'mobile-non-header'"
+      [primaryColor]="primaryColor.value"
+      class="firs-tab">
       <div class="mobile-preview-header">
         <p class="mobile-preview-headline">
-          Some text for example
+          {{'SETTINGS_FEATURE.TEXT' | translate}}
         </p>
       </div>
       <div class="plugin-block">
-        <div class="mobile-preview-card"
-          [ngStyle]="{'background-color': '#fffff'}">
+        <div [ngStyle]="{'background-color': '#fffff'}"
+             class="mobile-preview-card">
           <div class="mobile-preview-header-nested">
             <p class="mobile-preview-headline">
-              Log In
+              {{'SETTINGS_FEATURE.LOG_IN' | translate}}
             </p>
           </div>
           <mat-form-field appearance="fill" class="control-input">
-            <input matInput placeholder="Player Code">
+            <input matInput [placeholder]="'SETTINGS_FEATURE.PLAYER_CODE' | translate">
           </mat-form-field>
           <mat-form-field appearance="fill" class="control-input">
-            <input matInput placeholder="Card last 4 digit">
+            <input matInput [placeholder]="'SETTINGS_FEATURE.CARD_NUMBER' | translate">
           </mat-form-field>
 
-          <button class="mobile-preview-btn"
-            [ngStyle]="{
+          <button [ngStyle]="{
                         backgroundColor: buttonBackgroundColor.value.color,
                         'font-family': font.value,
                         color: buttonTextColor.value.color
 
-          }">
-            Log In
+          }"
+                  class="mobile-preview-btn">
+            {{'SETTINGS_FEATURE.LOG_IN' | translate}}
           </button>
           <p class="mobile-additional-info">
-            Other additional info
+            {{'SETTINGS_FEATURE.INFO' | translate}}
           </p>
         </div>
       </div>
     </cl-simple-mobile-view>
     <!--HOME PAGE-->
     <cl-simple-mobile-view
-      class="second-tab"
-      [mobileImageClass]="'mobile-non-header'"
-      [headerColor]="headerNavbarColor.value.color"
-      [logo]="logo.value"
       [backgroundColor]="'#E8E8E8'"
+      [fontFamily]="font.value"
+      [headerColor]="headerNavbarColor.value.color"
       [logoType]="logoType.value === 'image'"
-      [fontFamily]="font.value">
+      [logo]="logo.value"
+      [mobileImageClass]="'mobile-non-header'"
+      class="second-tab">
       <!--Points block-->
       <div class="plugin-block">
         <div class="points-block flex justify-content-between">
@@ -216,62 +228,63 @@
               0
             </p>
             <p class="points-title">
-              Your total points
+              {{'SETTINGS_FEATURE.YOUR_POINTS' | translate}}
             </p>
           </div>
           <div class="quare-code-btn">
-            <button class="mobile-preview-btn"
-              [ngStyle]="{
+            <button [ngStyle]="{
                         backgroundColor: buttonBackgroundColor.value.color,
                         'font-family': font.value,
                         color: buttonTextColor.value.color
 
-            }">
-              My OR
+            }"
+                    class="mobile-preview-btn">
+              {{'SETTINGS_FEATURE.MY_OR' | translate}}
             </button>
           </div>
         </div>
         <div class="games-block">
           <h2 class="card-fieldset-title sub-title">
-            Featured Rewards
+            {{'SETTINGS_FEATURE.FEATURE_REWARDS' | translate}}
+
           </h2>
-          <perx-core-rewards-collection [rewardsList]="rewards$"
-            clScrollTo
-            [shiftTo]="50"
-            canRun="true"
-            classElement="card-collection-container"
-            [emit$]="mobilePreview.animationDone"></perx-core-rewards-collection>
+          <perx-core-rewards-collection [emit$]="mobilePreview.animationDone"
+                                        [rewardsList]="rewards$"
+                                        [shiftTo]="50"
+                                        canRun="true"
+                                        clScrollTo
+                                        classElement="card-collection-container"></perx-core-rewards-collection>
         </div>
       </div>
     </cl-simple-mobile-view>
     <cl-simple-mobile-view
-      class="three-tab"
-      [mobileImageClass]="'mobile-non-header'"
+      [fontFamily]="font.value"
       [headerColor]="headerNavbarColor.value.color"
-      [logo]="logo.value"
       [logoType]="logoType.value === 'image'"
-      [fontFamily]="font.value">
+      [logo]="logo.value"
+      [mobileImageClass]="'mobile-non-header'"
+      class="three-tab">
       <div class="plugin-block">
         <div
-          class="mobile-preview-fullpage"
           [ngStyle]="{
             'background-image':
               'url(assets/images/reward/card-background/card-bg-1.png)',
             'font-family': font.value,
             color: buttonTextColor.value.color
-          }">
+          }"
+          class="mobile-preview-fullpage">
           <perx-core-reward [reward]="reward$"></perx-core-reward>
         </div>
       </div>
 
       <div class="mobile-preview-btn-wrap mobile-btn-block">
         <button
-          class="mobile-preview-btn"
           [ngStyle]="{
             backgroundColor: buttonBackgroundColor.value.color,
             'font-family': font.value,
             color: buttonTextColor.value.color
-          }">
+          }"
+          class="mobile-preview-btn">
           {{ "button text" }}
         </button>
       </div>

@@ -1,20 +1,20 @@
 <article class="stamp-wrap" *ngIf="stampData" [formGroup]="formStamp">
   <header class="page-header full-with">
     <mat-form-field class="pagetitle-input" floatLabel="never">
-      <input type="text" matInput formControlName="name" placeholder="Enter title here">
-      <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
-      <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
-      <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+      <input type="text" matInput formControlName="name" [placeholder]="'ENTER_TITLE_HERE' | translate">
+      <mat-error *ngIf="name.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
+      <mat-error *ngIf="name.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 1</mat-error>
+      <mat-error *ngIf="name.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
     </mat-form-field>
     <div class="btn-group">
       <cl-button [classList]="'secondary'" class="stamp-btn-cancel" (click)="comeBack()">
-        <span>
-          Cancel
-        </span>
+       <span translate>
+        BTN_CANCEL
+      </span>
       </cl-button>
       <cl-button [classList]="'primary cta cta-save'" (click)="save()">
-        <span>
-          Save
+        <span translate>
+          BTN_SAVE
         </span>
       </cl-button>
     </div>
@@ -23,40 +23,40 @@
     <div class="phonepreview-wrapper">
       <div class="stamp-form">
         <mat-card class="card-fieldset">
-          <h2 class="card-fieldset-title sub-title">
-            Messages
+          <h2 class="card-fieldset-title sub-title" translate>
+            MESSAGES
           </h2>
           <div class="stamp-form">
             <div class="control-input">
-              <mat-form-field class="mat-form-field">
-                <input type="text" [placeholder]="'Headline message'" matInput formControlName="headlineMessage">
+              <mat-form-field class="messages-input">
+                <input type="text" [placeholder]="'HEADLINE_MESSAGE' | translate" matInput formControlName="headlineMessage">
                 <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
-                <mat-error *ngIf="headlineMessage.hasError('required')">Required field</mat-error>
-                <mat-error *ngIf="headlineMessage.hasError('minlength')">Min length 5</mat-error>
-                <mat-error *ngIf="headlineMessage.hasError('maxlength')">Max length 60</mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 5</mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
               </mat-form-field>
             </div>
             <div class="control-input">
-              <mat-form-field class="mat-form-field">
-                <input type="text" matInput [placeholder]="'Sub-headline message'" formControlName="subHeadlineMessage">
+              <mat-form-field class="messages-input">
+                <input type="text" matInput [placeholder]="'SUB-HEADLINE_MESSAGE' | translate" formControlName="subHeadlineMessage">
                 <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>
-                <mat-error *ngIf="subHeadlineMessage.hasError('required')">Required field</mat-error>
-                <mat-error *ngIf="subHeadlineMessage.hasError('minlength')">Min length 5</mat-error>
-                <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')">Max length 60</mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 5</mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
               </mat-form-field>
             </div>
           </div>
         </mat-card>
 
         <mat-card class="card-fieldset">
-          <h2 class="card-fieldset-title sub-title">
-            Game graphic
+          <h2 class="card-fieldset-title sub-title" translate>
+            GAME_GRAPHIC
           </h2>
           <div class="game-form">
             <div class="game-number">
               <div class="control-input" *ngIf="stampData?.number">
-                <h3 class="card-fieldset-label">
-                  Total number of stamps on a card
+                <h3 class="card-fieldset-label" translate>
+                  TOTAL_NUMBER_OF_STAMPS_ON_A_CARD
                 </h3>
                 <div class="slider">
                   <mat-slider
@@ -74,8 +74,8 @@
             </div>
             <div class="game-number game-number-slot">
               <div class="control-input reward-slot" *ngIf="stampSlotNumbers">
-                <h3 class="card-fieldset-label">
-                  Reward slot
+                <h3 class="card-fieldset-label" translate>
+                  REWARD_SLOT
                 </h3>
                 <cl-checkbox-group class="btn-list btn-medium-list" formControlName="stampsSlotNumber">
                   <ng-container *ngFor="let stampSlot of stampSlotNumbers">
@@ -88,8 +88,8 @@
             </div>
 
             <div class="control-img_asset">
-              <h3 class="card-fieldset-label">
-                Pre-stamp
+              <h3 class="card-fieldset-label" translate>
+                PRE-STAMP
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap *ngIf="stampData?.preStamp"
@@ -100,11 +100,11 @@
               </div>
             </div>
             <div class="control-img_asset">
-              <h3 class="card-fieldset-label">
-                Reward Pre-stamp
+              <h3 class="card-fieldset-label" translate>
+                REWARD_PRE-STAMP
                 <cl-info-hint>
-                  <span class="info-text">You can set the rewards when&nbsp;</span>
-                  <span class="info-text">you create a campaign</span>
+                  <span class="info-text" translate>YOU_CAN_SET_THE_REWARDS_WHEN</span>
+                  <span class="info-text" translate >YOU_CREATE_A_CAMPAIGN</span>
                 </cl-info-hint>
               </h3>
               <div class="game-gift-box_field">
@@ -116,8 +116,8 @@
               </div>
             </div>
             <div class="control-img_asset">
-              <h3 class="card-fieldset-label">
-                Post-stamp
+              <h3 class="card-fieldset-label" translate>
+                POST-STAMP
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap *ngIf="stampData?.stampsPost"
@@ -128,10 +128,10 @@
               </div>
             </div>
             <div class="control-img_asset">
-              <h3 class="card-fieldset-label">
-                Reward Post-stamp
+              <h3 class="card-fieldset-label" translate>
+                REWARD_POST-STAMP
                 <cl-info-hint>
-                  <span class="info-text">You can set the rewards when&nbsp;</span>
+                  <span class="info-text">You can set the rewards when</span>
                   <span class="info-text">you create a campaign</span>
                 </cl-info-hint>
               </h3>
@@ -144,8 +144,8 @@
               </div>
             </div>
             <div class="control-img_asset">
-              <h3 class="card-fieldset-label">
-                Card Background
+              <h3 class="card-fieldset-label" translate>
+                CARD_BACKGROUND
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap *ngIf="stampData?.cardBackground"
@@ -157,8 +157,8 @@
             </div>
 
             <div class="control-img_asset">
-              <h3 class="card-fieldset-label">
-                Background
+              <h3 class="card-fieldset-label" translate>
+                BACKGROUND
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap *ngIf="stampData?.backgroundStamp"
@@ -171,8 +171,8 @@
           </div>
         </mat-card>
         <mat-card class="card-fieldset">
-          <h2 class="card-fieldset-title sub-title">
-            Button
+          <h2 class="card-fieldset-title sub-title" translate>
+            BUTTON
           </h2>
           <div class="messages-form">
             <div class="control-input">

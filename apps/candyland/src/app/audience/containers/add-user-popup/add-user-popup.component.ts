@@ -23,9 +23,9 @@ export class AddUserPopupComponent implements OnInit {
       {title: 'Country 2', value: 'country2'}
     ],
     audienceList: [
-      {title: 'Gold_users', value: 'Gold_users'},
-      {title: 'Silver tier', value: 'Silver_tier'},
-      {title: 'Bronze tier', value: 'Bronze_tier'}
+      {title: 'AUDIENCE_FEATURE.GOLD_USERS', value: 'Gold_users'},
+      {title: 'AUDIENCE_FEATURE.SILVER_TIER', value: 'Silver_tier'},
+      {title: 'AUDIENCE_FEATURE.BRONZE_TIER', value: 'Bronze_tier'}
     ]
   };
 

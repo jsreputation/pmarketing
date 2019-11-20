@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AudiencesVouchersListComponent } from './audiences-vouchers-list.component';
 import { MatTableModule, MatMenuModule, MatIconModule } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AudiencesVouchersListComponent', () => {
   let component: AudiencesVouchersListComponent;
@@ -11,7 +12,8 @@ describe('AudiencesVouchersListComponent', () => {
       imports: [
         MatTableModule,
         MatMenuModule,
-        MatIconModule
+        MatIconModule,
+        TranslateModule.forRoot(),
       ],
       providers: [],
       declarations: [

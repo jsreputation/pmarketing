@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AudiencesUserInfoComponent } from './audiences-user-info.component';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AudiencesUserInfoComponent', () => {
   let component: AudiencesUserInfoComponent;
@@ -12,7 +13,8 @@ describe('AudiencesUserInfoComponent', () => {
       imports: [
         MatFormFieldModule,
         MatInputModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        TranslateModule.forRoot(),
       ],
       providers: [],
       declarations: [

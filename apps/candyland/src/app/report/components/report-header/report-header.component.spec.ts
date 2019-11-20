@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReportHeaderComponent } from './report-header.component';
 // tslint:disable-next-line
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ReportHeaderComponent', () => {
   let component: ReportHeaderComponent;
@@ -10,10 +11,11 @@ describe('ReportHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReportHeaderComponent ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-    .compileComponents();
+        declarations: [ReportHeaderComponent],
+        imports: [TranslateModule.forRoot()],
+        schemas: [NO_ERRORS_SCHEMA]
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
