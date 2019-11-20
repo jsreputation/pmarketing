@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { SelectAudienceComponent } from './select-audience.component';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SelectAudienceComponent', () => {
   let component: SelectAudienceComponent;
@@ -11,10 +12,11 @@ describe('SelectAudienceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectAudienceComponent ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-    .compileComponents();
+        declarations: [SelectAudienceComponent],
+        imports: [TranslateModule.forRoot()],
+        schemas: [NO_ERRORS_SCHEMA]
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {

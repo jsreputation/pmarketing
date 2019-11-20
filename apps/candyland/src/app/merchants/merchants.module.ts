@@ -14,6 +14,7 @@ import { ListMerchantViewModule } from '../shared/components/list-merchant-view/
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { CreateMerchantPopupModule } from '@cl-shared/containers/create-merchant-popup/create-merchant-popup.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,9 @@ import { CreateMerchantPopupModule } from '@cl-shared/containers/create-merchant
     SearchFilterModule,
     TableFiltersModule,
     PaginationModule,
-    NoDataModule
+    NoDataModule,
+    TranslateModule,
   ]
 })
-export class MerchantsModule { }
+export class MerchantsModule {
+}

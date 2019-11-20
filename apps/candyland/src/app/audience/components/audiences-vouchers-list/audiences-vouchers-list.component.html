@@ -2,7 +2,7 @@
   <table class="table" mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="rewardName" sticky>
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="source_id" class="column-featured">Reward Name</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="source_id" class="column-featured">{{'AUDIENCE_FEATURE.REWARD_NAME' | translate}}</th>
       <td mat-cell *matCellDef="let element" class="column-featured">
         <div class="name-cell">
           <span class="name-cell_">{{element?.reward?.name}}</span>
@@ -12,12 +12,12 @@
     </ng-container>
 
     <ng-container matColumnDef="merchant">
-      <th mat-header-cell *matHeaderCellDef>Merchant</th>
+      <th mat-header-cell *matHeaderCellDef>{{'AUDIENCE_FEATURE.MERCHANT' | translate}}</th>
       <td mat-cell *matCellDef="let element"> {{element?.reward?.merchantName}}</td>
     </ng-container>
 
     <ng-container matColumnDef="issuedDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="start_date" class="column-date">Issued Date</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="start_date" class="column-date">{{'AUDIENCE_FEATURE.ISSUED_DATE' | translate}}</th>
       <td mat-cell *matCellDef="let element" class="column-date">
         <ng-container *ngIf="element?.issuedDate">
           {{element?.issuedDate | date: DATE_FORMAT}}
@@ -28,7 +28,7 @@
     </ng-container>
 
     <ng-container matColumnDef="expiryDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="end_date" class="column-date">Expiry Date</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="end_date" class="column-date">{{'AUDIENCE_FEATURE.EXPIRY_DATE' | translate}}</th>
       <td mat-cell *matCellDef="let element" class="column-date">
         <ng-container *ngIf="element?.expiryDate">
           {{element?.expiryDate | date: DATE_FORMAT}}
@@ -39,7 +39,7 @@
     </ng-container>
 
     <ng-container matColumnDef="campaign">
-      <th mat-header-cell *matHeaderCellDef>Campaign</th>
+      <th mat-header-cell *matHeaderCellDef>{{'AUDIENCE_FEATURE.CAMPAIGN' | translate}}</th>
       <td mat-cell *matCellDef="let element">
         <div class="name-cell">
           <span class="name-cell_">{{element?.campaignName}}</span>
@@ -49,7 +49,7 @@
     </ng-container>
 
     <ng-container matColumnDef="redemptionType">
-      <th mat-header-cell *matHeaderCellDef>Redemption Type</th>
+      <th mat-header-cell *matHeaderCellDef>{{'AUDIENCE_FEATURE.REDEMPTION_TYPE' | translate}}</th>
       <td mat-cell *matCellDef="let element"> {{element?.redemptionType}}</td>
     </ng-container>
 
@@ -60,7 +60,7 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #itemMenu="matMenu">
-          <button mat-menu-item (click)="changeExpiryDate(element)">Change expiry date</button>
+          <button mat-menu-item (click)="changeExpiryDate(element)">{{'AUDIENCE_FEATURE.CHANGE_EXPIRY_DATE' | translate}}</button>
         </mat-menu>
       </td>
     </ng-container>

@@ -24,6 +24,7 @@ import { CampaignsMobilePreviewComponent } from '../../components/campaigns-mobi
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NewCampaignRewardsSurveyPageComponent', () => {
   let component: NewCampaignRewardsSurveyPageComponent;
@@ -54,7 +55,8 @@ describe('NewCampaignRewardsSurveyPageComponent', () => {
         MatRippleModule,
         MatDialogModule,
         ProgressBarModule,
-        RouterModule.forRoot([])
+        RouterModule.forRoot([]),
+        TranslateModule.forRoot(),
       ],
       providers: [
         {provide: CampaignCreationStoreService, useValue: campaignCreationStoreServiceStub},

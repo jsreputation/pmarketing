@@ -1,6 +1,6 @@
 <header class="page-header">
-  <h1 class="title">Merchants</h1>
-  <cl-button (click)="openDialogCreate()" classList="primary cta cta-new">Create New</cl-button>
+  <h1 class="title">{{'MERCHANTS' | translate}}</h1>
+  <cl-button (click)="openDialogCreate()" classList="primary cta cta-new">{{'BTN_CREATE_NEW' | translate}}</cl-button>
 </header>
 
 <section class="content merchant-list-content">
@@ -10,7 +10,7 @@
       <cl-table-filters [dataSource]="dataSource" classList="block">
         <ng-container *clTableFilter="'name'; let filter">
           <cl-search-filter class="search-block" [control]="filter"
-                            placeholder="Search for merchants"></cl-search-filter>
+                            [placeholder]="'SEARCH_PLACEHOLDER' | translate"></cl-search-filter>
         </ng-container>
       </cl-table-filters>
       <div class="table-card">
@@ -33,10 +33,10 @@
     <cl-no-data *ngSwitchCase="dataSourceStates.noDataApi">
       <img class="no-data-img" src="/assets/images/no-data/merchants-empty-illustration.svg" alt="">
       <h2 class="no-data-title">
-        You need Merchants to build your eco-system!
+        {{'NO_DATA_TITLE' | translate}}
       </h2>
       <p class="no-data-text">
-        Let&rsquo;s begin by creating your first Merchant
+        {{'NO_DATA_TEXT' | translate}}
       </p>
     </cl-no-data>
   </div>

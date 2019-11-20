@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import {
   IProfile,
   ICustomProperties,
-  IProfileProperty,
   ICardNumber,
 } from './profile.model';
 
@@ -15,7 +14,7 @@ export abstract class ProfileService {
 
   public abstract getCustomProperties(): Observable<ICustomProperties>;
 
-  public abstract updateUserInfo(data: IProfileProperty): Observable<void>;
+  public abstract updateUserInfo(data: IProfile): Observable<void>;
 
   public abstract setCardNumber(data: ICardNumber): Observable<void>;
 }

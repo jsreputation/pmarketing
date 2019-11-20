@@ -9,6 +9,7 @@ import {
 } from '@angular/material';
 import { DatePickerComponent } from './date-picker.component';
 import { Platform } from '@angular/cdk/platform';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { Platform } from '@angular/cdk/platform';
     MatDatepickerModule,
     MatInputModule,
     MatFormFieldModule,
-    MatIconModule
+    MatIconModule,
+    TranslateModule
   ],
   providers: [
     // The locale would typically be provided on the root module of your application. We do it at

@@ -12,6 +12,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule } from '@angular/material';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NewCampaignComponent', () => {
   let component: NewCampaignComponent;
@@ -25,7 +26,8 @@ describe('NewCampaignComponent', () => {
         ReactiveFormsModule,
         MatDialogModule,
         EngagementItemModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [NewCampaignComponent],
       providers: [

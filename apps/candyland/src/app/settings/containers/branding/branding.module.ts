@@ -9,6 +9,7 @@ import { UploadGraphicModule } from '@cl-shared/components/upload-graphic/upload
 import { SimpleMobileViewModule } from '@cl-shared';
 import { RewardsModule as PerxRewardsModule } from '@perx/core';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [BrandingComponent],
@@ -27,7 +28,7 @@ import { DirectivesModule } from '@cl-shared/directives/directives.module';
     MatFormFieldModule,
     MatInputModule,
     DirectivesModule,
-
+    TranslateModule,
   ]
 })
 export class BrandingModule { }

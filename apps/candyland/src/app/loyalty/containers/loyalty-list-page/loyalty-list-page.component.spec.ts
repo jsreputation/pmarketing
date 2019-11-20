@@ -4,6 +4,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoyaltyListPageComponent } from 'src/app/loyalty/containers/loyalty-list-page/loyalty-list-page.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoyaltyListPageComponent', () => {
   let component: LoyaltyListPageComponent;
@@ -13,7 +14,8 @@ describe('LoyaltyListPageComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [LoyaltyListPageComponent],
       schemas: [NO_ERRORS_SCHEMA]

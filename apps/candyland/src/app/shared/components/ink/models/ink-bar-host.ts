@@ -3,5 +3,4 @@ import { InkListenerDirective } from '@cl-shared/components/ink/directives/ink-l
 
 export interface IInkBarHost {
   getInkListeners(): QueryList<InkListenerDirective>;
-
 }

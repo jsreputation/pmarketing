@@ -1,31 +1,31 @@
 <header class="page-header full-with" [formGroup]="form">
   <mat-form-field class="pagetitle-input" floatLabel="never" >
-    <input type="text" matInput formControlName="name" placeholder="Enter title here">
-    <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
-    <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
-    <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+    <input type="text" matInput formControlName="name" [placeholder]="'ENTER_TITLE_HERE' | translate">
+    <mat-error *ngIf="name.hasError('required')">{{'ERROR_REQUIRED' | translate}}</mat-error>
+    <mat-error *ngIf="name.hasError('minlength')">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
+    <mat-error *ngIf="name.hasError('maxlength')">{{'ERROR_MAX_LENGTH' | translate}} 60</mat-error>
   </mat-form-field>
   <div class="btn-group">
-    <cl-button classList="secondary" routerLink="..">Cancel</cl-button>
+    <cl-button classList="secondary" routerLink="..">{{'BTN_CANCEL' | translate}}</cl-button>
     <!--    <cl-button classList="secondary" routerLink="..">Save as a draft</cl-button>-->
     <cl-button *ngIf="!isLastStep"
                classList="primary cta cta-next"
                (click)="goNext()">
-      Next
+      {{'BTN_NEXT' | translate}}
     </cl-button>
     <!--    [disable]="getStepCondition(stepper.selectedIndex)"-->
-    <cl-button *ngIf="isLastStep" classList="primary cta cta-save cta-save-launch" (click)="save()">Launch</cl-button>
+    <cl-button *ngIf="isLastStep" classList="primary cta cta-save cta-save-launch" (click)="save()">{{'BTN_LAUNCH' | translate}}</cl-button>
   </div>
 </header>
 
 <section class="content form-limiter">
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper (selectionChange)="goNext($event)">
     <mat-step [completed]="getStepCondition(0)">
-      <ng-template matStepLabel>Select engagement</ng-template>
+      <ng-template matStepLabel>{{'CAMPAIGN.SELECT_ENGAGEMENT' | translate}}</ng-template>
       <cl-new-campaign-select-engagement-page [tenantSettings]="tenantSettings"></cl-new-campaign-select-engagement-page>
     </mat-step>
     <mat-step [completed]="getStepCondition(1)">
-      <ng-template matStepLabel>Rewards & Limits</ng-template>
+      <ng-template matStepLabel>{{'CAMPAIGN.REWARDS_LIMITS' | translate}}</ng-template>
       <ng-container [ngSwitch]="store.currentCampaign?.template?.attributes_type">
         <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'"
                                              [tenantSettings]="tenantSettings"
@@ -42,11 +42,11 @@
       </ng-container>
     </mat-step>
     <mat-step [completed]="getStepCondition(2)">
-      <ng-template matStepLabel>Campaign Details</ng-template>
+      <ng-template matStepLabel>{{'CAMPAIGN.CAMPAIGN_DETAILS' | translate}}</ng-template>
       <cl-new-campaign-detail-page></cl-new-campaign-detail-page>
     </mat-step>
     <mat-step>
-      <ng-template matStepLabel>Review</ng-template>
+      <ng-template matStepLabel>{{'CAMPAIGN.REVIEW' | translate}}</ng-template>
       <cl-new-campaign-review-page [tenantSettings]="tenantSettings"
       ></cl-new-campaign-review-page>
     </mat-step>

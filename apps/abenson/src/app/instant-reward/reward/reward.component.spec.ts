@@ -3,6 +3,7 @@ import { RewardComponent } from './reward.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { GameModule, RewardsModule, RewardsService } from '@perx/core';
 import { of } from 'rxjs';
+import { MatDialogModule, MatDialogRef } from '@angular/material';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
@@ -18,10 +19,12 @@ describe('RewardComponent', () => {
       imports: [
         RouterTestingModule,
         GameModule,
+        MatDialogModule,
         RewardsModule,
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: MatDialogRef, useValue: {} }
       ]
     })
       .compileComponents();

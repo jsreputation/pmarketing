@@ -4,6 +4,7 @@ import { NewCampaignDonePopupComponent } from './new-campaign-done-popup.compone
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NewCampaignDonePopupComponent', () => {
   let component: NewCampaignDonePopupComponent;
@@ -11,7 +12,9 @@ describe('NewCampaignDonePopupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MatDialogModule],
+      imports: [
+        MatDialogModule,
+        TranslateModule.forRoot(),],
       providers: [
         {provide: MatDialogRef, useValue: {}},
         {provide: MAT_DIALOG_DATA, useValue: []},

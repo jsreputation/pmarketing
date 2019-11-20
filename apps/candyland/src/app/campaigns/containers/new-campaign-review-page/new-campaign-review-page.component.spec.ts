@@ -11,6 +11,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NewCampaignReviewPageComponent', () => {
   let component: NewCampaignReviewPageComponent;
@@ -18,11 +19,12 @@ describe('NewCampaignReviewPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ 
+      imports: [
         BrowserDynamicTestingModule,
         HttpClientTestingModule,
         ReactiveFormsModule,
         RouterModule.forRoot([]),
+        TranslateModule.forRoot(),
       ],
       declarations: [ NewCampaignReviewPageComponent ],
       providers: [

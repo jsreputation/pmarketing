@@ -2,7 +2,7 @@
   <table class="table" mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="id" class="column-id">ID</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="id" class="column-id"><span>{{'AUDIENCE_FEATURE.ID' | translate}}</span></th>
       <td mat-cell *matCellDef="let element" class="column-id">
         <a [routerLink]="'/audience/'+ element?.id">
           <span>#{{element?.id}}</span>
@@ -11,7 +11,7 @@
     </ng-container>
 
     <ng-container matColumnDef="name" sticky>
-      <th mat-header-cell *matHeaderCellDef class="column-featured">Name</th>
+      <th mat-header-cell *matHeaderCellDef class="column-featured"><span>{{'AUDIENCE_FEATURE.NAME' | translate}}</span></th>
       <td mat-cell *matCellDef="let element" class="column-featured">
         <a [routerLink]="'/audience/'+ element?.id">
           <span>{{element?.first_name}} {{element?.last_name}}</span>
@@ -20,29 +20,29 @@
     </ng-container>
 
     <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef class="column-email">Email</th>
+      <th mat-header-cell *matHeaderCellDef class="column-email"><span>{{'AUDIENCE_FEATURE.EMAIL' | translate}}</span></th>
       <td mat-cell *matCellDef="let element" class="column-email">{{element?.email_address || '-'}}</td>
     </ng-container>
 
     <ng-container matColumnDef="primary_identifier">
-      <th mat-header-cell *matHeaderCellDef>Primary Identifier</th>
+      <th mat-header-cell *matHeaderCellDef><span>{{'AUDIENCE_FEATURE.PRIMARY_IDENTIFIER' | translate}}</span></th>
       <td mat-cell *matCellDef="let element">{{element?.primary_identifier || '-'}}</td>
     </ng-container>
 
     <ng-container matColumnDef="state">
-      <th mat-header-cell *matHeaderCellDef class="column-state">State</th>
+      <th mat-header-cell *matHeaderCellDef class="column-state"><span>{{'AUDIENCE_FEATURE.STATE' | translate}}</span></th>
       <td mat-cell *matCellDef="let element" class="column-state">
         <cl-status-label [status]="element?.state"></cl-status-label>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="phone">
-      <th mat-header-cell *matHeaderCellDef class="column-phone">Contact Number</th>
+      <th mat-header-cell *matHeaderCellDef class="column-phone"><span>{{'AUDIENCE_FEATURE.CONTACT_NUMBER' | translate}}</span></th>
       <td mat-cell *matCellDef="let element" class="column-phone"> {{element?.phone_number || '-'}}</td>
     </ng-container>
 
     <ng-container matColumnDef="audienceList">
-      <th mat-header-cell *matHeaderCellDef class="column-audiencelist">Audience List</th>
+      <th mat-header-cell *matHeaderCellDef class="column-audiencelist"><span>{{'AUDIENCE_FEATURE.AUDIENCE_LIST' | translate}}</span></th>
       <td mat-cell *matCellDef="let element" class="column-audiencelist">
         {{ element?.pools }}
       </td>
@@ -55,7 +55,7 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #itemMenu="matMenu">
-          <button mat-menu-item (click)="manageList(element)">Manage List</button>
+          <button mat-menu-item (click)="manageList(element)">{{'AUDIENCE_FEATURE.MANAGE_LIST' | translate}}</button>
           <!-- <button mat-menu-item (click)="deactivateItem(element)">Deactivate</button> -->
         </mat-menu>
       </td>
