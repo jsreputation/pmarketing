@@ -9,7 +9,8 @@ import {
   ThemesService,
   FeedReaderService,
   ProfileService,
-  AuthenticationService } from '@perx/core';
+  AuthenticationService,
+  ConfigService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
@@ -52,6 +53,9 @@ describe('RedemptionComponent', () => {
   const feedReaderServiceStub = {};
   const authenticationServiceStub = {};
   const profileServiceStub = {};
+  const configServiceStub = {
+    readAppConfig: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -68,6 +72,7 @@ describe('RedemptionComponent', () => {
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: IVoucherService, useValue: vouchersServiceStub },
+        { provide : ConfigService, useValue: configServiceStub}
       ]
     })
       .compileComponents();
