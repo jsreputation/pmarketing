@@ -21,7 +21,7 @@ export class RedeemComponent implements OnInit, PageAppearence {
   ) { }
 
   public ngOnInit(): void {
-    const stringId : string | null = this.route.snapshot.paramMap.get('rewardId')
+    const stringId: string | null = this.route.snapshot.paramMap.get('rewardId');
     if (stringId) {
       this.rewardId = parseInt(stringId, 10);
     }

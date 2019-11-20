@@ -53,7 +53,7 @@ export class ConditionComponent implements OnInit, PageAppearence {
   }
 
   public onDiabetesConditionChanged(event: MatRadioChange): void {
-    if(!this.profile.customProperties) {
+    if (!this.profile.customProperties) {
       return;
     }
     this.profile.customProperties.diabetesState = event.value;
@@ -61,7 +61,7 @@ export class ConditionComponent implements OnInit, PageAppearence {
   }
 
   public onHypertensionConditionChanged(event: MatSlideToggleChange): void {
-    if(!this.profile.customProperties) {
+    if (!this.profile.customProperties) {
       return;
     }
     this.profile.customProperties.hypertension = event.checked.toString();
@@ -69,7 +69,7 @@ export class ConditionComponent implements OnInit, PageAppearence {
   }
 
   private updateCondition(): void {
-    if(!this.profile.customProperties) {
+    if (!this.profile.customProperties) {
       return;
     }
     this.profileService.setCustomProperties(this.profile.customProperties).subscribe(

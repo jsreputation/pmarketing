@@ -33,25 +33,25 @@ export class ProfileComponent implements OnInit, PageAppearence {
 
   private getConditionsFromProfile(profile: IProfile): string[] {
     const filteredConditions: string[] = [];
-    if(!profile.customProperties) {
+    if (!profile.customProperties) {
       return [];
     }
     const customProperties: ICustomProperties = profile.customProperties;
     Object.keys(profile.customProperties).forEach(property => {
-        if (property === 'diabetesState') {
-          const diabetesState = customProperties[property];
-          if (diabetesState && typeof diabetesState === 'string') {
-            if (diabetesState === 'pre_diabetes') {
-              this.translate.get('STATIC_PRE_DIABETES').subscribe((text) => filteredConditions.push(text));
-            } else if (diabetesState === 'diabetes') {
-              this.translate.get('STATIC_DIABETES').subscribe((text) => filteredConditions.push(text));
-            }
+      if (property === 'diabetesState') {
+        const diabetesState = customProperties[property];
+        if (diabetesState && typeof diabetesState === 'string') {
+          if (diabetesState === 'pre_diabetes') {
+            this.translate.get('STATIC_PRE_DIABETES').subscribe((text) => filteredConditions.push(text));
+          } else if (diabetesState === 'diabetes') {
+            this.translate.get('STATIC_DIABETES').subscribe((text) => filteredConditions.push(text));
           }
         }
-        if (property === 'hypertension' && customProperties[property] === 'true') {
-          this.translate.get('STATIC_HYPERTENSION').subscribe((text) => filteredConditions.push(text));
-        }
-      });
+      }
+      if (property === 'hypertension' && customProperties[property] === 'true') {
+        this.translate.get('STATIC_HYPERTENSION').subscribe((text) => filteredConditions.push(text));
+      }
+    });
     return filteredConditions.filter(condition => condition !== '');
   }
 
