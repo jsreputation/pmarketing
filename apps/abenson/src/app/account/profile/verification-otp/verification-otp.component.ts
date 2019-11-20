@@ -15,7 +15,7 @@ import { MatDialog } from '@angular/material';
 export class VerificationOtpComponent implements OnInit {
   public type: string;
   public data: IChangePhoneData | IChangePasswordData;
-  public userPhone: string;
+  public userPhone?: string;
   constructor(
     private route: ActivatedRoute,
     private auth: AuthenticationService,
@@ -29,9 +29,9 @@ export class VerificationOtpComponent implements OnInit {
   public ngOnInit(): void {
     this.ntfcService.$popup.subscribe((data) => this.dialog.open(PopupComponent, { data }));
     this.route.params.pipe(switchMap((params) => this.switchType(params.type)))
-      .subscribe((data: IChangePhoneData | IChangePasswordData) => this.data = { ...data, otp: null });
+      .subscribe((data: IChangePhoneData | IChangePasswordData) => this.data = { ...data, otp: '' });
   }
-  public get phoneDisplay(): string {
+  public get phoneDisplay(): string | undefined {
     return this.userPhone && '*'.repeat(this.userPhone.length - 4) + this.userPhone.substr(this.userPhone.length - 4);
   }
   private switchType(type: string): Observable<any> {
@@ -70,12 +70,14 @@ export class VerificationOtpComponent implements OnInit {
 
   public resendOtp(): void {
     switch (this.type) {
-    case 'phone':
-      this.auth.requestVerificationToken(this.userPhone).toPromise();
-      break;
-    case 'password':
-      this.auth.resendOTP(this.userPhone).toPromise();
-      break;
+      case 'phone':
+        this.auth.requestVerificationToken(this.userPhone).toPromise();
+        break;
+      case 'password':
+        if (this.userPhone) {
+          this.auth.resendOTP(this.userPhone).toPromise();
+        }
+        break;
     }
   }
 }

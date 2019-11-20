@@ -15,6 +15,7 @@ import {
   ProfileService,
   NotificationService,
   LoyaltyService,
+  ICardNumber,
 } from '@perx/core';
 
 @Component({
@@ -25,7 +26,7 @@ import {
 export class ExistingCardComponent implements OnInit {
   public existingCardForm: FormGroup;
 
-  private loyaltyId: number = null;
+  private loyaltyId?: number = undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -49,19 +50,21 @@ export class ExistingCardComponent implements OnInit {
     this.loyaltyService.getLoyalties().pipe(
       map(loyalties => loyalties && loyalties.length > 0 && loyalties[0])
     ).subscribe( (loyalty) => {
-      this.loyaltyId = loyalty.id;
+      if(loyalty) {
+        this.loyaltyId = loyalty.id;
+      }
     });
   }
 
   public onSubmit(): void {
-    const cardNumber: number = (this.existingCardForm.get('cardNumber').value as number);
+    const cardNumber: number = (this.existingCardForm.value.cardNumber as number);
     const cardNumberData = {
       cardNumber,
       loyaltyProgramId: this.loyaltyId,
     };
 
     try {
-      this.profileService.setCardNumber(cardNumberData).subscribe(
+      this.profileService.setCardNumber(cardNumberData as ICardNumber).subscribe(
         () => {
           // this.router.navigate(['enter-pin'], { state: { mobileNumber } });
         },
