@@ -22,12 +22,12 @@ export interface ICampaign {
   type: CampaignType;
   state: CampaignState;
   endsAt: Date | null;
+  beginsAt?: Date | null;
   rewards?: IReward[];
   thumbnailUrl?: string;
   engagementId?: number;
   rawPayload?: any;
   displayProperties?: IWCampaignDisplayProperties;
-  isComingSoon?: boolean | null;
 }
 
 export enum CommChannel {
