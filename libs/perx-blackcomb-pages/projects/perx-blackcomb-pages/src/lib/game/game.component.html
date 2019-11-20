@@ -13,6 +13,7 @@
     ></perx-blackcomb-pages-tap>
     <perx-blackcomb-pages-scratch
       *ngSwitchCase="gt.scratch"
+      [willWin]="willWin"
       [game]="game"
       (broken)=gameCompleted()
     ></perx-blackcomb-pages-scratch>

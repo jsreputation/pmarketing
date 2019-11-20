@@ -4,10 +4,10 @@
     [class.disable]="disabledState"
     matInput
     [ngxTimepicker]="toggleTimepicker"
-    [placeholder]="placeholder"
+    [placeholder]="placeholder | translate"
     [disableClick]="disabledState"
     [formControl]="control"
-    [format]=24 
+    [format]=24
     readonly>
   <ngx-material-timepicker-toggle class="time-picker-toggle"
                                   [class.disable]="disabledState"

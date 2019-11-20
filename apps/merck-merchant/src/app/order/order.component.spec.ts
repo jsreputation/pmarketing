@@ -69,7 +69,7 @@ describe('OrderComponent', () => {
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
       price: 50,
-      currency: 'HKD',
+      currency: 'HKD'
     },
     {
       name: 'Glucophage XR Tab',
@@ -77,7 +77,7 @@ describe('OrderComponent', () => {
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
       price: 75,
-      currency: 'HKD',
+      currency: 'HKD'
     },
     {
       name: 'Glucovance Tab',
@@ -85,7 +85,7 @@ describe('OrderComponent', () => {
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
       price: 50,
-      currency: 'HKD',
+      currency: 'HKD'
     },
     {
       name: 'Glucovance Tab',
@@ -93,7 +93,7 @@ describe('OrderComponent', () => {
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
       price: 100,
-      currency: 'HKD',
+      currency: 'HKD'
     },
     {
       name: 'Concor Tab',
@@ -101,7 +101,7 @@ describe('OrderComponent', () => {
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
       price: 50,
-      currency: 'HKD',
+      currency: 'HKD'
     },
     {
       name: 'Concor Tab',
@@ -109,7 +109,7 @@ describe('OrderComponent', () => {
       imageUrl: 'https://picsum.photos/200',
       pointsPerUnit: 5,
       price: 100,
-      currency: 'HKD',
+      currency: 'HKD'
     }
   ];
   const productServiceStub = {
@@ -165,14 +165,14 @@ describe('OrderComponent', () => {
         imageUrl: 'https://picsum.photos/200',
         pointsPerUnit: 5,
         price: 100,
-        currency: 'HKD',
+        currency: 'HKD'
       }, {
         name: 'Glucophage XR Tab',
         description: '500mg 60\'s',
         imageUrl: 'https://picsum.photos/200',
         pointsPerUnit: 5,
         price: 50,
-        currency: 'HKD',
+        currency: 'HKD'
       }];
       const productServiceSpy = spyOn(productService, 'getProducts').and.returnValue(of(productsStub));
       component.ngOnInit();

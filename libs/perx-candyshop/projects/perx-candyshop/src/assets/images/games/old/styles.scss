@@ -1,0 +1,8 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~saturn-datepicker/theming';
+//@include sat-datepicker-theme($theme);
+@import "styles/variables";
+@import "styles/common";
+@import "styles/icon-svg";
+@import "styles/tables";
+@import "styles/item-list";

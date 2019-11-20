@@ -8,17 +8,17 @@
   <div class="input-group">
     <!-- Reward Type-->
     <mat-form-field>
-      <mat-select [formControl]="formGroup.get('rewardType')" placeholder="Reward Type">
+      <mat-select [formControl]="formGroup.get('rewardType')" [placeholder]="'REWARD_TYPE' | translate">
         <ng-container *ngFor="let option of config?.rewardType">
-          <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+          <mat-option [value]="option?.value">{{option?.title | translate}}</mat-option>
         </ng-container>
       </mat-select>
     </mat-form-field>
     <!--Category-->
     <mat-form-field>
-      <mat-select [formControl]="formGroup.get('category')" placeholder="Category">
+      <mat-select [formControl]="formGroup.get('category')" [placeholder]="'CATEGORY' | translate">
         <ng-container *ngFor="let option of config?.category">
-          <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+          <mat-option [value]="option?.value">{{option?.title | translate}}</mat-option>
         </ng-container>
       </mat-select>
     </mat-form-field>
@@ -26,9 +26,9 @@
   <!--Redemption Type-->
   <div class="input-group">
     <mat-form-field>
-      <mat-select [formControl]="formGroup.get('redemptionType')" placeholder="Redemption Type">
+      <mat-select [formControl]="formGroup.get('redemptionType')" [placeholder]="'REDEMPTION_TYPE' | translate">
         <ng-container *ngFor="let option of config?.redemptionType">
-          <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+          <mat-option [value]="option?.value">{{option?.title | translate}}</mat-option>
         </ng-container>
       </mat-select>
     </mat-form-field>
@@ -39,7 +39,7 @@
         min="0"
         step="0.01"
         matInput
-        placeholder="Cost of Reward"
+        [placeholder]="'COST_OF_REWARD' | translate"
         [formControl]="formGroup.get('cost')">
       <span matSuffix>{{currency}}</span>
     </mat-form-field>
@@ -48,13 +48,13 @@
 <!--Description-->
 <mat-form-field>
         <textarea matInput
-                  placeholder="Description"
+                  [placeholder]="'DESCRIPTION' | translate"
                   [formControl]="formGroup.get('description')"></textarea>
 </mat-form-field>
 <!--Terms & Condition-->
 <mat-form-field>
         <textarea matInput
-                  placeholder="Terms & Condition"
+                  [placeholder]="'TERMS_&_CONDITION' | translate"
                   [formControl]="formGroup.get('termsAndCondition')"></textarea>
 </mat-form-field>
 <!-- Tags -->

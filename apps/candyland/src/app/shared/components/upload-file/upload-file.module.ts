@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UploadFileComponent } from './upload-file.component';
 import { DownloadButtonModule } from '@cl-shared/components/download-button/download-button.module';
 import { MatButtonModule, MatIconModule } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { MatButtonModule, MatIconModule } from '@angular/material';
     CommonModule,
     MatIconModule,
     MatButtonModule,
-    DownloadButtonModule
+    DownloadButtonModule,
+    TranslateModule
   ]
 })
 export class UploadFileModule {

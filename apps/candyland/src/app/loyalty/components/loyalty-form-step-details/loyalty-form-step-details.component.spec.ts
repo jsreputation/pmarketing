@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 // tslint:disable-next-line:import-blacklist
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LoyaltyFormStepDetailsComponent } from './loyalty-form-step-details.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoyaltyFormStepOneComponent', () => {
   let component: LoyaltyFormStepDetailsComponent;
@@ -9,9 +10,10 @@ describe('LoyaltyFormStepOneComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoyaltyFormStepDetailsComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+        declarations: [LoyaltyFormStepDetailsComponent],
+        imports: [TranslateModule.forRoot()],
+        schemas: [NO_ERRORS_SCHEMA]
+      })
       .compileComponents();
   }));
 

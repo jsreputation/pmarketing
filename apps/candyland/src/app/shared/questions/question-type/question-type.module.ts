@@ -4,6 +4,7 @@ import { QuestionTypeComponent } from 'src/app/shared/questions/question-type/qu
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule, MatSelectModule } from '@angular/material';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
 
     MatSelectModule,
     MatIconModule,
+    TranslateModule,
   ]
 })
 export class QuestionTypeModule { }

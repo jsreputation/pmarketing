@@ -6,6 +6,7 @@ import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { MatButtonModule, MatDialogModule, MatIconModule, MatMenuModule } from '@angular/material';
 import { CreateMerchantFormModule } from '@cl-shared/components/create-merchant-form/create-merchant-form.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
+    TranslateModule,
   ]
 })
 export class CreateMerchantPopupModule { }

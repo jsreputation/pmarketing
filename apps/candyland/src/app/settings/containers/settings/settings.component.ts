@@ -11,11 +11,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
   public navLinks: {path: string, label: string}[] = [
     {
       path: 'general',
-      label: 'General'
+      label: 'SETTINGS_FEATURE.GENERAL'
     },
     {
       path: 'branding',
-      label: 'Branding'
+      label: 'SETTINGS_FEATURE.BRANDING'
     },
     // {
     //  path: 'communications',
@@ -23,7 +23,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     // },
     {
       path: 'users-roles',
-      label: 'Users & Roles'
+      label: 'SETTINGS_FEATURE.USERS_&_ROLES'
     },
   ];
 

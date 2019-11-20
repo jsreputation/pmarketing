@@ -1,12 +1,13 @@
 <header class="page-header">
-  <h1 class="title">Loyalty Program</h1>
-  <cl-button routerLink="new" classList="primary cta cta-new">Create New</cl-button>
+  <h1 class="title">{{'LOYALTY_FEATURE.LOYALTY_PROGRAM' | translate}}</h1>
+  <cl-button routerLink="new" classList="primary cta cta-new">{{'BTN_CREATE_NEW' | translate}}</cl-button>
 </header>
 
 <section class="content">
   <ng-container [ngSwitch]="dataSource.state$ | async">
     <ng-container *ngSwitchCase="dataSourceStates.hasDataApi">
       <cl-loyalty-grid [dataSource]="dataSource"
+                       [statusLabel]="statusLabel"
                        [menuOptions]="menuOptions"
                        (menuTapped)="menuOptTapped($event)"
       >
@@ -24,10 +25,10 @@
     <cl-no-data *ngSwitchCase="dataSourceStates.noDataApi">
       <img class="no-data-img" src="/assets/images/no-data/loyalty-empty-illustration.svg" alt="">
       <h2 class="no-data-title">
-        Re-define your customer loyalty
+        {{'LOYALTY_FEATURE.NO_DATA_TITLE' | translate}}
       </h2>
       <p class="no-data-text">
-        Create your first program and reward points for user actions, transactions & more
+        {{'LOYALTY_FEATURE.NO_DATA_TEXT' | translate}}
       </p>
     </cl-no-data>
   </ng-container>
