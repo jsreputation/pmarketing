@@ -8,6 +8,7 @@ import { Type } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedDataService } from 'src/app/services/shared-data.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { IWMessageResponse } from '@perx/whistler';
 
 const testphone = '18888888';
 
@@ -93,7 +94,7 @@ describe('VerificationOtpComponent', () => {
     it('should submit phone data', fakeAsync(() => {
       component.type = 'phone';
       component.data = { otp: '1111', phone: testphone };
-      const authSpy = spyOn(auth, 'changePhone').and.returnValue(of(null));
+      const authSpy = spyOn(auth, 'changePhone').and.callThrough();
       component.onSubmit();
       tick();
       expect(authSpy).toHaveBeenCalled();
@@ -108,7 +109,7 @@ describe('VerificationOtpComponent', () => {
     it('should resend otp', fakeAsync(() => {
       component.type = 'phone';
       component.userPhone = testphone;
-      const authSpy = spyOn(auth, 'requestVerificationToken').and.returnValue(of(null));
+      const authSpy = spyOn(auth, 'requestVerificationToken').and.callThrough();
       component.resendOtp();
       tick();
       expect(authSpy).toHaveBeenCalledWith(testphone);
@@ -116,7 +117,7 @@ describe('VerificationOtpComponent', () => {
 
     it('should resend otp for password flow', fakeAsync(() => {
       component.type = 'password';
-      const authSpy = spyOn(auth, 'resendOTP').and.returnValue(of(null));
+      const authSpy = spyOn(auth, 'resendOTP').and.callThrough();
       component.resendOtp();
       tick();
       expect(authSpy).toHaveBeenCalledWith(testphone);
@@ -137,7 +138,7 @@ describe('VerificationOtpComponent', () => {
 
     it('should handle password submit', fakeAsync(() => {
       component.type = 'password';
-      spyOn(auth, 'changePassword').and.returnValue(of(null));
+      spyOn(auth, 'changePassword').and.returnValue(of({} as IWMessageResponse));
       const spyRouter = spyOn(router, 'navigate');
       component.onSubmit();
       tick();

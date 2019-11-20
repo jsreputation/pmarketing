@@ -2,7 +2,7 @@ import { TestBed, async, fakeAsync, ComponentFixture, tick } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule, MatToolbarModule, MatIconModule, MatSnackBarModule, MatDialog, MatSnackBar } from '@angular/material';
-import { NotificationService } from '@perx/core';
+import { NotificationService, AuthenticationService, IVoucherService, ICampaignService, ProfileService } from '@perx/core';
 import { HomeComponent } from './home/home.component';
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
 import { ProfileComponent } from './account/profile/profile.component';
@@ -18,6 +18,9 @@ import { Type } from '@angular/core';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/signup/signup.component';
 import { CustomerSupportComponent } from './account/customer-support/customer-support.component';
+import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { SharedDataService } from './services/shared-data.service';
 
 describe('AppComponent', () => {
   let app: AppComponent;
@@ -66,31 +69,41 @@ describe('AppComponent', () => {
   }));
 
   it('should change show log status', () => {
-    app.onActivate(new LoginComponent(null, null, null, null));
+    const auth = {} as AuthenticationService;
+    const router = {} as Router;
+    const form = {} as FormBuilder;
+    const notifi = {} as NotificationService;
+    const voucherService = {} as IVoucherService;
+    const campaingService = {} as ICampaignService;
+    const profile = {} as ProfileService;
+    const location = {} as Location;
+    const shared = {} as SharedDataService;
+    const matDialog = {} as MatDialog;
+    app.onActivate(new LoginComponent(router, form, auth, notifi));
     expect(app.showHeader).toBeFalsy();
-    app.onActivate(new SignUpComponent(null, null, null));
+    app.onActivate(new SignUpComponent(form, auth, router));
     expect(app.showHeader).toBeFalsy();
-    app.onActivate(new HomeComponent(null, null, null));
+    app.onActivate(new HomeComponent(router, voucherService, campaingService));
     expect(app.showToolbar).toBeTruthy();
     app.onActivate(new TermsAndConditionComponent());
     expect(app.headerTitle).toBe('Terms & Conditions');
-    app.onActivate(new ProfileComponent(null));
+    app.onActivate(new ProfileComponent(profile));
     expect(app.headerTitle).toBe('Profile');
-    app.onActivate(new ChangeBarangayComponent(null, null, null));
+    app.onActivate(new ChangeBarangayComponent(form, profile, location));
     expect(app.headerTitle).toBe('Change Barangay');
-    app.onActivate(new ChangePasswordComponent(null, null, null, null));
+    app.onActivate(new ChangePasswordComponent(form, shared, router, auth));
     expect(app.headerTitle).toBe('Change PIN Code');
-    app.onActivate(new ChangeEmailComponent(null, null, null));
+    app.onActivate(new ChangeEmailComponent(form, profile, router));
     expect(app.headerTitle).toBe('Change Email');
-    app.onActivate(new ChangeCityComponent(null, null, null));
+    app.onActivate(new ChangeCityComponent(form, profile, location));
     expect(app.headerTitle).toBe('Change City/Municipality');
-    app.onActivate(new ChangeStreetAddressComponent(null, null, null));
+    app.onActivate(new ChangeStreetAddressComponent(form, profile, location));
     expect(app.headerTitle).toBe('Change Street Address');
     app.onActivate(new FaqComponent());
     expect(app.headerTitle).toBe('FAQ');
     app.onActivate(new PrivacyPolicyComponent());
     expect(app.headerTitle).toBe('Privacy Policy');
-    app.onActivate(new CustomerSupportComponent(null));
+    app.onActivate(new CustomerSupportComponent(matDialog));
     expect(app.headerTitle).toBe('Customer Support');
   });
 
