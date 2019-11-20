@@ -1,6 +1,16 @@
 .sign-up {
-  width: 80%;
-  margin: 2rem auto;
+  margin: 2rem 1.6rem;
+  padding: 1.6rem;
+  background: #fff;
+
+  .error_msg {
+    padding-bottom: 1rem;
+
+    span {
+      color: #eb202f;
+      font-size: 1.5rem;
+    }
+  }
 
   button {
     width: 100%;
