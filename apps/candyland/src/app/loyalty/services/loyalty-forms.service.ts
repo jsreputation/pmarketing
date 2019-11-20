@@ -55,7 +55,7 @@ export class LoyaltyFormsService {
       status: StatusLabel.DRAFT,
       details: {
         pointsName: 'Point',
-        imageUrl: 'https://test.com.jpg',
+        imageUrl: null,
         joinMethod: {
           inviteOnly: true
         },
