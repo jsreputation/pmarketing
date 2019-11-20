@@ -7,6 +7,7 @@ import {
 import { AudiencesUsersListComponent } from './audiences-users-list.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AudiencesUsersListComponent', () => {
   let component: AudiencesUsersListComponent;
@@ -19,7 +20,8 @@ describe('AudiencesUsersListComponent', () => {
         RouterTestingModule,
         StatusLabelModule,
         MatMenuModule,
-        MatIconModule
+        MatIconModule,
+        TranslateModule.forRoot(),
       ],
       providers: [],
       declarations: [

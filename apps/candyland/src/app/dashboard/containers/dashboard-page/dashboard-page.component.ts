@@ -24,15 +24,15 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   public navLinks: { path: string, label: string }[] = [
     {
       path: 'overview',
-      label: 'Overview'
+      label: 'NAV_LINK_OVERVIEW'
     },
     {
       path: 'rewards',
-      label: 'Rewards'
+      label: 'NAV_LINK_REWARD'
     },
     {
       path: 'campaigns',
-      label: 'Campaigns'
+      label: 'NAV_LINK_CAMPAIGNS'
     }
   ];
 

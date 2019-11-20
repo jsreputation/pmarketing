@@ -12,6 +12,7 @@ import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wr
 import { SimpleMobileViewModule } from '@cl-shared';
 import { SurveyModule as PerxSurveyModule} from '@perx/core';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { DirectivesModule } from '@cl-shared/directives/directives.module';
     MatInputModule,
     MatSelectModule,
     DragDropModule,
-    DirectivesModule
+    DirectivesModule,
+    TranslateModule
   ]
 })
 export class NewSurveyModule { }

@@ -2,7 +2,7 @@
 <div class="dashboard-group-graphics">
   <div class="chard-card-list">
 
-    <h2 class="chart-card-info-title">Active Campaigns: {{activeCampaigns}}</h2>
+    <h2 class="chart-card-info-title">{{'CAMPAIGN_GRAPHIC_PAGE.TITLE' | translate}} {{activeCampaigns}}</h2>
 
     <div class="tabs-list-wrap business-insights-tabs-list-wrap">
       <mat-radio-group color="primary" class="tabs-list business-insights-tabs-list" [value]="activeTab" (change)="selectedTab($event.value)">
@@ -19,21 +19,21 @@
       <ng-container *ngSwitchCase="'survey'">
 
         <article class="chart-card">
-          <h3 class="chart-card-title">Survey Engagement Rate</h3>
+          <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.SURVEY_ENGAGEMENT_RATE</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="157" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
-          <h3 class="chart-card-title">Top 5 Rewards</h3>
+          <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.TOP_5_REWARDS</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="177" [cardType]="'horizontalBar'"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
-          <h3 class="chart-card-title">Channels</h3>
+          <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.CHANNELS</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="178" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
@@ -41,7 +41,7 @@
 
         <article class="chart-card full-width">
           <div class="chart-card-header-with-control">
-            <h3 class="chart-card-title">Survey Campaign lists</h3>
+            <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.SURVEY_CAMPAIGN_LISTS</h3>
             <cl-search-filter class="search-block" placeholder="Search for survey campaigns"></cl-search-filter>
           </div>
           <div class="chart-card-content overflow-all">
@@ -56,12 +56,12 @@
 
         <article class="chart-card full-width">
           <div class="chart-card-header-with-control">
-            <h3 class="chart-card-title">Game Engagement Rate</h3>
+            <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.GAME_ENGAGEMENT_RATE</h3>
             <mat-form-field appearance="outline">
               <mat-select #selectGame [value]="106">
-                <mat-option selected [value]="106">Shake the tree</mat-option>
-                <mat-option [value]="107">Hit the pinata</mat-option>
-                <mat-option [value]="109">Instant rewards</mat-option>
+                <mat-option selected [value]="106" >{{'CAMPAIGN_GRAPHIC_PAGE.SHAKE_THE_TREE' | translate}}</mat-option>
+                <mat-option [value]="107" >{{'CAMPAIGN_GRAPHIC_PAGE.HIT_THE_PINATA' | translate}}</mat-option>
+                <mat-option [value]="109" >{{'CAMPAIGN_GRAPHIC_PAGE.INSTANT_REWARDS' | translate}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -71,14 +71,14 @@
         </article>
 
         <article class="chart-card">
-          <h3 class="chart-card-title">Top 5 Rewards</h3>
+          <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.TOP_5_REWARDS</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
-          <h3 class="chart-card-title">Channels</h3>
+          <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.CHANNELS</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
@@ -90,21 +90,21 @@
       <ng-container *ngSwitchCase="'stamps'">
 
         <article class="chart-card">
-          <h3 class="chart-card-title">Stamps Engagement Rate</h3>
+          <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.STAMPS_ENGAGEMENT_RATE</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'line'" [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
-          <h3 class="chart-card-title">Top 5 Rewards</h3>
+          <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.TOP_5_REWARDS</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
-          <h3 class="chart-card-title">Channels</h3>
+          <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.CHANNELS</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
@@ -112,8 +112,8 @@
 
         <article class="chart-card full-width">
           <div class="chart-card-header-with-control">
-            <h3 class="chart-card-title">Stamps Campaign lists</h3>
-            <cl-search-filter class="search-block" placeholder="Search for stamps campaigns"></cl-search-filter>
+            <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.STAMPS_CAMPAIGN_LISTS</h3>
+            <cl-search-filter class="search-block" [placeholder]="'CAMPAIGN_GRAPHIC_PAGE.SEARCH_FOR_STAMPS_CAMPAIGNS' | translate"></cl-search-filter>
           </div>
           <div class="chart-card-content overflow-all">
             <cl-chart-card [id]="179" [cardType]="'table'" [params]="params"></cl-chart-card>
@@ -126,21 +126,21 @@
       <ng-container *ngSwitchCase="'reward'">
 
         <article class="chart-card">
-          <h3 class="chart-card-title">Instant Reward Engagement Rate</h3>
+          <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.INSTANT_REWARD_ENGAGEMENT_RATE</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'line'" [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
-          <h3 class="chart-card-title">Top 5 Rewards</h3>
+          <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.TOP_5_REWARDS</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
-          <h3 class="chart-card-title">Channels</h3>
+          <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.CHANNELS</h3>
           <div class="chart-card-content">
             <cl-chart-card [id]="110" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
           </div>
@@ -148,8 +148,8 @@
 
         <article class="chart-card full-width">
           <div class="chart-card-header-with-control">
-            <h3 class="chart-card-title">Stamps Rewards lists</h3>
-            <cl-search-filter class="search-block" placeholder="Search for rewards campaigns"></cl-search-filter>
+            <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.STAMPS_REWARDS_LISTS</h3>
+            <cl-search-filter class="search-block" [placeholder]="'CAMPAIGN_GRAPHIC_PAGE.SEARCH_FOR_REWARDS_CAMPAIGNS' | translate"></cl-search-filter>
           </div>
           <div class="chart-card-content overflow-all">
             <cl-chart-card [id]="179" [cardType]="'table'" [params]="params"></cl-chart-card>
