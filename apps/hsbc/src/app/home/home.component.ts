@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   private displayCampaignAs: string = 'puzzle';
   public puzzleTextFn: () => string;
   public titleFn: (index?: number) => string;
+  public sourceType: string = null;
 
   constructor(
     private router: Router,
@@ -30,6 +31,8 @@ export class HomeComponent implements OnInit {
 
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => {
+        this.sourceType = config.sourceType as string;
+
         if (config.sourceType === 'hsbc-xmas') {
           this.displayCampaignAs = 'stamp_card';
           this.puzzleTextFn = () => 'new stamps';
