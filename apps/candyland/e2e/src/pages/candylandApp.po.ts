@@ -283,6 +283,15 @@ export class CreateSurveyAppPage {
   public questionTextField(): ElementFinder {
     return element.all(by.css('div.mat-form-field-infix>input')).get(3);
   }
+  public confirmModal(): ElementFinder {
+    return element(by.css('cl-confirm-modal'));
+  }
+  public saveButton(): ElementFinder {
+    return element.all(by.css('cl-button')).get(1);
+  }
+  public launchNowButton(): ElementFinder {
+    return element.all(by.css('cl-button')).get(2);
+  }
 
 }
 
