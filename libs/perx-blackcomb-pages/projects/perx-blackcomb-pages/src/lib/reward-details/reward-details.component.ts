@@ -6,14 +6,15 @@ import {
   IVoucherService,
   LoyaltyService,
   ILoyalty,
-  NotificationService
+  NotificationService,
+  RewardConfirmComponent,
+  IRewardConfirmComponentParam
 } from '@perx/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap, takeUntil, tap, last } from 'rxjs/operators';
 import { Observable, Subject, of, combineLatest } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
-import { RewardConfirmComponent, IRewardConfirmComponentParam } from './reward-confirm/reward-confirm.component';
 
 @Component({
   selector: 'perx-blackcomb-reward-details',
