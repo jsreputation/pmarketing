@@ -1,9 +1,11 @@
 <perx-core-reward
     class="core-reward"
+    *ngIf="theme && theme.properties"
     [reward]="reward$"
     [displayPriceFn]="displayPriceFn"
     [descriptionLabel]="descriptionLabel"
-    [tncLabel]="tncLabel"></perx-core-reward>
+    [tncLabel]="tncLabel"
+    [showExpiry]="theme.properties['showExpiryOnRewardDetail']"></perx-core-reward>
 <div class="action">
     <button
       mat-button
