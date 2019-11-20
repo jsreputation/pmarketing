@@ -50,7 +50,7 @@ When(/^7_I click the next button$/, async () => {
   // clicking on the games option
   await PageShakeTheTree.shakeTreeTypeOptions().click();
   // clicking on the next button
-  await PageShakeTheTree.shakeTreeNextButton().click();
+  await PageEngagement.nextLaunchNowButton().click();
   await browser.sleep(3000);
   });
 

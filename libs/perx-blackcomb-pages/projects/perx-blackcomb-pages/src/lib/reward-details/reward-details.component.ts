@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RewardsService, IReward, IPrice } from '@perx/core';
+import { RewardsService, IReward, IPrice, ThemesService, ITheme } from '@perx/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
@@ -17,6 +17,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public descriptionLabel: string = 'Description';
   public tncLabel: string = 'Terms and Conditions';
   public buttonLabel: string = 'Redeem';
+  public theme: ITheme;
 
   private initTranslate(): void {
     this.translate.get('REDEEM').subscribe((text) => this.buttonLabel = text);
@@ -38,10 +39,15 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private rewardsService: RewardsService,
     private activeRoute: ActivatedRoute,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private themesService: ThemesService
   ) { }
 
   public ngOnInit(): void {
+    this.themesService.getThemeSetting().subscribe(
+      theme => this.theme = theme
+    );
+
     this.initTranslate();
     this.reward$ = this.activeRoute.params
       .pipe(

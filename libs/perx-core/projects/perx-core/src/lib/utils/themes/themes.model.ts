@@ -19,6 +19,7 @@ interface IThemeProperties {
     'showHistoryPage'?: boolean;
     'showNewsfeedOnHomepage'?: boolean;
     'showQrPageSubtitle'?: boolean;
+    'showExpiryOnRewardDetail'?: boolean;
     '--login_background_colour'?: string;
 }
 
