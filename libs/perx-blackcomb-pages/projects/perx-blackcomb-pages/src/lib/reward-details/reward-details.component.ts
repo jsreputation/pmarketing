@@ -9,7 +9,7 @@ import {
   NotificationService,
   PopupComponent
 } from '@perx/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { filter, map, switchMap, takeUntil, tap, last } from 'rxjs/operators';
 import { Observable, Subject, of, combineLatest } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -54,7 +54,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
     private activeRoute: ActivatedRoute,
     private translate: TranslateService,
     private notificationService: NotificationService,
-    private router: Router,
+    // private router: Router,
     private dialog: MatDialog
   ) { }
 
@@ -99,10 +99,10 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
       .pipe(
         last(),
         switchMap(
-          ([balance, points, user_point, proceed, confirm, cancel]) => this.dialog.open(PopupComponent, {
+          ([balance, points, userPoint, proceed, confirm, cancel]) => this.dialog.open(PopupComponent, {
             data: {
-              title: this.rewardData.name,
-              text: `${balance} ${dataTemp.existingPoints} ${points}. ${user_point} ${dataTemp.requiredPoints} ${points} ${proceed}.`,
+              title: dataTemp.title,
+              text: `${balance} ${dataTemp.existingPoints} ${points}. ${userPoint} ${dataTemp.requiredPoints} ${points} ${proceed}.`,
               afterClosedCallBack: this,
               buttonTxt: confirm,
               buttonTxt2: cancel
@@ -110,13 +110,14 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
           }).afterClosed()
         )
       ).pipe(
+        tap(res => console.log('res' + res)),
         switchMap((result) => result ? this.exchangePoints() : of(null)),
         takeUntil(this.destroy$),
       ).subscribe(() => { });
   }
 
   public dialogClosed(): void {
-    this.router.navigate(['/wallet']);
+    // this.router.navigate(['/wallet']);
   }
 
   private exchangePoints(): Observable<void> {
@@ -129,7 +130,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
           .pipe(
             last(),
             tap(([balance, points, close]) => this.notificationService.addPopup({
-              title: this.rewardData.name,
+              title: this.rewardData.name || '',
               text: `${balance} ${29} ${points}`,
               afterClosedCallBack: this,
               buttonTxt: close
