@@ -1,11 +1,11 @@
 <ng-container>
-  <label class="card-label">Voucher Code Type</label>
+  <label class="card-label" translate>VOUCHER_CODE_TYPE</label>
 
   <!--Voucher Code Type-->
   <div class="card-row radio-group-row" *ngIf="redemptionType !== 'Merchant PIN'">
     <mat-radio-group color="primary" [formControl]="formGroup.get('type')">
       <ng-container *ngFor="let type of config?.voucherCodeTypes">
-        <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>
+        <mat-radio-button [value]="type?.value">{{type?.title | translate}}</mat-radio-button>
       </ng-container>
     </mat-radio-group>
   </div>
@@ -19,7 +19,7 @@
       maxlength="6"
       step="1"
       matInput
-      placeholder="Merchant PIN"
+      [placeholder]="'MERCHANT_PIN' | translate"
       [formControl]="formGroup.get('singleCode.code')">
   </mat-form-field>
 
@@ -30,7 +30,7 @@
       min="0"
       step="1"
       matInput
-      placeholder="eg. JKHJHJ"
+      [placeholder]="'EG._JKHJHJ' | translate"
       [formControl]="formGroup.get('singleCode.code')">
   </mat-form-field>
 
@@ -40,7 +40,7 @@
       min="0"
       step="1"
       matInput
-      placeholder="eg.1234567890000"
+      [placeholder]="'EG._123' | translate"
       [formControl]="formGroup.get('singleCode.code')">
     <mat-hint>12 Digits only</mat-hint>
   </mat-form-field>
@@ -68,7 +68,7 @@
         [formControl]="formGroup.get('uniqueGeneratedCode.length')">
     </mat-form-field>
     <mat-form-field>
-      <mat-select [formControl]="formGroup.get('uniqueGeneratedCode.codeFormat')" placeholder="Code format">
+      <mat-select [formControl]="formGroup.get('uniqueGeneratedCode.codeFormat')" [placeholder]="'CODE_FORMAT' | translate">
         <ng-container *ngFor="let option of config?.voucherCodeFormat">
           <mat-option [value]="option?.value">{{option?.title}}</mat-option>
         </ng-container>

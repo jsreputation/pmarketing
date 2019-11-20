@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EngagementsComponent } from './engagements.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('EngagementsComponent', () => {
   let component: EngagementsComponent;
@@ -10,7 +11,8 @@ describe('EngagementsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [ EngagementsComponent ]
     })

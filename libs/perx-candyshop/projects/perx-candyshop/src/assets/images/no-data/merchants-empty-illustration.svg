@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1000px" height="1000px" viewBox="0 0 1000 1000" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>merchants-empty-illustration</title>
+    <desc>Created with Sketch.</desc>
+    <g id="merchants-empty-illustration" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="storefront-monochrome" transform="translate(0.000000, 49.000000)">
+            <path d="M200.922664,11.5020283 C93.3695589,42.7518771 -3.99859285,144.654886 3.39568311,244.298134 C10.5251503,343.921023 122.742964,441.243435 193.986711,559.595876 C264.996204,678.182436 295.296439,817.809203 377.865854,873.285319 C460.201015,928.751256 594.581286,899.832422 703.061222,841.81153 C811.357828,783.790638 893.65225,696.901808 944.780714,597.513037 C995.70548,497.879969 1015.55595,385.787677 983.412241,296.303175 C951.472228,206.839031 867.741729,140.267692 785.895446,104.437247 C703.784354,68.810383 623.526923,64.4435474 524.763433,42.253101 C425.745319,20.0626546 308.221145,-19.6969251 200.922664,11.5020283 Z" id="Path" fill="#E4EAF8" fill-rule="nonzero"></path>
+            <path d="M0,661.630769 C0,605.64359 23.4466019,597.5 23.4466019,562.889744 C23.4466019,422.412821 70.3398058,399 100.92233,399 C159.029126,399 152.504854,459.964949 166.165049,480.435897 C196.747573,526.24359 210,559.835897 210,591.392308 C210,719.653846 156.990291,796 112.135922,796 C63.2038835,796 0,726.850744 0,661.630769 Z" id="Path" fill="#2665EE" fill-rule="nonzero"></path>
+            <path d="M109.5,570 L109.5,880" id="Path" stroke="#DFDFDF" stroke-width="6" stroke-linecap="round"></path>
+            <path d="M110,651 L158,603" id="Path" stroke="#DFDFDF" stroke-width="6" stroke-linecap="round"></path>
+            <path d="M110,729 L68,687" id="Path" stroke="#DFDFDF" stroke-width="6" stroke-linecap="round"></path>
+            <polyline id="Path" stroke="#000000" stroke-width="2.5" fill="#FFFFFF" fill-rule="nonzero" stroke-linecap="round" stroke-linejoin="round" points="771 576.039945 771 858 189 858 189 119 771 119 771 549.57438"></polyline>
+            <rect id="Rectangle" fill="#DFDFDF" fill-rule="nonzero" x="172" y="823" width="616" height="38"></rect>
+            <rect id="Rectangle" fill="#DFDFDF" fill-rule="nonzero" x="253" y="622" width="156" height="238"></rect>
+            <rect id="Rectangle" fill="#DFDFDF" fill-rule="nonzero" x="447" y="620" width="287" height="135"></rect>
+            <rect id="Rectangle" fill="#DFDFDF" fill-rule="nonzero" x="147" y="427" width="661" height="15"></rect>
+            <rect id="Rectangle" fill="#DFDFDF" fill-rule="nonzero" x="147" y="299" width="661" height="15"></rect>
+            <rect id="Rectangle" fill="#DFDFDF" fill-rule="nonzero" x="147" y="94" width="661" height="36"></rect>
+            <rect id="Rectangle" fill="#DFDFDF" fill-rule="nonzero" x="222" y="161" width="109" height="137"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="227" y="165" width="99" height="133"></rect>
+            <rect id="Rectangle" fill="#DFDFDF" fill-rule="nonzero" x="422" y="161" width="109" height="137"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="427" y="165" width="99" height="133"></rect>
+            <rect id="Rectangle" fill="#DFDFDF" fill-rule="nonzero" x="621" y="161" width="109" height="137"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="626" y="165" width="99" height="133"></rect>
+            <polygon id="Path" fill="#DFDFDF" fill-rule="nonzero" points="826 550 771.047059 442 188.952941 442 134 550"></polygon>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="189" y="442" width="18" height="108"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="232" y="442" width="18" height="108"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="275" y="442" width="18" height="108"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="319" y="442" width="18" height="108"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="362" y="442" width="18" height="108"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="406" y="442" width="18" height="108"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="449" y="442" width="18" height="108"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="492" y="442" width="18" height="108"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="536" y="442" width="18" height="108"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="579" y="442" width="18" height="108"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="623" y="442" width="18" height="108"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="666" y="442" width="18" height="108"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="709" y="442" width="18" height="108"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="753" y="442" width="18" height="108"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="456" y="628" width="269" height="119"></rect>
+            <polygon id="Path" fill="#F8F8F8" fill-rule="nonzero" points="326 187 227 286.115044 227 299 231.082474 299 326 203.972174"></polygon>
+            <polygon id="Path" fill="#F8F8F8" fill-rule="nonzero" points="300.484536 165 227 238.59116 227 276 326 176.856354 326 165"></polygon>
+            <polygon id="Path" fill="#F8F8F8" fill-rule="nonzero" points="526 187 427 286.115044 427 299 431.082474 299 526 203.972174"></polygon>
+            <polygon id="Path" fill="#F8F8F8" fill-rule="nonzero" points="500.484536 165 427 238.59116 427 276 526 176.856354 526 165"></polygon>
+            <polygon id="Path" fill="#F8F8F8" fill-rule="nonzero" points="725 187 626 286.115044 626 299 630.082474 299 725 203.972174"></polygon>
+            <polygon id="Path" fill="#F8F8F8" fill-rule="nonzero" points="699.484536 165 626 238.59116 626 276 725 176.856354 725 165"></polygon>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="261" y="630" width="140" height="230"></rect>
+            <rect id="Rectangle" fill="#DFDFDF" fill-rule="nonzero" x="261" y="733" width="144" height="6"></rect>
+            <rect id="Rectangle" fill="#DFDFDF" fill-rule="nonzero" x="772" y="367" width="61" height="12"></rect>
+            <circle id="Oval" fill="#2665EE" fill-rule="nonzero" cx="876.5" cy="372.5" r="30.5"></circle>
+            <polygon id="Path" fill="#F8F8F8" fill-rule="nonzero" points="580.879253 628 462 747 541.120747 747 660 628"></polygon>
+            <polygon id="Path" fill="#F8F8F8" fill-rule="nonzero" points="573.110184 747 692 628 676.889816 628 558 747"></polygon>
+            <polygon id="Path" fill="#F8F8F8" fill-rule="nonzero" points="725 628 708.875593 628 590 747 625.428991 747 725 647.324786"></polygon>
+        </g>
+    </g>
+</svg>

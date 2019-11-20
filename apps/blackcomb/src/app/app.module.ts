@@ -31,9 +31,12 @@ import zh from '@angular/common/locales/zh';
 import localeZhExtra from '@angular/common/locales/extra/zh';
 import ru from '@angular/common/locales/ru';
 import localesRuExtra from '@angular/common/locales/extra/ru';
+import vi from '@angular/common/locales/vi';
+import localesViExtra from '@angular/common/locales/extra/vi';
 
 registerLocaleData(zh, 'zh', localeZhExtra);
 registerLocaleData(ru, 'ru', localesRuExtra);
+registerLocaleData(vi, 'vi', localesViExtra);
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
   translateService.setDefaultLang(environment.defaultLang);

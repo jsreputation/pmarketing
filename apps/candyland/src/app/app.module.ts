@@ -1,5 +1,5 @@
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './auth/auth.module';
 import { MainContainerComponent } from './main-container/main-container.component';
 import { SideNavModule } from './shared/components/side-nav/side-nav.module';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from '@cl-core/interceptors/auth.interceptor';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { SessionService } from '@cl-core/services/session.service';
@@ -19,6 +19,12 @@ import { JsonApiModule } from 'angular2-jsonapi';
 import { PerxChartModule } from '@perx/chart';
 import { WINDOW_PROVIDERS } from '@cl-core/services/window.service';
 import { GestureConfig } from '@angular/material/core';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
+import {
+  setLanguage,
+  translateLoader
+} from '@cl-core/translate-services/multiple-translate-loader-service';
 
 @NgModule({
   declarations: [
@@ -37,7 +43,26 @@ import { GestureConfig } from '@angular/material/core';
     PerxChartModule.forRoot({ tokenBasePath: environment.apiHost }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     JsonApiModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        deps: [HttpClient],
+        useFactory: (httpClient) => translateLoader(httpClient,  [
+          { prefix: './assets/i18n/', suffix: '.json' },
+          { prefix: '/assets/i18n/dashboard/', suffix: '.json' },
+          { prefix: '/assets/i18n/merchants/', suffix: '.json' },
+          { prefix: '/assets/i18n/rewards/', suffix: '.json' },
+          { prefix: '/assets/i18n/engagements/', suffix: '.json' },
+          { prefix: '/assets/i18n/campaigns/', suffix: '.json' },
+          { prefix: '/assets/i18n/audience/', suffix: '.json' },
+          { prefix: '/assets/i18n/settings/', suffix: '.json' },
+          { prefix: '/assets/i18n/loyalty/', suffix: '.json' },
+          { prefix: '/assets/i18n/campaigns/', suffix: '.json' },
+          { prefix: '/assets/i18n/common/', suffix: '.json'}
+        ])
+      }
+    }),
   ],
   providers: [
     LocalStorageService,
@@ -45,6 +70,7 @@ import { GestureConfig } from '@angular/material/core';
     WINDOW_PROVIDERS,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig },
+    { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService, TranslateDefaultLanguageService], multi: true }
   ],
   bootstrap: [AppComponent]
 })

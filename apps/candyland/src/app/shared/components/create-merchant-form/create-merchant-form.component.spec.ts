@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TestComponentsModule } from '@cl-shared/test-components/test-components.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CreateMerchantFormComponent', () => {
   let component: CreateMerchantFormComponent;
@@ -25,7 +26,8 @@ describe('CreateMerchantFormComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         BrowserAnimationsModule,
-        TestComponentsModule
+        TestComponentsModule,
+        TranslateModule.forRoot(),
       ],
       schemas: [NO_ERRORS_SCHEMA],
     })

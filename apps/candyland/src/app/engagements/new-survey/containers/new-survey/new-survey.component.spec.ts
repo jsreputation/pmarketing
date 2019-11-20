@@ -19,6 +19,7 @@ import { ConfirmModalModule, SimpleMobileViewModule } from '@cl-shared';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
+import { TranslateModule } from '@ngx-translate/core';
 describe('NewSurveyPageComponent', () => {
   let component: NewSurveyComponent;
   let fixture: ComponentFixture<NewSurveyComponent>;
@@ -44,6 +45,7 @@ describe('NewSurveyPageComponent', () => {
         DragDropModule,
         MatDialogModule,
         ConfirmModalModule,
+        TranslateModule.forRoot(),
       ],
       schemas: [ NO_ERRORS_SCHEMA ],
       declarations: [ NewSurveyComponent ],

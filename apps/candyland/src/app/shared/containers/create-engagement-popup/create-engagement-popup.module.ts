@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { InkModule } from '@cl-shared/components/ink/ink.module';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
+    TranslateModule,
   ],
   exports: [
     CreateEngagementPopupComponent,

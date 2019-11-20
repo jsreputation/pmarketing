@@ -1,6 +1,6 @@
 <header class="page-header">
-  <h1 class="title">Rewards</h1>
-  <cl-button routerLink="/rewards/new-reward/" classList="primary cta cta-new">Create New</cl-button>
+  <h1 class="title" translate>REWARDS</h1>
+  <cl-button routerLink="/rewards/new-reward/" classList="primary cta cta-new" ><span translate>BTN_CREATE_NEW</span></cl-button>
 </header>
 
 <section class="content">
@@ -9,7 +9,7 @@
       <!--filters-->
       <cl-table-filters [dataSource]="dataSource" classList="block">
         <ng-container *clTableFilter="'name'; let filter">
-          <cl-search-filter class="search-block" [control]="filter" placeholder="Search for rewards"></cl-search-filter>
+          <cl-search-filter class="search-block" [control]="filter" [placeholder]="'SEARCH_FOR_REWARDS' | translate"></cl-search-filter>
         </ng-container>
       </cl-table-filters>
       <div class="table-card">
@@ -33,10 +33,10 @@
     <cl-no-data *ngSwitchCase="dataSourceStates.noDataApi">
       <img class="no-data-img" src="/assets/images/no-data/reward-empty-illustration.svg" alt="">
       <h2 class="no-data-title">
-        Your reward bag is empty <span style="display: inline-block;">:(</span>
+        <span translate>OUR_REWARD_BAG_IS_EMPTY</span> <span style="display: inline-block;">:(</span>
       </h2>
-      <p class="no-data-text">
-        Let&rsquo;s begin by creating your first Reward
+      <p class="no-data-text" translate>
+        LETS_BEGIN_BY_CREATING_YOUR_FIRST_REWARD
       </p>
     </cl-no-data>
   </ng-container>

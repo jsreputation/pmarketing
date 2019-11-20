@@ -1,12 +1,11 @@
 <aside class="dialog" role="dialog" aria-labelledby="dialogTitle-selectEngagementType">
   <header class="dialog-header-wrap">
-    <h2 class="dialog-title" id="dialogTitle-selectEngagementType">Select Engagement Type</h2>
+    <h2 class="dialog-title" id="dialogTitle-selectEngagementType" translate>SELECT_ENGAGEMENT_TYPE</h2>
   </header>
   <mat-dialog-content>
     <div class="dialog-content">
       <cl-ink [border]="true" [triangle]="true">
-        <cl-engagement-type #engagementHost
-                            [clInkHost]="engagementHost"
+        <cl-engagement-type clInkHost
                             (selectType)="setType($event)"
                             [selectedType]="selectedType"
                             [graphicList]="engagementType$ | async"
@@ -19,21 +18,21 @@
                   [graphicList]="gamesType$ | async"
                   [selectedGame]="selectedGame"
         ></cl-games>
-      </div>    
+      </div>
     </div>
   </mat-dialog-content>
   <div class="dialog-actions">
     <cl-button [classList]="'secondary'"
-        class="actions-close"
-        (click)="close()"
-        [disableRipple]="true">
-      <span>Cancel</span>
+               class="actions-close"
+               (click)="close()"
+               [disableRipple]="true">
+      <span translate>BTN_CANCEL</span>
     </cl-button>
 
     <cl-button [classList]="'primary'"
-        (click)="next()"
-        [disableRipple]="true">
-      <span>Next</span>
+               (click)="next()"
+               [disableRipple]="true">
+      <span translate>BTN_NEXT</span>
     </cl-button>
   </div>
 </aside>

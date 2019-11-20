@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {
   HomeComponent,
-  WalletComponent,
+  WalletHistoryComponent,
   HistoryComponent,
   RedeemComponent,
   VoucherDetailComponent,
@@ -20,7 +20,7 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'home', component: HomeComponent },
-      { path: 'wallet', component: WalletComponent, canActivate: [ WalletGuard ] },
+      { path: 'wallet', component: WalletHistoryComponent, canActivate: [ WalletGuard ] },
       { path: 'history', component: HistoryComponent },
       { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },

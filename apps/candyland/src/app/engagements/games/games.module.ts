@@ -29,6 +29,7 @@ import { NewScratchPageComponent } from './containers/new-scratch-page/new-scrat
 import { GameComponent } from './containers/game/game.component';
 
 import { SettingsMobilePreviewModule } from '../../settings/components/settings-mobile-preview/settings-mobile-preview.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { SettingsMobilePreviewModule } from '../../settings/components/settings-
     MatSelectModule,
     MatSliderModule,
     DirectivesModule,
+    TranslateModule,
   ]
 })
 export class GamesModule {
