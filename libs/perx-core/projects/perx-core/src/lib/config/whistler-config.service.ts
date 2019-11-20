@@ -6,7 +6,7 @@ import { ConfigService } from './config.service';
 @Injectable({
   providedIn: 'root'
 })
-export class WhistlerConfigService implements ConfigService {
+export class WhistlerConfigService extends ConfigService {
 
   public readAppConfig(): Observable<IConfig> {
     throw new Error('WhistlerConfigService readAppConfig Method not implemented.');

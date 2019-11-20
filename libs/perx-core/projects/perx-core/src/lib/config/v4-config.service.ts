@@ -21,13 +21,15 @@ interface IV4MicrositeSettings {
 @Injectable({
   providedIn: 'root'
 })
-export class V4ConfigService implements ConfigService {
+export class V4ConfigService extends ConfigService {
   private appConfig: IConfig;
 
   constructor(
     private http: HttpClient,
     private authenticationService: AuthenticationService
-  ) { }
+  ) { 
+    super();
+  }
 
   public static v4MicrositeSettingsToMicrositeSettings(v4Settings: IV4MicrositeSettings): IMicrositeSettings {
     return {
