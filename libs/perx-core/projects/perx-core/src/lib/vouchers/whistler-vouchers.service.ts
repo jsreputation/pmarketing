@@ -14,6 +14,7 @@ import {
   IJsonApiListPayload,
   IJsonApiItem,
   IJsonApiItemPayload,
+  IWPurchaseAttributes
 } from '@perx/whistler';
 import { oc } from 'ts-optchain';
 
@@ -65,6 +66,18 @@ export class WhistlerVouchersService implements IVoucherService {
     return 0;
   }
 
+  private static PurchaseToVoucher(purchaseData: IJsonApiItem<IWPurchaseAttributes>): IJsonApiItem<IWAssignedAttributes> {
+    const voucherData = purchaseData.attributes.voucher;
+    return {
+      id: voucherData.id.toString(),
+      type: 'vouchers',
+      attributes: {
+        source_id: purchaseData.attributes.reward_entity_id,
+        source_type: 'Perx::Reward::Entity',
+        ...voucherData
+      }
+    };
+  }
   // @ts-ignore
   public getAll(voucherParams?: IGetVoucherParams): Observable<IVoucher[]> {
     return new Observable(subscriber => {
@@ -141,7 +154,7 @@ export class WhistlerVouchersService implements IVoucherService {
   // @ts-ignore
   public issueReward(rewardId: number, sourceType?: string, locale: string = 'en', cardId?: number): Observable<IVoucher> {
 
-    return this.http.post<IJsonApiItemPayload<any>>(`${this.config.apiHost}/voucher-service/purchase_requests`,
+    return this.http.post<IJsonApiItemPayload<IWPurchaseAttributes>>(`${this.config.apiHost}/voucher-service/purchase_requests`,
       {
         data: {
           type: 'purchase_request',
@@ -152,6 +165,7 @@ export class WhistlerVouchersService implements IVoucherService {
         }
       }).pipe(
         map(res => res.data),
+        map((res: IJsonApiItem<IWPurchaseAttributes>) => WhistlerVouchersService.PurchaseToVoucher(res)),
         switchMap((voucher: IJsonApiItem<IWAssignedAttributes>) => this.getFullVoucher(voucher))
       );
   }
