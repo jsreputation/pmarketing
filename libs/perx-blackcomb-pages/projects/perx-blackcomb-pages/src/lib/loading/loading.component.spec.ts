@@ -3,14 +3,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoadingComponent } from './loading.component';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, ICampaignService, IGameService, Config } from '@perx/core';
+import { AuthenticationService, ICampaignService, IGameService, Config, NotificationService } from '@perx/core';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-
-const configStub: Partial<Config> = {
-  preAuth: false
-};
 
 describe('LoadingComponent', () => {
   let component: LoadingComponent;
@@ -27,6 +23,12 @@ describe('LoadingComponent', () => {
   };
 
   const iGameSvcStub: Partial<IGameService> = {};
+  const configStub: Partial<Config> = {
+    preAuth: false
+  };
+  const notificationServiceStub: Partial<NotificationService> = {
+    addPopup: () => { }
+  };
 
   beforeEach(async(() => {
     const routerStub: Partial<Router> = { navigate: () => Promise.resolve(true) };
@@ -43,7 +45,8 @@ describe('LoadingComponent', () => {
         { provide: ICampaignService, useValue: iCampaignSvcStub },
         { provide: IGameService, useValue: iGameSvcStub },
         { provide: Router, useValue: routerStub },
-        { provide: Config, useValue: configStub }
+        { provide: Config, useValue: configStub },
+        { provide: NotificationService, useValue: notificationServiceStub }
       ]
     })
       .compileComponents();

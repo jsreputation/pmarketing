@@ -19,6 +19,7 @@ import { OpenCloseDirective } from '@cl-shared/questions/question-form-field/sha
 import { DynamicFieldDirective } from '@cl-shared/questions/question-form-field/shared/dynamic-field.directive';
 import { QuestionFormFieldService } from '@cl-shared/questions/question-form-field/shared/services/question-form-field.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('QuestionGroupFieldComponent', () => {
   let component: QuestionGroupFieldComponent;
@@ -43,6 +44,7 @@ describe('QuestionGroupFieldComponent', () => {
         MatInputModule,
         MatSlideToggleModule,
         DragDropModule,
+        TranslateModule.forRoot()
       ],
       declarations: [
         QuestionGroupFieldComponent,

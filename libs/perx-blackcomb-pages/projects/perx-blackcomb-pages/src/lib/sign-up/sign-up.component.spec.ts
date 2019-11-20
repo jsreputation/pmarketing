@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SurveyModule as PerxSurveyModule, IFormsService, AuthenticationService, Config, IGameService, InstantOutcomeService } from '@perx/core';
 import { SignUpComponent } from './sign-up.component';
 import { of } from 'rxjs';
-import { MatSnackBar, MatInputModule, MatDialogModule } from '@angular/material';
+import { MatSnackBar, MatInputModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -44,7 +44,6 @@ describe('SignUpComponent', () => {
         MatInputModule,
         NoopAnimationsModule,
         TranslateModule.forRoot(),
-        MatDialogModule,
         TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([
           { path: 'wallet', redirectTo: '/' }

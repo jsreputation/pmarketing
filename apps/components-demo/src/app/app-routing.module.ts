@@ -41,8 +41,10 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
     path: 'pages', loadChildren: () => import('./pages/pages.module').then(mod => mod.PagesModule)
+  },
+  {
+    path: 'candyshop', loadChildren: () => import('./candyshop/candyshop.module').then(mod => mod.CandyshopModule)
   }
-
 ];
 
 @NgModule({

@@ -7,20 +7,20 @@ export const game: IGame[] = [
     type: GameType.pinata,
     remainingNumberOfTries: 3,
     config: {
-      stillImg: null,
-      breakingImg: null,
-      brokenImg: null,
+      stillImg: '',
+      breakingImg: undefined,
       nbTaps: 3,
+      brokenImg: '',
     },
-    backgroundImg: null,
+    backgroundImg: undefined,
     texts: {
-      title: null,
-      subTitle: null,
-      button: null,
+      title: undefined,
+      subTitle: undefined,
+      button: undefined,
     },
     results: {
-      outcome: null,
-      noOutcome: null
+      outcome: undefined,
+      noOutcome: undefined
     }
   }
 ];

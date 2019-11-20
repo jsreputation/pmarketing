@@ -30,6 +30,7 @@ import { AudiencesVouchersListComponent } from './components/audiences-vouchers-
 import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';
 import { SelectRewardPopupModule } from '@cl-shared/containers/select-reward-popup/select-reward-popup.module';
 import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
     MatTabsModule,
     DatePickerModule,
     SelectRewardPopupModule,
-    PaginationModule
+    PaginationModule,
+    TranslateModule,
   ],
   entryComponents: [
     ChangeExpiryDatePopupComponent,

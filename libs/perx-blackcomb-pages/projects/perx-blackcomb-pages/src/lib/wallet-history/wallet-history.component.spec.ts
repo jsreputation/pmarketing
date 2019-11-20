@@ -12,7 +12,7 @@ describe('WalletHistoryComponent', () => {
   let fixture: ComponentFixture<WalletHistoryComponent>;
 
   const router = {
-    navigate: () => {}
+    navigate: () => { }
   };
   const vouchersServiceStub: Partial<IVoucherService> = {
     getAll: () => of([])
@@ -20,7 +20,7 @@ describe('WalletHistoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WalletHistoryComponent ],
+      declarations: [WalletHistoryComponent],
       imports: [
         VouchersModule,
         RouterTestingModule,

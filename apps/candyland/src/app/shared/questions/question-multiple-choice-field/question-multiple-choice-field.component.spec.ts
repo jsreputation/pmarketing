@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { QuestionMultipleChoiceFieldComponent } from './question-multiple-choice-field.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatSlideToggleModule } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('QuestionMultipleChoiceFieldComponent', () => {
   let component: QuestionMultipleChoiceFieldComponent;
@@ -17,7 +18,8 @@ describe('QuestionMultipleChoiceFieldComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        TranslateModule.forRoot()
       ],
       declarations: [QuestionMultipleChoiceFieldComponent]
     })

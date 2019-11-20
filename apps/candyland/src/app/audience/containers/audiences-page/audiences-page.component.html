@@ -1,6 +1,6 @@
 <header class="page-header">
-  <h1 class="title">Audiences</h1>
-  <cl-button (click)="openAddUserDialog()" classList="primary cta cta-new cta-new-adduser">Add User</cl-button>
+  <h1 class="title">{{'AUDIENCE_FEATURE.AUDIENCES' | translate}}</h1>
+  <cl-button (click)="openAddUserDialog()" classList="primary cta cta-new cta-new-adduser">{{'AUDIENCE_FEATURE.ADD_USER' | translate}}</cl-button>
 </header>
 
 <section class="content">
@@ -12,13 +12,13 @@
     <ng-container [ngSwitch]="currentTab">
       <cl-table-filters *ngSwitchDefault [dataSource]="dataSource">
         <ng-container *clTableFilter="searchKey ; let filter">
-          <cl-search-filter class="search-block" [control]="filter" placeholder="Search for users"></cl-search-filter>
+          <cl-search-filter class="search-block" [control]="filter" [placeholder]="'AUDIENCE_FEATURE.SEARCH_FOR_USERS' | translate"></cl-search-filter>
         </ng-container>
       </cl-table-filters>
 
       <cl-table-filters *ngSwitchCase="'audience'" [dataSource]="audiencesDataSource">
         <ng-container *clTableFilter="searchKey ; let filter">
-          <cl-search-filter class="search-block" [control]="filter" placeholder="Search for audience">
+          <cl-search-filter class="search-block" [control]="filter" [placeholder]="'AUDIENCE_FEATURE.SEARCH_FOR_AUDIENCE' | translate">
           </cl-search-filter>
         </ng-container>
       </cl-table-filters>
@@ -48,10 +48,10 @@
   <cl-no-data *ngIf="(noData$ | async)">
     <img class="no-data-img" src="/assets/images/no-data/audience-empty-illustration.svg" alt="">
     <h2 class="no-data-title">
-      Slice and dice your target audience
+      {{'AUDIENCE_FEATURE.NO_DATA_TITLE' | translate}}
     </h2>
     <p class="no-data-text">
-      Let&rsquo;s begin by creating your first Audience List
+      {{'AUDIENCE_FEATURE.NO_DATA_TEXT' | translate}}
     </p>
   </cl-no-data>
 </section>

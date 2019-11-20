@@ -19,6 +19,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NewStampPageComponent', () => {
   let component: NewStampComponent;
@@ -48,7 +49,8 @@ describe('NewStampPageComponent', () => {
         MatSliderModule,
         MatCheckboxModule,
         DirectivesModule,
-        CheckboxGroupModule
+        CheckboxGroupModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [ NewStampComponent ],
       providers: [
