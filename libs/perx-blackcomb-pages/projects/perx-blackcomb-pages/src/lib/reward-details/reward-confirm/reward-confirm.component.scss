@@ -1,0 +1,33 @@
+@import "~src/assets/styles/variables";
+
+.reward-confirm {
+  &-title {
+    text-align: center;
+  }
+
+  &-content {
+    font-size: 1.6rem;
+    padding: 0 1.6rem;
+    height: 9rem;
+
+    & > p {
+      margin: 0.5rem 0;
+    }
+  }
+
+  &-actions {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    justify-content: center;
+
+    & > button.mat-button {
+      margin-left: 0;
+    }
+  }
+}
+
+.confirm-btn {
+  color: $white;
+  width: 100%;
+}

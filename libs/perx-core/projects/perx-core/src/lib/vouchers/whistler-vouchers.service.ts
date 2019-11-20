@@ -137,9 +137,23 @@ export class WhistlerVouchersService implements IVoucherService {
   public reserveReward(rewardId: number, params?: IRewardParams): Observable<IVoucher> {
     throw new Error('Method not implemented.');
   }
+
   // @ts-ignore
-  public issueReward(rewardId: number): Observable<IVoucher> {
-    throw new Error('Method not implemented.');
+  public issueReward(rewardId: number, sourceType?: string, locale: string = 'en', cardId?: number): Observable<IVoucher> {
+
+    return this.http.post<IJsonApiItemPayload<any>>(`${this.config.apiHost}/voucher-service/purchase_requests`,
+      {
+        data: {
+          type: 'purchase_request',
+          attributes: {
+            loyalty_card_id: cardId,
+            reward_entity_id: rewardId
+          }
+        }
+      }).pipe(
+        map(res => res.data),
+        switchMap((voucher: IJsonApiItem<IWAssignedAttributes>) => this.getFullVoucher(voucher))
+      );
   }
 
   private get vouchersUrl(): string {
