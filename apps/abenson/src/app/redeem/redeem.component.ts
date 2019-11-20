@@ -28,10 +28,10 @@ export class RedeemComponent implements OnInit {
         filter((params: ParamMap) => params.has('id')),
         switchMap((params: ParamMap) => {
           const id: string | null = params.get('id');
-          if(!id) {
-            return throwError({message: 'voucherId is required'})
+          if (!id) {
+            return throwError({ message: 'voucherId is required' });
           }
-          this.voucherId =  Number.parseInt(id, 10);
+          this.voucherId = Number.parseInt(id, 10);
           return this.vouchersService.get(this.voucherId);
         })
       );

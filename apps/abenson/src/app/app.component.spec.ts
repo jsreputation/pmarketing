@@ -76,7 +76,7 @@ describe('AppComponent', () => {
     const voucherService = {} as IVoucherService;
     const campaingService = {} as ICampaignService;
     const profile = {} as ProfileService;
-    const location = {} as Location;
+    const locationTest = {} as Location;
     const shared = {} as SharedDataService;
     const matDialog = {} as MatDialog;
     app.onActivate(new LoginComponent(router, form, auth, notifi));
@@ -89,15 +89,15 @@ describe('AppComponent', () => {
     expect(app.headerTitle).toBe('Terms & Conditions');
     app.onActivate(new ProfileComponent(profile));
     expect(app.headerTitle).toBe('Profile');
-    app.onActivate(new ChangeBarangayComponent(form, profile, location));
+    app.onActivate(new ChangeBarangayComponent(form, profile, locationTest));
     expect(app.headerTitle).toBe('Change Barangay');
     app.onActivate(new ChangePasswordComponent(form, shared, router, auth));
     expect(app.headerTitle).toBe('Change PIN Code');
     app.onActivate(new ChangeEmailComponent(form, profile, router));
     expect(app.headerTitle).toBe('Change Email');
-    app.onActivate(new ChangeCityComponent(form, profile, location));
+    app.onActivate(new ChangeCityComponent(form, profile, locationTest));
     expect(app.headerTitle).toBe('Change City/Municipality');
-    app.onActivate(new ChangeStreetAddressComponent(form, profile, location));
+    app.onActivate(new ChangeStreetAddressComponent(form, profile, locationTest));
     expect(app.headerTitle).toBe('Change Street Address');
     app.onActivate(new FaqComponent());
     expect(app.headerTitle).toBe('FAQ');

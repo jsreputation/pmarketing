@@ -49,8 +49,8 @@ export class ExistingCardComponent implements OnInit {
   private initLoyaltyId(): void {
     this.loyaltyService.getLoyalties().pipe(
       map(loyalties => loyalties && loyalties.length > 0 && loyalties[0])
-    ).subscribe( (loyalty) => {
-      if(loyalty) {
+    ).subscribe((loyalty) => {
+      if (loyalty) {
         this.loyaltyId = loyalty.id;
       }
     });

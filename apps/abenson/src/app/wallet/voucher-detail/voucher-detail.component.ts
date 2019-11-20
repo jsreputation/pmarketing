@@ -24,8 +24,8 @@ export class VoucherDetailComponent implements OnInit {
         filter((params: ParamMap) => params.has('id')),
         switchMap((params: ParamMap) => {
           const id: string | null = params.get('id');
-          if(!id) {
-            return throwError({message: 'voucher id is required'})
+          if (!id) {
+            return throwError({ message: 'voucher id is required' });
           }
           const idN: number = Number.parseInt(id, 10);
           return this.vouchersService.get(idN);
