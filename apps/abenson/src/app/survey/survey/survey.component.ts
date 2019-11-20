@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, ISurvey, SurveyService } from '@perx/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 
 interface IAnswer {
@@ -33,7 +33,10 @@ export class SurveyComponent implements OnInit {
       .pipe(
         filter((params: ParamMap) => params.has('id')),
         switchMap((params: ParamMap) => {
-          const id: string = params.get('id');
+          const id: string | null = params.get('id');
+          if(!id) {
+            return throwError({message: 'survey id is required'})
+          }
           const idN = Number.parseInt(id, 10);
           return this.surveyService.getSurveyFromCampaign(idN);
         }),

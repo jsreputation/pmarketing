@@ -2,7 +2,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { StampService, IStampCard } from '@perx/core';
 import { Component, OnInit } from '@angular/core';
 import { filter, switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -27,7 +27,10 @@ export class CardComponent implements OnInit {
       .pipe(
         filter((params: ParamMap) => params.has('id')),
         switchMap((params: ParamMap) => {
-          const id: string = params.get('id');
+          const id: string | null = params.get('id');
+          if(!id) {
+            return throwError({message: 'stampCard id is required'})
+          }
           const idN = Number.parseInt(id, 10);
           return this.stampService.getCurrentCard(idN);
         }),
