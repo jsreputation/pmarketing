@@ -11,7 +11,7 @@ interface IDictionary {
 }
 
 @Injectable()
-export class CustomTranslateLoader implements TranslateLoader {
+export class LanguageService implements TranslateLoader {
   private contentHeader: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
