@@ -1,0 +1,35 @@
+<div class="upload-wrap"
+  [class.invalid]="isRequired || message"
+  [class.field-lock]="lock"
+  [ngClass]="classList">
+  <input #fileInput type="file"
+    *ngIf="!imgURL"
+    class="upload-input"
+    accept='image/*'
+    (change)="preview(fileInput.files)" />
+  <div class="image-wrap"
+    (click)="setActive()"
+    [ngClass]="{active: imgURL === _selectGraphic}"
+    *ngIf="imgURL">
+    <img [src]="imgURL" class="image" alt="upload">
+    <button class="image-clear" (click)="clear()" [attr.aria-label]="btnLabel">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+
+  <div class="upload-wrap-btn" *ngIf="!imgURL">
+    <button class="upload-btn" (click)="fileInput.click()" [attr.aria-label]="btnLabel">
+      <ng-content></ng-content>
+      <span>{{btnLabel}}</span>
+    </button>
+  </div>
+  <div class="upload-error-wrap">
+    <p class="upload-error" *ngIf="isRequired">Required field</p>
+    <p class="upload-error" *ngIf="message">{{message}}</p>
+  </div>
+  <div class="upload-type-wrap" *ngIf="!message && !isRequired">
+    <span class="upload-type">
+      {{placeholder}}
+    </span>
+  </div>
+</div>

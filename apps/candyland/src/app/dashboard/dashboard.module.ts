@@ -24,6 +24,7 @@ import { RadiusCircleChartModule } from '@cl-shared/charts/radius-circle-chart/r
 import { LinearChartModule, ChartCardModule } from '@cl-shared';
 import { DashboardRewardsPageComponent } from './containers/dashboard-rewards-page/dashboard-rewards-page.component';
 import { DashboardChartsParametersService } from './services/dashboard-charts-parameters.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { DashboardChartsParametersService } from './services/dashboard-charts-pa
     MatTabsModule,
     MatSelectModule,
     ChartCardModule,
-    SearchFilterModule
+    SearchFilterModule,
+    TranslateModule
   ],
   providers: [
     DashboardChartsParametersService

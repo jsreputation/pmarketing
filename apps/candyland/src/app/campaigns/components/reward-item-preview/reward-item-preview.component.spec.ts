@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardItemPreviewComponent } from './reward-item-preview.component';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RewardItemPreviewComponent', () => {
   let component: RewardItemPreviewComponent;
@@ -11,6 +12,9 @@ describe('RewardItemPreviewComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ RewardItemPreviewComponent ],
+      imports: [
+        TranslateModule.forRoot(),
+      ],
       schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();

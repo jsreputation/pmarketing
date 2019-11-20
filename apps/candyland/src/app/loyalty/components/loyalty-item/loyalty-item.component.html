@@ -8,8 +8,10 @@
   <div class="loyalty-item-info">
     <p class="loyalty-item-name" [class.linkable]="linkable" (click)="navigateToReview()">{{data?.name}}</p>
     <p class="loyalty-item-group">{{data?.details?.pointsName}}</p>
-    <p class="loyalty-item-tiers" *ngIf="data?.customTiersCount > 0">{{data?.customTiersCount}} Tiers</p>
-    <cl-status-label [status]="data?.status"></cl-status-label>
+    <p class="loyalty-item-tiers" *ngIf="data?.customTiersCount > 0">{{data?.customTiersCount}} {{'LOYALTY_FEATURE.TIERS' | translate}}</p>
+    <cl-status-label [status]="data?.status"
+                     [config]="statusLabel"
+    ></cl-status-label>
   </div>
   <div class="loyalty-item-actions" *ngIf="linkable || menuOptions.length > 0">
     <button mat-button [matMenuTriggerFor]="menu" class="btn-icon" aria-label="Loyalty program menu">
@@ -18,11 +20,11 @@
     <mat-menu #menu="matMenu">
       <button mat-menu-item
         *ngIf="data?.status === statusType.ACTIVE"
-        (click)="tapped({action: loyaltyAction.pause})">Pause</button>
+        (click)="tapped({action: loyaltyAction.pause})">{{'PAUSE' | translate}}</button>
       <button mat-menu-item
         *ngIf="data?.status === statusType.PAUSED"
-        (click)="tapped({action: loyaltyAction.activate})">Active</button>
-      <button mat-menu-item *ngFor="let action of menuOptions" (click)="tapped(action)">{{action.label}}</button>
+        (click)="tapped({action: loyaltyAction.activate})">{{'ACTIVE' | translate}}</button>
+      <button mat-menu-item *ngFor="let action of menuOptions" (click)="tapped(action)">{{action.label | translate}}</button>
     </mat-menu>
   </div>
 </div>

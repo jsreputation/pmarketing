@@ -1,12 +1,12 @@
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatSnackBar, MatDialog } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import {
   IFormsService,
   AuthenticationService,
   IPopupConfig,
-  PopupComponent,
   IGameService,
-  InstantOutcomeService
+  InstantOutcomeService,
+  NotificationService
 } from '@perx/core';
 import { ISurvey, IAnswer } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -40,7 +40,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private formSvc: IFormsService,
     private authService: AuthenticationService,
     public snack: MatSnackBar,
-    private dialog: MatDialog,
+    private notificationService: NotificationService,
     private router: Router,
     private route: ActivatedRoute,
     private translate: TranslateService,
@@ -167,7 +167,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
         () => {
           this.router.navigate(['/wallet']);
           if (this.popupData) {
-            this.dialog.open(PopupComponent, { data: this.popupData });
+            this.notificationService.addPopup(this.popupData);
           }
         },
         (error: Error) => this.updateErrorMessage(error.message)

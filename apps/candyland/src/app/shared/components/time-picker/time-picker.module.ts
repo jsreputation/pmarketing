@@ -8,6 +8,7 @@ import {
 } from '@angular/material';
 import { TimePickerComponent } from './time-picker.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    TranslateModule
   ]
 })
 export class TimePickerModule {

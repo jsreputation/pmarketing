@@ -9,6 +9,7 @@ import { BrandingModule } from './containers/branding/branding.module';
 import { CommunicationsModule } from './containers/communications/communications.module';
 import { UsersRolesModule } from './containers/users-roles/users-roles.module';
 import { JsonApiModule } from 'angular2-jsonapi';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { JsonApiModule } from 'angular2-jsonapi';
     CommunicationsModule,
     UsersRolesModule,
     MatTabsModule,
-    JsonApiModule
+    JsonApiModule,
+    TranslateModule,
   ]
 })
 export class SettingsModule { }

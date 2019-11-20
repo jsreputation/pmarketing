@@ -1,26 +1,31 @@
 <mat-expansion-panel class="card" expanded>
   <mat-expansion-panel-header class="card-header">
     <h2 class="card-title">
-      Global Earn and Burn Rules
+      {{'LOYALTY_FEATURE.GLOBAL_EARN_AND_BURN_RULES' | translate}}
     </h2>
   </mat-expansion-panel-header>
 
   <div class="card-content">
-    <p class="info-points-title">Points Earning Conversion Rate</p>
+    <p class="info-points-title">
+      {{'LOYALTY_FEATURE.POINTS_EARNING_CONVERSION_RATE' | translate}}
+     </p>
     <p class="info-points-value">
       {{loyalty?.tiersConversions?.globalEarnRule.amount}}
       {{currency || 'SGD'}}
-      spending =
+      {{'LOYALTY_FEATURE.SPENDING' | translate}} =
       {{loyalty?.tiersConversions?.globalEarnRule.points}}
       {{loyalty?.details?.pointsName}}
     </p>
-    <p class="info-points-title">Points Burning Conversion Rate</p>
+    <p class="info-points-title">
+      {{'LOYALTY_FEATURE.POINTS_BURNING_CONVERSION_RATE' | translate}}
+    </p>
     <p class="info-points-value">
       {{loyalty?.tiersConversions?.globalBurnRule.amount}}
       {{loyalty?.details?.pointsName}}
       =
       {{loyalty?.tiersConversions?.globalBurnRule.points}}
-      {{currency || 'SGD'}} in reward value
+      {{currency || 'SGD'}}
+      {{'LOYALTY_FEATURE.IN_REWARD_VALUE' | translate}}
     </p>
   </div>
 </mat-expansion-panel>
