@@ -13,6 +13,7 @@ import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { SelectRewardPopupComponent } from './select-reward-popup.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { SelectRewardPopupComponent } from './select-reward-popup.component';
     ButtonModule,
     MatFormFieldModule,
     TableFiltersModule,
-    PaginationModule
+    PaginationModule,
+    TranslateModule
   ],
   entryComponents: [
     SelectRewardPopupComponent

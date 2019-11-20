@@ -10,7 +10,8 @@ import {
   ThemesService,
   FeedReaderService,
   AuthenticationService,
-  ProfileService
+  ProfileService,
+  ConfigService
 } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatTabsModule, MatCardModule, MatIconModule, MatRippleModule } from '@angular/material';
@@ -119,6 +120,10 @@ describe('HomeComponent', () => {
 
   const profileServiceStub = {};
 
+  const configServiceStub = {
+    readAppConfig: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -147,6 +152,7 @@ describe('HomeComponent', () => {
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: IVoucherService, useValue: vouchersServiceStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ],
     })
       .compileComponents();

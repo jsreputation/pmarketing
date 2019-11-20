@@ -6,7 +6,7 @@
         <img class="reward-item-no-img" *ngIf="!data?.image" src="assets/images/icons/deactivate.svg">
       </div>
       <div class="reward-item-info">
-        <p class="reward-item-name">{{data?.name || 'No reward'}}</p>
+        <p class="reward-item-name">{{data?.name || ('CAMPAIGN.NO_REWARD' | translate)}}</p>
         <p class="reward-item-type" *ngIf="data?.merchantName">{{data?.merchantName}}</p>
       </div>
       <!-- <cl-progress-bar class="reward-item-progress"
@@ -16,7 +16,9 @@
       </cl-progress-bar> -->
     </div>
     <div class="reward-item-probability" *ngIf="probability.enabled">
-      <span class="reward-item-probability-label">Probability</span>
+      <span class="reward-item-probability-label">
+        {{'CAMPAIGN.PROBABILITY' | translate}}
+      </span>
       <mat-form-field class="reward-item-probability-input">
         <input
           type="number"

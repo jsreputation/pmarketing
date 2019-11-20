@@ -2,21 +2,21 @@
   {
     "id": 2,
     "type": "shake",
-    "title": "Shake the tree",
+    "title": "SHAKE_THE_TREE",
     "img": "assets/images/games/shake.png",
     "active": "false"
   },
   {
     "id": 3,
     "type": "tap",
-    "title": "Hit the pinata",
+    "title": "HIT_THE_PINATA",
     "img": "assets/images/games/tap.png",
     "active": "false"
   },
   {
     "id": 5,
     "type": "scratch",
-    "title": "Scratch the Card (β)",
+    "title": "SCRATCH_THE_CARD",
     "img": "assets/images/games/scratch.png",
     "active": "false"
   }

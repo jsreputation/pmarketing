@@ -5,6 +5,7 @@ import { SingleReportCardComponent } from './single-report-card.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { DynamicGraphicDirective } from './shared/dynamic-graphic.directive';
 import { QuestionTypeModule } from '@cl-shared';
+import { TranslateModule } from '@ngx-translate/core';
 describe('SingleReportCardComponent', () => {
   let component: SingleReportCardComponent;
   let fixture: ComponentFixture<SingleReportCardComponent>;
@@ -16,7 +17,8 @@ describe('SingleReportCardComponent', () => {
         DynamicGraphicDirective,
       ],
       imports: [
-        QuestionTypeModule
+        QuestionTypeModule,
+        TranslateModule.forRoot()
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

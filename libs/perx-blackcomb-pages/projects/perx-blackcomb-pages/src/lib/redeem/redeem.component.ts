@@ -6,11 +6,11 @@ import {
   IVoucherService,
   RedemptionType,
   IPopupConfig,
-  PopupComponent,
+  NotificationService,
+  PopUpClosedCallBack,
 } from '@perx/core';
 import { Observable, Subject } from 'rxjs';
 import { filter, switchMap, takeUntil, map, tap } from 'rxjs/operators';
-import { MatDialog, MatDialogRef } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './redeem.component.html',
   styleUrls: ['./redeem.component.scss']
 })
-export class RedeemComponent implements OnInit, OnDestroy {
+export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
   public voucher$: Observable<Voucher>;
   public voucherId: number;
   public redemptionType: RedemptionType;
@@ -58,9 +58,9 @@ export class RedeemComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private location: Location,
     private vouchersService: IVoucherService,
-    private dialog: MatDialog,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private notificationService: NotificationService
   ) {
   }
 
@@ -128,21 +128,27 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public needLoginPopup(): void {
-    this.translate.get(['REEDEM_QUEST', 'GO_TO_LOGIN']).pipe(map((dictionary) => this.popup({
-      title: dictionary.REEDEM_QUEST,
-      buttonTxt: dictionary.GO_TO_LOGIN
-    }).afterClosed())).subscribe(() => this.router.navigate(['/login']));
+    this.translate.get(['REEDEM_QUEST', 'GO_TO_LOGIN'])
+      .subscribe((dictionary) => this.popup({
+        title: dictionary.REEDEM_QUEST,
+        buttonTxt: dictionary.GO_TO_LOGIN
+      }));
   }
 
   public errorPopup(): void {
     this.popup(this.errorPopUp);
   }
 
-  public popup(data: IPopupConfig): MatDialogRef<PopupComponent> {
-    return this.dialog.open(PopupComponent, { data });
+  public popup(data: IPopupConfig): void {
+    data.afterClosedCallBack = this;
+    return this.notificationService.addPopup(data);
   }
 
   public goBack(): void {
     this.location.back();
+  }
+
+  public dialogClosed(): void {
+    this.router.navigate(['/login']);
   }
 }

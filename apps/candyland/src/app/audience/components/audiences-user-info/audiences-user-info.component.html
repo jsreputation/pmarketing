@@ -8,7 +8,7 @@
     <div class="user-info-item">
       <div class="control-input">
         <mat-form-field>
-          <input matInput placeholder="ID" value="#{{user?.id}}" disabled>
+          <input matInput [placeholder]="'AUDIENCE_FEATURE.ID' | translate" value="#{{user?.id}}" disabled>
         </mat-form-field>
       </div>
     </div>
@@ -16,7 +16,7 @@
     <div class="user-info-item">
       <div class="control-input">
         <mat-form-field>
-          <input matInput placeholder="Contact no." value="{{user?.phone_number || '-' }}" disabled>
+          <input matInput [placeholder]="'AUDIENCE_FEATURE.CONTACT_NO' | translate" value="{{user?.phone_number || '-' }}" disabled>
         </mat-form-field>
       </div>
     </div>
@@ -24,7 +24,7 @@
     <div class="user-info-item">
       <div class="control-input">
         <mat-form-field>
-          <input matInput placeholder="Race" value="{{user?.race || '-' }}" disabled>
+          <input matInput [placeholder]="'AUDIENCE_FEATURE.RACE' | translate" value="{{user?.race || '-' }}" disabled>
         </mat-form-field>
       </div>
     </div>
@@ -32,7 +32,7 @@
     <div class="user-info-item">
       <div class="control-input">
         <mat-form-field>
-          <input matInput placeholder="Country" value="{{user?.country || '-' }}" disabled>
+          <input matInput [placeholder]="'AUDIENCE_FEATURE.COUNTRY' | translate" value="{{user?.country || '-' }}" disabled>
         </mat-form-field>
       </div>
     </div>
@@ -40,7 +40,7 @@
     <div class="user-info-item">
       <div class="control-input">
         <mat-form-field>
-          <input matInput placeholder="State" value="{{user?.state || '-' }}" disabled>
+          <input matInput [placeholder]="'AUDIENCE_FEATURE.STATE' | translate" value="{{user?.state || '-' }}" disabled>
         </mat-form-field>
       </div>
     </div>
@@ -48,7 +48,7 @@
     <div class="user-info-item">
       <div class="control-input">
         <mat-form-field>
-          <input matInput placeholder="Email" value="{{user?.email_address || '-'}}" disabled>
+          <input matInput [placeholder]="'AUDIENCE_FEATURE.EMAIL' | translate" value="{{user?.email_address || '-'}}" disabled>
         </mat-form-field>
       </div>
     </div>
@@ -56,7 +56,7 @@
     <div class="user-info-item">
       <div class="control-input">
         <mat-form-field>
-          <input matInput placeholder="Birthday" value="{{user?.birthday || '-' }}" disabled>
+          <input matInput [placeholder]="'AUDIENCE_FEATURE.BIRTHDAY' | translate" value="{{user?.birthday || '-' }}" disabled>
         </mat-form-field>
       </div>
     </div>
@@ -64,7 +64,7 @@
     <div class="user-info-item">
       <div class="control-input">
         <mat-form-field>
-          <input matInput placeholder="Gender" value="{{user?.gender || '-' }}" disabled>
+          <input matInput [placeholder]="'AUDIENCE_FEATURE.GENDER' | translate" value="{{user?.gender || '-' }}" disabled>
         </mat-form-field>
       </div>
     </div>
@@ -72,7 +72,7 @@
     <div class="user-info-item">
       <div class="control-input">
         <mat-form-field>
-          <input matInput placeholder="City" value="{{user?.city || '-' }}" disabled>
+          <input matInput [placeholder]="'AUDIENCE_FEATURE.CITY' | translate" value="{{user?.city || '-' }}" disabled>
         </mat-form-field>
       </div>
     </div>
@@ -80,7 +80,7 @@
     <div class="user-info-item">
       <div class="control-input">
         <mat-form-field>
-          <input matInput placeholder="Audience list" value="{{ user?.pools || '-' }}" disabled>
+          <input matInput [placeholder]="'AUDIENCE_FEATURE.AUDIENCE_LIST' | translate" value="{{ user?.pools || '-' }}" disabled>
         </mat-form-field>
       </div>
 <!--
