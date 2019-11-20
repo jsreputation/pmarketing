@@ -9,16 +9,20 @@
       <!--limits-->
       <mat-card class="card" formGroupName="limits">
         <div class="card-header">
-          <h2 class="card-title">Response Limits</h2>
+          <h2 class="card-title">
+            {{'CAMPAIGN.RESPONSE_LIMITS' | translate}}
+          </h2>
         </div>
         <div class="card-content">
           <div class="card-row stretch">
             <div>
               <mat-form-field>
-                <mat-label>Per User</mat-label>
+                <mat-label>
+                  {{'CAMPAIGN.PER_USER' | translate}}
+                </mat-label>
                 <input matInput type="number" [min]="1" formControlName="times">
-                <mat-error *ngIf="times?.hasError('min')">Min length 1</mat-error>
-                <mat-error *ngIf="times?.hasError('max')">Max length 60</mat-error>
+                <mat-error *ngIf="times?.hasError('min')">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
+                <mat-error *ngIf="times?.hasError('max')">{{'ERROR_MAX_LENGTH' | translate}} 60</mat-error>
               </mat-form-field>
             </div>
           </div>

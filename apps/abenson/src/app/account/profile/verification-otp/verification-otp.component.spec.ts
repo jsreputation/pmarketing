@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { VerificationOtpComponent } from './verification-otp.component';
-import { UtilsModule, ProfileService, AuthenticationService, IProfile } from '@perx/core';
+import { UtilsModule, ProfileService, AuthenticationService, IProfile, NotificationService } from '@perx/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IChangePhoneData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
@@ -9,32 +9,42 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedDataService } from 'src/app/services/shared-data.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IWMessageResponse } from '@perx/whistler';
+import { MatDialogModule } from '@angular/material/dialog';
 
-const testphone = '18888888';
-
-const profileServiceStub = {
-  whoAmI: () => of({ phone: '12345' })
-};
-
-const authenticationServiceStub = {
-  changePhone: () => of(),
-  requestVerificationToken: () => of(),
-  resendOTP: () => of(),
-  changePassword: () => of()
-};
 describe('VerificationOtpComponent', () => {
+  const testphone: string = '18888888';
+  const profileServiceStub: Partial<ProfileService> = {
+    whoAmI: () => of({ phone: '12345' })
+  };
+  const authenticationServiceStub: Partial<AuthenticationService> = {
+    changePhone: () => of(),
+    requestVerificationToken: () => of(),
+    resendOTP: () => of(),
+    changePassword: () => of()
+  };
   let component: VerificationOtpComponent;
   let fixture: ComponentFixture<VerificationOtpComponent>;
   let auth: AuthenticationService;
   const params = new BehaviorSubject({ type: 'phone' });
   let profileService: ProfileService;
   let router: Router;
+  const notificationServiceStub: Partial<NotificationService> = {
+    $popup: of(),
+    addPopup: () => { }
+  };
+
+  const activatedRouteStub = {
+    params,
+    queryParams: of({ phone: testphone })
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [VerificationOtpComponent],
       imports: [
         UtilsModule,
         NoopAnimationsModule,
+        MatDialogModule,
         RouterTestingModule.withRoutes([{
           path: 'account',
           component: VerificationOtpComponent
@@ -44,19 +54,9 @@ describe('VerificationOtpComponent', () => {
         SharedDataService,
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            params,
-            queryParams: of({ phone: testphone })
-          }
-        },
-        {
-          provide: Router,
-          useValue: {
-            navigate: () => { }
-          }
-        }
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
+        { provide: Router, useValue: { navigate: () => { } } },
+        { provide: NotificationService, useValue: notificationServiceStub }
       ]
     })
       .compileComponents();

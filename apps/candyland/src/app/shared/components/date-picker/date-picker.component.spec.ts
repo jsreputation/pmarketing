@@ -10,6 +10,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DatePickerComponent', () => {
   let component: DatePickerComponent;
@@ -26,6 +27,7 @@ describe('DatePickerComponent', () => {
         MatFormFieldModule,
         MatIconModule,
         MatNativeDateModule,
+        TranslateModule.forRoot()
       ],
       schemas: [NO_ERRORS_SCHEMA],
     })

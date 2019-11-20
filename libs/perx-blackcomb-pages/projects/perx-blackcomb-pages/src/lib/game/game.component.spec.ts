@@ -5,12 +5,11 @@ import { of } from 'rxjs';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
 import { ScratchComponent } from './scratch/scratch.component';
-import { GameModule, IGameService, PopupComponent, GameType, IGame, AuthenticationService } from '@perx/core';
-import { MatDialogModule, MatProgressBarModule } from '@angular/material';
+import { GameModule, IGameService, GameType, IGame, AuthenticationService, NotificationService } from '@perx/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('GameComponent', () => {
@@ -40,6 +39,7 @@ describe('GameComponent', () => {
   const authServiceStub: Partial<AuthenticationService> = {
     getAnonymous: () => true,
   };
+  const notificationServiceStub: Partial<NotificationService> = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -48,23 +48,22 @@ describe('GameComponent', () => {
         ShakeComponent,
         TapComponent,
         ScratchComponent,
-        PopupComponent,
       ],
       imports: [
-        GameModule,
-        MatDialogModule,
         MatProgressBarModule,
-        BrowserAnimationsModule,
+        NoopAnimationsModule,
+        GameModule,
         TranslateModule.forRoot(),
       ],
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
         { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: Router, useValue: routerStub },
-        { provide: AuthenticationService, useValue: authServiceStub }
+        { provide: AuthenticationService, useValue: authServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub }
       ]
     })
-      .overrideModule(BrowserDynamicTestingModule, { set: { entryComponents: [PopupComponent] } })
+      // .overrideModule(BrowserDynamicTestingModule, { set: { entryComponents: [PopupComponent] } })
       .compileComponents();
   }));
 

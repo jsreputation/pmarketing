@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { MatIconModule, MatSelectModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('QuestionTypeComponent', () => {
   let component: QuestionTypeComponent;
@@ -19,6 +20,7 @@ describe('QuestionTypeComponent', () => {
 
         MatSelectModule,
         MatIconModule,
+        TranslateModule.forRoot()
       ],
       declarations: [ QuestionTypeComponent ]
     })

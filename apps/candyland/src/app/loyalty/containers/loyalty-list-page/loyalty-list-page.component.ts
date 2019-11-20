@@ -1,10 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { CustomDataSource, DataSourceStates, DataSourceUpdateSchema } from '@cl-shared/table';
 import { LoyaltyAction } from '../../models/loyalty-action.enum';
 import { IEngagementItemMenuOption } from '../../components/loyalty-item/loyalty-item.component';
 import { Router } from '@angular/router';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
+import { StatusLabelConfig } from '@cl-shared';
+import { TranslateService } from '@ngx-translate/core';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-loyalty-list-page',
@@ -12,26 +16,34 @@ import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
   styleUrls: ['./loyalty-list-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoyaltyListPageComponent implements OnDestroy {
+export class LoyaltyListPageComponent implements OnInit, OnDestroy {
   public loyaltyId: string;
   public loyaltyAction: typeof LoyaltyAction = LoyaltyAction;
   public dataSource: CustomDataSource<ILoyaltyForm>;
   public dataSourceStates: typeof DataSourceStates = DataSourceStates;
   public menuOptions: IEngagementItemMenuOption[] = [
-    {action: this.loyaltyAction.edit, label: 'Edit'},
-    {action: this.loyaltyAction.duplicate, label: 'Duplicate'},
-    {action: this.loyaltyAction.delete, label: 'Delete'},
+    {action: this.loyaltyAction.edit, label: 'BTN_EDIT'},
+    {action: this.loyaltyAction.duplicate, label: 'BTN_DUPLICATE'},
+    {action: this.loyaltyAction.delete, label: 'BTN_DELETE'},
   ];
-
+  public statusLabel: { [key: string]: StatusLabelConfig };
+  private destroy$: Subject<void> = new Subject();
   constructor(
     private loyaltyService: LoyaltyService,
     private router: Router,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private translate: TranslateService
   ) {
     this.dataSource = new CustomDataSource<ILoyaltyForm>(this.loyaltyService);
   }
 
+  public ngOnInit(): void {
+    this.prepareStatusesLabel();
+  }
+
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   /**
@@ -91,5 +103,27 @@ export class LoyaltyListPageComponent implements OnDestroy {
         this.dataSource.updateData(DataSourceUpdateSchema.currentPage);
         this.cd.detectChanges();
       });
+  }
+
+  private prepareStatusesLabel(): void {
+    combineLatest([this.getTranslation(), this.getStatusLabel()])
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(([translation, statuses]) => {
+        Object.values(statuses)
+          .forEach((item) => {
+            item.title = translation[item.title];
+          });
+        this.statusLabel = statuses;
+      });
+  }
+
+  private getTranslation(): Observable<any> {
+    return this.translate.get('STATUSES_TYPE');
+  }
+
+  private getStatusLabel(): Observable<{ [key: string]: StatusLabelConfig }> {
+    return this.loyaltyService.getStatusLable();
   }
 }

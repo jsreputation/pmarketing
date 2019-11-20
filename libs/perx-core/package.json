@@ -24,6 +24,7 @@
     "@angular/router": "~8.0.0",
     "@perx/whistler": "^0.0.0",
     "angularx-qrcode": "^1.6.1",
+    "ngx-ellipsis": "^2.0.9",
     "ngx-multi-line-ellipsis": "^1.0.4",
     "rxjs": "~6.4.0",
     "ts-optchain": "^0.1.7",
@@ -80,9 +81,18 @@
         "files": [
           "**/*.ts?(x)"
         ],
-        "excludedFiles": ["**/*.service.spec.ts", "**/*.service.ts", "**/*.component.ts"],
+        "excludedFiles": [
+          "**/*.service.spec.ts",
+          "**/*.service.ts",
+          "**/*.component.ts"
+        ],
         "rules": {
-          "camelcase": ["error", {"ignoreDestructuring": true}]
+          "camelcase": [
+            "error",
+            {
+              "ignoreDestructuring": true
+            }
+          ]
         }
       }
     ]
