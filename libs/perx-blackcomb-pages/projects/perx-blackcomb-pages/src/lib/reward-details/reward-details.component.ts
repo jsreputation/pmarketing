@@ -100,7 +100,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   }
 
   private exchangePoints(): Observable<void> {
-    return this.vouchersService.issueReward(this.rewardData.id, null, null, this.loyalty.cardId)
+    return this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
       .pipe(
         switchMap(() => combineLatest([
           this.translate.get('YOUR_BALANCE_IS'),

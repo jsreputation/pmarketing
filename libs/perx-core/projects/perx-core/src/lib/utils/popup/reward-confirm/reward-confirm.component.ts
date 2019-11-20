@@ -8,7 +8,7 @@ export interface IRewardConfirmComponentParam {
 }
 
 @Component({
-  selector: 'hkbn-reward-confirm',
+  selector: 'perx-core-reward-confirm-popup',
   templateUrl: './reward-confirm.component.html',
   styleUrls: ['./reward-confirm.component.scss']
 })
