@@ -84,7 +84,9 @@ export class MacaronService {
   }
 
   public getCampaignMacaron(campaign: ICampaign): IMacaron | null {
-    if (campaign.isComingSoon) {
+    const currentDate = new Date();
+    const isComingSoon = campaign.beginsAt && campaign.beginsAt.getTime() > currentDate.getTime();
+    if (isComingSoon) {
       return {
         label: 'Coming Soon',
         class: 'coming-soon',
