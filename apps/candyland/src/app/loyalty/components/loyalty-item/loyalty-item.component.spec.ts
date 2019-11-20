@@ -6,6 +6,7 @@ import { LoyaltyItemComponent } from 'src/app/loyalty/components/loyalty-item/lo
 import { PipesModule } from '@cl-shared/pipes/pipes.module';
 import { MatMenuModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoyaltyItemComponent', () => {
   let component: LoyaltyItemComponent;
@@ -18,7 +19,8 @@ describe('LoyaltyItemComponent', () => {
         RouterTestingModule,
         PipesModule,
         MatMenuModule,
-        MatIconModule
+        MatIconModule,
+        TranslateModule.forRoot()
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

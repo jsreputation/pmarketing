@@ -4,6 +4,7 @@ import { LoyaltyReviewComponent } from './loyalty-review.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoyaltyReviewComponent', () => {
   let component: LoyaltyReviewComponent;
@@ -13,7 +14,8 @@ describe('LoyaltyReviewComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [ LoyaltyReviewComponent ],
       schemas: [NO_ERRORS_SCHEMA]

@@ -32,6 +32,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ShakeTreeService } from '@cl-core/services';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CreateEngagementPopupComponent', () => {
   let component: CreateEngagementPopupComponent;
@@ -70,6 +71,7 @@ describe('CreateEngagementPopupComponent', () => {
         MatButtonModule,
         NoDataModule,
         HttpClientTestingModule,
+        TranslateModule.forRoot(),
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },

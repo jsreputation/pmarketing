@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 import { StepConditionService } from '../../services/step-condition.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ReviewCampaignComponent', () => {
   let component: ReviewCampaignComponent;
@@ -23,7 +24,8 @@ describe('ReviewCampaignComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        TranslateModule.forRoot(),
       ],
       providers: [
         {
