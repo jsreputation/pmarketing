@@ -14,7 +14,7 @@ import {
   OutcomeModule,
   ProfileModule,
   RewardsModule,
-  CustomTranslateLoader,
+  LanguageService,
   TokenStorage,
   ConfigService,
 } from '@perx/core';
@@ -33,6 +33,7 @@ import ru from '@angular/common/locales/ru';
 import localesRuExtra from '@angular/common/locales/extra/ru';
 import vi from '@angular/common/locales/vi';
 import localesViExtra from '@angular/common/locales/extra/vi';
+import { MatDialogModule } from '@angular/material/dialog';
 
 registerLocaleData(zh, 'zh', localeZhExtra);
 registerLocaleData(ru, 'ru', localesRuExtra);
@@ -61,12 +62,13 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     UtilsModule,
     PerxCampaignModule,
     HttpClientModule,
+    MatDialogModule,
     RewardsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         deps: [HttpClient, ConfigService, TokenStorage],
-        useClass: CustomTranslateLoader
+        useClass: LanguageService
       }
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),

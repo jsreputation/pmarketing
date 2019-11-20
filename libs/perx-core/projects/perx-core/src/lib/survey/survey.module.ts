@@ -1,9 +1,9 @@
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   MatFormFieldModule,
   MatInputModule,
   MatButtonModule,
   MatIconModule,
-  MatDatepickerModule,
   MatNativeDateModule,
   MatSelectModule,
   MatCheckboxModule,

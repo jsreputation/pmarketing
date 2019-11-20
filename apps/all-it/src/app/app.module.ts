@@ -15,8 +15,8 @@ import {
   ProfileModule,
   RewardsModule,
   TokenStorage,
-  CustomTranslateLoader,
-  ConfigService,
+  LanguageService,
+  ConfigService
 } from '@perx/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -54,7 +54,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
       loader: {
         provide: TranslateLoader,
         deps: [HttpClient, ConfigService, TokenStorage],
-        useClass: CustomTranslateLoader
+        useClass: LanguageService
       }
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
