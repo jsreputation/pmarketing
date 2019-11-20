@@ -1,13 +1,16 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { PopupComponent, NotificationService, IPopupConfig, ThemesService, ITheme, AuthenticationService, Config } from '@perx/core';
-// import {
-//   HomeComponent,
-//   HistoryComponent,
-//   AccountComponent,
-//   LoginComponent,
-//   WalletComponent
-// } from '@perx/blackcomb-pages';
+import {
+  PopupComponent,
+  NotificationService,
+  IPopupConfig,
+  ThemesService,
+  ITheme,
+  AuthenticationService,
+  Config,
+  ConfigService,
+  IConfig
+} from '@perx/core';
 import { Location } from '@angular/common';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
@@ -30,6 +33,7 @@ export class LayoutComponent implements OnInit {
   public leftIcon: string = '';
   public preAuth: boolean;
   public theme: ITheme;
+  public appConfig: IConfig;
 
   constructor(
     private notificationService: NotificationService,
@@ -39,7 +43,8 @@ export class LayoutComponent implements OnInit {
     private themesService: ThemesService,
     private authService: AuthenticationService,
     private cd: ChangeDetectorRef,
-    private config: Config
+    private config: Config,
+    private configService: ConfigService,
   ) {
     if (config) {
       this.preAuth = this.config.preAuth || false;
@@ -49,6 +54,10 @@ export class LayoutComponent implements OnInit {
   public ngOnInit(): void {
     this.themesService.getThemeSetting().subscribe(
       theme => this.theme = theme
+    );
+
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig) => this.appConfig = config
     );
 
     this.authService.$failedAuth.subscribe(
