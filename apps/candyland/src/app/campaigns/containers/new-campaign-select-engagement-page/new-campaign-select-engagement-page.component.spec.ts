@@ -12,6 +12,7 @@ import { MatDialogModule, MatRadioModule, MatSelectModule } from '@angular/mater
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PipesModule } from '@cl-shared/pipes/pipes.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NewCampaignSelectEngagementPageComponent', () => {
   let component: NewCampaignSelectEngagementPageComponent;
@@ -28,7 +29,8 @@ describe('NewCampaignSelectEngagementPageComponent', () => {
         MatSelectModule,
         MatDialogModule,
         PipesModule,
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [NewCampaignSelectEngagementPageComponent],
       providers: [

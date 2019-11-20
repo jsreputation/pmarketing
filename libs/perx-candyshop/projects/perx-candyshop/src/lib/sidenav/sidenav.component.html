@@ -1,0 +1,39 @@
+<mat-sidenav-container class="container-sidenav">
+  <mat-sidenav class="sidenav" #snav
+                [@openClose]="isOpen ? 'open' : 'closed'"
+                [mode]="mobileQuery.matches ? 'over' : 'side'"
+                [opened]="sideNavOpened"
+                [fixedInViewport]="mobileQuery.matches"
+                fixedTopGap="64">
+    <mat-toolbar class="mat-toolbar-log" [class.center]="!isOpen">
+      <cs-logo [sizeClass]="isOpen ? 'medium' : 'small'"></cs-logo>
+    </mat-toolbar>
+    <div class="sidenav-data-container">
+      <cs-user *ngIf="user"
+              class="cl-user"
+              [isOpen]="isOpen"
+              [user]="user"
+      ></cs-user>
+    </div>
+    <div class="sidenav-menu-wrap">
+      <cs-sidenav-menu [isOpen]="isOpen" [menus]="menus"></cs-sidenav-menu>
+    </div>
+    <div class="sidenav-actions" [class.compressed]="!isOpen">
+      <button class="sidenav-logout btn-transparent"
+              [routerLink]="['/login']"
+      >
+        <i class="icon logout" matListIcon></i>
+        <span class="btn-text" (click)="clickLogout()">{{logOutButtonText}}</span>
+      </button>
+      <button class="sidenav-compress"
+              (click)="toggle()">
+        <mat-icon aria-hidden="false" aria-label="Compress Navigation">{{isOpen ? 'keyboard_arrow_left': 'keyboard_arrow_right'}}</mat-icon>
+      </button>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content [@position]="isOpen ? 'open' : 'closed'">
+    <button (click)="snav.toggle()" class="side-nav-toggle"><span>Show nav</span></button>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

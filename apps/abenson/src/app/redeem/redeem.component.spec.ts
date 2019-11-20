@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RedeemComponent } from './redeem.component';
 import { VouchersModule, IVoucherService } from '@perx/core';
+import { MatDialogModule, MatDialogRef } from '@angular/material';
 // import { of } from 'rxjs';
 
 describe('RedeemComponent', () => {
@@ -16,10 +17,12 @@ describe('RedeemComponent', () => {
       declarations: [RedeemComponent],
       imports: [
         RouterTestingModule,
+        MatDialogModule,
         VouchersModule
       ],
       providers: [
-        { provide: IVoucherService, useValue: vouchersServiceStub }
+        { provide: IVoucherService, useValue: vouchersServiceStub },
+        { provide: MatDialogRef, useValue: {} }
       ]
     })
       .compileComponents();

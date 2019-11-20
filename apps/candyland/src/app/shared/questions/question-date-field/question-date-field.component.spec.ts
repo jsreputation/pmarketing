@@ -7,6 +7,7 @@ import {
   MatInputModule,
   MatSlideToggleModule
 } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('QuestionDateFieldComponent', () => {
   let component: QuestionDateFieldComponent;
@@ -18,7 +19,8 @@ describe('QuestionDateFieldComponent', () => {
         ReactiveFormsModule,
         MatInputModule,
         MatFormFieldModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        TranslateModule.forRoot()
       ],
       declarations: [QuestionDateFieldComponent]
     })

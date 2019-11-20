@@ -56,6 +56,7 @@ export class EngagementAppPage {
   public itemInfo(): ElementFinder {
     return element.all(by.css('div.engagement-item-info>p.engagement-item-name')).first();
   }
+
 }
 
 export class CreateShakeTheTreeAppPage {
@@ -77,9 +78,6 @@ export class CreateShakeTheTreeAppPage {
   }
   public shakeTreeGamesButton(): ElementFinder {
     return element(by.className('btn mat-flat-button primary'));
-  }
-  public shakeTreeNextButton(): ElementFinder {
-    return element.all(by.css('cl-button')).get(2);
   }
   public mobilePreviewCheck(): ElementFinder {
     return element(by.className('mobile-preview mobile-content-multiple'));
@@ -293,21 +291,49 @@ export class CreateSurveyAppPage {
   public questionTextField(): ElementFinder {
     return element.all(by.css('div.mat-form-field-infix>input')).get(3);
   }
+  public confirmModal(): ElementFinder {
+    return element(by.css('cl-confirm-modal'));
+  }
   public saveButton(): ElementFinder {
     return element.all(by.css('cl-button')).get(1);
   }
   public launchNowButton(): ElementFinder {
     return element.all(by.css('cl-button')).get(2);
   }
-  public confirmModal(): ElementFinder {
-    return element(by.css('cl-confirm-modal'));
-  }
+
 }
 
 export class CreateHitThePinataAppPage {
 
   public navigateToHitThePinata(): Promise<string> {
-    return browser.get('engagements/games/new-pinata') as Promise<string> ;
+    return browser.get('engagements/games/new-pinata') as Promise<string>;
+  }
+  public uploadedBackgroundImageObj(): ElementFinder {
+    return element(by.css('div.image-wrap.ng-star-inserted>img.image'));
+  }
+  public pinataDesign(): ElementFinder {
+    return element.all(by.css('cl-images-preview')).get(1);
+  }
+  public pinataBackgroundDesign(): ElementFinder {
+    return element.all(by.css('cl-images-preview')).get(4);
+  }
+  public pinataImage(): ElementFinder {
+    return element(by.css('img.img'));
+  }
+  public backgroundElement(): ElementFinder {
+    return element(by.css('div.mobile-preview-background'));
+  }
+  public buttonTextPreview(): ElementFinder {
+    return element(by.css('button.mobile-preview-btn'));
+  }
+  public loadPreviewElement(): ElementFinder {
+    return element(by.className('mobile-preview-headline'));
+  }
+  public headlinePreview(): ElementArrayFinder {
+    return element.all(by.className('mobile-preview-headline'));
+  }
+  public subHeadlinePreview(): ElementArrayFinder {
+    return element.all(by.className('mobile-preview-sub-headline'));
   }
 
 }

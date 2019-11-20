@@ -18,7 +18,7 @@
     left: -1px;
     border: 2px solid $primary-color;
     border-radius: $border-radius;
-    visibility: hidden;
+    opacity: 0;
     transition: 0.3s cubic-bezier(0.35, 0, 0.25, 1);
     z-index: 1;
   }
@@ -55,7 +55,7 @@
     border-color: transparent;
 
     .picker-border {
-      visibility: visible;
+      opacity: 1;
     }
   }
 }

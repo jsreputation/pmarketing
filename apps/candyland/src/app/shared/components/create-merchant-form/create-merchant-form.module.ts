@@ -12,6 +12,7 @@ import { ButtonModule } from '../button/button.module';
 import { UploadGraphicModule } from '@cl-shared/components/upload-graphic/upload-graphic.module';
 import { UtilsModule } from '@perx/core';
 import { MerchantBranchComponent } from './merchant-branch/merchant-branch.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { MerchantBranchComponent } from './merchant-branch/merchant-branch.compo
     MatCheckboxModule,
 
     UtilsModule,
+    TranslateModule,
   ]
 })
 export class CreateMerchantFormModule { }

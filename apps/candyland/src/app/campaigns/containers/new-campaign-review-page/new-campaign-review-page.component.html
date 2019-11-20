@@ -3,7 +3,9 @@
     <!--template-->
     <mat-card class="card" *ngIf="campaign?.template">
       <div class="card-header">
-        <h2 class="card-title">Template</h2>
+        <h2 class="card-title">
+          {{'CAMPAIGN.TEMPLATE' | translate}}
+        </h2>
       </div>
       <div class="card-engagement-item-adjuster">
         <cl-engagement-item [data]="campaign?.template"></cl-engagement-item>
@@ -12,7 +14,9 @@
     <!--rewards-->
     <mat-card class="card" *ngIf="campaign?.rewardsOptions?.rewards.length">
       <div class="card-header">
-        <p class="card-title">Rewards</p>
+        <p class="card-title">
+          {{'CAMPAIGN.REWARDS' | translate}}
+        </p>
       </div>
       <div class="card-content">
         <cl-reward-item-preview
@@ -29,7 +33,9 @@
       <div *ngFor="let rewardsData of campaign?.rewardsListCollection">
         <div *ngIf="rewardsData?.rewardsOptions?.rewards?.length">
           <div class="card-header">
-            <p class="card-title">Rewards for slot {{rewardsData?.stampSlotNumber}}</p>
+            <p class="card-title">
+                    {{'CAMPAIGN.REWARDS_FOR_SLOT' | translate}}
+                    {{rewardsData?.stampSlotNumber}}</p>
           </div>
           <div class="card-content">
             <cl-reward-item-preview
@@ -46,17 +52,26 @@
     <!--limits-->
     <mat-card class="card" *ngIf="campaign?.limits?.times">
       <div class="card-header">
-        <h2 class="card-title">Play Limits</h2>
+        <h2 class="card-title">
+          {{'CAMPAIGN.PLAY_LIMITS' | translate}}
+        </h2>
       </div>
       <div class="card-content">
         <dl class="card-definitions">
           <div class="card-definitions-splitter">
             <div *ngIf="campaign?.limits?.times">
-              <dt class="card-label">Limit per user</dt>
-              <dd class="card-value">{{campaign?.limits?.times}} time{{campaign?.limits?.times > 1 ? 's' : ''}}</dd>
+              <dt class="card-label">
+                {{'CAMPAIGN.LIMIT_PER_USER' | translate}}
+              </dt>
+              <dd class="card-value">{{campaign?.limits?.times}}
+                {{'CAMPAIGN.TIME' | translate}}
+                {{campaign?.limits?.times > 1 ? 's' : ''}}
+              </dd>
             </div>
             <div *ngIf="campaign?.limits?.duration">
-              <dt class="card-label">Limit per duration</dt>
+              <dt class="card-label">
+                {{'CAMPAIGN.LIMIT_PER_DURATION' | translate}}
+              </dt>
               <dd class="card-value">{{campaign?.limits?.duration}}</dd>
             </div>
           </div>
@@ -67,26 +82,32 @@
     <mat-card class="card" *ngIf="campaign?.campaignInfo">
       <div class="card-header">
         <h2 class="card-title">
-          Campaign Info
+          {{'CAMPAIGN.CAMPAIGN_INFO' | translate}}
         </h2>
       </div>
 
       <div class="card-content">
         <dl class="card-definitions">
           <div *ngIf="campaign?.campaignInfo?.goal">
-            <dt class="card-label">Campaign goal</dt>
+            <dt class="card-label">
+              {{'CAMPAIGN.CAMPAIGN_GOAL' | translate}}
+            </dt>
             <dd class="card-value">{{campaign?.campaignInfo?.goal}}</dd>
           </div>
 
           <div *ngIf="campaign?.campaignInfo?.startDate">
-            <dt class="card-label">Campaign duration</dt>
+            <dt class="card-label">
+              {{'CAMPAIGN.CAMPAIGN_DURATION' | translate}}
+            </dt>
             <dd class="card-value">
               <span>
                 <span>{{campaign?.campaignInfo?.startDate | date: 'mediumDate' }}</span>
                 <span>&nbsp;{{campaign?.campaignInfo?.startTime}}</span>
               </span>
               <ng-container *ngIf="campaign?.campaignInfo?.endDate">
-                <small>to</small>
+                <small>
+                  {{'TO' | translate}}
+                </small>
                 <span>
                   <span>{{campaign?.campaignInfo?.endDate | date: 'mediumDate' }}</span>
                   <span>&nbsp;{{campaign?.campaignInfo?.endTime}}</span>
@@ -96,7 +117,9 @@
           </div>
 
           <div *ngIf="campaign?.campaignInfo?.labels">
-            <dt class="card-label">Label</dt>
+            <dt class="card-label">
+              {{'CAMPAIGN.LABEL' | translate}}
+            </dt>
             <dd class="card-value">
               <span class="card-chip" *ngFor="let label of campaign?.campaignInfo?.labels">{{label}}</span>
             </dd>
@@ -108,7 +131,7 @@
     <mat-card class="card">
       <div class="card-header">
         <h2 class="card-title">
-          Channel
+          {{'CAMPAIGN.CHANNEL' | translate}}
         </h2>
       </div>
       <div class="card-content">
@@ -116,10 +139,18 @@
           {{campaign?.channel?.type}}
         </h3>
         <!--Message-->
+        <div class="card-section" *ngIf="campaign?.campaignInfo?.informationCollectionSetting">
+          <div class="card-header">
+            <h3 class="card-title">
+              {{ informationCollectionSettingTitle }}
+            </h3>
+          </div>
+        </div>
+        <!--Message-->
         <div class="card-section" *ngIf="campaign?.channel?.message">
           <div class="card-header">
             <h3 class="card-title">
-              Message
+              {{'CAMPAIGN.MESSAGE' | translate}}
             </h3>
           </div>
           <div class="card-content">
@@ -130,7 +161,7 @@
         <div class="card-section" *ngIf="campaign?.channel?.schedule?.sendDate">
           <div class="card-header">
             <h3 class="card-title">
-              Schedule date
+              {{'CAMPAIGN.SCHEDULE_DATE' | translate}}
             </h3>
           </div>
 
@@ -143,13 +174,17 @@
             <div class="card-row stretch" *ngIf="campaign?.channel?.schedule?.enableRecurrence">
               <div class="row">
                 <div>
-                  <label class="card-label">Repeat every</label>
+                  <label class="card-label">
+                    {{'CAMPAIGN.REPEAT_EVERY' | translate}}
+                  </label>
                   {{campaign?.channel?.schedule?.recurrence?.period}}&nbsp;{{campaign?.channel?.schedule?.recurrence?.period}}
                 </div>
                 <div>
                   <!--repeat on-->
                   <ng-container *ngIf="campaign?.channel?.schedule?.recurrence?.repeatOn.length > 0">
-                    <label class="card-label">Repeat on</label>
+                    <label class="card-label">
+                      {{'CAMPAIGN.REPEAT_ON' | translate}}
+                    </label>
                     <span *ngFor="let repeatOn of campaign?.channel?.schedule?.recurrence?.repeatOn">
                       {{repeatOn}},&nbsp;
                     </span>

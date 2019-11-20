@@ -1,4 +1,5 @@
 import { WEngagementType } from '../public-api';
+import { IWCampaignDisplayProperties } from './campaign/campaign';
 
 export interface IWRewardDisplayProperties {
   merchantPinText?: IWProperties;
@@ -6,11 +7,6 @@ export interface IWRewardDisplayProperties {
   codeInstructionsText?: IWProperties;
   errorPopUp?: IWProperties;
   CTAButtonTxt?: string;
-}
-
-export interface IWCampaignDisplayProperties {
-  noRewardsPopUp?: IWProperties;
-  successPopUp?: IWProperties;
 }
 
 export interface IWProperties {
