@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ConfigService } from './config.service';
+import { V4ConfigService } from './v4-config.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AuthenticationService } from '../auth/authentication/authentication.service';
 import { Type } from '@angular/core';
@@ -9,9 +9,9 @@ const authenticationServiceStub = {
   getAppToken: () => of()
 };
 
-describe('ConfigService', () => {
+describe('V4ConfigService', () => {
   let httpTestingController: HttpTestingController;
-  let service: ConfigService;
+  let service: V4ConfigService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,7 +23,7 @@ describe('ConfigService', () => {
     });
     // httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
-    service = TestBed.get(ConfigService);
+    service = TestBed.get(V4ConfigService);
   });
 
   it('should be created', () => {
@@ -55,7 +55,7 @@ describe('ConfigService', () => {
       string_value: 'key',
       json_value: {}
     };
-    const val = ConfigService.v4MicrositeSettingsToMicrositeSettings(convertObject);
+    const val = V4ConfigService.v4MicrositeSettingsToMicrositeSettings(convertObject);
     expect(val.id).toBe(convertObject.id);
   });
 });
