@@ -10,6 +10,7 @@ import { ExpireTimerComponent } from '../expire-timer/expire-timer.component';
 import { rewards } from 'src/app/rewards.mock';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';
+import { IMacaron } from 'src/app/services/macaron.service';
 
 const locationsServiceStub = {
   getFromMerchant: () => of()
@@ -89,10 +90,12 @@ describe('RewardDetailComponent', () => {
     expect(component.isExpired).toBe(false);
     expect(component.showMacaron).toBe(true);
 
-    component.macaron = null;
+    component.macaron = undefined;
     component.onExpiring();
     tick();
-    expect(component.macaron).toEqual({ label: 'Expiring', class: '', isButtonEnabled: false });
+    if (component.macaron) {
+      expect(component.macaron).toEqual({ label: 'Expiring', class: '', isButtonEnabled: false });
+    }
   }));
 
   it('should navigate back', () => {
@@ -128,16 +131,16 @@ describe('RewardDetailComponent', () => {
       component.onExpiring();
       tick();
       expect(component.reward).toBe(expiringReward);
-      expect(component.macaron.label).toBe('Expiring');
+      expect(component.macaron && component.macaron.label).toBe('Expiring');
       expect(component.isExpired).toBe(false);
       expect(component.showMacaron).toBe(true);
     }));
   });
 
   it('should setToExpired', fakeAsync(() => {
-    component.macaron = null;
+    component.macaron = undefined;
     component.setToExpired();
     tick();
-    expect(component.macaron.label).toBe('Expiring');
+    expect(component.macaron && (component.macaron as IMacaron).label || '').toBe('Expiring');
   }));
 });

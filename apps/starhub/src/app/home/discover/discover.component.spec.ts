@@ -9,7 +9,7 @@ import { CampaignsComponent } from '../campaigns/campaigns.component';
 import { MatCardModule, MatIconModule, MatDialogModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-import { GameModule, RewardsService, ICampaignService, FeedReaderService, IGameService } from '@perx/core';
+import { GameModule, RewardsService, ICampaignService, FeedReaderService, IGameService, IReward } from '@perx/core';
 import { of } from 'rxjs';
 import { rewards } from 'src/app/rewards.mock';
 import { catalogs } from 'src/app/catalogs.mock';
@@ -92,7 +92,7 @@ describe('DiscoverComponent', () => {
   it('should go to reward with reward queryParams id', () => {
     const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
     const routerSpy = spyOn(router, 'navigate');
-    const reward = {
+    const reward: IReward = {
       id: 1,
       name: 'Test reward',
       description: 'test description',
@@ -110,7 +110,7 @@ describe('DiscoverComponent', () => {
       termsAndConditions: '',
       howToRedeem: '',
       categoryTags: [],
-      inventory: null,
+      inventory: undefined,
     };
     component.rewardSelected(reward);
     expect(routerSpy).toHaveBeenCalledWith(['/reward'], { queryParams: { id: 1 } });

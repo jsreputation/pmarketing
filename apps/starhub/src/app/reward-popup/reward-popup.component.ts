@@ -18,9 +18,9 @@ export interface TimerCallBack {
 })
 export class RewardPopupComponent {
 
-  public text: string = null;
-  public imageUrl: string = null;
-  public buttonTxt: string = null;
+  public text: string;
+  public imageUrl: string;
+  public buttonTxt: string;
   public validTo: Date;
 
   constructor(
@@ -33,7 +33,7 @@ export class RewardPopupComponent {
     if (data.text) {
       this.text = data.text;
     }
-    if (data.buttonTxt !== undefined) {
+    if (data.buttonTxt) {
       this.buttonTxt = data.buttonTxt;
     }
     if (data.imageUrl) {
