@@ -1,8 +1,7 @@
-@import '~@angular/material/theming';
 @import "./variables";
 
 .page-header {
-  @include mat-elevation(4);
+  //@include mat-elevation(4);
 
   display: flex;
   width: 100%;

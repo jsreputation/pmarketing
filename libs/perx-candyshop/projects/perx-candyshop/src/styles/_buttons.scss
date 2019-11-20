@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+//@import '~@angular/material/theming';
 @import "./variables";
 
 button {
@@ -92,7 +92,7 @@ button {
 
 //FAB BUTTON RE-STYLE (!important to override WalkMe Styling)
 @mixin fab-btn($icon-color: $white) {
-  @include mat-elevation(5);
+  //@include mat-elevation(5);
 
   min-width: initial !important;
   width: $fab-btn !important;
@@ -125,38 +125,38 @@ button {
   }
 }
 
-// WALKME FAB RE-STYLE
-.walkme-player.walkme-css-reset.walkme-zambezi.walkme-california.walkme-theme-white-blue.walkme-position-major-bottom.walkme-position-minor-right_corner {
-  @include fab-btn($secondary-font-color);
-
-  background: $white !important;
-
-  &::before {
-    mask: url("/assets/images/icons/cta-help.svg") no-repeat 50% 50%;
-  }
-
-  &::after {
-    @include typo-button;
-
-    content: "Help";
-    text-transform: uppercase;
-    color: $secondary-font-color;
-    display: inline-block;
-    line-height: 5.6rem;
-    padding-left: 4.8rem;
-    transition: 0.15s cubic-bezier(0.35, 0, 0.25, 1);
-    opacity: 0;
-  }
-
-  &:hover {
-    background: $light-gray !important;
-    width: 11rem !important;
-
-    &::after {
-      opacity: 1;
-    }
-  }
-}
+ //WALKME FAB RE-STYLE
+//.walkme-player.walkme-css-reset.walkme-zambezi.walkme-california.walkme-theme-white-blue.walkme-position-major-bottom.walkme-position-minor-right_corner {
+//  @include fab-btn($secondary-font-color);
+//
+//  background: $white !important;
+//
+//  &::before {
+//    mask: url("/assets/images/icons/cta-help.svg") no-repeat 50% 50%;
+//  }
+//
+//  &::after {
+//    @include typo-button;
+//
+//    content: "Help";
+//    text-transform: uppercase;
+//    color: $secondary-font-color;
+//    display: inline-block;
+//    line-height: 5.6rem;
+//    padding-left: 4.8rem;
+//    transition: 0.15s cubic-bezier(0.35, 0, 0.25, 1);
+//    opacity: 0;
+//  }
+//
+//  &:hover {
+//    background: $light-gray !important;
+//    width: 11rem !important;
+//
+//    &::after {
+//      opacity: 1;
+//    }
+//  }
+//}
 
 @media (max-width: $tablet-width) {
   // CTA MOBILE

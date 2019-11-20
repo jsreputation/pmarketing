@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, forwardRef, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DateAdapter } from 'saturn-datepicker';
 import { noop, Subject } from 'rxjs';
@@ -19,7 +19,7 @@ import { DatepickerRangeValue } from '../../models/datepicker-range-value.interf
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SepareteRangeDatePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
-
+  @Input() public appearance: string = 'outline';
   public timeForm: FormGroup;
   public disabledState: boolean;
   private destroy$: Subject<void> = new Subject();
