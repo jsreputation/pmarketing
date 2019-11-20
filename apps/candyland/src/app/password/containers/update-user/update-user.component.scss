@@ -1,0 +1,79 @@
+.visible-icon {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.parent-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 2.5rem;
+  align-items: center;
+  height: 100vh;
+
+  .perx-logo {
+    margin-top: 7.7rem;
+    margin-left: 6.4rem;
+    align-self: flex-start;
+
+    img {
+      width: 7.7rem;
+      height: 3.7rem;
+      object-fit: contain;
+    }
+  }
+
+  p {
+    margin: 1.6rem 0;
+    font-size: 1.6em;
+  }
+
+  .inputs-related {
+    cl-button, cl-button ::ng-deep button, mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .intro-pic {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 30rem;
+    max-height: 30rem;
+
+    .image-nice {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .text-container {
+    display: flex;
+    height: 50vh;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    .back-to-login {
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.4rem;
+      color: #2665ee;
+    }
+
+    .main-text {
+      .Hello-there {
+        font-family: Roboto, serif;
+        font-size: 3.2rem;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: 0.25px;
+        color: #333333;
+      }
+
+      .foot-msg {
+        color: rgba(0, 0, 0, 0.6);
+      }
+    }
+  }
+}
