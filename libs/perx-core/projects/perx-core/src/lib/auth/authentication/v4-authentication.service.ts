@@ -148,7 +148,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   // @ts-ignore
-  public createUserAndAutoLogin(pi: string, userObj?: any, anonymous?: boolean): Observable<any> {
+  public createUserAndAutoLogin(pi: string, userObj?: { [key: string]: any }, anonymous?: boolean): Observable<any> {
     return throwError('Not implement yet');
   }
 
