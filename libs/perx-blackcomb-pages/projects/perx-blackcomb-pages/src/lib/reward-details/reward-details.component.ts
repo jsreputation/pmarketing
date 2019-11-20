@@ -110,7 +110,6 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
           }).afterClosed()
         )
       ).pipe(
-        tap(res => console.log('res' + res)),
         switchMap((result) => result ? this.exchangePoints() : of(null)),
         takeUntil(this.destroy$),
       ).subscribe(() => { });
