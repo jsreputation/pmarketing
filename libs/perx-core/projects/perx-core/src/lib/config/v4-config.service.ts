@@ -27,7 +27,7 @@ export class V4ConfigService extends ConfigService {
   constructor(
     private http: HttpClient,
     private authenticationService: AuthenticationService
-  ) { 
+  ) {
     super();
   }
 
