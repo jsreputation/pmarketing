@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
 import {
   IProfile,
   ICustomProperties,
-  IProfileProperty,
   ICardNumber,
 } from './profile.model';
 import { ProfileService } from './profile.service';
@@ -99,7 +98,7 @@ export class V4ProfileService extends ProfileService {
       );
   }
 
-  public updateUserInfo(data: IProfileProperty): Observable<void> {
+  public updateUserInfo(data: IProfile): Observable<void> {
     return this.whoAmI().pipe(
       mergeMap(
         (profile: IProfile) => this.http.patch<void>(

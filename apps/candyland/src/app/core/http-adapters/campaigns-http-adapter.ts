@@ -5,6 +5,7 @@ import {
 } from '@cl-core/models/engagement/engagement-type.enum';
 import { IWCampaignAttributes, WEngagementType, WInformationCollectionSettingType } from '@perx/whistler';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
 
 export class CampaignsHttpAdapter {
   public static transformToCampaign(data: any): ICampaignTableData {
@@ -36,6 +37,21 @@ export class CampaignsHttpAdapter {
     };
   }
 
+  public static transformInformationCollectionType(data: WInformationCollectionSettingType): InformationCollectionSettingType {
+    let result: InformationCollectionSettingType;
+    switch (data) {
+      case WInformationCollectionSettingType.not_required:
+        result = InformationCollectionSettingType.notRequired;
+        break;
+      case WInformationCollectionSettingType.pi_required:
+        result = InformationCollectionSettingType.piRequired;
+        break;
+      case WInformationCollectionSettingType.signup_required:
+        result = InformationCollectionSettingType.signupRequired;
+        break;
+    }
+    return result;
+  }
   public static transformAPIResponseToCampaign(data: IJsonApiItem<IWCampaignAttributes>): ICampaign {
     const campaignData = data.attributes;
     return {
@@ -44,7 +60,8 @@ export class CampaignsHttpAdapter {
       engagement_id: `${campaignData.engagement_id}`,
       engagement_type: EngagementTypeFromAPIMapping[campaignData.engagement_type],
       campaignInfo: {
-        informationCollectionSetting: WInformationCollectionSettingType[campaignData.display_properties.informationCollectionSetting],
+        informationCollectionSetting: CampaignsHttpAdapter.transformInformationCollectionType(
+          campaignData.display_properties.informationCollectionSetting),
         goal: campaignData.goal,
         startDate: campaignData.start_date_time ? new Date(campaignData.start_date_time) : null,
         startTime: campaignData.start_date_time ? moment(campaignData.start_date_time).format('LT') : '',
@@ -65,6 +82,9 @@ export class CampaignsHttpAdapter {
     const startDate = data.campaignInfo.startDate ?
       moment(moment(data.campaignInfo.startDate).format('l') + ' ' + startTime).format() : null;
     const endDate = data.campaignInfo.endDate ? moment(moment(data.campaignInfo.endDate).format('l') + ' ' + endTime).format() : null;
+    // When user not select weblink, default the information collection setting back to not required. Double confirm with Nocolas
+    const informationCollectionSetting = data.channel.type === 'weblink' ?
+      data.campaignInfo.informationCollectionSetting : InformationCollectionSettingType.notRequired;
     return {
       type: 'entities',
       attributes: {
@@ -76,7 +96,7 @@ export class CampaignsHttpAdapter {
         end_date_time: endDate,
         goal: data.campaignInfo.goal,
         labels: data.campaignInfo.labels || [],
-        display_properties: { ...data.displayProperties, informationCollectionSetting: data.campaignInfo.informationCollectionSetting }
+        display_properties: { ...data.displayProperties, informationCollectionSetting }
       }
     };
   }
