@@ -99,7 +99,7 @@ describe('AppComponent', () => {
     open: () => { }
   };
   const tokenStorageStub: Partial<TokenStorage> = {
-    getAppInfoProperty: () => null,
+    getAppInfoProperty: () => undefined,
     setAppInfoProperty: () => { }
   };
 
