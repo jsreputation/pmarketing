@@ -63,5 +63,6 @@
   "SINGLE_REWARD": "Single Reward",
   "MULTIPLE_REWARDS": "Multiple Rewards",
   "GIFTS": "gifts",
-  "ADD_SUB_QUESTION": " + Add Sub Question"
+  "ADD_SUB_QUESTION": " + Add Sub Question",
+  "LAUNCH_AS_A_CAMPAIGN": "Launch as a campaign"
 }

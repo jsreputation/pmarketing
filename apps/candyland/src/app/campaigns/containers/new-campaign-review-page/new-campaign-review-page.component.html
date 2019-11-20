@@ -136,13 +136,13 @@
       </div>
       <div class="card-content">
         <h3 class="card-label">
-          {{campaign?.channel?.type}}
+          {{campaign?.channel?.type | translate}}
         </h3>
         <!--Message-->
         <div class="card-section" *ngIf="campaign?.campaignInfo?.informationCollectionSetting">
           <div class="card-header">
             <h3 class="card-title">
-              {{ informationCollectionSettingTitle }}
+              {{ informationCollectionSettingTitle | translate}}
             </h3>
           </div>
         </div>
