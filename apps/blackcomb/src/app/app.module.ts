@@ -14,7 +14,7 @@ import {
   OutcomeModule,
   ProfileModule,
   RewardsModule,
-  CustomTranslateLoader,
+  LanguageService,
   TokenStorage,
   ConfigService,
 } from '@perx/core';
@@ -66,7 +66,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
       loader: {
         provide: TranslateLoader,
         deps: [HttpClient, ConfigService, TokenStorage],
-        useClass: CustomTranslateLoader
+        useClass: LanguageService
       }
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
