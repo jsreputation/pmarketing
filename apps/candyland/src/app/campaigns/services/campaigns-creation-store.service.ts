@@ -29,10 +29,10 @@ export class CampaignCreationStoreService {
       { title: 'Instant Reward', value: 'Instant Reward' }
     ],
     durationLimits: [
-      { title: 'Day', value: 'day' },
-      { title: 'Week', value: 'week' },
-      { title: 'Month', value: 'month' },
-      { title: 'Campaign', value: 'campaign' }
+      { title: 'DAY', value: 'day' },
+      { title: 'WEEK', value: 'week' },
+      { title: 'MONTH', value: 'month' },
+      { title: 'CAMPAIGN', value: 'campaign' }
     ],
     days: [
       { title: 'S', value: 'sunday' },

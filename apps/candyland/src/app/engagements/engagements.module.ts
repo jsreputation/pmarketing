@@ -25,6 +25,7 @@ import { EngagementItemModule } from '@cl-shared/components/engagement-item/enga
 import { EngagementsListComponent } from './components/engagements-list/engagements-list.component';
 import { EngagementsGridComponent } from './components/engagements-grid/engagements-grid.component';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { DirectivesModule } from '@cl-shared/directives/directives.module';
     EngagementItemModule,
     ConfirmModalModule,
     DirectivesModule,
+    TranslateModule
   ],
   entryComponents: [
     EngagementsListPageComponent,

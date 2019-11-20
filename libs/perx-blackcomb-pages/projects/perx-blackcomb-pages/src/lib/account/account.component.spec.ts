@@ -22,6 +22,7 @@ import {
   ConfigModule,
   IProfile,
   PagesObject,
+  NotificationService,
 } from '@perx/core';
 
 import { AccountComponent } from './account.component';
@@ -30,6 +31,8 @@ import { profile } from '../mock/profile.mock';
 import { pagesObject } from '../mock/pages.mock';
 
 describe('AccountComponent', () => {
+  const notificationServiceStub: Partial<NotificationService> = {};
+
   const environment = {
     apiHost: 'https://api.perxtech.io',
     production: false,
@@ -62,7 +65,8 @@ describe('AccountComponent', () => {
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
-        { provide: ThemesService, useValue: themeServiceStub }
+        { provide: ThemesService, useValue: themeServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub }
       ]
     })
       .compileComponents();

@@ -2,7 +2,7 @@ import { async, TestBed } from '@angular/core/testing';
 
 import { LayoutComponent } from './layout.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatDialogModule, MatToolbarModule, MatIconModule } from '@angular/material';
+import { MatToolbarModule, MatIconModule, MatDialogModule } from '@angular/material';
 import { ThemesService, AuthenticationService, ConfigModule } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -16,9 +16,9 @@ describe('LayoutComponent', () => {
         RouterTestingModule.withRoutes([
           { path: 'wallet', redirectTo: '/' }
         ]),
-        MatDialogModule,
         MatToolbarModule,
         MatIconModule,
+        MatDialogModule,
         TranslateModule.forRoot(),
         ConfigModule.forRoot({})
       ],

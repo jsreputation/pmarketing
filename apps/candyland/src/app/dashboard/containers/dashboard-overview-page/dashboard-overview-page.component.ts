@@ -17,9 +17,9 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
   public params: { [key: string]: string };
   public activeTab: any = 'activeCustomers';
   public tabs: ITotal[] = [
-    { name: 'activeCustomers', id: 106, title: 'Total Active Customers' },
-    { name: 'issuedRewards', id: 147, title: 'Total Issued Rewards' },
-    { name: 'activeCampaigns', id: 153, title: 'Total Running Campaigns' }
+    { name: 'activeCustomers', id: 106, title: 'OVERVIEW_GRAPHIC_PAGE.TOTAL_ACTIVE_CUSTOMERS' },
+    { name: 'issuedRewards', id: 147, title: 'OVERVIEW_GRAPHIC_PAGE.TOTAL_ISSUED_REWARDS' },
+    { name: 'activeCampaigns', id: 153, title: 'OVERVIEW_GRAPHIC_PAGE.TOTAL_RUNNING_CAMPAIGNS' }
   ];
   public tabsValue: any;
   public get tabsIds(): number[] {

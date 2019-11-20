@@ -9,26 +9,34 @@
     <!--limits-->
     <mat-card class="card" formGroupName="limits">
       <div class="card-header">
-        <h2 class="card-title">Play Limits</h2>
+        <h2 class="card-title">
+          {{'CAMPAIGN.PLAY_LIMITS' | translate}}
+        </h2>
       </div>
       <div class="card-content">
         <div class="card-row stretch">
           <div>
             <mat-form-field>
-              <mat-label class="card-label">Per user</mat-label>
+              <mat-label class="card-label">
+                {{'CAMPAIGN.PER_USER' | translate}}
+              </mat-label>
               <input matInput type="number" [min]="1" formControlName="times" autocomplete="off">
-              <span matSuffix>Play</span>
-              <mat-error *ngIf="times?.hasError('min')">Min length 1</mat-error>
-              <mat-error *ngIf="times?.hasError('max')">Max length 60</mat-error>
+              <span matSuffix>
+                {{'CAMPAIGN.PLAY' | translate}}
+              </span>
+              <mat-error *ngIf="times?.hasError('min')">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
+              <mat-error *ngIf="times?.hasError('max')">{{'ERROR_MAX_LENGTH' | translate}} 60</mat-error>
             </mat-form-field>
           </div>
           <div>
             <mat-form-field>
-              <mat-label class="card-label">Per duration</mat-label>
+              <mat-label class="card-label">
+                {{'CAMPAIGN.PER_DURATION' | translate}}
+              </mat-label>
               <mat-select formControlName="duration">
                 <mat-option *ngFor="let option of config?.durationLimits"
                             [value]="option?.value">
-                  {{option?.title}}
+                  {{option?.title | translate}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
