@@ -4,18 +4,17 @@ import 'reflect-metadata';
 import 'regenerator-runtime'; // import required by node-cache due callback-based updateand wp polyfill step
 
 import express from 'express';
-import { readFileSync } from 'fs';
 import { join } from 'path';
 import compression from 'compression';
 
 import { preauth } from './ctrl/preauth';
 import { login, users } from './ctrl/cognito';
 import { v4Token } from './ctrl/v4-token';
-import { ApiConfig } from './types/apiConfig';
 import { v2Token } from './ctrl/v2-token';
 import { themes } from './ctrl/themes';
 import { manifest } from './ctrl/manifest';
 import { language } from './ctrl/language';
+import { getCredentials } from './utils/credentials';
 
 // Express server
 const app = express();
@@ -29,24 +28,21 @@ const PORT = process.env.PORT || 4000;
 const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
 const BASE_HREF = process.env.BASE_HREF || '/';
 
-const apiConfigPath = process.env.API_CONFIG_PATH || 'config.json';
-const apiConfig: ApiConfig = JSON.parse(readFileSync(apiConfigPath).toString());
-
 app.options('*', cors());
 
-app.get('/preauth', preauth(apiConfig));
+app.get('/preauth', preauth(getCredentials));
 
-app.post(`${BASE_HREF}v4/oauth/token`, v4Token(apiConfig));
+app.post(`${BASE_HREF}v4/oauth/token`, v4Token(getCredentials));
 
-app.post(`${BASE_HREF}v2/oauth/token`, v2Token(apiConfig));
+app.post(`${BASE_HREF}v2/oauth/token`, v2Token(getCredentials));
 
-app.post(`${BASE_HREF}cognito/login`, login(apiConfig));
+app.post(`${BASE_HREF}cognito/login`, login(getCredentials));
 
-app.post(`${BASE_HREF}cognito/users`, users(apiConfig));
+app.post(`${BASE_HREF}cognito/users`, users(getCredentials));
 
-app.post(`${BASE_HREF}themes`, themes(apiConfig));
+app.post(`${BASE_HREF}themes`, themes(getCredentials));
 
-app.get(`${BASE_HREF}manifest.webmanifest`, manifest(apiConfig));
+app.get(`${BASE_HREF}manifest.webmanifest`, manifest(getCredentials));
 
 app.get(`${BASE_HREF}lang`, language());
 

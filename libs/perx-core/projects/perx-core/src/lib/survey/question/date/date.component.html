@@ -5,8 +5,8 @@
         matInput
         [matDatepicker]="pickerFrom"
         placeholder="From"
-        (focus)="openCalendarFrom(pickerFrom)"
-        (click)="openCalendarFrom(pickerFrom)"
+        (focus)="openCalendarFrom()"
+        (click)="openCalendarFrom()"
         (change)="updateInputFrom($event.target.value)"
         (dateChange)="updateInputFrom($event.target.value)"
         #pickerFromInput
@@ -19,8 +19,8 @@
         matInput
         [matDatepicker]="pickerTo"
         placeholder="To"
-          (focus)="openCalendarTo(pickerTo)"
-          (click)="openCalendarTo(pickerTo)"
+        (focus)="openCalendarTo()"
+        (click)="openCalendarTo()"
         (change)="updateInputTo($event.target.value)"
         (dateChange)="updateInputTo($event.target.value)"
         #pickerToInput
@@ -35,8 +35,8 @@
         matInput
         [matDatepicker]="picker"
         placeholder="Choose a date"
-            (focus)="openCalendar(picker)"
-            (click)="openCalendar(picker)"
+        (focus)="openCalendar()"
+        (click)="openCalendar()"
         (change)="updateInput($event.target.value)"
         (dateChange)="updateInput($event.target.value)"
         #pickerInput

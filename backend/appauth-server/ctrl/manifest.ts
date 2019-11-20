@@ -2,10 +2,10 @@ import cacheManager from 'cache-manager';
 import Jimp from 'jimp';
 import { IJsonApiItem, IWTenant } from '@perx/whistler';
 import { Manifest, DARK, LIGHT } from '../types/manifest-model';
-import { ApiConfig } from '../types/apiConfig';
+import { ICredentials } from '../types/apiConfig';
 import { Request, Response, NextFunction } from 'express';
-import { fetchTheme } from './themes';
-import { getQueryHost } from './utils';
+import { fetchTheme } from '../utils/theme';
+import { getQueryHost } from '../utils/utils';
 
 const exportedImgDirectory = '/static/generated';
 // max set to 1 so only most recent value will be kept, old will be replaced if new settings
@@ -63,27 +63,21 @@ const generateManifest = (
   };
 };
 
-export const manifest = (apiConfig: ApiConfig) => async (
+export const manifest = (getCredentials: ((url: string) => Promise<ICredentials>)) => async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   // is there a way of express to delete files after that? so i save space, rly generate on fly
   try {
-    const url = getQueryHost(req);
+    const url: string = getQueryHost(req);
+    const endpointCredential: ICredentials = await getCredentials(url);
 
-    const endpoint = apiConfig.endpoints[url];
-    if (endpoint === undefined) {
-      throw new Error(`No endpoints found for ${url}`);
-    }
-
-    const endpointTargetUrl = endpoint.target_url;
-    const endpointRequest = await fetchTheme(url, apiConfig);
+    const endpointTargetUrl = endpointCredential.target_url;
+    const endpointRequest = await fetchTheme(endpointCredential);
     const tenantObj: IJsonApiItem<IWTenant> = endpointRequest.data.data[0];
     const displayProperties = tenantObj.attributes.display_properties;
-    const hashedTheme = themeHasher(JSON.stringify(displayProperties)).toString(
-      12
-    );
+    const hashedTheme = themeHasher(JSON.stringify(displayProperties)).toString(12);
     // we could peek instd so its 'most-recentness' isn't updated
     res.type('application/manifest+json');
 

@@ -6,6 +6,7 @@ import { MatDialogModule, MatFormFieldModule, MatIconModule, MatRadioModule, Mat
 import { InkModule } from '../../../components/ink/ink.module';
 import { ButtonModule } from '../../../components/button/button.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('EngagementTypeComponent', () => {
   let component: EngagementTypeComponent;
@@ -23,6 +24,7 @@ describe('EngagementTypeComponent', () => {
         ButtonModule,
         MatRadioModule,
         ReactiveFormsModule,
+        TranslateModule.forRoot()
       ],
       declarations: [
         EngagementTypeComponent,

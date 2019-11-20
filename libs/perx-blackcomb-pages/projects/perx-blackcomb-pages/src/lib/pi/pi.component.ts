@@ -12,9 +12,8 @@ import {
   AbstractControl,
 } from '@angular/forms';
 
-import { Subject } from 'rxjs';
-import { Config, AuthenticationService, PopupComponent, IPopupConfig, InstantOutcomeService, IGameService } from '@perx/core';
-import { MatDialog } from '@angular/material';
+import { Subject, iif, of } from 'rxjs';
+import { Config, AuthenticationService, IPopupConfig, InstantOutcomeService, IGameService, NotificationService } from '@perx/core';
 import { switchMap, takeUntil, catchError, tap } from 'rxjs/operators';
 
 @Component({
@@ -41,13 +40,13 @@ export class PIComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private config: Config,
-    private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
     private gameService: IGameService,
     private instantOutcomeService: InstantOutcomeService,
     private translate: TranslateService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private notificationService: NotificationService
   ) {
     this.preAuth = this.config.preAuth || false;
   }
@@ -89,27 +88,32 @@ export class PIComponent implements OnInit, OnDestroy {
       }
       const oldPI = this.authService.getPI();
       const oldToken = this.authService.getUserAccessToken();
+      const oldAnonymousStatus = this.authService.getAnonymous();
       let newUserId;
       let newToken;
       (window as any).primaryIdentifier = pi;
       this.authService.autoLogin().pipe(
         catchError(() => { throw new Error('PI_NOT_EXIST'); }),
         tap(() => {
-          newUserId = this.authService.getUserId();
-          newToken = this.authService.getUserAccessToken();
-          this.authService.savePI(oldPI);
-          this.authService.saveUserId(oldUserId);
-          this.authService.saveUserAccessToken(oldToken);
+          if (oldAnonymousStatus) {
+            newUserId = this.authService.getUserId();
+            newToken = this.authService.getUserAccessToken();
+            this.authService.savePI(oldPI);
+            this.authService.saveUserId(oldUserId);
+            this.authService.saveUserAccessToken(oldToken);
+          }
         }),
-        switchMap(() => this.authService.mergeUserById([oldUserId], newUserId)),
+        switchMap((res) => iif(() => this.authService.getAnonymous(), this.authService.mergeUserById([oldUserId], newUserId), of(res))),
         catchError((err: Error) => {
           throw err.message.startsWith('PI_') ? err : new Error('PI_MERGE_FAIL');
         }),
         tap(() => {
-          this.authService.savePI(pi);
-          this.authService.saveUserId(newUserId);
-          this.authService.saveUserAccessToken(newToken);
-          this.authService.saveAnonymous(false);
+          if (oldAnonymousStatus) {
+            this.authService.savePI(pi);
+            this.authService.saveUserId(newUserId);
+            this.authService.saveUserAccessToken(newToken);
+            this.authService.saveAnonymous(false);
+          }
         }),
         switchMap(() => {
           if (this.engagementType === 'game' && this.transactionId) {
@@ -127,7 +131,7 @@ export class PIComponent implements OnInit, OnDestroy {
         () => {
           this.router.navigate(['/wallet']);
           if (this.popupData) {
-            this.dialog.open(PopupComponent, { data: this.popupData });
+            this.notificationService.addPopup(this.popupData);
           }
         },
         (error: Error) => this.updateErrorMessage(error.message)

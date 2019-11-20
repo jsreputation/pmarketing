@@ -8,6 +8,7 @@ import { AuthService } from '@cl-core-services';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { SessionService } from '@cl-core/services/session.service';
 import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginPageComponent', () => {
   let component: MainContainerComponent;
@@ -19,7 +20,8 @@ describe('LoginPageComponent', () => {
         RouterTestingModule,
         BrowserAnimationsModule,
         SideNavModule,
-        HttpClientModule
+        HttpClientModule,
+        TranslateModule.forRoot()
       ],
       providers: [ AuthService, LocalStorageService, SessionService ],
       declarations: [MainContainerComponent]

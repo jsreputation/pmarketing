@@ -22,6 +22,7 @@ import {SimpleMobileViewModule} from '@cl-shared/components/simple-mobile-view/s
 import { NewScratchPageComponent } from './new-scratch-page.component';
 
 import { SettingsMobilePreviewModule } from '../../../../settings/components/settings-mobile-preview/settings-mobile-preview.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NewScratchComponent', () => {
   let component: NewScratchPageComponent;
@@ -44,6 +45,7 @@ describe('NewScratchComponent', () => {
         MatCardModule,
         MatFormFieldModule,
         HttpClientTestingModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [
         NewScratchPageComponent,

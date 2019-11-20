@@ -21,7 +21,8 @@
           "options": {
             "main": "projects/perx-candyshop/src/test.ts",
             "tsConfig": "projects/perx-candyshop/tsconfig.spec.json",
-            "karmaConfig": "projects/perx-candyshop/karma.conf.js"
+            "karmaConfig": "projects/perx-candyshop/karma.conf.js",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -37,7 +38,8 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "perx-candyshop",
   "schematics": {
     "@schematics/angular:component": {
