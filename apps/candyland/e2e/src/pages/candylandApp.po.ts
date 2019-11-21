@@ -14,6 +14,14 @@ export class DashboardAppPage {
 
 export class EngagementAppPage {
 
+  public static engagementItemArray(): ElementArrayFinder {
+    return element.all(by.css('div.engagement-item'));
+  }
+
+  public static engagementItemTypeArray(): ElementArrayFinder {
+    return element.all(by.css('p.engagement-item-type'));
+  }
+
   public navigateToEngagement(): Promise<string> {
     return browser.get('engagements') as Promise<string>;
   }
@@ -453,8 +461,20 @@ export class CampaignAppPage {
 
 export class CreateCampaignAppPage {
 
-  public navigateToCreateCampaign(): Promise<string> {
+  public static navigateToCreateCampaign(): Promise<string> {
     return browser.get('campaigns/new-campaign') as Promise<string> ;
+  }
+
+  public static campaignDialogTitle(): ElementFinder {
+    return element(by.id('dialogTitle-selectRewards'));
+  }
+
+  public static campaignMatRadioAudience(): ElementFinder {
+    return element(by.xpath('//*[@id="mat-radio-5"]/label/div[1]/div[1]'));
+  }
+
+  public static campaignMatRadioSms(): ElementFinder {
+    return element(by.xpath('//*[@id="mat-radio-8"]/label/div[1]/div[1]'));
   }
 
 }
@@ -489,10 +509,6 @@ export class AudienceAppPage {
     return element(by.xpath('(//*[@href="/audience/1"][1]/span)[2]'));
   }
 
-  public static audienceCheckboxContainer(): ElementArrayFinder {
-    return element.all(by.css('div.mat-checkbox-inner-container'));
-  }
-
   public static audienceColumnList(): ElementArrayFinder {
     return element.all(by.css('td.column-audiencelist'));
   }
@@ -500,24 +516,28 @@ export class AudienceAppPage {
 }
 
 export class BlackcombWalletAppPage {
-
   public navigateBlackcombWalletApp(): Promise<string> {
     return browser.get('https://generic-blackcomb-dev1.uat.whistler.perxtech.io/wallet') as Promise<string> ;
   }
-
 }
 
 export class BlackcombHomeAppPage {
-
-  public navigateToBlackcombHomeApp(): Promise<string> {
+  public static navigateToBlackcombHomeApp(): Promise<string> {
     return browser.get('https://generic-blackcomb-dev1.uat.whistler.perxtech.io/home') as Promise<string> ;
   }
-
 }
 
 export class ElementApp {
   public static h3Array(): ElementArrayFinder {
     return element.all(by.css('h3'));
+  }
+
+  public static h1(): ElementFinder {
+    return element(by.css('h1'));
+  }
+
+  public static h4(): ElementFinder {
+    return element(by.css('h4'));
   }
 
   public static inputText(): ElementFinder {
@@ -538,6 +558,10 @@ export class ElementApp {
 
   public static inputFile(): ElementFinder {
     return element(by.css('input[type=file]'));
+  }
+
+  public static inputNumberArray(): ElementArrayFinder {
+    return element.all(by.css('input[type=number]'));
   }
 
   public static clButton(): ElementFinder {
@@ -618,5 +642,97 @@ export class ElementApp {
 
   public static matSelectArrowWrapper(): ElementArrayFinder {
     return element.all(by.css('div.mat-select-arrow-wrapper'));
+  }
+
+  public static matFlatButtonArray(): ElementArrayFinder {
+    return element.all(by.css('button.btn.mat-flat-button'));
+  }
+
+  public static matTable(): ElementFinder {
+    return element(by.className('table mat-table'));
+  }
+
+  public static tdGridCell(): ElementArrayFinder {
+    return element.all(by.css('td[role=gridcell]'));
+  }
+
+  public static pRewardItem(): ElementArrayFinder {
+    return element.all(by.css('p.reward-item-name'));
+  }
+
+  public static matCheckboxFrame(): ElementArrayFinder {
+    return element.all(by.css('div.mat-checkbox-frame'));
+  }
+
+  public static matCheckboxInnerContainer(): ElementArrayFinder {
+    return element.all(by.css('div.mat-checkbox-inner-container'));
+  }
+
+  public static matExpansionPanel(): ElementArrayFinder {
+    return element.all(by.css('mat-expansion-panel'));
+  }
+
+  public static matExpansionPanelHeader(): ElementArrayFinder {
+    return element.all(by.css('mat-expansion-panel-header'));
+  }
+
+  public static matSelectTrigger(): ElementArrayFinder {
+    return element.all(by.css('div.mat-select-trigger'));
+  }
+
+  public static matRadioGroup(): ElementArrayFinder {
+    return element.all(by.css('mat-radio-group'));
+  }
+
+  public static matSelect(): ElementArrayFinder {
+    return element.all(by.css('mat-select'));
+  }
+
+  public static spanUploadFile(): ElementFinder {
+    return element(by.css('span.upload-file-file-name'));
+  }
+
+  public static matRadioButton(): ElementArrayFinder {
+    return element.all(by.css('mat-radio-button'));
+  }
+
+  public static matCard(): ElementFinder {
+    return element(by.css('mat-card'));
+  }
+
+  public static divQuestion(): ElementArrayFinder {
+    return element.all(by.css('div.question'));
+  }
+
+  public static divWelcomeText(): ElementFinder {
+    return element(by.css('div.welcome-text.ng-star-inserted'));
+  }
+
+  public static divTitle(): ElementArrayFinder {
+    return element.all(by.css('div[class=title]'));
+  }
+
+  public static matButtonRipple(): ElementFinder {
+    return element(by.css('div.mat-button-ripple'));
+  }
+
+  public static matTabList(): ElementFinder {
+    return element(by.css('div.mat-tab-list'));
+  }
+
+  public static spanMatButtonWrapper(): ElementFinder {
+    return element(by.css('span.mat-button-wrapper'));
+  }
+
+  public static imgArray(): ElementArrayFinder {
+    return element.all(by.css('img'));
+  }
+
+  public static button(): ElementFinder {
+    return element(by.css('button'));
+  }
+
+  public static matTabLabelContent(): ElementArrayFinder {
+    return element.all(by.css('div.mat-tab-label-content'));
   }
 }
