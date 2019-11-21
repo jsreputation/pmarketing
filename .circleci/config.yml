@@ -205,7 +205,7 @@ jobs:
             --build-arg basehref=$BASE_HREF \
             --build-arg preauth=$PREAUTH \
             --build-arg iswhistler=$IS_WHISTLER \
-            --build-arg sourcetype=$SOURCE_TYPE
+            --build-arg sourcetype=$SOURCE_TYPE \
             --build-arg env=$APP_ENV
       - run:
           name: Push docker
