@@ -24,7 +24,7 @@ describe('RewardComponent', () => {
   const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalties: (): Observable<ILoyalty[]> => of([]),
     getLoyalty: (): Observable<ILoyalty> => of()
-  }
+  };
 
   const themeServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
