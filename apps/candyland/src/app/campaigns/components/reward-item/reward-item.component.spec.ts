@@ -25,7 +25,7 @@ describe('RewardItemComponent', () => {
     component = fixture.componentInstance;
     group = new FormGroup({
       test: new FormControl(),
-      test2: new FormGroup({probability: new FormControl(null)}, [])
+      test2: new FormGroup({probability: new FormControl(null), limit: new FormControl(0)}, []),
     });
     component.group = (group.get('test2') as FormGroup);
     fixture.detectChanges();

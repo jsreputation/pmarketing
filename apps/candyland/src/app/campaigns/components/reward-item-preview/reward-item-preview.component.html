@@ -13,8 +13,10 @@
 <!--                   [total]="data?.total">-->
 
 <!--  </cl-progress-bar>-->
+<div *ngIf="limit">
+    <span class="reward-item-probability-label probability-preview">{{'CAMPAIGN.LIMIT' | translate}} {{limit}}</span>
+  </div>
   <div *ngIf="enableProbability && probability">
     <span class="reward-item-probability-label probability-preview">{{'CAMPAIGN.PROBABILITY' | translate}} {{probability}}%</span>
   </div>
 </div>
-
