@@ -9,7 +9,8 @@ import {
   NotificationService,
   PopupComponent,
   ThemesService,
-  ITheme
+  ITheme,
+  Voucher
 } from '@perx/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap, takeUntil, tap, last } from 'rxjs/operators';
@@ -105,7 +106,6 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
             data: {
               title: dataTemp.title,
               text: `${balance} ${dataTemp.existingPoints} ${points}. ${userPoint} ${dataTemp.requiredPoints} ${points} ${proceed}.`,
-              afterClosedCallBack: this,
               buttonTxt: confirm,
               buttonTxt2: cancel
             }
@@ -116,22 +116,19 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
       ).subscribe(() => { });
   }
 
-  public dialogClosed(): void {
-    this.router.navigate(['/wallet']);
-  }
-
   private exchangePoints(): Observable<void> {
     return this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
       .pipe(
-        switchMap(() => this.translate.get(['YOUR_BALANCE_IS', 'POINTS', 'CLOSE'])
+        switchMap((res: Voucher) => this.translate.get(['REDEEM_SUCCESSFULLY', 'CLOSE'])
           .pipe(
             last(),
-            tap(([balance, points, close]) => this.notificationService.addPopup({
-              title: this.rewardData.name || '',
-              text: `${balance} ${29} ${points}`,
-              afterClosedCallBack: this,
-              buttonTxt: close
-            })),
+            tap(([redeemSuccess, close]) => {
+              this.router.navigate(['/voucher-detail', { id: res.id }]);
+              this.notificationService.addPopup({
+                title: redeemSuccess,
+                buttonTxt: close
+              });
+            }),
             map(() => { return; })
           )
         )

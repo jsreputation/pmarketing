@@ -135,13 +135,14 @@ export class WhistlerGameService implements IGameService {
   }
 
   public get(engagementId: number, campaignId?: number): Observable<IGame> {
+    if (this.cache[engagementId]) {
+      return of(this.cache[engagementId]);
+    }
     let campaignIdParams = '';
     if (campaignId) {
       campaignIdParams = `?campaign_id=${campaignId}`;
     }
-    if (this.cache[engagementId]) {
-      return of(this.cache[engagementId]);
-    }
+
     return this.http.get<IJsonApiItemPayload<IWGameEngagementAttributes>>(`${this.hostName}/game/engagements/${engagementId}${campaignIdParams}`)
       .pipe(
         map(res => res.data),
