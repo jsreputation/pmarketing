@@ -5,7 +5,7 @@ import {
   MatCardModule,
   MatListModule
 } from '@angular/material';
-import { ProfileService, AuthenticationService, LoyaltyService } from '@perx/core';
+import { ProfileService, AuthenticationService, LoyaltyService, IProfile } from '@perx/core';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';
@@ -14,18 +14,18 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('AccountComponent', () => {
   let component: AccountComponent;
   let fixture: ComponentFixture<AccountComponent>;
-  const userInfo = {
+  const userInfo: IProfile = {
     id: 59431,
     state: 'active',
     firstName: 'Perx',
     lastName: 'PERX',
-    middleName: null,
-    phone: null,
-    email: null,
-    birthDate: null,
-    gender: null,
+    middleName: undefined,
+    phone: undefined,
+    email: undefined,
+    birthDate: undefined,
+    gender: undefined,
     joinedDate: '2019-07-01T03:37:50.049Z',
-    passwordExpiryDate: null,
+    passwordExpiryDate: undefined,
     customProperties: {
       last_4: '1234'
     }
