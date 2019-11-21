@@ -6,41 +6,55 @@
   <div class="card-definitions-splitter">
     <!-- Reward Type-->
     <div>
-      <dt class="card-label">Reward Type</dt>
+      <dt class="card-label">
+        {{'REWARD_TYPE' | translate}}
+      </dt>
       <dd class="card-value">{{data?.rewardType || '-'}}</dd>
     </div>
     <!--Category-->
     <div>
-      <dt class="card-label">Category</dt>
+      <dt class="card-label">
+        {{'CATEGORY' | translate}}
+      </dt>
       <dd class="card-value">{{data?.category || '-'}}</dd>
     </div>
   </div>
   <div class="card-definitions-splitter">
     <!--Redemption Type-->
     <div>
-      <dt class="card-label">Redemption Type</dt>
+      <dt class="card-label">
+        {{'REDEMPTION_TYPE' | translate}}
+      </dt>
       <dd class="card-value">{{data?.redemptionType || '-'}}</dd>
     </div>
     <!--Cost of Reward-->
     <div>
-      <dt class="card-label">Reward Type</dt>
+      <dt class="card-label">
+        {{'REWARD_TYPE' | translate}}
+      </dt>
       <dd class="card-value">{{data?.rewardType || '-'}}</dd>
     </div>
   </div>
   <div class="card-definitions-splitter">
     <!--Description-->
     <div *ngIf="data?.description">
-      <dt class="card-label">Description</dt>
+      <dt class="card-label">
+        {{'DESCRIPTION' | translate}}
+      </dt>
       <dd class="card-value">{{data?.description}}</dd>
     </div>
     <!--Terms & Condition-->
     <div *ngIf="data?.termsAndCondition">
-      <dt class="card-label">Terms & Condition</dt>
+      <dt class="card-label">
+        {{'TERMS_&_CONDITION' | translate}}
+      </dt>
       <dd class="card-value">{{data?.termsAndCondition}}</dd>
     </div>
   </div>
   <div *ngIf="data?.tags">
-    <dt class="card-label">Tags</dt>
+    <dt class="card-label">
+      {{'TAGS'| translate}}
+    </dt>
     <dd class="card-value">
       <span class="card-chip" *ngFor="let tag of data?.tags">{{tag}}</span>
     </dd>

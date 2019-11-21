@@ -1,15 +1,21 @@
 <!--Single code-->
 <ng-container *ngIf="data?.voucherCode?.type === 'single_code' && data?.voucherCode?.singleCode?.code">
-  <label class="card-label">Voucher Code Type</label>
-  <p>Single code</p>
+  <label class="card-label">
+    {{'VOUCHER_CODE_TYPE'| translate}}
+  </label>
+  <p>
+    {{'SINGLE_CODE'| translate}}
+  </p>
   <p class="card-value">{{data?.voucherCode?.singleCode?.code}}</p>
 </ng-container>
 <!--/ Single code-->
 
 <!--Unique codes: System generated-->
 <ng-container *ngIf="data?.voucherCode?.type === 'system_generated'">
-  <label class="card-label">Voucher Code Type</label>
-  <p>Unique codes: System generated</p>
+  <label class="card-label">
+    {{'VOUCHER_CODE_TYPE'| translate}}
+  </label>
+  <p>{{'VOUCHER_CODE_OPTIONS.UNIQUE_CODES:_SYSTEM_GENERATED' | translate}}</p>
   <p class="card-value">{{data?.voucherCode?.uniqueGeneratedCode?.prefix}} ({{data?.voucherCode?.uniqueGeneratedCode?.codeFormat}})</p>
   <!-- <cl-download-button [file]="data?.voucherCode?.uniqueGeneratedCode?.file">Download voucher codes</cl-download-button> -->
 </ng-container>
@@ -17,7 +23,9 @@
 
 <!--Merchant PIN-->
 <ng-container *ngIf="data?.voucherCode?.merchantPIN">
-  <label class="card-label">Merchant PIN</label>
+  <label class="card-label">
+    {{'MERCHANT_PIN' | translate}}
+  </label>
   <p class="card-value">{{data?.voucherCode?.merchantPIN.code}}</p>
 </ng-container>
 <!--/ Merchant PIN-->
@@ -26,7 +34,7 @@
 <div *ngIf="data?.voucherValidity" class="card-section">
   <div class="card-header">
     <h2 class="card-title">
-      Voucher Validity
+      {{'VOUCHER_VALIDITY' | translate}}
     </h2>
   </div>
   <div class="card-content">
@@ -36,10 +44,11 @@
       </span>
     </time>
     <p class="card-value" *ngIf="data?.voucherValidity?.type === 'issuance_date'">
-      Valid for
+      {{'VALID_FOR' | translate}}
       {{data?.voucherValidity?.issuanceDate?.times}}
-      {{data?.voucherValidity?.issuanceDate?.duration}}{{data?.voucherValidity?.issuanceDate?.times > 1 ? 's' : ''}}
-      after issuance
+      {{data?.voucherValidity?.issuanceDate?.duration}}
+      <!--{{data?.voucherValidity?.issuanceDate?.times > 1 ? 's' : ''}}-->
+      {{'AFTER_ISSUANCE' | translate}}
     </p>
   </div>
 </div>

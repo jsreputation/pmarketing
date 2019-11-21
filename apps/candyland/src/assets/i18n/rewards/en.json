@@ -76,5 +76,20 @@
   "TIMES": "Times",
   "REDEMPTION_LIMITS_PER_USER": "Redemption Limits Per User",
   "REWARD_IMAGE": "Reward Image",
-  "TAGS": "Tags"
+  "TAGS": "Tags",
+  "AVAILABLE_VOUCHERS": "Available Vouchers",
+  "REPLENISH": "Replenish",
+  "available": "available",
+  "expired": "expired",
+  "issued": "issued",
+  "reserved": "reserved",
+  "redeemed": "redeemed",
+  "voided": "voided",
+  "REPLENISH_VOUCHER_CODES": "Replenish Voucher Codes",
+  "VOUCHER_CODE_AVAILABLE": "Voucher codes available: 10,000",
+  "SINGLE_CODE": "Single code",
+  "VOUCHER_CODES_ISSUED": "Voucher codes Issued (15 Campaigns)",
+  "STATUS": "Status",
+  "BRANCHES": "branches",
+  "TIMES_PER": "Times per"
 }

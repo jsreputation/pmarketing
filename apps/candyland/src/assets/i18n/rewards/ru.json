@@ -76,5 +76,21 @@
   "TIMES": "Количество",
   "REDEMPTION_LIMITS_PER_USER": "Лимиты погашения на пользователя",
   "REWARD_IMAGE": "Изображение награды",
-  "TAGS": "Теги"
+  "TAGS": "Теги",
+  "AVAILABLE_VOUCHERS": "Доступные ваучеры",
+  "REPLENISH": "Пополнить",
+  "available": "доступные",
+  "expired": "истекшие",
+  "issued": "выданые",
+  "reserved": "зарезервированые",
+  "redeemed": "выкупленые",
+  "voided": "аннулированные",
+  "REPLENISH_VOUCHER_CODES": "Пополнить коды ваучеров",
+  "VOUCHER_CODE_AVAILABLE": "Доступны коды ваучеров: 10,000",
+  "SINGLE_CODE": "Единый код",
+  "VOUCHER_CODES_ISSUED": "Выданы коды ваучеров (15 кампаний)",
+  "STATUS": "Статус",
+  "BRANCHES": "Филиалы",
+  "TIMES_PER": "Раз в"
 }
+
