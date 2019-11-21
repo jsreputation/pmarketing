@@ -11,7 +11,7 @@ import { IMacaron } from '../../services/macaron.service';
 export class RewardDetailComponent {
   public isExpired: boolean = false;
   @Input()
-  public macaron: IMacaron;
+  public macaron?: IMacaron;
 
   @Output()
   public hasExpired: EventEmitter<boolean> = new EventEmitter<boolean>();

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
+import { NgModule, APP_INITIALIZER, LOCALE_ID, Injectable, ErrorHandler } from '@angular/core';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -14,7 +14,7 @@ import {
   OutcomeModule,
   ProfileModule,
   RewardsModule,
-  CustomTranslateLoader,
+  LanguageService,
   TokenStorage,
   ConfigService,
 } from '@perx/core';
@@ -31,9 +31,30 @@ import zh from '@angular/common/locales/zh';
 import localeZhExtra from '@angular/common/locales/extra/zh';
 import ru from '@angular/common/locales/ru';
 import localesRuExtra from '@angular/common/locales/extra/ru';
+import vi from '@angular/common/locales/vi';
+import localesViExtra from '@angular/common/locales/extra/vi';
+import { MatDialogModule } from '@angular/material/dialog';
+import * as Sentry from '@sentry/browser';
+
+Sentry.init({
+  dsn: 'https://736f7fc0afd74f4383fdc760f7c81e5a@sentry.io/1827240'
+});
+
+@Injectable()
+export class SentryErrorHandler implements ErrorHandler {
+  public handleError(error: any): void {
+    // const eventId =
+    Sentry.captureException(error.originalError || error);
+    if (!environment.production) {
+      console.error(error);
+    }
+    // Sentry.showReportDialog({ eventId });
+  }
+}
 
 registerLocaleData(zh, 'zh', localeZhExtra);
 registerLocaleData(ru, 'ru', localesRuExtra);
+registerLocaleData(vi, 'vi', localesViExtra);
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
   translateService.setDefaultLang(environment.defaultLang);
@@ -58,12 +79,13 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     UtilsModule,
     PerxCampaignModule,
     HttpClientModule,
+    MatDialogModule,
     RewardsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         deps: [HttpClient, ConfigService, TokenStorage],
-        useClass: CustomTranslateLoader
+        useClass: LanguageService
       }
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
@@ -71,7 +93,8 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
   bootstrap: [AppComponent],
   providers: [
     { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true },
-    { provide: LOCALE_ID, useValue: environment.defaultLang }
+    { provide: LOCALE_ID, useValue: environment.defaultLang },
+    { provide: ErrorHandler, useClass: SentryErrorHandler }
   ],
 })
 export class AppModule { }

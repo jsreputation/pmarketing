@@ -1,0 +1,53 @@
+@import "./variables";
+@import '~@angular/material/theming';
+
+.item {
+  justify-content: space-between;
+  position: relative;
+  border-radius: $border-radius-lg !important;
+
+  &.shadow {
+    @include mat-elevation(2);
+  }
+}
+
+.item-list {
+  margin-top: $vertical-padding;
+  margin-bottom: $vertical-padding;
+  display: grid;
+  grid-gap: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
+  grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+  justify-content: start;
+  align-items: start;
+  // position: relative;
+
+  & > .mat-radio-button {
+    @include check-select;
+
+    border-radius: $border-radius-lg !important;
+
+    &.mat-radio-checked {
+      border-color: $secondary-color;
+
+      &::before,
+      &::after {
+        opacity: 1;
+      }
+    }
+
+    .mat-radio-label-content {
+      padding: 0;
+      width: 100%;
+    }
+  }
+
+  .mat-radio-container {
+    display: none;
+  }
+
+  &.shadow {
+    .mat-radio-button {
+      box-shadow: 0 0.4rem 0.4rem 0 #d2d8e2;
+    }
+  }
+}

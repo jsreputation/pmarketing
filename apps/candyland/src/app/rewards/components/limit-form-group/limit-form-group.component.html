@@ -1,8 +1,8 @@
 <div class="card-section">
   <div class="card-header">
     <div class="row">
-      <h2 class="card-title">
-        Voucher Limits Per Campaign
+      <h2 class="card-title" translate>
+        VOUCHER_LIMITS_PER_CAMPAIGN
       </h2>
       <mat-slide-toggle color="primary" [formControl]="formGroup.get('enabledVoucherPerCampaign')"></mat-slide-toggle>
     </div>
@@ -17,15 +17,15 @@
           step="1"
           [formControl]="formGroup.get('voucherPerCampaign.vouchers')"
           matInput>
-        <span matSuffix>Vouchers</span>
+        <span matSuffix><span translate>VOUCHERS</span></span>
       </mat-form-field>
       <!--/ input number-->
-      <span>per campaign, per</span>
+      <span translate>PER_CAMPAIGN_PER</span>
       <!-- duration Limits-->
       <mat-form-field class="half-on-mobile">
         <mat-select [formControl]="formGroup.get('voucherPerCampaign.duration')">
           <ng-container *ngFor="let option of config?.durationLimits">
-            <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+            <mat-option [value]="option?.value">{{option?.title | translate}}</mat-option>
           </ng-container>
         </mat-select>
       </mat-form-field>
@@ -38,7 +38,7 @@
   <div class="card-header">
     <div class="row">
       <h2 class="card-title">
-        Issuance Limits Per User
+        {{'ISSUANCE_LIMITS_PER_USER' | translate}}
       </h2>
       <mat-slide-toggle color="primary" [formControl]="formGroup.get('enabledIssuancePerUser')"></mat-slide-toggle>
     </div>
@@ -53,17 +53,19 @@
           step="1"
           [formControl]="formGroup.get('issuancePerUser.times')"
           matInput>
-        <span matSuffix>Times</span>
+        <span matSuffix>
+          {{'TIMES' | translate}}
+        </span>
       </mat-form-field>
       <!--/input number-->
 
-      <span>per campaign, per</span>
+      <span translate>PER_CAMPAIGN_PER</span>
 
       <!-- duration Limits-->
       <mat-form-field class="half-on-mobile">
         <mat-select [formControl]="formGroup.get('issuancePerUser.duration')">
           <ng-container *ngFor="let option of config?.durationLimits">
-            <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+            <mat-option [value]="option?.value">{{option?.title | translate}}</mat-option>
           </ng-container>
         </mat-select>
       </mat-form-field>
@@ -75,8 +77,8 @@
 <div class="card-section">
   <div class="card-header">
     <div class="row">
-      <h2 class="card-title">
-        Redemption Limits Per User
+      <h2 class="card-title" translate>
+        REDEMPTION_LIMITS_PER_USER
       </h2>
       <mat-slide-toggle color="primary" [formControl]="formGroup.get('enabledRedemptionPerUser')"></mat-slide-toggle>
     </div>
@@ -91,15 +93,15 @@
           step="1"
           [formControl]="formGroup.get('redemptionPerUser.times')"
           matInput>
-        <span matSuffix>Times</span>
+        <span matSuffix><span translate>TIMES</span></span>
       </mat-form-field>
       <!--/ input number-->
-      <span>per campaign, per</span>
+      <span translate>PER_CAMPAIGN_PER</span>
       <!-- duration Limits-->
       <mat-form-field class="half-on-mobile">
         <mat-select [formControl]="formGroup.get('redemptionPerUser.duration')">
           <ng-container *ngFor="let option of config?.durationLimits">
-            <mat-option [value]="option?.value">{{option?.title}}</mat-option>
+            <mat-option [value]="option?.value">{{option?.title | translate}}</mat-option>
           </ng-container>
         </mat-select>
       </mat-form-field>

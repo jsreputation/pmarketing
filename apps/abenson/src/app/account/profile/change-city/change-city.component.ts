@@ -41,7 +41,7 @@ export class ChangeCityComponent implements OnInit {
 
   public onSubmit(): void {
     this.customProperties = {
-      city: this.cityChangeForm.get('newCity').value
+      city: this.cityChangeForm.value.newCity
     };
 
     if (this.customProperties.city) {

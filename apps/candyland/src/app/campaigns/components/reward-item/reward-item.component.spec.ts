@@ -4,6 +4,7 @@ import { RewardItemComponent } from './reward-item.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RewardItemComponent', () => {
   let component: RewardItemComponent;
@@ -12,7 +13,7 @@ describe('RewardItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, TranslateModule.forRoot(),],
       declarations: [RewardItemComponent],
       schemas: [ NO_ERRORS_SCHEMA ]
     })
@@ -24,7 +25,7 @@ describe('RewardItemComponent', () => {
     component = fixture.componentInstance;
     group = new FormGroup({
       test: new FormControl(),
-      test2: new FormGroup({probability: new FormControl(null)}, [])
+      test2: new FormGroup({probability: new FormControl(null), limit: new FormControl(0)}, []),
     });
     component.group = (group.get('test2') as FormGroup);
     fixture.detectChanges();

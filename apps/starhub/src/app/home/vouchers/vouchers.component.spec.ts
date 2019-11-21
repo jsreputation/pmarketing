@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { VouchersComponent } from './vouchers.component';
 import { MatCardModule, MatIconModule } from '@angular/material';
@@ -15,7 +15,7 @@ describe('VouchersComponent', () => {
   let fixture: ComponentFixture<VouchersComponent>;
   let router: Router;
   const vouchersServiceStub = {
-    getAll: () => of([])
+    getAll: () => of(vouchers)
   };
 
   const today = new Date();
@@ -50,6 +50,16 @@ describe('VouchersComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should on ngOnInit', fakeAsync(() => {
+    const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>
+      (IVoucherService as Type<IVoucherService>);
+
+    const voucherServiceSpy = spyOn(voucherService, 'getAll').and.returnValue(of(vouchers));
+    component.ngOnInit();
+    tick();
+    expect(voucherServiceSpy).toHaveBeenCalled();
+  }));
 
   it('should navigate', () => {
     const spyRouter = spyOn(router, 'navigate');

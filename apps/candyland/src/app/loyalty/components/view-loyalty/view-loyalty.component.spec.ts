@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ViewLoyaltyComponent } from './view-loyalty.component';
 // tslint:disable-next-line:import-blacklist
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ViewLoyaltyComponent', () => {
   let component: ViewLoyaltyComponent;
@@ -11,6 +12,9 @@ describe('ViewLoyaltyComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ViewLoyaltyComponent ],
+      imports: [
+        TranslateModule.forRoot(),
+      ],
       schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();

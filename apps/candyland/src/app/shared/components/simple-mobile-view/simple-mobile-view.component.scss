@@ -5,6 +5,7 @@
   height: 63.8rem;
   z-index: 5;
   position: relative;
+  cursor: default;
 
   &::after {
     content: "";
@@ -37,7 +38,7 @@
 .header-logo-mobile {
   overflow: hidden;
   position: absolute;
-  bottom: 4px;
+  bottom: 0.4rem;
   left: 0;
   display: flex;
   justify-content: center;

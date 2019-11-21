@@ -6,33 +6,37 @@ import {
   MatToolbarModule,
   MatSlideToggleModule,
   MatListModule,
-  MatRadioModule
+  MatRadioModule,
+  MatSlideToggle,
+  MatRadioButton
 } from '@angular/material';
 import { Location } from '@angular/common';
-import { ProfileService } from '@perx/core';
+import { ProfileService, IProfile } from '@perx/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
+const toogle = {} as MatSlideToggle;
+const radioButton = {} as MatRadioButton;
 describe('ConditionComponent', () => {
   let component: ConditionComponent;
   let fixture: ComponentFixture<ConditionComponent>;
   const locationStub = {
-    goBack: () => {}
+    goBack: () => { }
   };
 
-  const userInfo = {
+  const userInfo: IProfile = {
     id: 59431,
     state: 'active',
     firstName: 'Perx',
     lastName: 'PERX',
-    middleName: null,
-    phone: null,
-    email: null,
-    birthDate: null,
-    gender: null,
+    middleName: undefined,
+    phone: undefined,
+    email: undefined,
+    birthDate: undefined,
+    gender: undefined,
     joinedDate: '2019-07-01T03:37:50.049Z',
-    passwordExpiryDate: null,
+    passwordExpiryDate: undefined,
     customProperties: {
       last_4: '1234',
       diabetes: 'true',
@@ -48,7 +52,7 @@ describe('ConditionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConditionComponent ],
+      declarations: [ConditionComponent],
       imports: [
         MatIconModule,
         MatToolbarModule,
@@ -62,7 +66,7 @@ describe('ConditionComponent', () => {
         { provide: ProfileService, useValue: profileServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -88,27 +92,31 @@ describe('ConditionComponent', () => {
 
   describe('toggleDiabetesButtonGroupVisibilty', () => {
     it('should update diabetes on button slide on', () => {
-      component.toggleDiabetesButtonGroupVisibilty({ checked: true, source: null });
-      expect(component.profile.customProperties.diabetes).toBe('true');
-      expect(component.profile.customProperties.diabetesState).toBe('diabetes');
+      component.toggleDiabetesButtonGroupVisibilty({ checked: true, source: toogle });
+      expect(component.profile.customProperties && component.profile.customProperties.diabetes).toBe('true');
+      expect(component.profile.customProperties && component.profile.customProperties.diabetesState).toBe('diabetes');
     });
 
     it('should update diabetes on button slide off', () => {
-      component.toggleDiabetesButtonGroupVisibilty({ checked: false, source: null });
-      expect(component.profile.customProperties.diabetes).toBe('false');
-      expect(component.profile.customProperties.diabetesState).toBe('');
+      component.toggleDiabetesButtonGroupVisibilty({ checked: false, source: toogle });
+      expect(component.profile.customProperties && component.profile.customProperties.diabetes).toBe('false');
+      expect(component.profile.customProperties && component.profile.customProperties.diabetesState).toBe('');
     });
   });
 
   describe('isDiabetesState', () => {
     it('should return true and checked pre-diabetes radiobox ', () => {
-      component.profile.customProperties.diabetesState = 'pre_diabetes';
+      if (component.profile.customProperties) {
+        component.profile.customProperties.diabetesState = 'pre_diabetes';
+      }
       const isDiabetesState = component.isDiabetesState('pre_diabetes');
       expect(isDiabetesState).toBe(true);
     });
 
     it('should return false and NOT check diabetes radiobox ', () => {
-      component.profile.customProperties.diabetesState = 'pre_diabetes';
+      if (component.profile.customProperties) {
+        component.profile.customProperties.diabetesState = 'pre_diabetes';
+      }
       const isDiabetesState = component.isDiabetesState('diabetes');
       expect(isDiabetesState).toBe(false);
     });
@@ -116,25 +124,25 @@ describe('ConditionComponent', () => {
 
   describe('onDiabetesConditionChanged', () => {
     it('should set diabetes state to diabetes', () => {
-      component.onDiabetesConditionChanged({value: 'diabetes', source: null});
-      expect(component.profile.customProperties.diabetesState).toBe('diabetes');
+      component.onDiabetesConditionChanged({ value: 'diabetes', source: radioButton });
+      expect(component.profile.customProperties && component.profile.customProperties.diabetesState).toBe('diabetes');
     });
 
     it('should set diabetes state to pre_diabetes', () => {
-      component.onDiabetesConditionChanged({value: 'pre_diabetes', source: null});
-      expect(component.profile.customProperties.diabetesState).toBe('pre_diabetes');
+      component.onDiabetesConditionChanged({ value: 'pre_diabetes', source: radioButton });
+      expect(component.profile.customProperties && component.profile.customProperties.diabetesState).toBe('pre_diabetes');
     });
   });
 
   describe('onHypertensionConditionChanged', () => {
     it('should set hypertension to string true', () => {
-      component.onHypertensionConditionChanged({checked: true, source: null});
-      expect(component.profile.customProperties.hypertension).toBe('true');
+      component.onHypertensionConditionChanged({ checked: true, source: toogle });
+      expect(component.profile.customProperties && component.profile.customProperties.hypertension).toBe('true');
     });
 
     it('should set hypertension to string false', () => {
-      component.onHypertensionConditionChanged({checked: false, source: null});
-      expect(component.profile.customProperties.hypertension).toBe('false');
+      component.onHypertensionConditionChanged({ checked: false, source: toogle });
+      expect(component.profile.customProperties && component.profile.customProperties.hypertension).toBe('false');
     });
   });
 
