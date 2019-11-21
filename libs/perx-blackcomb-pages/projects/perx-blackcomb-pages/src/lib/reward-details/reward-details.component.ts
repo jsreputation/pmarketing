@@ -97,13 +97,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
         this.rewardData.rewardPrice.length > 0 ? this.rewardData.rewardPrice[0].points || 0 : 0
     };
 
-    combineLatest([
-      this.translate.get('YOU_CURRENTLY_HAVE'),
-      this.translate.get('POINTS'),
-      this.translate.get('USE_POINTS'),
-      this.translate.get('PROCEED'),
-      this.translate.get('CONFIRM'),
-      this.translate.get('CANCEL')])
+    this.translate.get(['YOU_CURRENTLY_HAVE', 'POINTS', 'USE_POINTS', 'PROCEED', 'CONFIRM', 'CANCEL'])
       .pipe(
         last(),
         switchMap(
@@ -116,8 +110,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
               buttonTxt2: cancel
             }
           }).afterClosed()
-        )
-      ).pipe(
+        ),
         switchMap((result) => result ? this.exchangePoints() : of(null)),
         takeUntil(this.destroy$),
       ).subscribe(() => { });
@@ -130,10 +123,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   private exchangePoints(): Observable<void> {
     return this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
       .pipe(
-        switchMap(() => combineLatest([
-          this.translate.get('YOUR_BALANCE_IS'),
-          this.translate.get('POINTS'),
-          this.translate.get('CLOSE')])
+        switchMap(() => this.translate.get(['YOUR_BALANCE_IS', 'POINTS', 'CLOSE'])
           .pipe(
             last(),
             tap(([balance, points, close]) => this.notificationService.addPopup({
