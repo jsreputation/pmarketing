@@ -163,11 +163,12 @@ export class WhistlerVouchersService implements IVoucherService {
             reward_entity_id: rewardId
           }
         }
-      }).pipe(
-        map(res => res.data),
-        map((res: IJsonApiItem<IWPurchaseAttributes>) => WhistlerVouchersService.PurchaseToVoucher(res)),
-        switchMap((voucher: IJsonApiItem<IWAssignedAttributes>) => this.getFullVoucher(voucher))
-      );
+      }
+    ).pipe(
+      map(res => res.data),
+      map((res: IJsonApiItem<IWPurchaseAttributes>) => WhistlerVouchersService.PurchaseToVoucher(res)),
+      switchMap((voucher: IJsonApiItem<IWAssignedAttributes>) => this.getFullVoucher(voucher))
+    );
   }
 
   private get vouchersUrl(): string {
