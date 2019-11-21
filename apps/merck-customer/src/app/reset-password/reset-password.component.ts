@@ -16,7 +16,7 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
   public resetPasswordForm: FormGroup;
   public mobileNumber: string = '';
   public otp: string = '';
-  public errorMessage: string = null;
+  public errorMessage: string | null = null;
 
   constructor(
     private router: Router,
@@ -31,7 +31,7 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
     }
 
     // todo: the following block does not seem like it would trigger
-    if (currentNavigation.extras.hasOwnProperty('state')) {
+    if (currentNavigation.extras.state) {
       this.mobileNumber = currentNavigation.extras.state.mobileNo;
       this.otp = currentNavigation.extras.state.otp;
     }
@@ -60,8 +60,8 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
 
   public onUpdatePassword(): void {
 
-    const password = this.resetPasswordForm.get('password').value as string;
-    const confirmPassword = this.resetPasswordForm.get('confirmPassword').value as string;
+    const password = this.resetPasswordForm.value.password as string;
+    const confirmPassword = this.resetPasswordForm.value.confirmPassword as string;
     if (password !== confirmPassword) {
       this.notificationService.addSnack('Passwords do not match.');
       return;
@@ -69,7 +69,7 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
 
     this.profileService.whoAmI().pipe(
       mergeMap((profile: IProfile) => {
-        this.mobileNumber = profile.phone;
+        this.mobileNumber = profile.phone || '';
         return this.authService.resetPassword({
           phone: this.mobileNumber,
           newPassword: password,

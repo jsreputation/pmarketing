@@ -79,11 +79,11 @@ export class LoginComponent implements OnInit, PageAppearence {
     // TODO: Uncomment the following line once merck-customer backend is setup with authentication service
     // const mobileNo = this.selectedCountry + (this.loginForm.get('mobileNo').value as string);
 
-    const mobileNo = (this.loginForm.get('mobileNo').value as string);
-    const countryCode = (this.loginForm.get('countryCode').value as string);
+    const mobileNo = (this.loginForm.value.mobileNo as string);
+    const countryCode = (this.loginForm.value.countryCode as string);
     const codeAndMobile = countryCode + mobileNo;
     const cleanedMobileNo = codeAndMobile.replace(/[^0-9]/g, ''); // remove non numeric and special characters
-    const password: string = this.loginForm.get('password').value;
+    const password: string = this.loginForm.value.password;
 
     this.authService.login(cleanedMobileNo, password).subscribe(
       () => {
@@ -134,7 +134,7 @@ export class LoginComponent implements OnInit, PageAppearence {
     if (!this.appAccessTokenFetched) {
       return;
     }
-    const mobileNumber = (this.loginForm.get('mobileNo').value as string);
+    const mobileNumber = (this.loginForm.value.mobileNo as string);
     this.router.navigate(['forgot-password'], { state: { country: this.selectedCountry, mobileNo: mobileNumber } });
   }
 

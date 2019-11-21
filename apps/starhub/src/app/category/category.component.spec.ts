@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { CategoryComponent } from './category.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatIconModule, MatToolbarModule, MatCardModule, MatBottomSheetModule } from '@angular/material';
+import { MatIconModule, MatToolbarModule, MatCardModule, MatBottomSheetModule, MatBottomSheet } from '@angular/material';
 import { RewardsService } from '@perx/core';
 import { of } from 'rxjs';
 import { rewards } from '../rewards.mock';
@@ -11,6 +11,10 @@ import { RewardsSortPipe } from './rewards-sort.pipe';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { SortingMode } from './category.model';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CategorySelectComponent } from './category-select/category-select.component';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { CategorySortComponent } from './category-sort/category-sort.component';
 
 describe('CategoryComponent', () => {
   let component: CategoryComponent;
@@ -31,23 +35,36 @@ describe('CategoryComponent', () => {
   const routerStub = {
     navigate: () => {}
   };
+  const matBottomSheetStub = {
+    open: () => {}
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CategoryComponent, RewardsSortPipe],
+      declarations: [
+        CategoryComponent,
+        RewardsSortPipe,
+        CategorySelectComponent,
+        CategorySortComponent,
+      ],
       imports: [
         RouterTestingModule,
         MatIconModule,
         MatToolbarModule,
         MatBottomSheetModule,
-        MatCardModule
+        MatCardModule,
+        BrowserAnimationsModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
-        { provide: Router, useValue: routerStub }
-      ]
+        { provide: Router, useValue: routerStub },
+        { provide: MatBottomSheet, useValue: matBottomSheetStub },
+      ],
     })
+      .overrideModule(BrowserDynamicTestingModule, {
+        set: { entryComponents: [CategorySelectComponent, CategorySortComponent] } }
+      )
       .compileComponents();
   }));
 
@@ -60,32 +77,6 @@ describe('CategoryComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  // describe('getMacaron', () => {
-  //   it('should return expiring', () => {
-  //     const currentTime = new Date();
-  //     const validTo = new Date(currentTime.setDate(currentTime.getDate() + 1)); // set to 24hrs
-  //     const validFrom = new Date(currentTime.setDate(currentTime.getDate() + 4)); // set to 96hrs
-  //     const macaronText = component.getMacaron((validFrom), String(validTo));
-  //     expect(macaronText).toBe('expiring');
-  //   });
-
-  //   it('should return just-added', () => {
-  //     const currentTime = new Date();
-  //     const validTo = new Date(currentTime.setDate(currentTime.getDate() + 2)); // set to 48hrs
-  //     const validFrom = new Date(currentTime.setDate(currentTime.getDate() + 1)); // set to 24hrs
-  //     const macaronText = component.getMacaron(String(validFrom), String(validTo));
-  //     expect(macaronText).toBe('just-added');
-  //   });
-
-  //   it('should return empty string', () => {
-  //     const currentTime = new Date();
-  //     const validTo = new Date(currentTime.setDate(currentTime.getDate() + 2)); // set to 48hrs
-  //     const validFrom = new Date(currentTime.setDate(currentTime.getDate() + 4)); // set to 96hrs
-  //     const macaronText = component.getMacaron(String(validFrom), String(validTo));
-  //     expect(macaronText).toBe('');
-  //   });
-  // });
 
   describe('onInit', () => {
     it('should get category name', fakeAsync(() => {
@@ -104,13 +95,13 @@ describe('CategoryComponent', () => {
       rewardThumbnail: '',
       rewardBanner: '',
       merchantImg: '',
-      rewardPrice: null,
+      rewardPrice: undefined,
       merchantId: 1,
       merchantName: '',
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      categoryTags: null,
+      categoryTags: undefined,
     };
 
     const router = TestBed.get<Router>(Router as Type<Router>);
@@ -165,4 +156,21 @@ describe('CategoryComponent', () => {
       }
     );
   }));
+
+  it('should call bottomSheet on selectCategory', fakeAsync(() => {
+    const bottomSheet = TestBed.get<MatBottomSheet>(MatBottomSheet as Type<MatBottomSheet>);
+    const bottomSheetSpy = spyOn(bottomSheet, 'open');
+    component.selectCategory();
+    tick();
+    expect(bottomSheetSpy).toHaveBeenCalled();
+  }));
+
+  it('should call bottomSheet on selectSort', fakeAsync(() => {
+    const bottomSheet = TestBed.get<MatBottomSheet>(MatBottomSheet as Type<MatBottomSheet>);
+    const bottomSheetSpy = spyOn(bottomSheet, 'open');
+    component.selectSort();
+    tick();
+    expect(bottomSheetSpy).toHaveBeenCalled();
+  }));
+
 });

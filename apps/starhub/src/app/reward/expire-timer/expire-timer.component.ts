@@ -47,16 +47,16 @@ export class ExpireTimerComponent implements OnInit {
       this.isExpiring.emit(true);
       this.dateTime$ = timer(0, 1000).pipe(
         take(thirtySixHoursInSeconds),
-        map(() => {
+        map((): ITime[] => {
           const time = Date.parse(String(this.timerEndDate)) - (new Date()).getTime();
-          const seconds = Math.floor( (time / 1000) % 60 );
-          const minutes = Math.floor( (time / 1000 / 60) % 60 );
-          const hours = Math.floor( (time / (1000 * 60 * 60)) % 24 );
-          const days = Math.floor( time / ( 1000 * 60 * 60 * 24) );
+          const seconds = Math.floor((time / 1000) % 60);
+          const minutes = Math.floor((time / 1000 / 60) % 60);
+          const hours = Math.floor((time / (1000 * 60 * 60)) % 24);
+          const days = Math.floor(time / (1000 * 60 * 60 * 24));
 
           if (Math.round(convertedtoSeconds) <= 0) {
             this.hasExpired.emit(true);
-            return;
+            return [];
           }
           convertedtoSeconds--;
           return [{
