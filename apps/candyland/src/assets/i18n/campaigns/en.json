@@ -23,6 +23,7 @@
     "THE_TOTAL_PROBABILITY": "The total probability exceeds 100%. Please make it 100%.",
     "PROBABILITY": "Probability",
     "NO_REWARD": "No reward",
+    "LIMIT": "Limit",
     "STAMPS_RULE": "Stamps Rule",
     "SEQUENCE": "Sequence",
     "ADD_RULE": "+ Add Rule",
