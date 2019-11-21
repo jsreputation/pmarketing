@@ -15,16 +15,17 @@
                       [total]="data?.total">
       </cl-progress-bar> -->
       <div class="reward-item-limit">
+          <span class="reward-item-limit-label">
+              {{'CAMPAIGN.LIMIT' | translate}}
+            </span>
         <mat-form-field class="reward-item-limit-input">
           <input
             type="number"
             min="0"
-            max="availabelCodeCount"
             step="1"
             matInput
             [class.invalid]="isInvalid"
             [formControl]="limit">
-          <span matSuffix>/{{availabelCodeCount}}</span>
         </mat-form-field>
       </div>
     </div>

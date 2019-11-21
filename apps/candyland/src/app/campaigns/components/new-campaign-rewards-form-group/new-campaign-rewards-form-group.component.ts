@@ -1,4 +1,3 @@
-import { VouchersService } from '@cl-core/services/vouchers.service';
 import {
   Component,
   OnInit,
@@ -70,8 +69,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     public dialog: MatDialog,
     private fb: FormBuilder,
     private store: CampaignCreationStoreService,
-    private rewardsService: RewardsService,
-    private voucherService: VouchersService
+    private rewardsService: RewardsService
   ) {
   }
 
@@ -136,9 +134,9 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       return data.lootBoxId === this.slotNumber;
     }).filter(data => data.resultId)
       .map(data =>
-        combineLatest(this.rewardsService.getReward(data.resultId), this.voucherService.getAvailableCodesCount(data.resultId)).pipe(
-          map(([reward, count]: [IRewardEntity, number]) =>
-            ({ ...reward, count: count || 0, probability: data.probability, outcomeId: data.id, limit: data.limit })),
+        this.rewardsService.getReward(data.resultId).pipe(
+          map((reward: IRewardEntity) =>
+            ({ ...reward, probability: data.probability, outcomeId: data.id, limit: data.limit })),
           catchError(() => of(null))
         ));
     combineLatest(...possibleOutcomes).subscribe(
@@ -193,7 +191,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       probability: {
         value: value ? value.probability || 0 : this.noOutCome && this.noOutCome.probability || 0, disabled: !isEnableProbability
       },
-      limit: value.limit || 0
+      limit: value ? value.limit || 0 : 0
     });
   }
 

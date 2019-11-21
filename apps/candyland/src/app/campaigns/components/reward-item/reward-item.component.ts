@@ -26,10 +26,6 @@ export class RewardItemComponent implements OnInit {
     return this.group.get('limit');
   }
 
-  public get availabelCodeCount(): AbstractControl {
-    return this.group.value.count;
-  }
-
   public get isInvalid(): boolean {
     return this.group.parent.invalid;
   }
