@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CustomTranslateLoader } from './land.service';
+import { LanguageService } from './language.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ConfigService } from '../../config/config.service';
 import { of } from 'rxjs';
@@ -10,13 +10,13 @@ const tokenStorageStub = {
   getAppInfoProperty: () => null,
   setAppInfoProperty: () => { }
 };
-describe('CustomTranslateLoader', () => {
+describe('LanguageService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientTestingModule
     ],
     providers: [
-      CustomTranslateLoader,
+      LanguageService,
       {
         provide: ConfigService,
         useValue: {
@@ -28,7 +28,7 @@ describe('CustomTranslateLoader', () => {
   }));
 
   it('should be created', () => {
-    const service: CustomTranslateLoader = TestBed.get(CustomTranslateLoader);
+    const service: LanguageService = TestBed.get(LanguageService);
     expect(service).toBeTruthy();
   });
 });

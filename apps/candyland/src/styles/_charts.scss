@@ -38,6 +38,16 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
     flex-basis: 100%;
   }
 
+  &.double-width {
+    flex-basis: calc(50% - 2.4rem);
+    min-width: 32rem;
+  }
+
+  &.quarter-width {
+    flex-basis: calc(25% - 2.4rem);
+    min-width: 32rem;
+  }
+
   &-info-title {
     @include typo-body1;
 
@@ -120,6 +130,19 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
 
 .chart-card:first-of-type {
   flex-basis: 100%;
+}
+
+.advanced_pie--splitter {
+  display: grid;
+  grid-gap: ($horizontal-padding * 0.75);
+  grid-template-columns: repeat(auto-fit, minmax(32rem, 1fr));
+
+  cl-chart-card {
+    min-height: 24rem;
+    position: relative;
+    display: block;
+    width: 100%;
+  }
 }
 
 @media (min-width: $desktop-width + 1) {
