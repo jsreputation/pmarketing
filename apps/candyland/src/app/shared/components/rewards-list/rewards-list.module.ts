@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { ProgressBarModule } from '@cl-shared/components/progress-bar/progress-bar.module';
 import { RewardsListComponent } from './rewards-list.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { RewardsListComponent } from './rewards-list.component';
     ButtonModule,
     ProgressBarModule,
     RouterModule,
+    TranslateModule
   ],
   exports: [
     RewardsListComponent

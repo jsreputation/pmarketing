@@ -44,12 +44,12 @@ describe('RedemptionComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: null,
+      redemptionType: undefined,
       categoryTags: [{
         id: 1,
         title: 'test'
       }],
-      inventory: null,
+      inventory: undefined,
     },
     state: VoucherState.expired,
     expiry: null,
@@ -130,9 +130,10 @@ describe('RedemptionComponent', () => {
 
   describe('onInit', () => {
     it('should NOT get voucher based if queryParams id is NOT present', () => {
+      const defVal = component.voucher;
       params.next({ id: null });
       component.ngOnInit();
-      expect(component.voucher).toBe(undefined);
+      expect(component.voucher).toBe(defVal);
     });
 
     it('should get voucher based if queryParams id is present', () => {

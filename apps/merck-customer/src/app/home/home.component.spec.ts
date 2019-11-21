@@ -7,7 +7,8 @@ import {
   LoyaltyModule,
   RewardsModule,
   ProfileService,
-  LoyaltyService
+  LoyaltyService,
+  IReward
 } from '@perx/core';
 import { of } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,16 +19,16 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  const reward = {
+  const reward: IReward = {
     id: 149,
     name: '100 HSBC Bonus Points',
-    description: null,
-    subtitle: null,
+    description:  '',
+    subtitle: '',
     validFrom: new Date('2019-07-04T09:58:07.000Z'),
     validTo: new Date('2020-07-19T16:00:00Z'),
     rewardThumbnail: '',
     rewardBanner: '',
-    merchantImg: null,
+    merchantImg: undefined,
     rewardPrice: [
       {
         id: 23,
@@ -35,10 +36,10 @@ describe('HomeComponent', () => {
         price: 0
       }
     ],
-    merchantId: null,
-    merchantName: null,
-    merchantWebsite: null,
-    termsAndConditions: null,
+    merchantId: undefined,
+    merchantName: undefined,
+    merchantWebsite: undefined,
+    termsAndConditions: '',
     howToRedeem: '',
   };
 

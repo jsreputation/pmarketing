@@ -9,6 +9,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TimePickerComponent', () => {
   let component: TimePickerComponent;
@@ -24,6 +25,7 @@ describe('TimePickerComponent', () => {
         MatIconModule,
         NgxMaterialTimepickerModule,
         NoopAnimationsModule,
+        TranslateModule.forRoot(),
       ],
       schemas: [NO_ERRORS_SCHEMA],
     })

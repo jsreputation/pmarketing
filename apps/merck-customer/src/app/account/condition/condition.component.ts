@@ -16,13 +16,16 @@ export class ConditionComponent implements OnInit, PageAppearence {
   constructor(
     private profileService: ProfileService,
     private notificationService: NotificationService
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this.profileService.whoAmI().subscribe(res => {
       this.profile = res;
+      if (!res.customProperties) {
+        return;
+      }
       Object.keys(res.customProperties).forEach((key) => {
-        if (key === 'diabetes' && res.customProperties[key] === 'true') {
+        if (key === 'diabetes' && res.customProperties && res.customProperties[key] === 'true') {
           this.showDiabetesCondition = true;
         }
       });
@@ -31,10 +34,10 @@ export class ConditionComponent implements OnInit, PageAppearence {
 
   public toggleDiabetesButtonGroupVisibilty(event: MatSlideToggleChange): void {
     this.showDiabetesCondition = event.checked;
-    if (event.checked) {
+    if (event.checked && this.profile.customProperties) {
       this.profile.customProperties.diabetes = 'true';
       this.profile.customProperties.diabetesState = 'diabetes';
-    } else {
+    } else if (this.profile.customProperties) {
       this.profile.customProperties.diabetes = 'false';
       this.profile.customProperties.diabetesState = '';
     }
@@ -42,29 +45,38 @@ export class ConditionComponent implements OnInit, PageAppearence {
   }
 
   public isDiabetesState(state: string): boolean {
-    return this.profile.customProperties.diabetesState === state;
+    return !!this.profile.customProperties && this.profile.customProperties.diabetesState === state;
   }
 
   public isChecked(condition: string): boolean {
-    return this.profile.customProperties[condition] === 'true';
+    return !!this.profile.customProperties && this.profile.customProperties[condition] === 'true';
   }
 
   public onDiabetesConditionChanged(event: MatRadioChange): void {
+    if (!this.profile.customProperties) {
+      return;
+    }
     this.profile.customProperties.diabetesState = event.value;
     this.updateCondition();
   }
 
   public onHypertensionConditionChanged(event: MatSlideToggleChange): void {
+    if (!this.profile.customProperties) {
+      return;
+    }
     this.profile.customProperties.hypertension = event.checked.toString();
     this.updateCondition();
   }
 
   private updateCondition(): void {
+    if (!this.profile.customProperties) {
+      return;
+    }
     this.profileService.setCustomProperties(this.profile.customProperties).subscribe(
       () => this.notificationService.addSnack('Condition Updated.'),
       err => {
         this.notificationService.addSnack('ProfileService::SetCustomProperties : ' + err);
-    });
+      });
   }
 
   public getPageProperties(): PageProperties {

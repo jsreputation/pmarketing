@@ -1,5 +1,5 @@
 <section class="page-header">
-  <h1 class="title">Audiences</h1>
+  <h1 class="title">{{'AUDIENCE_FEATURE.AUDIENCES' | translate}}</h1>
 </section>
 
 <cl-audiences-user-info [user]="user"></cl-audiences-user-info>
@@ -8,10 +8,10 @@
   <!--filters-->
   <cl-table-filters [dataSource]="dataSource" classList="block">
     <ng-container *clTableFilter="'rewardName'; let filter">
-      <cl-search-filter class="search-block" [control]="filter" placeholder="Search vouchers"></cl-search-filter>
+      <cl-search-filter class="search-block" [control]="filter" [placeholder]="'AUDIENCE_FEATURE.SEARCH_VOUCHERS' | translate"></cl-search-filter>
       <cl-button [classList]="'primary'"
         (click)="openSelectRewardPopup()">
-        <span>Issue Voucher</span>
+        <span>{{'AUDIENCE_FEATURE.ISSUE_VOUCHER' | translate}}</span>
       </cl-button>
     </ng-container>
     <ng-container *clTableFilter="'status'; let filter">

@@ -1,18 +1,17 @@
 import { TestBed, async, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { MatDialogModule, MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   AuthenticationService,
   ProfileService,
   ICampaignService,
   NotificationService,
   PopupComponent,
-  // IGameService,
   ICampaign,
-  // IGame,
-  // GameType,
-  TokenStorage
+  TokenStorage,
+  IPopupConfig
 } from '@perx/core';
 import { of, Observable, throwError } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,27 +23,27 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
 
-class MockNotificationService {
-  get $popup(): Observable<any> {
-    return of(true);
+class MockNotificationService implements Partial<NotificationService> {
+  get $popup(): Observable<IPopupConfig> {
+    return of();
   }
 
-  get $snack(): Observable<any> {
-    return of(true);
+  get $snack(): Observable<string> {
+    return of();
   }
 }
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  const authenticationServiceStub = {
+  const authenticationServiceStub: Partial<AuthenticationService> = {
     saveUserAccessToken: () => { }
   };
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of()
   };
 
-  const campaigns: ICampaign[] = [
+  const mockCampaigns: ICampaign[] = [
     {
       id: 1,
       name: 'abc',
@@ -87,38 +86,19 @@ describe('AppComponent', () => {
       thumbnailUrl: '',
     }
   ];
-  const campaignServiceStub = {
-    getCampaigns: () => of(campaigns),
-    getCampaign: () => of(campaigns[0])
+  const campaignServiceStub: Partial<ICampaignService> = {
+    getCampaigns: () => of(mockCampaigns),
+    getCampaign: () => of(mockCampaigns[0])
   };
-  const routerStub = {
-    navigate: () => { },
-    navigateByUrl: () => { },
+  const routerStub: Partial<Router> = {
+    navigate: () => Promise.resolve(true),
+    navigateByUrl: () => Promise.resolve(true),
     events: of()
   };
   const matSnackBarStub = {
     open: () => { }
   };
-
-  // const games: IGame[] = [{
-  //   id: 1,
-  //   campaignId: 1,
-  //   type: GameType.pinata,
-  //   remainingNumberOfTries: 1,
-  //   config: {
-  //     stillImg: '',
-  //     brokenImg: '',
-  //     nbTaps: 5
-  //   },
-  //   texts: {
-  //   },
-  //   results: {
-  //   }
-  // }];
-  // const gameServiceStub = {
-  //   getGamesFromCampaign: () => of([])
-  // };
-  const tokenStorageStub = {
+  const tokenStorageStub: Partial<TokenStorage> = {
     getAppInfoProperty: () => null,
     setAppInfoProperty: () => { }
   };
@@ -137,20 +117,15 @@ describe('AppComponent', () => {
         ExpireTimerComponent
       ],
       providers: [
-        // TokenStorage,
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: NotificationService, useClass: MockNotificationService },
-        {
-          provide: ActivatedRoute, useValue: {
-            queryParams: of({ token: 'feature-demo' })
-          }
-        },
+        { provide: ActivatedRoute, useValue: { queryParams: of({ token: 'feature-demo' }) } },
         { provide: Router, useValue: routerStub },
         { provide: MatSnackBar, useValue: matSnackBarStub },
-        // { provide: IGameService, useValue: gameServiceStub },
-        { provide: TokenStorage, useValue: tokenStorageStub }
+        { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: MatDialogRef, useValue: {} },
       ],
     });
     TestBed.overrideModule(BrowserDynamicTestingModule, {
@@ -189,37 +164,11 @@ describe('AppComponent', () => {
 
     it('should call ICampaignService.getCampaigns', fakeAsync(() => {
       const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-      const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
+      const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(mockCampaigns));
       component.ngOnInit();
       tick();
       expect(campaignsServiceSpy).toHaveBeenCalled();
     }));
-
-    // it('should call ICampaignService.getCampaign and filter CampaignType.give_reward', fakeAsync(() => {
-    //   const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-    //   const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
-
-    //   const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-    //   const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[1]));
-    //   component.ngOnInit();
-    //   tick();
-    //   expect(campaignsServiceSpy).toHaveBeenCalled();
-    //   expect(campaignServiceSpy).toHaveBeenCalled();
-    //   // expect(component.rewar).toBe(campaigns[1]);
-    // }));
-
-    // it('should call ICampaignService.getCampaign and filter CampaignType.game', fakeAsync(() => {
-    //   const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-    //   const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
-
-    //   const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-    //   const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[0]));
-    //   component.ngOnInit();
-    //   tick();
-    //   expect(campaignsServiceSpy).toHaveBeenCalled();
-    //   expect(campaignServiceSpy).toHaveBeenCalled();
-    //   // expect(component.selectedCampaign).toBe(campaigns[0]);
-    // }));
 
     it('should redirect to error screen', fakeAsync(() => {
       const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
@@ -236,41 +185,4 @@ describe('AppComponent', () => {
     }));
 
   });
-
-  // describe('dialogClosed', () => {
-  // it('should navigate to reward if CampaignType is give_reward', fakeAsync(() => {
-  //   const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-  //   spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
-
-  //   const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-  //   spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[1]));
-
-  //   const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
-  //   const routerSpy = spyOn(router, 'navigate');
-
-  //   component.ngOnInit();
-  //   component.dialogClosed();
-  //   tick();
-  //   expect(routerSpy).toHaveBeenCalledWith(['/reward'], { queryParams: { id: 1 } });
-  // }));
-
-  // it('should navigate to game if CampaignType is game', fakeAsync(() => {
-  //   const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-  //   spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
-
-  //   const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-  //   spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[0]));
-
-  //   const gamesService = TestBed.get<IGameService>(IGameService as Type<IGameService>);
-  //   spyOn(gamesService, 'getGamesFromCampaign').and.returnValue(of(games));
-
-  //   const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
-  //   const routerSpy = spyOn(router, 'navigate');
-
-  //   component.ngOnInit();
-  //   component.dialogClosed();
-  //   tick();
-  //   expect(routerSpy).toHaveBeenCalledWith(['/game'], { queryParams: { id: 1 } });
-  // }));
-  // });
 });

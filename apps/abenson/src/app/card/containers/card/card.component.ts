@@ -26,7 +26,7 @@ export class CardComponent implements OnInit {
   public membershipId: number;
   public transactionsLoaded: boolean = false;
   public transactionsEnded: boolean = false;
-  private loyaltyId: number = null;
+  private loyaltyId?: number = undefined;
   private activeTabId: number = 0;
   private transactionsPageId: number = 1;
   private tabsId: any = {
@@ -44,8 +44,10 @@ export class CardComponent implements OnInit {
     this.loyaltyService.getLoyalties().pipe(
       map(loyalties => loyalties && loyalties.length && loyalties[0])
     ).subscribe((loyalty) => {
-      this.loyaltyId = loyalty.id;
-      this.membershipId = +loyalty.membershipIdentifier;
+      if (loyalty) {
+        this.loyaltyId = loyalty.id;
+        this.membershipId = parseInt(loyalty.membershipIdentifier || '0', 10);
+      }
       this.priceLabelFn = (tr: ITransaction) => `Points ${tr.points < 0 ? 'spent' : 'earned'}`;
       this.getTransactions();
     });
@@ -64,6 +66,9 @@ export class CardComponent implements OnInit {
 
   private getTransactions(): void {
     this.transactionsLoaded = false;
+    if (!this.loyaltyId) {
+      return;
+    }
     this.loyaltyService.getTransactions(this.loyaltyId, this.transactionsPageId)
       .subscribe((transactions) => {
         transactions = transactions && transactions.length ? transactions.filter(tr => tr.points !== 0) : [];
