@@ -11,19 +11,19 @@ const tabs: ITabConfig[] = [
     filterKey: null,
     filterValue: null,
     tabName: 'Diabetes',
-    rewardsList: null
+    rewardsList: undefined
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'Category 2',
-    rewardsList: null
+    rewardsList: undefined
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'Category 3',
-    rewardsList: null
+    rewardsList: undefined
   }
 ];
 
@@ -70,12 +70,16 @@ export class HomeComponent implements OnInit, PageAppearence {
     this.getTags().pipe(flatMap((tags: ITabConfig[]) => {
       this.tabs.next(tags);
       return forkJoin(tags.map((tab) => {
-        return this.rewardsService.getAllRewards(null, [tab.tabName])
+        return this.rewardsService.getAllRewards(undefined, [tab.tabName])
           .pipe(map((result: IReward[]) => ({ key: tab.tabName, value: result })));
       }));
     })).subscribe((result) => {
       result.forEach((rewards) => {
-        this.staticTab.find((elem) => rewards.key === elem.tabName).rewardsList = of(rewards.value);
+        const reward = this.staticTab.find((elem) => rewards.key === elem.tabName);
+        if (!reward) {
+          return;
+        }
+        reward.rewardsList = of(rewards.value);
         this.tabs.next(this.staticTab);
       });
     });
