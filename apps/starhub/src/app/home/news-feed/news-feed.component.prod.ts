@@ -22,7 +22,7 @@ export class NewsFeedComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.reader.getFromUrl('https://cdn.perxtech.io/content/starhub/rss.xml')
+    this.reader.getFromUrl('https://cdn.perxtech.net/content/starhub/rss.xml')
       .subscribe(items => this.items = items);
     this.itemSize = window.innerWidth;
   }
@@ -56,7 +56,7 @@ export class NewsFeedComponent implements OnInit {
   }
 
   public getFirstLine(text: string): string {
-    const lines = text.match(/[^\r\n]+/g) || [];
+    const lines = text.match(/[^\r\n]+/g);
     return lines && lines.length > 0 ? lines[0] : '';
   }
 }
