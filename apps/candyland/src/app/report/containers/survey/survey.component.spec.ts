@@ -5,6 +5,7 @@ import { SurveyComponent } from './survey.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SurveyComponent', () => {
   let component: SurveyComponent;
@@ -19,6 +20,7 @@ describe('SurveyComponent', () => {
         RouterTestingModule.withRoutes([
           { path: 'dashboard/overview', redirectTo: '/' }
         ]),
+        TranslateModule.forRoot(),
       ]
     })
     .compileComponents();

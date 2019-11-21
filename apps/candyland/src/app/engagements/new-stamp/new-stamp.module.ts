@@ -16,6 +16,7 @@ import { DirectivesModule } from '@cl-shared/directives/directives.module';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkb
     MatSliderModule,
     MatCheckboxModule,
     DirectivesModule,
-    CheckboxGroupModule
+    CheckboxGroupModule,
+    TranslateModule,
   ]
 })
 export class NewStampModule {

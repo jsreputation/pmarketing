@@ -16,7 +16,7 @@ export class GameComponent implements OnInit {
   public buttonText: string;
   public title: string;
   public subTitle: string;
-  public numberOfTaps: number;
+  public numberOfTaps: number | null;
   public isGameAvailable: boolean = false;
   public isButtonDisabled: boolean = true;
   public game: IGame;
@@ -49,7 +49,7 @@ export class GameComponent implements OnInit {
           this.subTitle = game.texts.subTitle || 'Shake the Pinata and Win!';
           this.isGameAvailable = true;
           this.isButtonDisabled = false;
-          this.numberOfTaps = game.config.nbTaps;
+          this.numberOfTaps = game.config && game.config.nbTaps;
 
           if (game.type === GameType.shakeTheTree) {
             this.backgroundImage = game.backgroundImg || 'assets/tree/background.jpg';
@@ -62,9 +62,9 @@ export class GameComponent implements OnInit {
           if (game.remainingNumberOfTries <= 0) {
             this.isButtonDisabled = true;
             this.notificationService.addPopup({
-              title: game.results.noOutcome.title,
-              text: game.results.noOutcome.subTitle,
-              buttonTxt: game.results.noOutcome.button,
+              title: game.results.noOutcome && game.results.noOutcome.title,
+              text: game.results.noOutcome && game.results.noOutcome.subTitle,
+              buttonTxt: game.results.noOutcome && game.results.noOutcome.button,
               afterClosedCallBack: this,
               panelClass: 'custom-class'
             });
@@ -110,28 +110,30 @@ export class GameComponent implements OnInit {
 
   public gameCompleted(): void {
     this.gameService.play(this.game.id)
-    .pipe(
-      map((game: IPlayOutcome) => game.vouchers)
-    )
-    .subscribe(
-      (vouchs: Voucher[]) => {
-        if (vouchs.length === 0) {
-          this.showNoRewardsPopUp();
-        } else {
-          this.gameOutcomeService.setVouchersList(vouchs);
-          this.gameOutcomeService.setOutcome(this.game.results.outcome);
-          this.router.navigate(['/congrats']);
-        }
+      .pipe(
+        map((game: IPlayOutcome) => game.vouchers)
+      )
+      .subscribe(
+        (vouchs: Voucher[]) => {
+          if (vouchs.length === 0) {
+            this.showNoRewardsPopUp();
+          } else {
+            this.gameOutcomeService.setVouchersList(vouchs);
+            if (this.game.results && this.game.results.outcome) {
+              this.gameOutcomeService.setOutcome(this.game.results.outcome);
+            }
+            this.router.navigate(['/congrats']);
+          }
         },
-      () => this.showNoRewardsPopUp()
-    );
+        () => this.showNoRewardsPopUp()
+      );
   }
 
   private showNoRewardsPopUp(): void {
     this.notificationService.addPopup({
-      title: this.game.results.noOutcome.title,
-      text: this.game.results.noOutcome.subTitle,
-      buttonTxt: this.game.results.noOutcome.button,
+      title: this.game.results.noOutcome && this.game.results.noOutcome.title,
+      text: this.game.results.noOutcome && this.game.results.noOutcome.subTitle,
+      buttonTxt: this.game.results.noOutcome && this.game.results.noOutcome.button,
       afterClosedCallBack: this,
       panelClass: 'custom-class'
     });

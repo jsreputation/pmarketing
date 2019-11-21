@@ -47,6 +47,10 @@
                 {
                   "replace": "src/index.html",
                   "with": "src/index.prod.html"
+                },
+                {
+                  "replace": "src/app/home/news-feed/news-feed.component.ts",
+                  "with": "src/app/home/news-feed/news-feed.component.prod.ts"
                 }
               ],
               "budgets": [

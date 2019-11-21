@@ -3,14 +3,14 @@
 </div>
 <div class="dashboard-explore-card-content">
   <h3 class="dashboard-explore-card-title">
-    {{gameCard.title}}
+    {{gameCard.title | translate}}
   </h3>
   <p class="dashboard-explore-card-description">
-    {{gameCard.description}}
+    {{gameCard.description | translate}}
   </p>
 </div>
 <div class="dashboard-explore-card-actions">
   <cl-button [classList]="'ph-0 tertiary'" (click)="clickToLink(gameCard.name)">
-    <span>{{gameCard.link}}</span>
+    <span>{{gameCard.link | translate}}</span>
   </cl-button>
 </div>

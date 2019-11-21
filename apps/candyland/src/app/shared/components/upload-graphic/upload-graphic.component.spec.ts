@@ -3,6 +3,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {UploadGraphicComponent} from './upload-graphic.component';
 import {MatIconModule} from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DownloadButtonComponent', () => {
   let component: UploadGraphicComponent;
@@ -12,7 +13,8 @@ describe('DownloadButtonComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         MatIconModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [ UploadGraphicComponent ]
     })

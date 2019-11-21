@@ -1,0 +1,52 @@
+@import '../../styles/variables';
+
+.status-label {
+  @include typo-caption;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  min-width: 5.7rem;
+  width: fit-content;
+  border-radius: 1.35rem;
+  padding: 0 1.3rem;
+  box-sizing: border-box;
+  color: rgba($color: $white, $alpha: 0.9);
+}
+
+.active {
+  background-color: $green;
+}
+
+.inactive {
+  background-color: $disable-color;
+}
+
+.draft {
+  background-color: #8576ed;
+}
+
+.scheduled {
+  background-color: $primary-color;
+}
+
+.pending {
+  background-color: $pending-color;
+}
+
+.paused {
+  background-color: $disable-color;
+}
+
+.ended {
+  background-color: $disable-color;
+}
+
+.processed {
+  background-color: $success-color;
+}
+
+.failed {
+  background-color: $warning-color;
+}

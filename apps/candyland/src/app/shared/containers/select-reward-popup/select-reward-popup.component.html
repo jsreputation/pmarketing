@@ -1,6 +1,8 @@
 <aside class="dialog" role="dialog" aria-labelledby="dialogTitle-selectRewards">
   <header class="dialog-header-wrap">
-    <h2 class="dialog-title" id="dialogTitle-selectRewards">Select Rewards</h2>
+    <h2 class="dialog-title" id="dialogTitle-selectRewards">
+      {{'CAMPAIGN.' | translate}}
+    </h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
@@ -11,7 +13,7 @@
         <!--filters-->
         <cl-table-filters [dataSource]="dataSource" classList="block">
           <ng-container *clTableFilter="'name'; let filter">
-            <cl-search-filter class="search-block" [control]="filter" placeholder="Search for rewards"></cl-search-filter>
+            <cl-search-filter class="search-block" [control]="filter" [placeholder]="'CAMPAIGN.SEARCH_FOR_REWARDS' | translate"></cl-search-filter>
           </ng-container>
         </cl-table-filters>
         <!--table-->
@@ -37,14 +39,16 @@
               class="actions-close"
               (click)="close()"
               [disableRipple]="true">
-      <span>Cancel</span>
+      <span>{{'BTN_CANCEL' | translate}}</span>
     </cl-button>
 
     <cl-button [classList]="'primary'"
               (click)="add()"
               [disable]="!selectedReward"
               [disableRipple]="true">
-      <span>Add Reward</span>
+      <span>
+        {{'CAMPAIGN.ADD_REWARD' | translate}}
+      </span>
     </cl-button>
   </footer>
   <!--</mat-dialog-actions>-->

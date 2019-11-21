@@ -1,11 +1,11 @@
 <section [formGroup]="formGeneral">
   <mat-card class="card-fieldset">
     <h2 class="card-fieldset-title sub-title">
-      Time zone
+      {{'SETTINGS_FEATURE.TIME_ZONE' | translate}}
     </h2>
     <div class="control-input">
       <mat-form-field class="game-stamp-select">
-        <mat-label>Select Time Zone</mat-label>
+        <mat-label>{{'SETTINGS_FEATURE.SELECT_TIME_ZONE' | translate}}</mat-label>
         <mat-select formControlName="time_zone">
           <mat-option *ngFor="let zone of timeZones$ | async" [value]="zone.id">
             ({{zone.zone}}) {{zone.country}}
@@ -16,11 +16,11 @@
   </mat-card>
   <mat-card class="card-fieldset">
     <h2 class="card-fieldset-title sub-title">
-      Currency
+      {{'SETTINGS_FEATURE.CURRENCY' | translate}}
     </h2>
     <div class="control-input">
       <mat-form-field class="game-stamp-select">
-        <mat-label>Select Currency</mat-label>
+        <mat-label>{{'SETTINGS_FEATURE.SELECT_CURRENCY' | translate}}</mat-label>
         <mat-select formControlName="currency">
           <mat-option *ngFor="let currency of currency$ | async" [value]="currency.currency">
             {{currency.country + ' ' + currency.currency}}
