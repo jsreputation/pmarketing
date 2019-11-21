@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, AbstractControl, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material';
-
+import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap, takeUntil } from 'rxjs/operators';
 import { RewardsService, MerchantsService } from '@cl-core/services';
@@ -173,18 +172,13 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.route.paramMap.pipe(
       map((params: ParamMap) => params.get('id')),
       tap(id => this.id = id),
-      switchMap((id: string) => {
-        if (id) {
-          return this.rewardsService.getRewardToForm(id);
-        }
-        return of(null);
-      }),
+      switchMap((id: string) => id ? this.rewardsService.getRewardToForm(id) : of(null)),
       takeUntil(this.destroy$),
     )
       .subscribe(
-        (reward: IRewardEntityForm) => {
+        (reward: IRewardEntityForm | undefined) => {
           // handle the loyalties to patch form
-          this.getRewardLoyaltyData$.next(reward.loyalties);
+          this.getRewardLoyaltyData$.next(reward ? reward.loyalties : null);
 
           this.reward = reward;
           const patchData = reward || this.newRewardFormService.getDefaultValue();
