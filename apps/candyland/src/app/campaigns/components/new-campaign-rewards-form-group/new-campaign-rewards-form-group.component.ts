@@ -1,3 +1,4 @@
+import { VouchersService } from '@cl-core/services/vouchers.service';
 import {
   Component,
   OnInit,
@@ -70,6 +71,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     private fb: FormBuilder,
     private store: CampaignCreationStoreService,
     private rewardsService: RewardsService,
+    private voucherService: VouchersService
   ) {
   }
 
@@ -133,10 +135,12 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       }
       return data.lootBoxId === this.slotNumber;
     }).filter(data => data.resultId)
-      .map(data => this.rewardsService.getReward(data.resultId).pipe(
-        map(reward => ({ ...reward, probability: data.probability, outcomeId: data.id })),
-        catchError(() => of(null))
-      ));
+      .map(data =>
+        combineLatest(this.rewardsService.getReward(data.resultId), this.voucherService.getAvailableCodesCount(data.resultId)).pipe(
+          map(([reward, count]: [IRewardEntity, number]) =>
+            ({ ...reward, count, probability: data.probability, outcomeId: data.id, limit: data.limit })),
+          catchError(() => of(null))
+        ));
     combineLatest(...possibleOutcomes).subscribe(
       (rewards: Partial<IRewardEntity>[]) => {
         rewards.filter(data => data).map((reward: IRewardEntity) => this.addReward(reward));
@@ -188,7 +192,8 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       value: value && [value] || [{ ...this.noOutCome }],
       probability: {
         value: value ? value.probability || 0 : this.noOutCome && this.noOutCome.probability || 0, disabled: !isEnableProbability
-      }
+      },
+      limit: value.limit || 0
     });
   }
 

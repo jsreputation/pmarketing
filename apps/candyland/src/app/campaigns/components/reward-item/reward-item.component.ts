@@ -9,7 +9,8 @@ import { AbstractControl, FormControl, FormGroup} from '@angular/forms';
 export class RewardItemComponent implements OnInit {
   @Input() public group: FormGroup = new FormGroup({
     value: new FormControl(null),
-    probability: new FormControl({value: 0, disabled: true})
+    probability: new FormControl({value: 0, disabled: true}),
+    limit: new FormControl({value: 0})
   });
   @Output() private clickDelete: EventEmitter<any> = new EventEmitter<any>();
 
@@ -19,6 +20,14 @@ export class RewardItemComponent implements OnInit {
 
   public get probability(): AbstractControl {
     return this.group.get('probability');
+  }
+
+  public get limit(): AbstractControl {
+    return this.group.get('limit');
+  }
+
+  public get availabelCodeCount(): AbstractControl {
+    return this.group.value.count;
   }
 
   public get isInvalid(): boolean {
