@@ -138,11 +138,7 @@ export class WhistlerGameService implements IGameService {
     if (this.cache[engagementId]) {
       return of(this.cache[engagementId]);
     }
-    let campaignIdParams = '';
-    if (campaignId) {
-      campaignIdParams = `?campaign_id=${campaignId}`;
-    }
-
+    const campaignIdParams: string = campaignId ? `?campaign_id=${campaignId}` : '';
     return this.http.get<IJsonApiItemPayload<IWGameEngagementAttributes>>(`${this.hostName}/game/engagements/${engagementId}${campaignIdParams}`)
       .pipe(
         map(res => res.data),
