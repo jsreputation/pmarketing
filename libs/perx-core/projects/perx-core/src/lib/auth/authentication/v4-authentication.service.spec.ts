@@ -402,7 +402,7 @@ describe('V4AuthenticationService', () => {
     })));
   it('should  getUserId', fakeAsync(inject([V4AuthenticationService, TokenStorage],
     (auth: V4AuthenticationService, storage: TokenStorage) => {
-      const spy = spyOn(storage, 'getAppInfoProperty')
+      const spy = spyOn(storage, 'getAppInfoProperty');
       spy.and.returnValue('30');
       expect(auth.getUserId()).toBe(30);
       spy.and.returnValue(undefined);
@@ -417,7 +417,7 @@ describe('V4AuthenticationService', () => {
   it('mergeUserById', fakeAsync(inject([V4AuthenticationService],
     (auth: V4AuthenticationService) => {
       const spyObject = {
-        err() { }
+        err(): void { }
       };
       const spy = spyOn(spyObject, 'err');
       auth.mergeUserById([1], 1).subscribe(() => { }, spyObject.err);

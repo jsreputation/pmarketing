@@ -62,16 +62,16 @@ describe('V4ConfigService', () => {
     expect(val.id).toBe(convertObject.id);
   });
 
-  it('getTenantAppSettings', fakeAsync(inject([V4ConfigService, AuthenticationService, HttpClient], 
-    (config: V4ConfigService, auth: AuthenticationService, http: HttpClient)=>{
+  it('getTenantAppSettings', fakeAsync(inject([V4ConfigService, AuthenticationService, HttpClient],
+    (config: V4ConfigService, auth: AuthenticationService, http: HttpClient) => {
       const spyHttpGet = spyOn(http, 'get');
-      spyHttpGet.and.returnValue(of({ apiHost: '11'} as IConfig));
-      config.readAppConfig().subscribe(()=>{});
+      spyHttpGet.and.returnValue(of({ apiHost: '11' } as IConfig));
+      config.readAppConfig().subscribe(() => { });
       tick();
       const spy = spyOn(V4ConfigService, 'v4MicrositeSettingsToMicrositeSettings');
       spyOn(auth, 'getAppToken').and.returnValue(of({} as IWAppAccessTokenResponse));
       spyHttpGet.and.returnValue(of({}));
-      config.getTenantAppSettings('key').subscribe(()=>{});
+      config.getTenantAppSettings('key').subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
     })));

@@ -31,22 +31,24 @@ describe('WhistlerCampaignService', () => {
   const now = new Date();
   const tomorrow = (new Date());
   tomorrow.setDate(now.getDate() + 1);
-  const campaingMock = {data:[{
-    id: '111',
-    type: 'test',
-    links: {
-      self: 'test'
-    }, attributes: {
-      start_date_time: null,
-      name: '',
-      engagement_type:
-        WEngagementType.games,
-      engagement_id: 1
+  const campaingMock = {
+    data: [{
+      id: '111',
+      type: 'test',
+      links: {
+        self: 'test'
+      }, attributes: {
+        start_date_time: null,
+        name: '',
+        engagement_type:
+          WEngagementType.games,
+        engagement_id: 1
+      }
+    }], meta: {
+      page_count: 3
     }
-  }], meta: {
-    page_count: 3
-  } }
-  
+  };
+
   const mockCampaign: IJsonApiItem<IWCampaignAttributes> = {
     id: '2',
     type: '',
@@ -182,7 +184,7 @@ describe('WhistlerCampaignService', () => {
 
   it('startsAfter handle null values', fakeAsync(inject([WhistlerCampaignService, HttpClient],
     (campaign: WhistlerCampaignService, http: HttpClient) => {
-      const spy = spyOn(http, 'get').and.returnValue(of(campaingMock))
+      const spy = spyOn(http, 'get').and.returnValue(of(campaingMock));
       campaign.getCampaigns().subscribe(() => { });
       // second call for write value to cashe
       campaign.getCampaigns().subscribe(() => { });

@@ -182,25 +182,25 @@ describe('WhistlerAuthenticationService', () => {
       expect(setAppInfoProperty).toHaveBeenCalledWith('pi', 'pi');
     }));
 
-  it('should  get anonymous', fakeAsync(inject([WhistlerAuthenticationService, TokenStorage], 
-    (auth: WhistlerAuthenticationService, storage: TokenStorage) => { 
+  it('should  get anonymous', fakeAsync(inject([WhistlerAuthenticationService, TokenStorage],
+    (auth: WhistlerAuthenticationService, storage: TokenStorage) => {
       spyOn(storage, 'getAppInfoProperty').and.returnValue('true');
       expect(auth.getAnonymous()).toBeTruthy();
-  })));
+    })));
 
-  it('should  getUserId', fakeAsync(inject([WhistlerAuthenticationService, TokenStorage], 
-    (auth: WhistlerAuthenticationService, storage: TokenStorage) => { 
-      const spy = spyOn(storage, 'getAppInfoProperty')
+  it('should  getUserId', fakeAsync(inject([WhistlerAuthenticationService, TokenStorage],
+    (auth: WhistlerAuthenticationService, storage: TokenStorage) => {
+      const spy = spyOn(storage, 'getAppInfoProperty');
       spy.and.returnValue('30');
       expect(auth.getUserId()).toBe(30);
       spy.and.returnValue(undefined);
       expect(auth.getUserId()).toBe(null);
-  })));
+    })));
 
-  it('mergeUserById', fakeAsync(inject([WhistlerAuthenticationService, HttpClient], 
-    (auth: WhistlerAuthenticationService, http: HttpClient)=>{
+  it('mergeUserById', fakeAsync(inject([WhistlerAuthenticationService, HttpClient],
+    (auth: WhistlerAuthenticationService, http: HttpClient) => {
       const spy = spyOn(http, 'post').and.returnValue(of());
-      auth.mergeUserById([1],2);
+      auth.mergeUserById([1], 2);
       tick();
       expect(spy).toHaveBeenCalled();
     })));
