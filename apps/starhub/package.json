@@ -6,6 +6,7 @@
     "start": "PREAUTH=true npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
     "build:starhub:prod": "PRODUCTION=true npm run config && ng build --prod",
+    "build:starhub:staging": "PRODUCTION=true npm run config && ng build --configuration staging",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "clean": "rm -rf ./dist ./node_modules",
     "test": "ng test",
