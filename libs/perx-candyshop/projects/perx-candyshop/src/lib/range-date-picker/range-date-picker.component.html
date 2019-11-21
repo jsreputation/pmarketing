@@ -1,12 +1,14 @@
-<mat-form-field appearance="outline">
+<mat-form-field [appearance]="appearance">
   <input matInput
-    aria-label="Choose a date"
-    placeholder="Choose a date"
-    [satDatepicker]="picker"
+         aria-label="Choose a date"
+         [class.disable]="disabledState"
+         [satDatepicker]="picker"
          [placeholder]="placeholder"
-    [formControl]="control">
+         [formControl]="control">
   <sat-datepicker #picker [rangeMode]="true"
-    orderPeriodLabel="month">
+                  orderPeriodLabel="month">
   </sat-datepicker>
-  <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+  <sat-datepicker-toggle matSuffix
+                         [class.disable]="disabledState"
+                         [for]="picker"></sat-datepicker-toggle>
 </mat-form-field>

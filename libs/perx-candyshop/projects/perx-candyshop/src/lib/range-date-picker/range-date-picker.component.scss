@@ -1,0 +1,21 @@
+.date-picker {
+
+  &.full-with {
+    width: 100%;
+    max-width: none;
+  }
+
+  &-toggle {
+    outline: none;
+    cursor: pointer;
+
+    &.disable {
+      cursor: default;
+    }
+  }
+
+  &-button {
+    height: 2.1rem !important;
+    width: 2.1rem !important;
+  }
+}

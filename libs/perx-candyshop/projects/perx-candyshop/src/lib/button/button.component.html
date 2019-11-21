@@ -6,5 +6,8 @@
         [attr.form]="formId"
         [disableRipple]="disableRipple"
 >
-  <ng-content></ng-content>
+  <ng-content select=".btn-cta-mobile-icon"></ng-content>
+  <div class="btn-content">
+    <ng-content></ng-content>
+  </div>
 </button>
