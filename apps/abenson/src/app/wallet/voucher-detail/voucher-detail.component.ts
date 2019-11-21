@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { IVoucherService, Voucher } from '@perx/core';
 import { filter, switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-voucher-detail',
@@ -23,7 +23,10 @@ export class VoucherDetailComponent implements OnInit {
       .pipe(
         filter((params: ParamMap) => params.has('id')),
         switchMap((params: ParamMap) => {
-          const id: string = params.get('id');
+          const id: string | null = params.get('id');
+          if (!id) {
+            return throwError({ message: 'voucher id is required' });
+          }
           const idN: number = Number.parseInt(id, 10);
           return this.vouchersService.get(idN);
         })

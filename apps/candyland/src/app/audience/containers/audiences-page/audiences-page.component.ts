@@ -96,17 +96,16 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   public changeList(tab: string): void {
+    this.searchKey = 'query';
     switch (tab) {
       case 'audience':
-        this.searchKey = 'id';
-
         this.audiencesDataSource = new CustomDataSource<IWAudiences>(this.audiencesService);
         const params: HttpParamsOptions = {include: 'users'};
         this.audiencesDataSource.params = params;
         break;
       case 'users':
       default:
-        this.searchKey = 'query';
+        // this.searchKey = 'query';
         this.dataSource = new CustomDataSource<IWUser>(this.audiencesUserService);
     }
     this.currentTab = tab;

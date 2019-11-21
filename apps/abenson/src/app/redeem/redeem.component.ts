@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Voucher, IVoucherService, RedemptionType, IPopupConfig, PopupComponent } from '@perx/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
@@ -13,7 +13,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 export class RedeemComponent implements OnInit {
   public voucher$: Observable<Voucher>;
   public voucherId: number;
-  public redemptionType: RedemptionType;
+  public redemptionType: RedemptionType | null | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,8 +27,11 @@ export class RedeemComponent implements OnInit {
       .pipe(
         filter((params: ParamMap) => params.has('id')),
         switchMap((params: ParamMap) => {
-          const id: string = params.get('id');
-          this.voucherId =  Number.parseInt(id, 10);
+          const id: string | null = params.get('id');
+          if (!id) {
+            return throwError({ message: 'voucherId is required' });
+          }
+          this.voucherId = Number.parseInt(id, 10);
           return this.vouchersService.get(this.voucherId);
         })
       );

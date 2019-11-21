@@ -30,7 +30,7 @@ export class ChangeBarangayComponent implements OnInit {
 
   public onSubmit(): void {
     this.customProperties = {
-      barangay: this.barangayChangeForm.get('newBarangay').value
+      barangay: this.barangayChangeForm.value.newBarangay
     };
 
     if (this.customProperties.barangay) {
