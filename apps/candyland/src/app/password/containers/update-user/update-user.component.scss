@@ -5,19 +5,20 @@
 .parent-container {
   display: flex;
   flex-direction: column;
-  padding: 0 2.5rem;
+  padding: 0 10vw;
   align-items: center;
+  width: 80vw;
   height: 100vh;
 
   .perx-logo {
-    margin-top: 7.7rem;
-    margin-left: 6.4rem;
-    align-self: flex-start;
+    position: absolute;
+    top: 2rem;
+    left: 4rem;
 
     img {
       width: 7.7rem;
       height: 3.7rem;
-      object-fit: contain;
+      object-fit: cover;
     }
   }
 
@@ -27,7 +28,7 @@
   }
 
   .inputs-related {
-    cl-button, cl-button ::ng-deep button, mat-form-field {
+    mat-form-field {
       width: 100%;
     }
   }
@@ -35,7 +36,7 @@
   .intro-pic {
     display: flex;
     justify-content: center;
-    margin: 0 auto;
+    margin: 5.7rem auto 0;
     max-width: 30rem;
     max-height: 30rem;
 
@@ -53,6 +54,8 @@
     justify-content: space-evenly;
 
     .back-to-login {
+      font-family: Roboto, serif;
+      line-height: 3;
       text-decoration: none;
       font-weight: 500;
       font-size: 1.4rem;

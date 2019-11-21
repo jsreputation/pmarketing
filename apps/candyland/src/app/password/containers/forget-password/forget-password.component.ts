@@ -1,15 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {Location} from '@angular/common';
+
+interface StateObjIntf  {
+  id: string;
+  user: string;
+  navigationId: number;
+}
 
 @Component({
   selector: 'perx-blackcomb-pages-forget-password',
   templateUrl: './forget-password.component.html',
   styleUrls: ['./forget-password.component.scss']
 })
-export class ForgetPasswordComponent implements OnInit {
+export class ForgetPasswordComponent implements AfterViewInit {
+  @ViewChild('accountid', {static: false})
+  public accountIdInput: ElementRef;
 
-  // constructor() { }
+  @ViewChild('username', {static: false})
+  public usernameInput: ElementRef;
 
-  public ngOnInit(): void {
+  constructor(private location: Location) { }
+
+  public ngAfterViewInit(): void {
+    const state = this.location.getState() as StateObjIntf;
+    this.accountIdInput.nativeElement.value = state.id || '';
+    this.usernameInput.nativeElement.value = state.user || '';
   }
 
 }
