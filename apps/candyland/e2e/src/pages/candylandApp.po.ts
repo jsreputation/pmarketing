@@ -735,7 +735,6 @@ export class ElementApp {
   public static matTabLabelContent(): ElementArrayFinder {
     return element.all(by.css('div.mat-tab-label-content'));
   }
-  
   public static inputArray(): ElementArrayFinder {
     return element.all(by.css('input'));
   }
