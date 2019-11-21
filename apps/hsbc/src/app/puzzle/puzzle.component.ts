@@ -146,7 +146,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       )
       .subscribe((card: IStampCard) => {
         if (!card || !card.campaignId) {
-          throw new Error(`card is required`);
+          throw new Error(`card or campaignId is required`);
         }
 
         this.fetchStampTransactionCount(card.campaignId);
@@ -154,13 +154,17 @@ export class PuzzleComponent implements OnInit, OnDestroy {
         this.card = card;
         this.cols = card.displayProperties.numberOfCols;
         this.rows = card.displayProperties.numberOfRows;
-        if (!this.cols || !this.rows || !card.displayProperties.cardImage) {
+        if (!this.cols || !this.rows) {
           throw new Error(`cols or rows is required`);
         }
 
         this.playedPieces = card.stamps ? card.stamps.filter(stamp => stamp.state === StampState.redeemed).length : 0;
         const availablePieces = card.stamps ? card.stamps.filter(stamp => stamp.state === StampState.issued).length : 0;
         this.availablePieces = Math.min(this.rows * this.cols - this.playedPieces, availablePieces);
+        if (!card.displayProperties.cardImage) {
+          throw new Error(`cardImage is required`);
+        }
+
         this.image = card.displayProperties.cardImage.value.imageUrl;
         if (this.availablePieces === 0 && card.state === StampCardState.inactive) {
           this.notificationService.addPopup({

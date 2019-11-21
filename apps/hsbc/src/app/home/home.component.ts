@@ -51,9 +51,6 @@ export class HomeComponent implements OnInit {
 
     this.activeRoute.queryParamMap.subscribe(ps => {
       const tab: string | null = ps.get('tab');
-      if (!tab) {
-        throw new Error(`tab is required`);
-      }
 
       if (tab === 'history') {
         this.selectedTab = 1;
@@ -76,8 +73,9 @@ export class HomeComponent implements OnInit {
           (campaigns: ICampaign[]) => from(campaigns).pipe(
             mergeMap((campaign: ICampaign) => this.fetchCard(campaign.id)),
             toArray(),
-            map((stampCards: IStampCard[]) => stampCards.filter(
-              card => card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === this.displayCampaignAs)),
+            map((stampCards: IStampCard[]) => stampCards.filter(card =>
+              card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === this.displayCampaignAs
+            )),
             map((cards: IStampCard[]) => cards[0])
           )
         ),
