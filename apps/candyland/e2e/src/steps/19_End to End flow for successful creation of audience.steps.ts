@@ -139,8 +139,8 @@ When(/^10_I select an option for the audience list$/, async () => {
     await browser.sleep(3000);
   } else {
     await browser.sleep(3000);
-    await browser.wait(ec.elementToBeClickable(AudienceAppPage.audienceCheckboxContainer().get(0)), 6000);
-    await AudienceAppPage.audienceCheckboxContainer().get(0).click();
+    await browser.wait(ec.elementToBeClickable(ElementApp.matCheckboxInnerContainer().get(0)), 6000);
+    await ElementApp.matCheckboxInnerContainer().get(0).click();
     await browser.sleep(3000);
   }
   // clicking on the save button
