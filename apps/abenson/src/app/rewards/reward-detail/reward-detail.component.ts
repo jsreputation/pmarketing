@@ -44,7 +44,8 @@ export class RewardDetailComponent implements OnInit {
       title: this.rewardData ? this.rewardData.name : '',
       requiredPoints: this.rewardData &&
         this.rewardData.rewardPrice &&
-        this.rewardData.rewardPrice.length > 0 ? this.rewardData.rewardPrice[0].points : 0
+        this.rewardData.rewardPrice.length > 0
+        &&  this.rewardData.rewardPrice[0].points ? this.rewardData.rewardPrice[0].points : 0
     };
     return this.dialog.open(RewardConfirmComponent, { width: '30rem', data }).afterClosed()
       .pipe(switchMap((result) => result ? this.exchangePoints() : of(null)))

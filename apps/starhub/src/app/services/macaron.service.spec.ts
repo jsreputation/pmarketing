@@ -29,10 +29,12 @@ describe('GameOutcomeService', () => {
       }
     };
     const macaron = macaronService.getMacaron(reward);
-    expect(macaron.label).toBe('Running out');
-    expect(macaron.class).toBe('running-out');
-    expect(macaron.rewardBalance).toBe(10);
-    expect(macaron.isButtonEnabled).toBe(true);
+    if (macaron) {
+      expect(macaron.label).toBe('Running out');
+      expect(macaron.class).toBe('running-out');
+      expect(macaron.rewardBalance).toBe(10);
+      expect(macaron.isButtonEnabled).toBe(true);
+    }
   }));
 
   it('should return fully redeemed macaron', inject([MacaronService], (macaronService: MacaronService) => {
@@ -53,9 +55,11 @@ describe('GameOutcomeService', () => {
       }
     };
     const macaron = macaronService.getMacaron(reward);
-    expect(macaron.label).toBe('Fully redeemed');
-    expect(macaron.class).toBe('fully-redeemed');
-    expect(macaron.isButtonEnabled).toBe(false);
+    if (macaron) {
+      expect(macaron.label).toBe('Fully redeemed');
+      expect(macaron.class).toBe('fully-redeemed');
+      expect(macaron.isButtonEnabled).toBe(false);
+    }
   }));
 
   it('should return Expiring Soon macaron', inject([MacaronService], (macaronService: MacaronService) => {
@@ -77,9 +81,11 @@ describe('GameOutcomeService', () => {
       }
     };
     const macaron = macaronService.getMacaron(reward);
-    expect(macaron.label).toBe('Expiring Soon');
-    expect(macaron.class).toBe('expiring');
-    expect(macaron.isButtonEnabled).toBe(true);
+    if (macaron) {
+      expect(macaron.label).toBe('Expiring Soon');
+      expect(macaron.class).toBe('expiring');
+      expect(macaron.isButtonEnabled).toBe(true);
+    }
   }));
 
   it('should return Expiring Soon macaron', inject([MacaronService], (macaronService: MacaronService) => {
@@ -102,9 +108,11 @@ describe('GameOutcomeService', () => {
       }
     };
     const macaron = macaronService.getMacaron(reward);
-    expect(macaron.label).toBe('Just added');
-    expect(macaron.class).toBe('just-added');
-    expect(macaron.isButtonEnabled).toBe(true);
+    if (macaron) {
+      expect(macaron.label).toBe('Just added');
+      expect(macaron.class).toBe('just-added');
+      expect(macaron.isButtonEnabled).toBe(true);
+    }
   }));
 
   it('should return Expiring Soon macaron', inject([MacaronService], (macaronService: MacaronService) => {
@@ -119,8 +127,10 @@ describe('GameOutcomeService', () => {
       endsAt: new Date(today.setHours(today.getHours() + 48))
     };
     const macaron = macaronService.getCampaignMacaron(campaign);
-    expect(macaron.label).toBe('Coming Soon');
-    expect(macaron.class).toBe('coming-soon');
-    expect(macaron.isButtonEnabled).toBe(false);
+    if (macaron) {
+      expect(macaron.label).toBe('Coming Soon');
+      expect(macaron.class).toBe('coming-soon');
+      expect(macaron.isButtonEnabled).toBe(false);
+    }
   }));
 });

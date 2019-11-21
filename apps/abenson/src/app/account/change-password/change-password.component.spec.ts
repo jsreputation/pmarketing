@@ -56,7 +56,7 @@ describe('ChangePasswordComponent', () => {
   });
 
   it('change password', fakeAsync(() => {
-    spyOn(auth, 'requestVerificationToken').and.returnValue(of(null));
+    spyOn(auth, 'requestVerificationToken').and.callThrough();
     const sharedSpy = spyOn(sharedData, 'addData');
     const routerSpy = spyOn(router, 'navigate');
     component.changePassword();

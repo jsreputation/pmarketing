@@ -17,7 +17,7 @@ export class EnterPinComponent implements OnInit, PageAppearence {
 
   public MAX_DIGITS_COUNT: number = 6;
   public pinMode: PinMode = PinMode.password;
-  private mobileNo: string = null;
+  private mobileNo?: string = undefined;
   public visibleNo: string = '';
 
   constructor(
@@ -26,15 +26,15 @@ export class EnterPinComponent implements OnInit, PageAppearence {
     private authService: AuthenticationService,
     private notificationService: NotificationService
   ) {
-      const currentNavigation = this.router.getCurrentNavigation();
-      if (!currentNavigation) {
-        return;
-      }
+    const currentNavigation = this.router.getCurrentNavigation();
+    if (!currentNavigation) {
+      return;
+    }
 
-      if (currentNavigation.extras.state) {
-        this.mobileNo = currentNavigation.extras.state.mobileNo;
-        this.visibleNo = this.encodeMobileNo(this.mobileNo);
-      }
+    if (currentNavigation.extras.state) {
+      this.mobileNo = currentNavigation.extras.state.mobileNo;
+      this.visibleNo = this.mobileNo ? this.encodeMobileNo(this.mobileNo) : '';
+    }
   }
 
   public getPageProperties(): PageProperties {
@@ -61,13 +61,13 @@ export class EnterPinComponent implements OnInit, PageAppearence {
   public ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       if (params.get('type') !== null) {
-          this.pinMode = params.get('type') as PinMode;
-        }
+        this.pinMode = params.get('type') as PinMode;
+      }
     });
   }
 
   public onPinEntered(enteredPin: string): void {
-    if (this.pinMode === PinMode.register) {
+    if (this.pinMode === PinMode.register && this.mobileNo) {
       this.authService.verifyOTP(this.mobileNo, enteredPin).subscribe(
         (response) => {
           this.notificationService.addSnack(response.message);
@@ -84,9 +84,12 @@ export class EnterPinComponent implements OnInit, PageAppearence {
   }
 
   public resendOtp(): void {
+    if (!this.mobileNo) {
+      return;
+    }
     if (this.pinMode === PinMode.password) {
       this.authService.forgotPassword(this.mobileNo).subscribe(
-        (res: {message: string}) => {
+        (res: { message: string }) => {
           this.notificationService.addSnack(res.message);
         },
         err => {
