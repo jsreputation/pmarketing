@@ -4,6 +4,7 @@ import { QuestionCountryCodeFieldComponent } from './question-country-code-field
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { SurveyService } from '@cl-core/services';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('QuestionCountryCodeFieldComponent', () => {
   let component: QuestionCountryCodeFieldComponent;
@@ -17,6 +18,7 @@ describe('QuestionCountryCodeFieldComponent', () => {
         MatSelectModule,
         MatFormFieldModule,
         MatInputModule,
+        TranslateModule.forRoot()
       ],
       declarations: [ QuestionCountryCodeFieldComponent ],
       providers: [

@@ -10,7 +10,7 @@ import {
   IWMessageResponse,
   IWAppAccessTokenResponse
 } from '@perx/whistler';
-import { IProfile, IProfileAttributes } from '../../profile/profile.model';
+import { IProfile } from '../../profile/profile.model';
 import { AuthService } from 'ngx-auth';
 
 export abstract class AuthenticationService implements AuthService {
@@ -51,7 +51,7 @@ export abstract class AuthenticationService implements AuthService {
 
   public abstract autoLogin(): Observable<any>;
 
-  public abstract createUserAndAutoLogin(pi: string, userObj?: IProfileAttributes, anonymous?: boolean): Observable<any>;
+  public abstract createUserAndAutoLogin(pi: string, userObj?: { [key: string]: any }, anonymous?: boolean): Observable<any>;
 
   /**
    * This is important, for those public pages, API require app level access token in request header

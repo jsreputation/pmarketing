@@ -18,6 +18,7 @@ import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 
 import { SelectRewardPopupComponent } from './select-reward-popup.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SelectRewardPopupComponent', () => {
   let component: SelectRewardPopupComponent;
@@ -38,6 +39,7 @@ describe('SelectRewardPopupComponent', () => {
         TableFiltersModule,
         HttpClientTestingModule,
         BrowserAnimationsModule,
+        TranslateModule.forRoot(),
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },

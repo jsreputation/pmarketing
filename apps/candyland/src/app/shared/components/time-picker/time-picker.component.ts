@@ -29,7 +29,7 @@ import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 })
 export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() public control: AbstractControl = new FormControl(null, []);
-  @Input() public placeholder: string = 'Time';
+  @Input() public placeholder: string = 'TIME';
 
   @Input() set disabled(value: boolean) {
     this.setDisabledState(value);

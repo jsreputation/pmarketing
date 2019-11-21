@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { MacaronService } from './macaron.service';
-import { IReward } from '@perx/core';
+import { IReward, CampaignType, CampaignState, ICampaign } from '@perx/core';
 
 describe('GameOutcomeService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -29,10 +29,12 @@ describe('GameOutcomeService', () => {
       }
     };
     const macaron = macaronService.getMacaron(reward);
-    expect(macaron.label).toBe('Running out');
-    expect(macaron.class).toBe('running-out');
-    expect(macaron.rewardBalance).toBe(10);
-    expect(macaron.isButtonEnabled).toBe(true);
+    if (macaron) {
+      expect(macaron.label).toBe('Running out');
+      expect(macaron.class).toBe('running-out');
+      expect(macaron.rewardBalance).toBe(10);
+      expect(macaron.isButtonEnabled).toBe(true);
+    }
   }));
 
   it('should return fully redeemed macaron', inject([MacaronService], (macaronService: MacaronService) => {
@@ -53,9 +55,11 @@ describe('GameOutcomeService', () => {
       }
     };
     const macaron = macaronService.getMacaron(reward);
-    expect(macaron.label).toBe('Fully redeemed');
-    expect(macaron.class).toBe('fully-redeemed');
-    expect(macaron.isButtonEnabled).toBe(false);
+    if (macaron) {
+      expect(macaron.label).toBe('Fully redeemed');
+      expect(macaron.class).toBe('fully-redeemed');
+      expect(macaron.isButtonEnabled).toBe(false);
+    }
   }));
 
   it('should return Expiring Soon macaron', inject([MacaronService], (macaronService: MacaronService) => {
@@ -77,9 +81,11 @@ describe('GameOutcomeService', () => {
       }
     };
     const macaron = macaronService.getMacaron(reward);
-    expect(macaron.label).toBe('Expiring Soon');
-    expect(macaron.class).toBe('expiring');
-    expect(macaron.isButtonEnabled).toBe(true);
+    if (macaron) {
+      expect(macaron.label).toBe('Expiring Soon');
+      expect(macaron.class).toBe('expiring');
+      expect(macaron.isButtonEnabled).toBe(true);
+    }
   }));
 
   it('should return Expiring Soon macaron', inject([MacaronService], (macaronService: MacaronService) => {
@@ -102,9 +108,29 @@ describe('GameOutcomeService', () => {
       }
     };
     const macaron = macaronService.getMacaron(reward);
-    console.log(macaron);
-    expect(macaron.label).toBe('Just added');
-    expect(macaron.class).toBe('just-added');
-    expect(macaron.isButtonEnabled).toBe(true);
+    if (macaron) {
+      expect(macaron.label).toBe('Just added');
+      expect(macaron.class).toBe('just-added');
+      expect(macaron.isButtonEnabled).toBe(true);
+    }
+  }));
+
+  it('should return Expiring Soon macaron', inject([MacaronService], (macaronService: MacaronService) => {
+    const today = new Date();
+    const campaign: ICampaign = {
+      id: 1,
+      name: 'Reward Test',
+      description: 'Reward Description',
+      type: CampaignType.game,
+      state: CampaignState.active,
+      beginsAt: new Date(today.setHours(today.getHours() + 12)),
+      endsAt: new Date(today.setHours(today.getHours() + 48))
+    };
+    const macaron = macaronService.getCampaignMacaron(campaign);
+    if (macaron) {
+      expect(macaron.label).toBe('Coming Soon');
+      expect(macaron.class).toBe('coming-soon');
+      expect(macaron.isButtonEnabled).toBe(false);
+    }
   }));
 });

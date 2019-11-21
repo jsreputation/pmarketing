@@ -24,8 +24,14 @@ describe('GameOutcomeService', () => {
   }));
 
   it('should get gameOutcome', inject([GameOutcomeService], (gameOutcome: GameOutcomeService) => {
+    const outcomeObject = {
+      title: 'title test',
+      subTitle: 'subtitle test',
+      button: 'button test',
+    };
+    gameOutcome.setOutcome(outcomeObject);
     const outcome = gameOutcome.getOutcome();
-    expect(outcome).toBe(undefined);
+    expect(outcome).toBe(outcomeObject);
   }));
 
   it('should set gameOutcome', inject([GameOutcomeService], (gameOutcome: GameOutcomeService) => {

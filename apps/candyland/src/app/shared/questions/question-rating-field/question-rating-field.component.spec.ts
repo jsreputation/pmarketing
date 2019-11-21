@@ -4,6 +4,7 @@ import { QuestionRatingFieldComponent } from './question-rating-field.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('QuestionRatingFieldComponent', () => {
   let component: QuestionRatingFieldComponent;
@@ -19,6 +20,7 @@ describe('QuestionRatingFieldComponent', () => {
         MatSelectModule,
         MatFormFieldModule,
         MatInputModule,
+        TranslateModule.forRoot()
       ],
       declarations: [ QuestionRatingFieldComponent ]
     })

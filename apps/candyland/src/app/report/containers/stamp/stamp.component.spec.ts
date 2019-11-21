@@ -7,6 +7,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { StampsService } from '@cl-core-services';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('StampComponent', () => {
   let component: StampComponent;
@@ -28,6 +29,7 @@ describe('StampComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
+        TranslateModule.forRoot(),
       ]
     })
     .compileComponents();

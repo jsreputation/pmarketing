@@ -12,6 +12,8 @@ interface IPayloadGroup {
 })
 
 export class GroupComponent implements OnChanges {
+  @Input()
+  public hideIndex: boolean = false;
 
   @Input()
   public id: number;
@@ -65,4 +67,9 @@ export class GroupComponent implements OnChanges {
     const totalPoint = pointsTrackerValues.reduce((sum, point) => sum + point, 0);
     return totalPoint / subQuestionLength;
   }
+
+  public getCharCode(i: number): string {
+    return String.fromCharCode(97 + i);
+  }
+
 }

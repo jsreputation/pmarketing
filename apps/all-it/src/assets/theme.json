@@ -16,6 +16,7 @@
       "showHomePage": true,
       "showHistoryPage": false,
       "showNewsfeedOnHomepage": true,
-      "showQrPageSubtitle": true
+      "showQrPageSubtitle": true,
+      "showExpiryOnRewardDetail": false
     }
 }

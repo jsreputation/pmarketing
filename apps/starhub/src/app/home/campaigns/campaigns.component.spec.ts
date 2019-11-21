@@ -3,13 +3,17 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { CampaignsComponent } from './campaigns.component';
 import { MatCardModule, MatIconModule } from '@angular/material';
 import { of } from 'rxjs';
-import { ICampaignService, CampaignType, CampaignState, IGameService } from '@perx/core';
+import { ICampaignService, CampaignType, CampaignState, IGameService, ICampaign, IGame, GameType } from '@perx/core';
 import { Type } from '@angular/core';
 import { game } from '../../game.mock';
+import { IMacaron, MacaronService } from 'src/app/services/macaron.service';
 
 describe('CampaignsComponent', () => {
   let component: CampaignsComponent;
   let fixture: ComponentFixture<CampaignsComponent>;
+  let campaigndService: ICampaignService;
+  let gameService: IGameService;
+  let macaronService: MacaronService;
   const campaignServiceStub = {
     getCampaigns: () => of([])
   };
@@ -20,7 +24,7 @@ describe('CampaignsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CampaignsComponent ],
+      declarations: [CampaignsComponent],
       imports: [
         MatCardModule,
         MatIconModule
@@ -30,11 +34,14 @@ describe('CampaignsComponent', () => {
         { provide: IGameService, useValue: gameServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CampaignsComponent);
+    campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
+    gameService = TestBed.get<IGameService>(IGameService as Type<IGameService>);
+    macaronService = TestBed.get<MacaronService>(MacaronService as Type<MacaronService>);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -45,14 +52,14 @@ describe('CampaignsComponent', () => {
 
   describe('ngOnInit', () => {
     it('should get all campaigns on init', fakeAsync(() => {
-      const campaigns = [
+      const campaigns: ICampaign[] = [
         {
           id: 1,
           name: 'abc',
           description: 'abc',
           type: CampaignType.game,
           state: CampaignState.active,
-          endsAt: undefined,
+          endsAt: null,
           rewards: [],
           thumbnailUrl: '',
         },
@@ -62,7 +69,7 @@ describe('CampaignsComponent', () => {
           description: 'abc',
           type: CampaignType.give_reward,
           state: CampaignState.active,
-          endsAt: undefined,
+          endsAt: null,
           rewards: [
             {
               id: 1,
@@ -71,7 +78,7 @@ describe('CampaignsComponent', () => {
               subtitle: '',
               validFrom: new Date(),
               validTo: new Date(),
-              sellingFrom: null,
+              sellingFrom: undefined,
               rewardThumbnail: '',
               rewardBanner: '',
               merchantImg: '',
@@ -82,13 +89,12 @@ describe('CampaignsComponent', () => {
               termsAndConditions: '',
               howToRedeem: '',
               categoryTags: [],
-              inventory: null,
+              inventory: undefined,
             }
           ],
           thumbnailUrl: '',
         }
       ];
-      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
       const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
       component.ngOnInit();
       tick();
@@ -97,55 +103,69 @@ describe('CampaignsComponent', () => {
       expect(component.campaigns).toEqual([campaigns[0]]);
     }));
   });
-
-  it('should getCampaignMacaron', () => {
-    const campaignMacaron = component.getCampaignMacaron({
-      id: 1,
-      name: 'abc',
-      description: 'abc',
-      type: CampaignType.game,
-      state: CampaignState.active,
-      endsAt: undefined,
-      rewards: [],
-      thumbnailUrl: '',
-      isComingSoon: true
-    });
-    expect(campaignMacaron).toEqual({label: 'Coming Soon', class: 'coming-soon', isButtonEnabled: false});
-  });
-
-  describe('selected', () => {
-    it('should emit hasExpired with value true', () => {
-      const campaign = {
+  it('should handle ngOnInit with games', fakeAsync(() => {
+    const campaigns: ICampaign[] = [
+      {
         id: 1,
         name: 'abc',
         description: 'abc',
         type: CampaignType.game,
         state: CampaignState.active,
-        endsAt: undefined,
+        endsAt: null,
         rewards: [],
         thumbnailUrl: '',
-      };
-      component.games = game;
-      spyOn(component.tapped, 'emit');
-      component.selected(campaign);
-      expect(component.tapped.emit).toHaveBeenCalledWith(1);
-    });
+      }
+    ];
+    const games: IGame[] = [
+      {
+        id: 1,
+        campaignId: 1,
+        type: GameType.pinata,
+        remainingNumberOfTries: 1,
+        config: null,
+        texts: {
+          title: 'test'
+        },
+        results: {}
+      }
+    ];
+    spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
+    spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of(games));
+    component.ngOnInit();
+    tick();
+  }));
 
-    it('should not emit', () => {
-      const campaign = {
-        id: 2,
-        name: 'abc',
-        description: 'abc',
-        type: CampaignType.game,
-        state: CampaignState.active,
-        endsAt: undefined,
-        rewards: [],
-        thumbnailUrl: '',
-      };
-      component.games = game;
-      spyOn(component.tapped, 'emit');
-      component.selected(campaign);
-      expect(component.tapped.emit).not.toHaveBeenCalled();
-    });
+  it('should emit hasExpired with value true', () => {
+    const campaign: ICampaign = {
+      id: 1,
+      name: 'abc',
+      description: 'abc',
+      type: CampaignType.game,
+      state: CampaignState.active,
+      endsAt: null,
+      rewards: [],
+      thumbnailUrl: '',
+    };
+    component.games = [];
+    component.selected(campaign);
+
+    component.games = game;
+    spyOn(component.tapped, 'emit');
+    component.selected(campaign);
+    expect(component.tapped.emit).toHaveBeenCalledWith(1);
   });
+
+  it('getCampaignMacaron', fakeAsync(() => {
+    const macron: IMacaron = { label: 'test', isButtonEnabled: false, class: 'test' };
+    spyOn(macaronService, 'getCampaignMacaron').and.returnValue(macron);
+    const result = component.getCampaignMacaron({
+      id: 1,
+      name: 'test',
+      description: 'test',
+      type: CampaignType.game,
+      state: CampaignState.draft,
+      endsAt: new Date()
+    });
+    expect(result).toEqual(macron);
+  }));
 });

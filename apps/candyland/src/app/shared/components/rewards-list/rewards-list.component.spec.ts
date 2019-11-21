@@ -14,6 +14,7 @@ import { of } from 'rxjs';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RewardsListComponent', () => {
   let component: RewardsListComponent;
@@ -32,6 +33,7 @@ describe('RewardsListComponent', () => {
         ProgressBarModule,
         RouterTestingModule,
         BrowserAnimationsModule,
+        TranslateModule.forRoot()
       ],
       schemas: [NO_ERRORS_SCHEMA],
     })

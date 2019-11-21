@@ -95,13 +95,13 @@ describe('CategoryComponent', () => {
       rewardThumbnail: '',
       rewardBanner: '',
       merchantImg: '',
-      rewardPrice: null,
+      rewardPrice: undefined,
       merchantId: 1,
       merchantName: '',
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      categoryTags: null,
+      categoryTags: undefined,
     };
 
     const router = TestBed.get<Router>(Router as Type<Router>);

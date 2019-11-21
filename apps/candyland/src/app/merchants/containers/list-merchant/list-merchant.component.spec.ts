@@ -9,38 +9,45 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableFiltersModule } from '@cl-shared';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialogRef, MatDialogModule } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ListMerchantComponent', () => {
-    let component: ListMerchantComponent;
-    let fixture: ComponentFixture<ListMerchantComponent>;
+  let component: ListMerchantComponent;
+  let fixture: ComponentFixture<ListMerchantComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule,
-                BrowserDynamicTestingModule,
-                FormsModule,
-                ReactiveFormsModule,
-                TableFiltersModule,
-                HttpClientTestingModule,
-                MatDialogModule
-            ],
-            providers: [
-                { provide: MatDialogRef, useValue: { close: () => {} } }
-            ],
-            declarations: [ListMerchantComponent],
-            schemas: [ NO_ERRORS_SCHEMA ]
-        })
-            .compileComponents();
-    }));
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+        imports: [
+          RouterTestingModule,
+          BrowserDynamicTestingModule,
+          FormsModule,
+          ReactiveFormsModule,
+          TableFiltersModule,
+          HttpClientTestingModule,
+          MatDialogModule,
+          TranslateModule.forRoot()
+        ],
+        providers: [
+          {
+            provide: MatDialogRef, useValue: {
+              close: () => {
+              }
+            }
+          }
+        ],
+        declarations: [ListMerchantComponent],
+        schemas: [NO_ERRORS_SCHEMA]
+      })
+      .compileComponents();
+  }));
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(ListMerchantComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ListMerchantComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -4,6 +4,7 @@ import { SidenavMenuComponent } from './sidenav-menu.component';
 import { SidenaveMenuItemComponent } from './sidenave-menu-item/sidenave-menu-item.component';
 import { MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { RouterModule } from '@angular/router';
     MatButtonModule,
     MatIconModule,
     MatListModule,
+    TranslateModule,
   ]
 })
 export class SidenavMenuModule { }
