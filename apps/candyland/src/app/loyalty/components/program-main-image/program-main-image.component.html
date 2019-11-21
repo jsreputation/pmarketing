@@ -1,16 +1,16 @@
 <mat-expansion-panel class="card" expanded>
   <mat-expansion-panel-header class="card-header">
     <h2 class="card-title">
-      Upload Image
+      {{'LOYALTY_FEATURE.UPLOAD_IMAGE' | translate}}
     </h2>
   </mat-expansion-panel-header>
 
   <div class="card-content" [formGroup]="group">
     <p class="upload-img-title">
-      Loyalty Program Main Image
+      {{'LOYALTY_FEATURE.LOYALTY_PROGRAM_MAIN_IMAGE' | translate}}
     </p>
     <cl-upload-graphic [formControl]="imageUrl"
-                       [btnLabel]="'Upload photo'"
+                       [btnLabel]="'LOYALTY_FEATURE.UPLOAD_PHOTO' | translate"
                        [isRequired]="imageUrl.hasError('required') && imageUrl.touched"
     ></cl-upload-graphic>
   </div>

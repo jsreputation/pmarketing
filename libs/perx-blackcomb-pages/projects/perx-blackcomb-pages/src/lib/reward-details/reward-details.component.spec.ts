@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardDetailsComponent } from './reward-details.component';
-import { RewardsModule, RewardsService, VouchersModule, IVoucherService, LoyaltyService, ILoyalty } from '@perx/core';
+import { RewardsModule, RewardsService, VouchersModule, IVoucherService, LoyaltyService, ILoyalty, ThemesService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
@@ -13,8 +13,8 @@ describe('RewardComponent', () => {
   let component: RewardDetailsComponent;
   let fixture: ComponentFixture<RewardDetailsComponent>;
 
-  const vouchersServiceStub = {
-    issueReward: () => of({})
+  const vouchersServiceStub: Partial<IVoucherService>  = {
+    issueReward: () => of()
   };
 
   const rewardsServiceStub: Partial<RewardsService> = {
@@ -24,6 +24,10 @@ describe('RewardComponent', () => {
   const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalties: (): Observable<ILoyalty[]> => of([]),
     getLoyalty: (): Observable<ILoyalty> => of()
+  }
+
+  const themeServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
   };
 
   beforeEach(async(() => {
@@ -44,7 +48,8 @@ describe('RewardComponent', () => {
         },
         { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
-        { provide: LoyaltyService, useValue: loyaltyServiceStub }
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: ThemesService, useValue: themeServiceStub }
       ]
     })
       .compileComponents();

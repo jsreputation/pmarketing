@@ -1,4 +1,6 @@
 import * as moment from 'moment';
+import * as striptags from 'striptags';
+
 import { IWRewardEntityAttributes } from '@perx/whistler';
 
 export class RewardHttpAdapter {
@@ -110,7 +112,7 @@ export class RewardHttpAdapter {
         category: data.rewardInfo.category,
         redemption_type: data.rewardInfo.redemptionType,
         cost_of_reward: data.rewardInfo.cost,
-        description: data.rewardInfo.description,
+        description: striptags(data.rewardInfo.description),
         terms_conditions: data.rewardInfo.termsAndCondition,
         tags: data.rewardInfo.tags || [],
         organization_id: data.rewardInfo.merchantId,

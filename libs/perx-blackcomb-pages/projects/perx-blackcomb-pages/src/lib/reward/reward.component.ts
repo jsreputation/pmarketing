@@ -9,12 +9,11 @@ import {
   IEngagementTransaction,
   RewardsService,
   AuthenticationService,
-  PopupComponent
+  NotificationService
 } from '@perx/core';
 import { map, switchMap, catchError, tap, takeUntil, mergeMap, } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';
-import { MatDialog } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -53,7 +52,7 @@ export class RewardComponent implements OnInit, OnDestroy {
     private outcomeService: InstantOutcomeService,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog,
+    private notificationService: NotificationService,
     private auth: AuthenticationService,
     private translate: TranslateService,
     private rewardService: RewardsService
@@ -173,7 +172,7 @@ export class RewardComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate(['/wallet']);
       if (this.popupData) {
-        this.dialog.open(PopupComponent, { data: this.popupData });
+        this.notificationService.addPopup(this.popupData);
       }
     }
   }

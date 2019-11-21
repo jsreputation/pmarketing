@@ -7,7 +7,9 @@ import {
   LoyaltyService,
   ILoyalty,
   NotificationService,
-  PopupComponent
+  PopupComponent,
+  ThemesService,
+  ITheme
 } from '@perx/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap, takeUntil, tap, last } from 'rxjs/operators';
@@ -29,6 +31,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public buttonLabel: string = 'Redeem';
   public rewardData: IReward;
   private loyalty: ILoyalty;
+  public theme: ITheme;
 
   private initTranslate(): void {
     this.translate.get('REDEEM').subscribe((text) => this.buttonLabel = text);
@@ -55,10 +58,15 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private notificationService: NotificationService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private themesService: ThemesService
   ) { }
 
   public ngOnInit(): void {
+    this.themesService.getThemeSetting().subscribe(
+      theme => this.theme = theme
+    );
+
     this.initTranslate();
     this.loyaltyService.getLoyalties().pipe(
       map(loyalties => loyalties[0])

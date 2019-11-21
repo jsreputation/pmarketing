@@ -59,7 +59,7 @@ describe('ChangeEmailComponent', () => {
   });
 
   it('should submit data', fakeAsync(() => {
-    spyOn(profileService, 'updateUserInfo').and.returnValue(of(null));
+    spyOn(profileService, 'updateUserInfo').and.callThrough();
     const routerSpy = spyOn(router, 'navigate');
     component.onSubmit();
     tick();

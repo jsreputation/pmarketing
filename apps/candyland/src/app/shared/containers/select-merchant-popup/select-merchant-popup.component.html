@@ -1,6 +1,6 @@
 <aside class="dialog" role="dialog" aria-labelledby="dialogTitle-selectMerchant">
   <header class="dialog-header-wrap">
-    <h2 class="dialog-title" id="dialogTitle-selectMerchant">Select Merchant</h2>
+    <h2 class="dialog-title" id="dialogTitle-selectMerchant" translate>EXISTING_MERCHANT_POPUP.SELECT_MERCHANT</h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
       <mat-icon>close</mat-icon>
     </button>
@@ -12,7 +12,7 @@
         <cl-table-filters [dataSource]="dataSource" classList="block">
           <ng-container *clTableFilter="'name'; let filter">
             <cl-search-filter class="search-block" [control]="filter"
-                              placeholder="Search for merchants"></cl-search-filter>
+                              [placeholder]="'EXISTING_MERCHANT_POPUP.SEARCH_FOR_MERCHANTS' | translate"></cl-search-filter>
           </ng-container>
         </cl-table-filters>
         <!--table-->
@@ -42,8 +42,8 @@
               (click)="close()"
               [disableRipple]="true"
     >
-        <span>
-          Cancel
+        <span translate>
+          BTN_CANCEL
         </span>
     </cl-button>
 
@@ -52,8 +52,8 @@
               (click)="add()"
               [disableRipple]="true"
     >
-        <span>
-          Add Merchant
+        <span translate>
+          BTN_ADD_MERCHANT
         </span>
     </cl-button>
   </footer>

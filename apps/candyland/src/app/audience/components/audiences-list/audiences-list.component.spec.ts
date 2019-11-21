@@ -4,6 +4,7 @@ import {
 } from '@angular/material';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { AudiencesListComponent } from './audiences-list.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AudiencesListComponent', () => {
   let component: AudiencesListComponent;
@@ -14,6 +15,7 @@ describe('AudiencesListComponent', () => {
       imports: [
         MatTableModule,
         StatusLabelModule,
+        TranslateModule.forRoot(),
       ],
       providers: [],
       declarations: [

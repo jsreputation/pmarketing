@@ -13,8 +13,7 @@ import {
 } from '@angular/forms';
 
 import { Subject, iif, of } from 'rxjs';
-import { Config, AuthenticationService, PopupComponent, IPopupConfig, InstantOutcomeService, IGameService } from '@perx/core';
-import { MatDialog } from '@angular/material';
+import { Config, AuthenticationService, IPopupConfig, InstantOutcomeService, IGameService, NotificationService } from '@perx/core';
 import { switchMap, takeUntil, catchError, tap } from 'rxjs/operators';
 
 @Component({
@@ -41,13 +40,13 @@ export class PIComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private config: Config,
-    private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
     private gameService: IGameService,
     private instantOutcomeService: InstantOutcomeService,
     private translate: TranslateService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private notificationService: NotificationService
   ) {
     this.preAuth = this.config.preAuth || false;
   }
@@ -132,7 +131,7 @@ export class PIComponent implements OnInit, OnDestroy {
         () => {
           this.router.navigate(['/wallet']);
           if (this.popupData) {
-            this.dialog.open(PopupComponent, { data: this.popupData });
+            this.notificationService.addPopup(this.popupData);
           }
         },
         (error: Error) => this.updateErrorMessage(error.message)

@@ -20,6 +20,7 @@ import { GameModule } from '@perx/core';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 import { ConfirmModalModule } from '@cl-shared';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NewPinataPageComponent', () => {
   let component: NewPinataPageComponent;
@@ -45,6 +46,7 @@ describe('NewPinataPageComponent', () => {
         HttpClientTestingModule,
         MatDialogModule,
         ConfirmModalModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [ NewPinataPageComponent ],
       providers: [

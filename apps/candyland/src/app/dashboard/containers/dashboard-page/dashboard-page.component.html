@@ -1,21 +1,21 @@
 <header class="page-header full-with">
-  <h1 class="title">Dashboard</h1>
+  <h1 class="title" translate>PAGE_NAME</h1>
 </header>
 <section class="content">
   <div class="dashboard-welcome">
     <h1 class="title">
-      Welcome to Perx, {{userName$ | async}}
+      {{'TITLE' | translate}} {{userName$ | async}}
     </h1>
-    <p class="lead">
-      Here is an overview of what’s going on with your active campaigns to help you get things done today.
+    <p class="lead" translate>
+      DESCRIPTION
     </p>
   </div>
-  <h2 class="dashboard-title">Explore Perx</h2>
+  <h2 class="dashboard-title" translate>SECTION_EXPLORE</h2>
   <div class="dashboard-explore-cards">
     <cl-dashboard-game-card *ngFor="let gameCard of gameCard$ | async" [gameCard]="gameCard" class="game-card">
     </cl-dashboard-game-card>
   </div>
-  <h2 class="dashboard-title">Business Insight</h2>
+  <h2 class="dashboard-title" translate>SECTION_BUSINESS</h2>
   <section class="dashboard-insights-card">
     <div class="dashboard-insights-card-header">
       <nav mat-tab-nav-bar>
@@ -25,7 +25,7 @@
            routerLinkActive #rla="routerLinkActive"
            [routerLinkActiveOptions]="{exact: true}"
            [active]="rla.isActive">
-          {{link.label}}
+          {{link.label | translate}}
         </a>
       </nav>
       <cl-range-date-picker-filter [control]="dateRange"></cl-range-date-picker-filter>

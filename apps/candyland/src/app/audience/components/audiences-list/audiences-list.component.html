@@ -2,7 +2,7 @@
   <table class="table" mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="name" sticky>
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="name" class="column-featured">List Name</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="name" class="column-featured">{{'AUDIENCE_FEATURE.LIST_NAME'| translate}}</th>
       <td mat-cell *matCellDef="let element" class="column-featured">
         <span>{{element?.name}}</span>
       </td>
@@ -14,19 +14,19 @@
     </ng-container>
 
     <ng-container matColumnDef="updated">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="updated_at">Last Updated</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="updated_at">{{'AUDIENCE_FEATURE.LAST_UPDATED' | translate}}</th>
       <td mat-cell *matCellDef="let element">
         {{element?.updated_at | date: DATE_FORMAT}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="numberUsers">
-      <th mat-header-cell *matHeaderCellDef>No. of users</th>
+      <th mat-header-cell *matHeaderCellDef>{{'AUDIENCE_FEATURE.NO_OF_USERS' | translate}}</th>
       <td mat-cell *matCellDef="let element"> {{ element?.users?.length || '-' }}</td>
     </ng-container>
 
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef class="column-status">Status</th>
+      <th mat-header-cell *matHeaderCellDef class="column-status">{{'AUDIENCE_FEATURE.STATUS' | translate}}</th>
       <td mat-cell *matCellDef="let element" class="column-status">
         <cl-status-label [status]="element?.status"></cl-status-label>
       </td>
@@ -36,4 +36,3 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   </div>
-  

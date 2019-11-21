@@ -41,7 +41,7 @@ export class VouchersComponent implements OnInit {
     this.redeemedVouchers = feed
       .pipe(
         map((vouchers: Voucher[]) => vouchers.filter(voucher => voucher.state !== VoucherState.issued)),
-        map((vouchers: Voucher[]) => vouchers.filter(voucher => this.daysSince(voucher.redemptionDate)))
+        map((vouchers: Voucher[]) => vouchers.filter(voucher => voucher.redemptionDate && this.daysSince(voucher.redemptionDate)))
       );
   }
 
@@ -53,7 +53,7 @@ export class VouchersComponent implements OnInit {
     this.hideSeeMore = true;
   }
 
-  private getDifferenceWithCurrentInDays(inputDate: Date): number {
+  private getDifferenceWithCurrentInDays(inputDate: Date | null): number {
     if (!inputDate) {
       // TODO: not sure about vouchers with null expiry
       return 0;

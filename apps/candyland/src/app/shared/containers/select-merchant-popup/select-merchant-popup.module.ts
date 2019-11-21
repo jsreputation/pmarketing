@@ -17,6 +17,7 @@ import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
     TableFiltersModule,
     SearchFilterModule,
     PaginationModule,
-    ListMerchantViewModule
+    ListMerchantViewModule,
+    TranslateModule,
   ]
 })
 export class SelectMerchantPopupModule { }
