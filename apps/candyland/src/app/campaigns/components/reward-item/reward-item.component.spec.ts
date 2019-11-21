@@ -6,7 +6,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
-fdescribe('RewardItemComponent', () => {
+describe('RewardItemComponent', () => {
   let component: RewardItemComponent;
   let fixture: ComponentFixture<RewardItemComponent>;
   let group: FormGroup;
