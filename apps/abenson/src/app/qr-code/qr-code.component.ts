@@ -27,7 +27,7 @@ import {
 export class QRCodeComponent implements OnInit {
   public voucherId: number;
   public voucherState: VoucherState;
-  public code: string;
+  public code?: string;
   constructor(
     private route: ActivatedRoute,
     private notification: NotificationService,
@@ -43,21 +43,21 @@ export class QRCodeComponent implements OnInit {
         this.code = voucher.code;
       }),
       flatMap(() => this.vouchersService.stateChangedForVoucher(this.voucherId))).subscribe((val) =>
-      this.successRedeemed(val)
-    , (err) => {
-      if (err && err.error) {
-        this.notification.addSnack(err.error.message);
-      } else {
-        this.notification.addSnack('Oops, something went wrong');
-      }
-    });
+        this.successRedeemed(val)
+        , (err) => {
+          if (err && err.error) {
+            this.notification.addSnack(err.error.message);
+          } else {
+            this.notification.addSnack('Oops, something went wrong');
+          }
+        });
   }
 
   public successRedeemed(voucher: Voucher): void {
     if (voucher.state === VoucherState.redeemed && this.voucherState === VoucherState.issued) {
       this.notification.addPopup({
         title: 'Successfully Redeemed!',
-        text: `You have redeemed ${voucher.reward.name}.`,
+        text: `You have redeemed ${voucher.reward ? voucher.reward.name : ''}.`,
         buttonTxt: 'Back to rewards',
         imageUrl: 'assets/img/success_redeem.png',
       });

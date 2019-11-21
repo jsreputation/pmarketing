@@ -27,9 +27,9 @@ const transaction: ITransaction = {
   id: 0,
   points: -11,
   earnedDate: new Date().toString(),
-  pointsBalance: null,
+  pointsBalance: 1,
   currencyBalance: 50,
-  properties: null
+  properties: {}
 };
 
 describe('CardComponent', () => {
@@ -85,7 +85,7 @@ describe('CardComponent', () => {
   });
 
   it('should change tab, trigger onscroll', () => {
-    const spy = spyOn(loyaltyService, 'getTransactions').and.returnValue(of(null));
+    const spy = spyOn(loyaltyService, 'getTransactions').and.returnValue(of());
     component.transactionsEnded = false;
     component.tabChanged({ index: 1 } as MatTabChangeEvent);
     component.onScroll();

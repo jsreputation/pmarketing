@@ -12,9 +12,9 @@ export class TransactionHistoryPipe implements PipeTransform {
 
     return allTransanctions.pipe(
       map((transactions: ITransactionHistory[]) => transactions.filter((transaction: ITransactionHistory) => {
-        return isPurchase ?
+        return transaction.transactionDetails ? isPurchase ?
           (transaction.transactionDetails.type === TransactionDetailType.transaction) :
-          (transaction.transactionDetails.type === TransactionDetailType.reward);
+          (transaction.transactionDetails.type === TransactionDetailType.reward) : null;
       }))
     );
   }

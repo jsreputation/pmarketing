@@ -11,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
-  public errorMessage: string;
+  public errorMessage?: string;
   public preAuth: boolean;
 
   constructor(
@@ -34,9 +34,9 @@ export class LoginComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const username = (this.loginForm.get('mobileNumber').value as string);
-    const password: string = this.loginForm.get('pinCode').value;
-    this.errorMessage = null;
+    const username = this.loginForm.value.mobileNumber as string;
+    const password: string = this.loginForm.value.pinCode;
+    this.errorMessage = undefined;
 
     this.authService.login(username, password).subscribe(
       () => {

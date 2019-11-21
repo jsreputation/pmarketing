@@ -39,7 +39,7 @@ describe('UserInfoComponent', () => {
         { provide: Router, useValue: routerStub },
         {
           provide: ProfileService,
-          useValue: {setCustomProperties: () => of()}
+          useValue: {setCustomProperties: () => of(null)}
         }
       ]
     })
@@ -59,7 +59,7 @@ describe('UserInfoComponent', () => {
   it('should navigate to home once user info is set', fakeAsync(() => {
     const profileService: ProfileService = fixture.debugElement.injector.get<ProfileService>(ProfileService as Type<ProfileService>);
 
-    const profileServiceSpy = spyOn(profileService, 'setCustomProperties').and.returnValue(of(null));
+    const profileServiceSpy = spyOn(profileService, 'setCustomProperties').and.callThrough();
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     const routerSpy = spyOn(routerStub, 'navigateByUrl').and.stub();
 
@@ -73,6 +73,6 @@ describe('UserInfoComponent', () => {
   it('should update diabetes condition', () => {
 
     component.diabetesConditionUpdated(true);
-    expect(component.surveyForm.get('diabetes').value).toBe('diabetes');
+    expect(component.surveyForm.value.diabetes).toBe('diabetes');
   });
 });
