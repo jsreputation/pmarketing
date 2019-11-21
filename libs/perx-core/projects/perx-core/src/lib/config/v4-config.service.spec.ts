@@ -1,9 +1,12 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { V4ConfigService } from './v4-config.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AuthenticationService } from '../auth/authentication/authentication.service';
 import { Type } from '@angular/core';
 import { of } from 'rxjs';
+import { IWAppAccessTokenResponse } from '@perx/whistler';
+import { HttpClient } from '@angular/common/http';
+import { IConfig } from './models/config.model';
 
 const authenticationServiceStub = {
   getAppToken: () => of()
@@ -58,4 +61,18 @@ describe('V4ConfigService', () => {
     const val = V4ConfigService.v4MicrositeSettingsToMicrositeSettings(convertObject);
     expect(val.id).toBe(convertObject.id);
   });
+
+  it('getTenantAppSettings', fakeAsync(inject([V4ConfigService, AuthenticationService, HttpClient], 
+    (config: V4ConfigService, auth: AuthenticationService, http: HttpClient)=>{
+      const spyHttpGet = spyOn(http, 'get');
+      spyHttpGet.and.returnValue(of({ apiHost: '11'} as IConfig));
+      config.readAppConfig().subscribe(()=>{});
+      tick();
+      const spy = spyOn(V4ConfigService, 'v4MicrositeSettingsToMicrositeSettings');
+      spyOn(auth, 'getAppToken').and.returnValue(of({} as IWAppAccessTokenResponse));
+      spyHttpGet.and.returnValue(of({}));
+      config.getTenantAppSettings('key').subscribe(()=>{});
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })));
 });
