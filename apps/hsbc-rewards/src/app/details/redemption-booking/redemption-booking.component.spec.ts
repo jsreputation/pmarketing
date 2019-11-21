@@ -32,7 +32,7 @@ describe('RedemptionBookingComponent', () => {
   const locationsServiceStub = {};
 
   const loyaltyServiceStub = {
-    getLoyalty: (): Observable<ILoyalty> => of(null),
+    getLoyalty: (): Observable<ILoyalty> => of({} as ILoyalty),
     getLoyalties: (): Observable<ILoyalty[]> => of([])
   };
   const mockReward: IReward = {
