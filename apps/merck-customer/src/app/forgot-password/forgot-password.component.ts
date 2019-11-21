@@ -27,10 +27,10 @@ export class ForgotPasswordComponent implements PageAppearence {
   private initForm(): void {
 
     let receivedMobileNo = '';
-    if (this.router.getCurrentNavigation() !== null
-      && this.router.getCurrentNavigation().extras.hasOwnProperty('state')) {
-      receivedMobileNo = this.router.getCurrentNavigation().extras.state.mobileNo;
-      this.selectedCountry = this.router.getCurrentNavigation().extras.state.country;
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation !== null && navigation.extras.state) {
+      receivedMobileNo = navigation.extras.state.mobileNo;
+      this.selectedCountry = navigation.extras.state.country;
     }
     this.resetPasswordForm = this.fb.group({
       mobileNo: [receivedMobileNo, Validators.required],
@@ -48,8 +48,8 @@ export class ForgotPasswordComponent implements PageAppearence {
   }
 
   public onSubmit(): void {
-    const mobileNumber = (this.resetPasswordForm.get('mobileNo').value as string);
-    const countryCode = (this.resetPasswordForm.get('countryCode').value as string);
+    const mobileNumber = (this.resetPasswordForm.value.mobileNo as string);
+    const countryCode = (this.resetPasswordForm.value.countryCode as string);
     const codeAndMobile = countryCode + mobileNumber;
     const cleanedMobileNo = codeAndMobile.replace(/[^0-9]/g, ''); // remove non numeric and special characters
 

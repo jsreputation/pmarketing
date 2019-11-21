@@ -42,7 +42,7 @@ export class ChangeStreetAddressComponent implements OnInit {
 
   public onSubmit(): void {
     this.customProperties = {
-      addr1: this.streetAddressChangeForm.get('newStreetAddress').value
+      addr1: this.streetAddressChangeForm.value.newStreetAddress
     };
 
     if (this.customProperties.addr1) {

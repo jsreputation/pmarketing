@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TabItemViewComponent } from './tab-item-view.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TabItemViewComponent', () => {
     let component: TabItemViewComponent;
@@ -8,7 +9,10 @@ describe('TabItemViewComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [TabItemViewComponent]
+            declarations: [TabItemViewComponent],
+          imports: [
+            TranslateModule.forRoot(),
+          ]
         })
             .compileComponents();
     }));

@@ -65,7 +65,7 @@ describe('FindPharmacyComponent', () => {
     }
   ];
   const tagsStub = ['Drug', 'Medical Supply'];
-  const merchants: Observable<IMerchant[]> = null;
+  const merchants: Observable<IMerchant[]> = of([]);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

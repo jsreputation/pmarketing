@@ -26,7 +26,7 @@ export class RedemptionComponent implements OnInit {
   public showEnterPinComponent: boolean = false;
   public isPinEntered: boolean = false;
   public isPinCorrect: boolean;
-  public macaron: IMacaron;
+  public macaron: IMacaron | null;
   @ViewChild('pinInput', { static: false })
   private pinInputComponent: PinInputComponent;
 
@@ -49,10 +49,11 @@ export class RedemptionComponent implements OnInit {
         switchMap((id: number) => this.vouchersService.get(id)),
         tap((voucher: Voucher) => {
           this.voucher = voucher;
-          const categories: ICategoryTags[] = voucher.reward.categoryTags;
-          const category: string = categories && categories.length > 0 ? categories[0].title : undefined;
+          const categories: ICategoryTags[] = voucher.reward && voucher.reward.categoryTags ? voucher.reward.categoryTags : [];
+          const category: string | undefined = categories && categories.length > 0 ? categories[0].title : undefined;
           if (category !== undefined) {
-            const pageName: string = `rewards:vouchers:redemption:${category}:${voucher.reward.name}`;
+            const pageName: string = `rewards:vouchers:redemption:${category}:
+            ${voucher.reward && voucher.reward.name ? voucher.reward.name : ''}`;
             this.analytics.addEvent({
               pageName,
               pageType: PageType.detailPage,

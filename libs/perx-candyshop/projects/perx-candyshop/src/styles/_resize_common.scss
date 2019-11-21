@@ -1,0 +1,36 @@
+@import "./variables";
+
+//spacings
+.card-fieldset,
+.dialog-actions {
+  padding-top: ($vertical-padding * 0.625) !important;
+}
+
+.card-fieldset,
+.card-content,
+.dialog-actions {
+  padding-bottom: ($vertical-padding * 0.625) !important;
+}
+
+.card-fieldset,
+.card-header,
+.card-content,
+.dialog .mat-tab-header,
+.dialog-header-wrap,
+.dialog-content,
+.dialog-actions {
+  padding-left: ($horizontal-padding * 0.75) !important;
+  padding-right: ($horizontal-padding * 0.75) !important;
+
+  @media (max-width: $mobile-width) {
+    padding-left: ($horizontal-padding * 0.5) !important;
+    padding-right: ($horizontal-padding * 0.5) !important;
+  }
+}
+
+@media (max-width: $mobile-width) {
+  .mat-dialog-content {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+}

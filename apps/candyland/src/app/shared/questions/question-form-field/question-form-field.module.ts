@@ -18,6 +18,7 @@ import {
   QuestionMultipleChoiceFieldModule
 } from '@cl-shared/questions/question-multiple-choice-field/question-multiple-choice-field.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatInputModule,
     MatSlideToggleModule,
     DragDropModule,
+    TranslateModule,
   ],
   providers: [
     QuestionFormFieldService

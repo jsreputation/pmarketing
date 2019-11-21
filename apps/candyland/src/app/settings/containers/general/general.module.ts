@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { GeneralComponent } from './general.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule, MatSelectModule } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [GeneralComponent],
@@ -12,7 +13,8 @@ import { MatCardModule, MatSelectModule } from '@angular/material';
     ReactiveFormsModule,
 
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    TranslateModule,
   ]
 })
 export class GeneralModule { }

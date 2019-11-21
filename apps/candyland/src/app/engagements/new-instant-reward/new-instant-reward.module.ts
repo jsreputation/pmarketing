@@ -24,6 +24,7 @@ import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view
 import { ConfirmModalModule } from '@cl-shared';
 import { NewInstantRewardManagePageComponent } from './containers/new-instant-reward-manage-page/new-instant-reward-manage-page.component';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { DirectivesModule } from '@cl-shared/directives/directives.module';
     MatRadioModule,
     ConfirmModalModule,
     DirectivesModule,
+    TranslateModule,
   ]
 })
 export class NewInstantRewardModule {

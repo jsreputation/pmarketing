@@ -1,16 +1,16 @@
-import { Directive, Input } from '@angular/core';
+import {
+  Directive,
+  ViewContainerRef,
+} from '@angular/core';
 
 @Directive({
   selector: '[clInkHost]'
 })
 export class InkHostDirective {
-  @Input() public set clInkHost(host: any) {
-    this.host = host;
+  constructor(private viewContainerRef: ViewContainerRef) {
   }
 
-  private host: any;
-
   public getHost(): any {
-    return this.host;
+    return (this.viewContainerRef as any)._data.componentView.component || null;
   }
 }
