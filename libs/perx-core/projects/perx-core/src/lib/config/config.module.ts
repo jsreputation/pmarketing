@@ -8,7 +8,7 @@ import { AuthenticationService } from '../auth/authentication/authentication.ser
 
 export function configServiceFactory(http: HttpClient, config: Config, authenticationService: AuthenticationService): ConfigService {
   if (config.isWhistler) {
-    return new WhistlerConfigService( http );
+    return new WhistlerConfigService( http, config );
   }
   return new V4ConfigService(http, authenticationService);
 }

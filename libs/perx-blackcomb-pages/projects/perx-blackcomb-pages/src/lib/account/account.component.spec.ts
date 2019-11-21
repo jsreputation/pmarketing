@@ -18,7 +18,7 @@ import {
   AuthenticationService,
   ProfileModule,
   ProfileService,
-  ThemesService,
+  ConfigService,
   ConfigModule,
   IProfile,
   PagesObject,
@@ -47,7 +47,7 @@ describe('AccountComponent', () => {
   const profileServiceStub: Partial<ProfileService> = {
     whoAmI: (): Observable<IProfile> => of(profile)
   };
-  const themeServiceStub: Partial<ThemesService> = {
+  const configServiceStub: Partial<ConfigService> = {
     getAccountSettings: (): Observable<PagesObject> => of(pagesObject)
   };
   const authenticationServiceStub: Partial<AuthenticationService> = {
@@ -65,7 +65,7 @@ describe('AccountComponent', () => {
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
-        { provide: ThemesService, useValue: themeServiceStub },
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub }
       ]
     })
