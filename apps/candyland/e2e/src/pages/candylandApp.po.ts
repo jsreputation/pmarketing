@@ -294,7 +294,6 @@ export class CreateSurveyAppPage {
     return element.all(by.css('cl-button')).get(2);
   }
 
-
 }
 
 export class CreateHitThePinataAppPage {
@@ -360,7 +359,6 @@ export class RewardAppPage {
  public filterItems(): ElementFinder {
     return element(by.className('name-cell__link'));
  }
-
 
 }
 
@@ -442,10 +440,6 @@ export class CreateRewardAppPage {
   public closeButton(): ElementFinder {
     return element.all(by.css('cl-button')).get(0);
   }
-
-    return browser.get('rewards/new-reward') as Promise<string> ;
-  }
-
 
 }
 
