@@ -13,7 +13,7 @@ import {
 } from '@perx/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap, takeUntil, tap, last } from 'rxjs/operators';
-import { Observable, Subject, of, combineLatest } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 

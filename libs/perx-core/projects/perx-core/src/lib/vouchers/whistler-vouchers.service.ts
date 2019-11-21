@@ -69,12 +69,12 @@ export class WhistlerVouchersService implements IVoucherService {
   private static PurchaseToVoucher(purchaseData: IJsonApiItem<IWPurchaseAttributes>): IJsonApiItem<IWAssignedAttributes> {
     const voucherData = purchaseData.attributes.voucher;
     return {
-      id: voucherData.id.toString(),
+      id: voucherData.id ? voucherData.id.toString() : '',
       type: 'vouchers',
       attributes: {
+        ...voucherData,
         source_id: purchaseData.attributes.reward_entity_id,
-        source_type: 'Perx::Reward::Entity',
-        ...voucherData
+        source_type: 'Perx::Reward::Entity'
       }
     };
   }
