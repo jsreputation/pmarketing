@@ -64,6 +64,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTenants();
     this.initForm();
+    this.store.currentCampaign$.subscribe(console.log);
     this.form.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
@@ -231,7 +232,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private updateOutcomeWhenEdit(
     campaign: ICampaign,
-    data: { value: IRewardEntity, probability: number }[],
+    data: { value: IRewardEntity, probability: number, limit: number }[],
     enableProbability: boolean,
     slotNumber?: number
   ): Observable<any>[] {

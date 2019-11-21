@@ -138,7 +138,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       .map(data =>
         combineLatest(this.rewardsService.getReward(data.resultId), this.voucherService.getAvailableCodesCount(data.resultId)).pipe(
           map(([reward, count]: [IRewardEntity, number]) =>
-            ({ ...reward, count, probability: data.probability, outcomeId: data.id, limit: data.limit })),
+            ({ ...reward, count: count || 0, probability: data.probability, outcomeId: data.id, limit: data.limit })),
           catchError(() => of(null))
         ));
     combineLatest(...possibleOutcomes).subscribe(
