@@ -7,7 +7,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 import { MatDialogModule, MatButtonModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
 describe('RewardComponent', () => {
   let component: RewardDetailsComponent;
@@ -43,9 +42,6 @@ describe('RewardComponent', () => {
         TranslateModule.forRoot(),
       ],
       providers: [
-        {
-          provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ id: '1' })) }
-        },
         { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
