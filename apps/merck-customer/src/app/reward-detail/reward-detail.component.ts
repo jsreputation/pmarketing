@@ -15,15 +15,16 @@ export class RewardDetailComponent implements OnInit, PageAppearence {
   public rewardId: number;
 
   constructor(
-              private router: Router,
-              private route: ActivatedRoute,
-              private rewardService: RewardsService
-              ) {}
+    private router: Router,
+    private route: ActivatedRoute,
+    private rewardService: RewardsService
+  ) { }
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      if (params.get('rewardId')) {
-        this.rewardId = +params.get('rewardId');
+      const stringId: string | null = params.get('rewardId');
+      if (stringId) {
+        this.rewardId = parseInt(stringId, 10);
         this.getReward();
       }
     });

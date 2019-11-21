@@ -3,32 +3,32 @@ import {
   MatIconModule,
   MatToolbarModule,
 } from '@angular/material';
-import { GameModule, IGameService, GameType, NotificationService, IPlayOutcome } from '@perx/core';
+import { GameModule, IGameService, GameType, NotificationService, IPlayOutcome, IGame } from '@perx/core';
 import { GameComponent } from './game.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';
 // import 'jasmine'
-const mockGame = {
+const mockGame: IGame = {
   id: 1,
   campaignId: 1,
   type: GameType.pinata,
   remainingNumberOfTries: 3,
   config: {
-    stillImg: null,
-    breakingImg: null,
-    brokenImg: null,
+    stillImg: '',
+    breakingImg: '',
+    brokenImg: '',
     nbTaps: 3,
   },
-  backgroundImg: null,
+  backgroundImg: undefined,
   texts: {
-    title: null,
-    subTitle: null,
-    button: null,
+    title: undefined,
+    subTitle: undefined,
+    button: undefined,
   },
   results: {
-    outcome: null,
+    outcome: undefined,
     noOutcome: {
       title: 'test',
       subTitle: 'test',
@@ -127,7 +127,7 @@ describe('GameComponent', () => {
 
   it('should handle gameComplited', fakeAsync(() => {
     component.game = mockGame;
-    spyOn(gameService, 'play').and.returnValue(of({vouchers: []} as IPlayOutcome));
+    spyOn(gameService, 'play').and.returnValue(of({vouchers: [], rawPayload: {}} as IPlayOutcome));
     const spyComponent = spyOn(notificationService, 'addPopup');
     component.gameCompleted();
     tick();
