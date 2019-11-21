@@ -7,6 +7,6 @@ export const campaigns: ICampaign[] = [
     description: null,
     type: CampaignType.game,
     state: CampaignState.active,
-    endsAt: undefined
+    endsAt: null
   }
 ];

@@ -76,7 +76,7 @@ describe('NewsFeedComponent', () => {
     });
 
     it('should update newsAfterScroll to [] on updateScrollIndex', () => {
-      component.items = null;
+      component.items = [];
       component.updateScrollIndex(0);
       expect(component.newsAfterScroll).toEqual([]);
     });
