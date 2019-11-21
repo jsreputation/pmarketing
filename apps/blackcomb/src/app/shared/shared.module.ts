@@ -9,7 +9,6 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatProgressSpinnerModule,
-  MatDialogModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 const modules = [
@@ -22,7 +21,6 @@ const modules = [
   MatFormFieldModule,
   MatInputModule,
   MatProgressSpinnerModule,
-  MatDialogModule,
   FormsModule,
   ReactiveFormsModule
 ];

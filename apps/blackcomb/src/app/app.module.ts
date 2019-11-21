@@ -17,6 +17,7 @@ import {
   LanguageService,
   TokenStorage,
   ConfigService,
+  PopupComponent,
 } from '@perx/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -96,5 +97,8 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     { provide: LOCALE_ID, useValue: environment.defaultLang },
     { provide: ErrorHandler, useClass: SentryErrorHandler }
   ],
+  entryComponents: [
+    PopupComponent
+  ]
 })
 export class AppModule { }
