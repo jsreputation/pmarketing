@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { MatDatepicker } from '@angular/material';
+import { MatDatepicker } from '@angular/material/datepicker';
 import { IAnswer, IDateRange } from '../../models/survey.model';
 
 interface IPayloadDate {

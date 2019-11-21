@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class NoRenewaleInNamePipe implements PipeTransform {
     public transform(name: string | null): string {
         if (name === null) {
-            return name;
+            return '';
         }
         return name.toLowerCase().endsWith('(renewal)') ? name.substring(0, name.length - ' (Renewal)'.length) : name;
     }
