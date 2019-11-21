@@ -12,8 +12,8 @@ export class RewardsSortPipe implements PipeTransform {
     return allrewards.pipe(
       map(rewards => rewards.sort((a, b) => {
         if (mode === SortingMode.latest) {
-          const dateTimeFirst = new Date(a.validFrom).getTime();
-          const dateTimeSecond = new Date(b.validFrom).getTime();
+          const dateTimeFirst = a.validFrom ? new Date(a.validFrom).getTime() : 0;
+          const dateTimeSecond = b.validFrom ? new Date(b.validFrom).getTime() : 0;
           return (dateTimeSecond - dateTimeFirst);
         }
         if (mode === SortingMode.ending_soon) {
