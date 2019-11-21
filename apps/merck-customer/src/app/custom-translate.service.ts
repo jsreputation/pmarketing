@@ -28,7 +28,7 @@ export class PerxTranslateLoader extends TranslateLoader {
       }
     });
   }
-  public getTranslation(lang: string): Observable<IDictionary> {
+  public getTranslation(lang: string): Observable<IDictionary | null> {
     const apiAddress = `${this.hostUrl}lang?default=${lang}`;
     return this.httpClient.get<IDictionary>(`/assets/i18n/${lang}.json`, { headers: this.contentHeader, observe: 'response' })
       .pipe(

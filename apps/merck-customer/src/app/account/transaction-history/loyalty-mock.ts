@@ -90,7 +90,7 @@ export const mockTransactionsHistory: ITransactionHistory[] = [
     identifier: 'Awarded Points',
     transactedAt: new Date('2019-10-09T14:46:11.961Z'),
     pointsAmount: 500,
-    properties: null,
+    properties: undefined,
     transactionDetails: {}
   },
   {
@@ -115,8 +115,8 @@ export const mockTransactionsHistory: ITransactionHistory[] = [
   },
   {
     id: 752,
-    name: null,
-    identifier: null,
+    name: undefined,
+    identifier: undefined,
     transactedAt: new Date('2019-10-09T16:50:57.530Z'),
     pointsAmount: -300,
     properties: {},
@@ -128,7 +128,7 @@ export const mockTransactionsHistory: ITransactionHistory[] = [
         voucherExpiry: new Date('2020-09-22T16:00:00.000Z'),
         userAccount: '10888905-1570617174',
         rewardName: 'Clemens Diabetes Compact Wallet',
-        redemptionLocation: null
+        redemptionLocation: undefined
       }
     }
   }
