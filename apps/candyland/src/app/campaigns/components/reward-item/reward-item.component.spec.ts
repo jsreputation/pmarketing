@@ -6,7 +6,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('RewardItemComponent', () => {
+fdescribe('RewardItemComponent', () => {
   let component: RewardItemComponent;
   let fixture: ComponentFixture<RewardItemComponent>;
   let group: FormGroup;
@@ -25,7 +25,7 @@ describe('RewardItemComponent', () => {
     component = fixture.componentInstance;
     group = new FormGroup({
       test: new FormControl(),
-      test2: new FormGroup({probability: new FormControl(null)}, [])
+      test2: new FormGroup({probability: new FormControl(null), limit: new FormControl(0)}, []),
     });
     component.group = (group.get('test2') as FormGroup);
     fixture.detectChanges();
