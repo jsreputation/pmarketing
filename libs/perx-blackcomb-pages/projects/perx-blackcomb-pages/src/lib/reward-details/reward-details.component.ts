@@ -6,17 +6,14 @@ import {
   IVoucherService,
   LoyaltyService,
   ILoyalty,
-  NotificationService,
-  PopupComponent,
   ThemesService,
   ITheme,
   Voucher
 } from '@perx/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { filter, map, switchMap, takeUntil, tap, last } from 'rxjs/operators';
-import { Observable, Subject, of } from 'rxjs';
+import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'perx-blackcomb-reward-details',
@@ -57,9 +54,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
     private loyaltyService: LoyaltyService,
     private activeRoute: ActivatedRoute,
     private translate: TranslateService,
-    private notificationService: NotificationService,
     private router: Router,
-    private dialog: MatDialog,
     private themesService: ThemesService
   ) { }
 
@@ -90,48 +85,11 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   }
 
   public buyReward(): void {
-    const dataTemp = {
-      title: this.rewardData ? this.rewardData.name : '',
-      existingPoints: this.loyalty ? this.loyalty.pointsBalance : 0,
-      requiredPoints: this.rewardData &&
-        this.rewardData.rewardPrice &&
-        this.rewardData.rewardPrice.length > 0 ? this.rewardData.rewardPrice[0].points || 0 : 0
-    };
-
-    this.translate.get(['YOU_CURRENTLY_HAVE', 'POINTS', 'USE_POINTS', 'PROCEED', 'CONFIRM', 'CANCEL'])
-      .pipe(
-        last(),
-        switchMap(
-          ([balance, points, userPoint, proceed, confirm, cancel]) => this.dialog.open(PopupComponent, {
-            data: {
-              title: dataTemp.title,
-              text: `${balance} ${dataTemp.existingPoints} ${points}. ${userPoint} ${dataTemp.requiredPoints} ${points} ${proceed}.`,
-              buttonTxt: confirm,
-              buttonTxt2: cancel
-            }
-          }).afterClosed()
-        ),
-        switchMap((result) => result ? this.exchangePoints() : of(null)),
-        takeUntil(this.destroy$),
-      ).subscribe(() => { });
-  }
-
-  private exchangePoints(): Observable<void> {
-    return this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
-      .pipe(
-        switchMap((res: Voucher) => this.translate.get(['REDEEM_SUCCESSFULLY', 'CLOSE'])
-          .pipe(
-            last(),
-            tap(([redeemSuccess, close]) => {
-              this.router.navigate(['/voucher-detail', { id: res.id }]);
-              this.notificationService.addPopup({
-                title: redeemSuccess,
-                buttonTxt: close
-              });
-            }),
-            map(() => { return; })
-          )
-        )
+    this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
+      .subscribe(
+        (res: Voucher) => {
+          this.router.navigate([`/voucher-detail/${res.id}`]);
+        },
       );
   }
 
