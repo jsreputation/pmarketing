@@ -7,9 +7,8 @@
     [tncLabel]="tncLabel"
     [showExpiry]="appConfig.showExpiryOnRewardDetail"></perx-core-reward>
 <div class="action">
-    <button
-      mat-button
-    >
+  <button mat-raised-button color="primary" class="reward-buy"
+  (click)="buyReward()">
       {{buttonLabel}}
     </button>
 </div>
