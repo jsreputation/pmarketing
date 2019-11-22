@@ -20,7 +20,7 @@ export class NewCampaignRewardsSurveyPageComponent extends AbstractStepWithForm 
   public defaultValue: {[key: string]: any} = {
     rewardsOptions: {
       enableProbability: false,
-      limit: 0,
+      limit: null,
       rewards: []
     }
   };
