@@ -57,9 +57,13 @@
 }
 
 .checkbox-container {
+  position: relative;
   margin-bottom: 3.2rem;
   margin-top: 2rem;
-  display: flex;
+
+  .checkbox-content {
+    display: flex;
+  }
 
   .mat-checkbox {
     position: relative;
@@ -71,6 +75,11 @@
     font-size: 1.2rem;
     line-height: 1.6rem;
     letter-spacing: 0.04rem;
+  }
+
+  mat-error {
+    position: absolute;
+    font-size: 75%;
   }
 }
 
