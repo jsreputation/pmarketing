@@ -1,6 +1,6 @@
 {
-  "CAMPAIGN LIMIT": "Campaign",
   "CAMPAIGN": {
+    "CAMPAIGN_LIMIT": "Campaign",
     "SEARCH_FOR_CAMPAIGN": "Search for campaign",
     "NO_DATA_TITLE": "Engaging with your customers is easy!",
     "NO_DATA_TEXT": "Let's begin by creating your first campaign",
