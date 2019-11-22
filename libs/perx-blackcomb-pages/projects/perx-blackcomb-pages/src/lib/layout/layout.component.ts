@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { PopupComponent, NotificationService, IPopupConfig, ThemesService, ITheme, AuthenticationService, Config } from '@perx/core';
+import { ThemesService, ITheme, AuthenticationService, Config } from '@perx/core';
 // import {
 //   HomeComponent,
 //   HistoryComponent,
@@ -32,8 +31,6 @@ export class LayoutComponent implements OnInit {
   public theme: ITheme;
 
   constructor(
-    private notificationService: NotificationService,
-    private dialog: MatDialog,
     private location: Location,
     private router: Router,
     private themesService: ThemesService,
@@ -59,8 +56,8 @@ export class LayoutComponent implements OnInit {
       }
     );
 
-    this.notificationService.$popup
-      .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
+    // this.notificationService.$popup
+    //   .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
 
     this.router.events
       .pipe(
