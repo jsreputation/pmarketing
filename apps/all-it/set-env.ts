@@ -45,7 +45,7 @@ const displayProperties = `"display_properties": {
 const envConfigFile = `export const environment = {
   apiHost: '${process.env.APIHOST ? process.env.APIHOST : 'https://api.getperx.io'}',
   production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
-  preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : true},
+  preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : false},
   isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
   baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}',
   defaultLang: '${process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'}'
@@ -55,7 +55,7 @@ const envConfigFile = `export const environment = {
 const appConfigFile = `{
   "apiHost": "${process.env.APIHOST ? process.env.APIHOST : 'https://api.getperx.io'}",
   "production": ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
-  "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : true},
+  "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : false},
   "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
   "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
   "defaultLang": "${process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'}",
@@ -65,6 +65,8 @@ const appConfigFile = `{
   "showNewsfeedOnHomepage": ${process.env.SHOW_NEWSFEED_HOMEPAGE ? process.env.SHOW_NEWSFEED_HOMEPAGE : true},
   "showQrPageSubtitle": ${process.env.SHOW_QRPAGE_SUBTITLE ? process.env.SHOW_QRPAGE_SUBTITLE : true},
   "showExpiryOnRewardDetail": ${process.env.SHOW_EXPIRY_REWARD_DETAIL ? process.env.SHOW_EXPIRY_REWARD_DETAIL : false},
+  "showUserInfoOnAccountsPage": ${process.env.SHOW_USERINFO_ACCOUNTS ? process.env.SHOW_USERINFO_ACCOUNTS : true},
+  "showTransactionHistoryOnAccountsPage": ${process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS ? process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS : true},
   ${displayProperties}
 }
 `;
