@@ -25,7 +25,7 @@ export class OutcomesService {
   }
 
   public updateOutcome(
-    data: { value: IRewardEntity, probability: number },
+    data: { value: IRewardEntity, probability: number, limit: number },
     campaignId: string,
     enableProbability: boolean,
     slotNumber: number
@@ -35,7 +35,7 @@ export class OutcomesService {
   }
 
   public createOutcome(
-    data: { value: IRewardEntity, probability: number },
+    data: { value: IRewardEntity, probability: number, limit: number },
     campaignId: string,
     enableProbability: boolean,
     slotNumber: number
