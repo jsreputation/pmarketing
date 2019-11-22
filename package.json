@@ -14,6 +14,7 @@
     "build:prudential:prod": "echo 'skipping prudential build'",
     "build:merck-core:prod": "lerna run build:lib && lerna run build:merck-core:prod --",
     "build:starhub:prod": "lerna run build:lib && lerna run build:starhub:prod --",
+    "build:starhub:staging": "lerna run build:lib && lerna run build:starhub:staging --",
     "build:components-demo:prod": "lerna run build:lib && lerna run build:components-demo:prod --",
     "build:hkbn:prod": "lerna run build:lib && lerna run build:hkbn:prod --",
     "build:hsbc-rewards:prod": "lerna run build:lib && lerna run build:hsbc-rewards:prod --",

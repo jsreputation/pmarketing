@@ -192,6 +192,12 @@ jobs:
             fi
             echo "after second set APP: ${APP}"
 
+            export APP_ENV="prod"
+            if [ $APP == 'starhub' ] && [ $TARGET_ENV != 'production' ]
+            then
+              export APP_ENV="staging"
+            fi
+
             docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG} \
             --no-cache \
             --build-arg app=$APP \
@@ -199,7 +205,8 @@ jobs:
             --build-arg basehref=$BASE_HREF \
             --build-arg preauth=$PREAUTH \
             --build-arg iswhistler=$IS_WHISTLER \
-            --build-arg sourcetype=$SOURCE_TYPE
+            --build-arg sourcetype=$SOURCE_TYPE \
+            --build-arg env=$APP_ENV
       - run:
           name: Push docker
           command: |
