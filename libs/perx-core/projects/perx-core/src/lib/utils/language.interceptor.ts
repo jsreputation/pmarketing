@@ -9,7 +9,7 @@ export class LanguageInterceptor implements HttpInterceptor {
   ) { }
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const lang = this.tokenStorage.getAppInfoProperty('lang');
-    const request = req.clone({setHeaders: {'Accept-Language' : lang || 'en'}})
+    const request = req.clone({setHeaders: {'Accept-Language' : lang || 'en'}});
     return next.handle(request);
   }
 }
