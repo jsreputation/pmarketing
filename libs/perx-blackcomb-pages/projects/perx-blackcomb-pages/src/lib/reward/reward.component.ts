@@ -59,17 +59,21 @@ export class RewardComponent implements OnInit, OnDestroy {
   ) { }
 
   private initTranslate(): void {
-    [
-      this.successPopUp.title,
-      this.successPopUp.buttonTxt,
-      this.noRewardsPopUp.title,
-      this.noRewardsPopUp.text,
-      this.noRewardsPopUp.buttonTxt
-    ]
-      .filter((k) => k !== undefined && k !== null)
-      .forEach((k: string) => {
-        this.translate.get(k).subscribe((text: string) => k = text);
-      });
+    if (this.successPopUp.title) {
+      this.translate.get(this.successPopUp.title).subscribe((text: string) => this.successPopUp.title = text);
+    }
+    if (this.successPopUp.buttonTxt) {
+      this.translate.get(this.successPopUp.buttonTxt).subscribe((text: string) => this.successPopUp.buttonTxt = text);
+    }
+    if (this.noRewardsPopUp.title) {
+      this.translate.get(this.noRewardsPopUp.title).subscribe((text: string) => this.noRewardsPopUp.title = text);
+    }
+    if (this.noRewardsPopUp.text) {
+      this.translate.get(this.noRewardsPopUp.text).subscribe((text: string) => this.noRewardsPopUp.text = text);
+    }
+    if (this.noRewardsPopUp.buttonTxt) {
+      this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text: string) => this.noRewardsPopUp.buttonTxt = text);
+    }
   }
 
   public ngOnInit(): void {

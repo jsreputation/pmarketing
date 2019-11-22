@@ -17,7 +17,6 @@ import {
   LanguageService,
   TokenStorage,
   ConfigService,
-  PopupComponent,
 } from '@perx/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,7 +33,7 @@ import ru from '@angular/common/locales/ru';
 import localesRuExtra from '@angular/common/locales/extra/ru';
 import vi from '@angular/common/locales/vi';
 import localesViExtra from '@angular/common/locales/extra/vi';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material';
 import * as Sentry from '@sentry/browser';
 
 Sentry.init({
@@ -97,8 +96,6 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     { provide: LOCALE_ID, useValue: environment.defaultLang },
     { provide: ErrorHandler, useClass: SentryErrorHandler }
   ],
-  entryComponents: [
-    PopupComponent
-  ]
+  entryComponents: []
 })
 export class AppModule { }
