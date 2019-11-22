@@ -1,4 +1,4 @@
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import {
   IFormsService,
@@ -6,13 +6,15 @@ import {
   IPopupConfig,
   IGameService,
   InstantOutcomeService,
-  NotificationService
+  NotificationService,
+  IPrePlayStateData
 } from '@perx/core';
 import { ISurvey, IAnswer } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject, iif, of } from 'rxjs';
-import { takeUntil, catchError, tap, switchMap } from 'rxjs/operators';
+import { catchError, tap, switchMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { Location } from '@angular/common';
 
 interface ISignupAttributes {
   [key: string]: any;
@@ -42,30 +44,28 @@ export class SignUpComponent implements OnInit, OnDestroy {
     public snack: MatSnackBar,
     private notificationService: NotificationService,
     private router: Router,
-    private route: ActivatedRoute,
     private translate: TranslateService,
     private gameService: IGameService,
+    private location: Location,
     private instantOutcomeService: InstantOutcomeService
   ) { }
 
   public ngOnInit(): void {
     this.data$ = this.formSvc.getSignupForm();
-    this.route.queryParams.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe((params) => {
-      if (params && params.popupData) {
-        this.popupData = JSON.parse(params.popupData);
-      }
-      if (params && params.engagementType) {
-        this.engagementType = params.engagementType;
-      }
-      if (params && params.transactionId) {
-        this.transactionId = parseInt(params.transactionId, 10);
-      }
-      if (params && params.collectInfo) {
-        this.collectInfo = !!params.collectInfo;
-      }
-    });
+    const stateData = this.location.getState() as IPrePlayStateData;
+
+    if (stateData && stateData.popupData) {
+      this.popupData = stateData.popupData;
+    }
+    if (stateData && stateData.engagementType) {
+      this.engagementType = stateData.engagementType;
+    }
+    if (stateData && stateData.transactionId) {
+      this.transactionId = stateData.transactionId;
+    }
+    if (stateData && stateData.collectInfo) {
+      this.collectInfo = !!stateData.collectInfo;
+    }
   }
 
   public ngOnDestroy(): void {

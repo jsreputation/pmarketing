@@ -9,7 +9,8 @@ import {
   IEngagementTransaction,
   RewardsService,
   AuthenticationService,
-  NotificationService
+  NotificationService,
+  IPrePlayStateData
 } from '@perx/core';
 import { map, switchMap, catchError, tap, takeUntil, mergeMap, } from 'rxjs/operators';
 
@@ -164,15 +165,17 @@ export class RewardComponent implements OnInit, OnDestroy {
   }
 
   private redirectUrlAndPopUp(): void {
-    const queryParams = {
-      popupData: JSON.stringify(this.popupData),
-      engagementType: 'instant_outcome',
-      transactionId: this.transactionId
+    const state: IPrePlayStateData = {
+      popupData: this.popupData,
+      engagementType: 'game',
+      transactionId: this.transactionId,
+      collectInfo: true
     };
+
     if (this.isAnonymousUser && this.informationCollectionSetting === 'pi_required') {
-      this.router.navigate(['/pi'], { queryParams });
+      this.router.navigate(['/pi'], { state });
     } else if (this.isAnonymousUser && this.informationCollectionSetting === 'signup_required') {
-      this.router.navigate(['/signup'], { queryParams });
+      this.router.navigate(['/signup'], { state });
     } else {
       this.router.navigate(['/wallet']);
       if (this.popupData) {

@@ -122,13 +122,10 @@ describe('SurveyService', () => {
         }
       },
     };
-    const survey: ISurvey = {
-      title: '',
-      questions: []
-    };
+
     httpClientSpy.post.and.returnValue(of(res));
 
-    service.postSurveyAnswer([], survey, 3)
+    service.postSurveyAnswer([], 3, 1)
       .subscribe(
         (s: { hasOutcomes: boolean }) => {
           expect(s.hasOutcomes).toBeFalsy();
