@@ -1,13 +1,13 @@
 <button mat-flat-button
-        class="btn"
+        class="cs-btn"
         [ngClass]="classList"
         [class.disable]="disable"
         [disabled]="disable"
         [attr.form]="formId"
         [disableRipple]="disableRipple"
 >
-  <ng-content select=".btn-cta-mobile-icon"></ng-content>
-  <div class="btn-content">
+  <ng-content select=".cs-btn-mobile-icon"></ng-content>
+  <div class="cs-btn-content">
     <ng-content></ng-content>
   </div>
 </button>
