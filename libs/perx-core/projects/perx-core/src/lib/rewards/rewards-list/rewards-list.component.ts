@@ -39,6 +39,10 @@ export class RewardsListComponent implements OnInit {
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
 
+  public get themeFontColor(): string | null {
+    return this.theme ? this.theme.properties['--font_color'] : null;
+  }
+
   constructor(
     private themesService: ThemesService,
   ) { }
