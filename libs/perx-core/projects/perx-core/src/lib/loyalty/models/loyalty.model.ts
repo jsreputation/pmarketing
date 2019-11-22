@@ -22,6 +22,7 @@ export interface ILoyalty {
   currencyBalance?: number;
   currency?: string;
   expiringPoints?: IExpiringPoints[];
+  cardId?: number;
 }
 
 export interface ITransaction {
