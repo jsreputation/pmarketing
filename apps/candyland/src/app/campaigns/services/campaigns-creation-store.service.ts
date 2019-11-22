@@ -32,7 +32,7 @@ export class CampaignCreationStoreService {
       { title: 'DAY', value: 'day' },
       { title: 'WEEK', value: 'week' },
       { title: 'MONTH', value: 'month' },
-      { title: 'CAMPAIGN', value: 'campaign' }
+      { title: 'CAMPAIGN LIMIT', value: 'campaign' }
     ],
     days: [
       { title: 'S', value: 'sunday' },
