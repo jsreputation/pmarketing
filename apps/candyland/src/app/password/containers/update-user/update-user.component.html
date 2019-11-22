@@ -9,11 +9,9 @@
           <p>Enter your new password.</p>
         </div>
         <div class="inputs-related">
-          <mat-form-field [style.fontSize.rem]=1.4>
-            <mat-icon matSuffix class="visible-icon">visibility_off</mat-icon>
-            <label for="email">
-              <input id="email" matInput [placeholder]="'Enter password'">
-            </label>
+          <mat-form-field>
+            <input matInput [placeholder]="'Enter password'" [type]="hide ? 'password' : 'text'">
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </mat-form-field>
           <cl-button [classList]="'primary btn-block'" class="btn-block">Submit</cl-button>
         </div>
@@ -43,11 +41,9 @@
         </div>
 
         <div class="inputs-related">
-          <mat-form-field [style.fontSize.rem]=1.4>
-            <mat-icon matSuffix class="visible-icon">visibility_off</mat-icon>
-            <label for="password">
-              <input id="password" matInput [placeholder]="'Enter password'">
-            </label>
+          <mat-form-field>
+            <input matInput [placeholder]="'Enter password'" [type]="hide ? 'password' : 'text'">
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </mat-form-field>
           <cl-button [classList]="'primary btn-block'" class="btn-block">Submit</cl-button>
         </div>

@@ -32,10 +32,7 @@ export class AuthService {
     const localToken = this.localStorage.get('authToken');
     const localUserId = this.localStorage.get('userId');
     if (!localToken || !localUserId) {
-      this.clearCache(); // here we just clearcache we dont logout because the guard will take care
-      //       // Why do we need to logout here. If there is no localToken
-      //       // nor localUserId, then the auth guard should take over the
-      //       // routing rather than redirecting here.
+      this.clearCache();
       return;
     }
     this.sessionService.token = localToken;

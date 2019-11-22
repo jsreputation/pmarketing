@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class UpdateUserComponent implements OnInit {
   public routeEnd: string;
+  public hide: boolean = true;
 
   constructor(private router: Router) { }
 
