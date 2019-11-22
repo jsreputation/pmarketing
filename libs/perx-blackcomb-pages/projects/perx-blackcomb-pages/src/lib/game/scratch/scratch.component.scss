@@ -7,10 +7,13 @@
     @include game-headline;
 
     margin-top: $app-margin;
+    color: white;
   }
 
   h3 {
     @include game-subheadline;
+
+    color: white;
   }
 }
 
