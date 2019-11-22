@@ -2,42 +2,42 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IReward, RewardsService, LoyaltyService, ILoyalty, IProfile } from '@perx/core';
 import { ITabConfig, IPrice } from '@perx/core';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of, Subject, throwError } from 'rxjs';
 import { flatMap, map, filter } from 'rxjs/operators';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import {DatePipe} from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 const tabs: ITabConfig[] = [
   {
     filterKey: 'Lifestyle',
     filterValue: null,
     tabName: 'Lifestyle',
-    rewardsList: null
+    rewardsList: undefined
   }, {
     filterKey: null,
     filterValue: null,
     tabName: 'Travel',
-    rewardsList: null
+    rewardsList: undefined
   }, {
     filterKey: null,
     filterValue: null,
     tabName: 'Shopping',
-    rewardsList: null
+    rewardsList: undefined
   }, {
     filterKey: null,
     filterValue: null,
     tabName: 'Mileage',
-    rewardsList: null
+    rewardsList: undefined
   }, {
     filterKey: null,
     filterValue: null,
     tabName: 'Charity donation',
-    rewardsList: null
+    rewardsList: undefined
   }, {
     filterKey: null,
     filterValue: null,
     tabName: 'Annual fee',
-    rewardsList: null
+    rewardsList: undefined
   }
 ];
 
@@ -78,15 +78,15 @@ export class HomeComponent implements OnInit {
     this.getRewardsCollection();
     this.getLoyalty();
     this.displayPriceFn = (rewardPrice: IPrice) => {
-      if (rewardPrice.points > 0 && rewardPrice.price > 0) {
+      if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && rewardPrice.price > 0) {
         return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${parseInt((rewardPrice.price).toString(), 10)}`;
       }
 
-      if (rewardPrice.price > 0) {
+      if (rewardPrice.price && rewardPrice.price > 0) {
         return `${rewardPrice.currencyCode} ${parseInt((rewardPrice.price).toString(), 10)}`;
       }
 
-      if (rewardPrice.points > 0) {
+      if (rewardPrice.points && rewardPrice.points > 0) {
         return `${rewardPrice.points} points`;
       }
       return '0 points'; // is actually 0 or invalid value default
@@ -107,12 +107,16 @@ export class HomeComponent implements OnInit {
   }
 
   private loadCurrentTabRewards(tabName: string): void {
-    this.rewardsService.getRewards(1, this.requestPageSize, null, [tabName])
+    this.rewardsService.getRewards(1, this.requestPageSize, undefined, [tabName])
       .pipe(map((res: IReward[]) => {
         this.rewardMultiPageMetaTracker[tabName] = { page: 1, isLast: false };
         return ({ key: tabName, value: res });
       })).subscribe((rewards) => {
-        this.staticTab.find((elem) => rewards.key === elem.tabName).rewardsList = of(rewards.value);
+        const tab: ITabConfig | undefined = this.staticTab.find((elem) => rewards.key === elem.tabName);
+        if (!tab) {
+          return;
+        }
+        tab.rewardsList = of(rewards.value);
         this.tabs.next(this.staticTab);
       });
   }
@@ -147,7 +151,7 @@ export class HomeComponent implements OnInit {
   public onScroll(): void {
     if (!this.rewardMultiPageMetaTracker[this.currentTab].isLast) {
       let rewards;
-      this.rewardsService.getRewards(this.rewardMultiPageMetaTracker[this.currentTab].page + 1, 10, null, [this.currentTab]).pipe(
+      this.rewardsService.getRewards(this.rewardMultiPageMetaTracker[this.currentTab].page + 1, 10, undefined, [this.currentTab]).pipe(
         flatMap((newRewards: IReward[]) => {
           rewards = newRewards;
           if (newRewards.length === 0 || newRewards.length < this.requestPageSize) {
@@ -155,11 +159,18 @@ export class HomeComponent implements OnInit {
           } else {
             this.rewardMultiPageMetaTracker[this.currentTab].page += 1;
           }
-          return tabs.find(tab => tab.tabName === this.currentTab).rewardsList;
+          const tab = tabs.find(el => el.tabName === this.currentTab);
+          if (tab && tab.rewardsList) {
+            return tab.rewardsList;
+          }
+          return throwError({ message: 'can not find reward list' });
         })
       ).subscribe(
         (existingRewards: IReward[]) => {
-          tabs.find(tab => tab.tabName === this.currentTab).rewardsList = of(existingRewards.concat(rewards));
+          const tab = tabs.find(el => el.tabName === this.currentTab);
+          if (tab) {
+            tab.rewardsList = of(existingRewards.concat(rewards));
+          }
         },
         (err) => console.log(err)
       );
