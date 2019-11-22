@@ -54,9 +54,10 @@ export class V4MerchantsService implements IMerchantsService {
   ) {
   }
 
-  public static v4OutletsToOutlets(outlets: IV4Outlet[] | undefined): IOutlet[] {
+  public static v4OutletsToOutlets(outlets: IV4Outlet[] | undefined): IOutlet[] | null {
     if (!outlets) {
-      throw new Error('Data to map outlet is not valid');
+      console.log('Data to map outlet is not valid');
+      return null;
     }
     return outlets.map(
       (outlet: IV4Outlet) => ({

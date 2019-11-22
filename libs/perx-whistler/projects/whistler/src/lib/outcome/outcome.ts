@@ -5,7 +5,7 @@ export interface IWOutcome {
     resultType: string;
     probability: number;
     lootBoxId?: number;
-    limit: number;
+    limit: number | null;
 }
 export interface IWOutcomeAttributes {
     result_id: number;

@@ -43,15 +43,21 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
   private initTranslate(): void {
     this.translate.get('ENTER_CODE').subscribe((text) => this.headLine = text);
     this.translate.get('REDEMPTION_CODE').subscribe((text) => this.subHeadLine = text);
-    [
-      this.rewardSuccessPopUp.title,
-      this.rewardSuccessPopUp.text,
-      this.rewardSuccessPopUp.buttonTxt,
-      this.errorPopUp.title,
-      this.errorPopUp.buttonTxt
-    ]
-      .filter(k => k !== undefined && k !== null)
-      .forEach((k: string) => this.translate.get(k).subscribe((text) => k = text));
+    if (this.rewardSuccessPopUp.title) {
+      this.translate.get(this.rewardSuccessPopUp.title).subscribe((text) => this.rewardSuccessPopUp.title = text);
+    }
+    if (this.rewardSuccessPopUp.text) {
+      this.translate.get(this.rewardSuccessPopUp.text).subscribe((text) => this.rewardSuccessPopUp.text = text);
+    }
+    if (this.rewardSuccessPopUp.buttonTxt) {
+      this.translate.get(this.rewardSuccessPopUp.buttonTxt).subscribe((text) => this.rewardSuccessPopUp.buttonTxt = text);
+    }
+    if (this.errorPopUp.title) {
+      this.translate.get(this.errorPopUp.title).subscribe((text) => this.errorPopUp.title = text);
+    }
+    if (this.errorPopUp.buttonTxt) {
+      this.translate.get(this.errorPopUp.buttonTxt).subscribe((text) => this.errorPopUp.buttonTxt = text);
+    }
   }
 
   constructor(
