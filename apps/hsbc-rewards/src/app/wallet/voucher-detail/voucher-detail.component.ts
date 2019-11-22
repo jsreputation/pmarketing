@@ -29,7 +29,7 @@ export class VoucherDetailComponent implements OnInit {
 
   public ngOnInit(): void {
     this.voucher = this.route.params.pipe(switchMap((param) => {
-      return this.voucherService.get(param.id, null, {
+      return this.voucherService.get(param.id, undefined, {
         type: null,
         sourceType: 'hsbc-rewards'
       });

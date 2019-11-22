@@ -9,12 +9,12 @@ export class OutcomesHttpAdapter {
       resultType: data.attributes.result_type,
       probability: data.attributes.probability ? data.attributes.probability * 100 : null,
       lootBoxId: data.attributes.loot_box_id,
-      limit: data.attributes.max_issuance_per_campaign || 0
+      limit: data.attributes.max_issuance_per_campaign || null
     };
   }
 
   public static transformFromOutcomes(
-    data: { value: IRewardEntity, probability: number, limit: number },
+    data: { value: IRewardEntity, probability: number, limit: number | null },
     enableProbability: boolean,
     campaignId: string,
     slotNumber: number
@@ -28,7 +28,7 @@ export class OutcomesHttpAdapter {
         loot_box_id: slotNumber,
         no_outcome: !data.value.id,
         campaign_entity_id: campaignId && parseInt(campaignId, 10),
-        max_issuance_per_campaign: data.limit
+        max_issuance_per_campaign: data.limit || null
       }
     };
   }

@@ -14,12 +14,12 @@ export {
 } from './lib/jsonapi.payload';
 export { IWRewardDisplayProperties, IWProperties, IWAttbsObjEntity } from './lib/whistler.models';
 
-export { IWVoucherCodesApi, WVoucherCodesStatus } from './lib/voucher/codes';
 export { IWVoucherStatsApi } from './lib/voucher/stats';
 export { IWVouchersApi } from './lib/voucher/vouchers-api';
 export {
   WAssignedStatus,
   IWAssignedAttributes,
+  IWPurchaseAttributes,
   IWAssignRequestAttributes
 } from './lib/voucher/assigneds';
 export {

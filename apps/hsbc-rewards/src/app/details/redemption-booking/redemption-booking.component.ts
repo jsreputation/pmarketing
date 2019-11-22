@@ -12,9 +12,9 @@ import {
   IVoucherService
 } from '@perx/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, flatMap } from 'rxjs/operators';
+import { switchMap, flatMap, map } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { forkJoin, Observable, of, SubscriptionLike } from 'rxjs';
+import { forkJoin, Observable, of, SubscriptionLike, throwError } from 'rxjs';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -36,7 +36,7 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
   private merchantAllLocations: ILocation[] = [];
   private lastMerchantPage: number = 1;
   private isCurrentMerchantPageLoaded: boolean = false;
-  private merchantId: number = null;
+  private merchantId: number;
 
   constructor(
     private locationService: LocationsService,
@@ -71,6 +71,9 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
       this.rewardsService.getRewardPricesOptions(this.rewardId)]);
     })).pipe(flatMap((result) => {
       [this.reward, this.prices] = result;
+      if (!this.reward.merchantId) {
+        return throwError({ message: 'merchantId is required' });
+      }
       this.merchantId = this.reward.merchantId;
       // merchantId can be null if reward is set up incorrectly on dashboard
       return this.locationService.getFromMerchant(this.merchantId);
@@ -126,8 +129,11 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
   }
 
   public submitForm(): void {
-    const totalCost = this.prices.find((price) => price.id === this.bookingForm.value.priceId)
-      .points * this.bookingForm.value.quantity;
+    const currentPrice = this.prices.find((price) => price.id === this.bookingForm.value.priceId);
+    if (!currentPrice || !currentPrice.points) {
+      return;
+    }
+    const totalCost = currentPrice.points * this.bookingForm.value.quantity;
     if (totalCost > this.loyalty.pointsBalance) {
       this.notificationService.addPopup({
         title: 'Sorry',
@@ -158,8 +164,13 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
   private getLoyalty(): void {
     this.loyaltyService.getLoyalties().pipe(switchMap((loyaltyes) => {
       return !loyaltyes || !loyaltyes.length ? of(null) : this.loyaltyService.getLoyalty(loyaltyes[0].id);
+    }), map((loyalty) => {
+      if (loyalty) {
+        return loyalty;
+      }
+      throw new Error();
     })).subscribe((loyalty) => {
       this.loyalty = loyalty;
-    });
+    }, () => console.error('Can\'t find loyalty'));
   }
 }

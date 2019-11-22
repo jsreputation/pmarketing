@@ -28,17 +28,6 @@ export class StampCardComponent implements OnInit, OnDestroy {
     buttonTxt: 'TRY_AGAIN'
   };
 
-  private initTranslate(): void {
-    [
-      this.rewardSuccessPopUp.title,
-      this.errorPopUp.title,
-      this.rewardSuccessPopUp.buttonTxt,
-      this.errorPopUp.buttonTxt
-    ]
-      .filter(k => k !== undefined && k !== null)
-      .forEach((k: string) => this.translate.get(k).subscribe((text) => k = text));
-  }
-
   constructor(
     private stampService: StampService,
     private route: ActivatedRoute,
@@ -46,6 +35,21 @@ export class StampCardComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private translate: TranslateService
   ) {
+  }
+
+  private initTranslate(): void {
+    if (this.rewardSuccessPopUp.title) {
+      this.translate.get(this.rewardSuccessPopUp.title).subscribe((text) => this.rewardSuccessPopUp.title = text);
+    }
+    if (this.errorPopUp.title) {
+      this.translate.get(this.errorPopUp.title).subscribe((text) => this.errorPopUp.title = text);
+    }
+    if (this.rewardSuccessPopUp.buttonTxt) {
+      this.translate.get(this.rewardSuccessPopUp.buttonTxt).subscribe((text) => this.rewardSuccessPopUp.buttonTxt = text);
+    }
+    if (this.errorPopUp.buttonTxt) {
+      this.translate.get(this.errorPopUp.buttonTxt).subscribe((text) => this.errorPopUp.buttonTxt = text);
+    }
   }
 
   public ngOnInit(): void {
