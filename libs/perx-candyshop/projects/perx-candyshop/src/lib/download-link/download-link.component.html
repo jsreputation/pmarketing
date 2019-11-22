@@ -1,12 +1,13 @@
 <div class="download-link">
-  <mat-form-field appearance="outline" class="control-input download-link-field" disabled>
+  <mat-form-field appearance="outline" class="download-link-field" disabled>
     <input matInput type="text" [value]="fileName" readonly>
   </mat-form-field>
-  <a
-    mat-flat-button
-    class="btn primary download-link-btn"
-    color="primary"
-    [href]="safeLink"
-    [download]="fileName"
-    disableRipple="false">Download</a>
+  <a [href]="safeLink" [download]="fileName">
+    <cs-button
+      class="download-link-btn"
+      classList="primary"
+      [disableRipple]="false">
+      Download
+    </cs-button>
+  </a>
 </div>

@@ -16,7 +16,7 @@
   z-index: 101;
   background: $white;
 
-  .btn-group {
+  .cs-btn-group {
     flex-shrink: 0;
     margin-left: auto;
   }
@@ -84,7 +84,7 @@
   .page-header {
     padding-left: 2.4rem + ($horizontal-padding * 1.5);
 
-    .btn-group {
+    .cs-btn-group {
       padding: 0;
       margin: 0;
 

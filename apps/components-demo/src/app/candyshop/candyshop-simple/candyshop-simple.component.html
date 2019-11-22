@@ -1,5 +1,5 @@
 <h2>Button</h2>
-<div class="input-group" style="padding: 1rem; background: #f3f3f3">
+<div class="cs-btn-group" style="padding: 1rem; background: #f3f3f3">
   <cs-button>simple</cs-button>
   <cs-button classList="primary">primary</cs-button>
   <cs-button classList="ph-0">ph-0</cs-button>
@@ -13,11 +13,23 @@
 </div>
 
 <h2>Download Button</h2>
-<cs-download-button file="http://www.orimi.com/pdf-test.pdf">Download</cs-download-button>
+<div class="cs-btn-group">
+
+  <cs-download-button file="http://www.orimi.com/pdf-test.pdf">
+    Download Button with Default Icon
+  </cs-download-button>
+
+  <cs-download-button file="http://www.orimi.com/pdf-test.pdf">
+    Download Button with Custom Icon
+    <ng-template csDownloadIcon>
+      <mat-icon>cloud_upload</mat-icon>
+    </ng-template>
+  </cs-download-button>
+</div>
 
 <!--<cs-download-button file="test.pdf" link="http://www.orimi.com/pdf-test.pdf">Download</cs-download-button>-->
 <h2>Download Link</h2>
-<cs-download-link file="test.pdf" link="http://www.orimi.com/pdf-test.pdf"></cs-download-link>
+<cs-download-link file="image.jpg" link="/images/myw3schoolsimage.jpg"></cs-download-link>
 
 <h2>Copy Link</h2>
 <cs-copy-link link="http://test-link" (copied)="log('copy')">
@@ -34,10 +46,12 @@
 <!--</cs-ink>-->
 
 <h2>Role Label</h2>
-<cs-role-label role="2" [showTitle]="true"></cs-role-label>
-<cs-role-label role="3" [showTitle]="true" email="some@email.com"></cs-role-label>
-<cs-role-label role="4" [showTitle]="true" classList="small"></cs-role-label>
-<cs-role-label role="1"></cs-role-label>
+<div class="cs-btn-group" style="padding: 1rem; background: #f3f3f3">
+  <cs-role-label role="2" [showTitle]="true"></cs-role-label>
+  <cs-role-label role="3" [showTitle]="true" email="some@email.com"></cs-role-label>
+  <cs-role-label role="4" [showTitle]="true" classList="small"></cs-role-label>
+  <cs-role-label role="1"></cs-role-label>
+</div>
 
 <h2>Status Label</h2>
 <cs-status-label status="active"></cs-status-label>

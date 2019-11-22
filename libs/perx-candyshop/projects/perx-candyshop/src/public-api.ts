@@ -1,6 +1,7 @@
 /*
  * Public API Surface of perx-candyshop
  */
+
 export { IGraphic } from './models/graphic.interface';
 export { StatusType } from './models/status-type.enum';
 export { DatepickerRangeValue } from './models/datepicker-range-value.interface';
@@ -17,6 +18,7 @@ export { CustomLineProgressModule } from './lib/custom-line-progress/custom-line
 export { CustomLineProgressComponent } from './lib/custom-line-progress/custom-line-progress.component';
 
 export { DownloadButtonModule } from './lib/download-button/download-button.module';
+export { DownloadIconDirective } from './lib/download-button/download-button.component';
 export { DownloadButtonComponent } from './lib/download-button/download-button.component';
 
 export { DownloadLinkModule } from './lib/download-link/download-link.module';

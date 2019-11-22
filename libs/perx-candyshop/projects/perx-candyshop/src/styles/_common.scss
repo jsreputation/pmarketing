@@ -1,22 +1,22 @@
 //@import '~@angular/material/theming';
 @import "./variables";
 
-html, body {
-  min-height: 100%;
-  font-size: 62.5%;
-}
+//html, body {
+//  min-height: 100%;
+//  font-size: 62.5%;
+//}
 
-body {
-  margin: 0;
-}
+//body {
+//  margin: 0;
+//}
 
-body, input, button, select {
-  font-family: $primary-font;
-}
+//body, input, button, select {
+//  font-family: $primary-font;
+//}
 
-h1, h2, h3, h4, h5, p {
-  margin: 0;
-}
+//h1, h2, h3, h4, h5, p {
+//  margin: 0;
+//}
 
 .w-100 {
   width: 100% !important;
@@ -34,48 +34,48 @@ h1, h2, h3, h4, h5, p {
   display: flex;
 }
 
-.flex-column {
+.cs-flex-column {
   display: flex;
   flex-direction: column;
 }
 
-.justify-content-between {
+.cs-justify-content-between {
   -webkit-box-pack: justify !important;
   -ms-flex-pack: justify !important;
   justify-content: space-between !important;
 }
 
-.justify-content-center {
+.cs-justify-content-center {
   justify-content: center !important;
 }
 
-.flex-end {
+.cs-flex-end {
   justify-content: flex-end;
 }
 
-.align-items-center {
+.cs-align-items-center {
   -webkit-box-align: center !important;
   -ms-flex-align: center !important;
   align-items: center !important;
 }
 
-.menu-item {
+.cs-menu-item {
   .mat-list-text {
     padding-left: 0.8rem !important;
   }
 }
 
-.mat-form-field {
-  width: 100%;
-}
+//.mat-form-field {
+//  width: 100%;
+//}
 
-.mat-form-field-infix {
-  min-width: 0 !important;
-  flex-basis: 180px !important;
-  width: auto !important;
-}
+//.mat-form-field-infix {
+//  min-width: 0 !important;
+//  flex-basis: 180px !important;
+//  width: auto !important;
+//}
 
-.title {
+.cs-title {
   @include typo-h5;
 
   margin: auto 0;
@@ -181,8 +181,8 @@ h1, h2, h3, h4, h5, p {
   }
 }
 
-.btn-group {
-  cl-button, button, a {
+.cs-btn-group {
+  cs-button, button, a, mat-button {
     margin-right: ($horizontal-padding * 0.25);
 
     &:last-of-type {
@@ -191,7 +191,7 @@ h1, h2, h3, h4, h5, p {
   }
 }
 
-.input-group {
+.cs-input-group {
   display: flex;
   flex-flow: row wrap;
   align-items: baseline;
