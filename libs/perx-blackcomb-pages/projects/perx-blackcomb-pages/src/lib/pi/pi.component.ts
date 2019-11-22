@@ -1,4 +1,4 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import {
   Component,
@@ -11,10 +11,10 @@ import {
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
-
+import { Location } from '@angular/common';
 import { Subject, iif, of } from 'rxjs';
-import { Config, AuthenticationService, IPopupConfig, InstantOutcomeService, IGameService, NotificationService } from '@perx/core';
-import { switchMap, takeUntil, catchError, tap } from 'rxjs/operators';
+import { Config, AuthenticationService, IPopupConfig, InstantOutcomeService, IGameService, NotificationService, IPrePlayStateData } from '@perx/core';
+import { switchMap, catchError, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-pages-pi',
@@ -41,11 +41,11 @@ export class PIComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private config: Config,
     private router: Router,
-    private route: ActivatedRoute,
     private gameService: IGameService,
     private instantOutcomeService: InstantOutcomeService,
     private translate: TranslateService,
     private authService: AuthenticationService,
+    private location: Location,
     private notificationService: NotificationService
   ) {
     this.preAuth = this.config.preAuth || false;
@@ -53,19 +53,17 @@ export class PIComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initForm();
-    this.route.queryParams.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe((params) => {
-      if (params && params.popupData) {
-        this.popupData = JSON.parse(params.popupData);
-      }
-      if (params && params.engagementType) {
-        this.engagementType = params.engagementType;
-      }
-      if (params && params.transactionId) {
-        this.transactionId = parseInt(params.transactionId, 10);
-      }
-    });
+    const stateData = this.location.getState() as IPrePlayStateData;
+    console.log(stateData);
+    if (stateData && stateData.popupData) {
+      this.popupData = stateData.popupData;
+    }
+    if (stateData && stateData.engagementType) {
+      this.engagementType = stateData.engagementType;
+    }
+    if (stateData && stateData.transactionId) {
+      this.transactionId = stateData.transactionId;
+    }
   }
 
   public ngOnDestroy(): void {

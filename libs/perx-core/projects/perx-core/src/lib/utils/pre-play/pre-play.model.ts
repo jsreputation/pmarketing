@@ -4,7 +4,7 @@ import { IAnswer } from '../../survey/models/survey.model';
 export interface IPrePlayStateData {
     popupData: IPopupConfig;
     engagementType: string;
-    collectInfo: boolean;
+    collectInfo?: boolean;
     transactionId?: number | null;
     surveyId?: number | null;
     campaignId?: number;
