@@ -191,7 +191,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       probability: {
         value: value ? value.probability || 0 : this.noOutCome && this.noOutCome.probability || 0, disabled: !isEnableProbability
       },
-      limit: value ? value.limit || 0 : 0
+      limit: value ? value.limit || null : null
     });
   }
 
