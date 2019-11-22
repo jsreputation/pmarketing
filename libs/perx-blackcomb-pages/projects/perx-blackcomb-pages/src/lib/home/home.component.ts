@@ -19,7 +19,6 @@ import {
   takeUntil,
   map,
   retry,
-  switchMap,
   mergeMap,
   takeLast,
 } from 'rxjs/operators';
@@ -134,8 +133,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         .pipe(
           map((cs: ICampaign[]) => cs.filter(c => c.type === CampaignType.game)),
           map((cs: ICampaign[]) => cs.filter(c => gameByCid[c.id] === undefined)),
-          switchMap((arrOfCampaigns: ICampaign[]) => {
-            let gameIds = arrOfCampaigns.map(c => c.engagementId);
+          mergeMap((arrOfCampaigns: ICampaign[]) => {
+            let gameIds: number[] = arrOfCampaigns.map(c => c.engagementId)
+              .filter((id: number) => id !== undefined) as number[];
             gameIds = gameIds.filter((item, index) => gameIds.indexOf(item) === index);
             return combineLatest(
               ...gameIds.filter(id => id !== undefined)

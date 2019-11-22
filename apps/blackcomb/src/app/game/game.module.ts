@@ -27,7 +27,7 @@ import { GameRoutingModule } from './game-routing.module';
     GameRoutingModule,
     PerxGameModule,
     AuthenticationModule,
-    MatProgressBarModule,
+    MatProgressBarModule
   ]
 })
 export class GameModule { }
