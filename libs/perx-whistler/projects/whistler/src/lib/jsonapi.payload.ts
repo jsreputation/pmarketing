@@ -19,7 +19,7 @@ export interface IJsonApiItemPayload<T, S = any> {
 export interface IJsonApiItem<T> {
   id: string;
   type: string;
-  links: {
+  links?: {
     self: string;
   };
   attributes: T;

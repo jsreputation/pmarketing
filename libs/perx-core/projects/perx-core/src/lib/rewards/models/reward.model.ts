@@ -44,7 +44,7 @@ export interface ICatalog {
 }
 
 export interface IPrice {
-  id: number;
+  id?: number;
   rewardCampaignId?: number;
   price?: number;
   currencyCode?: string;
