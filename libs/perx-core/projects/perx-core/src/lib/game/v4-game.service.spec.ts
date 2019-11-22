@@ -1,10 +1,12 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 
 import { V4GameService } from './v4-game.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { IGame, GameType } from './game.model';
 import { Type } from '@angular/core';
 import { ConfigModule } from '../../public-api';
+import { HttpClient } from '@angular/common/http';
+import { of } from 'rxjs';
 
 describe('V4GameService', () => {
   let httpTestingController: HttpTestingController;
@@ -235,4 +237,69 @@ describe('V4GameService', () => {
 
     httpTestingController.verify();
   });
+
+  it('handle error', fakeAsync(inject([V4GameService, HttpClient], (gameService: V4GameService, http: HttpClient) => {
+    spyOn(http, 'get').and.returnValue(of({ data: { game_type: '' } }));
+    const handleErr = { err() { } };
+    const spy = spyOn(handleErr, 'err');
+    gameService.get(1).subscribe(() => { }, handleErr.err);
+    tick();
+    expect(spy).toHaveBeenCalled();
+  })));
+
+  it('check addition option for v4GameToGame', fakeAsync(inject([V4GameService, HttpClient], (gameService: V4GameService, http: HttpClient) => {
+    const game = {
+      game_type: 'hit_the_pinata',
+      campaign_id: 1,
+      display_properties: {
+        header: {
+          value: {
+            title: 'title',
+            description: 'test'
+          }
+        },
+        play_button_text: 'test',
+        outcome: {
+          button_text: 'rest',
+          description: 'rest',
+          title: 'rest',
+          type: 'image',
+          value: {
+            image_url: 'test',
+            file: ''
+          }
+        },
+        still_image: {
+          value: {
+            image_url: ''
+          }
+        },
+        opened_image: {
+          value: {
+            image_url: ''
+          }
+        },
+        nooutcome: {
+          button_text: 'rest',
+          description: 'rest',
+          title: 'rest'
+        }
+      },
+      id: 1,
+      number_of_tries: 1,
+      state: null,
+      user_account_id: 1,
+    };
+    const successHandle = {success() {}}
+    spyOn(http, 'get').and.returnValue(of({ data: game }));
+    const spy = spyOn(successHandle, 'success');
+    gameService.get(1).subscribe(successHandle.success);
+    tick();
+    expect(spy).toHaveBeenCalled();
+    game.display_properties.outcome.value = { image_url: '',file: 'text'}
+    gameService.get(1).subscribe(successHandle.success);
+    tick();
+    expect(spy).toHaveBeenCalled();
+  })));
+
 });
