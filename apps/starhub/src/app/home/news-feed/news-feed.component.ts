@@ -56,7 +56,7 @@ export class NewsFeedComponent implements OnInit {
   }
 
   public getFirstLine(text: string): string {
-    const lines = text.match(/[^\r\n]+/g);
-    return lines[0];
+    const lines = text.match(/[^\r\n]+/g) || [];
+    return lines && lines.length > 0 ? lines[0] : '';
   }
 }

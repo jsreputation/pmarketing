@@ -5,6 +5,7 @@
   flex-basis: auto;
   flex-grow: 1;
   justify-content: flex-start;
+  height: 100%;
 
   .reward-img__wrapper {
     flex: 0 0 10.5rem;
@@ -60,6 +61,7 @@
     }
 
     .description {
+      height: 100%;
       width: 70%;
       font-size: 1.2rem;
     }

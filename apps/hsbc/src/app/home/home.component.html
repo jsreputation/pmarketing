@@ -38,7 +38,7 @@
           </mat-icon>
         </mat-card>
         <h1>My Rewards</h1>
-        <perx-core-vouchers
+        <perx-core-vouchers *ngIf="sourceType !== null"
           (route)="onRoute($event)"
           [filter]="'issued'"
           [iconDisplay]="'arrow_forward_ios'"
@@ -47,13 +47,14 @@
           [showExpireDate]="false"
           [showRedeemedDate]="false"
           [showRedeemedIcon]="false"
+          [sourceType]="sourceType"
         ></perx-core-vouchers>
       </div>
     </mat-tab>
     <mat-tab label="History">
       <div class="tab-group__content">
         <h1>Redeemed Rewards</h1>
-        <perx-core-vouchers
+        <perx-core-vouchers *ngIf="sourceType !== null"
           (route)="onRoute($event)"
           [canSelectRedeemed]="true"
           [filter]="'redeemed'"
@@ -63,6 +64,7 @@
           [showExpireDate]="false"
           [showRedeemedDate]="true"
           [showRedeemedIcon]="false"
+          [sourceType]="sourceType"
         ></perx-core-vouchers>
       </div>
     </mat-tab>

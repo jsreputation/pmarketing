@@ -1,6 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CandyshopSimpleComponent } from './candyshop-simple.component';
+import {
+  ButtonModule,
+  DownloadButtonModule,
+  DownloadLinkModule,
+  CopyLinkModule,
+  RoleLabelModule,
+  StatusLabelModule,
+  ImagesPreviewModule,
+  CustomLineProgressModule,
+  ProgressBarModule,
+  VouchersProgressBarModule,
+  InfoHintModule
+} from '@perx/candyshop';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CandyshopSimpleComponent', () => {
   let component: CandyshopSimpleComponent;
@@ -8,9 +22,23 @@ describe('CandyshopSimpleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CandyshopSimpleComponent ]
+      declarations: [CandyshopSimpleComponent],
+      imports: [
+        ButtonModule,
+        DownloadButtonModule,
+        DownloadLinkModule,
+        CopyLinkModule,
+        RoleLabelModule,
+        StatusLabelModule,
+        ImagesPreviewModule,
+        CustomLineProgressModule,
+        ProgressBarModule,
+        VouchersProgressBarModule,
+        InfoHintModule,
+        NoopAnimationsModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

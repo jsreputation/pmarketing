@@ -9,7 +9,7 @@ describe('Pipe: Default', () => {
 
   it('should return null on pipe transfor', () => {
     const name = pipe.transform(null);
-    expect(name).toBe(null);
+    expect(name).toBe('');
   });
 
   it('should remove (renewal on pipe transform)', () => {

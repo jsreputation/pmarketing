@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CandyshopMenuComponent } from './candyshop-menu.component';
+import { SidenavMenuModule, SidenavModule } from '@perx/candyshop';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CandyshopMenuComponent', () => {
   let component: CandyshopMenuComponent;
@@ -8,9 +11,15 @@ describe('CandyshopMenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CandyshopMenuComponent ]
+      declarations: [CandyshopMenuComponent],
+      imports: [
+        SidenavMenuModule,
+        SidenavModule,
+        NoopAnimationsModule,
+        RouterTestingModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

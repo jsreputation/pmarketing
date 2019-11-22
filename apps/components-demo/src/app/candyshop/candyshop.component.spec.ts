@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CandyshopComponent } from './candyshop.component';
+import { ButtonModule } from '@perx/candyshop';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CandyshopComponent', () => {
   let component: CandyshopComponent;
@@ -8,7 +10,11 @@ describe('CandyshopComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CandyshopComponent]
+      declarations: [CandyshopComponent],
+      imports: [
+        ButtonModule,
+        RouterTestingModule
+      ]
     })
       .compileComponents();
   }));

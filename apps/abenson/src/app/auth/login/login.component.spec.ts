@@ -86,10 +86,10 @@ describe('LoginComponent', () => {
   }));
 
   it('should handle unknown status', fakeAsync(() => {
-    component.errorMessage = null;
+    component.errorMessage = undefined;
     spyOn(auth, 'login').and.returnValue(throwError(new HttpErrorResponse({ status: 403 })));
     component.onSubmit();
-    expect(component.errorMessage).toBe(null);
+    expect(component.errorMessage).toBe(undefined);
   }));
 
   it('should handle error with status 0', fakeAsync(() => {

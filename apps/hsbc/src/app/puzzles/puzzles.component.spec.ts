@@ -8,7 +8,8 @@ import {
   PuzzlesModule,
   StampModule,
   StampService,
-  AuthenticationService
+  AuthenticationService,
+  ConfigService
 } from '@perx/core';
 import {RouterTestingModule} from '@angular/router/testing';
 import {of} from 'rxjs';
@@ -22,6 +23,10 @@ describe('PuzzlesComponent', () => {
     getCards: () => of([])
   };
   const authenticationServiceStub = {$failedAuth: of(true)};
+
+  const configServiceStub = {
+    readAppConfig: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -42,6 +47,7 @@ describe('PuzzlesComponent', () => {
       providers: [
         {provide: StampService, useValue: stampsServiceStub},
         {provide: AuthenticationService, useValue: authenticationServiceStub},
+        { provide: ConfigService, useValue: configServiceStub}
       ]
     })
       .compileComponents();

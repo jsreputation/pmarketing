@@ -31,16 +31,16 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
 
   public ngOnInit(): void {
     this.purchasesTitleFn = (tr: ITransactionHistory) =>
-      `${tr.transactionDetails.data && (tr.transactionDetails.data as IPurchaseTransactionHistory).pharmacyName}`;
+      `${tr.transactionDetails && (tr.transactionDetails.data as IPurchaseTransactionHistory).pharmacyName}`;
 
     this.redemptionsTitleFn = (tr: ITransactionHistory) =>
-      `${tr.transactionDetails.data && (tr.transactionDetails.data as IRewardTransactionHistory).rewardName}`;
+      `${tr.transactionDetails && (tr.transactionDetails.data as IRewardTransactionHistory).rewardName}`;
 
     this.descFn = (tr: ITransactionHistory) =>
-      `${tr.transactionDetails.data && (tr.transactionDetails.data as IPurchaseTransactionHistory).productName}`;
+      `${tr.transactionDetails && (tr.transactionDetails.data as IPurchaseTransactionHistory).productName}`;
 
     this.subTitleFn = (tr: ITransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
-    this.priceLabelFn = (tr: ITransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount)}`;
+    this.priceLabelFn = (tr: ITransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount || 0)}`;
 
     this.loyaltyService.getTransactionHistory().subscribe(
       (transactions: ITransactionHistory[]) => this.transactions = of(transactions),

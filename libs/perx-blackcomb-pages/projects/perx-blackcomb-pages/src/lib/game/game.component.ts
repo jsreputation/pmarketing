@@ -1,10 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { IGameService, IGame, GameType, IPopupConfig, IEngagementTransaction, AuthenticationService, PopupComponent } from '@perx/core';
+import {
+  IGameService,
+  IGame,
+  GameType,
+  IPopupConfig,
+  IEngagementTransaction,
+  AuthenticationService,
+  NotificationService
+} from '@perx/core';
 import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
 import { Observable, interval, throwError, Subject, of, combineLatest } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { MatDialog } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -37,24 +44,11 @@ export class GameComponent implements OnInit, OnDestroy {
     imageUrl: '',
   };
 
-  private initTranslate(): void {
-    [
-      this.successPopUp.title,
-      this.successPopUp.text,
-      this.successPopUp.buttonTxt,
-      this.noRewardsPopUp.title,
-      this.noRewardsPopUp.text,
-      this.noRewardsPopUp.buttonTxt
-    ]
-      .filter(k => k !== undefined && k !== null)
-      .forEach((k: string) => this.translate.get(k).subscribe((text) => k = text));
-  }
-
   constructor(
     private route: ActivatedRoute,
     private gameService: IGameService,
     private router: Router,
-    private dialog: MatDialog,
+    private notificationService: NotificationService,
     private auth: AuthenticationService,
     private translate: TranslateService,
   ) {
@@ -164,7 +158,28 @@ export class GameComponent implements OnInit, OnDestroy {
       this.router.navigate(['/signup'], { queryParams });
     } else {
       this.router.navigate(['/wallet']);
-      this.dialog.open(PopupComponent, { data: this.popupData });
+      this.notificationService.addPopup(this.popupData);
+    }
+  }
+
+  private initTranslate(): void {
+    if (this.successPopUp.title) {
+      this.translate.get(this.successPopUp.title).subscribe((text) => this.successPopUp.title = text);
+    }
+    if (this.successPopUp.text) {
+      this.translate.get(this.successPopUp.text).subscribe((text) => this.successPopUp.text = text);
+    }
+    if (this.successPopUp.buttonTxt) {
+      this.translate.get(this.successPopUp.buttonTxt).subscribe((text) => this.successPopUp.buttonTxt = text);
+    }
+    if (this.noRewardsPopUp.title) {
+      this.translate.get(this.noRewardsPopUp.title).subscribe((text) => this.noRewardsPopUp.title = text);
+    }
+    if (this.noRewardsPopUp.text) {
+      this.translate.get(this.noRewardsPopUp.text).subscribe((text) => this.noRewardsPopUp.text = text);
+    }
+    if (this.noRewardsPopUp.buttonTxt) {
+      this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
     }
   }
 }

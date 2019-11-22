@@ -9,12 +9,11 @@ import {
   IEngagementTransaction,
   RewardsService,
   AuthenticationService,
-  PopupComponent
+  NotificationService
 } from '@perx/core';
 import { map, switchMap, catchError, tap, takeUntil, mergeMap, } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';
-import { MatDialog } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -53,24 +52,28 @@ export class RewardComponent implements OnInit, OnDestroy {
     private outcomeService: InstantOutcomeService,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog,
+    private notificationService: NotificationService,
     private auth: AuthenticationService,
     private translate: TranslateService,
     private rewardService: RewardsService
   ) { }
 
   private initTranslate(): void {
-    [
-      this.successPopUp.title,
-      this.successPopUp.buttonTxt,
-      this.noRewardsPopUp.title,
-      this.noRewardsPopUp.text,
-      this.noRewardsPopUp.buttonTxt
-    ]
-      .filter((k) => k !== undefined && k !== null)
-      .forEach((k: string) => {
-        this.translate.get(k).subscribe((text: string) => k = text);
-      });
+    if (this.successPopUp.title) {
+      this.translate.get(this.successPopUp.title).subscribe((text: string) => this.successPopUp.title = text);
+    }
+    if (this.successPopUp.buttonTxt) {
+      this.translate.get(this.successPopUp.buttonTxt).subscribe((text: string) => this.successPopUp.buttonTxt = text);
+    }
+    if (this.noRewardsPopUp.title) {
+      this.translate.get(this.noRewardsPopUp.title).subscribe((text: string) => this.noRewardsPopUp.title = text);
+    }
+    if (this.noRewardsPopUp.text) {
+      this.translate.get(this.noRewardsPopUp.text).subscribe((text: string) => this.noRewardsPopUp.text = text);
+    }
+    if (this.noRewardsPopUp.buttonTxt) {
+      this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text: string) => this.noRewardsPopUp.buttonTxt = text);
+    }
   }
 
   public ngOnInit(): void {
@@ -173,7 +176,7 @@ export class RewardComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate(['/wallet']);
       if (this.popupData) {
-        this.dialog.open(PopupComponent, { data: this.popupData });
+        this.notificationService.addPopup(this.popupData);
       }
     }
   }
