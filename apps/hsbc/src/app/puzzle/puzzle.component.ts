@@ -94,6 +94,13 @@ export class PuzzleComponent implements OnInit, OnDestroy {
           this.displayCampaignAs = 'stamp_card';
         }
 
+        if (config.sourceType === 'hsbc-collect2') {
+          // tslint:disable-next-line: max-line-length
+          this.notificationService.addPopup({
+            text: 'Thank you for joining the Collect and Win Promo! The campaign has now ended. Redemption of earned rewards is untill December 30, 2019 only.'
+          });
+        }
+
         if (this.campaignId === null) {
           this.fetchCampaign();
         } else if (this.cardId === null || this.card === null) {
