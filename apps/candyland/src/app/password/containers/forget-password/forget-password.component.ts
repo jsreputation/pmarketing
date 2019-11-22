@@ -1,5 +1,6 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 interface StateObjIntf  {
   id: string;
@@ -12,19 +13,36 @@ interface StateObjIntf  {
   templateUrl: './forget-password.component.html',
   styleUrls: ['./forget-password.component.scss']
 })
-export class ForgetPasswordComponent implements AfterViewInit {
-  @ViewChild('accountid', {static: false})
-  public accountIdInput: ElementRef;
+export class ForgetPasswordComponent implements OnInit {
+  public formForget: FormGroup;
 
-  @ViewChild('username', {static: false})
-  public usernameInput: ElementRef;
+  constructor(private location: Location, private fb: FormBuilder) { }
 
-  constructor(private location: Location) { }
+  get accountId(): AbstractControl | null { return this.formForget.get('account_id'); }
+  get username(): AbstractControl | null { return this.formForget.get('username'); }
 
-  public ngAfterViewInit(): void {
-    const state = this.location.getState() as StateObjIntf;
-    this.accountIdInput.nativeElement.value = state.id || '';
-    this.usernameInput.nativeElement.value = state.user || '';
+  private createForm(state: StateObjIntf): void {
+    this.formForget = this.fb.group({
+      account_id: [ state.id || null, [
+        Validators.required,
+        Validators.pattern(/([0-9]|[A-Z]|-)*/i),
+        Validators.minLength(3),
+        Validators.maxLength(64)
+      ]],
+      username: [ state.user || null, [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(100)
+      ]]
+    });
   }
 
+  public ngOnInit(): void {
+    const state = this.location.getState() as StateObjIntf;
+    this.createForm(state);
+  }
+
+  public onSubmit(): void {
+    console.log(this.formForget.value);
+  }
 }

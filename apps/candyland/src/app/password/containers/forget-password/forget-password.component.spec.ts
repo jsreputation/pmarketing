@@ -7,6 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {ReactiveFormsModule} from '@angular/forms';
 
 describe('ForgetPasswordComponent', () => {
   let component: ForgetPasswordComponent;
@@ -19,6 +20,7 @@ describe('ForgetPasswordComponent', () => {
         MatFormFieldModule,
         MatIconModule,
         ButtonModule,
+        ReactiveFormsModule,
         RouterTestingModule,
         MatInputModule,
         NoopAnimationsModule

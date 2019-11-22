@@ -5,6 +5,7 @@ import {UpdateUserComponent} from './containers/update-user/update-user.componen
 import {CommonModule} from '@angular/common';
 import {PasswordRoutingModule} from './password-routing.module';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
   imports: [
     CommonModule,
     PasswordRoutingModule,
+    ReactiveFormsModule,
     MatToolbarModule,
     ButtonModule,
     MatButtonModule,
