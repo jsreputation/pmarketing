@@ -31,8 +31,8 @@ describe('RedemptionBookingComponent', () => {
 
   const locationsServiceStub = {};
 
-  const loyaltyServiceStub = {
-    getLoyalty: (): Observable<ILoyalty> => of({} as ILoyalty),
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
+    getLoyalty: (): Observable<ILoyalty> => of(),
     getLoyalties: (): Observable<ILoyalty[]> => of([])
   };
   const mockReward: IReward = {
