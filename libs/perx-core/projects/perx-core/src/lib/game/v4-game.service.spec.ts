@@ -7,6 +7,7 @@ import { Type } from '@angular/core';
 import { ConfigModule } from '../../public-api';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
+import { RedemptionType } from '../vouchers/models/voucher.model';
 
 describe('V4GameService', () => {
   let httpTestingController: HttpTestingController;
@@ -290,16 +291,29 @@ describe('V4GameService', () => {
       state: null,
       user_account_id: 1,
     };
-    const successHandle = {success() {}}
+    const successHandle = { success() { } }
     spyOn(http, 'get').and.returnValue(of({ data: game }));
     const spy = spyOn(successHandle, 'success');
     gameService.get(1).subscribe(successHandle.success);
     tick();
     expect(spy).toHaveBeenCalled();
-    game.display_properties.outcome.value = { image_url: '',file: 'text'}
+    game.display_properties.outcome.value = { image_url: '', file: 'text' }
     gameService.get(1).subscribe(successHandle.success);
     tick();
     expect(spy).toHaveBeenCalled();
   })));
 
+  it('play should filter voucher ', fakeAsync(inject([V4GameService, HttpClient],
+    (gameService: V4GameService, http: HttpClient) => {
+      spyOn(http, 'put').and.returnValue(of({
+        data: {
+          outcomes: [{ outcome_type: 'reward', redemption_type: RedemptionType.none }]
+        }
+      }));
+      const handle = { success() { } };
+      const spy = spyOn(handle, 'success');
+      gameService.play(1).subscribe(handle.success);
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })));
 });
