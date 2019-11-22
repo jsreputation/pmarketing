@@ -91,7 +91,7 @@ export class RewardComponent implements OnInit, OnDestroy {
         map((params: Params) => params.id),
         switchMap((id: string) => this.outcomeService.getFromCampaign(parseInt(id, 10))),
         catchError((err: HttpErrorResponse) => {
-          if (err.status === 403) {
+          if (err.status === 403 || err.status === 404) {
             this.router.navigate(['/wallet']);
             this.notificationService.addPopup(this.instantOutcomeNotAvailablePopUp);
           }
