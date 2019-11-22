@@ -32,15 +32,16 @@ export class RewardDetailComponent implements OnInit {
     }));
 
     this.displayPriceFn = (rewardPrice: IPrice) => {
-      if (rewardPrice.points > 0 && rewardPrice.price > 0) {
+
+      if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && rewardPrice.price > 0) {
         return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${Math.floor(rewardPrice.price)}`;
       }
 
-      if (rewardPrice.price > 0) {
+      if (rewardPrice.price && rewardPrice.price > 0) {
         return `${rewardPrice.currencyCode} ${Math.floor(rewardPrice.price)}`;
       }
 
-      if (rewardPrice.points > 0) {
+      if (rewardPrice.points && rewardPrice.points > 0) {
         return `${rewardPrice.points} points`;
       }
       return '0 points'; // is actually 0 or invalid value default
@@ -51,15 +52,15 @@ export class RewardDetailComponent implements OnInit {
   }
 
   public displayPrice(rewardPrice: IPrice): string {
-    if (rewardPrice.points > 0 && rewardPrice.price > 0) {
+    if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && rewardPrice.price > 0) {
       return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${rewardPrice.price}`;
     }
 
-    if (rewardPrice.price > 0) {
+    if (rewardPrice.price && rewardPrice.price > 0) {
       return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
     }
 
-    if (rewardPrice.points > 0) {
+    if (rewardPrice.points && rewardPrice.points > 0) {
       return `${rewardPrice.points} points`;
     }
 
