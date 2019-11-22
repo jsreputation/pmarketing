@@ -1,6 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+
 import { Observable } from 'rxjs';
-import { IPrice, IReward } from '../models/reward.model';
+
+import {
+  IPrice,
+  IReward,
+} from '../models/reward.model';
+import {
+  ITheme,
+  ThemesService,
+} from '../../../public-api';
 
 @Component({
   selector: 'perx-core-rewards-list',
@@ -10,6 +25,7 @@ import { IPrice, IReward } from '../models/reward.model';
 export class RewardsListComponent implements OnInit {
 
   public repeatGhostCount: number = 10;
+  public theme: ITheme | null = null;
 
   @Input('rewardsList')
   public rewards$: Observable<IReward[]>;
@@ -23,10 +39,15 @@ export class RewardsListComponent implements OnInit {
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
 
-  // constructor() {
-  // }
+  constructor(
+    private themesService: ThemesService,
+  ) { }
 
   public ngOnInit(): void {
+    this.themesService.getThemeSetting().subscribe(
+      theme => this.theme = theme
+    );
+
     if (!this.displayPriceFn) {
       this.displayPriceFn = (rewardPrice: IPrice) => {
         if (rewardPrice.price && rewardPrice.price > 0) {
