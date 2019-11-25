@@ -3,13 +3,14 @@ import { MatSnackBar } from '@angular/material';
 import {
   IFormsService,
   AuthenticationService,
-  IPopupConfig,
   IGameService,
   InstantOutcomeService,
   NotificationService,
-  IPrePlayStateData
+  IPrePlayStateData,
+  ISurvey,
+  IAnswer,
+  SurveyService
 } from '@perx/core';
-import { ISurvey, IAnswer } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject, iif, of } from 'rxjs';
 import { catchError, tap, switchMap } from 'rxjs/operators';
@@ -32,11 +33,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public answers: IAnswer[];
   public totalLength: number;
   public currentPointer: number;
-  private popupData: IPopupConfig;
-  private engagementType: string;
-  private transactionId: number;
-  private collectInfo: boolean;
   public errorMessage: string | null = null;
+  private stateData: IPrePlayStateData;
 
   constructor(
     private formSvc: IFormsService,
@@ -46,26 +44,14 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private router: Router,
     private translate: TranslateService,
     private gameService: IGameService,
+    private surveyService: SurveyService,
     private location: Location,
     private instantOutcomeService: InstantOutcomeService
   ) { }
 
   public ngOnInit(): void {
     this.data$ = this.formSvc.getSignupForm();
-    const stateData = this.location.getState() as IPrePlayStateData;
-
-    if (stateData && stateData.popupData) {
-      this.popupData = stateData.popupData;
-    }
-    if (stateData && stateData.engagementType) {
-      this.engagementType = stateData.engagementType;
-    }
-    if (stateData && stateData.transactionId) {
-      this.transactionId = stateData.transactionId;
-    }
-    if (stateData && stateData.collectInfo) {
-      this.collectInfo = !!stateData.collectInfo;
-    }
+    this.stateData = this.location.getState() as IPrePlayStateData;
   }
 
   public ngOnDestroy(): void {
@@ -98,7 +84,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     });
     const PI = userObj.primary_identifier;
     if (PI) {
-      if (this.collectInfo) {
+      if (this.stateData && this.stateData.collectInfo) {
         this.submitDataAndCollectInformation(PI, userObj);
       }
       this.submitData(PI, userObj);
@@ -152,11 +138,20 @@ export class SignUpComponent implements OnInit, OnDestroy {
           }
         }),
         switchMap(() => {
-          if (this.engagementType === 'game' && this.transactionId) {
-            return this.gameService.prePlayConfirm(this.transactionId);
+          if (
+            this.stateData &&
+            this.stateData.engagementType === 'survey' &&
+            this.stateData.campaignId &&
+            this.stateData.answers &&
+            this.stateData.surveyId
+          ) {
+            return this.surveyService.postSurveyAnswer(this.stateData.answers, this.stateData.campaignId, this.stateData.surveyId);
           }
-          if (this.engagementType === 'instant_outcome' && this.transactionId) {
-            return this.instantOutcomeService.prePlayConfirm(this.transactionId);
+          if (this.stateData && this.stateData.engagementType === 'game' && this.stateData.transactionId) {
+            return this.gameService.prePlayConfirm(this.stateData.transactionId);
+          }
+          if (this.stateData && this.stateData.engagementType === 'instant_outcome' && this.stateData.transactionId) {
+            return this.instantOutcomeService.prePlayConfirm(this.stateData.transactionId);
           }
           throw new Error('PI_NO_TRANSACTION_MATCH');
         }),
@@ -166,8 +161,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
       ).subscribe(
         () => {
           this.router.navigate(['/wallet']);
-          if (this.popupData) {
-            this.notificationService.addPopup(this.popupData);
+          if (this.stateData && this.stateData.popupData) {
+            this.notificationService.addPopup(this.stateData.popupData);
           }
         },
         (error: Error) => this.updateErrorMessage(error.message)

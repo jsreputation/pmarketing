@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NotificationService, ISurvey, SurveyService, IPopupConfig, IPrePlayStateData } from '@perx/core';
+import { NotificationService, ISurvey, SurveyService, IPopupConfig, IPrePlayStateData, AuthenticationService } from '@perx/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, Subject, of } from 'rxjs';
 import { filter, switchMap, takeUntil, map } from 'rxjs/operators';
@@ -66,10 +66,12 @@ export class SurveyComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private surveyService: SurveyService,
     private translate: TranslateService,
+    private auth: AuthenticationService
   ) { }
 
   public ngOnInit(): void {
     this.initTranslate();
+    this.isAnonymousUser = this.auth.getAnonymous();
     this.data$ = this.route.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
@@ -140,12 +142,13 @@ export class SurveyComponent implements OnInit, OnDestroy {
 
   private redirectUrlAndPopUp(): void {
     const surveyId = this.survey && this.survey.id ? Number.parseInt(this.survey.id, 10) : null;
+    const campaignId = this.route.snapshot.params.id ? Number.parseInt(this.route.snapshot.params.id, 10) : null;
     const state: IPrePlayStateData = {
       popupData: this.popupData,
       engagementType: 'survey',
       surveyId,
       collectInfo: true,
-      campaignId: this.route.snapshot.params.id as number,
+      campaignId,
       answers: this.answers
     };
 

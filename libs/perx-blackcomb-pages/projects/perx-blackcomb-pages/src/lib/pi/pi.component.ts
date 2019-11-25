@@ -13,7 +13,7 @@ import {
 } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Subject, iif, of } from 'rxjs';
-import { Config, AuthenticationService, IPopupConfig, InstantOutcomeService, IGameService, NotificationService, IPrePlayStateData } from '@perx/core';
+import { Config, AuthenticationService, InstantOutcomeService, IGameService, NotificationService, IPrePlayStateData, SurveyService } from '@perx/core';
 import { switchMap, catchError, tap } from 'rxjs/operators';
 
 @Component({
@@ -27,9 +27,7 @@ export class PIComponent implements OnInit, OnDestroy {
   public preAuth: boolean;
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
-  private popupData: IPopupConfig;
-  private engagementType: string;
-  private transactionId: number;
+  private stateData: IPrePlayStateData;
 
   private initForm(): void {
     this.PIForm = this.fb.group({
@@ -42,6 +40,7 @@ export class PIComponent implements OnInit, OnDestroy {
     private config: Config,
     private router: Router,
     private gameService: IGameService,
+    private surveyService: SurveyService,
     private instantOutcomeService: InstantOutcomeService,
     private translate: TranslateService,
     private authService: AuthenticationService,
@@ -53,17 +52,7 @@ export class PIComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initForm();
-    const stateData = this.location.getState() as IPrePlayStateData;
-    console.log(stateData);
-    if (stateData && stateData.popupData) {
-      this.popupData = stateData.popupData;
-    }
-    if (stateData && stateData.engagementType) {
-      this.engagementType = stateData.engagementType;
-    }
-    if (stateData && stateData.transactionId) {
-      this.transactionId = stateData.transactionId;
-    }
+    this.stateData = this.location.getState() as IPrePlayStateData;
   }
 
   public ngOnDestroy(): void {
@@ -114,11 +103,20 @@ export class PIComponent implements OnInit, OnDestroy {
           }
         }),
         switchMap(() => {
-          if (this.engagementType === 'game' && this.transactionId) {
-            return this.gameService.prePlayConfirm(this.transactionId);
+          if (
+            this.stateData &&
+            this.stateData.engagementType === 'survey' &&
+            this.stateData.campaignId &&
+            this.stateData.answers &&
+            this.stateData.surveyId
+          ) {
+            return this.surveyService.postSurveyAnswer(this.stateData.answers, this.stateData.campaignId, this.stateData.surveyId);
           }
-          if (this.engagementType === 'instant_outcome' && this.transactionId) {
-            return this.instantOutcomeService.prePlayConfirm(this.transactionId);
+          if (this.stateData && this.stateData.engagementType === 'game' && this.stateData.transactionId) {
+            return this.gameService.prePlayConfirm(this.stateData.transactionId);
+          }
+          if (this.stateData && this.stateData.engagementType === 'instant_outcome' && this.stateData.transactionId) {
+            return this.instantOutcomeService.prePlayConfirm(this.stateData.transactionId);
           }
           throw new Error('PI_NO_TRANSACTION_MATCH');
         }),
@@ -128,8 +126,8 @@ export class PIComponent implements OnInit, OnDestroy {
       ).subscribe(
         () => {
           this.router.navigate(['/wallet']);
-          if (this.popupData) {
-            this.notificationService.addPopup(this.popupData);
+          if (this.stateData.popupData) {
+            this.notificationService.addPopup(this.stateData.popupData);
           }
         },
         (error: Error) => this.updateErrorMessage(error.message)

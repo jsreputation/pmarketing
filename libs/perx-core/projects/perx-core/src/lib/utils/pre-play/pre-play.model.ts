@@ -7,6 +7,6 @@ export interface IPrePlayStateData {
     collectInfo?: boolean;
     transactionId?: number | null;
     surveyId?: number | null;
-    campaignId?: number;
+    campaignId?: number | null;
     answers?: IAnswer[];
 }

@@ -73,8 +73,8 @@ export class GameComponent implements OnInit, OnDestroy {
       switchMap((id: number) => this.gameService.getGamesFromCampaign(id).pipe(
         catchError((err: HttpErrorResponse) => {
           if (err.status === 403 || err.status === 404) {
-            this.router.navigate(['/wallet']);
-            this.notificationService.addPopup(this.gameNotAvailablePopUp);
+            this.popupData = this.gameNotAvailablePopUp;
+            this.redirectUrlAndPopUp();
           }
           throw err;
         }))
