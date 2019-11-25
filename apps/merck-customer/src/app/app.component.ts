@@ -54,8 +54,8 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
 
-    const lang = this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
-    this.store.setAppInfoProperty(lang, 'merck-customer');
+    const lang  = this.store.getAppInfoProperty('merck-customer') || this.translateService.currentLang || this.translateService.defaultLang;
+    this.translateService.use(lang);
     this.translateService.onLangChange.subscribe((change: LangChangeEvent) => {
       this.store.setAppInfoProperty(change.lang, 'merck-customer');
     });
