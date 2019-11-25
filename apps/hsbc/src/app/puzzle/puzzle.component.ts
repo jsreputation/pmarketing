@@ -47,14 +47,14 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./puzzle.component.scss']
 })
 export class PuzzleComponent implements OnInit, OnDestroy {
-  public campaignId: number = null;
-  private cardId: number = null;
-  private card: IStampCard = null;
+  public campaignId: number | null | undefined = null;
+  private cardId: number | null = null;
+  private card: IStampCard | null = null;
   public availablePieces: number = 0;
   public playedPieces: number = 0;
   public totalAvailablePieces: number = 0;
-  public rows: number = 2;
-  public cols: number = 3;
+  public rows: number | undefined = 2;
+  public cols: number | undefined = 3;
   public image: string = '';
   private cardsCount: number = 0;
   private currentStampId: number = 0;
@@ -72,6 +72,9 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   public cardBgImage: string;
 
   public get rewards(): PuzzleCollectReward[] {
+    if (!this.card || !this.card.displayProperties.rewardPositions) {
+      throw new Error(`card or rewardPositions is required`);
+    }
     return this.card.displayProperties.rewardPositions.map((el: number) => ({ rewardPosition: --el }));
   }
 
@@ -165,13 +168,11 @@ export class PuzzleComponent implements OnInit, OnDestroy {
           (campaigns: ICampaign[]) => from(campaigns).pipe(
             mergeMap((campaign: ICampaign) => this.currentCard(campaign.id)),
             toArray(),
-            map((stampCards: IStampCard[]) => {
-              return stampCards.filter(
-                card => card.displayProperties.displayCampaignAs &&
-                  card.displayProperties.displayCampaignAs === this.displayCampaignAs);
-            }),
+            map((stampCards: IStampCard[]) => stampCards.filter(card =>
+              card.displayProperties.displayCampaignAs &&
+              card.displayProperties.displayCampaignAs === this.displayCampaignAs)),
             map((cards: IStampCard[]) => cards[0]),
-            tap((card: IStampCard) => {
+            tap((card: IStampCard | null) => {
               if (card) {
                 this.campaignId = card.campaignId;
               }
@@ -180,17 +181,26 @@ export class PuzzleComponent implements OnInit, OnDestroy {
         ),
       )
       .subscribe((card: IStampCard) => {
-        if (!card) {
-          return;
+        if (!card || !card.campaignId) {
+          throw new Error(`card or campaignId is required`);
         }
+
         this.fetchStampTransactionCount(card.campaignId);
         this.cardId = card.id;
         this.card = card;
         this.cols = card.displayProperties.numberOfCols;
         this.rows = card.displayProperties.numberOfRows;
+        if (!this.cols || !this.rows) {
+          throw new Error(`cols or rows is required`);
+        }
+
         this.playedPieces = card.stamps ? card.stamps.filter(stamp => stamp.state === StampState.redeemed).length : 0;
         const availablePieces = card.stamps ? card.stamps.filter(stamp => stamp.state === StampState.issued).length : 0;
         this.availablePieces = Math.min(this.rows * this.cols - this.playedPieces, availablePieces);
+        if (!card.displayProperties.cardImage) {
+          throw new Error(`cardImage is required`);
+        }
+
         this.image = card.displayProperties.cardImage.value.imageUrl;
         if (this.availablePieces === 0 && card.state === StampCardState.inactive) {
           this.notificationService.addPopup({
@@ -205,8 +215,16 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   }
 
   private fetchCard(): void {
+    if (!this.campaignId) {
+      throw new Error(`campaignId is required`);
+    }
+
     this.currentCard(this.campaignId).subscribe(
       (card: IStampCard) => {
+        if (!this.campaignId) {
+          throw new Error(`campaignId is required`);
+        }
+
         this.card = card;
         this.cardId = card.id;
         this.fetchStampTransactionCount(this.campaignId);
@@ -234,6 +252,10 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   }
 
   public onMoved(): void {
+    if (!this.card || !this.card.stamps) {
+      throw new Error(`card or stamps is required`);
+    }
+
     const stamps = this.card.stamps.filter(s => s.state === StampState.issued);
     if (stamps.length === 0) {
       // don't do anything
@@ -244,6 +266,10 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   }
 
   public async stampClicked(stamp: IStamp): Promise<void> {
+    if (!this.card || !this.card.stamps) {
+      throw new Error(`card or stamps is required`);
+    }
+
     // build ordered list of stamps to be stamped
     const stamps: IStamp[] = this.card.stamps.filter(s => s.state === StampState.issued);
     for (const st of stamps) {
@@ -268,6 +294,14 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       .then(
         (stamp: IStamp) => {
           if (stamp.state === StampState.redeemed) {
+            if (!this.card || !this.card.stamps) {
+              throw new Error(`card or stamps is required`);
+            }
+
+            if (!this.cols || !this.rows) {
+              throw new Error(`cols or rows is required`);
+            }
+
             const redeemedCard = this.card.stamps.map((cardStamp: IStamp) => {
               if (cardStamp.id === stampId) {
                 return { ...cardStamp, state: StampState.redeemed };
@@ -277,7 +311,15 @@ export class PuzzleComponent implements OnInit, OnDestroy {
             this.card = { ...this.card, stamps: redeemedCard };
 
             if (this.card.cardNumber === this.cardsCount) { // we are on the last card
+              if (!this.card || !this.card.stamps) {
+                throw new Error(`card or stamps is required`);
+              }
+
               const redeemedTransactionsCount = this.card.stamps.filter(s => s.state === StampState.redeemed).length;
+              if (!this.card || !this.card.campaignConfig) {
+                throw new Error(`card or campaignConfig is required`);
+              }
+
               if (this.card.displayProperties.displayCampaignAs === 'stamp_card'
                 && redeemedTransactionsCount === this.card.campaignConfig.totalSlots) {
                 this.notificationService.addPopup({
@@ -308,6 +350,10 @@ export class PuzzleComponent implements OnInit, OnDestroy {
               this.dialog.open(RewardPopupComponent, { data });
             }
           } else {
+            if (!this.card || !this.card.stamps) {
+              throw new Error(`card or stamps is required`);
+            }
+
             const issuedLeft = this.card.stamps.filter(s => s.state === StampState.issued);
             if (issuedLeft.length === 0) {
               // all redeemed but no voucher
