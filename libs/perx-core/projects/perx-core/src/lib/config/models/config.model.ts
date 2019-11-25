@@ -1,7 +1,8 @@
 import { TokenType } from '../../utils/storage/models/token-storage.model';
+import { IWSetting } from '@perx/whistler';
 
 export interface IConfig {
-  [key: string]: string | number | boolean | TokenType;
+  [key: string]: string | number | boolean | TokenType | IWSetting;
 }
 
 export interface IMicrositeSettings {
