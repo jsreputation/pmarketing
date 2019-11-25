@@ -53,7 +53,7 @@ export class WalletComponent implements OnInit {
       );
 
     this.activeRoute.queryParamMap.subscribe(ps => {
-      const tab: string = ps.get('tab');
+      const tab: string | null = ps.get('tab');
       if (tab === 'history') {
         this.selectedTab = 1;
       }
