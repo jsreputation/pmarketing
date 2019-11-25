@@ -34,12 +34,12 @@ export class LoginComponent implements OnInit {
   public ngOnInit(): void { }
 
   public onSubmit(): void {
-    const merchantUsername = (this.loginForm.get('name').value as string);
-    const email = (this.loginForm.get('email').value as string);
-    const password: string = this.loginForm.get('password').value;
+    const merchantUsername = this.loginForm.value.name as string;
+    const email = this.loginForm.value.email as string;
+    const password: string = this.loginForm.value.password;
     const scope: string = 'merchant_credentials';
 
-    this.authService.login(email, password, null, null, scope).subscribe(
+    this.authService.login(email, password, undefined, undefined, scope).subscribe(
       () => {
         // set global userID var for GA tracking
         if (!((window as any).primaryIdentifier)) {
