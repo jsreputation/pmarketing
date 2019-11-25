@@ -22,7 +22,7 @@ export interface IWAssignedAttributes {
 export interface IWPurchaseAttributes {
   loyalty_card_id: number;
   reward_entity_id: number;
-  voucher: IWAssignedAttributes;
+  voucher_id: number;
 }
 
 export interface IWAssignRequestAttributes {
