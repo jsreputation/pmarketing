@@ -13,9 +13,9 @@ describe('GameModule', () => {
         HttpClientTestingModule
       ],
       providers: [
-        { provide: IVoucherService, useValue: {}}
+        { provide: IVoucherService, useValue: {} }
       ]
-    })
+    });
   });
 
   it('gameServiceFactory', inject([HttpClient, IVoucherService],

@@ -61,17 +61,17 @@ describe('PinataComponent', () => {
     }
   });
 
-  it('should reset', ()=>{
+  it('should reset', () => {
     component.stillImg = '';
     component.reset();
     expect(component.currentImg).toBe('');
   });
 
-  it('should handle ngOnChanges', ()=>{
-    const change = {openedImg: {previousValue: '', currentValue: 'img', firstChange: true, isFirstChange: ()=>true}};
-     // @ts-ignore
+  it('should handle ngOnChanges', () => {
+    const change = { openedImg: { previousValue: '', currentValue: 'img', firstChange: true, isFirstChange: () => true } };
+    // @ts-ignore
     component.movingImg = undefined;
-    component.ngOnChanges({})
+    component.ngOnChanges({});
     component.ngOnChanges(change);
     component.shake();
     component.nbTaps = 3;
