@@ -27,7 +27,8 @@
   "BTN_LAUNCH": "Launch",
   "BTN_APPLY": "Apply",
   "BTN_REPORT": "Report",
-
+  "BTN_COME_BACK": "Come Back",
+  "BTN_CLOSE": "Close",
 
   "DESCRIPTION": "Description",
   "POINTS": "points",
@@ -78,5 +79,6 @@
     "PAUSED": "Paused",
     "ENDED": "Ended"
   },
-  "NAME": "Name"
+  "NAME": "Name",
+  "ACTIVATE": "activate"
 }

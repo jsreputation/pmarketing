@@ -38,7 +38,7 @@
     "STAMPS": "штампы",
     "STAMP_CARDS_VALIDITY": "Срок действия штампов",
     "VALID_FOR": "Valid for",
-    "PLAY": "Играть",
+    "PLAY": "Игр",
     "AFTER_1ST_STAMP_EARNED": "После получения 1-го штампа",
     "RESPONSE_LIMITS": "Ограничение ответов",
     "PER_USER": "На Пользователя",
@@ -64,6 +64,16 @@
     "REPEAT_ON": "Повторять",
     "SELECT_REWARDS": "Выбрать награды",
     "SEARCH_FOR_REWARDS": "Поиск наград",
-    "ADD_REWARD": "Добавить вознаграждение"
+    "ADD_REWARD": "Добавить награду",
+    "CAMPAIGN": "Кампания",
+    "InformationCollectionSettingTypes": {
+      "NO_INFORMATION": "Сбор информации не требуется",
+      "PI_INFORMATION": "Требуется сбор информации PI",
+      "SIGNUP_INFORMATION": "Требуется сбор регистрационной информации"
+    },
+    "ChannelTypes": {
+      "WEBLINK": "Веб ссылка",
+      "SMS": "CMC"
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardDetailsComponent } from './reward-details.component';
-import { RewardsModule, RewardsService, ConfigService, VouchersModule, IVoucherService, LoyaltyService, ILoyalty, ThemesService } from '@perx/core';
+import { RewardsModule, RewardsService, VouchersModule, ConfigService, IVoucherService, LoyaltyService, ILoyalty, ThemesService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
@@ -14,7 +14,6 @@ describe('RewardComponent', () => {
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
-
   const vouchersServiceStub: Partial<IVoucherService>  = {
     issueReward: () => of()
   };
