@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
 import { StampService } from '../../stamp/stamp.service';
-import { IStampCard, StampCardState, StampState } from '../../stamp/models/stamp.model';
+import { IStampCard, StampCardState, StampState, IStamp } from '../../stamp/models/stamp.model';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -166,11 +166,12 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
     return base[index % base.length];
   }
 
-  public nbAvailableStamps(puzzle: IStampCard): number {
+  public nbAvailableStamps(puzzle: IStampCard): string {
     if (puzzle.stamps === undefined) {
-      return 0;
+      return '0';
     }
-    return puzzle.stamps.filter(st => st.state === StampState.issued).length;
+    const length = puzzle.stamps.filter(st => st.state === StampState.issued).length;
+    return length === 1 ? '' : length.toString();
   }
 
   public nbPlacedStamps(puzzle: IStampCard): number {
