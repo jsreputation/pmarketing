@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
 import { StampService } from '../../stamp/stamp.service';
-import { IStampCard, StampCardState, StampState, IStamp } from '../../stamp/models/stamp.model';
+import { IStampCard, StampCardState, StampState } from '../../stamp/models/stamp.model';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
