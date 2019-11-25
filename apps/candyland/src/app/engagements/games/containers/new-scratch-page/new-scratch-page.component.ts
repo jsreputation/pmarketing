@@ -81,10 +81,6 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
     return this.form.get(ControlsName.buttonText);
   }
 
-  public get lastButtonText(): AbstractControl {
-    return this.form.get(ControlsName.lastButtonText);
-  }
-
   public get preScratchImage(): AbstractControl {
     return this.form.get(ControlsName.preScratchImage);
   }
@@ -202,11 +198,6 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
         Validators.minLength(2),
         Validators.maxLength(20)
       ]],
-      lastButtonText: ['Back To Wallet', [
-        Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(20)
-      ]],
       preScratchImage: [null, [Validators.required]],
       postScratchSuccessImage: [null, [Validators.required]],
       postScratchFailImage: [null, [Validators.required]],
@@ -220,7 +211,6 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
       headlineMessage: 'Scratch it!',
       subHeadlineMessage: 'Scratch it to get a reward!',
       buttonText: 'Start Playing',
-      lastButtonText: 'Back To Wallet',
       [ControlsName.preScratchImage]: data.preScratchImage[0],
       [ControlsName.postScratchSuccessImage]: data.postScratchSuccessImage[0],
       [ControlsName.postScratchFailImage]: data.postScratchFailImage[0],

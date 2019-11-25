@@ -78,7 +78,7 @@ export class WhistlerRewardsService implements RewardsService {
     };
   }
 
-  public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
+  public getAllRewards(tags?: string[] | null, categories?: string[]): Observable<IReward[]> {
     return new Observable(subject => {
       let current: IReward[] = [];
       let meta: IWMetaData = { currentPage: 1, totalPages: 1 };
@@ -106,7 +106,7 @@ export class WhistlerRewardsService implements RewardsService {
   public getRewards(
     page: number,
     pageSize: number = 10,
-    tags?: string[],
+    tags?: string[] | null,
     categories?: string[],
   ): Observable<IReward[]> {
     const tagsString = tags && tags.join(',');

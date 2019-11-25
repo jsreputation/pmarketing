@@ -7,6 +7,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { IWCampaignAttributes } from '@perx/whistler';
 import { ICampaign, ICampaignTableData } from '@cl-core/models/campaign/campaign.interface';
+import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,15 @@ export class CampaignsService implements ITableService {
 
   public deleteCampaign(id: string): Observable<IJsonApiPayload<IWCampaignAttributes>> {
     return this.campaignsHttpsService.deleteCampaign(id);
+  }
+
+  public updateCampaignStatus(id: string, status: string): Observable<ILoyaltyForm> {
+    // const sendData: any = CampaignsHttpAdapter.transformCampaignStatus(status);
+    const sendData: any = CampaignsHttpAdapter.transformCampaignStatus(status);
+    sendData.id = id;
+    return this.campaignsHttpsService.updateCampaign(id, {data: sendData}).pipe(
+      map(response => CampaignsHttpAdapter.transformToCampaign(response.data))
+    );
   }
 
 }

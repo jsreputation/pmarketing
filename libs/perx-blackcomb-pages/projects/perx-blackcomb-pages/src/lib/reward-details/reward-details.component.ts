@@ -6,7 +6,6 @@ import {
   IVoucherService,
   LoyaltyService,
   ILoyalty,
-  ITheme,
   Voucher,
   ConfigService,
   IConfig
@@ -31,7 +30,6 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public appConfig: IConfig;
   public rewardData: IReward;
   private loyalty: ILoyalty;
-  public theme: ITheme;
 
   private initTranslate(): void {
     this.translate.get('REDEEM').subscribe((text) => this.buttonLabel = text);
