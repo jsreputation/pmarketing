@@ -4,7 +4,7 @@ import { LoginComponent } from './login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationService, Config, ThemesService } from '@perx/core';
+import { AuthenticationService, Config, ConfigService, ThemesService } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
@@ -25,6 +25,10 @@ describe('LoginComponent', () => {
     getThemeSetting: () => of()
   };
 
+  const configServiceStub = {
+    readAppConfig: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
@@ -42,7 +46,8 @@ describe('LoginComponent', () => {
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ThemesService, useValue: themeServiceStub },
-        { provide: Config, useValue: configStub }
+        { provide: Config, useValue: configStub },
+        { provide: ConfigService, useValue: configServiceStub}
       ]
     })
       .compileComponents();
