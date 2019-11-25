@@ -29,7 +29,7 @@ export class SignUpComponent implements OnInit {
       lastName: ['', Validators.required],
       phone: ['', Validators.required],
       password: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
-      accept_terms: [false, Validators.required]
+      accept_terms: [false, Validators.requiredTrue]
     });
   }
 

@@ -45,6 +45,13 @@ export class GameComponent implements OnInit, OnDestroy {
     imageUrl: '',
   };
 
+  public gameNotAvailablePopUp: IPopupConfig = {
+    title: 'GAME_NOT_VALID',
+    text: 'GAME_NOT_VALID_TEXT',
+    buttonTxt: 'BACK_TO_WALLET',
+    imageUrl: '',
+  };
+
   constructor(
     private route: ActivatedRoute,
     private gameService: IGameService,
@@ -65,8 +72,9 @@ export class GameComponent implements OnInit, OnDestroy {
       tap((id: number) => this.campaignId = id),
       switchMap((id: number) => this.gameService.getGamesFromCampaign(id).pipe(
         catchError((err: HttpErrorResponse) => {
-          if (err.status === 403) {
+          if (err.status === 403 || err.status === 404) {
             this.router.navigate(['/wallet']);
+            this.notificationService.addPopup(this.gameNotAvailablePopUp);
           }
           throw err;
         }))

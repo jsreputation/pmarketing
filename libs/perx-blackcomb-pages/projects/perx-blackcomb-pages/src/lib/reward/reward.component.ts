@@ -47,6 +47,13 @@ export class RewardComponent implements OnInit, OnDestroy {
     imageUrl: '',
   };
 
+  public instantOutcomeNotAvailablePopUp: IPopupConfig = {
+    title: 'INSTANT_OUTCOME_NOT_VALID',
+    text: 'INSTANT_OUTCOME_NOT_VALID_TEXT',
+    buttonTxt: 'BACK_TO_WALLET',
+    imageUrl: '',
+  };
+
   private destroy$: Subject<any> = new Subject();
 
   constructor(
@@ -85,8 +92,9 @@ export class RewardComponent implements OnInit, OnDestroy {
         map((params: Params) => params.id),
         switchMap((id: string) => this.outcomeService.getFromCampaign(parseInt(id, 10))),
         catchError((err: HttpErrorResponse) => {
-          if (err.status === 403) {
+          if (err.status === 403 || err.status === 404) {
             this.router.navigate(['/wallet']);
+            this.notificationService.addPopup(this.instantOutcomeNotAvailablePopUp);
           }
           throw err;
         })
