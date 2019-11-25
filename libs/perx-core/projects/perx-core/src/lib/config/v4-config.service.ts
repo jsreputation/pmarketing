@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IConfig, IMicrositeSettings } from './models/config.model';
+import { IConfig, IMicrositeSettings, PagesObject } from './models/config.model';
 import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from '../auth/authentication/authentication.service';
 import { map, switchMap, tap } from 'rxjs/operators';
@@ -53,5 +53,9 @@ export class V4ConfigService extends ConfigService {
       map((res: IV4MicrositeSettingsResponse) => res.data),
       map((data: IV4MicrositeSettings) => V4ConfigService.v4MicrositeSettingsToMicrositeSettings(data))
     );
+  }
+
+  public getAccountSettings(): Observable<PagesObject> {
+    throw new Error(`Method not implemented.`);
   }
 }
