@@ -44,4 +44,8 @@ export class RewardHttpService {
   public updateReward(id: string, data: IJsonApiPayload<IWRewardEntityAttributes>): Observable<IJsonApiPayload<IWRewardEntityAttributes>> {
     return this.http.patch<IJsonApiPayload<IWRewardEntityAttributes>>(ApiConfig.rewardsPath + '/' + id, data);
   }
+
+  public getRewardTier(): Observable<any> {
+    return this.http.get(ApiConfig.rewardsTierPath);
+  }
 }
