@@ -1,9 +1,10 @@
 // https://github.com/angular/angular-cli/issues/4318#issuecomment-464160213
-import { writeFile } from 'fs'; // fs = require('fs');
+const fs = require('fs');
+const async = require('async');
 
 // Configure Angular `environment.ts` file path
 const targetPath = `./src/environments/environment.ts`;
-
+const appConfigPath = `./src/assets/config/app-config.json`;
 // Load node modules
 const colors = require('colors');
 require('dotenv').config();
@@ -21,12 +22,33 @@ const envConfigFile = `export const environment = {
 };
 `;
 
-console.log(colors.magenta('The file `environment.ts` will be written with the following content: \n'));
-console.log(colors.grey(envConfigFile));
+const appConfigFile = `{
+  "apiHost": "${process.env.APIHOST ? process.env.APIHOST : 'https://api.getperx.io'}",
+  "production": ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
+  "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : true},
+  "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
+  "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
+  "defaultLang": "${process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'}",
+  "showSubtitleLogin": ${process.env.SHOW_LOGIN_SUBTITLE ? process.env.SHOW_LOGIN_SUBTITLE : true},
+  "showHomePage": ${process.env.SHOW_HOME_PAGE ? process.env.SHOW_HOME_PAGE : true},
+  "showHistoryPage": ${process.env.SHOW_HISTORY_PAGE ? process.env.SHOW_HISTORY_PAGE : false},
+  "showNewsfeedOnHomepage": ${process.env.SHOW_NEWSFEED_HOMEPAGE ? process.env.SHOW_NEWSFEED_HOMEPAGE : true},
+  "showQrPageSubtitle": ${process.env.SHOW_QRPAGE_SUBTITLE ? process.env.SHOW_QRPAGE_SUBTITLE : true},
+  "showExpiryOnRewardDetail": ${process.env.SHOW_EXPIRY_REWARD_DETAIL ? process.env.SHOW_EXPIRY_REWARD_DETAIL : false},  
+}
+`;
 
-writeFile(targetPath, envConfigFile, (err) => {
-  if (err) {
-    throw console.error(err);
-  }
-  console.log(colors.magenta(`Angular environment.ts file generated correctly at ${targetPath} \n`));
-});
+async.each([[targetPath, envConfigFile], [appConfigPath, appConfigFile]],
+  (item: [[string, string], [string, string]], callback: any) => {
+
+    console.log(colors.magenta(`The file '${item[0]}' will be written with the following content: \n`));
+    console.log(colors.grey(item[1]));
+
+    fs.writeFile(item[0], item[1], (err: any) => {
+      if (err) {
+        throw console.error(err);
+      }
+      console.log(colors.magenta(`file generated correctly at ${item[0]} \n`));
+      callback();
+    });
+  });
