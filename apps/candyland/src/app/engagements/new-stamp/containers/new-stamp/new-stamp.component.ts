@@ -194,7 +194,8 @@ export class NewStampComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         value => {
-          for (let i = 0; i <= value; i++) {
+          this.stamps = [];
+          for (let i = 1; i <= value; i++) {
             this.stamps.push({
               id: 1,
               state: PuzzleCollectStampState.redeemed
