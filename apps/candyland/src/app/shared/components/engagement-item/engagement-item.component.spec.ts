@@ -4,6 +4,7 @@ import { EngagementItemComponent } from './engagement-item.component';
 import { PipesModule } from '@cl-shared/pipes/pipes.module';
 import { MatMenuModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('EngagementItemComponent', () => {
   let component: EngagementItemComponent;
@@ -16,7 +17,8 @@ describe('EngagementItemComponent', () => {
         RouterTestingModule,
         PipesModule,
         MatMenuModule,
-        MatIconModule
+        MatIconModule,
+        TranslateModule.forRoot(),
       ],
       schemas: []
     })

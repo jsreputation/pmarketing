@@ -66,6 +66,16 @@
     "REPEAT_ON": "Repeat on",
     "SELECT_REWARDS": "Select Rewards",
     "SEARCH_FOR_REWARDS": "Search for rewards",
-    "ADD_REWARD": "Add Reward"
+    "ADD_REWARD": "Add Reward",
+    "CAMPAIGN": "campaign",
+    "InformationCollectionSettingTypes": {
+      "NO_INFORMATION": "No information collection required",
+      "PI_INFORMATION": "PI information collection required",
+      "SIGNUP_INFORMATION": "Signup information collection required"
+    },
+    "ChannelTypes": {
+      "Weblink": "Weblink",
+      "SMS": "SMS"
+    }
   }
 }

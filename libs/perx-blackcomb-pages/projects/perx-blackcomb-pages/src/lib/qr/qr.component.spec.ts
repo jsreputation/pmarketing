@@ -17,7 +17,7 @@ import { of } from 'rxjs';
 import { QRCodeModule } from 'angularx-qrcode';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { ProfileService, ThemesService } from '@perx/core';
+import { ProfileService, ThemesService, ConfigService } from '@perx/core';
 
 import { QRComponent } from './qr.component';
 
@@ -42,6 +42,8 @@ describe('QrComponent', () => {
 
   const profileServiceStub: Partial<ProfileService> = { whoAmI: () => of({ id: 2, firstName: '', lastName: '' }) };
 
+  const configServiceStub = { readAppConfig: () => of() };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [QRComponent],
@@ -54,7 +56,9 @@ describe('QrComponent', () => {
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: Location, useValue: locationStub },
-        { provide: ThemesService, useValue: themesServiceStub }
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: ConfigService, useValue: configServiceStub}
+
       ]
     })
       .compileComponents();

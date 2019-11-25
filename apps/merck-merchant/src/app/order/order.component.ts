@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {ProductService, IProduct} from '../services/product.service';
-import {IMerchantAdminService, IMerchantAdminTransaction, IMerchantProfile, NotificationService, TokenStorage} from '@perx/core';
-import {from} from 'rxjs';
-import {mergeMap, switchMap} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ProductService, IProduct } from '../services/product.service';
+import { IMerchantAdminService, IMerchantAdminTransaction, IMerchantProfile, NotificationService, TokenStorage } from '@perx/core';
+import { from, throwError } from 'rxjs';
+import { mergeMap, switchMap } from 'rxjs/operators';
 
 export interface IPayload {
   name: string;
@@ -55,8 +55,9 @@ export class OrderComponent implements OnInit {
   }
 
   private checkUpdatedRewards(): void {
-    this.selectedProducts = this.rewards.filter(reward => reward.quantity > 0);
-    this.totalPoints = this.selectedProducts.reduce((sum, current) => sum + current.quantity * current.pointsPerUnit, 0);
+    this.selectedProducts = this.rewards.filter(reward => reward.quantity && reward.quantity > 0);
+    this.totalPoints = this.selectedProducts.reduce((sum, current) =>
+      sum + (current.quantity ? current.quantity : 0) * current.pointsPerUnit, 0);
   }
 
   public toggleSummary(): void {
@@ -70,20 +71,30 @@ export class OrderComponent implements OnInit {
 
   public onCompleteTransaction(): void {
     const merchantUsername = this.tokenStorage.getAppInfoProperty('merchantUsername');
-
+    if (!merchantUsername) {
+      this.notificationService.addSnack('merchant username is void');
+      return;
+    }
     // 0 padded date
     const date = new Date();
-    const dateStamp = ( '0' + date.getDate()).slice(-2) + ('0' + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString();
+    const dateStamp = ('0' + date.getDate()).slice(-2) + ('0' + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString();
 
     this.merchantAdminService.getMerchantProfile()
       .pipe(
-        switchMap((merchantProfile: IMerchantProfile) => from(this.selectedProducts).pipe(
-          mergeMap((product: IProduct) => {
-            return this.merchantAdminService.createTransaction(
-              this.payload.id, merchantUsername, product.price, product.currency,
-              'purchase', dateStamp + '-' + this.payload.id, merchantProfile.merchantAccount.name, product.name);
-          })
-        ))
+        switchMap((merchantProfile: IMerchantProfile) => {
+          const merchantName: string | undefined = merchantProfile.merchantAccount && merchantProfile.merchantAccount.name;
+          if (!merchantName) {
+            return throwError({ message: 'merchant name is required' });
+          }
+          return from(this.selectedProducts).pipe(
+            mergeMap((product: IProduct) => {
+
+              return this.merchantAdminService.createTransaction(
+                this.payload.id, merchantUsername, product.price, product.currency,
+                'purchase', dateStamp + '-' + this.payload.id, merchantName, product.name);
+            })
+          );
+        })
       )
       .subscribe((transaction: IMerchantAdminTransaction) => {
         this.notificationService.addSnack('Transaction ID: ' + transaction.id + 'completed');

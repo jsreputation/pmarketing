@@ -31,6 +31,10 @@
     "title": "PAUSED",
     "class": "paused"
   },
+  "pause": {
+    "title": "PAUSED",
+    "class": "paused"
+  },
   "ended": {
     "title": "ENDED",
     "class": "ended"

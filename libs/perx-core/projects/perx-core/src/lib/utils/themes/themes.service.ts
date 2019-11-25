@@ -1,5 +1,5 @@
 import { Observable, BehaviorSubject } from 'rxjs';
-import { ITheme, PagesObject, LIGHT, DARK } from './themes.model';
+import { ITheme, LIGHT, DARK } from './themes.model';
 import { IConfig } from '../../config/models/config.model';
 
 export abstract class ThemesService {
@@ -23,6 +23,4 @@ export abstract class ThemesService {
   }
 
   public abstract getThemeSetting(config?: IConfig): Observable<ITheme>;
-
-  public abstract getAccountSettings(): Observable<PagesObject>;
 }
