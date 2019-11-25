@@ -25,15 +25,14 @@ export class LoyaltyRuleHttpAdapter {
   public static transformToRuleSetForm(data: IJsonApiItem<any>): any {
     return {
       id: data.id,
-      customTiersCount: data.attributes.custom_tiers_count,
-      name: data.attributes.name,
-      status: data.attributes.status,
-      pointsName: data.attributes.unit,
-      createdAt: data.attributes.created_at || null
+      matchType: data.attributes.match_type,
+      domainType: data.attributes.domain_type,
+      domainId: data.attributes.domain_id,
+      rules: []
     };
   }
 
-  public static transformFromRuleSetForm(tierId: string, typeTier: string): IJsonApiItem<any> {
+  public static transformFromRuleSetForm(typeTier: string, tierId: string): IJsonApiItem<any> {
     return {
       type: 'rule_sets',
       attributes: {
@@ -55,15 +54,14 @@ export class LoyaltyRuleHttpAdapter {
   public static transformToRuleForm(data: IJsonApiItem<any>): any {
     return {
       id: data.id,
-      customTiersCount: data.attributes.custom_tiers_count,
-      name: data.attributes.name,
-      status: data.attributes.status,
-      pointsName: data.attributes.unit,
-      createdAt: data.attributes.created_at || null
+      matchType: data.attributes.match_type,
+      domainType: data.attributes.domain_type,
+      domainId: data.attributes.domain_id,
+      rules: []
     };
   }
 
-  public static transformFromRuleForm(data: any, id: string): IJsonApiItem<any> {
+  public static transformFromRuleForm(data: any, basicTierId: string): IJsonApiItem<any> {
     return {
       type: 'custom_tiers',
       attributes: {
@@ -78,7 +76,8 @@ export class LoyaltyRuleHttpAdapter {
       relationships: {
         basic_tier: {
           data: {
-            type: 'basic_tiers'
+            type: 'basic_tiers',
+            id: basicTierId
           }
         }
       }

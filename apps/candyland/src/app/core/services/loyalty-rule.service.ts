@@ -43,7 +43,8 @@ export class LoyaltyRuleService {
           }
           console.log('create');
           return this.createRuleSet(tierType, tierId);
-        })
+        }),
+        // tap((data) => LoyaltyRuleHttpAdapter.transformToRuleForm(data))
       );
   }
 
@@ -56,6 +57,7 @@ export class LoyaltyRuleService {
 
   public createRuleSet(data: any, basicTierId: string): Observable<IJsonApiPayload<any>> {
     const sendData: any = LoyaltyRuleHttpAdapter.transformFromRuleSetForm(data, basicTierId);
+    console.log('sendData', sendData);
     return this.rulesHttpService.createRuleSet({data: sendData}).pipe(
       map((response: any) => LoyaltyRuleHttpAdapter.transformToRuleSetForm(response.data))
     );

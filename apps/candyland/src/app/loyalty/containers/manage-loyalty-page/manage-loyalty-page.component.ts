@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TierSetupPopupComponent } from 'src/app/loyalty/containers/tier-setup-popup/tier-setup-popup.component';
@@ -8,7 +8,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { LoyaltyStepForm } from '../../models/loyalty-step-form.enum';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from '@cl-core/services/user.service';
-import { Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { AudiencesService } from '@cl-core-services';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
@@ -18,8 +18,7 @@ import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.
 import Utils from '@cl-helpers/utils';
 import { StatusLabel } from '@cl-helpers/status-label.enum';
 import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { IWBasicTierAttributes } from '@perx/whistler';
-import { IWPools } from '@perx/whistler';
+import { IWBasicTierAttributes, IWPools } from '@perx/whistler';
 import { RuleSetupPopupComponent } from '../rule-setup-popup/rule-setup-popup.component';
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 
@@ -36,104 +35,108 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   public loyaltyId: string;
   public basicTierId: string;
   public form: FormGroup;
+  public stepProgress: number = null;
+  private stepProgress$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   public customTierDataSource: CustomDataSource<ICustomTireForm>;
-  public earnRules: any = [
-    {
-      tier: {
-        name: 'General Rules',
-        type: 'basicTier',
-        id: '1'
-      },
-      matchMethod: 'first',
-      rules: [
-        {
-          priority: 1,
-          name: 'Main Rule Prepaid',
-          conditions: ['Makes a PREPAID transaction'],
-          pointsEarned: 'Apply 2x multiplier'
-        },
-        {
-          priority: 2,
-          name: 'Main Rule Accessories',
-          conditions: [
-            'Make a transaction for each RM100',
-            'Make a transaction of product category IT Accessories'
-          ],
-          pointsEarned: '100 Bonus Points'
-        },
-        {
-          priority: 3,
-          name: 'Main Rule Peripherals',
-          conditions: [
-            'Make a transaction for each RM200',
-            'Make a transaction of product category IT Accessories'
-          ],
-          pointsEarned: '100 Bonus Points'
-        },
-        {
-          priority: 4,
-          name: 'Main Rule Peripherals',
-          conditions: [
-            'Make a transaction for each RM200',
-            'Make a transaction of product category IT Accessories'
-          ],
-          pointsEarned: '100 Bonus Points'
-        }
-      ]
-    },
-    {
-      tier: {
-        name: 'Silver Tier',
-        type: 'customTier',
-        id: '11'
-      },
-      matchMethod: 'all',
-      rules: [
-        {
-          priority: 1,
-          name: 'Main Rule Prepaid',
-          conditions: ['Makes a PREPAID transaction'],
-          pointsEarned: 'Apply 2x multiplier'
-        },
-        {
-          priority: 2,
-          name: 'Main Rule Accessories',
-          conditions: [
-            'Make a transaction for each RM100',
-            'Make a transaction of product category IT Accessories'
-          ],
-          pointsEarned: '100 Bonus Points'
-        },
-        {
-          priority: 4,
-          name: 'Main Rule Peripherals',
-          conditions: [
-            'Make a transaction for each RM200',
-            'Make a transaction of product category IT Accessories'
-          ],
-          pointsEarned: '100 Bonus Points'
-        },
-        {
-          priority: 3,
-          name: 'Main Rule Peripherals',
-          conditions: [
-            'Make a transaction for each RM200',
-            'Make a transaction of product category IT Accessories'
-          ],
-          pointsEarned: '100 Bonus Points'
-        }
-      ]
-    },
-    {
-      tier: {
-        name: 'Gold Tier',
-        type: 'customTier',
-        id: '13'
-      },
-      matchMethod: 'all',
-      rules: []
-    }
-  ];
+  public basicTierRuleSet: any;
+  public customTierRuleSetMap: any;
+  // public earnRules: any = [
+  //   {
+  //     tier: {
+  //       name: 'General Rules',
+  //       type: 'basicTier',
+  //       id: '1'
+  //     },
+  //     matchMethod: 'first',
+  //     rules: [
+  //       {
+  //         priority: 1,
+  //         name: 'Main Rule Prepaid',
+  //         conditions: ['Makes a PREPAID transaction'],
+  //         pointsEarned: 'Apply 2x multiplier'
+  //       },
+  //       {
+  //         priority: 2,
+  //         name: 'Main Rule Accessories',
+  //         conditions: [
+  //           'Make a transaction for each RM100',
+  //           'Make a transaction of product category IT Accessories'
+  //         ],
+  //         pointsEarned: '100 Bonus Points'
+  //       },
+  //       {
+  //         priority: 3,
+  //         name: 'Main Rule Peripherals',
+  //         conditions: [
+  //           'Make a transaction for each RM200',
+  //           'Make a transaction of product category IT Accessories'
+  //         ],
+  //         pointsEarned: '100 Bonus Points'
+  //       },
+  //       {
+  //         priority: 4,
+  //         name: 'Main Rule Peripherals',
+  //         conditions: [
+  //           'Make a transaction for each RM200',
+  //           'Make a transaction of product category IT Accessories'
+  //         ],
+  //         pointsEarned: '100 Bonus Points'
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     tier: {
+  //       name: 'Silver Tier',
+  //       type: 'customTier',
+  //       id: '11'
+  //     },
+  //     matchMethod: 'all',
+  //     rules: [
+  //       {
+  //         priority: 1,
+  //         name: 'Main Rule Prepaid',
+  //         conditions: ['Makes a PREPAID transaction'],
+  //         pointsEarned: 'Apply 2x multiplier'
+  //       },
+  //       {
+  //         priority: 2,
+  //         name: 'Main Rule Accessories',
+  //         conditions: [
+  //           'Make a transaction for each RM100',
+  //           'Make a transaction of product category IT Accessories'
+  //         ],
+  //         pointsEarned: '100 Bonus Points'
+  //       },
+  //       {
+  //         priority: 4,
+  //         name: 'Main Rule Peripherals',
+  //         conditions: [
+  //           'Make a transaction for each RM200',
+  //           'Make a transaction of product category IT Accessories'
+  //         ],
+  //         pointsEarned: '100 Bonus Points'
+  //       },
+  //       {
+  //         priority: 3,
+  //         name: 'Main Rule Peripherals',
+  //         conditions: [
+  //           'Make a transaction for each RM200',
+  //           'Make a transaction of product category IT Accessories'
+  //         ],
+  //         pointsEarned: '100 Bonus Points'
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     tier: {
+  //       name: 'Gold Tier',
+  //       type: 'customTier',
+  //       id: '13'
+  //     },
+  //     matchMethod: 'all',
+  //     rules: []
+  //   }
+  // ];
   public pools: IWPools;
   public isEditPage: boolean = false;
   public showDraftButton: boolean = true;
@@ -158,6 +161,10 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     return this.form.get('customTiersCount');
   }
 
+  public get currentStep(): number {
+    return this.stepper ? this.stepper.selectedIndex : 0;
+  }
+
   public get isLastStep(): boolean {
     return this.stepper && this.stepper.selectedIndex === this.stepper._steps.length - 1;
   }
@@ -175,19 +182,35 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     private audiencesService: AudiencesService,
     private router: Router,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cd: ChangeDetectorRef
   ) {
   }
 
   public ngOnInit(): void {
     this.initPools();
     this.initForm();
-    this.initCustomTiersDataSource();
-    this.handleRouteParams().subscribe(
-      (loyalty: ILoyaltyForm) => this.initLoyaltyData(loyalty),
-      (error: Error) => {
-        console.warn(error.message);
-        this.router.navigateByUrl('/loyalty');
+    this.handleRouteParams()
+      .subscribe(
+        (loyalty: ILoyaltyForm) => this.initLoyaltyData(loyalty),
+        (error: Error) => {
+          console.warn(error.message);
+          this.router.navigateByUrl('/loyalty');
+        }
+      );
+    this.stepProgress$.pipe(
+      takeUntil(this.destroy$),
+    ).subscribe(stepProgress => {
+        console.log('stepProgress', stepProgress);
+        switch (stepProgress) {
+          case 1:
+            this.initCustomTiersDataSource();
+            break;
+          case 2:
+            this.initBasicTierRuleSet();
+            break;
+        }
+        this.stepProgress = stepProgress;
       }
     );
   }
@@ -197,29 +220,34 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public goNext(): void {
+  public clickGoNext(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
     if (this.isNotChangedFormValue()) {
-      // complete the current step
-      this.stepper.selected.completed = true;
-      // move to next step
-      this.stepper.next();
+      this.goNext();
       return;
     }
 
     this.getLoyaltyWithBasicTierRequest()
       .subscribe(() => {
-        // save current form value for checking changes in next step
-        this.prevFormValue = this.form.value;
-        // complete the current step
-        this.stepper.selected.completed = true;
-        // move to next step
-        this.stepper.next();
+        this.prevFormValue = this.form.value; // save current form value for checking changes in next step
+        this.goNext();
       });
+  }
+
+  private goNext(): void {
+    this.stepper.selected.completed = true;   // complete the current step
+    this.stepper.next();                      // move to next step
+    this.updateStepProgress();
+  }
+
+  private updateStepProgress(): void {
+    if (this.currentStep > this.stepProgress$.value) {
+      this.stepProgress$.next(this.currentStep);
+    }
   }
 
   public saveAsDraft(): void {
@@ -340,12 +368,15 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   private initCustomTiersDataSource(): void {
     if (!this.customTierDataSource) {
       this.customTierDataSource = new CustomDataSource<ICustomTireForm>(this.customTierService);
+      this.customTierDataSource.filter = {program_id: this.loyaltyId};
+      // this.customTierDataSource.updateData();
+      // this.setBasicTierIdToCustomTiersDataSourceFilter(this.basicTierId);
     }
   }
 
-  private setBasicTierIdToCustomTiersDataSourceFilter(basicTierId: string): void {
-    this.customTierDataSource.filter = {program_id: basicTierId};
-  }
+  // private setBasicTierIdToCustomTiersDataSourceFilter(basicTierId: string): void {
+  //   this.customTierDataSource.filter = {program_id: basicTierId};
+  // }
 
   // public addRule(): void {
   //   const dialogRef = this.dialog.open(AddRulePopupComponent);
@@ -410,7 +441,6 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
         switchMap(() => this.loyaltyService.getBasicTierRequest(newLoyalty, this.loyaltyId, this.basicTierId)),
         filter(Boolean),
         tap(basicTier => this.setBasicTierId(basicTier.data.id)),
-        switchMap(() => this.initRules()),
         filter(Boolean),
         takeUntil(this.destroy$)
       );
@@ -419,7 +449,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   private setBasicTierId(basicTierId: string): void {
     if (basicTierId && basicTierId !== this.basicTierId) {
       this.basicTierId = basicTierId;
-      this.setBasicTierIdToCustomTiersDataSourceFilter(this.loyaltyId);
+      // this.setBasicTierIdToCustomTiersDataSourceFilter(this.loyaltyId);
     }
   }
 
@@ -458,8 +488,15 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     return Utils.isEqual(this.form.value, this.prevFormValue);
   }
 
-  private initRules(): Observable<any> {
-    return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', this.basicTierId)
-      .pipe(tap(data => console.log(data)));
+  private initBasicTierRuleSet(): void {
+    this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', this.basicTierId)
+      .pipe(
+        takeUntil(this.destroy$),
+        tap(data => console.log('findAndCreateRuleSet', data))
+      )
+      .subscribe((data: any) => {
+        this.basicTierRuleSet = data;
+        this.cd.detectChanges();
+      });
   }
 }

@@ -56,7 +56,6 @@ import { AmountConditionGroupComponent } from './components/amount-condition-gro
 import { TransactionConditionGroupComponent } from './components/transaction-condition-group/transaction-condition-group.component';
 import { DynamicFormGroupDirective } from './dynamic-field.directive';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { LoyaltyReviewComponent } from './containers/loyalty-review/loyalty-review.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
@@ -116,7 +115,6 @@ import { TranslateModule } from '@ngx-translate/core';
     StatusLabelModule,
     MatDialogModule,
     UploadFileModule,
-    UploadGraphicModule,
     MatTabsModule,
     MatTableModule,
     DatePickerModule,

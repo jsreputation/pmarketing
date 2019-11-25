@@ -6,7 +6,7 @@ import {
   ILoyaltyForm,
   ILoyaltyTiersConversions
 } from '@cl-core/models/loyalty/loyalty-form.model';
-import { IWBasicTierAttributes, IWCustomTierAttributes , IWJoinMethod, IWLoyaltyAttributes } from '@perx/whistler';
+import { IWBasicTierAttributes, IWCustomTierAttributes, IWJoinMethod, IWLoyaltyAttributes } from '@perx/whistler';
 
 export class LoyaltyHttpAdapter {
 
@@ -73,7 +73,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformFromCustomTierForm(data: ICustomTireForm, basicTierId: string): IJsonApiItem<IWCustomTierAttributes > {
+  public static transformFromCustomTierForm(data: ICustomTireForm, basicTierId: string): IJsonApiItem<IWCustomTierAttributes> {
     return {
       type: 'custom_tiers',
       attributes: {
@@ -97,14 +97,15 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformToTableDataCustomTierForm(data: IJsonApiListPayload<IWCustomTierAttributes >): ITableData<ICustomTireForm> {
+  public static transformToTableDataCustomTierForm(data: IJsonApiListPayload<IWCustomTierAttributes>): ITableData<ICustomTireForm> {
     const formatData = data.data.map((item) => LoyaltyHttpAdapter.transformToCustomTierForm(item));
     return {data: formatData, meta: data.meta};
   }
 
-  public static transformToCustomTierForm(data: IJsonApiItem<IWCustomTierAttributes >): ICustomTireForm {
+  public static transformToCustomTierForm(data: IJsonApiItem<IWCustomTierAttributes>): ICustomTireForm {
     return {
       id: data.id,
+      type: 'customTier',
       name: data.attributes.name,
       joinMethod: LoyaltyHttpAdapter.transformJoinMethodFromApi(data.attributes.join_method),
       imageUrl: data.attributes.image_url,
