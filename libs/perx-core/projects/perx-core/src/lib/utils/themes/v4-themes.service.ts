@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ThemesService } from './themes.service';
-import { ITheme, PagesObject } from './themes.model';
+import { ITheme } from './themes.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
@@ -27,9 +27,5 @@ export class V4ThemesService extends ThemesService {
       map((res) => res as ITheme),
       tap((theme) => this.setActiveTheme(theme))
     );
-  }
-
-  public getAccountSettings(): Observable<PagesObject> {
-    throw new Error(`Method not implemented.`);
   }
 }

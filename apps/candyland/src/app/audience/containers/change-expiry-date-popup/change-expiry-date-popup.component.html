@@ -1,6 +1,6 @@
 <aside class="dialog" role="dialog" aria-labelledby="dialogTitle-changeExpiryDate">
   <header class="dialog-header-wrap">
-    <h2 class="dialog-title" id="dialogTitle-changeExpiryDate">Change expiry date</h2>
+    <h2 class="dialog-title" id="dialogTitle-changeExpiryDate">{{'AUDIENCE_FEATURE.CHANGE_EXPIRY_DATE' | translate}}</h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
       <mat-icon>close</mat-icon>
     </button>
@@ -9,18 +9,30 @@
     <div class="dialog-content">
       <div class="change-expiry-row">
         <div class="change-expiry-card disable">
-          <span>From</span>
-          <h4>Old</h4>
-          <span>Current Expiry Date</span>
+          <span>
+            {{'AUDIENCE_FEATURE.FROM' | translate}}
+          </span>
+          <h4>
+            {{'AUDIENCE_FEATURE.OLD' | translate}}
+          </h4>
+          <span>
+            {{'AUDIENCE_FEATURE.CURRENT_EXPIRY_DATE' | translate}}
+          </span>
           <cl-date-picker [value]="data?.expiryDate"
                           [disabled]="true">
           </cl-date-picker>
         </div>
 
         <div class="change-expiry-card">
-          <span>To</span>
-          <h4>New</h4>
-          <span>Enter New Expiry Date</span>
+          <span>
+            {{'AUDIENCE_FEATURE.TO' | translate}}
+          </span>
+          <h4>
+            {{'AUDIENCE_FEATURE.NEW' | translate}}
+          </h4>
+          <span>
+            {{'AUDIENCE_FEATURE.ENTER_NEW_EXPIRY_DATE' | translate}}
+          </span>
           <cl-date-picker [formControl]="newDate"></cl-date-picker>
         </div>
       </div>
@@ -31,13 +43,13 @@
                class="actions-close"
                (click)="close()"
                [disableRipple]="true">
-        <span>Cancel</span>
+        <span>{{'BTN_CANCEL' | translate}}</span>
     </cl-button>
 
     <cl-button classList="primary"
                (click)="save()"
                [disableRipple]="true">
-        <span>Add</span>
+        <span>{{'BTN_ADD' | translate}}</span>
     </cl-button>
   </footer>
 </aside>

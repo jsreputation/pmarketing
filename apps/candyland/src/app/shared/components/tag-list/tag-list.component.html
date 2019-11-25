@@ -10,7 +10,7 @@
         cancel
       </mat-icon>
     </mat-chip>
-    <input placeholder="Tags"
+    <input [placeholder]="placeholder"
            [formControl]="control"
            [matChipInputFor]="chipList"
            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"

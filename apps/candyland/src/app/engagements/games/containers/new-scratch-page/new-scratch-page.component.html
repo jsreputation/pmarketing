@@ -142,15 +142,6 @@
                 <mat-error *ngIf="buttonText.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 20</mat-error>
               </mat-form-field>
             </div>
-            <div class="control-input">
-              <mat-form-field class="messages-input">
-                <input type="text" [placeholder]="'LAST_BUTTON_TEXT' | translate" matInput formControlName="lastButtonText">
-                <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
-                <mat-error *ngIf="buttonText.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
-                <mat-error *ngIf="buttonText.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 2</mat-error>
-                <mat-error *ngIf="buttonText.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 20</mat-error>
-              </mat-form-field>
-            </div>
           </div>
         </mat-card>
       </div>
@@ -220,17 +211,6 @@
                 [src]="postScratchImage"
               >
             </div>
-          </div>
-          <div class="mobile-preview-btn-wrap mobile-btn-block">
-            <button class="mobile-preview-btn"
-                    [ngStyle]="{
-                  backgroundColor: tenantSettings?.buttonColor,
-                  'color': tenantSettings?.buttonTextColor,
-                  'font-family': tenantSettings?.font
-                }"
-            >
-              {{lastButtonText.value}}
-            </button>
           </div>
         </cl-simple-mobile-view>
       </cl-settings-mobile-preview>

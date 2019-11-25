@@ -350,7 +350,6 @@ export class RewardAppPage {
 
   public navigateToReward(): Promise<string> {
     return browser.get('rewards') as Promise<string> ;
-
  }
  public rewardTab(): ElementFinder {
     return element.all(by.css('h3')).get(1);
@@ -367,7 +366,6 @@ export class RewardAppPage {
  public filterItems(): ElementFinder {
     return element(by.className('name-cell__link'));
  }
-
 }
 
 export class CreateRewardAppPage {

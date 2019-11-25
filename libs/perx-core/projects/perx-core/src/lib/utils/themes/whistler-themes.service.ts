@@ -1,6 +1,6 @@
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { ITheme, DARK, LIGHT, PagesObject } from './themes.model';
+import { ITheme, DARK, LIGHT } from './themes.model';
 import { IWSetting, IWTenant, } from '@perx/whistler';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
@@ -14,7 +14,6 @@ import { IJsonApiListPayload } from '@perx/whistler';
 })
 export class WhistlerThemesService extends ThemesService {
   private themeSettingEndpoint: string;
-  private settings: any;
 
   constructor(
     private http: HttpClient,
@@ -51,9 +50,7 @@ export class WhistlerThemesService extends ThemesService {
         '--header_color': setting['theme.header_color'],
         '--login_background_colour': setting['theme.login_background_colour'],
         '--background': backgroundColor,
-        '--font_color': fontColor,
-        showHistoryPage: setting.showHistoryPage || true,
-        showHomePage: setting.showHomePage || false,
+        '--font_color': fontColor
       }
     };
   }
@@ -67,20 +64,6 @@ export class WhistlerThemesService extends ThemesService {
       map(res => res.data && res.data[0].attributes.display_properties),
       map((setting) => WhistlerThemesService.WThemeToTheme(setting)),
       tap((theme) => this.setActiveTheme(theme))
-    );
-  }
-
-  public getAccountSettings(): Observable<PagesObject> {
-    if (this.settings) {
-      return of(this.settings);
-    }
-    const accountSettingRequest: { url: string } = {
-      url: location.host
-    };
-    return this.http.post<IJsonApiListPayload<IWTenant>>(this.themeSettingEndpoint, accountSettingRequest).pipe(
-      map(res => res.data && res.data[0].attributes.display_properties),
-      map((displayProps) => displayProps.account || { pages: [] }),
-      map((account) => this.settings = account)
     );
   }
 }

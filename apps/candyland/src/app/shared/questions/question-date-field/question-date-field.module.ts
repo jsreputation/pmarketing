@@ -7,6 +7,7 @@ import {
   MatInputModule,
   MatSlideToggleModule
 } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {
     ReactiveFormsModule,
     MatInputModule,
     MatFormFieldModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    TranslateModule
   ]
 })
 export class QuestionDateFieldModule { }
