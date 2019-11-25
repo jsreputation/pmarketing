@@ -11,12 +11,6 @@
       "--header_color": "#000000",
       "--background": "#ffffff",
       "--font_color": "#212121",
-      "--login_background_colour": "#000",
-      "showSubtitleLogin": true,
-      "showHomePage": true,
-      "showHistoryPage": false,
-      "showNewsfeedOnHomepage": true,
-      "showQrPageSubtitle": true,
-      "showExpiryOnRewardDetail": false
+      "--login_background_colour": "#000"
     }
 }

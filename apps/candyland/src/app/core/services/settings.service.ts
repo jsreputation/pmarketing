@@ -17,6 +17,7 @@ import { IamUser } from '@cl-core/http-adapters/iam-user';
 import { IWIAMUserAttributes } from '@perx/whistler';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { IReward } from '@perx/core';
+import { RoleLabelConfig } from '@cl-shared';
 
 export enum DefaultSetting {
   style = 'Light',
@@ -202,6 +203,10 @@ export class SettingsService implements ITableService {
         parent: null
       }]
     };
+  }
+
+  public getRoleLabel(): Observable<{ [key: string]: RoleLabelConfig }> {
+    return this.settingsHttpService.getRoleLabel();
   }
 
 }
