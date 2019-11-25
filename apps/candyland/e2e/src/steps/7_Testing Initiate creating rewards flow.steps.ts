@@ -1,10 +1,11 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, protractor } from 'protractor';
-import { DashboardAppPage, RewardAppPage } from '../pages/candylandApp.po';
+import { DashboardAppPage, RewardAppPage, ElementApp } from '../pages/candylandApp.po';
 
 let  DashboardPage: DashboardAppPage;
 let  RewardPage: RewardAppPage;
+const Element =  ElementApp;
 
 Before( () => {
   // initializing page objects instances
@@ -51,11 +52,11 @@ Then(/^3_I should see the search bar ,reward list and create new button.$/, asyn
     // waiting for reward list to load
     await browser.wait(ec.presenceOf(RewardPage.rewardList()), 5000);
     // waiting for create new button to load
-    await browser.wait(ec.presenceOf(RewardPage.createNewButton()), 5000);
+    await browser.wait(ec.presenceOf(Element.clButton()), 5000);
     // asserting the presence of search bar , reward list , create new button
     expect(await RewardPage.searchBar().isPresent()).to.equal(true);
     expect(await RewardPage.rewardList().isPresent()).to.equal(true);
-    expect(await RewardPage.createNewButton().isPresent()).to.equal(true);
+    expect(await Element.clButton().isPresent()).to.equal(true);
 });
 
 // Ensure that create new reward button is functional
@@ -65,8 +66,8 @@ Given(/^4_I am on the reward page$/, async () => {
 
 When(/^4_I click on the create new button$/, async () => {
     const ec = protractor.ExpectedConditions;
-    await browser.wait(ec.elementToBeClickable(RewardPage.createNewButton()), 5000);
-    await RewardPage.createNewButton().click();
+    await browser.wait(ec.elementToBeClickable(Element.clButton()), 5000);
+    await Element.clButton().click();
     await browser.sleep(3000);
 });
 
