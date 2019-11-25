@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {IPayload} from '../order/order.component';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { IPayload } from '../order/order.component';
+import { Router } from '@angular/router';
 import {
   NotificationService,
   RewardsService,
   IReward,
   IMerchantAdminService, Voucher
 } from '@perx/core';
-import {flatMap} from 'rxjs/operators';
-import {HttpResponseBase} from '@angular/common/http';
+import { flatMap } from 'rxjs/operators';
+import { HttpResponseBase } from '@angular/common/http';
 
 interface IHttpResponseBase extends HttpResponseBase {
   error: {
@@ -54,6 +54,9 @@ export class RedeemComponent implements OnInit {
 
   public onProceed(): void {
     this.didProceed = true;
+    if (!this.payload.rewardId) {
+      throw new Error('reward id is required');
+    }
     this.merchantService.issueVoucher(this.payload.rewardId, this.payload.identifier)
       .pipe(
         // flatMap((voucher: Voucher) => this.rewardsService.getRewardPricesOptions(voucher.rewardId)),
@@ -66,6 +69,6 @@ export class RedeemComponent implements OnInit {
   }
 
   public getPrice(): number {
-    return this.reward.rewardPrice[0].points;
+    return this.reward.rewardPrice && this.reward.rewardPrice[0].points || 0;
   }
 }
