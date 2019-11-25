@@ -13,6 +13,7 @@ import {
   mergeMap,
   tap,
   toArray,
+  flatMap,
 } from 'rxjs/operators';
 import {
   from,
@@ -32,6 +33,8 @@ import {
   IConfig,
   ConfigService,
   PuzzleCollectReward,
+  ThemesService,
+  ITheme,
 } from '@perx/core';
 
 import { SoundService } from '../sound/sound.service';
@@ -59,6 +62,14 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   public subTitle: string = 'Tap the stamps to earn your reward!';
   private displayCampaignAs: string = 'puzzle';
   public sourceType: string;
+  public preStampImg: string | undefined;
+  public postStampImg: string | undefined;
+  public rewardPreStamp: string | undefined;
+  public rewardPostStamp: string | undefined;
+  public availableStampImg: string | undefined;
+  public availableRewardImg: string | undefined;
+  public backgroundImage: string | undefined;
+  public cardBgImage: string | undefined;
 
   public get rewards(): PuzzleCollectReward[] {
     if (!this.card || !this.card.displayProperties.rewardPositions) {
@@ -76,6 +87,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
     private soundService: SoundService,
     private configService: ConfigService,
     private dialog: MatDialog,
+    private themesService: ThemesService,
   ) {
   }
 
@@ -90,29 +102,42 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       this.cardId = Number.parseInt(cardIdStr, 10);
     }
 
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig) => {
-        this.sourceType = config.sourceType as string;
-        if (config.sourceType === 'hsbc-xmas') {
-          this.displayCampaignAs = 'stamp_card';
-        }
+    this.configService.readAppConfig()
+      .pipe(
+        tap((config: IConfig) => {
+          this.sourceType = config.sourceType as string;
+          if (config.sourceType === 'hsbc-xmas') {
+            this.displayCampaignAs = 'stamp_card';
+          }
 
-        if (config.sourceType === 'hsbc-collect2') {
-          // tslint:disable-next-line: max-line-length
-          this.notificationService.addPopup({
-            text: 'Thank you for joining the Collect and Win Promo! The campaign has now ended. Redemption of earned rewards is untill December 30, 2019 only.',
-            disableOverlayClose: true,
-            afterClosedCallBack: this
-          });
-        }
+          if (config.sourceType === 'hsbc-collect2') {
+            // tslint:disable-next-line: max-line-length
+            this.notificationService.addPopup({
+              text: 'Thank you for joining the Collect and Win Promo! The campaign has now ended. Redemption of earned rewards is untill December 30, 2019 only.',
+              disableOverlayClose: true,
+              afterClosedCallBack: this
+            });
+          }
 
-        if (this.campaignId === null) {
-          this.fetchCampaign();
-        } else if (this.cardId === null || this.card === null) {
-          this.fetchCard();
+          if (this.campaignId === null) {
+            this.fetchCampaign();
+          } else if (this.cardId === null || this.card === null) {
+            this.fetchCard();
+          }
+        }),
+        flatMap((config: IConfig) => this.themesService.getThemeSetting(config))
+      ).subscribe((res: ITheme) => {
+        if (res.properties.stampCard) {
+          this.preStampImg = res.properties.stampCard['--pre_stamp_image'];
+          this.postStampImg = res.properties.stampCard['--post_stamp_image'];
+          this.rewardPreStamp = res.properties.stampCard['--reward_pre_stamp_image'];
+          this.rewardPostStamp = res.properties.stampCard['--reward_post_stamp_image'];
+          this.availableStampImg = res.properties.stampCard['--available_stamp_image'];
+          this.availableRewardImg = res.properties.stampCard['--available_reward_image'];
+          this.backgroundImage = res.properties.stampCard['--background_image'];
+          this.cardBgImage = res.properties.stampCard['--card_background_image'];
         }
-      }
-    );
+      });
 
     if (!localStorage.getItem('enableSound')) {
       setTimeout(() => {

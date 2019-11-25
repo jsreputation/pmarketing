@@ -1,6 +1,5 @@
 <cl-report-header (closePage)="onClose()"
-                  [title]="data?.title"
-></cl-report-header>
+  [title]="data?.title"></cl-report-header>
 <article class="report-page">
   <mat-card class="card full-width report-info-block">
     <div class="height-line"></div>
@@ -16,11 +15,10 @@
         </div>
 
         <cl-button (click)="downloadReport()"
-                   classList="primary"
-        >
-      <span>
-        Download Report
-      </span>
+          classList="primary">
+          <span>
+            Download Report
+          </span>
         </cl-button>
       </div>
     </div>
@@ -42,7 +40,7 @@
     <article class="chart-card">
       <h3 class="chart-card-title">Popular Time for Stamp Earn</h3>
       <div class="chart-card-content">
-        <cl-chart-card [cardType]="'calendardHeatmap'" [id]="146" [params]="params"></cl-chart-card>
+        <cl-chart-card [cardType]="'calendarHeatmap'" [id]="146" [params]="params"></cl-chart-card>
       </div>
     </article>
 
