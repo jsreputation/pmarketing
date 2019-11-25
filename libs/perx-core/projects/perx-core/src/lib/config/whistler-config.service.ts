@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { IConfig, IMicrositeSettings, PagesObject } from './models/config.model';
 import { ConfigService } from './config.service';
 import { HttpClient } from '@angular/common/http';
-import { IJsonApiListPayload, IWTenant } from '@perx/whistler';
+import { IJsonApiListPayload, IWSetting, IWTenant } from '@perx/whistler';
 import { map } from 'rxjs/operators';
 import { Config } from './config';
 
@@ -22,8 +22,30 @@ export class WhistlerConfigService extends ConfigService {
       this.endpoint = config.baseHref + 'themes';
     }
   }
+
+  private static WTenantToConfig(setting: IWSetting): IConfig {
+    return {
+      showHistoryPage: setting.showHistoryPage || true,
+      showHomePage: setting.showHomePage || false,
+      // showSubtitleLogin: setting.showSubtitleLogin || false,
+      // showNewsfeedOnHomepage: setting.showNewsfeedOnHomepage || false,
+      // showQrPageSubtitle: setting.showQrPageSubtitle || false,
+      // showExpiryOnRewardDetail: setting.showExpiryOnRewardDetail || true,
+      // showUserInfoOnAccountsPage: setting.showUserInfoOnAccountsPage || false,
+      // showTransactionHistoryOnAccountsPage: setting.showTransactionHistoryOnAccountsPage || false
+    };
+  }
+
   public readAppConfig(): Observable<IConfig> {
-    return this.http.get<IConfig>('assets/config/app-config.json');
+    // mostly copy from theme service
+    const themesRequest: { url: string } = {
+      url: location.host
+    };
+
+    return this.http.post<IJsonApiListPayload<IWTenant>>(this.endpoint, themesRequest).pipe(
+      map(res => res.data && res.data[0].attributes.display_properties),
+      map((setting) => WhistlerConfigService.WTenantToConfig(setting)),
+    );
   }
 
   public getTenantAppSettings(): Observable<IMicrositeSettings> {
