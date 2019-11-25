@@ -13,7 +13,7 @@ export interface IReward {
   name: string;
   description: string;
   subtitle: string;
-  validFrom: Date;
+  validFrom: Date | null;
   validTo: Date | null;
   sellingFrom?: Date;
   rewardThumbnail?: string;
@@ -25,9 +25,9 @@ export interface IReward {
   merchantWebsite?: string;
   termsAndConditions: string;
   howToRedeem: string;
-  redemptionType?: RedemptionType;
+  redemptionType?: RedemptionType | null;
   categoryTags?: ICategoryTags[];
-  inventory?: Inventory;
+  inventory?: Inventory | null;
   redemptionText?: string;
   rawPayload?: any;
   displayProperties?: IWRewardDisplayProperties;

@@ -21,19 +21,19 @@ interface FormProperties {
 export class PopupComponent {
   public form: FormGroup;
 
-  public get title(): AbstractControl {
+  public get title(): AbstractControl | null {
     return this.form.get('title');
   }
 
-  public get text(): AbstractControl {
+  public get text(): AbstractControl | null {
     return this.form.get('text');
   }
 
-  public get btnTxt(): AbstractControl {
+  public get btnTxt(): AbstractControl | null {
     return this.form.get('btnTxt');
   }
 
-  public get btnTxt2(): AbstractControl {
+  public get btnTxt2(): AbstractControl | null {
     return this.form.get('btnTxt2');
   }
 

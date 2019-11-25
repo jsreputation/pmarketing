@@ -2,7 +2,7 @@ import { IReward, ICatalog, IPrice } from './models/reward.model';
 import { Observable } from 'rxjs';
 
 export abstract class RewardsService {
-  public abstract getAllRewards(tags?: string[], categories?: string[], locale?: string): Observable<IReward[]>;
+  public abstract getAllRewards(tags?: string[] | null, categories?: string[], locale?: string): Observable<IReward[]>;
 
   public abstract getRewards(
     age: number,
