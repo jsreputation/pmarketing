@@ -146,7 +146,12 @@ export class GameComponent implements OnInit, OnDestroy {
     const isCollectDataRequired = !!(this.informationCollectionSetting === 'pi_required' || this.informationCollectionSetting === 'signup_required');
     const userAction$: Observable<void> = !this.transactionId || (this.isAnonymousUser && isCollectDataRequired) ?
       of(void 0) :
-      this.gameService.prePlayConfirm(this.transactionId);
+      this.gameService.prePlayConfirm(this.transactionId).pipe(
+        catchError((err: HttpErrorResponse) => {
+          this.popupData = this.noRewardsPopUp;
+          throw err;
+        })
+      );
     combineLatest(processBar$, userAction$).subscribe(
       () => this.redirectUrlAndPopUp(),
       () => this.redirectUrlAndPopUp()
