@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';
 import { DateAdapter } from 'saturn-datepicker';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DateTimePickerComponent', () => {
   let component: DateTimePickerComponent;
@@ -35,6 +36,7 @@ describe('DateTimePickerComponent', () => {
         MatIconModule,
         MatNativeDateModule,
         DatePickerModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         DateAdapter

@@ -6,11 +6,11 @@ import {
   IVoucherService,
   RedemptionType,
   IPopupConfig,
-  PopupComponent,
+  NotificationService,
+  PopUpClosedCallBack,
 } from '@perx/core';
 import { Observable, Subject } from 'rxjs';
 import { filter, switchMap, takeUntil, map, tap } from 'rxjs/operators';
-import { MatDialog, MatDialogRef } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './redeem.component.html',
   styleUrls: ['./redeem.component.scss']
 })
-export class RedeemComponent implements OnInit, OnDestroy {
+export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
   public voucher$: Observable<Voucher>;
   public voucherId: number;
   public redemptionType: RedemptionType;
@@ -43,24 +43,30 @@ export class RedeemComponent implements OnInit, OnDestroy {
   private initTranslate(): void {
     this.translate.get('ENTER_CODE').subscribe((text) => this.headLine = text);
     this.translate.get('REDEMPTION_CODE').subscribe((text) => this.subHeadLine = text);
-    [
-      this.rewardSuccessPopUp.title,
-      this.rewardSuccessPopUp.text,
-      this.rewardSuccessPopUp.buttonTxt,
-      this.errorPopUp.title,
-      this.errorPopUp.buttonTxt
-    ]
-      .filter(k => k !== undefined && k !== null)
-      .forEach((k: string) => this.translate.get(k).subscribe((text) => k = text));
+    if (this.rewardSuccessPopUp.title) {
+      this.translate.get(this.rewardSuccessPopUp.title).subscribe((text) => this.rewardSuccessPopUp.title = text);
+    }
+    if (this.rewardSuccessPopUp.text) {
+      this.translate.get(this.rewardSuccessPopUp.text).subscribe((text) => this.rewardSuccessPopUp.text = text);
+    }
+    if (this.rewardSuccessPopUp.buttonTxt) {
+      this.translate.get(this.rewardSuccessPopUp.buttonTxt).subscribe((text) => this.rewardSuccessPopUp.buttonTxt = text);
+    }
+    if (this.errorPopUp.title) {
+      this.translate.get(this.errorPopUp.title).subscribe((text) => this.errorPopUp.title = text);
+    }
+    if (this.errorPopUp.buttonTxt) {
+      this.translate.get(this.errorPopUp.buttonTxt).subscribe((text) => this.errorPopUp.buttonTxt = text);
+    }
   }
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private vouchersService: IVoucherService,
-    private dialog: MatDialog,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private notificationService: NotificationService
   ) {
   }
 
@@ -128,21 +134,27 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public needLoginPopup(): void {
-    this.translate.get(['REEDEM_QUEST', 'GO_TO_LOGIN']).pipe(map((dictionary) => this.popup({
-      title: dictionary.REEDEM_QUEST,
-      buttonTxt: dictionary.GO_TO_LOGIN
-    }).afterClosed())).subscribe(() => this.router.navigate(['/login']));
+    this.translate.get(['REEDEM_QUEST', 'GO_TO_LOGIN'])
+      .subscribe((dictionary) => this.popup({
+        title: dictionary.REEDEM_QUEST,
+        buttonTxt: dictionary.GO_TO_LOGIN
+      }));
   }
 
   public errorPopup(): void {
     this.popup(this.errorPopUp);
   }
 
-  public popup(data: IPopupConfig): MatDialogRef<PopupComponent> {
-    return this.dialog.open(PopupComponent, { data });
+  public popup(data: IPopupConfig): void {
+    data.afterClosedCallBack = this;
+    return this.notificationService.addPopup(data);
   }
 
   public goBack(): void {
     this.location.back();
+  }
+
+  public dialogClosed(): void {
+    this.router.navigate(['/login']);
   }
 }

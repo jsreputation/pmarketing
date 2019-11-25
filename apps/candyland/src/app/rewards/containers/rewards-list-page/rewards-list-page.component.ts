@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { RewardsService } from '@cl-core/services';
 import { switchMap } from 'rxjs/operators';
 import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-menu-actions';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
 
 @Component({
   selector: 'cl-rewards-list-page',
@@ -29,9 +31,19 @@ export class RewardsListPageComponent {
     private rewardsService: RewardsService,
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private readonly translate: TranslateService,
+    private translateDefaultLanguage: TranslateDefaultLanguageService
   ) {
     this.dataSource = new CustomDataSource<IRewardEntity>(this.rewardsService);
+    this.setTranslateLanguage();
+  }
+
+  private setTranslateLanguage(): void {
+    this.translateDefaultLanguage.defaultLanguage$
+      .subscribe((language: string) => {
+        this.translate.setDefaultLang(language);
+      });
   }
 
   public actionHandler(action: { action: RewardsTableMenuActions, data: IRewardEntity }): void {

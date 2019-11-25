@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, AbstractControl, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material';
-
+import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap, takeUntil } from 'rxjs/operators';
 import { RewardsService, MerchantsService } from '@cl-core/services';
@@ -11,6 +10,8 @@ import { CreateMerchantPopupComponent, SelectMerchantPopupComponent, ToggleContr
 import { Merchant } from '@cl-core/http-adapters/merchant';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
 
 @Component({
   selector: 'cl-manage-rewards',
@@ -43,6 +44,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     private newRewardFormService: NewRewardFormService,
     private toggleControlService: ToggleControlService,
     private loyaltyService: LoyaltyService,
+    private readonly translate: TranslateService,
+    private translateDefaultLanguage: TranslateDefaultLanguageService
   ) {
   }
 
@@ -53,6 +56,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.handleMerchantIdChanges();
     this.handleRouteParams();
     this.handlerLoyalty();
+    this.setTranslateLanguage();
   }
 
   public ngOnDestroy(): void {
@@ -168,18 +172,13 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.route.paramMap.pipe(
       map((params: ParamMap) => params.get('id')),
       tap(id => this.id = id),
-      switchMap((id: string) => {
-        if (id) {
-          return this.rewardsService.getRewardToForm(id);
-        }
-        return of(null);
-      }),
+      switchMap((id: string) => id ? this.rewardsService.getRewardToForm(id) : of(null)),
       takeUntil(this.destroy$),
     )
       .subscribe(
-        (reward: IRewardEntityForm) => {
+        (reward: IRewardEntityForm | undefined) => {
           // handle the loyalties to patch form
-          this.getRewardLoyaltyData$.next(reward.loyalties);
+          this.getRewardLoyaltyData$.next(reward ? reward.loyalties : null);
 
           this.reward = reward;
           const patchData = reward || this.newRewardFormService.getDefaultValue();
@@ -291,5 +290,12 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       };
     });
     return result;
+  }
+
+  private setTranslateLanguage(): void {
+    this.translateDefaultLanguage.defaultLanguage$
+      .subscribe((language: string) => {
+        this.translate.setDefaultLang(language);
+      });
   }
 }

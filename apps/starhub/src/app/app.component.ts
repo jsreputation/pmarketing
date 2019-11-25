@@ -54,8 +54,8 @@ declare const _satellite: {
 })
 export class AppComponent implements OnInit, PopUpClosedCallBack {
   // public selectedCampaign: ICampaign;
-  public reward: IReward = null;
-  public game: IGame = null;
+  public reward?: IReward;
+  public game?: IGame;
   private token: string;
 
   constructor(
@@ -208,9 +208,9 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   // }
 
   public dialogClosed(): void {
-    if (this.reward !== null) {
+    if (this.reward) {
       this.router.navigate([`/reward`], { queryParams: { id: this.reward.id } });
-    } else if (this.game !== null) {
+    } else if (this.game) {
       this.router.navigate([`/game`], { queryParams: { id: this.game.id } });
     } else {
       console.error('Something fishy, we should not be here, without any reward or game');

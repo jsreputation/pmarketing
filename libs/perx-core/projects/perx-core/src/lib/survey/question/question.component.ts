@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, Optional} from '@angular/core';
 import { IQuestion, SurveyQuestionType, IAnswer, IPoints, IErrors } from '../models/survey.model';
 
 @Component({
@@ -12,6 +12,9 @@ export class QuestionComponent implements OnChanges {
   public id: number;
 
   @Input()
+  public hideIndex: boolean = false;
+
+  @Input()
   public questionPointer: number;
 
   @Input()
@@ -19,6 +22,9 @@ export class QuestionComponent implements OnChanges {
 
   @Input()
   public question: IQuestion;
+
+  @Input() @Optional()
+  public alpha: string;
 
   @Input()
   public isSubQuestion: boolean;
@@ -56,9 +62,9 @@ export class QuestionComponent implements OnChanges {
   }
 
   public updateAnswer(answer: IAnswer): void {
-    this.question.answer = String(answer.content);
+    this.question.answer = answer.content.toString();
     const questionId = answer.questionId ? answer.questionId : this.question.id;
-    this.updateAnswers.emit({ questionId, content: answer.content });
+    this.updateAnswers.emit({ questionId, content: answer.content.toString() });
     this.updateNonGroupPoint();
     this.questionValidation();
   }

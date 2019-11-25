@@ -22,6 +22,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { MatDialog } from '@angular/material/dialog';
 
 describe('RedemptionBookingComponent', () => {
   let component: RedemptionBookingComponent;
@@ -29,8 +31,8 @@ describe('RedemptionBookingComponent', () => {
 
   const locationsServiceStub = {};
 
-  const loyaltyServiceStub = {
-    getLoyalty: (): Observable<ILoyalty> => of(null),
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
+    getLoyalty: (): Observable<ILoyalty> => of(),
     getLoyalties: (): Observable<ILoyalty[]> => of([])
   };
   const mockReward: IReward = {
@@ -53,10 +55,15 @@ describe('RedemptionBookingComponent', () => {
     reserveReward: () => of()
   };
 
+  const dialogServiceStub = {
+    open: (componentRef: any, config: any) => of({componentRef, config})
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RedemptionBookingComponent],
       imports: [
+        BrowserDynamicTestingModule,
         DetailHeaderModule,
         MatRadioModule,
         MatCheckboxModule,
@@ -74,6 +81,7 @@ describe('RedemptionBookingComponent', () => {
         { provide: LocationsService, useValue: locationsServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: IVoucherService, useValue: vouchersServiceStub },
+        { provide: MatDialog, useValue: dialogServiceStub },
       ]
     })
       .compileComponents();

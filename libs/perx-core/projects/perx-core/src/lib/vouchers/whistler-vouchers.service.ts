@@ -14,6 +14,7 @@ import {
   IJsonApiListPayload,
   IJsonApiItem,
   IJsonApiItemPayload,
+  IWPurchaseAttributes
 } from '@perx/whistler';
 import { oc } from 'ts-optchain';
 
@@ -21,6 +22,9 @@ import { oc } from 'ts-optchain';
   providedIn: 'root'
 })
 export class WhistlerVouchersService implements IVoucherService {
+  // quick cache
+  private vouchers: IVoucher[] = [];
+
   constructor(
     private http: HttpClient,
     private config: Config,
@@ -62,15 +66,33 @@ export class WhistlerVouchersService implements IVoucherService {
     return 0;
   }
 
+  private static PurchaseToVoucher(purchaseData: IJsonApiItem<IWPurchaseAttributes>): IJsonApiItem<IWAssignedAttributes> {
+    const voucherData = purchaseData.attributes.voucher;
+    return {
+      id: voucherData.id ? voucherData.id.toString() : '',
+      type: 'vouchers',
+      attributes: {
+        ...voucherData,
+        source_id: purchaseData.attributes.reward_entity_id,
+        source_type: 'Perx::Reward::Entity'
+      }
+    };
+  }
   // @ts-ignore
   public getAll(voucherParams?: IGetVoucherParams): Observable<IVoucher[]> {
     return new Observable(subscriber => {
       let vouchers: IVoucher[] = [];
+      if (this.vouchers.length > 0) {
+        // if cache is not empty let's emit the cache first
+        subscriber.next(vouchers);
+      }
       const process = (p: number, res: IJsonApiListPayload<IWAssignedAttributes>) => {
         const vsQuerries: Observable<IVoucher>[] = res.data.map(v => this.getFullVoucher(v));
         combineLatest(vsQuerries)
           .subscribe((vs: IVoucher[]) => {
             vouchers = vouchers.concat(vs).sort(WhistlerVouchersService.compare);
+            // update data in the cache
+            this.vouchers = vouchers;
             subscriber.next(vouchers);
             if (!res.meta || !res.meta.page_count || p >= res.meta.page_count) {
               subscriber.complete();
@@ -110,9 +132,8 @@ export class WhistlerVouchersService implements IVoucherService {
     throw new Error('Method not implemented.');
   }
 
-  // @ts-ignore
   public reset(vouchers?: IVoucher[]): void {
-    throw new Error('Method not implemented.');
+    this.vouchers = vouchers !== undefined ? vouchers : [];
   }
 
   // @ts-ignore
@@ -125,16 +146,32 @@ export class WhistlerVouchersService implements IVoucherService {
     throw new Error('Method not implemented.');
   }
 
-  private get vouchersUrl(): string {
-    return `${this.config.apiHost}/voucher-service/vouchers`;
-  }
-
   // @ts-ignore
   public reserveReward(rewardId: number, params?: IRewardParams): Observable<IVoucher> {
     throw new Error('Method not implemented.');
   }
+
   // @ts-ignore
-  public issueReward(rewardId: number): Observable<IVoucher> {
-    throw new Error('Method not implemented.');
+  public issueReward(rewardId: number, sourceType?: string, locale: string = 'en', cardId?: number): Observable<IVoucher> {
+
+    return this.http.post<IJsonApiItemPayload<IWPurchaseAttributes>>(`${this.config.apiHost}/voucher-service/purchase_requests`,
+      {
+        data: {
+          type: 'purchase_request',
+          attributes: {
+            loyalty_card_id: cardId,
+            reward_entity_id: rewardId
+          }
+        }
+      }
+    ).pipe(
+      map(res => res.data),
+      map((res: IJsonApiItem<IWPurchaseAttributes>) => WhistlerVouchersService.PurchaseToVoucher(res)),
+      switchMap((voucher: IJsonApiItem<IWAssignedAttributes>) => this.getFullVoucher(voucher))
+    );
+  }
+
+  private get vouchersUrl(): string {
+    return `${this.config.apiHost}/voucher-service/vouchers`;
   }
 }
