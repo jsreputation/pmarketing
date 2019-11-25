@@ -50,7 +50,12 @@
     "MANAGER_TITLE": "Manager",
     "MANAGER_DESCRIPTION": "Has access to create, update within the scope of modules provided access to. Creator may not launch campaigns",
     "VIEWER_TITLE": "Viewer",
-    "VIEWER_DESCRIPTION": "Has access to view only"
+    "VIEWER_DESCRIPTION": "Has access to view only",
+    "ADMIN_ABBR": "A",
+    "CREATOR_ABBR": "C",
+    "CUSTOMER_ABBR": "CS",
+    "MANAGER_ABBR": "M",
+    "VIEWER_ABBR": "V"
   },
   "INVITE_NEW_USERS": "Invite new users",
   "EMAIL_ADDRESS": "Email Address",

@@ -45,10 +45,15 @@ const routes: Routes = [
       {
         path: 'loyalty',
         loadChildren: () => import('./loyalty/loyalty.module').then(mod => mod.LoyaltyModule)
-      }
+      },
     ]
   },
   { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
+  {
+    path: 'password',
+    canActivate: [NoAuthGuard],
+    loadChildren: () => import('./password/password.module').then(mod => mod.PasswordModule)
+  },
   { path: '**', redirectTo: '/dashboard'}
 ];
 

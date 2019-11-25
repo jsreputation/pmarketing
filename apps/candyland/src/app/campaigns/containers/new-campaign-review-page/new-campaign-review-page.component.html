@@ -24,6 +24,7 @@
           class="item"
           [data]="reward?.value"
           [probability]="reward?.probability"
+          [limit]="reward?.limit"
           [enableProbability]="campaign?.rewardsOptions?.enableProbability">
         </cl-reward-item-preview>
       </div>
@@ -43,6 +44,7 @@
               class="item"
               [data]="reward?.value"
               [probability]="reward?.probability"
+              [limit]="reward?.limit"
               [enableProbability]="rewardsData?.rewardsOptions?.enableProbability">
             </cl-reward-item-preview>
           </div>
@@ -136,13 +138,13 @@
       </div>
       <div class="card-content">
         <h3 class="card-label">
-          {{campaign?.channel?.type}}
+          {{campaign?.channel?.type | translate}}
         </h3>
         <!--Message-->
         <div class="card-section" *ngIf="campaign?.campaignInfo?.informationCollectionSetting">
           <div class="card-header">
             <h3 class="card-title">
-              {{ informationCollectionSettingTitle }}
+              {{ informationCollectionSettingTitle | translate}}
             </h3>
           </div>
         </div>

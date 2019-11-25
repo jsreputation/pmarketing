@@ -1,6 +1,6 @@
 {
   "PAGE_NAME": "Доска",
-  "TITLE": "Добро пожаловать в Perx, Админ",
+  "TITLE": "Добро пожаловать в Perx, ",
   "DESCRIPTION": "Вот описание того, что происходит с вашими активными кампаниями. Это поможет вам добиться цели сегодня.",
   "SECTION_EXPLORE": "Изучите Perx",
   "SECTION_BUSINESS": "Понимание бизнеса",
@@ -18,7 +18,7 @@
   "NAV_LINK_CAMPAIGNS": "Кампании",
   "OVERVIEW_GRAPHIC_PAGE": {
     "TOTAL_ACTIVE_CUSTOMERS": "Всего активных клиентов",
-    "TOTAL_ISSUED_REWARDS": "Всего опубликованных наград",
+    "TOTAL_ISSUED_REWARDS": "Всего наград",
     "TOTAL_RUNNING_CAMPAIGNS": "Всего активных кампаний",
     "DEMOGRAPHICS": "Демография",
     "POPULAR_REDEMPTION_DAYS": "Популярные дни обмена",

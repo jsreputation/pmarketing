@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   public rightIconToShow: string = '';
   public currentPage: string;
   public failedAuthSubscriber: Subscription;
-  private soundToggleSubscription: Subscription;
+  private soundToggleSubscription: Subscription | undefined;
   private sourceType: string;
   @ViewChild('drawer', { static: false }) public drawer: MatSidenav;
 
