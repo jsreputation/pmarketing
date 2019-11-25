@@ -33,11 +33,11 @@
           <mat-label>{{'SETTINGS_FEATURE.ROLE' | translate}}</mat-label>
           <mat-select [formControl]="form.get('roleId')">
             <mat-select-trigger>
-              <cl-role-label [role]="form.get('roleId').value" [showTitle]="true"></cl-role-label>
+              <cl-role-label [role]="form.get('roleId').value" [config]="roleLabel" [showTitle]="true"></cl-role-label>
             </mat-select-trigger>
             <ng-container *ngFor="let role of config">
               <mat-option [value]="role.id">
-                <cl-role-label [role]="role?.id" [showTitle]="true" classList="small"></cl-role-label>
+                <cl-role-label [role]="role?.id" [config]="roleLabel" [showTitle]="true" classList="small"></cl-role-label>
               </mat-option>
             </ng-container>
           </mat-select>

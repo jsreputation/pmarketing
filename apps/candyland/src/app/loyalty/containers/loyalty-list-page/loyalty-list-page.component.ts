@@ -6,9 +6,9 @@ import { IEngagementItemMenuOption } from '../../components/loyalty-item/loyalty
 import { Router } from '@angular/router';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { StatusLabelConfig } from '@cl-shared';
-import { TranslateService } from '@ngx-translate/core';
-import { combineLatest, Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ConfigService } from '@cl-core-services';
 
 @Component({
   selector: 'cl-loyalty-list-page',
@@ -32,13 +32,13 @@ export class LoyaltyListPageComponent implements OnInit, OnDestroy {
     private loyaltyService: LoyaltyService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private translate: TranslateService
+    private configService: ConfigService
   ) {
     this.dataSource = new CustomDataSource<ILoyaltyForm>(this.loyaltyService);
   }
 
   public ngOnInit(): void {
-    this.prepareStatusesLabel();
+    this.getStatusesLabel();
   }
 
   public ngOnDestroy(): void {
@@ -105,25 +105,11 @@ export class LoyaltyListPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  private prepareStatusesLabel(): void {
-    combineLatest([this.getTranslation(), this.getStatusLabel()])
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe(([translation, statuses]) => {
-        Object.values(statuses)
-          .forEach((item) => {
-            item.title = translation[item.title];
-          });
+  private getStatusesLabel(): void {
+    this.configService.prepareStatusesLabel()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((statuses) => {
         this.statusLabel = statuses;
       });
-  }
-
-  private getTranslation(): Observable<any> {
-    return this.translate.get('STATUSES_TYPE');
-  }
-
-  private getStatusLabel(): Observable<{ [key: string]: StatusLabelConfig }> {
-    return this.loyaltyService.getStatusLable();
   }
 }

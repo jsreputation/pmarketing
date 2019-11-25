@@ -20,13 +20,15 @@
   <footer class="dialog-actions">
 
     <cl-button [classList]="'secondary'" class="actions-close" (click)="close()" [disableRipple]="true">
-      <span>Cancel</span>
+      <span>{{'BTN_CANCEL' | translate}}</span>
     </cl-button>
 
     <cl-button [classList]="'primary'" (click)="addMerchant()" [disableRipple]="true">
-      <span *ngIf="data; else editBtnText">Save Merchant</span>
+      <span *ngIf="data; else editBtnText">{{'SAVE_MERCHANT' | translate}}</span>
       <ng-template #editBtnText>
-        <span>Add Merchant</span>
+        <span>
+          {{'ADD_MERCHANT' | translate}}
+        </span>
       </ng-template>
     </cl-button>
   </footer>
