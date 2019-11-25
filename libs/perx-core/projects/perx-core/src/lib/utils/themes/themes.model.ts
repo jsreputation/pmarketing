@@ -14,13 +14,19 @@ interface IThemeProperties {
     '--header_color'?: string;
     '--background': string;
     '--font_color': string;
-    'showHomePage'?: boolean;
-    'showSubtitleLogin'?: boolean;
-    'showHistoryPage'?: boolean;
-    'showNewsfeedOnHomepage'?: boolean;
-    'showQrPageSubtitle'?: boolean;
-    'showExpiryOnRewardDetail'?: boolean;
     '--login_background_colour'?: string;
+    'stampCard'?: IStampCardTheme;
+}
+
+interface IStampCardTheme {
+  '--pre_stamp_image'?: string;
+  '--post_stamp_image'?: string;
+  '--reward_pre_stamp_image'?: string;
+  '--reward_post_stamp_image'?: string;
+  '--available_stamp_image'?: string;
+  '--available_reward_image'?: string;
+  '--background_image'?: string;
+  '--card_background_image'?: string;
 }
 
 export const LIGHT: ITheme = {
@@ -38,13 +44,3 @@ export const DARK: ITheme = {
     '--font_color': '#fff'
   }
 };
-
-export interface AccountPageObject {
-  title: string;
-  content_url: string;  // eslint-disable-line
-  key: string;
-}
-
-export interface PagesObject {
-  pages: AccountPageObject[];
-}

@@ -39,7 +39,7 @@ export class VoucherComponent implements OnInit {
   }
 
   private fetchVouchers(srcType: string): void {
-    this.voucherService.get(this.id, null, {sourceType: srcType, type: null})
+    this.voucherService.get(this.id, false, {sourceType: srcType, type: null})
       .subscribe(voucher => {
         this.voucher = voucher;
         if (voucher.state !== 'issued' && this.sourceType === 'hsbc-collect2') {

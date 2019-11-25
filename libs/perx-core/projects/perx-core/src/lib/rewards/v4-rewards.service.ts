@@ -216,7 +216,7 @@ export class V4RewardsService extends RewardsService {
     };
   }
 
-  public getAllRewards(tags?: string[], categories?: string[], locale: string = 'en'): Observable<IReward[]> {
+  public getAllRewards(tags?: string[] | null, categories?: string[], locale: string = 'en'): Observable<IReward[]> {
 
     return new Observable(subject => {
       const pageSize = 10;
@@ -245,7 +245,7 @@ export class V4RewardsService extends RewardsService {
   public getRewards(
     page: number = 1,
     pageSize: number = 10,
-    tags?: string[],
+    tags?: string[] | null,
     categories?: string[],
     locale: string = 'en'
   ): Observable<IReward[]> {

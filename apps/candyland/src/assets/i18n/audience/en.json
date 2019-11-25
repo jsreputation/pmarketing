@@ -42,6 +42,13 @@
     "MERCHANT": "Merchant",
     "CAMPAIGN": "Campaign",
     "SEARCH_VOUCHERS": "Search vouchers",
-    "ISSUE_VOUCHER": "Issue Voucher"
+    "ISSUE_VOUCHER": "Issue Voucher",
+    "MANAGE_LIST": "Manage List",
+    "FROM": "From",
+    "OLD": "Old",
+    "CURRENT_EXPIRY_DATE": "Current Expiry Date",
+    "TO": "To",
+    "NEW": "New",
+    "ENTER_NEW_EXPIRY_DATE": "Enter New Expiry Date"
   }
 }

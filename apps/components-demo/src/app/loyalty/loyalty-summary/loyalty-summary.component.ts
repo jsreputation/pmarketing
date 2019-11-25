@@ -11,7 +11,7 @@ import { mockLoyalty, mockProfile } from './../loyalty-mock';
 })
 export class LoyaltySummaryComponent implements OnInit {
   public profile: Observable<IProfile> | undefined;
-  public loyalty: Observable<ILoyalty> | undefined;
+  public loyalty: Observable<ILoyalty | false> | undefined;
 
   constructor(private loyaltyService: LoyaltyService, private profileService: ProfileService) { }
 

@@ -17,7 +17,7 @@
             {{loyalty?.createdAt | date: 'medium'}}</span>
         </div>
         <div class="info-type-status">
-          <cl-status-label [status]="loyalty?.status"></cl-status-label>
+          <cl-status-label [status]="loyalty?.status" [config]="statusLabel"></cl-status-label>
         </div>
         <div>
           <p class="info-name">

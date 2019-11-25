@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
+import { CardType } from '@perx/chart';
 
 @Component({
   selector: 'cl-dashboard-rewards-page',
@@ -14,6 +15,7 @@ export class DashboardRewardsPageComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
 
   public params: { [key: string]: string };
+  public ct: typeof CardType = CardType;
 
   constructor(private chartsParametersService: DashboardChartsParametersService) {
   }

@@ -11,7 +11,8 @@ import {
   LoyaltyService,
   ProfileService,
   IGameService,
-  ThemesService
+  ThemesService,
+  ConfigService
 } from '@perx/core';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material';
@@ -35,6 +36,8 @@ const loyaltyServiceStub: Partial<LoyaltyService> = {
 const gameSvcStub: Partial<IGameService> = {};
 
 const themesServiceStub = { getThemeSetting: () => of({})};
+
+const configServiceStub = { readAppConfig: () => of() };
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -63,7 +66,8 @@ describe('HomeComponent', () => {
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: ProfileService, useValue: profileService },
         { provide: IGameService, useValue: gameSvcStub },
-        { provide: ThemesService, useValue: themesServiceStub }
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();
