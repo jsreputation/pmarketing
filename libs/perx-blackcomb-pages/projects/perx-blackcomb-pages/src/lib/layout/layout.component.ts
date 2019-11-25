@@ -1,9 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { MatDialog } from '@angular/material';
 import {
-  PopupComponent,
-  NotificationService,
-  IPopupConfig,
   ThemesService,
   ITheme,
   AuthenticationService,
@@ -36,8 +32,6 @@ export class LayoutComponent implements OnInit {
   public appConfig: IConfig;
 
   constructor(
-    private notificationService: NotificationService,
-    private dialog: MatDialog,
     private location: Location,
     private router: Router,
     private themesService: ThemesService,
@@ -68,8 +62,8 @@ export class LayoutComponent implements OnInit {
       }
     );
 
-    this.notificationService.$popup
-      .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
+    // this.notificationService.$popup
+    //   .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
 
     this.router.events
       .pipe(

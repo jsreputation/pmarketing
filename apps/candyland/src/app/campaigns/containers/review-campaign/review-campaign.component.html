@@ -1,7 +1,7 @@
 <header class="page-header full-with">
   <h1 class="title" *ngIf="campaign">{{campaign.name}}</h1>
   <cl-button classList="primary cta cta-edit cta-edit-comeback"
-              (click)="comeBack()"> Come Back
+              (click)="comeBack()">{{'BTN_COME_BACK' | translate}}
   </cl-button>
 </header>
 <section class="content form-limiter">

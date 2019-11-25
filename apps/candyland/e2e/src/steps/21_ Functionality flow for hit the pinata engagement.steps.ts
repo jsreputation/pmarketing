@@ -1,16 +1,16 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, protractor } from 'protractor';
-import { CreateHitThePinataAppPage, EngagementAppPage } from '../pages/candylandApp.po';
+import { CreateHitThePinataAppPage, ElementApp } from '../pages/candylandApp.po';
 import * as path from 'path' ;
 
 let PageHitThePinata: CreateHitThePinataAppPage;
-let PageEngagement: EngagementAppPage;
+const Element = ElementApp;
 
 Before( () => {
   // initializing page objects instances
-  PageEngagement = new EngagementAppPage();
   PageHitThePinata = new CreateHitThePinataAppPage();
+
 });
 
 // Ensure functionality of headline and and sub-headline message
@@ -22,15 +22,15 @@ Given(/^4_I am on the hit the pinata creation page$/, async () => {
 When(/^4_I input a test string in the headlline and sub headline field.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for headline field to load
-  await browser.wait(ec.presenceOf(PageEngagement.inputTextField().get(1)), 6000);
+  await browser.wait(ec.presenceOf(Element.inputTextArray().get(1)), 6000);
   // waiting for sub-headline field to load
-  await browser.wait(ec.presenceOf(PageEngagement.inputTextField().get(2)), 6000);
+  await browser.wait(ec.presenceOf(Element.inputTextArray().get(2)), 6000);
   // inputing a test string in the headline field
-  await PageEngagement.inputTextField().get(1).clear();
-  await PageEngagement.inputTextField().get(1).sendKeys('TestString0001');
+  await Element.inputTextArray().get(1).clear();
+  await Element.inputTextArray().get(1).sendKeys('TestString0001');
   // inputing a test string in the sub-headline field
-  await PageEngagement.inputTextField().get(2).clear();
-  await PageEngagement.inputTextField().get(2).sendKeys('TestString0002');
+  await Element.inputTextArray().get(2).clear();
+  await Element.inputTextArray().get(2).sendKeys('TestString0002');
 });
 
 Then(/^4_I should see the test string in the preview element.$/, async () => {
@@ -85,9 +85,9 @@ When(/^6_I upload a background$/, async () => {
   const absolutePath = path.resolve(__dirname, FileToUpload);
   const ec = protractor.ExpectedConditions;
   // waiting for the upload field to load
-  await browser.wait(ec.presenceOf(PageEngagement.inputFileField()), 6000);
+  await browser.wait(ec.presenceOf(Element.inputFile()), 6000);
   // uploading test img file into field
-  await PageEngagement.inputFileField().sendKeys(absolutePath);
+  await Element.inputFile().sendKeys(absolutePath);
   await browser.sleep(3000);
 });
 Then(/^6_I should see the background in the preview element.$/, async () => {
@@ -105,10 +105,10 @@ Given(/^7_I am on the hit the pinata creation page.$/, async () => {
 When(/^7_I input a test string on the button text field$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for button text to load
-  await browser.wait(ec.presenceOf(PageEngagement.inputTextField().get(3)), 6000);
+  await browser.wait(ec.presenceOf(Element.inputTextArray().get(3)), 6000);
   // entering test string button text field
-  await PageEngagement.inputTextField().get(3).clear();
-  await PageEngagement.inputTextField().get(3).sendKeys('TestString003');
+  await Element.inputTextArray().get(3).clear();
+  await Element.inputTextArray().get(3).sendKeys('TestString003');
   await browser.sleep(3000);
 });
 

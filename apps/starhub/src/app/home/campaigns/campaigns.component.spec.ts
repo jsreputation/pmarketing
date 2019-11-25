@@ -19,7 +19,7 @@ describe('CampaignsComponent', () => {
   };
 
   const gameServiceStub = {
-    getGamesFromCampaign: () => of()
+    getGamesFromCampaign: () => of(game)
   };
 
   beforeEach(async(() => {
@@ -99,6 +99,8 @@ describe('CampaignsComponent', () => {
       component.ngOnInit();
       tick();
       expect(campaignsServiceSpy).toHaveBeenCalled();
+      expect(component.games).toEqual(game);
+      expect(component.campaigns).toEqual([campaigns[0]]);
     }));
   });
   it('should handle ngOnInit with games', fakeAsync(() => {

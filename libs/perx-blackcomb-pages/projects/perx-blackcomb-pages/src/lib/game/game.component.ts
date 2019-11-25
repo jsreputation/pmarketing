@@ -44,6 +44,13 @@ export class GameComponent implements OnInit, OnDestroy {
     imageUrl: '',
   };
 
+  public gameNotAvailablePopUp: IPopupConfig = {
+    title: 'GAME_NOT_VALID',
+    text: 'GAME_NOT_VALID_TEXT',
+    buttonTxt: 'BACK_TO_WALLET',
+    imageUrl: '',
+  };
+
   constructor(
     private route: ActivatedRoute,
     private gameService: IGameService,
@@ -64,8 +71,9 @@ export class GameComponent implements OnInit, OnDestroy {
       tap((id: number) => this.campaignId = id),
       switchMap((id: number) => this.gameService.getGamesFromCampaign(id).pipe(
         catchError((err: HttpErrorResponse) => {
-          if (err.status === 403) {
+          if (err.status === 403 || err.status === 404) {
             this.router.navigate(['/wallet']);
+            this.notificationService.addPopup(this.gameNotAvailablePopUp);
           }
           throw err;
         }))
@@ -163,15 +171,23 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   private initTranslate(): void {
-    [
-      this.successPopUp.title,
-      this.successPopUp.text,
-      this.successPopUp.buttonTxt,
-      this.noRewardsPopUp.title,
-      this.noRewardsPopUp.text,
-      this.noRewardsPopUp.buttonTxt
-    ]
-      .filter(k => k !== undefined && k !== null)
-      .forEach((k: string) => this.translate.get(k).subscribe((text) => k = text));
+    if (this.successPopUp.title) {
+      this.translate.get(this.successPopUp.title).subscribe((text) => this.successPopUp.title = text);
+    }
+    if (this.successPopUp.text) {
+      this.translate.get(this.successPopUp.text).subscribe((text) => this.successPopUp.text = text);
+    }
+    if (this.successPopUp.buttonTxt) {
+      this.translate.get(this.successPopUp.buttonTxt).subscribe((text) => this.successPopUp.buttonTxt = text);
+    }
+    if (this.noRewardsPopUp.title) {
+      this.translate.get(this.noRewardsPopUp.title).subscribe((text) => this.noRewardsPopUp.title = text);
+    }
+    if (this.noRewardsPopUp.text) {
+      this.translate.get(this.noRewardsPopUp.text).subscribe((text) => this.noRewardsPopUp.text = text);
+    }
+    if (this.noRewardsPopUp.buttonTxt) {
+      this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
+    }
   }
 }

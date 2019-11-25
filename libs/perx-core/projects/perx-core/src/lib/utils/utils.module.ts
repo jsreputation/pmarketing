@@ -38,6 +38,17 @@ const components = [
   NewsfeedComponent
 ];
 
+// make sure we have only one instance of the NotificationService
+export function notificationServiceFactory(): NotificationService {
+  // @ts-ignore
+  if (window.notificationService === undefined) {
+    // @ts-ignore
+    window.notificationService = new NotificationService();
+  }
+  // @ts-ignore
+  return window.notificationService;
+}
+
 @NgModule({
   declarations: [
     ...directives,
@@ -61,10 +72,11 @@ const components = [
     DistancePipe
   ],
   providers: [
-    NotificationService,
+    { provide: NotificationService, useFactory: notificationServiceFactory },
     FeedReaderService,
     GeneralStaticDataService,
-    { provide: ThemesService,
+    {
+      provide: ThemesService,
       useFactory: themesServiceFactory,
       deps: [HttpClient, Config]
     }
