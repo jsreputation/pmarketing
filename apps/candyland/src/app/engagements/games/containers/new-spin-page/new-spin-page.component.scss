@@ -1,0 +1,17 @@
+@import "variables";
+
+.info-text {
+  @include typo-caption;
+
+  color: $white;
+}
+
+mat-slider {
+  width: 100%;
+  max-width: 38rem;
+  margin: 0;
+}
+
+.reward-slot {
+  width: 100%;
+}
