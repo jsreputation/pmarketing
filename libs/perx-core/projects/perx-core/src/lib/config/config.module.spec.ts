@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from '../auth/authentication/authentication.service';
 import { Config } from './config';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { V4ConfigService } from './v4-config.service';
+import { WhistlerConfigService } from './whistler-config.service';
 
 describe('ConfigModule', () => {
   beforeEach(() => {
@@ -19,6 +21,7 @@ describe('ConfigModule', () => {
   });
   it('should', inject([HttpClient, Config, AuthenticationService],
     (http: HttpClient, configService: Config, auth: AuthenticationService) => {
-      configServiceFactory(http, configService, auth);
+      expect(configServiceFactory(http, {isWhistler: true}, auth) instanceof WhistlerConfigService).toBeTruthy();
+      expect(configServiceFactory(http, configService, auth) instanceof V4ConfigService).toBeTruthy();
     }));
 });

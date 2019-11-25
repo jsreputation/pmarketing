@@ -75,4 +75,16 @@ describe('V4ConfigService', () => {
       tick();
       expect(spy).toHaveBeenCalled();
     })));
+
+  it('getAccountSettings', fakeAsync(inject([V4ConfigService, HttpClient],
+    (config: V4ConfigService, http: HttpClient) => {
+      const spy = spyOn(http, 'get').and.returnValue(of({
+        display_properties: {
+          account: null
+        }
+      }));
+      config.getAccountSettings().subscribe(() => { });
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })));
 });
