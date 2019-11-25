@@ -38,11 +38,11 @@ import {
   styleUrls: ['./voucher.component.scss']
 })
 export class VoucherComponent implements OnInit {
-  public voucher: Voucher;
+  public voucher?: Voucher;
   public reward: IReward;
   public locations: ILocation[];
   public isButtonEnable: boolean = false;
-  public macaron: IMacaron;
+  public macaron: IMacaron | null;
   constructor(
     private vouchersService: IVoucherService,
     private activeRoute: ActivatedRoute,
@@ -59,10 +59,10 @@ export class VoucherComponent implements OnInit {
         switchMap((id: number) => this.vouchersService.get(id)),
         tap((voucher: Voucher) => {
           this.voucher = voucher;
-          const categories: ICategoryTags[] = voucher.reward.categoryTags;
-          const category: string = !isEmptyArray(categories) ? categories[0].title : undefined;
+          const categories: ICategoryTags[] = voucher.reward && voucher.reward.categoryTags || [];
+          const category: string = !isEmptyArray(categories) ? categories[0].title : '';
           if (category !== undefined) {
-            const pageName: string = `rewards:vouchers:${category.toLowerCase()}:${voucher.reward.name}`;
+            const pageName: string = `rewards:vouchers:${category.toLowerCase()}:${voucher.reward && voucher.reward.name}`;
             this.analytics.addEvent({
               pageName,
               pageType: PageType.detailPage,

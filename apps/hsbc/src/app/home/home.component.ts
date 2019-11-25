@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ICampaignService, CampaignType, NotificationService, IStampCard, IConfig, ConfigService, ICampaign, StampService } from '@perx/core';
-import {map, mergeMap, tap, toArray} from 'rxjs/operators';
+import { map, mergeMap, tap, toArray } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
 
 @Component({
@@ -10,12 +10,13 @@ import { from, Observable } from 'rxjs';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public campaigns: ICampaign[];
-  public campaignId: number;
+  public campaigns: ICampaign[] | null;
+  public campaignId: number | null | undefined;
   public selectedTab: number = 0;
   private displayCampaignAs: string = 'puzzle';
   public puzzleTextFn: () => string;
   public titleFn: (index?: number) => string;
+  public sourceType: string | null = null;
 
   constructor(
     private router: Router,
@@ -30,17 +31,27 @@ export class HomeComponent implements OnInit {
 
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => {
+        this.sourceType = config.sourceType as string;
+
         if (config.sourceType === 'hsbc-xmas') {
           this.displayCampaignAs = 'stamp_card';
           this.puzzleTextFn = () => 'new stamps';
           this.titleFn = (index?: number) => index !== undefined ? `Stamp Card ${this.puzzleIndex(index)} out of 12` : '';
         }
+
+        // todo: refactor fetchcampaign to support null campaigns
+        if (config.sourceType === 'hsbc-collect2') {
+          this.campaigns = null;
+          this.campaignId = null;
+        } else {
+          this.fetchCampaign();
+        }
+
       });
 
-    this.fetchCampaign();
-
     this.activeRoute.queryParamMap.subscribe(ps => {
-      const tab: string = ps.get('tab');
+      const tab: string | null = ps.get('tab');
+
       if (tab === 'history') {
         this.selectedTab = 1;
       }
@@ -62,11 +73,9 @@ export class HomeComponent implements OnInit {
           (campaigns: ICampaign[]) => from(campaigns).pipe(
             mergeMap((campaign: ICampaign) => this.fetchCard(campaign.id)),
             toArray(),
-            map((stampCards: IStampCard[]) => {
-              return stampCards.filter(
-                card => card.displayProperties.displayCampaignAs &&
-                  card.displayProperties.displayCampaignAs === this.displayCampaignAs);
-            }),
+            map((stampCards: IStampCard[]) => stampCards.filter(card =>
+              card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === this.displayCampaignAs
+            )),
             map((cards: IStampCard[]) => cards[0])
           )
         ),

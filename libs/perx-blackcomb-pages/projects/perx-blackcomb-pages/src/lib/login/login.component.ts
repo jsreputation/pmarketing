@@ -1,4 +1,4 @@
-import { AuthenticationService, NotificationService, Config, ITheme, ThemesService } from '@perx/core';
+import { AuthenticationService, NotificationService, Config, ITheme, ThemesService, ConfigService, IConfig } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
   public theme: Observable<ITheme>;
+  public appConfig: Observable<IConfig>;
 
   constructor(
     private router: Router,
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private themesService: ThemesService,
     private config: Config,
+    private configService: ConfigService,
     public translate: TranslateService
   ) {
     this.preAuth = this.config.preAuth ? this.config.preAuth : false;
@@ -35,6 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.initForm();
     this.theme = this.themesService.getThemeSetting();
+    this.appConfig = this.configService.readAppConfig();
   }
 
   public ngOnDestroy(): void {

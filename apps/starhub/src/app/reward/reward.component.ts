@@ -16,7 +16,7 @@ export class RewardComponent implements OnInit {
   public reward: IReward;
   public isButtonEnable: boolean = true;
   public isRewardsDetailsFetched: boolean = false;
-  public macaron: IMacaron;
+  public macaron: IMacaron | null;
   constructor(
     private location: Location,
     private router: Router,

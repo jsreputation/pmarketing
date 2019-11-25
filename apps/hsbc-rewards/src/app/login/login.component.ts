@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   public preAuth: boolean;
 
-  public errorMessage: string;
+  public errorMessage: string | null;
 
   constructor(
     private router: Router,
@@ -57,8 +57,8 @@ export class LoginComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const username = (this.loginForm.get('playerCode').value as string).toUpperCase();
-    const password: string = this.loginForm.get('hsbcCardLastFourDigits').value;
+    const username = (this.loginForm.value.playerCode as string).toUpperCase();
+    const password: string = this.loginForm.value.hsbcCardLastFourDigits;
     this.errorMessage = null;
     this.authService.login(username, password).subscribe(
       () => {

@@ -14,6 +14,8 @@
     "UPLOAD_PHOTO": "Upload photo",
     "USER_JOINING_METHOD": "User Joining Method",
     "TRANSACTION_AMOUNT": "Transaction Amount",
+    "amount": "Transaction Amount",
+    "points": "Points",
     "SIGN_UP": "Sign-up",
     "BY_INVITE": "By Invite",
     "SELECT_AUDIENCE": "Select Audience",

@@ -22,6 +22,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
   public defaultValue: any = {
     rewardsOptions: {
       enableProbability: false,
+      limit: null,
       rewards: []
     }
   };

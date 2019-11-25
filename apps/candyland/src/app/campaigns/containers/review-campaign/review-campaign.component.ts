@@ -163,7 +163,8 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getRewards(rewardsList: any[]): Observable<{ value: IRewardEntity | null, probability?: number, stampsSlotNumber?: number }[]> {
+  private getRewards(rewardsList: any[]):
+    Observable<{ value: IRewardEntity | null, limit: number | null, probability?: number, stampsSlotNumber?: number }[]> {
     if (!rewardsList || !rewardsList.length) {
       return of([]);
     }
@@ -172,14 +173,16 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         if (reward.resultId) {
           return this.rewardsService.getReward(reward.resultId).pipe(
             map(rewardData => ({
-              value: {...rewardData},
+              value: { ...rewardData },
+              limit: reward.limit || null,
               probability: reward.probability,
               stampsSlotNumber: reward.lootBoxId
             })),
-            catchError(() => of({value: null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId}))
+            catchError(() =>
+              of({ value: null, limit: reward.limit || null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId }))
           );
         }
-        return of({value: null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId});
+        return of({ value: null, limit: null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId });
       }
     ));
   }

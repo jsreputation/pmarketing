@@ -54,7 +54,7 @@ describe('ChangeBarangayComponent', () => {
 
   it('should handle submit', fakeAsync(() => {
     const locationSpy = spyOn(location, 'back');
-    spyOn(profileService, 'setCustomProperties').and.returnValue(of(null));
+    spyOn(profileService, 'setCustomProperties').and.callThrough();
     component.barangayChangeForm.setValue({ newBarangay: 'test' });
     component.onSubmit();
     expect(component.customProperties).toEqual({ barangay: 'test' });

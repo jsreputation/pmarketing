@@ -47,19 +47,19 @@ export class SignupComponent implements PageAppearence {
   public onSubmit(): void {
 
     try {
-      const passwordString = this.signupForm.get('password').value as string;
-      const confirmPassword = this.signupForm.get('confirmPassword').value as string;
+      const passwordString = this.signupForm.value.password as string;
+      const confirmPassword = this.signupForm.value.confirmPassword as string;
       if (passwordString !== confirmPassword) {
         this.notificationService.addSnack('Passwords do not match.');
         return;
       }
-      const termsConditions = this.signupForm.get('accept_terms').value as boolean;
+      const termsConditions = this.signupForm.value.accept_terms as boolean;
       if (!termsConditions) {
         this.notificationService.addSnack('Please accept terms & conditions.');
         return;
       }
 
-      const marketingCommunication = this.signupForm.get('accept_marketing').value as boolean;
+      const marketingCommunication = this.signupForm.value.accept_marketing as boolean;
       if (!marketingCommunication) {
         this.notificationService.addSnack('Please agree to receive marketing communications from Merck Group hk.');
         return;
@@ -68,9 +68,9 @@ export class SignupComponent implements PageAppearence {
       // TODO: Currently '+' sign is not beign saved in the backend
       // const mobileNumber = this.selectedCountry + this.signupForm.get('mobileNo').value as string;
 
-      const mobileNumber = this.signupForm.get('mobileNo').value.toString();
-      const name = this.signupForm.get('name').value as string;
-      const countryCode = (this.signupForm.get('countryCode').value as string);
+      const mobileNumber = this.signupForm.value.mobileNo.toString();
+      const name = this.signupForm.value.name as string;
+      const countryCode = this.signupForm.value.countryCode as string;
       const codeAndMobile = countryCode + mobileNumber;
       const cleanedMobileNo = codeAndMobile.replace(/[^0-9]/g, ''); // remove non numeric and special characters
 

@@ -2,10 +2,12 @@
   <h1 class="title">{{loyalty?.name}}</h1>
   <div class="btn-group">
     <cl-button classList="primary"
-               (click)="comeBack()"> Come Back
+               (click)="comeBack()">{{'BTN_COME_BACK' | translate}}
     </cl-button>
   </div>
 </header>
 <section class="content form-limiter loyalty">
-  <cl-view-loyalty *ngIf="loyalty" [loyaltyData]="loyalty" [dataSource]="customTierDataSource"></cl-view-loyalty>
+  <cl-view-loyalty *ngIf="loyalty" [loyaltyData]="loyalty" [dataSource]="customTierDataSource"
+                   [statusLabel]="statusLabel"
+  ></cl-view-loyalty>
 </section>

@@ -58,7 +58,7 @@ export class PopupComponent {
   // todo: only set up host listener if disableOverlayClose = true
   @HostListener('window:keyup.esc')
   public onKeyUp(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   public buttonPressed(): void {

@@ -5,7 +5,7 @@ export interface IMerchant {
     website?: string;
     tags?: ITag[];
     images?: IImage[];
-    outlets?: IOutlet[];
+    outlets?: IOutlet[] | null;
 }
 
 export interface ITag {
