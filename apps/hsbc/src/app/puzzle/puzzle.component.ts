@@ -62,14 +62,14 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   public subTitle: string = 'Tap the stamps to earn your reward!';
   private displayCampaignAs: string = 'puzzle';
   public sourceType: string;
-  public preStampImg: string;
-  public postStampImg: string;
-  public rewardPreStamp: string;
-  public rewardPostStamp: string;
-  public availableStampImg: string;
-  public availableRewardImg: string;
-  public backgroundImage: string;
-  public cardBgImage: string;
+  public preStampImg: string | undefined;
+  public postStampImg: string | undefined;
+  public rewardPreStamp: string | undefined;
+  public rewardPostStamp: string | undefined;
+  public availableStampImg: string | undefined;
+  public availableRewardImg: string | undefined;
+  public backgroundImage: string | undefined;
+  public cardBgImage: string | undefined;
 
   public get rewards(): PuzzleCollectReward[] {
     if (!this.card || !this.card.displayProperties.rewardPositions) {
@@ -127,14 +127,16 @@ export class PuzzleComponent implements OnInit, OnDestroy {
         }),
         flatMap((config: IConfig) => this.themesService.getThemeSetting(config))
       ).subscribe((res: ITheme) => {
-        this.preStampImg = res.properties.stampCard['--pre_stamp_image'];
-        this.postStampImg = res.properties.stampCard['--post_stamp_image'];
-        this.rewardPreStamp = res.properties.stampCard['--reward_pre_stamp_image'];
-        this.rewardPostStamp = res.properties.stampCard['--reward_post_stamp_image'];
-        this.availableStampImg = res.properties.stampCard['--available_stamp_image'];
-        this.availableRewardImg = res.properties.stampCard['--available_reward_image'];
-        this.backgroundImage = res.properties.stampCard['--background_image'];
-        this.cardBgImage = res.properties.stampCard['--card_background_image'];
+        if (res.properties.stampCard) {
+          this.preStampImg = res.properties.stampCard['--pre_stamp_image'];
+          this.postStampImg = res.properties.stampCard['--post_stamp_image'];
+          this.rewardPreStamp = res.properties.stampCard['--reward_pre_stamp_image'];
+          this.rewardPostStamp = res.properties.stampCard['--reward_post_stamp_image'];
+          this.availableStampImg = res.properties.stampCard['--available_stamp_image'];
+          this.availableRewardImg = res.properties.stampCard['--available_reward_image'];
+          this.backgroundImage = res.properties.stampCard['--background_image'];
+          this.cardBgImage = res.properties.stampCard['--card_background_image'];
+        }
       });
 
     if (!localStorage.getItem('enableSound')) {
