@@ -18,17 +18,22 @@ import {
   AuthenticationService,
   ProfileModule,
   ProfileService,
+  LoyaltyService,
   ConfigService,
   ConfigModule,
   IProfile,
   PagesObject,
   NotificationService,
+  IConfig,
+  ThemesService
 } from '@perx/core';
 
 import { AccountComponent } from './account.component';
 
 import { profile } from '../mock/profile.mock';
 import { pagesObject } from '../mock/pages.mock';
+
+import { MatCardModule } from '@angular/material';
 
 describe('AccountComponent', () => {
   const notificationServiceStub: Partial<NotificationService> = {};
@@ -48,17 +53,28 @@ describe('AccountComponent', () => {
     whoAmI: (): Observable<IProfile> => of(profile)
   };
   const configServiceStub: Partial<ConfigService> = {
-    getAccountSettings: (): Observable<PagesObject> => of(pagesObject)
+    getAccountSettings: (): Observable<PagesObject> => of(pagesObject),
+    readAppConfig: (): Observable<IConfig> => of({})
   };
   const authenticationServiceStub: Partial<AuthenticationService> = {
     logout: () => { }
   };
+  const loyalityServiceStub  = {
+    getLoyalty: () => of({})
+  };
+
+  const themeServiceStub: Partial<ThemesService> = {
+    getActiveTheme: () => of(),
+    getThemeSetting: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AccountComponent],
       imports: [
         RouterTestingModule,
         ProfileModule,
+        MatCardModule,
         TranslateModule.forRoot(),
         ConfigModule.forRoot({ ...environment })
       ],
@@ -66,7 +82,9 @@ describe('AccountComponent', () => {
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: NotificationService, useValue: notificationServiceStub }
+        { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: LoyaltyService, useValue: loyalityServiceStub },
+        { provide: ThemesService, useValue: themeServiceStub }
       ]
     })
       .compileComponents();
