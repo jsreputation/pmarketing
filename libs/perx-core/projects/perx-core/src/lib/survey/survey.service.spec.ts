@@ -15,7 +15,7 @@ import {
   IWSurveyEngagementAttributes,
 } from '@perx/whistler';
 
-describe('SurveyService', () => {
+fdescribe('SurveyService', () => {
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
   let service: SurveyService;
   const mockCampaign: ICampaign = {
@@ -136,7 +136,7 @@ describe('SurveyService', () => {
     expect(httpClientSpy.post.calls.count()).toBe(1, 'one call');
     expect(httpClientSpy.post.calls.argsFor(0)).toEqual([
       'https://blabla/survey/answers',
-      { data: { type: 'answers', attributes: { engagement_id: undefined, campaign_entity_id: 3, content: [] } } },
+      { data: { type: 'answers', attributes: { engagement_id: 1, campaign_entity_id: 3, content: [] } } },
       { headers: { 'Content-Type': 'application/vnd.api+json' } }
     ]);
   });
