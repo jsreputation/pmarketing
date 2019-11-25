@@ -66,4 +66,17 @@ export class RewardsService implements ITableService {
     sendData.id = id;
     return this.rewardHttp.updateReward(id, {data: sendData});
   }
+
+  public getRewardTierList(): Observable<any> {
+    return this.rewardHttp.getRewardTierList();
+  }
+
+  public getRewardTier(id: string): Observable<any> {
+    return this.rewardHttp.getRewardTier(id);
+  }
+
+  public createRewardTier(data: any): Observable<any> {
+    return this.rewardHttp.createRewardTier(data);
+  }
+
 }

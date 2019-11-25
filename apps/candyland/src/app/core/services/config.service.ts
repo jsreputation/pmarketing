@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 export class ConfigService {
 
   constructor(private configHttp: ConfigHttpService,
-              private translate: TranslateService) { }
+              private translate: TranslateService) {}
 
   public prepareStatusesLabel(): Observable<{ [key: string]: StatusLabelConfig }> {
     return combineLatest([this.getTranslationStatuses(), this.getStatusLabel()])

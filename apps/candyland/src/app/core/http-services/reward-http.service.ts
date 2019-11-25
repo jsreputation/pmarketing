@@ -45,7 +45,15 @@ export class RewardHttpService {
     return this.http.patch<IJsonApiPayload<IWRewardEntityAttributes>>(ApiConfig.rewardsPath + '/' + id, data);
   }
 
-  public getRewardTier(): Observable<any> {
+  public getRewardTierList(): Observable<any> {
     return this.http.get(ApiConfig.rewardsTierPath);
+  }
+
+  public getRewardTier(id: string): Observable<any> {
+    return this.http.get(ApiConfig.rewardsTierPath + `/${id}`);
+  }
+
+  public createRewardTier(data: any): Observable<any> {
+    return this.http.post(ApiConfig.rewardsTierPath, data);
   }
 }

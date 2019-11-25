@@ -57,6 +57,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.handleRouteParams();
     this.handlerLoyalty();
     this.setTranslateLanguage();
+    // this.getRewardTierList();
   }
 
   public ngOnDestroy(): void {
@@ -76,12 +77,17 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     }
     let request: Observable<any>;
     const rewardEntityForm: IRewardEntityForm = this.form.value;
+
+    // this.handlerRewardTiers(this.rewardLoyaltyForm.value, rewardEntityForm);
+    // return;
+
     if (this.id) {
       rewardEntityForm.displayProperties = this.reward.displayProperties;
       request = this.rewardsService.updateReward(this.id, rewardEntityForm, this.rewardLoyaltyForm.value);
     } else {
       request = this.rewardsService.createReward(rewardEntityForm, this.rewardLoyaltyForm.value);
     }
+
     request.subscribe(
       res => {
         if (res && res.data.id) {
@@ -301,4 +307,17 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
         this.translate.setDefaultLang(language);
       });
   }
+
+  // private getRewardTierList(): void {
+  //   this.rewardsService.getRewardTierList()
+  //     .subscribe((val) => {
+  //       // console.log('result list', val);
+  //     });
+  // }
+
+  // private handlerRewardTiers(rewardLoyaltyForm: any, rewardEntityForm: any): void {
+  //   console.log('rewardLoyaltyForm', rewardLoyaltyForm);
+  //   console.log('rewardEntityForm', rewardEntityForm);
+  //   console.log('id', this.id);
+  // }
 }
