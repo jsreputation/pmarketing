@@ -8,7 +8,7 @@ export interface ITabConfig {
   filterKey: string | null;
   filterValue: string | null;
   tabName: string;
-  rewardsList?: Observable<IReward[]>;
+  rewardsList?: Observable<IReward[]> | null;
 }
 
 export interface ITabConfigExtended extends ITabConfig {
