@@ -14,6 +14,7 @@ export interface ICampaignConfig {
   shortcodes: ICampaignChoice[];
   goals: ICampaignChoice[];
   channelTypes: ICampaignChoice[];
+  informationCollectionSettingTypes: ICampaignChoice[];
 }
 
 @Injectable()
@@ -28,10 +29,10 @@ export class CampaignCreationStoreService {
       { title: 'Instant Reward', value: 'Instant Reward' }
     ],
     durationLimits: [
-      { title: 'Day', value: 'day' },
-      { title: 'Week', value: 'week' },
-      { title: 'Month', value: 'month' },
-      { title: 'Campaign', value: 'campaign' }
+      { title: 'DAY', value: 'day' },
+      { title: 'WEEK', value: 'week' },
+      { title: 'MONTH', value: 'month' },
+      { title: 'CAMPAIGN.CAMPAIGN_LIMIT', value: 'campaign' }
     ],
     days: [
       { title: 'S', value: 'sunday' },
@@ -57,8 +58,13 @@ export class CampaignCreationStoreService {
       { title: 'Surprise & Delight', value: 'Surprise & Delight' },
     ],
     channelTypes: [
-      { title: 'Weblink', value: 'weblink' },
-      { title: 'SMS', value: 'sms' },
+      { title: 'CAMPAIGN.ChannelTypes.WEBLINK', value: 'weblink' },
+      { title: 'CAMPAIGN.ChannelTypes.SMS', value: 'sms' },
+    ],
+    informationCollectionSettingTypes: [
+      { title: 'CAMPAIGN.InformationCollectionSettingTypes.NO_INFORMATION', value: 'not_required' },
+      { title: 'CAMPAIGN.InformationCollectionSettingTypes.PI_INFORMATION', value: 'pi_required' },
+      { title: 'CAMPAIGN.InformationCollectionSettingTypes.SIGNUP_INFORMATION', value: 'signup_required' },
     ]
   };
 

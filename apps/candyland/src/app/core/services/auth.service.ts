@@ -32,7 +32,7 @@ export class AuthService {
     const localToken = this.localStorage.get('authToken');
     const localUserId = this.localStorage.get('userId');
     if (!localToken || !localUserId) {
-      this.logout();
+      this.clearCache();
       return;
     }
     this.sessionService.token = localToken;
@@ -75,11 +75,15 @@ export class AuthService {
     this.localStorage.set('userId', user.id);
   }
 
+  private clearCache(): void {
+    this.sessionService.remove();
+    this.userService.user = null;
+    this.localStorage.remove('userId');
+    this.localStorage.remove('authToken');
+  }
+
   public logout(): void {
-    // this.sessionService.remove();
-    // this.userService.user = null;
-    // this.localStorage.remove('userId');
-    // this.localStorage.remove('authToken');
-    // this.router.navigate(['/login']);
+    this.clearCache();
+    this.router.navigate(['/login']);
   }
 }

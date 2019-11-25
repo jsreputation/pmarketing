@@ -2,23 +2,29 @@ import { async, TestBed } from '@angular/core/testing';
 
 import { LayoutComponent } from './layout.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatDialogModule, MatToolbarModule, MatIconModule } from '@angular/material';
-import { ThemesService, AuthenticationService, ConfigModule } from '@perx/core';
+import { MatToolbarModule, MatIconModule, MatDialogModule } from '@angular/material';
+import { ThemesService, AuthenticationService, ConfigModule, ConfigService } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
 const themesServiceStub: Partial<ThemesService> = {};
 const authServiceStub: Partial<AuthenticationService> = {};
 
 describe('LayoutComponent', () => {
+
+  const configServiceStub = {
+    readAppConfig: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes([
           { path: 'wallet', redirectTo: '/' }
         ]),
-        MatDialogModule,
         MatToolbarModule,
         MatIconModule,
+        MatDialogModule,
         TranslateModule.forRoot(),
         ConfigModule.forRoot({})
       ],
@@ -33,7 +39,12 @@ describe('LayoutComponent', () => {
         {
           provide: AuthenticationService,
           useValue: authServiceStub
+        },
+        {
+          provide: ConfigService,
+          useValue: configServiceStub
         }
+
       ]
     }).compileComponents();
   }));

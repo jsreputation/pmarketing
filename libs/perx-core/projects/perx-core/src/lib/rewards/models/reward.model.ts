@@ -13,21 +13,21 @@ export interface IReward {
   name: string;
   description: string;
   subtitle: string;
-  validFrom: Date;
-  validTo: Date;
+  validFrom: Date | null;
+  validTo: Date | null;
   sellingFrom?: Date;
   rewardThumbnail?: string;
   rewardBanner: string;
-  merchantImg: string;
+  merchantImg?: string;
   rewardPrice?: IPrice[];
   merchantId?: number;
   merchantName?: string;
   merchantWebsite?: string;
   termsAndConditions: string;
   howToRedeem: string;
-  redemptionType?: RedemptionType;
+  redemptionType?: RedemptionType | null;
   categoryTags?: ICategoryTags[];
-  inventory?: Inventory;
+  inventory?: Inventory | null;
   redemptionText?: string;
   rawPayload?: any;
   displayProperties?: IWRewardDisplayProperties;
@@ -44,7 +44,7 @@ export interface ICatalog {
 }
 
 export interface IPrice {
-  id: number;
+  id?: number;
   rewardCampaignId?: number;
   price?: number;
   currencyCode?: string;

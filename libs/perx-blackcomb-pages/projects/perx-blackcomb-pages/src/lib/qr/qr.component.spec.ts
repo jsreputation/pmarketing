@@ -17,16 +17,32 @@ import { of } from 'rxjs';
 import { QRCodeModule } from 'angularx-qrcode';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { ProfileService } from '@perx/core';
+import { ProfileService, ThemesService, ConfigService } from '@perx/core';
 
 import { QRComponent } from './qr.component';
 
-describe('RedeemComponent', () => {
+describe('QrComponent', () => {
   let component: QRComponent;
   let fixture: ComponentFixture<QRComponent>;
   const locationStub: Partial<Location> = {
     back: () => { }
   };
+
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of({ name: '', properties: { '--background': '', '--font_color': '' } })
+  };
+
+  const activatedRouteStub = {
+    paramMap: of(convertToParamMap({ rewardId: 1 })),
+    snapshot:
+    {
+      paramMap: convertToParamMap({ rewardId: 1 })
+    }
+  };
+
+  const profileServiceStub: Partial<ProfileService> = { whoAmI: () => of({ id: 2, firstName: '', lastName: '' }) };
+
+  const configServiceStub = { readAppConfig: () => of() };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -37,20 +53,12 @@ describe('RedeemComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
-        {
-          provide: ProfileService,
-          useValue: { whoAmI: () => of({}) }
-        },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot:
-            {
-              paramMap: convertToParamMap({ rewardId: 1 })
-            }
-          }
-        },
-        { provide: Location, useValue: locationStub }
+        { provide: ProfileService, useValue: profileServiceStub },
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
+        { provide: Location, useValue: locationStub },
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: ConfigService, useValue: configServiceStub}
+
       ]
     })
       .compileComponents();

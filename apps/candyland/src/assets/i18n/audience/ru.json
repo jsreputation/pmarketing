@@ -1,0 +1,65 @@
+{
+ "AUDIENCE_FEATURE": {
+   "AUDIENCES": "Аудитории",
+   "ADD_USER": "Добавить пользователя",
+   "SEARCH_FOR_USERS": "Поиск пользователей",
+   "SEARCH_FOR_AUDIENCE": "Поиск аудитории",
+   "ID": "Идентификатор",
+   "NAME": "Имя",
+   "EMAIL": "Электронная почта",
+   "STATE": "Штат",
+   "CONTACT_NUMBER": "Контактный номер",
+   "AUDIENCE_LIST": "Список аудитории",
+   "PRIMARY_IDENTIFIER": "Первичный идентификатор",
+   "LIST_NAME": "Имя списка",
+   "LAST_UPDATED": "Последнее обновление",
+   "STATUS": "Статус",
+   "NO_OF_USERS": "Количество пользователей",
+   "NO_DATA_TITLE": "Разделите свою целевую аудиторию",
+   "NO_DATA_TEXT": "Давайте начнем с создания вашего первого списка аудитории",
+   "USER_DETAILS": "Данные пользователя",
+   "FIRST_NAME": "Имя *",
+   "LAST_NAME": "Фамилия *",
+   "EMAIL_ADDRESS": "Адрес электронной почты *",
+   "MOBILE_NUMBER": "Номер мобильного телефона * ",
+   "GENDER": "Пол",
+   "BIRTHDAY": "День рождения",
+   "RACE": "Раса",
+   "COUNTRY": "Страна",
+   "NATIONALITY": "Национальность",
+   "CITY": "Город",
+   "ADD_TO_AUDIENCE_LIST": "Добавить в список аудитории",
+   "UPLOAD_BY_FILE": "Загрузить из файла",
+   "GOLD_USERS": "Золотые пользователи",
+   "SILVER_TIER": "Серебряный уровень",
+   "BRONZE_TIER": "Бронзовый уровень",
+   "CONTACT_NO": "Контактный номер",
+   "REWARD_NAME": "Имя Подарка",
+   "ISSUED_DATE": "Дата публикации",
+   "EXPIRY_DATE": "Дата истечения срока действия",
+   "REDEMPTION_TYPE": "Тип погашения",
+   "CHANGE_EXPIRY_DATE": "Изменить дату истечения срока действия",
+   "MERCHANT": "Продавец",
+   "CAMPAIGN": "Кампания",
+   "SEARCH_VOUCHERS": "Поиск ваучера",
+   "ISSUE_VOUCHER": "Публикация Ваучера",
+   "MANAGE_LIST": "Управление списком",
+   "FROM": "",
+   "OLD": "Текущая",
+   "CURRENT_EXPIRY_DATE": "Текущая дата истечения",
+   "TO": "",
+   "NEW": "Новая",
+   "ENTER_NEW_EXPIRY_DATE": "Новая дата истечения"
+ }
+}
+
+
+
+
+
+
+
+
+
+
+

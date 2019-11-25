@@ -65,6 +65,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
 import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
+import { WalletHistoryComponent } from './wallet-history/wallet-history.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -106,7 +107,8 @@ const comps: any[] = [
   LayoutComponent,
   HomeComponent,
   GamesCollectionComponent,
-  NewsfeedComponent
+  NewsfeedComponent,
+  WalletHistoryComponent
 ];
 
 @NgModule({

@@ -10,6 +10,7 @@ import {
   defaultScratch,
   defaultPinata,
   IPlayOutcome,
+  IEngagementTransaction
 } from './game.model';
 import { Observable, combineLatest, of } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -48,7 +49,7 @@ export class WhistlerGameService implements IGameService {
 
   private static WGameToGame(game: IJsonApiItem<IWGameEngagementAttributes>): IGame {
     let type = TYPE.unknown;
-    let config: ITree | IPinata | IScratch;
+    let config: ITree | IPinata | IScratch | null = null;
     const { attributes } = game;
     if (attributes.game_type === WGameType.shakeTheTree) {
       type = TYPE.shakeTheTree;
@@ -74,8 +75,8 @@ export class WhistlerGameService implements IGameService {
       const scratchdp: IWScratchDisplayProperties = attributes.display_properties as IWScratchDisplayProperties;
       config = {
         ...defaultScratch(),
-        // underlyingImg: scratchdp.post_scratch_fail_img_url,
-        underlyingImg: scratchdp.post_scratch_success_img_url,
+        underlyingSuccessImg: scratchdp.post_scratch_success_img_url,
+        underlyingFailImg: scratchdp.post_scratch_fail_img_url,
         coverImg: scratchdp.pre_scratch_img_url
       };
     }
@@ -89,7 +90,7 @@ export class WhistlerGameService implements IGameService {
       texts.button = attributes.display_properties.button;
     }
 
-    const imgUrl: string = attributes.image_url;
+    const imgUrl: string | undefined = attributes.image_url ? attributes.image_url : undefined;
 
     const backgroundImg: string | undefined = attributes.display_properties.background_img_url ?
       attributes.display_properties.background_img_url : undefined;
@@ -112,7 +113,8 @@ export class WhistlerGameService implements IGameService {
         type: 'transactions',
         attributes: {
           engagement_id: gameId,
-          campaign_entity_id: campaignId
+          campaign_entity_id: campaignId,
+          status: 'confirmed'
         }
       }
     };
@@ -132,11 +134,12 @@ export class WhistlerGameService implements IGameService {
     );
   }
 
-  public get(engagementId: number): Observable<IGame> {
+  public get(engagementId: number, campaignId?: number): Observable<IGame> {
     if (this.cache[engagementId]) {
       return of(this.cache[engagementId]);
     }
-    return this.http.get<IJsonApiItemPayload<IWGameEngagementAttributes>>(`${this.hostName}/game/engagements/${engagementId}`)
+    const campaignIdParams: string = campaignId ? `?campaign_id=${campaignId}` : '';
+    return this.http.get<IJsonApiItemPayload<IWGameEngagementAttributes>>(`${this.hostName}/game/engagements/${engagementId}${campaignIdParams}`)
       .pipe(
         map(res => res.data),
         map(game => WhistlerGameService.WGameToGame(game)),
@@ -145,16 +148,61 @@ export class WhistlerGameService implements IGameService {
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    let disProp: IWCampaignDisplayProperties = null;
+    let disProp: IWCampaignDisplayProperties | null = null;
     return this.http.get<IJsonApiItemPayload<IWCampaignAttributes>>(`${this.hostName}/campaign/entities/${campaignId}`)
       .pipe(
         map((res: IJsonApiItemPayload<IWCampaignAttributes>) => res.data.attributes),
         map((entity: IWCampaignAttributes) => {
-          disProp = entity.display_properties;
+          disProp = { ...entity.display_properties };
           return entity.engagement_id;
         }),
-        switchMap((correctId: number) => this.get(correctId)),
+        switchMap((correctId: number) => this.get(correctId, campaignId)),
         map((game: IGame) => ([{ ...game, campaignId, displayProperties: { ...game.displayProperties, ...disProp } }]))
       );
   }
+
+  public prePlay(engagementId: number, campaignId?: number): Observable<IEngagementTransaction> {
+    const body = {
+      data: {
+        type: 'transactions',
+        attributes: {
+          engagement_id: engagementId,
+          campaign_entity_id: campaignId,
+          status: 'reserved'
+        }
+      }
+    };
+    return this.http.post<IJsonApiItemPayload<IWAttbsObjTrans>>(
+      `${this.hostName}/game/transactions`,
+      body,
+      { headers: { 'Content-Type': 'application/vnd.api+json' } }
+    ).pipe(
+      map(res => ({
+        id: Number.parseInt(res.data.id, 10),
+        voucherIds: res.data.attributes.results.attributes.results.map(
+          (outcome: IJsonApiItem<IWAssignedAttributes>) => Number.parseInt(outcome.id, 10)
+        )
+      }))
+    );
+  }
+  public prePlayConfirm(transactionId: number): Observable<void> {
+    const body = {
+      data: {
+        type: 'transactions',
+        id: transactionId,
+        attributes: {
+          status: 'confirmed'
+        }
+      }
+    };
+    return this.http.patch<IJsonApiItemPayload<IWAttbsObjTrans>>(
+      `${this.hostName}/game/transactions/${transactionId}`,
+      body,
+      { headers: { 'Content-Type': 'application/vnd.api+json' } }
+    ).pipe(
+      // @
+      map(() => void 0)
+    );
+  }
+
 }

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
+import { NgModule, APP_INITIALIZER, LOCALE_ID, Injectable, ErrorHandler } from '@angular/core';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -14,6 +14,9 @@ import {
   OutcomeModule,
   ProfileModule,
   RewardsModule,
+  LanguageService,
+  TokenStorage,
+  ConfigService,
 } from '@perx/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,39 +26,35 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { SignUpModule } from './sign-up/sign-up.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-import { HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import localeZhExtra from '@angular/common/locales/extra/zh';
 import ru from '@angular/common/locales/ru';
 import localesRuExtra from '@angular/common/locales/extra/ru';
+import vi from '@angular/common/locales/vi';
+import localesViExtra from '@angular/common/locales/extra/vi';
+import { MatDialogModule } from '@angular/material';
+import * as Sentry from '@sentry/browser';
+
+Sentry.init({
+  dsn: 'https://736f7fc0afd74f4383fdc760f7c81e5a@sentry.io/1827240'
+});
+
+@Injectable()
+export class SentryErrorHandler implements ErrorHandler {
+  public handleError(error: any): void {
+    // const eventId =
+    Sentry.captureException(error.originalError || error);
+    if (!environment.production) {
+      console.error(error);
+    }
+    // Sentry.showReportDialog({ eventId });
+  }
+}
 
 registerLocaleData(zh, 'zh', localeZhExtra);
 registerLocaleData(ru, 'ru', localesRuExtra);
-
-@Injectable()
-export class CustomTranslateLoader implements TranslateLoader {
-  private contentHeader: HttpHeaders = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-  });
-  private hostUrl: string = 'http://localhost:4000/';
-  constructor(private httpClient: HttpClient) {
-    if (environment.production) {
-      this.hostUrl = `${environment.baseHref}`;
-    }
-  }
-  public getTranslation(lang: string): Observable<{ [k: string]: string }> {
-    const apiAddress = `${this.hostUrl}lang?default=${lang}`;
-    return this.httpClient.get<{ [k: string]: string }>(apiAddress, { headers: this.contentHeader })
-      .pipe(
-        catchError(() => this.httpClient.get<{ [k: string]: string }>(`${this.hostUrl}assets/en-json.json`))
-      );
-  }
-}
+registerLocaleData(vi, 'vi', localesViExtra);
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
   translateService.setDefaultLang(environment.defaultLang);
@@ -80,12 +79,13 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     UtilsModule,
     PerxCampaignModule,
     HttpClientModule,
+    MatDialogModule,
     RewardsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient],
-        useClass: CustomTranslateLoader
+        deps: [HttpClient, ConfigService, TokenStorage],
+        useClass: LanguageService
       }
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
@@ -93,7 +93,9 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
   bootstrap: [AppComponent],
   providers: [
     { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true },
-    { provide: LOCALE_ID, useValue: environment.defaultLang }
+    { provide: LOCALE_ID, useValue: environment.defaultLang },
+    { provide: ErrorHandler, useClass: SentryErrorHandler }
   ],
+  entryComponents: []
 })
 export class AppModule { }

@@ -23,10 +23,10 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
   public params: { [key: string]: string };
   public activeTab: string = 'survey';
   public tabs: ITotal[] = [
-    { id: 174, name: 'survey', title: 'Survey' },
-    { id: 181, name: 'games', title: 'Games' },
-    { id: 173, name: 'stamps', title: 'Stamps' },
-    { id: 180, name: 'reward', title: 'Instant Reward' }
+    { id: 174, name: 'survey', title: 'CAMPAIGN_GRAPHIC_PAGE.NAV_TITLE_SURVEY' },
+    { id: 181, name: 'games', title: 'CAMPAIGN_GRAPHIC_PAGE.NAV_TITLE_GAMES' },
+    { id: 173, name: 'stamps', title: 'CAMPAIGN_GRAPHIC_PAGE.NAV_TITLE_STAMPS' },
+    { id: 180, name: 'reward', title: 'CAMPAIGN_GRAPHIC_PAGE.NAV_TITLE_INSTANT_REWARD' }
   ];
   public tabsValue: any;
   public activeCampaigns: number;

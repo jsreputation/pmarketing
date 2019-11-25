@@ -14,10 +14,6 @@ interface IThemeProperties {
     '--header_color'?: string;
     '--background': string;
     '--font_color': string;
-    'showHomePage'?: boolean;
-    'showSubtitleLogin'?: boolean;
-    'showHistoryPage'?: boolean;
-    'showNewsfeedOnHomepage'?: boolean;
     '--login_background_colour'?: string;
 }
 
@@ -36,13 +32,3 @@ export const DARK: ITheme = {
     '--font_color': '#fff'
   }
 };
-
-export interface AccountPageObject {
-  title: string;
-  content_url: string;  // eslint-disable-line
-  key: string;
-}
-
-export interface PagesObject {
-  pages: AccountPageObject[];
-}

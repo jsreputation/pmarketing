@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationService, ISurvey, SurveyService, IPopupConfig } from '@perx/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { filter, switchMap, takeUntil } from 'rxjs/operators';
+import { filter, switchMap, takeUntil, map } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
 interface IAnswer {
@@ -38,12 +38,24 @@ export class SurveyComponent implements OnInit, OnDestroy {
   };
 
   private initTranslate(): void {
-    this.translate.get(this.successPopUp.title).subscribe((text) => this.successPopUp.title = text);
-    this.translate.get(this.successPopUp.text).subscribe((text) => this.successPopUp.text = text);
-    this.translate.get(this.successPopUp.buttonTxt).subscribe((text) => this.successPopUp.buttonTxt = text);
-    this.translate.get(this.noRewardsPopUp.title).subscribe((text) => this.noRewardsPopUp.title = text);
-    this.translate.get(this.noRewardsPopUp.text).subscribe((text) => this.noRewardsPopUp.text = text);
-    this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
+    if (this.successPopUp.title) {
+      this.translate.get(this.successPopUp.title).subscribe((text) => this.successPopUp.title = text);
+    }
+    if (this.successPopUp.text) {
+      this.translate.get(this.successPopUp.text).subscribe((text) => this.successPopUp.text = text);
+    }
+    if (this.successPopUp.buttonTxt) {
+      this.translate.get(this.successPopUp.buttonTxt).subscribe((text) => this.successPopUp.buttonTxt = text);
+    }
+    if (this.noRewardsPopUp.title) {
+      this.translate.get(this.noRewardsPopUp.title).subscribe((text) => this.noRewardsPopUp.title = text);
+    }
+    if (this.noRewardsPopUp.text) {
+      this.translate.get(this.noRewardsPopUp.text).subscribe((text) => this.noRewardsPopUp.text = text);
+    }
+    if (this.noRewardsPopUp.buttonTxt) {
+      this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
+    }
   }
 
   constructor(
@@ -59,8 +71,8 @@ export class SurveyComponent implements OnInit, OnDestroy {
     this.data$ = this.route.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
-        switchMap((params: ParamMap) => {
-          const id: string = params.get('id');
+        map((params: ParamMap) => params.get('id')),
+        switchMap((id: string) => {
           const idN = Number.parseInt(id, 10);
           return this.surveyService.getSurveyFromCampaign(idN);
         }),
@@ -105,12 +117,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
     this.surveyService.postSurveyAnswer(this.answers, this.survey, this.route.snapshot.params.id)
       .subscribe(
         (res) => {
-          let popupConfig: IPopupConfig = null;
-          if (res.hasOutcomes) {
-            popupConfig = this.successPopUp;
-          } else {
-            popupConfig = this.noRewardsPopUp;
-          }
+          const popupConfig: IPopupConfig = res.hasOutcomes ? this.successPopUp : this.noRewardsPopUp;
           this.router.navigate(['/wallet']);
           this.notificationService.addPopup(popupConfig);
         }

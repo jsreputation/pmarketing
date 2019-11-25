@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { QuestionLongTextFieldComponent } from './question-long-text-field.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/ma
     MatSelectModule,
     MatFormFieldModule,
     MatInputModule,
+    TranslateModule,
   ]
 })
 export class QuestionLongTextFieldModule { }

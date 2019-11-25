@@ -12,6 +12,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "importHelpers": true,
+    "strictNullChecks": true,
     "target": "es2015",
     "typeRoots": [
       "node_modules/@types"

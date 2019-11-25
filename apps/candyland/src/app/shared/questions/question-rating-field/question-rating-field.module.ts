@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { QuestionRatingFieldComponent } from './question-rating-field.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/ma
     MatSelectModule,
     MatFormFieldModule,
     MatInputModule,
+    TranslateModule,
   ]
 })
 export class QuestionRatingFieldModule { }

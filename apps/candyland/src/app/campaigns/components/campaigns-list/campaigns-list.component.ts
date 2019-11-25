@@ -3,6 +3,7 @@ import { MatSort } from '@angular/material';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
 import { ICampaignTableData } from '@cl-core/models/campaign/campaign.interface';
+import { StatusLabelConfig } from '@cl-shared';
 
 @Component({
   selector: 'cl-campaigns-list',
@@ -13,12 +14,15 @@ export class CampaignsListComponent implements AfterViewInit {
   public DATE_FORMAT: string = 'mediumDate';
   public TIME_FORMAT: string = 'shortTime';
 
+  @Input() public statusLabel: { [key: string]: StatusLabelConfig };
   @Input() public dataSource: CustomDataSource<ICampaignTableData>;
   @Input() public displayedColumns: string[] = ['name', 'status', 'begin', 'end', 'audience', 'engagementType', 'actions'];
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
   @Output() public editAction: EventEmitter<ICampaignTableData> = new EventEmitter<ICampaignTableData>();
   @Output() public duplicateAction: EventEmitter<ICampaignTableData> = new EventEmitter<ICampaignTableData>();
   @Output() public emitOpenReport: EventEmitter<string> = new EventEmitter<string>();
+  @Output() public pauseCampaign: EventEmitter<ICampaignTableData> = new EventEmitter<ICampaignTableData>();
+  @Output() public activateCampaign: EventEmitter<ICampaignTableData> = new EventEmitter<ICampaignTableData>();
 
   public ngAfterViewInit(): void {
     this.dataSource.registerSort(this.sort);
@@ -32,7 +36,12 @@ export class CampaignsListComponent implements AfterViewInit {
     this.duplicateAction.emit(item);
   }
 
-  public pauseItem(): void {
+  public pauseItem(item: ICampaignTableData): void {
+    this.pauseCampaign.emit(item);
+  }
+
+  public activateItem(item: ICampaignTableData): void {
+    this.activateCampaign.emit(item);
   }
 
   public openReport(item: ICampaignTableData): void {

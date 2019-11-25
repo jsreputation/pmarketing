@@ -1,6 +1,6 @@
 <ng-container *ngIf="group">
   <div class="form-group" [formGroup]="group">
-    <mat-slide-toggle color="primary" formControlName="multiple">Multiple selection</mat-slide-toggle>
+    <mat-slide-toggle color="primary" formControlName="multiple"><span translate>MULTIPLE_SELECTION</span></mat-slide-toggle>
 
     <div class="choice-wrap" *ngFor="let item of choices.controls; let i = index">
       <div class="control-input-action">
@@ -18,7 +18,7 @@
     <div class="control-input">
       <mat-form-field class="messages-input">
         <input type="text" #choiceText (keydown.enter)="addedField(choiceText)" matInput
-          [placeholder]="'- Add Choice'" />
+          [placeholder]="'ADD_CHOICE' | translate" />
       </mat-form-field>
     </div>
   </div>

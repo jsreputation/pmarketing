@@ -5,14 +5,14 @@ import { map } from 'rxjs/operators';
 import { MatTabChangeEvent } from '@angular/material';
 
 export interface ITabConfig {
-  filterKey?: string;
-  filterValue: string;
+  filterKey: string | null;
+  filterValue: string | null;
   tabName: string;
-  rewardsList?: Observable<IReward[]>;
+  rewardsList?: Observable<IReward[]> | null;
 }
 
 export interface ITabConfigExtended extends ITabConfig {
-  rewardsType: string;
+  rewardsType: string | null;
 }
 
 @Component({
@@ -30,7 +30,7 @@ export class RewardsListTabbedComponent implements OnInit {
       filterKey: null,
       filterValue: null,
       tabName: 'All Rewards',
-      rewardsList: null
+      // rewardsList: null
     }
   ]);
 
@@ -70,12 +70,14 @@ export class RewardsListTabbedComponent implements OnInit {
     }
 
     return rewardsList.pipe(
-      map(rewards => tab.filterValue === null || tab.filterKey === null ? rewards : rewards.filter((reward: IReward) => {
-        const filterBy = tab.filterKey;
-        return reward[`${filterBy}`] &&
-          reward[`${filterBy}`].toLowerCase() === tab.filterValue.toLowerCase();
-      }
-      ))
+      map(rewards => {
+        if (tab.filterValue === null || tab.filterKey === null) {
+          return rewards;
+        }
+        const filterValue: string = tab.filterValue.toLowerCase();
+        const filterBy: string = tab.filterKey;
+        return rewards.filter((reward: IReward) => reward[filterBy] && reward[filterBy].toLowerCase() === filterValue);
+      })
     );
   }
 

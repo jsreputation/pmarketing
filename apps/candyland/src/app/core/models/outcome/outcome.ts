@@ -4,4 +4,5 @@ export interface IOutcome {
     resultType: string;
     probability: number;
     lootBoxId?: number;
+    limit?: number;
 }

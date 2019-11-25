@@ -5,6 +5,7 @@ import { EngagementsGridComponent } from './engagements-grid.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('EngagementsGridComponent', () => {
   let component: EngagementsGridComponent;
@@ -13,6 +14,7 @@ describe('EngagementsGridComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [TranslateModule.forRoot(),],
       declarations: [
         EngagementsGridComponent
       ],

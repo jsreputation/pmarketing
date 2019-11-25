@@ -16,7 +16,7 @@ import {
   IEngagementStamps,
   IEngagementTapType,
   IEngagementShakeType,
-  IEngagementType
+  IEngagementType, IEngagementScratchType
 } from '@cl-core/models/engagement/engagement.interface';
 export class EngagementHttpAdapter {
 
@@ -135,13 +135,35 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformGameHandler(data: IJsonApiItem<IWEngagementAttributes>, engagementType?: string): IEngagementShakeType | IEngagementTapType | undefined {
+  public static transformGameHandler(data: IJsonApiItem<IWEngagementAttributes>, engagementType?: string): IEngagementShakeType | IEngagementTapType | IEngagementScratchType | undefined {
     switch (data.attributes.game_type) {
       case WGameType.shakeTheTree:
         return EngagementHttpAdapter.transformToShackType(data as IJsonApiItem<IWTreeGameEngagementAttributes>, engagementType);
       case WGameType.pinata:
         return EngagementHttpAdapter.transformToPinataType(data as IJsonApiItem<IWPinataGameEngagementAttributes>, engagementType);
+      case WGameType.scratch:
+        return EngagementHttpAdapter.transformToScratchType(data as IJsonApiItem<IWScratchGameEngagementAttributes>, engagementType)
     }
+  }
+
+  public static transformToScratchType(data: IJsonApiItem<IWScratchGameEngagementAttributes>, engagementType?: string) {
+    return {
+      id: data.id,
+      type: data.type,
+      game_type: data.attributes.game_type,
+      title: data.attributes.title,
+      description: data.attributes.description,
+      image_url: data.attributes.image_url,
+      title_display: data.attributes.display_properties.title,
+      button: data.attributes.display_properties.button,
+      sub_title: data.attributes.display_properties.sub_title,
+      pre_scratch_img_url: data.attributes.display_properties.pre_scratch_img_url,
+      post_scratch_success_img_url: data.attributes.display_properties.post_scratch_success_img_url,
+      post_scratch_fail_img_url: data.attributes.display_properties.post_scratch_fail_img_url,
+      attributes_type: engagementType,
+      created_at: data.attributes.created_at,
+      updated_at: data.attributes.updated_at
+    };
   }
 
   public static transformToShackType(data: IJsonApiItem<IWTreeGameEngagementAttributes>, engagementType?: string): IEngagementShakeType {
@@ -363,7 +385,6 @@ export class EngagementHttpAdapter {
       headlineMessage: data.attributes.display_properties.title,
       subHeadlineMessage: data.attributes.display_properties.sub_title,
       buttonText: data.attributes.display_properties.button,
-      lastButtonText: data.attributes.display_properties.lastButtonText,
       background: data.attributes.display_properties.background_img_url,
       preScratchImage: data.attributes.display_properties.pre_scratch_img_url,
       postScratchSuccessImage: data.attributes.display_properties.post_scratch_success_img_url,

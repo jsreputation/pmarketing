@@ -1,6 +1,10 @@
 <header class="page-header">
-  <h1 class="title">Campaigns</h1>
-  <cl-button routerLink="/campaigns/new-campaign" classList="primary cta cta-new">Create New</cl-button>
+  <h1 class="title">
+    {{'CAMPAIGNS' | translate}}
+  </h1>
+  <cl-button routerLink="/campaigns/new-campaign" classList="primary cta cta-new">
+    {{'BTN_CREATE_NEW' | translate}}
+  </cl-button>
 </header>
 
 <section class="content">
@@ -9,7 +13,7 @@
     <!--    filters-->
     <cl-table-filters [dataSource]="dataSource">
       <ng-container *clTableFilter="'name'; let filter">
-        <cl-search-filter class="search-block" [control]="filter" placeholder="Search for campaign"></cl-search-filter>
+        <cl-search-filter class="search-block" [control]="filter" [placeholder]="'CAMPAIGN.SEARCH_FOR_CAMPAIGN' | translate"></cl-search-filter>
       </ng-container>
       <div>
         <ng-container *clTableFilter="'rangeDate'; let filter">
@@ -17,14 +21,14 @@
         </ng-container>
         <ng-container *clTableFilter="'status'; value: ''; let filter">
           <mat-form-field appearance="outline" class="control-input half-block">
-            <mat-select [formControl]="filter" placeholder="All">
-              <mat-option value="">All</mat-option>
-              <mat-option value="active">Active</mat-option>
+            <mat-select [formControl]="filter" [placeholder]="'STATUSES_TYPE.ALL' | translate">
+              <mat-option value="">{{'STATUSES_TYPE.ALL' | translate}}</mat-option>
+              <mat-option value="active">{{'STATUSES_TYPE.ACTIVE' | translate}}</mat-option>
               <!--          <mat-option value="pending">pending</mat-option>-->
-              <mat-option value="draft">Draft</mat-option>
-              <mat-option value="sheduled">Sheduled</mat-option>
-              <mat-option value="paused">Paused</mat-option>
-              <mat-option value="ended">Ended</mat-option>
+              <mat-option value="draft">{{'STATUSES_TYPE.DRAFT' | translate}}</mat-option>
+              <mat-option value="sheduled">{{'STATUSES_TYPE.SCHEDULED' | translate}}</mat-option>
+              <mat-option value="paused">{{'STATUSES_TYPE.PAUSED' | translate}}</mat-option>
+              <mat-option value="ended">{{'STATUSES_TYPE.ENDED' | translate}}</mat-option>
             </mat-select>
           </mat-form-field>
         </ng-container>
@@ -34,10 +38,13 @@
     <div class="table-card">
       <!--  table-->
       <cl-campaigns-list [dataSource]="dataSource"
+                         [statusLabel]="statusLabel"
                          [displayedColumns]="displayedColumns"
                          (editAction)="editCampaign($event)"
                          (duplicateAction)="duplicateCampaign($event)"
                          (emitOpenReport)="openReport($event)"
+                         (activateCampaign)="activateCampaign($event)"
+                         (pauseCampaign)="pauseCampaign($event)"
       >
       </cl-campaigns-list>
       <!--/ table-->
@@ -54,10 +61,10 @@
   <cl-no-data *ngSwitchCase="dataSourceStates.noDataApi">
     <img class="no-data-img" src="/assets/images/no-data/campaign-empty-illustration.svg" alt="">
     <h2 class="no-data-title">
-      Engaging with your customers is easy!
+      {{'CAMPAIGN.NO_DATA_TITLE' | translate}}
     </h2>
     <p class="no-data-text">
-      Let&rsquo;s begin by creating your first campaign
+      {{'CAMPAIGN.NO_DATA_TEXT' | translate}}
     </p>
   </cl-no-data>
   </ng-container>

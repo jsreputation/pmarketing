@@ -99,7 +99,7 @@ describe('WhistlerRewardsService', () => {
     service.getReward(42)
       .subscribe((r: IReward) => {
         expect(`${r.id}`).toEqual(mockReward.id);
-        expect(r.merchantName).toBeNull();
+        expect(r.merchantName).not.toBeDefined();
         done();
       });
 

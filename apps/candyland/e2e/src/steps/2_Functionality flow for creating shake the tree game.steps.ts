@@ -1,10 +1,11 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, protractor } from 'protractor';
-import { EngagementAppPage, CreateShakeTheTreeAppPage } from '../pages/candylandApp.po';
+import { EngagementAppPage, CreateShakeTheTreeAppPage, ElementApp } from '../pages/candylandApp.po';
 // initializing page objects variables
 let PageEngagement: EngagementAppPage;
 let PageShakeTheTree: CreateShakeTheTreeAppPage;
+const Element = ElementApp;
 
 Before( () => {
   // initializing page objects instances
@@ -39,7 +40,7 @@ Given(/^7_I am on the engagement creation dialog box$/, async () => {
   await PageEngagement.navigateToEngagement();
   await browser.sleep(3000);
   // removing the walkme widget
-  await browser.executeScript('document.getElementById("walkme-player").remove()');
+  // await browser.executeScript('document.getElementById("walkme-player").remove()');
 });
 
 When(/^7_I click the next button$/, async () => {
@@ -50,7 +51,7 @@ When(/^7_I click the next button$/, async () => {
   // clicking on the games option
   await PageShakeTheTree.shakeTreeTypeOptions().click();
   // clicking on the next button
-  await PageShakeTheTree.shakeTreeNextButton().click();
+  await Element.matFlatButtonArray().click();
   await browser.sleep(3000);
   });
 

@@ -4,8 +4,11 @@ import { CustomDataSource } from '@cl-shared/table';
 import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
 import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { ILoyaltyForm, ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
+
+import { StatusLabelConfig } from '@cl-shared';
+import { ConfigService } from '@cl-core-services';
+import { LoyaltyService } from '@cl-core/services/loyalty.service';
 
 @Component({
   selector: 'cl-loyalty-review-page',
@@ -15,6 +18,7 @@ import { ILoyaltyForm, ICustomTireForm } from '@cl-core/models/loyalty/loyalty-f
 export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
   public loyalty: ILoyaltyForm;
   public customTierDataSource: CustomDataSource<ICustomTireForm>;
+  public statusLabel: { [key: string]: StatusLabelConfig };
   protected destroy$: Subject<void> = new Subject();
 
   constructor(
@@ -22,11 +26,13 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
     private customTierService: LoyaltyCustomTierService,
     private router: Router,
     private cd: ChangeDetectorRef,
+    private configService: ConfigService,
     private loyaltyService: LoyaltyService
   ) { }
 
   public ngOnInit(): void {
     this.handleRouteParams();
+    this.getStatusesLabel();
   }
 
   public ngOnDestroy(): void {
@@ -72,5 +78,13 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
 
   private setBasicTierIdToCustomTiersDataSourceFilter(basicTierId: string): void {
     this.customTierDataSource.filter = { program_id: basicTierId };
+  }
+
+  private getStatusesLabel(): void {
+    this.configService.prepareStatusesLabel()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((statuses) => {
+        this.statusLabel = statuses;
+      });
   }
 }

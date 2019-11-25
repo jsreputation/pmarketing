@@ -15,6 +15,7 @@ import {
   IJsonApiItem,
   IJsonApiListPayload,
 } from '@perx/whistler';
+import { oc } from 'ts-optchain';
 
 @Injectable({
   providedIn: 'root'
@@ -47,19 +48,19 @@ export class WhistlerRewardsService implements RewardsService {
       // @ts-ignore
       id: (typeof r.id) === 'string' ? Number.parseInt(r.id, 10) : r.id,
       name: r.attributes.name,
-      description: r.attributes.description,
+      description: oc(r).attributes.description(''),
       subtitle: '',
-      validFrom: new Date(r.attributes.created_at),
+      validFrom: r.attributes.created_at ? new Date(r.attributes.created_at) : new Date(),
       validTo: null,
       rewardThumbnail: r.attributes.image_url,
-      rewardBanner: r.attributes.image_url,
-      merchantId: Number.parseInt(r.attributes.organization_id, 10),
-      merchantImg: merchant && merchant.images && merchant.images.length > 0 ? merchant.images[0].url : null,
-      merchantName: merchant ? merchant.name : null,
+      rewardBanner: oc(r).attributes.image_url(''),
+      merchantId: r.attributes.organization_id ? Number.parseInt(r.attributes.organization_id, 10) : undefined,
+      merchantImg: merchant && merchant.images && merchant.images.length > 0 ? merchant.images[0].url : undefined,
+      merchantName: merchant ? merchant.name : undefined,
       rewardPrice: [],
-      termsAndConditions: r.attributes.terms_conditions,
+      termsAndConditions: oc(r).attributes.terms_conditions(''),
       // howToRedeem: r.attributes.redemption_type,
-      redemptionText: ('redemption_text' in r.attributes.display_properties) ? r.attributes.display_properties.redemption_text : null,
+      redemptionText: oc(r).attributes.display_properties.redemption_text(),
       categoryTags: [
         {
           id: 0,
@@ -69,15 +70,15 @@ export class WhistlerRewardsService implements RewardsService {
       redemptionType: WhistlerRewardsService.WRedemptionToRT(r.attributes.redemption_type),
       rawPayload: metaData,
       displayProperties: {
-        merchantPinText: r.attributes.display_properties.merchantPinText,
-        rewardSuccessPopUp: r.attributes.display_properties.rewardSuccessPopUp,
-        codeInstructionsText: r.attributes.display_properties.codeInstructionsText,
-        errorPopUp: r.attributes.display_properties.errorPopUp,
+        merchantPinText: oc(r).attributes.display_properties.merchantPinText(),
+        rewardSuccessPopUp: oc(r).attributes.display_properties.rewardSuccessPopUp(),
+        codeInstructionsText: oc(r).attributes.display_properties.codeInstructionsText(),
+        errorPopUp: oc(r).attributes.display_properties.errorPopUp(),
       }
     };
   }
 
-  public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
+  public getAllRewards(tags?: string[] | null, categories?: string[]): Observable<IReward[]> {
     return new Observable(subject => {
       let current: IReward[] = [];
       let meta: IWMetaData = { currentPage: 1, totalPages: 1 };
@@ -105,7 +106,7 @@ export class WhistlerRewardsService implements RewardsService {
   public getRewards(
     page: number,
     pageSize: number = 10,
-    tags?: string[],
+    tags?: string[] | null,
     categories?: string[],
   ): Observable<IReward[]> {
     const tagsString = tags && tags.join(',');
@@ -145,11 +146,18 @@ export class WhistlerRewardsService implements RewardsService {
         )
       ),
       map(([rewards, merchants]: [IJsonApiItem<IWRewardEntityAttributes>[], IMerchant[]]) => rewards.map(
-        r => WhistlerRewardsService.WRewardToReward(
-          r,
-          merchants.find(m => m.id === Number.parseInt(r.attributes.organization_id, 10)),
-          metaData
-        )
+        (r: IJsonApiItem<IWRewardEntityAttributes>) => {
+          let merchant: IMerchant | null = null;
+          if (r.attributes.organization_id !== undefined) {
+            const orgId: number = Number.parseInt(r.attributes.organization_id, 10);
+            merchant = merchants.find(m => m.id === orgId) || null;
+          }
+          return WhistlerRewardsService.WRewardToReward(
+            r,
+            merchant,
+            metaData
+          );
+        }
       )
       ),
       // save each reward in local cache

@@ -31,6 +31,7 @@ export class TagListComponent implements OnDestroy, ControlValueAccessor {
   @Input() public selectable: boolean = true;
   @Input() public removable: boolean = true;
   @Input() public addOnBlur: boolean = true;
+  @Input() public placeholder: string = 'Tags';
   public readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   @Input() set value(setValue: string[]) {

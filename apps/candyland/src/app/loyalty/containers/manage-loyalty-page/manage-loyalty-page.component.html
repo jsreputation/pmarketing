@@ -1,18 +1,17 @@
 <header class="page-header full-with" [formGroup]="form">
   <mat-form-field class="pagetitle-input" floatLabel="never">
-    <input type="text" matInput formControlName="name" placeholder="Enter title here">
-    <mat-error *ngIf="name.hasError('required')">Required field</mat-error>
-    <mat-error *ngIf="name.hasError('minlength')">Min length 1</mat-error>
-    <mat-error *ngIf="name.hasError('maxlength')">Max length 60</mat-error>
+    <input type="text" matInput formControlName="name" [placeholder]="'ENTER_TITLE_HERE' | translate">
+    <mat-error *ngIf="name.hasError('required')">{{'ERROR_REQUIRED' | translate}}</mat-error>
+    <mat-error *ngIf="name.hasError('minlength')">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
+    <mat-error *ngIf="name.hasError('maxlength')">{{'ERROR_MAX_LENGTH' | translate}} 60</mat-error>
   </mat-form-field>
   <!--  buttons-->
   <div class="btn-group">
-    <cl-button classList="tertiary" *ngIf="!isEditPage" (click)="cancel()">Cancel</cl-button>
-    <cl-button classList="tertiary" *ngIf="isEditPage" (click)="navigateToList()">Back</cl-button>
-    <cl-button classList="secondary" *ngIf="!isLastStep && showDraftButton" (click)="saveAsDraft()">Save as a draft
-    </cl-button>
-    <cl-button classList="primary cta cta-next" *ngIf="!isLastStep" (click)="goNext()">Next</cl-button>
-    <cl-button *ngIf="isLastStep" classList="primary cta cta-save cta-save-launch" (click)="launch()">Launch</cl-button>
+    <cl-button classList="tertiary" *ngIf="!isEditPage" (click)="cancel()">{{'BTN_CANCEL' | translate}}</cl-button>
+    <cl-button classList="tertiary" *ngIf="isEditPage" (click)="navigateToList()">{{'BTN_BACK' | translate}}</cl-button>
+    <cl-button classList="secondary" *ngIf="!isLastStep && showDraftButton" (click)="saveAsDraft()">{{'BTN_SAVE_AS_DRAFT' | translate}}</cl-button>
+    <cl-button classList="primary cta cta-next" *ngIf="!isLastStep" (click)="goNext()">{{'BTN_NEXT' | translate}}</cl-button>
+    <cl-button *ngIf="isLastStep" classList="primary cta cta-save cta-save-launch" (click)="launch()">{{'BTN_LAUNCH' | translate}}</cl-button>
   </div>
   <!--/  buttons-->
 </header>
@@ -20,13 +19,13 @@
   <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0">
     <!--step 1-->
     <mat-step completed="false">
-      <ng-template matStepLabel>Loyalty Details</ng-template>
+      <ng-template matStepLabel>{{'LOYALTY_FEATURE.LOYALTY_DETAILS' | translate}}</ng-template>
       <cl-loyalty-form-step-details *ngIf="form && stepOne" [group]="stepOne"
                                     [pools]="pools"></cl-loyalty-form-step-details>
     </mat-step>
     <!--step 2-->
     <mat-step completed="false">
-      <ng-template matStepLabel>Tiers & Conversions</ng-template>
+      <ng-template matStepLabel>{{'LOYALTY_FEATURE.TIERS_CONVERSIONS' | translate}}</ng-template>
       <cl-loyalty-form-step-tiers-conversions *ngIf="form && stepTwo" [group]="stepTwo"
                                               [customTierDataSource]="customTierDataSource"
                                               (tiersConversionsAction)="handleLoyaltyActions($event)"
@@ -44,7 +43,7 @@
     </mat-step>
     <!--step 4-->
     <mat-step>
-      <ng-template matStepLabel>Review</ng-template>
+      <ng-template matStepLabel>{{'LOYALTY_FEATURE.REVIEW' | translate}}</ng-template>
       <cl-loyalty-form-step-review *ngIf="form && stepOne && stepTwo && isLastStep"
                                    [dataSource]="customTierDataSource"
                                    [group]="form"></cl-loyalty-form-step-review>

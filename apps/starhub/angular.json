@@ -33,6 +33,24 @@
             "scripts": []
           },
           "configurations": {
+            "staging": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
             "production": {
               "optimization": true,
               "outputHashing": "all",
@@ -47,6 +65,10 @@
                 {
                   "replace": "src/index.html",
                   "with": "src/index.prod.html"
+                },
+                {
+                  "replace": "src/app/home/news-feed/news-feed.component.ts",
+                  "with": "src/app/home/news-feed/news-feed.component.prod.ts"
                 }
               ],
               "budgets": [

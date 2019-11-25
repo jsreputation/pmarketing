@@ -61,6 +61,7 @@ button.mat-default {
 button.mat-stroked-button {
   background-color: white !important;
   color: var(--accent) !important;
+  border: 1px solid var(--accent) !important;
 }
 
 .mat-toolbar {
@@ -87,5 +88,5 @@ button.mat-stroked-button {
 }
 
 .backArrow {
-  color: var(--accent);
+  color: var(--button_text_color);
 }

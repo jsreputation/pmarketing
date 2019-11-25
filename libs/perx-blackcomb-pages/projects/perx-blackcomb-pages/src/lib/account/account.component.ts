@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import {
   ProfileService,
   IProfile,
-  ThemesService,
+  ConfigService,
   AuthenticationService,
   Config,
   PagesObject,
@@ -25,16 +25,16 @@ export class AccountComponent implements OnInit {
   constructor(
     public config: Config,
     private profileService: ProfileService,
-    private themeService: ThemesService,
+    private configService: ConfigService,
     private translate: TranslateService,
     private router: Router,
     private authenticationService: AuthenticationService,
   ) {
-    this.preAuth = config.preAuth;
+    this.preAuth = config.preAuth || false;
   }
 
   public ngOnInit(): void {
-    this.themeService.getAccountSettings()
+    this.configService.getAccountSettings()
       .pipe(
         tap((settings: PagesObject) => this.pages = settings.pages),
         flatMap((settings) => this.translate.get(settings.pages.map((page) => page.title))),

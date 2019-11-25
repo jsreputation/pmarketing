@@ -1,6 +1,6 @@
 <aside class="dialog invite-new-users" role="dialog" aria-labelledby="dialogTitle-inviteNewUsers">
   <header class="dialog-header-wrap">
-    <h2 class="dialog-title" id="dialogTitle-inviteNewUsers">Invite new users</h2>
+    <h2 class="dialog-title" id="dialogTitle-inviteNewUsers">{{'SETTINGS_FEATURE.INVITE_NEW_USER' | translate}}</h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
       <mat-icon>close</mat-icon>
     </button>
@@ -9,39 +9,39 @@
     <!--    <mat-horizontal-stepper labelPosition="bottom" linear #stepper>-->
     <!--      <mat-step [completed]="this.form.valid">-->
     <div class="dialog-content">
-      <ng-template matStepLabel>Email</ng-template>
+      <ng-template matStepLabel>{{'SETTINGS_FEATURE.EMAIL' | translate}}</ng-template>
       <div class="invite-new-users-section">
         <!-- name-->
         <mat-form-field>
-          <input matInput placeholder="Name" [formControl]="this.form.get('name')">
-          <mat-error *ngIf="this.form.get('name').hasError('required')">Required field</mat-error>
-          <mat-error *ngIf="this.form.get('name').hasError('minlength')">Min length 5</mat-error>
-          <mat-error *ngIf="this.form.get('name').hasError('maxlength')">Max length 50</mat-error>
+          <input matInput [placeholder]="'SETTINGS_FEATURE.NAME' | translate" [formControl]="this.form.get('name')">
+          <mat-error *ngIf="this.form.get('name').hasError('required')">{{'ERROR_REQUIRED' | translate}}</mat-error>
+          <mat-error *ngIf="this.form.get('name').hasError('minlength')">{{'ERROR_MIN_LENGTH' | translate}} 5</mat-error>
+          <mat-error *ngIf="this.form.get('name').hasError('maxlength')">{{'ERROR_MAX_LENGTH' | translate}} 50</mat-error>
         </mat-form-field>
         <!-- /  name-->
         <!-- email-->
         <mat-form-field>
-          <input matInput placeholder="Email Address" [formControl]="this.form.get('email')">
-          <mat-error *ngIf="this.form.get('email').hasError('required')">Required field</mat-error>
-          <mat-error *ngIf="this.form.get('email').hasError('minlength')">Min length 15</mat-error>
-          <mat-error *ngIf="this.form.get('email').hasError('maxlength')">Max length 50</mat-error>
-          <mat-error *ngIf="this.form.get('email').hasError('email')">Wrong format of email</mat-error>
+          <input matInput [placeholder]="'SETTINGS_FEATURE.EMAIL_ADDRESS' | translate" [formControl]="this.form.get('email')">
+          <mat-error *ngIf="this.form.get('email').hasError('required')">{{'ERROR_REQUIRED' | translate}}</mat-error>
+          <mat-error *ngIf="this.form.get('email').hasError('minlength')">{{'ERROR_MIN_LENGTH' | translate}} 15</mat-error>
+          <mat-error *ngIf="this.form.get('email').hasError('maxlength')">{{'ERROR_MAX_LENGTH' | translate}} 50</mat-error>
+          <mat-error *ngIf="this.form.get('email').hasError('email')">{{'ERROR_WRONG_FORMAT_OF_EMAIL' | translate}}</mat-error>
         </mat-form-field>
         <!-- /  email-->
         <!--role-->
         <mat-form-field>
-          <mat-label>Role</mat-label>
+          <mat-label>{{'SETTINGS_FEATURE.ROLE' | translate}}</mat-label>
           <mat-select [formControl]="form.get('roleId')">
             <mat-select-trigger>
-              <cl-role-label [role]="form.get('roleId').value" [showTitle]="true"></cl-role-label>
+              <cl-role-label [role]="form.get('roleId').value" [config]="roleLabel" [showTitle]="true"></cl-role-label>
             </mat-select-trigger>
             <ng-container *ngFor="let role of config">
               <mat-option [value]="role.id">
-                <cl-role-label [role]="role?.id" [showTitle]="true" classList="small"></cl-role-label>
+                <cl-role-label [role]="role?.id" [config]="roleLabel" [showTitle]="true" classList="small"></cl-role-label>
               </mat-option>
             </ng-container>
           </mat-select>
-          <mat-error *ngIf="this.form.get('roleId').hasError('required')">Required field</mat-error>
+          <mat-error *ngIf="this.form.get('roleId').hasError('required')">{{'ERROR_REQUIRED' | translate}}</mat-error>
         </mat-form-field>
         <!--/ role-->
       </div>
@@ -105,7 +105,9 @@
                 class="actions-close"
                 (click)="close()"
                 [disableRipple]="true">
-      <span>Cancel</span>
+      <span>
+        {{'BTN_CANCEL' | translate}}
+      </span>
     </cl-button>
     <!--          <cl-button classList="primary"-->
     <!--                     (click)="goNext()"-->
@@ -117,7 +119,7 @@
                 (click)="invite()"
                 [disable]="this.form.invalid"
                 [disableRipple]="true">
-      <span>Invite</span>
+      <span>{{'SETTINGS_FEATURE.INVITE_NEW_USER' | translate}}</span>
     </cl-button>
   </footer>
   <!--  <div class="dialog-actions">-->

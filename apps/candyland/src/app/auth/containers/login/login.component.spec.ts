@@ -11,6 +11,7 @@ import { AuthService } from '@cl-core-services';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { SessionService } from '@cl-core/services/session.service';
 import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -27,7 +28,8 @@ describe('LoginComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
-        HttpClientModule
+        HttpClientModule,
+        TranslateModule.forRoot()
       ],
       providers: [ AuthService, LocalStorageService, SessionService ],
       declarations: [

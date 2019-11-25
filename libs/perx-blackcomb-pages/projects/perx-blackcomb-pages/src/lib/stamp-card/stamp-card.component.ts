@@ -1,9 +1,8 @@
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { StampService, IStampCard, IPopupConfig, PopupComponent } from '@perx/core';
+import { StampService, IStampCard, IPopupConfig, NotificationService } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { filter, switchMap, takeUntil } from 'rxjs/operators';
+import { filter, switchMap, takeUntil, map } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
-import { MatDialog, MatDialogRef } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -14,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 export class StampCardComponent implements OnInit, OnDestroy {
   public title: string; // = 'Scratch & Win!'
-  public subTitle: string; //  = 'Collect all 10 stickers and win a reward!'
+  public subTitle?: string; //  = 'Collect all 10 stickers and win a reward!'
   public background: string;
   public cardBackground: string;
   public isEnabled: boolean = false;
@@ -29,20 +28,28 @@ export class StampCardComponent implements OnInit, OnDestroy {
     buttonTxt: 'TRY_AGAIN'
   };
 
-  private initTranslate(): void {
-    this.translate.get(this.rewardSuccessPopUp.title).subscribe((text) => this.rewardSuccessPopUp.title = text);
-    this.translate.get(this.errorPopUp.title).subscribe((text) => this.errorPopUp.title = text);
-    this.translate.get(this.rewardSuccessPopUp.buttonTxt).subscribe((text) => this.rewardSuccessPopUp.buttonTxt = text);
-    this.translate.get(this.errorPopUp.buttonTxt).subscribe((text) => this.errorPopUp.buttonTxt = text);
-  }
-
   constructor(
     private stampService: StampService,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog,
+    private notificationService: NotificationService,
     private translate: TranslateService
   ) {
+  }
+
+  private initTranslate(): void {
+    if (this.rewardSuccessPopUp.title) {
+      this.translate.get(this.rewardSuccessPopUp.title).subscribe((text) => this.rewardSuccessPopUp.title = text);
+    }
+    if (this.errorPopUp.title) {
+      this.translate.get(this.errorPopUp.title).subscribe((text) => this.errorPopUp.title = text);
+    }
+    if (this.rewardSuccessPopUp.buttonTxt) {
+      this.translate.get(this.rewardSuccessPopUp.buttonTxt).subscribe((text) => this.rewardSuccessPopUp.buttonTxt = text);
+    }
+    if (this.errorPopUp.buttonTxt) {
+      this.translate.get(this.errorPopUp.buttonTxt).subscribe((text) => this.errorPopUp.buttonTxt = text);
+    }
   }
 
   public ngOnInit(): void {
@@ -51,8 +58,8 @@ export class StampCardComponent implements OnInit, OnDestroy {
     this.stampCard$ = this.route.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
-        switchMap((params: ParamMap) => {
-          const id: string = params.get('id');
+        map((params: ParamMap) => params.get('id')),
+        switchMap((id: string) => {
           const idN = Number.parseInt(id, 10);
           return this.stampService.getCurrentCard(idN);
         }),
@@ -60,10 +67,10 @@ export class StampCardComponent implements OnInit, OnDestroy {
       );
     this.stampCard$.subscribe(
       (stampCard: IStampCard) => {
-        this.title = stampCard.title;
+        this.title = stampCard.title || '';
         this.subTitle = stampCard.subTitle;
-        this.background = stampCard.displayProperties.bgImage;
-        this.cardBackground = stampCard.displayProperties.cardBgImage;
+        this.background = stampCard.displayProperties.bgImage || '';
+        this.cardBackground = stampCard.displayProperties.cardBgImage || '';
         if (stampCard.displayProperties.noRewardsPopUp) {
           this.errorPopUp.title = stampCard.displayProperties.noRewardsPopUp.headLine;
           this.errorPopUp.text = stampCard.displayProperties.noRewardsPopUp.subHeadLine;
@@ -92,13 +99,10 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public handleStamp(): void {
     this.stampService.play().subscribe((res) => {
       if (res) {
-        return this.popup(this.rewardSuccessPopUp);
+        this.notificationService.addPopup(this.rewardSuccessPopUp);
+      } else {
+        this.notificationService.addPopup(this.errorPopUp);
       }
-      return this.popup(this.errorPopUp);
     });
-  }
-
-  private popup(data: IPopupConfig): MatDialogRef<PopupComponent> {
-    return this.dialog.open(PopupComponent, { data });
   }
 }

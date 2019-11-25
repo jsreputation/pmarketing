@@ -10,7 +10,7 @@ import { AuthenticationService } from '@perx/core';
 })
 export class SignUpComponent implements OnInit {
   public signUpForm: FormGroup;
-  public errorMessage: string;
+  public errorMessage?: string;
   public hide: boolean = true;
 
   constructor(
@@ -29,18 +29,18 @@ export class SignUpComponent implements OnInit {
       lastName: ['', Validators.required],
       phone: ['', Validators.required],
       password: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
-      accept_terms: [false, Validators.required]
+      accept_terms: [false, Validators.requiredTrue]
     });
   }
 
   public onSubmit(): void {
-    const password: string = this.signUpForm.get('password').value;
-    const termsConditions = this.signUpForm.get('accept_terms').value as boolean;
+    const password: string = this.signUpForm.value.password;
+    const termsConditions = this.signUpForm.value.accept_terms as boolean;
     if (!termsConditions) {
       return;
     }
 
-    this.errorMessage = null;
+    this.errorMessage = undefined;
     const profile = this.signUpForm.value;
     delete profile.accept_terms;
     profile.password_confirmation = password;

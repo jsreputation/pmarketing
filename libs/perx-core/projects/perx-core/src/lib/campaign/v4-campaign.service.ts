@@ -6,7 +6,6 @@ import { ICampaign, CampaignType, CampaignState } from './models/campaign.model'
 import { ICampaignService } from './icampaign.service';
 import { V4RewardsService, IV4Reward } from '../rewards/v4-rewards.service';
 import { Config } from '../config/config';
-import {oc} from 'ts-optchain';
 
 interface IV4Image {
   type: string;
@@ -28,7 +27,6 @@ interface IV4Campaign {
   tags: any[];
   state: CampaignState;
   rewards?: IV4Reward[];
-  is_coming_soon?: boolean | null;
 }
 
 interface IV4CampaignResponse {
@@ -57,16 +55,17 @@ export class V4CampaignService implements ICampaignService {
     const thumbnail = campaign.images.find(image => ['catalog_thumbnail', 'campaign_thumbnail'].some(ty => ty === image.type));
     const thumbnailUrl = thumbnail ? thumbnail.url : undefined;
     const rewards = campaign.rewards && campaign.rewards.map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward));
+
     return {
       id: campaign.id,
       name: campaign.name,
       description: campaign.description,
       type: campaign.campaign_type,
       state: campaign.state,
-      endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null ,
+      endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null,
+      beginsAt: campaign.begins_at ? new Date(campaign.begins_at) : null,
       rewards,
       thumbnailUrl,
-      isComingSoon: oc(campaign).is_coming_soon()
     };
   }
 
