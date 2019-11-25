@@ -1,6 +1,6 @@
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { WhistlerGameService } from './whist-game.service';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, inject } from '@angular/core/testing';
 import { ConfigModule } from '../config/config.module';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { Type } from '@angular/core';
@@ -12,6 +12,8 @@ import {
   IJsonApiItemPayload,
   IWGameEngagementAttributes,
 } from '@perx/whistler';
+import { HttpClient } from '@angular/common/http';
+import { of } from 'rxjs';
 
 describe('WhistlerGameService', () => {
   let httpTestingController: HttpTestingController;
@@ -173,4 +175,10 @@ describe('WhistlerGameService', () => {
 
     httpTestingController.verify();
   });
+
+  it('WGameToGame else branches', fakeAsync(inject([WhistlerGameService, HttpClient],
+    (gameService: WhistlerGameService, http: HttpClient) => {
+      spyOn(http, 'get').and.returnValue(of({data: {}}));
+      gameService.get(500).subscribe(()=>{});
+    })));
 });
