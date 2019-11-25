@@ -5,6 +5,7 @@ import { switchMap, tap, takeUntil } from 'rxjs/operators';
 
 import { DashboardService } from '@cl-core/services';
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
+import { CardType } from '@perx/chart';
 
 export enum DictionaryTotal {
   activeCustomers = 'activeCustomers',
@@ -30,6 +31,7 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
   ];
   public tabsValue: any;
   public activeCampaigns: number;
+  public ct: typeof CardType = CardType;
 
   public get tabsIds(): number[] {
     return this.tabs.map(tab => tab.id);
