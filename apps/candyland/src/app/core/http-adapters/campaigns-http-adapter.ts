@@ -3,11 +3,25 @@ import {
   EngagementTypeAPIMapping,
   EngagementTypeFromAPIMapping
 } from '@cl-core/models/engagement/engagement-type.enum';
-import { IWCampaignAttributes, WEngagementType, WInformationCollectionSettingType } from '@perx/whistler';
+import {
+  IWCampaignAttributes,
+  WEngagementType,
+  WInformationCollectionSettingType
+} from '@perx/whistler';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
 
 export class CampaignsHttpAdapter {
+
+  public static transformCampaignStatus(status: string): IJsonApiItem<Partial<IWCampaignAttributes>> {
+    return {
+      type: 'entities',
+      attributes: {
+        status
+      }
+    };
+  }
+
   public static transformToCampaign(data: any): ICampaignTableData {
     const eType = data.attributes.engagement_type ?
       CampaignsHttpAdapter.EngagementTypePipeTransform(EngagementTypeFromAPIMapping[data.attributes.engagement_type])

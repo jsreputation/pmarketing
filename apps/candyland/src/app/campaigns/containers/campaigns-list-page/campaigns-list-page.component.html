@@ -38,10 +38,13 @@
     <div class="table-card">
       <!--  table-->
       <cl-campaigns-list [dataSource]="dataSource"
+                         [statusLabel]="statusLabel"
                          [displayedColumns]="displayedColumns"
                          (editAction)="editCampaign($event)"
                          (duplicateAction)="duplicateCampaign($event)"
                          (emitOpenReport)="openReport($event)"
+                         (activateCampaign)="activateCampaign($event)"
+                         (pauseCampaign)="pauseCampaign($event)"
       >
       </cl-campaigns-list>
       <!--/ table-->

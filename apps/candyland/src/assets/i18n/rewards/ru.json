@@ -1,7 +1,7 @@
 {
   "SEARCH_FOR_REWARDS": "Поиск наград",
   "REWARD_NAME": "Название награды",
-  "REWARD_TYPE": "Тип вознаграждения",
+  "REWARD_TYPE": "Тип награды",
   "REDEMPTION_TYPE": "Тип погашения",
   "CATEGORY": "Категория",
   "VALIDITY": "Срок действия",
@@ -9,7 +9,7 @@
   "OUR_REWARD_BAG_IS_EMPTY": "Ваша наградная сумка пуста",
   "LETS_BEGIN_BY_CREATING_YOUR_FIRST_REWARD": "Давайте начнем с создания вашей первой награды",
   "ENTER_TITLE_HERE": "Введите название здесь",
-  "REWARD_INFO": "Информация о вознаграждении",
+  "REWARD_INFO": "Информация о награде",
   "REWARD_TYPE_OPTIONS": {
     "FREE": "Бесплатно",
     "CASHBACK": "Кэшбэк",
@@ -36,10 +36,10 @@
     "MERCHANT_PIN": "ПИН-код продавца",
     "PROMO_CODE": "Промо-код"
   },
-  "COST_OF_REWARD": "Стоимость вознаграждения",
+  "COST_OF_REWARD": "Стоимость награды",
   "TERMS_&_CONDITION": "Условия использования",
-  "POINTS_BURN_RULE": "Правило (Сжигания очков:",
-  "POINTS_TO": "очки к",
+  "POINTS_BURN_RULE": "очков (Условие сгорания:",
+  "POINTS_TO": "очков за",
   "ELIGIBLE_TIERS": "Допустимые уровни",
   "APPLY_TIER_DISCOUNT": "Применить скидку уровня (",
   "MERCHANT_INFO": "Информация о продавце",
@@ -53,7 +53,7 @@
   "VOUCHER_CODE_TYPE": "Тип кода ваучера",
   "VOUCHER_CODE_OPTIONS": {
     "SINGLE_CODE": "Единый код",
-    "UNIQUE_CODES:_SYSTEM_GENERATED": "Уникальные коды: система сгенерирована",
+    "UNIQUE_CODES:_SYSTEM_GENERATED": "Уникальные коды: генерируются системой",
     "UNIQUE_CODES:_USER_UPLOAD": "Уникальные коды: загрузка пользователя"
   },
   "MERCHANT_PIN": "ПИН-код продавца",
@@ -68,12 +68,29 @@
   "DOES_NOT_END": "Не заканчивается",
   "VALID_FOR": "Действителен для",
   "EG_10": "например 10",
-  "AFTER_ISSUANCE": "После выдачи",
+  "AFTER_ISSUANCE": "после выдачи",
   "LIMITS": "Пределы",
   "VOUCHER_LIMITS_PER_CAMPAIGN": "Лимиты ваучеров на кампанию",
   "PER_CAMPAIGN_PER": "за кампанию, за",
   "ISSUANCE_LIMITS_PER_USER": "Лимиты выдачи на пользователя",
   "TIMES": "Количество",
   "REDEMPTION_LIMITS_PER_USER": "Лимиты погашения на пользователя",
-  "REWARD_IMAGE": "Изображение вознаграждения"
+  "REWARD_IMAGE": "Изображение награды",
+  "TAGS": "Теги",
+  "AVAILABLE_VOUCHERS": "Доступные ваучеры",
+  "REPLENISH": "Пополнить",
+  "available": "доступные",
+  "expired": "истекшие",
+  "issued": "выданые",
+  "reserved": "зарезервированые",
+  "redeemed": "выкупленые",
+  "voided": "аннулированные",
+  "REPLENISH_VOUCHER_CODES": "Пополнить коды ваучеров",
+  "VOUCHER_CODE_AVAILABLE": "Доступны коды ваучеров: 10,000",
+  "SINGLE_CODE": "Единый код",
+  "VOUCHER_CODES_ISSUED": "Выданы коды ваучеров (15 кампаний)",
+  "STATUS": "Статус",
+  "BRANCHES": "Филиалы",
+  "TIMES_PER": "Раз в"
 }
+

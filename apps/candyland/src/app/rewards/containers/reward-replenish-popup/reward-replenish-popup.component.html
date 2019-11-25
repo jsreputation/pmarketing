@@ -1,6 +1,8 @@
 <aside class="dialog" role="dialog" aria-labelledby="dialogTitle-replenishVoucherCodes">
   <header class="dialog-header-wrap">
-    <h2 class="dialog-title" id="dialogTitle-replenishVoucherCodes">Replenish Voucher Codes</h2>
+    <h2 class="dialog-title" id="dialogTitle-replenishVoucherCodes">
+      {{'REPLENISH_VOUCHER_CODES' | translate}}
+     </h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
@@ -13,10 +15,14 @@
         <mat-form-field>
           <input type="number" matInput [min]="0" [max]="10000"
                  (input)="setReplenishVoucherCodes(+$event.target.value)"/>
-          <mat-hint>Voucher codes available: 10,000</mat-hint>
+          <mat-hint>
+            {{'VOUCHER_CODE_AVAILABLE' | translate}}
+          </mat-hint>
         </mat-form-field>
         <div class="code-preview">
-          <label class="dialog-content-title">Single code</label>
+          <label class="dialog-content-title">
+            {{'SINGLE_CODE' | translate}}
+          </label>
           <div class="code-preview-block">
             {{voucherSettings?.voucherCode?.singleCode?.code}}
           </div>
@@ -29,10 +35,14 @@
         <mat-form-field>
           <input type="number" matInput [min]="0" [max]="10000"
                  (change)="setReplenishVoucherCodes(+$event.target.value)"/>
-          <mat-hint>Voucher codes available: 10,000</mat-hint>
+          <mat-hint>
+            {{'VOUCHER_CODE_AVAILABLE' | translate}}
+          </mat-hint>
         </mat-form-field>
         <div class="code-preview">
-          <label class="dialog-content-title">Unique codes: System generated</label>
+          <label class="dialog-content-title">
+            {{'VOUCHER_CODE_OPTIONS.UNIQUE_CODES:_SYSTEM_GENERATED' | translate}}
+          </label>
           <div class="code-preview-block">
             {{voucherSettings?.voucherCode?.uniqueGeneratedCode?.prefix}} ({{voucherSettings?.voucherCode?.uniqueGeneratedCode?.codeFormat}})
           </div>
@@ -60,10 +70,14 @@
         <mat-form-field>
           <input type="number" matInput [min]="0" [max]="10000"
                  (change)="setReplenishVoucherCodes($event.target.value)"/>
-          <mat-hint>Voucher codes available: 10,000</mat-hint>
+          <mat-hint>
+            {{'VOUCHER_CODE_AVAILABLE' | translate}}
+          </mat-hint>
         </mat-form-field>
         <div class="code-preview">
-          <label class="dialog-content-title">Merchant PIN</label>
+          <label class="dialog-content-title">
+            {{'MERCHANT_PIN' | translate}}
+          </label>
           <div class="code-preview-block">
             {{voucherSettings?.merchantPIN?.code}}
           </div>
@@ -79,7 +93,7 @@
                (click)="close()"
                [disableRipple]="true">
         <span>
-          Cancel
+          {{'BTN_CANCEL' | translate}}
         </span>
     </cl-button>
 
@@ -88,7 +102,7 @@
                [disable]="!replenishVoucherCodes"
                [disableRipple]="true">
         <span>
-          Replenish
+          {{'REPLENISH' | translate}}
         </span>
     </cl-button>
   </footer>
