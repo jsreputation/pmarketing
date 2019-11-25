@@ -13,7 +13,7 @@ describe('RewardComponent', () => {
   let fixture: ComponentFixture<RewardDetailsComponent>;
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
-  }
+  };
   const vouchersServiceStub: Partial<IVoucherService>  = {
     issueReward: () => of()
   };
