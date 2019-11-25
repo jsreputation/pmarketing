@@ -5,6 +5,7 @@ export interface IWOutcome {
     resultType: string;
     probability: number;
     lootBoxId?: number;
+    limit: number | null;
 }
 export interface IWOutcomeAttributes {
     result_id: number;
@@ -13,6 +14,7 @@ export interface IWOutcomeAttributes {
     loot_box_id?: number;
     no_outcome?: boolean;
     campaign_entity_id?: number;
+    max_issuance_per_campaign?: number;
 }
 
 export interface IWCampaignProperties {
