@@ -20,7 +20,7 @@ export class RoleLabelComponent implements OnChanges {
   @Input() public email: string;
   @Input() public classList: string = '';
   public roleConfig: RoleLabelConfig;
-  private config: { [key: string]: RoleLabelConfig } = {
+  @Input() public config: { [key: string]: RoleLabelConfig } = {
     [Role.ADMIN]: {abbr: 'A', title: 'Admin', class: 'admin'},
     [Role.CREATOR]: {abbr: 'C', title: 'Creator', class: 'creator'},
     [Role.CUSTOMER]: {abbr: 'CS', title: 'Customer Support', class: 'customer'},
@@ -29,6 +29,9 @@ export class RoleLabelComponent implements OnChanges {
   };
 
   public ngOnChanges(): void {
+    if (!this.config || !this.role) {
+      return;
+    }
     this.roleConfig = this.config[this.role];
   }
 }

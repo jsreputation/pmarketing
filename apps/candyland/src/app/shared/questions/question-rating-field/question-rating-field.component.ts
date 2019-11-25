@@ -33,7 +33,7 @@ export class QuestionRatingFieldComponent implements OnInit {
     for (let i = 3; i <= 10; i++) {
       scales.push(
         {
-          title: `Scale ${i}`,
+          title: i,
           value: i
         }
       );
