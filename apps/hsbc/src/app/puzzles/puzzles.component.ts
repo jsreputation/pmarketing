@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {ConfigService, IConfig, IStampCard, NotificationService} from '@perx/core';
+import {ConfigService, IConfig, isEmptyString, IStampCard, NotificationService} from '@perx/core';
 
 @Component({
   selector: 'app-puzzles',
@@ -8,7 +8,7 @@ import {ConfigService, IConfig, IStampCard, NotificationService} from '@perx/cor
   styleUrls: ['./puzzles.component.scss']
 })
 export class PuzzlesComponent implements OnInit {
-  public campaignId: number = null;
+  public campaignId: number | null = null;
   public sourceType: string;
 
   constructor(
@@ -26,7 +26,11 @@ export class PuzzlesComponent implements OnInit {
       }
     );
     this.route.paramMap.subscribe(params => {
-      this.campaignId = Number.parseInt(params.get('campaignId'), 10);
+      if (isEmptyString(params.get('campaignId'))) {
+        throw new Error(`campaignId is required`);
+      }
+
+      this.campaignId = Number.parseInt(params.get('campaignId') as string, 10);
     });
   }
 

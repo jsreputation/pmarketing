@@ -1,5 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ThemesService, ITheme, AuthenticationService, Config, ConfigService, IConfig } from '@perx/core';
+import {
+  ThemesService,
+  ITheme,
+  AuthenticationService,
+  Config,
+  ConfigService,
+  IConfig
+} from '@perx/core';
 import { Location } from '@angular/common';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
