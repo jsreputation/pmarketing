@@ -12,6 +12,7 @@ import {
   IPrice,
   IReward,
 } from '../models/reward.model';
+import { Colors } from '../../perx-core.constants';
 import {
   ITheme,
   ThemesService,
@@ -26,6 +27,7 @@ export class RewardsListComponent implements OnInit {
 
   public repeatGhostCount: number = 10;
   public theme: ITheme | null = null;
+  public colorPrimary: Colors = Colors.Primary;
 
   @Input('rewardsList')
   public rewards$: Observable<IReward[]>;
@@ -43,14 +45,18 @@ export class RewardsListComponent implements OnInit {
     return this.theme ? this.theme.properties['--font_color'] : null;
   }
 
+  private initTheme(): void {
+    this.themesService.getThemeSetting().subscribe(
+      theme => this.theme = theme
+    );
+  }
+
   constructor(
     private themesService: ThemesService,
   ) { }
 
   public ngOnInit(): void {
-    this.themesService.getThemeSetting().subscribe(
-      theme => this.theme = theme
-    );
+    this.initTheme();
 
     if (!this.displayPriceFn) {
       this.displayPriceFn = (rewardPrice: IPrice) => {
