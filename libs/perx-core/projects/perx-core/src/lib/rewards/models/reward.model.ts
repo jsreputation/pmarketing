@@ -13,7 +13,7 @@ export interface IReward {
   name: string;
   description: string;
   subtitle: string;
-  validFrom: Date;
+  validFrom: Date | null;
   validTo: Date | null;
   sellingFrom?: Date;
   rewardThumbnail?: string;
@@ -44,7 +44,7 @@ export interface ICatalog {
 }
 
 export interface IPrice {
-  id: number;
+  id?: number;
   rewardCampaignId?: number;
   price?: number;
   currencyCode?: string;

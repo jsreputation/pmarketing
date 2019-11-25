@@ -38,7 +38,7 @@ import { ContentModule } from '../content/content.module';
     VoucherDetailModule,
     PiModule,
     RewardsDetailModule,
-    ContentModule
+    ContentModule,
   ]
 })
 export class LayoutModule { }
