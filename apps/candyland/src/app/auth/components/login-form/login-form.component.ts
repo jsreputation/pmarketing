@@ -30,6 +30,11 @@ export class LoginFormComponent implements OnInit {
     }
   }
 
+  public onForget(): void {
+    const data = this.formLogin.value;
+    this.router.navigate(['/password/forget'], {state: {id: data.account_id, user: data.username}});
+  }
+
   get username(): AbstractControl | null { return this.formLogin.get('username'); }
   get password(): AbstractControl | null { return this.formLogin.get('password'); }
   get accountId(): AbstractControl | null { return this.formLogin.get('account_id'); }
