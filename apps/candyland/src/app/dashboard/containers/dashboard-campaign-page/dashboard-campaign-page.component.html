@@ -5,7 +5,8 @@
     <h2 class="chart-card-info-title">{{'CAMPAIGN_GRAPHIC_PAGE.TITLE' | translate}} {{activeCampaigns}}</h2>
 
     <div class="tabs-list-wrap business-insights-tabs-list-wrap">
-      <mat-radio-group color="primary" class="tabs-list business-insights-tabs-list" [value]="activeTab" (change)="selectedTab($event.value)">
+      <mat-radio-group color="primary" class="tabs-list business-insights-tabs-list" [value]="activeTab"
+        (change)="selectedTab($event.value)">
         <ng-container *ngFor="let tab of tabs; let index = index">
           <mat-radio-button [value]="tab?.name">
             <cl-tab-item-view [data]="tab" [value]="getTabValue(index)"></cl-tab-item-view>
@@ -21,21 +22,21 @@
         <article class="chart-card">
           <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.SURVEY_ENGAGEMENT_RATE</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="157" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="157" [cardType]="ct.advancedPie" [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.TOP_5_REWARDS</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="177" [cardType]="'horizontalBar'"></cl-chart-card>
+            <cl-chart-card [id]="177" [cardType]="ct.horizontalBar"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.CHANNELS</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="178" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="178" [cardType]="ct.advancedPie" [params]="params"></cl-chart-card>
           </div>
         </article>
 
@@ -45,7 +46,7 @@
             <cl-search-filter class="search-block" placeholder="Search for survey campaigns"></cl-search-filter>
           </div>
           <div class="chart-card-content overflow-all">
-            <cl-chart-card [id]="179" [cardType]="'table'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="179" [cardType]="ct.table" [params]="params"></cl-chart-card>
           </div>
         </article>
 
@@ -59,28 +60,28 @@
             <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.GAME_ENGAGEMENT_RATE</h3>
             <mat-form-field appearance="outline">
               <mat-select #selectGame [value]="106">
-                <mat-option selected [value]="106" >{{'CAMPAIGN_GRAPHIC_PAGE.SHAKE_THE_TREE' | translate}}</mat-option>
-                <mat-option [value]="107" >{{'CAMPAIGN_GRAPHIC_PAGE.HIT_THE_PINATA' | translate}}</mat-option>
-                <mat-option [value]="109" >{{'CAMPAIGN_GRAPHIC_PAGE.INSTANT_REWARDS' | translate}}</mat-option>
+                <mat-option selected [value]="106">{{'CAMPAIGN_GRAPHIC_PAGE.SHAKE_THE_TREE' | translate}}</mat-option>
+                <mat-option [value]="107">{{'CAMPAIGN_GRAPHIC_PAGE.HIT_THE_PINATA' | translate}}</mat-option>
+                <mat-option [value]="109">{{'CAMPAIGN_GRAPHIC_PAGE.INSTANT_REWARDS' | translate}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
           <div class="chart-card-content">
-            <cl-chart-card [id]="selectGame.value" [cardType]="'line'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="selectGame.value" [cardType]="ct.line" [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.TOP_5_REWARDS</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="110" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="110" [cardType]="ct.horizontalBar" [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.CHANNELS</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="110" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="110" [cardType]="ct.advancedPie" [params]="params"></cl-chart-card>
           </div>
         </article>
 
@@ -92,31 +93,32 @@
         <article class="chart-card">
           <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.STAMPS_ENGAGEMENT_RATE</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="110" [cardType]="'line'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="110" [cardType]="ct.line" [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.TOP_5_REWARDS</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="110" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="110" [cardType]="ct.horizontalBar" [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.CHANNELS</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="110" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="110" [cardType]="ct.advancedPie" [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card full-width">
           <div class="chart-card-header-with-control">
             <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.STAMPS_CAMPAIGN_LISTS</h3>
-            <cl-search-filter class="search-block" [placeholder]="'CAMPAIGN_GRAPHIC_PAGE.SEARCH_FOR_STAMPS_CAMPAIGNS' | translate"></cl-search-filter>
+            <cl-search-filter class="search-block"
+              [placeholder]="'CAMPAIGN_GRAPHIC_PAGE.SEARCH_FOR_STAMPS_CAMPAIGNS' | translate"></cl-search-filter>
           </div>
           <div class="chart-card-content overflow-all">
-            <cl-chart-card [id]="179" [cardType]="'table'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="179" [cardType]="ct.table" [params]="params"></cl-chart-card>
           </div>
         </article>
 
@@ -128,31 +130,32 @@
         <article class="chart-card">
           <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.INSTANT_REWARD_ENGAGEMENT_RATE</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="110" [cardType]="'line'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="110" [cardType]="ct.line" [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.TOP_5_REWARDS</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="110" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="110" [cardType]="ct.horizontalBar" [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.CHANNELS</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="110" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="110" [cardType]="ct.advancedPie" [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card full-width">
           <div class="chart-card-header-with-control">
             <h3 class="chart-card-title" translate>CAMPAIGN_GRAPHIC_PAGE.STAMPS_REWARDS_LISTS</h3>
-            <cl-search-filter class="search-block" [placeholder]="'CAMPAIGN_GRAPHIC_PAGE.SEARCH_FOR_REWARDS_CAMPAIGNS' | translate"></cl-search-filter>
+            <cl-search-filter class="search-block"
+              [placeholder]="'CAMPAIGN_GRAPHIC_PAGE.SEARCH_FOR_REWARDS_CAMPAIGNS' | translate"></cl-search-filter>
           </div>
           <div class="chart-card-content overflow-all">
-            <cl-chart-card [id]="179" [cardType]="'table'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="179" [cardType]="ct.table" [params]="params"></cl-chart-card>
           </div>
         </article>
 
