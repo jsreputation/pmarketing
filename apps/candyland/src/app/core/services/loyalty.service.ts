@@ -7,7 +7,6 @@ import { LoyaltyHttpAdapter } from '@cl-core/http-adapters/loyalty-http-adapter'
 import { map, switchMap } from 'rxjs/operators';
 import { IWBasicTierAttributes } from '@perx/whistler';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { StatusLabelConfig } from '@cl-shared';
 
 @Injectable({
   providedIn: 'root'
@@ -113,10 +112,6 @@ export class LoyaltyService implements ITableService {
       return this.updateBasicTier(basicTierId, loyalty, loyaltyId);
     }
     return this.createBasicTier(loyalty, loyaltyId);
-  }
-
-  public getStatusLable(): Observable<{ [key: string]: StatusLabelConfig }> {
-    return this.loyaltyHttpService.getStatusLable();
   }
 
 }

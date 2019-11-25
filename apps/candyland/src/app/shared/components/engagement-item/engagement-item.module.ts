@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { EngagementItemComponent } from './engagement-item.component';
 import { PipesModule } from '@cl-shared/pipes/pipes.module';
 import { MatIconModule, MatButtonModule, MatMenuModule } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [EngagementItemComponent],
@@ -12,7 +13,8 @@ import { MatIconModule, MatButtonModule, MatMenuModule } from '@angular/material
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
-    PipesModule
+    PipesModule,
+    TranslateModule,
   ]
 })
 export class EngagementItemModule { }

@@ -18,7 +18,7 @@
     >
       <ng-container *ngIf="option.value">
         <div class="vouchers-progress-bar-rectangle" [ngClass]="option?.type"></div>
-        <span>{{option?.type}}</span>
+        <span>{{option?.type | translate}}</span>
       </ng-container>
     </div>
   </div>
