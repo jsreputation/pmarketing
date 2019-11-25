@@ -178,6 +178,9 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       .subscribe(
         (reward: IRewardEntityForm | undefined) => {
           // handle the loyalties to patch form
+          if (!reward) {
+            return;
+          }
           this.getRewardLoyaltyData$.next(reward ? reward.loyalties : null);
 
           this.reward = reward;

@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
 import { IWIAMUserAttributes, IWTenantAttributes } from '@perx/whistler';
+import { RoleLabelConfig } from '@cl-shared';
 
 @Injectable({
   providedIn: 'root'
@@ -58,5 +59,9 @@ export class SettingsHttpService {
 
   public getTenants(): Observable<IJsonApiListPayload<IWTenantAttributes>> {
     return this.http.get<IJsonApiListPayload<IWTenantAttributes>>(ApiConfig.tenantsPath);
+  }
+
+  public getRoleLabel(): Observable<{ [key: string]: RoleLabelConfig }> {
+    return this.http.get<{ [key: string]: RoleLabelConfig }>('assets/actives/role-label/role-label.json');
   }
 }
