@@ -16,7 +16,6 @@ import {
 import {of} from 'rxjs';
 import {Type} from '@angular/core';
 import {Location} from '@angular/common';
-import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.model';
 
 describe('RedeemComponent', () => {
   let component: RedeemComponent;
@@ -139,7 +138,7 @@ describe('RedeemComponent', () => {
     //   points: 10,
     // };
 
-    const issuedVoucher: IVoucher = {
+    const issuedVoucher: Voucher = {
       id: 1,
       reward: {
         id: 1,
