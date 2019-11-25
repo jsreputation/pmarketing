@@ -2,8 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationService, ISurvey, SurveyService, IPopupConfig, IPrePlayStateData, AuthenticationService } from '@perx/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, Subject, of } from 'rxjs';
-import { filter, switchMap, takeUntil, map } from 'rxjs/operators';
+import { filter, switchMap, takeUntil, map, catchError } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 interface IAnswer {
   question_id: string;
@@ -126,7 +127,12 @@ export class SurveyComponent implements OnInit, OnDestroy {
     const isCollectDataRequired = !!(this.informationCollectionSetting === 'pi_required' || this.informationCollectionSetting === 'signup_required');
     const userAction$: Observable<{ hasOutcomes: boolean; }> = !surveyId || (this.isAnonymousUser && isCollectDataRequired) ?
       of({ hasOutcomes: true }) :
-      this.surveyService.postSurveyAnswer(this.answers, this.route.snapshot.params.id, surveyId);
+      this.surveyService.postSurveyAnswer(this.answers, this.route.snapshot.params.id, surveyId).pipe(
+        catchError((err: HttpErrorResponse) => {
+          this.popupData = this.noRewardsPopUp;
+          throw err;
+        })
+      );
 
     userAction$.subscribe(
       (res) => {
