@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TransactionHistoryComponent } from './transaction-history.component';
+import { LoyaltyModule, LoyaltyService } from '@perx/core';
+import { of } from 'rxjs';
 
 describe('TransactionHistoryComponent', () => {
   let component: TransactionHistoryComponent;
@@ -8,7 +10,19 @@ describe('TransactionHistoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TransactionHistoryComponent ]
+      imports: [
+        LoyaltyModule
+      ],
+      declarations: [ TransactionHistoryComponent ],
+      providers: [
+        {
+          provide: LoyaltyService,
+          useValue: {
+            getAllTransactions: () => of(),
+            getTransactionHistory: () => of()
+          }
+        }
+      ]
     })
       .compileComponents();
   }));

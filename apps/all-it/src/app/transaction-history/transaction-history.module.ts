@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TransactionHistoryComponent } from '@perx/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { LoyaltyModule } from '@perx/core';
 
 const routes: Routes = [{
   path: '',
@@ -16,6 +17,7 @@ const routes: Routes = [{
   imports: [
     MatButtonModule,
     CommonModule,
+    LoyaltyModule,
     RouterModule.forChild(routes)
   ]
 })

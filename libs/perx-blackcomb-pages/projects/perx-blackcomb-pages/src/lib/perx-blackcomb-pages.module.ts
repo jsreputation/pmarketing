@@ -43,7 +43,8 @@ import {
   RewardsListTabbedComponent,
   RewardsListComponent,
   LoyaltySummaryComponent,
-  NewsfeedComponent
+  LoyaltyTransactionsListComponent,
+  NewsfeedComponent,
 } from '@perx/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -104,6 +105,7 @@ const comps: any[] = [
   WalletComponent,
   RewardsListTabbedComponent,
   LoyaltySummaryComponent,
+  LoyaltyTransactionsListComponent,
   RewardsListComponent,
   LayoutComponent,
   HomeComponent,
