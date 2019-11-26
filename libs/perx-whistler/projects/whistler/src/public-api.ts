@@ -10,7 +10,8 @@ export {
   IJsonApiPatchItem,
   IJsonApiPatchData,
   IJsonApiPostItem,
-  IJsonApiPostData
+  IJsonApiPostData,
+  IWRelationshipsDataType
 } from './lib/jsonapi.payload';
 export { IWRewardDisplayProperties, IWProperties, IWAttbsObjEntity } from './lib/whistler.models';
 

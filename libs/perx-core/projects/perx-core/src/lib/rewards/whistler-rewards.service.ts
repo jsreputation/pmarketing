@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RewardsService } from './rewards.service';
-import { Observable, combineLatest, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IReward, ICatalog, IPrice, RedemptionType } from './models/reward.model';
 import { Config } from '../config/config';
-import { map, switchMap, catchError, tap } from 'rxjs/operators';
-import { IMerchant } from '../merchants/models/merchants.model';
-import { IMerchantsService } from '../merchants/imerchants.service';
+import { map, tap } from 'rxjs/operators';
 
 import {
   IWRewardEntityAttributes,
@@ -14,7 +12,9 @@ import {
   IJsonApiItemPayload,
   IJsonApiItem,
   IJsonApiListPayload,
-  IWTierRewardCostsAttributes
+  IWTierRewardCostsAttributes,
+  IWMerchantAttributes,
+  IWRelationshipsDataType
 } from '@perx/whistler';
 import { oc } from 'ts-optchain';
 
@@ -26,7 +26,7 @@ export class WhistlerRewardsService implements RewardsService {
   // basic local cache
   private rewards: { [k: number]: IReward } = {};
 
-  constructor(private http: HttpClient, config: Config, private merchantService: IMerchantsService) {
+  constructor(private http: HttpClient, config: Config) {
     this.baseUrl = `${config.apiHost}/reward/entities`;
   }
 
@@ -46,8 +46,8 @@ export class WhistlerRewardsService implements RewardsService {
 
   private static WRewardToReward(
     r: IJsonApiItem<IWRewardEntityAttributes>,
-    merchant: IMerchant | null,
-    tierRewardCost: IJsonApiItem<IWTierRewardCostsAttributes> | null,
+    merchants: IJsonApiItem<IWMerchantAttributes>[] | null,
+    tierRewardCost: IJsonApiItem<IWTierRewardCostsAttributes>[] | null,
     metaData?: IWMetaData
   ): IReward {
     return {
@@ -60,14 +60,14 @@ export class WhistlerRewardsService implements RewardsService {
       validTo: null,
       rewardThumbnail: r.attributes.image_url,
       rewardBanner: oc(r).attributes.image_url(''),
-      merchantId: r.attributes.organization_id ? Number.parseInt(r.attributes.organization_id, 10) : undefined,
-      merchantImg: merchant && merchant.images && merchant.images.length > 0 ? merchant.images[0].url : undefined,
-      merchantName: merchant ? merchant.name : undefined,
+      merchantId: merchants && merchants[0] ? Number.parseInt(merchants[0].id, 10) : undefined,
+      merchantImg: oc(merchants)[0].attributes.properties.logo_image('') || undefined,
+      merchantName: oc(merchants)[0].attributes.name('') || undefined,
       rewardPrice: [
         {
           price: r.attributes.cost_of_reward,
           currencyCode: r.attributes.currency,
-          points: tierRewardCost ? Number.parseInt(tierRewardCost.attributes.tier_value, 10) : undefined
+          points: tierRewardCost && tierRewardCost[0] ? Number.parseInt(tierRewardCost[0].attributes.tier_value, 10) : undefined
         }
       ],
       termsAndConditions: oc(r).attributes.terms_conditions(''),
@@ -148,43 +148,31 @@ export class WhistlerRewardsService implements RewardsService {
         };
       }),
       map(res => {
-        const merchantIds: { [k: number]: boolean } = {};
-        res.data.forEach((r) => !!r.attributes.organization_id && (merchantIds[r.attributes.organization_id] = true));
         return {
           rewards: res.data,
-          mIds: Object.keys(merchantIds),
-          tierRewardCost: res.included && res.included.length > 0 ?
+          merchantsIC: res.included && res.included.length > 0 ?
+            res.included.filter(include => include.type === 'Ros::Organization::Org') : null,
+          tierRewardCostsIC: res.included && res.included.length > 0 ?
             res.included.filter(include => include.type === 'tier_reward_costs') : null
         };
       }),
-      switchMap(
-        (obj) => combineLatest(
-          of(obj.rewards),
-          obj.mIds.length > 0 ? combineLatest(...obj.mIds.map(id => this.merchantService.getMerchant(Number.parseInt(id, 10)))) : of([]),
-          of(obj.tierRewardCost)
-        )
-      ),
-      map((
-        [rewards, merchants, tierRewardCosts]:
-          [IJsonApiItem<IWRewardEntityAttributes>[], IMerchant[], IJsonApiItem<IWTierRewardCostsAttributes>[]]
-      ) => rewards.map(
+      map((res) => res.rewards.map(
         (r: IJsonApiItem<IWRewardEntityAttributes>) => {
-          let merchant: IMerchant | null = null;
-          if (r.attributes.organization_id !== undefined) {
-            const orgId: number = Number.parseInt(r.attributes.organization_id, 10);
-            merchant = merchants.find(m => m.id === orgId) || null;
-          }
+          const merchants = res.merchantsIC && res.merchantsIC.length > 0 ? res.merchantsIC.filter(mIC => {
+            const merchantRS = r.relationships && r.relationships.organization.data as IWRelationshipsDataType;
+            return merchantRS && merchantRS.id === mIC.id && merchantRS.type === 'Ros::Organization::Org';
+          }) : null;
 
-          const tierRewardCost = tierRewardCosts && tierRewardCosts.length > 0 ? tierRewardCosts.find(cost =>
+          const tierRCosts = res.tierRewardCostsIC && res.tierRewardCostsIC.length > 0 ? res.tierRewardCostsIC.filter(cost =>
             oc(r).relationships.tier_reward_costs.data ?
-              oc(r).relationships.tier_reward_costs.data([]).some(
-                rewardCost => rewardCost.id === cost.attributes.entity_id.toString()
+              (oc(r).relationships.tier_reward_costs.data([]) as IWRelationshipsDataType[]).some(
+                rewardCost => rewardCost.id === cost.attributes.entity_id.toString() && rewardCost.type === 'tier_reward_costs'
               ) : false
           ) || null : null;
           return WhistlerRewardsService.WRewardToReward(
             r,
-            merchant,
-            tierRewardCost,
+            merchants,
+            tierRCosts,
             metaData,
           );
         }
@@ -206,22 +194,16 @@ export class WhistlerRewardsService implements RewardsService {
     };
     return this.http.get<IJsonApiItemPayload<IWRewardEntityAttributes>>(`${this.baseUrl}/${id}`, { params })
       .pipe(
-        switchMap((reward: IJsonApiItemPayload<IWRewardEntityAttributes>) => {
-          const tierRewardCost = reward.included && reward.included.length > 0 ? reward.included.find(include => include.type === 'tier_reward_costs') : null;
-          if (!reward.data.attributes.organization_id || reward.data.attributes.organization_id === null) {
-            return of([reward, null, tierRewardCost]);
-          }
-          return combineLatest(
-            of(reward),
-            this.merchantService.getMerchant(Number.parseInt(reward.data.attributes.organization_id, 10))
-              .pipe(catchError(() => of(null))),
-            of(tierRewardCost)
-          );
+        map((reward: IJsonApiItemPayload<IWRewardEntityAttributes>) => {
+          const tierRewardCosts = reward.included && reward.included.length > 0 ? reward.included.filter(include => include.type === 'tier_reward_costs') : null;
+          const merchants = reward.included && reward.included.length > 0 ? reward.included.filter(include => include.type === 'Ros::Organization::Org') : null;
+          return {
+            reward: reward.data,
+            merchants,
+            tierRewardCosts
+          };
         }),
-        map((
-          [reward, merchant, tierRewardCost]:
-            [IJsonApiItemPayload<IWRewardEntityAttributes>, IMerchant | null, IJsonApiItem<IWTierRewardCostsAttributes>]
-        ) => WhistlerRewardsService.WRewardToReward(reward.data, merchant, tierRewardCost)),
+        map(res => WhistlerRewardsService.WRewardToReward(res.reward, res.merchants, res.tierRewardCosts)),
         // save reward in local cache
         tap((reward: IReward) => this.rewards[id] = reward)
       );

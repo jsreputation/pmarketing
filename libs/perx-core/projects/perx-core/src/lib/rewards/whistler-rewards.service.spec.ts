@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { WhistlerRewardsService } from './whistler-rewards.service';
 import { ConfigModule } from '../config/config.module';
-import { IMerchantsService } from '../merchants/imerchants.service';
 import { of } from 'rxjs';
 import { IReward } from './models/reward.model';
 import { IMerchant } from '../merchants/models/merchants.model';
@@ -22,10 +21,6 @@ describe('WhistlerRewardsService', () => {
   const mockMerchant: IMerchant = {
     id: 42,
     name: 'merchant 42'
-  };
-
-  const merchantsServiceStub = {
-    getMerchant: () => of(mockMerchant)
   };
 
   const environment = {
@@ -79,7 +74,6 @@ describe('WhistlerRewardsService', () => {
         ConfigModule.forRoot({ ...environment })
       ],
       providers: [
-        { provide: IMerchantsService, useValue: merchantsServiceStub },
         { provide: HttpClient, useValue: httpClientSpy }
       ]
     });
