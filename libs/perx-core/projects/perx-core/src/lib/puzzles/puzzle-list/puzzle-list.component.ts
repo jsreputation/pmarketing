@@ -25,7 +25,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   public titleFn: (index?: number) => string;
 
   @Input()
-  public puzzleTextFn: () => string;
+  public puzzleTextFn: (len?: string) => string;
 
   public total: number | null = null;
 
@@ -170,8 +170,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
     if (puzzle.stamps === undefined) {
       return '0';
     }
-    const length = puzzle.stamps.filter(st => st.state === StampState.issued).length;
-    return length === 1 ? '' : length.toString();
+    return puzzle.stamps.filter(st => st.state === StampState.issued).length.toString();
   }
 
   public nbPlacedStamps(puzzle: IStampCard): number {
