@@ -104,7 +104,10 @@ describe('WhistlerRewardsService', () => {
       });
 
     expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
-    expect(httpClientSpy.get.calls.argsFor(0)).toEqual(['https://blabla/reward/entities/42']);
+    expect(httpClientSpy.get.calls.argsFor(0)).toEqual([
+      'https://blabla/reward/entities/42',
+      { params: { include: 'organization,tier_reward_costs' } }
+    ]);
   });
 
   it('should get a reward from its id with merchant', (done: DoneFn) => {
@@ -121,7 +124,10 @@ describe('WhistlerRewardsService', () => {
       });
 
     expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
-    expect(httpClientSpy.get.calls.argsFor(0)).toEqual(['https://blabla/reward/entities/42']);
+    expect(httpClientSpy.get.calls.argsFor(0)).toEqual([
+      'https://blabla/reward/entities/42',
+      { params: { include: 'organization,tier_reward_costs' } }
+    ]);
   });
 
   it('should get a page of rewards', (done: DoneFn) => {
@@ -144,7 +150,7 @@ describe('WhistlerRewardsService', () => {
     expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
     expect(httpClientSpy.get.calls.argsFor(0)).toEqual([
       'https://blabla/reward/entities',
-      { params: { 'page[number]': '1', 'page[size]': '10', 'filter[tags]': '42tags', 'filter[category]': '42categories' } }
+      { params: { 'page[number]': '1', 'page[size]': '10', 'filter[tags]': '42tags', 'filter[category]': '42categories', include: 'organization,tier_reward_costs' } }
     ]);
   });
 
@@ -171,7 +177,7 @@ describe('WhistlerRewardsService', () => {
     expect(httpClientSpy.get.calls.count()).toBe(2, 'two calls');
     expect(httpClientSpy.get.calls.argsFor(0)).toEqual([
       'https://blabla/reward/entities',
-      { params: { 'page[number]': '1', 'page[size]': '10', 'filter[tags]': '42tags', 'filter[category]': '42categories' } }
+      { params: { 'page[number]': '1', 'page[size]': '10', 'filter[tags]': '42tags', 'filter[category]': '42categories', include: 'organization,tier_reward_costs' } }
     ]);
   });
 });
