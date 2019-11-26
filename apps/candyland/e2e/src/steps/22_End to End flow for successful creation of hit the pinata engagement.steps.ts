@@ -1,10 +1,11 @@
 import { Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, protractor } from 'protractor';
-import { EngagementAppPage } from '../pages/candylandApp.po';
+import { EngagementAppPage, ElementApp } from '../pages/candylandApp.po';
 import * as path from 'path' ;
 
 let PageEngagement: EngagementAppPage;
+const Element = ElementApp;
 // Verifying successful creation of hit the pinata engagment
 Given(/^8_I am on engagement page$/, async () => {
   PageEngagement = new EngagementAppPage();
@@ -16,7 +17,7 @@ Given(/^8_I click on the create new button$/, async () => {
   // waiting for the create new button to load
   await browser.wait(ec.elementToBeClickable(PageEngagement.engagementCreateNewButton()), 6000);
   // clicking on the create new button
-  await PageEngagement.engagementCreateNewButton().click();
+  await Element.clButton().click();
 });
 
 Given(/^8_I click on the game option.$/, async () => {
@@ -43,15 +44,15 @@ Given(/^8_I click on the next button$/, async () => {
 Given(/^8_I enter a test string in the headline message and sub-headline message$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for headline field to load
-  await browser.wait(ec.presenceOf(PageEngagement.inputTextField().get(1)), 6000);
+  await browser.wait(ec.presenceOf(Element.inputTextArray().get(1)), 6000);
   // waiting for sub-headline field to load
-  await browser.wait(ec.presenceOf(PageEngagement.inputTextField().get(2)), 6000);
+  await browser.wait(ec.presenceOf(Element.inputTextArray().get(2)), 6000);
   // inputing a test string in the headline field
-  await PageEngagement.inputTextField().get(1).clear();
-  await PageEngagement.inputTextField().get(1).sendKeys('E2ETestString0001');
+  await Element.inputTextArray().get(1).clear();
+  await Element.inputTextArray().get(1).sendKeys('E2ETestString0001');
   // inputing a test string in the sub-headline field
-  await PageEngagement.inputTextField().get(2).clear();
-  await PageEngagement.inputTextField().get(2).sendKeys('E2ETestString0002');
+  await Element.inputTextArray().get(2).clear();
+  await Element.inputTextArray().get(2).sendKeys('E2ETestString0002');
 });
 
 Given(/^8_I upload a background image.$/, async () => {
@@ -59,9 +60,9 @@ Given(/^8_I upload a background image.$/, async () => {
   const absolutePath = path.resolve(__dirname, FileToUpload);
   const ec = protractor.ExpectedConditions;
   // waiting for the upload field to load
-  await browser.wait(ec.presenceOf(PageEngagement.inputFileField()), 6000);
+  await browser.wait(ec.presenceOf(Element.inputFile()), 6000);
   // uploading test img file into field
-  await PageEngagement.inputFileField().sendKeys(absolutePath);
+  await Element.inputFile().sendKeys(absolutePath);
   await browser.sleep(3000);
 });
 
