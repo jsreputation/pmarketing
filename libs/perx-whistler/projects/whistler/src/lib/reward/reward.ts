@@ -49,3 +49,14 @@ interface IWProperties {
   imageURL?: string;
   buttonTxt?: string;
 }
+
+export interface IWTierRewardCostsAttributes {
+  urn?: string;
+  created_at?: string;
+  updated_at?: string;
+  apply_tier_discout: boolean;
+  tier_value: string;
+  tier_id: number;
+  tier_type: string;
+  entity_id: number;
+}
