@@ -154,7 +154,7 @@ export class WhistlerRewardsService implements RewardsService {
           rewards: res.data,
           mIds: Object.keys(merchantIds),
           tierRewardCost: res.included && res.included.length > 0 ?
-            res.included.find(include => include.type === 'tier_reward_costs') : null
+            res.included.filter(include => include.type === 'tier_reward_costs') : null
         };
       }),
       switchMap(
@@ -165,8 +165,8 @@ export class WhistlerRewardsService implements RewardsService {
         )
       ),
       map((
-        [rewards, merchants, tierRewardCost]:
-          [IJsonApiItem<IWRewardEntityAttributes>[], IMerchant[], IJsonApiItem<IWTierRewardCostsAttributes>]
+        [rewards, merchants, tierRewardCosts]:
+          [IJsonApiItem<IWRewardEntityAttributes>[], IMerchant[], IJsonApiItem<IWTierRewardCostsAttributes>[]]
       ) => rewards.map(
         (r: IJsonApiItem<IWRewardEntityAttributes>) => {
           let merchant: IMerchant | null = null;
@@ -174,6 +174,13 @@ export class WhistlerRewardsService implements RewardsService {
             const orgId: number = Number.parseInt(r.attributes.organization_id, 10);
             merchant = merchants.find(m => m.id === orgId) || null;
           }
+
+          const tierRewardCost = tierRewardCosts && tierRewardCosts.length > 0 ? tierRewardCosts.find(cost =>
+            oc(r).relationships.tier_reward_costs.data ?
+              oc(r).relationships.tier_reward_costs.data([]).some(
+                rewardCost => rewardCost.id === cost.attributes.entity_id.toString()
+              ) : false
+          ) || null : null;
           return WhistlerRewardsService.WRewardToReward(
             r,
             merchant,
