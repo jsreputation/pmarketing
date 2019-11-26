@@ -54,13 +54,13 @@ When(/^5_I select an option for the pinata and the background.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the pinata and the ground field to load
   // waiting for the pinata field to load
-  await browser.wait(ec.presenceOf(PageHitThePinata.pinataDesign()), 6000);
+  await browser.wait(ec.presenceOf(Element.designImageArray().get(1)), 6000);
   // waiting for the background field to load
-  await browser.wait(ec.presenceOf(PageHitThePinata.pinataBackgroundDesign()), 6000);
+  await browser.wait(ec.presenceOf(Element.designImageArray().get(4)), 6000);
   // clicking on the second option of the pinata
-  await PageHitThePinata.pinataDesign().click();
+  await Element.designImageArray().get(1).click();
   // clicking on the second option of the background
-  await PageHitThePinata.pinataBackgroundDesign().click();
+  await Element.designImageArray().get(4).click();
   await browser.sleep(3000);
 });
 

@@ -50,6 +50,10 @@ const routes: Routes = [
         loadChildren: (): any => import('../instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule)
       },
       {
+        path: 'profile',
+        loadChildren: (): any => import('../profile/profile.module').then((mod: any) => mod.ProfileModule)
+      },
+      {
         path: 'transaction-history',
         loadChildren: (): any => import('../transaction-history/transaction-history.module')
                       .then((mod: any) => mod.TransactionHistoryModule)

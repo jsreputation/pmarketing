@@ -1,10 +1,17 @@
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-
-import { V4GameService } from './v4-game.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { IGame, GameType } from './game.model';
 import { Type } from '@angular/core';
-import { ConfigModule } from '../../public-api';
+
+import {
+  IGame,
+  GameType,
+} from './game.model';
+import { V4GameService } from './v4-game.service';
+
+import { ConfigModule } from '../config/config.module';
 
 describe('V4GameService', () => {
   let httpTestingController: HttpTestingController;

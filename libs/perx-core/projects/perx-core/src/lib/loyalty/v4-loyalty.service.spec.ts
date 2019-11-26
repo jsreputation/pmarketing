@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { V4LoyaltyService } from './v4-loyalty.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ConfigModule } from '../../public-api';
+
+import { ConfigModule } from '../config/config.module';
 
 describe('LoyaltyService', () => {
   beforeEach(() => TestBed.configureTestingModule({

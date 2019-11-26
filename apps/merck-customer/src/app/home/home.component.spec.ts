@@ -1,24 +1,36 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-
-import { HomeComponent } from './home.component';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
+import { Type } from '@angular/core';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
+
 import {
   RewardsService,
   LoyaltyModule,
   RewardsModule,
   ProfileService,
   LoyaltyService,
-  IReward
+  IReward, ThemesService
 } from '@perx/core';
-import { of } from 'rxjs';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Type } from '@angular/core';
-import { Router } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+
+import { HomeComponent } from './home.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
+
+  const themesServiceStub = {
+    getThemeSetting: () => of()
+  };
   const reward: IReward = {
     id: 149,
     name: '100 HSBC Bonus Points',
@@ -87,7 +99,13 @@ describe('HomeComponent', () => {
             })
           }
         },
-        { provide: Router, useValue: { navigateByUrl: () => {} } },
+        {
+          provide: Router,
+          useValue: { navigateByUrl: () => {} } },
+        {
+          provide: ThemesService,
+          useValue: themesServiceStub,
+        },
       ]
     })
       .compileComponents();
