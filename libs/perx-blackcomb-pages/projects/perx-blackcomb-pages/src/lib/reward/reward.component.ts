@@ -176,7 +176,12 @@ export class RewardComponent implements OnInit, OnDestroy {
     const isCollectDataRequired = !!(this.informationCollectionSetting === 'pi_required' || this.informationCollectionSetting === 'signup_required');
     const userAction$: Observable<void> = !this.transactionId || (this.isAnonymousUser && isCollectDataRequired) ?
       of(void 0) :
-      this.outcomeService.prePlayConfirm(this.transactionId);
+      this.outcomeService.prePlayConfirm(this.transactionId).pipe(
+        catchError((err: HttpErrorResponse) => {
+          this.popupData = this.noRewardsPopUp;
+          throw err;
+        })
+      );
 
     userAction$.subscribe(
       () => this.redirectUrlAndPopUp(),
