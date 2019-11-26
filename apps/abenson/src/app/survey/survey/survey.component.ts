@@ -52,17 +52,20 @@ export class SurveyComponent implements OnInit {
     return this.currentPointer === this.totalLength;
   }
   public onSubmit(): void {
-    this.surveyService.postSurveyAnswer(this.answers, this.survey, this.route.snapshot.params.id).subscribe(
-      () => {
-        this.router.navigate(['/wallet']);
-        this.notificationService.addPopup({
-          text: 'Here is a reward for you.',
-          title: 'Thanks for completing the survey.',
-          buttonTxt: 'View Reward',
-          imageUrl: 'assets/congrats_image.png'
-        });
-      }
-    );
+    const surveyId = this.survey && this.survey.id ? Number.parseInt(this.survey.id, 10) : null;
+    if (surveyId) {
+      this.surveyService.postSurveyAnswer(this.answers, this.route.snapshot.params.id, surveyId).subscribe(
+        () => {
+          this.router.navigate(['/wallet']);
+          this.notificationService.addPopup({
+            text: 'Here is a reward for you.',
+            title: 'Thanks for completing the survey.',
+            buttonTxt: 'View Reward',
+            imageUrl: 'assets/congrats_image.png'
+          });
+        }
+      );
+    }
   }
 
   public setTotalLength(totalLength: number): void {

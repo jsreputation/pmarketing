@@ -34,7 +34,9 @@ describe('RewardComponent', () => {
   };
 
   const instantOutStub: Partial<InstantOutcomeService> = {
-
+    getFromCampaign: () => of(),
+    prePlayConfirm: () => of(),
+    prePlay: () => of()
   };
 
   const authServiceStub: Partial<AuthenticationService> = {
