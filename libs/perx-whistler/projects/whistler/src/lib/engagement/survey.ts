@@ -1,4 +1,5 @@
 import { IWQuestion } from './survey-question';
+import { WInformationCollectionSettingType } from '../campaign/campaign';
 
 export interface IWSurveyDisplayProperties {
   title: string;
@@ -8,6 +9,7 @@ export interface IWSurveyDisplayProperties {
   card_background_img_url: string;
   questions: IWQuestion[];
   button?: string;
+  informationCollectionSetting?: WInformationCollectionSettingType;
   noRewardsPopUp?: {
     headLine?: string;
     subHeadLine?: string;

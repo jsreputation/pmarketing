@@ -1,12 +1,13 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, protractor } from 'protractor';
-import { EngagementAppPage, CreateShakeTheTreeAppPage } from '../pages/candylandApp.po';
+import { EngagementAppPage, CreateShakeTheTreeAppPage, ElementApp } from '../pages/candylandApp.po';
 import * as moment from 'moment';
 // initializing instances of the pages
 
 let PageEngagement: EngagementAppPage;
 let PageShakeTheTree: CreateShakeTheTreeAppPage;
+const Element = ElementApp;
 
 // Getting the current day, month , year
 const now = moment().format();
@@ -146,6 +147,6 @@ Then(/^30_Both options are present.$/, async () => {
   // waiting for the dialog element to load
   const ec = protractor.ExpectedConditions;
   await browser.wait(ec.presenceOf(PageShakeTheTree.fileDialog()), 6000);
-  expect(await PageShakeTheTree.firstDialogEl()).to.equal(true);
-  expect(await PageShakeTheTree.secondDialogEl().isPresent()).to.equal(true);
+  expect(await Element.clButtonArray().get(1).to.equal(true));
+  expect(await Element.clButtonArray().get(2).isPresent()).to.equal(true);
 });
