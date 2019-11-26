@@ -2,7 +2,7 @@
   [ngStyle]="{'background-color': th?.properties['--account_background_color']}">
   <div *ngIf="appConfig | async as aConfig">
     <div *ngIf="aConfig.showUserInfoOnAccountsPage" class="section">
-      <mat-card class="basic-info mat-elevation-z0">
+      <mat-card class="basic-info mat-elevation-z0" (click)="onProfileClicked()">
           <mat-card-header>
             <div mat-card-avatar>
               <img src="assets/avatar.png" alt="">
@@ -13,7 +13,7 @@
         </mat-card>
     </div>
     <div class="section">
-      <a *ngIf="aConfig.showTransactionHistoryOnAccountsPage">Transaction History</a>
+      <a *ngIf="aConfig.showTransactionHistoryOnAccountsPage" routerLink="/transaction-history">Transaction History</a>
       <a [routerLink]="'/c/' +page.key" *ngFor="let page of pages">{{page.title}}</a>
     </div>
     <div *ngIf="!preAuth" class="section">

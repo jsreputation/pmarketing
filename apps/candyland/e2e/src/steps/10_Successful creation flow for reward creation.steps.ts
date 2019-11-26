@@ -1,11 +1,12 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, protractor, ElementFinder, ProtractorExpectedConditions } from 'protractor';
-import { RewardAppPage, CreateRewardAppPage } from '../pages/candylandApp.po';
+import { RewardAppPage, CreateRewardAppPage, ElementApp } from '../pages/candylandApp.po';
 import * as path from 'path' ;
 
 let RewardPage: RewardAppPage;
 let CreateRewardPage: CreateRewardAppPage;
+const Element = ElementApp;
 // creating var for protractor expected conditions
 // const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 
@@ -21,9 +22,9 @@ Given(/^19_I am on the rewards page.$/, async () => {
 
 Given(/^19_I click on create new button.$/, async () => {
   const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
-  await browser.wait(ec.presenceOf(RewardPage.createNewButton()), 6000);
+  await browser.wait(ec.presenceOf(Element.clButton()), 6000);
   // clicking on the create new button
-  await RewardPage.createNewButton().click();
+  await Element.clButton().click();
 
 });
 
@@ -80,7 +81,7 @@ Given(/^19_I select an existing merchant.$/, async () => {
   // clicking on the first row of merchant
   await CreateRewardPage.firstMerchantsRow().get(0).click();
   // clicking on the add merchant button
-  await CreateRewardPage.addMerchantButton().click();
+  await Element.clButtonArray().last().click();
 
 });
 
@@ -170,9 +171,9 @@ Given(/^19_I enter test values for Redemption Limits Per User.$/, async () => {
 
 When(/^19_I press save button.$/, async () => {
   // clicking on the save button
-  await CreateRewardPage.saveButton().click();
+  await Element.clButtonArray().get(1).click();
   // press the close button
-  await CreateRewardPage.closeButton().click();
+  await Element.clButtonArray().get(2).click();
 });
 
 Then(/^19_Reward is present under the reward category .$/, () => {

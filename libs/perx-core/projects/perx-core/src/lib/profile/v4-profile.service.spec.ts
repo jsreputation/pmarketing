@@ -1,9 +1,10 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { V4ProfileService } from './v4-profile.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ProfileModule } from './profile.module';
-import { ConfigModule } from '../../public-api';
+
+import { ConfigModule } from '../config/config.module';
 
 describe('ProfileService', () => {
   beforeEach(() => TestBed.configureTestingModule({
