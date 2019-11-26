@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public errorMessage?: string;
   public preAuth: boolean;
+  public appAccessToken: string;
 
   constructor(
     private router: Router,
@@ -23,6 +24,11 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.authService.getAppToken().subscribe((res) => {
+      this.appAccessToken = res.access_token;
+    }, (err) => {
+      console.error('Error' + err);
+    });
     this.initForm();
   }
 

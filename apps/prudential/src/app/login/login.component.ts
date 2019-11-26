@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   public preAuth: boolean;
   public failedAuth: boolean;
-
+  public appAccessToken: string;
   constructor(
     private router: Router,
     private authService: AuthenticationService,
@@ -26,6 +26,11 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.authService.getAppToken().subscribe((res) => {
+      this.appAccessToken = res.access_token;
+    }, (err) => {
+      console.error('Error' + err);
+    });
     if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
       this.authService.autoLogin().subscribe(
         () => {

@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit, PageAppearence {
   public currentSelectedLanguage: string = 'en';
 
   public preAuth: boolean;
+  public appAccessToken: string;
 
   constructor(
     private router: Router,
@@ -50,7 +51,8 @@ export class LoginComponent implements OnInit, PageAppearence {
   public ngOnInit(): void {
     this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
     this.authService.getAppToken().subscribe(
-      () => {
+      (res) => {
+        this.appAccessToken = res.access_token;
         this.appAccessTokenFetched = true;
       },
       (err) => {

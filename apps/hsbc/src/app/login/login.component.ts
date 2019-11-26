@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
   public errorMessage: string | null;
   public sourceType: string;
   public isLoading: boolean = true;
+  public appAccessToken: string;
 
   constructor(
     private router: Router,
@@ -70,6 +71,11 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.authService.getAppToken().subscribe((token) => {
+      this.appAccessToken = token.access_token;
+    }, (err) => {
+      console.error('Error' + err);
+    });
     this.configService.readAppConfig().pipe(
       tap((config: IConfig) => {
         this.preAuth = config.preAuth as boolean;
@@ -92,7 +98,7 @@ export class LoginComponent implements OnInit {
 
   public onSubmit(): void {
     const username: string | null = this.playerCode ? (this.playerCode.value as string).toUpperCase() : null;
-    const password: string | null = this.hsbcCardLastFourDigits ? (this.hsbcCardLastFourDigits .value as string).toUpperCase() : null;
+    const password: string | null = this.hsbcCardLastFourDigits ? (this.hsbcCardLastFourDigits.value as string).toUpperCase() : null;
     this.errorMessage = null;
     if (isEmptyString(username) || isEmptyString(password)) {
       throw new Error(`username or password is required`);

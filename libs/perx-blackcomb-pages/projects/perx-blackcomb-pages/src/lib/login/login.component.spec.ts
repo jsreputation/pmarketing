@@ -7,6 +7,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationService, Config, ConfigService, ThemesService } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
+import { IWAppAccessTokenResponse } from '@perx/whistler';
 
 const configStub: Partial<Config> = {
   preAuth: false
@@ -17,7 +18,8 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
 
   const authenticationServiceStub: Partial<AuthenticationService> = {
-    getUserAccessToken: () => ''
+    getUserAccessToken: () => '',
+    getAppToken: () => of({} as IWAppAccessTokenResponse)
   };
 
   const themeServiceStub: Partial<ThemesService> = {

@@ -15,7 +15,8 @@ describe('LoginComponent', () => {
   let auth: AuthenticationService;
   let notificationService: NotificationService;
   const authenticationServiceStub = {
-    login: () => of(null)
+    login: () => of(null),
+    getAppToken: () => of({})
   };
 
   beforeEach(async(() => {

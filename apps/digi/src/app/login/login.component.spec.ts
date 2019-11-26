@@ -9,7 +9,8 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   const AuthenticationServiceStub = {
-    getUserAccessToken: () => of()
+    getUserAccessToken: () => of(),
+    getAppToken: () => of({})
   };
   const configServiceStub = {
     readAppConfig: () => of()
@@ -20,7 +21,7 @@ describe('LoginComponent', () => {
       imports: [
         RouterTestingModule
       ],
-      declarations: [ LoginComponent ],
+      declarations: [LoginComponent],
       providers: [
         { provide: AuthenticationService, useValue: AuthenticationServiceStub },
         { provide: ConfigService, useValue: configServiceStub }

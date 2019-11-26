@@ -12,7 +12,7 @@ import { FormGroup } from '@angular/forms';
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public isHidden: boolean = true;
-
+  public appAccessToken: string;
   protected preAuth: boolean;
 
   constructor(
@@ -23,7 +23,11 @@ export class LoginComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-
+    this.authService.getAppToken().subscribe((token) => {
+      this.appAccessToken = token.access_token;
+    }, (err) => {
+      console.error('Error' + err);
+    });
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => {
         this.preAuth = config.preAuth as boolean;

@@ -41,7 +41,7 @@ describe('LoginComponent', () => {
         { provide: Router, useValue: routerStub },
         {
           provide: AuthenticationService,
-          useValue: {login: () => {}, getInterruptedUrl: () => null}
+          useValue: {login: () => {}, getInterruptedUrl: () => null, getAppToken: () => of({})}
         },
         { provide: TokenStorage, useValue: tokenStorageStub}
       ]
