@@ -53,6 +53,11 @@ const routes: Routes = [
         path: 'profile',
         loadChildren: (): any => import('../profile/profile.module').then((mod: any) => mod.ProfileModule)
       },
+      {
+        path: 'transaction-history',
+        loadChildren: (): any => import('../transaction-history/transaction-history.module')
+                      .then((mod: any) => mod.TransactionHistoryModule)
+      },
       { path: 'reward-detail/:id', component: RewardDetailsComponent },
       { path: 'c/:key', component: ContentComponent },
     ]

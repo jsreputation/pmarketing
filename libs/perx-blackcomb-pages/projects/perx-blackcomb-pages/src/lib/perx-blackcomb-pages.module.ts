@@ -44,7 +44,8 @@ import {
   RewardsListTabbedComponent,
   RewardsListComponent,
   LoyaltySummaryComponent,
-  NewsfeedComponent
+  LoyaltyTransactionsListComponent,
+  NewsfeedComponent,
 } from '@perx/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -68,6 +69,7 @@ import { HomeComponent } from './home/home.component';
 import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
 import { WalletHistoryComponent } from './wallet-history/wallet-history.component';
 import { ProfileComponent } from './profile/profile.component';
+import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -105,12 +107,14 @@ const comps: any[] = [
   WalletComponent,
   RewardsListTabbedComponent,
   LoyaltySummaryComponent,
+  LoyaltyTransactionsListComponent,
   RewardsListComponent,
   LayoutComponent,
   HomeComponent,
   GamesCollectionComponent,
   NewsfeedComponent,
-  WalletHistoryComponent
+  WalletHistoryComponent,
+  TransactionHistoryComponent
 ];
 
 @NgModule({

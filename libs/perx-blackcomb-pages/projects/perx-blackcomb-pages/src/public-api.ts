@@ -24,3 +24,4 @@ export { SignUpComponent } from './lib/sign-up/sign-up.component';
 export { LayoutComponent } from './lib/layout/layout.component';
 export { WalletHistoryComponent } from './lib/wallet-history/wallet-history.component';
 export { ProfileComponent } from './lib/profile/profile.component';
+export { TransactionHistoryComponent } from './lib/transaction-history/transaction-history.component';

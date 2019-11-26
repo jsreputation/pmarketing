@@ -1,4 +1,4 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import {
   Component,
@@ -11,10 +11,10 @@ import {
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
-
+import { Location } from '@angular/common';
 import { Subject, iif, of } from 'rxjs';
-import { Config, AuthenticationService, IPopupConfig, InstantOutcomeService, IGameService, NotificationService } from '@perx/core';
-import { switchMap, takeUntil, catchError, tap } from 'rxjs/operators';
+import { Config, AuthenticationService, InstantOutcomeService, IGameService, NotificationService, IPrePlayStateData, SurveyService } from '@perx/core';
+import { switchMap, catchError, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-pages-pi',
@@ -27,9 +27,7 @@ export class PIComponent implements OnInit, OnDestroy {
   public preAuth: boolean;
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
-  private popupData: IPopupConfig;
-  private engagementType: string;
-  private transactionId: number;
+  private stateData: IPrePlayStateData;
 
   private initForm(): void {
     this.PIForm = this.fb.group({
@@ -41,11 +39,12 @@ export class PIComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private config: Config,
     private router: Router,
-    private route: ActivatedRoute,
     private gameService: IGameService,
+    private surveyService: SurveyService,
     private instantOutcomeService: InstantOutcomeService,
     private translate: TranslateService,
     private authService: AuthenticationService,
+    private location: Location,
     private notificationService: NotificationService
   ) {
     this.preAuth = this.config.preAuth || false;
@@ -53,19 +52,7 @@ export class PIComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initForm();
-    this.route.queryParams.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe((params) => {
-      if (params && params.popupData) {
-        this.popupData = JSON.parse(params.popupData);
-      }
-      if (params && params.engagementType) {
-        this.engagementType = params.engagementType;
-      }
-      if (params && params.transactionId) {
-        this.transactionId = parseInt(params.transactionId, 10);
-      }
-    });
+    this.stateData = this.location.getState() as IPrePlayStateData;
   }
 
   public ngOnDestroy(): void {
@@ -116,11 +103,20 @@ export class PIComponent implements OnInit, OnDestroy {
           }
         }),
         switchMap(() => {
-          if (this.engagementType === 'game' && this.transactionId) {
-            return this.gameService.prePlayConfirm(this.transactionId);
+          if (
+            this.stateData &&
+            this.stateData.engagementType === 'survey' &&
+            this.stateData.campaignId &&
+            this.stateData.answers &&
+            this.stateData.surveyId
+          ) {
+            return this.surveyService.postSurveyAnswer(this.stateData.answers, this.stateData.campaignId, this.stateData.surveyId);
           }
-          if (this.engagementType === 'instant_outcome' && this.transactionId) {
-            return this.instantOutcomeService.prePlayConfirm(this.transactionId);
+          if (this.stateData && this.stateData.engagementType === 'game' && this.stateData.transactionId) {
+            return this.gameService.prePlayConfirm(this.stateData.transactionId);
+          }
+          if (this.stateData && this.stateData.engagementType === 'instant_outcome' && this.stateData.transactionId) {
+            return this.instantOutcomeService.prePlayConfirm(this.stateData.transactionId);
           }
           throw new Error('PI_NO_TRANSACTION_MATCH');
         }),
@@ -130,8 +126,8 @@ export class PIComponent implements OnInit, OnDestroy {
       ).subscribe(
         () => {
           this.router.navigate(['/wallet']);
-          if (this.popupData) {
-            this.notificationService.addPopup(this.popupData);
+          if (this.stateData.popupData) {
+            this.notificationService.addPopup(this.stateData.popupData);
           }
         },
         (error: Error) => this.updateErrorMessage(error.message)
