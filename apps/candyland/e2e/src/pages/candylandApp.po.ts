@@ -520,6 +520,12 @@ export class BlackcombHomeAppPage {
   }
 }
 
+export class BlackcombHistoryAppPage {
+  public static navigateToBlackcombHistoryApp(): Promise<string> {
+    return browser.get('https://generic-blackcomb-dev1.uat.whistler.perxtech.io/wallet') as Promise<string> ;
+  }
+}
+
 export class ElementApp {
   public static h3Array(): ElementArrayFinder {
     return element.all(by.css('h3'));
@@ -619,6 +625,10 @@ export class ElementApp {
 
   public static matToolbar(): ElementFinder {
     return element.all(by.css('mat-toolbar')).get(1);
+  }
+
+  public static matToolbarLinkArray(): ElementArrayFinder {
+    return element.all(by.css('mat-toolbar>a'));
   }
 
   public static matCardArray(): ElementArrayFinder {
