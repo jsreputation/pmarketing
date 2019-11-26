@@ -1,11 +1,21 @@
 import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SurveyModule as PerxSurveyModule, IFormsService, AuthenticationService, Config, IGameService, InstantOutcomeService } from '@perx/core';
+import {
+  SurveyModule as PerxSurveyModule,
+  IFormsService,
+  AuthenticationService,
+  Config,
+  IGameService,
+  InstantOutcomeService,
+  SurveyService
+} from '@perx/core';
 import { SignUpComponent } from './sign-up.component';
 import { of } from 'rxjs';
 import { MatSnackBar, MatInputModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Location } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 const configStub: Partial<Config> = {
   preAuth: false
@@ -17,6 +27,14 @@ const gameServiceStub: Partial<IGameService> = {
 
 const instantOutcomeServiceStub: Partial<InstantOutcomeService> = {
   prePlayConfirm: () => of()
+};
+
+const locationStub: Partial<Location> = {
+  getState: () => { }
+};
+
+const surveyServiceStub: Partial<SurveyService> = {
+  postSurveyAnswer: () => of()
 };
 
 const authServiceStub: Partial<AuthenticationService> = {
@@ -42,11 +60,11 @@ describe('SignUpComponent', () => {
       imports: [
         PerxSurveyModule,
         MatInputModule,
+        HttpClientModule,
         NoopAnimationsModule,
         TranslateModule.forRoot(),
-        TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([
-          { path: 'wallet', redirectTo: '/' }
+          { path: 'wallet', redirectTo: '/' },
         ]),
       ],
       providers: [
@@ -63,6 +81,8 @@ describe('SignUpComponent', () => {
         { provide: IGameService, useValue: gameServiceStub },
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: InstantOutcomeService, useValue: instantOutcomeServiceStub },
+        { provide: Location, useValue: locationStub },
+        { provide: SurveyService, useValue: surveyServiceStub },
       ]
     })
       .compileComponents();
