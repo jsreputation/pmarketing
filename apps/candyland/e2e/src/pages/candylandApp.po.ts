@@ -522,7 +522,7 @@ export class BlackcombHomeAppPage {
 
 export class BlackcombHistoryAppPage {
   public static navigateToBlackcombHistoryApp(): Promise<string> {
-    return browser.get('https://generic-blackcomb-dev1.uat.whistler.perxtech.io/wallet') as Promise<string> ;
+    return browser.get('https://generic-blackcomb-dev1.uat.whistler.perxtech.io/loading?cid=86') as Promise<string> ;
   }
 }
 
