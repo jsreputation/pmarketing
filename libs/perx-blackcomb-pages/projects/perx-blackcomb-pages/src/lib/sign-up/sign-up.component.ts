@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import {
@@ -12,8 +13,8 @@ import {
   SurveyService
 } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subject, iif, of } from 'rxjs';
-import { catchError, tap, switchMap } from 'rxjs/operators';
+import { Observable, Subject, iif, of, throwError } from 'rxjs';
+import { catchError, tap, switchMap, retryWhen, delay, mergeMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Location } from '@angular/common';
 
@@ -106,6 +107,15 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
     if (userObj) {
       const oldUserId = this.authService.getUserId();
+      const retryWhenTransactionFailed = (err: Observable<HttpErrorResponse>) => err.pipe(
+        mergeMap(error => {
+          if (error.status === 422) {
+            return of(error.status).pipe(delay(1000));
+          }
+          return throwError(error);
+        })
+      );
+
       if (!oldUserId) {
         throw new Error('should not be here');
       }
@@ -148,10 +158,18 @@ export class SignUpComponent implements OnInit, OnDestroy {
             return this.surveyService.postSurveyAnswer(this.stateData.answers, this.stateData.campaignId, this.stateData.surveyId);
           }
           if (this.stateData && this.stateData.engagementType === 'game' && this.stateData.transactionId) {
-            return this.gameService.prePlayConfirm(this.stateData.transactionId);
+            return this.gameService.prePlayConfirm(this.stateData.transactionId).pipe(
+              retryWhen(
+                retryWhenTransactionFailed
+              )
+            );
           }
           if (this.stateData && this.stateData.engagementType === 'instant_outcome' && this.stateData.transactionId) {
-            return this.instantOutcomeService.prePlayConfirm(this.stateData.transactionId);
+            return this.instantOutcomeService.prePlayConfirm(this.stateData.transactionId).pipe(
+              retryWhen(
+                retryWhenTransactionFailed
+              )
+            );
           }
           throw new Error('PI_NO_TRANSACTION_MATCH');
         }),
