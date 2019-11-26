@@ -26,8 +26,8 @@ export class LoyaltyRuleHttpAdapter {
     return {
       id: data.id,
       matchType: data.attributes.match_type,
-      domainType: data.attributes.domain_type,
-      domainId: data.attributes.domain_id,
+      tierType: data.attributes.domain_type,
+      tierId: data.attributes.domain_id,
       rules: []
     };
   }
@@ -54,33 +54,43 @@ export class LoyaltyRuleHttpAdapter {
   public static transformToRuleForm(data: IJsonApiItem<any>): any {
     return {
       id: data.id,
-      matchType: data.attributes.match_type,
-      domainType: data.attributes.domain_type,
-      domainId: data.attributes.domain_id,
-      rules: []
+      priority: data.attributes.priority,
+      name: data.attributes.name,
+      conditions: [],
+      result: {}
     };
   }
 
-  public static transformFromRuleForm(data: any, basicTierId: string): IJsonApiItem<any> {
+  public static transformFromRuleForm(data: any, ruleSetId: string): IJsonApiItem<any> {
     return {
-      type: 'custom_tiers',
+      type: 'rules',
       attributes: {
+        rule_set_id: ruleSetId,
+        reward_type: 'Perx::Reward::Entity',
+        reward_id: 1,
         name: data.name,
-        image_url: data.imageUrl,
-        bonus_ratio: (data.earnBonus / 100).toFixed(3),
-        discount_ratio: (data.burnDiscount / 100).toFixed(3),
-        expiry_period: data.pointsExpiry.amount,
-        expiry_period_type: data.pointsExpiry.type,
-        expiry_period_trigger: data.pointsExpiry.trigger
-      },
-      relationships: {
-        basic_tier: {
-          data: {
-            type: 'basic_tiers',
-            id: basicTierId
-          }
-        }
+        conditions: data.conditions.map(condition =>
+          LoyaltyRuleHttpAdapter.transformFromFromConditionForm(condition)
+        )
       }
+    };
+  }
+
+  public static transformFromToConditionForm(data: any): any {
+    return {
+      type: data.field,
+      value: data.value,
+      operator: data.sign,
+      valueType: data.value_type
+    };
+  }
+
+  public static transformFromFromConditionForm(data: any): any {
+    return {
+      field: data.type,
+      sign: data.operator,
+      value: data.value,
+      value_type: data.valueType
     };
   }
 }

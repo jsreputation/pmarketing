@@ -18,8 +18,9 @@
   </div>
   <!--/  buttons-->
 </header>
+
 <section class="content form-limiter loyalty">
-  <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0">
+  <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0" disableRipple>
     <!--step 1-->
     <mat-step completed="false">
       <ng-template matStepLabel>{{'LOYALTY_FEATURE.LOYALTY_DETAILS' | translate}}</ng-template>
@@ -39,19 +40,19 @@
       </cl-loyalty-form-step-tiers-conversions>
     </mat-step>
     <!--step 3-->
-    <mat-step>
+    <mat-step completed="false">
       <ng-template matStepLabel>Point Earn Rules</ng-template>
       <cl-loyalty-form-step-earn-rules *ngIf="stepProgress >= 2"
                                        [basicTierId]="basicTierId"
                                        [basicTierRuleSet]="basicTierRuleSet"
+                                       [customTierRuleSetMap]="customTierRuleSetMap"
                                        [customTierDataSource]="customTierDataSource"
-                                       [rules]="null"
                                        (rulesAction)="handleLoyaltyActions($event)"></cl-loyalty-form-step-earn-rules>
       <div>
       </div>
     </mat-step>
     <!--step 4-->
-    <mat-step>
+    <mat-step completed="false">
       <ng-template matStepLabel>{{'LOYALTY_FEATURE.REVIEW' | translate}}</ng-template>
       <cl-loyalty-form-step-review *ngIf="stepProgress >= 3"
                                    [dataSource]="customTierDataSource"

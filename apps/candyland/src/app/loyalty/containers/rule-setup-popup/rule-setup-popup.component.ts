@@ -3,6 +3,7 @@ import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LoyaltyEarnRulesFormsService } from '../../services/loyalty-earn-rules-forms.service';
+import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 
 @Component({
   selector: 'cl-rule-setup-popup',
@@ -12,21 +13,22 @@ import { LoyaltyEarnRulesFormsService } from '../../services/loyalty-earn-rules-
 export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   protected destroy$: Subject<void> = new Subject();
+  public titleError: string;
 
   public get name(): AbstractControl {
     return this.form.get('name') || null;
   }
 
   public get applyMultiplier(): AbstractControl {
-    return this.form.get('pointsEarned.applyMultiplier');
+    return this.form.get('result.applyMultiplier');
   }
 
   public get awardPoints(): AbstractControl {
-    return this.form.get('pointsEarned.awardPoints');
+    return this.form.get('result.awardPoints');
   }
 
   public get maximumPoints(): AbstractControl {
-    return this.form.get('pointsEarned.maximumPoints');
+    return this.form.get('result.maximumPoints');
   }
 
   public get conditions(): FormArray {
@@ -36,11 +38,13 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   constructor(
     public dialogRef: MatDialogRef<RuleSetupPopupComponent>,
     private formsService: LoyaltyEarnRulesFormsService,
-    @Inject(MAT_DIALOG_DATA) public data: { rule: any | null }
+    private ruleService: LoyaltyRuleService,
+    @Inject(MAT_DIALOG_DATA) public data: { ruleSet: any, rule?: any | null }
   ) {
   }
 
   public ngOnInit(): void {
+    console.log('initData', this.data);
     this.initForm();
     this.fillForm();
   }
@@ -72,13 +76,22 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
       this.form.markAllAsTouched();
       return;
     }
-    // let request;
+    let request;
     if (this.data.rule) {
-      // request = this.customTierService.updateCustomTier(this.data.tier.id, this.form.value, this.data.basicTierId);
+      request = this.ruleService.updateRule(this.data.ruleSet.id, this.form.value, this.data.rule.id);
     } else {
-      // request = this.customTierService.createCustomTier(this.form.value, this.data.basicTierId);
+      request = this.ruleService.createRule(this.data.ruleSet.id, this.form.value);
     }
-    // request.subscribe(data => this.dialogRef.close(data));
+    request.subscribe(
+      data => this.dialogRef.close(data),
+      (error: any) => {
+        this.titleError = error.error.errors.find(item => 'title' in item).title;
+        if (this.titleError) {
+          this.name.setErrors({title: true});
+          this.name.markAllAsTouched();
+        }
+      }
+    );
   }
 
   private initForm(): void {

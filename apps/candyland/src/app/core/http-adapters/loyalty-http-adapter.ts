@@ -1,11 +1,6 @@
 import Utils from '@cl-helpers/utils';
 import { LoyaltyJoinMethodMap } from '@cl-core/models/loyalty/loyalty-joing-method-map';
-import {
-  ICustomTireForm,
-  ILoyaltyDetails,
-  ILoyaltyForm,
-  ILoyaltyTiersConversions
-} from '@cl-core/models/loyalty/loyalty-form.model';
+import { ICustomTireForm, ILoyaltyDetails, ILoyaltyForm, ILoyaltyTiersConversions } from '@cl-core/models/loyalty/loyalty-form.model';
 import { IWBasicTierAttributes, IWCustomTierAttributes, IWJoinMethod, IWLoyaltyAttributes } from '@perx/whistler';
 
 export class LoyaltyHttpAdapter {

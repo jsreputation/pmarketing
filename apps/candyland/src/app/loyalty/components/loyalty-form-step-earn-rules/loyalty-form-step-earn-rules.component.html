@@ -1,135 +1,14 @@
-<!--<mat-expansion-panel class="card" expanded *ngFor="let rule of rules">-->
-<!--  <mat-expansion-panel-header class="card-header">-->
-<!--    <h2 class="card-title">-->
-<!--      {{rule?.tier?.name}}-->
-<!--    </h2>-->
-<!--  </mat-expansion-panel-header>-->
+<cl-loyalty-rule-card [tierId]="basicTierId"
+                      tierType="basicTier"
+                      [ruleSet]="basicTierRuleSet"
+                      (rulesAction)="handleTiersAction($event)">
+</cl-loyalty-rule-card>
 
-<!--  <div class="card-content">-->
-<!--    <label class="card-label">Rules Application</label>-->
-<!--    <div class="card-row">-->
-<!--      <mat-form-field>-->
-<!--        <mat-select>-->
-<!--          <mat-option value="first">Apply First Matching Rule</mat-option>-->
-<!--          &lt;!&ndash;          <mat-option [value]="pointsExpirePeriodType.week">Week</mat-option>&ndash;&gt;-->
-<!--          &lt;!&ndash;          <mat-option [value]="pointsExpirePeriodType.month">Month</mat-option>&ndash;&gt;-->
-<!--          &lt;!&ndash;          <mat-option [value]="pointsExpirePeriodType.year">Year</mat-option>&ndash;&gt;-->
-<!--        </mat-select>-->
-<!--        <mat-hint>Perx will apply only the topmost rule in the list that matches the conditions.</mat-hint>-->
-<!--      </mat-form-field>-->
-<!--    </div>-->
-<!--    <br>-->
-<!--    <br>-->
-<!--    <br>-->
-<!--    <label class="card-label">-->
-<!--      {{rule?.tier?.type === 'basicTier' ? 'Points Earn Rules' : ''}}-->
-<!--      {{rule?.tier?.type === 'customTier' ? 'Special Rules' : ''}}-->
-<!--    </label>-->
-<!--    <cl-point-earn-rules-list [editable]="true" *ngIf="rule?.rules" [dataSource]="rule?.rules"-->
-<!--                              (rulesAction)="handleTiersAction($event)">-->
-<!--      <div class="rule-list-no-data">-->
-<!--        There are currently no-->
-<!--        {{rule?.tier?.type === 'basicTier' ? 'points Earn Rules' : ''}}-->
-<!--        {{rule?.tier?.type === 'customTier' ? 'special rules' : ''}}-->
-<!--        for the-->
-<!--        {{rule?.tier?.name}}.-->
-<!--      </div>-->
-<!--    </cl-point-earn-rules-list>-->
-<!--    <cl-button [classList]="'tertiary'" (click)="createRule()">-->
-<!--        <span>-->
-<!--         + Create new rule-->
-<!--        </span>-->
-<!--    </cl-button>-->
-<!--  </div>-->
-<!--</mat-expansion-panel>-->
-
-<mat-expansion-panel class="card" expanded>
-  <mat-expansion-panel-header class="card-header">
-    <h2 class="card-title">
-      General Rules
-    </h2>
-  </mat-expansion-panel-header>
-
-  <div class="card-content">
-    <label class="card-label">Rules Application</label>
-    <div class="card-row">
-      <mat-form-field>
-        <mat-select [value]="basicTierRuleSet?.matchType">
-          <mat-option value="match_first">Apply First Matching Rule</mat-option>
-          <mat-option value="match_all">Apply All Matching Rule</mat-option>
-        </mat-select>
-        <mat-hint>Perx will apply only the topmost rule in the list that matches the conditions.</mat-hint>
-      </mat-form-field>
-    </div>
-    <br>
-    <br>
-    <br>
-    <label class="card-label">
-      Points Earn Rules
-    </label>
-        <cl-point-earn-rules-list [editable]="true"
-                                  *ngIf="basicTierRuleSet?.rules"
-                                  [dataSource]="basicTierRuleSet?.rules"
-                                  (rulesAction)="handleTiersAction($event)">
-          <div class="rule-list-no-data">
-            There are currently no
-            points Earn Rules
-<!--            {{basicTierRuleSet?.type === 'basicTier' ? 'points Earn Rules' : ''}}-->
-<!--            {{basicTierRuleSet?.type === 'customTier' ? 'special rules' : ''}}-->
-            for the
-            {{basicTierRuleSet?.name}}.
-          </div>
-        </cl-point-earn-rules-list>
-    <cl-button [classList]="'tertiary'" (click)="createRule(basicTierId)">
-        <span>
-         + Create new rule
-        </span>
-    </cl-button>
-  </div>
-</mat-expansion-panel>
-
-<mat-expansion-panel class="card" expanded *ngFor="let customTier of (customTierDataSource.data$ | async)">
-  <mat-expansion-panel-header class="card-header">
-    <h2 class="card-title">
-      {{customTier.name}}
-    </h2>
-  </mat-expansion-panel-header>
-
-  <div class="card-content">
-    <label class="card-label">Rules Application</label>
-    <div class="card-row">
-      <mat-form-field>
-        <mat-select>
-          <mat-option value="first">Apply First Matching Rule</mat-option>
-          <!--          <mat-option [value]="pointsExpirePeriodType.week">Week</mat-option>-->
-          <!--          <mat-option [value]="pointsExpirePeriodType.month">Month</mat-option>-->
-          <!--          <mat-option [value]="pointsExpirePeriodType.year">Year</mat-option>-->
-        </mat-select>
-        <mat-hint>Perx will apply only the topmost rule in the list that matches the conditions.</mat-hint>
-      </mat-form-field>
-    </div>
-    <br>
-    <br>
-    <br>
-    <label class="card-label">
-      Special Rules
-    </label>
-    <!--    <cl-point-earn-rules-list [editable]="true"-->
-    <!--                              *ngIf="rule?.rules"-->
-    <!--                              [dataSource]="rule?.rules"-->
-    <!--                              (rulesAction)="handleTiersAction($event)">-->
-    <!--      <div class="rule-list-no-data">-->
-    <!--        There are currently no-->
-    <!--        {{rule?.tier?.type === 'basicTier' ? 'points Earn Rules' : ''}}-->
-    <!--        {{rule?.tier?.type === 'customTier' ? 'special rules' : ''}}-->
-    <!--        for the-->
-    <!--        {{rule?.tier?.name}}.-->
-    <!--      </div>-->
-    <!--    </cl-point-earn-rules-list>-->
-    <cl-button [classList]="'tertiary'" (click)="createRule()">
-        <span>
-         + Create new rule
-        </span>
-    </cl-button>
-  </div>
-</mat-expansion-panel>
+<ng-container *ngFor="let customTier of (customTierDataSource.data$ | async)">
+  <cl-loyalty-rule-card [tierId]="customTier?.id"
+                        tierType="customTier"
+                        [tierName]="customTier?.name"
+                        [ruleSet]="getCustomTierRuleSet(customTier?.id)"
+                        (rulesAction)="handleTiersAction($event)">
+  </cl-loyalty-rule-card>
+</ng-container>

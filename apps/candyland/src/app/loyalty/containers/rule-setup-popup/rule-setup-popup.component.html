@@ -11,6 +11,7 @@
       <mat-error *ngIf="name.hasError('required') && name.touched">Required field</mat-error>
       <mat-error *ngIf="name.hasError('minlength') && name.touched">Min length 1</mat-error>
       <mat-error *ngIf="name.hasError('maxlength') && name.touched">Max length 60</mat-error>
+      <mat-error *ngIf="name.hasError('title') && name.touched">{{titleError}}</mat-error>
     </mat-form-field>
 
     <label class="loyalty-label">If the customer...</label>
@@ -28,6 +29,7 @@
                         (valueChange)="updateCondition(index, $event)">
               <mat-option value="transaction">Makes a transaction TYPE</mat-option>
               <mat-option value="amount">Makes a transaction AMOUNT</mat-option>
+              <mat-option value="currency">Makes a transaction CURRENCY</mat-option>
               <mat-option value="date">Transacts within these DATES</mat-option>
             </mat-select>
           </mat-form-field>
@@ -49,7 +51,7 @@
 
 
     <label class="loyalty-label">THEN</label>
-    <ng-container formGroupName="pointsEarned">
+    <ng-container formGroupName="result">
       <div class="card-section card-content">
         <mat-form-field>
           <mat-select formControlName="typePoints">

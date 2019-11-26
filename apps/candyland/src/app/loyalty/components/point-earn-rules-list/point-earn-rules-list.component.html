@@ -1,5 +1,8 @@
 <div class="table-wrap">
-  <table class="table rule-list" #table mat-table [dataSource]="dataSource"
+  <table class="table rule-list"
+         *ngIf="dataSource?.length > 0"
+         #table mat-table
+         [dataSource]="dataSource"
          cdkDropList
          [cdkDropListData]="dataSource"
          (cdkDropListDropped)="dropTable($event)">

@@ -8,7 +8,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { LoyaltyStepForm } from '../../models/loyalty-step-form.enum';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from '@cl-core/services/user.service';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, from, Observable, of, Subject } from 'rxjs';
 import { AudiencesService } from '@cl-core-services';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
@@ -39,7 +39,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   private stepProgress$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   public customTierDataSource: CustomDataSource<ICustomTireForm>;
   public basicTierRuleSet: any;
-  public customTierRuleSetMap: any;
+  public customTierRuleSetMap: any = {};
   // public earnRules: any = [
   //   {
   //     tier: {
@@ -53,7 +53,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   //         priority: 1,
   //         name: 'Main Rule Prepaid',
   //         conditions: ['Makes a PREPAID transaction'],
-  //         pointsEarned: 'Apply 2x multiplier'
+  //         result: 'Apply 2x multiplier'
   //       },
   //       {
   //         priority: 2,
@@ -62,7 +62,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   //           'Make a transaction for each RM100',
   //           'Make a transaction of product category IT Accessories'
   //         ],
-  //         pointsEarned: '100 Bonus Points'
+  //         result: '100 Bonus Points'
   //       },
   //       {
   //         priority: 3,
@@ -71,7 +71,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   //           'Make a transaction for each RM200',
   //           'Make a transaction of product category IT Accessories'
   //         ],
-  //         pointsEarned: '100 Bonus Points'
+  //         result: '100 Bonus Points'
   //       },
   //       {
   //         priority: 4,
@@ -80,7 +80,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   //           'Make a transaction for each RM200',
   //           'Make a transaction of product category IT Accessories'
   //         ],
-  //         pointsEarned: '100 Bonus Points'
+  //         result: '100 Bonus Points'
   //       }
   //     ]
   //   },
@@ -96,7 +96,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   //         priority: 1,
   //         name: 'Main Rule Prepaid',
   //         conditions: ['Makes a PREPAID transaction'],
-  //         pointsEarned: 'Apply 2x multiplier'
+  //         result: 'Apply 2x multiplier'
   //       },
   //       {
   //         priority: 2,
@@ -105,7 +105,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   //           'Make a transaction for each RM100',
   //           'Make a transaction of product category IT Accessories'
   //         ],
-  //         pointsEarned: '100 Bonus Points'
+  //         result: '100 Bonus Points'
   //       },
   //       {
   //         priority: 4,
@@ -114,7 +114,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   //           'Make a transaction for each RM200',
   //           'Make a transaction of product category IT Accessories'
   //         ],
-  //         pointsEarned: '100 Bonus Points'
+  //         result: '100 Bonus Points'
   //       },
   //       {
   //         priority: 3,
@@ -123,7 +123,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   //           'Make a transaction for each RM200',
   //           'Make a transaction of product category IT Accessories'
   //         ],
-  //         pointsEarned: '100 Bonus Points'
+  //         result: '100 Bonus Points'
   //       }
   //     ]
   //   },
@@ -208,6 +208,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
             break;
           case 2:
             this.initBasicTierRuleSet();
+            this.initCustomTierRuleSetMap();
             break;
         }
         this.stepProgress = stepProgress;
@@ -307,7 +308,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
         this.deleteCustomTier(data.data.id);
         break;
       case NewLoyaltyActions.createRule:
-        this.createCustomRule();
+        this.createRule(data.data);
         break;
       case NewLoyaltyActions.editRule:
         this.editRule(data.data);
@@ -345,7 +346,13 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   private createCustomTire(): void {
     this.getRefDialogSetupTier()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.updateCustomTiersDataSource());
+      .subscribe((tier) => {
+        console.log('tier', tier);
+        this.updateCustomTiersDataSource();
+        if (this.stepProgress >= 2) {
+          this.getCustomTierRuleSet(tier.id).subscribe();
+        }
+      });
   }
 
   private updateCustomTiersDataSource(): void {
@@ -362,7 +369,14 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   private deleteCustomTier(id: string): void {
     this.customTierService.deleteCustomTier(id)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.updateCustomTiersDataSource());
+      .subscribe(() => {
+        this.updateCustomTiersDataSource();
+        if (this.stepProgress >= 2) {
+          const ruleSetId = this.customTierRuleSetMap[id].id;
+          console.log('ruleSetId', ruleSetId);
+          this.ruleService.deleteRuleSet(ruleSetId).subscribe();
+        }
+      });
   }
 
   private initCustomTiersDataSource(): void {
@@ -388,12 +402,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   private getRefDialogSetupRule(data: any = null): Observable<MatDialogRef<RuleSetupPopupComponent>> {
     const dialogRef: MatDialogRef<RuleSetupPopupComponent> = this.dialog.open(RuleSetupPopupComponent, {
       panelClass: 'tier-setup-dialog',
-      data: {
-        // basicTierId: this.basicTierId,
-        // type:
-        rule: data
-      }
-
+      data
     });
 
     console.log('dat', data);
@@ -404,10 +413,22 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
       );
   }
 
-  private createCustomRule(): void {
-    this.getRefDialogSetupRule()
+  private createRule(data: any): void {
+    this.getRefDialogSetupRule(data)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.updateCustomTiersDataSource());
+      .subscribe((rule) => {
+        console.log('ruleSet', data.ruleSet, '\n rule', rule);
+        // if (data.ruleSet.tierType === 'Perx::Loyalty::BasicTier') {
+        //   this.basicTierRuleSet.rules.push(rule);
+        // }
+        // if (data.ruleSet.tierType === 'Perx::Loyalty::CustomTier') {
+        //   this.customTierRuleSetMap[data.tierId].rules.push(rule);
+        // }
+        const updateRules = [...data.ruleSet.rules, rule];
+        data.ruleSet.rules = updateRules;
+        this.cd.detectChanges();
+        console.log('\n basicTierRuleSet', this.basicTierRuleSet, '\n customTierRuleSetMap', this.customTierRuleSetMap);
+      });
   }
 
   private editRule(data: ICustomTireForm): void {
@@ -494,9 +515,38 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
         tap(data => console.log('findAndCreateRuleSet', data))
       )
-      .subscribe((data: any) => {
-        this.basicTierRuleSet = data;
+      .subscribe((ruleSet: any) => {
+        this.basicTierRuleSet = ruleSet;
         this.cd.detectChanges();
       });
+  }
+
+  private getCustomTierRuleSet(id: string): Observable<any> {
+    return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', id)
+      .pipe(
+        tap(ruleSet => console.log('ruleSet', ruleSet)),
+        tap(ruleSet => this.customTierRuleSetMap[id] = ruleSet),
+        tap(() => console.log('customTierRuleSetMap', this.customTierRuleSetMap)),
+      );
+  }
+
+  private initCustomTierRuleSetMap(): void {
+    const customTierIds = this.customTierDataSource.data.map(item => item.id);
+    console.log('customTierIds', customTierIds);
+    from(customTierIds).pipe(
+      switchMap(id => this.getCustomTierRuleSet(id)),
+    ).subscribe(data => {
+      console.log('initCustomTierRuleSetMap', data);
+      this.cd.detectChanges();
+    });
+    // this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', this.basicTierId)
+    //   .pipe(
+    //     takeUntil(this.destroy$),
+    //     tap(data => console.log('findAndCreateRuleSet', data))
+    //   )
+    //   .subscribe((data: any) => {
+    //     this.basicTierRuleSet = data;
+    //     this.cd.detectChanges();
+    //   });
   }
 }

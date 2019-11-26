@@ -80,18 +80,22 @@ export class LoyaltyRuleService {
     );
   }
 
-  public createRule(data: any, basicTierId: string): Observable<IJsonApiPayload<any>> {
-    const sendData: any = LoyaltyRuleHttpAdapter.transformFromRuleForm(data, basicTierId);
-    return this.rulesHttpService.createRuleSet({data: sendData});
+  public createRule(ruleSetId: string, data: any): Observable<IJsonApiPayload<any>> {
+    const sendData: any = LoyaltyRuleHttpAdapter.transformFromRuleForm(data, ruleSetId);
+    return this.rulesHttpService.createRule({data: sendData}).pipe(
+      map((response: any) => LoyaltyRuleHttpAdapter.transformToRuleForm(response.data))
+    );
   }
 
-  public updateRule(RuleId: string, data: any, basicTierId: string): Observable<IJsonApiPayload<any>> {
-    const sendData: any = LoyaltyRuleHttpAdapter.transformFromRuleSetForm(data, basicTierId);
-    sendData.id = RuleId;
-    return this.rulesHttpService.updateRuleSet(RuleId, {data: sendData});
+  public updateRule(ruleSetId: string, data: any, ruleId: string): Observable<IJsonApiPayload<any>> {
+    const sendData: any = LoyaltyRuleHttpAdapter.transformFromRuleForm(data, ruleSetId);
+    sendData.id = ruleId;
+    return this.rulesHttpService.updateRule(ruleId, {data: sendData}).pipe(
+      map((response: any) => LoyaltyRuleHttpAdapter.transformToRuleForm(response.data))
+    );
   }
 
   public deleteRule(id: string): Observable<IJsonApiPayload<any>> {
-    return this.rulesHttpService.deleteRuleSet(id);
+    return this.rulesHttpService.deleteRule(id);
   }
 }

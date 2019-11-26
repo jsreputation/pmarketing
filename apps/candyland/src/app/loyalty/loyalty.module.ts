@@ -57,6 +57,8 @@ import { TransactionConditionGroupComponent } from './components/transaction-con
 import { DynamicFormGroupDirective } from './dynamic-field.directive';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TranslateModule } from '@ngx-translate/core';
+import { LoyaltyRuleCardComponent } from './components/loyalty-rules-card/loyalty-rule-card.component';
+import { CurrencyConditionGroupComponent } from './components/currency-condition-group/currency-condition-group.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +91,9 @@ import { TranslateModule } from '@ngx-translate/core';
     DateConditionGroupComponent,
     AmountConditionGroupComponent,
     TransactionConditionGroupComponent,
-    DynamicFormGroupDirective
+    CurrencyConditionGroupComponent,
+    DynamicFormGroupDirective,
+    LoyaltyRuleCardComponent,
   ],
   imports: [
     CommonModule,
@@ -133,6 +137,7 @@ import { TranslateModule } from '@ngx-translate/core';
     DateConditionGroupComponent,
     AmountConditionGroupComponent,
     TransactionConditionGroupComponent,
+    CurrencyConditionGroupComponent
   ]
 })
 export class LoyaltyModule {

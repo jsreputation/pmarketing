@@ -1,4 +1,14 @@
-import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
@@ -10,13 +20,21 @@ import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
   styleUrls: ['./point-earn-rules-list.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class PointEarnRulesListComponent {
+export class PointEarnRulesListComponent implements OnChanges {
   @Input() public editable: boolean = false;
   @Input() public dataSource: any;
   @Input() public tier: any;
   @Input() public displayedColumns: string[] = ['priority', 'name', 'conditions', 'pointsEarned'];
   @Output() public rulesAction: EventEmitter<{ action: NewLoyaltyActions, data?: ICustomTireForm }> = new EventEmitter();
   @ViewChild('table', {static: false}) public table: MatTable<any>;
+
+  constructor(private cd: ChangeDetectorRef) {
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    console.log('changes', changes);
+    this.cd.detectChanges();
+  }
 
   public get displayedColumnsWithEdit(): string[] {
     if (this.editable) {

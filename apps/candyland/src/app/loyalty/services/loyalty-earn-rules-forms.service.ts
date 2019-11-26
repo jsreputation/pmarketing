@@ -18,7 +18,7 @@ export class LoyaltyEarnRulesFormsService {
       name: new FormControl(null,
         [Validators.required, Validators.minLength(1), Validators.maxLength(60)]),
       conditions: new FormArray([]),
-      pointsEarned: new FormGroup({
+      result: new FormGroup({
         typePoints: new FormControl(null, [Validators.required]),
         awardPoints: new FormControl(null, [Validators.required, Validators.min(1)]),
         typeMultiplier: new FormControl(null, [Validators.required]),
@@ -32,8 +32,13 @@ export class LoyaltyEarnRulesFormsService {
     return {
       priority: 1,
       name: 'rule name',
-      conditions: [],
-      pointsEarned: {
+      conditions: [{
+        type: 'transaction',
+        operator: 'equal',
+        value: 'prepaid',
+        valueType: 'string',
+      }],
+      result: {
         typePoints: 'bonus',
         awardPoints: 100,
         typeMultiplier: 'multiplier',
@@ -50,31 +55,59 @@ export class LoyaltyEarnRulesFormsService {
   public conditionGroups: { [key: string]: any } = {
     transaction: (type) => this.transactionGroup(type),
     amount: (type) => this.amountGroup(type),
+    currency: (type) => this.currencyGroup(type),
     date: (type) => this.dateGroup(type)
   };
 
   public transactionGroup(type: string): FormGroup {
     return new FormGroup({
       type: new FormControl(type),
-      transactionType: new FormControl(null, [Validators.required])
+      operator: new FormControl('equal', [Validators.required]),
+      value: new FormControl('prepaid', [Validators.required]),
+      valueType: new FormControl('string'),
+    });
+  }
+
+  // public transactionGroup(type: string): FormGroup {
+  //   return new FormGroup({
+  //     type: new FormControl(type),
+  //     transactionType: new FormControl(null, [Validators.required])
+  //   });
+  // }
+
+  public currencyGroup(type: string): FormGroup {
+    return new FormGroup({
+      type: new FormControl(type),
+      operator: new FormControl('equal', [Validators.required]),
+      value: new FormControl('SGD', [Validators.required]),
+      valueType: new FormControl('string'),
     });
   }
 
   public amountGroup(type: string): FormGroup {
     return new FormGroup({
       type: new FormControl(type),
-      operator: new FormControl(null, [Validators.required]),
-      currency: new FormControl(null, [Validators.required]),
-      value: new FormControl(null, [Validators.required])
+      operator: new FormControl('equal', [Validators.required]),
+      value: new FormControl(0, [Validators.required]),
+      valueType: new FormControl('integer'),
     });
   }
 
   public dateGroup(type: string): FormGroup {
     return new FormGroup({
       type: new FormControl(type),
-      startDate: new FormControl(null, [Validators.required]),
-      endDate: new FormControl(null, [Validators.required])
+      operator: new FormControl('equal', [Validators.required]),
+      value: new FormControl(Date.now(), [Validators.required]),
+      valueType: new FormControl('date')
     });
   }
+
+  // public dateGroup(type: string): FormGroup {
+  //   return new FormGroup({
+  //     type: new FormControl(type),
+  //     startDate: new FormControl(null, [Validators.required]),
+  //     endDate: new FormControl(null, [Validators.required])
+  //   });
+  // }
 
 }
