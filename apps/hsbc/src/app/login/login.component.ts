@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
   public errorMessage: string | null;
   public sourceType: string;
   public isLoading: boolean = true;
+  private campaignId: string;
 
   constructor(
     private router: Router,
@@ -72,6 +73,7 @@ export class LoginComponent implements OnInit {
   public ngOnInit(): void {
     this.configService.readAppConfig().pipe(
       tap((config: IConfig) => {
+        this.campaignId = config.campaignId as string;
         this.preAuth = config.preAuth as boolean;
         if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
           this.authService.autoLogin().subscribe(
@@ -105,7 +107,9 @@ export class LoginComponent implements OnInit {
           (window as any).primaryIdentifier = username;
         }
 
-        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'puzzle');
+        const url = this.campaignId ? `puzzle/${this.campaignId}` : 'puzzle';
+
+        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : url);
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {

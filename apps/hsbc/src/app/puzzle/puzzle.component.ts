@@ -81,6 +81,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     const campaignIdStr = this.route.snapshot.paramMap.get('campaignId');
+
     if (campaignIdStr !== null && campaignIdStr !== '') {
       this.campaignId = Number.parseInt(campaignIdStr, 10);
     }
@@ -138,6 +139,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   }
 
   private fetchCampaign(): void {
+
     this.campaignService.getCampaigns()
       .pipe(
         map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp)),
