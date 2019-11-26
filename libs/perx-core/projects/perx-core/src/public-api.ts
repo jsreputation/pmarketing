@@ -196,6 +196,12 @@ export { ConfigService } from './lib/config/config.service';
 export { IConfig, IMicrositeSettings, PagesObject, AccountPageObject } from './lib/config/models/config.model';
 
 /**
+ * PrePlay
+ */
+export {
+  IPrePlayStateData
+} from './lib/utils/pre-play/pre-play.model';
+/**
  * Theme
  */
 export {
