@@ -18,6 +18,7 @@ import {
   MatSelectModule,
   MatDatepickerModule,
   MatToolbarModule,
+  MatListModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
@@ -66,6 +67,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
 import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
 import { WalletHistoryComponent } from './wallet-history/wallet-history.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -134,13 +136,15 @@ const comps: any[] = [
     MatSelectModule,
     MatDatepickerModule,
     TranslateModule.forChild(),
-    MatToolbarModule
+    MatToolbarModule,
+    MatListModule
   ],
   exports: [
     ...comps,
   ],
   declarations: [
     ...comps,
+    ProfileComponent,
   ]
 })
 export class PerxBlackcombPagesModule {

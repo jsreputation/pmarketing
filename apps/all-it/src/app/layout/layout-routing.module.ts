@@ -49,6 +49,10 @@ const routes: Routes = [
         path: 'give_reward/:id',
         loadChildren: (): any => import('../instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule)
       },
+      {
+        path: 'profile',
+        loadChildren: (): any => import('../profile/profile.module').then((mod: any) => mod.ProfileModule)
+      },
       { path: 'reward-detail/:id', component: RewardDetailsComponent },
       { path: 'c/:key', component: ContentComponent },
     ]

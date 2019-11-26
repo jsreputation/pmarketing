@@ -23,3 +23,4 @@ export { GamesCollectionComponent } from './lib/home/games-collection/games-coll
 export { SignUpComponent } from './lib/sign-up/sign-up.component';
 export { LayoutComponent } from './lib/layout/layout.component';
 export { WalletHistoryComponent } from './lib/wallet-history/wallet-history.component';
+export { ProfileComponent } from './lib/profile/profile.component';
