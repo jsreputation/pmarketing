@@ -15,7 +15,7 @@ import {
   IWSurveyEngagementAttributes,
 } from '@perx/whistler';
 
-fdescribe('SurveyService', () => {
+describe('SurveyService', () => {
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
   let service: SurveyService;
   const mockCampaign: ICampaign = {
