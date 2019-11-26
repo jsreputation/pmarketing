@@ -1,5 +1,26 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { HomeComponent } from './home.component';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
+import { Type } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import {
+  of,
+  Observable,
+} from 'rxjs';
+import {
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
+import { QRCodeModule } from 'angularx-qrcode';
+
 import {
   IReward,
   LoyaltyModule,
@@ -8,17 +29,12 @@ import {
   RewardsModule,
   VouchersModule,
   ILoyalty,
-  RewardsService
+  RewardsService, ThemesService
 } from '@perx/core';
-import { MatButtonModule } from '@angular/material';
-import { QRCodeModule } from 'angularx-qrcode';
-import { RouterTestingModule } from '@angular/router/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { of, Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
+import { HomeComponent } from './home.component';
+
 import { mockLoyalty } from '../loyalty.mock';
-import { Type } from '@angular/core';
 
 const user = {
   id: 5,
@@ -32,6 +48,10 @@ describe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;
   let rewardsService: RewardsService;
   let translateService: TranslateService;
+
+  const themesServiceStub = {
+    getThemeSetting: () => of()
+  };
   const loyaltyServiceStub = {
     getLoyalty: (): Observable<ILoyalty> => of(mockLoyalty),
     getLoyalties: (): Observable<ILoyalty[]> => of([mockLoyalty])
@@ -52,9 +72,21 @@ describe('HomeComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
-        { provide: ProfileService, useValue: { whoAmI: () => of(null) } },
-        { provide: LoyaltyService, useValue: loyaltyServiceStub },
-        { provide: RewardsService, useValue: rewardServiceStub }
+        {
+          provide: ProfileService,
+          useValue: { whoAmI: () => of(null) } },
+        {
+          provide: LoyaltyService,
+          useValue: loyaltyServiceStub,
+        },
+        {
+          provide: RewardsService,
+          useValue: rewardServiceStub,
+        },
+        {
+          provide: ThemesService,
+          useValue: themesServiceStub,
+        },
       ],
       declarations: [HomeComponent]
     })
