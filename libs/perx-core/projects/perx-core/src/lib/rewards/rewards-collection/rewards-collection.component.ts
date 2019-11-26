@@ -15,10 +15,8 @@ import {
 import {
   Colors,
 } from '../../perx-core.constants';
-import {
-  ITheme,
-  ThemesService,
-} from '../../../public-api';
+import { ITheme } from '../../utils/themes/themes.model';
+import { ThemesService } from '../../utils/themes/themes.service';
 
 @Component({
   selector: 'perx-core-rewards-collection',

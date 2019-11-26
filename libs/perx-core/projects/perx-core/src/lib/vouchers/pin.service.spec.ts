@@ -1,14 +1,23 @@
-import { TestBed, async } from '@angular/core/testing';
+import {
+  TestBed,
+  async,
+} from '@angular/core/testing';
+import { Type } from '@angular/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
+import { of } from 'rxjs';
+
+import {
+  IVoucher,
+  VoucherState,
+} from './models/voucher.model';
 import { PinService } from './pin.service';
 import { VouchersModule } from './vouchers.module';
 import { IVoucherService } from './ivoucher.service';
+
 import { RewardsService } from '../rewards/rewards.service';
-import { of } from 'rxjs';
-import { IVoucher, VoucherState } from './models/voucher.model';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ConfigModule } from '../../public-api';
-import { Type } from '@angular/core';
 import { IMerchantsService } from '../merchants/imerchants.service';
+import { ConfigModule } from '../config/config.module';
 
 describe('PinService', () => {
   let service: PinService;

@@ -16,7 +16,7 @@ import {
 } from '../models/reward.model';
 import { MaterialModule } from '../../shared/material.module';
 import { UtilsModule } from '../../utils/utils.module';
-import { ThemesService } from '../../../public-api';
+import { ThemesService } from '../../utils/themes/themes.service';
 
 describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;
