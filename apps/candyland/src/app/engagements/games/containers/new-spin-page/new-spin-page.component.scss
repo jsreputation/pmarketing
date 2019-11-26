@@ -1,5 +1,18 @@
 @import "variables";
 
+.control-input-splitter {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: -($horizontal-padding * 0.5);
+  margin-left: -($horizontal-padding * 0.25);
+  margin-right: -($horizontal-padding * 0.25);
+
+  > * {
+    padding-left: ($horizontal-padding * 0.25);
+    padding-right: ($horizontal-padding * 0.25);
+  }
+}
+
 .info-text {
   @include typo-caption;
 
@@ -12,6 +25,16 @@ mat-slider {
   margin: 0;
 }
 
+.control-input {
+  flex: 1 0 25%;
+}
+
 .reward-slot {
   width: 100%;
 }
+//
+//@media (max-width: $mobile-width) {
+//  .control-input-splitter {
+//    flex-wrap: wrap;
+//  }
+//}

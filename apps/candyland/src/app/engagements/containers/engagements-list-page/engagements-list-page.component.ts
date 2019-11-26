@@ -108,6 +108,7 @@ export class EngagementsListPageComponent implements OnInit, AfterViewInit, OnDe
   public menuOptionTapped(event: { engagement: IEngagementType, action: string }): void {
     switch (event.action) {
       case EngagementsListPageComponent.CAMPAIGN_ACTION:
+        console.log('am i being called, launch campaign', event.engagement);
         this.launchCampaign(event.engagement);
     }
   }

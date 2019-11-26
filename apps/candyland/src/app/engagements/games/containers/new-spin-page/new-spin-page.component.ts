@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { AvailableNewEngagementService, RoutingStateService, SettingsService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { combineLatest, Observable, of, Subject } from 'rxjs';
-import { tap, map, switchMap, takeUntil } from 'rxjs/operators';
+import {tap, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { ControlsName } from '../../../../models/controls-name';
 import { ISlice } from '@perx/core';
@@ -13,6 +13,30 @@ import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapte
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import {IWEngagementAttributes } from '@perx/whistler';
+import {SpinService} from '@cl-core/services/spin.service';
+
+//  test
+function rainbowGenerator(length: number): string[] {
+  const size    = length; // change later on
+  const rainbow = new Array(size);
+
+  for (let i = 0; i < size; i++) {
+    const red   = sin_to_hex(i, 0 / 3); // 0   deg
+    const blue  = sin_to_hex(i, Math.PI * 2 / 3); // 120 deg
+    const green = sin_to_hex(i, 2 * Math.PI * 2 / 3); // 240 deg
+
+    rainbow[i] = '#' + red + green + blue;
+  }
+
+  function sin_to_hex(i: number, phase: number): string {
+    const sin = Math.sin(Math.PI / size * 2 * i + phase);
+    const int = Math.floor(sin * 127) + 128;
+    const hex = int.toString(16);
+
+    return hex.length === 1 ? '0' + hex : hex;
+  }
+  return rainbow;
+}
 
 @Component({
   selector: 'cl-new-spin-page',
@@ -24,14 +48,14 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
   @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<void> = new Subject();
-
+  public MAX_WEDGES: number = 10;
   public id: string;
   public formSpin: FormGroup;
-  public stampSlotNumbers: CommonSelect[];
-  public allStampSlotNumbers: CommonSelect[];
-  public stampData: IStampsDefaultValue;
+  public rewardSlotNumbers: CommonSelect[];
+  public allRewardSlotNumbers: CommonSelect[];
+  public spinData: ISpinDefaultValue;
+  public rewardSlotNumberData: { rewardPosition: number }[] = [];
   public iSlices: ISlice[] = [];
-  public stampsSlotNumberData: { rewardPosition: number }[] = [];
   public tenantSettings: ITenantsProperties;
 
   public get name(): AbstractControl {
@@ -54,16 +78,12 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     return this.formSpin.get(ControlsName.background);
   }
 
-  public get colorCtrls(): FormArray {
-    return (this.formSpin.get(ControlsName.colorCtrls) as FormArray);
+  public get colorCtrls(): FormGroup {
+    return (this.formSpin.get('colorCtrls') as FormGroup);
   }
 
   public get numberOfWedges(): AbstractControl {
     return this.formSpin.get(ControlsName.numberOfWedges);
-  }
-
-  public get rewardSlots(): AbstractControl {
-    return this.formSpin.get(ControlsName.rewardSlots);
   }
 
   public get rewardIcon(): AbstractControl {
@@ -82,14 +102,17 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     return this.formSpin.get(ControlsName.pointerImg);
   }
 
+  public get colorCtrlsToLoop(): any[] { // to type as the color object
+    return Object.keys(this.colorCtrls.controls).slice(0, this.numberOfWedges.value);
+  }
+
   constructor(
     private fb: FormBuilder,
     private routingState: RoutingStateService,
     private router: Router,
     private route: ActivatedRoute,
-    // private stampDataService: StampDataService,
+    private spinService: SpinService,
     private availableNewEngagementService: AvailableNewEngagementService,
-    // private stampsService: StampsService,
     private cd: ChangeDetectorRef,
     private settingsService: SettingsService
   ) {
@@ -97,13 +120,16 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initTenants();
-    this.createStampForm();
-    combineLatest([this.getStampData(), this.handleRouteParams()])
+    this.createSpinForm();
+    // console.log(this.colorCtrls.get('Wedge #1 Color'), 'i am next');
+    console.log(this.colorCtrlsToLoop, 'here i am');
+    combineLatest([this.getSpinData(), this.handleRouteParams()])
       .subscribe(
-        ([previewData, stamp]) => {
-          this.stampData = previewData;
-          this.stampSlotNumbers = this.allStampSlotNumbers = previewData.slotNumber;
-          const patchData = stamp || this.getDefaultValue(previewData);
+        ([previewData, spin]) => {
+          console.log('i am inisde init subscribe, ', previewData, spin);
+          this.spinData = previewData;
+          this.rewardSlotNumbers = this.allRewardSlotNumbers = previewData.rewardSlots;
+          const patchData = spin || this.getDefaultValue(previewData);
           this.formSpin.patchValue(patchData);
           this.cd.detectChanges();
         },
@@ -112,8 +138,9 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('/engagements');
         }
       );
-    this.subscribeStampsNumberChanges();
-    this.subscribeStampsSlotChanges();
+    this.subscribeSpinsNumberChanges();
+    this.subscribeSpinSlotChanges();
+    this.subscribeColorFormGroupControls();
   }
 
   public ngOnDestroy(): void {
@@ -125,40 +152,13 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     return ImageControlValue.getImgLink(control, defaultImg);
   }
 
-  public save(): void {
-    if (this.formSpin.invalid) {
-      this.formSpin.markAllAsTouched();
-      return;
-    }
-    this.simpleMobileViewComponent.createPreview()
-      .pipe(
-        switchMap((imageUrl: IUploadedFile) => {
-          if (this.id) {
-            return this.stampsService.updateStamp(this.id, {...this.formSpin.value, image_url: imageUrl.url});
-          }
-          return this.stampsService.createStamp({...this.formSpin.value, image_url: imageUrl.url}).pipe(
-            tap(
-              (engagement: IJsonApiPayload<IWEngagementAttributes>) =>
-                this.availableNewEngagementService.transformAndSetNewEngagement(engagement)
-            )
-          );
-        })
-      )
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.router.navigateByUrl('/engagements'));
-  }
-
-  public comeBack(): void {
-    this.routingState.comeBackPreviousUrl();
-  }
-
-  private createStampForm(): void {
+  private createSpinForm(): void {
     this.formSpin = this.fb.group({
-      name: ['Stamp Card Template', [Validators.required,
+      name: ['Spin Wheel Template', [Validators.required,
         Validators.minLength(1),
         Validators.maxLength(60)]
       ],
-      headlineMessage: ['Collect stamps', [
+      headlineMessage: ['Spin the Wheel', [
         Validators.required,
         Validators.minLength(5),
         Validators.maxLength(60)
@@ -175,12 +175,32 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       ]],
       numberOfWedges: [null, [Validators.required]], // stampsNumber
       rewardSlots: [null, [Validators.required]], // stampsSlotNumber
-      colorCtrls: new FormArray([]),
+      colorCtrls: this.fb.group(this.generateColorCtrls()),
       // color selection,
       rewardIcon: [null, [Validators.required]],
       wheelImg: [null, [Validators.required]],
       wheelPosition: [null, [Validators.required]],
       pointerImg: [null, [Validators.required]]
+    });
+  }
+
+  private generateColorCtrls(): any {
+    const rainbowColors = rainbowGenerator(this.MAX_WEDGES);
+    // const arrayColors = rainbowColors.map((color, index) => ({ labelView: `Wedge #${index + 1} Color`, color }));
+    return rainbowColors.reduce((obj, item, index) => {
+      obj[index] = this.fb.control(item, [Validators.required]);
+      return obj;
+    }, {});
+  }
+
+  private subscribeColorFormGroupControls(): void {
+    // UPDATE ISLICE OBJECT
+    Object.keys(this.colorCtrls.controls).forEach(key => {
+      this.colorCtrls.get(key).valueChanges.pipe(takeUntil(this.destroy$)).
+        subscribe((value) => {
+          // update ISlices
+          this.iSlices[key].labelColor = value;
+        });
     });
   }
 
@@ -199,22 +219,26 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         value => {
-          for (let i = 0; i <= value; i++) {
-            this.colorCtrls.push(
-              this.fb.control({labelView: 'Primary Color', color: '#fff'}, [Validators.required])
-            ); // temp push all same colours
+          // console.log(value, 'current Spin number');
+          this.iSlices = [];
+          for (let i = 0; i < value; i++) {
             this.iSlices.push({
-              id: '1',
-              labelColor: this.colorCtrls.at(i).value.color
+              id: `${i}`,
+              labelColor: this.colorCtrls.get(`${i}`).value
             });
           }
+          console.log(this.iSlices, 'my slices', typeof value);
+          console.log(this.rewardSlotNumbers, 'first');
+          this.rewardSlotNumbers = this.allRewardSlotNumbers.filter((slot) => +slot.value <= value); // not working
+          console.log(this.rewardSlotNumbers, 'secon');
+          console.log(this.rewardSlotNumbers, 'rewardsslstsNUMBER');
           this.formSpin.get('rewardSlots').patchValue([]);
-          this.patchForm('rewardSlots', [this.rewardSlots[this.rewardSlots.length - 1].value]);
+          this.patchForm('rewardSlots', [this.rewardSlotNumbers[this.rewardSlotNumbers.length - 1].value]);
         });
   }
 
-  private subscribeStampsSlotChanges(): void {
-    this.formSpin.get(ControlsName.stampsSlotNumber)
+  private subscribeSpinSlotChanges(): void {
+    this.formSpin.get(ControlsName.rewardSlots)
       .valueChanges
       .pipe(
         takeUntil(this.destroy$)
@@ -223,18 +247,58 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
         if (!value) {
           return;
         }
-        this.stampsSlotNumberData = value.map(
+        this.rewardSlotNumberData = value.map(
           (item: number) => ({rewardPosition: item - 1})
         );
       });
   }
+
   /*** END subscription to form value Changes ***/
 
-  private getSpinData(): Observable<IStampsDefaultValue> {
-    return this.stampsService.getStampsData();
+  private getSpinData(): Observable<ISpinDefaultValue> {
+    return this.spinService.getSpinData();
+  }
+
+  private getDefaultValue(data: ISpinDefaultValue): Partial<ISpinEntityForm> {
+    return {
+      rewardSlots: [data.rewardSlots[data.rewardSlots.length - 1].value],
+      wedgeColorSelections: data.wedgeColorSelections,
+      numberOfWedges: data.numberOfWedges[data.numberOfWedges.length - 6].value, // start with 4 color controls
+      wheelPosition: data.wheelPosition,
+      pointerImg: data.pointerImg,
+      background: data.background
+    };
   }
 
   /*** START ***/
+
+  public save(): void {
+    if (this.formSpin.invalid) {
+      this.formSpin.markAllAsTouched();
+      return;
+    }
+    this.simpleMobileViewComponent.createPreview()
+      .pipe(
+        switchMap((imageUrl: IUploadedFile) => {
+          if (this.id) {
+            return this.spinService.updateSpin(this.id, {...this.formSpin.value, image_url: imageUrl.url});
+          }
+          return this.spinService.createSpin({...this.formSpin.value, image_url: imageUrl.url}).pipe(
+            tap(
+              (engagement: IJsonApiPayload<IWEngagementAttributes>) =>
+                this.availableNewEngagementService.transformAndSetNewEngagement(engagement)
+            )
+          );
+        })
+      )
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.router.navigateByUrl('/engagements'));
+  }
+
+  public comeBack(): void {
+    this.routingState.comeBackPreviousUrl();
+  }
+
   private initTenants(): void {
     this.settingsService.getTenants()
       .pipe(takeUntil(this.destroy$))

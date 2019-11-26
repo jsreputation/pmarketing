@@ -106,4 +106,5 @@ export interface ISlice {
   labelColor?: string;
   backgroundColor?: string;
   backgroundImage?: string;
+  // isRewardPosition?: boolean;
 }

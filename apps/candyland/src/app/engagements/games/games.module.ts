@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  MatCardModule,
+  MatCardModule, MatCheckboxModule,
   MatFormFieldModule,
   MatInputModule,
   MatSelectModule,
@@ -26,10 +26,14 @@ import { GamesRoutingModule } from './games-routing.module';
 import { NewShakePageComponent } from './containers/new-shake-page/new-shake-page.component';
 import { NewPinataPageComponent } from './containers/new-pinata-page/new-pinata-page.component';
 import { NewScratchPageComponent } from './containers/new-scratch-page/new-scratch-page.component';
+import { NewSpinPageComponent } from './containers/new-spin-page/new-spin-page.component';
 import { GameComponent } from './containers/game/game.component';
 
 import { SettingsMobilePreviewModule } from '../../settings/components/settings-mobile-preview/settings-mobile-preview.module';
 import { TranslateModule } from '@ngx-translate/core';
+import {ClColorPickerModule} from '@cl-shared/components/cl-color-picker/cl-color-picker.module';
+import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
+
 
 @NgModule({
   declarations: [
@@ -37,6 +41,7 @@ import { TranslateModule } from '@ngx-translate/core';
     NewPinataPageComponent,
     NewScratchPageComponent,
     GameComponent,
+    NewSpinPageComponent,
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -50,10 +55,12 @@ import { TranslateModule } from '@ngx-translate/core';
     GameModule,
     SimpleMobileViewModule,
     SettingsMobilePreviewModule,
-
+    ClColorPickerModule,
+    CheckboxGroupModule,
     MatTabsModule,
     MatCardModule,
     MatFormFieldModule,
+    MatCheckboxModule,
     MatInputModule,
     MatSelectModule,
     MatSliderModule,

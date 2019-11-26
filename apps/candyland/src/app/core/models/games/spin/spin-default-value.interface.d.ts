@@ -1,6 +1,6 @@
-declare interface ISpinEntityForm extends ICommonGameForm {
-  numberOfWedges: number;
-  rewardSlots: number[];
+declare interface ISpinDefaultValue extends ICommonGameForm {
+  numberOfWedges: CommonSelect[];
+  rewardSlots: CommonSelect[];
   wedgeColorSelections: { labelView: string, color: string }[];
   rewardIcon: IGraphic | string;
   wheelImg: IGraphic | string;
