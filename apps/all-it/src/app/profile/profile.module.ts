@@ -20,7 +20,7 @@ const mockProfileResponse: IProfile = {
   state: 'active',
   birthDate: new Date(),
   customProperties: {
-    postCode: 1234,
+    postcode: 1234,
     membershipExpiryDate: '2019-12-26T03:37:50.049Z'
   }
 };
