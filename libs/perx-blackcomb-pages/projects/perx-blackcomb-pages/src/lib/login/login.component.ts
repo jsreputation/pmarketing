@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.initForm();
     this.theme = this.themesService.getThemeSetting();
     this.appConfig = this.configService.readAppConfig();
-    this.authService.getAppToken().subscribe(()=>{
+    this.authService.getAppToken().subscribe(() => {
       this.appAccessTokenFetched = true;
     }, (err) => {
       console.error('Error' + err);

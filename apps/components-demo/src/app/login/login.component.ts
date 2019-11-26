@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.authService.getAppToken().subscribe((res)=>{
+    this.authService.getAppToken().subscribe((res) => {
       this.appAccessToken = res.access_token;
     }, (err) => {
       console.error('Error' + err);

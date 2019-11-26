@@ -36,7 +36,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public errorMessage: string | null = null;
   private stateData: IPrePlayStateData;
   public appAccessToken: string;
-  
+
   constructor(
     private formSvc: IFormsService,
     private authService: AuthenticationService,
@@ -53,7 +53,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.data$ = this.formSvc.getSignupForm();
     this.stateData = this.location.getState() as IPrePlayStateData;
-    this.authService.getAppToken().subscribe((token)=>{
+    this.authService.getAppToken().subscribe((token) => {
       this.appAccessToken = token.access_token;
     }, (err) => {
       console.error('Error' + err);
