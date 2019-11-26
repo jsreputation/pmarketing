@@ -9,7 +9,8 @@ import {
   IEngagementTransaction,
   RewardsService,
   AuthenticationService,
-  NotificationService
+  NotificationService,
+  IPrePlayStateData
 } from '@perx/core';
 import { map, switchMap, catchError, tap, takeUntil, mergeMap, } from 'rxjs/operators';
 
@@ -81,65 +82,77 @@ export class RewardComponent implements OnInit, OnDestroy {
     if (this.noRewardsPopUp.buttonTxt) {
       this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text: string) => this.noRewardsPopUp.buttonTxt = text);
     }
+    if (this.instantOutcomeNotAvailablePopUp.title) {
+      this.translate.get(this.instantOutcomeNotAvailablePopUp.title)
+        .subscribe((text: string) => this.instantOutcomeNotAvailablePopUp.title = text);
+    }
+    if (this.instantOutcomeNotAvailablePopUp.text) {
+      this.translate.get(this.instantOutcomeNotAvailablePopUp.text)
+        .subscribe((text: string) => this.instantOutcomeNotAvailablePopUp.text = text);
+    }
+    if (this.instantOutcomeNotAvailablePopUp.buttonTxt) {
+      this.translate.get(this.instantOutcomeNotAvailablePopUp.buttonTxt)
+        .subscribe((text: string) => this.instantOutcomeNotAvailablePopUp.buttonTxt = text);
+    }
   }
 
   public ngOnInit(): void {
     this.initTranslate();
     this.isAnonymousUser = this.auth.getAnonymous();
-    this.route.params
-      .pipe(
-        map((params: Params) => params.id),
-        switchMap((id: string) => this.outcomeService.getFromCampaign(parseInt(id, 10))),
-        catchError((err: HttpErrorResponse) => {
-          if (err.status === 403 || err.status === 404) {
-            this.router.navigate(['/wallet']);
-            this.notificationService.addPopup(this.instantOutcomeNotAvailablePopUp);
-          }
-          throw err;
-        })
-      )
-      .subscribe(
-        (eng: IOutcome) => {
-          this.title = eng.title;
-          this.subTitle = eng.subTitle;
-          this.button = eng.button;
-          this.background = eng.backgroundImgUrl;
-          this.cardBackground = eng.cardBackgroundImgUrl;
-          const { displayProperties } = eng;
+    // tslint:disable-next-line: one-variable-per-declaration
+    const getInstantOutcome = (campaignId: string) => this.outcomeService.getFromCampaign(parseInt(campaignId, 10)).pipe(
+      catchError((err: HttpErrorResponse) => {
+        if (err.status === 403 || err.status === 404) {
+          this.popupData = this.instantOutcomeNotAvailablePopUp;
+          this.redirectUrlAndPopUp();
+        }
+        throw err;
+      }),
+      tap((eng: IOutcome) => {
+        this.title = eng.title;
+        this.subTitle = eng.subTitle;
+        this.button = eng.button;
+        this.background = eng.backgroundImgUrl;
+        this.cardBackground = eng.cardBackgroundImgUrl;
+        const { displayProperties } = eng;
 
-          if (displayProperties && displayProperties.informationCollectionSetting) {
-            this.informationCollectionSetting = displayProperties.informationCollectionSetting;
-          }
-          if (displayProperties && displayProperties.noRewardsPopUp) {
-            this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
-            this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
-            this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
-            this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
-          }
-        },
-        () => this.redirectUrlAndPopUp()
-      );
+        if (displayProperties && displayProperties.informationCollectionSetting) {
+          this.informationCollectionSetting = displayProperties.informationCollectionSetting;
+        }
+        if (displayProperties && displayProperties.noRewardsPopUp) {
+          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
+          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
+          this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
+          this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
+        }
+      })
+    );
+
+    // tslint:disable-next-line: one-variable-per-declaration
+    const prePlay = (campaignId: string) => this.outcomeService.prePlay(parseInt(campaignId, 10)).pipe(
+      tap((outcomeTransaction: IEngagementTransaction) => {
+        this.transactionId = outcomeTransaction.id;
+      }),
+      mergeMap((outcomeTransaction: IEngagementTransaction) => {
+        if (!outcomeTransaction.rewardIds || outcomeTransaction.rewardIds.length === 0) {
+          return throwError('empty');
+        }
+        return of(outcomeTransaction);
+      }),
+      catchError(() => {
+        this.popupData = this.noRewardsPopUp;
+        this.redirectUrlAndPopUp();
+        // next line is actually useless as we will redirected.
+        return of({ id: -1 });
+      })
+    );
 
     this.transaction$ =
       this.route.params
         .pipe(
           map((params: Params) => params.id),
-          switchMap((campaignId: string) => this.outcomeService.prePlay(parseInt(campaignId, 10))),
-          tap((outcomeTransaction: IEngagementTransaction) => {
-            this.transactionId = outcomeTransaction.id;
-          }),
-          mergeMap((outcomeTransaction: IEngagementTransaction) => {
-            if (!outcomeTransaction.rewardIds || outcomeTransaction.rewardIds.length === 0) {
-              return throwError('empty');
-            }
-            return of(outcomeTransaction);
-          }),
-          catchError(() => {
-            this.popupData = this.noRewardsPopUp;
-            this.redirectUrlAndPopUp();
-            // next line is actually useless as we will redirected.
-            return of({ id: -1 });
-          })
+          switchMap((campaignId: string) => combineLatest(getInstantOutcome(campaignId), prePlay(campaignId))),
+          map(([_, transaction]: [IOutcome, IEngagementTransaction]) => transaction)
         );
 
     this.rewards$ =
@@ -177,15 +190,17 @@ export class RewardComponent implements OnInit, OnDestroy {
   }
 
   private redirectUrlAndPopUp(): void {
-    const queryParams = {
-      popupData: JSON.stringify(this.popupData),
+    const state: IPrePlayStateData = {
+      popupData: this.popupData,
       engagementType: 'instant_outcome',
-      transactionId: this.transactionId
+      transactionId: this.transactionId,
+      collectInfo: true
     };
+
     if (this.isAnonymousUser && this.informationCollectionSetting === 'pi_required') {
-      this.router.navigate(['/pi'], { queryParams });
+      this.router.navigate(['/pi'], { state });
     } else if (this.isAnonymousUser && this.informationCollectionSetting === 'signup_required') {
-      this.router.navigate(['/signup'], { queryParams });
+      this.router.navigate(['/signup'], { state });
     } else {
       this.router.navigate(['/wallet']);
       if (this.popupData) {
