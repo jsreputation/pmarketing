@@ -87,9 +87,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public buyReward(): void {
     this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
       .subscribe(
-        (res: Voucher) => {
-          this.router.navigate([`/voucher-detail/${res.id}`]);
-        },
+        (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`])
       );
   }
 

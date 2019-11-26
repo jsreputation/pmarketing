@@ -321,7 +321,6 @@ export class CreateHitThePinataAppPage {
   public subHeadlinePreview(): ElementArrayFinder {
     return element.all(by.className('mobile-preview-sub-headline'));
   }
-
 }
 export class CreateInstantRewardAppPage {
 
