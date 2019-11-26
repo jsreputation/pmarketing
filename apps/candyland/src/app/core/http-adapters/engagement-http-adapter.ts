@@ -385,7 +385,6 @@ export class EngagementHttpAdapter {
       headlineMessage: data.attributes.display_properties.title,
       subHeadlineMessage: data.attributes.display_properties.sub_title,
       buttonText: data.attributes.display_properties.button,
-      lastButtonText: data.attributes.display_properties.lastButtonText,
       background: data.attributes.display_properties.background_img_url,
       preScratchImage: data.attributes.display_properties.pre_scratch_img_url,
       postScratchSuccessImage: data.attributes.display_properties.post_scratch_success_img_url,

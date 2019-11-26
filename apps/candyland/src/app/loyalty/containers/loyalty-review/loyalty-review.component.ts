@@ -3,11 +3,12 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CustomDataSource } from '@cl-shared/table';
 import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
 import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { combineLatest, Observable, Subject } from 'rxjs';
-import { LoyaltyService } from '@cl-core/services/loyalty.service';
+import { Subject } from 'rxjs';
 import { ILoyaltyForm, ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { TranslateService } from '@ngx-translate/core';
+
 import { StatusLabelConfig } from '@cl-shared';
+import { ConfigService } from '@cl-core-services';
+import { LoyaltyService } from '@cl-core/services/loyalty.service';
 
 @Component({
   selector: 'cl-loyalty-review',
@@ -25,13 +26,13 @@ export class LoyaltyReviewComponent implements OnInit, OnDestroy {
     private customTierService: LoyaltyCustomTierService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private loyaltyService: LoyaltyService,
-    private translate: TranslateService
+    private configService: ConfigService,
+    private loyaltyService: LoyaltyService
   ) { }
 
   public ngOnInit(): void {
     this.handleRouteParams();
-    this.prepareStatusesLabel();
+    this.getStatusesLabel();
   }
 
   public ngOnDestroy(): void {
@@ -79,25 +80,11 @@ export class LoyaltyReviewComponent implements OnInit, OnDestroy {
     this.customTierDataSource.filter = { program_id: basicTierId };
   }
 
-  private prepareStatusesLabel(): void {
-    combineLatest([this.getTranslation(), this.getStatusLabel()])
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe(([translation, statuses]) => {
-        Object.values(statuses)
-          .forEach((item) => {
-            item.title = translation[item.title];
-          });
+  private getStatusesLabel(): void {
+    this.configService.prepareStatusesLabel()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((statuses) => {
         this.statusLabel = statuses;
       });
-  }
-
-  private getTranslation(): Observable<any> {
-    return this.translate.get('STATUSES_TYPE');
-  }
-
-  private getStatusLabel(): Observable<{ [key: string]: StatusLabelConfig }> {
-    return this.loyaltyService.getStatusLable();
   }
 }

@@ -29,11 +29,6 @@ export class EngagementAppPage {
   public engagementTabOption(): ElementFinder {
     return element.all(by.css('h3')).get(2);
   }
-
-  public engagementCreateNewButton(): ElementFinder {
-    return element(by.css('cl-button'));
-  }
-
   public selectEngagementTypeDialog(): ElementFinder {
     return element(by.css('mat-dialog-content'));
   }
@@ -57,6 +52,9 @@ export class EngagementAppPage {
     return element.all(by.css('div.engagement-item-info>p.engagement-item-name')).first();
   }
 
+  public gamePinataOptions(): ElementFinder {
+    return element.all('img[alt="game-icon"]').get(1);
+  }
 }
 
 export class CreateShakeTheTreeAppPage {
@@ -336,7 +334,6 @@ export class CreateHitThePinataAppPage {
   public subHeadlinePreview(): ElementArrayFinder {
     return element.all(by.className('mobile-preview-sub-headline'));
   }
-
 }
 export class CreateInstantRewardAppPage {
 
@@ -350,7 +347,6 @@ export class RewardAppPage {
 
   public navigateToReward(): Promise<string> {
     return browser.get('rewards') as Promise<string> ;
-
  }
  public rewardTab(): ElementFinder {
     return element.all(by.css('h3')).get(1);
@@ -367,7 +363,6 @@ export class RewardAppPage {
  public filterItems(): ElementFinder {
     return element(by.className('name-cell__link'));
  }
-
 }
 
 export class CreateRewardAppPage {

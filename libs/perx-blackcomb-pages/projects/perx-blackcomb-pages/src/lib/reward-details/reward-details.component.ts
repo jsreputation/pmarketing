@@ -6,9 +6,9 @@ import {
   IVoucherService,
   LoyaltyService,
   ILoyalty,
-  ThemesService,
-  ITheme,
-  Voucher
+  Voucher,
+  ConfigService,
+  IConfig
 } from '@perx/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
@@ -27,9 +27,9 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public descriptionLabel: string = 'Description';
   public tncLabel: string = 'Terms and Conditions';
   public buttonLabel: string = 'Redeem';
+  public appConfig: IConfig;
   public rewardData: IReward;
   private loyalty: ILoyalty;
-  public theme: ITheme;
 
   private initTranslate(): void {
     this.translate.get('REDEEM').subscribe((text) => this.buttonLabel = text);
@@ -54,13 +54,13 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
     private loyaltyService: LoyaltyService,
     private activeRoute: ActivatedRoute,
     private translate: TranslateService,
-    private router: Router,
-    private themesService: ThemesService
+    private configService: ConfigService,
+    private router: Router
   ) { }
 
   public ngOnInit(): void {
-    this.themesService.getThemeSetting().subscribe(
-      theme => this.theme = theme
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig) => this.appConfig = config
     );
 
     this.initTranslate();
@@ -87,9 +87,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public buyReward(): void {
     this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
       .subscribe(
-        (res: Voucher) => {
-          this.router.navigate([`/voucher-detail/${res.id}`]);
-        },
+        (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`])
       );
   }
 
