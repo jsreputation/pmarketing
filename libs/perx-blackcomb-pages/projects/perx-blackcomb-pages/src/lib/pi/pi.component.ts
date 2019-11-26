@@ -152,7 +152,6 @@ export class PIComponent implements OnInit, OnDestroy {
     }
   }
 
-  private retryWhenTransactionFailed
   public updateErrorMessage(error: string): void {
     this.translate.get(error).subscribe(res => this.errorMessage = res);
   }
