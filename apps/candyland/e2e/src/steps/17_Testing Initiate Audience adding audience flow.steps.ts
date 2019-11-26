@@ -1,5 +1,4 @@
 import {
-  Before,
   Given,
   Then,
   When,
@@ -12,16 +11,8 @@ import { expect } from 'chai';
 
 import {
   AudienceAppPage,
-  EngagementAppPage,
   ElementApp,
 } from '../pages/candylandApp.po';
-
-let engagementAppPage: EngagementAppPage;
-
-Before( () => {
-  // initializing page objects instances
-  engagementAppPage = new EngagementAppPage();
-});
 
 // Ensure that audience tab is present
 Then(/^1_The audience tab should be present.$/, async () => {
@@ -58,10 +49,10 @@ Then(/^3_I should see the relevant elements for audience page.$/, async () => {
   // wait for the search bar to load
   await browser.wait(ec.presenceOf(ElementApp.inputText()), 6000);
   // wait for add user button to load
-  await browser.wait(ec.presenceOf(engagementAppPage.engagementCreateNewButton()), 6000);
+  await browser.wait(ec.presenceOf(ElementApp.clButton()), 6000);
   // doing an assertion on the presence of the elements
   // search bar
   expect(await ElementApp.inputText().isDisplayed()).to.equal(true);
   // add user button
-  expect(await engagementAppPage.engagementCreateNewButton().isDisplayed()).to.equal(true);
+  expect(await ElementApp.clButton().isDisplayed()).to.equal(true);
 });

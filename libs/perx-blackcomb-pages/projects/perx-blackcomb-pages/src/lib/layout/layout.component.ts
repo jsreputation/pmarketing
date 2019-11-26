@@ -16,6 +16,7 @@ import { HistoryComponent } from '../history/history.component';
 import { AccountComponent } from '../account/account.component';
 import { WalletComponent } from '../wallet/wallet.component';
 import { WalletHistoryComponent } from '../wallet-history/wallet-history.component';
+import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
   selector: 'perx-blackcomb-games-layout',
@@ -79,6 +80,7 @@ export class LayoutComponent implements OnInit {
           '/reward-detail',
           '/c',
           '/qr',
+          '/profile',
           '/transaction-history'
         ];
         // if current url starts with any of the above segments, use arrow_backward
@@ -93,7 +95,8 @@ export class LayoutComponent implements OnInit {
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||
       ref instanceof WalletComponent ||
-      ref instanceof WalletHistoryComponent;
+      ref instanceof WalletHistoryComponent ||
+      ref instanceof ProfileComponent ;
     this.cd.detectChanges();
   }
 

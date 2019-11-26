@@ -1,13 +1,19 @@
 import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 
+import {
+  IGame,
+  GameType,
+} from './game.model';
 import { V4GameService } from './v4-game.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { IGame, GameType } from './game.model';
 import { Type } from '@angular/core';
-import { ConfigModule } from '../../public-api';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { RedemptionType } from '../vouchers/models/voucher.model';
+import { ConfigModule } from '../config/config.module';
 
 describe('V4GameService', () => {
   let httpTestingController: HttpTestingController;
