@@ -1,13 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
+import { MatCardModule } from '@angular/material';
+
+import { of } from 'rxjs';
+import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 
 import { RewardsListComponent } from './rewards-list.component';
-import { MatCardModule } from '@angular/material';
 import { UtilsModule } from '../../utils/utils.module';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
+import { ThemesService } from '../../utils/themes/themes.service';
 
 describe('RewardsListComponent', () => {
   let component: RewardsListComponent;
   let fixture: ComponentFixture<RewardsListComponent>;
+
+  const themesServiceStub = {
+    getThemeSetting: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -16,6 +27,12 @@ describe('RewardsListComponent', () => {
         MatCardModule,
         UtilsModule,
         NgxMultiLineEllipsisModule
+      ],
+      providers: [
+        {
+          provide: ThemesService,
+          useValue: themesServiceStub,
+        },
       ],
     })
       .compileComponents();

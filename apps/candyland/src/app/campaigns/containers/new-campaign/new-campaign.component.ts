@@ -26,6 +26,7 @@ import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
+import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -39,7 +40,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private campaign: ICampaign;
   private campaignBaseURL: string;
   public tenantSettings: ITenantsProperties;
-  @ViewChild('stepper', {static: false}) private stepper: MatStepper;
+  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
 
   private destroy$: Subject<void> = new Subject();
 
@@ -330,7 +331,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.getDialogData(this.store.currentCampaign)
       .pipe(
         switchMap((config) => this.dialog.open(NewCampaignDonePopupComponent,
-          {data: config}).afterClosed())
+          { data: config }).afterClosed())
       )
       .subscribe(() => this.router.navigate(['/campaigns']));
   }
@@ -364,15 +365,15 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       ).pipe(
         map(
           ([campaign, commEvent, outcomes]:
-             [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
-            ...campaign,
-            audience: {select: commEvent && commEvent.poolId || null},
-            channel: {
-              type: commEvent && commEvent.channel || 'weblink',
-              ...commEvent
-            },
-            rewardsList: outcomes
-          }))
+            [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
+              ...campaign,
+              audience: { select: commEvent && commEvent.poolId || null },
+              channel: {
+                type: commEvent && commEvent.channel || 'weblink',
+                ...commEvent
+              },
+              rewardsList: outcomes
+            }))
       ).subscribe(
         campaign => {
           this.campaign = Object.assign({}, campaign);
