@@ -1,10 +1,12 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
+import { of } from 'rxjs';
 
 import { V4LocationsService } from './v4-locations.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ConfigModule } from '../../public-api';
+
 import { IMerchantsService } from '../merchants/imerchants.service';
-import { of } from 'rxjs';
+import { ConfigModule } from '../config/config.module';
 
 describe('V4LocationService', () => {
   const merchantsServiceStub = {

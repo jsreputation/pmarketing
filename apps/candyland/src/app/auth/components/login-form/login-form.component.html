@@ -23,7 +23,8 @@
     </div>
     <div class="login-form-control">
       <mat-form-field>
-        <input matInput formControlName="password" [placeholder]="'LOGIN_PAGE.PASSWORD' | translate" [type]="hide ? 'password' : 'text'">
+        <input matInput formControlName="password" [placeholder]="'LOGIN_PAGE.PASSWORD' | translate"
+          [type]="hide ? 'password' : 'text'">
         <mat-error *ngIf="password.hasError('required')" translate>ERROR_REQUIRED</mat-error>
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
@@ -40,5 +41,15 @@
       </cl-button>
     </div>
 
+    <!-- NL: temporarily hidden as it is not a working feature yet
+      <div class="login-form-action">
+      <cl-button (click)="onForget()"
+                 [classList]="'primary btn-block'"
+                 class="btn-block">
+          <span>
+            Forget Password
+          </span>
+      </cl-button>
+    </div> -->
   </form>
 </div>

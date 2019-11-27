@@ -35,7 +35,7 @@ export class EngagementsListPageComponent implements OnInit, AfterViewInit, OnDe
   public noData: boolean;
   public isGridMode: boolean = true;
   public options: IEngagementItemMenuOption[] = [
-    { action: EngagementsListPageComponent.CAMPAIGN_ACTION, label: 'Launch as a campaign' }
+    { action: EngagementsListPageComponent.CAMPAIGN_ACTION, label: 'LAUNCH_AS_A_CAMPAIGN' }
   ];
 
   @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;

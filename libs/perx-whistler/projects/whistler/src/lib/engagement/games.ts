@@ -27,7 +27,6 @@ export interface IWPinataDisplayProperties extends IWGameDisplayProperties {
 }
 
 export interface IWScratchDisplayProperties extends IWGameDisplayProperties {
-  lastButtonText?: string;
   pre_scratch_img_url: string;
   post_scratch_success_img_url: string;
   post_scratch_fail_img_url: string;

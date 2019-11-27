@@ -1,18 +1,22 @@
-import { Router, ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import {
   IFormsService,
   AuthenticationService,
-  IPopupConfig,
   IGameService,
   InstantOutcomeService,
-  NotificationService
+  NotificationService,
+  IPrePlayStateData,
+  ISurvey,
+  IAnswer,
+  SurveyService
 } from '@perx/core';
-import { ISurvey, IAnswer } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subject, iif, of } from 'rxjs';
-import { takeUntil, catchError, tap, switchMap } from 'rxjs/operators';
+import { Observable, Subject, iif, of, throwError } from 'rxjs';
+import { catchError, tap, switchMap, retryWhen, delay, mergeMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { Location } from '@angular/common';
 
 interface ISignupAttributes {
   [key: string]: any;
@@ -30,11 +34,10 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public answers: IAnswer[];
   public totalLength: number;
   public currentPointer: number;
-  private popupData: IPopupConfig;
-  private engagementType: string;
-  private transactionId: number;
-  private collectInfo: boolean;
   public errorMessage: string | null = null;
+  private stateData: IPrePlayStateData;
+  private maxRetryTimes: number = 5;
+  private retryTimes: number = 0;
 
   constructor(
     private formSvc: IFormsService,
@@ -42,30 +45,16 @@ export class SignUpComponent implements OnInit, OnDestroy {
     public snack: MatSnackBar,
     private notificationService: NotificationService,
     private router: Router,
-    private route: ActivatedRoute,
     private translate: TranslateService,
     private gameService: IGameService,
+    private surveyService: SurveyService,
+    private location: Location,
     private instantOutcomeService: InstantOutcomeService
   ) { }
 
   public ngOnInit(): void {
     this.data$ = this.formSvc.getSignupForm();
-    this.route.queryParams.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe((params) => {
-      if (params && params.popupData) {
-        this.popupData = JSON.parse(params.popupData);
-      }
-      if (params && params.engagementType) {
-        this.engagementType = params.engagementType;
-      }
-      if (params && params.transactionId) {
-        this.transactionId = parseInt(params.transactionId, 10);
-      }
-      if (params && params.collectInfo) {
-        this.collectInfo = !!params.collectInfo;
-      }
-    });
+    this.stateData = this.location.getState() as IPrePlayStateData;
   }
 
   public ngOnDestroy(): void {
@@ -98,7 +87,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     });
     const PI = userObj.primary_identifier;
     if (PI) {
-      if (this.collectInfo) {
+      if (this.stateData && this.stateData.collectInfo) {
         this.submitDataAndCollectInformation(PI, userObj);
       }
       this.submitData(PI, userObj);
@@ -120,6 +109,16 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
     if (userObj) {
       const oldUserId = this.authService.getUserId();
+      const retryWhenTransactionFailed = (err: Observable<HttpErrorResponse>) => err.pipe(
+        mergeMap(error => {
+          if (error.status === 422 && this.retryTimes < this.maxRetryTimes) {
+            this.retryTimes++;
+            return of(error.status).pipe(delay(1000));
+          }
+          return throwError(error);
+        })
+      );
+
       if (!oldUserId) {
         throw new Error('should not be here');
       }
@@ -152,11 +151,28 @@ export class SignUpComponent implements OnInit, OnDestroy {
           }
         }),
         switchMap(() => {
-          if (this.engagementType === 'game' && this.transactionId) {
-            return this.gameService.prePlayConfirm(this.transactionId);
+          if (
+            this.stateData &&
+            this.stateData.engagementType === 'survey' &&
+            this.stateData.campaignId &&
+            this.stateData.answers &&
+            this.stateData.surveyId
+          ) {
+            return this.surveyService.postSurveyAnswer(this.stateData.answers, this.stateData.campaignId, this.stateData.surveyId);
           }
-          if (this.engagementType === 'instant_outcome' && this.transactionId) {
-            return this.instantOutcomeService.prePlayConfirm(this.transactionId);
+          if (this.stateData && this.stateData.engagementType === 'game' && this.stateData.transactionId) {
+            return this.gameService.prePlayConfirm(this.stateData.transactionId).pipe(
+              retryWhen(
+                retryWhenTransactionFailed
+              )
+            );
+          }
+          if (this.stateData && this.stateData.engagementType === 'instant_outcome' && this.stateData.transactionId) {
+            return this.instantOutcomeService.prePlayConfirm(this.stateData.transactionId).pipe(
+              retryWhen(
+                retryWhenTransactionFailed
+              )
+            );
           }
           throw new Error('PI_NO_TRANSACTION_MATCH');
         }),
@@ -166,8 +182,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
       ).subscribe(
         () => {
           this.router.navigate(['/wallet']);
-          if (this.popupData) {
-            this.notificationService.addPopup(this.popupData);
+          if (this.stateData && this.stateData.popupData) {
+            this.notificationService.addPopup(this.stateData.popupData);
           }
         },
         (error: Error) => this.updateErrorMessage(error.message)

@@ -1,13 +1,32 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RewardComponent } from './reward.component';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
+import {
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { GameModule, RewardsModule, RewardsService } from '@perx/core';
+
 import { of } from 'rxjs';
-import { MatDialogModule, MatDialogRef } from '@angular/material';
+
+import {
+  GameModule,
+  RewardsModule,
+  RewardsService,
+  ThemesService,
+} from '@perx/core';
+
+import { RewardComponent } from './reward.component';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
+
+  const themesServiceStub = {
+    getThemeSetting: () => of()
+  };
 
   const rewardsServiceStub = {
     getAllRewards: () => of(),
@@ -23,8 +42,18 @@ describe('RewardComponent', () => {
         RewardsModule,
       ],
       providers: [
-        { provide: RewardsService, useValue: rewardsServiceStub },
-        { provide: MatDialogRef, useValue: {} }
+        {
+          provide: RewardsService,
+          useValue: rewardsServiceStub,
+        },
+        {
+          provide: MatDialogRef,
+          useValue: {}
+        },
+        {
+          provide: ThemesService,
+          useValue: themesServiceStub,
+        },
       ]
     })
       .compileComponents();

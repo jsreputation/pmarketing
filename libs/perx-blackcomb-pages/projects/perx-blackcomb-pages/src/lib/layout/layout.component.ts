@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ThemesService, ITheme, AuthenticationService, Config } from '@perx/core';
-// import {
-//   HomeComponent,
-//   HistoryComponent,
-//   AccountComponent,
-//   LoginComponent,
-//   WalletComponent
-// } from '@perx/blackcomb-pages';
+import {
+  ThemesService,
+  ITheme,
+  AuthenticationService,
+  Config,
+  ConfigService,
+  IConfig
+} from '@perx/core';
 import { Location } from '@angular/common';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
@@ -16,6 +16,7 @@ import { HistoryComponent } from '../history/history.component';
 import { AccountComponent } from '../account/account.component';
 import { WalletComponent } from '../wallet/wallet.component';
 import { WalletHistoryComponent } from '../wallet-history/wallet-history.component';
+import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
   selector: 'perx-blackcomb-games-layout',
@@ -29,6 +30,7 @@ export class LayoutComponent implements OnInit {
   public leftIcon: string = '';
   public preAuth: boolean;
   public theme: ITheme;
+  public appConfig: IConfig;
 
   constructor(
     private location: Location,
@@ -36,7 +38,8 @@ export class LayoutComponent implements OnInit {
     private themesService: ThemesService,
     private authService: AuthenticationService,
     private cd: ChangeDetectorRef,
-    private config: Config
+    private config: Config,
+    private configService: ConfigService,
   ) {
     if (config) {
       this.preAuth = this.config.preAuth || false;
@@ -46,6 +49,10 @@ export class LayoutComponent implements OnInit {
   public ngOnInit(): void {
     this.themesService.getThemeSetting().subscribe(
       theme => this.theme = theme
+    );
+
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig) => this.appConfig = config
     );
 
     this.authService.$failedAuth.subscribe(
@@ -72,7 +79,9 @@ export class LayoutComponent implements OnInit {
           '/contact-us',
           '/reward-detail',
           '/c',
-          '/qr'
+          '/qr',
+          '/profile',
+          '/transaction-history'
         ];
         // if current url starts with any of the above segments, use arrow_backward
         this.leftIcon = urlsWithBack.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
@@ -86,7 +95,8 @@ export class LayoutComponent implements OnInit {
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||
       ref instanceof WalletComponent ||
-      ref instanceof WalletHistoryComponent;
+      ref instanceof WalletHistoryComponent ||
+      ref instanceof ProfileComponent ;
     this.cd.detectChanges();
   }
 

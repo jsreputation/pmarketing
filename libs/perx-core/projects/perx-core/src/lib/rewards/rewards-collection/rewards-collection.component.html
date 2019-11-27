@@ -30,8 +30,11 @@
               {{ reward.description | slice : 16 }}</div>
           </div>
         </ng-template>
-        <div *ngIf="reward.rewardPrice &&
-                reward.rewardPrice.length > 0" class="points overline">
+        <div
+          *ngIf="reward.rewardPrice && reward.rewardPrice.length > 0"
+          class="points overline"
+          [ngStyle]="{'color': themeFontColor ? themeFontColor : colorPrimary}"
+        >
           <div *ngFor="let rewardPrice of reward.rewardPrice">
             {{displayPriceFn(rewardPrice)}}</div>
         </div>
