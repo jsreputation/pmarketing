@@ -29,6 +29,8 @@ export class PIComponent implements OnInit, OnDestroy {
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
   private stateData: IPrePlayStateData;
+  private maxRetryTimes: number = 5;
+  private retryTimes: number = 0;
 
   private initForm(): void {
     this.PIForm = this.fb.group({
@@ -73,7 +75,8 @@ export class PIComponent implements OnInit, OnDestroy {
       const oldUserId = this.authService.getUserId();
       const retryWhenTransactionFailed = (err: Observable<HttpErrorResponse>) => err.pipe(
         mergeMap(error => {
-          if (error.status === 422) {
+          if (error.status === 422 && this.retryTimes < this.maxRetryTimes) {
+            this.retryTimes++;
             return of(error.status).pipe(delay(1000));
           }
           return throwError(error);
