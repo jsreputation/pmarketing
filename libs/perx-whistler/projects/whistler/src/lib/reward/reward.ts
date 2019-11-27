@@ -1,7 +1,8 @@
 export enum WRedemptionType {
   promoCode = 'Promo Code',
   qrCode = 'QR Code',
-  merchantPin = 'Merchant PIN'
+  merchantPin = 'Merchant PIN',
+  barCode = 'Bar Code'
 }
 
 export interface IWRewardEntityAttributes {

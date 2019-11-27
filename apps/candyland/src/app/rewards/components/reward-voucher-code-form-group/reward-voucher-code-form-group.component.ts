@@ -13,6 +13,7 @@ export class RewardVoucherCodeFormGroupComponent {
   @Input() public formGroup: AbstractControl;
   @Input() public form: AbstractControl;
   @Input() public config: { [key: string]: OptionConfig[] };
+  public rt: typeof WRedemptionType = WRedemptionType;
 
   public codeFormatConfig: { [key: string]: { eg: string } } = {
     alphanumeric: { eg: 'HB1234' },
