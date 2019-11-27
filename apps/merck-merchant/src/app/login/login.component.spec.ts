@@ -11,10 +11,12 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatRippleModule,
+  MatSelectModule,
 } from '@angular/material';
 import { SalesContactComponent } from '../sales-contact/sales-contact.component';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -30,12 +32,14 @@ describe('LoginComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
+        MatSelectModule,
         MatToolbarModule,
         MatFormFieldModule,
         MatInputModule,
         MatRippleModule,
         BrowserAnimationsModule,
         AuthenticationModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: Router, useValue: routerStub },

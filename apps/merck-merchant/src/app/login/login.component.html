@@ -1,39 +1,46 @@
 <div class="main-container">
   <img class="logo" src="assets/logo.png">
-
+  <div class="translate-switch">
+    <mat-form-field>
+      <mat-select [(value)]="currentSelectedLanguage" (selectionChange)="switchLanguage()">
+        <mat-option value="en" >En</mat-option>
+        <mat-option value="zh" >Zh</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <div class="logo-title">
     Diabetes Loyality Program
   </div>
 
   <div class="container">
     <div class="content">
-      <div class="main-heading">Welcome!</div>
+      <div class="main-heading">{{"WELCOME"|translate}}!</div>
 
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
         <mat-form-field class="full-width__input">
-          <mat-label>Name</mat-label>
-          <input matInput placeholder="Name" formControlName="name">
+          <mat-label>{{"NAME"|translate}}</mat-label>
+          <input matInput placeholder='{{"NAME"|translate}}' formControlName="name">
         </mat-form-field>
 
         <mat-form-field class="full-width__input">
-          <mat-label>Email Address</mat-label>
-          <input matInput placeholder="Email Address" formControlName="email" required>
+          <mat-label>{{"EMAIL_ADDRESS"|translate}}</mat-label>
+          <input matInput placeholder='{{"EMAIL_ADDRESS"|translate}}' formControlName="email" required>
           <mat-error *ngIf="loginForm.hasError('email')">
-            Email is <strong>required</strong>
+            {{"EMAIL_ADDRESS_IS"|translate}} <strong>required</strong>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width__input">
-          <mat-label>Password</mat-label>
-          <input type="password" matInput placeholder="Password" formControlName="password" required>
+          <mat-label>{{"PASSWORD"|translate}}</mat-label>
+          <input type="password" matInput placeholder='{{"PASSWORD"|translate}}' formControlName="password" required>
           <mat-error *ngIf="loginForm.hasError('password')">
-            Password is <strong>required</strong>
+            {{"PASSWORD_IS"|translate}} <strong>required</strong>
           </mat-error>
         </mat-form-field>
 
-        <div class="forgot-text" (click)="onForgotPassword()">Forgot password?</div>
-        <button mat-flat-button type="submit" class="full-width__button">Login</button>
+        <div class="forgot-text" (click)="onForgotPassword()">{{"FORGOT_PASSWORD"|translate}}?</div>
+        <button mat-flat-button type="submit" class="full-width__button">{{"LOGIN"|translate}}</button>
 
         <div class="sales-contact">
           <app-sales-contact></app-sales-contact>

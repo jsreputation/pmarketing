@@ -1,0 +1,21 @@
+{
+  "LOGIN_SUBTITLE": "默糖心",
+  "WELCOME": "歡迎",
+  "NAME": "姓名",
+  "EMAIL_ADDRESS": "電郵地址",
+  "EMAIL_ADDRESS_IS": "電郵地址",
+  "PASSWORD": "密碼",
+  "PASSWORD_IS": "密碼",
+  "FORGOT_PASSWORD": "忘記密碼",
+  "LOGIN": "登入",
+  "SALES_CONTACT": "營業代表聯絡",
+  "SALES_SCAN": "營業代表掃瞄",
+  "REDEMPTION": "換領",
+  "LOGOUT": "登出",
+  "NEXT": "下一頁",
+  "CANCEL": "取消",
+  "CONFIRM": "確認",
+  "BACK": "返回",
+  "PROCEED": "繼續",
+  "CLOSE": "關閉"
+}
