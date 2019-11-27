@@ -9,7 +9,7 @@ export interface IMicrositeSettings {
   id: number;
   key: string;
   stringValue: string;
-  jsonValue: {[key: string]: string | number | boolean | TokenType};
+  jsonValue: { [key: string]: string | number | boolean | TokenType };
 }
 
 export interface AccountPageObject {

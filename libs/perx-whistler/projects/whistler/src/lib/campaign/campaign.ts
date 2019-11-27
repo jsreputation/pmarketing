@@ -16,7 +16,8 @@ export interface IWCampaignAttributes {
   possible_outcomes?: any;
   comm?: any;
   comm_channel?: null;
-  pool_id?: string | null;
+  // pool_id is mandatory, if left empty during campaign edition, then it should be null
+  pool_id: number | null;
   labels?: string[];
   display_properties?: IWCampaignDisplayProperties;
 }
