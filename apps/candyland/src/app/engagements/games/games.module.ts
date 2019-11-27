@@ -33,6 +33,7 @@ import { SettingsMobilePreviewModule } from '../../settings/components/settings-
 import { TranslateModule } from '@ngx-translate/core';
 import {ClColorPickerModule} from '@cl-shared/components/cl-color-picker/cl-color-picker.module';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
+import {UploadGraphicModule} from '@cl-shared/components/upload-graphic/upload-graphic.module';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkb
     SimpleMobileViewModule,
     SettingsMobilePreviewModule,
     ClColorPickerModule,
+    UploadGraphicModule,
     CheckboxGroupModule,
     MatTabsModule,
     MatCardModule,

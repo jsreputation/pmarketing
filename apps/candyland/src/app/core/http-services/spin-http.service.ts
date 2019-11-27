@@ -13,7 +13,7 @@ export class SpinHttpService {
   }
 
   public getSpinData(): Observable<ISpinDefaultValue> {
-    return this.http.get<ISpinDefaultValue>('assets/actives/spin/data.json');
+    return this.http.get<ISpinDefaultValue>('assets/actives/spin/spin-data.json');
   }
 
   public createSpin(data: IJsonApiPostItem<IWSpinGameEngagementAttributes>): Observable<IJsonApiPayload<IWSpinGameEngagementAttributes>> {

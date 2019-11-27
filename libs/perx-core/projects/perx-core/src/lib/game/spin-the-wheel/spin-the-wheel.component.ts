@@ -59,6 +59,7 @@ export class SpinTheWheelComponent implements OnInit {
     this.generateCanvas();
     this.init();
     this.attachListeners();
+    console.log(this.slices);
   }
 
   public generateCanvas(): void {

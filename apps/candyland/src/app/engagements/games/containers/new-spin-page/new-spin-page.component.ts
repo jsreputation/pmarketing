@@ -15,29 +15,6 @@ import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-v
 import {IWEngagementAttributes } from '@perx/whistler';
 import {SpinService} from '@cl-core/services/spin.service';
 
-//  test
-function rainbowGenerator(length: number): string[] {
-  const size    = length; // change later on
-  const rainbow = new Array(size);
-
-  for (let i = 0; i < size; i++) {
-    const red   = sin_to_hex(i, 0 / 3); // 0   deg
-    const blue  = sin_to_hex(i, Math.PI * 2 / 3); // 120 deg
-    const green = sin_to_hex(i, 2 * Math.PI * 2 / 3); // 240 deg
-
-    rainbow[i] = '#' + red + green + blue;
-  }
-
-  function sin_to_hex(i: number, phase: number): string {
-    const sin = Math.sin(Math.PI / size * 2 * i + phase);
-    const int = Math.floor(sin * 127) + 128;
-    const hex = int.toString(16);
-
-    return hex.length === 1 ? '0' + hex : hex;
-  }
-  return rainbow;
-}
-
 @Component({
   selector: 'cl-new-spin-page',
   templateUrl: './new-spin-page.component.html',
@@ -121,12 +98,9 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.initTenants();
     this.createSpinForm();
-    // console.log(this.colorCtrls.get('Wedge #1 Color'), 'i am next');
-    console.log(this.colorCtrlsToLoop, 'here i am');
     combineLatest([this.getSpinData(), this.handleRouteParams()])
       .subscribe(
         ([previewData, spin]) => {
-          console.log('i am inisde init subscribe, ', previewData, spin);
           this.spinData = previewData;
           this.rewardSlotNumbers = this.allRewardSlotNumbers = previewData.rewardSlots;
           const patchData = spin || this.getDefaultValue(previewData);
@@ -152,6 +126,8 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     return ImageControlValue.getImgLink(control, defaultImg);
   }
 
+  /*** generating functions START ***/
+
   private createSpinForm(): void {
     this.formSpin = this.fb.group({
       name: ['Spin Wheel Template', [Validators.required,
@@ -176,7 +152,6 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       numberOfWedges: [null, [Validators.required]], // stampsNumber
       rewardSlots: [null, [Validators.required]], // stampsSlotNumber
       colorCtrls: this.fb.group(this.generateColorCtrls()),
-      // color selection,
       rewardIcon: [null, [Validators.required]],
       wheelImg: [null, [Validators.required]],
       wheelPosition: [null, [Validators.required]],
@@ -185,13 +160,37 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
   }
 
   private generateColorCtrls(): any {
-    const rainbowColors = rainbowGenerator(this.MAX_WEDGES);
-    // const arrayColors = rainbowColors.map((color, index) => ({ labelView: `Wedge #${index + 1} Color`, color }));
+    const rainbowColors = this.rainbowGenerator(this.MAX_WEDGES);
     return rainbowColors.reduce((obj, item, index) => {
       obj[index] = this.fb.control(item, [Validators.required]);
       return obj;
     }, {});
   }
+
+  private rainbowGenerator(length: number): string[] {
+    const size    = length; // change later on
+    const rainbow = new Array(size);
+
+    for (let i = 0; i < size; i++) {
+      const red   = sin_to_hex(i, 0 / 3); // 0   deg
+      const blue  = sin_to_hex(i, Math.PI * 2 / 3); // 120 deg
+      const green = sin_to_hex(i, 2 * Math.PI * 2 / 3); // 240 deg
+
+      rainbow[i] = '#' + red + green + blue;
+    }
+
+    function sin_to_hex(i: number, phase: number): string {
+      const sin = Math.sin(Math.PI / size * 2 * i + phase);
+      const int = Math.floor(sin * 127) + 128;
+      const hex = int.toString(16);
+
+      return hex.length === 1 ? '0' + hex : hex;
+    }
+    return rainbow;
+  }
+  /*** generating functions END ***/
+
+  /*** START subscription to form value Changes ***/
 
   private subscribeColorFormGroupControls(): void {
     // UPDATE ISLICE OBJECT
@@ -199,7 +198,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       this.colorCtrls.get(key).valueChanges.pipe(takeUntil(this.destroy$)).
         subscribe((value) => {
           // update ISlices
-          this.iSlices[key].labelColor = value;
+          this.iSlices[key].backgroundColor = value;
         });
     });
   }
@@ -210,7 +209,6 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  /*** START subscription to form value Changes ***/
   private subscribeSpinsNumberChanges(): void {
     this.formSpin.get('numberOfWedges')
       .valueChanges
@@ -219,19 +217,14 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         value => {
-          // console.log(value, 'current Spin number');
           this.iSlices = [];
           for (let i = 0; i < value; i++) {
             this.iSlices.push({
               id: `${i}`,
-              labelColor: this.colorCtrls.get(`${i}`).value
+              backgroundColor: this.colorCtrls.get(`${i}`).value
             });
           }
-          console.log(this.iSlices, 'my slices', typeof value);
-          console.log(this.rewardSlotNumbers, 'first');
           this.rewardSlotNumbers = this.allRewardSlotNumbers.filter((slot) => +slot.value <= value); // not working
-          console.log(this.rewardSlotNumbers, 'secon');
-          console.log(this.rewardSlotNumbers, 'rewardsslstsNUMBER');
           this.formSpin.get('rewardSlots').patchValue([]);
           this.patchForm('rewardSlots', [this.rewardSlotNumbers[this.rewardSlotNumbers.length - 1].value]);
         });
@@ -262,7 +255,6 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
   private getDefaultValue(data: ISpinDefaultValue): Partial<ISpinEntityForm> {
     return {
       rewardSlots: [data.rewardSlots[data.rewardSlots.length - 1].value],
-      wedgeColorSelections: data.wedgeColorSelections,
       numberOfWedges: data.numberOfWedges[data.numberOfWedges.length - 6].value, // start with 4 color controls
       wheelPosition: data.wheelPosition,
       pointerImg: data.pointerImg,
@@ -273,6 +265,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
   /*** START ***/
 
   public save(): void {
+    // console.log(this.formSpin.value);
     if (this.formSpin.invalid) {
       this.formSpin.markAllAsTouched();
       return;

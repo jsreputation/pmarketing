@@ -107,11 +107,9 @@
                 Reward Icon
               </h3>
               <div class="game-gift-box_field">
-                <cl-select-graphic-wrap *ngIf="spinData?.rewardIcon"
-                                        formControlName="rewardIcon"
-                                        [isRequired]="rewardIcon.hasError('required') && rewardIcon.touched"
-                                        [graphicList]="spinData?.rewardIcon">
-                </cl-select-graphic-wrap>
+                <cl-upload-graphic class="upload graphic-image-preview"
+                  [formControl]="rewardIcon"
+                ></cl-upload-graphic>
               </div>
             </div>
 
@@ -200,7 +198,7 @@
                       {{subHeadlineMessage.value}}
                     </p>
                   </div>
-                <perx-core-spin-the-wheel></perx-core-spin-the-wheel>
+                <perx-core-spin-the-wheel  [slices]="iSlices"></perx-core-spin-the-wheel>
               </div>
 
           <div class="mobile-preview-btn-wrap mobile-btn-block">

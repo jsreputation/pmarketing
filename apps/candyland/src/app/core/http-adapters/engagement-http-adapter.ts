@@ -320,9 +320,7 @@ export class EngagementHttpAdapter {
           sub_title: data.subHeadlineMessage,
           nb_of_wedges: +data.numberOfWedges,
           slots: data.rewardSlots, // indeterminate should be iControl i think
-          wedge_colors: data.wedgeColorSelections.map(
-            wedgeColor => wedgeColor.color
-          ),
+          wedge_colors: Object.values(data.colorCtrls),
           reward_icon: ImageControlValue.getImagePath(data.rewardIcon),
           wheel_img: ImageControlValue.getImagePath(data.wheelImg),
           wheel_position: ImageControlValue.getImagePath(data.wheelPosition),
@@ -450,9 +448,7 @@ export class EngagementHttpAdapter {
           sub_title: data.subHeadlineMessage,
           nb_of_wedges: +data.numberOfWedges,
           slots: data.rewardSlots, // indeterminate should be iControl i think
-          wedge_colors: data.wedgeColorSelections.map(
-            wedgeColor => wedgeColor.color
-          ),
+          wedge_colors: Object.values(data.colorCtrls),
           reward_icon: ImageControlValue.getImagePath(data.rewardIcon),
           wheel_img: ImageControlValue.getImagePath(data.wheelImg),
           wheel_position: ImageControlValue.getImagePath(data.wheelPosition),
@@ -528,11 +524,7 @@ export class EngagementHttpAdapter {
       buttonText: data.attributes.display_properties.button,
       numberOfWedges: data.attributes.display_properties.nb_of_wedges,
       rewardSlots: data.attributes.display_properties.slots,
-      wedgeColorSelections: data.attributes.display_properties.wedge_colors.map(
-        (color, i) => ({
-          labelView: `Wedge #${i + 1} Color`, color
-        })
-      ),
+      colorCtrls: Object.assign(data.attributes.display_properties.wedge_colors),
       rewardIcon: data.attributes.display_properties.reward_icon,
       wheelImg: data.attributes.display_properties.wheel_img,
       wheelPosition: data.attributes.display_properties.wheel_position,

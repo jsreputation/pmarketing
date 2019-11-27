@@ -109,8 +109,8 @@
       "id": 1,
       "type": "wheelPositionImage1",
       "title": "icon",
-      "img": "global/assets/game/positionup.png",
-      "fullImg": "global/assets/game/positionupfull.png",
+      "img": "global/assets/preview/positionup.png",
+      "fullImg": "global/assets/preview/positionupfull.png",
       "format": ".png",
       "active": "false"
     },
@@ -118,8 +118,8 @@
       "id": 2,
       "type": "wheelPositionImage2",
       "title": "icon",
-      "img": "global/assets/game/positiondown.png",
-      "fullImg": "global/assets/game/positiondown.png",
+      "img": "global/assets/preview/positiondown.png",
+      "fullImg": "global/assets/preview/positiondown.png",
       "format": ".png",
       "active": "false"
     }

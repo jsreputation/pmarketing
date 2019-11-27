@@ -1,7 +1,7 @@
 declare interface ISpinDefaultValue extends ICommonGameForm {
   numberOfWedges: CommonSelect[];
   rewardSlots: CommonSelect[];
-  wedgeColorSelections: { labelView: string, color: string }[];
+  colorCtrls: {[index: number]: string};
   rewardIcon: IGraphic | string;
   wheelImg: IGraphic | string;
   wheelPosition: IGraphic | string;
