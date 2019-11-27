@@ -14,16 +14,16 @@ export class WhistlerConfigService extends ConfigService {
   private settings: any;
   private endpoint: string;
 
-  constructor( private http: HttpClient, config: Config ) {
+  constructor(private http: HttpClient, private config: Config) {
     super();
-    if (!config.production) {
+    if (!this.config.production) {
       this.endpoint = 'http://localhost:4000/themes';
     } else {
-      this.endpoint = config.baseHref + 'themes';
+      this.endpoint = this.config.baseHref + 'themes';
     }
   }
 
-  private static WTenantToConfig(setting: IWSetting): IConfig {
+  private static WTenantToConfig(setting: IWSetting, config: Config): IConfig {
     return {
       showHistoryPage: setting.showHistoryPage || true,
       showHomePage: setting.showHomePage || false,
@@ -33,6 +33,7 @@ export class WhistlerConfigService extends ConfigService {
       // showExpiryOnRewardDetail: setting.showExpiryOnRewardDetail || true,
       // showUserInfoOnAccountsPage: setting.showUserInfoOnAccountsPage || false,
       // showTransactionHistoryOnAccountsPage: setting.showTransactionHistoryOnAccountsPage || false
+      production: config.production || false
     };
   }
 
@@ -42,10 +43,11 @@ export class WhistlerConfigService extends ConfigService {
       url: location.host
     };
 
-    return this.http.post<IJsonApiListPayload<IWTenant>>(this.endpoint, themesRequest).pipe(
-      map(res => res.data && res.data[0].attributes.display_properties),
-      map((setting) => WhistlerConfigService.WTenantToConfig(setting)),
-    );
+    return this.http.post<IJsonApiListPayload<IWTenant>>(this.endpoint, themesRequest)
+      .pipe(
+        map(res => res.data && res.data[0].attributes.display_properties),
+        map((setting) => WhistlerConfigService.WTenantToConfig(setting, this.config)),
+      );
   }
 
   public getTenantAppSettings(): Observable<IMicrositeSettings> {

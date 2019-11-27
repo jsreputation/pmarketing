@@ -21,7 +21,7 @@ import {
 } from '@perx/whistler';
 import { ConfigModule } from '../config/config.module';
 
-fdescribe('SurveyService', () => {
+describe('SurveyService', () => {
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
   let service: SurveyService;
   const mockCampaign: ICampaign = {
