@@ -75,12 +75,12 @@ export class SurveyService {
       );
   }
 
-  public postSurveyAnswer(answers: IAnswer[], survey: ISurvey, campaignId: number): Observable<{ hasOutcomes: boolean }> {
+  public postSurveyAnswer(answers: IAnswer[], campaignId: number, surveyId: number): Observable<{ hasOutcomes: boolean }> {
     const body = {
       data: {
         type: 'answers',
         attributes: {
-          engagement_id: survey.id,
+          engagement_id: surveyId,
           campaign_entity_id: campaignId,
           content: answers
         }

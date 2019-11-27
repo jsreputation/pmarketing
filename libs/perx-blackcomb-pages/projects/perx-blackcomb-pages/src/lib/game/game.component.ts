@@ -7,7 +7,8 @@ import {
   IPopupConfig,
   IEngagementTransaction,
   AuthenticationService,
-  NotificationService
+  NotificationService,
+  IPrePlayStateData
 } from '@perx/core';
 import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
 import { Observable, interval, throwError, Subject, of, combineLatest } from 'rxjs';
@@ -72,8 +73,8 @@ export class GameComponent implements OnInit, OnDestroy {
       switchMap((id: number) => this.gameService.getGamesFromCampaign(id).pipe(
         catchError((err: HttpErrorResponse) => {
           if (err.status === 403 || err.status === 404) {
-            this.router.navigate(['/wallet']);
-            this.notificationService.addPopup(this.gameNotAvailablePopUp);
+            this.popupData = this.gameNotAvailablePopUp;
+            this.redirectUrlAndPopUp();
           }
           throw err;
         }))
@@ -146,7 +147,12 @@ export class GameComponent implements OnInit, OnDestroy {
     const isCollectDataRequired = !!(this.informationCollectionSetting === 'pi_required' || this.informationCollectionSetting === 'signup_required');
     const userAction$: Observable<void> = !this.transactionId || (this.isAnonymousUser && isCollectDataRequired) ?
       of(void 0) :
-      this.gameService.prePlayConfirm(this.transactionId);
+      this.gameService.prePlayConfirm(this.transactionId).pipe(
+        catchError((err: HttpErrorResponse) => {
+          this.popupData = this.noRewardsPopUp;
+          throw err;
+        })
+      );
     combineLatest(processBar$, userAction$).subscribe(
       () => this.redirectUrlAndPopUp(),
       () => this.redirectUrlAndPopUp()
@@ -154,16 +160,17 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   private redirectUrlAndPopUp(): void {
-    const queryParams = {
-      popupData: JSON.stringify(this.popupData),
+    const state: IPrePlayStateData = {
+      popupData: this.popupData,
       engagementType: 'game',
       transactionId: this.transactionId,
       collectInfo: true
     };
+
     if (this.isAnonymousUser && this.informationCollectionSetting === 'pi_required') {
-      this.router.navigate(['/pi'], { queryParams });
+      this.router.navigate(['/pi'], { state });
     } else if (this.isAnonymousUser && this.informationCollectionSetting === 'signup_required') {
-      this.router.navigate(['/signup'], { queryParams });
+      this.router.navigate(['/signup'], { state });
     } else {
       this.router.navigate(['/wallet']);
       this.notificationService.addPopup(this.popupData);
