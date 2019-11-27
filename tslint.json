@@ -6,13 +6,15 @@
   "rulesDirectory": [
     "codelyzer",
     "rxjs-tslint",
-    "tslint-consistent-codestyle"
+    "tslint-consistent-codestyle",
+    "tslint-no-focused-test"
   ],
   "rules": {
     "array-type": [
       true,
       "array"
     ],
+    "no-focused-test": true,
     "arrow-parens": false,
     "deprecation": {
       "severity": "warn"
