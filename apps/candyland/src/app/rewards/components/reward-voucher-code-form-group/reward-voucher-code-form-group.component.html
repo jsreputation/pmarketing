@@ -34,7 +34,8 @@
       [formControl]="formGroup.get('singleCode.code')">
   </mat-form-field>
 
-  <mat-form-field *ngIf="formGroup.get('singleCode').enabled && redemptionType === 'Bar Code' && formGroup.get('uniqueGeneratedCode').disabled">
+  <mat-form-field
+    *ngIf="formGroup.get('singleCode').enabled && redemptionType === 'Bar Code' && formGroup.get('uniqueGeneratedCode').disabled">
     <input
       type="number"
       min="0"
@@ -68,7 +69,8 @@
         [formControl]="formGroup.get('uniqueGeneratedCode.length')">
     </mat-form-field>
     <mat-form-field>
-      <mat-select [formControl]="formGroup.get('uniqueGeneratedCode.codeFormat')" [placeholder]="'CODE_FORMAT' | translate">
+      <mat-select [formControl]="formGroup.get('uniqueGeneratedCode.codeFormat')"
+        [placeholder]="'CODE_FORMAT' | translate">
         <ng-container *ngFor="let option of config?.voucherCodeFormat">
           <mat-option [value]="option?.value">{{option?.title}}</mat-option>
         </ng-container>
@@ -77,12 +79,6 @@
   </div>
   <!--/ Unique codes: System generated-->
 
-  <!--Unique codes: User upload-->
-  <div *ngIf="formGroup.get('uniqueUserUploadCode').enabled">
-    <cl-upload-file>
-    </cl-upload-file>
-  </div>
-  <!-- /Unique codes: User upload-->
 </ng-container>
 
 <!--Merchant PIN-->

@@ -1,5 +1,5 @@
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { RewardsService } from './../../../core/services/rewards.service';
+import { RewardsService } from '@cl-core/services/rewards.service';
 import {
   CampaignsService,
   EngagementsService,
@@ -21,6 +21,7 @@ import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
+import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
 @Component({
   selector: 'cl-review-campaign',

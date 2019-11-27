@@ -1,3 +1,9 @@
+export enum WRedemptionType {
+  promoCode = 'Promo Code',
+  qrCode = 'QR Code',
+  merchantPin = 'Merchant PIN'
+}
+
 export interface IWRewardEntityAttributes {
   urn?: string;
   created_at?: string;
@@ -6,7 +12,7 @@ export interface IWRewardEntityAttributes {
   image_url?: string;
   reward_type: string;
   category: string;
-  redemption_type: string;
+  redemption_type: WRedemptionType;
   cost_of_reward: number;
   tags: string[];
   currency?: string;
