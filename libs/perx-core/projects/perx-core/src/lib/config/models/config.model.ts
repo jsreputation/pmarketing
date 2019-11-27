@@ -2,7 +2,6 @@ import { TokenType } from '../../utils/storage/models/token-storage.model';
 import { IWSetting } from '@perx/whistler';
 
 export interface IConfig {
-  baseHref: string;
   [key: string]: string | number | boolean | TokenType | IWSetting;
 }
 
