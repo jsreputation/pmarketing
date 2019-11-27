@@ -148,12 +148,12 @@ export class WhistlerRewardsService implements RewardsService {
         };
       }),
       map(res => ({
-          rewards: res.data,
-          merchantsIC: res.included && res.included.length > 0 ?
-            res.included.filter(include => include.type === 'Ros::Organization::Org') : null,
-          tierRewardCostsIC: res.included && res.included.length > 0 ?
-            res.included.filter(include => include.type === 'tier_reward_costs') : null
-        })),
+        rewards: res.data,
+        merchantsIC: res.included && res.included.length > 0 ?
+          res.included.filter(include => include.type === 'Ros::Organization::Org') : null,
+        tierRewardCostsIC: res.included && res.included.length > 0 ?
+          res.included.filter(include => include.type === 'tier_reward_costs') : null
+      })),
       map((res) => res.rewards.map(
         (r: IJsonApiItem<IWRewardEntityAttributes>) => {
           const merchants = res.merchantsIC && res.merchantsIC.length > 0 ? res.merchantsIC.filter(mIC => {
