@@ -4,7 +4,6 @@ import { WhistlerRewardsService } from './whistler-rewards.service';
 import { ConfigModule } from '../config/config.module';
 import { of } from 'rxjs';
 import { IReward } from './models/reward.model';
-import { IMerchant } from '../merchants/models/merchants.model';
 import { HttpClient } from '@angular/common/http';
 import { takeLast } from 'rxjs/operators';
 
@@ -18,10 +17,6 @@ import {
 describe('WhistlerRewardsService', () => {
   let httpClientSpy: { get: jasmine.Spy };
   let service: WhistlerRewardsService;
-  const mockMerchant: IMerchant = {
-    id: 42,
-    name: 'merchant 42'
-  };
 
   const environment = {
     apiHost: 'https://blabla',
@@ -113,7 +108,6 @@ describe('WhistlerRewardsService', () => {
     service.getReward(42)
       .subscribe((r: IReward) => {
         expect(`${r.id}`).toEqual(mockReward.id);
-        expect(r.merchantName).toEqual(mockMerchant.name);
         done();
       });
 
