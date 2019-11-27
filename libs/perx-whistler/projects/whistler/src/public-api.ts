@@ -25,6 +25,7 @@ export {
 export {
   IWRewardEntityAttributes,
   IWMetaData,
+  WRedemptionType
 } from './lib/reward/reward';
 export { IWAttbsObjTrans } from './lib/game/game';
 export {
