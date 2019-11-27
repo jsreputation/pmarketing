@@ -2,6 +2,7 @@ import {
   Given,
   When,
   Then,
+  Before,
 } from 'cucumber';
 import {
   browser,
@@ -9,13 +10,26 @@ import {
   protractor,
 } from 'protractor';
 import { expect } from 'chai';
-import { BlackcombHistoryAppPage, ElementApp } from '../pages/candylandApp.po';
+import {
+  BlackcombHistoryAppPage,
+  BlackcombWalletAppPage,
+  ElementApp,
+} from '../pages/candylandApp.po';
 
 const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 const Element = ElementApp;
+let BlackcombWalletApp: BlackcombWalletAppPage;
+
+Before( () => {
+  BlackcombWalletApp = new BlackcombWalletAppPage();
+});
 
 Given(/^16_I am at the blackcomb wallet page$/, async () => {
   await BlackcombHistoryAppPage.navigateToBlackcombHistoryApp();
+  await browser.sleep(3000);
+
+  await BlackcombWalletApp.navigateBlackcombWalletApp();
+  await browser.sleep(3000);
 });
 
 When(/^16_I click on the history tab$/, async () => {
@@ -32,6 +46,10 @@ Then(/^16_I should be navigated history page$/, async () => {
 
 Given(/^17_I am at the blackcomb wallet page$/, async () => {
   await BlackcombHistoryAppPage.navigateToBlackcombHistoryApp();
+  await browser.sleep(3000);
+
+  await BlackcombWalletApp.navigateBlackcombWalletApp();
+  await browser.sleep(3000);
 });
 
 When(/^17_I do nothing$/, () => {});
@@ -40,18 +58,22 @@ Then(/^17_I should see the history tab in the nav bar$/, async () => {
   // waiting for the nav bar to load
   await browser.wait(ec.presenceOf(ElementApp.matToolbar()), 6000);
   // doing an assertion on the presence of the history tab
-  expect(await Element.matTabLinkArray().get(1).isDisplayed()).to.equal(true);
+  expect(await Element.matToolbarLinkArray().get(1).isDisplayed()).to.equal(true);
 });
 
 Given(/^18_I am at the blackcomb wallet page$/, async () => {
   await BlackcombHistoryAppPage.navigateToBlackcombHistoryApp();
+  await browser.sleep(3000);
+
+  await BlackcombWalletApp.navigateBlackcombWalletApp();
+  await browser.sleep(3000);
 });
 
 When(/^18_I click on the history tab$/, async () => {
   // waiting for the nav bar to load
   await browser.wait(ec.presenceOf(ElementApp.matToolbar()), 6000);
   // clicking on the history tab
-  await Element.matTabLinkArray().get(1).click();
+  await Element.matToolbarLinkArray().get(1).click();
   await browser.sleep(3000);
 });
 
