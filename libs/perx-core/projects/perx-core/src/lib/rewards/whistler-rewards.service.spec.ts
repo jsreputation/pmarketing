@@ -14,6 +14,7 @@ import {
   IJsonApiItem,
   IJsonApiListPayload,
   IJsonApiItemPayload,
+  WRedemptionType,
 } from '@perx/whistler';
 
 describe('WhistlerRewardsService', () => {
@@ -44,7 +45,7 @@ describe('WhistlerRewardsService', () => {
       name: '42',
       reward_type: '42',
       category: '42',
-      redemption_type: 'Promo Code',
+      redemption_type: WRedemptionType.promoCode,
       cost_of_reward: 42,
       tags: [],
       display_properties: {
@@ -61,7 +62,7 @@ describe('WhistlerRewardsService', () => {
       name: '42',
       reward_type: '42',
       category: '42',
-      redemption_type: 'QR Code',
+      redemption_type: WRedemptionType.qrCode,
       cost_of_reward: 42,
       tags: [],
       display_properties: {
