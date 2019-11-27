@@ -37,6 +37,7 @@ describe('WhistlerCampaignService', () => {
       self: ''
     },
     attributes: {
+      pool_id: null,
       name: 'I love that stuff',
       start_date_time: now.toISOString(),
       engagement_type: WEngagementType.survey,
@@ -51,6 +52,7 @@ describe('WhistlerCampaignService', () => {
       self: ''
     },
     attributes: {
+      pool_id: null,
       name: '',
       start_date_time: tomorrow.toISOString(),
       engagement_type: WEngagementType.survey,
@@ -67,6 +69,7 @@ describe('WhistlerCampaignService', () => {
       self: ''
     },
     attributes: {
+      pool_id: null,
       name: '',
       start_date_time: yesterday.toISOString(),
       end_date_time: yesterday.toISOString(),
@@ -154,12 +157,12 @@ describe('WhistlerCampaignService', () => {
   });
 
   it('endDate should be null if end_date_time is null or not defined', () => {
-    const { endsAt } =  WhistlerCampaignService.WhistlerCampaignToCampaign(mockCampaign);
+    const { endsAt } = WhistlerCampaignService.WhistlerCampaignToCampaign(mockCampaign);
     expect(endsAt).toEqual(null);
   });
 
   it('endDate should be proper Date object if end_date_time is defined', () => {
-    const { endsAt } =  WhistlerCampaignService.WhistlerCampaignToCampaign(mockExpiredCampaign);
+    const { endsAt } = WhistlerCampaignService.WhistlerCampaignToCampaign(mockExpiredCampaign);
     expect(endsAt).toEqual(yesterday);
   });
 });
