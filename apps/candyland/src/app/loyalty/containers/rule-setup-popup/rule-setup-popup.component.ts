@@ -72,20 +72,26 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   }
 
   public apply(): void {
+    debugger
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
     let request;
     if (this.data.rule) {
+      debugger
       request = this.ruleService.updateRule(this.data.ruleSet.id, this.form.value, this.data.rule.id);
     } else {
       request = this.ruleService.createRule(this.data.ruleSet.id, this.form.value);
     }
     request.subscribe(
-      data => this.dialogRef.close(data),
+      rule => {
+        // TODO: change conditions get from API which conditions CRUD finished
+        const ruleWithConditions = {...rule, conditions: this.conditions.value};
+        this.dialogRef.close(ruleWithConditions);
+      },
       (error: any) => {
-        this.titleError = error.error.errors.find(item => 'title' in item).title;
+        this.titleError = error.error.errors.find(item => item.source.pointer === '/data/attributes/name').title;
         if (this.titleError) {
           this.name.setErrors({title: true});
           this.name.markAllAsTouched();
@@ -100,7 +106,7 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
 
   private fillForm(): void {
     const pathValue = this.data.rule || this.formsService.getDefaultValue();
-    console.log('pathValue', pathValue);
+    console.log('pathValue', pathValue, pathValue.conditions);
     pathValue.conditions.forEach(() => this.addCondition());
     this.form.patchValue(pathValue);
   }

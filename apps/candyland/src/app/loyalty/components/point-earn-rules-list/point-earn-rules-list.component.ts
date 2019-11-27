@@ -1,15 +1,10 @@
 import {
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   Output,
-  SimpleChanges,
-  ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { MatTable } from '@angular/material/table';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
@@ -20,20 +15,16 @@ import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
   styleUrls: ['./point-earn-rules-list.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class PointEarnRulesListComponent implements OnChanges {
+export class PointEarnRulesListComponent {
   @Input() public editable: boolean = false;
-  @Input() public dataSource: any;
-  @Input() public tier: any;
-  @Input() public displayedColumns: string[] = ['priority', 'name', 'conditions', 'pointsEarned'];
+  // @Input() public dataSource: any;
+  @Input() public ruleSet: any;
+  @Input() public displayedColumns: string[] = ['priority', 'name', 'conditions']; // 'pointsEarned'];
   @Output() public rulesAction: EventEmitter<{ action: NewLoyaltyActions, data?: ICustomTireForm }> = new EventEmitter();
-  @ViewChild('table', {static: false}) public table: MatTable<any>;
 
-  constructor(private cd: ChangeDetectorRef) {
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes', changes);
-    this.cd.detectChanges();
+  // @ViewChild('table', {static: false}) public table: MatTable<any>;
+  public get rules(): any[] {
+    return this.ruleSet.rules;
   }
 
   public get displayedColumnsWithEdit(): string[] {
@@ -43,27 +34,29 @@ export class PointEarnRulesListComponent implements OnChanges {
     return this.displayedColumns;
   }
 
-  public editItem(rule: ICustomTireForm): void {
-    this.rulesAction.emit({action: NewLoyaltyActions.editRule, data: rule});
+  public editItem(rule: any): void {
+    this.rulesAction.emit({action: NewLoyaltyActions.editRule, data: {ruleSet: this.ruleSet, rule}});
   }
 
   public duplicateItem(rule: ICustomTireForm): void {
-    this.rulesAction.emit({action: NewLoyaltyActions.duplicateRule, data: rule});
+    this.rulesAction.emit({action: NewLoyaltyActions.duplicateRule, data: {ruleSet: this.ruleSet, rule}});
   }
 
   public deleteItem(rule: ICustomTireForm): void {
-    this.rulesAction.emit({action: NewLoyaltyActions.deleteRule, data: rule});
+    this.rulesAction.emit({action: NewLoyaltyActions.deleteRule, data: {ruleSet: this.ruleSet, rule}});
   }
 
-  // public dropTable(event: CdkDragDrop<any>): void {
-  //
-  // }
-
   public dropTable(event: CdkDragDrop<any>): void {
-    const prevIndex = this.dataSource.findIndex((d) => d === event.item.data);
-    moveItemInArray(this.dataSource, prevIndex, event.currentIndex);
-    this.dataSource.map((item, index) => item.priority = (index + 1).toString());
-    this.table.renderRows();
-    // this.rulesAction.emit({action: NewLoyaltyActions.dropRule, data: rule});
+    const prevIndex = this.rules.findIndex((d) => d === event.item.data);
+    // const rules = [...this.rules];
+    // moveItemInArray(rules, prevIndex, event.currentIndex);
+    // this.dataSource = rules;
+    // moveItemInArray(this.dataSource, prevIndex, event.currentIndex);
+    // this.dataSource.map((item, index) => item.priority = (index + 1).toString());
+    // this.table.renderRows();
+    this.rulesAction.emit({
+      action: NewLoyaltyActions.dropRule,
+      data: {ruleSet: this.ruleSet, prevIndex, currentIndex: event.currentIndex}
+    });
   }
 }

@@ -23,8 +23,9 @@
       {{tierType === 'basicTier' ? 'Points Earn Rules' : ''}}
       {{tierType === 'customTier' ? 'Special Rules' : ''}}
     </label>
-    <cl-point-earn-rules-list [editable]="true" *ngIf="ruleSet?.rules"
-                              [dataSource]="ruleSet?.rules"
+    <cl-point-earn-rules-list *ngIf="ruleSet?.rules"
+                              [editable]="true"
+                              [ruleSet]="ruleSet"
                               (rulesAction)="handleTiersAction($event)">
       <div class="rule-list-no-data">
         There are currently no

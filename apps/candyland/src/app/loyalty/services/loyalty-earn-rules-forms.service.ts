@@ -18,13 +18,13 @@ export class LoyaltyEarnRulesFormsService {
       name: new FormControl(null,
         [Validators.required, Validators.minLength(1), Validators.maxLength(60)]),
       conditions: new FormArray([]),
-      result: new FormGroup({
-        typePoints: new FormControl(null, [Validators.required]),
-        awardPoints: new FormControl(null, [Validators.required, Validators.min(1)]),
-        typeMultiplier: new FormControl(null, [Validators.required]),
-        applyMultiplier: new FormControl(null, [Validators.required, Validators.min(1)]),
-        maximumPoints: new FormControl(null, [Validators.required, Validators.min(1)])
-      })
+      // result: new FormGroup({
+      //   typePoints: new FormControl(null, [Validators.required]),
+      //   awardPoints: new FormControl(null, [Validators.required, Validators.min(1)]),
+      //   typeMultiplier: new FormControl(null, [Validators.required]),
+      //   applyMultiplier: new FormControl(null, [Validators.required, Validators.min(1)]),
+      //   maximumPoints: new FormControl(null, [Validators.required, Validators.min(1)])
+      // })
     });
   }
 
@@ -38,13 +38,13 @@ export class LoyaltyEarnRulesFormsService {
         value: 'prepaid',
         valueType: 'string',
       }],
-      result: {
-        typePoints: 'bonus',
-        awardPoints: 100,
-        typeMultiplier: 'multiplier',
-        applyMultiplier: 2,
-        maximumPoints: 3
-      }
+      // result: {
+      //   typePoints: 'bonus',
+      //   awardPoints: 100,
+      //   typeMultiplier: 'multiplier',
+      //   applyMultiplier: 2,
+      //   maximumPoints: 3
+      // }
     };
   }
 

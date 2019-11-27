@@ -59,6 +59,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TranslateModule } from '@ngx-translate/core';
 import { LoyaltyRuleCardComponent } from './components/loyalty-rules-card/loyalty-rule-card.component';
 import { CurrencyConditionGroupComponent } from './components/currency-condition-group/currency-condition-group.component';
+import { ConditionInfoPipe } from './condition-info.pipe';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { CurrencyConditionGroupComponent } from './components/currency-condition
     CurrencyConditionGroupComponent,
     DynamicFormGroupDirective,
     LoyaltyRuleCardComponent,
+    ConditionInfoPipe,
   ],
   imports: [
     CommonModule,

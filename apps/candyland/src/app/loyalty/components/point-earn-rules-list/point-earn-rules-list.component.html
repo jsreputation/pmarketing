@@ -1,10 +1,10 @@
 <div class="table-wrap">
   <table class="table rule-list"
-         *ngIf="dataSource?.length > 0"
+         *ngIf="rules?.length > 0"
          #table mat-table
-         [dataSource]="dataSource"
+         [dataSource]="rules"
          cdkDropList
-         [cdkDropListData]="dataSource"
+         [cdkDropListData]="rules"
          (cdkDropListDropped)="dropTable($event)">
 
     <ng-container matColumnDef="priority">
@@ -31,7 +31,7 @@
     <ng-container matColumnDef="conditions">
       <th mat-header-cell *matHeaderCellDef>Conditions</th>
       <td mat-cell *matCellDef="let element">
-        <span class="rule-conditions">{{element?.conditions}}</span>
+        <span class="rule-conditions">{{element?.conditions | clConditionInfo}}</span>
       </td>
     </ng-container>
 
@@ -60,10 +60,6 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumnsWithEdit;"
         cdkDrag
         [cdkDragData]="row"></tr>
-<!--    <tr mat-footer-row *matFooterCellDef>No records found.</tr>-->
   </table>
-  <!--  <div class="rule-list-no-data" *ngIf="dataSource?.length === 0">-->
-  <!--    There are currently no special rules for the Gold tier.-->
-  <!--  </div>-->
-  <ng-content *ngIf="dataSource?.length === 0" select=".rule-list-no-data"></ng-content>
+  <ng-content *ngIf="rules?.length === 0" select=".rule-list-no-data"></ng-content>
 </div>

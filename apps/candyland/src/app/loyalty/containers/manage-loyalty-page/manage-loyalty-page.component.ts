@@ -21,6 +21,7 @@ import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-f
 import { IWBasicTierAttributes, IWPools } from '@perx/whistler';
 import { RuleSetupPopupComponent } from '../rule-setup-popup/rule-setup-popup.component';
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'cl-manage-loyalty-page',
@@ -314,11 +315,10 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
         this.editRule(data.data);
         break;
       case NewLoyaltyActions.deleteRule:
-        this.deleteRule(data.data.id);
+        this.deleteRule(data.data);
         break;
       case NewLoyaltyActions.dropRule:
-        // this.deleteRule(data.data.id);
-        console.log('drop rule');
+        this.dropRule(data.data);
         break;
     }
   }
@@ -431,16 +431,28 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  private editRule(data: ICustomTireForm): void {
+  private editRule(data: any): void {
     this.getRefDialogSetupRule(data)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.updateCustomTiersDataSource());
+      .subscribe((updatedRule) => {
+        data.rule = updatedRule;
+      });
   }
 
-  private deleteRule(id: string): void {
-    this.customTierService.deleteCustomTier(id)
+  private deleteRule(data: any): void {
+    const ruleId = data.rule.id;
+    this.ruleService.deleteRule(ruleId)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.updateCustomTiersDataSource());
+      .subscribe(() => {
+        data.ruleSet.rules = [...data.ruleSet.rules.filter(rule => rule.id !== ruleId)];
+      });
+  }
+
+  private dropRule(data: any): void {
+    const newRules = [...data.ruleSet.rules];
+    moveItemInArray(newRules, data.prevIndex, data.currentIndex);
+    data.ruleSet.rules = newRules;
+    console.log(data.rules, this.basicTierRuleSet);
   }
 
   private initPools(): void {
