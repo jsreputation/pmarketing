@@ -150,7 +150,14 @@ When(/^26_I upload a file with the appropriate format for background$/, async ()
 Then(/^26_background reflects the file upload.$/, async () => {
   // initializing variables for attributes src
   const srcUploadField = await PageShakeTheTree.uploadField().getAttribute('src');
-  const srcElementPreview = await PageShakeTheTree.backgroundPreview().getAttribute('style');
-
-  expect(await srcElementPreview).to.contain(srcUploadField);
+  const srcElementPreviewStyle = await PageShakeTheTree.backgroundPreview().getAttribute('style');
+  // get background-image url from style
+  const bgUrl = srcElementPreviewStyle.split('"')[1];
+  // initializing regex looking for ','
+  const regex = /,/;
+  // doing a substring matching the first 6 characters of src attr
+  const srcUploadFieldSubstr = srcUploadField.substring(srcUploadField.search(regex), srcUploadField.search(regex) + 5);
+  const srcElementPreviewSubstr = bgUrl.substring(bgUrl.search(regex), bgUrl.search(regex) + 5);
+  // doing an assertion matching the src substring
+  expect(await srcUploadFieldSubstr).to.contain(srcElementPreviewSubstr);
 });
