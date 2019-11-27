@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NotificationService } from '@perx/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-change-password',
@@ -13,7 +13,7 @@ export class ChangePasswordComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private notificationService: NotificationService
   ) {
     this.initForm();
   }
@@ -30,15 +30,18 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const passwordString = this.changePasswordForm.get('newPassword');
-    const confirmPassword = this.changePasswordForm.get('confirmPassword');
+    const passwordField = this.changePasswordForm.get('newPassword');
+    const passwordString = passwordField ? passwordField.value : '';
+
+    const confirmPasswordField = this.changePasswordForm.get('confirmPassword');
+    const confirmPassword = confirmPasswordField ? confirmPasswordField.value : '';
 
     if (passwordString !== confirmPassword) {
-      console.log('Password fields do not match');
+      this.notificationService.addSnack('Passwords do not match.');
       return;
     }
 
-    this.router.navigateByUrl('/profile');
+    // TODO: Proceed to OTP page which still needs to created
   }
 
 }
