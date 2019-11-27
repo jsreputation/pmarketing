@@ -12,9 +12,10 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { Location } from '@angular/common';
-import { Subject, iif, of } from 'rxjs';
+import { Subject, iif, of, Observable, throwError } from 'rxjs';
 import { Config, AuthenticationService, InstantOutcomeService, IGameService, NotificationService, IPrePlayStateData, SurveyService } from '@perx/core';
-import { switchMap, catchError, tap } from 'rxjs/operators';
+import { switchMap, catchError, tap, retryWhen, delay, mergeMap } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'perx-blackcomb-pages-pi',
@@ -28,6 +29,8 @@ export class PIComponent implements OnInit, OnDestroy {
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
   private stateData: IPrePlayStateData;
+  private maxRetryTimes: number = 5;
+  private retryTimes: number = 0;
 
   private initForm(): void {
     this.PIForm = this.fb.group({
@@ -70,6 +73,15 @@ export class PIComponent implements OnInit, OnDestroy {
 
     if (pi) {
       const oldUserId = this.authService.getUserId();
+      const retryWhenTransactionFailed = (err: Observable<HttpErrorResponse>) => err.pipe(
+        mergeMap(error => {
+          if (error.status === 422 && this.retryTimes < this.maxRetryTimes) {
+            this.retryTimes++;
+            return of(error.status).pipe(delay(1000));
+          }
+          return throwError(error);
+        })
+      );
       if (!oldUserId) {
         throw new Error('should not be here');
       }
@@ -113,10 +125,18 @@ export class PIComponent implements OnInit, OnDestroy {
             return this.surveyService.postSurveyAnswer(this.stateData.answers, this.stateData.campaignId, this.stateData.surveyId);
           }
           if (this.stateData && this.stateData.engagementType === 'game' && this.stateData.transactionId) {
-            return this.gameService.prePlayConfirm(this.stateData.transactionId);
+            return this.gameService.prePlayConfirm(this.stateData.transactionId).pipe(
+              retryWhen(
+                retryWhenTransactionFailed
+              )
+            );
           }
           if (this.stateData && this.stateData.engagementType === 'instant_outcome' && this.stateData.transactionId) {
-            return this.instantOutcomeService.prePlayConfirm(this.stateData.transactionId);
+            return this.instantOutcomeService.prePlayConfirm(this.stateData.transactionId).pipe(
+              retryWhen(
+                retryWhenTransactionFailed
+              )
+            );
           }
           throw new Error('PI_NO_TRANSACTION_MATCH');
         }),
