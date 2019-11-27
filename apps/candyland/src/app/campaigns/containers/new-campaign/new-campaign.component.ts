@@ -39,7 +39,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private campaign: ICampaign;
   private campaignBaseURL: string;
   public tenantSettings: ITenantsProperties;
-  @ViewChild('stepper', {static: false}) private stepper: MatStepper;
+  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
 
   private destroy$: Subject<void> = new Subject();
 
@@ -248,8 +248,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       if (this.store.currentCampaign.id) {
         if (outcome.value.outcomeId) {
           const oldRewardRecord = oldCampaignList.find(reward => reward.id === outcome.value.outcomeId);
-          const oldProbability = oldRewardRecord ? oldRewardRecord.probability : null;
-          if (oldProbability !== outcome.probability) {
+          const oldProbability = oldRewardRecord ? oldRewardRecord.probability || undefined : undefined;
+          const oldLimit = oldRewardRecord ? oldRewardRecord.limit || undefined : undefined;
+          if (oldProbability !== outcome.probability || oldLimit !== outcome.limit) {
             updateOutcomesArr$.push(updateOutcomes$(outcome));
           }
         } else {
@@ -330,7 +331,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.getDialogData(this.store.currentCampaign)
       .pipe(
         switchMap((config) => this.dialog.open(NewCampaignDonePopupComponent,
-          {data: config}).afterClosed())
+          { data: config }).afterClosed())
       )
       .subscribe(() => this.router.navigate(['/campaigns']));
   }
@@ -364,15 +365,15 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       ).pipe(
         map(
           ([campaign, commEvent, outcomes]:
-             [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
-            ...campaign,
-            audience: {select: commEvent && commEvent.poolId || null},
-            channel: {
-              type: commEvent && commEvent.channel || 'weblink',
-              ...commEvent
-            },
-            rewardsList: outcomes
-          }))
+            [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
+              ...campaign,
+              audience: { select: commEvent && commEvent.poolId || null },
+              channel: {
+                type: commEvent && commEvent.channel || 'weblink',
+                ...commEvent
+              },
+              rewardsList: outcomes
+            }))
       ).subscribe(
         campaign => {
           this.campaign = Object.assign({}, campaign);

@@ -35,6 +35,7 @@ export interface ICampaign {
         result_id?: number;
         result_type?: string;
         probability?: number;
+        limit?: number;
     }[];
     rewards?: any; // todo investigate difference with rewardsList
     rewardsOptions?: any;
