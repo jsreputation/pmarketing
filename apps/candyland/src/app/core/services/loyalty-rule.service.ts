@@ -24,7 +24,12 @@ export class LoyaltyRuleService {
   public getRuleSetList(params: HttpParamsOptions): Observable<any> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.rulesHttpService.getRuleSetList(httpParams).pipe(
-      map(response => LoyaltyRuleHttpAdapter.transformToList(response.data))
+      map(response => {
+        return LoyaltyRuleHttpAdapter.transformToList(response.data);
+        // return JsonApiParser.parseDataWithIncludes(response, LoyaltyRuleHttpAdapter.transformToList, {
+        // 'rule_conditions': {LoyaltyRuleHttpAdapter.transfor}
+        // });
+      })
     );
   }
 

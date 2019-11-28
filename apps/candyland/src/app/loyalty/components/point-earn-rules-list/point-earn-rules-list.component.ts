@@ -5,7 +5,7 @@ import {
   Output,
   ViewEncapsulation
 } from '@angular/core';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 

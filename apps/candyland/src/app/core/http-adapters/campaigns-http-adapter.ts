@@ -10,6 +10,7 @@ import {
 } from '@perx/whistler';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
+import { DateTimeParser } from '@cl-helpers/date-time-parser';
 
 export class CampaignsHttpAdapter {
 
@@ -30,8 +31,8 @@ export class CampaignsHttpAdapter {
       id: data.id,
       name: data.attributes.name,
       status: data.attributes.status,
-      begin: CampaignsHttpAdapter.stringToDate(data.attributes.start_date_time),
-      end: CampaignsHttpAdapter.stringToDate(data.attributes.end_date_time),
+      begin: DateTimeParser.stringToDate(data.attributes.start_date_time),
+      end: DateTimeParser.stringToDate(data.attributes.end_date_time),
       audience: data.attributes.pool_id,
       goal: data.attributes.goal,
       engagementType: eType
@@ -77,10 +78,10 @@ export class CampaignsHttpAdapter {
         informationCollectionSetting: CampaignsHttpAdapter.transformInformationCollectionType(
           campaignData.display_properties.informationCollectionSetting),
         goal: campaignData.goal,
-        startDate: campaignData.start_date_time ? new Date(campaignData.start_date_time) : null,
-        startTime: campaignData.start_date_time ? moment(campaignData.start_date_time).format('LT') : '',
-        endDate: campaignData.end_date_time ? new Date(campaignData.end_date_time) : null,
-        endTime: campaignData.end_date_time ? moment(campaignData.end_date_time).format('LT') : '',
+        startDate: DateTimeParser.stringToDate(campaignData.start_date_time),
+        startTime: DateTimeParser.stringToTime(campaignData.start_date_time, 'LT'),
+        endDate: DateTimeParser.stringToDate(campaignData.end_date_time),
+        endTime: DateTimeParser.stringToTime(campaignData.end_date_time, 'LT'),
         disabledEndDate: !campaignData.end_date_time,
         labels: campaignData.labels
       },
@@ -114,9 +115,4 @@ export class CampaignsHttpAdapter {
       }
     };
   }
-
-  private static stringToDate(stringDate: string | null): Date | null {
-    return stringDate ? new Date(stringDate) : null;
-  }
-
 }

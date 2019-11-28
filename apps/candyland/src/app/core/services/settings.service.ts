@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { SettingsHttpService } from '@cl-core/http-services/settings-http.service';
 import { AuthService } from '@cl-core/services/auth.service';
-import { TimeZoneSort } from '@cl-helpers/time-zone-sort';
+import { DateTimeParser } from '@cl-helpers/date-time-parser';
 import Utils from '@cl-helpers/utils';
 import { Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
@@ -59,7 +59,7 @@ export class SettingsService implements ITableService {
   public getTimeZone(): Observable<ITimeZone[]> {
     return this.settingsHttpService.getTimeZone()
       .pipe(
-        map((zones: ITimeZone[]) => zones.sort(TimeZoneSort.compareTimeZone))
+        map((zones: ITimeZone[]) => zones.sort(DateTimeParser.compareTimeZone))
       );
   }
 
