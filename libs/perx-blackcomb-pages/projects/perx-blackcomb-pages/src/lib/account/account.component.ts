@@ -67,4 +67,8 @@ export class AccountComponent implements OnInit {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
   }
+
+  public onProfileClicked(): void {
+    this.router.navigateByUrl('profile');
+  }
 }

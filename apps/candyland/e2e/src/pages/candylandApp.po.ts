@@ -29,6 +29,7 @@ export class EngagementAppPage {
   public engagementTabOption(): ElementFinder {
     return element.all(by.css('h3')).get(2);
   }
+
   public selectEngagementTypeDialog(): ElementFinder {
     return element(by.css('mat-dialog-content'));
   }
@@ -54,6 +55,10 @@ export class EngagementAppPage {
 
   public gamePinataOptions(): ElementFinder {
     return element.all('img[alt="game-icon"]').get(1);
+  }
+
+  public confirmModal(): ElementFinder {
+    return element(by.css('cl-confirm-modal'));
   }
 }
 
@@ -173,12 +178,6 @@ export class CreateShakeTheTreeAppPage {
   public transactionDate(): ElementFinder {
     return element.all(by.css('p.engagement-item-date')).first();
   }
-  public firstDialogEl(): ElementFinder {
-    return element.all(by.css('cl-button')).get(1);
-  }
-  public secondDialogEl(): ElementFinder {
-    return element.all(by.css('cl-button')).get(2);
-  }
 }
 export class LoginAppPage {
 
@@ -293,12 +292,6 @@ export class CreateSurveyAppPage {
   public confirmModal(): ElementFinder {
     return element(by.css('cl-confirm-modal'));
   }
-  public saveButton(): ElementFinder {
-    return element.all(by.css('cl-button')).get(1);
-  }
-  public launchNowButton(): ElementFinder {
-    return element.all(by.css('cl-button')).get(2);
-  }
 
 }
 
@@ -309,12 +302,6 @@ export class CreateHitThePinataAppPage {
   }
   public uploadedBackgroundImageObj(): ElementFinder {
     return element(by.css('div.image-wrap.ng-star-inserted>img.image'));
-  }
-  public pinataDesign(): ElementFinder {
-    return element.all(by.css('cl-images-preview')).get(1);
-  }
-  public pinataBackgroundDesign(): ElementFinder {
-    return element.all(by.css('cl-images-preview')).get(4);
   }
   public pinataImage(): ElementFinder {
     return element(by.css('img.img'));
@@ -337,8 +324,31 @@ export class CreateHitThePinataAppPage {
 }
 export class CreateInstantRewardAppPage {
 
+  public static instantRewardBtn(): ElementFinder {
+    return element.all(by.css('button.engagement-selector')).get(3);
+  }
+
   public navigateToCreateInstantReward(): Promise<string> {
     return browser.get('engagements/new-instant-reward') as Promise<string> ;
+  }
+
+  public mobileHeadline(): ElementFinder {
+    return element(by.css('p.mobile-preview-headline'));
+  }
+  public mobileSubHeadline(): ElementFinder {
+    return element(by.css('p.mobile-preview-sub-headline'));
+  }
+
+  public cardPreview(): ElementFinder {
+    return element(by.css('div.mobile-preview-card'));
+  }
+
+  public backgroundPreview(): ElementFinder {
+    return element(by.css('div.mobile-preview-background'));
+  }
+
+  public mobileButtonPreview(): ElementFinder {
+    return element(by.css('button.mobile-preview-btn'));
   }
 
 }
@@ -356,9 +366,6 @@ export class RewardAppPage {
  }
  public rewardList(): ElementFinder {
     return element(by.css('table'));
- }
- public createNewButton(): ElementFinder {
-    return element(by.css('cl-button'));
  }
  public filterItems(): ElementFinder {
     return element(by.className('name-cell__link'));
@@ -431,17 +438,8 @@ export class CreateRewardAppPage {
   public firstMerchantsRow(): ElementFinder {
     return element.all(by.css('tr.merchant-row.mat-row.ng-star-inserted')).get(0);
   }
-  public addMerchantButton(): ElementFinder {
-    return element.all(by.css('cl-button')).last();
-  }
   public dropDownMenu(): ElementArrayFinder {
     return element.all(by.className('mat-select-arrow-wrapper'));
-  }
-  public saveButton(): ElementFinder {
-    return element.all(by.css('cl-button')).get(1);
-  }
-  public closeButton(): ElementFinder {
-    return element.all(by.css('cl-button')).get(0);
   }
 
 }
@@ -555,6 +553,10 @@ export class ElementApp {
     return element(by.css('input[type=file]'));
   }
 
+  public static inputFileArray(): ElementArrayFinder {
+    return element.all(by.css('input[type=file]'));
+  }
+
   public static inputNumberArray(): ElementArrayFinder {
     return element.all(by.css('input[type=number]'));
   }
@@ -613,6 +615,14 @@ export class ElementApp {
 
   public static matTabGroup(): ElementFinder {
     return element(by.css('mat-tab-group'));
+  }
+
+  public static matToolbar(): ElementFinder {
+    return element.all(by.css('mat-toolbar')).get(1);
+  }
+
+  public static matCardArray(): ElementArrayFinder {
+    return element.all(by.css('mat-card'));
   }
 
   public static clSimpleMobileView(): ElementFinder {
@@ -732,6 +742,14 @@ export class ElementApp {
   }
   public static inputArray(): ElementArrayFinder {
     return element.all(by.css('input'));
+  }
+
+  public static designImageArray(): ElementArrayFinder {
+    return element.all(by.css('cl-images-preview'));
+  }
+
+  public static engagementCreated(): ElementFinder {
+    return element.all(by.css('p.engagement-item-name.linkable')).get(0);
   }
 
 }

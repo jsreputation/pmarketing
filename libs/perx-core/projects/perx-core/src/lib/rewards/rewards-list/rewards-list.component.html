@@ -27,9 +27,11 @@
                 {{reward.description}}
               </div>
             </ng-template>
-            <div class="reward-price-details">
-              <div *ngIf="reward.rewardPrice &&
-                  reward.rewardPrice.length > 0">
+            <div
+              class="reward-price-details"
+              [ngStyle]="{'color': themeFontColor ? themeFontColor : colorPrimary}"
+            >
+              <div *ngIf="reward.rewardPrice && reward.rewardPrice.length > 0">
                 <div *ngFor="let rewardPrice of reward.rewardPrice">
                   {{displayPriceFn(rewardPrice)}}
                 </div>
