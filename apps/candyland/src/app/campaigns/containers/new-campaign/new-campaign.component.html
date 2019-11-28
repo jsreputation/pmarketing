@@ -14,7 +14,7 @@
       {{'BTN_NEXT' | translate}}
     </cl-button>
     <!--    [disable]="getStepCondition(stepper.selectedIndex)"-->
-    <cl-button *ngIf="isLastStep && campaign.status !== 'active'" classList="primary cta cta-save cta-save-launch" (click)="save()">{{'BTN_LAUNCH' | translate}}</cl-button>
+    <cl-button *ngIf="isLastStep && store.currentCampaign?.status !== 'active'" classList="primary cta cta-save cta-save-launch" (click)="save()">{{'BTN_LAUNCH' | translate}}</cl-button>
   </div>
 </header>
 
