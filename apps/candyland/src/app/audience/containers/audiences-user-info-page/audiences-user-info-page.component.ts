@@ -163,17 +163,23 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   }
 
   public openEditUserDialog(): void {
-    const dialogData: IUpsertUserPopup = { panelClass: 'audience-dialog', data: {type: Type.Edit} };
+    const dialogData: IUpsertUserPopup = {
+      panelClass: 'audience-dialog',
+      data: {
+        type: Type.Edit,
+        formData: this.user,
+      }
+    };
     const dialogRef = this.dialog.open(UpsertUserPopupComponent, dialogData);
 
     dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
-        switchMap((newUser: any) => this.audiencesUserService.createUser(newUser))
+        switchMap((newUser: any) => this.audiencesUserService.updateUser(this.user.id, newUser))
       )
       .subscribe(() => {
         this.dataSource.updateData();
-        this.snack.open('User successfully created.', 'x', {duration: 2000});
+        this.snack.open('User successfully updated.', 'x', {duration: 2000});
       });
   }
 }
