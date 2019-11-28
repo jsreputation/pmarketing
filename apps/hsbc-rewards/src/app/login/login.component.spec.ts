@@ -20,7 +20,8 @@ describe('LoginComponent', () => {
     $failedAuth: of(true),
     getInterruptedUrl: () => null,
     login: of({ bearer_token: 'SWWERW' }),
-    getAppToken: () => of({})
+    getAppToken: () => of({}),
+    getAppAccessToken: () => 'token'
   };
   const configServiceStub = {
     readAppConfig: () => of()

@@ -10,7 +10,8 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
   const AuthenticationServiceStub = {
     getUserAccessToken: () => of(),
-    getAppToken: () => of({})
+    getAppToken: () => of({}),
+    getAppAccessToken: () => 'token',
   };
   const configServiceStub = {
     readAppConfig: () => of()

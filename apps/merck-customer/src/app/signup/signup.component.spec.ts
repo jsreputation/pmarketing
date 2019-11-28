@@ -45,7 +45,8 @@ describe('SignupComponent', () => {
           provide: AuthenticationService,
           useValue: {
             signup: () => of(),
-            getAppToken: () => of({})
+            getAppToken: () => of({}),
+            getAppAccessToken: () => 'token'
           }
         },
         { provide: Router, useValue: routerStub },

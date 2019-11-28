@@ -15,7 +15,8 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
   const authServiceStub = {
     getUserAccessToken: () => of(),
-    getAppToken: () => of({})
+    getAppToken: () => of({}),
+    getAppAccessToken: () => 'token'
   };
   beforeEach(async(() => {
     TestBed.configureTestingModule({

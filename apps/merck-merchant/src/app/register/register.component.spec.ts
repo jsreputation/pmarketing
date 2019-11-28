@@ -39,7 +39,11 @@ describe('RegisterComponent', () => {
         { provide: Router, useValue: routerStub },
         {
           provide: AuthenticationService,
-          useValue: { forgotPassword: () => { }, getAppToken: () => of({}) }
+          useValue: {
+            forgotPassword: () => { },
+            getAppToken: () => of({}),
+            getAppAccessToken: () => 'token'
+          }
         },
         { provide: IMerchantAdminService, useValue: merchantAdminServiceStub },
       ]

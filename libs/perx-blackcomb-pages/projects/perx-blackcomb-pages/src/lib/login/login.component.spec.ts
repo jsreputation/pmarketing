@@ -19,7 +19,8 @@ describe('LoginComponent', () => {
 
   const authenticationServiceStub: Partial<AuthenticationService> = {
     getUserAccessToken: () => '',
-    getAppToken: () => of({} as IWAppAccessTokenResponse)
+    getAppToken: () => of({} as IWAppAccessTokenResponse),
+    getAppAccessToken: () => 'token'
   };
 
   const themeServiceStub: Partial<ThemesService> = {

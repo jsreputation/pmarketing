@@ -42,7 +42,8 @@ const authServiceStub: Partial<AuthenticationService> = {
   getUserId: () => 0,
   autoLogin: () => of(),
   mergeUserById: () => of(),
-  getAppToken: () => of({} as IWAppAccessTokenResponse)
+  getAppToken: () => of({} as IWAppAccessTokenResponse),
+  getAppAccessToken: () => 'token'
 };
 
 describe('SignUpComponent', () => {

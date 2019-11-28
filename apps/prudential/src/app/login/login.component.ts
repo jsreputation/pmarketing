@@ -11,10 +11,9 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  public appAccessTokenFetched: boolean;
   public preAuth: boolean;
   public failedAuth: boolean;
-  public appAccessToken: string;
   constructor(
     private router: Router,
     private authService: AuthenticationService,
@@ -26,11 +25,16 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.authService.getAppToken().subscribe((res) => {
-      this.appAccessToken = res.access_token;
-    }, (err) => {
-      console.error('Error' + err);
-    });
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
     if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
       this.authService.autoLogin().subscribe(
         () => {

@@ -11,7 +11,7 @@ import { of } from 'rxjs';
 describe('SignupComponent', () => {
   let component: SignUpComponent;
   let fixture: ComponentFixture<SignUpComponent>;
-  const authenticationServiceStub = { getAppToken: () => of({}) };
+  const authenticationServiceStub = { getAppToken: () => of({}), getAppAccessToken: () => 'token' };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

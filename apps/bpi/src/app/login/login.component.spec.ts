@@ -12,7 +12,8 @@ describe('LoginComponent', () => {
 
   const authServiceStub = {
     autoLogin: () => of(),
-    getAppToken: () => of({})
+    getAppToken: () => of({}),
+    getAppAccessToken: () => 'token'
   };
   const configServiceStub = {
     readAppConfig: () => of()

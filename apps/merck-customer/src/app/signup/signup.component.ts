@@ -13,7 +13,8 @@ export class SignupComponent implements PageAppearence {
 
   public signupForm: FormGroup;
   public selectedCountry: string = '+852';
-  public appAccessToken: string;
+  public appAccessTokenFetched: boolean;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -24,11 +25,16 @@ export class SignupComponent implements PageAppearence {
     this.getAppToken();
   }
   private getAppToken(): void {
-    this.authService.getAppToken().subscribe((res) => {
-      this.appAccessToken = res.access_token;
-    }, (err) => {
-      console.error('Error' + err);
-    });
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
   }
   private initForm(): void {
     this.signupForm = this.fb.group({

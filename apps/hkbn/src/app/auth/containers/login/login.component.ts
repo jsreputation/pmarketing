@@ -9,15 +9,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  public appAccessToken: string;
+  public appAccessTokenFetched: boolean;
   constructor(private authService: AuthenticationService, private router: Router, private nofifcationService: NotificationService) {
   }
   public ngOnInit(): void {
-    this.authService.getAppToken().subscribe((res) => {
-      this.appAccessToken = res.access_token;
-    }, (err) => {
-      console.error('Error' + err);
-    });
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
   }
   public login(data: LoginFormValue): void {
     this.authService.login(data.user, data.pass).subscribe(

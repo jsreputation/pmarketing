@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   public merchantProfile: IMerchantProfile;
   private invitationToken: string;
   private clientId: string;
-  public appAccessToken: string;
+  public appAccessTokenFetched: boolean;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -30,11 +30,16 @@ export class RegisterComponent implements OnInit {
     this.getAppToken();
   }
   private getAppToken(): void {
-    this.authService.getAppToken().subscribe((res) => {
-      this.appAccessToken = res.access_token;
-    }, (err) => {
-      console.error('Error' + err);
-    });
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
   }
   public ngOnInit(): void {
 

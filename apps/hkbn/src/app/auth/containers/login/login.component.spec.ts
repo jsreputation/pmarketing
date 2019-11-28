@@ -44,7 +44,8 @@ describe('LoginComponent', () => {
           useValue: {
             login: () => of(true),
             getInterruptedUrl: () => null,
-            getAppToken: () => of({})
+            getAppToken: () => of({}),
+            getAppAccessToken: () => 'token',
           }
         }
       ],

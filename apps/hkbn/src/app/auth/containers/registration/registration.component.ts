@@ -13,7 +13,6 @@ const countries = ['China', 'Hong Kong', 'Macau'];
 export class RegistrationComponent implements OnInit {
   /* istanbul ignore next */
   public countryCodes: ICountryCode[];
-  public appAccessToken: string;
   constructor(
     private auth: AuthenticationService,
     private router: Router,

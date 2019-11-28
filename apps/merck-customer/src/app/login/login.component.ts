@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit, PageAppearence {
   public currentSelectedLanguage: string = 'en';
 
   public preAuth: boolean;
-  public appAccessToken: string;
 
   constructor(
     private router: Router,
@@ -50,15 +49,16 @@ export class LoginComponent implements OnInit, PageAppearence {
 
   public ngOnInit(): void {
     this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
-    this.authService.getAppToken().subscribe(
-      (res) => {
-        this.appAccessToken = res.access_token;
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
-      },
-      (err) => {
-        console.log('Error' + err);
-      }
-    );
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
 
     if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
       this.authService.autoLogin().subscribe(

@@ -12,7 +12,7 @@ export class SignUpComponent implements OnInit {
   public signUpForm: FormGroup;
   public errorMessage?: string;
   public hide: boolean = true;
-  public appAccessToken: string;
+  public appAccessTokenFetched: boolean;
   constructor(
     private fb: FormBuilder,
     private authService: AuthenticationService,
@@ -21,11 +21,16 @@ export class SignUpComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initForm();
-    this.authService.getAppToken().subscribe((token) => {
-      this.appAccessToken = token.access_token;
-    }, (err) => {
-      console.error('Error' + err);
-    });
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
   }
 
   public initForm(): void {

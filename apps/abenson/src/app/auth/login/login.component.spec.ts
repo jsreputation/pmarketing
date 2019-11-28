@@ -16,6 +16,7 @@ describe('LoginComponent', () => {
   let notificationService: NotificationService;
   const authenticationServiceStub = {
     login: () => of(null),
+    getAppAccessToken: () => 'token',
     getAppToken: () => of({})
   };
 

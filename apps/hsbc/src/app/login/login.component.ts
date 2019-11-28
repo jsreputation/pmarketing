@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
   public errorMessage: string | null;
   public sourceType: string;
   public isLoading: boolean = true;
-  public appAccessToken: string;
+  public appAccessTokenFetched: boolean;
 
   constructor(
     private router: Router,
@@ -71,11 +71,16 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.authService.getAppToken().subscribe((token) => {
-      this.appAccessToken = token.access_token;
-    }, (err) => {
-      console.error('Error' + err);
-    });
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+         this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
     this.configService.readAppConfig().pipe(
       tap((config: IConfig) => {
         this.preAuth = config.preAuth as boolean;
