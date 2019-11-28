@@ -41,6 +41,10 @@ const authServiceStub: Partial<AuthenticationService> = {
   getUserId: () => 0,
   autoLogin: () => of(),
   mergeUserById: () => of(),
+  getPI: () => '',
+  getUserAccessToken: () => '',
+  getAnonymous: () => true,
+  logout: () => { }
 };
 
 describe('SignUpComponent', () => {
