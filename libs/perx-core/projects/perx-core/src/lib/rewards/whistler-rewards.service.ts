@@ -17,6 +17,7 @@ import {
   IWRelationshipsDataType
 } from '@perx/whistler';
 import { oc } from 'ts-optchain';
+import { WRedemptionType } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -30,14 +31,14 @@ export class WhistlerRewardsService implements RewardsService {
     this.baseUrl = `${config.apiHost}/reward/entities`;
   }
 
-  private static WRedemptionToRT(rt: string): RedemptionType {
-    if (rt === 'Promo Code') {
+  private static WRedemptionToRT(rt: WRedemptionType): RedemptionType {
+    if (rt === WRedemptionType.promoCode) {
       return RedemptionType.txtCode;
     }
-    if (rt === 'QR Code') {
+    if (rt === WRedemptionType.qrCode) {
       return RedemptionType.qr;
     }
-    if (rt === 'Merchant PIN') {
+    if (rt === WRedemptionType.merchantPin) {
       return RedemptionType.pin;
     }
 
