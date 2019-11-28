@@ -7,6 +7,7 @@ import { switchMap } from 'rxjs/operators';
 import { RewardsTableMenuActions } from '../../rewards-actions/rewards-table-menu-actions';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
+import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
 @Component({
   selector: 'cl-rewards-list-page',
