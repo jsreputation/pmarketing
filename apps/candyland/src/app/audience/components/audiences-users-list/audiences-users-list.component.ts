@@ -28,7 +28,6 @@ import {
 } from '../../audience.model';
 import { UpsertUserPopupComponent } from '../../containers/upsert-user-popup/upsert-user-popup.component';
 
-
 @Component({
   selector: 'cl-audiences-users-list',
   templateUrl: './audiences-users-list.component.html',
