@@ -1,0 +1,33 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  max-width: 80rem;
+  margin: 0 2rem;
+
+  h2 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 2rem;
+    color: #212121;
+  }
+
+  .subheading {
+    font-size: 1.4rem;
+    color: #666666;
+    font-style: normal;
+    font-weight: normal;
+    margin-top: 0.8rem;
+  }
+
+  .pin-input-container {
+    width: 100%;
+    margin: 3rem auto;
+    float: none;
+  }
+
+  .bottom-text {
+    color: 666666;
+    font-size: 1.2rem;
+  }
+}

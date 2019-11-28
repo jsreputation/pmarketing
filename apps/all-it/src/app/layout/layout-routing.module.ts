@@ -63,6 +63,11 @@ const routes: Routes = [
         loadChildren: (): any => import('../change-password/change-password.module')
                       .then((mod: any) => mod.ChangePasswordModule)
       },
+      {
+        path: 'enter-pin/:type',
+        loadChildren: (): any => import('../enter-pin/enter-pin.module')
+                      .then((mod: any) => mod.EnterPinModule)
+      },
       { path: 'reward-detail/:id', component: RewardDetailsComponent },
       { path: 'c/:key', component: ContentComponent },
     ]

@@ -46,6 +46,7 @@ import {
   LoyaltySummaryComponent,
   LoyaltyTransactionsListComponent,
   NewsfeedComponent,
+  PinInputComponent
 } from '@perx/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -71,6 +72,7 @@ import { WalletHistoryComponent } from './wallet-history/wallet-history.componen
 import { ProfileComponent } from './profile/profile.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { EnterPinComponent } from './enter-pin/enter-pin.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -117,7 +119,9 @@ const comps: any[] = [
   WalletHistoryComponent,
   TransactionHistoryComponent,
   ProfileComponent,
-  ChangePasswordComponent
+  ChangePasswordComponent,
+  EnterPinComponent,
+  PinInputComponent
 ];
 
 @NgModule({

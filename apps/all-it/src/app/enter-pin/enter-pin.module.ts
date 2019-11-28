@@ -1,23 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProfileComponent } from '@perx/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
-import { MatListModule, MatIconModule } from '@angular/material';
+import { EnterPinComponent } from '@perx/blackcomb-pages';
+import { UtilsModule } from '@perx/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [{
   path: '',
-  component: ProfileComponent
+  component: EnterPinComponent
 }];
 
 @NgModule({
   declarations: [
-    ProfileComponent
+    EnterPinComponent
   ],
   imports: [
     CommonModule,
-    MatListModule,
-    MatIconModule,
+    UtilsModule,
+    TranslateModule.forChild(),
     RouterModule.forChild(routes)
   ]
 })
-export class ProfileModule { }
+export class EnterPinModule { }
