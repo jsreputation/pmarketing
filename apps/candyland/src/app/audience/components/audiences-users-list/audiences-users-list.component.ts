@@ -72,7 +72,6 @@ export class AudiencesUsersListComponent implements AfterViewInit {
   }
 
   public openEditUserDialog(user: any): void {
-    console.log('user', user);
     const dialogData: IUpsertUserPopup = {
       panelClass: 'audience-dialog',
       data: {
