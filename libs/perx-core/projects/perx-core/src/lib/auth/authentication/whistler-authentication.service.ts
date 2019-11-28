@@ -241,7 +241,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public logout(): void {
-    this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'pi']);
+    this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'pi', 'anonymous']);
   }
 
   // @ts-ignore
