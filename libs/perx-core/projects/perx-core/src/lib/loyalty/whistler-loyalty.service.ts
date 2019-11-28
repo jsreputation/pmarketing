@@ -12,6 +12,7 @@ import {
   IJsonApiListPayload,
   IJsonApiItem,
   IJsonApiItemPayload,
+  IWRelationshipsDataType
 } from '@perx/whistler';
 import { AuthenticationService } from '../auth/authentication/authentication.service';
 
@@ -38,7 +39,8 @@ export class WhistlerLoyaltyService {
   ): ILoyalty {
     const card = cards && cards.find(cardTemp =>
       cardTemp.type === 'cards' && cardTemp.attributes.user_id === userId &&
-      oc(loyalty).relationships.cards.data([]).filter(rCard => rCard.type === 'cards' && rCard.id === cardTemp.id).length > 0
+      (oc(loyalty).relationships.cards.data([]) as IWRelationshipsDataType[])
+        .filter(rCard => rCard.type === 'cards' && rCard.id === cardTemp.id).length > 0
     );
     return {
       id: Number.parseInt(loyalty.id, 10),
