@@ -309,14 +309,18 @@ jobs:
             echo 'export HELM_REPO_URL=https://rails-on-services.github.io/helm-charts' >> $BASH_ENV
             echo 'export HELM_APP="$APP"' >> $BASH_ENV
             if [ $APP == 'candyland' ]; then
-              if [ $TARGET_NAMESPACE == 'master' ]; then
-                INGRESS_HOST="candyland.${TARGET_ENV}.whistler.perxtech.io"
+              if [ $TARGET_ENV == 'production' ]; then
+                INGRESS_HOST="candyland.whistler.perxtech.io"
+              elif [ $TARGET_ENV == 'staging' ]; then
+                INGRESS_HOST="candyland.staging.whistler.perxtech.io"
               else
                 INGRESS_HOST="candyland-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
               fi
             elif [ $APP == 'blackcomb' ]; then
-              if [ $TARGET_NAMESPACE == 'master' ]; then
-                INGRESS_HOST="*-blackcomb.${TARGET_ENV}.whistler.perxtech.io"
+              if [ $TARGET_ENV == 'production' ]; then
+                INGRESS_HOST="*-blackcomb.whistler.perxtech.io"
+              elif [ $TARGET_ENV == 'staging' ]; then
+                NGRESS_HOST="*-blackcomb.staging.whistler.perxtech.io"
               else
                 INGRESS_HOST="*-blackcomb-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
               fi
