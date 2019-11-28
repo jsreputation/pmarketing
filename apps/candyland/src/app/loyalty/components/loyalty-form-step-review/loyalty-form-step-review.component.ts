@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CustomDataSource } from '@cl-shared/table';
 import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
@@ -12,7 +12,7 @@ import { ConfigService } from '@cl-core-services';
   templateUrl: './loyalty-form-step-review.component.html',
   styleUrls: ['./loyalty-form-step-review.component.scss']
 })
-export class LoyaltyFormStepReviewComponent {
+export class LoyaltyFormStepReviewComponent implements OnInit, OnDestroy {
   @Input() public group: FormGroup;
   @Input() public dataSource: CustomDataSource<ICustomTireForm>;
   public statusLabel: { [key: string]: StatusLabelConfig };
@@ -21,8 +21,15 @@ export class LoyaltyFormStepReviewComponent {
     return this.group.value;
   }
 
-  constructor(private configService: ConfigService) {
+  constructor(private configService: ConfigService) {}
+
+  public  ngOnInit(): void {
     this.getStatusesLabel();
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private getStatusesLabel(): void {
@@ -32,4 +39,5 @@ export class LoyaltyFormStepReviewComponent {
         this.statusLabel = statuses;
       });
   }
+
 }

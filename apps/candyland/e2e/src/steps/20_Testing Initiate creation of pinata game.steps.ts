@@ -18,9 +18,9 @@ Given(/^1_I am on engagement page$/, async () => {
 Given(/^1_I click on the create new button$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the create new button to load
-  await browser.wait(ec.elementToBeClickable(PageEngagement.engagementCreateNewButton()), 6000);
+  await browser.wait(ec.elementToBeClickable(Element.clButton()), 6000);
   // clicking on the create new button
-  await PageEngagement.engagementCreateNewButton().click();
+  await Element.clButton().click();
 });
 
 When(/^1_I Click on the game option.$/, async () => {
@@ -53,9 +53,9 @@ Given(/^2_I am on engagement page$/, async () => {
 Given(/^2_I click on the create new button$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the create new button to load
-  await browser.wait(ec.elementToBeClickable(PageEngagement.engagementCreateNewButton()), 6000);
+  await browser.wait(ec.elementToBeClickable(Element.clButton()), 6000);
   // clicking on the create new button
-  await PageEngagement.engagementCreateNewButton().click();
+  await Element.clButton().click();
 });
 
 Given(/^2_I Click on the game option.$/, async () => {

@@ -1,12 +1,17 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClient } from '@angular/common/http';
+
+import { of } from 'rxjs';
 
 import { SurveyService } from './survey.service';
-import { ConfigModule } from '../../public-api';
-import { ICampaignService } from '../campaign/icampaign.service';
-import { HttpClient } from '@angular/common/http';
 import { ISurvey } from './models/survey.model';
-import { of } from 'rxjs';
-import { ICampaign, CampaignType, CampaignState } from '../campaign/models/campaign.model';
+
+import {
+  ICampaign,
+  CampaignType,
+  CampaignState,
+} from '../campaign/models/campaign.model';
+import { ICampaignService } from '../campaign/icampaign.service';
 
 import {
   IWPostAnswerAttributes,
@@ -14,6 +19,7 @@ import {
   IJsonApiItem,
   IWSurveyEngagementAttributes,
 } from '@perx/whistler';
+import { ConfigModule } from '../config/config.module';
 
 describe('SurveyService', () => {
   let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
@@ -122,13 +128,10 @@ describe('SurveyService', () => {
         }
       },
     };
-    const survey: ISurvey = {
-      title: '',
-      questions: []
-    };
+
     httpClientSpy.post.and.returnValue(of(res));
 
-    service.postSurveyAnswer([], survey, 3)
+    service.postSurveyAnswer([], 3, 1)
       .subscribe(
         (s: { hasOutcomes: boolean }) => {
           expect(s.hasOutcomes).toBeFalsy();
@@ -139,7 +142,7 @@ describe('SurveyService', () => {
     expect(httpClientSpy.post.calls.count()).toBe(1, 'one call');
     expect(httpClientSpy.post.calls.argsFor(0)).toEqual([
       'https://blabla/survey/answers',
-      { data: { type: 'answers', attributes: { engagement_id: undefined, campaign_entity_id: 3, content: [] } } },
+      { data: { type: 'answers', attributes: { engagement_id: 1, campaign_entity_id: 3, content: [] } } },
       { headers: { 'Content-Type': 'application/vnd.api+json' } }
     ]);
   });

@@ -29,10 +29,9 @@ export class StatusLabelComponent implements OnChanges {
   };
 
   public ngOnChanges(): void {
-    if (!this.config || !this.status) {
+    if (!this.status || !this.config) {
       return;
     }
-
     this.statusConfig = this.config[this.status];
   }
 }

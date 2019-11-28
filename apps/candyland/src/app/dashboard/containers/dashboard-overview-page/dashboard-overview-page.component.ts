@@ -4,6 +4,7 @@ import { switchMap, tap, takeUntil } from 'rxjs/operators';
 
 import { DashboardService } from '@cl-core/services';
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
+import { CardType } from '@perx/chart';
 
 @Component({
   selector: 'cl-dashboard-overview-page',
@@ -22,6 +23,8 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
     { name: 'activeCampaigns', id: 153, title: 'OVERVIEW_GRAPHIC_PAGE.TOTAL_RUNNING_CAMPAIGNS' }
   ];
   public tabsValue: any;
+  public ct: typeof CardType = CardType;
+
   public get tabsIds(): number[] {
     return this.tabs.map(tab => tab.id);
   }

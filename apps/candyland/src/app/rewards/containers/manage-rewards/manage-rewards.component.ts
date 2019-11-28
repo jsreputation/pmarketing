@@ -12,8 +12,8 @@ import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
-import { IWTierRewardCost } from '../../../../../../../libs/perx-whistler/dist/whistler';
-
+import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
+import { IWTierRewardCost } from '@perx/whistler';
 @Component({
   selector: 'cl-manage-rewards',
   templateUrl: './manage-rewards.component.html',
