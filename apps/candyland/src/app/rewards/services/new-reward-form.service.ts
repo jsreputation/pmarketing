@@ -153,6 +153,7 @@ export class NewRewardFormService {
 
   public getRewardLoyaltyTiersGroup(): FormGroup {
     return new FormGroup({
+      tierRewardCostsId: new FormControl(null),
       customTierId: new FormControl(null),
       name: new FormControl(null),
       statusTiers: new FormControl(null),

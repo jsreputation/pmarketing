@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IWRewardEntityAttributes } from '@perx/whistler';
-
+import { IWRewardEntityAttributes, IWTierRewardCost } from '@perx/whistler';
+// tslint:disable
 @Injectable({
   providedIn: 'root'
 })
@@ -45,15 +45,24 @@ export class RewardHttpService {
     return this.http.patch<IJsonApiPayload<IWRewardEntityAttributes>>(ApiConfig.rewardsPath + '/' + id, data);
   }
 
-  public getRewardTierList(): Observable<any> {
-    return this.http.get(ApiConfig.rewardsTierPath);
+  public getRewardTierList(page: number): Observable<IJsonApiListPayload<IWTierRewardCost[]>> {
+    const params: any = {
+      'page[number]': page ? page : 1,
+      'page[size]': 20
+    };
+    return this.http.get<IJsonApiListPayload<IWTierRewardCost[]>>(ApiConfig.rewardsTierPath, { params: params });
   }
 
   public getRewardTier(id: string): Observable<any> {
     return this.http.get(ApiConfig.rewardsTierPath + `/${id}`);
   }
 
-  public createRewardTier(data: any): Observable<any> {
-    return this.http.post(ApiConfig.rewardsTierPath, data);
+  public createRewardTier(data: IWTierRewardCost): Observable<IJsonApiPostItem<IWTierRewardCost>> {
+    return this.http.post<IJsonApiPostItem<IWTierRewardCost>>(ApiConfig.rewardsTierPath, {data: data});
   }
+
+  public patchRewardTier(data: any): Observable<any> {
+    return this.http.patch(`${ApiConfig.rewardsTierPath}/${data.id}` , {data: data});
+  }
+
 }

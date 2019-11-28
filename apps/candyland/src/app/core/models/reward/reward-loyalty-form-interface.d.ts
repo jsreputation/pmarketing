@@ -5,6 +5,7 @@ declare interface ILoyaltyFormGroup {
 }
 
 declare interface ILoyaltyTiersFormGroup {
+  tierRewardCostsId: string;
   customTierId: string;
   name: string;
   statusTiers: boolean;

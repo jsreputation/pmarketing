@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import * as striptags from 'striptags';
 
-import { IWRewardEntityAttributes } from '@perx/whistler';
+import { IWRewardEntityAttributes, IWTierRewardCost } from '@perx/whistler';
 
 export class RewardHttpAdapter {
 
@@ -208,6 +208,34 @@ export class RewardHttpAdapter {
           loyalties: null,
         }
       }
+    };
+  }
+
+  public static transformFromLoyaltyForm(tier: ILoyaltyTiersFormGroup, rewardId: string, cost: number): IWTierRewardCost {
+    const result: IWTierRewardCost = {
+        type: 'tier_reward_costs',
+        attributes: {
+          apply_tier_discount: tier.statusDiscount ? tier.statusDiscount : false,
+          tier_value: cost ? cost : 0,
+          custom_tier_id: tier.customTierId,
+          entity_id: rewardId
+        }
+    };
+
+    if (tier.tierRewardCostsId) {
+      result['id'] = tier.tierRewardCostsId;
+    }
+
+    return result;
+  }
+
+  public static transformToLoyaltyCost(data: IWTierRewardCost): ITierRewardCost {
+    return {
+      tierRewardCostsId: data.id,
+      statusDiscount: data.attributes.apply_tier_discount,
+      customTierId: data.attributes.custom_tier_id,
+      rewardId: data.attributes.entity_id,
+      costReward: data.attributes.tier_value
     };
   }
 }
