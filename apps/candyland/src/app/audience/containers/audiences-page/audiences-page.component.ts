@@ -1,22 +1,16 @@
-import { IWAudiences, IWUser } from '@perx/whistler';
-import {
-  Component,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  AfterViewInit,
-  OnInit,
-  OnDestroy
-} from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { AudiencesService } from '@cl-core/services';
-import { AddUserPopupComponent } from '../add-user-popup/add-user-popup.component';
-import { FormControl } from '@angular/forms';
-import { ManageListPopupComponent } from '../manage-list-popup/manage-list-popup.component';
-import { SettingsService } from '@cl-core-services';
-import { combineLatest, Observable, Subject } from 'rxjs';
-import { distinctUntilChanged, filter, map, switchMap, takeUntil } from 'rxjs/operators';
-import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
-import { CustomDataSource, DataSourceStates } from '@cl-shared/table/data-source/custom-data-source';
+import {IWAudiences, IWUser} from '@perx/whistler';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {AudiencesService} from '@cl-core/services';
+import {UpsertUserPopupComponent} from '../upsert-user-popup/upsert-user-popup.component';
+import {FormControl} from '@angular/forms';
+import {ManageListPopupComponent} from '../manage-list-popup/manage-list-popup.component';
+import {SettingsService} from '@cl-core-services';
+import {combineLatest, Observable, Subject} from 'rxjs';
+import {distinctUntilChanged, filter, map, switchMap, takeUntil} from 'rxjs/operators';
+import {AudiencesUserService} from '@cl-core/services/audiences-user.service';
+import {CustomDataSource, DataSourceStates} from '@cl-shared/table/data-source/custom-data-source';
+import {IUpsertUserPopup, Type} from '../../audience.model';
 
 @Component({
   selector: 'cl-audiences-page',
@@ -71,7 +65,8 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   public openAddUserDialog(): void {
-    const dialogRef = this.dialog.open(AddUserPopupComponent, {panelClass: 'audience-dialog'});
+    const dialogData: IUpsertUserPopup = { panelClass: 'audience-dialog', data: {type: Type.Add} };
+    const dialogRef = this.dialog.open(UpsertUserPopupComponent, dialogData);
 
     dialogRef.afterClosed()
       .pipe(

@@ -13,7 +13,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { map, switchMap, tap, filter, distinct, takeUntil } from 'rxjs/operators';
-import { IWAssignedAttributes } from '@perx/whistler';
+import { IWAssignedAttributes, IWUser } from '@perx/whistler';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
@@ -21,6 +21,8 @@ import { CustomDataSource } from '@cl-shared';
 import { AudiencesVouchersService } from '@cl-core/services/audiences-vouchers.service';
 import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
+import { UpsertUserPopupComponent } from '../upsert-user-popup/upsert-user-popup.component';
+import {IUpsertUserPopup, Type} from '../../audience.model';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -32,7 +34,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   private destroy$: Subject<void> = new Subject();
 
   public userId: string;
-  public user: any;
+  public user: IWUser;
   public tabsFilterConfig: OptionConfig[];
   public dataSource: CustomDataSource<any>;
 
@@ -115,7 +117,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       takeUntil(this.destroy$),
     )
       .subscribe(
-        user => {
+        (user: IWUser) => {
           this.user = user;
           this.cd.detectChanges();
         },
@@ -135,5 +137,20 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       const counterObject = PrepareTableFilters.countFieldValue(data, 'status');
       this.tabsFilterConfig = PrepareTableFilters.prepareTabsFilterConfig(counterObject);
     });
+  }
+
+  public openEditUserDialog(): void {
+    const dialogData: IUpsertUserPopup = { panelClass: 'audience-dialog', data: {type: Type.Edit} };
+    const dialogRef = this.dialog.open(UpsertUserPopupComponent, dialogData);
+
+    dialogRef.afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap((newUser: any) => this.audiencesUserService.createUser(newUser))
+      )
+      .subscribe(() => {
+        this.dataSource.updateData();
+        this.snack.open('User successfully created.', 'x', {duration: 2000});
+      });
   }
 }
