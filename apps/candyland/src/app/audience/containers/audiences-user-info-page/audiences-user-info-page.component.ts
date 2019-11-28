@@ -9,20 +9,43 @@ import {
   OnInit,
   Renderer2
 } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import {
+  MatDialog,
+  MatSnackBar,
+} from '@angular/material';
+import {
+  ActivatedRoute,
+  ParamMap,
+  Router,
+} from '@angular/router';
+
 import { Subject } from 'rxjs';
-import { map, switchMap, tap, filter, distinct, takeUntil } from 'rxjs/operators';
-import { IWAssignedAttributes, IWUser } from '@perx/whistler';
-import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
+import {
+  map,
+  switchMap,
+  tap,
+  filter,
+  distinct,
+  takeUntil,
+} from 'rxjs/operators';
+
+import {
+  IWAssignedAttributes,
+  IWUser,
+} from '@perx/whistler';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { CustomDataSource } from '@cl-shared';
 import { AudiencesVouchersService } from '@cl-core/services/audiences-vouchers.service';
 import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
+
+import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
 import { UpsertUserPopupComponent } from '../upsert-user-popup/upsert-user-popup.component';
-import {IUpsertUserPopup, Type} from '../../audience.model';
+import {
+  IUpsertUserPopup,
+  Type,
+} from '../../audience.model';
 
 @Component({
   selector: 'cl-audiences-user-info-page',

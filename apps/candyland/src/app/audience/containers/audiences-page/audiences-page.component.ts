@@ -1,16 +1,48 @@
-import {IWAudiences, IWUser} from '@perx/whistler';
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {MatDialog, MatSnackBar} from '@angular/material';
-import {AudiencesService} from '@cl-core/services';
-import {UpsertUserPopupComponent} from '../upsert-user-popup/upsert-user-popup.component';
-import {FormControl} from '@angular/forms';
-import {ManageListPopupComponent} from '../manage-list-popup/manage-list-popup.component';
-import {SettingsService} from '@cl-core-services';
-import {combineLatest, Observable, Subject} from 'rxjs';
-import {distinctUntilChanged, filter, map, switchMap, takeUntil} from 'rxjs/operators';
-import {AudiencesUserService} from '@cl-core/services/audiences-user.service';
-import {CustomDataSource, DataSourceStates} from '@cl-shared/table/data-source/custom-data-source';
-import {IUpsertUserPopup, Type} from '../../audience.model';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import {
+  MatDialog,
+  MatSnackBar,
+} from '@angular/material';
+import { FormControl } from '@angular/forms';
+
+import {
+  combineLatest,
+  Observable,
+  Subject,
+} from 'rxjs';
+import {
+  distinctUntilChanged,
+  filter,
+  map,
+  switchMap,
+  takeUntil,
+} from 'rxjs/operators';
+
+import {
+  IWAudiences,
+  IWUser,
+} from '@perx/whistler';
+import { AudiencesService } from '@cl-core/services';
+import { SettingsService } from '@cl-core-services';
+import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
+import {
+  CustomDataSource,
+  DataSourceStates,
+} from '@cl-shared/table/data-source/custom-data-source';
+
+import { UpsertUserPopupComponent } from '../upsert-user-popup/upsert-user-popup.component';
+import { ManageListPopupComponent } from '../manage-list-popup/manage-list-popup.component';
+import {
+  IUpsertUserPopup,
+  Type,
+} from '../../audience.model';
 
 @Component({
   selector: 'cl-audiences-page',
