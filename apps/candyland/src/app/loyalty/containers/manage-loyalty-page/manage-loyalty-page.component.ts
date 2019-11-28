@@ -189,6 +189,12 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    // const params = {
+    //   include: 'rules.rule_conditions',
+    //   'filter[domain_id]': 196,
+    //   'filter[domain_type]': 'Perx::Loyalty::BasicTier',
+    // };
+    // this.ruleService.getRuleSetList(params).subscribe(data => console.log('getRuleSetList', data));
     this.initPools();
     this.initForm();
     this.handleRouteParams()
@@ -534,7 +540,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   private getCustomTierRuleSet(id: string): Observable<any> {
-    return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', id)
+    return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::CustomTier', id)
       .pipe(
         tap(ruleSet => console.log('ruleSet', ruleSet)),
         tap(ruleSet => this.customTierRuleSetMap[id] = ruleSet),

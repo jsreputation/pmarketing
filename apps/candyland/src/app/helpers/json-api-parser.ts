@@ -15,11 +15,11 @@ export class JsonApiParser {
   public static parseData(source: any, adapterFunction: (data: any) => any) {
     const sourceData = source.data;
     if (Utils.isObject(sourceData)) {
-      return adapterFunction(sourceData);
+      return (adapterFunction && typeof adapterFunction === 'function') ? adapterFunction(sourceData) : sourceData;
     }
 
     if (Utils.isArray(sourceData)) {
-      return sourceData.map(item => adapterFunction(item));
+      return sourceData.map(item =>  (adapterFunction && typeof adapterFunction === 'function') ? adapterFunction(item) : item);
     }
   }
 
@@ -58,9 +58,9 @@ export class JsonApiParser {
 
     if (Utils.isArray(sourceData)) {
       sourceData.forEach((sourceItem, i) => {
-        // console.log('sourceItem', sourceItem);
+        console.log('sourceItem', sourceItem);
         const result = JsonApiParser.findRelations(sourceItem, type, mapIncludes);
-        // console.log('result', result);
+        console.log('result', result);
         if (result) {
           target[i] = JsonApiParser.setResult(target[i], fieldName, result);
         }

@@ -1,3 +1,6 @@
+import { JsonApiParser } from '@cl-helpers/json-api-parser';
+import Utils from '@cl-helpers/utils';
+
 export class LoyaltyRuleHttpAdapter {
 
   // public static transformToLoyalties(data: any): { data: any[] } {
@@ -70,27 +73,45 @@ export class LoyaltyRuleHttpAdapter {
         reward_id: 1,
         name: data.name,
         conditions: data.conditions.map(condition =>
-          LoyaltyRuleHttpAdapter.transformFromFromConditionForm(condition)
+          LoyaltyRuleHttpAdapter.transformFromConditionForm(condition)
         )
       }
     };
   }
 
-  public static transformFromToConditionForm(data: any): any {
+  public static transformToConditionForm(data: any): any {
     return {
-      type: data.field,
-      value: data.value,
-      operator: data.sign,
-      valueType: data.value_type
+      type: data.attributes.field,
+      value: data.attributes.value,
+      operator: data.attributes.sign,
+      valueType: data.attributes.value_type
     };
   }
 
-  public static transformFromFromConditionForm(data: any): any {
+  public static transformFromConditionForm(data: any): any {
     return {
       field: data.type,
       sign: data.operator,
-      value: data.value,
+      value: (data.valueType === 'date') ? new Date(data.value) : data.value,
       value_type: data.valueType
     };
+  }
+
+  public static transformFromRuleSetWithIncludes(data: any): any {
+    let formattedData = JsonApiParser.parseDataWithIncludes(data, LoyaltyRuleHttpAdapter.transformToRuleSetForm,
+      {rules: {fieldName: 'rules'}});
+    if (Utils.isArray(formattedData)) {
+      formattedData = formattedData[0];
+    }
+    const conditionsIncludes = JsonApiParser.getMapIncludes(data, 'rule_conditions', LoyaltyRuleHttpAdapter.transformToConditionForm);
+    formattedData.rules = formattedData.rules.map((rule) => {
+      const formattedRule = LoyaltyRuleHttpAdapter.transformToRuleForm(rule);
+      const conditions = JsonApiParser.findRelations(rule, 'rule_conditions', conditionsIncludes);
+      if (conditions) {
+        formattedRule.conditions = conditions;
+      }
+      return formattedRule;
+    });
+    return formattedData;
   }
 }

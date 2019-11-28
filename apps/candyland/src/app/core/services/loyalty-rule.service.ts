@@ -23,33 +23,25 @@ export class LoyaltyRuleService {
 
   public getRuleSetList(params: HttpParamsOptions): Observable<any> {
     const httpParams = ClHttpParams.createHttpParams(params);
-    return this.rulesHttpService.getRuleSetList(httpParams).pipe(
-      map(response => {
-        return LoyaltyRuleHttpAdapter.transformToList(response.data);
-        // return JsonApiParser.parseDataWithIncludes(response, LoyaltyRuleHttpAdapter.transformToList, {
-        // 'rule_conditions': {LoyaltyRuleHttpAdapter.transfor}
-        // });
-      })
-    );
+    return this.rulesHttpService.getRuleSetList(httpParams);
   }
 
   public findAndCreateRuleSet(tierType: string, tierId: string): Observable<any> {
     const params = {
-      include: 'domain',
+      include: 'domain,rules.rule_conditions',
       'filter[domain_id]': tierId,
       'filter[domain_type]': tierType
     };
     return this.getRuleSetList(params)
       .pipe(
-        switchMap((data: any[]) => {
-          if (data.length > 0) {
+        switchMap((response: any) => {
+          if (response.data.length > 0) {
             console.log('find');
-            return of(data[0]);
+            return of(LoyaltyRuleHttpAdapter.transformFromRuleSetWithIncludes(response));
           }
           console.log('create');
           return this.createRuleSet(tierType, tierId);
         }),
-        // tap((data) => LoyaltyRuleHttpAdapter.transformToRuleForm(data))
       );
   }
 
