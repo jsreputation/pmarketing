@@ -65,7 +65,7 @@ Then(/^2_I will be redirected to the the engagment page.$/, async () => {
 Given(/^3_that i am at the engagement page.$/, async () => {
   await EngagementPage.navigateToEngagement();
   await browser.sleep(3000);
-  await browser.executeScript('WalkMeAPI.stopFlow()');
+  // await browser.executeScript('WalkMeAPI.stopFlow()');
 });
 
 When(/^3_I click on the create new button.$/, async () => {
