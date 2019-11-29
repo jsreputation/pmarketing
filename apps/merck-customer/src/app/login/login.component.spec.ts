@@ -51,7 +51,8 @@ describe('LoginComponent', () => {
             isAuthorized: () => of({}),
             login: () => {},
             getInterruptedUrl: () => null,
-            getAppToken: () => of({})
+            getAppToken: () => of({}),
+            getAppAccessToken: () => 'token'
           }
         },
         { provide: ProfileService, useValue: profileStub}

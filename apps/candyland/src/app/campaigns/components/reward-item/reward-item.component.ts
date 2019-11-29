@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup} from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
 @Component({
   selector: 'cl-reward-item',
@@ -9,8 +10,8 @@ import { AbstractControl, FormControl, FormGroup} from '@angular/forms';
 export class RewardItemComponent implements OnInit {
   @Input() public group: FormGroup = new FormGroup({
     value: new FormControl(null),
-    probability: new FormControl({value: 0, disabled: true}),
-    limit: new FormControl({value: 0})
+    probability: new FormControl({ value: 0, disabled: true }),
+    limit: new FormControl({ value: 0 })
   });
   @Output() private clickDelete: EventEmitter<any> = new EventEmitter<any>();
 
@@ -36,5 +37,4 @@ export class RewardItemComponent implements OnInit {
   public delete(): void {
     this.clickDelete.emit(this.data);
   }
-
 }

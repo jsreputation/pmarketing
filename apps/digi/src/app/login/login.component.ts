@@ -10,7 +10,7 @@ import { AuthenticationService, ConfigService, IConfig } from '@perx/core';
 export class LoginComponent implements OnInit {
   public preAuth: boolean;
   public failedAuth: boolean;
-
+  public appAccessTokenFetched: boolean;
   constructor(
     private router: Router,
     private authService: AuthenticationService,
@@ -21,6 +21,16 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => {
         this.preAuth = config.preAuth as boolean;
