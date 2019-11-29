@@ -7,12 +7,16 @@ import {
 } from 'protractor';
 
 export class DashboardAppPage {
-  public navigateToDashboard(): Promise<string> {
+  public static navigateToDashboard(): Promise<string> {
     return browser.get('dashboard') as Promise<string>;
   }
 }
 
 export class EngagementAppPage {
+
+  public static navigateToEngagement(): Promise<string> {
+    return browser.get('engagements') as Promise<string>;
+  }
 
   public static engagementItemArray(): ElementArrayFinder {
     return element.all(by.css('div.engagement-item'));
@@ -22,23 +26,15 @@ export class EngagementAppPage {
     return element.all(by.css('p.engagement-item-type'));
   }
 
-  public navigateToEngagement(): Promise<string> {
-    return browser.get('engagements') as Promise<string>;
-  }
-
-  public engagementTabOption(): ElementFinder {
-    return element.all(by.css('h3')).get(2);
-  }
-
-  public selectEngagementTypeDialog(): ElementFinder {
+  public static selectEngagementTypeDialog(): ElementFinder {
     return element(by.css('mat-dialog-content'));
   }
 
-  public engagementTypeOptions(): ElementArrayFinder {
+  public static engagementTypeOptions(): ElementArrayFinder {
     return element.all(by.css('cl-type-item'));
   }
 
-  public activeEngagementTypeOption(): ElementFinder {
+  public static activeEngagementTypeOption(): ElementFinder {
     return element(by.css('button.engagement-selector.active'));
   }
   public engagementNextButton(): ElementFinder {
