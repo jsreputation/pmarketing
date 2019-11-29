@@ -24,7 +24,7 @@ export interface IReward {
   merchantName?: string;
   merchantWebsite?: string;
   termsAndConditions: string;
-  howToRedeem: string;
+  howToRedeem?: string;
   redemptionType?: RedemptionType | null;
   categoryTags?: ICategoryTags[];
   inventory?: Inventory | null;

@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { RewardsService } from '@cl-core/services';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
+import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
 @Component({
   selector: 'cl-select-reward-popup',
