@@ -6,7 +6,7 @@
     <div class="reward-name">
         {{voucher.reward?.name}}
     </div>
-    <ngx-barcode [bc-value]="code" [bc-display-value]="true"></ngx-barcode>
+    <ngx-barcode *ngIf="voucher.code" [bc-value]="voucher.code" [bc-display-value]="true"></ngx-barcode>
     <div class="title">
       Present this bar code to the cashier to complete your transaction.
     </div>
