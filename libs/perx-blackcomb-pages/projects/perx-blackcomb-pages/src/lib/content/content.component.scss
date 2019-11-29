@@ -9,6 +9,32 @@
   align-items: center;
 }
 
+h1 {
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.015rem;
+}
+
+p {
+  font-size: 1.4rem;
+  line-height: 2.5rem;
+  letter-spacing: 0.025rem;
+  white-space: pre-line;
+  color: #666666;
+}
+
+li {
+  font-size: 1.4rem;
+  line-height: 2.5rem;
+  letter-spacing: 0.025rem;
+  margin-bottom: 1.6rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
 .content {
   margin: 2.4rem;
   font-size: 1.4rem;
