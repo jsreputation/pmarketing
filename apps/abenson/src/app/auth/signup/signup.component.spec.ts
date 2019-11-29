@@ -6,15 +6,16 @@ import { MatFormFieldModule, MatIconModule, MatCheckboxModule, MatInputModule } 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
 
 describe('SignupComponent', () => {
   let component: SignUpComponent;
   let fixture: ComponentFixture<SignUpComponent>;
-  const authenticationServiceStub = {};
+  const authenticationServiceStub = { getAppToken: () => of({}), getAppAccessToken: () => 'token' };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SignUpComponent ],
+      declarations: [SignUpComponent],
       imports: [
         FormsModule,
         ReactiveFormsModule,
