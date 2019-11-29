@@ -38,6 +38,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   private stateData: IPrePlayStateData;
   private maxRetryTimes: number = 5;
   private retryTimes: number = 0;
+  public appAccessTokenFetched: boolean;
 
   constructor(
     private formSvc: IFormsService,
@@ -55,6 +56,16 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.data$ = this.formSvc.getSignupForm();
     this.stateData = this.location.getState() as IPrePlayStateData;
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
   }
 
   public ngOnDestroy(): void {

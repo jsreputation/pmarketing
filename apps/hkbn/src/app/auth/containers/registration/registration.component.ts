@@ -13,12 +13,23 @@ const countries = ['China', 'Hong Kong', 'Macau'];
 export class RegistrationComponent implements OnInit {
   /* istanbul ignore next */
   public countryCodes: ICountryCode[];
+  public appAccessTokenFetched: boolean;
   constructor(
     private auth: AuthenticationService,
     private router: Router,
     private generalStaticDataService: GeneralStaticDataService
   ) { }
   public ngOnInit(): void {
+    const token = this.auth.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.auth.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
     this.generalStaticDataService.getCountriesList(countries).subscribe((codes) => this.countryCodes = codes);
   }
   public submitHandler(data: ISignUpData): void {
