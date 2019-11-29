@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class SignupComponent {
 
   public signupForm: FormGroup;
+  public errorMessage: string | null;
 
   constructor(
     private fb: FormBuilder,
@@ -26,7 +27,7 @@ export class SignupComponent {
       postcode: ['', Validators.required],
       countryCode: ['60', Validators.required],
       mobileNo: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', Validators.email],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
       accept_terms: [false, Validators.required],
@@ -38,7 +39,7 @@ export class SignupComponent {
     const passwordString = this.signupForm.get('password').value as string;
     const confirmPassword = this.signupForm.get('confirmPassword').value as string;
     if (passwordString !== confirmPassword) {
-      console.log('Password fields do not match');
+      this.errorMessage = 'Passwords do not match';
       return;
     }
 

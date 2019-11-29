@@ -59,6 +59,9 @@
                     <mat-error *ngIf="signupForm.get('email').hasError('required')">
                         <span>Email is</span><strong>REQUIRED</strong>
                     </mat-error>
+                    <mat-error *ngIf="signupForm.get('email').hasError('email')">
+                        <span>Incorrect email format</span>
+                    </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Password</mat-label>
