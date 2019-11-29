@@ -8,10 +8,7 @@ import { DataService } from '@perx/chart';
   providedIn: 'root'
 })
 export class DashboardService {
-
-  constructor(private dashboardHttpService: DashboardHttpService,
-              private dataService: DataService) {
-  }
+  constructor(private dashboardHttpService: DashboardHttpService, private dataService: DataService) { }
 
   public getDashboardGameCard(): Observable<any> {
     return this.dashboardHttpService.getDashboardGameCard()
@@ -31,13 +28,13 @@ export class DashboardService {
     return this.dashboardHttpService.getDashboardCampaignsTabs();
   }
 
-  public getTabValue(id: number, params: HttpParamsOptions ): Observable<any> {
+  public getTabValue(id: string, params: HttpParamsOptions): Observable<string | number | null> {
     return this.dataService.getData(id, params).pipe(
       map(response => response.rows[0][0] || null)
     );
   }
 
-  public getTabsValue(idArray: number[], params: HttpParamsOptions ): Observable<any> {
+  public getTabsValue(idArray: string[], params: HttpParamsOptions): Observable<(string | number | null)[]> {
     return combineLatest(idArray.map(id => this.getTabValue(id, params)));
   }
 }

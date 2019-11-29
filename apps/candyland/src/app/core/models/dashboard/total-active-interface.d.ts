@@ -1,5 +1,5 @@
-declare interface ITotal {
-  id?: number;
+export interface ITotal {
+  id?: string;
   name: string;
   value?: any;
   title: string;
