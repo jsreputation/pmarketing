@@ -61,6 +61,12 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   public tabsFilterConfig: OptionConfig[];
   public dataSource: CustomDataSource<any>;
 
+  private async updateLocalUser(): Promise<IWUser> {
+    this.user = await this.audiencesUserService.getUser(this.userId).toPromise();
+    this.cd.detectChanges();
+    return this.user;
+  }
+
   constructor(
     private audiencesUserService: AudiencesUserService,
     private vouchersService: AudiencesVouchersService,
@@ -177,8 +183,8 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
         filter(Boolean),
         switchMap((newUser: any) => this.audiencesUserService.updateUser(this.user.id, newUser))
       )
-      .subscribe(() => {
-        this.dataSource.updateData();
+      .subscribe(async () => {
+        await this.updateLocalUser();
         this.snack.open('User successfully updated.', 'x', {duration: 2000});
       });
   }
