@@ -13,7 +13,7 @@ import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-f
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
-import { IWTierRewardCost } from '@perx/whistler';
+import { IWTierRewardCostsAttributes } from '@perx/whistler';
 @Component({
   selector: 'cl-manage-rewards',
   templateUrl: './manage-rewards.component.html',
@@ -190,7 +190,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   private handleRouteParams(): void {
     this.route.paramMap.pipe(
       map((params: ParamMap) => params.get('id')),
-      tap(id => this.id = id),
+      tap((id: any) => this.id = id),
       switchMap((id: string) => id ? this.rewardsService.getRewardToForm(id) : of(null)),
       takeUntil(this.destroy$),
     )
@@ -245,8 +245,9 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     return this.rewardsService.getRewardTierList();
   }
 
-  private createRewardTiers(rewardLoyaltyForm: ILoyaltyFormGroup[], id: string): Observable<IJsonApiPostItem<IWTierRewardCost>[]> {
-    const result: Observable<IJsonApiPostItem<IWTierRewardCost>>[] = [];
+  private createRewardTiers(rewardLoyaltyForm: ILoyaltyFormGroup[], id: string)
+    : Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>[]> {
+    const result: Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>>[] = [];
 
     rewardLoyaltyForm.forEach((item: ILoyaltyFormGroup) => {
 
@@ -258,8 +259,9 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     return forkJoin(result);
   }
 
-  private updateRewardTiers(rewardLoyaltyForm: ILoyaltyFormGroup[]): Observable<IJsonApiPostItem<IWTierRewardCost>[]> {
-    const result: Observable<IJsonApiPostItem<IWTierRewardCost>>[] = [];
+  private updateRewardTiers(rewardLoyaltyForm: ILoyaltyFormGroup[])
+    : Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>[]> {
+    const result: Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>>[] = [];
     rewardLoyaltyForm.forEach((item) => {
       item.tiers.forEach((tier) => {
         result.push(this.rewardsService.patchRewardTier(tier, this.id, item.costReward));
@@ -280,7 +282,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   private filterRewardTierList(rewardTierList: ITierRewardCost[]): {[key: string]: ITierRewardCost} {
     const result: {[key: string]: ITierRewardCost} = {};
     rewardTierList.forEach((rewardTier) => {
-      if (this.id === '' + rewardTier.rewardId) {
+      if ('' + this.id === '' + rewardTier.rewardId) {
         result[rewardTier.customTierId] = rewardTier;
       }
     });

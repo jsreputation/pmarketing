@@ -29,9 +29,6 @@ export {
   IWTierRewardCostsAttributes,
   WRedemptionType
 } from './lib/reward/reward';
-export {
-  IWTierRewardCost
-} from './lib/reward/tier-reward-cost';
 export { IWAttbsObjTrans } from './lib/game/game';
 export {
   IWInstantOutcomeLimitAttributes,

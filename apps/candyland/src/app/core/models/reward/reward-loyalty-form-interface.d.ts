@@ -1,6 +1,6 @@
 declare interface ILoyaltyFormGroup {
   programId: string;
-  costReward: number;
+  costReward: string;
   tiers: ILoyaltyTiersFormGroup[];
 }
 

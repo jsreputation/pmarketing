@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import * as striptags from 'striptags';
 
-import { IWRewardEntityAttributes, IWTierRewardCost } from '@perx/whistler';
+import { IWRewardEntityAttributes, IWTierRewardCostsAttributes } from '@perx/whistler';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
@@ -103,7 +103,8 @@ export class RewardHttpAdapter {
     };
   }
 
-  public static transformFromRewardForm(data: IRewardEntityForm, loyalties?: any): IJsonApiItem<IWRewardEntityAttributes> {
+  public static transformFromRewardForm(data: IRewardEntityForm, loyalties?: any)
+    : IJsonApiItem<IWRewardEntityAttributes> {
     return {
       type: 'entities',
       attributes: {
@@ -132,7 +133,8 @@ export class RewardHttpAdapter {
   }
 
   public static getVoucherProperties(data: IRewardEntityForm): { [key: string]: any } {
-    if (data.vouchers.voucherCode.type === 'single_code' || data.rewardInfo.redemptionType === 'Merchant PIN') {
+    if (data.vouchers.voucherCode.type === 'single_code'
+      || data.rewardInfo.redemptionType === 'Merchant PIN') {
       return {
         code_type: data.vouchers.voucherCode.type,
         code: data.vouchers.voucherCode.singleCode.code
@@ -212,14 +214,15 @@ export class RewardHttpAdapter {
     };
   }
 
-  public static transformFromLoyaltyForm(tier: ILoyaltyTiersFormGroup, rewardId: string, cost: number): IWTierRewardCost {
-    const result: IWTierRewardCost = {
+  public static transformFromLoyaltyForm(tier: ILoyaltyTiersFormGroup, rewardId: string, cost: string)
+    : IJsonApiItem<Partial<IWTierRewardCostsAttributes>> {
+    const result: IJsonApiItem<Partial<IWTierRewardCostsAttributes>> = {
         type: 'tier_reward_costs',
         attributes: {
           apply_tier_discount: tier.statusDiscount ? tier.statusDiscount : false,
-          tier_value: cost ? cost : 0,
+          tier_value: cost ? cost : '0',
           custom_tier_id: tier.customTierId,
-          entity_id: rewardId
+          entity_id: +rewardId
         }
     };
 
@@ -230,9 +233,10 @@ export class RewardHttpAdapter {
     return result;
   }
 
-  public static transformToLoyaltyCost(data: IWTierRewardCost): ITierRewardCost {
+  public static transformToLoyaltyCost(data: IJsonApiItem<Partial<IWTierRewardCostsAttributes>>)
+    : ITierRewardCost {
     return {
-      tierRewardCostsId: data.id,
+      tierRewardCostsId: +data.id,
       statusDiscount: data.attributes.apply_tier_discount,
       customTierId: data.attributes.custom_tier_id,
       rewardId: data.attributes.entity_id,
