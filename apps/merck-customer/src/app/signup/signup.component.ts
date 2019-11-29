@@ -13,16 +13,29 @@ export class SignupComponent implements PageAppearence {
 
   public signupForm: FormGroup;
   public selectedCountry: string = '+852';
+  public appAccessTokenFetched: boolean;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthenticationService,
     private notificationService: NotificationService
-) {
-     this.initForm();
+  ) {
+    this.initForm();
+    this.getAppToken();
   }
-
+  private getAppToken(): void {
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
+  }
   private initForm(): void {
     this.signupForm = this.fb.group({
       name: ['', Validators.required],
@@ -88,13 +101,13 @@ export class SignupComponent implements PageAppearence {
 
       this.authService.signup(signUpData).subscribe(
         () => {
-          this.router.navigate(['enter-pin/register'], { state: { mobileNo: cleanedMobileNo } } );
+          this.router.navigate(['enter-pin/register'], { state: { mobileNo: cleanedMobileNo } });
         },
         err => {
           this.notificationService.addSnack(err.error.message);
         });
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   }
 
