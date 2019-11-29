@@ -22,7 +22,8 @@ import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/m
 
 const authenticationService = {
   signup: () => of(null),
-  getAppToken: () => of({})
+  getAppToken: () => of({}),
+  getAppAccessToken: () => ''
 };
 const mockUser: ISignUpData = {
   phone: '111',
