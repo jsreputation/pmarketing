@@ -56,6 +56,7 @@ describe('WhistlerCampaignService', () => {
       self: ''
     },
     attributes: {
+      pool_id: null,
       name: 'I love that stuff',
       start_date_time: now.toISOString(),
       engagement_type: WEngagementType.survey,
@@ -70,6 +71,7 @@ describe('WhistlerCampaignService', () => {
       self: ''
     },
     attributes: {
+      pool_id: null,
       name: '',
       start_date_time: tomorrow.toISOString(),
       engagement_type: WEngagementType.survey,
@@ -86,6 +88,7 @@ describe('WhistlerCampaignService', () => {
       self: ''
     },
     attributes: {
+      pool_id: null,
       name: '',
       start_date_time: yesterday.toISOString(),
       end_date_time: yesterday.toISOString(),
