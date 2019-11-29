@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
-import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 @Component({
   selector: 'cl-point-earn-rules-list',
@@ -20,7 +19,7 @@ export class PointEarnRulesListComponent {
   // @Input() public dataSource: any;
   @Input() public ruleSet: any;
   @Input() public displayedColumns: string[] = ['priority', 'name', 'conditions']; // 'pointsEarned'];
-  @Output() public rulesAction: EventEmitter<{ action: NewLoyaltyActions, data?: ICustomTireForm }> = new EventEmitter();
+  @Output() public rulesAction: EventEmitter<{ action: NewLoyaltyActions, data?: any }> = new EventEmitter();
 
   // @ViewChild('table', {static: false}) public table: MatTable<any>;
   public get rules(): any[] {
@@ -38,11 +37,11 @@ export class PointEarnRulesListComponent {
     this.rulesAction.emit({action: NewLoyaltyActions.editRule, data: {ruleSet: this.ruleSet, rule}});
   }
 
-  public duplicateItem(rule: ICustomTireForm): void {
+  public duplicateItem(rule: any): void {
     this.rulesAction.emit({action: NewLoyaltyActions.duplicateRule, data: {ruleSet: this.ruleSet, rule}});
   }
 
-  public deleteItem(rule: ICustomTireForm): void {
+  public deleteItem(rule: any): void {
     this.rulesAction.emit({action: NewLoyaltyActions.deleteRule, data: {ruleSet: this.ruleSet, rule}});
   }
 

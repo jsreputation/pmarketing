@@ -11,7 +11,7 @@ import {
   MatDialogModule,
   MatOptionModule,
   MatSelectModule,
-  MatTabsModule
+  MatTabsModule, MatProgressBarModule
 } from '@angular/material';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
@@ -126,7 +126,8 @@ import { ConditionInfoPipe } from './condition-info.pipe';
     DatePickerModule,
     PipesModule,
     TranslateModule,
-    DragDropModule
+    DragDropModule,
+    MatProgressBarModule
   ],
   providers: [
     LoyaltyFormsService,

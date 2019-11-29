@@ -43,6 +43,7 @@
     <mat-step completed="false">
       <ng-template matStepLabel>Point Earn Rules</ng-template>
       <cl-loyalty-form-step-earn-rules *ngIf="stepProgress >= 2"
+                                       [loader]="ruleLoader"
                                        [basicTierId]="basicTierId"
                                        [basicTierRuleSet]="basicTierRuleSet"
                                        [customTierRuleSetMap]="customTierRuleSetMap"

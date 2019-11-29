@@ -12,6 +12,7 @@ export class LoyaltyFormStepEarnRulesComponent implements OnInit {
   @Input() public basicTierId: any;
   @Input() public basicTierRuleSet: any;
   @Input() public customTierRuleSetMap: any;
+  @Input() public loader: boolean;
   @Output() public rulesAction: EventEmitter<{ action: NewLoyaltyActions, data?: any }> = new EventEmitter();
 
   public ngOnInit(): void {

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { concatMap, filter, finalize, last, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TierSetupPopupComponent } from 'src/app/loyalty/containers/tier-setup-popup/tier-setup-popup.component';
 import { LoyaltyFormsService } from '../../services/loyalty-forms.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
@@ -8,7 +8,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { LoyaltyStepForm } from '../../models/loyalty-step-form.enum';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from '@cl-core/services/user.service';
-import { BehaviorSubject, from, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, concat, from, Observable, of, Subject } from 'rxjs';
 import { AudiencesService } from '@cl-core-services';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
@@ -41,103 +41,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   public customTierDataSource: CustomDataSource<ICustomTireForm>;
   public basicTierRuleSet: any;
   public customTierRuleSetMap: any = {};
-  // public earnRules: any = [
-  //   {
-  //     tier: {
-  //       name: 'General Rules',
-  //       type: 'basicTier',
-  //       id: '1'
-  //     },
-  //     matchMethod: 'first',
-  //     rules: [
-  //       {
-  //         priority: 1,
-  //         name: 'Main Rule Prepaid',
-  //         conditions: ['Makes a PREPAID transaction'],
-  //         result: 'Apply 2x multiplier'
-  //       },
-  //       {
-  //         priority: 2,
-  //         name: 'Main Rule Accessories',
-  //         conditions: [
-  //           'Make a transaction for each RM100',
-  //           'Make a transaction of product category IT Accessories'
-  //         ],
-  //         result: '100 Bonus Points'
-  //       },
-  //       {
-  //         priority: 3,
-  //         name: 'Main Rule Peripherals',
-  //         conditions: [
-  //           'Make a transaction for each RM200',
-  //           'Make a transaction of product category IT Accessories'
-  //         ],
-  //         result: '100 Bonus Points'
-  //       },
-  //       {
-  //         priority: 4,
-  //         name: 'Main Rule Peripherals',
-  //         conditions: [
-  //           'Make a transaction for each RM200',
-  //           'Make a transaction of product category IT Accessories'
-  //         ],
-  //         result: '100 Bonus Points'
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     tier: {
-  //       name: 'Silver Tier',
-  //       type: 'customTier',
-  //       id: '11'
-  //     },
-  //     matchMethod: 'all',
-  //     rules: [
-  //       {
-  //         priority: 1,
-  //         name: 'Main Rule Prepaid',
-  //         conditions: ['Makes a PREPAID transaction'],
-  //         result: 'Apply 2x multiplier'
-  //       },
-  //       {
-  //         priority: 2,
-  //         name: 'Main Rule Accessories',
-  //         conditions: [
-  //           'Make a transaction for each RM100',
-  //           'Make a transaction of product category IT Accessories'
-  //         ],
-  //         result: '100 Bonus Points'
-  //       },
-  //       {
-  //         priority: 4,
-  //         name: 'Main Rule Peripherals',
-  //         conditions: [
-  //           'Make a transaction for each RM200',
-  //           'Make a transaction of product category IT Accessories'
-  //         ],
-  //         result: '100 Bonus Points'
-  //       },
-  //       {
-  //         priority: 3,
-  //         name: 'Main Rule Peripherals',
-  //         conditions: [
-  //           'Make a transaction for each RM200',
-  //           'Make a transaction of product category IT Accessories'
-  //         ],
-  //         result: '100 Bonus Points'
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     tier: {
-  //       name: 'Gold Tier',
-  //       type: 'customTier',
-  //       id: '13'
-  //     },
-  //     matchMethod: 'all',
-  //     rules: []
-  //   }
-  // ];
+  public ruleLoader: boolean = false;
   public pools: IWPools;
   public isEditPage: boolean = false;
   public showDraftButton: boolean = true;
@@ -214,8 +118,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
             this.initCustomTiersDataSource();
             break;
           case 2:
-            this.initBasicTierRuleSet();
-            this.initCustomTierRuleSetMap();
+            this.initAllRuleSet();
             break;
         }
         this.stepProgress = stepProgress;
@@ -356,7 +259,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
         console.log('tier', tier);
         this.updateCustomTiersDataSource();
         if (this.stepProgress >= 2) {
-          this.getCustomTierRuleSet(tier.id).subscribe();
+          this.createCustomTierRuleSet(tier.id).subscribe();
         }
       });
   }
@@ -379,7 +282,6 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
         this.updateCustomTiersDataSource();
         if (this.stepProgress >= 2) {
           const ruleSetId = this.customTierRuleSetMap[id].id;
-          console.log('ruleSetId', ruleSetId);
           this.ruleService.deleteRuleSet(ruleSetId).subscribe();
         }
       });
@@ -527,44 +429,48 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     return Utils.isEqual(this.form.value, this.prevFormValue);
   }
 
-  private initBasicTierRuleSet(): void {
-    this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', this.basicTierId)
+  private getBasicTierRuleSet(): Observable<any> {
+    return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', this.basicTierId)
       .pipe(
         takeUntil(this.destroy$),
-        tap(data => console.log('findAndCreateRuleSet', data))
-      )
-      .subscribe((ruleSet: any) => {
-        this.basicTierRuleSet = ruleSet;
-        this.cd.detectChanges();
-      });
+        tap(ruleSet => this.basicTierRuleSet = ruleSet)
+      );
+  }
+
+  private createCustomTierRuleSet(id: string): Observable<any> {
+    this.ruleLoader = true;
+    return this.ruleService.createRuleSet('Perx::Loyalty::CustomTier', id)
+      .pipe(
+        tap(ruleSet => this.customTierRuleSetMap[id] = ruleSet),
+        filter(Boolean),
+        finalize(() => this.ruleLoader = false)
+      );
   }
 
   private getCustomTierRuleSet(id: string): Observable<any> {
     return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::CustomTier', id)
       .pipe(
-        tap(ruleSet => console.log('ruleSet', ruleSet)),
         tap(ruleSet => this.customTierRuleSetMap[id] = ruleSet),
-        tap(() => console.log('customTierRuleSetMap', this.customTierRuleSetMap)),
       );
   }
 
-  private initCustomTierRuleSetMap(): void {
+  private getAllCustomTierRuleSet(): Observable<any> {
     const customTierIds = this.customTierDataSource.data.map(item => item.id);
-    console.log('customTierIds', customTierIds);
-    from(customTierIds).pipe(
-      switchMap(id => this.getCustomTierRuleSet(id)),
-    ).subscribe(data => {
-      console.log('initCustomTierRuleSetMap', data);
-      this.cd.detectChanges();
-    });
-    // this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', this.basicTierId)
-    //   .pipe(
-    //     takeUntil(this.destroy$),
-    //     tap(data => console.log('findAndCreateRuleSet', data))
-    //   )
-    //   .subscribe((data: any) => {
-    //     this.basicTierRuleSet = data;
-    //     this.cd.detectChanges();
-    //   });
+    return from(customTierIds).pipe(
+      concatMap(id => this.getCustomTierRuleSet(id)),
+    );
+  }
+
+  private initAllRuleSet(): void {
+    this.ruleLoader = true;
+    concat(this.getBasicTierRuleSet(), this.getAllCustomTierRuleSet())
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(Boolean),
+        tap(() => this.cd.detectChanges()),
+        last(),
+        finalize(() => this.ruleLoader = false)
+      )
+      .subscribe();
   }
 }

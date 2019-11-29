@@ -6,15 +6,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ConditionInfoPipe implements PipeTransform {
 
   public transform(conditions: any[]): string {
-    const result: string =  conditions.map(this.getConditionText)
+    return conditions.map(this.getConditionText)
       .filter(value => value !== null)
       .join('\nAND\n');
-    console.log('ConditionInfoPipe', conditions, result);
-    return result;
   }
 
   public getConditionText(condition: any): string | null {
-    console.log('Conditione', condition);
     switch (condition.type) {
       case 'transaction':
         return `Makes a ${condition.value} transaction`;
