@@ -105,7 +105,5 @@ export interface ISlice {
   label?: string;
   labelColor?: string;
   backgroundColor?: string;
-  backgroundImage?: string; // i think only needs to be passed down once, if is the wheel img // why is this here?
-  // add properties to a parent object the pointer, wheel img, background img i suppose
-  // isRewardPosition?: boolean;
+  backgroundImage?: string;
 }

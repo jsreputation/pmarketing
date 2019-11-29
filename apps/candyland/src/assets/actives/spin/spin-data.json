@@ -81,7 +81,7 @@
       "type": "pointerImg1",
       "title": "icon",
       "img": "global/assets/game/pointer1.png",
-      "fullImg": "global/assets/game/pointer1full.png",
+      "fullImg": "global/assets/game/pointer1.png",
       "format": ".png",
       "active": "false"
     },
@@ -90,7 +90,7 @@
       "type": "pointerImg2",
       "title": "icon",
       "img": "global/assets/game/pointer2.png",
-      "fullImg": "global/assets/game/pointer2full.png",
+      "fullImg": "global/assets/game/pointer2.png",
       "format": ".png",
       "active": "false"
     },
@@ -99,7 +99,7 @@
       "type": "pointerImg3",
       "title": "icon",
       "img": "global/assets/game/pointer3.png",
-      "fullImg": "global/assets/game/pointer3full.png",
+      "fullImg": "global/assets/game/pointer3.png",
       "format": ".png",
       "active": "false"
     }
@@ -159,7 +159,7 @@
       "type": "bg1",
       "title": "icon",
       "img": "global/assets/background/stamp-bg-10.png",
-      "fullImg": "global/assets/background/full_bg_10.png",
+      "fullImg": "global/assets/background/full_bg_10.jpg",
       "format": ".png",
       "active": "false"
     },
@@ -181,6 +181,15 @@
       "format": ".png",
       "active": "false"
     }
-  ]
+  ],
+  "rewardIcon": [{
+    "id": 1,
+    "type": "post-stamp-2",
+    "title": "icon",
+    "img": "global/assets/stamps/post-stamp-2.png",
+    "fullImg": "global/assets/stamps/post-stamp-2.png",
+    "format": ".png",
+    "active": "false"
+  }]
 }
 

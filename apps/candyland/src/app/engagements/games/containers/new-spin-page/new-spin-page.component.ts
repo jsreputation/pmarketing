@@ -3,7 +3,7 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '
 import { AvailableNewEngagementService, RoutingStateService, SettingsService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
-import { combineLatest, Observable, of, Subject } from 'rxjs';
+import {combineLatest, Observable, of, Subject} from 'rxjs';
 import {tap, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { ControlsName } from '../../../../models/controls-name';
@@ -34,6 +34,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
   public rewardSlotNumberData: { rewardPosition: number }[] = [];
   public iSlices: ISlice[] = [];
   public tenantSettings: ITenantsProperties;
+  public perxCoreSpinClass: string;
 
   public get name(): AbstractControl {
     return this.formSpin.get(ControlsName.name);
@@ -89,8 +90,8 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private spinService: SpinService,
-    private availableNewEngagementService: AvailableNewEngagementService,
     private cd: ChangeDetectorRef,
+    private availableNewEngagementService: AvailableNewEngagementService,
     private settingsService: SettingsService
   ) {
   }
@@ -103,6 +104,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
         ([previewData, spin]) => {
           this.spinData = previewData;
           this.rewardSlotNumbers = this.allRewardSlotNumbers = previewData.rewardSlots;
+          console.log(spin);
           const patchData = spin || this.getDefaultValue(previewData);
           this.formSpin.patchValue(patchData);
           this.cd.detectChanges();
@@ -115,6 +117,8 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     this.subscribeSpinsNumberChanges();
     this.subscribeSpinSlotChanges();
     this.subscribeColorFormGroupControls();
+    this.subscribeSpinPositionChanges();
+    this.cd.detectChanges();
   }
 
   public ngOnDestroy(): void {
@@ -198,8 +202,23 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       this.colorCtrls.get(key).valueChanges.pipe(takeUntil(this.destroy$)).
         subscribe((value) => {
           // update ISlices
-          this.iSlices[key].backgroundColor = value;
+          if (this.iSlices) {
+            this.iSlices[key].backgroundColor = value;
+            this.iSlices = [...this.iSlices];
+          }
         });
+    });
+  }
+
+  private subscribeSpinPositionChanges(): void {
+    this.wheelPosition.valueChanges.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((value) => {
+      if (value.img.includes('down')) {
+        this.perxCoreSpinClass = 'mobile-preview-v2';
+      } else {
+        this.perxCoreSpinClass = 'mobile-preview-plugin';
+      }
     });
   }
 
@@ -217,35 +236,55 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         value => {
-          this.iSlices = [];
+          const tempISlices = [];
+          // this.iSlices = [];
           for (let i = 0; i < value; i++) {
-            this.iSlices.push({
+            // console.log('here shit happens', this.colorCtrls.get(`${i}`).value);
+            tempISlices.push({
               id: `${i}`,
-              backgroundColor: this.colorCtrls.get(`${i}`).value
+              label: `${i}win`, // hard code same
+              backgroundColor: this.colorCtrls.get(`${i}`).value,
             });
           }
           this.rewardSlotNumbers = this.allRewardSlotNumbers.filter((slot) => +slot.value <= value); // not working
+          console.log(tempISlices, 'temp slices');
+          this.iSlices = tempISlices;
+          console.log(this.iSlices, 'i used this from tempislices');
           this.formSpin.get('rewardSlots').patchValue([]);
           this.patchForm('rewardSlots', [this.rewardSlotNumbers[this.rewardSlotNumbers.length - 1].value]);
         });
   }
 
   private subscribeSpinSlotChanges(): void {
-    this.formSpin.get(ControlsName.rewardSlots)
-      .valueChanges
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe((value: number[]) => {
-        if (!value) {
-          return;
-        }
-        this.rewardSlotNumberData = value.map(
-          (item: number) => ({rewardPosition: item - 1})
-        );
-      });
-  }
+    combineLatest(
+      [this.formSpin.get(ControlsName.rewardSlots).valueChanges, this.formSpin.get(ControlsName.rewardIcon).valueChanges]).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(([slots, iconObj]) => {
+      // console.log(value, value2);
+      if (!slots) {
+        return;
+      }
+      this.rewardSlotNumberData = slots.map(
+        (item: number) => ({rewardPosition: item - 1})
+      );
+      const tempISlices = [];
 
+      if (this.iSlices.length) {
+        for (let i = 0; i < this.numberOfWedges.value; i++) {
+          tempISlices.push({
+            id: `${i}`,
+            label: `${i}win`, // hard code same
+            backgroundColor: this.colorCtrls.get(`${i}`).value,
+          });
+        }
+
+        this.rewardSlotNumberData.forEach(({rewardPosition}) => {
+          tempISlices[rewardPosition].backgroundImage = ImageControlValue.prepareImage(iconObj.img);
+        });
+      }
+      this.iSlices = [...tempISlices];
+    });
+  }
   /*** END subscription to form value Changes ***/
 
   private getSpinData(): Observable<ISpinDefaultValue> {
@@ -254,11 +293,13 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
 
   private getDefaultValue(data: ISpinDefaultValue): Partial<ISpinEntityForm> {
     return {
-      rewardSlots: [data.rewardSlots[data.rewardSlots.length - 1].value],
+      rewardSlots: [data.rewardSlots[data.rewardSlots.length - 6].value],
       numberOfWedges: data.numberOfWedges[data.numberOfWedges.length - 6].value, // start with 4 color controls
-      wheelPosition: data.wheelPosition,
-      pointerImg: data.pointerImg,
-      background: data.background
+      wheelPosition: data.wheelPosition[0],
+      wheelImg: data.wheelImg[0],
+      pointerImg: data.pointerImg[0],
+      background: data.background[0],
+      rewardIcon: data.rewardIcon[0]
     };
   }
 
@@ -297,7 +338,6 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: Tenants) => {
         this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
-        this.cd.detectChanges();
       });
   }
 

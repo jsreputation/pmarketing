@@ -3,6 +3,7 @@
   justify-content: center;
   width: 100%;
   height: 100%;
+  border: 1px solid salmon;
 }
 
 #wheel {
@@ -11,16 +12,23 @@
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  top: 0;
+  top: -15%;
   left: 0;
   right: 0;
   bottom: 0;
   width: 100%;
   height: 100%;
+
+  &.down {
+    zoom: 1.55;
+    top: 25%;
+  }
 }
 
 #wheel-canvas-stop,
 #ng-wheel-canvas {
+  //zoom: inherit;
+  z-index: 2;
   position: absolute;
 }
 
@@ -28,4 +36,20 @@
   width: 100%;
   height: 100%;
   text-align: center;
+
+  &.down {
+    height: 90%;
+    overflow: hidden;
+  }
+}
+
+.wheelWrap {
+  z-index: 1;
+  //zoom: inherit;
+  position: absolute;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
