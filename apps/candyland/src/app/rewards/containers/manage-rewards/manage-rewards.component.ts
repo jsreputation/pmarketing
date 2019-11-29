@@ -12,6 +12,7 @@ import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
+import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
 
 @Component({
   selector: 'cl-manage-rewards',
