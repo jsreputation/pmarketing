@@ -22,6 +22,7 @@ import { noop, combineLatest, of, Subject } from 'rxjs';
 import { distinctUntilChanged, map, catchError, takeUntil } from 'rxjs/operators';
 import { RewardsService } from '@cl-core/services/rewards.service';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
+import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
 @Component({
   selector: 'cl-new-campaign-rewards-form-group',
@@ -210,5 +211,4 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     }
     this.cd.detectChanges();
   }
-
 }
