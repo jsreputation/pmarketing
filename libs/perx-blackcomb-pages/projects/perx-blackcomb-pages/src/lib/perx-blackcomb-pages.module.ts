@@ -70,6 +70,7 @@ import { GamesCollectionComponent } from './home/games-collection/games-collecti
 import { WalletHistoryComponent } from './wallet-history/wallet-history.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -114,7 +115,9 @@ const comps: any[] = [
   GamesCollectionComponent,
   NewsfeedComponent,
   WalletHistoryComponent,
-  TransactionHistoryComponent
+  TransactionHistoryComponent,
+  ProfileComponent,
+  ChangePasswordComponent
 ];
 
 @NgModule({
@@ -148,7 +151,6 @@ const comps: any[] = [
   ],
   declarations: [
     ...comps,
-    ProfileComponent,
   ]
 })
 export class PerxBlackcombPagesModule {
