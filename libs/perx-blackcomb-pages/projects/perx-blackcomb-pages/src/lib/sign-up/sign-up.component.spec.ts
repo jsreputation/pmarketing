@@ -16,6 +16,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Location } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { IWAppAccessTokenResponse } from '@perx/whistler';
 
 const configStub: Partial<Config> = {
   preAuth: false
@@ -44,7 +45,9 @@ const authServiceStub: Partial<AuthenticationService> = {
   getPI: () => '',
   getUserAccessToken: () => '',
   getAnonymous: () => true,
-  logout: () => { }
+  logout: () => { },
+  getAppToken: () => of({} as IWAppAccessTokenResponse),
+  getAppAccessToken: () => 'token'
 };
 
 describe('SignUpComponent', () => {

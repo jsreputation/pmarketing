@@ -142,17 +142,11 @@ export class CreateShakeTheTreeAppPage {
   public previewMyChoice(): ElementFinder {
     return element(by.className('gift-img gift-img__1 ng-star-inserted'));
   }
-  public uploadGiftImage(): ElementFinder {
-    return element.all(by.css('input[type="file"]')).get(0);
-  }
-  public uploadBackgroundImage(): ElementFinder {
-    return element.all(by.css('input[type="file"]')).get(1);
-  }
   public uploadedImageObj(): ElementFinder {
-    return element(by.css('div.image-wrap.ng-star-inserted>img.image'));
+    return element(by.css('div.image-wrap.ng-star-inserted>img'));
   }
   public errorUploadMessage(): ElementFinder {
-    return element(by.css('div.upload-error-wrap.ng-star-inserted>span'));
+    return element.all(by.css('p.upload-error.ng-star-inserted')).get(1);
   }
   public emptyInputFields(): ElementArrayFinder {
     return element.all(by.css('input[type="file"]'));

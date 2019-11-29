@@ -68,5 +68,9 @@
     "SURVEY_SUCCESS_TITLE": "Your RSVP is successful!",
     "SURVEY_SUCCESS_TEXT": "See you at our event!",
     "SURVEY_NO_REWARDS_TITLE": "Thank you for your interest. We’re sorry, all places have been taken.",
-    "SURVEY_NO_REWARDS_TEXT": "Nonetheless, we’ve added you to our waiting list for the event and will call you when places are available by 07 October 2019"
+    "SURVEY_NO_REWARDS_TEXT": "Nonetheless, we’ve added you to our waiting list for the event and will call you when places are available by 07 October 2019",
+    "ENTER_OLD_PASSWORD": "Enter old password",
+    "ENTER_NEW_PASSWORD": "Enter new password",
+    "CONFIRM_NEW_PASSWORD": "Confirm new password",
+    "SAVE": "Save"
 }

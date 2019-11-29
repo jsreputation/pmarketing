@@ -58,6 +58,11 @@ const routes: Routes = [
         loadChildren: (): any => import('../transaction-history/transaction-history.module')
                       .then((mod: any) => mod.TransactionHistoryModule)
       },
+      {
+        path: 'change-password',
+        loadChildren: (): any => import('../change-password/change-password.module')
+                      .then((mod: any) => mod.ChangePasswordModule)
+      },
       { path: 'reward-detail/:id', component: RewardDetailsComponent },
       { path: 'c/:key', component: ContentComponent },
     ]

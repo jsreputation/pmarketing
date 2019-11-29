@@ -41,6 +41,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   private oldPI: string;
   private oldToken: string;
   private oldAnonymousStatus: boolean;
+  public appAccessTokenFetched: boolean;
 
   constructor(
     private formSvc: IFormsService,
@@ -61,6 +62,16 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.oldToken = this.authService.getUserAccessToken();
     this.oldAnonymousStatus = this.authService.getAnonymous();
     this.stateData = this.location.getState() as IPrePlayStateData;
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
     this.authService.logout();
   }
 
