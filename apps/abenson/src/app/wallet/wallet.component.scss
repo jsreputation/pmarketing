@@ -24,3 +24,13 @@ h1 {
   margin-top: 2.4rem;
   margin-bottom: 1.6rem;
 }
+
+.coming_soon {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+
+  p {
+    text-align: center;
+  }
+}

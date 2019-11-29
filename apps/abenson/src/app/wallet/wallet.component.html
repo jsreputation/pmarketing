@@ -3,22 +3,31 @@
     <mat-tab label="My Rewards">
       <div class="wrapper">
         <h1>My Rewards</h1>
-        <perx-core-vouchers [data]="issuedVouchers"
-                            [showExpireDate]="true"
-                            [mapping]="mapping"
-                            [showRedeemedDate]="false"
-                            (tapped)="openDetail($event)">           
-        </perx-core-vouchers>
+        <!-- <perx-core-vouchers [data]="issuedVouchers" [showExpireDate]="true" [mapping]="mapping"
+          [showRedeemedDate]="false" (tapped)="openDetail($event)">
+        </perx-core-vouchers> -->
+        <div class="coming_soon">
+          <div>
+            <img class="coming-soon-img" src="assets/img/coming_soon.png">
+            <p>Coming soon</p>
+          </div>
+        </div>
       </div>
     </mat-tab>
     <mat-tab label="History">
       <div class="wrapper">
         <h1>My History</h1>
-        <perx-core-vouchers [data]="redeemedVouchers"
+        <!-- <perx-core-vouchers [data]="redeemedVouchers"
                             [showExpireDate]="false"
                             [mapping]="mapping"
                             [showRedeemedDate]="true">
-        </perx-core-vouchers>
+        </perx-core-vouchers> -->
+        <div class="coming_soon">
+          <div>
+            <img class="coming-soon-img" src="assets/img/coming_soon.png">
+            <p>Coming soon</p>
+          </div>
+        </div>
       </div>
     </mat-tab>
   </mat-tab-group>
