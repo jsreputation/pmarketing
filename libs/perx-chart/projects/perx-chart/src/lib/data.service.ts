@@ -39,7 +39,7 @@ export class DataService {
     }
   }
 
-  public getData(id: number, params: { [key: string]: string }): Observable<IData> {
+  public getData(id: number | string, params: { [key: string]: string }): Observable<IData> {
     if (id === undefined) {
       return throwError('card id cannot be undefined');
     }
@@ -68,7 +68,7 @@ export class DataService {
         }));
   }
 
-  private getToken(id: number): Observable<string> {
+  private getToken(id: number | string): Observable<string> {
     return this.http.get<ITokenResponse>(`${this.tokenBasePath}/cognito/metabase_token/${id}`)
       .pipe(
         retry(2),
