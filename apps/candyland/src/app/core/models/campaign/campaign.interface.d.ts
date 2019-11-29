@@ -1,5 +1,6 @@
 import { ISchedule } from '../comm/schedule';
 import { InformationCollectionSettingType } from './campaign.enum';
+import { IRewardEntity } from '../reward/reward-entity.interface';
 
 export interface ICampaign {
   id?: string;
@@ -30,18 +31,25 @@ export interface ICampaign {
     schedule?: ISchedule;
   };
   template?: any;
-  rewardsList?: {
-    id?: string;
-    result_id?: number;
-    result_type?: string;
-    probability?: number;
-    limit?: number;
-  }[];
-  rewards?: any; // todo investigate difference with rewardsList
-  rewardsOptions?: any;
-  rewardsListCollection?: any;
+  rewardsListCollection?: ICampaignOutcomeRewardOptions[];
   limits?: any;
   displayProperties?: any;
+}
+
+export interface ICampaignOutcome {
+  id?: string;
+  resultId?: number;
+  resultType?: string;
+  probability?: number;
+  limit?: number;
+  stampSlotNumber?: number;
+  rewardsOptions?: ICampaignOutcomeRewardOptions;
+}
+
+export interface ICampaignOutcomeRewardOptions {
+  probability?: number;
+  limit?: number;
+  value?: IRewardEntity | { probability: 0, outcomeId: '' }
 }
 
 export interface ICampaignTableData {

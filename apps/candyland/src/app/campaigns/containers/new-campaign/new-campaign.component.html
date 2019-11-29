@@ -26,20 +26,7 @@
     </mat-step>
     <mat-step [completed]="getStepCondition(1)">
       <ng-template matStepLabel>{{'CAMPAIGN.REWARDS_LIMITS' | translate}}</ng-template>
-      <ng-container [ngSwitch]="store.currentCampaign?.template?.attributes_type">
-        <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'"
-                                             [tenantSettings]="tenantSettings"
-        ></cl-new-campaign-rewards-stamps-page>
-        <cl-new-campaign-rewards-survey-page *ngSwitchCase="'survey'"
-                                             [tenantSettings]="tenantSettings"
-        ></cl-new-campaign-rewards-survey-page>
-        <cl-new-campaign-rewards-survey-page *ngSwitchCase="'instant_reward'"
-                                      [tenantSettings]="tenantSettings"
-        ></cl-new-campaign-rewards-survey-page>
-        <cl-new-campaign-rewards-page *ngSwitchCase="'game'"
-                                      [tenantSettings]="tenantSettings"
-        ></cl-new-campaign-rewards-page>
-      </ng-container>
+      <cl-new-campaign-rewards-limits-page [tenantSettings]="tenantSettings"></cl-new-campaign-rewards-limits-page>
     </mat-step>
     <mat-step [completed]="getStepCondition(2)">
       <ng-template matStepLabel>{{'CAMPAIGN.CAMPAIGN_DETAILS' | translate}}</ng-template>

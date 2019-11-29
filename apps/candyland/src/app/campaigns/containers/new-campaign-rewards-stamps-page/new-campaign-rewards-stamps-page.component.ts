@@ -6,6 +6,7 @@ import { NewCampaignRewardsStampsFormService } from 'src/app/campaigns/services/
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
+import { noop } from 'rxjs';
 
 @Component({
   selector: 'cl-new-campaign-rewards-stamps-page',
@@ -15,6 +16,12 @@ import { CampaignCreationStoreService } from '../../services/campaigns-creation-
 })
 export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
+  @Input() public group: FormGroup = this.formService.getLimitsForm('stamps');
+
+  private onChange: any = noop;
+  // @ts-ignore
+  private onTouched: any = noop;
+  public isFirstInit: boolean = true;
   public form: FormGroup;
 
   constructor(
@@ -22,7 +29,8 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     public stepConditionService: StepConditionService,
     public cd: ChangeDetectorRef,
     private toggleControlService: ToggleControlService,
-    private formService: NewCampaignRewardsStampsFormService) {
+    private formService: NewCampaignRewardsStampsFormService
+  ) {
     super(1, store, stepConditionService);
     this.initForm();
   }
@@ -32,11 +40,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     if (!this.form) {
       return;
     }
-    const stampsSlotNumber = this.store.currentCampaign.template.slots;
     const stampsNumber = +this.store.currentCampaign.template.nb_of_slots;
-    for (const slotNumber of stampsSlotNumber) {
-      this.addReward(this.createRewardForm(slotNumber));
-    }
     this.form.get('stampsRule.sequence').valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
@@ -55,24 +59,12 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     this.cd.detach();
   }
 
-  public get rewardsListCollection(): FormArray {
-    return this.form.get('rewardsListCollection') as FormArray;
-  }
-
   public get stampRule(): FormArray {
     return this.form.get('stampsRule.rules') as FormArray;
   }
 
   public get isSequence(): boolean {
     return this.form.get('stampsRule.sequence').value;
-  }
-
-  public addReward(formGroup: FormGroup): void {
-    this.rewardsListCollection.push(formGroup);
-  }
-
-  public removeReward(index: number): void {
-    this.rewardsListCollection.removeAt(index);
   }
 
   public addStampRule(): void {
@@ -86,7 +78,6 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   }
 
   private initForm(): void {
-    this.form = this.formService.getForm();
     if (!this.form) {
       return;
     }
@@ -103,18 +94,18 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
           this.updateForm();
         }
       });
+    this.group.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (limit) => {
+          this.onChange(limit);
+        }
+      );
   }
 
   private updateForm(): void {
     this.form.updateValueAndValidity();
     this.cd.detectChanges();
-  }
-
-  private createRewardForm(slotNumber: number): FormGroup {
-    return new FormGroup({
-      stampSlotNumber: new FormControl(slotNumber),
-      rewardsOptions: new FormControl([])
-    });
   }
 
   private clearFormArray(formArray: FormArray): void {
@@ -133,6 +124,25 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     for (let i = 0; i < stampsNumber; i++) {
       this.addStampRule();
     }
+  }
+
+  public writeValue(data: any): void {
+    if (data === null) {
+      return;
+    }
+
+    this.group.patchValue(data, { emitEvent: false });
+    this.group.updateValueAndValidity();
+    this.cd.detectChanges();
+  }
+
+  public registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  public registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+    this.group.markAsTouched();
   }
 
 }

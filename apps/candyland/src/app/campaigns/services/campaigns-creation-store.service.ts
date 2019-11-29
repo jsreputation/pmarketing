@@ -77,9 +77,6 @@ export class CampaignCreationStoreService {
   }
 
   public updateCampaign(value: ICampaign): void {
-    if ('rewards' in value) {
-      this.currentCampaign.rewards = value.rewards;
-    }
     this.currentCampaign = Object.assign(this.currentCampaign, value);
   }
 

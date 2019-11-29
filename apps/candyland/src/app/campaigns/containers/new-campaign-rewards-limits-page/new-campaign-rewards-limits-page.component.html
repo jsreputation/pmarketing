@@ -1,0 +1,25 @@
+<div class="phonepreview-wrapper" *ngIf="form">
+  <div class="forms-container" [formGroup]="form">
+    <!--Rewards-->
+    <mat-card class="card">
+      <ng-container *ngFor="let rewardGroup of rewardsListCollection?.controls; let i = index">
+        <cl-new-campaign-rewards-form-group [formControl]="rewardGroup.get('rewardsOptions')"
+          [slotNumber]="rewardGroup.get('stampSlotNumber').value"
+          [title]="('CAMPAIGN.REWARDS_FOR_SLOT' | translate) + ' ' + rewardGroup.get('stampSlotNumber').value">
+        </cl-new-campaign-rewards-form-group>
+      </ng-container>
+    </mat-card>
+    <!--/ Rewards-->
+    <!-- Stamps Rule-->
+    <ng-container [ngSwitch]="store.currentCampaign?.template?.attributes_type">
+      <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'" [formControl]="limits" [tenantSettings]="tenantSettings">
+      </cl-new-campaign-rewards-stamps-page>
+      <cl-new-campaign-rewards-survey-page *ngSwitchDefault [formControl]="limits" [tenantSettings]="tenantSettings">
+      </cl-new-campaign-rewards-survey-page>
+      ></cl-new-campaign-rewards-page>
+    </ng-container>
+    <!--/ Stamps Rule-->
+  </div>
+  <cl-campaigns-mobile-preview [storeTemplate$]="store.template$" [tenantSettings]="tenantSettings">
+  </cl-campaigns-mobile-preview>
+</div>`
