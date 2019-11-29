@@ -1,4 +1,4 @@
-<div class="parent-container" *ngIf="voucher$ | async as voucher">
+<div class="flex-grow" *ngIf="voucher$ | async as voucher">
   <div class="full-page-container-white">
     RedemptionType: {{redemptionType}}
     <div *ngIf="voucher.redemptionType === 'pin'">
@@ -21,6 +21,9 @@
     </div>
     <div *ngIf="voucher.redemptionType === 'qrcode'" class="qrcode-container" >
       <perx-core-qrcode-redemption [voucherId]="voucherId"></perx-core-qrcode-redemption>
+    </div>
+    <div *ngIf="voucher.redemptionType === 'barcode'" class="flex-grow">
+      <app-qr-code [voucher]="voucher$"></app-qr-code>
     </div>
   </div>
 </div>

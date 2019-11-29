@@ -1,5 +1,6 @@
-.parent-container {
-  height: 90vh;
+:host {
+  height: 100%;
+  display: flex;
 }
 
 .redemption-result {
@@ -78,4 +79,8 @@ perx-core-pin-input {
   margin-bottom: 2rem;
   width: 90%;
   color: #2665ee;
+}
+
+.flex-grow {
+  flex-grow: 1;
 }

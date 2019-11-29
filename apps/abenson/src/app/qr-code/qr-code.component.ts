@@ -1,16 +1,11 @@
 import {
   Component,
   OnInit,
+  Input,
 } from '@angular/core';
 import {
-  ActivatedRoute,
   Router,
 } from '@angular/router';
-
-import {
-  flatMap,
-  tap,
-} from 'rxjs/operators';
 
 import {
   NotificationService,
@@ -18,6 +13,9 @@ import {
   Voucher,
   VoucherState,
 } from '@perx/core';
+import { Observable, Subject } from 'rxjs';
+import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.model';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-qr-code',
@@ -25,32 +23,42 @@ import {
   styleUrls: ['./qr-code.component.scss']
 })
 export class QRCodeComponent implements OnInit {
+  @Input()
   public voucherId: number;
+  @Input('voucher')
+  public voucher$: Observable<IVoucher>;
+
   public voucherState: VoucherState;
   public code?: string;
+  private redeemSubject: Subject<number> = new Subject();
   constructor(
-    private route: ActivatedRoute,
     private notification: NotificationService,
     private vouchersService: IVoucherService,
     private router: Router
   ) { }
 
   public ngOnInit(): void {
-    this.route.params.pipe(flatMap((param) => this.vouchersService.get(parseInt(param.id, 10))),
-      tap((voucher: Voucher) => {
+    if (!this.voucher$ && this.voucherId) {
+      this.voucher$ = this.vouchersService.get(this.voucherId);
+    }
+    if (this.voucher$ && !this.voucherId) {
+      this.voucher$.subscribe((voucher) => {
         this.voucherId = voucher.id;
-        this.voucherState = voucher.state;
-        this.code = voucher.code;
-      }),
-      flatMap(() => this.vouchersService.stateChangedForVoucher(this.voucherId))).subscribe((val) =>
-        this.successRedeemed(val)
-        , (err) => {
-          if (err && err.error) {
-            this.notification.addSnack(err.error.message);
-          } else {
-            this.notification.addSnack('Oops, something went wrong');
-          }
-        });
+        this.redeemSubject.next(this.voucherId);
+      });
+    } else if (this.voucherId) {
+      this.redeemSubject.next(this.voucherId);
+    }
+
+    this.redeemSubject.pipe(
+      switchMap((id) => this.vouchersService.stateChangedForVoucher(id)))
+      .subscribe((val) => this.successRedeemed(val), (err) => {
+        if (err && err.error) {
+          this.notification.addSnack(err.error.message);
+        } else {
+          this.notification.addSnack('Oops, something went wrong');
+        }
+      });
   }
 
   public successRedeemed(voucher: Voucher): void {
