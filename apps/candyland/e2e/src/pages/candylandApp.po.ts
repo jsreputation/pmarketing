@@ -208,10 +208,10 @@ export class LoginAppPage {
 export class CreateSurveyAppPage {
 
   public navigateToSurvey(): Promise<string> {
-    return browser.get('engagements/new-survey/questions') as Promise<string>;
+    return browser.get('engagements/new-survey') as Promise<string>;
   }
   public surveyCreateNewButton(): ElementFinder {
-    return element.all(by.css('button')).get(2);
+    return element(by.className('btn mat-flat-button primary'));
   }
   public questionButton(): ElementFinder {
     return element.all(by.css('cl-button')).last();
@@ -235,7 +235,7 @@ export class CreateSurveyAppPage {
     return element.all(by.css('mat-option.mat-option.ng-star-inserted'));
   }
   public previewElement(): ElementFinder {
-    return element(by.className('mobile-preview-mobile'));
+    return element(by.className('mobile-preview'));
   }
   public questionForm(): ElementFinder {
     return element.all(by.css('div.question-form-header')).last();
