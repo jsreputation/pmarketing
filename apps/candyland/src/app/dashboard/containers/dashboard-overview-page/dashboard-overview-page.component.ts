@@ -5,6 +5,7 @@ import { switchMap, tap, takeUntil } from 'rxjs/operators';
 import { DashboardService } from '@cl-core/services';
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
 import { CardType } from '@perx/chart';
+import { ITotal } from '@cl-core/models/dashboard/total-active-interface';
 
 @Component({
   selector: 'cl-dashboard-overview-page',
