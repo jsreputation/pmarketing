@@ -37,16 +37,17 @@ export class EngagementAppPage {
   public static activeEngagementTypeOption(): ElementFinder {
     return element(by.css('button.engagement-selector.active'));
   }
-  public engagementNextButton(): ElementFinder {
-    return element.all(by.className('btn mat-flat-button primary')).get(1);
-  }
 
-  public itemName(): ElementFinder {
+  public static itemName(): ElementFinder {
     return element.all(by.css('p.engagement-item-name')).first();
   }
 
-  public itemInfo(): ElementFinder {
+  public  static itemInfo(): ElementFinder {
     return element.all(by.css('div.engagement-item-info>p.engagement-item-name')).first();
+  }
+
+  public engagementNextButton(): ElementFinder {
+    return element.all(by.className('btn mat-flat-button primary')).get(1);
   }
 
   public gamePinataOptions(): ElementFinder {
@@ -131,12 +132,22 @@ export class CreateShakeTheTreeAppPage {
     return element(by.css('div.gift-wrapper.gift-wrapper__1.hang.ng-star-inserted>img'));
   }
 
-  public shakeTreeCreateNewButton(): ElementFinder {
-    return element.all(by.css('button')).get(2);
-  }
-  public shakeTreeSaveButton(): ElementFinder {
+  public static shakeTreeSaveButton(): ElementFinder {
     return element(by.css('button.btn.mat-flat-button.primary'));
   }
+
+  public static launchNowButton(): ElementFinder {
+    return element.all(by.css('button.btn.mat-flat-button.primary')).last();
+  }
+
+  public static transactionDate(): ElementFinder {
+    return element.all(by.css('p.engagement-item-date')).first();
+  }
+
+  public static launchLaterBtn(): ElementFinder {
+    return element(by.css('button.btn.mat-flat-button.secondary'));
+  }
+
   public shakeTreeLaunchButton(): ElementFinder {
     return element.all(by.css('button.btn.mat-flat-button.primary')).last();
   }
@@ -146,14 +157,9 @@ export class CreateShakeTheTreeAppPage {
   public mainHeadlineField(): ElementFinder {
     return element.all(by.css('input[type=text]')).get(0);
   }
-  public launchLaterBtn(): ElementFinder {
-    return element(by.css('cl-button.actions-close'));
-  }
+
   public fileDialog(): ElementFinder {
     return element(by.css('cl-confirm-modal'));
-  }
-  public transactionDate(): ElementFinder {
-    return element.all(by.css('p.engagement-item-date')).first();
   }
 }
 export class LoginAppPage {
@@ -753,5 +759,13 @@ export class ElementApp {
 
   public static mobilePreviewBackground(): ElementFinder {
     return element(by.css('div.mobile-preview-background'));
+  }
+
+  public static matFlatButtonPrimary(): ElementArrayFinder {
+    return element.all(by.className('btn mat-flat-button primary'));
+  }
+
+  public static clConfirmDialog(): ElementFinder {
+    return element(by.css('cl-confirm-modal'));
   }
 }
