@@ -241,7 +241,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       return [];
     }
     const updateOutcomesArr$ = [];
-    const oldCampaignList = this.store.currentCampaign.rewardsList;
+    const oldCampaignList = this.store.currentCampaign.rewardsListCollection;
     const deleteOutcomes$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
     const updateOutcomes$ = outcomeData => this.outcomesService.updateOutcome(outcomeData, campaign.id, enableProbability, slotNumber);
     const createOutcomes$ = outcomeData => this.outcomesService.createOutcome(outcomeData, campaign.id, enableProbability, slotNumber);
@@ -374,7 +374,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
                 type: commEvent && commEvent.channel || 'weblink',
                 ...commEvent
               },
-              rewardsList: outcomes
+              rewardsListCollection: outcomes
             }))
       ).subscribe(
         campaign => {

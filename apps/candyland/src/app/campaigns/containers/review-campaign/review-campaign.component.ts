@@ -99,7 +99,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
                 message: commEvent && commEvent.message,
                 schedule: commEvent && { ...commEvent.schedule }
               },
-              rewardsList: outcomes
+              rewardsListCollection: outcomes
             })
         ),
         switchMap((campaign: ICampaign) => {
@@ -111,7 +111,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
             of(campaign),
             this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
             this.limitsService.getLimits(limitParams, eType).pipe(map(limits => limits[0]), catchError(() => of({ times: null }))),
-            this.getRewards(campaign.rewardsList)
+            this.getRewards(campaign.rewardsListCollection)
           );
         }),
         map(([campaign, engagement, limits, rewards]:

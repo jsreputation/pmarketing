@@ -84,7 +84,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       .asObservable()
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
-        const isFirstTimeRenderFromAPIResponse = data && data.id && data.rewardsList && this.isFirstInit;
+        const isFirstTimeRenderFromAPIResponse = data && data.id && data.rewardsListCollection && this.isFirstInit;
         if (isFirstTimeRenderFromAPIResponse) {
           this.isFirstInit = false;
           this.initRewardsList();
