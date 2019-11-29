@@ -119,6 +119,18 @@ export class CreateShakeTheTreeAppPage {
     return element(by.className('gift-img gift-img__1 ng-star-inserted'));
   }
 
+  public static uploadedImageObj(): ElementFinder {
+    return element(by.css('div.image-wrap.ng-star-inserted>img'));
+  }
+
+  public static errorUploadMessage(): ElementFinder {
+    return element.all(by.css('p.upload-error.ng-star-inserted')).get(1);
+  }
+
+  public static giftPreview(): ElementFinder {
+    return element(by.css('div.gift-wrapper.gift-wrapper__1.hang.ng-star-inserted>img'));
+  }
+
   public shakeTreeCreateNewButton(): ElementFinder {
     return element.all(by.css('button')).get(2);
   }
@@ -130,24 +142,6 @@ export class CreateShakeTheTreeAppPage {
   }
   public headlineField(): ElementFinder {
     return element.all(by.css('input[type=text]')).get(1);
-  }
-  public uploadedImageObj(): ElementFinder {
-    return element(by.css('div.image-wrap.ng-star-inserted>img'));
-  }
-  public errorUploadMessage(): ElementFinder {
-    return element.all(by.css('p.upload-error.ng-star-inserted')).get(1);
-  }
-  public emptyInputFields(): ElementArrayFinder {
-    return element.all(by.css('input[type="file"]'));
-  }
-  public uploadField(): ElementFinder {
-    return element(by.css('div.image-wrap.ng-star-inserted>img'));
-  }
-  public giftPreview(): ElementFinder {
-    return element(by.css('div.gift-wrapper.gift-wrapper__1.hang.ng-star-inserted>img'));
-  }
-  public backgroundPreview(): ElementFinder {
-    return element(by.css('div.mobile-preview-background'));
   }
   public mainHeadlineField(): ElementFinder {
     return element.all(by.css('input[type=text]')).get(0);
@@ -755,5 +749,9 @@ export class ElementApp {
 
   public static clImagesPreview(): ElementArrayFinder {
     return element.all(by.tagName('cl-images-preview'));
+  }
+
+  public static mobilePreviewBackground(): ElementFinder {
+    return element(by.css('div.mobile-preview-background'));
   }
 }
