@@ -5,9 +5,8 @@ export interface IOutcome {
     resultId?: number;
     resultType?: string;
     probability?: number;
-    lootBoxId?: number;
+    slotNumber?: number;
     limit?: number;
-    stampSlotNumber?: number;
     rewardsOptions?: ICampaignOutcomeRewardOptions;
 }
 

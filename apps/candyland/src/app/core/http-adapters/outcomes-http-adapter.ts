@@ -9,7 +9,7 @@ export class OutcomesHttpAdapter {
       resultId: data.attributes.result_id,
       resultType: data.attributes.result_type,
       probability: data.attributes.probability ? data.attributes.probability * 100 : null,
-      lootBoxId: data.attributes.loot_box_id,
+      slotNumber: data.attributes.loot_box_id,
       limit: data.attributes.max_issuance_per_campaign || null
     };
   }
