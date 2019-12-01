@@ -3,5 +3,5 @@ export enum LoyaltyAction {
   duplicate = 'duplicate',
   delete = 'delete',
   activate = 'active',
-  pause = 'pause'
+  paused = 'paused'
 }
