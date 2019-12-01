@@ -117,7 +117,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
       const params = new URLSearchParams(param);
       (window as any).primaryIdentifier = params.get('pi');
       const cid: string | null = params.get('cid');
-      this.campaignId = cid ? Number.parseInt(cid, 10) : null;
+      this.campaignId = cid ? Number.parseInt(cid, 10) : (window as any).campaignId;
       (window as any).campaignId = this.campaignId;
       /*
       * Later when API ready, the logic is:
