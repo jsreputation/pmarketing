@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService, IProfile } from '@perx/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'perx-blackcomb-pages-profile',
@@ -10,7 +11,8 @@ export class ProfileComponent implements OnInit {
   public profile: IProfile;
 
   constructor(
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private router: Router
   ) { }
 
   public ngOnInit(): void {
@@ -18,6 +20,9 @@ export class ProfileComponent implements OnInit {
   }
 
   public onEditPasswordClicked(): void {
+    this.router.navigateByUrl('change-password');
   }
 
+  public onEditMobileClicked(): void {
+  }
 }

@@ -2,16 +2,17 @@ import * as moment from 'moment';
 import * as striptags from 'striptags';
 
 import { IWRewardEntityAttributes } from '@perx/whistler';
+import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
+import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
 export class RewardHttpAdapter {
-
   public static transformToTableData(data: any): ITableData<IRewardEntity> {
     const formatData = data.data.map((item) => {
       const formatItem = RewardHttpAdapter.transformToReward(item);
       formatItem.merchantName = RewardHttpAdapter.includeOrganization(item, data);
       return formatItem;
     });
-    return {data: formatData, meta: data.meta};
+    return { data: formatData, meta: data.meta };
   }
 
   public static includeOrganization(currentData: any, response: any): string {
@@ -145,7 +146,7 @@ export class RewardHttpAdapter {
         format_type: data.vouchers.voucherCode.uniqueGeneratedCode.codeFormat
       };
     }
-    return {code_type: data.vouchers.voucherCode.type};
+    return { code_type: data.vouchers.voucherCode.type };
   }
 
   public static getRewardValidity(data: any): { [key: string]: any } {
@@ -176,7 +177,7 @@ export class RewardHttpAdapter {
 
   public static setTime(date: string, time: any): any {
     const [hours, minutes] = time.split(':');
-    return moment(date).set({hours, minutes}).utc().toDate();
+    return moment(date).set({ hours, minutes }).utc().toDate();
   }
 
   public static transformFromReward(data: IRewardEntity): IJsonApiItem<IWRewardEntityAttributes> {
