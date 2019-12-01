@@ -13,6 +13,8 @@ interface Coords {
   y: number;
 }
 
+const RADIUS: number = 10;
+
 @Component({
   selector: 'perx-core-scratch-card',
   templateUrl: './scratch-card.component.html',
@@ -43,6 +45,54 @@ export class ScratchCardComponent implements AfterViewInit {
   public canvasWidth: string;
   public canvasHeight: string;
   private isDrawing: boolean;
+
+  public get lastPointOffset(): Coords {
+    const randomPoint = this.randomPoint(RADIUS);
+    return {
+      x: (this.lastPoint.x - RADIUS) + randomPoint.x,
+      y: (this.lastPoint.y - RADIUS) + randomPoint.y,
+    };
+  }
+
+  private randomPoint(radius: number): Coords {
+    const angle: number = Math.random() * Math.PI * 2;
+    return {
+      x: Math.cos(angle) * radius,
+      y: Math.sin(angle) * radius
+    };
+  }
+
+  private scratch(e: TouchEvent, lastPoint: Coords = this.lastPoint): void {
+    if (!this.isDrawing || !this.enabled || !this.canvas) {
+      return;
+    }
+
+    e.preventDefault();
+
+    const currentPoint: Coords = this.getMouse(e, this.canvas);
+    const dist: number = this.distanceBetween(lastPoint, currentPoint);
+    const angle: number = this.angleBetween(lastPoint, currentPoint);
+
+    let x: number;
+    let y: number;
+    const canvas2dContext = this.canvas.getContext('2d');
+
+    if (canvas2dContext) {
+      for (let i = 0; i < dist; i++) {
+        x = lastPoint.x + (Math.sin(angle) * i) - 25;
+        y = lastPoint.y + (Math.cos(angle) * i) - 25;
+        canvas2dContext.globalCompositeOperation = 'destination-out';
+        canvas2dContext.drawImage(this.brush, x, y);
+      }
+    }
+    if (this.lastPoint === lastPoint) {
+      this.lastPoint = currentPoint;
+    }
+    const constFilledInPixels = this.getFilledInPixels(32);
+    if (constFilledInPixels) {
+      this.handlePercentage(constFilledInPixels);
+    }
+  }
 
   public ngAfterViewInit(): void {
     this.generateCanvas();
@@ -149,36 +199,11 @@ export class ScratchCardComponent implements AfterViewInit {
   public handleMouseDown(e: TouchEvent): void {
     this.isDrawing = true;
     this.lastPoint = this.getMouse(e, this.canvas);
+    this.scratch(e, this.lastPointOffset);
   }
 
   public handleMouseMove(e: TouchEvent): void {
-    if (!this.isDrawing || !this.enabled || !this.canvas) {
-      return;
-    }
-
-    e.preventDefault();
-
-    const currentPoint: Coords = this.getMouse(e, this.canvas);
-    const dist: number = this.distanceBetween(this.lastPoint, currentPoint);
-    const angle: number = this.angleBetween(this.lastPoint, currentPoint);
-
-    let x: number;
-    let y: number;
-    const canvas2dContext = this.canvas.getContext('2d');
-
-    if (canvas2dContext) {
-      for (let i = 0; i < dist; i++) {
-        x = this.lastPoint.x + (Math.sin(angle) * i) - 25;
-        y = this.lastPoint.y + (Math.cos(angle) * i) - 25;
-        canvas2dContext.globalCompositeOperation = 'destination-out';
-        canvas2dContext.drawImage(this.brush, x, y);
-      }
-    }
-    this.lastPoint = currentPoint;
-    const constFilledInPixels = this.getFilledInPixels(32);
-    if (constFilledInPixels) {
-      this.handlePercentage(constFilledInPixels);
-    }
+    this.scratch(e);
   }
 
   public handleMouseUp(): void {

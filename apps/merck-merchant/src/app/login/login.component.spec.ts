@@ -41,9 +41,14 @@ describe('LoginComponent', () => {
         { provide: Router, useValue: routerStub },
         {
           provide: AuthenticationService,
-          useValue: {login: () => {}, getInterruptedUrl: () => null}
+          useValue: {
+            login: () => { },
+            getInterruptedUrl: () => null,
+            getAppToken: () => of({}),
+            getAppAccessToken: () => 'token'
+          }
         },
-        { provide: TokenStorage, useValue: tokenStorageStub}
+        { provide: TokenStorage, useValue: tokenStorageStub }
       ]
     }).compileComponents();
   }));
@@ -69,7 +74,7 @@ describe('LoginComponent', () => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
       AuthenticationService as Type<AuthenticationService>
     );
-    const authSpy = spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
+    const authSpy = spyOn(authenticationService, 'login').and.returnValue(of({ bearer_token: 'SWWERW' }));
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     const routerSpy = spyOn(routerStub, 'navigateByUrl').and.stub();
 
