@@ -173,7 +173,9 @@ export class GameComponent implements OnInit, OnDestroy {
       this.router.navigate(['/signup'], { state });
     } else {
       this.router.navigate(['/wallet']);
-      this.notificationService.addPopup(this.popupData);
+      if (this.popupData && this.isAnonymousUser) {
+        this.notificationService.addPopup(this.popupData);
+      }
     }
   }
 

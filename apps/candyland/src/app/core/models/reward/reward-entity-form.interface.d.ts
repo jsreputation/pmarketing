@@ -1,4 +1,6 @@
-declare interface IRewardEntityForm {
+import { WRedemptionType } from "@perx/whistler";
+
+export interface IRewardEntityForm {
   id?: string;
   name: string;
   currency?: string;
@@ -8,7 +10,7 @@ declare interface IRewardEntityForm {
     image: string;
     rewardType: string;
     category: string;
-    redemptionType: string;
+    redemptionType: WRedemptionType;
     cost: number;
     description: string;
     termsAndCondition: string;

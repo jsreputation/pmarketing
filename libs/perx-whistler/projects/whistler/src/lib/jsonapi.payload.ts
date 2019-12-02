@@ -29,12 +29,14 @@ export interface IJsonApiItem<T> {
         self: string;
         related: string;
       },
-      data?: {
-        id: string;
-        type: string;
-      }[]
+      data?: IWRelationshipsDataType[] | IWRelationshipsDataType
     }
   };
+}
+
+export interface IWRelationshipsDataType {
+  id: string;
+  type: string;
 }
 
 export interface IJsonApiPatchItem<T> {

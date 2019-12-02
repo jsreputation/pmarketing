@@ -11,7 +11,9 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
 
   const authServiceStub = {
-    autoLogin: () => of()
+    autoLogin: () => of(),
+    getAppToken: () => of({}),
+    getAppAccessToken: () => 'token'
   };
   const configServiceStub = {
     readAppConfig: () => of()

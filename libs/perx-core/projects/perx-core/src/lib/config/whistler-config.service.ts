@@ -33,7 +33,8 @@ export class WhistlerConfigService extends ConfigService {
       // showExpiryOnRewardDetail: setting.showExpiryOnRewardDetail || true,
       // showUserInfoOnAccountsPage: setting.showUserInfoOnAccountsPage || false,
       // showTransactionHistoryOnAccountsPage: setting.showTransactionHistoryOnAccountsPage || false
-      production: config.production || false
+      production: config.production || false,
+      baseHref: config.baseHref || '/'
     };
   }
 

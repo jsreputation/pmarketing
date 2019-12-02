@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
   public currentSelectedLanguage: string = 'en';
-
+  public appAccessTokenFetched: boolean;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -37,6 +37,16 @@ export class LoginComponent implements OnInit {
 
   public ngOnInit(): void {
     this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
   }
 
   public onSubmit(): void {
