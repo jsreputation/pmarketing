@@ -1,13 +1,23 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
 import {
   MatTableModule,
   MatMenuModule,
-  MatIconModule
+  MatIconModule,
+  MatDialogModule,
+  MatSnackBarModule,
 } from '@angular/material';
-import { AudiencesUsersListComponent } from './audiences-users-list.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
+import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { TranslateModule } from '@ngx-translate/core';
+
+import { AudiencesUsersListComponent } from './audiences-users-list.component';
 
 describe('AudiencesUsersListComponent', () => {
   let component: AudiencesUsersListComponent;
@@ -21,9 +31,14 @@ describe('AudiencesUsersListComponent', () => {
         StatusLabelModule,
         MatMenuModule,
         MatIconModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        HttpClientTestingModule,
         TranslateModule.forRoot(),
       ],
-      providers: [],
+      providers: [
+        AudiencesUserService,
+      ],
       declarations: [
         AudiencesUsersListComponent,
       ]

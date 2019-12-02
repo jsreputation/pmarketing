@@ -160,9 +160,9 @@ Given(/^14_I am at the blackcomb home page$/, async () => {
 
 When(/^14_I click on a featured reward$/, async () => {
   // waiting for featured reward to load
-  await browser.wait(ec.presenceOf(ElementApp.matCard().get(2)), 6000);
+  await browser.wait(ec.presenceOf(ElementApp.matCardArray().get(2)), 6000);
   // clicking on the featured reward
-  await ElementApp.matCard().get(2).click();
+  await ElementApp.matCardArray().get(2).click();
   await browser.sleep(1000);
 });
 
@@ -177,9 +177,9 @@ Given(/^15_I am at the blackcomb home page$/, async () => {
 
 When(/^15_I click on a reward under the all category$/, async () => {
   // waiting for featured reward to load
-  await browser.wait(ec.presenceOf(ElementApp.matCard().get(3)), 6000);
+  await browser.wait(ec.presenceOf(ElementApp.matCardArray().get(3)), 6000);
   // clicking on the featured reward
-  await ElementApp.matCard().get(3).click();
+  await ElementApp.matCardArray().get(3).click();
   await browser.sleep(1000);
 });
 

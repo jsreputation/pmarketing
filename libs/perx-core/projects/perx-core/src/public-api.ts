@@ -150,6 +150,7 @@ export { RepeatTimesDirective } from './lib/utils/directives/repeat-times.direct
 export { NewsfeedComponent } from './lib/utils/newsfeed/newsfeed.component';
 export { LanguageService } from './lib/utils/language/language.service';
 export { LanguageInterceptor } from './lib/utils/language.interceptor';
+export { LocaleIdFactory } from './lib/utils/language/locale-id.factory';
 /**
  * Puzzles
  */

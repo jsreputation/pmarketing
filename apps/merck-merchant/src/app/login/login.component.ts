@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
-
+  public appAccessTokenFetched: boolean;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -31,7 +31,18 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  public ngOnInit(): void { }
+  public ngOnInit(): void {
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
+  }
 
   public onSubmit(): void {
     const merchantUsername = this.loginForm.value.name as string;

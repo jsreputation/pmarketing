@@ -1,11 +1,12 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
-import { browser, protractor } from 'protractor';
-import { EngagementAppPage, CreateShakeTheTreeAppPage, ElementApp } from '../pages/candylandApp.po';
+import { browser, protractor, ProtractorExpectedConditions } from 'protractor';
+import { EngagementAppPage, CreateShakeTheTreeAppPage, ElementApp, LoginAppPage } from '../pages/candylandApp.po';
 // initializing page objects variables
 let PageEngagement: EngagementAppPage;
 let PageShakeTheTree: CreateShakeTheTreeAppPage;
 const Element = ElementApp;
+const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 
 Before( () => {
   // initializing page objects instances
@@ -15,6 +16,19 @@ Before( () => {
 });
 // Scenario: Ensure that both options of engagment games is visible to customer
 Given(/^6_I am on the customer engagment dialog box$/, async () => {
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  // entering correct account id
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
   await PageEngagement.navigateToEngagement();
   await browser.sleep(3000);
   // await element(by.className('btn mat-flat-button primary')).click();
@@ -23,7 +37,6 @@ Given(/^6_I am on the customer engagment dialog box$/, async () => {
 });
 
 When(/^6_I click on the games option$/,  async () => {
-  const ec = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(PageShakeTheTree.shakeTreeGamesButton()), 5000);
   // clicking on the create new button
   await PageShakeTheTree.shakeTreeGamesButton().click();
@@ -31,7 +44,7 @@ When(/^6_I click on the games option$/,  async () => {
 });
 
 Then(/^6_The two options for the games are present.$/, async () => {
-  expect(await PageShakeTheTree.firstPresentOption().count()).to.equal(2);
+  expect(await PageShakeTheTree.firstPresentOption().count()).to.equal(3);
   expect(await PageShakeTheTree.secondPresentOption().getText()).to.equal('Select Engagement Type');
 });
 
@@ -44,14 +57,13 @@ Given(/^7_I am on the engagement creation dialog box$/, async () => {
 });
 
 When(/^7_I click the next button$/, async () => {
-  const ec = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(PageShakeTheTree.shakeTreeGamesButton()), 5000);
   // clicking on the create new button
   await PageShakeTheTree.shakeTreeGamesButton().click();
   // clicking on the games option
   await PageShakeTheTree.shakeTreeTypeOptions().click();
   // clicking on the next button
-  await Element.matFlatButtonArray().click();
+  await Element.clButtonArray().get(2).click();
   await browser.sleep(3000);
   });
 
@@ -68,7 +80,6 @@ Given(/^8_that I am on the shake the tree creation page$/, async () => {
 When(/^8_I do nothing$/, () => {});
 
 Then('8_The relevant text input fields are present.', async () => {
-  const ec = protractor.ExpectedConditions;
   // waiting for element to load
   await browser.wait(ec.presenceOf(PageShakeTheTree.engagementTitleField()), 5000);
   await browser.wait(ec.presenceOf(PageShakeTheTree.headlineField()), 5000);
@@ -111,7 +122,6 @@ When(/^10_I entered a empty text string in the headline text box.$/, async () =>
 });
 
 Then(/^10_the empty string entered is reflected in the preview element.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   // waiting for preview headline to load
   await browser.wait(ec.presenceOf(PageShakeTheTree.shakeTreePreviewHeadline()), 6000);
   expect(await PageShakeTheTree.shakeTreePreviewEmptyHeadline().getText()).to.be.equal('');
@@ -131,7 +141,6 @@ When(/^11_I entered a pseudo random text string in the headline text box.$/, asy
 });
 
 Then(/^11_the random string entered is reflected in the preview element.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(PageShakeTheTree.shakeTreePreviewHeadline()), 6000);
   expect(await PageShakeTheTree.shakeTreePreviewHeadline().getText()).to.be.equal('This is a test string!');
 });
@@ -165,7 +174,6 @@ When(/^13_I entered a pseudo random text string in the sub-headline text box.$/,
 });
 
 Then(/^13_the random string entered is reflected in the preview element.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(PageShakeTheTree.shakeTreePreviewSubHeadline()), 6000);
   expect(await PageShakeTheTree.shakeTreePreviewSubHeadline().getText()).to.be.equal('This is a test string!');
 });
@@ -198,7 +206,6 @@ When(/^15_I entered a pseudo random text string in the button text box.$/, async
 });
 
 Then(/^15_the random string entered is reflected in the preview element.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(PageShakeTheTree.shakeTreePreviewButton()), 6000);
   expect(await PageShakeTheTree.shakeTreePreviewButton().getText()).to.be.equal('This is a test string!');
 });
@@ -294,6 +301,6 @@ When(/^20_I click on the gift design of my choics$/, async () => {
 
 Then(/^20_The preview element should reflect my choice.$/, async () => {
    const giftElement = PageShakeTheTree.previewMyChoice();
-   // doing an asssertion base on the url in src
-   expect(await giftElement.getAttribute('src')).to.contain('assets/images/gifts/state2.png');
+   // doing an assertion base on the url in src
+   expect(await giftElement.getAttribute('src')).to.contain('assets/game/gift2.png');
   });

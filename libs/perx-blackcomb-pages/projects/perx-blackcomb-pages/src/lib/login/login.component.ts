@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private destroy$: Subject<any> = new Subject();
   public theme: Observable<ITheme>;
   public appConfig: Observable<IConfig>;
-
+  public appAccessTokenFetched: boolean;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -38,6 +38,16 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.initForm();
     this.theme = this.themesService.getThemeSetting();
     this.appConfig = this.configService.readAppConfig();
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
   }
 
   public ngOnDestroy(): void {
