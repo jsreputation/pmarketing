@@ -103,7 +103,7 @@ export class RewardComponent implements OnInit, OnDestroy {
       if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && rewardPrice.price > 0) {
         return `${rewardPrice.currencyCode} ${Math.floor(rewardPrice.price)}`;
       }
-      return ''; // is actually 0 or invalid value default
+      return '';
     };
   }
 
