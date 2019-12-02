@@ -17,12 +17,15 @@ import {
 
 import { HistoryComponent } from './history.component';
 
+import { transactions } from '../mock/transaction.mock';
+import { loyalties } from '../mock/loyalty.mock';
+
 describe('HistoryComponent', () => {
   let component: HistoryComponent;
   let fixture: ComponentFixture<HistoryComponent>;
   const loyaltyServiceStub = {
-    getTransactions: () => of([]),
-    getLoyalties: () => of([]),
+    getTransactions: () => of(transactions),
+    getLoyalties: () => of(loyalties),
   };
 
   beforeEach(async(() => {
