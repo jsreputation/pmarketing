@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormGroup } from '@angular/forms';
 import { NewCampaignRewardsStampsFormService } from 'src/app/campaigns/services/new-campaign-rewards-stamps-form.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
@@ -18,7 +18,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
   @Input() public tenantSettings: ITenantsProperties;
   public form: FormGroup;
   private isFirstInit: boolean = true;
-  public slots: number[];
+  public slots: number[] = [0];
 
   constructor(
     public store: CampaignCreationStoreService,
