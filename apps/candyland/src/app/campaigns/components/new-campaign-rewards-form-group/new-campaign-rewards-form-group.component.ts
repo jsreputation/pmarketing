@@ -163,7 +163,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     if (data === null) {
       return;
     }
-
+  
     this.group.patchValue(data, { emitEvent: false });
     this.group.updateValueAndValidity();
     this.cd.detectChanges();
@@ -211,4 +211,12 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     }
     this.cd.detectChanges();
   }
+
+
+  // private createRewardForm(slotNumber: number): FormGroup {
+  //   return new FormGroup({
+  //     slotNumber: new FormControl(slotNumber),
+  //     rewardsOptions: new FormControl([])
+  //   });
+  // }
 }

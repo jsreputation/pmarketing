@@ -57,7 +57,6 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
   }
 
   public get rewardsListCollection(): FormArray {
-    console.log(this.form.get('rewardsListCollection'));
     return this.form.get('rewardsListCollection') as FormArray;
   }
 
@@ -65,23 +64,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
     return this.form.get('limits') as FormGroup;
   }
 
-  public addReward(formGroup: FormGroup): void {
-    this.rewardsListCollection.push(formGroup);
-  }
-
-  public removeReward(index: number): void {
-    this.rewardsListCollection.removeAt(index);
-  }
-
   private initForm(): void {
     this.form = this.formService.getForm();
   }
-
-  private createRewardForm(slotNumber: number): FormGroup {
-    return new FormGroup({
-      slotNumber: new FormControl(slotNumber),
-      rewardsOptions: new FormControl([])
-    });
-  }
-
 }
