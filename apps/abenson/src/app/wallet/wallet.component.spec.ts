@@ -15,10 +15,10 @@ describe('WalletComponent', () => {
   };
   const configServiceStub = {
     readAppConfig: () => of({})
-  }
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WalletComponent ],
+      declarations: [WalletComponent],
       imports: [
         NoopAnimationsModule,
         MatTabsModule,
@@ -27,7 +27,7 @@ describe('WalletComponent', () => {
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub },
-        { provide: ConfigService, useValue: configServiceStub}
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();

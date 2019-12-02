@@ -25,7 +25,7 @@ import { of } from 'rxjs';
 
 const configServiceStub = {
   readAppConfig: () => of({})
-}
+};
 
 describe('AppComponent', () => {
   let app: AppComponent;
