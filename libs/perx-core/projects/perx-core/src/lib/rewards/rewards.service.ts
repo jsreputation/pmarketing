@@ -18,4 +18,6 @@ export abstract class RewardsService {
   public abstract getAllCatalogs(locale?: string): Observable<ICatalog[]>;
 
   public abstract getCatalog(id: number, locale?: string): Observable<ICatalog>;
+
+  public abstract getCatalogs(page?: number, pageSize?: number, locale?: string): Observable<ICatalog[]>;
 }
