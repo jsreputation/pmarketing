@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { StatusLabelMapping, Voucher, IVoucherService, VoucherState } from '@perx/core';
+import { StatusLabelMapping, Voucher, IVoucherService, VoucherState, ConfigService } from '@perx/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class WalletComponent implements OnInit {
   public issuedVouchers: Observable<Voucher[]>;
-
+  public comingSoon: boolean = true;
   public redeemedVouchers: Observable<Voucher[]>;
 
   public mapping: StatusLabelMapping = {
@@ -24,11 +24,13 @@ export class WalletComponent implements OnInit {
 
   constructor(
     private vouchersService: IVoucherService,
-    private router: Router
+    private router: Router,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
     const feed = this.vouchersService.getAll();
+    this.configService.readAppConfig().subscribe((config) => this.comingSoon = config.comingSoon as boolean);
     this.issuedVouchers = feed
       .pipe(
         map((vouchers: Voucher[]) => vouchers.filter(voucher => voucher.state === VoucherState.issued))
