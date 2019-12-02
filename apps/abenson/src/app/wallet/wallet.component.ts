@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class WalletComponent implements OnInit {
   public issuedVouchers: Observable<Voucher[]>;
-  public comingSoon: boolean = true;
+  public comingSoon: boolean = false;
   public redeemedVouchers: Observable<Voucher[]>;
 
   public mapping: StatusLabelMapping = {
