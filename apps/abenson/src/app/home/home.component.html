@@ -4,14 +4,20 @@
   </div>
   <h1>Games</h1>
   <div class="games">
-    <mat-card *ngFor="let campaign of campaigns$ | async as campaigns" routerLink="" matRipple
+    <!-- <mat-card *ngFor="let campaign of campaigns$ | async as campaigns" routerLink="" matRipple
       (click)="onCampaignSelect(campaign)">
       <img class="puzzle-img" src="assets/static_image.png">
       <mat-card-content>
         <p class='main-reward-title'>{{campaign.name}}</p>
         <p class="reward-subtitle">{{campaign.description}}</p>
       </mat-card-content>
-    </mat-card>
+    </mat-card> -->
+    <div class="coming_soon">
+      <div>
+        <img class="coming-soon-img" src="assets/img/coming_soon.png">
+        <p>Coming soon</p>
+      </div>
+    </div>
   </div>
   <div class="rewards">
     <h1>Rewards</h1>

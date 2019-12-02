@@ -25,7 +25,7 @@ export class GameComponent implements OnInit {
       flatMap((params) => this.gameService.getGamesFromCampaign(parseInt(params.id, 10))),
       take(1),
       tap((games) => !games || !games.length && this.router.navigate(['/wallet'])),
-      map((games) => games[0]),
+      map((games) => games[0])
     );
   }
 
