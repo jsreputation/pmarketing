@@ -6,7 +6,7 @@ import {
 import {
   MatIconModule,
   MatCardModule,
-} from '@angular/material'
+} from '@angular/material';
 
 import { of } from 'rxjs';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
