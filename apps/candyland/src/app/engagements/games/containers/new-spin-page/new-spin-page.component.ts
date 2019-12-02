@@ -105,10 +105,8 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
           this.spinData = previewData;
           this.rewardSlotNumbers = this.allRewardSlotNumbers = previewData.rewardSlots;
           const patchData = spin || this.getDefaultValue(previewData);
-          console.log(patchData);
           this.formSpin.patchValue(patchData);
           const wheelPosImg: string = JSON.stringify(this.wheelPosition.value);
-          console.log(wheelPosImg, 'this is wheelpos img');
           if (wheelPosImg) {
             this.perxCoreSpinClass = wheelPosImg.includes('down') ? 'mobile-preview-v2' : 'mobile-preview-plugin';
             console.log(this.perxCoreSpinClass, 'am, i called?');
@@ -220,6 +218,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       } else {
         this.perxCoreSpinClass = 'mobile-preview-plugin';
       }
+      this.cd.detectChanges(); // this is critical
     });
   }
 

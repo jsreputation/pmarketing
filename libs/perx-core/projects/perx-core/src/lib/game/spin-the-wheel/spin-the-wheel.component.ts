@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, AfterViewInit, SimpleChanges, ViewChild, ElementRef} from '@angular/core';
+import {Component, Input, OnChanges, AfterViewInit, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { ISlice } from '../game.model';
 
 interface ImageForPattern {
@@ -109,7 +109,6 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     if ((changes.slices && this.slices)
       || (changes.wheelImg && this.wheelImg)
       || (changes.pointerImg && this.pointerImg)) {
-      // console.log(this.slices, 'i dont think i am called');
       this.init();
     }
   }
@@ -168,7 +167,6 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
         count++;
         if (count === slicesWithImg.length) {
           this.createPatterns(images);
-          console.log('i am inside here and doing createPatterns and drawWheel');
         }
       };
     });
@@ -227,6 +225,19 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
         }
       }
 
+      if (this.wheelImgLoaded) {
+        this.ctxWheelWrap.save();
+        this.ctxWheelWrap.clearRect(0, 0, this.canvasWheelWrap.width, this.canvasWheelWrap.height);
+        this.ctxWheelWrap.translate(this.canvasWheelWrap.width / 2, this.canvasWheelWrap.width / 2);
+        this.ctxWheelWrap.rotate(Math.PI / 180 * (this.startAngle));
+        this.ctxWheelWrap.translate(-(this.canvasWheelWrap.width / 2), -(this.canvasWheelWrap.width / 2));
+        this.ctxWheelWrap
+          .drawImage(this.wheelImgLoaded,
+            0 , 0,
+            this.canvasWheelWrap.width , this.canvasWheelWrap.height);
+        this.ctxWheelWrap.restore();
+      }
+
       // render label
       if (slice.label) {
         this.ctx.save();
@@ -268,12 +279,12 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private fillWheelWrapStyle(): void {
-    const wheelImg = new Image(); // this.canvasWheelWrap.width, this.canvasWheelWrap.height
+    const wheelImg: HTMLImageElement = new Image(); // this.canvasWheelWrap.width, this.canvasWheelWrap.height
     wheelImg.src = this.wheelImg; // this.wheelImg suppose
-    this.ctxWheelWrap.globalCompositeOperation = 'source-out'; // suppose source-out
     wheelImg.onload = () => {
       if (this.wheelImgLoaded !== wheelImg) {
         this.wheelImgLoaded = wheelImg;
+        this.ctxWheelWrap.clearRect(0, 0 , this.canvasWheelWrap.width, this.canvasWheelWrap.height); // critical to clear first to not ghost
         this.ctxWheelWrap
           .drawImage(this.wheelImgLoaded,
             0 , 0,
@@ -300,19 +311,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
       SpinTheWheelComponent.easeOut(this.spinTime, 0, this.spinAngleStart, this.spinTimeTotal);
     this.startAngle += spinAngle * Math.PI / 180;
     this.drawWheel();
-    if (this.wheelImgLoaded) {
-      this.ctxWheelWrap.save();
-      this.ctxWheelWrap.clearRect(0, 0, this.canvasWheelWrap.width, this.canvasWheelWrap.height);
-      this.ctxWheelWrap.translate(this.canvasWheelWrap.width / 2, this.canvasWheelWrap.width / 2);
-      this.ctxWheelWrap.rotate(Math.PI / 180 * (this.startAngle));
-      this.ctxWheelWrap.translate(-(this.canvasWheelWrap.width / 2), -(this.canvasWheelWrap.width / 2));
-      this.ctxWheelWrap
-        .drawImage(this.wheelImgLoaded,
-          0 , 0,
-          this.canvasWheelWrap.width , this.canvasWheelWrap.height);
-      this.ctxWheelWrap.restore();
-    }
-
+  // draw wheel used to be here
     const that = this;
     this.spinTimeout = window.setTimeout(() => {
       that.rotateWheel();
