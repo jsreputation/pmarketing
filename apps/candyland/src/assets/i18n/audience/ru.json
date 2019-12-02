@@ -2,6 +2,7 @@
  "AUDIENCE_FEATURE": {
    "AUDIENCES": "Аудитории",
    "ADD_USER": "Добавить пользователя",
+   "EDIT_USER": "Редактировать пользователя",
    "SEARCH_FOR_USERS": "Поиск пользователей",
    "SEARCH_FOR_AUDIENCE": "Поиск аудитории",
    "ID": "Идентификатор",
