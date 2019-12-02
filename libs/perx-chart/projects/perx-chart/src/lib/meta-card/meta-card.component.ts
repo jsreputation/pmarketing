@@ -27,7 +27,7 @@ export class MetaCardComponent implements OnChanges, OnDestroy {
   @Input()
   public parameters: { [key: string]: string };
   @Input()
-  public id: number;
+  public id: number | string;
   @Input()
   public cardType: CardType = CardType.verticalBar;
 

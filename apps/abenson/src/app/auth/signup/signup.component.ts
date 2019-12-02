@@ -12,7 +12,7 @@ export class SignUpComponent implements OnInit {
   public signUpForm: FormGroup;
   public errorMessage?: string;
   public hide: boolean = true;
-
+  public appAccessTokenFetched: boolean;
   constructor(
     private fb: FormBuilder,
     private authService: AuthenticationService,
@@ -21,6 +21,16 @@ export class SignUpComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initForm();
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
   }
 
   public initForm(): void {
@@ -48,8 +58,8 @@ export class SignUpComponent implements OnInit {
     this.authService.signup(profile).subscribe(() => {
       this.router.navigate(['sms-validation'], { queryParams: { identifier: profile.phone } });
     },
-    (e) => {
-      console.log(e);
-    });
+      (e) => {
+        console.log(e);
+      });
   }
 }
