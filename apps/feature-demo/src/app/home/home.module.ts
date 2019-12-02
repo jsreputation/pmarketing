@@ -11,6 +11,7 @@ import {
   MatDialogModule,
 } from '@angular/material';
 
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 
 import {
@@ -64,6 +65,7 @@ import { PopupComponent } from './news-feed/popup/popup.component';
     LoyaltyModule,
     PerxRewardsModule,
     PerxCoreVouchersModule,
+    InfiniteScrollModule,
   ],
   bootstrap: [
   ],

@@ -1,16 +1,26 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
+import {
+  MatIconModule,
+  MatCardModule,
+} from '@angular/material';
+
+import { of } from 'rxjs';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
+import { RewardsService } from '@perx/core';
 
 import { CatalogsComponent } from './catalogs.component';
-import { MatIconModule, MatCardModule } from '@angular/material';
-import { RewardsService } from '@perx/core';
-import { of } from 'rxjs';
 import { catalogs } from 'src/app/catalogs.mock';
 
 describe('CatalogsComponent', () => {
   let component: CatalogsComponent;
   let fixture: ComponentFixture<CatalogsComponent>;
   const catalogsServiceStub = {
-    getAllCatalogs: () => of(catalogs)
+    getCatalogs: () => of(catalogs),
   };
 
   beforeEach(async(() => {
@@ -18,13 +28,14 @@ describe('CatalogsComponent', () => {
       declarations: [ CatalogsComponent ],
       imports: [
         MatIconModule,
-        MatCardModule
+        MatCardModule,
+        InfiniteScrollModule,
       ],
       providers: [
         { provide: RewardsService, useValue: catalogsServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -37,7 +48,7 @@ describe('CatalogsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should get catalogs from getAllCatalogs', () => {
+  it('should get catalogs from getCatalogs', () => {
     component.catalogs$.subscribe(res => {
       expect(res[0].id).toBe(0);
       expect(res[0].name).toBe('Ramadan Exclusive');
