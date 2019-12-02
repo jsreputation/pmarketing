@@ -8,7 +8,6 @@ import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaig
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
-import { oc } from 'ts-optchain';
 import { NewCampaignRewardsStampsFormService } from '../../services/new-campaign-rewards-stamps-form.service';
 import { noop } from 'rxjs';
 
@@ -29,7 +28,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
   public form: FormGroup;
 
   public get times(): FormControl {
-    return this.form.get('limits.times') as FormControl;
+    return this.group.get('limits.times') as FormControl;
   }
 
   constructor(
@@ -54,13 +53,15 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
   }
 
   public get campaignEngagementType(): string {
-    return oc(this.store.currentCampaign).template.attributes_type('game');
+    return this.store.currentCampaign && this.store.currentCampaign.template && this.store.currentCampaign.template.attributes_type || '';
   }
 
   private initForm(): void {
     if (!this.form) {
       return;
     }
+    console.log('init form');
+    console.log(this.form);
     if (this.route.snapshot.params.id) {
       this.store.currentCampaign$
         .asObservable()
@@ -70,11 +71,11 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
           if (isFirstTimeRenderFromAPIResponse) {
             this.isFirstInit = false;
             const limitsData = Object.assign({}, data);
-            this.form.patchValue(limitsData);
+            this.group.patchValue(limitsData);
           }
         });
     } else {
-      this.form.patchValue(this.formService.getDefaultValue(this.campaignEngagementType));
+      this.group.patchValue(this.formService.getDefaultValue(this.campaignEngagementType));
     }
     this.group.valueChanges
       .pipe(takeUntil(this.destroy$))
@@ -105,7 +106,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
   }
 
   private subscribeFormValueChange(): void {
-    this.form.valueChanges
+    this.group.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe((val: ICampaign) => this.store.updateCampaign(val));
   }

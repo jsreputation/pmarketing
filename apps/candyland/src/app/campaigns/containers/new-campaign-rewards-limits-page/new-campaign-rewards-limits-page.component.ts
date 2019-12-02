@@ -18,6 +18,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
   @Input() public tenantSettings: ITenantsProperties;
   public form: FormGroup;
   private isFirstInit: boolean = true;
+  public slots: number[];
 
   constructor(
     public store: CampaignCreationStoreService,
@@ -35,18 +36,15 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
       return;
     }
     this.store.currentCampaign$
-    .asObservable()
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((data: ICampaign) => {
-      const isFirstTimeRenderFromAPIResponse = data && data.template && this.isFirstInit;
-      if (isFirstTimeRenderFromAPIResponse) {
-        this.isFirstInit = false;
-        const stampsSlotNumber = this.store.currentCampaign.template.slots;
-        for (const slotNumber of stampsSlotNumber) {
-          this.addReward(this.createRewardForm(slotNumber));
+      .asObservable()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: ICampaign) => {
+        const isFirstTimeRenderFromAPIResponse = data && data.template && this.isFirstInit;
+        if (isFirstTimeRenderFromAPIResponse) {
+          this.isFirstInit = false;
+          this.slots = this.store.currentCampaign.template.slots || [0];
         }
-      }
-    });
+      });
   }
 
   public ngOnDestroy(): void {
@@ -59,6 +57,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
   }
 
   public get rewardsListCollection(): FormArray {
+    console.log(this.form.get('rewardsListCollection'));
     return this.form.get('rewardsListCollection') as FormArray;
   }
 

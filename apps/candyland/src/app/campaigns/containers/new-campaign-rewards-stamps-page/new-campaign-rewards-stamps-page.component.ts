@@ -22,7 +22,6 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   // @ts-ignore
   private onTouched: any = noop;
   public isFirstInit: boolean = true;
-  public form: FormGroup;
 
   constructor(
     public store: CampaignCreationStoreService,
@@ -37,11 +36,9 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
 
   public ngOnInit(): void {
     super.ngOnInit();
-    if (!this.form) {
-      return;
-    }
+ 
     const stampsNumber = +this.store.currentCampaign.template.nb_of_slots;
-    this.form.get('stampsRule.sequence').valueChanges
+    this.group.get('stampsRule.sequence').valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
         if (value) {
@@ -50,8 +47,6 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
           this.initUnsequenceRules();
         }
       });
-    // TODO: will be need for realization edit page
-    // this.form.patchValue(this.formService.getDefaultValue());
   }
 
   public ngOnDestroy(): void {
@@ -60,11 +55,11 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   }
 
   public get stampRule(): FormArray {
-    return this.form.get('stampsRule.rules') as FormArray;
+    return this.group.get('stampsRule.rules') as FormArray;
   }
 
   public get isSequence(): boolean {
-    return this.form.get('stampsRule.sequence').value;
+    return this.group.get('stampsRule.sequence').value;
   }
 
   public addStampRule(): void {
@@ -78,17 +73,14 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   }
 
   private initForm(): void {
-    if (!this.form) {
-      return;
-    }
-    this.form.valueChanges
+    this.group.valueChanges
       .pipe(
         distinctUntilChanged(),
         debounceTime(500),
         takeUntil(this.destroy$)
       )
       .subscribe(() => {
-        const toggleConfig = this.formService.getToggleConfig(this.form);
+        const toggleConfig = this.formService.getToggleConfig(this.group);
         this.toggleControlService.updateFormStructure(toggleConfig);
         if (this.toggleControlService.formChanged) {
           this.updateForm();
@@ -104,7 +96,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   }
 
   private updateForm(): void {
-    this.form.updateValueAndValidity();
+    this.group.updateValueAndValidity();
     this.cd.detectChanges();
   }
 
