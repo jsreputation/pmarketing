@@ -9,7 +9,7 @@ export interface IRewardEntity {
   redemptionType?: WRedemptionType;
   current: number;
   total: number;
-  limit?: number;
+  limit?: number | null;
   probability?: number | null;
   category: string;
   voucherInfo?: {

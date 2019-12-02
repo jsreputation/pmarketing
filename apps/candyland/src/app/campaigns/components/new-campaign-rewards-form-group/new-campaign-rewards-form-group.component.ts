@@ -122,22 +122,22 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
   public initRewardsList(): void {
     this.rewards.reset();
-    const noOutcome = this.campaign.rewardsList.find(outcome => !outcome.resultId);
+    const noOutcome = this.campaign.rewardsListCollection.find(outcomeData => !outcomeData.outcome.resultId).outcome;
     this.noOutCome = {
       probability: noOutcome && noOutcome.probability || 0,
       outcomeId: noOutcome && noOutcome.id
     };
 
-    const possibleOutcomes = this.campaign.rewardsList.filter(data => {
+    const possibleOutcomes = this.campaign.rewardsListCollection.filter(data => {
       if (!this.slotNumber) {
         return true;
       }
-      return data.lootBoxId === this.slotNumber;
-    }).filter(data => data.resultId)
+      return data.outcome.lootBoxId === this.slotNumber;
+    }).filter(data => data.outcome.resultId)
       .map(data =>
-        this.rewardsService.getReward(data.resultId).pipe(
+        this.rewardsService.getReward(data.outcome.resultId).pipe(
           map((reward: IRewardEntity) =>
-            ({ ...reward, probability: data.probability, outcomeId: data.id, limit: data.limit })),
+            ({ ...reward, probability: data.outcome.probability, outcomeId: data.outcome.id, limit: data.outcome.limit })),
           catchError(() => of(null))
         ));
     combineLatest(...possibleOutcomes).subscribe(

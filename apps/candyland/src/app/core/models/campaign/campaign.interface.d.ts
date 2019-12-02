@@ -1,6 +1,7 @@
 import { ISchedule } from '../comm/schedule';
 import { InformationCollectionSettingType } from './campaign.enum';
 import { IOutcome } from '../outcome/outcome';
+import { IRewardEntity } from '../reward/reward-entity.interface';
 
 export interface ICampaign {
   id?: string;
@@ -31,9 +32,20 @@ export interface ICampaign {
     schedule?: ISchedule;
   };
   template?: any;
-  rewardsListCollection?: IOutcome[];
+  enable
+  rewardsListCollection?:  ICampaignRewardsList[];
   limits?: any;
   displayProperties?: any;
+}
+
+
+export interface ICampaignRewardsList {
+  outcome?: IOutcome;
+  slotInfo?: {
+    enableProbability?: boolean
+    slotNumber?: number | null;
+  }
+  rewardsOptions?: IRewardEntity | { probability: 0, outcomeId: '', limit: '', id: '' };
 }
 
 export interface ICampaignTableData {

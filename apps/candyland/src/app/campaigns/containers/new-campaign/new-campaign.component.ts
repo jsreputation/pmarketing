@@ -21,12 +21,10 @@ import {
   IWLimitAttributes,
   IWProfileAttributes
 } from '@perx/whistler';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign, ICampaignRewardsList } from '@cl-core/models/campaign/campaign.interface';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
-import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
-import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -204,26 +202,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private updateOutcomes(campaign: ICampaign): Observable<any> {
     let updateOutcomesArr$ = [];
-    if (this.store.currentCampaign.template.attributes_type === EngagementType.stamp) {
-      this.store.currentCampaign.rewardsListCollection.forEach(
-        rewardsData => {
-          const updateOutcomeList = this.updateOutcomeWhenEdit(
-            campaign,
-            rewardsData.rewardsOptions && rewardsData.rewardsOptions.rewards,
-            rewardsData.rewardsOptions && rewardsData.rewardsOptions.enableProbability,
-            rewardsData.stampSlotNumber
-          );
-          updateOutcomesArr$ = [...updateOutcomesArr$, ...updateOutcomeList];
-
-        });
-    } else {
-      const rewardsOptions = this.store.currentCampaign.rewardsOptions;
-      updateOutcomesArr$ = this.updateOutcomeWhenEdit(
-        campaign,
-        rewardsOptions && rewardsOptions.rewards,
-        rewardsOptions && rewardsOptions.enableProbability
-      );
-    }
+    const rewardsCollection = this.store.currentCampaign.rewardsListCollection;
+    const updateOutcomeList = this.updateOutcomeWhenEdit(campaign, rewardsCollection);
+    updateOutcomesArr$ = [...updateOutcomesArr$, ...updateOutcomeList];
 
     if (updateOutcomesArr$.length <= 0) {
       return of([]);
@@ -233,41 +214,37 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private updateOutcomeWhenEdit(
     campaign: ICampaign,
-    data: { value: IRewardEntity, probability: number, limit: number | null }[],
-    enableProbability: boolean,
-    slotNumber?: number
+    data: ICampaignRewardsList[],
   ): Observable<any>[] {
     if (!data || data.length <= 0) {
       return [];
     }
     const updateOutcomesArr$ = [];
-    const oldCampaignList = this.store.currentCampaign.rewardsListCollection;
+    const oldCampaignListToDelete = this.store.currentCampaign.rewardsListCollection
+      .filter(outcomeData => outcomeData.outcome && !outcomeData.rewardsOptions);
     const deleteOutcomes$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
-    const updateOutcomes$ = outcomeData => this.outcomesService.updateOutcome(outcomeData, campaign.id, enableProbability, slotNumber);
-    const createOutcomes$ = outcomeData => this.outcomesService.createOutcome(outcomeData, campaign.id, enableProbability, slotNumber);
+    const updateOutcomes$ = outcomeData =>
+      this.outcomesService.updateOutcome(outcomeData, campaign.id, data.slotInfo.enableProbability, data.slotInfo.slotNumber);
+    const createOutcomes$ = outcomeData =>
+      this.outcomesService.createOutcome(outcomeData, campaign.id, data.slotInfo.enableProbability, data.slotInfo.slotNumber);
 
-    data.forEach(outcome => {
+    data.forEach(outcomeData => {
       if (this.store.currentCampaign.id) {
-        if (outcome.value.outcomeId) {
-          const oldRewardRecord = oldCampaignList.find(reward => reward.id === outcome.value.outcomeId);
-          const oldProbability = oldRewardRecord ? oldRewardRecord.probability || undefined : undefined;
-          const oldLimit = oldRewardRecord ? oldRewardRecord.limit || undefined : undefined;
-          if (oldProbability !== outcome.probability || oldLimit !== outcome.limit) {
-            updateOutcomesArr$.push(updateOutcomes$(outcome));
+        if (outcomeData.outcome.id) {
+          if (outcomeData.outcome.probability !== outcomeData.rewardsOptions.probability ||
+            outcomeData.outcome.limit !== outcomeData.rewardsOptions.limit) {
+            updateOutcomesArr$.push(updateOutcomes$(outcomeData.rewardsOptions));
           }
         } else {
-          updateOutcomesArr$.push(createOutcomes$(outcome));
+          updateOutcomesArr$.push(createOutcomes$(outcomeData.rewardsOptions));
         }
       } else {
-        updateOutcomesArr$.push(createOutcomes$(outcome));
+        updateOutcomesArr$.push(createOutcomes$(outcomeData.rewardsOptions));
       }
     });
-    if (oldCampaignList && oldCampaignList.length >= 0) {
-      oldCampaignList.forEach(oldReward => {
-        const isOutcomeExist = data.find(oc => oc.value.outcomeId === oldReward.id);
-        if (!isOutcomeExist) {
-          updateOutcomesArr$.push(deleteOutcomes$(oldReward.id));
-        }
+    if (oldCampaignListToDelete && oldCampaignListToDelete.length >= 0) {
+      oldCampaignListToDelete.forEach(oldReward => {
+        updateOutcomesArr$.push(deleteOutcomes$(oldReward.outcome.id));
       });
     }
     return updateOutcomesArr$;
@@ -367,7 +344,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       ).pipe(
         map(
           ([campaign, commEvent, outcomes]:
-            [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
+            [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => {
+            outcomes.forEach(outcome => ({ outcome, slotInfo: { slotNumber: outcome.slotNumber } }));
+            return {
               ...campaign,
               audience: { select: commEvent && commEvent.poolId || null },
               channel: {
@@ -375,7 +354,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
                 ...commEvent
               },
               rewardsListCollection: outcomes
-            }))
+            };
+          })
       ).subscribe(
         campaign => {
           this.campaign = Object.assign({}, campaign);

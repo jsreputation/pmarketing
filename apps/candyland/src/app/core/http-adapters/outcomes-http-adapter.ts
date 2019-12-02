@@ -15,7 +15,7 @@ export class OutcomesHttpAdapter {
   }
 
   public static transformFromOutcomes(
-    data: { value: IRewardEntity, probability: number, limit: number | null },
+    data: IRewardEntity| { probability: 0, outcomeId: '', limit: '', id: '' },
     enableProbability: boolean,
     campaignId: string,
     slotNumber: number
@@ -23,11 +23,11 @@ export class OutcomesHttpAdapter {
     return {
       type: 'possible_outcomes',
       attributes: {
-        result_id: data.value && parseInt(data.value.id, 10),
+        result_id: data && parseInt(data.id, 10),
         result_type: 'Perx::Reward::Entity',
         probability: enableProbability ? data.probability / 100 : null,
         loot_box_id: slotNumber,
-        no_outcome: !data.value.id,
+        no_outcome: !data.id,
         campaign_entity_id: campaignId && parseInt(campaignId, 10),
         max_issuance_per_campaign: data.limit || null
       }

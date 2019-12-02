@@ -48,7 +48,7 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
       this.stampsHasRewards = false;
     } else {
       campaign.rewardsListCollection.forEach(data => {
-        if (data.rewardsOptions.rewards && data.rewardsOptions.rewards.length > 0) {
+        if (data.rewardsOptions) {
           this.stampsHasRewards = true;
         }
       });

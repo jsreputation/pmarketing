@@ -1,7 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { NewCampaignRewardsStampsFormService } from 'src/app/campaigns/services/new-campaign-rewards-stamps-form.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
@@ -70,7 +68,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
 
   private createRewardForm(slotNumber: number): FormGroup {
     return new FormGroup({
-      stampSlotNumber: new FormControl(slotNumber),
+      slotNumber: new FormControl(slotNumber),
       rewardsOptions: new FormControl([])
     });
   }

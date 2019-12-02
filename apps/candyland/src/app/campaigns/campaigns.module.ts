@@ -73,7 +73,7 @@ import {
 } from './components/new-campaign-stamp-rule-form-group/new-campaign-stamp-rule-form-group.component';
 import { ReviewCampaignComponent } from './containers/review-campaign/review-campaign.component';
 import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
-import { NewCampaignRewardsSurveyPageComponent } from './containers/new-campaign-rewards-survey-page/new-campaign-rewards-survey-page.component';
+import { NewCampaignRewardsLimitsPageComponent } from './containers/new-campaign-rewards-limits-page/new-campaign-rewards-limits-page.component';
 import { SimpleMobileViewModule, PipesModule } from '@cl-shared';
 import { SurveyModule as PerxSurveyModule, GameModule, ConfigModule, PuzzlesModule, RewardsModule as PerxRewardsModule } from '@perx/core';
 import { environment } from '@cl-environments/environment';
@@ -103,7 +103,7 @@ import { TranslateModule } from '@ngx-translate/core';
     NewCampaignRewardsFormGroupComponent,
     NewCampaignStampRuleFormGroupComponent,
     ReviewCampaignComponent,
-    NewCampaignRewardsSurveyPageComponent,
+    NewCampaignRewardsLimitsPageComponent,
     CampaignsMobilePreviewComponent,
   ],
   imports: [

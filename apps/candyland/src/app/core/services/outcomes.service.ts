@@ -7,6 +7,7 @@ import { OutcomesHttpAdapter } from '@cl-core/http-adapters/outcomes-http-adapte
 import { IWOutcomeAttributes } from '@perx/whistler';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
+import { ICampaignRewardsList } from '@cl-core/models/campaign/campaign.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -26,17 +27,17 @@ export class OutcomesService {
   }
 
   public updateOutcome(
-    data: { value: IRewardEntity, probability: number, limit: number | null },
+    data: ICampaignRewardsList,
     campaignId: string,
     enableProbability: boolean,
     slotNumber: number
   ): Observable<IJsonApiPayload<IWOutcomeAttributes>> {
-    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data, enableProbability, campaignId, slotNumber);
-    return this.outcomesHttpsService.updateOutcome(data.value.outcomeId, { data: { id: data.value.outcomeId, ...sendData } });
+    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data.rewardsOptions, enableProbability, campaignId, slotNumber);
+    return this.outcomesHttpsService.updateOutcome(data.outcome.id, { data: { id: data.outcome.id, ...sendData } });
   }
 
   public createOutcome(
-    data: { value: IRewardEntity, probability: number, limit: number | null },
+    data: IRewardEntity,
     campaignId: string,
     enableProbability: boolean,
     slotNumber: number
