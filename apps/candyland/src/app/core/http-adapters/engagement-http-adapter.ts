@@ -303,6 +303,29 @@ export class EngagementHttpAdapter {
     };
   }
 
+  public static transformFromInstantRewardForm(
+    data: IRewardForm
+  ): IJsonApiItem<IWInstantOutcomeEngagementAttributes> {
+    return {
+      type: "engagements",
+      attributes: {
+        type: "instant_reward",
+        title: data.name,
+        image_url: data.image_url,
+        display_properties: {
+          banner: data.banner,
+          title: data.headlineMessage,
+          sub_title: data.headlineMessage,
+          card_background_img_url: ImageControlValue.getImagePath(
+            data.cardBackground
+          ),
+          background_img_url: ImageControlValue.getImagePath(data.background),
+          button: data.buttonText
+        }
+      }
+    };
+  }
+
   public static transformFromSpinForm(
     data: ISpinEntityForm
   ): IJsonApiItem<IWSpinGameEngagementAttributes> {
@@ -326,30 +349,6 @@ export class EngagementHttpAdapter {
           wheel_position: ImageControlValue.getImagePath(data.wheelPosition),
           background_img_url: ImageControlValue.getImagePath(data.background),
           pointer_img: ImageControlValue.getImagePath(data.pointerImg)
-        }
-      }
-    };
-  }
-
-  public static transformFromInstantRewardForm(
-    data: IRewardForm
-  ): IJsonApiItem<IWInstantOutcomeEngagementAttributes> {
-    return {
-      type: "engagements",
-      attributes: {
-        type: "instant_reward",
-        title: data.name,
-        image_url: data.image_url,
-        display_properties: {
-          banner: data.banner,
-          title: data.headlineMessage,
-          sub_title: data.headlineMessage,
-          // subHeadlineText: data.subHeadlineMessage,
-          card_background_img_url: ImageControlValue.getImagePath(
-            data.cardBackground
-          ),
-          background_img_url: ImageControlValue.getImagePath(data.background),
-          button: data.buttonText
         }
       }
     };
@@ -520,6 +519,7 @@ export class EngagementHttpAdapter {
       name: data.attributes.title,
       headlineMessage: data.attributes.display_properties.title,
       subHeadlineMessage: data.attributes.display_properties.sub_title,
+      gameType: data.attributes.game_type,
       background: data.attributes.display_properties.background_img_url,
       buttonText: data.attributes.display_properties.button,
       numberOfWedges: data.attributes.display_properties.nb_of_wedges,

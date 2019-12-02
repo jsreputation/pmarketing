@@ -1,4 +1,5 @@
 declare interface ISpinEntityForm extends ICommonGameForm {
+  gameType?: string;
   numberOfWedges: number;
   rewardSlots: number[];
   colorCtrls: {[index: number]: string};

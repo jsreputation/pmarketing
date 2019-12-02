@@ -107,11 +107,10 @@
                 Reward Icon
               </h3>
               <div class="game-gift-box_field">
-                <cl-select-graphic-wrap *ngIf="spinData?.rewardIcon"
+                <cl-select-graphic *ngIf="spinData?.rewardIcon"
                   formControlName="rewardIcon"
-                  [isRequired]="rewardIcon.hasError('required') && rewardIcon.touched"
                   [graphicList]="spinData?.rewardIcon"
-                ></cl-select-graphic-wrap>
+                ></cl-select-graphic>
               </div>
             </div>
 

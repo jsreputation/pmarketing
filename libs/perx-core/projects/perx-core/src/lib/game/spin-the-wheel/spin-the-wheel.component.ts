@@ -17,26 +17,6 @@ interface Pattern {
   styleUrls: ['./spin-the-wheel.component.scss']
 })
 export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
-  private get canvas(): HTMLCanvasElement { return this.canvasEl.nativeElement; }
-  private get canvasArrow(): HTMLCanvasElement { return this.canvasArrowEl.nativeElement; }
-  private get wheel(): HTMLDivElement { return this.wheelEl.nativeElement; }
-  private get container(): HTMLDivElement { return this.containerEl.nativeElement; }
-  private get wheelWrap(): HTMLDivElement { return this.wheelWrapEl.nativeElement; }
-
-  private get ctx(): CanvasRenderingContext2D {
-    if (!this.ctx_ && this.canvas.getContext) {
-      this.ctx_ = this.canvas.getContext('2d') as CanvasRenderingContext2D;
-      this.loadImg();
-    }
-    return this.ctx_;
-  }
-
-  private get ctxArrow(): CanvasRenderingContext2D {
-    if (!this.ctxArrow_ && this.canvasArrow.getContext) {
-      this.ctxArrow_ = this.canvasArrow.getContext('2d') as CanvasRenderingContext2D;
-    }
-    return this.ctxArrow_;
-  }
   @Input()
   public slices: ISlice[] = [];
 
@@ -54,28 +34,60 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   // tslint:disable-next-line:variable-name
   private ctx_: CanvasRenderingContext2D;
+  // tslint:disable-next-line:variable-name
   private ctxArrow_: CanvasRenderingContext2D;
+  // tslint:disable-next-line:variable-name
+  private ctxWheelWrap_: CanvasRenderingContext2D;
   private arcDeg: number;
   private arc: number;
   private startAngle: number;
+  public size: number;
   private patternImg: Pattern[] = [];
   private spinTime: number;
   private dragging: boolean = false;
   private spinTimeTotal: number = 0;
   private spinAngleStart: number = 0;
   private spinTimeout: number;
-  private size: number;
+  private wheelImgLoaded!: HTMLImageElement;
 
   @ViewChild('canvas', {static: true})
   private canvasEl: ElementRef<HTMLCanvasElement>;
   @ViewChild('arrow', {static: true})
   private canvasArrowEl: ElementRef<HTMLCanvasElement>;
+  @ViewChild('wheelWrap', {static: true})
+  private canvasWheelWrapEl: ElementRef<HTMLCanvasElement>;
   @ViewChild('wheel', {static: true})
   private wheelEl: ElementRef<HTMLDivElement>;
   @ViewChild('container', {static: true})
   private containerEl: ElementRef<HTMLDivElement>;
-  @ViewChild('wheelWrap', {static: true})
-  private wheelWrapEl: ElementRef<HTMLDivElement>;
+
+  private get canvas(): HTMLCanvasElement { return this.canvasEl.nativeElement; }
+  private get canvasArrow(): HTMLCanvasElement { return this.canvasArrowEl.nativeElement; }
+  private get canvasWheelWrap(): HTMLCanvasElement { return this.canvasWheelWrapEl.nativeElement; }
+
+  private get wheel(): HTMLDivElement { return this.wheelEl.nativeElement; }
+  private get container(): HTMLDivElement { return this.containerEl.nativeElement; }
+
+  private get ctx(): CanvasRenderingContext2D {
+    if (!this.ctx_ && this.canvas.getContext) {
+      this.ctx_ = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+    }
+    return this.ctx_;
+  }
+
+  private get ctxArrow(): CanvasRenderingContext2D {
+    if (!this.ctxArrow_ && this.canvasArrow.getContext) {
+      this.ctxArrow_ = this.canvasArrow.getContext('2d') as CanvasRenderingContext2D;
+    }
+    return this.ctxArrow_;
+  }
+
+  private get ctxWheelWrap(): CanvasRenderingContext2D {
+    if (!this.ctxWheelWrap_ && this.canvasWheelWrap.getContext) {
+      this.ctxWheelWrap_ = this.canvasWheelWrap.getContext('2d') as CanvasRenderingContext2D;
+    }
+    return this.ctxWheelWrap_;
+  }
 
   private static findTop(element: HTMLElement): number {
     const rec = element.getBoundingClientRect();
@@ -93,21 +105,18 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     return b + c * (tc + -3 * ts + 3 * t);
   }
 
-  public ngAfterViewInit(): void {
-    this.generateCanvas();
-    this.init();
-    this.setWheelImgDimensions();
-    this.attachListeners();
-    console.log('ngOnInit', this.slices);
+  public ngOnChanges(changes: SimpleChanges): void {
+    if ((changes.slices && this.slices)
+      || (changes.wheelImg && this.wheelImg)
+      || (changes.pointerImg && this.pointerImg)) {
+      // console.log(this.slices, 'i dont think i am called');
+      this.init();
+    }
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if ((changes.slices && this.slices) || (changes.wheelImg && this.wheelImg) || changes.pointerImg) {
-      this.init();
-      this.setWheelImgDimensions();
-      this.fillArrowStyle();
-    }
-    console.log('ngOnChanges', changes);
+  public ngAfterViewInit(): void {
+    this.generateCanvas();
+    this.attachListeners();
   }
 
   private generateCanvas(): void {
@@ -116,11 +125,8 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     this.canvas.height = this.wheel.offsetWidth;
     this.canvasArrow.width = this.wheel.offsetWidth;
     this.canvasArrow.height = this.wheel.offsetWidth;
-  }
-
-  private setWheelImgDimensions(): void {
-    this.wheelWrap.style.width = this.wheel.offsetWidth * 1.2 + 'px';
-    this.wheelWrap.style.height = this.wheel.offsetWidth * 1.2 + 'px';
+    this.canvasWheelWrap.height = this.wheel.offsetWidth * 1.15;
+    this.canvasWheelWrap.width =  this.wheel.offsetWidth * 1.15;
   }
 
   private attachListeners(): void {
@@ -140,7 +146,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   private init(): void {
     this.arcDeg = 360 / this.slices.length;
     this.startAngle = this.arcDeg / 2 * Math.PI / 180;
-    this.arc = this.arcDeg * Math.PI / 180;
+    this.arc = this.arcDeg * Math.PI / 180; // converting back to radians
     this.spinTimeout = 0;
     this.loadImg();
   }
@@ -150,21 +156,19 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     let count: number = 0;
     const images: ImageForPattern[] = [];
 
-    if (slicesWithImg.length === 0) {
-      this.drawWheel();
-      return;
-    }
+    this.fillArrowStyle();
+    this.fillWheelWrapStyle();
 
     slicesWithImg.forEach((item) => {
+      console.log('at least i enter4ed ehre laodImg loopigb thru saliceWithImage?');
       const image: HTMLImageElement = new Image();
       image.src = item.backgroundImage ? item.backgroundImage : '';
       images.push({ id: item.id, image });
       image.onload = () => {
         count++;
         if (count === slicesWithImg.length) {
-          console.log('create patterns is being called wihtin load image');
           this.createPatterns(images);
-          this.drawWheel();
+          console.log('i am inside here and doing createPatterns and drawWheel');
         }
       };
     });
@@ -175,57 +179,64 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
       .map(item => (
         {
           id: item.id,
-          pattern: this.ctx && this.ctx.createPattern(item.image, 'repeat')
+          pattern: this.ctx && this.ctx.createPattern(item.image, 'no-repeat')
         })).filter((imagePattern) => {
         if (imagePattern.pattern) {
           return imagePattern;
         }
       });
-    console.log(patternImg, 'patternImg');
     this.patternImg = (patternImg as Pattern[]);
     this.drawWheel();
   }
 
   private drawWheel(): void {
-    const outsideRadius = this.size / 2 - 5;
-    const textRadius = this.size / 3;
-    let currentPattern;
+    console.log('i am drawWheel and i am also being called');
+    const outsideRadius = this.size / 2 - 5; // how does this come about ?
+    this.ctx.translate(this.size / 2, this.size / 2);
+    this.ctx.rotate(this.startAngle); // why have a start angle, just center it if dont have?
+    // draw slices
     this.slices.forEach((slice: ISlice, i: number) => {
-      if (this.ctx !== null) {
-        const angle = this.startAngle + i * this.arc;
+      const angle = i * this.arc;
+      // render background color
+      this.ctx.fillStyle = slice.backgroundColor || 'white';
+      this.ctx.beginPath();
+      this.ctx.arc(0, 0, outsideRadius, angle, angle + this.arc, false);
+      this.ctx.arc(0, 0, 0, angle + this.arc, angle, true);
 
-        this.ctx.fillStyle = slice.backgroundColor || 'white';
+      this.ctx.stroke();
+      this.ctx.fill();
+      // render background image
+      if (slice.backgroundImage) {
+        const currentPattern: Pattern | undefined = this.patternImg.find(item => item.id === slice.id);
+        if (currentPattern) {
+          this.ctx.save();
+          this.ctx.rotate(angle  + this.arc / 2);
 
-        this.ctx.beginPath();
-        this.ctx.arc(this.size / 2, this.size / 2, outsideRadius, angle, angle + this.arc, false);
-        this.ctx.arc(this.size / 2, this.size / 2, 0, angle + this.arc, angle, true);
+          const stampSize: number = 500 / this.slices.length; // *** dynamic rectangle
+          this.ctx.translate(outsideRadius / 1.8,  - (Math.floor(outsideRadius / 5)) ); // 25 looks okay
 
-        this.ctx.stroke();
-        this.ctx.fill();
-
-        if (slice.backgroundImage) {
           this.ctx.globalCompositeOperation = 'source-atop';
-          currentPattern = this.patternImg.find(item => item.id === slice.id);
-          if (currentPattern) {
-            this.ctx.fillStyle = currentPattern.pattern;
-            this.ctx.beginPath();
-            this.ctx.arc(this.size / 2, this.size / 2, outsideRadius, angle, angle + this.arc, false);
-            this.ctx.arc(this.size / 2, this.size / 2, 0, angle + this.arc, angle, true);
-            this.ctx.fill();
-          }
-        }
 
+          this.ctx.fillStyle = currentPattern.pattern;
+          this.ctx.beginPath();
+          this.ctx.rect(0, 0 , stampSize, stampSize);
+          this.ctx.fill();
+          this.ctx.restore();
+        } else {
+          console.log('no pattern');
+        }
+      }
+
+      // render label
+      if (slice.label) {
         this.ctx.save();
         this.ctx.shadowOffsetX = -1;
         this.ctx.shadowOffsetY = -1;
         this.ctx.shadowBlur = 0;
         this.ctx.fillStyle = slice.labelColor || 'black';
-        this.ctx.translate(
-          this.size / 2 + Math.cos(angle + this.arc / 2) * textRadius,
-          this.size / 2 + Math.sin(angle + this.arc / 2) * textRadius
-        );
 
-        this.ctx.rotate(angle + this.arc / 2 + Math.PI);
+        this.ctx.rotate(angle + this.arc / 2);
+        this.ctx.translate(this.size / 4, 0);
         this.ctx.font = 'bold 15px Helvetica, Arial';
 
         const text = slice.label || '';
@@ -242,18 +253,33 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
         this.ctx.restore();
       }
     });
+    this.ctx.resetTransform();
   }
 
   private fillArrowStyle(): void {
     const arrowImage: HTMLImageElement = new Image();
-    console.log(this.pointerImg, 'i am pointerImg');
     arrowImage.src = this.pointerImg;
-    arrowImage.onload = () => this.ctxArrow.drawImage(arrowImage, 0, 30, 40, 80);
+    arrowImage.onload = () => this.ctxArrow.drawImage(arrowImage, this.canvasArrow.width / 2 - 20, 0, 40, 50);
     if (this.ctxArrow) {
       this.ctxArrow.clearRect(0, 0, this.canvasArrow.width, this.canvasArrow.height);
       this.ctxArrow.fillStyle = (this.ctxArrow.createPattern(arrowImage, 'no-repeat') as CanvasPattern);
       this.ctxArrow.fill();
     }
+  }
+
+  private fillWheelWrapStyle(): void {
+    const wheelImg = new Image(); // this.canvasWheelWrap.width, this.canvasWheelWrap.height
+    wheelImg.src = this.wheelImg; // this.wheelImg suppose
+    this.ctxWheelWrap.globalCompositeOperation = 'source-out'; // suppose source-out
+    wheelImg.onload = () => {
+      if (this.wheelImgLoaded !== wheelImg) {
+        this.wheelImgLoaded = wheelImg;
+        this.ctxWheelWrap
+          .drawImage(this.wheelImgLoaded,
+            0 , 0,
+            this.canvasWheelWrap.width , this.canvasWheelWrap.height);
+      }
+    };
   }
 
   private spin(): void {
@@ -274,6 +300,19 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
       SpinTheWheelComponent.easeOut(this.spinTime, 0, this.spinAngleStart, this.spinTimeTotal);
     this.startAngle += spinAngle * Math.PI / 180;
     this.drawWheel();
+    if (this.wheelImgLoaded) {
+      this.ctxWheelWrap.save();
+      this.ctxWheelWrap.clearRect(0, 0, this.canvasWheelWrap.width, this.canvasWheelWrap.height);
+      this.ctxWheelWrap.translate(this.canvasWheelWrap.width / 2, this.canvasWheelWrap.width / 2);
+      this.ctxWheelWrap.rotate(Math.PI / 180 * (this.startAngle));
+      this.ctxWheelWrap.translate(-(this.canvasWheelWrap.width / 2), -(this.canvasWheelWrap.width / 2));
+      this.ctxWheelWrap
+        .drawImage(this.wheelImgLoaded,
+          0 , 0,
+          this.canvasWheelWrap.width , this.canvasWheelWrap.height);
+      this.ctxWheelWrap.restore();
+    }
+
     const that = this;
     this.spinTimeout = window.setTimeout(() => {
       that.rotateWheel();
@@ -282,10 +321,10 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   private stopRotateWheel(): void {
     if (!this.ctx) { return; }
-    clearTimeout(this.spinTimeout);
+    clearTimeout(this.spinTimeout); // think it has everything to do with this. timeout async thing messes up
     const degrees = this.startAngle * 180 / Math.PI + 180;
     const arcd = this.arc * 180 / Math.PI;
-    const index = Math.floor((360 - degrees % 360) / arcd);
+    const index = Math.floor((360 - degrees % 360) / arcd); // this determines where ends
     this.ctx.save();
 
     this.ctx.font = 'bold 20px Helvetica, Arial';

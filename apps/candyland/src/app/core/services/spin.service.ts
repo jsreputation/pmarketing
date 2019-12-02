@@ -25,13 +25,13 @@ export class SpinService {
 
   public createSpin(data: ISpinEntityForm): Observable<IJsonApiPayload<IWSpinGameEngagementAttributes>> {
     console.log(data, 'in createSpinFunc');
-    const sentData = EngagementHttpAdapter.transformSpin(data);
+    const sentData = EngagementHttpAdapter.transformFromSpinForm(data);
     console.log(sentData, 'error here i suppose');
     return this.spinHttpService.createSpin({data: sentData});
   }
 
   public updateSpin(id: string, data: ISpinEntityForm): Observable<IJsonApiPayload<IWSpinGameEngagementAttributes>> {
-    const sendData = EngagementHttpAdapter.transformSpin(data);
+    const sendData = EngagementHttpAdapter.transformFromSpinForm(data);
     sendData.id = id;
     return this.spinHttpService.updateSpin(id, {data: sendData});
   }

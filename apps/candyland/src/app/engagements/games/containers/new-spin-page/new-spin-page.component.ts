@@ -12,7 +12,7 @@ import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
-import {IWEngagementAttributes } from '@perx/whistler';
+import { IWSpinGameEngagementAttributes } from '@perx/whistler';
 import {SpinService} from '@cl-core/services/spin.service';
 
 @Component({
@@ -104,9 +104,15 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
         ([previewData, spin]) => {
           this.spinData = previewData;
           this.rewardSlotNumbers = this.allRewardSlotNumbers = previewData.rewardSlots;
-          console.log(spin);
           const patchData = spin || this.getDefaultValue(previewData);
+          console.log(patchData);
           this.formSpin.patchValue(patchData);
+          const wheelPosImg: string = JSON.stringify(this.wheelPosition.value);
+          console.log(wheelPosImg, 'this is wheelpos img');
+          if (wheelPosImg) {
+            this.perxCoreSpinClass = wheelPosImg.includes('down') ? 'mobile-preview-v2' : 'mobile-preview-plugin';
+            console.log(this.perxCoreSpinClass, 'am, i called?');
+          }
           this.cd.detectChanges();
         },
         (error: Error) => {
@@ -114,11 +120,12 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('/engagements');
         }
       );
+
     this.subscribeSpinsNumberChanges();
     this.subscribeSpinSlotChanges();
     this.subscribeColorFormGroupControls();
     this.subscribeSpinPositionChanges();
-    this.cd.detectChanges();
+    // this.cd.detectChanges();
   }
 
   public ngOnDestroy(): void {
@@ -126,12 +133,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public getImgLink(control: FormControl, defaultImg: string): string {
-    return ImageControlValue.getImgLink(control, defaultImg);
-  }
-
   /*** generating functions START ***/
-
   private createSpinForm(): void {
     this.formSpin = this.fb.group({
       name: ['Spin Wheel Template', [Validators.required,
@@ -201,11 +203,10 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     Object.keys(this.colorCtrls.controls).forEach(key => {
       this.colorCtrls.get(key).valueChanges.pipe(takeUntil(this.destroy$)).
         subscribe((value) => {
-          // update ISlices
-          if (this.iSlices) {
+          if (this.iSlices && (key < this.numberOfWedges.value)) {
             this.iSlices[key].backgroundColor = value;
-            this.iSlices = [...this.iSlices];
           }
+          this.iSlices = [...this.iSlices];
         });
     });
   }
@@ -214,17 +215,11 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     this.wheelPosition.valueChanges.pipe(
       takeUntil(this.destroy$)
     ).subscribe((value) => {
-      if (value.img.includes('down')) {
+      if (value.img && value.img.includes('down')) {
         this.perxCoreSpinClass = 'mobile-preview-v2';
       } else {
         this.perxCoreSpinClass = 'mobile-preview-plugin';
       }
-    });
-  }
-
-  private patchForm(fieldName: string, value: any): void {
-    this.formSpin.patchValue({
-      [fieldName]: value
     });
   }
 
@@ -236,20 +231,17 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         value => {
-          const tempISlices = [];
+          const tempISlices: ISlice[] = [];
           // this.iSlices = [];
           for (let i = 0; i < value; i++) {
-            // console.log('here shit happens', this.colorCtrls.get(`${i}`).value);
             tempISlices.push({
               id: `${i}`,
-              label: `${i}win`, // hard code same
+              // label: `${i}win`, // hard code same
               backgroundColor: this.colorCtrls.get(`${i}`).value,
             });
           }
           this.rewardSlotNumbers = this.allRewardSlotNumbers.filter((slot) => +slot.value <= value); // not working
-          console.log(tempISlices, 'temp slices');
           this.iSlices = tempISlices;
-          console.log(this.iSlices, 'i used this from tempislices');
           this.formSpin.get('rewardSlots').patchValue([]);
           this.patchForm('rewardSlots', [this.rewardSlotNumbers[this.rewardSlotNumbers.length - 1].value]);
         });
@@ -259,8 +251,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     combineLatest(
       [this.formSpin.get(ControlsName.rewardSlots).valueChanges, this.formSpin.get(ControlsName.rewardIcon).valueChanges]).pipe(
       takeUntil(this.destroy$)
-    ).subscribe(([slots, iconObj]) => {
-      // console.log(value, value2);
+    ).subscribe(([slots, _]) => {
       if (!slots) {
         return;
       }
@@ -273,22 +264,35 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
         for (let i = 0; i < this.numberOfWedges.value; i++) {
           tempISlices.push({
             id: `${i}`,
-            label: `${i}win`, // hard code same
+            // label: `${i}win`, // hard code same
             backgroundColor: this.colorCtrls.get(`${i}`).value,
           });
         }
 
         this.rewardSlotNumberData.forEach(({rewardPosition}) => {
-          tempISlices[rewardPosition].backgroundImage = ImageControlValue.prepareImage(iconObj.img);
+          tempISlices[rewardPosition].backgroundImage = ImageControlValue.getImgLink(this.rewardIcon);
         });
       }
-      this.iSlices = [...tempISlices];
+      this.iSlices = tempISlices;
     });
   }
+
   /*** END subscription to form value Changes ***/
+
+  private patchForm(fieldName: string, value: any): void {
+    this.formSpin.patchValue({
+      [fieldName]: value
+    });
+  }
+
+  /*** START utility functions ***/
 
   private getSpinData(): Observable<ISpinDefaultValue> {
     return this.spinService.getSpinData();
+  }
+
+  public getImgLink(control: FormControl, defaultImg: string): string {
+    return ImageControlValue.getImgLink(control, defaultImg);
   }
 
   private getDefaultValue(data: ISpinDefaultValue): Partial<ISpinEntityForm> {
@@ -303,10 +307,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     };
   }
 
-  /*** START ***/
-
   public save(): void {
-    // console.log(this.formSpin.value);
     if (this.formSpin.invalid) {
       this.formSpin.markAllAsTouched();
       return;
@@ -319,7 +320,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
           }
           return this.spinService.createSpin({...this.formSpin.value, image_url: imageUrl.url}).pipe(
             tap(
-              (engagement: IJsonApiPayload<IWEngagementAttributes>) =>
+              (engagement: IJsonApiPayload<IWSpinGameEngagementAttributes>) =>
                 this.availableNewEngagementService.transformAndSetNewEngagement(engagement)
             )
           );
@@ -338,6 +339,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: Tenants) => {
         this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+        this.cd.detectChanges();
       });
   }
 
@@ -351,8 +353,16 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
         }
         return of(null);
       }),
+      tap(spin => this.checkGameType(spin)),
       takeUntil(this.destroy$)
     );
   }
-  /*** END ***/
+
+  private checkGameType(spin: ISpinDefaultValue): void {
+    if (spin && spin.gameType !== 'spin') {
+      console.warn('Wrong type of game!');
+      this.router.navigateByUrl('/engagements');
+    }
+  }
+  /*** END utility***/
 }

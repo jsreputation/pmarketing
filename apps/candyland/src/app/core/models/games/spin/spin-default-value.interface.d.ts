@@ -1,4 +1,5 @@
 declare interface ISpinDefaultValue extends ICommonGameForm {
+  gameType?: string;
   numberOfWedges: CommonSelect[];
   rewardSlots: CommonSelect[];
   colorCtrls: {[index: number]: string};
