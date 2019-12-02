@@ -23,7 +23,6 @@ describe('HistoryComponent', () => {
   const loyaltyServiceStub = {
     getTransactions: () => of([]),
     getLoyalties: () => of([]),
-
   };
 
   beforeEach(async(() => {

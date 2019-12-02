@@ -56,7 +56,7 @@ export class HistoryComponent implements OnInit {
 
     this.loyaltyService.getTransactions(this.loyaltyId, this.transactionsPageId, REQ_PAGE_SIZE)
       .subscribe((transactionsArr: ITransaction[]) => {
-        if (!transactionsArr) {
+        if (isEmptyArray(transactionsArr)) {
           return;
         }
 
