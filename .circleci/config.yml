@@ -321,7 +321,7 @@ jobs:
                 if [ $TARGET_NAMESPACE == 'master' ]; then
                   INGRESS_HOST="candyland.${TARGET_ENV}.whistler.perxtech.io"
                 else
-                  INGRESS_HOST="candyland-{$TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
+                  INGRESS_HOST="candyland-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
                 fi
               fi
             elif [ $APP == 'blackcomb' ]; then

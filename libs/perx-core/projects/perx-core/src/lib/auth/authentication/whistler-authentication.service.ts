@@ -167,7 +167,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   private getUserWithPI(): Observable<IJsonApiListPayload<IWCognitoLogin>> {
-    const user = (window as any).primaryIdentifier || this.getPI();
+    const user: string = (window as any).primaryIdentifier || this.getPI();
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: user
@@ -306,11 +306,18 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public getPI(): string {
-    return this.tokenStorage.getAppInfoProperty('pi') || '';
+    const pi = this.tokenStorage.getAppInfoProperty('pi') || '';
+    // eventually refresh window param for GTM
+    if (pi !== undefined && pi !== '') {
+      (window as any).primaryIdentifier = pi;
+    }
+    return pi;
   }
 
   public savePI(pi: string): void {
     this.tokenStorage.setAppInfoProperty(pi, 'pi');
+    // update global property for GTM
+    (window as any).primaryIdentifier = pi;
   }
 
   public getAnonymous(): boolean {
