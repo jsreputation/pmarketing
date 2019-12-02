@@ -1,8 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ITransaction, LoyaltyService} from '@perx/core';
-import { map } from 'rxjs/operators';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+
+import {
+  BehaviorSubject,
+  Observable,
+} from 'rxjs';
+import {
+  map,
+  scan,
+} from 'rxjs/operators';
+
 import { TranslateService } from '@ngx-translate/core';
+
+import {
+  ITransaction,
+  LoyaltyService,
+  ILoyalty,
+  isEmptyArray,
+} from '@perx/core';
+
+const REQ_PAGE_SIZE: number = 10;
 
 @Component({
   selector: 'hkbn-history',
@@ -10,27 +29,80 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit {
+  public transactions$: Observable<ITransaction[]>;
+  private transactions: BehaviorSubject<ITransaction[]> = new BehaviorSubject<ITransaction[]>([]);
+  public transactionsLoaded: boolean = false;
+  public transactionsEnded: boolean = false;
+  private transactionsPageId: number = 1;
+  private loyaltyId: number = null;
   public accrued: Observable<ITransaction[]>;
   public redeemed: Observable<ITransaction[]>;
-  private transactions: Observable<ITransaction[]>;
   public subTitleFn: (tr: ITransaction) => string;
   public titleFn: (tr: ITransaction) => string;
   public priceLabelFn: (tr: ITransaction) => string;
 
-  constructor(private loyaltyService: LoyaltyService, private translate: TranslateService) { }
+  private async initLoyaltyId(): Promise<void> {
+    const loyalties: ILoyalty[] = await this.loyaltyService.getLoyalties().toPromise();
+    if (!isEmptyArray(loyalties) && loyalties[0]) {
+      this.loyaltyId = loyalties[0].id;
+    }
+  }
 
-  public ngOnInit(): void {
-    this.transactions = this.loyaltyService.getAllTransactions();
-    this.accrued = this.transactions.pipe(
-      map((transactions: ITransaction[]) => transactions.filter(transaction => transaction.pointsBalance > 0))
-    );
-    this.redeemed = this.transactions.pipe(
-      map((transactions: ITransaction[]) => transactions.filter(transaction => transaction.pointsBalance <= 0))
-    );
+  private loadTransactions(): void {
+    this.transactionsLoaded = false;
+    if (!this.loyaltyId) {
+      return;
+    }
 
+    this.loyaltyService.getTransactions(this.loyaltyId, this.transactionsPageId, REQ_PAGE_SIZE)
+      .subscribe((transactionsArr: ITransaction[]) => {
+        if (!transactionsArr) {
+          return;
+        }
+
+        this.transactions.next(transactionsArr);
+        this.transactionsLoaded = true;
+        // accrued/redeemed have to have separate requests, infinite-scroll
+        this.accrued = this.transactions.pipe(
+          map((transactions: ITransaction[]) => transactions.filter(transaction => transaction.pointsBalance > 0))
+        );
+        this.redeemed = this.transactions.pipe(
+          map((transactions: ITransaction[]) => transactions.filter(transaction => transaction.pointsBalance <= 0))
+        );
+        if (transactionsArr.length < REQ_PAGE_SIZE) {
+          this.transactionsEnded = true;
+        }
+      });
+  }
+
+  private initTransactionsScan(): void {
+    this.transactions$ = this.transactions.asObservable().pipe(
+      scan((acc, curr) => [...acc, ...curr ? curr : []], [])
+    );
+  }
+
+  constructor(
+    private loyaltyService: LoyaltyService,
+    private translate: TranslateService,
+  ) {
+    this.initTransactionsScan();
+  }
+
+  public async ngOnInit(): Promise<void> {
+    await this.initLoyaltyId();
+    this.loadTransactions();
     this.translate.get('POINTS')
       .subscribe((res: string) => {
         this.priceLabelFn = () => res;
       });
+  }
+
+  public onScroll(): void {
+    if (this.transactionsEnded) {
+      return null;
+    }
+
+    this.transactionsPageId++;
+    this.loadTransactions();
   }
 }
