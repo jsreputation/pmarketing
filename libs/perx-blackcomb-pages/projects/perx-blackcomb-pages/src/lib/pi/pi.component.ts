@@ -29,6 +29,11 @@ export class PIComponent implements OnInit, OnDestroy {
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
   private stateData: IPrePlayStateData;
+  private maxRetryTimes: number = 5;
+  private retryTimes: number = 0;
+  private oldPI: string;
+  private oldToken: string;
+  private oldAnonymousStatus: boolean;
 
   private initForm(): void {
     this.PIForm = this.fb.group({
@@ -53,7 +58,11 @@ export class PIComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initForm();
+    this.oldPI = this.authService.getPI();
+    this.oldToken = this.authService.getUserAccessToken();
+    this.oldAnonymousStatus = this.authService.getAnonymous();
     this.stateData = this.location.getState() as IPrePlayStateData;
+    this.authService.logout();
   }
 
   public ngOnDestroy(): void {
@@ -73,7 +82,8 @@ export class PIComponent implements OnInit, OnDestroy {
       const oldUserId = this.authService.getUserId();
       const retryWhenTransactionFailed = (err: Observable<HttpErrorResponse>) => err.pipe(
         mergeMap(error => {
-          if (error.status === 422) {
+          if (error.status === 422 && this.retryTimes < this.maxRetryTimes) {
+            this.retryTimes++;
             return of(error.status).pipe(delay(1000));
           }
           return throwError(error);
@@ -82,29 +92,27 @@ export class PIComponent implements OnInit, OnDestroy {
       if (!oldUserId) {
         throw new Error('should not be here');
       }
-      const oldPI = this.authService.getPI();
-      const oldToken = this.authService.getUserAccessToken();
-      const oldAnonymousStatus = this.authService.getAnonymous();
       let newUserId;
       let newToken;
       (window as any).primaryIdentifier = pi;
       this.authService.autoLogin().pipe(
         catchError(() => { throw new Error('PI_NOT_EXIST'); }),
         tap(() => {
-          if (oldAnonymousStatus) {
+          if (this.oldAnonymousStatus) {
             newUserId = this.authService.getUserId();
             newToken = this.authService.getUserAccessToken();
-            this.authService.savePI(oldPI);
+            this.authService.savePI(this.oldPI);
             this.authService.saveUserId(oldUserId);
-            this.authService.saveUserAccessToken(oldToken);
+            this.authService.saveUserAccessToken(this.oldToken);
           }
         }),
-        switchMap((res) => iif(() => this.authService.getAnonymous(), this.authService.mergeUserById([oldUserId], newUserId), of(res))),
+        switchMap((res) => iif(
+          () => this.oldAnonymousStatus && !!oldUserId, this.authService.mergeUserById([oldUserId], newUserId), of(res))),
         catchError((err: Error) => {
           throw err.message.startsWith('PI_') ? err : new Error('PI_MERGE_FAIL');
         }),
         tap(() => {
-          if (oldAnonymousStatus) {
+          if (this.oldAnonymousStatus) {
             this.authService.savePI(pi);
             this.authService.saveUserId(newUserId);
             this.authService.saveUserAccessToken(newToken);

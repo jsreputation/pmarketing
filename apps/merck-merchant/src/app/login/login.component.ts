@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
-
+  public appAccessTokenFetched: boolean;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -25,19 +25,34 @@ export class LoginComponent implements OnInit {
 
   private initForm(): void {
     this.loginForm = this.fb.group({
-      name: [''],
+      name: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
-  public ngOnInit(): void { }
+  public ngOnInit(): void {
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
+  }
 
   public onSubmit(): void {
     const merchantUsername = this.loginForm.value.name as string;
     const email = this.loginForm.value.email as string;
     const password: string = this.loginForm.value.password;
     const scope: string = 'merchant_credentials';
+
+    if (!merchantUsername || !email || !password) {
+      return;
+    }
 
     this.authService.login(email, password, undefined, undefined, scope).subscribe(
       () => {
@@ -54,9 +69,9 @@ export class LoginComponent implements OnInit {
           if (err.status === 0) {
             this.notificationService.addSnack('We could not reach the server');
           } else if (err.status === 401) {
-            [this.loginForm.controls.email, this.loginForm.controls.password]
+            [this.loginForm.controls.name, this.loginForm.controls.email, this.loginForm.controls.password]
               .forEach(c => c.setErrors({
-                invalid: true
+                invalid: true,
               }));
             this.notificationService.addSnack('Invalid credentials');
           }

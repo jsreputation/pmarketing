@@ -2,6 +2,7 @@
   "AUDIENCE_FEATURE": {
     "AUDIENCES": "Audiences",
     "ADD_USER": "Add User",
+    "EDIT_USER": "Edit User",
     "SEARCH_FOR_USERS": "Search for users",
     "SEARCH_FOR_AUDIENCE": "Search for audience",
     "ID": "ID",

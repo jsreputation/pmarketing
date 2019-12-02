@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { OutcomesHttpAdapter } from '@cl-core/http-adapters/outcomes-http-adapter';
 import { IWOutcomeAttributes } from '@perx/whistler';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
+import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
 @Injectable({
   providedIn: 'root'

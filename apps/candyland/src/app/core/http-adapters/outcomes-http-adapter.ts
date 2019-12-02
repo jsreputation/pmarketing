@@ -1,5 +1,6 @@
 import { IWOutcomeAttributes } from '@perx/whistler';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
+import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
 export class OutcomesHttpAdapter {
   public static transformAPIResponseToOutcome(data: IJsonApiItem<IWOutcomeAttributes>): IOutcome {

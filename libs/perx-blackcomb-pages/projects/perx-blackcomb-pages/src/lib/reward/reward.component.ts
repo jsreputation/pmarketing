@@ -10,7 +10,8 @@ import {
   RewardsService,
   AuthenticationService,
   NotificationService,
-  IPrePlayStateData
+  IPrePlayStateData,
+  IPrice
 } from '@perx/core';
 import { map, switchMap, catchError, tap, takeUntil, mergeMap, } from 'rxjs/operators';
 
@@ -34,6 +35,7 @@ export class RewardComponent implements OnInit, OnDestroy {
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
   private popupData: IPopupConfig;
+  public displayPriceFn: (price: IPrice) => string;
   public noRewardsPopUp: IPopupConfig = {
     title: 'INSTANT_OUTCOME_NO_REWARDS_TITLE',
     text: 'INSTANT_OUTCOME_NO_REWARDS_TEXT',
@@ -96,8 +98,18 @@ export class RewardComponent implements OnInit, OnDestroy {
     }
   }
 
+  private initDisplayPriceFn(): void {
+    this.displayPriceFn = (rewardPrice: IPrice) => {
+      if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && rewardPrice.price > 0) {
+        return `${rewardPrice.currencyCode} ${Math.floor(rewardPrice.price)}`;
+      }
+      return '';
+    };
+  }
+
   public ngOnInit(): void {
     this.initTranslate();
+    this.initDisplayPriceFn();
     this.isAnonymousUser = this.auth.getAnonymous();
     // tslint:disable-next-line: one-variable-per-declaration
     const getInstantOutcome = (campaignId: string) => this.outcomeService.getFromCampaign(parseInt(campaignId, 10)).pipe(
@@ -203,7 +215,7 @@ export class RewardComponent implements OnInit, OnDestroy {
       this.router.navigate(['/signup'], { state });
     } else {
       this.router.navigate(['/wallet']);
-      if (this.popupData) {
+      if (this.popupData && this.isAnonymousUser) {
         this.notificationService.addPopup(this.popupData);
       }
     }
