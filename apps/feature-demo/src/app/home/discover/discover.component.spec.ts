@@ -14,7 +14,6 @@ import { Router } from '@angular/router';
 import { Type } from '@angular/core';
 
 import { of } from 'rxjs';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 
 import {
@@ -96,7 +95,6 @@ describe('DiscoverComponent', () => {
         RewardsModule,
         PerxProfileModule,
         PerxLoyaltyModule,
-        InfiniteScrollModule,
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
