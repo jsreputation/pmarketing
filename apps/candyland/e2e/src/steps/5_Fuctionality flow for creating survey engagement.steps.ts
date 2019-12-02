@@ -30,7 +30,6 @@ Given(/^1_I am on the customer engagment dialog box$/, async () => {
 
   await PageEngagement.navigateToEngagement();
   await browser.wait(ec.presenceOf(CreateSurveyPage.surveyCreateNewButton()), 5000);
-  await browser.sleep(3000);
   // clicking on the create new button
   await CreateSurveyPage.surveyCreateNewButton().click();
 });
