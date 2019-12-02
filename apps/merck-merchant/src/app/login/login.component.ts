@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   private initForm(): void {
     this.loginForm = this.fb.group({
-      name: [''],
+      name: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
@@ -50,6 +50,10 @@ export class LoginComponent implements OnInit {
     const password: string = this.loginForm.value.password;
     const scope: string = 'merchant_credentials';
 
+    if (!merchantUsername || !email || !password) {
+      return;
+    }
+
     this.authService.login(email, password, undefined, undefined, scope).subscribe(
       () => {
         // set global userID var for GA tracking
@@ -65,9 +69,9 @@ export class LoginComponent implements OnInit {
           if (err.status === 0) {
             this.notificationService.addSnack('We could not reach the server');
           } else if (err.status === 401) {
-            [this.loginForm.controls.email, this.loginForm.controls.password]
+            [this.loginForm.controls.name, this.loginForm.controls.email, this.loginForm.controls.password]
               .forEach(c => c.setErrors({
-                invalid: true
+                invalid: true,
               }));
             this.notificationService.addSnack('Invalid credentials');
           }
