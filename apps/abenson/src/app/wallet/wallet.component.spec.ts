@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { WalletComponent } from './wallet.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material';
-import { IVoucherService, Voucher, VouchersModule } from '@perx/core';
+import { IVoucherService, Voucher, VouchersModule, ConfigService } from '@perx/core';
 import { Observable, of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -13,7 +13,9 @@ describe('WalletComponent', () => {
   const vouchersServiceStub = {
     getAll: (): Observable<Voucher[]> => of([])
   };
-
+  const configServiceStub = {
+    readAppConfig: () => of({})
+  }
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ WalletComponent ],
@@ -24,7 +26,8 @@ describe('WalletComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        { provide: IVoucherService, useValue: vouchersServiceStub }
+        { provide: IVoucherService, useValue: vouchersServiceStub },
+        { provide: ConfigService, useValue: configServiceStub}
       ]
     })
       .compileComponents();
