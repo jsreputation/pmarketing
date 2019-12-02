@@ -7,6 +7,8 @@ import { map } from 'rxjs/operators';
 import { RewardHttpAdapter } from '@cl-core/http-adapters/reward-http-adapter';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { IWRewardEntityAttributes } from '@perx/whistler';
+import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
+import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +35,7 @@ export class RewardsService implements ITableService {
   }
 
   public getReward(id: string): Observable<IRewardEntity> {
-    const params = {include: 'organization'};
+    const params = { include: 'organization' };
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.rewardHttp.getReward(id, httpParams).pipe(
       map(response => {
@@ -52,18 +54,18 @@ export class RewardsService implements ITableService {
 
   public createReward(data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]): Observable<IJsonApiPayload<IWRewardEntityAttributes>> {
     const sendData: IJsonApiItem<IWRewardEntityAttributes> = RewardHttpAdapter.transformFromRewardForm(data, loyalties);
-    return this.rewardHttp.createReward({data: sendData});
+    return this.rewardHttp.createReward({ data: sendData });
   }
 
   public duplicateReward(data: IRewardEntity): Observable<IJsonApiPayload<IWRewardEntityAttributes>> {
     const sendData: IJsonApiItem<IWRewardEntityAttributes> = RewardHttpAdapter.transformFromReward(data);
-    return this.rewardHttp.createReward({data: sendData});
+    return this.rewardHttp.createReward({ data: sendData });
   }
 
   public updateReward(id: string, data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]):
     Observable<IJsonApiPayload<IWRewardEntityAttributes>> {
     const sendData: IJsonApiItem<IWRewardEntityAttributes> = RewardHttpAdapter.transformFromRewardForm(data, loyalties);
     sendData.id = id;
-    return this.rewardHttp.updateReward(id, {data: sendData});
+    return this.rewardHttp.updateReward(id, { data: sendData });
   }
 }
