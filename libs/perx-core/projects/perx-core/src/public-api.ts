@@ -115,7 +115,7 @@ export {
 } from './lib/loyalty/models/loyalty.model';
 export { TransactionPipe } from './lib/loyalty/loyalty-transactions-list/transaction.pipe';
 export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-summary.component';
-
+export { LoyaltyTransactionsListComponent } from './lib/loyalty/loyalty-transactions-list/loyalty-transactions-list.component';
 /**
  * Rewards
  */
@@ -150,6 +150,7 @@ export { RepeatTimesDirective } from './lib/utils/directives/repeat-times.direct
 export { NewsfeedComponent } from './lib/utils/newsfeed/newsfeed.component';
 export { LanguageService } from './lib/utils/language/language.service';
 export { LanguageInterceptor } from './lib/utils/language.interceptor';
+export { LocaleIdFactory } from './lib/utils/language/locale-id.factory';
 /**
  * Puzzles
  */
@@ -195,6 +196,12 @@ export { Config } from './lib/config/config';
 export { ConfigService } from './lib/config/config.service';
 export { IConfig, IMicrositeSettings, PagesObject, AccountPageObject } from './lib/config/models/config.model';
 
+/**
+ * PrePlay
+ */
+export {
+  IPrePlayStateData
+} from './lib/utils/pre-play/pre-play.model';
 /**
  * Theme
  */

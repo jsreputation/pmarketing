@@ -21,13 +21,6 @@
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width__input">
-                    <mat-label>NRIC</mat-label>
-                    <input matInput placeholder="NRIC" formControlName="nric" type="number" required>
-                    <mat-error *ngIf="signupForm.get('nric').hasError('required')">
-                        <span>NRIC is </span><strong>REQUIRED</strong>
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Date of Birth</mat-label>
                     <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dob">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -38,13 +31,6 @@
                     <input matInput placeholder="Postcode" formControlName="postcode" type="number" required>
                     <mat-error *ngIf="signupForm.get('postcode').hasError('required')">
                         <span>Postcode is </span><strong>REQUIRED</strong>
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="fill" class="full-width__input">
-                    <mat-label>1 Year Membership</mat-label>
-                    <input matInput placeholder="1 Year Membership" formControlName="yearMembership" required>
-                    <mat-error *ngIf="signupForm.get('yearMembership').hasError('required')">
-                        <span>Membership is</span><strong>REQUIRED</strong>
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width__input">

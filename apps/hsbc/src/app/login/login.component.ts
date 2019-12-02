@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
   public sourceType: string;
   public isLoading: boolean = true;
   private campaignId: string;
+  public appAccessTokenFetched: boolean;
 
   constructor(
     private router: Router,
@@ -71,6 +72,16 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+         this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
     this.configService.readAppConfig().pipe(
       tap((config: IConfig) => {
         this.campaignId = config.campaignId as string;
@@ -94,7 +105,7 @@ export class LoginComponent implements OnInit {
 
   public onSubmit(): void {
     const username: string | null = this.playerCode ? (this.playerCode.value as string).toUpperCase() : null;
-    const password: string | null = this.hsbcCardLastFourDigits ? (this.hsbcCardLastFourDigits .value as string).toUpperCase() : null;
+    const password: string | null = this.hsbcCardLastFourDigits ? (this.hsbcCardLastFourDigits.value as string).toUpperCase() : null;
     this.errorMessage = null;
     if (isEmptyString(username) || isEmptyString(password)) {
       throw new Error(`username or password is required`);

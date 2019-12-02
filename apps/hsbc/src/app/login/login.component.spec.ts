@@ -6,13 +6,13 @@ import { LoginComponent } from './login.component';
 import { MatCardModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService, UtilsModule, TokenStorage, ConfigService } from '@perx/core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  const authenticationServiceStub = {};
+  const authenticationServiceStub = { getAppToken: () => of({}), getAppAccessToken: () => 'token' };
   const tokenStorageStub = {};
   const configServiceStub = {
     readAppConfig: () => of()
@@ -23,7 +23,7 @@ describe('LoginComponent', () => {
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: TokenStorage, useValue: tokenStorageStub },
-        { provide: ConfigService, useValue: configServiceStub}
+        { provide: ConfigService, useValue: configServiceStub }
       ],
       imports: [
         MatCardModule,

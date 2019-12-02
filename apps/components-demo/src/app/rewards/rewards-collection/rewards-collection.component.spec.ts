@@ -1,15 +1,28 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
+
+import { of } from 'rxjs';
+
+import {
+  RewardsModule as PerxRewardsModule,
+  ThemesService,
+} from '@perx/core';
+import { RewardsService } from '@perx/core';
 
 import { RewardsCollectionComponent } from './rewards-collection.component';
-import { RewardsModule as PerxRewardsModule } from '@perx/core';
-import { RewardsService } from '@perx/core';
-import { of } from 'rxjs';
 
 describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;
   let fixture: ComponentFixture<RewardsCollectionComponent>;
+
   const rewardsServiceStub = {
     getAllRewards: () => of([])
+  };
+  const themesServiceStub = {
+    getThemeSetting: () => of()
   };
 
   beforeEach(async(() => {
@@ -19,7 +32,14 @@ describe('RewardsCollectionComponent', () => {
         PerxRewardsModule,
       ],
       providers: [
-        { provide: RewardsService, useValue: rewardsServiceStub }
+        {
+          provide: RewardsService,
+          useValue: rewardsServiceStub,
+        },
+        {
+          provide: ThemesService,
+          useValue: themesServiceStub,
+        },
       ]
     }).compileComponents();
   }));

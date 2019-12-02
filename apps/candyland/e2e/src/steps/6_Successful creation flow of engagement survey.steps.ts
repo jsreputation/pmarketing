@@ -1,10 +1,11 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, protractor } from 'protractor';
-import { CreateSurveyAppPage, EngagementAppPage } from '../pages/candylandApp.po';
+import { CreateSurveyAppPage, ElementApp, EngagementAppPage } from '../pages/candylandApp.po';
 
 let PageEngagement: EngagementAppPage;
 let CreateSurveyPage: CreateSurveyAppPage;
+const Element = ElementApp;
 
 Before( () => {
   // initializing page objects instances
@@ -46,11 +47,11 @@ Given(/^12_I type the test string.$/, async () => {
 When(/^12_I press save button.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // clicking on the save button
-  await CreateSurveyPage.saveButton().click();
+  await Element.clButtonArray().get(1).click();
   // Wait for engagement tab to appear
   await browser.wait(ec.presenceOf(CreateSurveyPage.confirmModal()), 6000);
   // clicking on the launch now button
-  await CreateSurveyPage.launchNowButton().click();
+  await Element.clButtonArray().get(2).click();
 });
 
 Then(/^12_Game is present under the engagment category .$/, async () => {

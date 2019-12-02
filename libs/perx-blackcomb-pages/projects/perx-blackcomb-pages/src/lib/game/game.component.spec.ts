@@ -30,7 +30,8 @@ describe('GameComponent', () => {
   };
   const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of([game]),
-    prePlay: () => of()
+    prePlay: () => of(),
+    prePlayConfirm: () => of(),
   };
   const routerStub: Partial<Router> = {
     navigate: () => Promise.resolve(true)
