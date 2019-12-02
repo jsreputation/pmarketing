@@ -35,8 +35,9 @@ export class LanguageService implements TranslateLoader {
       map((hostUrl: string) => `${hostUrl}lang?default=${lang}`),
       switchMap((apiAddress: string) => this.httpClient.get<IDictionary>(apiAddress, { headers: this.contentHeader, observe: 'response' })),
       tap((res: HttpResponse<IDictionary>) => {
-        const l: string | null = res.headers.get('content-language');
-        this.tokenStorage.setAppInfoProperty(l || lang, 'lang');
+        const l: string | null = res.headers.get('content-language') || lang;
+        this.tokenStorage.setAppInfoProperty(l, 'lang');
+        document.documentElement.lang = l;
       }),
       map((res: HttpResponse<IDictionary>) => res.body),
       catchError(() => this.httpClient.get<IDictionary>(`${host}assets/en-json.json`)),
