@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthenticationService, NotificationService, ISignUpData } from '@perx/core';
 
 @Component({
   selector: 'app-signup',
@@ -11,12 +12,29 @@ export class SignupComponent {
 
   public signupForm: FormGroup;
   public errorMessage: string | null;
+  public appAccessTokenFetched: boolean = false;
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthenticationService,
+    private notificationService: NotificationService
   ) {
     this.initForm();
+    this.getAppToken();
+  }
+
+  private getAppToken(): void {
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
   }
 
   private initForm(): void {
@@ -36,13 +54,53 @@ export class SignupComponent {
   }
 
   public onSubmit(): void {
-    const passwordString = this.signupForm.get('password').value as string;
-    const confirmPassword = this.signupForm.get('confirmPassword').value as string;
+
+    if (!this.appAccessTokenFetched) {
+      this.errorMessage = 'Unknown error occurerd.';
+      return;
+    }
+
+    const passwordString = this.signupForm.get('password').value;
+    const confirmPassword = this.signupForm.get('confirmPassword').value;
     if (passwordString !== confirmPassword) {
       this.errorMessage = 'Passwords do not match';
       return;
     }
 
+    const name = this.signupForm.value.name;
+    const dob = this.signupForm.value.dob;
+
+    const mobileNumber = this.signupForm.value.mobileNo;
+    const countryCode = this.signupForm.value.countryCode;
+    const codeAndMobile = countryCode + mobileNumber;
+
+    const emailValue = this.signupForm.value.email;
+
+    const signUpData: ISignUpData = {
+      lastName: name,
+      birthDay: dob,
+      phone: codeAndMobile,
+      password: passwordString,
+      passwordConfirmation: confirmPassword,
+      email: emailValue
+    };
+
+    const title = this.signupForm.value.title;
+    const postcode = this.signupForm.value.postcode;
+
+    console.log(`Title ${title}`);
+    console.log(`Post code: ${postcode}`);
+
+    this.authService.signup(signUpData)
+    .subscribe(
+      () => {
+        // TODO: Use ProfileService::setCustomProperties to set postcode & title
+        // TODO: Navigate to otp page
+        // this.router.navigateByUrl('/enter-pin/register')
+      },
+      err => {
+        this.notificationService.addSnack(err.error.message);
+      });
   }
 
   public goToLogin(): void {
