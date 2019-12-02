@@ -33,7 +33,6 @@ Given(/^1_I am on the customer engagment dialog box$/, async () => {
   await browser.sleep(3000);
   // clicking on the create new button
   await CreateSurveyPage.surveyCreateNewButton().click();
-
 });
 
 When(/^1_I click on the survey option$/, async () => {
@@ -98,6 +97,7 @@ Then(/^4_There is an error message present.$/, async () => {
    expect(await CreateSurveyPage.errorMessageByIdField().getText()).to.contain('Required field');
 });
 
+// This scenario is not valid for now, as far as sub-headline is no longer a required field
 // Verifiying that sub-headline message field generates error message when having null value.
 Given(/^5_that I am on the survey creation page$/, async () => {
   await CreateSurveyPage.navigateToSurvey();
