@@ -224,22 +224,32 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       .filter(outcomeData => outcomeData.outcome && !outcomeData.rewardsOptions);
     const deleteOutcomes$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
     const updateOutcomes$ = outcomeData =>
-      this.outcomesService.updateOutcome(outcomeData, campaign.id, data.slotInfo.enableProbability, data.slotInfo.slotNumber);
+      this.outcomesService.updateOutcome(
+        outcomeData.reweardsOptions,
+        campaign.id,
+        outcomeData.slotInfo.enableProbability,
+        outcomeData.slotInfo.slotNumber
+      );
     const createOutcomes$ = outcomeData =>
-      this.outcomesService.createOutcome(outcomeData, campaign.id, data.slotInfo.enableProbability, data.slotInfo.slotNumber);
+      this.outcomesService.createOutcome(
+        outcomeData.reweardsOptions,
+        campaign.id,
+        outcomeData.slotInfo.enableProbability,
+        outcomeData.slotInfo.slotNumber
+      );
 
     data.forEach(outcomeData => {
       if (this.store.currentCampaign.id) {
         if (outcomeData.outcome.id) {
           if (outcomeData.outcome.probability !== outcomeData.rewardsOptions.probability ||
             outcomeData.outcome.limit !== outcomeData.rewardsOptions.limit) {
-            updateOutcomesArr$.push(updateOutcomes$(outcomeData.rewardsOptions));
+            updateOutcomesArr$.push(updateOutcomes$(outcomeData));
           }
         } else {
-          updateOutcomesArr$.push(createOutcomes$(outcomeData.rewardsOptions));
+          updateOutcomesArr$.push(createOutcomes$(outcomeData));
         }
       } else {
-        updateOutcomesArr$.push(createOutcomes$(outcomeData.rewardsOptions));
+        updateOutcomesArr$.push(createOutcomes$(outcomeData));
       }
     });
     if (oldCampaignListToDelete && oldCampaignListToDelete.length >= 0) {
@@ -327,6 +337,12 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       });
   }
 
+  private outcomeToRewardCollection(outcomes: IOutcome[]): ICampaignRewardsList[] {
+    const collections: ICampaignRewardsList[] = [];
+    outcomes.forEach(outcome => collections.push({ outcome, slotInfo: { slotNumber: outcome.slotNumber } }));
+    return collections;
+  }
+
   private handleRouteParams(): void {
     const campaignId = this.route.snapshot.params.id;
     const paramsComm: HttpParamsOptions = {
@@ -344,18 +360,15 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       ).pipe(
         map(
           ([campaign, commEvent, outcomes]:
-            [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => {
-            outcomes.forEach(outcome => ({ outcome, slotInfo: { slotNumber: outcome.slotNumber } }));
-            return {
+            [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
               ...campaign,
               audience: { select: commEvent && commEvent.poolId || null },
               channel: {
                 type: commEvent && commEvent.channel || 'weblink',
                 ...commEvent
               },
-              rewardsListCollection: outcomes
-            };
-          })
+              rewardsListCollection: this.outcomeToRewardCollection(outcomes)
+            }))
       ).subscribe(
         campaign => {
           this.campaign = Object.assign({}, campaign);

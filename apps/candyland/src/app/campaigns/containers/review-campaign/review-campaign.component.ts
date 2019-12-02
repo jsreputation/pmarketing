@@ -15,13 +15,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, map, catchError, takeUntil } from 'rxjs/operators';
 import { combineLatest, of, Observable, Subject } from 'rxjs';
 
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign, ICampaignRewardsList } from '@cl-core/models/campaign/campaign.interface';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
-import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
 @Component({
   selector: 'cl-review-campaign',
@@ -99,7 +98,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
                 message: commEvent && commEvent.message,
                 schedule: commEvent && { ...commEvent.schedule }
               },
-              rewardsListCollection: outcomes
+              rewardsListCollection: this.outcomeToRewardCollection(outcomes)
             })
         ),
         switchMap((campaign: ICampaign) => {
@@ -114,41 +113,15 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
             this.getRewards(campaign.rewardsListCollection)
           );
         }),
-        map(([campaign, engagement, limits, rewards]:
+        map(([campaign, engagement, limits, rewardsListCollection]:
           [
             ICampaign | null, IEngagementType | null, ILimit | null,
-            { value: IRewardEntity, probability?: number, stampsSlotNumber?: number }[] | null
+            ICampaignRewardsList[] | null
           ]) => {
-          let rewardsOptions = null;
-          let rewardsListCollection = null;
-          if (campaign.engagement_type === 'stamps') {
-            const transformedRewards = {};
-            rewards.forEach(reward => {
-              if (!transformedRewards[reward.stampsSlotNumber]) {
-                transformedRewards[reward.stampsSlotNumber] = {
-                  stampSlotNumber: reward.stampsSlotNumber,
-                  rewardsOptions: {
-                    enableProbability: !!reward.probability,
-                    rewards: [reward]
-                  }
-                };
-              } else {
-                transformedRewards[reward.stampsSlotNumber].rewardsOptions.rewards =
-                  [...transformedRewards[reward.stampsSlotNumber].rewardsOptions.rewards, reward];
-              }
-            });
-            rewardsListCollection = [...Object.values(transformedRewards)];
-          } else {
-            rewardsOptions = {
-              enableProbability: rewards.some(reward => !!reward.probability),
-              rewards
-            };
-          }
           return {
             ...campaign,
             template: engagement,
             limits,
-            rewardsOptions,
             rewardsListCollection
           };
         }),
@@ -164,26 +137,46 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getRewards(rewardsList: any[]):
-    Observable<{ value: IRewardEntity | null, limit: number | null, probability?: number, stampsSlotNumber?: number }[]> {
-    if (!rewardsList || !rewardsList.length) {
+  private outcomeToRewardCollection(outcomes: IOutcome[]): ICampaignRewardsList[] {
+    const collections: ICampaignRewardsList[] = [];
+    outcomes.forEach(outcome => collections.push({ outcome, slotInfo: { slotNumber: outcome.slotNumber } }));
+    return collections;
+  }
+
+  private getRewards(outcomeList: ICampaignRewardsList[]):
+    Observable<ICampaignRewardsList[]> {
+    if (!outcomeList || !outcomeList.length) {
       return of([]);
     }
-    return combineLatest(...rewardsList.map(
-      reward => {
-        if (reward.resultId) {
-          return this.rewardsService.getReward(reward.resultId).pipe(
+    return combineLatest(...outcomeList.map(
+      outcomeData => {
+        const outcome = outcomeData.outcome;
+        if (outcome.resultId) {
+          return this.rewardsService.getReward(outcome.slotNumber.toString()).pipe(
             map(rewardData => ({
-              value: { ...rewardData },
-              limit: reward.limit || null,
-              probability: reward.probability,
-              stampsSlotNumber: reward.lootBoxId
+              outcome,
+              rewardsOptions: { ...rewardData, limit: outcome.limit || null, probability: outcome.probability, },
+              slotInfo: {
+                slotNumber: outcome.slotNumber
+              }
             })),
             catchError(() =>
-              of({ value: null, limit: reward.limit || null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId }))
+              of({
+                outcome,
+                rewardsOptions: { limit: outcome.limit || null, probability: outcome.probability },
+                slotInfo: {
+                  stampsSlotNumber: outcome.slotNumber
+                }
+              }))
           );
         }
-        return of({ value: null, limit: null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId });
+        return of({
+          outcome,
+          rewardsOptions: { limit: outcome.limit || null, probability: outcome.probability },
+          slotInfo: {
+            stampsSlotNumber: outcome.slotNumber
+          }
+        });
       }
     ));
   }

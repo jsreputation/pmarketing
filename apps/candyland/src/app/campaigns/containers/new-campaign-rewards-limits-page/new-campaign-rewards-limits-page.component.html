@@ -14,9 +14,8 @@
     <ng-container [ngSwitch]="store.currentCampaign?.template?.attributes_type">
       <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'" [formControl]="limits" [tenantSettings]="tenantSettings">
       </cl-new-campaign-rewards-stamps-page>
-      <cl-new-campaign-rewards-survey-page *ngSwitchDefault [formControl]="limits" [tenantSettings]="tenantSettings">
-      </cl-new-campaign-rewards-survey-page>
-      ></cl-new-campaign-rewards-page>
+      <cl-new-campaign-rewards-page *ngSwitchDefault [formControl]="limits" [tenantSettings]="tenantSettings">
+      </cl-new-campaign-rewards-page>
     </ng-container>
     <!--/ Stamps Rule-->
   </div>

@@ -32,7 +32,6 @@ export interface ICampaign {
     schedule?: ISchedule;
   };
   template?: any;
-  enable
   rewardsListCollection?:  ICampaignRewardsList[];
   limits?: any;
   displayProperties?: any;
