@@ -2,13 +2,14 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CustomDataSource } from '@cl-shared/table';
 import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
-import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { concatMap, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { from, Observable, Subject } from 'rxjs';
 import { ILoyaltyForm, ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 import { StatusLabelConfig } from '@cl-shared';
 import { ConfigService } from '@cl-core-services';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
+import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 
 @Component({
   selector: 'cl-loyalty-review-page',
@@ -16,8 +17,11 @@ import { LoyaltyService } from '@cl-core/services/loyalty.service';
   styleUrls: ['./loyalty-review-page.component.scss']
 })
 export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
+  public loader: boolean = false;
   public loyalty: ILoyaltyForm;
   public customTierDataSource: CustomDataSource<ICustomTireForm>;
+  public basicTierRuleSet: any;
+  public customTierRuleSetMap: any = {};
   public statusLabel: { [key: string]: StatusLabelConfig };
   protected destroy$: Subject<void> = new Subject();
 
@@ -27,12 +31,14 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
     private router: Router,
     private cd: ChangeDetectorRef,
     private configService: ConfigService,
-    private loyaltyService: LoyaltyService
-  ) { }
+    private loyaltyService: LoyaltyService,
+    private ruleService: LoyaltyRuleService,
+  ) {
+  }
 
   public ngOnInit(): void {
+    this.initStatusesLabel();
     this.handleRouteParams();
-    this.getStatusesLabel();
   }
 
   public ngOnDestroy(): void {
@@ -46,18 +52,19 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
 
   private handleRouteParams(): void {
     this.route.paramMap.pipe(
-      map((params: ParamMap) => params.get('id')),
-      tap(id => this.setBasicTierId(id)),
-      switchMap(id => this.loyaltyService.getLoyalty(id)),
       takeUntil(this.destroy$),
-    ).subscribe(data => {
-      if (data) {
-        this.loyalty = data;
+      map((params: ParamMap) => params.get('id')),
+      tap(() => this.loader = true),
+      switchMap(id => this.getLoyalty(id)),
+      tap((loyalty: ILoyaltyForm) => this.initCustomTiersDataSource(loyalty.id)),
+      switchMap((loyalty: ILoyaltyForm) => this.getBasicTierRuleSet(loyalty.basicTierId)),
+      switchMap(() => this.getAllCustomTierRuleSet()),
+      tap(() => {
+        this.loader = false;
         this.cd.detectChanges();
-      } else {
-        this.router.navigateByUrl('/loyalty');
-      }
-    },
+      })
+    ).subscribe(() => {
+      },
       (error: Error) => {
         console.warn(error.message);
         this.router.navigateByUrl('/loyalty');
@@ -65,22 +72,51 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  private setBasicTierId(loyaltyId: string): void {
-    this.initCustomTiersDataSource();
-    this.setBasicTierIdToCustomTiersDataSourceFilter(loyaltyId);
+  private getLoyalty(id: string): Observable<any> {
+    return this.loyaltyService.getLoyalty(id)
+      .pipe(
+        tap(loyalty => {
+            if (loyalty) {
+              this.loyalty = loyalty;
+            } else {
+              this.router.navigateByUrl('/loyalty');
+            }
+          },
+        ));
   }
 
-  private initCustomTiersDataSource(): void {
+  private initCustomTiersDataSource(id: string): void {
     if (!this.customTierDataSource) {
-      this.customTierDataSource = new CustomDataSource<ICustomTireForm>(this.customTierService);
+      this.customTierDataSource = new CustomDataSource<ICustomTireForm>(
+        this.customTierService, 20, {'filter[program_id]': id});
     }
   }
 
-  private setBasicTierIdToCustomTiersDataSourceFilter(basicTierId: string): void {
-    this.customTierDataSource.filter = { program_id: basicTierId };
+  private getBasicTierRuleSet(basicTierId: string): Observable<any> {
+    return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', basicTierId)
+      .pipe(
+        takeUntil(this.destroy$),
+        tap(ruleSet => this.basicTierRuleSet = ruleSet)
+      );
   }
 
-  private getStatusesLabel(): void {
+  private getCustomTierRuleSet(id: string): Observable<any> {
+    return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::CustomTier', id)
+      .pipe(
+        tap(ruleSet => this.customTierRuleSetMap[id] = ruleSet),
+      );
+  }
+
+  private getAllCustomTierRuleSet(): Observable<any> {
+    const customTierIds = this.customTierDataSource.data.map(item => item.id);
+    return from(customTierIds).pipe(
+      concatMap(id => this.getCustomTierRuleSet(id)),
+      filter(Boolean),
+      tap(() => this.cd.detectChanges())
+    );
+  }
+
+  private initStatusesLabel(): void {
     this.configService.prepareStatusesLabel()
       .pipe(takeUntil(this.destroy$))
       .subscribe((statuses) => {

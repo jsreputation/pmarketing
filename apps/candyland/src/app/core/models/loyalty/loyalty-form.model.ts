@@ -38,7 +38,7 @@ export interface ILoyaltyTiersConversions {
 
 export interface ICustomTireForm {
   id?: string;
-  type: string,
+  type?: string;
   name: string;
   joinMethod: IJoinMethod;
   imageUrl: string;

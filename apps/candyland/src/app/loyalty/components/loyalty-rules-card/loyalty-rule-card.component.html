@@ -7,7 +7,7 @@
 
   <div class="card-content" *ngIf="ruleSet">
     <label class="card-label">Rules Application</label>
-    <div class="card-row">
+    <div class="card-row" [class.match-type-field-only-view]="!editable">
       <mat-form-field>
         <mat-select [value]="ruleSet?.matchType">
           <mat-option value="match_first">Apply First Matching Rule</mat-option>
@@ -24,7 +24,7 @@
       {{tierType === 'customTier' ? 'Special Rules' : ''}}
     </label>
     <cl-point-earn-rules-list *ngIf="ruleSet?.rules"
-                              [editable]="true"
+                              [editable]="editable"
                               [ruleSet]="ruleSet"
                               (rulesAction)="handleTiersAction($event)">
       <div class="rule-list-no-data">
@@ -35,7 +35,9 @@
         {{tierName || 'General Rules'}}.
       </div>
     </cl-point-earn-rules-list>
-    <cl-button [classList]="'tertiary'" (click)="createRule(ruleSet)">
+    <cl-button *ngIf="editable"
+                [classList]="'tertiary'"
+               (click)="createRule(ruleSet)">
         <span>
          + Create new rule
         </span>

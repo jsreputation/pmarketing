@@ -19,10 +19,9 @@
   border-collapse: separate !important;
   border-spacing: 0 0.8rem !important;
 
-  mat-row {
+  &-only-view {
     pointer-events: none;
   }
-
 
   &-row {
     display: flex;
@@ -38,8 +37,8 @@
     margin: 0 0 0 -1.6rem;
   }
 
-  &-action-button{
-    pointer-events: auto;
+  &-action-button {
+    pointer-events: all;
   }
 
   //.cdk-drag-preview {
@@ -73,22 +72,6 @@
     }
   }
 
-  td.mat-cell:first-of-type {
-    //padding-left: 0;
-  }
-
-  tr.mat-row {
-    //border-bottom: 14px solid white;
-    //background-color: #fafafa;
-    //border-bottom-color: transparent;
-    //border: 1.4rem solid transparent;
-    //min-height: 5.6rem;
-    //border-radius: 0.4rem;
-    //background-color: #fafafa;
-    //box-sizing: content-box;
-    //padding-top: 1.4rem;
-  }
-
   .mat-header-cell {
     font-size: 1.6rem;
     font-weight: normal;
@@ -97,23 +80,5 @@
     line-height: 1;
     letter-spacing: normal;
     color: #3e4e73;
-  }
-
-  &-no-data {
-    border-top: 0.8rem solid white;
-    border-radius: 0.4rem;
-    min-height: 5.6rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom-color: transparent;
-    background-color: $lightest-gray;
-    border-top: 1.4rem solid white;
-    font-size: 1.4rem;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.14;
-    letter-spacing: normal;
   }
 }

@@ -7,6 +7,7 @@ import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
   styleUrls: ['./loyalty-rule-card.component.scss']
 })
 export class LoyaltyRuleCardComponent {
+  @Input() public editable: boolean = true;
   @Input() public tierId: string;
   @Input() public tierType: string = 'basicTier';
   @Input() public tierName: string;

@@ -55,9 +55,16 @@
     <!--step 4-->
     <mat-step completed="false">
       <ng-template matStepLabel>{{'LOYALTY_FEATURE.REVIEW' | translate}}</ng-template>
-      <cl-loyalty-form-step-review *ngIf="stepProgress >= 3"
-                                   [dataSource]="customTierDataSource"
-                                   [group]="form"></cl-loyalty-form-step-review>
+      <cl-view-loyalty *ngIf="stepProgress >= 3"
+                       [loyaltyData]="form.value"
+                       [dataSource]="customTierDataSource"
+                       [basicTierRuleSet]="basicTierRuleSet"
+                       [customTierRuleSetMap]="customTierRuleSetMap"
+                       [statusLabel]="statusLabel"
+      ></cl-view-loyalty>
+<!--      <cl-loyalty-form-step-review *ngIf="stepProgress >= 3"-->
+<!--                                   [dataSource]="customTierDataSource"-->
+<!--                                   [group]="form"></cl-loyalty-form-step-review>-->
     </mat-step>
   </mat-horizontal-stepper>
 </section>

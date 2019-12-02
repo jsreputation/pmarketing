@@ -1,1 +1,26 @@
+@import "variables";
 
+.match-type-field-only-view {
+  pointer-events: none;
+
+  ::ng-deep .mat-select-arrow, ::ng-deep .mat-form-field-underline {
+    opacity: 0;
+  }
+}
+
+.rule-list-no-data {
+  border-radius: 0.4rem;
+  min-height: 5.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom-color: transparent;
+  background-color: $lightest-gray;
+  border-top: 1.4rem solid white;
+  font-size: 1.4rem;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.14;
+  letter-spacing: normal;
+}

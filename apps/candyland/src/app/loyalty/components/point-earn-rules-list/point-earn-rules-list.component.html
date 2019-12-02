@@ -1,7 +1,8 @@
 <div class="table-wrap">
   <table class="table rule-list"
+         [class.rule-list-only-view]="!editable"
          *ngIf="rules?.length > 0"
-         #table mat-table
+         mat-table
          [dataSource]="rules"
          cdkDropList
          [cdkDropListData]="rules"
@@ -59,6 +60,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumnsWithEdit"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumnsWithEdit;"
         cdkDrag
+        class="rule-list-only-view"
         [cdkDragData]="row"></tr>
   </table>
   <ng-content *ngIf="rules?.length === 0" select=".rule-list-no-data"></ng-content>

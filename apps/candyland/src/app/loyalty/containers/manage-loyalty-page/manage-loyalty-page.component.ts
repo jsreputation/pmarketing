@@ -9,7 +9,7 @@ import { LoyaltyStepForm } from '../../models/loyalty-step-form.enum';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from '@cl-core/services/user.service';
 import { BehaviorSubject, concat, from, Observable, of, Subject } from 'rxjs';
-import { AudiencesService } from '@cl-core-services';
+import { AudiencesService, ConfigService } from '@cl-core-services';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -22,6 +22,7 @@ import { IWBasicTierAttributes, IWPools } from '@perx/whistler';
 import { RuleSetupPopupComponent } from '../rule-setup-popup/rule-setup-popup.component';
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { StatusLabelConfig } from '@cl-shared/components/status-label/status-label.component';
 
 @Component({
   selector: 'cl-manage-loyalty-page',
@@ -48,6 +49,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   public prevFormValue: ILoyaltyForm;
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
+  public statusLabel: { [key: string]: StatusLabelConfig };
   protected destroy$: Subject<void> = new Subject();
 
   public get stepOne(): FormGroup {
@@ -79,6 +81,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    private configService: ConfigService,
     private loyaltyFormsService: LoyaltyFormsService,
     private loyaltyService: LoyaltyService,
     private ruleService: LoyaltyRuleService,
@@ -100,6 +103,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     // };
     // this.ruleService.getRuleSetList(params).subscribe(data => console.log('getRuleSetList', data));
     this.initPools();
+    this.initStatusesLabel();
     this.initForm();
     this.handleRouteParams()
       .subscribe(
@@ -112,7 +116,6 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     this.stepProgress$.pipe(
       takeUntil(this.destroy$),
     ).subscribe(stepProgress => {
-        console.log('stepProgress', stepProgress);
         switch (stepProgress) {
           case 1:
             this.initCustomTiersDataSource();
@@ -289,8 +292,11 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
 
   private initCustomTiersDataSource(): void {
     if (!this.customTierDataSource) {
-      this.customTierDataSource = new CustomDataSource<ICustomTireForm>(this.customTierService);
-      this.customTierDataSource.filter = {program_id: this.loyaltyId};
+      this.customTierDataSource = new CustomDataSource<ICustomTireForm>(
+        this.customTierService,
+        20,
+        {'filter[program_id]': this.loyaltyId});
+      // this.customTierDataSource.filter = {program_id: this.loyaltyId};
       // this.customTierDataSource.updateData();
       // this.setBasicTierIdToCustomTiersDataSourceFilter(this.basicTierId);
     }
@@ -472,5 +478,13 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
         finalize(() => this.ruleLoader = false)
       )
       .subscribe();
+  }
+
+  private initStatusesLabel(): void {
+    this.configService.prepareStatusesLabel()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((statuses) => {
+        this.statusLabel = statuses;
+      });
   }
 }

@@ -7,7 +7,14 @@
   </div>
 </header>
 <section class="content form-limiter loyalty">
-  <cl-view-loyalty *ngIf="loyalty" [loyaltyData]="loyalty" [dataSource]="customTierDataSource"
-                   [statusLabel]="statusLabel"
-  ></cl-view-loyalty>
+  <div class="rule-loader">
+    <mat-progress-bar class="rule-loader-bar" *ngIf="loader" mode="indeterminate"></mat-progress-bar>
+  </div>
+  <cl-view-loyalty *ngIf="loyalty"
+                   [loyaltyData]="loyalty"
+                   [dataSource]="customTierDataSource"
+                   [basicTierRuleSet]="basicTierRuleSet"
+                   [customTierRuleSetMap]="customTierRuleSetMap"
+                   [statusLabel]="statusLabel">
+  </cl-view-loyalty>
 </section>

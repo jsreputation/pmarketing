@@ -2,8 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output,
-  ViewEncapsulation
+  Output
 } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
@@ -12,7 +11,7 @@ import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
   selector: 'cl-point-earn-rules-list',
   templateUrl: './point-earn-rules-list.component.html',
   styleUrls: ['./point-earn-rules-list.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  // encapsulation: ViewEncapsulation.None
 })
 export class PointEarnRulesListComponent {
   @Input() public editable: boolean = false;
