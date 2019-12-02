@@ -5,6 +5,8 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { oc } from 'ts-optchain';
+import { takeUntil } from 'rxjs/operators';
+import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 @Component({
   selector: 'cl-new-campaign-rewards-limits-page',
@@ -15,6 +17,7 @@ import { oc } from 'ts-optchain';
 export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
   public form: FormGroup;
+  private isFirstInit: boolean = true;
 
   constructor(
     public store: CampaignCreationStoreService,
@@ -31,10 +34,19 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
     if (!this.form) {
       return;
     }
-    const stampsSlotNumber = this.store.currentCampaign.template.slots;
-    for (const slotNumber of stampsSlotNumber) {
-      this.addReward(this.createRewardForm(slotNumber));
-    }
+    this.store.currentCampaign$
+    .asObservable()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((data: ICampaign) => {
+      const isFirstTimeRenderFromAPIResponse = data && data.template && this.isFirstInit;
+      if (isFirstTimeRenderFromAPIResponse) {
+        this.isFirstInit = false;
+        const stampsSlotNumber = this.store.currentCampaign.template.slots;
+        for (const slotNumber of stampsSlotNumber) {
+          this.addReward(this.createRewardForm(slotNumber));
+        }
+      }
+    });
   }
 
   public ngOnDestroy(): void {
