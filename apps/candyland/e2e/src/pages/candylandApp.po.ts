@@ -46,10 +46,6 @@ export class EngagementAppPage {
     return element.all(by.css('div.engagement-item-info>p.engagement-item-name')).first();
   }
 
-  public engagementNextButton(): ElementFinder {
-    return element.all(by.className('btn mat-flat-button primary')).get(1);
-  }
-
   public gamePinataOptions(): ElementFinder {
     return element.all('img[alt="game-icon"]').get(1);
   }
@@ -147,20 +143,6 @@ export class CreateShakeTheTreeAppPage {
   public static launchLaterBtn(): ElementFinder {
     return element(by.css('button.btn.mat-flat-button.secondary'));
   }
-
-  public shakeTreeLaunchButton(): ElementFinder {
-    return element.all(by.css('button.btn.mat-flat-button.primary')).last();
-  }
-  public headlineField(): ElementFinder {
-    return element.all(by.css('input[type=text]')).get(1);
-  }
-  public mainHeadlineField(): ElementFinder {
-    return element.all(by.css('input[type=text]')).get(0);
-  }
-
-  public fileDialog(): ElementFinder {
-    return element(by.css('cl-confirm-modal'));
-  }
 }
 export class LoginAppPage {
 
@@ -196,68 +178,63 @@ export class LoginAppPage {
 
 export class CreateSurveyAppPage {
 
-  public navigateToSurvey(): Promise<string> {
+  public static navigateToSurvey(): Promise<string> {
     return browser.get('engagements/new-survey') as Promise<string>;
   }
+
+  public static headerByIdField(): ElementFinder {
+    return element(by.id('mat-input-0'));
+  }
+
+  public static headlineByIdField(): ElementFinder {
+    return element(by.id('mat-input-1'));
+  }
+
+  public static subHeadlineByIdField(): ElementFinder {
+    return element(by.id('mat-input-2'));
+  }
+
+  public static previewElement(): ElementFinder {
+    return element(by.className('mobile-preview'));
+  }
+
+  public static errorMessageByIdField(): ElementFinder {
+    return element(by.id('mat-error-0'));
+  }
+
+  public static subHeadlineField(): ElementFinder {
+    return element(by.css('input#mat-input-2'));
+  }
+
+  public static loadQuestionButton(): ElementFinder {
+    return element.all(by.css('cl-button>button')).last();
+  }
+
+  public static surveyOptions(): ElementArrayFinder {
+    return element.all(by.css('mat-option.mat-option.ng-star-inserted'));
+  }
+
+  public static optionWrap(): ElementFinder {
+    return element.all(by.css('div.view-wrap')).get(1);
+  }
+
+  public static questionForm(): ElementFinder {
+    return element.all(by.css('div.question-form-header')).last();
+  }
+
+  public static pictureChoiceOption(): ElementFinder {
+    return element.all(by.css('div.view-text')).get(1);
+  }
+
+  public static textField(): ElementFinder {
+    return element(by.css('input#mat-input-3'));
+  }
+
   public surveyCreateNewButton(): ElementFinder {
     return element(by.className('btn mat-flat-button primary'));
   }
   public questionButton(): ElementFinder {
     return element.all(by.css('cl-button')).last();
-  }
-  public loadQuestionButton(): ElementFinder {
-    return element.all(by.css('cl-button>button')).last();
-  }
-  public headerByIdField(): ElementFinder {
-    return element(by.id('mat-input-0'));
-  }
-  public headlineByIdField(): ElementFinder {
-    return element(by.id('mat-input-1'));
-  }
-  public subHeadlineByIdField(): ElementFinder {
-    return element(by.id('mat-input-2'));
-  }
-  public errorMessageByIdField(): ElementFinder {
-    return element(by.id('mat-error-0'));
-  }
-  public surveyOptions(): ElementArrayFinder {
-    return element.all(by.css('mat-option.mat-option.ng-star-inserted'));
-  }
-  public previewElement(): ElementFinder {
-    return element(by.className('mobile-preview'));
-  }
-  public questionForm(): ElementFinder {
-    return element.all(by.css('div.question-form-header')).last();
-  }
-  public headerField(): ElementFinder {
-    return element.all(by.css('input[type=text]')).get(0);
-  }
-  public headlineField(): ElementFinder {
-    return element(by.css('input#mat-input-1'));
-  }
-  public subHeadlineField(): ElementFinder {
-    return element(by.css('input#mat-input-2'));
-  }
-  public errorMessageField(): ElementFinder {
-    return element(by.css('mat-error'));
-  }
-  public textField(): ElementFinder {
-    return element(by.css('input#mat-input-3'));
-  }
-  public pictureOption(): ElementFinder {
-    return element.all(by.css('span.mat-option-text')).get(1);
-  }
-  public optionWrap(): ElementFinder {
-    return element.all(by.css('div.view-wrap')).get(1);
-  }
-  public pictureChoiceOption(): ElementFinder {
-    return element.all(by.css('div.view-text')).get(1);
-  }
-  public uploadField(): ElementFinder {
-    return element(by.css('div.image-wrap.ng-star-inserted>img'));
-  }
-  public uploadFileChoiceOption(): ElementFinder {
-    return element.all(by.css('input[type="file"]')).get(0);
   }
   public headerTextField(): ElementFinder {
     return element.all(by.css('div.mat-form-field-infix>input')).first();
@@ -339,20 +316,24 @@ export class CreateInstantRewardAppPage {
 export class RewardAppPage {
 
   public navigateToReward(): Promise<string> {
-    return browser.get('rewards') as Promise<string> ;
- }
- public rewardTab(): ElementFinder {
+    return browser.get('rewards') as Promise<string>;
+  }
+
+  public rewardTab(): ElementFinder {
     return element.all(by.css('h3')).get(1);
- }
- public searchBar(): ElementFinder {
+  }
+
+  public searchBar(): ElementFinder {
     return element(by.css('input'));
- }
- public rewardList(): ElementFinder {
+  }
+
+  public rewardList(): ElementFinder {
     return element(by.css('table'));
- }
- public filterItems(): ElementFinder {
+  }
+
+  public filterItems(): ElementFinder {
     return element(by.className('name-cell__link'));
- }
+  }
 }
 
 export class CreateRewardAppPage {
@@ -761,11 +742,19 @@ export class ElementApp {
     return element(by.css('div.mobile-preview-background'));
   }
 
-  public static matFlatButtonPrimary(): ElementArrayFinder {
+  public static matFlatButtonPrimaryArray(): ElementArrayFinder {
     return element.all(by.className('btn mat-flat-button primary'));
   }
 
   public static clConfirmDialog(): ElementFinder {
     return element(by.css('cl-confirm-modal'));
+  }
+
+  public static matFlatButtonPrimary(): ElementFinder {
+    return element(by.className('btn mat-flat-button primary'));
+  }
+
+  public static imageWrap(): ElementFinder {
+    return element(by.css('div.image-wrap.ng-star-inserted>img'));
   }
 }

@@ -57,7 +57,7 @@ Given(/^27_I click on shake the tree.$/, () => {});
 
 Given(/^27_I click on the next button.$/, async () => {
   // clicking on the next button
-  await ElementApp.matFlatButtonPrimary().get(1).click();
+  await ElementApp.matFlatButtonPrimaryArray().get(1).click();
 });
 
 Given(/^27_I type the test string$/, async () => {
@@ -105,7 +105,7 @@ Given(/^28_I click on games button.$/, async () => {
 Given(/^28_I click on shake the tree.$/, () => {});
 
 Given(/^28_I click on the next button.$/, async () => {
-  await ElementApp.matFlatButtonPrimary().get(1).click();
+  await ElementApp.matFlatButtonPrimaryArray().get(1).click();
 });
 
 Given(/^28_I type the test string$/, async () => {
