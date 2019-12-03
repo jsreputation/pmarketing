@@ -40,14 +40,10 @@
         margin-top: 2rem;
       }
 
-      .blue-button {
-        background-color: #0F69AF !important;
-      }
-
       .clear-background {
         border: 0.1rem solid #d7d7d7 !important;
         background-color: #EDEDED !important;
-        color: #0F69AF !important;
+        color: var(--button_background_color) !important;
       }
     }
   }

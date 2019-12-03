@@ -10,12 +10,13 @@
   align-items: center;
 
   perx-core-reward {
-    flex: 1 auto;
+    flex-grow: 1;
     width: 100%;
+    overflow: scroll;
   }
 
   button {
     width: 80%;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
   }
 }
