@@ -9,9 +9,6 @@ import {
 } from '../new-campaign-done-popup/new-campaign-done-popup.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-
 import { map, switchMap, tap, catchError, takeUntil } from 'rxjs/operators';
 import { combineLatest, iif, of, Observable, Subject } from 'rxjs';
 
@@ -40,7 +37,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private campaign: ICampaign;
   private campaignBaseURL: string;
   public tenantSettings: ITenantsProperties;
-  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
+  @ViewChild('stepper', {static: false}) private stepper: MatStepper;
 
   private destroy$: Subject<void> = new Subject();
 
@@ -63,7 +60,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.getTenants();
+    this.initTenantSettings();
     this.initForm();
     this.form.valueChanges
       .pipe(takeUntil(this.destroy$))
@@ -128,7 +125,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const generateLimitData$ = this.updateLimitFn();
 
     saveCampaign$.pipe(
-      tap((res: IJsonApiPayload<IWCampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
+      // tap((res: IJsonApiPayload<IWCampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
       switchMap(
         (res: IJsonApiPayload<IWCampaignAttributes>) => combineLatest(
           iif(hasLimitData, generateLimitData$(res.data), of(res)).pipe(catchError(() => of(null))),
@@ -140,7 +137,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     ).subscribe(
       data => {
         if (data) {
-          this.openDialog();
+          this.openDialog(data.data.id);
         }
       },
       (error: Error) => console.warn(error.message)
@@ -281,12 +278,12 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
           map(csv => {
             // const b = new Blob([csv], { type: 'application/csv;charset=utf-8;' });
             //  const url = URL.createObjectURL(b);
-            const url = `data:application/octet-stream;charset=utf-16le;base64,${btoa(csv)}`;
+            const csvLink = `data:application/octet-stream;charset=utf-16le;base64,${btoa(csv)}`;
 
             return {
               title,
               subTitle: 'Download your individual links',
-              url,
+              csvLink,
               type: 'download'
             };
           })
@@ -317,10 +314,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       );
     return combineLatest(getUsersPis, this.blackcombUrl)
       .pipe(map(([pis, url]: [string[], string]) => {
-        return pis.reduce((p: string, v: string) =>
-          `${p}${v},${url}&pi=${v},\n`, 'identifier,urls,\n');
-      }),
-        takeUntil(this.destroy$)
+        return pis.reduce((p: string, v: string) => `${p}${v},${url}&pi=${v},\n`, 'identifier,urls,\n');
+      }), takeUntil(this.destroy$)
       );
   }
 
@@ -328,23 +323,21 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return of(this.campaignBaseURL);
   }
 
-  private openDialog(): void {
-    this.getDialogData(this.store.currentCampaign)
+  private openDialog(id: string): void {
+    this.getDialogData({...this.store.currentCampaign, id})
       .pipe(
         switchMap((config) => this.dialog.open(NewCampaignDonePopupComponent,
-          { data: config }).afterClosed())
+          {data: config}).afterClosed())
       )
       .subscribe(() => this.router.navigate(['/campaigns']));
   }
 
-  private getTenants(): void {
-    this.settingsService.getTenants()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe((res: Tenants) => {
-        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
-        this.campaignBaseURL = res.display_properties.campaign_base_url;
+  private initTenantSettings(): void {
+    this.settingsService.getTenant()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res: ITenantsProperties) => {
+        this.tenantSettings = res;
+        this.campaignBaseURL = res.campaignBaseURL;
         this.cdr.detectChanges();
       });
   }
@@ -366,15 +359,15 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       ).pipe(
         map(
           ([campaign, commEvent, outcomes]:
-            [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
-              ...campaign,
-              audience: { select: commEvent && commEvent.poolId || null },
-              channel: {
-                type: commEvent && commEvent.channel || 'weblink',
-                ...commEvent
-              },
-              rewardsList: outcomes
-            }))
+             [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
+            ...campaign,
+            audience: {select: commEvent && commEvent.poolId || null},
+            channel: {
+              type: commEvent && commEvent.channel || 'weblink',
+              ...commEvent
+            },
+            rewardsList: outcomes
+          }))
       ).subscribe(
         campaign => {
           this.campaign = Object.assign({}, campaign);

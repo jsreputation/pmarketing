@@ -74,7 +74,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTranslationTabsLable();
     this.createFormBranding();
-    this.getTenants();
+    this.getTenant();
     this.listColors = [{
       labelView: 'Primary Color', color: this.primaryColor.value
     },
@@ -128,8 +128,8 @@ export class BrandingComponent implements OnInit, OnDestroy {
       });
   }
 
-  private getTenants(): void {
-    this.settingsService.getTenants()
+  private getTenant(): void {
+    this.settingsService.findTenant()
       .subscribe((res: Tenants) => {
         this.tenants = res;
         this.handlerValue(res.display_properties);

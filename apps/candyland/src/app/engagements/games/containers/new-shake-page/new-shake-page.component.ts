@@ -83,7 +83,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.getTenants();
+    this.initTenantSettings();
     this.initShakeTreeForm();
     this.initGameGiftField();
     combineLatest([this.getData(), this.handleRouteParams()])
@@ -190,10 +190,11 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
     };
   }
 
-  private getTenants(): void {
-    this.settingsService.getTenants()
-      .subscribe((res: Tenants) => {
-        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+  private initTenantSettings(): void {
+    this.settingsService.getTenant()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res: ITenantsProperties) => {
+        this.tenantSettings = res;
         this.cd.detectChanges();
       });
   }

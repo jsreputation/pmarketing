@@ -181,10 +181,10 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
   }
 
   private initTenants(): void {
-    this.settingsService.getTenants()
+    this.settingsService.getTenant()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res: Tenants) => {
-        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+      .subscribe((res: ITenantsProperties) => {
+        this.tenantSettings = res;
         this.cd.detectChanges();
       });
   }

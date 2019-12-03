@@ -93,7 +93,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.initTenants();
+    this.initTenantsSettings();
     this.createStampForm();
     combineLatest([this.getStampData(), this.handleRouteParams()])
       .subscribe(
@@ -242,11 +242,11 @@ export class NewStampComponent implements OnInit, OnDestroy {
     };
   }
 
-  private initTenants(): void {
-    this.settingsService.getTenants()
+  private initTenantsSettings(): void {
+    this.settingsService.getTenant()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res: Tenants) => {
-        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+      .subscribe((res: ITenantsProperties) => {
+        this.tenantSettings = res;
         this.cd.detectChanges();
       });
   }

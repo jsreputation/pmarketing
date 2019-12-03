@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IWIAMUserAttributes, IWTenantAttributes } from '@perx/whistler';
+import { IWIAMUserAttributes, IWLoyaltyAttributes, IWTenantAttributes } from '@perx/whistler';
 import { RoleLabelConfig } from '@cl-shared';
 
 @Injectable({
@@ -63,5 +63,25 @@ export class SettingsHttpService {
 
   public getRoleLabel(): Observable<{ [key: string]: RoleLabelConfig }> {
     return this.http.get<{ [key: string]: RoleLabelConfig }>('assets/actives/role-label/role-label.json');
+  }
+
+  public getCognitoEndpoint(id: string, params: HttpParams): Observable<IJsonApiPayload<any>> {
+    return this.http.get<IJsonApiPayload<any>>(`${ApiConfig.cognitoEndpoints}/${id}`, {params});
+  }
+
+  public getCognitoEndpoints(params: HttpParams): Observable<IJsonApiListPayload<any>> {
+    return this.http.get<IJsonApiListPayload<any>>(ApiConfig.cognitoEndpoints, {params});
+  }
+
+  public createCognitoEndpoint(data: IJsonApiPayload<IWLoyaltyAttributes>): Observable<IJsonApiPayload<any>> {
+    return this.http.post<IJsonApiPayload<any>>(ApiConfig.cognitoEndpoints + '/', data);
+  }
+
+  public updateCognitoEndpoint(id: string, data: IJsonApiPayload<IWLoyaltyAttributes>): Observable<IJsonApiPayload<any>> {
+    return this.http.patch<IJsonApiPayload<any>>(ApiConfig.cognitoEndpoints + '/' + id, data);
+  }
+
+  public deleteCognitoEndpoin(id: string): Observable<IJsonApiPayload<any>> {
+    return this.http.delete<IJsonApiPayload<any>>(ApiConfig.cognitoEndpoints + '/' + id);
   }
 }

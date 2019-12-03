@@ -51,7 +51,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.store.resetCampaign();
-    this.getTenants();
+    this.initTenantSettings();
     this.getCampaignData();
   }
 
@@ -64,10 +64,11 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private getTenants(): void {
-    this.settingsService.getTenants()
-      .subscribe((res: Tenants) => {
-        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+  private initTenantSettings(): void {
+    this.settingsService.getTenant()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res: ITenantsProperties) => {
+        this.tenantSettings = res;
         this.cd.detectChanges();
       });
   }

@@ -1,5 +1,8 @@
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { IWIAMUserAttributes, IWTenantDisplayProperties } from '@perx/whistler';
+import {
+  IWIAMUserAttributes,
+  IWTenantDisplayProperties
+} from '@perx/whistler';
 
 export interface IColor {
   labelView: string;
@@ -140,7 +143,8 @@ export class SettingsHttpAdapter {
       headerColor: SettingsHttpAdapter.getTenantProperty('theme.header_color', data),
       logo: SettingsHttpAdapter.tenantLogo(data),
       primary: SettingsHttpAdapter.getTenantProperty('theme.primary', data),
-      logoType: SettingsHttpAdapter.tenantTypeLogo(data)
+      logoType: SettingsHttpAdapter.tenantTypeLogo(data),
+      campaignBaseURL: data.display_properties.campaign_base_url || null
     };
   }
 
@@ -165,5 +169,22 @@ export class SettingsHttpAdapter {
   // @ts-ignore
   public static tenantTypeLogo(data: Tenants): boolean {
     return true; // !(SettingsHttpAdapter.getTenantProperty('theme.title', data) as any);
+  }
+
+  public static transformToCognitoEndpoint(data: IJsonApiItem<any>): any {
+    return {
+      url: data.attributes.url,
+      typeType: data.attributes.target_type,
+    };
+  }
+
+  public static transformFromCognitoEndpoint(data: any): IJsonApiItem<any> {
+    return {
+      type: 'endpoints',
+      attributes: {
+        url: data.url || 'https://generic-blackcomb-dev1.uat.whistler.perxtech.io/',
+        target_type: data.type || 'blackcomb',
+      }
+    };
   }
 }
