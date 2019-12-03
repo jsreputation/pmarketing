@@ -322,30 +322,39 @@ export class RewardAppPage {
 
 export class CreateRewardAppPage {
 
-  public navigateToRewardCreate(): Promise<string> {
-
+  public static navigateToRewardCreate(): Promise<string> {
     return browser.get('rewards/new-reward') as Promise<string>;
   }
-  public headerField(): ElementFinder {
+
+  public static headerField(): ElementFinder {
     return element.all(by.css('input[ng-reflect-type="text"]')).get(0);
   }
-  public voucherCodeField(): ElementFinder {
-    return element.all(by.css('input[ng-reflect-type="text"]')).get(1);
-  }
-  public textField(): ElementArrayFinder {
+
+  public static textField(): ElementArrayFinder {
     return element.all(by.css('textarea'));
   }
+
+  public static loadRadioButton(): ElementFinder {
+    return element.all(by.className('mat-radio-ripple mat-ripple')).get(4);
+  }
+
+  public static radioButton(): ElementFinder {
+    return element.all(by.css('div.mat-radio-outer-circle')).get(4);
+  }
+
+  public static checkboxField(): ElementArrayFinder {
+    return element.all(by.css('input[type=checkbox]'));
+  }
+
+  public static slider(): ElementArrayFinder {
+    return element.all(by.className('mat-slide-toggle-thumb-container'));
+  }
+
   public selectField(): ElementArrayFinder {
     return element.all(by.css('div.mat-select-trigger'));
   }
   public rewardOptions(): ElementArrayFinder {
     return element.all(by.css('span.mat-option-text'));
-  }
-  public loadRadioButton(): ElementFinder {
-    return element.all(by.className('mat-radio-ripple mat-ripple')).get(4);
-  }
-  public radioButton(): ElementFinder {
-    return element.all(by.css('div.mat-radio-outer-circle')).get(4);
   }
   public radioPrimaryButton(): ElementFinder {
     return element.all(by.className('mat-radio-button mat-primary ng-star-inserted')).get(2);
@@ -353,14 +362,8 @@ export class CreateRewardAppPage {
   public fileUploadField(): ElementFinder {
     return element.all(by.css('input[type=file]')).get(1);
   }
-  public checkboxField(): ElementArrayFinder {
-    return element.all(by.css('input[type=checkbox]'));
-  }
   public numberField(): ElementArrayFinder {
     return element.all(by.css('input[type=number]'));
-  }
-  public slider(): ElementArrayFinder {
-    return element.all(by.className('mat-slide-toggle-thumb-container'));
   }
   public inputFileField(): ElementFinder {
     return element(by.css('input[type=file]'));
