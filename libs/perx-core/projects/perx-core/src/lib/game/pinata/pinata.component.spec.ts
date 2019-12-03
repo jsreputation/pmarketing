@@ -60,4 +60,32 @@ describe('PinataComponent', () => {
       component.shake();
     }
   });
+
+  it('should reset', () => {
+    component.stillImg = '';
+    component.reset();
+    expect(component.currentImg).toBe('');
+  });
+
+  it('should handle ngOnChanges', () => {
+    const change = { openedImg: { previousValue: '', currentValue: 'img', firstChange: true, isFirstChange: () => true } };
+    // @ts-ignore
+    component.movingImg = undefined;
+    component.ngOnChanges({});
+    component.ngOnChanges(change);
+    component.shake();
+    component.nbTaps = 3;
+    component.movingImg = 'img.move';
+    component.shake();
+    expect(component.currentImg).toBe('img.move'); // test for shake
+    component.nbTaps = 1;
+    component.ngOnChanges(change);
+    component.nbTaps = 3;
+    // @ts-ignore
+    component.movingImg = undefined;
+    component.ngOnChanges(change);
+    component.movingImg = 'img.move';
+    component.ngOnChanges(change);
+    expect(component.currentImg).toBe('img.move'); // test for ngOnChanges
+  });
 });
