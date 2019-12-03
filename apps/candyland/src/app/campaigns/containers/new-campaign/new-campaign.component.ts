@@ -219,9 +219,10 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     if (!data || data.length <= 0) {
       return [];
     }
+    const slots = campaign.template.slots || [0];
     const updateOutcomesArr$ = [];
-    const oldCampaignListToDelete = data.filter(outcomeData => outcomeData.outcome && outcomeData.outcome.slotNumber === -1);
-    const campaignList = data.filter(outcomeData => outcomeData.outcome && outcomeData.outcome.slotNumber >= 0);
+    const oldCampaignListToDelete = data.filter(outcomeData => !slots.includes(outcomeData.outcome.slotNumber));
+    const campaignList = data.filter(outcomeData => slots.includes(outcomeData.outcome.slotNumber));
     const deleteOutcomes$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
     const updateOutcomes$ = outcomeData =>
       this.outcomesService.updateOutcome(
