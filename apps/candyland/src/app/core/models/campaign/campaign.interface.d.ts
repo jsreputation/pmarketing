@@ -40,10 +40,6 @@ export interface ICampaign {
 
 export interface ICampaignRewardsList {
   outcome?: IOutcome;
-  slotInfo?: {
-    enableProbability?: boolean
-    slotNumber?: number | null;
-  }
   rewardsOptions?: IRewardEntity | { probability: 0, outcomeId: '', limit: '', id: '' };
 }
 
