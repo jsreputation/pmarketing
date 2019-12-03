@@ -17,7 +17,8 @@ import {
 
 import { ClValidators } from '@cl-helpers/cl-validators';
 import { AudiencesService } from '@cl-core-services';
-import {Type} from '../../audience.model';
+
+import { Type } from '../../audience.model';
 
 @Component({
   selector: 'cl-upsert-user-popup',

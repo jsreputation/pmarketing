@@ -7,6 +7,7 @@
       "perxCore",
       "camelCase"
     ],
+    "no-focused-test": true,
     "component-selector": [
       true,
       "element",
