@@ -66,7 +66,9 @@ export class RewardComponent implements OnInit, OnDestroy {
     private auth: AuthenticationService,
     private translate: TranslateService,
     private rewardService: RewardsService
-  ) { }
+  ) {
+    this.displayPriceFn = () => '';
+  }
 
   private initTranslate(): void {
     if (this.successPopUp.title) {
@@ -98,18 +100,8 @@ export class RewardComponent implements OnInit, OnDestroy {
     }
   }
 
-  private initDisplayPriceFn(): void {
-    this.displayPriceFn = (rewardPrice: IPrice) => {
-      if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && rewardPrice.price > 0) {
-        return `${rewardPrice.currencyCode} ${Math.floor(rewardPrice.price)}`;
-      }
-      return '';
-    };
-  }
-
   public ngOnInit(): void {
     this.initTranslate();
-    this.initDisplayPriceFn();
     this.isAnonymousUser = this.auth.getAnonymous();
     // tslint:disable-next-line: one-variable-per-declaration
     const getInstantOutcome = (campaignId: string) => this.outcomeService.getFromCampaign(parseInt(campaignId, 10)).pipe(
