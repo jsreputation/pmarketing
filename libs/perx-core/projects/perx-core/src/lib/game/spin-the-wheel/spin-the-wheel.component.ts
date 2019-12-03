@@ -307,7 +307,6 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
       SpinTheWheelComponent.easeOut(this.spinTime, 0, this.spinAngleStart, this.spinTimeTotal);
     this.startAngle += spinAngle * Math.PI / 180;
     this.drawWheel();
-  // draw wheel used to be here
     const that = this;
     this.spinTimeout = window.setTimeout(() => {
       that.rotateWheel();
