@@ -4,7 +4,6 @@ import { NewCampaignRewardsStampsFormService } from 'src/app/campaigns/services/
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
-import { oc } from 'ts-optchain';
 import { takeUntil } from 'rxjs/operators';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
@@ -17,6 +16,7 @@ import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
   public form: FormGroup;
+  public campaignEngagementType: string;
   private isFirstInit: boolean = true;
   // Slot 0 for those outcomes not caterorized, -1 for those outcomes need to be deleted
   public slots: number[] = [0];
@@ -40,21 +40,19 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
       .asObservable()
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: ICampaign) => {
-        const isFirstTimeRenderFromAPIResponse = data && data.template && this.isFirstInit;
-        if (isFirstTimeRenderFromAPIResponse) {
+        const hasTemplate = data && data.template;
+        if ( hasTemplate && this.isFirstInit) {
           this.isFirstInit = false;
           this.slots = this.store.currentCampaign.template.slots || [0];
         }
+        this.campaignEngagementType = hasTemplate ? data.template.attributes_type : '';
+        this.cd.detectChanges();
       });
   }
 
   public ngOnDestroy(): void {
     super.ngOnDestroy();
     this.cd.detach();
-  }
-
-  public get campaignEngagementType(): string {
-    return oc(this.store.currentCampaign).template.attributes_type('game');
   }
 
   public get limits(): FormGroup {

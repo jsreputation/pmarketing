@@ -1,6 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input, forwardRef } from '@angular/core';
+import { FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { takeUntil } from 'rxjs/operators';
 
@@ -15,20 +15,27 @@ import { noop } from 'rxjs';
   selector: 'cl-new-campaign-rewards-page',
   templateUrl: './new-campaign-rewards-page.component.html',
   styleUrls: ['./new-campaign-rewards-page.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => NewCampaignRewardsPageComponent),
+      multi: true
+    }
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
-  @Input() public group: FormGroup = this.formService.getLimitsForm(this.campaignEngagementType);
+  @Input() public campaignType: string;
+  @Input() public group: FormGroup = this.formService.getLimitsForm(this.campaignType);
 
   private onChange: any = noop;
   // @ts-ignore
   private onTouched: any = noop;
   public isFirstInit: boolean = true;
-  public form: FormGroup;
 
   public get times(): FormControl {
-    return this.group.get('limits.times') as FormControl;
+    return this.group.get('times') as FormControl;
   }
 
   constructor(
@@ -52,16 +59,11 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
     this.cd.detach();
   }
 
-  public get campaignEngagementType(): string {
-    return this.store.currentCampaign && this.store.currentCampaign.template && this.store.currentCampaign.template.attributes_type || '';
-  }
-
   private initForm(): void {
-    if (!this.form) {
+    if (!this.group) {
       return;
     }
-    console.log('init form');
-    console.log(this.form);
+
     if (this.route.snapshot.params.id) {
       this.store.currentCampaign$
         .asObservable()
@@ -75,7 +77,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
           }
         });
     } else {
-      this.group.patchValue(this.formService.getDefaultValue(this.campaignEngagementType));
+      this.group.patchValue(this.formService.getDefaultValue(this.campaignType));
     }
     this.group.valueChanges
       .pipe(takeUntil(this.destroy$))

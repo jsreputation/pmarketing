@@ -11,12 +11,12 @@
     </mat-card>
     <!--/ Rewards-->
     <!-- Stamps Rule-->
-    <!-- <ng-container [ngSwitch]="store.currentCampaign?.template?.attributes_type">
-      <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'" [formControl]="limits" [tenantSettings]="tenantSettings">
+    <ng-container [ngSwitch]="campaignEngagementType">
+      <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'" [formGroup]="limits" [tenantSettings]="tenantSettings">
       </cl-new-campaign-rewards-stamps-page>
-      <cl-new-campaign-rewards-page *ngSwitchDefault [formControl]="limits" [tenantSettings]="tenantSettings">
+      <cl-new-campaign-rewards-page *ngSwitchDefault [formGroup]="limits" [tenantSettings]="tenantSettings" [campaignType]="campaignEngagementType">
       </cl-new-campaign-rewards-page>
-    </ng-container> -->
+    </ng-container>
     <!--/ Stamps Rule-->
   </div>
   <cl-campaigns-mobile-preview [storeTemplate$]="store.template$" [tenantSettings]="tenantSettings">
