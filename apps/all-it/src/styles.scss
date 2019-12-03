@@ -4,15 +4,15 @@
 
 :root {
   --font: Roboto;
-  --logo: "";
-  --title: "";
-  --accent: #96289a;
-  --primary: #147dd3;
-  --button_text_color: #fff;
-  --button_background_color: #147dd3;
-  --header_color: #147dd3;
-  --background: #fafafa;
-  --font_color: #333;
+  --logo: "assets/header_logo.png";
+  --title: "all-it";
+  --accent: #0088D1;
+  --primary: #ffffff;
+  --button_text_color: #ffffff;
+  --button_background_color: #0F69AF;
+  --header_color: #000000;
+  --background: #ffffff;
+  --font_color: #212121;
 }
 
 html {
@@ -32,11 +32,6 @@ body {
 
 .mat-primary {
   color: black !important;
-}
-
-button {
-  background-color: var(--button_background_color) !important;
-  color: var(--button_text_color) !important;
 }
 
 button.mat-primary {
