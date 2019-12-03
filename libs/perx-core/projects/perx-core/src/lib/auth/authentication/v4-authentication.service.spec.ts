@@ -388,4 +388,39 @@ describe('V4AuthenticationService', () => {
     auth.savePI('1234');
     expect(spySet).toHaveBeenCalledWith('1234', 'pi');
   }));
+
+  it('should  get anonymous', fakeAsync(inject([V4AuthenticationService, TokenStorage],
+    (auth: V4AuthenticationService, storage: TokenStorage) => {
+      spyOn(storage, 'getAppInfoProperty').and.returnValue('true');
+      expect(auth.getAnonymous()).toBeTruthy();
+    })));
+  it('should  set anonymous', fakeAsync(inject([V4AuthenticationService, TokenStorage],
+    (auth: V4AuthenticationService, storage: TokenStorage) => {
+      const spy = spyOn(storage, 'setAppInfoProperty');
+      auth.saveAnonymous(true);
+      expect(spy).toHaveBeenCalled();
+    })));
+  it('should  getUserId', fakeAsync(inject([V4AuthenticationService, TokenStorage],
+    (auth: V4AuthenticationService, storage: TokenStorage) => {
+      const spy = spyOn(storage, 'getAppInfoProperty');
+      spy.and.returnValue('30');
+      expect(auth.getUserId()).toBe(30);
+      spy.and.returnValue(undefined);
+      expect(auth.getUserId()).toBe(null);
+    })));
+  it('should save userId', inject([V4AuthenticationService, TokenStorage],
+    (auth: V4AuthenticationService, storage: TokenStorage) => {
+      const spy = spyOn(storage, 'setAppInfoProperty');
+      auth.saveUserId(1);
+      expect(spy).toHaveBeenCalledWith(1, 'id');
+    }));
+  it('mergeUserById', fakeAsync(inject([V4AuthenticationService],
+    (auth: V4AuthenticationService) => {
+      const spyObject = {
+        err(): void { }
+      };
+      const spy = spyOn(spyObject, 'err');
+      auth.mergeUserById([1], 1).subscribe(() => { }, spyObject.err);
+      expect(spy).toHaveBeenCalled();
+    })));
 });
