@@ -148,6 +148,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       .subscribe(
         (user: IWUser) => {
           this.user = user;
+          console.log('this.user', this.user);
           this.cd.detectChanges();
         },
         (err) => {
