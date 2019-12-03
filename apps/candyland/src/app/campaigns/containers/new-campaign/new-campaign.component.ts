@@ -21,7 +21,7 @@ import {
   IWLimitAttributes,
   IWProfileAttributes
 } from '@perx/whistler';
-import { ICampaign, ICampaignRewardsList } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
@@ -202,7 +202,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private updateOutcomes(campaign: ICampaign): Observable<any> {
     let updateOutcomesArr$ = [];
-    const rewardsCollection = this.store.currentCampaign.rewardsListCollection;
+    const rewardsCollection = this.store.currentCampaign.outcomes;
     const updateOutcomeList = this.updateOutcomeWhenEdit(campaign, rewardsCollection);
     updateOutcomesArr$ = [...updateOutcomesArr$, ...updateOutcomeList];
 
@@ -214,14 +214,14 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private updateOutcomeWhenEdit(
     campaign: ICampaign,
-    data: ICampaignRewardsList[],
+    data: ICampaignOutcome[],
   ): Observable<any>[] {
     if (!data || data.length <= 0) {
       return [];
     }
     const updateOutcomesArr$ = [];
-    const oldCampaignListToDelete = this.store.currentCampaign.rewardsListCollection
-      .filter(outcomeData => outcomeData.outcome && !outcomeData.rewardsOptions);
+    const oldCampaignListToDelete = data.filter(outcomeData => outcomeData.outcome && outcomeData.outcome.slotNumber === -1);
+    const campaignList = data.filter(outcomeData => outcomeData.outcome && outcomeData.outcome.slotNumber >= 0);
     const deleteOutcomes$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
     const updateOutcomes$ = outcomeData =>
       this.outcomesService.updateOutcome(
@@ -238,16 +238,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         outcomeData.slotInfo.slotNumber
       );
 
-    data.forEach(outcomeData => {
-      if (this.store.currentCampaign.id) {
-        if (outcomeData.outcome.id) {
-          if (outcomeData.outcome.probability !== outcomeData.rewardsOptions.probability ||
-            outcomeData.outcome.limit !== outcomeData.rewardsOptions.limit) {
-            updateOutcomesArr$.push(updateOutcomes$(outcomeData));
-          }
-        } else {
-          updateOutcomesArr$.push(createOutcomes$(outcomeData));
-        }
+    campaignList.forEach(outcomeData => {
+      if (this.store.currentCampaign.id && outcomeData.outcome.id) {
+        updateOutcomesArr$.push(updateOutcomes$(outcomeData));
       } else {
         updateOutcomesArr$.push(createOutcomes$(outcomeData));
       }
@@ -337,9 +330,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       });
   }
 
-  private outcomeToRewardCollection(outcomes: IOutcome[]): ICampaignRewardsList[] {
-    const collections: ICampaignRewardsList[] = [];
-    outcomes.forEach(outcome => collections.push({ outcome, slotInfo: { slotNumber: outcome.slotNumber } }));
+  private outcomeToRewardCollection(outcomes: IOutcome[]): ICampaignOutcome[] {
+    const collections: ICampaignOutcome[] = [];
+    outcomes.forEach(outcome => collections.push({ outcome }));
     return collections;
   }
 
@@ -367,7 +360,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
                 type: commEvent && commEvent.channel || 'weblink',
                 ...commEvent
               },
-              rewardsListCollection: this.outcomeToRewardCollection(outcomes)
+              outcomes: this.outcomeToRewardCollection(outcomes)
             }))
       ).subscribe(
         campaign => {

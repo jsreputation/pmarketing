@@ -7,7 +7,7 @@ import { OutcomesHttpAdapter } from '@cl-core/http-adapters/outcomes-http-adapte
 import { IWOutcomeAttributes } from '@perx/whistler';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
-import { ICampaignRewardsList } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class OutcomesService {
   }
 
   public updateOutcome(
-    data: ICampaignRewardsList,
+    data: ICampaignOutcome,
     campaignId: string,
     enableProbability: boolean,
     slotNumber: number

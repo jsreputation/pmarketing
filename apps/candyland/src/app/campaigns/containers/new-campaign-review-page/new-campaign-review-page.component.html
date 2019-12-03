@@ -31,7 +31,7 @@
     </mat-card>
     <!--stamp rewards-->
     <mat-card class="card" *ngIf="stampsHasRewards">
-      <div *ngFor="let rewardsData of campaign?.rewardsListCollection">
+      <div *ngFor="let rewardsData of campaign?.outcomes">
         <div *ngIf="rewardsData?.rewardsOptions?.rewards?.length">
           <div class="card-header">
             <p class="card-title">

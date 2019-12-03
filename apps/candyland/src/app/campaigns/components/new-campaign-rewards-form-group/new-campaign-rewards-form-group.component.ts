@@ -14,7 +14,7 @@ import { RewardsService } from '@cl-core/services/rewards.service';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { sum } from '@cl-helpers/total-sum';
-import { ICampaignRewardsList } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
 
 @Component({
   selector: 'cl-new-campaign-rewards-form-group',
@@ -25,7 +25,7 @@ import { ICampaignRewardsList } from '@cl-core/models/campaign/campaign.interfac
 export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
   @Input() public title: string = 'CAMPAIGN.REWARDS';
   @Input() public slotNumber: number = 0;
-  public rewards: ICampaignRewardsList[] = [];
+  public rewards: ICampaignOutcome[] = [];
   private isFirstInit: boolean;
   private noOutCome: { probability: 0, outcomeId: '', limit: '', id: '' };
   private destroy$: Subject<void> = new Subject();
@@ -53,7 +53,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
       .asObservable()
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
-        const isFirstTimeRenderFromAPIResponse = data && data.id && data.rewardsListCollection && this.isFirstInit;
+        const isFirstTimeRenderFromAPIResponse = data && data.id && data.outcomes && this.isFirstInit;
         if (isFirstTimeRenderFromAPIResponse) {
           this.isFirstInit = false;
           this.initRewardsList();
@@ -78,7 +78,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
   }
 
   public initRewardsList(): void {
-    const noOutcome = this.campaign.rewardsListCollection.find(outcomeData => !outcomeData.outcome.resultId);
+    const noOutcome = this.campaign.outcomes.find(outcomeData => !outcomeData.outcome.resultId);
     this.noOutCome = {
       probability: noOutcome && noOutcome.outcome && noOutcome.outcome.probability || 0,
       outcomeId: noOutcome && noOutcome.outcome && noOutcome.outcome.id,
@@ -86,7 +86,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
       id: ''
     };
 
-    const possibleOutcomes = this.campaign.rewardsListCollection.filter(
+    const possibleOutcomes = this.campaign.outcomes.filter(
       data => {
         if (!this.slotNumber) {
           return true;
@@ -136,7 +136,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
     }
   }
 
-  private createRewardFormGroup(value: IRewardEntity): ICampaignRewardsList {
+  private createRewardFormGroup(value: IRewardEntity): ICampaignOutcome {
     return {
       rewardsOptions: value || { ...this.noOutCome }
     };

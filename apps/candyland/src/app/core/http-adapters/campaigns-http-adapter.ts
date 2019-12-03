@@ -87,7 +87,7 @@ export class CampaignsHttpAdapter {
         labels: campaignData.labels
       },
       template: {},
-      rewardsListCollection: [],
+      outcomes: [],
       displayProperties: { ...campaignData.display_properties }
     };
   }

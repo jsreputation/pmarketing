@@ -44,10 +44,10 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
   }
 
   public checkStampsHasRewards(campaign: ICampaign): void {
-    if (!campaign.rewardsListCollection) {
+    if (!campaign.outcomes) {
       this.stampsHasRewards = false;
     } else {
-      campaign.rewardsListCollection.forEach(data => {
+      campaign.outcomes.forEach(data => {
         if (data.rewardsOptions) {
           this.stampsHasRewards = true;
         }

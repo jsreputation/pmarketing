@@ -15,7 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, map, catchError, takeUntil } from 'rxjs/operators';
 import { combineLatest, of, Observable, Subject } from 'rxjs';
 
-import { ICampaign, ICampaignRewardsList } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
@@ -98,7 +98,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
                 message: commEvent && commEvent.message,
                 schedule: commEvent && { ...commEvent.schedule }
               },
-              rewardsListCollection: this.outcomeToRewardCollection(outcomes)
+              outcomes: this.outcomeToRewardCollection(outcomes)
             })
         ),
         switchMap((campaign: ICampaign) => {
@@ -110,19 +110,19 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
             of(campaign),
             this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
             this.limitsService.getLimits(limitParams, eType).pipe(map(limits => limits[0]), catchError(() => of({ times: null }))),
-            this.getRewards(campaign.rewardsListCollection)
+            this.getRewards(campaign.outcomes)
           );
         }),
-        map(([campaign, engagement, limits, rewardsListCollection]:
+        map(([campaign, engagement, limits, outcomes]:
           [
             ICampaign | null, IEngagementType | null, ILimit | null,
-            ICampaignRewardsList[] | null
+            ICampaignOutcome[] | null
           ]) => {
           return {
             ...campaign,
             template: engagement,
             limits,
-            rewardsListCollection
+            outcomes
           };
         }),
         takeUntil(this.destroy$),
@@ -137,14 +137,14 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     }
   }
 
-  private outcomeToRewardCollection(outcomes: IOutcome[]): ICampaignRewardsList[] {
-    const collections: ICampaignRewardsList[] = [];
+  private outcomeToRewardCollection(outcomes: IOutcome[]): ICampaignOutcome[] {
+    const collections: ICampaignOutcome[] = [];
     outcomes.forEach(outcome => collections.push({ outcome, slotInfo: { slotNumber: outcome.slotNumber } }));
     return collections;
   }
 
-  private getRewards(outcomeList: ICampaignRewardsList[]):
-    Observable<ICampaignRewardsList[]> {
+  private getRewards(outcomeList: ICampaignOutcome[]):
+    Observable<ICampaignOutcome[]> {
     if (!outcomeList || !outcomeList.length) {
       return of([]);
     }
