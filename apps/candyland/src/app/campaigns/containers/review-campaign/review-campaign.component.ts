@@ -80,7 +80,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       include: 'template'
     };
     const paramsPO: HttpParamsOptions = {
-      'filter[campaign_entity_id]': campaignId
+      'filter[domain_id]': campaignId
     };
     if (campaignId) {
       combineLatest(
@@ -139,7 +139,9 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
 
   private outcomeToRewardCollection(outcomes: IOutcome[]): ICampaignOutcome[] {
     const collections: ICampaignOutcome[] = [];
-    outcomes.forEach(outcome => collections.push({ outcome, slotInfo: { slotNumber: outcome.slotNumber } }));
+    if (outcomes && outcomes.length > 0) {
+      outcomes.forEach(outcome => collections.push({ outcome }));
+    }
     return collections;
   }
 

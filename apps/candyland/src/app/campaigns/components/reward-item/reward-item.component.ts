@@ -12,13 +12,14 @@ import { takeUntil } from 'rxjs/operators';
 export class RewardItemComponent implements OnInit {
   @Input() public data: IRewardEntity;
   @Input() public enableProbability: boolean = false;
+  @Input() public isInvalid: boolean;
   @Output() private clickDelete: EventEmitter<any> = new EventEmitter<any>();
-  @Output() private updateReward: EventEmitter<{ probability: number, limit: number }> =
+  @Output() private updateOutcome: EventEmitter<{ probability: number, limit: number }> =
     new EventEmitter<{ probability: number, limit: number }>();
 
   public group: FormGroup = new FormGroup({
-    probability: new FormControl({ value: 0, disabled: true }),
-    limit: new FormControl({ value: 0 })
+    probability: new FormControl(),
+    limit: new FormControl()
   });
   private destroy$: Subject<void> = new Subject();
   public get probability(): AbstractControl {
@@ -29,25 +30,20 @@ export class RewardItemComponent implements OnInit {
     return this.group.get('limit');
   }
 
-  public get isInvalid(): boolean {
-    return this.group.parent.invalid;
-  }
-
   public ngOnInit(): void {
-    console.log(this.data);
     this.group.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(
       () => {
-        this.updateRewardData();
+        this.updateOutcomeData();
       }
     );
   }
 
-  public updateRewardData(): void {
+  public updateOutcomeData(): void {
     const updateData = {
-      probability: this.group.get('probability').value,
-      limit: this.group.get('limit').value
+      probability: this.group.get('probability').value || null,
+      limit: this.group.get('limit').value || null
     };
-    this.updateReward.emit(updateData);
+    this.updateOutcome.emit(updateData);
   }
   public delete(): void {
     this.clickDelete.emit(this.data);

@@ -63,7 +63,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTenants();
     this.initForm();
-    // this.store.currentCampaign$.subscribe(console.log);
+    this.store.currentCampaign$.subscribe(console.log);
     this.form.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
@@ -339,7 +339,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       include: 'template'
     };
     const paramsPO: HttpParamsOptions = {
-      'filter[campaign_entity_id]': campaignId
+      'filter[domain_id]': campaignId
     };
     if (campaignId) {
       combineLatest(
