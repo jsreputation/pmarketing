@@ -1,3 +1,4 @@
+{{data | json }}
 <div class="reward-item">
   <div class="reward-item-wrap">
     <div class="reward-item-container">
@@ -29,7 +30,7 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="reward-item-probability" *ngIf="probability.enabled">
+    <div class="reward-item-probability" *ngIf="enableProbability">
       <span class="reward-item-probability-label">
         {{'CAMPAIGN.PROBABILITY' | translate}}
       </span>
@@ -47,9 +48,6 @@
     </div>    
   </div>
   <div class="reward-item-actions">
-    <!--    <button mat-icon-button (click)="delete()">-->
-    <!--      <i class="icon delete-action"></i>-->
-    <!--    </button>-->
     <button mat-icon-button *ngIf="data?.name" (click)="delete()">
       <i class="icon full-with delete-action"></i>
     </button>

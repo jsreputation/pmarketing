@@ -3,7 +3,7 @@
     <!--Rewards-->
     <mat-card class="card">
       <ng-container *ngFor="let slot of slots">
-        <cl-new-campaign-rewards-form-group [formControl]="rewardsListCollection"
+        <cl-new-campaign-rewards-form-group
           [slotNumber]="slot"
           [title]="('CAMPAIGN.REWARDS_FOR_SLOT' | translate) + ' ' + slot">
         </cl-new-campaign-rewards-form-group>

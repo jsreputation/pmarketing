@@ -5,74 +5,39 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy,
   Input,
-  forwardRef,
 } from '@angular/core';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  NG_VALUE_ACCESSOR
-} from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import { ClValidators } from '@cl-helpers/cl-validators';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
-import { noop, combineLatest, of, Subject } from 'rxjs';
-import { distinctUntilChanged, map, catchError, takeUntil } from 'rxjs/operators';
+import { combineLatest, of, Subject } from 'rxjs';
+import { map, catchError, takeUntil } from 'rxjs/operators';
 import { RewardsService } from '@cl-core/services/rewards.service';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
+import { sum } from '@cl-helpers/total-sum';
+import { ICampaignRewardsList } from '@cl-core/models/campaign/campaign.interface';
 
 @Component({
   selector: 'cl-new-campaign-rewards-form-group',
   templateUrl: './new-campaign-rewards-form-group.component.html',
   styleUrls: ['./new-campaign-rewards-form-group.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NewCampaignRewardsFormGroupComponent),
-      multi: true
-    }
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
   @Input() public title: string = 'CAMPAIGN.REWARDS';
   @Input() public slotNumber: number = 0;
-  @Input() public group: FormArray = this.fb.array([
-    this.fb.group({
-      slotInfo: this.fb.group({
-        enableProbability: [false],
-        slotNumber: this.slotNumber
-      }),
-      rewardsOptions: {}
-    })
-  ], [ClValidators.sumMoreThan({ fieldName: 'rewardsOptions.probability' })]);
-
-  private onChange: any = noop;
-  // @ts-ignore
-  private onTouched: any = noop;
+  public rewards: ICampaignRewardsList[] = [];
   private isFirstInit: boolean;
-  private noOutCome: { probability: 0, outcomeId: '' };
+  private noOutCome: { probability: 0, outcomeId: '', limit: '', id: '' };
   private destroy$: Subject<void> = new Subject();
+  public enableProbability: boolean = false;
 
-  public get enableProbability(): AbstractControl {
-    return this.group.at(0).get('slotInfo.enableProbability');
-  }
-
-  public get rewards(): FormArray {
-    return this.group.at(0).get('rewardsOptions') as FormArray;
-  }
-
-  public get sumMoreThanError(): number {
-    return this.group.getError('sumMoreThan');
+  public get sumMoreThanError(): boolean {
+    return sum(this.rewards, 'probability') > 100;
   }
 
   constructor(
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
-    private fb: FormBuilder,
     private store: CampaignCreationStoreService,
     private rewardsService: RewardsService
   ) {
@@ -94,20 +59,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
           this.initRewardsList();
         }
       });
-    this.enableProbability.valueChanges
-      .pipe(
-        distinctUntilChanged(),
-        takeUntil(this.destroy$)
-      )
-      .subscribe((value: boolean) => {
-        this.updateRewards(value);
-      });
-    this.group.valueChanges
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((reward) => {
-        this.onChange(reward);
-        this.store.updateCampaign(reward);
-      });
   }
 
   public ngOnDestroy(): void {
@@ -125,21 +76,24 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
         }
       });
   }
+
   public initRewardsList(): void {
-    this.group.reset();
     const noOutcome = this.campaign.rewardsListCollection.find(outcomeData => !outcomeData.outcome.resultId);
     this.noOutCome = {
       probability: noOutcome && noOutcome.outcome && noOutcome.outcome.probability || 0,
-      outcomeId: noOutcome && noOutcome.outcome && noOutcome.outcome.id
+      outcomeId: noOutcome && noOutcome.outcome && noOutcome.outcome.id,
+      limit: '',
+      id: ''
     };
 
-    const possibleOutcomes = this.campaign.rewardsListCollection.filter(data => {
-      console.log(this.slotNumber);
-      if (!this.slotNumber) {
-        return true;
+    const possibleOutcomes = this.campaign.rewardsListCollection.filter(
+      data => {
+        if (!this.slotNumber) {
+          return true;
+        }
+        return data.outcome.lootBoxId === this.slotNumber;
       }
-      return data.outcome.lootBoxId === this.slotNumber;
-    }).filter(data => data.outcome.resultId)
+    ).filter(data => data.outcome.resultId)
       .map(data =>
         this.rewardsService.getReward(data.outcome.resultId).pipe(
           map((reward: IRewardEntity) =>
@@ -149,83 +103,55 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     combineLatest(...possibleOutcomes).subscribe(
       (rewards: Partial<IRewardEntity>[]) => {
         rewards.filter(data => data).map((reward: IRewardEntity) => this.updateReward(reward));
-        console.log('going to update rewards in campaign');
-        this.updateRewardsInCampaign(this.group.value);
+        this.updateRewardsInCampaign();
       }
     );
   }
 
   public addReward(value: IRewardEntity): void {
-    this.group.push(this.createRewardFormGroup(value, this.enableProbability.value));
-    console.log(this.group.value);
+    this.rewards.push(this.createRewardFormGroup(value));
     this.cd.detectChanges();
   }
 
   public updateReward(value: IRewardEntity): void {
-    if ((value.probability || value.probability === 0) && !this.enableProbability.value) {
-      this.enableProbability.patchValue(true);
+    if ((value.probability || value.probability === 0) && !this.enableProbability) {
+      this.enableProbability = true;
     }
-    const newReward = this.createRewardFormGroup(value, this.enableProbability.value);
-    this.group.push(newReward);
+    const newReward = this.createRewardFormGroup(value);
+    this.rewards.push(newReward);
     this.cd.detectChanges();
   }
 
-  public updateRewardsInCampaign(rewards: IRewardEntity[]): void {
-    console.log(rewards);
+  public updateRewardsInCampaign(): void {
+    console.log(this.rewards);
+  }
+
+  public updateRewardData(index: number, value: { probability: number, limit: number }): void {
+    this.rewards[index] = { ... this.rewards[index], ...value };
   }
 
   public removeReward(index: number): void {
-    this.group.removeAt(index);
-  }
-
-  public writeValue(data: any): void {
-    if (data === null) {
-      return;
-    }
-
-    this.group.patchValue(data, { emitEvent: false });
-    this.group.updateValueAndValidity();
-    this.cd.detectChanges();
-  }
-
-  public registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  public registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-    this.group.markAsTouched();
-  }
-
-  public setDisabledState?(isDisabled: boolean): void {
-    if (isDisabled) {
-      this.group.disable();
-    } else {
-      this.group.enable();
+    if (index > -1) {
+      this.rewards.splice(index, 1);
     }
   }
 
-  private createRewardFormGroup(value: IRewardEntity, isEnableProbability: boolean = false): FormGroup {
-    return this.fb.group({
-      slotInfo: {
-        enableProbability: isEnableProbability,
-        slotNumber: this.slotNumber
-      },
+  private createRewardFormGroup(value: IRewardEntity): ICampaignRewardsList {
+    return {
       rewardsOptions: value || { ...this.noOutCome }
-    });
+    };
   }
 
-  private updateRewards(isEnableProbability: boolean): void {
-    if (isEnableProbability) {
-      this.group.insert(0, this.createRewardFormGroup(null, isEnableProbability));
-      for (let i = 0; i < this.group.length; i++) {
-        this.group.at(i).get('rewardsOptions.probability').enable({ emitEvent: false });
-      }
+  public updateProbability(checked: boolean): void {
+    this.enableProbability = checked;
+    this.updateRewards();
+  }
+
+  private updateRewards(): void {
+    if (this.enableProbability) {
+      this.rewards.unshift(this.createRewardFormGroup(null));
     } else {
-      this.group.removeAt(0);
-      for (let i = 0; i < this.group.length; i++) {
-        this.group.at(i).get('rewardsOptions.probability').disable({ emitEvent: false });
-      }
+      this.rewards.shift();
     }
     this.cd.detectChanges();
   }

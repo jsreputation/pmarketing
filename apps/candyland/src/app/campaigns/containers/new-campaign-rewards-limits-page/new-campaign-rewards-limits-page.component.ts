@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { NewCampaignRewardsStampsFormService } from 'src/app/campaigns/services/new-campaign-rewards-stamps-form.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
@@ -54,10 +54,6 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
 
   public get campaignEngagementType(): string {
     return oc(this.store.currentCampaign).template.attributes_type('game');
-  }
-
-  public get rewardsListCollection(): FormArray {
-    return this.form.get('rewardsListCollection') as FormArray;
   }
 
   public get limits(): FormGroup {

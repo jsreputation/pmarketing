@@ -9,7 +9,6 @@ export class NewCampaignRewardsStampsFormService {
 
   public getForm(): FormGroup {
     return this.fb.group({
-      rewardsListCollection: this.fb.array([]),
       limits: this.fb.group({})
     });
   }
