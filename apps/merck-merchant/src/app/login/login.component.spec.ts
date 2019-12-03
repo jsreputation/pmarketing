@@ -74,7 +74,11 @@ describe('LoginComponent', () => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
       AuthenticationService as Type<AuthenticationService>
     );
-    const authSpy = spyOn(authenticationService, 'login').and.returnValue(of({ bearer_token: 'SWWERW' }));
+    component.loginForm.controls['name'].setValue('test');
+    component.loginForm.controls['email'].setValue('test@test.com');
+    component.loginForm.controls['password'].setValue('test1234');
+
+    const authSpy = spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     const routerSpy = spyOn(routerStub, 'navigateByUrl').and.stub();
 

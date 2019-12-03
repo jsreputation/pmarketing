@@ -122,7 +122,6 @@ export class V4GameService implements IGameService {
   private static v4GameToGame(game: Game): IGame {
     let type = TYPE.unknown;
     let config: ITree | IPinata;
-
     if (game.game_type === GameType.shakeTheTree) {
       type = TYPE.shakeTheTree;
       const dpts: TreeDisplayProperties = game.display_properties as TreeDisplayProperties;
@@ -150,7 +149,6 @@ export class V4GameService implements IGameService {
     } else {
       throw new Error(`${game.game_type} is not mapped yet`);
     }
-
     const texts: { [key: string]: string } = {};
     if (game.display_properties.header) {
       texts.title = game.display_properties.header.value.title;
