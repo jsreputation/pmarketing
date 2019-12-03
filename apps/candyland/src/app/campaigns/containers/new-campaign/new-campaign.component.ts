@@ -225,17 +225,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const deleteOutcomes$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
     const updateOutcomes$ = outcomeData =>
       this.outcomesService.updateOutcome(
-        outcomeData.reweardsOptions,
-        campaign.id,
-        outcomeData.slotInfo.enableProbability,
-        outcomeData.slotInfo.slotNumber
+        outcomeData.outcome,
+        campaign.id
       );
     const createOutcomes$ = outcomeData =>
       this.outcomesService.createOutcome(
-        outcomeData.reweardsOptions,
-        campaign.id,
-        outcomeData.slotInfo.enableProbability,
-        outcomeData.slotInfo.slotNumber
+        outcomeData.outcome,
+        campaign.id
       );
 
     campaignList.forEach(outcomeData => {

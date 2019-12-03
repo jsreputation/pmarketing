@@ -11,7 +11,7 @@
   <div>
     <cl-reward-item class="item"
                     *ngFor="let reward of rewards; let i = index"
-                    [data]="reward.rewardsOptions"
+                    [data]="reward.reward"
                     [enableProbability]="enableProbability"
                     (updateReward)="updateRewardData(i, $event.value)"
                     (clickDelete)="removeReward(i)">

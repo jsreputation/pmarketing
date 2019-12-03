@@ -18,6 +18,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
   @Input() public tenantSettings: ITenantsProperties;
   public form: FormGroup;
   private isFirstInit: boolean = true;
+  // Slot 0 for those outcomes not caterorized, -1 for those outcomes need to be deleted
   public slots: number[] = [0];
 
   constructor(

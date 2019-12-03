@@ -41,7 +41,7 @@ export interface ICampaign {
 export interface ICampaignOutcome {
   outcome?: IOutcome;
   enableProbability?: boolean
-  rewardsOptions?: IRewardEntity;
+  reward?: IRewardEntity;
 }
 
 export interface ICampaignTableData {

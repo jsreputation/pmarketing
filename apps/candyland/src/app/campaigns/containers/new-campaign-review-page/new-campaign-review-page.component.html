@@ -12,7 +12,7 @@
       </div>
     </mat-card>
     <!--rewards-->
-    <mat-card class="card" *ngIf="campaign?.rewardsOptions?.rewards.length">
+    <mat-card class="card" *ngIf="campaign?.reward?.rewards.length">
       <div class="card-header">
         <p class="card-title">
           {{'CAMPAIGN.REWARDS' | translate}}
@@ -20,19 +20,19 @@
       </div>
       <div class="card-content">
         <cl-reward-item-preview
-          *ngFor="let reward of campaign?.rewardsOptions?.rewards"
+          *ngFor="let reward of campaign?.reward?.rewards"
           class="item"
           [data]="reward?.value"
           [probability]="reward?.probability"
           [limit]="reward?.limit"
-          [enableProbability]="campaign?.rewardsOptions?.enableProbability">
+          [enableProbability]="campaign?.reward?.enableProbability">
         </cl-reward-item-preview>
       </div>
     </mat-card>
     <!--stamp rewards-->
     <mat-card class="card" *ngIf="stampsHasRewards">
       <div *ngFor="let rewardsData of campaign?.outcomes">
-        <div *ngIf="rewardsData?.rewardsOptions?.rewards?.length">
+        <div *ngIf="rewardsData?.reward?.rewards?.length">
           <div class="card-header">
             <p class="card-title">
                     {{'CAMPAIGN.REWARDS_FOR_SLOT' | translate}}
@@ -40,12 +40,12 @@
           </div>
           <div class="card-content">
             <cl-reward-item-preview
-              *ngFor="let reward of rewardsData?.rewardsOptions?.rewards"
+              *ngFor="let reward of rewardsData?.reward?.rewards"
               class="item"
               [data]="reward?.value"
               [probability]="reward?.probability"
               [limit]="reward?.limit"
-              [enableProbability]="rewardsData?.rewardsOptions?.enableProbability">
+              [enableProbability]="rewardsData?.reward?.enableProbability">
             </cl-reward-item-preview>
           </div>
         </div>

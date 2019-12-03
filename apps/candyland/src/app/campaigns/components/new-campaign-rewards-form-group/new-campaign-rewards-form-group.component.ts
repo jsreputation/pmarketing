@@ -27,7 +27,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
   @Input() public slotNumber: number = 0;
   public rewards: ICampaignOutcome[] = [];
   private isFirstInit: boolean;
-  private noOutCome: { probability: 0, outcomeId: '', limit: '', id: '' };
   private destroy$: Subject<void> = new Subject();
   public enableProbability: boolean = false;
 
@@ -72,53 +71,47 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe((reward: IRewardEntity) => {
         if (reward) {
-          this.addReward(reward);
+          this.addReward({
+            outcome: {
+              probability: 0,
+              limit: null,
+              resultId: Number.parseInt(reward.id, 10),
+              resultType: 'Ros::Reward::Entity'
+            },
+            reward
+          });
         }
       });
   }
 
   public initRewardsList(): void {
-    const noOutcome = this.campaign.outcomes.find(outcomeData => !outcomeData.outcome.resultId);
-    this.noOutCome = {
-      probability: noOutcome && noOutcome.outcome && noOutcome.outcome.probability || 0,
-      outcomeId: noOutcome && noOutcome.outcome && noOutcome.outcome.id,
-      limit: '',
-      id: ''
-    };
-
     const possibleOutcomes = this.campaign.outcomes.filter(
       data => {
         if (!this.slotNumber) {
           return true;
         }
-        return data.outcome.lootBoxId === this.slotNumber;
+        return data.outcome.slotNumber === this.slotNumber;
       }
     ).filter(data => data.outcome.resultId)
       .map(data =>
         this.rewardsService.getReward(data.outcome.resultId).pipe(
           map((reward: IRewardEntity) =>
-            ({ ...reward, probability: data.outcome.probability, outcomeId: data.outcome.id, limit: data.outcome.limit })),
+            ({ ...data, reward })),
           catchError(() => of(null))
         ));
     combineLatest(...possibleOutcomes).subscribe(
-      (rewards: Partial<IRewardEntity>[]) => {
-        rewards.filter(data => data).map((reward: IRewardEntity) => this.updateReward(reward));
+      (rewards: ICampaignOutcome[]) => {
+        rewards.filter(data => data).map((outcome: ICampaignOutcome) => this.addReward(outcome));
         this.updateRewardsInCampaign();
       }
     );
   }
 
-  public addReward(value: IRewardEntity): void {
-    this.rewards.push(this.createRewardFormGroup(value));
-    this.cd.detectChanges();
-  }
-
-  public updateReward(value: IRewardEntity): void {
-    if ((value.probability || value.probability === 0) && !this.enableProbability) {
+  public addReward(value: ICampaignOutcome): void {
+    if (value.enableProbability && !this.enableProbability) {
       this.enableProbability = true;
     }
-    const newReward = this.createRewardFormGroup(value);
-    this.rewards.push(newReward);
+    this.rewards.push(value);
     this.cd.detectChanges();
   }
 
@@ -127,19 +120,13 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
   }
 
   public updateRewardData(index: number, value: { probability: number, limit: number }): void {
-    this.rewards[index] = { ... this.rewards[index], ...value };
+    this.rewards[index].outcome = { ... this.rewards[index].outcome, ...value };
   }
 
   public removeReward(index: number): void {
     if (index > -1) {
       this.rewards.splice(index, 1);
     }
-  }
-
-  private createRewardFormGroup(value: IRewardEntity): ICampaignOutcome {
-    return {
-      rewardsOptions: value || { ...this.noOutCome }
-    };
   }
 
   public updateProbability(checked: boolean): void {
@@ -149,7 +136,13 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
 
   private updateRewards(): void {
     if (this.enableProbability) {
-      this.rewards.unshift(this.createRewardFormGroup(null));
+      const noOutcome = {
+        outcome: {
+          probability: 0,
+          slotNumber: this.slotNumber
+        }
+      };
+      this.rewards.unshift(noOutcome);
     } else {
       this.rewards.shift();
     }

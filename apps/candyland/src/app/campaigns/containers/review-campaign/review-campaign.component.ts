@@ -155,7 +155,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
           return this.rewardsService.getReward(outcome.slotNumber.toString()).pipe(
             map(rewardData => ({
               outcome,
-              rewardsOptions: { ...rewardData, limit: outcome.limit || null, probability: outcome.probability, },
+              reward: { ...rewardData, limit: outcome.limit || null, probability: outcome.probability, },
               slotInfo: {
                 slotNumber: outcome.slotNumber
               }
@@ -163,7 +163,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
             catchError(() =>
               of({
                 outcome,
-                rewardsOptions: { limit: outcome.limit || null, probability: outcome.probability },
+                reward: { limit: outcome.limit || null, probability: outcome.probability },
                 slotInfo: {
                   stampsSlotNumber: outcome.slotNumber
                 }
@@ -172,7 +172,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         }
         return of({
           outcome,
-          rewardsOptions: { limit: outcome.limit || null, probability: outcome.probability },
+          reward: { limit: outcome.limit || null, probability: outcome.probability },
           slotInfo: {
             stampsSlotNumber: outcome.slotNumber
           }
