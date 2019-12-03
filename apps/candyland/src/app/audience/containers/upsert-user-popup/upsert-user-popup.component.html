@@ -74,8 +74,11 @@
           <div class="dialog-input-group">
             <mat-form-field>
               <mat-select formControlName="audienceList" multiple>
-                <mat-option *ngFor="let option of pools"
-                            [value]="option.value">{{option.name | translate}}
+                <mat-option
+                  *ngFor="let option of pools"
+                  [value]="option.value"
+                >
+                  {{option.name | translate}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
