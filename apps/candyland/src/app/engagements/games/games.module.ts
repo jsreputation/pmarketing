@@ -35,7 +35,6 @@ import {ClColorPickerModule} from '@cl-shared/components/cl-color-picker/cl-colo
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 import {UploadGraphicModule} from '@cl-shared/components/upload-graphic/upload-graphic.module';
 
-
 @NgModule({
   declarations: [
     NewShakePageComponent,
