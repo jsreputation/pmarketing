@@ -13792,6 +13792,11 @@ tslint-consistent-codestyle@^1.15.1:
     tslib "^1.7.1"
     tsutils "^2.29.0"
 
+tslint-no-focused-test@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/tslint-no-focused-test/-/tslint-no-focused-test-0.5.0.tgz#e0a93ef3fa64bd91c7e7437d1f183204880a8ed5"
+  integrity sha512-YK0PSY5XAdJaTzVIXxnUGyvB5VAi+H9yTc3e40YVtu8Ix3+zLSz4ufvX6rXT3nWpim0DR6fxXoL/Zk8JI641Vg==
+
 tslint@^5.9.1:
   version "5.20.1"
   resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.20.1.tgz#e401e8aeda0152bc44dd07e614034f3f80c67b7d"

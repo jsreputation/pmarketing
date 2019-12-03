@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 
 import { WhistlerCampaignService } from './whistler-campaign.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -13,6 +13,8 @@ import {
   IJsonApiItem,
   IJsonApiItemPayload,
 } from '@perx/whistler';
+import { HttpClient } from '@angular/common/http';
+import { of } from 'rxjs';
 
 describe('WhistlerCampaignService', () => {
   let httpTestingController: HttpTestingController;
@@ -29,6 +31,23 @@ describe('WhistlerCampaignService', () => {
   const now = new Date();
   const tomorrow = (new Date());
   tomorrow.setDate(now.getDate() + 1);
+  const campaingMock = {
+    data: [{
+      id: '111',
+      type: 'test',
+      links: {
+        self: 'test'
+      }, attributes: {
+        start_date_time: null,
+        name: '',
+        engagement_type:
+          WEngagementType.games,
+        engagement_id: 1
+      }
+    }], meta: {
+      page_count: 3
+    }
+  };
 
   const mockCampaign: IJsonApiItem<IWCampaignAttributes> = {
     id: '2',
@@ -165,4 +184,14 @@ describe('WhistlerCampaignService', () => {
     const { endsAt } = WhistlerCampaignService.WhistlerCampaignToCampaign(mockExpiredCampaign);
     expect(endsAt).toEqual(yesterday);
   });
+
+  it('startsAfter handle null values', fakeAsync(inject([WhistlerCampaignService, HttpClient],
+    (campaign: WhistlerCampaignService, http: HttpClient) => {
+      const spy = spyOn(http, 'get').and.returnValue(of(campaingMock));
+      campaign.getCampaigns().subscribe(() => { });
+      // second call for write value to cashe
+      campaign.getCampaigns().subscribe(() => { });
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })));
 });
