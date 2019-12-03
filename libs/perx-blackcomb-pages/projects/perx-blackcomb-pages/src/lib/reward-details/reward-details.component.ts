@@ -33,11 +33,6 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
 
   private initTranslate(): void {
     this.translate.get('REDEEM').subscribe((text) => this.buttonLabel = text);
-    this.translate.get('POINTS')
-      .subscribe((points: string) => {
-        this.displayPriceFn = (price: IPrice) => `${price.price} ${points}`;
-
-      });
     this.translate.get('DESCRIPTION')
       .subscribe((desc: string) => {
         this.descriptionLabel = desc;

@@ -23,7 +23,7 @@ exports.config = {
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
   seleniumAddress: 'http://localhost:4444/wd/hub/',
-  resultJsonOutputFile:'./src/resultsOutput/result.json',
+  // resultJsonOutputFile:'./src/resultsOutput/result.json',
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   cucumberOpts: {
@@ -35,7 +35,7 @@ exports.config = {
     ui:       'bdd',
     reporter: 'dot',
     strict: true,
-    format: [],
+    format: 'json:src/resultsOutput/result.json',
     timeout: 35000,
     bail:true,
     dryRun: false,
@@ -51,5 +51,26 @@ exports.config = {
       project: require('path').join(__dirname, './tsconfig.json')
     });
 
+  },
+  onComplete: () => {
+    var reporter = require('cucumber-html-reporter');
+    var options = {
+      theme: 'bootstrap',
+      jsonFile: './src/resultsOutput/result.json',
+      output: './src/resultsOutput/cucumber_report.html',
+      reportSuiteAsScenarios: true,
+      launchReport: true,
+      scenarioTimestamp: true,
+      metadata: {
+          "App Version":"0.3.2",
+          "Test Environment": "STAGING",
+          "Browser": "Chrome  78.0.3904.105",
+          "Platform": "MacOS",
+          "Parallel": "Scenarios",
+          "Executed": "Remote"
+      }
+    };
+
+    reporter.generate(options);
   }
 };

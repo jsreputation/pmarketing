@@ -249,8 +249,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       if (this.store.currentCampaign.id) {
         if (outcome.value.outcomeId) {
           const oldRewardRecord = oldCampaignList.find(reward => reward.id === outcome.value.outcomeId);
-          const oldProbability = oldRewardRecord ? oldRewardRecord.probability : null;
-          if (oldProbability !== outcome.probability) {
+          const oldProbability = oldRewardRecord ? oldRewardRecord.probability || undefined : undefined;
+          const oldLimit = oldRewardRecord ? oldRewardRecord.limit || undefined : undefined;
+          if (oldProbability !== outcome.probability || oldLimit !== outcome.limit) {
             updateOutcomesArr$.push(updateOutcomes$(outcome));
           }
         } else {

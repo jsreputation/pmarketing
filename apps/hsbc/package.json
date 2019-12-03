@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run config && ng serve --host 0.0.0.0",
-    "start:xmas": "SOURCE_TYPE=hsbc-xmas npm run config && ng serve --host 0.0.0.0",
+    "start:xmas": "SOURCE_TYPE=hsbc-xmas CAMPAIGN_ID=331 npm run config && ng serve --host 0.0.0.0",
     "start:collect2": "SOURCE_TYPE=hsbc-collect2 npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
     "build:hsbc:prod": "PRODUCTION=true npm run config && ng build --prod",
