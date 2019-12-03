@@ -21,12 +21,15 @@
         <mat-form-field class="full-width__input">
           <mat-label>{{"NAME"|translate}}</mat-label>
           <input matInput placeholder='{{"NAME"|translate}}' formControlName="name">
+          <mat-error *ngIf="loginForm.get('name').hasError('required')">
+            {{"NAME_IS"|translate}} <strong>required</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width__input">
           <mat-label>{{"EMAIL_ADDRESS"|translate}}</mat-label>
           <input matInput placeholder='{{"EMAIL_ADDRESS"|translate}}' formControlName="email" required>
-          <mat-error *ngIf="loginForm.hasError('email')">
+          <mat-error *ngIf="loginForm.get('email').hasError('required')">
             {{"EMAIL_ADDRESS_IS"|translate}} <strong>required</strong>
           </mat-error>
         </mat-form-field>
@@ -34,7 +37,7 @@
         <mat-form-field class="full-width__input">
           <mat-label>{{"PASSWORD"|translate}}</mat-label>
           <input type="password" matInput placeholder='{{"PASSWORD"|translate}}' formControlName="password" required>
-          <mat-error *ngIf="loginForm.hasError('password')">
+          <mat-error *ngIf="loginForm.get('password').hasError('required')">
             {{"PASSWORD_IS"|translate}} <strong>required</strong>
           </mat-error>
         </mat-form-field>
