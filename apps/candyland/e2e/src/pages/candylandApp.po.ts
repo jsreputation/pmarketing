@@ -245,10 +245,6 @@ export class CreateSurveyAppPage {
   public subHeadlineTextField(): ElementFinder {
     return element.all(by.css('div.mat-form-field-infix>input')).get(2);
   }
-  public questionTextField(): ElementFinder {
-    return element.all(by.css('div.mat-form-field-infix>input')).get(3);
-  }
-
   public confirmModal(): ElementFinder {
     return element(by.css('cl-confirm-modal'));
   }
