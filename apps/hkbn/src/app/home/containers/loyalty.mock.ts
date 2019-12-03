@@ -9,5 +9,8 @@ export const mockLoyalty: ILoyalty = {
     membershipIdentifier: '',
     pointsBalance: 2,
     currencyBalance: 2,
-    currency: ''
+    currency: '',
+    expiringPoints: [{
+        points: 20
+    }]
 };
