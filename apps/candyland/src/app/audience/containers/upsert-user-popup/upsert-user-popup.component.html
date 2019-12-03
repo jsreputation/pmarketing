@@ -1,12 +1,16 @@
-<aside class="dialog" role="dialog" aria-labelledby="dialogTitle-addUser">
+<aside class="dialog" role="dialog" aria-labelledby="dialogTitle-upsertUser">
   <header class="dialog-header-wrap">
     <!--<h2 mat-dialog-title class="dialog-title" id="dialogTitle-addUser">Create Engagement</h2>-->
-    <h2 class="dialog-title" id="dialogTitle-addUser">{{'AUDIENCE_FEATURE.ADD_USER' | translate}}</h2>
+    <h2 class="dialog-title" id="dialogTitle-upsertUser">{{title | translate}}</h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
   </header>
-  <mat-dialog-content class="dialog-content" [formGroup]="form">
+  <mat-dialog-content
+    class="dialog-content"
+    [ngClass]="(data.type=='Add') ? 'add-form':'edit-form'"
+    [formGroup]="form"
+  >
     <mat-tab-group>
       <mat-tab label="Custom user">
         <div class="dialog-tab-content">
@@ -78,7 +82,10 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="Upload by file">
+      <mat-tab
+        *ngIf="data.type === 'Add'"
+        label="Upload by file"
+      >
         <div class="dialog-tab-content">
           <cl-upload-file formControlName="file"
                           [isRequired]="form.get('file').getError('required') && form.get('file').touched">
@@ -98,9 +105,9 @@
     </cl-button>
 
     <cl-button classList="primary"
-               (click)="add()">
+               (click)="upsert()">
         <span>
-          {{'BTN_ADD' | translate}}
+          {{btnLabel | translate}}
         </span>
     </cl-button>
   </footer>

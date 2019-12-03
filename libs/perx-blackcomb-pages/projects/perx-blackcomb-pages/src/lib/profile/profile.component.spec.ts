@@ -3,6 +3,7 @@ import { ProfileService } from '@perx/core';
 import { ProfileComponent } from './profile.component';
 import { of } from 'rxjs';
 import { MatListModule, MatIconModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
 
 const profileServiceStub = {
   whoAmI: () => of()
@@ -17,7 +18,8 @@ describe('ProfileComponent', () => {
       declarations: [ ProfileComponent ],
       imports: [
         MatListModule,
-        MatIconModule
+        MatIconModule,
+        RouterTestingModule
       ],
       providers: [
         { provide: ProfileService, useValue: profileServiceStub }

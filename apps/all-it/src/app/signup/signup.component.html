@@ -3,6 +3,9 @@
         <div class="content-container">
             <div class="main-heading">Sign Up</div>
             <div class="subtitle"><ng-container>Have an account? </ng-container><span class="link" (click)="goToLogin()">Sign In</span></div>
+            <div class="error_msg">
+                <span>{{errorMessage}}</span>
+              </div>
             <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Title</mat-label>
@@ -24,7 +27,7 @@
                     <mat-label>Date of Birth</mat-label>
                     <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dob">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-datepicker color="primary" #picker></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Postcode</mat-label>
@@ -56,6 +59,9 @@
                     <mat-error *ngIf="signupForm.get('email').hasError('required')">
                         <span>Email is</span><strong>REQUIRED</strong>
                     </mat-error>
+                    <mat-error *ngIf="signupForm.get('email').hasError('email')">
+                        <span>Incorrect email format</span>
+                    </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Password</mat-label>
@@ -85,7 +91,7 @@
                     <mat-checkbox formControlName="accept_marketing"></mat-checkbox>
                      <span class="wrap-checkbox-text">I agree to receive marketing materials.</span>
                 </div>
-                <button [disabled]="!signupForm.valid" mat-flat-button type="submit" class="full-width__button">Sign Up</button>
+                <button mat-flat-button type="submit" class="full-width__button" [disabled]="!signupForm.valid" [ngClass]="{'button-bg-color' : signupForm.valid}">Sign Up</button>
             </form>
         </div>
     </div>

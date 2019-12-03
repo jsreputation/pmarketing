@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { CreateEngagementPopupComponent } from '@cl-shared';
+import { DashboardGameCard } from '@cl-shared/models/dashboard/dashboard-game-car.interface';
 export enum DashboardGameCardName {
   ENGAGEMENT = 'engagement',
   CAMPAIGN = 'campaign',
@@ -14,8 +15,7 @@ export enum DashboardGameCardName {
 })
 export class DashboardGameCardComponent {
   @Input() public gameCard: DashboardGameCard;
-  constructor(public dialog: MatDialog,
-              private router: Router) { }
+  constructor(public dialog: MatDialog, private router: Router) { }
 
   public clickToLink(name: string): void {
     switch (name) {

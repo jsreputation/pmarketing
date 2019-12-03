@@ -67,16 +67,13 @@ export class CreateShakeTheTreeAppPage {
   public navigateToShakeTheTree(): Promise<string> {
     return browser.get('engagements/games/new-shake') as Promise<string> ;
   }
-  public shakeTreeCreateNewButton(): ElementFinder {
-    return element.all(by.css('button')).get(2);
-  }
   public shakeTreeTypeOptions(): ElementFinder {
     return element.all(by.tagName('cl-type-item')).get(1);
   }
   public shakeTreeSaveButton(): ElementFinder {
     return element(by.css('button.btn.mat-flat-button.primary'));
   }
-  public shakeTreeLaunchButton(): ElementFinder {
+  public launchNowButton(): ElementFinder {
     return element.all(by.css('button.btn.mat-flat-button.primary')).last();
   }
   public shakeTreeGamesButton(): ElementFinder {
@@ -142,17 +139,11 @@ export class CreateShakeTheTreeAppPage {
   public previewMyChoice(): ElementFinder {
     return element(by.className('gift-img gift-img__1 ng-star-inserted'));
   }
-  public uploadGiftImage(): ElementFinder {
-    return element.all(by.css('input[type="file"]')).get(0);
-  }
-  public uploadBackgroundImage(): ElementFinder {
-    return element.all(by.css('input[type="file"]')).get(1);
-  }
   public uploadedImageObj(): ElementFinder {
-    return element(by.css('div.image-wrap.ng-star-inserted>img.image'));
+    return element(by.css('div.image-wrap.ng-star-inserted>img'));
   }
   public errorUploadMessage(): ElementFinder {
-    return element(by.css('div.upload-error-wrap.ng-star-inserted>span'));
+    return element.all(by.css('p.upload-error.ng-star-inserted')).get(1);
   }
   public emptyInputFields(): ElementArrayFinder {
     return element.all(by.css('input[type="file"]'));
@@ -170,7 +161,7 @@ export class CreateShakeTheTreeAppPage {
     return element.all(by.css('input[type=text]')).get(0);
   }
   public launchLaterBtn(): ElementFinder {
-    return element(by.css('cl-button.actions-close'));
+    return element(by.css('button.btn.mat-flat-button.secondary'));
   }
   public fileDialog(): ElementFinder {
     return element(by.css('cl-confirm-modal'));
@@ -285,10 +276,6 @@ export class CreateSurveyAppPage {
   public subHeadlineTextField(): ElementFinder {
     return element.all(by.css('div.mat-form-field-infix>input')).get(2);
   }
-  public questionTextField(): ElementFinder {
-    return element.all(by.css('div.mat-form-field-infix>input')).get(3);
-  }
-
   public confirmModal(): ElementFinder {
     return element(by.css('cl-confirm-modal'));
   }

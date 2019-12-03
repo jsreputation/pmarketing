@@ -1,5 +1,11 @@
 <section class="page-header">
   <h1 class="title">{{'AUDIENCE_FEATURE.AUDIENCES' | translate}}</h1>
+  <cl-button
+    classList="primary cta cta-edit"
+    (click)="openEditUserDialog()"
+  >
+    {{'BTN_EDIT' | translate}}
+  </cl-button>
 </section>
 
 <cl-audiences-user-info [user]="user"></cl-audiences-user-info>
