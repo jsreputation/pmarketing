@@ -10,7 +10,8 @@ import {
   RewardsService,
   AuthenticationService,
   NotificationService,
-  IPrePlayStateData
+  IPrePlayStateData,
+  IPrice
 } from '@perx/core';
 import { map, switchMap, catchError, tap, takeUntil, mergeMap, } from 'rxjs/operators';
 
@@ -34,6 +35,7 @@ export class RewardComponent implements OnInit, OnDestroy {
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
   private popupData: IPopupConfig;
+  public displayPriceFn: (price: IPrice) => string;
   public noRewardsPopUp: IPopupConfig = {
     title: 'INSTANT_OUTCOME_NO_REWARDS_TITLE',
     text: 'INSTANT_OUTCOME_NO_REWARDS_TEXT',
@@ -64,7 +66,9 @@ export class RewardComponent implements OnInit, OnDestroy {
     private auth: AuthenticationService,
     private translate: TranslateService,
     private rewardService: RewardsService
-  ) { }
+  ) {
+    this.displayPriceFn = () => '';
+  }
 
   private initTranslate(): void {
     if (this.successPopUp.title) {
