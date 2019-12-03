@@ -6,7 +6,11 @@
       <mat-icon>close</mat-icon>
     </button>
   </header>
-  <mat-dialog-content class="dialog-content" [formGroup]="form">
+  <mat-dialog-content
+    class="dialog-content"
+    [ngClass]="(data.type=='Add') ? 'add-form':'edit-form'"
+    [formGroup]="form"
+  >
     <mat-tab-group>
       <mat-tab label="Custom user">
         <div class="dialog-tab-content">
@@ -78,7 +82,10 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="Upload by file">
+      <mat-tab
+        *ngIf="data.type === 'Add'"
+        label="Upload by file"
+      >
         <div class="dialog-tab-content">
           <cl-upload-file formControlName="file"
                           [isRequired]="form.get('file').getError('required') && form.get('file').touched">
