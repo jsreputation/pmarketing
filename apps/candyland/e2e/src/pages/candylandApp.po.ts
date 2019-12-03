@@ -230,25 +230,17 @@ export class CreateSurveyAppPage {
     return element(by.css('input#mat-input-3'));
   }
 
-  public surveyCreateNewButton(): ElementFinder {
-    return element(by.className('btn mat-flat-button primary'));
-  }
-  public questionButton(): ElementFinder {
-    return element.all(by.css('cl-button')).last();
-  }
-  public headerTextField(): ElementFinder {
+  public static headerTextField(): ElementFinder {
     return element.all(by.css('div.mat-form-field-infix>input')).first();
   }
-  public headlineTextField(): ElementFinder {
+
+  public static headlineTextField(): ElementFinder {
     return element.all(by.css('div.mat-form-field-infix>input')).get(1);
   }
-  public subHeadlineTextField(): ElementFinder {
+
+  public static subHeadlineTextField(): ElementFinder {
     return element.all(by.css('div.mat-form-field-infix>input')).get(2);
   }
-  public confirmModal(): ElementFinder {
-    return element(by.css('cl-confirm-modal'));
-  }
-
 }
 
 export class CreateHitThePinataAppPage {
