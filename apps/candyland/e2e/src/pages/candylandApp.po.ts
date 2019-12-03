@@ -303,23 +303,19 @@ export class CreateInstantRewardAppPage {
 
 export class RewardAppPage {
 
-  public navigateToReward(): Promise<string> {
+  public static navigateToReward(): Promise<string> {
     return browser.get('rewards') as Promise<string>;
   }
 
-  public rewardTab(): ElementFinder {
-    return element.all(by.css('h3')).get(1);
-  }
-
-  public searchBar(): ElementFinder {
+  public static searchBar(): ElementFinder {
     return element(by.css('input'));
   }
 
-  public rewardList(): ElementFinder {
+  public static rewardList(): ElementFinder {
     return element(by.css('table'));
   }
 
-  public filterItems(): ElementFinder {
+  public static filterItems(): ElementFinder {
     return element(by.className('name-cell__link'));
   }
 }
