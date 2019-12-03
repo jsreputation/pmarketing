@@ -105,16 +105,16 @@ export class RewardsService implements ITableService {
     return this.rewardHttp.getRewardTier(id);
   }
 
-  public createRewardTier(tier: ILoyaltyTiersFormGroup, id: string, costReward: string)
+  public createRewardTier(tier: ILoyaltyTiersFormGroup | IBasicTier, id: string)
     : Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>> {
-    const loyaltyCostValue = RewardHttpAdapter.transformFromLoyaltyForm(tier, id, costReward);
+    const loyaltyCostValue = RewardHttpAdapter.transformFromLoyaltyForm(tier, id);
 
     return this.rewardHttp.createRewardTier(loyaltyCostValue);
   }
 
-  public patchRewardTier(tier: ILoyaltyTiersFormGroup, id: string, costReward: string)
+  public patchRewardTier(tier: ILoyaltyTiersFormGroup , id: string)
     : Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>> {
-    const loyaltyCostValue = RewardHttpAdapter.transformFromLoyaltyForm(tier, id, costReward);
+    const loyaltyCostValue = RewardHttpAdapter.transformFromLoyaltyForm(tier, id);
 
     return this.rewardHttp.patchRewardTier(loyaltyCostValue);
   }

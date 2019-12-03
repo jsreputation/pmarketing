@@ -1,12 +1,14 @@
+
 declare interface ILoyaltyFormGroup {
   programId: string;
-  costReward: string;
+  // costReward: string;
   tiers: ILoyaltyTiersFormGroup[];
+  basicTier: IBasicTier;
 }
 
 declare interface ILoyaltyTiersFormGroup {
   tierRewardCostsId: string;
-  customTierId: string;
+  tierId: string;
   name: string;
   statusTiers: boolean;
   statusDiscount: boolean;
@@ -18,8 +20,16 @@ declare interface IMapLoyalties {
 
 declare interface IMapLoyalty {
   programId: string;
-  costReward: number;
+  // costReward: number;
   tiers: {
     [key: string]: ILoyaltyTiersFormGroup;
   };
+}
+
+declare interface IBasicTier {
+  tierValue: number;
+  tierType: string;
+  tierId: string;
+  entityId: string;
+  statusDiscount: boolean;
 }

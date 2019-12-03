@@ -146,18 +146,33 @@ export class NewRewardFormService {
   public getLoyaltyFormGroup(): FormGroup {
     return new FormGroup({
       programId: new FormControl(null),
-      costReward: new FormControl(null, [Validators.min(1)]),
-      tiers: new FormArray([])
+
+      tiers: new FormArray([]),
+      basicTier: new FormGroup({
+        // costReward: new FormControl(null, [Validators.min(1)]),
+        tierValue: new FormControl(1, [Validators.min(0)]),
+        tierType: new FormControl('Perx::Loyalty::BasicTier'),
+        tierId: new FormControl(null),
+        entityId: new FormControl(null)
+      })
     });
   }
+
+  // "apply_tier_discount": true,
+  // "tier_value": 100,"tier_id": 2,
+  // "tier_type": "Perx::Loyalty::CustomTier",
+  // "entity_id": 1
 
   public getRewardLoyaltyTiersGroup(): FormGroup {
     return new FormGroup({
       tierRewardCostsId: new FormControl(null),
-      customTierId: new FormControl(null),
+      tierId: new FormControl(null),
       name: new FormControl(null),
       statusTiers: new FormControl(null),
-      statusDiscount: new FormControl(null)
+      statusDiscount: new FormControl(null),
+      tierType: new FormControl('Perx::Loyalty::CustomTier'),
+      tierValue: new FormControl(1, [Validators.min(0)]),
+      tireDiscountValue: new FormControl({disabled: true, value: 55444}, )
     });
   }
 }

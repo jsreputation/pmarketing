@@ -214,17 +214,24 @@ export class RewardHttpAdapter {
     };
   }
 
-  public static transformFromLoyaltyForm(tier: ILoyaltyTiersFormGroup, rewardId: string, cost: string)
+  public static transformFromLoyaltyForm(tier: ILoyaltyTiersFormGroup | IBasicTier, rewardId: string)
     : IJsonApiItem<Partial<IWTierRewardCostsAttributes>> {
+    console.log('update transformer', tier);
+
     const result: IJsonApiItem<Partial<IWTierRewardCostsAttributes>> = {
         type: 'tier_reward_costs',
         attributes: {
           apply_tier_discount: tier.statusDiscount ? tier.statusDiscount : false,
-          tier_value: cost ? cost : '0',
-          custom_tier_id: tier.customTierId,
-          entity_id: +rewardId
+          tier_value: tier.tierValue ? tier.tierValue : 0,
+          tier_id: tier.tierId,
+          entity_id: +rewardId,
+          tier_type: tier.tierType
         }
     };
+
+    // if (tier.tierRewardCostsId) {
+    //   result['id'] = tier.tierRewardCostsId;
+    // }
 
     if (tier.tierRewardCostsId) {
       result['id'] = tier.tierRewardCostsId;
@@ -233,14 +240,30 @@ export class RewardHttpAdapter {
     return result;
   }
 
+  /*{
+  "data": {
+    "type": "tier_reward_costs",
+      "attributes": {
+        "apply_tier_discount": true,
+        "tier_value": 100,"tier_id": 2,
+        "tier_type": "Perx::Loyalty::CustomTier",
+        "entity_id": 1
+    }
+  }
+}*/
+
   public static transformToLoyaltyCost(data: IJsonApiItem<Partial<IWTierRewardCostsAttributes>>)
     : ITierRewardCost {
+    // if (data.attributes.tier_type === 'Perx::Loyalty::BasicTier') {
+    //   console.log('data BasicTier', data);
+    // }
     return {
       tierRewardCostsId: +data.id,
       statusDiscount: data.attributes.apply_tier_discount,
-      customTierId: data.attributes.custom_tier_id,
+      tierId: data.attributes.tier_id,
       rewardId: data.attributes.entity_id,
-      costReward: data.attributes.tier_value
+      tierValue: data.attributes.tier_value,
+      tierType: data.attributes.tier_type
     };
   }
 }

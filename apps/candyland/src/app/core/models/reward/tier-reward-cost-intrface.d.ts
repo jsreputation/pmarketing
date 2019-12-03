@@ -1,7 +1,8 @@
 declare interface ITierRewardCost {
   tierRewardCostsId: number;
   statusDiscount: boolean;
-  customTierId: string;
+  tierId: string;
   rewardId: number;
-  costReward: string;
+  tierValue: string;
+  tierType: string;
 }
