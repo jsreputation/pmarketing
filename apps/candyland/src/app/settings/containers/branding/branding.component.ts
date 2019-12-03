@@ -32,7 +32,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private settingsService: SettingsService,
-              private translate: TranslateService) {
+    private translate: TranslateService) {
   }
 
   public get headerNavbarColor(): AbstractControl {
@@ -78,16 +78,16 @@ export class BrandingComponent implements OnInit, OnDestroy {
     this.listColors = [{
       labelView: 'Primary Color', color: this.primaryColor.value
     },
-      {
-        labelView: 'Secondary Color', color: this.secondaryColor.value
-      }
+    {
+      labelView: 'Secondary Color', color: this.secondaryColor.value
+    }
     ];
     this.listColorsText = [{
       labelView: 'Black', color: '#000000'
     },
-      {
-        labelView: 'White', color: '#ffffff'
-      }];
+    {
+      labelView: 'White', color: '#ffffff'
+    }];
 
     this.patchValue({
       headerNavbarColor: this.listColors[0],
@@ -149,8 +149,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
         })),
         takeUntil(this.destroy$),
       )
-      .subscribe(() => {
-      });
+      .subscribe(() => { });
   }
 
   private handlerValue(data: IWTenantDisplayProperties): void {
@@ -166,7 +165,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
 
   private setDefaultValue(data: any): void {
     const defaultValue = this.prepareDefaultValue(data);
-    this.tenants.display_properties = {...this.tenants.display_properties, ...defaultValue};
+    this.tenants.display_properties = { ...this.tenants.display_properties, ...defaultValue };
     this.tenants.save()
       .subscribe(() => {
         this.subscribeFormChanges();

@@ -86,4 +86,8 @@ export class AuthService {
     this.clearCache();
     this.router.navigate(['/login']);
   }
+
+  public resetPassword(accountId: string, username: string): Observable<any> {
+    return this.http.resetPassword(accountId, username);
+  }
 }

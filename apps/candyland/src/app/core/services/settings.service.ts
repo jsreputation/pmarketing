@@ -18,6 +18,7 @@ import { IWIAMUserAttributes } from '@perx/whistler';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { IReward } from '@perx/core';
 import { RoleLabelConfig } from '@cl-shared';
+import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
 
 export enum DefaultSetting {
   style = 'Light',
@@ -172,8 +173,8 @@ export class SettingsService implements ITableService {
   }
 
   public updateTenants(value: ITenantsProperties): Observable<IamUser> {
-    const newProperties = {...this.tenants.display_properties, ...value};
-    this.tenants.display_properties = {...newProperties};
+    const newProperties = { ...this.tenants.display_properties, ...value };
+    this.tenants.display_properties = { ...newProperties };
     return this.tenants.save().pipe(
       switchMap(() => this.authService.updateUser())
     );
