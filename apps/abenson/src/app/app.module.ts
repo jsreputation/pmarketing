@@ -50,6 +50,7 @@ import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
 import { SmsValidationComponent } from './auth/sms-validation/sms-validation.component';
 import { QRCodeComponent } from './qr-code/qr-code.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
+import { PopupComponent } from './popup/popup.component';
 
 const rewardsServiceStub = {
   getReward: () => of(rewards[0]),
@@ -75,7 +76,8 @@ const campaignServiceStub = {
     SignUpComponent,
     ForgotPinComponent,
     SmsValidationComponent,
-    QRCodeComponent
+    QRCodeComponent,
+    PopupComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -112,6 +114,7 @@ const campaignServiceStub = {
     { provide: RewardsService, useValue: rewardsServiceStub },
     { provide: ICampaignService, useValue: campaignServiceStub }
   ],
+  entryComponents: [PopupComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
