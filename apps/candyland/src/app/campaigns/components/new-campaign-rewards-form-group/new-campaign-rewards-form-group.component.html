@@ -4,7 +4,7 @@
 </div>
 <div class="card-content" *ngIf="group && group?.controls?.length > 0">
   <div>
-    <mat-checkbox color="primary" (change)="updateProbability($event.checked)">
+    <mat-checkbox color="primary" [formControl]="enableProbability">
       {{'CAMPAIGN.INCLUDE_PROBABILITY' | translate}}
     </mat-checkbox>
   </div>

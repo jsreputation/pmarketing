@@ -139,7 +139,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
 
   private outcomeToRewardCollection(outcomes: IOutcome[]): ICampaignRewardsList[] {
     const collections: ICampaignRewardsList[] = [];
-    outcomes.forEach(outcome => collections.push({ outcome }));
+    outcomes.forEach(outcome => collections.push({ outcome, slotInfo: { slotNumber: outcome.slotNumber } }));
     return collections;
   }
 
@@ -156,17 +156,26 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
             map(rewardData => ({
               outcome,
               rewardsOptions: { ...rewardData, limit: outcome.limit || null, probability: outcome.probability, },
+              slotInfo: {
+                slotNumber: outcome.slotNumber
+              }
             })),
             catchError(() =>
               of({
                 outcome,
                 rewardsOptions: { limit: outcome.limit || null, probability: outcome.probability },
+                slotInfo: {
+                  stampsSlotNumber: outcome.slotNumber
+                }
               }))
           );
         }
         return of({
           outcome,
           rewardsOptions: { limit: outcome.limit || null, probability: outcome.probability },
+          slotInfo: {
+            stampsSlotNumber: outcome.slotNumber
+          }
         });
       }
     ));

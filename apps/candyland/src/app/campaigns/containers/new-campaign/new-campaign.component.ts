@@ -339,7 +339,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private outcomeToRewardCollection(outcomes: IOutcome[]): ICampaignRewardsList[] {
     const collections: ICampaignRewardsList[] = [];
-    outcomes.forEach(outcome => collections.push({ outcome }));
+    outcomes.forEach(outcome => collections.push({ outcome, slotInfo: { slotNumber: outcome.slotNumber } }));
     return collections;
   }
 
