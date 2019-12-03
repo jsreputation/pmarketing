@@ -12,40 +12,26 @@
       </div>
     </mat-card>
     <!--rewards-->
-    <mat-card class="card" *ngIf="campaign?.reward?.rewards.length">
-      <div class="card-header">
-        <p class="card-title">
-          {{'CAMPAIGN.REWARDS' | translate}}
-        </p>
-      </div>
-      <div class="card-content">
-        <cl-reward-item-preview
-          *ngFor="let reward of campaign?.reward?.rewards"
-          class="item"
-          [data]="reward?.value"
-          [probability]="reward?.probability"
-          [limit]="reward?.limit"
-          [enableProbability]="campaign?.reward?.enableProbability">
-        </cl-reward-item-preview>
-      </div>
-    </mat-card>
-    <!--stamp rewards-->
     <mat-card class="card" *ngIf="stampsHasRewards">
-      <div *ngFor="let rewardsData of campaign?.outcomes">
-        <div *ngIf="rewardsData?.reward?.rewards?.length">
+      <div *ngFor="let slot of slots">
+        <div *ngIf="hasRewardsInSlot(slot)">
           <div class="card-header">
-            <p class="card-title">
-                    {{'CAMPAIGN.REWARDS_FOR_SLOT' | translate}}
-                    {{rewardsData?.stampSlotNumber}}</p>
+            <p class="card-title" *ngIf="slot > 0">
+                {{'CAMPAIGN.REWARDS_FOR_SLOT' | translate}}
+                {{slot}}
+            </p>
+            <p class="card-title" *ngIf="slot === 0">
+                {{'CAMPAIGN.REWARDS' | translate}}
+            </p>
           </div>
           <div class="card-content">
             <cl-reward-item-preview
-              *ngFor="let reward of rewardsData?.reward?.rewards"
+              *ngFor="let outcome of campaign?.outcomes"
               class="item"
-              [data]="reward?.value"
-              [probability]="reward?.probability"
-              [limit]="reward?.limit"
-              [enableProbability]="rewardsData?.reward?.enableProbability">
+              [data]="outcome?.reward"
+              [probability]="outcome?.outcome?.probability"
+              [limit]="outcome?.outcome?.limit"
+              [enableProbability]="outcome?.enableProbability">
             </cl-reward-item-preview>
           </div>
         </div>

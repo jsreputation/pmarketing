@@ -9,14 +9,16 @@
     </mat-checkbox>
   </div>
   <div>
-    <cl-reward-item class="item"
-                    *ngFor="let outcome of outcomes; let i = index"
-                    [data]="outcome.reward"
-                    [enableProbability]="enableProbability"
-                    [isInvalid]="sumMoreThanError"
-                    (updateOutcome)="updateOutcomeData(i, $event)"
-                    (clickDelete)="removeOutcome(i)">
-    </cl-reward-item>
+    <div *ngFor="let outcome of outcomes; let i = index">
+      <cl-reward-item class="item"
+        *ngIf="outcome.outcome.slotNumber >= 0"
+        [data]="outcome.reward"
+        [enableProbability]="enableProbability"
+        [isInvalid]="sumMoreThanError"
+        (updateOutcome)="updateOutcomeData(i, $event)"
+        (clickDelete)="removeOutcome(i)">
+      </cl-reward-item>
+  </div>
     <mat-error class="error" *ngIf="sumMoreThanError">
       {{'CAMPAIGN.THE_TOTAL_PROBABILITY' | translate}}
     </mat-error>

@@ -43,6 +43,18 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
     return '';
   }
 
+  public get slots(): number[] {
+    return this.campaign.template.slots || [0];
+  }
+
+  public hasRewardsInSlot(slot: number): boolean {
+    const slotOutcomes = this.campaign.outcomes.filter(outcomeData => outcomeData.outcome.slotNumber === slot);
+    if (slotOutcomes) {
+      return slotOutcomes.length > 0;
+    }
+    return false;
+  }
+
   public checkStampsHasRewards(campaign: ICampaign): void {
     if (!campaign.outcomes) {
       this.stampsHasRewards = false;

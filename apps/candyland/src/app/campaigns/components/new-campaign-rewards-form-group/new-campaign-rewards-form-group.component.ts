@@ -85,6 +85,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
             },
             reward
           });
+          this.updateOutcomesInCampaign();
         }
       });
   }
@@ -122,18 +123,24 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
   }
 
   public updateOutcomesInCampaign(): void {
-    console.log(this.outcomes);
+    const otherSlotOutcomes = this.campaign.outcomes && this.campaign.outcomes.length > 0 ?
+      this.campaign.outcomes.filter(
+        outcomeData => outcomeData.outcome.slotNumber !== this.slotNumber && outcomeData.outcome.slotNumber >= 0
+      ) : [];
+    this.campaign.outcomes = [...otherSlotOutcomes, ...this.outcomes];
   }
 
   public updateOutcomeData(index: number, value: { probability: number, limit: number }): void {
     this.outcomes[index].outcome.probability = value.probability;
     this.outcomes[index].outcome.limit = value.limit;
+    this.updateOutcomesInCampaign();
   }
 
   public removeOutcome(index: number): void {
     if (index > -1) {
-      this.outcomes.splice(index, 1);
+      this.outcomes[index].outcome.slotNumber = -1;
     }
+    this.updateOutcomesInCampaign();
   }
 
   public updateProbability(checked: boolean): void {
