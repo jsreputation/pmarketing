@@ -30,6 +30,9 @@ import { SignUpModule } from './sign-up/sign-up.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { registerLocaleData } from '@angular/common';
+
+import enGb from '@angular/common/locales/en-GB';
+import localesEnGbExtra from '@angular/common/locales/extra/en-GB';
 import zh from '@angular/common/locales/zh';
 import localeZhExtra from '@angular/common/locales/extra/zh';
 import ru from '@angular/common/locales/ru';
@@ -58,6 +61,9 @@ export class SentryErrorHandler implements ErrorHandler {
     // Sentry.showReportDialog({ eventId });
   }
 }
+
+// use en-GB as the default english flavour
+registerLocaleData(enGb, 'en', localesEnGbExtra);
 
 registerLocaleData(zh, 'zh', localeZhExtra);
 registerLocaleData(ru, 'ru', localesRuExtra);
