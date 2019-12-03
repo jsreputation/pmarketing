@@ -6,6 +6,7 @@ import {
   IWPoolsAttributes,
   IWAudiences,
   IWUser,
+  IWUserPropertiesFE,
   IWPools
 } from '@perx/whistler';
 
@@ -152,7 +153,7 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  private static transformProps(attributes: IWProfileAttributes | null): any | null {
+  private static transformProps(attributes: IWProfileAttributes | null): IWUserPropertiesFE | null {
     if (!attributes) {
       return null;
     }

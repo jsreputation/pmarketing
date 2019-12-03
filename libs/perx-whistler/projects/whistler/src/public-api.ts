@@ -51,6 +51,7 @@ export {
   IWPoolsApi,
   IWPools,
   IWUser,
+  IWUserPropertiesFE,
 } from './lib/audiences/audiences.model';
 export {
   IWProfileAttributes,
