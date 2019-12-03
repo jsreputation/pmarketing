@@ -38,6 +38,10 @@ describe('PIComponent', () => {
     getUserId: () => 0,
     autoLogin: () => of(),
     mergeUserById: () => of(),
+    getPI: () => '',
+    getUserAccessToken: () => '',
+    getAnonymous: () => true,
+    logout: () => {}
   };
 
   const surveyServiceStub: Partial<SurveyService> = {

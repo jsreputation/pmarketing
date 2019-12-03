@@ -1,0 +1,9 @@
+@import "variables";
+
+::ng-deep {
+  .mat-dialog-content.edit-form {
+    .mat-tab-header {
+      display: none;
+    }
+  }
+}
