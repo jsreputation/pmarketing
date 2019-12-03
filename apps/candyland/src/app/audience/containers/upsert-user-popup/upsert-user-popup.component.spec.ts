@@ -1,20 +1,43 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { AddUserPopupComponent } from './add-user-popup.component';
 import {
-  MatDialogRef, MAT_DIALOG_DATA, MatIconModule, MatOptionModule,
-  MatSelectModule, MatInputModule, MatFormFieldModule, MatDialogModule, MatTabsModule
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
+import {
+  ReactiveFormsModule,
+  FormsModule,
+} from '@angular/forms';
+import {
+  NoopAnimationsModule,
+  BrowserAnimationsModule,
+} from '@angular/platform-browser/animations';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatIconModule,
+  MatOptionModule,
+  MatSelectModule,
+  MatInputModule,
+  MatFormFieldModule,
+  MatDialogModule,
+  MatTabsModule,
 } from '@angular/material';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { DatePickerModule, ButtonModule, UploadFileModule } from '@cl-shared';
-import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('AddUserPopupComponent', () => {
-  let component: AddUserPopupComponent;
-  let fixture: ComponentFixture<AddUserPopupComponent>;
+import {
+  DatePickerModule,
+  ButtonModule,
+  UploadFileModule,
+} from '@cl-shared';
+
+import { UpsertUserPopupComponent } from './upsert-user-popup.component';
+
+describe('UpsertUserPopupComponent', () => {
+  let component: UpsertUserPopupComponent;
+  let fixture: ComponentFixture<UpsertUserPopupComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -46,13 +69,13 @@ describe('AddUserPopupComponent', () => {
           },
           {provide: MAT_DIALOG_DATA, useValue: {}}
         ],
-        declarations: [AddUserPopupComponent]
+        declarations: [UpsertUserPopupComponent]
       })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddUserPopupComponent);
+    fixture = TestBed.createComponent(UpsertUserPopupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

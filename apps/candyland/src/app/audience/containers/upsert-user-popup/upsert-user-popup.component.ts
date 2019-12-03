@@ -1,16 +1,32 @@
-import { Component, ChangeDetectionStrategy, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Inject,
+  OnInit,
+} from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+} from '@angular/material';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+
 import { ClValidators } from '@cl-helpers/cl-validators';
 import { AudiencesService } from '@cl-core-services';
 
+import { Type } from '../../audience.model';
+
 @Component({
-  selector: 'cl-add-user-popup',
-  templateUrl: './add-user-popup.component.html',
-  styleUrls: ['./add-user-popup.component.scss'],
+  selector: 'cl-upsert-user-popup',
+  templateUrl: './upsert-user-popup.component.html',
+  styleUrls: ['./upsert-user-popup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddUserPopupComponent implements OnInit {
+export class UpsertUserPopupComponent implements OnInit {
   public form: FormGroup;
   public pools: any;
   public config: { [key: string]: OptionConfig[] } = {
@@ -29,14 +45,57 @@ export class AddUserPopupComponent implements OnInit {
     ]
   };
 
-  constructor(public dialogRef: MatDialogRef<AddUserPopupComponent>,
+  constructor(public dialogRef: MatDialogRef<UpsertUserPopupComponent>,
               private fb: FormBuilder,
               private audiencesService: AudiencesService,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
+  public get title(): string | null {
+    switch (this.data.type) {
+      case Type.Add:
+        return 'AUDIENCE_FEATURE.ADD_USER';
+      case Type.Edit:
+        return 'AUDIENCE_FEATURE.EDIT_USER';
+      default:
+        return null;
+    }
+  }
+
+  public get btnLabel(): string | null {
+    switch (this.data.type) {
+      case Type.Add:
+        return 'BTN_ADD';
+      case Type.Edit:
+        return 'BTN_EDIT';
+      default:
+        return null;
+    }
+  }
+
+  public get firstName(): AbstractControl {
+    return this.form.get('firstName');
+  }
+
+  public get lastName(): AbstractControl {
+    return this.form.get('lastName');
+  }
+
+  public get email(): AbstractControl {
+    return this.form.get('email');
+  }
+
+  public get phone(): AbstractControl {
+    return this.form.get('phone');
+  }
+
+  public get audienceList(): AbstractControl {
+    return this.form.get('audienceList');
+  }
+
   public ngOnInit(): void {
     this.initForm();
+    this.setForm();
     this.getPools();
   }
 
@@ -44,7 +103,7 @@ export class AddUserPopupComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  public add(): void {
+  public upsert(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -74,6 +133,18 @@ export class AddUserPopupComponent implements OnInit {
         // Validators.required
       ]]
     });
+  }
+
+  private setForm(): void {
+    if (!this.data.formData) {
+      return;
+    }
+
+    const { formData } = this.data;
+    this.firstName.setValue(formData.first_name);
+    this.lastName.setValue(formData.last_name);
+    this.email.setValue(formData.email_address);
+    this.phone.setValue(formData.phone_number);
   }
 
   private getPools(): any {
