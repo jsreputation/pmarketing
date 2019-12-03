@@ -32,19 +32,16 @@ export interface ICampaign {
     schedule?: ISchedule;
   };
   template?: any;
-  rewardsListCollection?:  ICampaignRewardsList[];
+  outcomes?: ICampaignOutcome[];
   limits?: any;
   displayProperties?: any;
 }
 
 
-export interface ICampaignRewardsList {
+export interface ICampaignOutcome {
   outcome?: IOutcome;
-  slotInfo?: {
-    enableProbability?: boolean
-    slotNumber?: number | null;
-  }
-  rewardsOptions?: IRewardEntity | { probability: 0, outcomeId: '', limit: '', id: '' };
+  enableProbability?: boolean
+  rewardsOptions?: IRewardEntity;
 }
 
 export interface ICampaignTableData {
