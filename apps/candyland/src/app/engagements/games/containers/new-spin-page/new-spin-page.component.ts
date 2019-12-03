@@ -109,7 +109,6 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
           const wheelPosImg: string = JSON.stringify(this.wheelPosition.value);
           if (wheelPosImg) {
             this.perxCoreSpinClass = wheelPosImg.includes('down') ? 'mobile-preview-v2' : 'mobile-preview-plugin';
-            console.log(this.perxCoreSpinClass, 'am, i called?');
           }
           this.cd.detectChanges();
         },
@@ -218,7 +217,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       } else {
         this.perxCoreSpinClass = 'mobile-preview-plugin';
       }
-      this.cd.detectChanges(); // this is critical
+      this.cd.detectChanges(); // crticial
     });
   }
 

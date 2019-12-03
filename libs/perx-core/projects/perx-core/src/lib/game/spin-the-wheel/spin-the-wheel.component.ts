@@ -159,7 +159,6 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     this.fillWheelWrapStyle();
 
     slicesWithImg.forEach((item) => {
-      console.log('at least i enter4ed ehre laodImg loopigb thru saliceWithImage?');
       const image: HTMLImageElement = new Image();
       image.src = item.backgroundImage ? item.backgroundImage : '';
       images.push({ id: item.id, image });
@@ -188,7 +187,6 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private drawWheel(): void {
-    console.log('i am drawWheel and i am also being called');
     const outsideRadius = this.size / 2 - 5; // how does this come about ?
     this.ctx.translate(this.size / 2, this.size / 2);
     this.ctx.rotate(this.startAngle); // why have a start angle, just center it if dont have?
@@ -220,8 +218,6 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
           this.ctx.rect(0, 0 , stampSize, stampSize);
           this.ctx.fill();
           this.ctx.restore();
-        } else {
-          console.log('no pattern');
         }
       }
 
@@ -320,12 +316,11 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   private stopRotateWheel(): void {
     if (!this.ctx) { return; }
-    clearTimeout(this.spinTimeout); // think it has everything to do with this. timeout async thing messes up
-    const degrees = this.startAngle * 180 / Math.PI + 180;
-    const arcd = this.arc * 180 / Math.PI;
+    clearTimeout(this.spinTimeout);
+    const degrees = (this.startAngle * 180 / Math.PI + 90); // convert startdegree to rad then add 180 deg
+    const arcd = this.arc * 180 / Math.PI; // arc degree 90degree no tuch
     const index = Math.floor((360 - degrees % 360) / arcd); // this determines where ends
     this.ctx.save();
-
     this.ctx.font = 'bold 20px Helvetica, Arial';
     this.ctx.fillStyle = 'black';
     const text = this.slices[index].label || '';
