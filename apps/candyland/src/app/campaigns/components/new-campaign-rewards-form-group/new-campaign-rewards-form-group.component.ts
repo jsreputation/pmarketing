@@ -33,6 +33,13 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
   private isFirstInit: boolean;
   public enableProbability: boolean = false;
   public sumMoreThanError: boolean = false;
+  public noOutcome = {
+    outcome: {
+      probability: 0,
+      limit: null,
+      slotNumber: this.slotNumber
+    }
+  }
   
   constructor(
     public cd: ChangeDetectorRef,
@@ -99,6 +106,9 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
   }
 
   public initOutcomesList(): void {
+    const noOutcomeData = this.campaign.outcomes.find(data => data.outcome.slotNumber === this.slotNumber && !data.outcome.resultId);
+    this.noOutcome.outcome.limit = noOutcomeData && noOutcomeData.outcome && noOutcomeData.outcome.limit || null;
+    this.noOutcome.outcome.probability = noOutcomeData && noOutcomeData.outcome && noOutcomeData.outcome.probability || 0;
     const possibleOutcomes = this.campaign.outcomes.filter(
       data => {
         if (!this.slotNumber) {
@@ -161,7 +171,7 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
 
   public removeOutcome(index: number): void {
     if (index > -1) {
-      this.outcomes[index].outcome.slotNumber = -1;
+      this.outcomes.splice(index, 1);
     }
     this.updateOutcomesInCampaign();
   }
@@ -173,17 +183,12 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
 
   private updateOutcomes(): void {
     if (this.enableProbability) {
-      const noOutcome = {
-        outcome: {
-          probability: 0,
-          slotNumber: this.slotNumber
-        }
-      };
-      this.outcomes.unshift(noOutcome);
+      this.outcomes.unshift(this.noOutcome);
     } else {
       this.outcomes.shift();
     }
     this.updateOutcomeProbabilitySetting();
+    this.updateOutcomesInCampaign();
     this.cd.detectChanges();
   }
 
