@@ -37,11 +37,11 @@ export class SettingsHttpService {
     return this.http.get<IJsonApiListPayload<IWIAMUserAttributes>>(ApiConfig.IAMUsersPath, { params });
   }
 
-  public inviteNewUser(body: IJsonApiPayload<IWIAMUserAttributes>): Observable<IJsonApiPayload<IWIAMUserAttributes>> {
+  public inviteNewUser(body: IJsonApiItem<IWIAMUserAttributes>): Observable<IJsonApiPayload<IWIAMUserAttributes>> {
     return this.http.post<IJsonApiPayload<IWIAMUserAttributes>>(ApiConfig.IAMUsersPath, { data: body });
   }
 
-  public patchUser(id: string, patchValue: IJsonApiPayload<IWIAMUserAttributes>): Observable<IJsonApiPayload<IWIAMUserAttributes>> {
+  public patchUser(id: string, patchValue: Partial<IJsonApiItem<IWIAMUserAttributes>>): Observable<IJsonApiPayload<IWIAMUserAttributes>> {
     return this.http.patch<IJsonApiPayload<IWIAMUserAttributes>>(`${ApiConfig.IAMUsersPath}/${id}`, { data: patchValue });
   }
 
