@@ -14,7 +14,7 @@ import { NewCampaignRewardsStampsFormService } from '../../services/new-campaign
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-fdescribe('NewCampaignRewardsStampsPageComponent', () => {
+describe('NewCampaignRewardsStampsPageComponent', () => {
   let component: NewCampaignRewardsStampsPageComponent;
   let fixture: ComponentFixture<NewCampaignRewardsStampsPageComponent>;
   let NewCampaignRewardsStampsFormServiceStub: Partial<NewCampaignRewardsStampsFormService>;
