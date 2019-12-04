@@ -3,7 +3,10 @@ import { SurveyHttpService } from '@cl-core/http-services/survey-http.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SurveyHttpAdapter } from '@cl-core/http-adapters/survey-http-adapter';
-import { ISurveyForm } from '@cl-core/models/survey/survey-common.interface';
+import {
+  ICountries,
+  ISurveyForm,
+} from '@cl-core/models/survey/survey-common.interface';
 import { IWSurveyEngagementAttributes } from '@perx/whistler';
 
 @Injectable({
@@ -28,7 +31,7 @@ export class SurveyService {
       );
   }
 
-  public getDefaultCountryCode(): Observable<any> {
+  public getDefaultCountryCode(): Observable<ICountries> {
     return this.surveyHttp.getDefaultCountryCode();
   }
 
