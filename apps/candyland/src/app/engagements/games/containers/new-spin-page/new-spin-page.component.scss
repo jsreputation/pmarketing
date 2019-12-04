@@ -1,0 +1,44 @@
+@import "variables";
+
+.control-input-splitter {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: -($horizontal-padding * 0.5);
+  margin-left: -($horizontal-padding * 0.25);
+  margin-right: -($horizontal-padding * 0.25);
+
+  > * {
+    padding-left: ($horizontal-padding * 0.25);
+    padding-right: ($horizontal-padding * 0.25);
+  }
+}
+
+.info-text {
+  @include typo-caption;
+
+  color: $white;
+}
+
+mat-slider {
+  width: 100%;
+  max-width: 38rem;
+  margin: 0;
+}
+
+.control-input {
+  flex: 0 0 25%;
+}
+
+.reward-slot {
+  width: 100%;
+}
+
+.mobile-preview-v2 {
+  position: absolute;
+  top: 5rem;
+  left: 0;
+  width: 24rem;
+  height: 100%;
+  display: block;
+  z-index: 3;
+}
