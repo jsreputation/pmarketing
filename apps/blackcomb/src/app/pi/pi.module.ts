@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PIComponent } from '@perx/blackcomb-pages';
+import { SignInComponent } from '@perx/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
 import {
   MatFormFieldModule,
@@ -12,12 +12,12 @@ import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [{
   path: '',
-  component: PIComponent
+  component: SignInComponent
 }];
 
 @NgModule({
   declarations: [
-    PIComponent,
+    SignInComponent,
   ],
   imports: [
     CommonModule,

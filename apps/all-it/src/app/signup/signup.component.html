@@ -65,7 +65,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Password</mat-label>
-                    <input matInput placeholder="Password" formControlName="password" type="password" required>
+                    <input matInput placeholder="Password" formControlName="password" type="password" autocomplete="on" required>
                     <mat-error *ngIf="signupForm.get('password').hasError('required')">
                         <span>Password is </span><strong>REQUIRED</strong>
                     </mat-error>
@@ -75,7 +75,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Confirm Password</mat-label>
-                    <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password" required>
+                    <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password" autocomplete="on" required>
                     <mat-error *ngIf="signupForm.get('confirmPassword').hasError('required')">
                         <span>Confirm Password is </span><strong>REQUIRED</strong>
                     </mat-error>
