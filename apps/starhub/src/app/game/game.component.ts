@@ -49,7 +49,7 @@ export class GameComponent implements OnInit {
           this.subTitle = game.texts.subTitle || 'Shake the Pinata and Win!';
           this.isGameAvailable = true;
           this.isButtonDisabled = false;
-          if ('nbTaps' in game.config) {
+          if (game.config && ('nbTaps' in game.config)) {
             this.numberOfTaps = game.config && game.config.nbTaps;
           }
 
