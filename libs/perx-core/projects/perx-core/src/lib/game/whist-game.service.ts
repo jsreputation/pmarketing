@@ -30,6 +30,7 @@ import {
   IWScratchDisplayProperties,
   IWCampaignDisplayProperties,
 } from '@perx/whistler';
+import { WhistlerVouchersService } from '../vouchers/whistler-vouchers.service';
 
 @Injectable({
   providedIn: 'root'
@@ -42,9 +43,13 @@ export class WhistlerGameService implements IGameService {
   constructor(
     private http: HttpClient,
     config: Config,
-    private whistVouchSvc: IVoucherService
+    private voucherService: IVoucherService
   ) {
     this.hostName = config.apiHost as string;
+  }
+
+  private get whistlerVoucherService(): WhistlerVouchersService {
+    return this.voucherService as WhistlerVouchersService;
   }
 
   private static WGameToGame(game: IJsonApiItem<IWGameEngagementAttributes>): IGame {
@@ -125,7 +130,7 @@ export class WhistlerGameService implements IGameService {
     ).pipe(
       mergeMap(res => (
         combineLatest(...res.data.attributes.results.attributes.results.map(
-          (outcome: IJsonApiItem<IWAssignedAttributes>) => this.whistVouchSvc.get(Number.parseInt(outcome.id, 10))
+          (outcome: IJsonApiItem<IWAssignedAttributes>) => this.whistlerVoucherService.getFullVoucher(outcome)
         )).pipe(
           map((vouchArr) => vouchArr.reduce((acc, currVouch) =>
             ({ ...acc, vouchers: [...acc.vouchers, currVouch] }), { vouchers: [], rawPayload: res })
