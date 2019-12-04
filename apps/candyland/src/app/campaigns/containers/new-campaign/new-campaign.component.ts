@@ -331,16 +331,17 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       .getAllPoolUser(campaign.audience.select)
       .pipe(
         map((users: IJsonApiItem<IWProfileAttributes>[]) => users.map(u => u.attributes.primary_identifier)),
+        takeUntil(this.destroy$)
       );
     return combineLatest(getUsersPis, this.getCognitoUrl())
       .pipe(
-        takeUntil(this.destroy$),
         map(([pis, url]: [string[], string]) => {
           return pis.reduce(
             (p: string, v: string) => `${p}${v},${url}?cid=${campaign.id}&pi=${v},\n`,
             'identifier,urls,\n'
           );
-        })
+        }),
+        takeUntil(this.destroy$)
       );
   }
 
@@ -356,7 +357,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private getCognitoUrl(): Observable<string> {
     const params = {'page[number]': '1', 'page[size]': '1'};
     return this.settingsService.getCognitoEndpoints(params).pipe(
-      takeUntil(this.destroy$),
       tap((data: any[]) => {
         if (data.length === 0) {
           this.messageService.show(
@@ -365,7 +365,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
             5000);
         }
       }),
-      map((data: any[]) => (data.length > 0) ? data[0].url : '')
+      map((data: any[]) => (data.length > 0) ? data[0].url : ''),
+      takeUntil(this.destroy$)
     );
   }
 
