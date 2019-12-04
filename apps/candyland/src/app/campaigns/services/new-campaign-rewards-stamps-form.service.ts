@@ -15,42 +15,46 @@ export class NewCampaignRewardsStampsFormService {
 
   public getLimitsForm(type: string): FormGroup {
     let formInit: FormGroup = this.fb.group({
-      times: [null, [
-        // Validators.required,
-        Validators.min(1),
-        Validators.max(60)
-      ]],
-      duration: [null, [
-        // Validators.required
-      ]],
-      id: null
+      limits: this.fb.group({
+        times: [null, [
+          // Validators.required,
+          Validators.min(1),
+          Validators.max(60)
+        ]],
+        duration: [null, [
+          // Validators.required
+        ]],
+        id: null
+      })
     });
 
     if (type === 'stamps') {
       formInit = this.fb.group({
-        stampsRule: this.fb.group({
-          sequence: [],
-          rules: this.fb.array([
-            this.fb.control(null)
-          ])
-        }),
         limits: this.fb.group({
-          enableStampCard: [false],
-          stampCard: this.fb.group({
-            perCampaign: [null, [Validators.max(1000)]],
-            perUser: [null, [Validators.max(1000)]],
-            duration: []
+          stampsRule: this.fb.group({
+            sequence: [],
+            rules: this.fb.array([
+              this.fb.control(null)
+            ])
           }),
-          enableStamp: [false],
-          stamp: this.fb.group({
-            perUser: [null, [Validators.max(1000)]],
+          limits: this.fb.group({
+            enableStampCard: [false],
+            stampCard: this.fb.group({
+              perCampaign: [null, [Validators.max(1000)]],
+              perUser: [null, [Validators.max(1000)]],
+              duration: []
+            }),
+            enableStamp: [false],
+            stamp: this.fb.group({
+              perUser: [null, [Validators.max(1000)]],
+              duration: []
+            })
+          }),
+          enableStampCardsValidity: [],
+          stampCardsValidity: this.fb.group({
+            times: [],
             duration: []
           })
-        }),
-        enableStampCardsValidity: [],
-        stampCardsValidity: this.fb.group({
-          times: [],
-          duration: []
         })
       });
     }

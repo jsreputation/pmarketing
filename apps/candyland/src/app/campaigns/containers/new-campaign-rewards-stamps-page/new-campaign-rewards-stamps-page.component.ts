@@ -33,7 +33,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   public ngOnInit(): void {
     super.ngOnInit();
     const stampsNumber = Number.parseInt(oc(this.store.currentCampaign).template.nb_of_slots(0), 10);
-    this.form.get('stampsRule.sequence').valueChanges
+    this.form.get('limits.stampsRule.sequence').valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
         if (value) {
@@ -49,22 +49,43 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     this.cd.detach();
   }
 
+
+  public get limitData(): FormGroup {
+    return this.form.get('limits') as FormGroup;
+  }
+
   public get stampRule(): FormArray {
-    return this.form.get('stampsRule.rules') as FormArray;
+    return this.form.get('limits.stampsRule') as FormArray;
+  }
+
+  public get rules(): FormArray {
+    return this.form.get('limits.stampsRule.rules') as FormArray;
   }
 
   public get isSequence(): boolean {
-    return this.form.get('stampsRule.sequence').value;
+    return this.form.get('limits.stampsRule.sequence').value;
+  }
+
+  public get limits(): FormGroup {
+    return this.form.get('limits.limits') as FormGroup;
+  }
+
+  public get enableStampCardsValidity(): FormControl {
+    return this.form.get('limits.enableStampCardsValidity') as FormControl;
+  }
+
+  public get stampCardsValidity(): FormGroup {
+    return this.form.get('limits.stampCardsValidity') as FormGroup;
   }
 
   public addStampRule(): void {
-    if (this.stampRule.length <= 20) {
-      this.stampRule.push(new FormControl(null));
+    if (this.rules.length <= 20) {
+      this.rules.push(new FormControl(null));
     }
   }
 
   public removeStampRule(index: number): void {
-    this.stampRule.removeAt(index);
+    this.rules.removeAt(index);
   }
 
   private initForm(): void {

@@ -23,8 +23,16 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
 
   public isFirstInit: boolean = true;
 
+  public get limits(): FormGroup {
+    return this.form.get('limits') as FormGroup;
+  }
+
   public get times(): FormControl {
-    return this.form.get('times') as FormControl;
+    return this.form.get('limits.times') as FormControl;
+  }
+
+  public get duration(): FormControl {
+    return this.form.get('limits.duration') as FormControl;
   }
 
   constructor(
@@ -47,7 +55,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
     super.ngOnDestroy();
     this.cd.detach();
   }
-
+  
   private initForm(): void {
     if (!this.form) {
       return;
