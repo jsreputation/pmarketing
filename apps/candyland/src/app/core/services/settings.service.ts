@@ -19,7 +19,6 @@ import { JsonApiQueryData } from 'angular2-jsonapi';
 import { IReward } from '@perx/core';
 import { RoleLabelConfig } from '@cl-shared';
 import { HttpParams } from '@angular/common/http';
-import { LoyaltyHttpAdapter } from '@cl-core/http-adapters/loyalty-http-adapter';
 
 export enum DefaultSetting {
   style = 'Light',
@@ -221,34 +220,34 @@ export class SettingsService implements ITableService {
     return this.settingsHttpService.getRoleLabel();
   }
 
-  public getCognitoEndpoint(id: string, params: HttpParams): Observable<IJsonApiPayload<any>> {
+  public getCognitoEndpoint(id: string, params: HttpParams): Observable<ICognitoEndpoint> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.settingsHttpService.getCognitoEndpoint(id, httpParams).pipe(
       map(response => SettingsHttpAdapter.transformToCognitoEndpoint(response.data))
     );
   }
 
-  public getCognitoEndpoints(params: HttpParamsOptions): Observable<any> {
+  public getCognitoEndpoints(params: HttpParamsOptions): Observable<ICognitoEndpoint[]> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.settingsHttpService.getCognitoEndpoints(httpParams).pipe(
       map(
-        response => response.data.map(item => LoyaltyHttpAdapter.transformToLoyalties(item))
+        response => response.data.map(item => SettingsHttpAdapter.transformToCognitoEndpoint(item))
       ));
   }
 
-  public createCognitoEndpoint(data: any = null): Observable<any> {
+  public createCognitoEndpoint(data: ICognitoEndpoint = null): Observable<ICognitoEndpoint> {
     const sendData = SettingsHttpAdapter.transformFromCognitoEndpoint(data);
     return this.settingsHttpService.createCognitoEndpoint({data: sendData}).pipe(
-      map(response => LoyaltyHttpAdapter.transformToLoyaltyForm(response.data))
+      map(response => SettingsHttpAdapter.transformToCognitoEndpoint(response.data))
     );
   }
 
-  public findAndCreateCognitoEndpoint(): Observable<any> {
+  public findAndCreateCognitoEndpoint(): Observable<ICognitoEndpoint> {
     const params: HttpParamsOptions = {'page[number]': '1', 'page[size]': '1'};
     return this.getCognitoEndpoints(params).pipe(
       switchMap(data => {
         if (data && data.length > 0) {
-          return of(data);
+          return of(data[0]);
         }
         return this.createCognitoEndpoint();
       })

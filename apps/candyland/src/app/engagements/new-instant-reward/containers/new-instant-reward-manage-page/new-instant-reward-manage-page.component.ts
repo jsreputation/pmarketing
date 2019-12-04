@@ -20,8 +20,6 @@ import { MockRewardsMobilePreview } from '../../../../../assets/actives/reward/r
 import {
   AvailableNewEngagementService, InstantRewardsService, RoutingStateService, SettingsService
 } from '@cl-core/services';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWEngagementAttributes } from '@perx/whistler';
 

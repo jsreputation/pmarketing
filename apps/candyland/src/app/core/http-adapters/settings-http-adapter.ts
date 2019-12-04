@@ -1,7 +1,8 @@
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import {
   IWIAMUserAttributes,
-  IWTenantDisplayProperties
+  IWTenantDisplayProperties,
+  IWCognitoEndpointAttributes
 } from '@perx/whistler';
 
 export interface IColor {
@@ -171,19 +172,20 @@ export class SettingsHttpAdapter {
     return true; // !(SettingsHttpAdapter.getTenantProperty('theme.title', data) as any);
   }
 
-  public static transformToCognitoEndpoint(data: IJsonApiItem<any>): any {
+  public static transformToCognitoEndpoint(data: IJsonApiItem<IWCognitoEndpointAttributes>): ICognitoEndpoint {
     return {
-      url: data.attributes.url,
-      typeType: data.attributes.target_type,
+      url: data.attributes.url || '',
+      targetType: data.attributes.target_type,
+      targetId: data.attributes.target_id
     };
   }
 
-  public static transformFromCognitoEndpoint(data: any): IJsonApiItem<any> {
+  public static transformFromCognitoEndpoint(data: ICognitoEndpoint): IJsonApiItem<IWCognitoEndpointAttributes> {
     return {
       type: 'endpoints',
       attributes: {
         url: data.url || 'https://generic-blackcomb-dev1.uat.whistler.perxtech.io/',
-        target_type: data.type || 'blackcomb',
+        target_type: data.targetType || 'blackcomb',
       }
     };
   }

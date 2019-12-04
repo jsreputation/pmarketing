@@ -10,8 +10,6 @@ import { StampDataService } from '../../shared/stamp-data.service';
 import { ControlsName } from '../../../../models/controls-name';
 import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWEngagementAttributes } from '@perx/whistler';
 

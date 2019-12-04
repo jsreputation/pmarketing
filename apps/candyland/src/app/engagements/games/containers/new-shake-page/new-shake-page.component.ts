@@ -10,8 +10,6 @@ import {
   AvailableNewEngagementService, RoutingStateService, SettingsService, ShakeTreeService
 } from '@cl-core/services';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWEngagementAttributes } from '@perx/whistler';
 

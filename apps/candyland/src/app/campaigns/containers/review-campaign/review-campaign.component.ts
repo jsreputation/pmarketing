@@ -1,4 +1,3 @@
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { RewardsService } from '@cl-core/services/rewards.service';
 import {
   CampaignsService,
@@ -19,7 +18,6 @@ import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
@@ -92,16 +90,16 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       ).pipe(
         map(
           ([campaign, commEvent, outcomes]:
-            [ICampaign | null, IComm | null, IOutcome[] | null]) => ({
-              ...campaign,
-              audience: { select: commEvent && commEvent.poolId || null },
-              channel: {
-                type: commEvent && commEvent.channel || 'weblink',
-                message: commEvent && commEvent.message,
-                schedule: commEvent && { ...commEvent.schedule }
-              },
-              rewardsList: outcomes
-            })
+             [ICampaign | null, IComm | null, IOutcome[] | null]) => ({
+            ...campaign,
+            audience: {select: commEvent && commEvent.poolId || null},
+            channel: {
+              type: commEvent && commEvent.channel || 'weblink',
+              message: commEvent && commEvent.message,
+              schedule: commEvent && {...commEvent.schedule}
+            },
+            rewardsList: outcomes
+          })
         ),
         switchMap((campaign: ICampaign) => {
           const limitParams: HttpParamsOptions = {
@@ -111,15 +109,15 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
           return combineLatest(
             of(campaign),
             this.engagementsService.getEngagement(campaign.engagement_id, campaign.engagement_type),
-            this.limitsService.getLimits(limitParams, eType).pipe(map(limits => limits[0]), catchError(() => of({ times: null }))),
+            this.limitsService.getLimits(limitParams, eType).pipe(map(limits => limits[0]), catchError(() => of({times: null}))),
             this.getRewards(campaign.rewardsList)
           );
         }),
         map(([campaign, engagement, limits, rewards]:
-          [
-            ICampaign | null, IEngagementType | null, ILimit | null,
-            { value: IRewardEntity, probability?: number, stampsSlotNumber?: number }[] | null
-          ]) => {
+               [
+                 ICampaign | null, IEngagementType | null, ILimit | null,
+                 { value: IRewardEntity, probability?: number, stampsSlotNumber?: number }[] | null
+               ]) => {
           let rewardsOptions = null;
           let rewardsListCollection = null;
           if (campaign.engagement_type === 'stamps') {
@@ -175,16 +173,16 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
         if (reward.resultId) {
           return this.rewardsService.getReward(reward.resultId).pipe(
             map(rewardData => ({
-              value: { ...rewardData },
+              value: {...rewardData},
               limit: reward.limit || null,
               probability: reward.probability,
               stampsSlotNumber: reward.lootBoxId
             })),
             catchError(() =>
-              of({ value: null, limit: reward.limit || null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId }))
+              of({value: null, limit: reward.limit || null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId}))
           );
         }
-        return of({ value: null, limit: null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId });
+        return of({value: null, limit: null, probability: reward.probability, stampsSlotNumber: reward.lootBoxId});
       }
     ));
   }

@@ -74,7 +74,7 @@
       "SIGNUP_INFORMATION": "Signup information collection required"
     },
     "ChannelTypes": {
-      "Weblink": "Weblink",
+      "WEBLINK": "Weblink",
       "SMS": "SMS"
     }
   }
