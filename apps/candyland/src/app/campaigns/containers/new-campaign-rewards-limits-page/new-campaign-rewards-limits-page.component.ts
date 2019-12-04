@@ -1,8 +1,6 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
-import { takeUntil } from 'rxjs/operators';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 
 @Component({
@@ -11,7 +9,7 @@ import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
   styleUrls: ['./new-campaign-rewards-limits-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
+export class NewCampaignRewardsLimitsPageComponent implements OnInit {
   @Input() public tenantSettings: ITenantsProperties;
   public form: FormGroup;
   public campaignEngagementType: string;
@@ -22,17 +20,14 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
     public store: CampaignCreationStoreService,
     public cd: ChangeDetectorRef,
   ) {
-    super(1, store, null);
   }
 
   public ngOnInit(): void {
-    super.ngOnInit();
     if (!this.form) {
       return;
     }
     this.store.currentCampaign$
       .asObservable()
-      .pipe(takeUntil(this.destroy$))
       .subscribe((data: ICampaign) => {
         const hasTemplate = data && data.template;
         if (hasTemplate) {
@@ -43,10 +38,6 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
       });
   }
 
-  public ngOnDestroy(): void {
-    super.ngOnDestroy();
-    this.cd.detach();
-  }
 
   public get limits(): FormGroup {
     return this.form.get('limits') as FormGroup;

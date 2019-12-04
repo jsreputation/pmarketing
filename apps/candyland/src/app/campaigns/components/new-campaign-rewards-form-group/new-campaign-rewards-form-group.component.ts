@@ -32,20 +32,8 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
   public outcomes: ICampaignOutcome[] = [];
   private isFirstInit: boolean;
   public enableProbability: boolean = false;
-
-  public get sumMoreThanError(): boolean {
-    const totalNum = this.outcomes.reduce((total, item) => {
-      if (item.outcome.probability) {
-        total += item.outcome.probability;
-      }
-      return total;
-    }, 0);
-    this.form.patchValue({
-      totalProbability: totalNum
-    });
-    return totalNum > 100;
-  }
-
+  public sumMoreThanError: boolean = false;
+  
   constructor(
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
@@ -79,6 +67,9 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
           this.initOutcomesList();
         }
       });
+      if (this.form) {
+        this.stepConditionService.registerStepCondition(1.1, this.form);
+      }
   }
 
   public ngOnDestroy(): void {
@@ -146,10 +137,25 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
     this.campaign.outcomes = [...otherSlotOutcomes, ...this.outcomes];
   }
 
+  public isSumMoreThan(): boolean {
+    const totalNum = this.outcomes.reduce((total, item) => {
+      if (item.outcome.probability) {
+        total += item.outcome.probability;
+      }
+      return total;
+    }, 0);
+    this.form.patchValue({
+      totalProbability: totalNum
+    });
+    this.form.updateValueAndValidity()
+    return totalNum > 100;
+  }
+
   public updateOutcomeData(index: number, value: { probability: number, limit: number }): void {
     this.outcomes[index].outcome.probability = value.probability;
     this.outcomes[index].outcome.limit = value.limit;
     this.updateOutcomesInCampaign();
+    this.sumMoreThanError = this.isSumMoreThan();
   }
 
   public removeOutcome(index: number): void {
