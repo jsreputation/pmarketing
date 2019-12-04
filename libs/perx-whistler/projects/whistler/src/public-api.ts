@@ -97,7 +97,8 @@ export {
   IWInstantOutcomeEngagementAttributes,
   IWSurveyEngagementAttributes,
   IWStampEngagementAttributes,
-  IWScratchGameEngagementAttributes
+  IWScratchGameEngagementAttributes,
+  IWSpinGameEngagementAttributes
 } from './lib/engagement/engagement';
 export {
   WGameType,
