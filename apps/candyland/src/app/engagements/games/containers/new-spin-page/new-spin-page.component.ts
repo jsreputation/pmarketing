@@ -217,7 +217,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       } else {
         this.perxCoreSpinClass = 'mobile-preview-plugin';
       }
-      this.cd.detectChanges(); // criticial
+      this.cd.detectChanges(); // critical
     });
   }
 
@@ -234,7 +234,6 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
           for (let i = 0; i < value; i++) {
             tempISlices.push({
               id: `${i}`,
-              // label: `${i}win`, // hard code same
               backgroundColor: this.colorCtrls.get(`${i}`).value,
             });
           }
