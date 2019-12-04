@@ -27,7 +27,7 @@ import { noop } from 'rxjs';
 export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
   @Input() public campaignType: string;
-  @Input() public group: FormGroup = this.formService.getLimitsForm(this.campaignType);
+  public group: FormGroup = this.formService.getLimitsForm(this.campaignType);
 
   private onChange: any = noop;
   // @ts-ignore

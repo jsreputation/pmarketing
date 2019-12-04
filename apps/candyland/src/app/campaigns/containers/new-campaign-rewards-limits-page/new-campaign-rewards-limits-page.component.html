@@ -1,5 +1,5 @@
-<div class="phonepreview-wrapper" *ngIf="form">
-  <div class="forms-container" [formGroup]="form">
+<div class="phonepreview-wrapper">
+  <div class="forms-container">
     <!--Rewards-->
     <mat-card class="card">
       <ng-container *ngFor="let slot of slots">
@@ -12,9 +12,9 @@
     <!--/ Rewards-->
     <!-- Stamps Rule-->
     <ng-container [ngSwitch]="campaignEngagementType">
-      <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'" [formGroup]="limits" [tenantSettings]="tenantSettings">
+      <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'" [tenantSettings]="tenantSettings">
       </cl-new-campaign-rewards-stamps-page>
-      <cl-new-campaign-rewards-page *ngSwitchDefault [formGroup]="limits" [tenantSettings]="tenantSettings" [campaignType]="campaignEngagementType">
+      <cl-new-campaign-rewards-page *ngSwitchDefault [tenantSettings]="tenantSettings" [campaignType]="campaignEngagementType">
       </cl-new-campaign-rewards-page>
     </ng-container>
     <!--/ Stamps Rule-->

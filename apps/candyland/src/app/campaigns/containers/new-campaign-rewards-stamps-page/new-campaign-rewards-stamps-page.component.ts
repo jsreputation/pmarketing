@@ -16,7 +16,7 @@ import { noop } from 'rxjs';
 })
 export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
-  @Input() public group: FormGroup = this.formService.getLimitsForm('stamps');
+  public group: FormGroup = this.formService.getLimitsForm('stamps');
 
   private onChange: any = noop;
   // @ts-ignore
