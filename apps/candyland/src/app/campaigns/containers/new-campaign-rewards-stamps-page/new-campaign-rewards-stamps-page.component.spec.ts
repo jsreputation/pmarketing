@@ -26,29 +26,29 @@ describe('NewCampaignRewardsStampsPageComponent', () => {
       getDefaultValue: () => ({}),
       getToggleConfig: () => ([]),
       getLimitsForm: () => (fb.group({
-        stampsRule: fb.group({
-          sequence: [],
-          rules: fb.array([
-            fb.control(null)
-          ])
-        }),
         limits: fb.group({
-          enableStampCard: [false],
-          stampCard: fb.group({
-            perCampaign: [null],
-            perUser: [null],
-            duration: []
+          stampsRule: fb.group({
+            sequence: [],
+            rules: fb.array([])
           }),
-          enableStamp: [false],
-          stamp: fb.group({
-            perUser: [null],
+          limits: fb.group({
+            enableStampCard: [false],
+            stampCard: fb.group({
+              perCampaign: [null],
+              perUser: [null],
+              duration: []
+            }),
+            enableStamp: [false],
+            stamp: fb.group({
+              perUser: [null],
+              duration: []
+            })
+          }),
+          enableStampCardsValidity: [],
+          stampCardsValidity: fb.group({
+            times: [],
             duration: []
           })
-        }),
-        enableStampCardsValidity: [],
-        stampCardsValidity: fb.group({
-          times: [],
-          duration: []
         })
       }))
     };

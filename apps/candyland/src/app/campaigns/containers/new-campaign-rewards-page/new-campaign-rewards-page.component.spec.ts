@@ -30,11 +30,13 @@ describe('NewCampaignRewardsPageComponent', () => {
     getDefaultValue: () => ({}),
     getToggleConfig: () => ([]),
     getLimitsForm: () => (fb.group({
-      times: [null],
-      duration: [null, [
-        // Validators.required
-      ]],
-      id: null
+      limits: fb.group({
+        times: [null],
+        duration: [null, [
+          // Validators.required
+        ]],
+        id: null
+      })
     }))
   };
 
@@ -75,7 +77,7 @@ describe('NewCampaignRewardsPageComponent', () => {
   });
 
   it('should create', () => {
-    component.form.controls['times'].setValue(0);
+    component.limits.controls['times'].setValue(0);
     expect(component).toBeTruthy();
   });
 });
