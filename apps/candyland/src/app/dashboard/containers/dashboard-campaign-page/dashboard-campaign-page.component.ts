@@ -7,6 +7,7 @@ import { DashboardService } from '@cl-core/services';
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
 import { CardType } from '@perx/chart';
 import { ITotal } from '@cl-core/models/dashboard/total-active-interface';
+import { FormControl } from '@angular/forms';
 
 export enum DictionaryTotal {
   activeCustomers = 'activeCustomers',
@@ -33,6 +34,7 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
   public tabsValue: any;
   public activeCampaigns: number;
   public ct: typeof CardType = CardType;
+  public tableSearch: FormControl = new FormControl();
 
   public get tabsIds(): string[] {
     return this.tabs.map(tab => tab.id);

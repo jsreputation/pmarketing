@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatTabsModule, MatCardModule } from '@angular/material';
+import { MatTabsModule, MatCardModule, MatDialogModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PromosComponent } from './promos.component';
@@ -20,7 +20,8 @@ describe('PromosComponent', () => {
       imports: [
         NoopAnimationsModule,
         MatTabsModule,
-        MatCardModule
+        MatCardModule,
+        MatDialogModule
       ],
       providers: [
         { provide: FeedReaderService, useValue: feedReaderServiceStub }
