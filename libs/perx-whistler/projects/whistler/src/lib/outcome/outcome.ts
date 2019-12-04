@@ -13,7 +13,8 @@ export interface IWOutcomeAttributes {
     probability?: number;
     loot_box_id?: number;
     no_outcome?: boolean;
-    campaign_entity_id?: number;
+    domain_id?: number;
+    domain_type?: string;
     max_issuance_per_campaign?: number;
 }
 

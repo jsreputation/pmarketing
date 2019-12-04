@@ -26,7 +26,8 @@ export class OutcomesHttpAdapter {
         probability: data.enableProbability ? data.outcome.probability / 100 : null,
         loot_box_id: data.outcome.slotNumber,
         no_outcome: !data.outcome.id,
-        campaign_entity_id: campaignId && parseInt(campaignId, 10),
+        domain_id: campaignId && parseInt(campaignId, 10),
+        domain_type: 'Perx::Campaign::Entity',
         max_issuance_per_campaign: data.outcome.limit || null
       }
     };

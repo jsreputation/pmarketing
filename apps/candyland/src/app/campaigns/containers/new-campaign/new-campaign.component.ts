@@ -63,6 +63,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTenants();
     this.initForm();
+    this.store.currentCampaign$.subscribe(console.log);
     this.form.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
@@ -218,19 +219,19 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     if (!data || data.length <= 0) {
       return [];
     }
-    const slots = campaign.template.slots || [0];
+    const slots = this.store.currentCampaign.template && this.store.currentCampaign.template.slots || [0];
     const updateOutcomesArr$ = [];
     const oldCampaignListToDelete = data.filter(outcomeData => !slots.includes(outcomeData.outcome.slotNumber));
     const campaignList = data.filter(outcomeData => slots.includes(outcomeData.outcome.slotNumber));
     const deleteOutcomes$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
     const updateOutcomes$ = outcomeData =>
       this.outcomesService.updateOutcome(
-        outcomeData.outcome,
+        outcomeData,
         campaign.id
       );
     const createOutcomes$ = outcomeData =>
       this.outcomesService.createOutcome(
-        outcomeData.outcome,
+        outcomeData,
         campaign.id
       );
 
