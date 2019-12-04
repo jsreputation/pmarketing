@@ -27,6 +27,7 @@ interface IV4SignUpData {
   gender?: string;
   password: string;
   password_confirmation?: string;
+  personal_properties?: { [key: string]: string | undefined };
 }
 
 interface IV4AuthenticateUserRequest {
@@ -230,6 +231,10 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       first_name: data.firstName,
       birthday: data.birthDay,
       password_confirmation: data.passwordConfirmation,
+      personal_properties: {
+        title: data.title,
+        postcode: data.postcode
+      },
       ...data
     };
   }
