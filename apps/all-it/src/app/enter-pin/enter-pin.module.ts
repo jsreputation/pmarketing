@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EnterPinComponent } from '@perx/blackcomb-pages';
 import { UtilsModule } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatToolbarModule } from '@angular/material';
 
 const routes: Routes = [{
   path: '',
@@ -17,6 +18,7 @@ const routes: Routes = [{
   imports: [
     CommonModule,
     UtilsModule,
+    MatToolbarModule,
     TranslateModule.forChild(),
     RouterModule.forChild(routes)
   ]

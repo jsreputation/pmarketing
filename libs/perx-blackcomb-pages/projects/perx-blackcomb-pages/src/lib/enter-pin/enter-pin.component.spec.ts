@@ -1,25 +1,32 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EnterPinComponent } from './enter-pin.component';
+import { EnterPinComponent, PinMode } from './enter-pin.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { UtilsModule, ProfileService, AuthenticationService, NotificationService } from '@perx/core';
+import { UtilsModule, ProfileService, AuthenticationService, NotificationService, ThemesService } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { MatToolbarModule } from '@angular/material';
+import { Router } from '@angular/router';
 
-const profileServiceStub = {
+const profileServiceStub: Partial<ProfileService> = {
   whoAmI: () => of()
 };
 
-const authenticationServiceStub = {
+const authenticationServiceStub: Partial<AuthenticationService> = {
   changePassword: () => of(),
-  resendOTP: () => of()
+  resendOTP: () => of(),
+  verifyOTP: () => of()
 };
 
-const notificationServiceStub = {
+const notificationServiceStub: Partial<NotificationService> = {
   addSnack: () => {},
   addPopup: () => {}
+};
+
+const themeServiceStub: Partial<ThemesService> = {
+  getThemeSetting: () => of()
 };
 
 describe('EnterPinComponent', () => {
@@ -33,12 +40,14 @@ describe('EnterPinComponent', () => {
         UtilsModule,
         NoopAnimationsModule,
         RouterTestingModule,
+        MatToolbarModule,
         TranslateModule.forRoot()
       ],
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub},
-        { provide: NotificationService, useValue: notificationServiceStub}
+        { provide: NotificationService, useValue: notificationServiceStub},
+        { provide: ThemesService, useValue: themeServiceStub}
       ]
     })
       .compileComponents();
@@ -54,7 +63,7 @@ describe('EnterPinComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call changePassword when pin entered', () => {
+  it('should call changePassword when pin entered in password mode', () => {
     component.changePasswordData = {
       newPassword: '',
       passwordConfirmation: '',
@@ -73,6 +82,23 @@ describe('EnterPinComponent', () => {
     component.onPinEntered('123456');
     expect(authenticationServiceSpy).toHaveBeenCalled();
     expect(notificationServiceSpy).toHaveBeenCalled();
+  });
+
+  it('should call verify Otp when pin entered in register mode', () => {
+    component.pinMode = PinMode.register;
+    component.userPhone = '123456';
+    const authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
+    const authenticationServiceSpy = spyOn(authenticationService, 'verifyOTP').and.returnValue(
+      of({
+        message: 'success'
+      })
+    );
+    const router: Router = TestBed.get<Router>(Router as Type<Router>);
+    const routerSpy = spyOn(router, 'navigate');
+
+    component.onPinEntered('123456');
+    expect(authenticationServiceSpy).toHaveBeenCalled();
+    expect(routerSpy).toHaveBeenCalled();
   });
 
   it('should call resendOTP when resendOTP clicked', () => {

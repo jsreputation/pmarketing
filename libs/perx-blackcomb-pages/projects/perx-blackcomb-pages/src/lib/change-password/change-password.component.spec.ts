@@ -16,7 +16,7 @@ describe('ChangePasswordComponent', () => {
   let fixture: ComponentFixture<ChangePasswordComponent>;
   const notificationServiceStub = { addSnack: () => {} };
 
-  const authenticationServiceStub = {
+  const authenticationServiceStub: Partial<AuthenticationService> = {
     requestVerificationToken: () => of()
   };
 

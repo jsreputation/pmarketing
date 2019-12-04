@@ -6,7 +6,9 @@ import {
   IChangePasswordData,
   AuthenticationService,
   NotificationService,
-  PopUpClosedCallBack
+  PopUpClosedCallBack,
+  ThemesService,
+  ITheme
 } from '@perx/core';
 
 export enum PinMode {
@@ -28,12 +30,15 @@ export class EnterPinComponent implements PopUpClosedCallBack {
   public visibleNumber: string;
   public userPhone: string | undefined;
 
+  public theme: ITheme;
+
   constructor(
     private profileService: ProfileService,
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthenticationService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private themeService: ThemesService
   ) {
 
     this.route.paramMap.subscribe(params => {
@@ -42,15 +47,14 @@ export class EnterPinComponent implements PopUpClosedCallBack {
 
         if (this.pinMode === PinMode.password) {
           this.getChangedPasswordDataFromNavigation();
+        } else if (this.pinMode === PinMode.register) {
+          this.getMobileNumberFromNavigation();
         }
       }
     });
 
-    this.profileService.whoAmI().subscribe(
-      (profile: IProfile) => {
-        this.userPhone = profile.phone;
-        this.visibleNumber = this.userPhone ? this.encodeMobileNo(this.userPhone) : '';
-      }
+    this.themeService.getThemeSetting().subscribe(
+      (th: ITheme) => this.theme = th
     );
   }
 
@@ -62,6 +66,25 @@ export class EnterPinComponent implements PopUpClosedCallBack {
 
     if (currentNavigation.extras.state) {
       this.changePasswordData = currentNavigation.extras.state as IChangePasswordData;
+    }
+
+    this.profileService.whoAmI().subscribe(
+      (profile: IProfile) => {
+        this.userPhone = profile.phone;
+        this.visibleNumber = this.userPhone ? this.encodeMobileNo(this.userPhone) : '';
+      }
+    );
+  }
+
+  private getMobileNumberFromNavigation(): void {
+    const currentNavigation = this.router.getCurrentNavigation();
+    if (!currentNavigation) {
+      return;
+    }
+
+    if (currentNavigation.extras.state) {
+      this.userPhone = currentNavigation.extras.state.mobileNo;
+      this.visibleNumber = this.userPhone ? this.encodeMobileNo(this.userPhone) : '';
     }
   }
 
@@ -82,6 +105,16 @@ export class EnterPinComponent implements PopUpClosedCallBack {
         err => {
           this.notificationService.addSnack(err.statusText);
         });
+    } else if (this.pinMode === PinMode.register && this.userPhone) {
+      this.authService.verifyOTP(this.userPhone, enteredPin).subscribe(
+        (response) => {
+          this.notificationService.addSnack(response.message);
+          this.router.navigate(['login']);
+        },
+        err => {
+          this.notificationService.addSnack(err.error.message);
+        }
+      );
     }
   }
 
