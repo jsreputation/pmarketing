@@ -1,24 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { NotificationService } from '@perx/core';
+import { NotificationService, IChangePasswordData, AuthenticationService } from '@perx/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'perx-blackcomb-pages-change-password',
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss']
 })
-export class ChangePasswordComponent implements OnInit {
+export class ChangePasswordComponent {
 
   public changePasswordForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private router: Router,
+    private authService: AuthenticationService
   ) {
     this.initForm();
-  }
-
-  public ngOnInit(): void {
   }
 
   private initForm(): void {
@@ -41,7 +41,19 @@ export class ChangePasswordComponent implements OnInit {
       return;
     }
 
-    // TODO: Proceed to OTP page which still needs to created
+    const oldPasswordField = this.changePasswordForm.get('oldPassword');
+    const oldPasswordString = oldPasswordField ? oldPasswordField.value : '';
+
+    const changePasswordData: IChangePasswordData = {
+      newPassword: passwordString,
+      passwordConfirmation: confirmPassword,
+      oldPassword: oldPasswordString,
+      otp: ''
+    };
+
+    this.authService.requestVerificationToken().subscribe(() => {
+      this.router.navigateByUrl('enter-pin/password', { state: changePasswordData });
+    });
   }
 
 }

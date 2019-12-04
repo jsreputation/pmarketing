@@ -82,7 +82,8 @@ export class LayoutComponent implements OnInit {
           '/qr',
           '/profile',
           '/transaction-history',
-          '/change-password'
+          '/change-password',
+          '/enter-pin'
         ];
         // if current url starts with any of the above segments, use arrow_backward
         this.leftIcon = urlsWithBack.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
