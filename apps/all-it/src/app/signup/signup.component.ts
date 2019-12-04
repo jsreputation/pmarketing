@@ -85,18 +85,17 @@ export class SignupComponent {
       email: emailValue
     };
 
-    const title = this.signupForm.value.title;
+    const titleString = this.signupForm.value.title;
     const postcode = this.signupForm.value.postcode;
 
-    console.log(`Title ${title}`);
+    console.log(`Title ${titleString}`);
     console.log(`Post code: ${postcode}`);
+    // TODO: How to pass these values in SignUpData.
 
     this.authService.signup(signUpData)
     .subscribe(
       () => {
-        // TODO: Use ProfileService::setCustomProperties to set postcode & title
-        // TODO: Navigate to otp page
-        // this.router.navigateByUrl('/enter-pin/register')
+        this.router.navigateByUrl('enter-pin/register', { state: { mobileNo: codeAndMobile } });
       },
       err => {
         this.notificationService.addSnack(err.error.message);
