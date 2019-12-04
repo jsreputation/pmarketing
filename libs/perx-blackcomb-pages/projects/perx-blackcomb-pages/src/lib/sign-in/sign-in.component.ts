@@ -1,5 +1,3 @@
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import {
   Component,
   OnInit,
@@ -12,17 +10,42 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { Location } from '@angular/common';
-import { Subject, iif, of, Observable, throwError } from 'rxjs';
-import { Config, AuthenticationService, InstantOutcomeService, IGameService, NotificationService, IPrePlayStateData, SurveyService } from '@perx/core';
-import { switchMap, catchError, tap, retryWhen, delay, mergeMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
+import {
+  Subject,
+  iif,
+  of,
+  Observable,
+  throwError,
+} from 'rxjs';
+import {
+  switchMap,
+  catchError,
+  tap,
+  retryWhen,
+  delay,
+  mergeMap,
+} from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
+
+import {
+  Config,
+  AuthenticationService,
+  InstantOutcomeService,
+  IGameService,
+  NotificationService,
+  IPrePlayStateData,
+  SurveyService,
+} from '@perx/core';
+
 @Component({
-  selector: 'perx-blackcomb-pages-pi',
-  templateUrl: './pi.component.html',
-  styleUrls: ['./pi.component.scss']
+  selector: 'perx-blackcomb-pages-sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.scss']
 })
-export class PIComponent implements OnInit, OnDestroy {
+export class SignInComponent implements OnInit, OnDestroy {
   public PIForm: FormGroup;
   public errorMessage: string | null = null;
   public preAuth: boolean;
