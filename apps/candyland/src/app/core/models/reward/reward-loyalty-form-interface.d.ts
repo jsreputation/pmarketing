@@ -10,8 +10,10 @@ declare interface ILoyaltyTiersFormGroup {
   tierRewardCostsId: string;
   tierId: string;
   name: string;
+  tierType: string;
   statusTiers: boolean;
   statusDiscount: boolean;
+  tierValue: number;
 }
 
 declare interface IMapLoyalties {
@@ -20,7 +22,6 @@ declare interface IMapLoyalties {
 
 declare interface IMapLoyalty {
   programId: string;
-  // costReward: number;
   tiers: {
     [key: string]: ILoyaltyTiersFormGroup;
   };
@@ -32,4 +33,5 @@ declare interface IBasicTier {
   tierId: string;
   entityId: string;
   statusDiscount: boolean;
+  tierRewardCostsId: string;
 }

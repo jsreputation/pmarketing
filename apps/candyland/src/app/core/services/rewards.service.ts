@@ -119,6 +119,11 @@ export class RewardsService implements ITableService {
     return this.rewardHttp.patchRewardTier(loyaltyCostValue);
   }
 
+  public deleteRewardTier(tier: ILoyaltyTiersFormGroup | IBasicTier): Observable<any> {
+    const loyaltyCostValue = RewardHttpAdapter.transformFromLoyaltyForm(tier, '0');
+    return this.rewardHttp.deleteRewardTier(loyaltyCostValue);
+  }
+
   private getRewardTierPage(page: number): Observable<IJsonApiListPayload<Partial<IWTierRewardCostsAttributes>[]>> {
     return this.rewardHttp.getRewardTierList(page);
   }

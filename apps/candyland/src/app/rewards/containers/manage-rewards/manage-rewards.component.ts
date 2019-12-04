@@ -31,9 +31,10 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public loyalties: ILoyaltyForm[];
   public rewardLoyaltyForm: FormArray;
   public getRewardLoyaltyData$: BehaviorSubject<ILoyaltyFormGroup[] | null> = new BehaviorSubject<ILoyaltyFormGroup[] | null>(null);
-  public defaultRewardTiers: any = {};
-  public tierDelete: any = [];
-  public tierUpdate: any = [];
+  public tierForSent: any = {
+    update: [],
+    delete: []
+  };
 
   public get merchantId(): AbstractControl {
     return this.form.get('rewardInfo.merchantId');
@@ -78,10 +79,6 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
-    }
-
-    if (this.id) {
-      return this.updateRewardTiers(this.rewardLoyaltyForm.value);
     }
 
     let request: Observable<any>;
@@ -277,33 +274,23 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
 
   private updateRewardTiers(rewardLoyaltyForm: ILoyaltyFormGroup[])
     : Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>[]> {
-    const result: Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>>[] = [];
+
     rewardLoyaltyForm.forEach((item) => {
-      // item это нужно для обновления базового тира!!!!!!
-
+      // this need for update basicTier
       this.handlerTierUpdate(item.basicTier);
-      // result.push(this.rewardsService.patchRewardTier(item.basicTier, this.id));
-
       item.tiers.forEach((tier) => {
-
-        // console.log('tier', tier);
-        // console.log('this.default', this.defaultRewardTiers);
-
+        // this need for update customTier
         this.handlerTierUpdate(tier);
-        // result.push(this.rewardsService.patchRewardTier(tier, this.id));
       });
     });
 
-    console.log('this.tierUpdate', this.tierUpdate);
-    console.log('this.tierDelete', this.tierDelete);
-
+    const result: Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>>[] = this.sendTiers();
     return forkJoin(result);
   }
 
   private patchLoyaltiesForm(): void {
     combineLatest([this.getLoyalties(), this.getRewardTierList()])
       .subscribe(([loyalties, rewardTierList]) => {
-        console.log('rewardTierList', rewardTierList);
         const rewardTierMap = this.filterRewardTierList(rewardTierList);
         this.handlerTierCost(loyalties, rewardTierMap);
       });
@@ -324,26 +311,12 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     loyalties.data.forEach((loyalty: ILoyaltyForm) => {
       const loyaltyFormGroup = this.newRewardFormService.getLoyaltyFormGroup();
 
-      // console.log('loyalty for set', loyalty);
-      // console.log('rewardTierMap', rewardTierMap);
-
       const basicTier = rewardTierMap[loyalty.basicTierId];
-      // if (loyalty.name === 'vbnvbnghfgh') {
-      //   console.log('loyalty for set', loyalty);
-      //   console.log('basicTier for patch', basicTier);
-      //   debugger;
-      //   alert('asdaf;sdf');
-      // }
-
-      // debugger;
       // handler of custom tears
       this.setCustomTiers(loyalty, loyaltyFormGroup);
-      // patch basic tier нужно )))
 
       if (basicTier) {
-        this.defaultRewardTiers[basicTier.tierId] = basicTier;
-
-        // console.log('basicTier for patch', basicTier);
+        this.newRewardFormService.setDefaultRewardTiers(basicTier);
 
         loyaltyFormGroup.patchValue({
           programId: loyalty.id,
@@ -353,8 +326,6 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
             entityId: this.id,
           }
         });
-        // console.log('loyaltyFormGroup.value', loyaltyFormGroup.value);
-        // debugger;
       }
       loyaltyFormGroup.patchValue({
         programId: loyalty.id,
@@ -383,9 +354,10 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
         (loyaltyGroup.get('tiers') as FormArray).controls.forEach((tier) => {
           const rewardTier = rewardTierMap[tier.value.tierId];
           if (rewardTier) {
-            // пушу для дальнейшей проверки сохранять или удалить.
+            // add to object for know what to do next remove or update
+
             rewardTier['statusTiers'] = true;
-            this.defaultRewardTiers[rewardTier.tierId] = rewardTier;
+            this.newRewardFormService.setDefaultRewardTiers(rewardTier);
             tier.patchValue({...rewardTier});
           }
         });
@@ -393,29 +365,19 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handlerTierUpdate(tier: any): void {
-    const tempTier = this.defaultRewardTiers[tier.tierId];
+  private handlerTierUpdate(tier: ILoyaltyTiersFormGroup | IBasicTier): void {
+    this.newRewardFormService.handlerTierUpdate(tier, this.tierForSent);
+  }
 
-    // remove custom tier
-    if (tempTier && !tier.statusTiers && tier.tierType === 'Perx::Loyalty::CustomTier') {
-      // на удаление тира
-      return this.tierDelete.push(tier);
-    }
+  private sendTiers(): Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>>[] {
+    const result = [];
+    this.tierForSent.update.forEach(tier => {
+      result.push(this.rewardsService.patchRewardTier(tier, this.id));
+    });
+    this.tierForSent.delete.forEach(tier => {
+      result.push(this.rewardsService.deleteRewardTier(tier));
+    });
 
-    // update custom tier
-    if (tempTier && tier.tierType === 'Perx::Loyalty::CustomTier' &&
-      (tier.tierValue !== tempTier.tierValue || tier.statusDiscount !== tempTier.statusDiscount)
-    ) {
-      return this.tierUpdate.push(tier);
-    }
-
-    // update basic tier
-    if (
-      tempTier && tempTier.tierValue !== tier.tierValue
-      && tempTier.tierType === 'Perx::Loyalty::BasicTier'
-    ) {
-      console.log('tempTier.tierValue, tier.tierValue', tempTier.tierValue, tier.tierValue);
-      this.tierUpdate.push(tier);
-    }
+    return result;
   }
 }

@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.interface';
+import { RewardTierTypes } from '../models/reward-tier-types.enum';
 
 @Injectable()
 export class NewRewardFormService {
+  public tierTypes: typeof RewardTierTypes = RewardTierTypes;
+  public defaultRewardTiers: any = {};
+
+  public setDefaultRewardTiers(tier: any): void {
+    this.defaultRewardTiers[tier.tierId] = tier;
+  }
   constructor(private fb: FormBuilder) {
   }
 
@@ -149,19 +156,14 @@ export class NewRewardFormService {
 
       tiers: new FormArray([]),
       basicTier: new FormGroup({
-        // costReward: new FormControl(null, [Validators.min(1)]),
+        tierRewardCostsId: new FormControl(null),
         tierValue: new FormControl(1, [Validators.min(0)]),
-        tierType: new FormControl('Perx::Loyalty::BasicTier'),
+        tierType: new FormControl(this.tierTypes.basicType),
         tierId: new FormControl(null),
         entityId: new FormControl(null)
       })
     });
   }
-
-  // "apply_tier_discount": true,
-  // "tier_value": 100,"tier_id": 2,
-  // "tier_type": "Perx::Loyalty::CustomTier",
-  // "entity_id": 1
 
   public getRewardLoyaltyTiersGroup(): FormGroup {
     return new FormGroup({
@@ -170,9 +172,42 @@ export class NewRewardFormService {
       name: new FormControl(null),
       statusTiers: new FormControl(null),
       statusDiscount: new FormControl(null),
-      tierType: new FormControl('Perx::Loyalty::CustomTier'),
+      tierType: new FormControl(this.tierTypes.customType),
       tierValue: new FormControl(1, [Validators.min(0)]),
       tireDiscountValue: new FormControl({disabled: true, value: 55444}, )
     });
+  }
+
+  public handlerTierUpdate(tier: any, tiersMap: any): void {
+    const tempTier = this.defaultRewardTiers[tier.tierId];
+
+    // remove custom tier
+    if (
+      tempTier
+      && !tier.statusTiers
+      && tier.tierType === this.tierTypes.customType) {
+      return tiersMap.delete.push(tier);
+    }
+
+    // update custom tier
+    if (
+      tempTier
+      && tier.tierType === this.tierTypes.customType
+      && (
+        tier.tierValue !== tempTier.tierValue
+        || tier.statusDiscount !== tempTier.statusDiscount
+      )
+    ) {
+      return tiersMap.update.push(tier);
+    }
+
+    // update basic tier
+    if (
+      tempTier
+      && tempTier.tierValue !== tier.tierValue
+      && tempTier.tierType === this.tierTypes.basicType
+    ) {
+      tiersMap.update.push(tier);
+    }
   }
 }

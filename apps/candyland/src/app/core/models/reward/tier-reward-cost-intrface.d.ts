@@ -3,6 +3,6 @@ declare interface ITierRewardCost {
   statusDiscount: boolean;
   tierId: string;
   rewardId: number;
-  tierValue: string;
+  tierValue: number;
   tierType: string;
 }
