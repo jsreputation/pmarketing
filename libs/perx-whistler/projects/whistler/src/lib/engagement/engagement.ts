@@ -3,7 +3,7 @@ import { IWInstantOutcomeDisplayProperties } from './instant-outcome';
 import {
   IWGameDisplayProperties,
   IWPinataDisplayProperties,
-  IWScratchDisplayProperties,
+  IWScratchDisplayProperties, IWSpinDisplayProperties,
   IWTreeDisplayProperties,
   WGameType
 } from './games';
@@ -39,7 +39,8 @@ export interface IWEngagementAttributes<T = any> {
 
 export interface IWGameEngagementAttributes extends IWEngagementAttributes<IWGameDisplayProperties |
   IWTreeDisplayProperties |
-  IWPinataDisplayProperties> {
+  IWPinataDisplayProperties |
+  IWSpinDisplayProperties> {
   game_type: WGameType;
 }
 
@@ -50,6 +51,10 @@ export interface IWTreeGameEngagementAttributes extends IWEngagementAttributes<I
 
 export interface IWPinataGameEngagementAttributes extends IWEngagementAttributes<IWPinataDisplayProperties> {
   display_properties: IWPinataDisplayProperties;
+}
+
+export interface IWSpinGameEngagementAttributes extends IWEngagementAttributes<IWSpinDisplayProperties> {
+  display_properties: IWSpinDisplayProperties;
 }
 
 export interface IWScratchGameEngagementAttributes extends IWEngagementAttributes<IWScratchDisplayProperties> {
