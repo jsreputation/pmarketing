@@ -21,11 +21,11 @@ export class OutcomesHttpAdapter {
     return {
       type: 'possible_outcomes',
       attributes: {
-        result_id: data && parseInt(data.reward.id, 10),
+        result_id: data && data.reward && parseInt(data.reward.id, 10) || null,
         result_type: 'Perx::Reward::Entity',
         probability: data.enableProbability ? data.outcome.probability / 100 : 0,
         loot_box_id: data.outcome.slotNumber,
-        no_outcome: !data.outcome.id,
+        no_outcome: data && !data.reward,
         domain_id: campaignId && parseInt(campaignId, 10),
         domain_type: 'Perx::Campaign::Entity',
         max_issuance_per_campaign: data.outcome.limit || null

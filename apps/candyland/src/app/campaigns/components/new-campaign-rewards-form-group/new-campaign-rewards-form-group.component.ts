@@ -183,6 +183,7 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
 
   private updateOutcomes(): void {
     if (this.enableProbability) {
+      this.noOutcome.outcome.slotNumber = this.slotNumber;
       this.outcomes.unshift(this.noOutcome);
     } else {
       this.outcomes.shift();

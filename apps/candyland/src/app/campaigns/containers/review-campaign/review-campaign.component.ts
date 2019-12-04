@@ -162,12 +162,14 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
             })),
             catchError(() =>
               of({
-                outcome
+                outcome,
+                enableProbability: true
               }))
           );
         }
         return of({
-          outcome
+          outcome,
+          enableProbability: true
         });
       }
     ));
