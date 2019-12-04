@@ -350,14 +350,27 @@ export class CreateRewardAppPage {
     return element.all(by.className('mat-slide-toggle-thumb-container'));
   }
 
+  public static imageClear(): ElementFinder {
+    return element(by.css('.image-clear'));
+  }
+
+  public static radioPrimaryButton(): ElementFinder {
+    return element.all(by.className('mat-radio-button mat-primary ng-star-inserted')).get(2);
+  }
+
+  public static uploadSection(): ElementFinder {
+    return element(by.css('input.upload-file-input.ng-star-inserted'));
+  }
+
+  public static errorMessage(): ElementFinder {
+    return element(by.className('error upload-file-error ng-star-inserted'));
+  }
+
   public selectField(): ElementArrayFinder {
     return element.all(by.css('div.mat-select-trigger'));
   }
   public rewardOptions(): ElementArrayFinder {
     return element.all(by.css('span.mat-option-text'));
-  }
-  public radioPrimaryButton(): ElementFinder {
-    return element.all(by.className('mat-radio-button mat-primary ng-star-inserted')).get(2);
   }
   public fileUploadField(): ElementFinder {
     return element.all(by.css('input[type=file]')).get(1);
@@ -368,20 +381,11 @@ export class CreateRewardAppPage {
   public inputFileField(): ElementFinder {
     return element(by.css('input[type=file]'));
   }
-  public imageClear(): ElementFinder {
-    return element(by.css('.image-clear'));
-  }
   public fileUploaded(): ElementFinder {
     return element(by.css('div.image-wrap.ng-star-inserted>img'));
   }
   public fileName(): ElementFinder {
     return element(by.css('span.upload-file-file-name'));
-  }
-  public errorMessage(): ElementFinder {
-    return element(by.className('error upload-file-error ng-star-inserted'));
-  }
-  public uploadSection(): ElementFinder {
-    return element(by.css('input.upload-file-input.ng-star-inserted'));
   }
   public merchantButton(): ElementFinder {
     return element.all(by.css('mat-radio-button')).get(0);
