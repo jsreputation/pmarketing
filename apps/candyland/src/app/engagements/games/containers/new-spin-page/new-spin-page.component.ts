@@ -217,7 +217,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       } else {
         this.perxCoreSpinClass = 'mobile-preview-plugin';
       }
-      this.cd.detectChanges(); // crticial
+      this.cd.detectChanges(); // criticial
     });
   }
 
