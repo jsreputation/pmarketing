@@ -21,7 +21,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   public slices: ISlice[] = [];
 
   @Input()
-  public spinDuration: number = 3;
+  public spinDuration: number = 2;
 
   @Input()
   public wheelImg: string;
@@ -31,6 +31,9 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   @Input()
   public classPosition: string;
+
+  @Input()
+  public slotToLand: number = this.slices.length - 1;
 
   // tslint:disable-next-line:variable-name
   private ctx_: CanvasRenderingContext2D;
@@ -49,6 +52,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   private spinAngleStart: number = 0;
   private spinTimeout: number;
   private wheelImgLoaded!: HTMLImageElement;
+  private angleToBeSpun: number;
 
   @ViewChild('canvas', {static: true})
   private canvasEl: ElementRef<HTMLCanvasElement>;
@@ -130,23 +134,27 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   private attachListeners(): void {
     this.canvasArrow.style.cursor = 'move';
-    this.canvasArrow.addEventListener('touchstart', this.handleStart.bind(this), false);
-    this.canvasArrow.addEventListener('mousedown', this.handleStart.bind(this), false);
+    this.canvasArrow.addEventListener('touchstart', this.handleStart.bind(this), {once: true});
+    this.canvasArrow.addEventListener('mousedown', this.handleStart.bind(this), {once: true});
 
     // listen while dragging
-    this.canvasArrow.addEventListener('touchend', this.handleEnd.bind(this), false);
-    this.canvasArrow.addEventListener('mouseup', this.handleEnd.bind(this), false);
+    this.canvasArrow.addEventListener('touchend', this.handleEnd.bind(this), {once: true});
+    this.canvasArrow.addEventListener('mouseup', this.handleEnd.bind(this), {once: true});
 
     // listen after dragging is complete
-    this.canvasArrow.addEventListener('touchmove', this.handleMove.bind(this), false);
-    this.canvasArrow.addEventListener('mousemove', this.handleMove.bind(this), false);
+    this.canvasArrow.addEventListener('touchmove', this.handleMove.bind(this), {once: true});
+    this.canvasArrow.addEventListener('mousemove', this.handleMove.bind(this), {once: true});
   }
 
   private init(): void {
     this.arcDeg = 360 / this.slices.length;
     this.startAngle = this.arcDeg / 2 * Math.PI / 180;
     this.arc = this.arcDeg * Math.PI / 180; // converting back to radians
+    const angleNeeded = this.getAngleNeeded(this.slotToLand);
+
     this.spinTimeout = 0;
+    // the latter part after angleToBeSpun makes it spin for x amt more rounds;
+    this.angleToBeSpun = angleNeeded + (Math.floor(Math.random() * 5) + 1)  * 360;
     this.loadImg();
   }
 
@@ -266,7 +274,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   private fillArrowStyle(): void {
     const arrowImage: HTMLImageElement = new Image();
     arrowImage.src = this.pointerImg;
-    arrowImage.onload = () => this.ctxArrow.drawImage(arrowImage, this.canvasArrow.width / 2 - 20, 0, 40, 50);
+    arrowImage.onload = () => this.ctxArrow.drawImage(arrowImage, this.canvasArrow.width / 2 - 20, 0, 50, 70);
     if (this.ctxArrow) {
       this.ctxArrow.clearRect(0, 0, this.canvasArrow.width, this.canvasArrow.height);
       this.ctxArrow.fillStyle = (this.ctxArrow.createPattern(arrowImage, 'no-repeat') as CanvasPattern);
@@ -289,10 +297,37 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     };
   }
 
+  private getAngleNeeded(neededIndex: number): number {
+    const degrees = this.startAngle * 180 / Math.PI + 90;
+    let arcd = this.arc * 180 / Math.PI;
+    const currentIndex = Math.floor((360 - degrees % 360) / arcd);
+    if (this.slices.length === 6) {
+      arcd -= 10;
+    }
+
+    if (this.slices.length === 9) {
+      arcd -= 4;
+    }
+
+    if (this.slices.length === 10) {
+      arcd -= 4;
+    }
+    if (currentIndex === neededIndex) {
+      return 0;
+    }
+    if (currentIndex > neededIndex) {
+      return arcd * (currentIndex - neededIndex);
+    }
+    return (
+      arcd * (currentIndex + (this.slices.length - neededIndex))
+    );
+  }
+
   private spin(): void {
-    this.spinAngleStart = Math.random() * 10 + 10;
+    // this.spinAngleStart = Math.random() * 10 + 10;
+    this.spinAngleStart = this.angleToBeSpun / 32.807503994186335;
     this.spinTime = 0;
-    this.spinTimeTotal = this.spinDuration * 3 * 1000;
+    this.spinTimeTotal = this.spinDuration * 3 + 4 * 1000;
     this.rotateWheel();
   }
 
@@ -310,19 +345,16 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     const that = this;
     this.spinTimeout = window.setTimeout(() => {
       that.rotateWheel();
-    }, 30);
+    }, 10); // change from 30
   }
 
   private stopRotateWheel(): void {
     if (!this.ctx) { return; }
     clearTimeout(this.spinTimeout);
-    const degrees = (this.startAngle * 180 / Math.PI + 90); // convert startdegree to rad then add 180 deg
-    const arcd = this.arc * 180 / Math.PI; // arc degree 90degree no tuch
-    const index = Math.floor((360 - degrees % 360) / arcd); // this determines where ends
     this.ctx.save();
     this.ctx.font = 'bold 20px Helvetica, Arial';
     this.ctx.fillStyle = 'black';
-    const text = this.slices[index].label || '';
+    const text = this.slices[this.slotToLand].label || '';
     this.ctx.fillText(
       text,
       this.size / 2 - this.ctx.measureText(text).width / 2,
@@ -346,7 +378,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
       // get the angle needed to rotate the wheel to follow the mouse/touch
       const angle = Math.round(
-        Math.atan2(e.pageX || e.touches[0].clientX - targetCenter[0], -(e.pageY || e.touches[0].clientY - targetCenter[1])) *
+        Math.atan2(e.pageX - targetCenter[0], -(e.pageY - targetCenter[1])) *
         (180 / Math.PI)
       );
 
