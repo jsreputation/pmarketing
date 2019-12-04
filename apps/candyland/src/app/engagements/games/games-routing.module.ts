@@ -8,6 +8,7 @@ import { NewShakePageComponent } from './containers/new-shake-page/new-shake-pag
 import { NewPinataPageComponent } from './containers/new-pinata-page/new-pinata-page.component';
 import { NewScratchPageComponent } from './containers/new-scratch-page/new-scratch-page.component';
 import { GameComponent } from './containers/game/game.component';
+import {NewSpinPageComponent} from './containers/new-spin-page/new-spin-page.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,14 @@ const routes: Routes = [
       {
         path: 'new-scratch/:id',
         component: NewScratchPageComponent
+      },
+      {
+        path: 'new-spin',
+        component: NewSpinPageComponent
+      },
+      {
+        path: 'new-spin/:id',
+        component: NewSpinPageComponent
       }
     ]
   }
