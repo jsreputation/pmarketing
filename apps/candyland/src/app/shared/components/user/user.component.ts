@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
 
 @Component({
   selector: 'cl-user',
