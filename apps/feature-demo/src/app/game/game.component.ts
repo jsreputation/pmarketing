@@ -47,7 +47,9 @@ export class GameComponent implements OnInit {
           this.subTitle = game.texts.subTitle || 'Shake the Pinata and Win!';
           this.isGameAvailable = true;
           this.isButtonDisabled = false;
-          this.numberOfTaps = game.config.nbTaps;
+          if ('nbTaps' in game.config) {
+            this.numberOfTaps = game.config.nbTaps;
+          }
 
           if (game.type === GameType.shakeTheTree) {
             this.backgroundImage = game.backgroundImg || 'assets/tree/background.jpg';
