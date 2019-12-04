@@ -40,7 +40,7 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
       slotNumber: this.slotNumber
     }
   }
-  
+
   constructor(
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
@@ -68,15 +68,15 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
       .asObservable()
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
-        const isFirstTimeRenderFromAPIResponse = data && data.id && data.outcomes && this.isFirstInit;
+        const isFirstTimeRenderFromAPIResponse = data && data.id && data.template && data.template.id && data.outcomes && this.isFirstInit;
         if (isFirstTimeRenderFromAPIResponse) {
           this.isFirstInit = false;
           this.initOutcomesList();
         }
       });
-      if (this.form) {
-        this.stepConditionService.registerStepCondition(1.1, this.form);
-      }
+    if (this.form) {
+      this.stepConditionService.registerStepCondition(1.1, this.form);
+    }
   }
 
   public ngOnDestroy(): void {
@@ -106,24 +106,29 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
   }
 
   public initOutcomesList(): void {
+    this.outcomes = [];
     const noOutcomeData = this.campaign.outcomes.find(data => data.outcome.slotNumber === this.slotNumber && !data.outcome.resultId);
     this.noOutcome.outcome.limit = noOutcomeData && noOutcomeData.outcome && noOutcomeData.outcome.limit || null;
     this.noOutcome.outcome.probability = noOutcomeData && noOutcomeData.outcome && noOutcomeData.outcome.probability || 0;
     const possibleOutcomes = this.campaign.outcomes.filter(
       data => {
+        if (!data.outcome.resultId) {
+          return false;
+        }
         if (!this.slotNumber) {
           return true;
         }
         return data.outcome.slotNumber === this.slotNumber;
       }
-    ).filter(data => data.outcome.resultId)
-      .map(data =>
-        this.rewardsService.getReward(data.outcome.resultId).pipe(
-          map((reward: IRewardEntity) =>
-            ({ ...data, reward })),
-          catchError(() => of(null))
-        ));
-    combineLatest(...possibleOutcomes).subscribe(
+    );
+    console.log(possibleOutcomes);
+    const possibleOutcomes$ = possibleOutcomes.map(data =>
+      this.rewardsService.getReward(data.outcome.resultId).pipe(
+        map((reward: IRewardEntity) =>
+          ({ ...data, reward })),
+        catchError(() => of(null))
+      ));
+    combineLatest(...possibleOutcomes$).subscribe(
       (rewards: ICampaignOutcome[]) => {
         rewards.filter(data => data).map((outcome: ICampaignOutcome) => this.addOutcome(outcome));
         this.updateOutcomesInCampaign();
@@ -132,11 +137,11 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
   }
 
   public addOutcome(value: ICampaignOutcome): void {
+    this.outcomes.push(value);
     if (value.outcome.probability > 0 && !this.enableProbability) {
       this.enableProbability = true;
+      this.updateOutcomeProbabilitySetting();
     }
-    this.outcomes.push(value);
-    this.updateOutcomeProbabilitySetting();
     this.cd.detectChanges();
   }
 
@@ -176,12 +181,8 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
     this.updateOutcomesInCampaign();
   }
 
-  public updateProbability(checked: boolean): void {
-    this.enableProbability = checked;
-    this.updateOutcomes();
-  }
-
-  private updateOutcomes(): void {
+  public updateOutcomes(): void {
+    console.log('this.enablePro' + this.enableProbability);
     if (this.enableProbability) {
       this.noOutcome.outcome.slotNumber = this.slotNumber;
       this.outcomes.unshift(this.noOutcome);

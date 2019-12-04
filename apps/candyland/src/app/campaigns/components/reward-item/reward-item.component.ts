@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
+import { IOutcome } from '@cl-core/models/outcome/outcome';
+import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
 @Component({
   selector: 'cl-reward-item',
@@ -10,7 +12,7 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./reward-item.component.scss'],
 })
 export class RewardItemComponent implements OnInit {
-  @Input() public data: IRewardEntity;
+  @Input() public outcomeData: ICampaignOutcome;
   @Input() public enableProbability: boolean = false;
   @Input() public isInvalid: boolean;
   @Output() private clickDelete: EventEmitter<any> = new EventEmitter<any>();
@@ -22,6 +24,7 @@ export class RewardItemComponent implements OnInit {
     limit: new FormControl()
   });
   private destroy$: Subject<void> = new Subject();
+
   public get probability(): AbstractControl {
     return this.group.get('probability');
   }
@@ -30,12 +33,25 @@ export class RewardItemComponent implements OnInit {
     return this.group.get('limit');
   }
 
+  public get outcome(): IOutcome {
+    return this.outcomeData.outcome;
+  }
+
+  public get data(): IRewardEntity {
+    return this.outcomeData.reward;
+  }
+
   public ngOnInit(): void {
+    this.initForm();
     this.group.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(
       () => {
         this.updateOutcomeData();
       }
     );
+  }
+
+  private initForm(): void {
+    this.group.patchValue({ probability: this.outcome.probability, limit: this.outcome.limit });
   }
 
   public updateOutcomeData(): void {
@@ -46,6 +62,6 @@ export class RewardItemComponent implements OnInit {
     this.updateOutcome.emit(updateData);
   }
   public delete(): void {
-    this.clickDelete.emit(this.data);
+    this.clickDelete.emit(this.outcomeData);
   }
 }

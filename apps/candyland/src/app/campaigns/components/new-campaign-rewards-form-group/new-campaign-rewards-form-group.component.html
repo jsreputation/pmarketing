@@ -4,7 +4,7 @@
 </div>
 <div class="card-content" *ngIf="outcomes && outcomes.length > 0">
   <div>
-    <mat-checkbox color="primary" (change)="updateProbability($event.checked)">
+    <mat-checkbox color="primary" [(ngModel)]="enableProbability" (change)="updateOutcomes()">
       {{'CAMPAIGN.INCLUDE_PROBABILITY' | translate}}
     </mat-checkbox>
   </div>
@@ -12,7 +12,7 @@
     <div *ngFor="let outcome of outcomes; let i = index">
       <cl-reward-item class="item"
         *ngIf="outcome.outcome.slotNumber === slotNumber"
-        [data]="outcome.reward"
+        [data]="outcome"
         [enableProbability]="enableProbability"
         [isInvalid]="sumMoreThanError"
         (updateOutcome)="updateOutcomeData(i, $event)"
