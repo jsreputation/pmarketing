@@ -48,9 +48,7 @@ export {
 export { IWCampaignAttributes, IWCampaignDisplayProperties, WInformationCollectionSettingType } from './lib/campaign/campaign';
 export {
   IWAudiences,
-  IWPoolsApi,
   IWPools,
-  IWUser,
 } from './lib/audiences/audiences.model';
 export {
   IWProfileAttributes,
