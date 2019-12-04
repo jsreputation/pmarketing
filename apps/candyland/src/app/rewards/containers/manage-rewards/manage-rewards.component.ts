@@ -33,7 +33,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public getRewardLoyaltyData$: BehaviorSubject<ILoyaltyFormGroup[] | null> = new BehaviorSubject<ILoyaltyFormGroup[] | null>(null);
   public tierForSent: any = {
     update: [],
-    delete: []
+    delete: [],
+    create: []
   };
 
   public get merchantId(): AbstractControl {
@@ -99,7 +100,6 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     request
       .pipe(
         switchMap(res => {
-
           if (this.id) {
             return this.updateRewardTiers(this.rewardLoyaltyForm.value);
           }
@@ -285,7 +285,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     });
 
     const result: Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>>[] = this.sendTiers();
-    return forkJoin(result);
+    return result.length ? forkJoin(result) : of(null);
   }
 
   private patchLoyaltiesForm(): void {
@@ -376,6 +376,9 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     });
     this.tierForSent.delete.forEach(tier => {
       result.push(this.rewardsService.deleteRewardTier(tier));
+    });
+    this.tierForSent.create.forEach(tier => {
+      result.push(this.rewardsService.createRewardTier(tier, this.id));
     });
 
     return result;

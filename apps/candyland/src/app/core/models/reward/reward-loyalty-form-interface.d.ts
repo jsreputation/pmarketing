@@ -34,4 +34,5 @@ declare interface IBasicTier {
   entityId: string;
   statusDiscount: boolean;
   tierRewardCostsId: string;
+  statusTiers?: boolean;
 }

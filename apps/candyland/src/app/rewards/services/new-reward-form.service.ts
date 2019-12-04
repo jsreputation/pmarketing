@@ -174,22 +174,54 @@ export class NewRewardFormService {
       statusDiscount: new FormControl(null),
       tierType: new FormControl(this.tierTypes.customType),
       tierValue: new FormControl(1, [Validators.min(0)]),
-      tireDiscountValue: new FormControl({disabled: true, value: 55444}, )
+      tireDiscountValue: new FormControl({disabled: true, value: 1}, )
     });
   }
 
-  public handlerTierUpdate(tier: any, tiersMap: any): void {
+  public handlerTierUpdate(tier: ILoyaltyTiersFormGroup | IBasicTier, tiersMap: any): void {
     const tempTier = this.defaultRewardTiers[tier.tierId];
 
-    // remove custom tier
+    this.addToListRemoveCustomTier(tier, tiersMap, tempTier);
+    this.addToListCreateCustomTier(tier, tiersMap, tempTier);
+    this.addToListUpdateCustomTier(tier, tiersMap, tempTier);
+    this.addToListUpdateBasicTier(tier, tiersMap, tempTier);
+  }
+
+  private addToListRemoveCustomTier(
+    tier: ILoyaltyTiersFormGroup | IBasicTier,
+    tiersMap: {[key: string]: any},
+    tempTier: any
+  ): void {
+
     if (
       tempTier
       && !tier.statusTiers
       && tier.tierType === this.tierTypes.customType) {
       return tiersMap.delete.push(tier);
     }
+  }
 
-    // update custom tier
+  private addToListCreateCustomTier(
+    tier: ILoyaltyTiersFormGroup | IBasicTier,
+    tiersMap: {[key: string]: any},
+    tempTier: any
+  ): void {
+
+    if (
+      !tempTier
+      && tier.statusTiers
+      && tier.tierType === this.tierTypes.customType
+    ) {
+      return tiersMap.create.push(tier);
+    }
+  }
+
+  private addToListUpdateCustomTier(
+    tier: ILoyaltyTiersFormGroup | IBasicTier,
+    tiersMap: {[key: string]: any},
+    tempTier: any
+  ): void {
+
     if (
       tempTier
       && tier.tierType === this.tierTypes.customType
@@ -200,8 +232,14 @@ export class NewRewardFormService {
     ) {
       return tiersMap.update.push(tier);
     }
+  }
 
-    // update basic tier
+  private addToListUpdateBasicTier(
+    tier: ILoyaltyTiersFormGroup | IBasicTier,
+    tiersMap: {[key: string]: any},
+    tempTier: any
+  ): void {
+
     if (
       tempTier
       && tempTier.tierValue !== tier.tierValue
