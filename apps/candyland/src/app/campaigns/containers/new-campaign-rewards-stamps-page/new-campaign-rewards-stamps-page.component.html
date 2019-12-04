@@ -17,7 +17,7 @@
           {{'CAMPAIGN.ADD_RULE' | translate}}
         </cl-button>
       </div>
-      <div class="card-section" *ngFor="let rule of stampRule?.controls; let i = index; let first = first">
+      <div class="card-section" *ngFor="let rule of rules?.controls; let i = index; let first = first">
         <div class="card-content">
           <div class="stamp-rule">
             <div class="stamp-rule-label-block" *ngIf="isSequence">
