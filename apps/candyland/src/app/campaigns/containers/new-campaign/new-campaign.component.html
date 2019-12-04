@@ -24,7 +24,7 @@
       <ng-template matStepLabel>{{'CAMPAIGN.SELECT_ENGAGEMENT' | translate}}</ng-template>
       <cl-new-campaign-select-engagement-page [tenantSettings]="tenantSettings"></cl-new-campaign-select-engagement-page>
     </mat-step>
-    <mat-step [completed]="getStepCondition(1)">
+    <mat-step [completed]="getStepCondition(1) && getStepCondition(1.1)">
       <ng-template matStepLabel>{{'CAMPAIGN.REWARDS_LIMITS' | translate}}</ng-template>
       <cl-new-campaign-rewards-limits-page [tenantSettings]="tenantSettings"></cl-new-campaign-rewards-limits-page>
     </mat-step>

@@ -8,12 +8,16 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
-import { combineLatest, of, Subject } from 'rxjs';
+import { combineLatest, of } from 'rxjs';
 import { map, catchError, takeUntil } from 'rxjs/operators';
 import { RewardsService } from '@cl-core/services/rewards.service';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
+import { AbstractStepWithForm } from '../../step-page-with-form';
+import { StepConditionService } from '../../services/step-condition.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { ClValidators } from '@cl-helpers/cl-validators';
 
 @Component({
   selector: 'cl-new-campaign-rewards-form-group',
@@ -21,12 +25,12 @@ import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
   styleUrls: ['./new-campaign-rewards-form-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
+export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public title: string = 'CAMPAIGN.REWARDS';
   @Input() public slotNumber: number = 0;
+  public form: FormGroup;
   public outcomes: ICampaignOutcome[] = [];
   private isFirstInit: boolean;
-  private destroy$: Subject<void> = new Subject();
   public enableProbability: boolean = false;
 
   public get sumMoreThanError(): boolean {
@@ -36,17 +40,29 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
       }
       return total;
     }, 0);
+    this.form.patchValue({
+      totalProbability: totalNum
+    });
     return totalNum > 100;
   }
 
   constructor(
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
-    private store: CampaignCreationStoreService,
-    private rewardsService: RewardsService
+    public store: CampaignCreationStoreService,
+    public stepConditionService: StepConditionService,
+    private rewardsService: RewardsService,
+    private fb: FormBuilder
   ) {
+    super(1.1, store, stepConditionService);
+    this.initForm();
   }
 
+  private initForm(): void {
+    this.form = this.fb.group({
+      totalProbability: [null, [ClValidators.sumMoreThan()]]
+    })
+  }
   public get campaign(): any {
     return this.store.currentCampaign;
   }
@@ -66,8 +82,8 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    super.ngOnDestroy();
+    this.cd.detach();
   }
 
   public openDialogSelectReward(): void {

@@ -16,7 +16,7 @@ import { oc } from 'ts-optchain';
 })
 export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
-  public group: FormGroup = this.formService.getLimitsForm('stamps');
+  public form: FormGroup = this.formService.getLimitsForm('stamps');
   public isFirstInit: boolean = true;
 
   constructor(
@@ -33,7 +33,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   public ngOnInit(): void {
     super.ngOnInit();
     const stampsNumber = Number.parseInt(oc(this.store.currentCampaign).template.nb_of_slots(0), 10);
-    this.group.get('stampsRule.sequence').valueChanges
+    this.form.get('stampsRule.sequence').valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
         if (value) {
@@ -50,11 +50,11 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   }
 
   public get stampRule(): FormArray {
-    return this.group.get('stampsRule.rules') as FormArray;
+    return this.form.get('stampsRule.rules') as FormArray;
   }
 
   public get isSequence(): boolean {
-    return this.group.get('stampsRule.sequence').value;
+    return this.form.get('stampsRule.sequence').value;
   }
 
   public addStampRule(): void {
@@ -68,14 +68,14 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   }
 
   private initForm(): void {
-    this.group.valueChanges
+    this.form.valueChanges
       .pipe(
         distinctUntilChanged(),
         debounceTime(500),
         takeUntil(this.destroy$)
       )
       .subscribe(() => {
-        const toggleConfig = this.formService.getToggleConfig(this.group);
+        const toggleConfig = this.formService.getToggleConfig(this.form);
         this.toggleControlService.updateFormStructure(toggleConfig);
         if (this.toggleControlService.formChanged) {
           this.updateForm();
@@ -84,7 +84,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   }
 
   private updateForm(): void {
-    this.group.updateValueAndValidity();
+    this.form.updateValueAndValidity();
     this.cd.detectChanges();
   }
 

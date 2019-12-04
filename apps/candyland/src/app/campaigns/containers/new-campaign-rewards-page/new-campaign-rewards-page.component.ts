@@ -19,12 +19,12 @@ import { NewCampaignRewardsStampsFormService } from '../../services/new-campaign
 export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
   @Input() public campaignType: string;
-  public group: FormGroup = this.formService.getLimitsForm(this.campaignType);
+  public form: FormGroup = this.formService.getLimitsForm(this.campaignType);
 
   public isFirstInit: boolean = true;
 
   public get times(): FormControl {
-    return this.group.get('times') as FormControl;
+    return this.form.get('times') as FormControl;
   }
 
   constructor(
@@ -49,7 +49,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
   }
 
   private initForm(): void {
-    if (!this.group) {
+    if (!this.form) {
       return;
     }
 
@@ -62,16 +62,16 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
           if (isFirstTimeRenderFromAPIResponse) {
             this.isFirstInit = false;
             const limitsData = Object.assign({}, data);
-            this.group.patchValue(limitsData);
+            this.form.patchValue(limitsData);
           }
         });
     } else {
-      this.group.patchValue(this.formService.getDefaultValue(this.campaignType));
+      this.form.patchValue(this.formService.getDefaultValue(this.campaignType));
     }
   }
 
   private subscribeFormValueChange(): void {
-    this.group.valueChanges
+    this.form.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe((val: ICampaign) => this.store.updateCampaign(val));
   }
