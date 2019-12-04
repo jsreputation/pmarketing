@@ -366,6 +366,14 @@ export class CreateRewardAppPage {
     return element(by.className('error upload-file-error ng-star-inserted'));
   }
 
+  public static merchantButtonArray(): ElementArrayFinder {
+    return element.all(by.css('.merchant-btn.mat-stroked-button.mat-primary'));
+  }
+
+  public static dropDownMenu(): ElementArrayFinder {
+    return element.all(by.className('mat-select-arrow-wrapper'));
+  }
+
   public selectField(): ElementArrayFinder {
     return element.all(by.css('div.mat-select-trigger'));
   }
@@ -387,14 +395,8 @@ export class CreateRewardAppPage {
   public fileName(): ElementFinder {
     return element(by.css('span.upload-file-file-name'));
   }
-  public merchantButton(): ElementFinder {
-    return element.all(by.css('mat-radio-button')).get(0);
-  }
   public firstMerchantsRow(): ElementFinder {
-    return element.all(by.css('tr.merchant-row.mat-row.ng-star-inserted')).get(0);
-  }
-  public dropDownMenu(): ElementArrayFinder {
-    return element.all(by.className('mat-select-arrow-wrapper'));
+    return element.all(by.css('tr.mat-row.ng-star-inserted')).get(0);
   }
 
 }
