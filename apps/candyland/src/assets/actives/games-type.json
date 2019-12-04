@@ -19,5 +19,12 @@
     "title": "SCRATCH_THE_CARD",
     "img": "assets/images/games/scratch.png",
     "active": "false"
+  },
+  {
+    "id": 6,
+    "type": "spin",
+    "title": "SPIN_THE_WHEEL",
+    "img": "assets/images/games/spinTheWheel.png",
+    "active": "false"
   }
 ]
