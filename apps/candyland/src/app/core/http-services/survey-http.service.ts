@@ -4,6 +4,7 @@ import { ApiConfig } from '@cl-core/api-config';
 import { Observable, of } from 'rxjs';
 import { GeneralStaticDataService, ICountryCode } from '@perx/core';
 import { IWSurveyEngagementAttributes, WSurveyQuestionType } from '@perx/whistler';
+import { ICountries } from '@cl-core/models/survey/survey-common.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,8 @@ export class SurveyHttpService {
     return this.generalStaticDataService.getCountriesList();
   }
 
-  public getDefaultCountryCode(): Observable<any> {
-    return this.http.get('assets/actives/common/default-coutry-code.json');
+  public getDefaultCountryCode(): Observable<ICountries> {
+    return this.http.get<ICountries>('assets/actives/common/default-coutry-code.json');
     // return this.generalStaticDataService.getCountriesList();
   }
 

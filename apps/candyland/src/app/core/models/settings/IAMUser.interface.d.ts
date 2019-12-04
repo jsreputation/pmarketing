@@ -1,5 +1,4 @@
-// tslint:disable
-declare interface IAMUser {
+export interface IAMUser {
   id: string;
   type: string;
   links: string;
