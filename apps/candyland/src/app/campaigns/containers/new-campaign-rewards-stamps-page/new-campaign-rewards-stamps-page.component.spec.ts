@@ -24,29 +24,29 @@ describe('NewCampaignRewardsStampsPageComponent', () => {
       getToggleConfig: () => ([])
     };
     TestBed.configureTestingModule({
-        imports: [
-          BrowserDynamicTestingModule,
-          MatCheckboxModule,
-          ButtonModule,
-          ReactiveFormsModule,
-          TranslateModule.forRoot(),
-        ],
-        providers: [
-          {
-            provide: CampaignCreationStoreService, useValue: {
-              updateCampaign: () => {
-              },
-              resetCampaign: () => {
-              },
-              currentCampaign$: new BehaviorSubject({})
-            }
-          },
-          {provide: StepConditionService, useValue: {registerStepCondition: () => ({})}},
-          {provide: NewCampaignRewardsStampsFormService, useValue: NewCampaignRewardsStampsFormServiceStub}
-        ],
-        declarations: [NewCampaignRewardsStampsPageComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      imports: [
+        BrowserDynamicTestingModule,
+        MatCheckboxModule,
+        ButtonModule,
+        ReactiveFormsModule,
+        TranslateModule.forRoot(),
+      ],
+      providers: [
+        {
+          provide: CampaignCreationStoreService, useValue: {
+            updateCampaign: () => {
+            },
+            resetCampaign: () => {
+            },
+            currentCampaign$: new BehaviorSubject({})
+          }
+        },
+        { provide: StepConditionService, useValue: { registerStepCondition: () => ({}) } },
+        { provide: NewCampaignRewardsStampsFormService, useValue: NewCampaignRewardsStampsFormServiceStub }
+      ],
+      declarations: [NewCampaignRewardsStampsPageComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

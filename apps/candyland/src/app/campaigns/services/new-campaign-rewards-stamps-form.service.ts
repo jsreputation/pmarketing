@@ -126,7 +126,7 @@ export class NewCampaignRewardsStampsFormService {
             }
           ]
         }
-      }
+      };
     }
     return defaultValue;
   }
