@@ -16,7 +16,7 @@ export class AppTokenInterceptor implements HttpInterceptor {
         }
         return this.authenticationService.getAccessToken().pipe(switchMap((val) => {
             req = req.clone({ headers: req.headers.set('access_token', 'Bearer ' + val) });
-            return next.handle(req)
+            return next.handle(req);
         }));
     }
 }
