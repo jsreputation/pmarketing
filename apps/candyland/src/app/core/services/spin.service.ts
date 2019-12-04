@@ -24,9 +24,7 @@ export class SpinService {
   }
 
   public createSpin(data: ISpinEntityForm): Observable<IJsonApiPayload<IWSpinGameEngagementAttributes>> {
-    console.log(data, 'in createSpinFunc');
     const sentData = EngagementHttpAdapter.transformFromSpinForm(data);
-    console.log(sentData, 'error here i suppose');
     return this.spinHttpService.createSpin({data: sentData});
   }
 

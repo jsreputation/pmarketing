@@ -80,7 +80,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     return this.formSpin.get(ControlsName.pointerImg);
   }
 
-  public get colorCtrlsToLoop(): any[] { // to type as the color object
+  public get colorCtrlsToLoop(): string[] {
     return Object.keys(this.colorCtrls.controls).slice(0, this.numberOfWedges.value);
   }
 
@@ -161,8 +161,8 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       pointerImg: [null, [Validators.required]]
     });
   }
-
-  private generateColorCtrls(): any {
+  // generates an array of color controls
+  private generateColorCtrls(): ({[key: string]: string}) {
     const rainbowColors = this.rainbowGenerator(this.MAX_WEDGES);
     return rainbowColors.reduce((obj, item, index) => {
       obj[index] = this.fb.control(item, [Validators.required]);

@@ -430,34 +430,6 @@ export class EngagementHttpAdapter {
     };
   }
 
-  public static transformSpin(
-    data: ISpinEntityForm
-  ): IJsonApiItem<IWSpinGameEngagementAttributes> {
-    return {
-      type: "engagements",
-      attributes: {
-        type: "game",
-        title: data.name,
-        description: "Spin and win",
-        game_type: WGameType.spin,
-        image_url: data.image_url,
-        display_properties: {
-          title: data.headlineMessage,
-          button: data.buttonText,
-          sub_title: data.subHeadlineMessage,
-          nb_of_wedges: +data.numberOfWedges,
-          slots: data.rewardSlots, // indeterminate should be iControl i think
-          wedge_colors: Object.values(data.colorCtrls),
-          reward_icon: ImageControlValue.getImagePath(data.rewardIcon),
-          wheel_img: ImageControlValue.getImagePath(data.wheelImg),
-          wheel_position: ImageControlValue.getImagePath(data.wheelPosition),
-          background_img_url: ImageControlValue.getImagePath(data.background),
-          pointer_img: ImageControlValue.getImagePath(data.pointerImg)
-        }
-      }
-    };
-  }
-
   public static transformStamp(
     data: IStampsEntityForm
   ): IJsonApiItem<IWStampEngagementAttributes> {
