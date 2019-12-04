@@ -103,7 +103,8 @@ export {
   IWGameDisplayProperties,
   IWTreeDisplayProperties,
   IWPinataDisplayProperties,
-  IWScratchDisplayProperties
+  IWScratchDisplayProperties,
+  IWSpinDisplayProperties
 } from './lib/engagement/games';
 export {
   IWInstantOutcomeDisplayProperties
