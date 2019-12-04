@@ -32,15 +32,5 @@ export interface IWUser {
   email_address: string;
   primary_identifier: string;
   pools?: any;
-  properties?: IWUserPropertiesFE;
-}
-
-export interface IWUserPropertiesFE {
-  gender?: string | null;
-  birthday?: Date | null;
-  race?: string | null;
-  country?: string | null;
-  nationality?: string | null;
-  city?: string | null;
-  state?: string | null;
+  properties?: {};
 }

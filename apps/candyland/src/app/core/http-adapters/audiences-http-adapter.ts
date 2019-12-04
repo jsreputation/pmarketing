@@ -6,7 +6,6 @@ import {
   IWPoolsAttributes,
   IWAudiences,
   IWUser,
-  IWUserPropertiesFE,
   IWPools
 } from '@perx/whistler';
 
@@ -153,7 +152,7 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  private static transformProps(attributes: IWProfileAttributes | null): IWUserPropertiesFE | null {
+  private static transformProps(attributes: IWProfileAttributes | null): IWCustomProperties | null {
     if (!attributes) {
       return null;
     }
@@ -165,7 +164,7 @@ export class AudiencesHttpAdapter {
 
     return {
       gender: properties.gender || null,
-      birthday: properties.birthday ? new Date(properties.birthday.toString()) : null,
+      birthday: properties.birthday || null,
       race: properties.race || null,
       country: properties.country || null,
       nationality: properties.nationality || null,

@@ -134,7 +134,7 @@ export class UpsertUserPopupComponent implements OnInit {
           ClValidators.email]],
         phone: [formData.phone_number, Validators.required],
         gender: [formData.properties ? formData.properties.gender : null, null],
-        birthday: [formData.properties ? formData.properties.birthday : null, null],
+        birthday: [formData.properties ? new Date(formData.properties.birthday) : null, null],
         race: [formData.properties ? formData.properties.race : null, null],
         country: [formData.properties ? formData.properties.country : null, null],
         nationality: [formData.properties ? formData.properties.nationality : null, null],
