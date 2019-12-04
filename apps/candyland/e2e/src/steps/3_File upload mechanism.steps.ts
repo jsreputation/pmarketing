@@ -86,7 +86,7 @@ When(/^23_I upload a file with wrong format$/, async () => {
 
 Then(/^23_my file should not be successfully uploaded.$/, async () =>  {
   // do an assertion based on the message shown
-  expect(await CreateShakeTheTreeAppPage.errorUploadMessage().getText()).to.contain('Only .JPG, .PNG or .GIF are supported.');
+  expect(await ElementApp.errorUploadMessage().getText()).to.contain('Only .JPG, .PNG or .GIF are supported.');
   // do an assertion where there are still 2 empty input fields
   expect(await ElementApp.inputFileArray().count()).to.be.equal(2);
 });
@@ -105,7 +105,7 @@ When(/^24_I upload a file with wrong format$/, async () => {
 });
 
 Then(/^24_my file should not be successfully uploaded.$/, async () => {
-  expect(await CreateShakeTheTreeAppPage.errorUploadMessage().getText()).to.contain('Only .JPG, .PNG or .GIF are supported.');
+  expect(await ElementApp.errorUploadMessage().getText()).to.contain('Only .JPG, .PNG or .GIF are supported.');
   // do an assertion where there are still 2 empty input fields
   expect(await ElementApp.inputFileArray().count()).to.be.equal(2);
 });
