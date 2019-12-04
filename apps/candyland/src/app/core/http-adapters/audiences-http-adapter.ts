@@ -11,7 +11,7 @@ import {
 export class AudiencesHttpAdapter {
 
   public static transformFromUserForm(data: IAudiencesUserForm): IJsonApiItem<IWProfileAttributes> {
-    const optionalPool = data.audienceList ? {relationships: {pools: {data: data.audienceList}}} : {};
+    const optionalPool = data.audienceList ? { relationships: { pools: { data: data.audienceList } } } : {};
     const mainUserApiObject = {
       type: 'users',
       attributes: {
@@ -77,7 +77,7 @@ export class AudiencesHttpAdapter {
 
   public static transformVoucherAssignedToApi(source: string, assigned: string): IJsonApiItem<IWAssignRequestAttributes> {
     return {
-      type: 'assigneds',
+      type: 'vouchers',
       attributes: {
         source_id: source,
         source_type: 'Perx::Reward::Entity',
@@ -88,7 +88,8 @@ export class AudiencesHttpAdapter {
 
   public static transformVoucherPatchToApi(id: string, endData: string): IJsonApiItem<Partial<IWAssignedAttributes>> {
     return {
-      id, type: 'assigneds',
+      id,
+      type: 'vouchers',
       attributes: {
         valid_to: endData
       }

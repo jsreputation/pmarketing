@@ -13,13 +13,16 @@
 
         <mat-form-field class="full-width__input">
           <mat-label>Name</mat-label>
-          <input matInput placeholder="Name" formControlName="name">
+          <input matInput placeholder="Name" formControlName="name" required>
+          <mat-error *ngIf="loginForm.get('name').hasError('required')">
+            Name is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width__input">
           <mat-label>Email Address</mat-label>
           <input matInput placeholder="Email Address" formControlName="email" required>
-          <mat-error *ngIf="loginForm.hasError('email')">
+          <mat-error *ngIf="loginForm.get('email').hasError('required')">
             Email is <strong>required</strong>
           </mat-error>
         </mat-form-field>
@@ -27,7 +30,7 @@
         <mat-form-field class="full-width__input">
           <mat-label>Password</mat-label>
           <input type="password" matInput placeholder="Password" formControlName="password" required>
-          <mat-error *ngIf="loginForm.hasError('password')">
+          <mat-error *ngIf="loginForm.get('password').hasError('required')">
             Password is <strong>required</strong>
           </mat-error>
         </mat-form-field>

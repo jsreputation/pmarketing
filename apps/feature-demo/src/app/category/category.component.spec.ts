@@ -1,23 +1,48 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-
-import { CategoryComponent } from './category.component';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
+import {
+  ActivatedRoute,
+  Router,
+} from '@angular/router';
+import {
+  MatIconModule,
+  MatToolbarModule,
+  MatCardModule,
+  MatBottomSheetModule,
+} from '@angular/material';
+import { Type } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatIconModule, MatToolbarModule, MatCardModule, MatBottomSheetModule } from '@angular/material';
-import { RewardsService, RewardsModule } from '@perx/core';
+
 import { of } from 'rxjs';
+
+import {
+  RewardsService,
+  RewardsModule,
+  ThemesService,
+} from '@perx/core';
+
+import { SortingMode } from './category.model';
+import { CategoryComponent } from './category.component';
+
 import { rewards } from '../rewards.mock';
 import { catalogs } from '../catalogs.mock';
 import { RewardsSortPipe } from './rewards-sort.pipe';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Type } from '@angular/core';
-import { SortingMode } from './category.model';
 
 describe('CategoryComponent', () => {
   let component: CategoryComponent;
   let fixture: ComponentFixture<CategoryComponent>;
+
   const rewardsServiceStub = {
     getAllRewards: () => of(rewards),
     getCatalog: () => of(catalogs[0])
+  };
+  const themesServiceStub = {
+    getThemeSetting: () => of()
   };
   const activatedRouteStub = {
     snapshot: {
@@ -44,9 +69,22 @@ describe('CategoryComponent', () => {
         RewardsModule
       ],
       providers: [
-        { provide: RewardsService, useValue: rewardsServiceStub },
-        { provide: ActivatedRoute, useValue: activatedRouteStub },
-        { provide: Router, useValue: routerStub }
+        {
+          provide: RewardsService,
+          useValue: rewardsServiceStub,
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: activatedRouteStub,
+        },
+        {
+          provide: Router,
+          useValue: routerStub,
+        },
+        {
+          provide: ThemesService,
+          useValue: themesServiceStub,
+        },
       ]
     })
       .compileComponents();

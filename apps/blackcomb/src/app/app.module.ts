@@ -17,23 +17,33 @@ import {
   LanguageService,
   TokenStorage,
   ConfigService,
+  LocaleIdFactory
 } from '@perx/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
+
+import { MatDialogModule } from '@angular/material';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { SignUpModule } from './sign-up/sign-up.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { registerLocaleData } from '@angular/common';
+
+import enGb from '@angular/common/locales/en-GB';
+import localesEnGbExtra from '@angular/common/locales/extra/en-GB';
 import zh from '@angular/common/locales/zh';
 import localeZhExtra from '@angular/common/locales/extra/zh';
 import ru from '@angular/common/locales/ru';
 import localesRuExtra from '@angular/common/locales/extra/ru';
 import vi from '@angular/common/locales/vi';
 import localesViExtra from '@angular/common/locales/extra/vi';
-import { MatDialogModule } from '@angular/material';
+import ko from '@angular/common/locales/ko';
+import localesKoExtra from '@angular/common/locales/extra/ko';
+import fr from '@angular/common/locales/fr';
+import localesFrExtra from '@angular/common/locales/extra/fr';
+
 import * as Sentry from '@sentry/browser';
 
 Sentry.init({
@@ -52,9 +62,14 @@ export class SentryErrorHandler implements ErrorHandler {
   }
 }
 
+// use en-GB as the default english flavour
+registerLocaleData(enGb, 'en', localesEnGbExtra);
+
 registerLocaleData(zh, 'zh', localeZhExtra);
 registerLocaleData(ru, 'ru', localesRuExtra);
 registerLocaleData(vi, 'vi', localesViExtra);
+registerLocaleData(ko, 'ko', localesKoExtra);
+registerLocaleData(fr, 'fr', localesFrExtra);
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
   translateService.setDefaultLang(environment.defaultLang);
@@ -93,7 +108,12 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
   bootstrap: [AppComponent],
   providers: [
     { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true },
-    { provide: LOCALE_ID, useValue: environment.defaultLang },
+    // Locale Id factory ensures the Locale Id matches whatever translation is available in the backend.
+    {
+      provide: LOCALE_ID,
+      deps: [TokenStorage],
+      useFactory: LocaleIdFactory
+    },
     { provide: ErrorHandler, useClass: SentryErrorHandler }
   ],
   entryComponents: []

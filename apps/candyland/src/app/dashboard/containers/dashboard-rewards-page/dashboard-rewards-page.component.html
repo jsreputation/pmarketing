@@ -8,49 +8,50 @@
         20,000
       </h3>
       <div class="chart-card-content">
-        <cl-chart-card [id]="158" [cardType]="'line'" [params]="params"></cl-chart-card>
+        <cl-chart-card [id]="'rewards_rewards_breakdown'" [cardType]="ct.line" [params]="params"></cl-chart-card>
       </div>
     </article>
 
     <article class="chart-card">
       <h3 class="chart-card-title" translate>REWARD_GRAPHIC_PAGE.DEMOGRAPHICS</h3>
       <div class="chart-card-content">
-        <cl-chart-card [id]="159" [cardType]="'verticalBar'" [params]="params"></cl-chart-card>
+        <cl-chart-card [id]="'rewards_demographic'" [cardType]="ct.verticalBar" [params]="params"></cl-chart-card>
       </div>
     </article>
 
     <article class="chart-card">
       <h3 class="chart-card-title" translate>REWARD_GRAPHIC_PAGE.POPULAR_REDEMPTION_DAYS</h3>
       <div class="chart-card-content">
-        <cl-chart-card [id]="164" [cardType]="'calendardHeatmap'" [params]="params"></cl-chart-card>
+        <cl-chart-card [id]="'rewards_popular_redemption_day'" [cardType]="ct.calendarHeatmap" [params]="params">
+        </cl-chart-card>
       </div>
     </article>
 
     <article class="chart-card">
       <h3 class="chart-card-title" translate>REWARD_GRAPHIC_PAGE.TOP_5_REWARDS</h3>
       <div class="chart-card-content">
-        <cl-chart-card [id]="160" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
+        <cl-chart-card [id]="'rewards_top_rewards'" [cardType]="ct.horizontalBar" [params]="params"></cl-chart-card>
       </div>
     </article>
 
     <article class="chart-card">
       <h3 class="chart-card-title" translate>REWARD_GRAPHIC_PAGE.TOP_5_MERCHANTS</h3>
       <div class="chart-card-content">
-        <cl-chart-card [id]="163" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
+        <cl-chart-card [id]="'rewards_top_merchants'" [cardType]="ct.horizontalBar" [params]="params"></cl-chart-card>
       </div>
     </article>
 
     <article class="chart-card">
       <h3 class="chart-card-title" translate>REWARD_GRAPHIC_PAGE.TOP_5_CATEGORIES</h3>
       <div class="chart-card-content">
-        <cl-chart-card [id]="161" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
+        <cl-chart-card [id]="'rewards_top_category'" [cardType]="ct.horizontalBar" [params]="params"></cl-chart-card>
       </div>
     </article>
 
     <article class="chart-card">
       <h3 class="chart-card-title" translate>REWARD_GRAPHIC_PAGE.CAMPAIGNS</h3>
       <div class="chart-card-content">
-        <cl-chart-card [id]="162" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
+        <cl-chart-card [id]="'rewards_top_campaigns'" [cardType]="ct.horizontalBar" [params]="params"></cl-chart-card>
       </div>
     </article>
 

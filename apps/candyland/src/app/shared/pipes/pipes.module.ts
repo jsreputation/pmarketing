@@ -8,6 +8,7 @@ import { UppercaseSplitPipe } from '@cl-shared/pipes/uppercase-split.pipe';
 import { EngagementTypePipe } from './engagement-type.pipe';
 import { SafePipe } from './safe.pipe';
 import { JoinMethodPipePipe } from '@cl-shared/pipes/join-method.pipe';
+import {ReplaceSpaceScorePipe} from '@cl-shared/pipes/underscore.pipe';
 
 const PIPES = [
   FullnamePipe,
@@ -17,7 +18,8 @@ const PIPES = [
   FieldsInArrayPipe,
   EngagementTypePipe,
   SafePipe,
-  JoinMethodPipePipe
+  JoinMethodPipePipe,
+  ReplaceSpaceScorePipe
 ];
 
 @NgModule({

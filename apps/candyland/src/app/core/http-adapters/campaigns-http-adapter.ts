@@ -23,7 +23,7 @@ export class CampaignsHttpAdapter {
     };
   }
 
-  public static transformToCampaign(data: any): ICampaignTableData {
+  public static transformToCampaign(data: IJsonApiItem<IWCampaignAttributes>): ICampaignTableData {
     const eType = data.attributes.engagement_type ?
       CampaignsHttpAdapter.EngagementTypePipeTransform(EngagementTypeFromAPIMapping[data.attributes.engagement_type])
       : '';
@@ -45,7 +45,7 @@ export class CampaignsHttpAdapter {
       .join(' ');
   }
 
-  public static transformTableData(data: any): ITableData<ICampaignTableData> {
+  public static transformTableData(data: IJsonApiListPayload<IWCampaignAttributes>): ITableData<ICampaignTableData> {
     return {
       data: data.data.map(item => CampaignsHttpAdapter.transformToCampaign(item)),
       meta: data.meta
@@ -67,11 +67,13 @@ export class CampaignsHttpAdapter {
     }
     return result;
   }
+
   public static transformAPIResponseToCampaign(data: IJsonApiItem<IWCampaignAttributes>): ICampaign {
     const campaignData = data.attributes;
     return {
       id: data.id,
       name: campaignData.name,
+      status: campaignData.status,
       engagement_id: `${campaignData.engagement_id}`,
       engagement_type: EngagementTypeFromAPIMapping[campaignData.engagement_type],
       campaignInfo: {
@@ -110,6 +112,7 @@ export class CampaignsHttpAdapter {
         start_date_time: startDate,
         end_date_time: endDate,
         goal: data.campaignInfo.goal,
+        pool_id: data.audience.select ? Number.parseInt(data.audience.select, 10) : null,
         labels: data.campaignInfo.labels || [],
         display_properties: { ...data.displayProperties, informationCollectionSetting }
       }

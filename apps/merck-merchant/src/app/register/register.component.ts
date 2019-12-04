@@ -1,8 +1,8 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {IMerchantAdminService, NotificationService, IMerchantProfile} from '@perx/core';
-import {isPlatformBrowser} from '@angular/common';
-import {Router} from '@angular/router';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IMerchantAdminService, NotificationService, IMerchantProfile, AuthenticationService } from '@perx/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,23 +16,42 @@ export class RegisterComponent implements OnInit {
   public merchantProfile: IMerchantProfile;
   private invitationToken: string;
   private clientId: string;
-
+  public appAccessTokenFetched: boolean;
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private notificationService: NotificationService,
     private merchantAdminService: IMerchantAdminService,
+    private authService: AuthenticationService,
     @Inject(PLATFORM_ID) private platformId: object
   ) {
     this.isMerchantNameLoading = true;
     this.initForm();
+    this.getAppToken();
   }
-
+  private getAppToken(): void {
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
+  }
   public ngOnInit(): void {
+
     if (isPlatformBrowser(this.platformId)) {
       const param = location.search;
-      this.invitationToken = new URLSearchParams(param).get('invitation_token');
-      this.clientId = new URLSearchParams(param).get('client_id');
+      const notSaveToken: string | null = new URLSearchParams(param).get('invitation_token');
+      const notSaveClientId: string | null = new URLSearchParams(param).get('client_id');
+      if (!notSaveToken || !notSaveClientId) {
+        return;
+      }
+      this.invitationToken = notSaveToken;
+      this.clientId = notSaveClientId;
 
       this.merchantAdminService.validateInvite(this.invitationToken, this.clientId).subscribe(
         (profile: IMerchantProfile) => {
@@ -70,8 +89,8 @@ export class RegisterComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const password: string = this.loginForm.get('password').value;
-    const confirmPassword: string = this.loginForm.get('confirm-password').value;
+    const password: string = this.loginForm.value.password;
+    const confirmPassword: string = this.loginForm.value['confirm-password'];
 
     if (password !== confirmPassword) {
       this.notificationService.addSnack('Passwords do not match.');

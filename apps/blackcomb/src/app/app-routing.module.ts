@@ -1,3 +1,4 @@
+import { PreAuthGuard } from './pre-auth.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
@@ -5,7 +6,7 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then((mod) => mod.LoginModule),
-    canActivate: [PublicGuard]
+    canActivate: [PublicGuard, PreAuthGuard]
   },
   {
     path: 'loading',

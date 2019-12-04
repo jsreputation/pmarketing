@@ -6,6 +6,7 @@ export enum GameType {
   shakeTheTree = 'shake',
   pinata = 'tap',
   scratch = 'scratch',
+  spin = 'spin'
 }
 
 export interface IEngagementTransaction {
@@ -24,7 +25,7 @@ export interface IGame {
   campaignId?: number;
   type: GameType;
   remainingNumberOfTries: number;
-  config: ITree | IPinata | IScratch | null;
+  config: ITree | IPinata | IScratch | ISpin | null;
   backgroundImg?: string;
   texts: {
     title?: string;
@@ -65,6 +66,36 @@ export function defaultScratch(): IScratch {
     uncoverPortionToTrigger: 90,
     nbTaps: 5
   };
+}
+
+export function defaultSpin(): ISpin {
+  return {
+    numberOfWedges: 5,
+    rewardSlots: [2, 4],
+    colorCtrls: {
+      0: 'red',
+      1: 'yellow',
+      2: 'green',
+      3: 'blue',
+      4: 'black'
+    },
+    rewardIcon: '',
+    wheelImg: '',
+    wheelPosition: '',
+    pointerImg: '',
+    background: ''
+  };
+}
+
+export interface ISpin {
+  numberOfWedges: number;
+  rewardSlots: number[];
+  colorCtrls: {[index: number]: string};
+  rewardIcon: string;
+  wheelImg: string;
+  wheelPosition: string;
+  pointerImg: string;
+  background: string;
 }
 
 export interface ITree {

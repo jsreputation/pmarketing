@@ -67,8 +67,8 @@ export class LoyaltyListPageComponent implements OnInit, OnDestroy {
       case this.loyaltyAction.activate:
         this.updateLoyaltyStatus(event.loyalty.id, this.loyaltyAction.activate);
         break;
-      case this.loyaltyAction.pause:
-        this.updateLoyaltyStatus(event.loyalty.id,  this.loyaltyAction.pause);
+      case this.loyaltyAction.paused:
+        this.updateLoyaltyStatus(event.loyalty.id,  this.loyaltyAction.paused);
         break;
     }
   }

@@ -8,17 +8,27 @@ import {
   MatInputModule,
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { Config, IGameService, InstantOutcomeService, AuthenticationService, NotificationService } from '@perx/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { PIComponent } from './pi.component';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
-describe('PIComponent', () => {
-  let component: PIComponent;
-  let fixture: ComponentFixture<PIComponent>;
+import {
+  Config,
+  IGameService,
+  InstantOutcomeService,
+  AuthenticationService,
+  NotificationService,
+  SurveyService,
+} from '@perx/core';
+
+import { SignInComponent } from './sign-in.component';
+
+describe('SignInComponent', () => {
+  let component: SignInComponent;
+  let fixture: ComponentFixture<SignInComponent>;
   const notificationServiceStub: Partial<NotificationService> = {};
 
   const configStub: Partial<Config> = {
@@ -37,18 +47,27 @@ describe('PIComponent', () => {
     getUserId: () => 0,
     autoLogin: () => of(),
     mergeUserById: () => of(),
+    getPI: () => '',
+    getUserAccessToken: () => '',
+    getAnonymous: () => true,
+    logout: () => {}
+  };
+
+  const surveyServiceStub: Partial<SurveyService> = {
+    postSurveyAnswer: () => of()
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        PIComponent
+        SignInComponent
       ],
       imports: [
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
         NoopAnimationsModule,
+        HttpClientModule,
         TranslateModule.forRoot(),
         RouterTestingModule
       ],
@@ -57,14 +76,15 @@ describe('PIComponent', () => {
         { provide: IGameService, useValue: gameServiceStub },
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: InstantOutcomeService, useValue: instantOutcomeServiceStub },
-        { provide: NotificationService, useValue: notificationServiceStub }
+        { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: SurveyService, useValue: surveyServiceStub },
       ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PIComponent);
+    fixture = TestBed.createComponent(SignInComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

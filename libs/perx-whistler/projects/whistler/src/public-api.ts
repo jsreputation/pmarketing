@@ -10,7 +10,8 @@ export {
   IJsonApiPatchItem,
   IJsonApiPatchData,
   IJsonApiPostItem,
-  IJsonApiPostData
+  IJsonApiPostData,
+  IWRelationshipsDataType
 } from './lib/jsonapi.payload';
 export { IWRewardDisplayProperties, IWProperties, IWAttbsObjEntity } from './lib/whistler.models';
 
@@ -25,6 +26,8 @@ export {
 export {
   IWRewardEntityAttributes,
   IWMetaData,
+  IWTierRewardCostsAttributes,
+  WRedemptionType
 } from './lib/reward/reward';
 export { IWAttbsObjTrans } from './lib/game/game';
 export {
@@ -92,14 +95,16 @@ export {
   IWInstantOutcomeEngagementAttributes,
   IWSurveyEngagementAttributes,
   IWStampEngagementAttributes,
-  IWScratchGameEngagementAttributes
+  IWScratchGameEngagementAttributes,
+  IWSpinGameEngagementAttributes
 } from './lib/engagement/engagement';
 export {
   WGameType,
   IWGameDisplayProperties,
   IWTreeDisplayProperties,
   IWPinataDisplayProperties,
-  IWScratchDisplayProperties
+  IWScratchDisplayProperties,
+  IWSpinDisplayProperties
 } from './lib/engagement/games';
 export {
   IWInstantOutcomeDisplayProperties

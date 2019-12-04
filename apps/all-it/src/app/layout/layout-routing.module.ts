@@ -9,7 +9,7 @@ import {
   ContentComponent,
   RewardDetailsComponent,
   LayoutComponent,
-  PIComponent
+  SignInComponent
 } from '@perx/blackcomb-pages';
 import { WalletGuard } from '../wallet.guard';
 
@@ -24,7 +24,7 @@ const routes: Routes = [
       { path: 'history', component: HistoryComponent },
       { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
-      { path: 'pi', component: PIComponent },
+      { path: 'pi', component: SignInComponent },
       {
         path: 'qr', loadChildren: (): any => import('../qr/qr.module').then((mod: any) => mod.QRModule)
 
@@ -48,6 +48,20 @@ const routes: Routes = [
       {
         path: 'give_reward/:id',
         loadChildren: (): any => import('../instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule)
+      },
+      {
+        path: 'profile',
+        loadChildren: (): any => import('../profile/profile.module').then((mod: any) => mod.ProfileModule)
+      },
+      {
+        path: 'transaction-history',
+        loadChildren: (): any => import('../transaction-history/transaction-history.module')
+                      .then((mod: any) => mod.TransactionHistoryModule)
+      },
+      {
+        path: 'change-password',
+        loadChildren: (): any => import('../change-password/change-password.module')
+                      .then((mod: any) => mod.ChangePasswordModule)
       },
       { path: 'reward-detail/:id', component: RewardDetailsComponent },
       { path: 'c/:key', component: ContentComponent },

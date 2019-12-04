@@ -1,9 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-
-import { V4ProfileService } from './v4-profile.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+
 import { ProfileModule } from './profile.module';
-import { ConfigModule, TokenStorage } from '../../public-api';
+import { V4ProfileService } from './v4-profile.service';
+
+import { ConfigModule } from '../config/config.module';
+import { TokenStorage } from '../utils/storage/token-storage.service';
 
 describe('ProfileService', () => {
   beforeEach(() => TestBed.configureTestingModule({

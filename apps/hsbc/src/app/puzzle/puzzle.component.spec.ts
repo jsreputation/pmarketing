@@ -12,6 +12,8 @@ import {
   IStampCard,
   StampCardState,
   AuthenticationService,
+  IVoucherService,
+  ThemesService,
   ConfigService
 } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -84,7 +86,9 @@ describe('PuzzleComponent', () => {
               paramMap: convertToParamMap({ campaignId: 1 })
             }
           }
-        }
+        },
+        { provide: IVoucherService, useValue: {} },
+        { provide: ThemesService, useValue: {} }
       ]
     })
       .compileComponents();

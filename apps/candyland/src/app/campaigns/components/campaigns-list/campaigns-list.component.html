@@ -65,7 +65,7 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #itemMenu="matMenu">
-          <button mat-menu-item (click)="editItem(element)">
+          <button mat-menu-item (click)="editItem(element)" [disabled]="element?.status === 'active'">
             {{'BTN_EDIT' | translate}}
           </button>
           <button mat-menu-item (click)="duplicateItem(element)">
@@ -76,7 +76,7 @@
             {{'PAUSE' | translate}}
           </button>
 
-          <button mat-menu-item *ngIf="element?.status === 'pause'" (click)="activateItem(element)">
+          <button mat-menu-item *ngIf="element?.status === 'paused'" (click)="activateItem(element)">
             {{'ACTIVATE' | translate}}
           </button>
 

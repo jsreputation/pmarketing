@@ -9,7 +9,7 @@ import {
   RewardDetailsComponent,
   ContentComponent,
   LayoutComponent,
-  PIComponent
+  SignInComponent
 } from '@perx/blackcomb-pages';
 import { HomeModule } from '../home/home.module';
 
@@ -27,7 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
     VoucherDetailComponent,
     RewardDetailsComponent,
     ContentComponent,
-    PIComponent
+    SignInComponent,
   ],
   imports: [
     WalletModule,

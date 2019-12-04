@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthenticationService, NotificationService, ISignUpData } from '@perx/core';
 
 @Component({
   selector: 'app-signup',
@@ -10,25 +11,41 @@ import { Router } from '@angular/router';
 export class SignupComponent {
 
   public signupForm: FormGroup;
+  public errorMessage: string | null;
+  public appAccessTokenFetched: boolean = false;
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthenticationService,
+    private notificationService: NotificationService
   ) {
     this.initForm();
+    this.getAppToken();
+  }
+
+  private getAppToken(): void {
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
   }
 
   private initForm(): void {
     this.signupForm = this.fb.group({
       title: ['', Validators.required],
       name: ['', Validators.required],
-      nric: ['', Validators.required],
       dob: ['', Validators.required],
       postcode: ['', Validators.required],
-      yearMembership: ['', Validators.required],
       countryCode: ['60', Validators.required],
       mobileNo: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', Validators.email],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
       accept_terms: [false, Validators.required],
@@ -37,13 +54,52 @@ export class SignupComponent {
   }
 
   public onSubmit(): void {
-    const passwordString = this.signupForm.get('password').value as string;
-    const confirmPassword = this.signupForm.get('confirmPassword').value as string;
-    if (passwordString !== confirmPassword) {
-      console.log('Password fields do not match');
+
+    if (!this.appAccessTokenFetched) {
+      this.errorMessage = 'Unknown error occurerd.';
       return;
     }
 
+    const passwordString = this.signupForm.get('password').value;
+    const confirmPassword = this.signupForm.get('confirmPassword').value;
+    if (passwordString !== confirmPassword) {
+      this.errorMessage = 'Passwords do not match';
+      return;
+    }
+
+    const name = this.signupForm.value.name;
+    const dob = this.signupForm.value.dob;
+
+    const mobileNumber = this.signupForm.value.mobileNo;
+    const countryCode = this.signupForm.value.countryCode;
+    const codeAndMobile = countryCode + mobileNumber;
+
+    const emailValue = this.signupForm.value.email;
+
+    const signUpData: ISignUpData = {
+      lastName: name,
+      birthDay: dob,
+      phone: codeAndMobile,
+      password: passwordString,
+      passwordConfirmation: confirmPassword,
+      email: emailValue
+    };
+
+    const titleString = this.signupForm.value.title;
+    const postcode = this.signupForm.value.postcode;
+
+    console.log(`Title ${titleString}`);
+    console.log(`Post code: ${postcode}`);
+    // TODO: How to pass these values in SignUpData.
+
+    this.authService.signup(signUpData)
+    .subscribe(
+      () => {
+        this.router.navigateByUrl('enter-pin/register', { state: { mobileNo: codeAndMobile } });
+      },
+      err => {
+        this.notificationService.addSnack(err.error.message);
+      });
   }
 
   public goToLogin(): void {
