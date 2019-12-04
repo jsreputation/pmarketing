@@ -154,30 +154,20 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       outcomeData => {
         const outcome = outcomeData.outcome;
         if (outcome.resultId) {
-          return this.rewardsService.getReward(outcome.slotNumber.toString()).pipe(
-            map(rewardData => ({
+          return this.rewardsService.getReward(outcome.resultId.toString()).pipe(
+            map(reward => ({
               outcome,
-              reward: { ...rewardData, limit: outcome.limit || null, probability: outcome.probability, },
-              slotInfo: {
-                slotNumber: outcome.slotNumber
-              }
+              reward,
+              enableProbability: true
             })),
             catchError(() =>
               of({
-                outcome,
-                reward: { limit: outcome.limit || null, probability: outcome.probability },
-                slotInfo: {
-                  stampsSlotNumber: outcome.slotNumber
-                }
+                outcome
               }))
           );
         }
         return of({
-          outcome,
-          reward: { limit: outcome.limit || null, probability: outcome.probability },
-          slotInfo: {
-            stampsSlotNumber: outcome.slotNumber
-          }
+          outcome
         });
       }
     ));
