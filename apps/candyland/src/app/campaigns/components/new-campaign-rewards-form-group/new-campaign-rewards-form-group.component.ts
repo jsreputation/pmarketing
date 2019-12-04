@@ -88,7 +88,8 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
               probability: 0,
               limit: null,
               resultId: Number.parseInt(reward.id, 10),
-              resultType: 'Ros::Reward::Entity'
+              resultType: 'Ros::Reward::Entity',
+              slotNumber: this.slotNumber
             },
             reward
           });

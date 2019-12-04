@@ -11,7 +11,7 @@
   <div>
     <div *ngFor="let outcome of outcomes; let i = index">
       <cl-reward-item class="item"
-        *ngIf="outcome.outcome.slotNumber >= 0"
+        *ngIf="outcome.outcome.slotNumber === slotNumber"
         [data]="outcome.reward"
         [enableProbability]="enableProbability"
         [isInvalid]="sumMoreThanError"
