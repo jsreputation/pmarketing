@@ -15,9 +15,9 @@ import {
   MatSelectModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NewCampaignRewardsStampsFormService } from '../../services/new-campaign-rewards-stamps-form.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 describe('NewCampaignRewardsPageComponent', () => {
@@ -50,7 +50,7 @@ describe('NewCampaignRewardsPageComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
-        RouterModule.forRoot([]),
+        RouterTestingModule,
         TranslateModule.forRoot(),
       ],
       declarations: [NewCampaignRewardsPageComponent],
