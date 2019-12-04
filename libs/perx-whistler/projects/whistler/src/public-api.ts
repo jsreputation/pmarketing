@@ -95,14 +95,16 @@ export {
   IWInstantOutcomeEngagementAttributes,
   IWSurveyEngagementAttributes,
   IWStampEngagementAttributes,
-  IWScratchGameEngagementAttributes
+  IWScratchGameEngagementAttributes,
+  IWSpinGameEngagementAttributes
 } from './lib/engagement/engagement';
 export {
   WGameType,
   IWGameDisplayProperties,
   IWTreeDisplayProperties,
   IWPinataDisplayProperties,
-  IWScratchDisplayProperties
+  IWScratchDisplayProperties,
+  IWSpinDisplayProperties
 } from './lib/engagement/games';
 export {
   IWInstantOutcomeDisplayProperties

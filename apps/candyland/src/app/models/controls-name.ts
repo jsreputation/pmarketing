@@ -22,5 +22,14 @@ export enum ControlsName {
   postStamps = 'postStamps',
   rewardPreStamps = 'rewardPreStamps',
   rewardPostStamps = 'rewardPostStamps',
-  stampsSlotNumber = 'stampsSlotNumber'
+  stampsSlotNumber = 'stampsSlotNumber',
+
+  numberOfWedges = 'numberOfWedges',
+  rewardSlots = 'rewardSlots',
+  rewardIcon = 'rewardIcon',
+  wheelImg = 'wheelImg',
+  wheelPosition = 'wheelPosition',
+  pointerImg = 'pointerImg',
+  colorCtrls = ' colorCtrls'
+
 }

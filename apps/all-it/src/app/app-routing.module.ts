@@ -22,6 +22,11 @@ const routes: Routes = [
     loadChildren: () => import('./loading/loading.module').then((mod) => mod.LoadingModule)
   },
   {
+    path: 'enter-pin/:type',
+    loadChildren: (): any => import('./enter-pin/enter-pin.module')
+      .then((mod: any) => mod.EnterPinModule)
+  },
+  {
     path: '',
     loadChildren: () => import('./layout/layout.module').then((mod) => mod.LayoutModule),
     canActivate: [ProtectedGuard]
