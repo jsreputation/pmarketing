@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ITotal } from '@cl-core/models/dashboard/total-active-interface';
 
 @Component({
   selector: 'cl-tab-item-view',

@@ -36,7 +36,7 @@ export class AudiencesHttpsService {
   }
 
   public updateUser(id: string, data: IJsonApiItem<any>): Observable<IJsonApiPayload<IWProfileAttributes>> {
-    return this.http.post<IJsonApiPayload<IWProfileAttributes>>(ApiConfig.getAllUsers + '/' + id, { data });
+    return this.http.patch<IJsonApiPayload<IWProfileAttributes>>(ApiConfig.getAllUsers + '/' + id, { data });
   }
 
   public updateUserPools(data: IJsonApiItem<any>): Observable<IJsonApiListPayload<IWPoolsAttributes>> {

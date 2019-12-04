@@ -2,6 +2,8 @@
   "AUDIENCE_FEATURE": {
     "AUDIENCES": "Audiences",
     "ADD_USER": "Add User",
+    "EDIT_USER": "Edit User",
+    "EDIT": "Edit",
     "SEARCH_FOR_USERS": "Search for users",
     "SEARCH_FOR_AUDIENCE": "Search for audience",
     "ID": "ID",
@@ -49,6 +51,6 @@
     "CURRENT_EXPIRY_DATE": "Current Expiry Date",
     "TO": "To",
     "NEW": "New",
-    "ENTER_NEW_EXPIRY_DATE": "Enter New Expiry Date",
+    "ENTER_NEW_EXPIRY_DATE": "Enter New Expiry Date"
   }
 }

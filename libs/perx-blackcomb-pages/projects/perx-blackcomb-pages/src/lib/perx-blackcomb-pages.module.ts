@@ -18,6 +18,7 @@ import {
   MatSelectModule,
   MatDatepickerModule,
   MatToolbarModule,
+  MatListModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
@@ -43,7 +44,9 @@ import {
   RewardsListTabbedComponent,
   RewardsListComponent,
   LoyaltySummaryComponent,
-  NewsfeedComponent
+  LoyaltyTransactionsListComponent,
+  NewsfeedComponent,
+  PinInputComponent
 } from '@perx/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -52,7 +55,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { LoginComponent } from './login/login.component';
-import { PIComponent } from './pi/pi.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 import { QRComponent } from './qr/qr.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { RewardDetailsComponent } from './reward-details/reward-details.component';
@@ -66,6 +69,10 @@ import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
 import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
 import { WalletHistoryComponent } from './wallet-history/wallet-history.component';
+import { ProfileComponent } from './profile/profile.component';
+import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { EnterPinComponent } from './enter-pin/enter-pin.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -82,7 +89,7 @@ const comps: any[] = [
   LoadingComponent,
   RedeemComponent,
   LoginComponent,
-  PIComponent,
+  SignInComponent,
   QRComponent,
   RewardDetailsComponent,
   PerxRewardComponent,
@@ -103,12 +110,18 @@ const comps: any[] = [
   WalletComponent,
   RewardsListTabbedComponent,
   LoyaltySummaryComponent,
+  LoyaltyTransactionsListComponent,
   RewardsListComponent,
   LayoutComponent,
   HomeComponent,
   GamesCollectionComponent,
   NewsfeedComponent,
-  WalletHistoryComponent
+  WalletHistoryComponent,
+  TransactionHistoryComponent,
+  ProfileComponent,
+  ChangePasswordComponent,
+  EnterPinComponent,
+  PinInputComponent
 ];
 
 @NgModule({
@@ -134,7 +147,8 @@ const comps: any[] = [
     MatSelectModule,
     MatDatepickerModule,
     TranslateModule.forChild(),
-    MatToolbarModule
+    MatToolbarModule,
+    MatListModule
   ],
   exports: [
     ...comps,

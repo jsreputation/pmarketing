@@ -1,10 +1,11 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
-import { browser, protractor } from 'protractor';
-import { DashboardAppPage, RewardAppPage } from '../pages/candylandApp.po';
+import { browser, protractor, ProtractorExpectedConditions } from 'protractor';
+import { DashboardAppPage, RewardAppPage, ElementApp, LoginAppPage } from '../pages/candylandApp.po';
 
 let  DashboardPage: DashboardAppPage;
 let  RewardPage: RewardAppPage;
+const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 
 Before( () => {
   // initializing page objects instances
@@ -13,13 +14,26 @@ Before( () => {
 });
 // Ensure that reward tab is present
 Given(/^1_I am on dashboard page$/, async () => {
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  // entering correct account id
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
+
   await DashboardPage.navigateToDashboard();
 });
 
 When(/^1_I do nothing$/, () => {});
 
 Then(/^1_The reward tab should be present.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(RewardPage.rewardTab()), 5000);
   expect(await RewardPage.rewardTab().getText()).to.be.equal('Rewards');
 });
@@ -30,7 +44,6 @@ Given(/^2_I am on dashboard page$/, async () => {
 });
 
 When(/^2_I click on the rewards tab$/, async () => {
-  const ec = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(RewardPage.rewardTab()), 5000);
   await RewardPage.rewardTab().click();
 });
@@ -45,17 +58,16 @@ Given(/^3_I am on the reward page$/, async () => {
 });
 
 Then(/^3_I should see the search bar ,reward list and create new button.$/, async () => {
-    const ec = protractor.ExpectedConditions;
     // waiting for search bar to load
     await browser.wait(ec.presenceOf(RewardPage.searchBar()), 5000);
     // waiting for reward list to load
     await browser.wait(ec.presenceOf(RewardPage.rewardList()), 5000);
     // waiting for create new button to load
-    await browser.wait(ec.presenceOf(RewardPage.createNewButton()), 5000);
+    await browser.wait(ec.presenceOf(ElementApp.clButton()), 5000);
     // asserting the presence of search bar , reward list , create new button
     expect(await RewardPage.searchBar().isPresent()).to.equal(true);
     expect(await RewardPage.rewardList().isPresent()).to.equal(true);
-    expect(await RewardPage.createNewButton().isPresent()).to.equal(true);
+    expect(await ElementApp.clButton().isPresent()).to.equal(true);
 });
 
 // Ensure that create new reward button is functional
@@ -64,9 +76,8 @@ Given(/^4_I am on the reward page$/, async () => {
 });
 
 When(/^4_I click on the create new button$/, async () => {
-    const ec = protractor.ExpectedConditions;
-    await browser.wait(ec.elementToBeClickable(RewardPage.createNewButton()), 5000);
-    await RewardPage.createNewButton().click();
+    await browser.wait(ec.elementToBeClickable(ElementApp.clButton()), 5000);
+    await ElementApp.clButton().click();
     await browser.sleep(3000);
 });
 
@@ -80,7 +91,6 @@ Given(/^5_I am on the reward page$/, async () => {
 });
 
 When(/^5_I enter a filter criteria$/, async () => {
-  const ec = protractor.ExpectedConditions;
   // waiting for search bar to load
   await browser.wait(ec.presenceOf(RewardPage.searchBar()), 5000);
   // entering search criteria

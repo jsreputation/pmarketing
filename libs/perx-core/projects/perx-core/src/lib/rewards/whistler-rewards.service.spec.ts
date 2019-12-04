@@ -2,10 +2,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { WhistlerRewardsService } from './whistler-rewards.service';
 import { ConfigModule } from '../config/config.module';
-import { IMerchantsService } from '../merchants/imerchants.service';
 import { of } from 'rxjs';
 import { IReward } from './models/reward.model';
-import { IMerchant } from '../merchants/models/merchants.model';
 import { HttpClient } from '@angular/common/http';
 import { takeLast } from 'rxjs/operators';
 
@@ -14,19 +12,12 @@ import {
   IJsonApiItem,
   IJsonApiListPayload,
   IJsonApiItemPayload,
+  WRedemptionType,
 } from '@perx/whistler';
 
 describe('WhistlerRewardsService', () => {
   let httpClientSpy: { get: jasmine.Spy };
   let service: WhistlerRewardsService;
-  const mockMerchant: IMerchant = {
-    id: 42,
-    name: 'merchant 42'
-  };
-
-  const merchantsServiceStub = {
-    getMerchant: () => of(mockMerchant)
-  };
 
   const environment = {
     apiHost: 'https://blabla',
@@ -44,7 +35,7 @@ describe('WhistlerRewardsService', () => {
       name: '42',
       reward_type: '42',
       category: '42',
-      redemption_type: 'Promo Code',
+      redemption_type: WRedemptionType.promoCode,
       cost_of_reward: 42,
       tags: [],
       display_properties: {
@@ -61,7 +52,7 @@ describe('WhistlerRewardsService', () => {
       name: '42',
       reward_type: '42',
       category: '42',
-      redemption_type: 'QR Code',
+      redemption_type: WRedemptionType.qrCode,
       cost_of_reward: 42,
       tags: [],
       display_properties: {
@@ -79,7 +70,6 @@ describe('WhistlerRewardsService', () => {
         ConfigModule.forRoot({ ...environment })
       ],
       providers: [
-        { provide: IMerchantsService, useValue: merchantsServiceStub },
         { provide: HttpClient, useValue: httpClientSpy }
       ]
     });
@@ -104,7 +94,10 @@ describe('WhistlerRewardsService', () => {
       });
 
     expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
-    expect(httpClientSpy.get.calls.argsFor(0)).toEqual(['https://blabla/reward/entities/42']);
+    expect(httpClientSpy.get.calls.argsFor(0)).toEqual([
+      'https://blabla/reward/entities/42',
+      { params: { include: 'organization,tier_reward_costs' } }
+    ]);
   });
 
   it('should get a reward from its id with merchant', (done: DoneFn) => {
@@ -116,12 +109,14 @@ describe('WhistlerRewardsService', () => {
     service.getReward(42)
       .subscribe((r: IReward) => {
         expect(`${r.id}`).toEqual(mockReward.id);
-        expect(r.merchantName).toEqual(mockMerchant.name);
         done();
       });
 
     expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
-    expect(httpClientSpy.get.calls.argsFor(0)).toEqual(['https://blabla/reward/entities/42']);
+    expect(httpClientSpy.get.calls.argsFor(0)).toEqual([
+      'https://blabla/reward/entities/42',
+      { params: { include: 'organization,tier_reward_costs' } }
+    ]);
   });
 
   it('should get a page of rewards', (done: DoneFn) => {
@@ -144,7 +139,7 @@ describe('WhistlerRewardsService', () => {
     expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
     expect(httpClientSpy.get.calls.argsFor(0)).toEqual([
       'https://blabla/reward/entities',
-      { params: { 'page[number]': '1', 'page[size]': '10', 'filter[tags]': '42tags', 'filter[category]': '42categories' } }
+      { params: { 'page[number]': '1', 'page[size]': '10', 'filter[tags]': '42tags', 'filter[category]': '42categories', include: 'organization,tier_reward_costs' } }
     ]);
   });
 
@@ -171,7 +166,7 @@ describe('WhistlerRewardsService', () => {
     expect(httpClientSpy.get.calls.count()).toBe(2, 'two calls');
     expect(httpClientSpy.get.calls.argsFor(0)).toEqual([
       'https://blabla/reward/entities',
-      { params: { 'page[number]': '1', 'page[size]': '10', 'filter[tags]': '42tags', 'filter[category]': '42categories' } }
+      { params: { 'page[number]': '1', 'page[size]': '10', 'filter[tags]': '42tags', 'filter[category]': '42categories', include: 'organization,tier_reward_costs' } }
     ]);
   });
 });

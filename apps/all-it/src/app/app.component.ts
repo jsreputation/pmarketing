@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { PopupComponent, NotificationService, IPopupConfig, ITheme, AuthenticationService } from '@perx/core';
 import {
   HomeComponent,
@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   constructor(
     private notificationService: NotificationService,
     private dialog: MatDialog,
+    private snackBar: MatSnackBar,
     private location: Location,
     private router: Router,
     private authService: AuthenticationService,
@@ -47,7 +48,8 @@ export class AppComponent implements OnInit {
 
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
-
+    this.notificationService.$snack
+      .subscribe((msg: string) => this.snackBar.open(msg, 'x', { duration: 2000 }));
     this.router.events
       .pipe(
         filter((event: Event) => event instanceof NavigationEnd),

@@ -2,19 +2,18 @@
   <header class="dialog-header-wrap">
     <h2 class="dialog-title" id="dialogTitle-replenishVoucherCodes">
       {{'REPLENISH_VOUCHER_CODES' | translate}}
-     </h2>
+    </h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
   </header>
   <mat-dialog-content>
     <div class="dialog-content">
-
       <!--      Single code-->
       <ng-container *ngIf="voucherSettings?.voucherCode?.type === 'single_code'">
         <mat-form-field>
           <input type="number" matInput [min]="0" [max]="10000"
-                 (input)="setReplenishVoucherCodes(+$event.target.value)"/>
+            (input)="setReplenishVoucherCodes(+$event.target.value)" />
           <mat-hint>
             {{'VOUCHER_CODE_AVAILABLE' | translate}}
           </mat-hint>
@@ -34,7 +33,7 @@
       <ng-container *ngIf="voucherSettings?.voucherCode?.type === 'system_generated'">
         <mat-form-field>
           <input type="number" matInput [min]="0" [max]="10000"
-                 (change)="setReplenishVoucherCodes(+$event.target.value)"/>
+            (change)="setReplenishVoucherCodes(+$event.target.value)" />
           <mat-hint>
             {{'VOUCHER_CODE_AVAILABLE' | translate}}
           </mat-hint>
@@ -44,17 +43,18 @@
             {{'VOUCHER_CODE_OPTIONS.UNIQUE_CODES:_SYSTEM_GENERATED' | translate}}
           </label>
           <div class="code-preview-block">
-            {{voucherSettings?.voucherCode?.uniqueGeneratedCode?.prefix}} ({{voucherSettings?.voucherCode?.uniqueGeneratedCode?.codeFormat}})
+            {{voucherSettings?.voucherCode?.uniqueGeneratedCode?.prefix}}
+            ({{voucherSettings?.voucherCode?.uniqueGeneratedCode?.codeFormat}})
           </div>
         </div>
       </ng-container>
       <!--/ Unique codes: System generated-->
 
       <!-- Unique codes: User Upload-->
-      <!-- <ng-container *ngIf="data?.uniqueUserUploadCode">
+      <ng-container *ngIf="voucherSettings?.voucherCode?.type === 'user_uploaded'">
         <cl-upload-file label="Unique codes: User Upload"
-                        (uploadFile)="setReplenishVoucherCodes(20000)"
-                        (deleteFile)="setReplenishVoucherCodes($event)">
+          (uploadFile)="setReplenishVoucherCodes(20000)"
+          (deleteFile)="setReplenishVoucherCodes($event)">
         </cl-upload-file>
         <div class="code-preview" *ngIf="replenishVoucherCodes">
           <label class="dialog-content-title">Total Number of Voucher</label>
@@ -62,14 +62,14 @@
             {{replenishVoucherCodes | number: '2.'}}
           </p>
         </div>
-      </ng-container> -->
+      </ng-container>
       <!--/ Unique codes: User Upload-->
 
       <!--Merchant PIN-->
       <ng-container *ngIf="voucherSettings?.merchantPIN">
         <mat-form-field>
           <input type="number" matInput [min]="0" [max]="10000"
-                 (change)="setReplenishVoucherCodes($event.target.value)"/>
+            (change)="setReplenishVoucherCodes($event.target.value)" />
           <mat-hint>
             {{'VOUCHER_CODE_AVAILABLE' | translate}}
           </mat-hint>
@@ -89,23 +89,21 @@
   </mat-dialog-content>
   <footer class="dialog-actions">
     <cl-button classList="secondary"
-               class="actions-close"
-               (click)="close()"
-               [disableRipple]="true">
-        <span>
-          {{'BTN_CANCEL' | translate}}
-        </span>
+      class="actions-close"
+      (click)="close()"
+      [disableRipple]="true">
+      <span>
+        {{'BTN_CANCEL' | translate}}
+      </span>
     </cl-button>
 
     <cl-button classList="primary"
-               (click)="replenish()"
-               [disable]="!replenishVoucherCodes"
-               [disableRipple]="true">
-        <span>
-          {{'REPLENISH' | translate}}
-        </span>
+      (click)="replenish()"
+      [disable]="!replenishVoucherCodes"
+      [disableRipple]="true">
+      <span>
+        {{'REPLENISH' | translate}}
+      </span>
     </cl-button>
   </footer>
 </aside>
-
-

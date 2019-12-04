@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ICampaignService, CampaignType, NotificationService, IStampCard, IConfig, ConfigService, ICampaign, StampService } from '@perx/core';
+import { ICampaignService, CampaignType, NotificationService, IStampCard, IConfig, ConfigService, ICampaign, StampService, StampState } from '@perx/core';
 import { map, mergeMap, tap, toArray } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
 
@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   public campaignId: number | null | undefined;
   public selectedTab: number = 0;
   private displayCampaignAs: string = 'puzzle';
-  public puzzleTextFn: () => string;
+  public puzzleTextFn: (puzzle: IStampCard) => string;
   public titleFn: (index?: number) => string;
   public sourceType: string | null = null;
 
@@ -35,7 +35,8 @@ export class HomeComponent implements OnInit {
 
         if (config.sourceType === 'hsbc-xmas') {
           this.displayCampaignAs = 'stamp_card';
-          this.puzzleTextFn = () => 'new stamps';
+          this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
+              puzzle.stamps.filter(st => st.state === StampState.issued).length !== 1 ? 'new stamps' : 'new stamp';
           this.titleFn = (index?: number) => index !== undefined ? `Stamp Card ${this.puzzleIndex(index)} out of 12` : '';
         }
 

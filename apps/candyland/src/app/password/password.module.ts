@@ -1,11 +1,11 @@
-import {NgModule} from '@angular/core';
-import {MatButtonModule, MatIconModule, MatInputModule, MatToolbarModule} from '@angular/material';
-import {ForgetPasswordComponent} from './containers/forget-password/forget-password.component';
-import {UpdateUserComponent} from './containers/update-user/update-user.component';
-import {CommonModule} from '@angular/common';
-import {PasswordRoutingModule} from './password-routing.module';
+import { NgModule } from '@angular/core';
+import { MatButtonModule, MatIconModule, MatInputModule, MatToolbarModule, MatSnackBarModule } from '@angular/material';
+import { ForgetPasswordComponent } from './containers/forget-password/forget-password.component';
+import { UpdateUserComponent } from './containers/update-user/update-user.component';
+import { CommonModule } from '@angular/common';
+import { PasswordRoutingModule } from './password-routing.module';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
-import {ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     ButtonModule,
     MatButtonModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
   ],
 })
-export class PasswordModule {}
+export class PasswordModule { }

@@ -14,7 +14,7 @@ export enum CardType {
   map = 'map',
   trend = 'trend',
   table = 'table',
-  calendarHeatmap = 'calendardHeatmap'
+  calendarHeatmap = 'calendarHeatmap'
 }
 
 @Component({
@@ -27,7 +27,7 @@ export class MetaCardComponent implements OnChanges, OnDestroy {
   @Input()
   public parameters: { [key: string]: string };
   @Input()
-  public id: number;
+  public id: number | string;
   @Input()
   public cardType: CardType = CardType.verticalBar;
 
@@ -41,8 +41,12 @@ export class MetaCardComponent implements OnChanges, OnDestroy {
   private currentRequest: Subscription;
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private dataService: DataService,
-              private cd: ChangeDetectorRef) {
+  public ct: typeof CardType = CardType;
+
+  constructor(
+    private dataService: DataService,
+    private cd: ChangeDetectorRef
+  ) {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

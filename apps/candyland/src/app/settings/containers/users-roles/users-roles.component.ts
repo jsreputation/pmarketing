@@ -1,9 +1,11 @@
 import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { SettingsService } from '@cl-core/services';
-import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popup/invite-new-users-popup.component';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { SettingsService, AuthService } from '@cl-core/services';
+import { InviteNewUsersPopupComponent, InviteNewUsersPopupComponentData } from './containers/invite-new-users-popup/invite-new-users-popup.component';
 import { filter, switchMap } from 'rxjs/operators';
 import { CustomDataSource, DataSourceStates } from '@cl-shared/table/data-source/custom-data-source';
+import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
+import { Role } from '@cl-helpers/role.enum';
 
 @Component({
   selector: 'cl-users-roles',
@@ -13,12 +15,15 @@ import { CustomDataSource, DataSourceStates } from '@cl-shared/table/data-source
 export class UsersRolesComponent implements AfterViewInit {
   public dataSource: CustomDataSource<IAMUser>;
   public dataSourceStates: typeof DataSourceStates = DataSourceStates;
-  public config: any;
-  private groups: any;
+  public config: Role[];
+  private groups: any[];
 
-  constructor(private settingsService: SettingsService,
-              public cd: ChangeDetectorRef,
-              public dialog: MatDialog
+  constructor(
+    private settingsService: SettingsService,
+    private authService: AuthService,
+    public cd: ChangeDetectorRef,
+    private dialog: MatDialog,
+    private snack: MatSnackBar
   ) {
     this.dataSource = new CustomDataSource<IAMUser>(this.settingsService);
   }
@@ -30,60 +35,55 @@ export class UsersRolesComponent implements AfterViewInit {
   }
 
   public openDialogInviteNewUsers(): void {
-    const dialogRef = this.dialog.open(InviteNewUsersPopupComponent, {
+    this.dialog.open<InviteNewUsersPopupComponent, InviteNewUsersPopupComponentData, IAMUser>(InviteNewUsersPopupComponent, {
       panelClass: 'invite-new-users-dialog',
       data: {
         groups: this.groups
       }
-    });
-    dialogRef.afterClosed()
+    })
+      .afterClosed()
       .pipe(
         filter(Boolean),
-        switchMap((newUser: any) => this.settingsService.inviteNewUser(newUser))
+        switchMap((newUser: IAMUser) => this.settingsService.inviteNewUser(newUser))
       )
-      .subscribe(() => {
-        this.dataSource.updateData();
-      });
+      .subscribe(() => this.dataSource.updateData());
   }
 
   public openDialogEditUsers(user: IAMUser): void {
-    const dialogRef = this.dialog.open(InviteNewUsersPopupComponent, {
-      panelClass: 'invite-new-users-dialog',
-      data: {
-        user,
-        groups: this.groups
+    this.dialog.open<InviteNewUsersPopupComponent, InviteNewUsersPopupComponentData, IAMUser>(
+      InviteNewUsersPopupComponent,
+      {
+        panelClass: 'invite-new-users-dialog',
+        data: {
+          user,
+          groups: this.groups
+        }
       }
-    });
-
-    dialogRef.afterClosed()
+    )
+      .afterClosed()
       .pipe(
         filter(Boolean),
-        switchMap((updatedUser: any) => this.settingsService.patchUser(user, updatedUser))
-        // switchMap((value: any) => {
-        //   if (value) {
-        //     const newUser = this.settingsTransformDataService.transformInviteUser({...user, ...value});
-        //     return this.settingsService.patchUser(newUser, user.id);
-        //   }
-        //   return of(null);
-        // })
+        switchMap((updatedUser: IAMUser) => this.settingsService.patchUser(user, updatedUser))
       )
-      .subscribe(() => {
-        this.dataSource.updateData();
-      });
+      .subscribe(() => this.dataSource.updateData());
   }
 
   public deleteUser(id: string): void {
     this.settingsService.deleteUser(id)
-      .subscribe(() => {
-        this.dataSource.updateData();
-      });
+      .subscribe(() => this.dataSource.updateData());
   }
 
   private getAllGroups(): void {
     this.settingsService.getAllGroups()
-      .subscribe((res) => {
-        this.groups = res.getModels();
-      });
+      .subscribe((res) => this.groups = res.getModels());
   }
 
+  public resetPassword(user: IAMUser): void {
+    const urnSegments: string[] = user.urn.split(':');
+    const accountId: string = urnSegments[urnSegments.length - 2];
+    this.authService.resetPassword(accountId, user.username).subscribe(
+      () => this.snack.open('User will receive an email with reset instructions', 'x'),
+      () => this.snack.open('Something went wrong', 'x')
+    );
+  }
 }
