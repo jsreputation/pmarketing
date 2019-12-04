@@ -162,7 +162,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     });
   }
   // generates an array of color controls
-  private generateColorCtrls(): ({[key: string]: string}) {
+  private generateColorCtrls(): ({[key: string]: AbstractControl}) {
     const rainbowColors = this.rainbowGenerator(this.MAX_WEDGES);
     return rainbowColors.reduce((obj, item, index) => {
       obj[index] = this.fb.control(item, [Validators.required]);
