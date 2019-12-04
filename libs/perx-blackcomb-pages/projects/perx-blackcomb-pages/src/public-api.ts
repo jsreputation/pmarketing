@@ -26,3 +26,4 @@ export { WalletHistoryComponent } from './lib/wallet-history/wallet-history.comp
 export { ProfileComponent } from './lib/profile/profile.component';
 export { TransactionHistoryComponent } from './lib/transaction-history/transaction-history.component';
 export { ChangePasswordComponent } from './lib/change-password/change-password.component';
+export { EnterPinComponent } from './lib/enter-pin/enter-pin.component';
