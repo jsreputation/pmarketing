@@ -55,6 +55,7 @@
     "tsickle": "^0.35.0",
     "tslint": "~5.19.0",
     "tslint-consistent-codestyle": "^1.15.1",
+    "tslint-no-focused-test": "^0.5.0",
     "typescript": "~3.4.3",
     "eslint": "~6.4.0",
     "@typescript-eslint/eslint-plugin": "~2.3.0",

@@ -15,9 +15,16 @@ import {
   Validators,
 } from '@angular/forms';
 
+import { Observable } from 'rxjs';
+
 import { ClValidators } from '@cl-helpers/cl-validators';
-import { AudiencesService } from '@cl-core-services';
-import {Type} from '../../audience.model';
+import { ICountries } from '@cl-core/models/survey/survey-common.interface';
+import {
+  AudiencesService,
+  SurveyService,
+} from '@cl-core-services';
+
+import { Type } from '../../audience.model';
 
 @Component({
   selector: 'cl-upsert-user-popup',
@@ -28,14 +35,11 @@ import {Type} from '../../audience.model';
 export class UpsertUserPopupComponent implements OnInit {
   public form: FormGroup;
   public pools: any;
+  public countriesList$: Observable<ICountries>;
   public config: { [key: string]: OptionConfig[] } = {
     gender: [
       {title: 'Male', value: 'male'},
       {title: 'Female', value: 'female'}
-    ],
-    country: [
-      {title: 'Country 1', value: 'country1'},
-      {title: 'Country 2', value: 'country2'}
     ],
     audienceList: [
       {title: 'AUDIENCE_FEATURE.GOLD_USERS', value: 'Gold_users'},
@@ -44,9 +48,14 @@ export class UpsertUserPopupComponent implements OnInit {
     ]
   };
 
+  private loadCountries(): void {
+    this.countriesList$ = this.surveyService.getDefaultCountryCode();
+  }
+
   constructor(public dialogRef: MatDialogRef<UpsertUserPopupComponent>,
               private fb: FormBuilder,
               private audiencesService: AudiencesService,
+              private surveyService: SurveyService,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
@@ -93,6 +102,7 @@ export class UpsertUserPopupComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.loadCountries();
     this.initForm();
     this.setForm();
     this.getPools();

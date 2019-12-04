@@ -43,7 +43,6 @@ export class AudiencesUsersListComponent implements AfterViewInit {
     'primary_identifier',
     'phone',
     'audienceList',
-    'edit',
     'actions',
   ];
   @Input() public config: any;

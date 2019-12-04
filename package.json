@@ -42,8 +42,6 @@
     "@typescript-eslint/parser": "^2.3.3",
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "lerna": "^3.14.1"
+    "lerna": "^3.14.1"   
   }
 }
-
-
