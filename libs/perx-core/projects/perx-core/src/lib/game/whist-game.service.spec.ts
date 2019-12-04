@@ -15,11 +15,12 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 
-describe('WhistlerGameService', () => {
+fdescribe('WhistlerGameService', () => {
   let httpTestingController: HttpTestingController;
   let service: WhistlerGameService;
   const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', {
-    get: of({})
+    get: of({}),
+    getFullVoucher: of()
   });
 
   const environment = {
@@ -220,7 +221,7 @@ describe('WhistlerGameService', () => {
       }));
       gameService.play(500, 500).subscribe(() => { });
       tick();
-      expect(vouchersServiceMock.get).toHaveBeenCalled();
+      expect(vouchersServiceMock.getFullVoucher).toHaveBeenCalled();
     })));
 
   it('getGamesFromCampaign', fakeAsync(inject([WhistlerGameService, HttpClient],
