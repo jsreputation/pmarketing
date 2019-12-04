@@ -10,7 +10,7 @@
           <mat-form-field appearance="outline" class="half-block">
             <mat-select [formControl]="filter" [placeholder]="'CAMPAIGN.FILTER_BY' | translate">
               <ng-container *ngFor="let option of typeFilterConfig">
-                <mat-option [value]="option.value">{{option.title | engagementType}}</mat-option>
+                <mat-option [value]="option.value">{{option.title | engagementType | replaceSpaceWithScore | translate}}</mat-option>
               </ng-container>
             </mat-select>
           </mat-form-field>

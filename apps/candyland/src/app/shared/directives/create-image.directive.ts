@@ -45,20 +45,17 @@ export class CreateImageDirective {
     }
   }
 
- public downloadImage(): Observable<any> {
-    const option: Partial<Options> = { useCORS: true, logging: false, allowTaint: false};
-    const element: any = (this.element.nativeElement as HTMLElement);
+ public downloadImage(): Observable<Blob> {
+    const option: Partial<Options> = { useCORS: true, logging: false, allowTaint: false, removeContainer: false};
+    const element: HTMLElement = (this.element.nativeElement as HTMLElement);
     const htmlCanvas: any = html2canvas;
     return fromPromise(htmlCanvas(element, option))
       .pipe(
-        map((canvas: any) => {
-          return this.b64toBlob(canvas.toDataURL('image/png'));
-        })
+        map((canvas: HTMLCanvasElement) => this.b64toBlob(canvas.toDataURL('image/png')))
       );
   }
 
   public b64toBlob(dataURI: string): Blob {
-
     const byteString = atob(dataURI.split(',')[1]);
     const ab = new ArrayBuffer(byteString.length);
     const ia = new Uint8Array(ab);
