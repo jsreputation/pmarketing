@@ -8,18 +8,27 @@ import {
   MatInputModule,
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { Config, IGameService, InstantOutcomeService, AuthenticationService, NotificationService, SurveyService } from '@perx/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { PIComponent } from './pi.component';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 
-describe('PIComponent', () => {
-  let component: PIComponent;
-  let fixture: ComponentFixture<PIComponent>;
+import {
+  Config,
+  IGameService,
+  InstantOutcomeService,
+  AuthenticationService,
+  NotificationService,
+  SurveyService,
+} from '@perx/core';
+
+import { SignInComponent } from './sign-in.component';
+
+describe('SignInComponent', () => {
+  let component: SignInComponent;
+  let fixture: ComponentFixture<SignInComponent>;
   const notificationServiceStub: Partial<NotificationService> = {};
 
   const configStub: Partial<Config> = {
@@ -51,7 +60,7 @@ describe('PIComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        PIComponent
+        SignInComponent
       ],
       imports: [
         ReactiveFormsModule,
@@ -75,7 +84,7 @@ describe('PIComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PIComponent);
+    fixture = TestBed.createComponent(SignInComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,11 +1,12 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
-import { browser, protractor } from 'protractor';
-import { EngagementAppPage, CreateSurveyAppPage } from '../pages/candylandApp.po';
+import { browser, protractor, ProtractorExpectedConditions } from 'protractor';
+import { EngagementAppPage, CreateSurveyAppPage, LoginAppPage } from '../pages/candylandApp.po';
 import * as path from 'path' ;
 
 let PageEngagement: EngagementAppPage;
 let CreateSurveyPage: CreateSurveyAppPage;
+const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 
 Before( () => {
   // initializing page objects instances
@@ -14,7 +15,19 @@ Before( () => {
 });
 // Ensure that clicking the survey button leads to survey creation page
 Given(/^1_I am on the customer engagment dialog box$/, async () => {
-  const ec = protractor.ExpectedConditions;
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  // entering correct account id
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
+
   await PageEngagement.navigateToEngagement();
   await browser.wait(ec.presenceOf(CreateSurveyPage.surveyCreateNewButton()), 5000);
   // clicking on the create new button
@@ -23,7 +36,6 @@ Given(/^1_I am on the customer engagment dialog box$/, async () => {
 
 When(/^1_I click on the survey option$/, async () => {
   // clicking on the survey option
-  const ec = protractor.ExpectedConditions;
   await browser.wait(ec.presenceOf(PageEngagement.engagementTypeOptions().first()), 5000);
   // clicking the survey option
   await PageEngagement.engagementTypeOptions().first().click();
@@ -44,7 +56,6 @@ Given(/^2_that I am on the survey creation page$/, async () => {
 When(/^2_I do nothing$/,  () => {});
 
 Then(/^2_The relevant text input fields are present.$/, async () => {
-   const ec = protractor.ExpectedConditions ;
    // waiting for header text field
    await browser.wait(ec.presenceOf(CreateSurveyPage.headerByIdField()), 7000 );
    // waiting for headline text field
@@ -74,7 +85,6 @@ Given(/^4_that I am on the survey creation page$/, async () => {
   });
 
 When(/^4_I entered a empty text string in the headline text box.$/, async () => {
-    const ec = protractor.ExpectedConditions;
     await browser.wait(ec.presenceOf(CreateSurveyPage.headlineByIdField()), 6000);
     // to elicit the required field message , i click on the headline box first then sub headline box
     await CreateSurveyPage.headlineByIdField().click();
@@ -82,11 +92,11 @@ When(/^4_I entered a empty text string in the headline text box.$/, async () => 
   });
 
 Then(/^4_There is an error message present.$/, async () => {
-   const ec = protractor.ExpectedConditions;
    await browser.wait(ec.presenceOf(CreateSurveyPage.errorMessageByIdField()), 6000 );
    expect(await CreateSurveyPage.errorMessageByIdField().getText()).to.contain('Required field');
 });
 
+// This scenario is not valid for now, as far as sub-headline is no longer a required field
 // Verifiying that sub-headline message field generates error message when having null value.
 Given(/^5_that I am on the survey creation page$/, async () => {
   await CreateSurveyPage.navigateToSurvey();
@@ -94,7 +104,6 @@ Given(/^5_that I am on the survey creation page$/, async () => {
 });
 
 When(/^5_I entered a empty text string in the sub-headline text box.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(CreateSurveyPage.subHeadlineField()), 6000);
   await browser.wait(ec.elementToBeClickable(CreateSurveyPage.headlineField()), 6000);
   // to elicit the required field message , i click on the sub-headline box first then headline box
@@ -103,7 +112,6 @@ When(/^5_I entered a empty text string in the sub-headline text box.$/, async ()
 });
 
 Then(/^5_There is an error message present.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   await browser.wait(ec.presenceOf(CreateSurveyPage.errorMessageField()), 6000 );
   expect(await CreateSurveyPage.errorMessageField().getText()).to.contain('Required field');
 });
@@ -126,21 +134,18 @@ Given(/^7_that I am on the survey creation page$/, async () => {
 });
 
 When(/^7_I click on the add question button.$/, async () => {
-    const ec = protractor.ExpectedConditions;
     // waiting for the add question button to be loaded
     await browser.wait(ec.elementToBeClickable(CreateSurveyPage.loadQuestionButton()), 6000 );
     await CreateSurveyPage.questionButton().click();
 });
 
 Then(/^7_There are seven options.$/, async () => {
-    const ec = protractor.ExpectedConditions;
     await browser.wait(ec.presenceOf(CreateSurveyPage.surveyOptions().get(0)), 6000 );
     expect(await CreateSurveyPage.surveyOptions().count()).to.be.equal(7);
 });
 
 // Verifiying that when clicking add picture choice list element generates a form.
 Given(/^8_that I am on list of options for the add question elements$/, async () => {
-    const ec = protractor.ExpectedConditions;
     await CreateSurveyPage.navigateToSurvey();
     // waiting for the add question button to be loaded
     await browser.wait(ec.elementToBeClickable(CreateSurveyPage.loadQuestionButton()), 6000 );
@@ -150,7 +155,6 @@ Given(/^8_that I am on list of options for the add question elements$/, async ()
 
 When(/^8_I select the option for picture choice.$/, async () => {
     // clicking the picture option
-    const ec = protractor.ExpectedConditions;
     await browser.wait(ec.presenceOf(CreateSurveyPage.pictureOption()), 6000 );
     await CreateSurveyPage.optionWrap().click();
 });
@@ -162,7 +166,6 @@ Then(/^8_There is a form present.$/, async () => {
 
 // Verifiying that picture choice form has relevant text fields
 Given(/^9_that I have selected added question picture choice$/, async () => {
-    const ec = protractor.ExpectedConditions;
     await CreateSurveyPage.navigateToSurvey();
     // waiting for the add question button to be loaded
     await browser.wait(ec.elementToBeClickable(CreateSurveyPage.loadQuestionButton()), 6000 );
@@ -180,7 +183,6 @@ Then(/^9_The relevant text fields are present.$/, async () => {
 
 // Verifiying that the image is uploaded in the picture choice form successfully
 Given(/^10_that I am on the picture choice form$/, async () => {
-  const ec = protractor.ExpectedConditions;
   await CreateSurveyPage.navigateToSurvey();
   // waiting for the add question button to be loaded
   await browser.wait(ec.elementToBeClickable(CreateSurveyPage.loadQuestionButton()), 6000 );
@@ -211,7 +213,6 @@ Given(/^11_that I am on the survey creation page$/, async () => {
 });
 
 When(/^11_I entered a empty text string in the header text box.$/, async () => {
-  const ec = protractor.ExpectedConditions ;
   // waiting for header text field
   await browser.wait(ec.presenceOf(CreateSurveyPage.headerField()), 7000 );
   // clearing default values
