@@ -142,7 +142,7 @@ export class AudiencesHttpAdapter {
 
     return {
       gender: formData.gender || null,
-      birthday: formData.birthday.toString() || null,
+      birthday: formData.birthday ? formData.birthday.toString() : null,
       race: formData.race || null,
       country: formData.country || null,
       nationality: formData.nationality || null,
