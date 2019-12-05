@@ -132,6 +132,6 @@ export {
 } from './lib/engagement/stamp';
 
 /** Cognito */
-export { IWCognitoTenantAttributes } from './lib/cognito/tenants';
+export { IWCognitoTenantAttributes, IWCognitoEndpointAttributes } from './lib/cognito/tenants';
 
 export { IWSetting, IWTenant, IWAccountPageObject, IWPagesObject } from './lib/tenant/settings';
