@@ -37,7 +37,6 @@ const routes: Routes = [
         loadChildren: () => import('./card/card.module').then(mod => mod.CardModule)
       },
       { path: 'loading', component: LoadingComponent },
-      { path: 'qr-code/:id', loadChildren: (): any => import('./qr-code/qr-code.module').then((mod: any) => mod.QRCodeModule) },
       { path: 'rewards', loadChildren: (): any => import('./rewards/rewards.module').then((mod: any) => mod.RewardsModule) }
     ],
     canActivate: [ProtectedGuard]
