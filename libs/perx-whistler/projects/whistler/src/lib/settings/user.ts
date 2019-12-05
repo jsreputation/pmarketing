@@ -7,8 +7,12 @@ export interface IWIAMUserAttributes {
   api: boolean;
   console: boolean;
   time_zone?: string;
-  properties?: any;
-  display_properties?: any;
+  properties?: {
+    /** @deprecated use the direct email field instead, not in properties */
+    email?: string;
+  };
+  display_properties?: void;
+  email: string | null;
   jwt_payload?: {
     iss?: string;
     sub?: string;

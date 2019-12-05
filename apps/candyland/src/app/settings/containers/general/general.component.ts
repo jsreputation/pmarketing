@@ -28,7 +28,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
     this.createFormGeneral();
     this.getTimeZone();
     this.getCurrency();
-    this.getTenants();
+    this.initTenantSettings();
   }
 
   private createFormGeneral(): void {
@@ -57,8 +57,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
     this.currency$ = this.settingsService.getCurrency();
   }
 
-  private getTenants(): void {
-    this.settingsService.getTenants()
+  private initTenantSettings(): void {
+    this.settingsService.findTenant()
       .subscribe((res: Tenants) => {
         this.tenants = res;
         this.patchValue(res.display_properties);

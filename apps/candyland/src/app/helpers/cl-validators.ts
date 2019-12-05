@@ -21,12 +21,12 @@ export class ClValidators extends Validators {
     return null;
   }
 
-  public static sumMoreThan(options: any): ValidatorFn {
+  public static sumMoreThan(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       if (!control || !control.value) {
         return null;
       }
-      const total = sum(control.value, options.fieldName);
+      const total = control.value;
       if (total > 100) {
         return {sumMoreThan: true};
       }

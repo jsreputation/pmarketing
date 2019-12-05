@@ -9,8 +9,6 @@ export interface IRewardEntity {
   redemptionType?: WRedemptionType;
   current: number;
   total: number;
-  limit?: number;
-  probability?: number | null;
   category: string;
   voucherInfo?: {
     type: string;
@@ -29,5 +27,4 @@ export interface IRewardEntity {
   merchantId?: string;
   merchantName?: string;
   tags: string[];
-  outcomeId?: string;
 }
