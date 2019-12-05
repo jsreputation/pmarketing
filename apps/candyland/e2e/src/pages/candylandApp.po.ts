@@ -253,11 +253,20 @@ export class CreateHitThePinataAppPage {
     return browser.get('engagements/games/new-pinata') as Promise<string>;
   }
 
+  public static headlinePreview(): ElementArrayFinder {
+    return element.all(by.className('mobile-preview-headline'));
+  }
+
+  public static subHeadlinePreview(): ElementArrayFinder {
+    return element.all(by.className('mobile-preview-sub-headline'));
+  }
+
+  public static pinataImage(): ElementFinder {
+    return element(by.css('img.img'));
+  }
+
   public uploadedBackgroundImageObj(): ElementFinder {
     return element(by.css('div.image-wrap.ng-star-inserted>img'));
-  }
-  public pinataImage(): ElementFinder {
-    return element(by.css('img.img'));
   }
   public backgroundElement(): ElementFinder {
     return element(by.css('div.mobile-preview-background'));
@@ -267,12 +276,6 @@ export class CreateHitThePinataAppPage {
   }
   public loadPreviewElement(): ElementFinder {
     return element(by.className('mobile-preview-headline'));
-  }
-  public headlinePreview(): ElementArrayFinder {
-    return element.all(by.className('mobile-preview-headline'));
-  }
-  public subHeadlinePreview(): ElementArrayFinder {
-    return element.all(by.className('mobile-preview-sub-headline'));
   }
 }
 export class CreateInstantRewardAppPage {
@@ -758,5 +761,9 @@ export class ElementApp {
 
   public static errorUploadMessage(): ElementFinder {
     return element.all(by.css('p.upload-error.ng-star-inserted')).get(1);
+  }
+
+  public static mobileButtonPreview(): ElementFinder {
+    return element(by.css('button.mobile-preview-btn'));
   }
 }
