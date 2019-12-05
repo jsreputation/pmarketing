@@ -10,6 +10,7 @@ import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { ActivatedRoute } from '@angular/router';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { Subject } from 'rxjs';
+import Utils from '@cl-helpers/utils';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -122,8 +123,8 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     }
     this.form.valueChanges
       .pipe(
-        distinctUntilChanged(),
         debounceTime(500),
+        distinctUntilChanged(Utils.isEqual),
         takeUntil(this.destroy$)
       )
       .subscribe((val: ICampaign) => {

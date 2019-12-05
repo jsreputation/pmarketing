@@ -1,0 +1,17 @@
+<div class="main-container">
+	<mat-toolbar class="toolbar mat-elevation-z3" *ngIf="theme">
+		<img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
+	</mat-toolbar>
+	<div class="content-container">
+		<h2 *ngIf="pinMode === 'password'" translate>STATIC_RESET_PASSWORD</h2>
+		<h2 *ngIf="pinMode === 'register'" translate>STATIC_NEW_REGISTER</h2>
+		<div class="subheading"><span translate>STATIC_RESET_PASSWORD_SUBHEADING</span>{{visibleNumber}}</div>
+		<div class="pin-input-container">
+			<perx-core-pin-input
+			[length]="MAX_DIGITS_COUNT"
+			(full)="onPinEntered($event)">
+			</perx-core-pin-input>
+		</div>
+		<div class="bottom-text" (click)="resendOtp()" translate>REDEND_OTP</div>
+	</div>
+</div>

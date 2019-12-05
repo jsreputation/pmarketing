@@ -7,7 +7,7 @@
       {{'TITLE' | translate}} {{userName$ | async}}
     </h1>
     <p class="lead" translate>
-      DESCRIPTION
+      DESCRIPTION_DASHBOARD
     </p>
   </div>
   <h2 class="dashboard-title" translate>SECTION_EXPLORE</h2>
@@ -20,11 +20,11 @@
     <div class="dashboard-insights-card-header">
       <nav mat-tab-nav-bar>
         <a mat-tab-link
-           *ngFor="let link of navLinks;"
-           [routerLink]="link.path"
-           routerLinkActive #rla="routerLinkActive"
-           [routerLinkActiveOptions]="{exact: true}"
-           [active]="rla.isActive">
+          *ngFor="let link of navLinks;"
+          [routerLink]="link.path"
+          routerLinkActive #rla="routerLinkActive"
+          [routerLinkActiveOptions]="{exact: true}"
+          [active]="rla.isActive">
           {{link.label | translate}}
         </a>
       </nav>

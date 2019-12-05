@@ -1,5 +1,3 @@
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import {
   Component,
   OnInit,
@@ -12,17 +10,42 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { Location } from '@angular/common';
-import { Subject, iif, of, Observable, throwError } from 'rxjs';
-import { Config, AuthenticationService, InstantOutcomeService, IGameService, NotificationService, IPrePlayStateData, SurveyService } from '@perx/core';
-import { switchMap, catchError, tap, retryWhen, delay, mergeMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
+import {
+  Subject,
+  iif,
+  of,
+  Observable,
+  throwError,
+} from 'rxjs';
+import {
+  switchMap,
+  catchError,
+  tap,
+  retryWhen,
+  delay,
+  mergeMap,
+} from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
+
+import {
+  Config,
+  AuthenticationService,
+  InstantOutcomeService,
+  IGameService,
+  NotificationService,
+  IPrePlayStateData,
+  SurveyService,
+} from '@perx/core';
+
 @Component({
-  selector: 'perx-blackcomb-pages-pi',
-  templateUrl: './pi.component.html',
-  styleUrls: ['./pi.component.scss']
+  selector: 'perx-blackcomb-pages-sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.scss']
 })
-export class PIComponent implements OnInit, OnDestroy {
+export class SignInComponent implements OnInit, OnDestroy {
   public PIForm: FormGroup;
   public errorMessage: string | null = null;
   public preAuth: boolean;
@@ -31,6 +54,9 @@ export class PIComponent implements OnInit, OnDestroy {
   private stateData: IPrePlayStateData;
   private maxRetryTimes: number = 5;
   private retryTimes: number = 0;
+  private oldPI: string;
+  private oldToken: string;
+  private oldAnonymousStatus: boolean;
 
   private initForm(): void {
     this.PIForm = this.fb.group({
@@ -55,7 +81,11 @@ export class PIComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initForm();
+    this.oldPI = this.authService.getPI();
+    this.oldToken = this.authService.getUserAccessToken();
+    this.oldAnonymousStatus = this.authService.getAnonymous();
     this.stateData = this.location.getState() as IPrePlayStateData;
+    this.authService.logout();
   }
 
   public ngOnDestroy(): void {
@@ -85,29 +115,27 @@ export class PIComponent implements OnInit, OnDestroy {
       if (!oldUserId) {
         throw new Error('should not be here');
       }
-      const oldPI = this.authService.getPI();
-      const oldToken = this.authService.getUserAccessToken();
-      const oldAnonymousStatus = this.authService.getAnonymous();
       let newUserId;
       let newToken;
       (window as any).primaryIdentifier = pi;
       this.authService.autoLogin().pipe(
         catchError(() => { throw new Error('PI_NOT_EXIST'); }),
         tap(() => {
-          if (oldAnonymousStatus) {
+          if (this.oldAnonymousStatus) {
             newUserId = this.authService.getUserId();
             newToken = this.authService.getUserAccessToken();
-            this.authService.savePI(oldPI);
+            this.authService.savePI(this.oldPI);
             this.authService.saveUserId(oldUserId);
-            this.authService.saveUserAccessToken(oldToken);
+            this.authService.saveUserAccessToken(this.oldToken);
           }
         }),
-        switchMap((res) => iif(() => this.authService.getAnonymous(), this.authService.mergeUserById([oldUserId], newUserId), of(res))),
+        switchMap((res) => iif(
+          () => this.oldAnonymousStatus && !!oldUserId, this.authService.mergeUserById([oldUserId], newUserId), of(res))),
         catchError((err: Error) => {
           throw err.message.startsWith('PI_') ? err : new Error('PI_MERGE_FAIL');
         }),
         tap(() => {
-          if (oldAnonymousStatus) {
+          if (this.oldAnonymousStatus) {
             this.authService.savePI(pi);
             this.authService.saveUserId(newUserId);
             this.authService.saveUserAccessToken(newToken);

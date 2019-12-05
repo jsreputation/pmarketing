@@ -13,6 +13,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule } from '@angular/material';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { MessageService } from '@cl-core-services';
 
 describe('NewCampaignComponent', () => {
   let component: NewCampaignComponent;
@@ -42,6 +43,11 @@ describe('NewCampaignComponent', () => {
           provide: StepConditionService, useValue: {
             registerStepCondition: () => ({}),
             getStepCondition: () => ({})
+          }
+        },
+        {
+          provide: MessageService, useValue: {
+            show: () => ({})
           }
         },
         { provide: LocalStorageService, useValue: {} }
