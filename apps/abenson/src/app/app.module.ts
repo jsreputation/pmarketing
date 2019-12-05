@@ -44,6 +44,8 @@ import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
 import { SignUpComponent } from './auth/signup/signup.component';
 import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
 import { SmsValidationComponent } from './auth/sms-validation/sms-validation.component';
+import { QRCodeComponent } from './qr-code/qr-code.component';
+import { NgxBarcodeModule } from 'ngx-barcode';
 import { AppTokenInterceptor } from './auth/apptoken.interceptor';
 import { PopupComponent } from './popup/popup.component';
 
@@ -59,6 +61,7 @@ import { PopupComponent } from './popup/popup.component';
     SignUpComponent,
     ForgotPinComponent,
     SmsValidationComponent,
+    QRCodeComponent,
     PopupComponent
   ],
   imports: [
@@ -90,7 +93,8 @@ import { PopupComponent } from './popup/popup.component';
     MatCheckboxModule,
     HttpClientModule,
     CampaignModule,
-    RewardsModule
+    RewardsModule,
+    NgxBarcodeModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },

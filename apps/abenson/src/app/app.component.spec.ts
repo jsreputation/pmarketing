@@ -2,7 +2,7 @@ import { TestBed, async, fakeAsync, ComponentFixture, tick } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule, MatToolbarModule, MatIconModule, MatSnackBarModule, MatDialog, MatSnackBar } from '@angular/material';
-import { NotificationService, AuthenticationService, IVoucherService, ICampaignService, ProfileService } from '@perx/core';
+import { NotificationService, AuthenticationService, IVoucherService, ICampaignService, ProfileService, ConfigService } from '@perx/core';
 import { HomeComponent } from './home/home.component';
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
 import { ProfileComponent } from './account/profile/profile.component';
@@ -21,6 +21,11 @@ import { CustomerSupportComponent } from './account/customer-support/customer-su
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { SharedDataService } from './services/shared-data.service';
+import { of } from 'rxjs';
+
+const configServiceStub: Partial<ConfigService> = {
+  readAppConfig: () => of({})
+};
 
 describe('AppComponent', () => {
   let app: AppComponent;
@@ -29,6 +34,7 @@ describe('AppComponent', () => {
   let dialog: MatDialog;
   let snackBar: MatSnackBar;
   let location: Location;
+  let configService: ConfigService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -41,6 +47,9 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      providers: [
+        { provide: ConfigService, useValue: configServiceStub }
+      ]
     }).compileComponents();
   }));
   beforeEach(fakeAsync(() => {
@@ -50,6 +59,7 @@ describe('AppComponent', () => {
     dialog = TestBed.get<MatDialog>(MatDialog as Type<MatDialog>);
     snackBar = TestBed.get<MatSnackBar>(MatSnackBar as Type<MatSnackBar>);
     location = TestBed.get<Location>(Location as Type<Location>);
+    configService = TestBed.get<ConfigService>(ConfigService as Type<ConfigService>);
     app.ngOnInit();
     tick();
   }));
@@ -84,7 +94,7 @@ describe('AppComponent', () => {
     expect(app.showHeader).toBeFalsy();
     app.onActivate(new SignUpComponent(form, auth, router));
     expect(app.showHeader).toBeFalsy();
-    app.onActivate(new HomeComponent(router, voucherService, campaingService));
+    app.onActivate(new HomeComponent(router, voucherService, campaingService, configService));
     expect(app.showToolbar).toBeTruthy();
     app.onActivate(new TermsAndConditionComponent());
     expect(app.headerTitle).toBe('Terms & Conditions');
