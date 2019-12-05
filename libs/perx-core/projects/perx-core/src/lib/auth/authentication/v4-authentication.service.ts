@@ -241,7 +241,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       };
     }
 
-
     return {
       last_name: data.lastName || '',
       first_name: data.firstName,
