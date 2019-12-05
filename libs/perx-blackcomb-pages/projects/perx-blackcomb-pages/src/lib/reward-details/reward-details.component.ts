@@ -32,7 +32,6 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   private loyalty: ILoyalty;
 
   private initTranslate(): void {
-    this.translate.get('REDEEM').subscribe((text) => this.buttonLabel = text);
     this.translate.get('DESCRIPTION')
       .subscribe((desc: string) => {
         this.descriptionLabel = desc;
@@ -54,9 +53,16 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig) => this.appConfig = config
-    );
+    this.configService.readAppConfig().pipe(
+      tap((config: IConfig) => this.appConfig = config),
+      switchMap((config: IConfig) => {
+        if (config.showVoucherBookingFromRewardsPage) {
+          return this.translate.get('GET_VOUCHER');
+        } else {
+          return this.translate.get('REDEEM');
+        }
+      })
+    ).subscribe((text) => this.buttonLabel = text);
 
     this.initTranslate();
     this.loyaltyService.getLoyalties().pipe(
