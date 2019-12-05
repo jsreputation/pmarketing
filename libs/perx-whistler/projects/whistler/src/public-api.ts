@@ -48,12 +48,11 @@ export {
 export { IWCampaignAttributes, IWCampaignDisplayProperties, WInformationCollectionSettingType } from './lib/campaign/campaign';
 export {
   IWAudiences,
-  IWPoolsApi,
   IWPools,
-  IWUser,
 } from './lib/audiences/audiences.model';
 export {
   IWProfileAttributes,
+  IWCustomProperties,
   IWPoolsAttributes,
   IWCognitoLogin,
   IWUserJWTRequest,
@@ -95,14 +94,16 @@ export {
   IWInstantOutcomeEngagementAttributes,
   IWSurveyEngagementAttributes,
   IWStampEngagementAttributes,
-  IWScratchGameEngagementAttributes
+  IWScratchGameEngagementAttributes,
+  IWSpinGameEngagementAttributes
 } from './lib/engagement/engagement';
 export {
   WGameType,
   IWGameDisplayProperties,
   IWTreeDisplayProperties,
   IWPinataDisplayProperties,
-  IWScratchDisplayProperties
+  IWScratchDisplayProperties,
+  IWSpinDisplayProperties
 } from './lib/engagement/games';
 export {
   IWInstantOutcomeDisplayProperties
@@ -131,6 +132,6 @@ export {
 } from './lib/engagement/stamp';
 
 /** Cognito */
-export { IWCognitoTenantAttributes } from './lib/cognito/tenants';
+export { IWCognitoTenantAttributes, IWCognitoEndpointAttributes } from './lib/cognito/tenants';
 
 export { IWSetting, IWTenant, IWAccountPageObject, IWPagesObject } from './lib/tenant/settings';
