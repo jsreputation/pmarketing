@@ -18,7 +18,7 @@ export class V4ThemesService extends ThemesService {
     this.themeSettingEndpoint = config.baseHref + `assets/theme.json`;
   }
 
-  public getThemeSetting(config?: IConfig): Observable<ITheme> {
+  public getThemeSetting(config?: IConfig<ITheme>): Observable<ITheme> {
     let url: string = this.themeSettingEndpoint;
     if (config && config.sourceType) {
       url = config.baseHref + `assets/${config.sourceType}-theme.json`;

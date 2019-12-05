@@ -107,7 +107,7 @@ const stubTabs: ITabConfigExtended[] = [
 export class HomeComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
   public theme: ITheme;
-  public appConfig: IConfig;
+  public appConfig: IConfig<{showNewsfeedOnHomepage: boolean}>;
   public newsFeedItems: Observable<FeedItem[]>;
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
@@ -192,8 +192,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       theme => this.theme = theme
     );
 
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig) => this.appConfig = config
+    this.configService.readAppConfig<{showNewsfeedOnHomepage: boolean}>().subscribe(
+      (config: IConfig<{showNewsfeedOnHomepage: boolean}>) => this.appConfig = config
     );
   }
 

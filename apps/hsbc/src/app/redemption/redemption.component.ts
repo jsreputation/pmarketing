@@ -28,7 +28,7 @@ export class RedemptionComponent implements OnInit {
     this.voucherId = parseInt(this.route.snapshot.paramMap.get('id') as string, 10);
 
     this.configService.readAppConfig().subscribe(
-      (config: IConfig) => {
+      (config: IConfig<void>) => {
         this.sourceType = config.sourceType as string;
 
         if (config.sourceType === 'hsbc-xmas') {

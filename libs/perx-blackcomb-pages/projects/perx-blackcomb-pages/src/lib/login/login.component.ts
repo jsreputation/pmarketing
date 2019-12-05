@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
   public theme: Observable<ITheme>;
-  public appConfig: Observable<IConfig>;
+  public appConfig: Observable<IConfig<void>>;
   public appAccessTokenFetched: boolean;
   constructor(
     private router: Router,

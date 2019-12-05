@@ -103,9 +103,9 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       this.cardId = Number.parseInt(cardIdStr, 10);
     }
 
-    this.configService.readAppConfig()
+    this.configService.readAppConfig<ITheme>()
       .pipe(
-        tap((config: IConfig) => {
+        tap((config: IConfig<ITheme>) => {
           this.sourceType = config.sourceType as string;
           if (config.sourceType === 'hsbc-xmas') {
             this.displayCampaignAs = 'stamp_card';
@@ -126,7 +126,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
             this.fetchCard();
           }
         }),
-        flatMap((config: IConfig) => this.themesService.getThemeSetting(config))
+        flatMap((config: IConfig<ITheme>) => this.themesService.getThemeSetting(config))
       ).subscribe((res: ITheme) => {
         if (res.properties.stampCard) {
           this.preStampImg = res.properties.stampCard['--pre_stamp_image'];

@@ -18,7 +18,7 @@ export class QRComponent implements OnInit {
   public rewardDetails: string | null = null;
   public rewardId: number | null = null;
   public theme: ITheme;
-  public appConfig: IConfig;
+  public appConfig: IConfig<{showQrPageSubtitle: boolean}>;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,8 +33,8 @@ export class QRComponent implements OnInit {
       theme => this.theme = theme
     );
 
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig) => this.appConfig = config
+    this.configService.readAppConfig<{showQrPageSubtitle: boolean}>().subscribe(
+      (config: IConfig<{showQrPageSubtitle: boolean}>) => this.appConfig = config
     );
 
     this.route.paramMap.pipe(

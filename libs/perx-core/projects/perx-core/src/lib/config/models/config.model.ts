@@ -1,8 +1,18 @@
 import { TokenType } from '../../utils/storage/models/token-storage.model';
 import { IWSetting } from '@perx/whistler';
 
-export interface IConfig {
-  [key: string]: string | number | boolean | TokenType | IWSetting;
+export interface IConfig<T> {
+  apiHost: string;
+  production: boolean;
+  preAuth: boolean;
+  isWhistler: boolean;
+  baseHref: string;
+  defaultLang?: string;
+  sourceType?: string;
+  custom?: T;
+  displayProperties?: IWSetting;
+  showHistoryPage?: boolean;
+  showHomePage?: boolean;
 }
 
 export interface IMicrositeSettings {

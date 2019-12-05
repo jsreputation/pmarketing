@@ -27,7 +27,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public descriptionLabel: string = 'Description';
   public tncLabel: string = 'Terms and Conditions';
   public buttonLabel: string = 'Redeem';
-  public appConfig: IConfig;
+  public appConfig: IConfig<{showExpiryOnRewardDetail: boolean}>;
   public rewardData: IReward;
   private loyalty: ILoyalty;
 
@@ -54,8 +54,8 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig) => this.appConfig = config
+    this.configService.readAppConfig<{showExpiryOnRewardDetail: boolean}>().subscribe(
+      (config: IConfig<{showExpiryOnRewardDetail: boolean}>) => this.appConfig = config
     );
 
     this.initTranslate();

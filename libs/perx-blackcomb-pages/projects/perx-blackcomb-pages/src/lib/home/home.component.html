@@ -12,7 +12,7 @@
       </a>
     </div>
   </div>
-  <perx-core-newsfeed [items$]="newsFeedItems" *ngIf="appConfig.showNewsfeedOnHomepage"></perx-core-newsfeed>
+  <perx-core-newsfeed [items$]="newsFeedItems" *ngIf="appConfig.custom && appConfig.custom.showNewsfeedOnHomepage"></perx-core-newsfeed>
   <div class="games">
     <div *ngIf="showGames" class="title" translate>GAMES</div>
     <perx-blackcomb-games-collection [games]="games$"></perx-blackcomb-games-collection>
