@@ -1,9 +1,17 @@
-
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { ApiConfig } from '@cl-core/api-config';
+import {
+  HttpClient,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IWVoucherStatsApi, IWVouchersApi } from '@perx/whistler';
+
+import { Observable } from 'rxjs';
+
+import {
+  IWVoucherStatsApi,
+  IWVouchersApi,
+} from '@perx/whistler';
+
+import { ApiConfig } from '@cl-core/api-config';
 import { SOURCE_TYPE } from '../../app.constants';
 
 @Injectable({
@@ -25,6 +33,8 @@ export class VouchersHttpService {
   }
 
   public getStats(rewardId: string): Observable<IJsonApiPayload<IWVoucherStatsApi>> {
-    return this.http.get<IJsonApiPayload<IWVoucherStatsApi>>(`${ApiConfig.basePath}/voucher-service/stats?source_id=${rewardId}&source_type=${SOURCE_TYPE}`);
+    return this.http.get<IJsonApiPayload<IWVoucherStatsApi>>(
+      `${ApiConfig.basePath}/voucher-service/stats?source_id=${rewardId}&source_type=${SOURCE_TYPE}`
+    );
   }
 }

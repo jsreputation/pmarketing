@@ -5,8 +5,9 @@ import {
   IWCustomProperties,
   IWPoolsAttributes,
   IWAudiences,
-  IWPools
+  IWPools,
 } from '@perx/whistler';
+
 import { SOURCE_TYPE } from '../../app.constants';
 
 export class AudiencesHttpAdapter {

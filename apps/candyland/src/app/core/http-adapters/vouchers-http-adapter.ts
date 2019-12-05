@@ -1,4 +1,8 @@
-import { IWVoucherStatsApi, IWVouchersApi } from '@perx/whistler';
+import {
+  IWVoucherStatsApi,
+  IWVouchersApi,
+} from '@perx/whistler';
+
 import { SOURCE_TYPE } from '../../app.constants';
 
 export class VouchersHttpAdapter {
