@@ -5,3 +5,10 @@ export interface IWCognitoTenantAttributes {
     signup: IWSurveyDisplayProperties;
   };
 }
+
+export interface IWCognitoEndpointAttributes {
+  url: string;
+  target_type: string;
+  properties?: any;
+  target_id?: number | null;
+}

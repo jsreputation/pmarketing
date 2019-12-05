@@ -1,4 +1,3 @@
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { RewardsService } from '@cl-core/services/rewards.service';
 import {
   CampaignsService,
@@ -19,7 +18,6 @@ import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign.i
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 
 @Component({
@@ -50,7 +48,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.store.resetCampaign();
-    this.getTenants();
+    this.initTenantSettings();
     this.getCampaignData();
   }
 
@@ -63,10 +61,11 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private getTenants(): void {
-    this.settingsService.getTenants()
-      .subscribe((res: Tenants) => {
-        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+  private initTenantSettings(): void {
+    this.settingsService.getTenant()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res: ITenantsProperties) => {
+        this.tenantSettings = res;
         this.cd.detectChanges();
       });
   }
