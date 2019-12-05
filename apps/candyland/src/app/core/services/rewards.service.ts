@@ -30,8 +30,8 @@ export class RewardsService implements ITableService {
     return this.rewardHttp.getRewards(httpParams);
   }
 
-  public getRewardsOptions(): Observable<OptionConfig[]> {
-    return this.rewardHttp.getRewardsOptions();
+  public getreward(): Observable<OptionConfig[]> {
+    return this.rewardHttp.getreward();
   }
 
   public getReward(id: string): Observable<IRewardEntity> {
