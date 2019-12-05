@@ -5,7 +5,8 @@
       <div class="row">
         <cl-table-filters [dataSource]="dataSource">
           <ng-container *clTableFilter="'username'; let filter">
-            <cl-search-filter class="search-block" [control]="filter" [placeholder]="'SETTINGS_FEATURE.SEARCH_FOR_USERS' | translate"></cl-search-filter>
+            <cl-search-filter class="search-block" [control]="filter"
+              [placeholder]="'SETTINGS_FEATURE.SEARCH_FOR_USERS' | translate"></cl-search-filter>
           </ng-container>
           <ng-container *clTableFilter="'groups'; value: ''; let filter">
             <mat-form-field appearance="outline" class="type-block half-block">
@@ -18,20 +19,21 @@
             </mat-form-field>
           </ng-container>
         </cl-table-filters>
-        <cl-button classList="primary cta cta-new cta-new-invitenew" (click)="openDialogInviteNewUsers()">{{'SETTINGS_FEATURE.INVITE_NEW_USER' | translate}}</cl-button>
+        <cl-button classList="primary cta cta-new cta-new-invitenew" (click)="openDialogInviteNewUsers()">
+          {{'SETTINGS_FEATURE.INVITE_NEW_USER' | translate}}</cl-button>
       </div>
       <div class="table-card">
         <!--table-->
-        <cl-users-roles-list [dataSource]="dataSource"
-                             [config]="config"
-                             (edit)="openDialogEditUsers($event)"
-                             (delete)="deleteUser($event)"
-        ></cl-users-roles-list>
+        <cl-users-roles-list
+          [dataSource]="dataSource"
+          [config]="config"
+          (edit)="openDialogEditUsers($event)"
+          (delete)="deleteUser($event)"
+          (resetPassword)="resetPassword($event)"></cl-users-roles-list>
         <!--paginator-->
         <cl-paginator [dataSource]="dataSource"
-                      [pageSize]="5"
-                      [pageSizeOptions]="[5, 10, 20]"
-        ></cl-paginator>
+          [pageSize]="5"
+          [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
       </div>
     </ng-container>
 
@@ -46,4 +48,3 @@
     </cl-no-data>
   </ng-container>
 </section>
-

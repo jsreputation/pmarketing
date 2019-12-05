@@ -16,3 +16,8 @@ export interface ISurveyForm {
   description: string;
   attribute_type: string;
 }
+
+export interface ICountries {
+  name: string;
+  code: string;
+}
