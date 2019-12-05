@@ -15,7 +15,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 
-fdescribe('WhistlerGameService', () => {
+describe('WhistlerGameService', () => {
   let httpTestingController: HttpTestingController;
   let service: WhistlerGameService;
   const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', {
