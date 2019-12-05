@@ -37,7 +37,6 @@ export class RewardHttpAdapter {
       merchantId: data.attributes.organization_id || null,
       current: data.attributes.cost_of_reward,
       total: 100,
-      probability: null,
       category: data.attributes.category,
       tags: data.attributes.tags || []
     };

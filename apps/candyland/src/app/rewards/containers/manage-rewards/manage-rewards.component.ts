@@ -150,7 +150,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   }
 
   private initConfig(): void {
-    this.rewardsService.getRewardsOptions()
+    this.rewardsService.getreward()
       .subscribe((config: OptionConfig[]) => this.config = config);
   }
 
