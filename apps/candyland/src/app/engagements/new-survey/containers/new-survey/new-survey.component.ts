@@ -11,8 +11,6 @@ import { AvailableNewEngagementService, RoutingStateService, SettingsService, Su
 import { QuestionFormFieldService, SimpleMobileViewComponent } from '@cl-shared';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { IWEngagementAttributes, IWQuestion, WSurveyQuestionType } from '@perx/whistler';
 
 @Component({
@@ -100,7 +98,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.getTenants();
+    this.initTenant();
     this.initForm();
     this.subscribeFormValueChanges();
     combineLatest([this.getSurveyData(), this.handleRouteParams()])
@@ -246,10 +244,11 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
       });
   }
 
-  private getTenants(): void {
-    this.settingsService.getTenants()
-      .subscribe((res: Tenants) => {
-        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+  private initTenant(): void {
+    this.settingsService.getTenant()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res: ITenantsProperties) => {
+        this.tenantSettings = res;
         this.cd.detectChanges();
       });
   }

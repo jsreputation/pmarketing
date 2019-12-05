@@ -7,7 +7,7 @@ import {
 } from '@angular/material';
 
 @Injectable({providedIn: 'root'})
-export class MsgService {
+export class MessageService {
   public message: string;
   public actionButtonText: string = 'x';
   public action: boolean = true;
@@ -20,18 +20,20 @@ export class MsgService {
   constructor(private snackBar: MatSnackBar) {
   }
 
-  public showSnackBar(
-      message: string,
-      actionType: 'success' | 'danger' | 'warning' | string = 'success',
-      actionText: string = 'x',
-      config?: MatSnackBarConfig
-    ): void {
+  public show(
+    message: string,
+    actionType: 'success' | 'danger' | 'warning' | string = 'success',
+    duration: number = 2000,
+    actionText: string = 'x',
+    config?: MatSnackBarConfig
+  ): void {
     this.actionButtonText = actionText ? actionText : this.actionButtonText;
     const matSnackBarConfig = new MatSnackBarConfig();
     matSnackBarConfig.verticalPosition = (config && config.verticalPosition) ? config.verticalPosition : this.verticalPosition;
     matSnackBarConfig.horizontalPosition = (config && config.horizontalPosition) ? config.horizontalPosition : this.horizontalPosition;
     matSnackBarConfig.duration = this.setAutoHide ? this.autoHide : 0;
     matSnackBarConfig.panelClass = actionType;
+    matSnackBarConfig.duration = duration;
 
     this.snackBar.open(message, this.actionButtonText, matSnackBarConfig);
   }
