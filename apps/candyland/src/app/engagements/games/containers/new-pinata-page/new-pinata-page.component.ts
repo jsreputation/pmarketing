@@ -10,8 +10,6 @@ import {
   AvailableNewEngagementService, PinataService, RoutingStateService, SettingsService
 } from '@cl-core/services';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWEngagementAttributes } from '@perx/whistler';
 
@@ -68,7 +66,7 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.getTenants();
+    this.initTenantSettings();
     this.createPinataForm();
     combineLatest([this.getPinataData(), this.handleRouteParams()])
       .subscribe(
@@ -162,10 +160,11 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
     return this.pinataService.getPinataData();
   }
 
-  private getTenants(): void {
-    this.settingsService.getTenants()
-      .subscribe((res: Tenants) => {
-        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+  private initTenantSettings(): void {
+    this.settingsService.getTenant()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res: ITenantsProperties) => {
+        this.tenantSettings = res;
         this.cd.detectChanges();
       });
   }
