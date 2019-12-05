@@ -44,6 +44,8 @@ import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
 import { SignUpComponent } from './auth/signup/signup.component';
 import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
 import { SmsValidationComponent } from './auth/sms-validation/sms-validation.component';
+import { AppTokenInterceptor } from './auth/apptoken.interceptor';
+import { PopupComponent } from './popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,7 @@ import { SmsValidationComponent } from './auth/sms-validation/sms-validation.com
     SignUpComponent,
     ForgotPinComponent,
     SmsValidationComponent,
+    PopupComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -90,8 +93,10 @@ import { SmsValidationComponent } from './auth/sms-validation/sms-validation.com
     RewardsModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AppTokenInterceptor, multi: true }
   ],
+  entryComponents: [PopupComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

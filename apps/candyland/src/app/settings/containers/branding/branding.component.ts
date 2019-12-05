@@ -26,14 +26,12 @@ export class BrandingComponent implements OnInit, OnDestroy {
   }[];
   public tenants: Tenants;
   public mockReward: IReward = this.settingsService.getMockReward();
-  public reward$: Observable<any> = of(this.mockReward);
-  public rewards$: Observable<any> = of([this.mockReward, this.mockReward]);
+  public reward$: Observable<IReward> = of(this.mockReward);
+  public rewards$: Observable<IReward[]> = of([this.mockReward, this.mockReward]);
   public tabsLabels: string[];
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private settingsService: SettingsService,
-              private translate: TranslateService) {
-  }
+  constructor(private settingsService: SettingsService, private translate: TranslateService) { }
 
   public get headerNavbarColor(): AbstractControl {
     return this.formBranding.get('headerNavbarColor');
@@ -74,20 +72,15 @@ export class BrandingComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getTranslationTabsLable();
     this.createFormBranding();
-    this.getTenants();
-    this.listColors = [{
-      labelView: 'Primary Color', color: this.primaryColor.value
-    },
-      {
-        labelView: 'Secondary Color', color: this.secondaryColor.value
-      }
+    this.getTenant();
+    this.listColors = [
+      { labelView: 'Primary Color', color: this.primaryColor.value },
+      { labelView: 'Secondary Color', color: this.secondaryColor.value }
     ];
-    this.listColorsText = [{
-      labelView: 'Black', color: '#000000'
-    },
-      {
-        labelView: 'White', color: '#ffffff'
-      }];
+    this.listColorsText = [
+      { labelView: 'Black', color: '#000000' },
+      { labelView: 'White', color: '#ffffff' }
+    ];
 
     this.patchValue({
       headerNavbarColor: this.listColors[0],
@@ -100,9 +93,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
   private getTranslationTabsLable(): void {
     this.translate.get('SETTINGS_FEATURE')
       .pipe(takeUntil(this.destroy$))
-      .subscribe((translates: any) => {
-        this.tabsLabels = [translates.LOGIN, translates.HOME, translates.REWARD_DETAIL];
-      });
+      .subscribe((translates: { [k: string]: string }) => this.tabsLabels = [translates.LOGIN, translates.HOME, translates.REWARD_DETAIL]);
   }
 
   private createFormBranding(): void {
@@ -117,19 +108,15 @@ export class BrandingComponent implements OnInit, OnDestroy {
     this.primaryColor
       .valueChanges
       .pipe(takeUntil(this.destroy$))
-      .subscribe((val) => {
-        this.listColors[0].color = val;
-      });
+      .subscribe((val) => this.listColors[0].color = val);
     this.secondaryColor
       .valueChanges
       .pipe(takeUntil(this.destroy$))
-      .subscribe((val) => {
-        this.listColors[1].color = val;
-      });
+      .subscribe((val) => this.listColors[1].color = val);
   }
 
-  private getTenants(): void {
-    this.settingsService.getTenants()
+  private getTenant(): void {
+    this.settingsService.findTenant()
       .subscribe((res: Tenants) => {
         this.tenants = res;
         this.handlerValue(res.display_properties);
@@ -142,15 +129,12 @@ export class BrandingComponent implements OnInit, OnDestroy {
       .pipe(
         debounceTime(300),
         switchMap((value => {
-          if (this.formBranding.valid) {
-            return this.settingsService.updateTenants(SettingsHttpAdapter.transformSettingsBrandingFormToAPI(value));
-          }
-          return of([]);
+          return this.formBranding.valid ?
+            this.settingsService.updateTenants(SettingsHttpAdapter.transformSettingsBrandingFormToAPI(value)) : of([]);
         })),
         takeUntil(this.destroy$),
       )
-      .subscribe(() => {
-      });
+      .subscribe(() => { });
   }
 
   private handlerValue(data: IWTenantDisplayProperties): void {
@@ -166,11 +150,9 @@ export class BrandingComponent implements OnInit, OnDestroy {
 
   private setDefaultValue(data: any): void {
     const defaultValue = this.prepareDefaultValue(data);
-    this.tenants.display_properties = {...this.tenants.display_properties, ...defaultValue};
+    this.tenants.display_properties = { ...this.tenants.display_properties, ...defaultValue };
     this.tenants.save()
-      .subscribe(() => {
-        this.subscribeFormChanges();
-      });
+      .subscribe(() => this.subscribeFormChanges());
   }
 
   private prepareDefaultValue(data: any): any {
@@ -186,5 +168,4 @@ export class BrandingComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }
