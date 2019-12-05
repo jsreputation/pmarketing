@@ -10,8 +10,8 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
-import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NewCampaignReviewPageComponent', () => {
   let component: NewCampaignReviewPageComponent;
@@ -23,7 +23,7 @@ describe('NewCampaignReviewPageComponent', () => {
         BrowserDynamicTestingModule,
         HttpClientTestingModule,
         ReactiveFormsModule,
-        RouterModule.forRoot([]),
+        RouterTestingModule,
         TranslateModule.forRoot(),
       ],
       declarations: [ NewCampaignReviewPageComponent ],

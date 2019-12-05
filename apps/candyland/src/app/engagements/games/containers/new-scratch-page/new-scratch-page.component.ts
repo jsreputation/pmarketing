@@ -34,8 +34,6 @@ import {
 } from 'rxjs';
 
 import { ImageControlValue } from '@cl-helpers/image-control-value';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import {
   AvailableNewEngagementService,
   ScratchService,
@@ -115,7 +113,7 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.getTenants();
+    this.initTenantSettings();
     this.initScratchForm();
     combineLatest([this.getScratchData(), this.handleRouteParams()])
       .subscribe(
@@ -223,10 +221,11 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
     return this.scratchService.getScratchData();
   }
 
-  private getTenants(): void {
-    this.settingsService.getTenants()
-      .subscribe((res: Tenants) => {
-        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+  private initTenantSettings(): void {
+    this.settingsService.getTenant()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res: ITenantsProperties) => {
+        this.tenantSettings = res;
         this.cd.detectChanges();
       });
   }
