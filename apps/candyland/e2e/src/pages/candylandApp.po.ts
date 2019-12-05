@@ -47,7 +47,11 @@ export class EngagementAppPage {
   }
 
   public gamePinataOptions(): ElementFinder {
-    return element.all('img[alt="game-icon"]').get(1);
+    return element.all(by.css('img[alt="game-icon"]')).get(1);
+  }
+
+  public gamePinataName(): ElementFinder {
+    return element.all(by.css('.engagement-selector-game>.engagement-selector-name')).get(1);
   }
 
   public confirmModal(): ElementFinder {
