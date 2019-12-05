@@ -46,11 +46,11 @@ export class EngagementAppPage {
     return element.all(by.css('div.engagement-item-info>p.engagement-item-name')).first();
   }
 
-  public gamePinataOptions(): ElementFinder {
+  public static gamePinataOptions(): ElementFinder {
     return element.all(by.css('img[alt="game-icon"]')).get(1);
   }
 
-  public gamePinataName(): ElementFinder {
+  public static gamePinataName(): ElementFinder {
     return element.all(by.css('.engagement-selector-game>.engagement-selector-name')).get(1);
   }
 
@@ -249,9 +249,10 @@ export class CreateSurveyAppPage {
 
 export class CreateHitThePinataAppPage {
 
-  public navigateToHitThePinata(): Promise<string> {
+  public static navigateToHitThePinata(): Promise<string> {
     return browser.get('engagements/games/new-pinata') as Promise<string>;
   }
+
   public uploadedBackgroundImageObj(): ElementFinder {
     return element(by.css('div.image-wrap.ng-star-inserted>img.image'));
   }
