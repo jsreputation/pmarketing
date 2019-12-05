@@ -3,6 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { RedeemComponent } from './redeem.component';
 import { VouchersModule, IVoucherService } from '@perx/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material';
+import { QRCodeComponent } from '../qr-code/qr-code.component';
+import { NgxBarcodeModule } from 'ngx-barcode';
 // import { of } from 'rxjs';
 
 describe('RedeemComponent', () => {
@@ -14,11 +16,12 @@ describe('RedeemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RedeemComponent],
+      declarations: [RedeemComponent, QRCodeComponent],
       imports: [
         RouterTestingModule,
         MatDialogModule,
-        VouchersModule
+        VouchersModule,
+        NgxBarcodeModule
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub },
