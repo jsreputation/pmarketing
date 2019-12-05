@@ -9,7 +9,7 @@ import { LoyaltyStepForm } from '../../models/loyalty-step-form.enum';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from '@cl-core/services/user.service';
 import { BehaviorSubject, concat, from, Observable, of, Subject } from 'rxjs';
-import { AudiencesService, ConfigService } from '@cl-core-services';
+import { AudiencesService, ConfigService, SettingsService } from '@cl-core-services';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -50,6 +50,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
   public statusLabel: { [key: string]: StatusLabelConfig };
+  private currencyList: Currency[];
   protected destroy$: Subject<void> = new Subject();
 
   public get stepOne(): FormGroup {
@@ -85,6 +86,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     private loyaltyFormsService: LoyaltyFormsService,
     private loyaltyService: LoyaltyService,
     private ruleService: LoyaltyRuleService,
+    private settingsService: SettingsService,
     private customTierService: LoyaltyCustomTierService,
     private userService: UserService,
     private audiencesService: AudiencesService,
@@ -121,6 +123,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
             this.initCustomTiersDataSource();
             break;
           case 2:
+            this.initCurrencyList();
             this.initAllRuleSet();
             break;
         }
@@ -316,10 +319,10 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   private getRefDialogSetupRule(data: any = null): Observable<MatDialogRef<RuleSetupPopupComponent>> {
     const dialogRef: MatDialogRef<RuleSetupPopupComponent> = this.dialog.open(RuleSetupPopupComponent, {
       panelClass: 'tier-setup-dialog',
-      data
+      data: {...data, config: {currencyList: this.currencyList}}
     });
 
-    console.log('dat', data);
+    console.log('getRefDialogSetupRule', data);
     return dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
@@ -358,7 +361,8 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     this.ruleService.deleteRule(ruleId)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        data.ruleSet.rules = [...data.ruleSet.rules.filter(rule => rule.id !== ruleId)];
+        data.ruleSet.rules = data.ruleSet.rules.filter(rule => rule.id !== ruleId);
+        this.cd.detectChanges();
       });
   }
 
@@ -486,5 +490,11 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
       .subscribe((statuses) => {
         this.statusLabel = statuses;
       });
+  }
+
+  private initCurrencyList(): void {
+    this.settingsService.getCurrency()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(currencyList => this.currencyList = currencyList);
   }
 }

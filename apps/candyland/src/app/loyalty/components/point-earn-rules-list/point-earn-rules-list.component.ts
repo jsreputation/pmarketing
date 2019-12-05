@@ -46,12 +46,6 @@ export class PointEarnRulesListComponent {
 
   public dropTable(event: CdkDragDrop<any>): void {
     const prevIndex = this.rules.findIndex((d) => d === event.item.data);
-    // const rules = [...this.rules];
-    // moveItemInArray(rules, prevIndex, event.currentIndex);
-    // this.dataSource = rules;
-    // moveItemInArray(this.dataSource, prevIndex, event.currentIndex);
-    // this.dataSource.map((item, index) => item.priority = (index + 1).toString());
-    // this.table.renderRows();
     this.rulesAction.emit({
       action: NewLoyaltyActions.dropRule,
       data: {ruleSet: this.ruleSet, prevIndex, currentIndex: event.currentIndex}
