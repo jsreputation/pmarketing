@@ -254,7 +254,7 @@ export class CreateHitThePinataAppPage {
   }
 
   public uploadedBackgroundImageObj(): ElementFinder {
-    return element(by.css('div.image-wrap.ng-star-inserted>img.image'));
+    return element(by.css('div.image-wrap.ng-star-inserted>img'));
   }
   public pinataImage(): ElementFinder {
     return element(by.css('img.img'));
