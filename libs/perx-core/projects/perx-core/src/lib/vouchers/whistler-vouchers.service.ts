@@ -99,7 +99,10 @@ export class WhistlerVouchersService implements IVoucherService {
     return this.http.get<IJsonApiListPayload<IWAssignedAttributes>>(`${this.vouchersUrl}?page[number]=${page}&page[size]=${size}`);
   }
 
-  private getFullVoucher(voucher: IJsonApiItem<IWAssignedAttributes>): Observable<IVoucher> {
+  /**
+   * @package
+   */
+  public getFullVoucher(voucher: IJsonApiItem<IWAssignedAttributes>): Observable<IVoucher> {
     return combineLatest(of(voucher), this.rewardsService.getReward(voucher.attributes.source_id))
       .pipe(
         map(([v, reward]: [IJsonApiItem<IWAssignedAttributes>, IReward]) => WhistlerVouchersService.WVoucherToVoucher(v, reward))
