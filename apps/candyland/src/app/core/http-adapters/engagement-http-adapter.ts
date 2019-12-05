@@ -218,7 +218,7 @@ export class EngagementHttpAdapter {
       created_at: data.attributes.created_at,
       updated_at: data.attributes.updated_at,
       nb_of_wedges: data.attributes.display_properties.nb_of_wedges,
-      slots: data.attributes.display_properties.slots,
+      slots: data.attributes.display_properties.slots.sort((a,b) => a - b),
       wedge_colors: data.attributes.display_properties.wedge_colors,
       reward_icon: data.attributes.display_properties.reward_icon,
       wheel_img: data.attributes.display_properties.wheel_img,
