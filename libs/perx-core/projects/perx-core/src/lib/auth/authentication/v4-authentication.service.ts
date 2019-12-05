@@ -226,24 +226,29 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   private signUpDataToV4SignUpData(data: ISignUpData): IV4SignUpData {
-    let v4SignUpdata = {
+
+    if (data.title && data.postcode) {
+      return {
+        last_name: data.lastName || '',
+        first_name: data.firstName,
+        birthday: data.birthDay,
+        password_confirmation: data.passwordConfirmation,
+        personal_properties: {
+          title: data.title,
+          postcode: data.postcode
+        },
+        ...data
+      };
+    }
+
+
+    return {
       last_name: data.lastName || '',
       first_name: data.firstName,
       birthday: data.birthDay,
       password_confirmation: data.passwordConfirmation,
-      personal_properties: {},
       ...data
     };
-
-    if (data.title) {
-      v4SignUpdata.personal_properties['title'] = data.title;
-    }
-
-    if (data.postcode) {
-      v4SignUpdata.personal_properties['postcode'] = data.postcode;
-    }
-
-    return v4SignUpdata;
   }
 
   // @ts-ignore
