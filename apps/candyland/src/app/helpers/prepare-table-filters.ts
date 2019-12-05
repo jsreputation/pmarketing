@@ -36,6 +36,11 @@ export class PrepareTableFilters {
 
   public static countFieldValue(array: object[], fieldName: string): { [key: string]: number } {
     const counterObject = {};
+
+    if (!array || !Array.isArray(array) || array.length === 0) {
+      return counterObject;
+    }
+
     array.forEach(item => {
       if (item === undefined || !(fieldName in item)) {
         return;
@@ -47,22 +52,7 @@ export class PrepareTableFilters {
         counterObject[value] = 1;
       }
     });
-    return counterObject;
-  }
 
-  public static countFieldValue2(array: object[], fieldName: string): { [key: string]: number } {
-    const counterObject = {};
-    array.forEach((item: any) => {
-      if (!(fieldName in item.attributes)) {
-        return;
-      }
-      const value = item.attributes[fieldName];
-      if (value in counterObject) {
-        counterObject[value]++;
-      } else {
-        counterObject[value] = 1;
-      }
-    });
     return counterObject;
   }
 
