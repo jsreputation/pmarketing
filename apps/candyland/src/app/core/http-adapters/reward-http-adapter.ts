@@ -101,8 +101,7 @@ export class RewardHttpAdapter {
     };
   }
 
-  public static transformFromRewardForm(data: IRewardEntityForm, loyalties?: any)
-    : IJsonApiItem<IWRewardEntityAttributes> {
+  public static transformFromRewardForm(data: IRewardEntityForm, loyalties?: any): IJsonApiItem<IWRewardEntityAttributes> {
     return {
       type: 'entities',
       attributes: {
@@ -212,18 +211,20 @@ export class RewardHttpAdapter {
     };
   }
 
-  public static transformFromLoyaltyForm(tier: ILoyaltyTiersFormGroup | IBasicTier, rewardId: string)
-    : IJsonApiItem<Partial<IWTierRewardCostsAttributes>> {
+  public static transformFromLoyaltyForm(
+    tier: ILoyaltyTiersFormGroup | IBasicTier,
+    rewardId: string
+  ): IJsonApiItem<Partial<IWTierRewardCostsAttributes>> {
 
     const result: IJsonApiItem<Partial<IWTierRewardCostsAttributes>> = {
-        type: 'tier_reward_costs',
-        attributes: {
-          apply_tier_discount: tier.statusDiscount ? tier.statusDiscount : false,
-          tier_value: tier.tierValue ? '' + tier.tierValue : '0',
-          tier_id: +tier.tierId,
-          entity_id: +rewardId,
-          tier_type: tier.tierType
-        }
+      type: 'tier_reward_costs',
+      attributes: {
+        apply_tier_discount: tier.statusDiscount ? tier.statusDiscount : false,
+        tier_value: tier.tierValue ? '' + tier.tierValue : '0',
+        tier_id: +tier.tierId,
+        entity_id: +rewardId,
+        tier_type: tier.tierType
+      }
     };
 
     if (tier.tierRewardCostsId) {
