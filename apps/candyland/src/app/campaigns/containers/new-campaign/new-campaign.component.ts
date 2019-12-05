@@ -253,7 +253,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     });
     if (oldCampaignListToDelete && oldCampaignListToDelete.length >= 0) {
       oldCampaignListToDelete.forEach(oldReward => {
-        updateOutcomesArr$.push(deleteOutcomes$(oldReward.outcome.id));
+        if (oldReward.outcome.id) {
+          updateOutcomesArr$.push(deleteOutcomes$(oldReward.outcome.id));
+        }
       });
     }
     return updateOutcomesArr$;
