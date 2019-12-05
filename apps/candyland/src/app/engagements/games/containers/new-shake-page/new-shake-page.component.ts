@@ -10,8 +10,6 @@ import {
   AvailableNewEngagementService, RoutingStateService, SettingsService, ShakeTreeService
 } from '@cl-core/services';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWEngagementAttributes } from '@perx/whistler';
 
@@ -83,7 +81,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.getTenants();
+    this.initTenantSettings();
     this.initShakeTreeForm();
     this.initGameGiftField();
     combineLatest([this.getData(), this.handleRouteParams()])
@@ -190,10 +188,11 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
     };
   }
 
-  private getTenants(): void {
-    this.settingsService.getTenants()
-      .subscribe((res: Tenants) => {
-        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+  private initTenantSettings(): void {
+    this.settingsService.getTenant()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res: ITenantsProperties) => {
+        this.tenantSettings = res;
         this.cd.detectChanges();
       });
   }

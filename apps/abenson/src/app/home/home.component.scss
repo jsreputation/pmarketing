@@ -99,3 +99,16 @@ perx-core-loyalty-summary ::ng-deep {
     }
   }
 }
+
+.coming_soon {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  p {
+    text-align: center;
+    font-size: 1.6rem;
+    line-height: 2.8rem;
+    letter-spacing: 0.05rem;
+  }
+}

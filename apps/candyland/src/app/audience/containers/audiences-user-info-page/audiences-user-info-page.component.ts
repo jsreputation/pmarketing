@@ -31,7 +31,7 @@ import {
 
 import {
   IWAssignedAttributes,
-  IWUser,
+  IWProfileAttributes,
 } from '@perx/whistler';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
@@ -57,11 +57,11 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   private destroy$: Subject<void> = new Subject();
 
   public userId: string;
-  public user: IWUser;
+  public user: IWProfileAttributes;
   public tabsFilterConfig: OptionConfig[];
   public dataSource: CustomDataSource<any>;
 
-  private async updateLocalUser(): Promise<IWUser> {
+  private async updateLocalUser(): Promise<IWProfileAttributes> {
     this.user = await this.audiencesUserService.getUser(this.userId).toPromise();
     this.cd.detectChanges();
     return this.user;
@@ -146,7 +146,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       takeUntil(this.destroy$),
     )
       .subscribe(
-        (user: IWUser) => {
+        (user: IWProfileAttributes) => {
           this.user = user;
           this.cd.detectChanges();
         },
