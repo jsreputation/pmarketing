@@ -55,7 +55,7 @@ export class VoucherComponent implements OnInit {
       });
   }
 
-  public isButtonDisabled() : boolean {
+  public isButtonDisabled(): boolean {
     const nowTime: number = (new Date()).getTime();
     const sellingFrom = this.reward.sellingFrom;
     if (sellingFrom && sellingFrom.getTime() <= nowTime) {
