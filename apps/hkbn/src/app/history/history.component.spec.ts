@@ -23,7 +23,7 @@ import { loyalties } from '../mock/loyalty.mock';
 describe('HistoryComponent', () => {
   let component: HistoryComponent;
   let fixture: ComponentFixture<HistoryComponent>;
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getTransactions: () => of(transactions),
     getLoyalties: () => of(loyalties),
   };

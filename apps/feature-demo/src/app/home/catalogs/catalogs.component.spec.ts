@@ -19,7 +19,7 @@ import { catalogs } from 'src/app/catalogs.mock';
 describe('CatalogsComponent', () => {
   let component: CatalogsComponent;
   let fixture: ComponentFixture<CatalogsComponent>;
-  const catalogsServiceStub = {
+  const catalogsServiceStub: Partial<RewardsService> = {
     getCatalogs: () => of(catalogs),
   };
 

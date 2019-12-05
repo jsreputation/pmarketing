@@ -44,7 +44,7 @@ import { CampaignsComponent } from '../campaigns/campaigns.component';
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
   let fixture: ComponentFixture<DiscoverComponent>;
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getAllRewards: () => of(rewards),
     getCatalogs: () => of(catalogs),
   };

@@ -19,7 +19,7 @@ import { CatalogsComponent } from './catalogs.component';
 describe('CatalogsComponent', () => {
   let component: CatalogsComponent;
   let fixture: ComponentFixture<CatalogsComponent>;
-  const catalogsServiceStub = {
+  const catalogsServiceStub: Partial<RewardsService> = {
     getCatalogs: () => of(catalogs),
   };
 
