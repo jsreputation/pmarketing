@@ -39,7 +39,7 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<RuleSetupPopupComponent>,
     private formsService: LoyaltyEarnRulesFormsService,
     private ruleService: LoyaltyRuleService,
-    @Inject(MAT_DIALOG_DATA) public data: { ruleSet: any, rule?: any | null }
+    @Inject(MAT_DIALOG_DATA) public data: { ruleSet: any, rule?: any | null, config: any }
   ) {
   }
 
@@ -72,14 +72,12 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   }
 
   public apply(): void {
-    debugger
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
     let request;
     if (this.data.rule) {
-      debugger
       request = this.ruleService.updateRule(this.data.ruleSet.id, this.form.value, this.data.rule.id);
     } else {
       request = this.ruleService.createRule(this.data.ruleSet.id, this.form.value);

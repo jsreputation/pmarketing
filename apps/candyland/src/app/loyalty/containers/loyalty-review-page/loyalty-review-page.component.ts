@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CustomDataSource } from '@cl-shared/table';
 import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
 import { concatMap, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { from, Observable, Subject } from 'rxjs';
-import { ILoyaltyForm, ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
+import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
 import { StatusLabelConfig } from '@cl-shared';
 import { ConfigService } from '@cl-core-services';
@@ -14,7 +14,8 @@ import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 @Component({
   selector: 'cl-loyalty-review-page',
   templateUrl: './loyalty-review-page.component.html',
-  styleUrls: ['./loyalty-review-page.component.scss']
+  styleUrls: ['./loyalty-review-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
   public loader: boolean = false;
@@ -78,6 +79,7 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
         tap(loyalty => {
             if (loyalty) {
               this.loyalty = loyalty;
+              this.cd.detectChanges();
             } else {
               this.router.navigateByUrl('/loyalty');
             }
