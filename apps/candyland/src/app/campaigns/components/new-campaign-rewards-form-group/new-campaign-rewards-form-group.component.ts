@@ -18,6 +18,7 @@ import { AbstractStepWithForm } from '../../step-page-with-form';
 import { StepConditionService } from '../../services/step-condition.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ClValidators } from '@cl-helpers/cl-validators';
+import { SOURCE_TYPE } from '../../../app.constants';
 
 @Component({
   selector: 'cl-new-campaign-rewards-form-group',
@@ -97,7 +98,7 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
               probability: 0,
               limit: null,
               resultId: Number.parseInt(reward.id, 10),
-              resultType: 'Ros::Reward::Entity',
+              resultType: SOURCE_TYPE,
               slotNumber: this.slotNumber
             },
             enableProbability: this.enableProbability,

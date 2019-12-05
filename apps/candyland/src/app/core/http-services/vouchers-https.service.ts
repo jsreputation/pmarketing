@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
 import { Injectable } from '@angular/core';
 import { IWVoucherStatsApi, IWVouchersApi } from '@perx/whistler';
+import { SOURCE_TYPE } from '../../app.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,6 @@ export class VouchersHttpService {
   }
 
   public getStats(rewardId: string): Observable<IJsonApiPayload<IWVoucherStatsApi>> {
-    return this.http.get<IJsonApiPayload<IWVoucherStatsApi>>(`${ApiConfig.basePath}/voucher-service/stats?source_id=${rewardId}&source_type=Perx::Reward::Entity`);
+    return this.http.get<IJsonApiPayload<IWVoucherStatsApi>>(`${ApiConfig.basePath}/voucher-service/stats?source_id=${rewardId}&source_type=${SOURCE_TYPE}`);
   }
 }

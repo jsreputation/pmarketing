@@ -7,6 +7,7 @@ import {
   IWAudiences,
   IWPools
 } from '@perx/whistler';
+import { SOURCE_TYPE } from '../../app.constants';
 
 export class AudiencesHttpAdapter {
 
@@ -81,7 +82,7 @@ export class AudiencesHttpAdapter {
       type: 'vouchers',
       attributes: {
         source_id: source,
-        source_type: 'Perx::Reward::Entity',
+        source_type: SOURCE_TYPE,
         assigned_to_id: assigned
       }
     };
