@@ -27,7 +27,9 @@ export class AbstractStepWithForm implements OnInit, OnDestroy {
     this.store.currentCampaign$
       .asObservable()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(data => this.campaign = data);
+      .subscribe(
+        data => this.campaign = data
+      );
 
     if (this.stepIndex !== undefined && this.stepConditionService && this.form) {
       this.stepConditionService.registerStepCondition(this.stepIndex, this.form);
