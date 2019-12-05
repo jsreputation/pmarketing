@@ -142,9 +142,6 @@ export class CreateShakeTheTreeAppPage {
   public uploadedImageObj(): ElementFinder {
     return element(by.css('div.image-wrap.ng-star-inserted>img'));
   }
-  public errorUploadMessage(): ElementFinder {
-    return element.all(by.css('p.upload-error.ng-star-inserted')).get(1);
-  }
   public emptyInputFields(): ElementArrayFinder {
     return element.all(by.css('input[type="file"]'));
   }
@@ -404,11 +401,11 @@ export class CreateRewardAppPage {
   public inputFileField(): ElementFinder {
     return element(by.css('input[type=file]'));
   }
+  public imageClear(): ElementFinder {
+    return element(by.css('.image-clear'));
+  }
   public fileUploaded(): ElementFinder {
     return element(by.css('div.image-wrap.ng-star-inserted>img'));
-  }
-  public errorUploadFile(): ElementFinder {
-    return element(by.css('span.upload-error'));
   }
   public fileName(): ElementFinder {
     return element(by.css('span.upload-file-file-name'));
@@ -747,6 +744,10 @@ export class ElementApp {
 
   public static engagementCreated(): ElementFinder {
     return element.all(by.css('p.engagement-item-name.linkable')).get(0);
+  }
+
+  public static errorUploadMessage(): ElementFinder {
+    return element.all(by.css('p.upload-error.ng-star-inserted')).get(1);
   }
 
 }
