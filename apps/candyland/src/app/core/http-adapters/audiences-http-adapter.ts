@@ -5,7 +5,6 @@ import {
   IWCustomProperties,
   IWPoolsAttributes,
   IWAudiences,
-  IWUser,
   IWPools
 } from '@perx/whistler';
 
@@ -28,7 +27,7 @@ export class AudiencesHttpAdapter {
     return Object.assign(mainUserApiObject, optionalPool);
   }
 
-  public static transformUpdateUserPools(data: IWUser): IJsonApiItem<any> {
+  public static transformUpdateUserPools(data: IWProfileAttributes): IJsonApiItem<any> {
     return {
       type: data.type,
       id: data.id,
@@ -41,14 +40,14 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformUserWithPools(data: IJsonApiPayload<IWProfileAttributes>): IWUser {
+  public static transformUserWithPools(data: IJsonApiPayload<IWProfileAttributes>): IWProfileAttributes {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const userData = AudiencesHttpAdapter.transformUser(data.data);
     userData.pools = data.data.relationships.pools.data.map((item: IJsonApiItem<IWPoolsAttributes>) => poolMap[item.id]).sort().join(', ');
     return userData;
   }
 
-  public static transformUsersWithPools(data: IJsonApiListPayload<IWProfileAttributes>): ITableData<IWUser> {
+  public static transformUsersWithPools(data: IJsonApiListPayload<IWProfileAttributes>): ITableData<IWProfileAttributes> {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const usersData = data.data.map((item: IJsonApiItem<IWProfileAttributes>) => {
       const formattedUser = AudiencesHttpAdapter.transformUser(item);
@@ -98,7 +97,7 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  private static transformUser(data: IJsonApiItem<IWProfileAttributes>): IWUser {
+  private static transformUser(data: IJsonApiItem<IWProfileAttributes>): IWProfileAttributes {
     return {
       id: data.id,
       type: data.type,

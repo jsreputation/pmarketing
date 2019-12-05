@@ -1,14 +1,18 @@
 export interface IWProfileAttributes {
-  urn?: string;
-  created_at?: string;
-  updated_at?: string;
-  title: string | null;
   first_name: string | null;
   last_name: string | null;
   phone_number: string | null;
   email_address: string | null;
   primary_identifier: string;
-  properties?: IWCustomProperties | null;
+  id?: string;
+  urn?: string;
+  created_at?: string;
+  updated_at?: string;
+  type?: string;
+  self?: string;
+  title?: string | null;
+  pools?: any;
+  properties?: IWCustomProperties;
   anonymous?: boolean;
 }
 
