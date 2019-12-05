@@ -7,7 +7,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { RoleLabelConfig } from '@cl-shared';
 import { takeUntil } from 'rxjs/operators';
+import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
 
+export interface InviteNewUsersPopupComponentData {
+  user?: IAMUser;
+  groups: any[];
+}
 @Component({
   selector: 'cl-invite-new-users-popup',
   templateUrl: './invite-new-users-popup.component.html',
@@ -15,20 +20,21 @@ import { takeUntil } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None
 })
 export class InviteNewUsersPopupComponent implements OnInit, OnDestroy {
-  @ViewChild('stepper', {static: false}) public stepper: MatStepper;
+  @ViewChild('stepper', { static: false }) public stepper: MatStepper;
   public form: FormGroup;
   public config: any[];
   public roleLabel: { [key: string]: RoleLabelConfig };
   protected destroy$: Subject<void> = new Subject();
-  constructor(public dialogRef: MatDialogRef<InviteNewUsersPopupComponent>,
-              private fb: FormBuilder,
-              private settingsService: SettingsService,
-              @Inject(MAT_DIALOG_DATA) public data: any,
-              private translate: TranslateService) {
-  }
+  constructor(
+    public dialogRef: MatDialogRef<InviteNewUsersPopupComponent>,
+    private fb: FormBuilder,
+    private settingsService: SettingsService,
+    @Inject(MAT_DIALOG_DATA) public data: InviteNewUsersPopupComponentData,
+    private translate: TranslateService
+  ) { }
 
   public ngOnInit(): void {
-    this.settingsService.getAllGroups().subscribe(config => this.config = config.getModels());
+    this.config = this.data.groups;
     this.initForm();
     this.doPatchForm(this.data.user);
     this.prepareRoleLabel();
@@ -51,7 +57,7 @@ export class InviteNewUsersPopupComponent implements OnInit, OnDestroy {
   }
 
   public invite(): void {
-    this.dialogRef.close({...this.form.value});
+    this.dialogRef.close({ ...this.form.value });
   }
 
   private initForm(): void {

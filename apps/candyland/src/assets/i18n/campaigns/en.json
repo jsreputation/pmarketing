@@ -74,8 +74,25 @@
       "SIGNUP_INFORMATION": "Signup information collection required"
     },
     "ChannelTypes": {
-      "Weblink": "Weblink",
+      "WEBLINK": "Weblink",
       "SMS": "SMS"
-    }
+    },
+    "GameFilters": {
+      "ALL": "All",
+      "GAME": "Game",
+      "INSTANT_REWARD": "Instant Reward",
+      "SURVEY": "Survey",
+      "STAMPS": "Stamp"
+    },
+    "BUILD_AWARE": "Build awareness",
+    "ACQUIRE_CUST": "Acquire customers",
+    "DRIVE_SALES": "Drive sales",
+    "REENGAGE_AUD": "Re-engage audience",
+    "SURPRISE_DELIGHT": "Surprise & Delight",
+    "URL": "Campaign Url",
+    "USER_ID": "User ID",
+    "FIRST_NAME": "First name",
+    "LAST_NAME": "Last name",
+    "SALUTATION": "Salutation"
   }
 }

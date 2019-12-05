@@ -9,7 +9,7 @@ import {
   ContentComponent,
   RewardDetailsComponent,
   LayoutComponent,
-  PIComponent
+  SignInComponent
 } from '@perx/blackcomb-pages';
 import { WalletGuard } from '../wallet.guard';
 
@@ -24,7 +24,7 @@ const routes: Routes = [
       { path: 'history', component: HistoryComponent },
       { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
-      { path: 'pi', component: PIComponent },
+      { path: 'pi', component: SignInComponent },
       {
         path: 'qr', loadChildren: (): any => import('../qr/qr.module').then((mod: any) => mod.QRModule)
 

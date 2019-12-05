@@ -15,8 +15,14 @@ import {
   Validators,
 } from '@angular/forms';
 
+import { Observable } from 'rxjs';
+
 import { ClValidators } from '@cl-helpers/cl-validators';
-import { AudiencesService } from '@cl-core-services';
+import { ICountries } from '@cl-core/models/survey/survey-common.interface';
+import {
+  AudiencesService,
+  SurveyService,
+} from '@cl-core-services';
 
 import { Type } from '../../audience.model';
 
@@ -26,17 +32,15 @@ import { Type } from '../../audience.model';
   styleUrls: ['./upsert-user-popup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class UpsertUserPopupComponent implements OnInit {
   public form: FormGroup;
   public pools: any;
+  public countriesList$: Observable<ICountries>;
   public config: { [key: string]: OptionConfig[] } = {
     gender: [
       {title: 'Male', value: 'male'},
       {title: 'Female', value: 'female'}
-    ],
-    country: [
-      {title: 'Country 1', value: 'country1'},
-      {title: 'Country 2', value: 'country2'}
     ],
     audienceList: [
       {title: 'AUDIENCE_FEATURE.GOLD_USERS', value: 'Gold_users'},
@@ -45,9 +49,14 @@ export class UpsertUserPopupComponent implements OnInit {
     ]
   };
 
+  private loadCountries(): void {
+    this.countriesList$ = this.surveyService.getDefaultCountryCode();
+  }
+
   constructor(public dialogRef: MatDialogRef<UpsertUserPopupComponent>,
               private fb: FormBuilder,
               private audiencesService: AudiencesService,
+              private surveyService: SurveyService,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
@@ -94,8 +103,8 @@ export class UpsertUserPopupComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.loadCountries();
     this.initForm();
-    this.setForm();
     this.getPools();
   }
 
@@ -112,39 +121,54 @@ export class UpsertUserPopupComponent implements OnInit {
   }
 
   private initForm(): void {
-    this.form = this.fb.group({
-      firstName: [null, Validators.required],
-      lastName: [null, Validators.required],
-      email: [null, [
-        Validators.required,
-        Validators.minLength(10),
-        Validators.maxLength(50),
-        ClValidators.email]],
-      phone: [null, Validators.required],
-      gender: [],
-      birthday: [],
-      race: [],
-      country: [],
-      nationality: [],
-      city: [],
-      state: [],
-      audienceList: [],
-      file: [null, [
-        // Validators.required
-      ]]
-    });
-  }
-
-  private setForm(): void {
-    if (!this.data.formData) {
-      return;
+    let controlsConfig: { [key: string]: any; };
+    if (this.data.type === Type.Edit && this.data.formData) {
+      const { formData } = this.data;
+      controlsConfig = {
+        firstName: [formData.first_name, Validators.required],
+        lastName: [formData.last_name, Validators.required],
+        email: [formData.email_address, [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(50),
+          ClValidators.email]],
+        phone: [formData.phone_number, Validators.required],
+        gender: [formData.properties ? formData.properties.gender : null, null],
+        birthday: [formData.properties ? new Date(formData.properties.birthday) : null, null],
+        race: [formData.properties ? formData.properties.race : null, null],
+        country: [formData.properties ? formData.properties.country : null, null],
+        nationality: [formData.properties ? formData.properties.nationality : null, null],
+        city: [formData.properties ? formData.properties.city : null, null],
+        state: [formData.properties ? formData.properties.state : null, null],
+        audienceList: [],
+        file: [null, [
+          // Validators.required
+        ]]
+      };
+    } else {
+      controlsConfig = {
+        firstName: [null, Validators.required],
+        lastName: [null, Validators.required],
+        email: [null, [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(50),
+          ClValidators.email]],
+        phone: [null, Validators.required],
+        gender: [],
+        birthday: [],
+        race: [],
+        country: [],
+        nationality: [],
+        city: [],
+        state: [],
+        audienceList: [],
+        file: [null, [
+          // Validators.required
+        ]]
+      };
     }
-
-    const { formData } = this.data;
-    this.firstName.setValue(formData.first_name);
-    this.lastName.setValue(formData.last_name);
-    this.email.setValue(formData.email_address);
-    this.phone.setValue(formData.phone_number);
+    this.form = this.fb.group(controlsConfig);
   }
 
   private getPools(): any {

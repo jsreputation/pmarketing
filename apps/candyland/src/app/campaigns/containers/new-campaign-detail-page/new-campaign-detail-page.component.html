@@ -12,7 +12,7 @@
       <mat-form-field class="card-row">
         <mat-select [formControl]="campaignInfo.get('goal')" [placeholder]="'CAMPAIGN.CAMPAIGN_GOAL' | translate">
           <ng-container *ngFor="let goal of config?.goals">
-            <mat-option [value]="goal?.value">{{goal?.title}}</mat-option>
+            <mat-option [value]="goal?.value">{{goal?.title | translate}}</mat-option>
           </ng-container>
         </mat-select>
       </mat-form-field>

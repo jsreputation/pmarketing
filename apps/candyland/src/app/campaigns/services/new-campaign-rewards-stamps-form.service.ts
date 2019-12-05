@@ -9,32 +9,57 @@ export class NewCampaignRewardsStampsFormService {
 
   public getForm(): FormGroup {
     return this.fb.group({
-      rewardsListCollection: this.fb.array([]),
-      stampsRule: this.fb.group({
-        sequence: [],
-        rules: this.fb.array([
-          this.fb.control(null)
-        ])
-      }),
+      limits: this.fb.group({})
+    });
+  }
+
+  public getLimitsForm(type: string): FormGroup {
+    let formInit: FormGroup = this.fb.group({
       limits: this.fb.group({
-        enableStampCard: [false],
-        stampCard: this.fb.group({
-          perCampaign: [null, [Validators.max(1000)]],
-          perUser: [null, [Validators.max(1000)]],
-          duration: []
-        }),
-        enableStamp: [false],
-        stamp: this.fb.group({
-          perUser: [null, [Validators.max(1000)]],
-          duration: []
-        })
-      }),
-      enableStampCardsValidity: [],
-      stampCardsValidity: this.fb.group({
-        times: [],
-        duration: []
+        times: [null, [
+          // Validators.required,
+          Validators.min(1),
+          Validators.max(60)
+        ]],
+        duration: [null, [
+          // Validators.required
+        ]],
+        id: null
       })
     });
+
+    if (type === 'stamps') {
+      formInit = this.fb.group({
+        limits: this.fb.group({
+          stampsRule: this.fb.group({
+            sequence: [],
+            rules: this.fb.array([
+              this.fb.control(null)
+            ])
+          }),
+          limits: this.fb.group({
+            enableStampCard: [false],
+            stampCard: this.fb.group({
+              perCampaign: [null, [Validators.max(1000)]],
+              perUser: [null, [Validators.max(1000)]],
+              duration: []
+            }),
+            enableStamp: [false],
+            stamp: this.fb.group({
+              perUser: [null, [Validators.max(1000)]],
+              duration: []
+            })
+          }),
+          enableStampCardsValidity: [],
+          stampCardsValidity: this.fb.group({
+            times: [],
+            duration: []
+          })
+        })
+      });
+    }
+
+    return formInit;
   }
 
   public getToggleConfig(form: FormGroup): ToggleControlConfig[] {
@@ -54,118 +79,59 @@ export class NewCampaignRewardsStampsFormService {
     ];
   }
 
-  public getDefaultValue(): { [key: string]: any } {
-    return {
-      rewardsList: [
-        // {
-        //   stampSlotNumber: 2,
-        //   rewardsOptions: {
-        //     enableProbability: true,
-        //     rewards: [
-        //       {
-        //         value: null,
-        //         probability: 5
-        //       },
-        //       {
-        //         value: {
-        //           id: 1,
-        //           image: 'assets/images/placeholders/mask-group.png',
-        //           name: 'Free Coffee',
-        //           type: 'Starbucks',
-        //           current: 500,
-        //           total: 1000
-        //         },
-        //         probability: 20
-        //       },
-        //       {
-        //         value: {
-        //           id: 2,
-        //           image: 'assets/images/placeholders/mask-group.png',
-        //           name: 'Free Coffee 2',
-        //           type: 'Starbucks',
-        //           current: 500,
-        //           total: 800
-        //         },
-        //         probability: 43
-        //       }
-        //     ]
-        //   }
-        // },
-        // {
-        //   stampSlotNumber: 4,
-        //   rewardsOptions: {
-        //     enableProbability: false,
-        //     rewards: [
-        //       {
-        //         value: {
-        //           id: 1,
-        //           image: 'assets/images/placeholders/mask-group.png',
-        //           name: 'Free Coffee',
-        //           type: 'Starbucks',
-        //           current: 500,
-        //           total: 1000
-        //         }
-        //       },
-        //       {
-        //         value: {
-        //           id: 2,
-        //           image: 'assets/images/placeholders/mask-group.png',
-        //           name: 'Free Coffee 2',
-        //           type: 'Starbucks',
-        //           current: 500,
-        //           total: 800
-        //         }
-        //       }
-        //     ]
-        //   }
-        // }
-      ],
-      stampsRule: {
-        sequence: true,
-        rules: [
-          {
-            ruleType: 'review',
-            product: 'productC'
-          },
-          {
-            ruleType: 'purchase',
-            product: 'productB'
-          },
-          {
-            ruleType: 'transaction',
-            condition: {
-              rule: 'isMoreThan',
-              value: 54
+  public getDefaultValue(type: string): { [key: string]: any } {
+    let defaultValue: { [key: string]: any } = {};
+
+    if (type === 'stamps') {
+      defaultValue = {
+        stampsRule: {
+          sequence: true,
+          rules: [
+            {
+              ruleType: 'review',
+              product: 'productC'
+            },
+            {
+              ruleType: 'purchase',
+              product: 'productB'
+            },
+            {
+              ruleType: 'transaction',
+              condition: {
+                rule: 'isMoreThan',
+                value: 54
+              }
+            },
+            {
+              ruleType: 'Bill payment'
+            },
+            {
+              ruleType: 'Reward redeemed'
+            },
+            {
+              ruleType: 'Sign up'
+            },
+            {
+              ruleType: 'Bill payment'
+            },
+            {
+              ruleType: 'Sign up'
+            },
+            {
+              ruleType: 'review',
+              product: 'productB'
+            },
+            {
+              ruleType: 'transaction',
+              condition: {
+                rule: 'isMoreThan',
+                value: 47
+              }
             }
-          },
-          {
-            ruleType: 'Bill payment'
-          },
-          {
-            ruleType: 'Reward redeemed'
-          },
-          {
-            ruleType: 'Sign up'
-          },
-          {
-            ruleType: 'Bill payment'
-          },
-          {
-            ruleType: 'Sign up'
-          },
-          {
-            ruleType: 'review',
-            product: 'productB'
-          },
-          {
-            ruleType: 'transaction',
-            condition: {
-              rule: 'isMoreThan',
-              value: 47
-            }
-          }
-        ]
-      }
-    };
+          ]
+        }
+      };
+    }
+    return defaultValue;
   }
 }
