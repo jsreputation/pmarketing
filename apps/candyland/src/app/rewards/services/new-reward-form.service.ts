@@ -181,49 +181,24 @@ export class NewRewardFormService {
   public handlerTierUpdate(tier: ILoyaltyTiersFormGroup | IBasicTier, tiersMap: any): void {
     const tempTier = this.defaultRewardTiers[tier.tierId];
 
-    this.addToListRemoveCustomTier(tier, tiersMap, tempTier);
-    this.addToListCreateCustomTier(tier, tiersMap, tempTier);
-    this.addToListUpdateCustomTier(tier, tiersMap, tempTier);
-    this.addToListUpdateBasicTier(tier, tiersMap, tempTier);
-  }
-
-  private addToListRemoveCustomTier(
-    tier: ILoyaltyTiersFormGroup | IBasicTier,
-    tiersMap: {[key: string]: any},
-    tempTier: any
-  ): void {
-
     if (
       tempTier
       && !tier.statusTiers
       && tier.tierType === this.tierTypes.customType) {
       return tiersMap.delete.push(tier);
     }
-  }
-
-  private addToListCreateCustomTier(
-    tier: ILoyaltyTiersFormGroup | IBasicTier,
-    tiersMap: {[key: string]: any},
-    tempTier: any
-  ): void {
 
     if (
-      !tempTier
+      !tier.tierRewardCostsId
       && tier.statusTiers
       && tier.tierType === this.tierTypes.customType
     ) {
       return tiersMap.create.push(tier);
     }
-  }
-
-  private addToListUpdateCustomTier(
-    tier: ILoyaltyTiersFormGroup | IBasicTier,
-    tiersMap: {[key: string]: any},
-    tempTier: any
-  ): void {
 
     if (
       tempTier
+      && tier.tierRewardCostsId
       && tier.tierType === this.tierTypes.customType
       && (
         tier.tierValue !== tempTier.tierValue
@@ -232,13 +207,6 @@ export class NewRewardFormService {
     ) {
       return tiersMap.update.push(tier);
     }
-  }
-
-  private addToListUpdateBasicTier(
-    tier: ILoyaltyTiersFormGroup | IBasicTier,
-    tiersMap: {[key: string]: any},
-    tempTier: any
-  ): void {
 
     if (
       tempTier

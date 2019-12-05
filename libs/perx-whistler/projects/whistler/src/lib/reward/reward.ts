@@ -62,7 +62,7 @@ export interface IWTierRewardCostsAttributes {
   created_at?: string;
   updated_at?: string;
   apply_tier_discount: boolean;
-  tier_value: number;
+  tier_value: string;
   tier_id: number;
   tier_type: string;
   entity_id: number;

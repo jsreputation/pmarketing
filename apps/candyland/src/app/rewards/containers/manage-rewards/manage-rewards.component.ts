@@ -285,6 +285,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     });
 
     const result: Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>>[] = this.sendTiers();
+
     return result.length ? forkJoin(result) : of(null);
   }
 
