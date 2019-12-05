@@ -54,6 +54,7 @@ export {
 } from './lib/audiences/audiences.model';
 export {
   IWProfileAttributes,
+  IWCustomProperties,
   IWPoolsAttributes,
   IWCognitoLogin,
   IWUserJWTRequest,
