@@ -13,7 +13,7 @@ describe('WalletComponent', () => {
   const vouchersServiceStub = {
     getAll: (): Observable<Voucher[]> => of([])
   };
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of({})
   };
   beforeEach(async(() => {

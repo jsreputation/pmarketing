@@ -22,7 +22,7 @@ describe('HomeComponent', () => {
   const router = {
     navigate: jasmine.createSpy('navigate')
   };
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of({})
   };
   const vouchersServiceStub = {

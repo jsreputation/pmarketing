@@ -23,7 +23,7 @@ import { FormBuilder } from '@angular/forms';
 import { SharedDataService } from './services/shared-data.service';
 import { of } from 'rxjs';
 
-const configServiceStub = {
+const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({})
 };
 
