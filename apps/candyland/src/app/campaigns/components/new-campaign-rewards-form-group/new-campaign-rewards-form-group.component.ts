@@ -33,12 +33,13 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
   private isFirstInit: boolean;
   public enableProbability: boolean = false;
   public sumMoreThanError: boolean = false;
-  public noOutcome = {
+  public noOutcome: ICampaignOutcome = {
     outcome: {
-      probability: 0,
       limit: null,
-      slotNumber: this.slotNumber
-    }
+      probability: 0,
+      slotNumber: -1
+    },
+    enableProbability: false
   };
 
   constructor(
@@ -99,6 +100,7 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
               resultType: 'Ros::Reward::Entity',
               slotNumber: this.slotNumber
             },
+            enableProbability: this.enableProbability,
             reward
           });
           this.updateOutcomesInCampaign();
@@ -107,10 +109,17 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
   }
 
   public initOutcomesList(): void {
-    this.outcomes = [];
     const noOutcomeData = this.campaign.outcomes.find(data => data.outcome.slotNumber === this.slotNumber && !data.outcome.resultId);
-    this.noOutcome.outcome.limit = noOutcomeData && noOutcomeData.outcome && noOutcomeData.outcome.limit || null;
-    this.noOutcome.outcome.probability = noOutcomeData && noOutcomeData.outcome && noOutcomeData.outcome.probability || 0;
+    if (noOutcomeData && noOutcomeData.outcome) {
+      noOutcomeData.enableProbability = true;
+      this.outcomes = [noOutcomeData];
+      this.enableProbability = true;
+    } else {
+      this.outcomes = [
+        this.noOutcome
+      ];
+      this.enableProbability = false;
+    }
     const possibleOutcomes = this.campaign.outcomes.filter(
       data => {
         if (!data.outcome.resultId) {
@@ -122,7 +131,6 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
         return data.outcome.slotNumber === this.slotNumber;
       }
     );
-    console.log(possibleOutcomes);
     const possibleOutcomes$ = possibleOutcomes.map(data =>
       this.rewardsService.getReward(data.outcome.resultId).pipe(
         map((reward: IRewardEntity) =>
@@ -138,6 +146,7 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
   }
 
   public addOutcome(value: ICampaignOutcome): void {
+    value.enableProbability = this.enableProbability;
     this.outcomes.push(value);
     if (value.outcome.probability > 0 && !this.enableProbability) {
       this.enableProbability = true;
@@ -177,18 +186,16 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
 
   public removeOutcome(index: number): void {
     if (index > -1) {
-      this.outcomes.splice(index, 1);
+      this.outcomes[index].outcome.slotNumber = -1;
     }
     this.updateOutcomesInCampaign();
   }
 
   public updateOutcomes(): void {
-    console.log('this.enablePro' + this.enableProbability);
     if (this.enableProbability) {
-      this.noOutcome.outcome.slotNumber = this.slotNumber;
-      this.outcomes.unshift(this.noOutcome);
+      this.outcomes[0].outcome.slotNumber = this.slotNumber;
     } else {
-      this.outcomes.shift();
+      this.outcomes[0].outcome.slotNumber = -1;
     }
     this.updateOutcomeProbabilitySetting();
     this.updateOutcomesInCampaign();
