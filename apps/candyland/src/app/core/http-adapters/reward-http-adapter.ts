@@ -1,5 +1,4 @@
 import * as moment from 'moment';
-import * as striptags from 'striptags';
 
 import { IWRewardEntityAttributes, IWTierRewardCostsAttributes } from '@perx/whistler';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
@@ -113,7 +112,7 @@ export class RewardHttpAdapter {
         category: data.rewardInfo.category,
         redemption_type: data.rewardInfo.redemptionType,
         cost_of_reward: data.rewardInfo.cost,
-        description: striptags(data.rewardInfo.description),
+        description: data.rewardInfo.description,
         terms_conditions: data.rewardInfo.termsAndCondition,
         tags: data.rewardInfo.tags || [],
         organization_id: data.rewardInfo.merchantId,
