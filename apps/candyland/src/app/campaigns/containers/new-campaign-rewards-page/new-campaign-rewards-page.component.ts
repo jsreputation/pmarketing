@@ -55,7 +55,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
     super.ngOnDestroy();
     this.cd.detach();
   }
-  
+
   private initForm(): void {
     if (!this.form) {
       return;
