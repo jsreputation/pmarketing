@@ -25,7 +25,7 @@ import { environment } from '../environments/environment';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatSnackBarModule } from '@angular/material';
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
   translateService.setDefaultLang(environment.defaultLang);
@@ -50,6 +50,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     HttpClientModule,
     RewardsModule,
     MatDialogModule,
+    MatSnackBarModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
