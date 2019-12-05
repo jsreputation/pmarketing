@@ -82,7 +82,7 @@ describe('DiscoverComponent', () => {
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
         { provide: Router, useValue: routerStub },
-        { provide: IGameService, useValue: gameServiceStub }
+        { provide: IGameService, useValue: gameServiceStub },
       ]
     })
       .compileComponents();
