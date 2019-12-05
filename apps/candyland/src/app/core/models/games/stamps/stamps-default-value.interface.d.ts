@@ -7,5 +7,4 @@ declare interface IStampsDefaultValue {
   rewardPreStamp: IGraphic[];
   preStamp: IGraphic[];
   backgroundStamp: IGraphic[];
-
 }
