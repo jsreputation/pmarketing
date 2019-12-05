@@ -51,6 +51,7 @@ describe('AppComponent', () => {
     snackBar = TestBed.get<MatSnackBar>(MatSnackBar as Type<MatSnackBar>);
     location = TestBed.get<Location>(Location as Type<Location>);
     app.ngOnInit();
+    tick();
   }));
   it('should create the app', () => {
     expect(app).toBeTruthy();
