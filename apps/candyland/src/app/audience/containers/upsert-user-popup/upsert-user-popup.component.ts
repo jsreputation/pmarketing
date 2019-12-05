@@ -37,28 +37,22 @@ export class UpsertUserPopupComponent implements OnInit {
   public form: FormGroup;
   public pools: any;
   public countriesList$: Observable<ICountries>;
-  public config: { [key: string]: OptionConfig[] } = {
-    gender: [
-      {title: 'Male', value: 'male'},
-      {title: 'Female', value: 'female'}
-    ],
-    audienceList: [
-      {title: 'AUDIENCE_FEATURE.GOLD_USERS', value: 'Gold_users'},
-      {title: 'AUDIENCE_FEATURE.SILVER_TIER', value: 'Silver_tier'},
-      {title: 'AUDIENCE_FEATURE.BRONZE_TIER', value: 'Bronze_tier'}
-    ]
-  };
+  public genders: OptionConfig[] = [
+    { title: 'Male', value: 'male' },
+    { title: 'Female', value: 'female' }
+  ];
 
   private loadCountries(): void {
     this.countriesList$ = this.surveyService.getDefaultCountryCode();
   }
 
-  constructor(public dialogRef: MatDialogRef<UpsertUserPopupComponent>,
-              private fb: FormBuilder,
-              private audiencesService: AudiencesService,
-              private surveyService: SurveyService,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
-  }
+  constructor(
+    public dialogRef: MatDialogRef<UpsertUserPopupComponent>,
+    private fb: FormBuilder,
+    private audiencesService: AudiencesService,
+    private surveyService: SurveyService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 
   public get title(): string | null {
     switch (this.data.type) {
@@ -71,14 +65,13 @@ export class UpsertUserPopupComponent implements OnInit {
     }
   }
 
-  public get btnLabel(): string | null {
+  public get btnLabel(): string {
     switch (this.data.type) {
       case Type.Add:
         return 'BTN_ADD';
       case Type.Edit:
-        return 'BTN_EDIT';
       default:
-        return null;
+        return 'BTN_SAVE';
     }
   }
 
@@ -129,12 +122,12 @@ export class UpsertUserPopupComponent implements OnInit {
         lastName: [formData.last_name, Validators.required],
         email: [formData.email_address, [
           Validators.required,
-          Validators.minLength(10),
+          Validators.minLength(5),
           Validators.maxLength(50),
           ClValidators.email]],
         phone: [formData.phone_number, Validators.required],
         gender: [formData.properties ? formData.properties.gender : null, null],
-        birthday: [formData.properties ? new Date(formData.properties.birthday) : null, null],
+        birthday: [formData.properties && formData.properties.birthday ? new Date(formData.properties.birthday) : null, null],
         race: [formData.properties ? formData.properties.race : null, null],
         country: [formData.properties ? formData.properties.country : null, null],
         nationality: [formData.properties ? formData.properties.nationality : null, null],
@@ -151,7 +144,7 @@ export class UpsertUserPopupComponent implements OnInit {
         lastName: [null, Validators.required],
         email: [null, [
           Validators.required,
-          Validators.minLength(10),
+          Validators.minLength(5),
           Validators.maxLength(50),
           ClValidators.email]],
         phone: [null, Validators.required],
@@ -171,10 +164,8 @@ export class UpsertUserPopupComponent implements OnInit {
     this.form = this.fb.group(controlsConfig);
   }
 
-  private getPools(): any {
+  private getPools(): void {
     this.audiencesService.getAudiencesList()
-      .subscribe((data: any) => {
-        this.pools = data;
-      });
+      .subscribe((data) => this.pools = data);
   }
 }
