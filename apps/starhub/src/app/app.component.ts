@@ -135,7 +135,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   }
 
   @HostListener('document:click', ['$event'])
-  onDocumentClick(e: any) {
+  public onDocumentClick(e: any): void {
     const isIpad = navigator.userAgent.match(/iPad/i) != null;
     const isIphone = (navigator.userAgent.match(/iPhone/i) != null) || (navigator.userAgent.match(/iPod/i) != null);
     const url = e && e.target && (e.target.href || e.target.parentNode && e.target.parentNode.href || null);
