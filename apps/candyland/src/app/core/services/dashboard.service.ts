@@ -37,6 +37,12 @@ export class DashboardService {
     );
   }
 
+  public getTabValues(id: string, params: HttpParamsOptions): Observable<any[] | null> {
+    return this.dataService.getData(id, params).pipe(
+      map((response: any) => response.rows || null)
+    );
+  }
+
   public getTabsValue(idArray: string[], params: HttpParamsOptions): Observable<(string | number | null)[]> {
     return combineLatest(idArray.map(id => this.getTabValue(id, params)));
   }

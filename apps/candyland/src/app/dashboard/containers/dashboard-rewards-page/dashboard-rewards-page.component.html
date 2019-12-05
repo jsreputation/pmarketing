@@ -5,6 +5,7 @@
     <article class="chart-card full-width">
       <h3 class="chart-card-title">
         {{'REWARD_GRAPHIC_PAGE.TOTAL_REWARDS' | translate}}
+        {{RewardValue}}
       </h3>
       <div class="chart-card-content">
         <cl-chart-card [id]="'rewards_total_rewards'" [cardType]="ct.line" [params]="params"></cl-chart-card>
