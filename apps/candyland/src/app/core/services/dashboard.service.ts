@@ -21,10 +21,10 @@ export class DashboardService {
 
   public getTotalActive(): Observable<ITotal[]> {
     return this.dashboardHttpService.getDashboardDataTotal()
-      // .pipe(
-      //   // map((res: ITotal[]) => res)
-      // )
-      ;
+    // .pipe(
+    //   // map((res: ITotal[]) => res)
+    // )
+    ;
   }
 
   public getDashboardCampaignsTabs(): Observable<ITotal[]> {
@@ -33,7 +33,7 @@ export class DashboardService {
 
   public getTabValue(id: string, params: HttpParamsOptions): Observable<string | number | null> {
     return this.dataService.getData(+id, params).pipe(
-      map(response => response.rows[0][0] || null)
+      map((response: any) => response.rows[0][0] || null)
     );
   }
 

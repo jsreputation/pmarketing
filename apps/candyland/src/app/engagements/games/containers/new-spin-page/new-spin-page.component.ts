@@ -9,8 +9,6 @@ import {tap, map, switchMap, takeUntil } from 'rxjs/operators';
 import { ControlsName } from '../../../../models/controls-name';
 import { ISlice } from '@perx/core';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWSpinGameEngagementAttributes } from '@perx/whistler';
 import {SpinService} from '@cl-core/services/spin.service';
@@ -97,7 +95,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.initTenants();
+    this.initTenantsSettings();
     this.createSpinForm();
     combineLatest([this.getSpinData(), this.handleRouteParams()])
       .subscribe(
@@ -217,7 +215,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       } else {
         this.perxCoreSpinClass = 'mobile-preview-plugin';
       }
-      this.cd.detectChanges(); // criticial
+      this.cd.detectChanges(); // critical
     });
   }
 
@@ -234,7 +232,6 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
           for (let i = 0; i < value; i++) {
             tempISlices.push({
               id: `${i}`,
-              // label: `${i}win`, // hard code same
               backgroundColor: this.colorCtrls.get(`${i}`).value,
             });
           }
@@ -332,11 +329,11 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     this.routingState.comeBackPreviousUrl();
   }
 
-  private initTenants(): void {
-    this.settingsService.getTenants()
+  private initTenantsSettings(): void {
+    this.settingsService.getTenant()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res: Tenants) => {
-        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+      .subscribe((res: ITenantsProperties) => {
+        this.tenantSettings = res;
         this.cd.detectChanges();
       });
   }

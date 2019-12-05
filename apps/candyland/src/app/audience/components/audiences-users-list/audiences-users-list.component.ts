@@ -18,7 +18,7 @@ import {
   switchMap,
 } from 'rxjs/operators';
 
-import { IWUser } from '@perx/whistler';
+import { IWProfileAttributes } from '@perx/whistler';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 
@@ -35,7 +35,7 @@ import { UpsertUserPopupComponent } from '../../containers/upsert-user-popup/ups
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AudiencesUsersListComponent implements AfterViewInit {
-  @Input() public dataSource: CustomDataSource<IWUser>;
+  @Input() public dataSource: CustomDataSource<IWProfileAttributes>;
   @Input() public displayedColumns: string[] = [
     'id',
     'name',

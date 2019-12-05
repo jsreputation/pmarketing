@@ -24,7 +24,7 @@ export class RewardHttpService {
   //   return this.http.get('assets/actives/rewards/reward-detail.json');
   // }
 
-  public getRewardsOptions(): Observable<OptionConfig[]> {
+  public getreward(): Observable<OptionConfig[]> {
     return this.http.get<OptionConfig[]>('assets/actives/rewards/rewards-options.json');
   }
 

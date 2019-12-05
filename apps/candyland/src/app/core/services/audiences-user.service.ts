@@ -7,7 +7,6 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { HttpParams } from '@angular/common/http';
 import { IWProfileAttributes, IWPoolsAttributes } from '@perx/whistler';
-import { IWUser } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +15,7 @@ export class AudiencesUserService implements ITableService {
   constructor(private http: AudiencesHttpsService) {
   }
 
-  public getUser(id: string): Observable<IWUser> {
+  public getUser(id: string): Observable<IWProfileAttributes> {
     const params: HttpParams = ClHttpParams.createHttpParams({include: 'pools'});
     return this.http.getUser(id, params).pipe(map((res: any) => AudiencesHttpAdapter.transformUserWithPools(res)));
   }
@@ -32,7 +31,7 @@ export class AudiencesUserService implements ITableService {
       .pipe(map(res => res.included));
   }
 
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<IWUser>> {
+  public getTableData(params: HttpParamsOptions): Observable<ITableData<IWProfileAttributes>> {
     params.include = 'pools';
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.http.getAllUsers(httpParams)
@@ -50,7 +49,7 @@ export class AudiencesUserService implements ITableService {
     return this.http.updateUser(id, formattedUser);
   }
 
-  public updateUserPools(user: IWUser): Observable<IJsonApiListPayload<IWPoolsAttributes>> {
+  public updateUserPools(user: IWProfileAttributes): Observable<IJsonApiListPayload<IWPoolsAttributes>> {
     const formattedData = AudiencesHttpAdapter.transformUpdateUserPools(user);
     return this.http.updateUserPools(formattedData);
   }
