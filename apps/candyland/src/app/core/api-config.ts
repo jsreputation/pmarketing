@@ -32,4 +32,5 @@ export class ApiConfig {
   public static getLoyaltyCustomTierPath: string = `${ApiConfig.basePath}/loyalty/custom_tiers`;
   public static getLoyaltyRuleSetPath: string = `${ApiConfig.basePath}/outcome/rule_sets`;
   public static getLoyaltyRulePath: string = `${ApiConfig.basePath}/outcome/rules`;
+  public static getLoyaltyRuleConditionPath: string = `${ApiConfig.basePath}/outcome/rule_conditions`;
 }

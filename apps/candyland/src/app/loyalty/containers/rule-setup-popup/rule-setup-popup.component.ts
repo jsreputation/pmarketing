@@ -4,6 +4,9 @@ import { Subject } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LoyaltyEarnRulesFormsService } from '../../services/loyalty-earn-rules-forms.service';
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
+import { concatAll, distinctUntilChanged, map, takeUntil, tap } from 'rxjs/operators';
+import Utils from '@cl-helpers/utils';
+import { CRUDParser } from '@cl-helpers/crud-parser';
 
 @Component({
   selector: 'cl-rule-setup-popup',
@@ -14,6 +17,7 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   protected destroy$: Subject<void> = new Subject();
   public titleError: string;
+  public conditionTypes: OptionConfig[];
 
   public get name(): AbstractControl {
     return this.form.get('name') || null;
@@ -47,6 +51,7 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
     console.log('initData', this.data);
     this.initForm();
     this.fillForm();
+    this.handleConditionTypes();
   }
 
   public ngOnDestroy(): void {
@@ -63,8 +68,26 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   }
 
   public updateCondition(index: number, type: string): void {
-    this.deleteCondition(index);
-    this.conditions.insert(index, this.formsService.createFormField(type));
+    const id = this.conditions.at(index).value.id;
+    // this.deleteCondition(index);
+    this.conditions.setControl(index, this.formsService.createFormField(type));
+    if (id) {
+      this.conditions.at(index).get('id').patchValue(id);
+    }
+    // this.conditions.insert(index, this.formsService.createFormField(type));
+  }
+
+  public handleConditionTypes(): void {
+    this.conditions.valueChanges.pipe(
+      distinctUntilChanged(Utils.isEqual),
+      map(conditions => conditions.map(condition => condition.type)),
+      tap(conditions => console.log(conditions)),
+      // map(selectedConditions => this.data.config.conditionType.filter(
+      //   conditionType => !selectedConditions.includes(conditionType.value))
+      // ),
+      // tap(conditions => console.log('2', conditions)),
+      takeUntil(this.destroy$)
+    ).subscribe(avaibleConditionsTypes => this.conditionTypes = avaibleConditionsTypes);
   }
 
   public close(): void {
@@ -77,10 +100,20 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
       return;
     }
     let request;
+    debugger
     if (this.data.rule) {
-      request = this.ruleService.updateRule(this.data.ruleSet.id, this.form.value, this.data.rule.id);
-    } else {
-      request = this.ruleService.createRule(this.data.ruleSet.id, this.form.value);
+      // request = this.ruleService.updateRule(this.data.ruleSet.id, this.form.value, this.data.rule.id);
+    //   const current = this.data.rule.conditions;
+    //   const updated = this.form.value.conditions;
+    //   const requestList = CRUDParser.buildRequestList(current, updated);
+    //   const sendRequestList = CRUDParser.sendRequestList(requestList, {
+    //     create: this.ruleService.createRuleCondition,
+    //     update: this.ruleService.updateRuleCondition,
+    //     delete: this.ruleService.deleteRuleCondition
+    //   }, [this.data.rule.id]);
+    //   concatAll(sendRequestList)
+    // } else {
+    //   request = this.ruleService.createRule(this.data.ruleSet.id, this.form.value);
     }
     request.subscribe(
       rule => {
@@ -108,4 +141,5 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
     pathValue.conditions.forEach(() => this.addCondition());
     this.form.patchValue(pathValue);
   }
+
 }

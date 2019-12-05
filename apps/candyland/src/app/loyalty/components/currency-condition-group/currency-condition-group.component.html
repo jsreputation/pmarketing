@@ -2,8 +2,8 @@
   <div class="loyalty-row input-group ">
     <mat-form-field class="loyalty-rule-input">
       <mat-select floatLabel="never" formControlName="value">
-        <ng-container *ngFor="let currencyItem of config?.currencyList">
-          <mat-option [value]="currencyItem.currency">{{currencyItem.currency}}</mat-option>
+        <ng-container *ngFor="let currencyOption of config?.currencyList">
+          <mat-option [value]="currencyOption.currency">{{currencyOption.currency}}</mat-option>
         </ng-container>
       </mat-select>
     </mat-form-field>

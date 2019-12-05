@@ -95,4 +95,30 @@ export class LoyaltyRuleService {
   public deleteRule(id: string): Observable<IJsonApiPayload<any>> {
     return this.rulesHttpService.deleteRule(id);
   }
+
+  public getRuleCondition(id: string, params: HttpParamsOptions): Observable<ICustomTireForm> {
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.rulesHttpService.getRuleCondition(id, httpParams).pipe(
+      map((response: any) => LoyaltyRuleHttpAdapter.transformToConditionForm(response.data))
+    );
+  }
+
+  public createRuleCondition(ruleSetId: string, data: any): Observable<IJsonApiPayload<any>> {
+    const sendData: any = LoyaltyRuleHttpAdapter.transformFromConditionForm(data, ruleSetId);
+    return this.rulesHttpService.createRuleCondition({data: sendData}).pipe(
+      map((response: any) => LoyaltyRuleHttpAdapter.transformToConditionForm(response.data))
+    );
+  }
+
+  public updateRuleCondition(ruleId: string, data: any, conditionId: string): Observable<IJsonApiPayload<any>> {
+    const sendData: any = LoyaltyRuleHttpAdapter.transformFromConditionForm(data, ruleId);
+    sendData.id = conditionId;
+    return this.rulesHttpService.updateRuleCondition(conditionId, {data: sendData}).pipe(
+      map((response: any) => LoyaltyRuleHttpAdapter.transformToConditionForm(response.data))
+    );
+  }
+
+  public deleteRuleCondition(id: string): Observable<IJsonApiPayload<any>> {
+    return this.rulesHttpService.deleteRuleCondition(id);
+  }
 }

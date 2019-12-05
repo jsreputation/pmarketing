@@ -9,7 +9,8 @@ const componentMapper = {
   transaction: TransactionConditionGroupComponent,
   amount: AmountConditionGroupComponent,
   currency: CurrencyConditionGroupComponent,
-  date: DateConditionGroupComponent,
+  fromDate: DateConditionGroupComponent,
+  toDate: DateConditionGroupComponent,
 };
 
 @Directive({

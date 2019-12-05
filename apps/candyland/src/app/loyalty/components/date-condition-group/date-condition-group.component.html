@@ -1,11 +1,11 @@
 <ng-container [formGroup]="group">
   <div class="loyalty-row input-group ">
-    <mat-form-field floatLabel="never" class="loyalty-rule-input">
-      <mat-select formControlName="operator">
-        <mat-option value="equal">equal to</mat-option>
-        <mat-option value="unequal">not equal to</mat-option>
-      </mat-select>
-    </mat-form-field>
+<!--    <mat-form-field floatLabel="never" class="loyalty-rule-input">-->
+<!--      <mat-select formControlName="operator">-->
+<!--        <mat-option value="equal">equal to</mat-option>-->
+<!--        <mat-option value="unequal">not equal to</mat-option>-->
+<!--      </mat-select>-->
+<!--    </mat-form-field>-->
     <cl-date-picker class="loyalty-rule-input" placeholder="date" formControlName="value" [max]="group.get('endDate')?.value">
     </cl-date-picker>
 <!--    <span>to</span>-->

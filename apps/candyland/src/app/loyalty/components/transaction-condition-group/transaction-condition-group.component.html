@@ -2,8 +2,9 @@
   <div class="row">
     <mat-form-field>
       <mat-select formControlName="value">
-        <mat-option value="prepaid">PREPAID</mat-option>
-        <mat-option value="other">Other Option</mat-option>
+        <ng-container *ngFor="let options of config?.transactionType">
+          <mat-option [value]="options?.value">{{options?.title}}</mat-option>
+        </ng-container>
       </mat-select>
     </mat-form-field>
   </div>

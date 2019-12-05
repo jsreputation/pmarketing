@@ -16,7 +16,7 @@
 
     <label class="loyalty-label">If the customer...</label>
     <ng-container *ngFor="let conditionGroup of conditions.controls;let index = index; let first = first">
-      <div class="row" *ngIf="!first">
+      <div class="row" *ngIf="!first || conditions.controls > 1">
         <label class="loyalty-label">AND</label>
         <button class="question-remove btn-transparent" (click)="deleteCondition(index)">
           <i class="icon delete"></i>
@@ -27,10 +27,14 @@
           <mat-form-field>
             <mat-select [formControl]="conditionGroup.get('type')"
                         (valueChange)="updateCondition(index, $event)">
-              <mat-option value="transaction">Makes a transaction TYPE</mat-option>
-              <mat-option value="amount">Makes a transaction AMOUNT</mat-option>
-              <mat-option value="currency">Makes a transaction CURRENCY</mat-option>
-              <mat-option value="date">Transacts within these DATES</mat-option>
+              <ng-container *ngFor="let conditionOption of data.config?.conditionType">
+                <mat-option [value]="conditionOption?.value">{{conditionOption?.title}}</mat-option>
+              </ng-container>
+<!--              <mat-option value="transaction">Makes a transaction TYPE</mat-option>-->
+<!--              <mat-option value="amount">Makes a transaction AMOUNT</mat-option>-->
+<!--              <mat-option value="currency">Makes a transaction CURRENCY</mat-option>-->
+<!--              <mat-option value="fromDate">Transacts from DATE</mat-option>-->
+<!--              <mat-option value="toDate">Transacts to DATE</mat-option>-->
             </mat-select>
           </mat-form-field>
         </div>

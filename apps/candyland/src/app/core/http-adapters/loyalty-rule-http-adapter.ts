@@ -73,7 +73,7 @@ export class LoyaltyRuleHttpAdapter {
         reward_id: 1,
         name: data.name,
         conditions: data.conditions.map(condition =>
-          LoyaltyRuleHttpAdapter.transformFromConditionForm(condition)
+          LoyaltyRuleHttpAdapter.transformFromCondition(condition)
         )
       }
     };
@@ -81,6 +81,7 @@ export class LoyaltyRuleHttpAdapter {
 
   public static transformToConditionForm(data: any): any {
     return {
+      id: data.id,
       type: data.attributes.field,
       value: data.attributes.value,
       operator: data.attributes.sign,
@@ -88,12 +89,27 @@ export class LoyaltyRuleHttpAdapter {
     };
   }
 
-  public static transformFromConditionForm(data: any): any {
+  public static transformFromCondition(data: any): any {
     return {
       field: data.type,
       sign: data.operator,
       value: (data.valueType === 'date') ? new Date(data.value) : data.value,
       value_type: data.valueType
+    };
+  }
+
+  public static transformFromConditionForm(data: any, ruleId: string): any {
+    return {
+      type: 'rule_conditions',
+      attributes: LoyaltyRuleHttpAdapter.transformFromCondition(data),
+      relationships: {
+        rule: {
+          data: {
+            type: 'rules',
+            id: ruleId
+          }
+        }
+      }
     };
   }
 

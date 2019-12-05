@@ -51,6 +51,26 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
   public statusLabel: { [key: string]: StatusLabelConfig };
   private currencyList: Currency[];
+  private ruleOperators: OptionConfig[] = [
+    {value: 'equal', title: '='},
+    {value: 'unequal', title: '≠'},
+    {value: 'less', title: '<'},
+    {value: 'greater', title: '>'},
+    {value: 'less_or_equal', title: '≤'},
+    {value: 'greater_or_equal', title: '≥'},
+  ];
+  private transactionType: OptionConfig[] = [
+    {value: 'prepaid', title: 'PREPAID'},
+    {value: 'cod', title: 'COD'},
+    {value: 'store', title: 'STORE'},
+  ];
+  private conditionType: OptionConfig[] = [
+    {value: 'transaction', title: 'Makes a transaction TYPE'},
+    {value: 'amount', title: 'Makes a transaction AMOUNT'},
+    {value: 'currency', title: 'Makes a transaction CURRENCY'},
+    {value: 'fromDate', title: 'Transacts from DATE'},
+    {value: 'toDate', title: 'Transacts to DATE'},
+  ];
   protected destroy$: Subject<void> = new Subject();
 
   public get stepOne(): FormGroup {
@@ -319,7 +339,15 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   private getRefDialogSetupRule(data: any = null): Observable<MatDialogRef<RuleSetupPopupComponent>> {
     const dialogRef: MatDialogRef<RuleSetupPopupComponent> = this.dialog.open(RuleSetupPopupComponent, {
       panelClass: 'tier-setup-dialog',
-      data: {...data, config: {currencyList: this.currencyList}}
+      data: {
+        ...data,
+        config: {
+          conditionType: this.conditionType,
+          currencyList: this.currencyList,
+          ruleOperators: this.ruleOperators,
+          transactionType: this.transactionType
+        }
+      }
     });
 
     console.log('getRefDialogSetupRule', data);
@@ -443,7 +471,8 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', this.basicTierId)
       .pipe(
         takeUntil(this.destroy$),
-        tap(ruleSet => this.basicTierRuleSet = ruleSet)
+        tap(ruleSet => this.basicTierRuleSet = ruleSet),
+        tap(ruleSet => console.log('Basic ruleSet', ruleSet))
       );
   }
 

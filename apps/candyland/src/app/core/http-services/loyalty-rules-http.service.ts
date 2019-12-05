@@ -50,4 +50,20 @@ export class LoyaltyRulesHttpService {
   public deleteRule(id: string): Observable<IJsonApiPayload<any>> {
     return this.http.delete<IJsonApiPayload<any>>(ApiConfig.getLoyaltyRulePath + '/' + id);
   }
+
+  public getRuleCondition(id: string, params: HttpParams): Observable<IJsonApiPayload<any>> {
+    return this.http.get<IJsonApiPayload<any>>(`${ApiConfig.getLoyaltyRuleConditionPath}/${id}`, {params});
+  }
+
+  public createRuleCondition(data: IJsonApiPayload<any>): Observable<IJsonApiPayload<any>> {
+    return this.http.post<IJsonApiPayload<any>>(ApiConfig.getLoyaltyRuleConditionPath + '/', data);
+  }
+
+  public updateRuleCondition(id: string, data: IJsonApiPayload<any>): Observable<IJsonApiPayload<any>> {
+    return this.http.patch<IJsonApiPayload<any>>(ApiConfig.getLoyaltyRuleConditionPath + '/' + id, data);
+  }
+
+  public deleteRuleCondition(id: string): Observable<IJsonApiPayload<any>> {
+    return this.http.delete<IJsonApiPayload<any>>(ApiConfig.getLoyaltyRuleConditionPath + '/' + id);
+  }
 }
