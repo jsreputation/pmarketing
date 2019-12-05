@@ -48,6 +48,9 @@ import { campaigns } from './mock/campaigns.mock';
 import { SignUpComponent } from './auth/signup/signup.component';
 import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
 import { SmsValidationComponent } from './auth/sms-validation/sms-validation.component';
+import { QRCodeComponent } from './qr-code/qr-code.component';
+import { NgxBarcodeModule } from 'ngx-barcode';
+import { AppTokenInterceptor } from './auth/apptoken.interceptor';
 import { PopupComponent } from './popup/popup.component';
 
 const rewardsServiceStub = {
@@ -74,6 +77,7 @@ const campaignServiceStub = {
     SignUpComponent,
     ForgotPinComponent,
     SmsValidationComponent,
+    QRCodeComponent,
     PopupComponent
   ],
   imports: [
@@ -103,12 +107,14 @@ const campaignServiceStub = {
     UtilsModule,
     LoyaltyModule,
     MatCheckboxModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxBarcodeModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
     { provide: RewardsService, useValue: rewardsServiceStub },
-    { provide: ICampaignService, useValue: campaignServiceStub }
+    { provide: ICampaignService, useValue: campaignServiceStub },
+    { provide: HTTP_INTERCEPTORS, useClass: AppTokenInterceptor, multi: true }
   ],
   entryComponents: [PopupComponent],
   bootstrap: [AppComponent]
