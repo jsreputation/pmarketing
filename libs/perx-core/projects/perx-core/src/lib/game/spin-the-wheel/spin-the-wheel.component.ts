@@ -33,12 +33,10 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   public classPosition: string;
 
   @Input()
-  public slotToLand: number = this.slices.length - 1;
+  public slotToLand: number = 0;
 
   // tslint:disable-next-line:variable-name
   private ctx_: CanvasRenderingContext2D;
-  // tslint:disable-next-line:variable-name
-  private ctxArrow_: CanvasRenderingContext2D;
   // tslint:disable-next-line:variable-name
   private ctxWheelWrap_: CanvasRenderingContext2D;
   private arcDeg: number;
@@ -56,8 +54,6 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   @ViewChild('canvas', {static: true})
   private canvasEl: ElementRef<HTMLCanvasElement>;
-  @ViewChild('arrow', {static: true})
-  private canvasArrowEl: ElementRef<HTMLCanvasElement>;
   @ViewChild('wheelWrap', {static: true})
   private canvasWheelWrapEl: ElementRef<HTMLCanvasElement>;
   @ViewChild('wheel', {static: true})
@@ -66,24 +62,14 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   private containerEl: ElementRef<HTMLDivElement>;
 
   private get canvas(): HTMLCanvasElement { return this.canvasEl.nativeElement; }
-  private get canvasArrow(): HTMLCanvasElement { return this.canvasArrowEl.nativeElement; }
   private get canvasWheelWrap(): HTMLCanvasElement { return this.canvasWheelWrapEl.nativeElement; }
-
   private get wheel(): HTMLDivElement { return this.wheelEl.nativeElement; }
   private get container(): HTMLDivElement { return this.containerEl.nativeElement; }
-
   private get ctx(): CanvasRenderingContext2D {
     if (!this.ctx_ && this.canvas.getContext) {
       this.ctx_ = this.canvas.getContext('2d') as CanvasRenderingContext2D;
     }
     return this.ctx_;
-  }
-
-  private get ctxArrow(): CanvasRenderingContext2D {
-    if (!this.ctxArrow_ && this.canvasArrow.getContext) {
-      this.ctxArrow_ = this.canvasArrow.getContext('2d') as CanvasRenderingContext2D;
-    }
-    return this.ctxArrow_;
   }
 
   private get ctxWheelWrap(): CanvasRenderingContext2D {
@@ -126,24 +112,22 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     this.size = this.wheel.offsetWidth;
     this.canvas.width = this.wheel.offsetWidth;
     this.canvas.height = this.wheel.offsetWidth;
-    this.canvasArrow.width = this.wheel.offsetWidth;
-    this.canvasArrow.height = this.wheel.offsetWidth;
     this.canvasWheelWrap.height = this.wheel.offsetWidth * 1.15;
     this.canvasWheelWrap.width =  this.wheel.offsetWidth * 1.15;
   }
 
   private attachListeners(): void {
-    this.canvasArrow.style.cursor = 'move';
-    this.canvasArrow.addEventListener('touchstart', this.handleStart.bind(this), {once: true});
-    this.canvasArrow.addEventListener('mousedown', this.handleStart.bind(this), {once: true});
+    this.canvas.style.cursor = 'move';
+    this.canvas.addEventListener('touchstart', this.handleStart.bind(this), {once: true});
+    this.canvas.addEventListener('mousedown', this.handleStart.bind(this), {once: true});
 
     // listen while dragging
-    this.canvasArrow.addEventListener('touchend', this.handleEnd.bind(this), {once: true});
-    this.canvasArrow.addEventListener('mouseup', this.handleEnd.bind(this), {once: true});
+    this.canvas.addEventListener('touchend', this.handleEnd.bind(this), {once: true});
+    this.canvas.addEventListener('mouseup', this.handleEnd.bind(this), {once: true});
 
     // listen after dragging is complete
-    this.canvasArrow.addEventListener('touchmove', this.handleMove.bind(this), {once: true});
-    this.canvasArrow.addEventListener('mousemove', this.handleMove.bind(this), {once: true});
+    this.canvas.addEventListener('touchmove', this.handleMove.bind(this), {once: true});
+    this.canvas.addEventListener('mousemove', this.handleMove.bind(this), {once: true});
   }
 
   private init(): void {
@@ -162,8 +146,8 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     const slicesWithImg: ISlice[] = this.slices.filter(item => item.backgroundImage);
     let count: number = 0;
     const images: ImageForPattern[] = [];
-
-    this.fillArrowStyle();
+    //
+    // this.fillArrowStyle();
     this.fillWheelWrapStyle();
 
     slicesWithImg.forEach((item) => {
@@ -269,17 +253,6 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
       }
     });
     this.ctx.resetTransform();
-  }
-
-  private fillArrowStyle(): void {
-    const arrowImage: HTMLImageElement = new Image();
-    arrowImage.src = this.pointerImg;
-    arrowImage.onload = () => this.ctxArrow.drawImage(arrowImage, this.canvasArrow.width / 2 - 20, 0, 50, 70);
-    if (this.ctxArrow) {
-      this.ctxArrow.clearRect(0, 0, this.canvasArrow.width, this.canvasArrow.height);
-      this.ctxArrow.fillStyle = (this.ctxArrow.createPattern(arrowImage, 'no-repeat') as CanvasPattern);
-      this.ctxArrow.fill();
-    }
   }
 
   private fillWheelWrapStyle(): void {

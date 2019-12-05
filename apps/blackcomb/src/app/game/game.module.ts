@@ -11,6 +11,8 @@ import {
   ShakeComponent,
   TapComponent,
   ScratchComponent,
+  SpinComponent,
+  ConfigToSlicesPipe
 } from '@perx/blackcomb-pages';
 
 import { GameRoutingModule } from './game-routing.module';
@@ -21,6 +23,8 @@ import { GameRoutingModule } from './game-routing.module';
     ShakeComponent,
     TapComponent,
     ScratchComponent,
+    SpinComponent,
+    ConfigToSlicesPipe
   ],
   imports: [
     CommonModule,

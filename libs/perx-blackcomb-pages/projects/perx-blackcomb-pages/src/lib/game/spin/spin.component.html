@@ -1,0 +1,31 @@
+<div class="main-puzzle-container">
+    <div class="game-header">
+      <h1>{{game.texts.title}}</h1>
+      <h3>{{game.texts.subTitle}}</h3>
+    </div>
+    <div class="game-wrapper">
+      <div class="spin-wrapper">
+        <perx-core-spin-the-wheel
+          [class]="spinPosition"
+          [classPosition]="spinPosition"
+          [pointerImg]="config.pointerImg"
+          [wheelImg]="config.wheelImg"
+          [slices]="config| slicesPipe">
+        </perx-core-spin-the-wheel>
+
+        <div class="game-footer">
+          <button class="js-play"
+                  [hidden]="isEnabled"
+                  mat-flat-button
+                  color="primary"
+                  (click)="isEnabled = true">
+            {{ game.texts.button }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
