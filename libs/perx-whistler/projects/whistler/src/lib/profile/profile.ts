@@ -24,12 +24,18 @@ export interface IWCognitoLogin {
   jwt: string;
 }
 
-interface IWCustomProperties {
-  [key: string]: string | number | boolean;
-}
-
 export interface IWUserJWTRequest {
   identifier: string;
   url: string;
   profile?: IWProfileAttributes;
+}
+
+export interface IWCustomProperties {
+  gender?: string | null;
+  birthday?: string | null;
+  race?: string | null;
+  country?: string | null;
+  nationality?: string | null;
+  city?: string | null;
+  state?: string | null;
 }
