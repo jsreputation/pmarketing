@@ -71,7 +71,7 @@ export class CardComponent implements OnInit {
     }
     this.loyaltyService.getTransactions(this.loyaltyId, this.transactionsPageId)
       .subscribe((transactions) => {
-        transactions = transactions && transactions.length ? transactions.filter(tr => tr.points !== 0) : [];
+        transactions = transactions && transactions.length ? transactions.filter(tr => tr.points > 0) : [];
         this.transactions.next(transactions);
         this.transactionsLoaded = true;
         if (transactions && transactions.length < 3) {
