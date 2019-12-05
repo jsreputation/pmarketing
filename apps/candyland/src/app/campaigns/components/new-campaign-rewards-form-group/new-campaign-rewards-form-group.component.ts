@@ -39,7 +39,7 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
       limit: null,
       slotNumber: this.slotNumber
     }
-  }
+  };
 
   constructor(
     public cd: ChangeDetectorRef,
@@ -56,8 +56,9 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
   private initForm(): void {
     this.form = this.fb.group({
       totalProbability: [null, [ClValidators.sumMoreThan()]]
-    })
+    });
   }
+
   public get campaign(): any {
     return this.store.currentCampaign;
   }
@@ -163,7 +164,7 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
     this.form.patchValue({
       totalProbability: totalNum
     });
-    this.form.updateValueAndValidity()
+    this.form.updateValueAndValidity();
     return totalNum > 100;
   }
 

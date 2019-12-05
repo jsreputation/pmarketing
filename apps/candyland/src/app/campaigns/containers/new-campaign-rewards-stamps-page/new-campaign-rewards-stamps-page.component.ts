@@ -49,7 +49,6 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     this.cd.detach();
   }
 
-
   public get limitData(): FormGroup {
     return this.form.get('limits') as FormGroup;
   }
