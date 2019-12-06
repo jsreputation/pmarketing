@@ -32,7 +32,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   public hasData: boolean;
   public noData: boolean;
   public templateIndex: number;
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
 
   public get template(): AbstractControl {
     return this.form.get('template');
@@ -142,7 +142,10 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
 
   }
 
-  private getLimits(campaignData: ICampaign, findTemplate: IEngagementType): void {
+  private getLimits(campaignData: ICampaign, findTemplate?: IEngagementType): void {
+    if (!findTemplate) {
+      return;
+    }
     const params: HttpParamsOptions = {
       'filter[campaign_entity_id]': campaignData.id
     };
