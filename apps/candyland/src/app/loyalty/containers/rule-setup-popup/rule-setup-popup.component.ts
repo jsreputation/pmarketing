@@ -1,12 +1,12 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { combineLatest, Observable, Subject } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LoyaltyEarnRulesFormsService } from '../../services/loyalty-earn-rules-forms.service';
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
-import { concatAll, distinctUntilChanged, map, takeUntil, tap } from 'rxjs/operators';
+import { distinctUntilChanged, map, switchMap, takeUntil } from 'rxjs/operators';
 import Utils from '@cl-helpers/utils';
-import { CRUDParser } from '@cl-helpers/crud-parser';
+import { CRUDParser, RequestType } from '@cl-helpers/crud-parser';
 
 @Component({
   selector: 'cl-rule-setup-popup',
@@ -42,13 +42,12 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   constructor(
     public dialogRef: MatDialogRef<RuleSetupPopupComponent>,
     private formsService: LoyaltyEarnRulesFormsService,
-    private ruleService: LoyaltyRuleService,
+    public ruleService: LoyaltyRuleService,
     @Inject(MAT_DIALOG_DATA) public data: { ruleSet: any, rule?: any | null, config: any }
   ) {
   }
 
   public ngOnInit(): void {
-    console.log('initData', this.data);
     this.initForm();
     this.fillForm();
     this.handleConditionTypes();
@@ -81,11 +80,6 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
     this.conditions.valueChanges.pipe(
       distinctUntilChanged(Utils.isEqual),
       map(conditions => conditions.map(condition => condition.type)),
-      tap(conditions => console.log(conditions)),
-      // map(selectedConditions => this.data.config.conditionType.filter(
-      //   conditionType => !selectedConditions.includes(conditionType.value))
-      // ),
-      // tap(conditions => console.log('2', conditions)),
       takeUntil(this.destroy$)
     ).subscribe(avaibleConditionsTypes => this.conditionTypes = avaibleConditionsTypes);
   }
@@ -99,28 +93,8 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
       this.form.markAllAsTouched();
       return;
     }
-    let request;
-    debugger
-    if (this.data.rule) {
-      // request = this.ruleService.updateRule(this.data.ruleSet.id, this.form.value, this.data.rule.id);
-    //   const current = this.data.rule.conditions;
-    //   const updated = this.form.value.conditions;
-    //   const requestList = CRUDParser.buildRequestList(current, updated);
-    //   const sendRequestList = CRUDParser.sendRequestList(requestList, {
-    //     create: this.ruleService.createRuleCondition,
-    //     update: this.ruleService.updateRuleCondition,
-    //     delete: this.ruleService.deleteRuleCondition
-    //   }, [this.data.rule.id]);
-    //   concatAll(sendRequestList)
-    // } else {
-    //   request = this.ruleService.createRule(this.data.ruleSet.id, this.form.value);
-    }
-    request.subscribe(
-      rule => {
-        // TODO: change conditions get from API which conditions CRUD finished
-        const ruleWithConditions = {...rule, conditions: this.conditions.value};
-        this.dialogRef.close(ruleWithConditions);
-      },
+    this.getRuleRequest().subscribe(
+      rule => this.dialogRef.close(rule),
       (error: any) => {
         this.titleError = error.error.errors.find(item => item.source.pointer === '/data/attributes/name').title;
         if (this.titleError) {
@@ -137,9 +111,47 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
 
   private fillForm(): void {
     const pathValue = this.data.rule || this.formsService.getDefaultValue();
-    console.log('pathValue', pathValue, pathValue.conditions);
     pathValue.conditions.forEach(() => this.addCondition());
     this.form.patchValue(pathValue);
+  }
+
+  private getConditionsRequests(ruleId: string, currentConditions: any[], updatedConditions: any[]): Observable<any>[] {
+    return CRUDParser.buildRequestList(currentConditions, updatedConditions, (type, data) => {
+      switch (type) {
+        case RequestType.CREATE:
+          return this.ruleService.createRuleCondition(ruleId, data);
+        case RequestType.UPDATE:
+          return this.ruleService.updateRuleCondition(ruleId, data, data.id);
+        case RequestType.DELETE:
+          return this.ruleService.deleteRuleCondition(data.id);
+      }
+    });
+  }
+
+  private getRuleRequest(): Observable<any> {
+    let request;
+    const ruleSetId = this.data.ruleSet.id;
+    const currentRule = this.data.rule;
+    const updatedRule = this.form.value;
+    if (currentRule) {
+      const ruleId = this.data.rule.id;
+      request = combineLatest([
+        this.ruleService.updateRule(updatedRule, ruleId),
+        ...this.getConditionsRequests(ruleId, currentRule.conditions, updatedRule.conditions)
+      ])
+        .pipe(
+          map(() => ruleId)
+        );
+    } else {
+      request = this.ruleService.createRule(ruleSetId, updatedRule).pipe(
+        map((rule: any) => rule.id)
+      );
+    }
+    request = request.pipe(
+      switchMap((id: string) => this.ruleService.getRule(id)),
+      takeUntil(this.destroy$)
+    );
+    return request;
   }
 
 }

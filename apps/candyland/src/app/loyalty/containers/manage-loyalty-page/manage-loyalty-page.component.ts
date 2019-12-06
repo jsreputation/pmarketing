@@ -118,12 +118,6 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    // const params = {
-    //   include: 'rules.rule_conditions',
-    //   'filter[domain_id]': 196,
-    //   'filter[domain_type]': 'Perx::Loyalty::BasicTier',
-    // };
-    // this.ruleService.getRuleSetList(params).subscribe(data => console.log('getRuleSetList', data));
     this.initPools();
     this.initStatusesLabel();
     this.initForm();
@@ -282,7 +276,6 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     this.getRefDialogSetupTier()
       .pipe(takeUntil(this.destroy$))
       .subscribe((tier) => {
-        console.log('tier', tier);
         this.updateCustomTiersDataSource();
         if (this.stepProgress >= 2) {
           this.createCustomTierRuleSet(tier.id).subscribe();
@@ -350,7 +343,6 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
       }
     });
 
-    console.log('getRefDialogSetupRule', data);
     return dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
@@ -360,27 +352,26 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
 
   private createRule(data: any): void {
     this.getRefDialogSetupRule(data)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        filter(Boolean),
+        takeUntil(this.destroy$)
+      )
       .subscribe((rule) => {
-        console.log('ruleSet', data.ruleSet, '\n rule', rule);
-        // if (data.ruleSet.tierType === 'Perx::Loyalty::BasicTier') {
-        //   this.basicTierRuleSet.rules.push(rule);
-        // }
-        // if (data.ruleSet.tierType === 'Perx::Loyalty::CustomTier') {
-        //   this.customTierRuleSetMap[data.tierId].rules.push(rule);
-        // }
         const updateRules = [...data.ruleSet.rules, rule];
         data.ruleSet.rules = updateRules;
         this.cd.detectChanges();
-        console.log('\n basicTierRuleSet', this.basicTierRuleSet, '\n customTierRuleSetMap', this.customTierRuleSetMap);
       });
   }
 
   private editRule(data: any): void {
     this.getRefDialogSetupRule(data)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        filter(Boolean),
+        takeUntil(this.destroy$)
+      )
       .subscribe((updatedRule) => {
-        data.rule = updatedRule;
+        data.ruleSet.rules = Utils.updateAtArray( data.ruleSet.rules, data.rule, updatedRule);
+        this.cd.detectChanges();
       });
   }
 
@@ -398,7 +389,6 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     const newRules = [...data.ruleSet.rules];
     moveItemInArray(newRules, data.prevIndex, data.currentIndex);
     data.ruleSet.rules = newRules;
-    console.log(data.rules, this.basicTierRuleSet);
   }
 
   private initPools(): void {
@@ -472,7 +462,6 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
         tap(ruleSet => this.basicTierRuleSet = ruleSet),
-        tap(ruleSet => console.log('Basic ruleSet', ruleSet))
       );
   }
 

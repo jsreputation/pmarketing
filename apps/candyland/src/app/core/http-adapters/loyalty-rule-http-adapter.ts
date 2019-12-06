@@ -79,6 +79,15 @@ export class LoyaltyRuleHttpAdapter {
     };
   }
 
+  public static transformFromRuleFormUpdate(data: any): IJsonApiItem<any> {
+    return {
+      type: 'rules',
+      attributes: {
+        name: data.name,
+      }
+    };
+  }
+
   public static transformToConditionForm(data: any): any {
     return {
       id: data.id,

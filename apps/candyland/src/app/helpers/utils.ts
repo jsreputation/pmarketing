@@ -3,7 +3,6 @@ import _transform from 'lodash.transform';
 import _isEmpty from 'lodash.isempty';
 
 // tslint:disable
-
 export default class Utils {
 
   static convertArrToObj(arr: any, propKey: string): { [key: string]: any } {
@@ -17,6 +16,17 @@ export default class Utils {
     return Object.keys(obj).map((key) => {
       return {name: key, ...obj[key]};
     });
+  }
+
+  static replaceAt(array: any[], index: number, value: any): any[] {
+    const ret = array.slice(0);
+    ret[index] = value;
+    return ret;
+  }
+
+  static updateAtArray(array: any[], current: number, updated: any): any[] {
+    const index = array.findIndex(item => Utils.isEqual(item, current));
+    return Utils.replaceAt(array, index, updated);
   }
 
   static filterUniq(arr: any[]): any[] {
@@ -130,7 +140,6 @@ export default class Utils {
     }, {});
   }
 
-
   static getChanges(changedObject, base) {
     return _transform(changedObject, (result, value, key) => {
       if (!_isEqual(value, base[key])) {
@@ -155,10 +164,10 @@ export default class Utils {
   static getFiles<T>(model: T): Partial<T> {
     const partialModel: Partial<T> = {};
     Object.keys(model).forEach((key: string) => {
-        if (model[key] && model[key].hasOwnProperty('image')) {
-          partialModel[key] = model[key];
-        }
+      if (model[key] && model[key].hasOwnProperty('image')) {
+        partialModel[key] = model[key];
       }
+    }
     );
     return partialModel;
   }

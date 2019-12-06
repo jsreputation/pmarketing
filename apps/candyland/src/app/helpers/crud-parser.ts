@@ -1,72 +1,66 @@
 import Utils from '@cl-helpers/utils';
+import { Observable } from 'rxjs';
 
-export interface TypeConfig {
-  fieldName?: string;
-  adapterFunction?: (data: any) => any;
+export enum RequestType {
+  CREATE = 'create',
+  UPDATE = 'update',
+  DELETE = 'delete',
+  UNCHANGED = 'unchanged'
 }
 
-export interface RequestListItem {
-  [type: string]: TypeConfig;
+export interface RequestData<T extends { id: string }> {
+  type: RequestType;
+  data: T;
 }
+
+export type RequestFunctionResult<R> = Observable<R> | null | undefined;
+
+export type RequestFunction<T, R> = (type: RequestType, data: T) =>  RequestFunctionResult<R>;
 
 // tslint:disable
 export class CRUDParser {
-  public static buildRequestList<T extends { id: string }>(current: T[], updated: T[]): { method: string, data: T }[] {
-    const result = [];
-    const updatedMap = {};
-    updated.forEach(updatedItem => {
-      console.log('updatedItem', updatedItem);
+  public static buildRequestDataList<T extends { id: string } = any>(current: T[], updated: T[]): RequestData<T>[] {
+    const result: RequestData<T>[]  = [];
+    const updatedMap: {[id: string]: T} = {};
+    updated.forEach((updatedItem: T) => {
       if (updatedItem.id) {
         updatedMap[updatedItem.id] = updatedItem;
       } else {
-        result.push({method: 'create', data: updatedItem});
+        result.push({type: RequestType.CREATE, data: updatedItem});
       }
     });
     current.forEach(currentItem => {
       if (!(currentItem.id in updatedMap)) {
-        result.push({method: 'delete', data: currentItem});
+        result.push({type: RequestType.DELETE, data: currentItem});
         return;
       }
 
       const updateItem = updatedMap[currentItem.id];
 
       if (!Utils.isEqual(updateItem, currentItem)) {
-        result.push({method: 'update', data: updateItem});
+        result.push({type: RequestType.UPDATE, data: updateItem});
         return;
       }
 
-      result.push({method: 'unchanged', data: updateItem});
+      result.push({type: RequestType.UNCHANGED, data: updateItem});
     });
 
-    console.log('result: ', current, updated, result);
     return result;
   }
 
-  sendRequestList<T>(
-    requestList: { method: string, data: any }[],
-    methods: { create?: Function, update?: Function, delete?: Function, unchanged?: Function },
-    additionalArguments: any[]) {
-    const result: T[] = [];
+  public static buildRequestList<T extends { id: string } = any, R = any>(
+    current: T[],
+    updated: T[],
+    callback: RequestFunction<T, R>): Observable<R>[] {
+    const requestList = CRUDParser.buildRequestDataList<T>(current, updated);
+    const result: Observable<R>[] = [];
     requestList.forEach(request => {
-        if (request.method in methods && methods[request.method] === 'function') {
-          const method = methods[request.method];
-          switch (request.method) {
-            case 'create':
-              result.push(method(request.data, ...additionalArguments));
-              return;
-            case 'update':
-              result.push(method(request.data.id, request.data, ...additionalArguments));
-              return;
-            case 'delete':
-              result.push(method(request.data.id));
-              return;
-            case 'unchanged':
-              result.push(method(request.data, ...additionalArguments));
-              return;
-          }
-        }
+      const callbackResult: RequestFunctionResult<R> = callback(request.type, request.data);
+      if(callbackResult && callbackResult instanceof Observable) {
+        result.push(callbackResult)
       }
-    );
+    });
+
     return result;
   }
 

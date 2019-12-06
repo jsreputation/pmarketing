@@ -58,9 +58,7 @@ export class JsonApiParser {
 
     if (Utils.isArray(sourceData)) {
       sourceData.forEach((sourceItem, i) => {
-        console.log('sourceItem', sourceItem);
         const result = JsonApiParser.findRelations(sourceItem, type, mapIncludes);
-        console.log('result', result);
         if (result) {
           target[i] = JsonApiParser.setResult(target[i], fieldName, result);
         }
@@ -74,10 +72,8 @@ export class JsonApiParser {
     for (const type in config) {
       if (type in config) {
         result = JsonApiParser.parseSingleInclude(source, target, type, config[type]);
-        // console.log(type, result);
       }
     }
-    console.log(source, target);
     return result;
   }
 
@@ -121,13 +117,10 @@ export class JsonApiParser {
   public static getMapIncludes(source, type, adapterFunction?: (data: any) => any) {
     const mapIncludes = {};
     source.included.forEach(item => {
-      // console.log('item', item);
       if (item.type.includes(type)) {
-        // console.log('itemEqual', item);
         mapIncludes[item.id] = (adapterFunction && typeof adapterFunction === 'function') ? adapterFunction(item) : item;
       }
     });
-    // console.log('mapIncludes', mapIncludes);
     return mapIncludes;
   }
 
@@ -162,9 +155,7 @@ export class JsonApiParser {
       }
 
       const relationData = sourceItem.relationships[subType].data;
-      // console.log('relationData', relationData);
       const relationResult = JsonApiParser.matchRelation(relationData, type, mapIncludes);
-      // console.log('relationResult', relationResult);
       if (relationResult) {
         return relationResult;
       }
@@ -173,7 +164,6 @@ export class JsonApiParser {
 
 
   public static matchRelation(relationData, type, mapIncludes) {
-    // console.log(relationData, type, mapIncludes);
     if (Utils.isObject(relationData)) {
       if (!relationData.type.includes(type)) {
         return;
@@ -203,13 +193,11 @@ export class JsonApiParser {
       if (relationArrayResult.length === 0) {
         return;
       }
-      console.log('set', relationArrayResult);
       return relationArrayResult;
     }
   }
 
   public static setResult(target, fieldName, relationResult) {
-    console.log('fieldName', fieldName);
     if (fieldName) {
       target[fieldName] = relationResult;
       return target;

@@ -5,6 +5,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { LoyaltyRulesHttpService } from '@cl-core/http-services/loyalty-rules-http.service';
 import { LoyaltyRuleHttpAdapter } from '@cl-core/http-adapters/loyalty-rule-http-adapter';
+import { JsonApiParser } from '@cl-helpers/json-api-parser';
 
 @Injectable({
   providedIn: 'root'
@@ -36,10 +37,8 @@ export class LoyaltyRuleService {
       .pipe(
         switchMap((response: any) => {
           if (response.data.length > 0) {
-            console.log('find');
             return of(LoyaltyRuleHttpAdapter.transformFromRuleSetWithIncludes(response));
           }
-          console.log('create');
           return this.createRuleSet(tierType, tierId);
         }),
       );
@@ -54,7 +53,6 @@ export class LoyaltyRuleService {
 
   public createRuleSet(data: any, basicTierId: string): Observable<IJsonApiPayload<any>> {
     const sendData: any = LoyaltyRuleHttpAdapter.transformFromRuleSetForm(data, basicTierId);
-    console.log('sendData', sendData);
     return this.rulesHttpService.createRuleSet({data: sendData}).pipe(
       map((response: any) => LoyaltyRuleHttpAdapter.transformToRuleSetForm(response.data))
     );
@@ -70,10 +68,19 @@ export class LoyaltyRuleService {
     return this.rulesHttpService.deleteRuleSet(id);
   }
 
-  public getRule(id: string, params: HttpParamsOptions): Observable<ICustomTireForm> {
+  public getRule(id: string): Observable<ICustomTireForm> {
+    const params = {
+      include: 'rule_conditions'
+    };
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.rulesHttpService.getRule(id, httpParams).pipe(
-      map((response: any) => LoyaltyRuleHttpAdapter.transformToRuleForm(response.data))
+      map((response: any) => JsonApiParser.parseDataWithIncludes(
+        response,
+        LoyaltyRuleHttpAdapter.transformToRuleForm,
+        {
+          rule_conditions: {fieldName: 'conditions', adapterFunction: LoyaltyRuleHttpAdapter.transformToConditionForm}
+        }
+      ))
     );
   }
 
@@ -84,8 +91,8 @@ export class LoyaltyRuleService {
     );
   }
 
-  public updateRule(ruleSetId: string, data: any, ruleId: string): Observable<IJsonApiPayload<any>> {
-    const sendData: any = LoyaltyRuleHttpAdapter.transformFromRuleForm(data, ruleSetId);
+  public updateRule(data: any, ruleId: string): Observable<IJsonApiPayload<any>> {
+    const sendData: any = LoyaltyRuleHttpAdapter.transformFromRuleFormUpdate(data);
     sendData.id = ruleId;
     return this.rulesHttpService.updateRule(ruleId, {data: sendData}).pipe(
       map((response: any) => LoyaltyRuleHttpAdapter.transformToRuleForm(response.data))
