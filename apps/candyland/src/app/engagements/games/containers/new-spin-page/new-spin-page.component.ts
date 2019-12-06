@@ -253,7 +253,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
         return;
       }
       this.rewardSlotNumberData = slots.map(
-        (item: number) => ({rewardPosition: item - 1})
+        (item: number) => ({rewardPosition: item})
       );
       const tempISlices = [];
 

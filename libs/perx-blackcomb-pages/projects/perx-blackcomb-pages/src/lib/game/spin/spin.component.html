@@ -6,9 +6,12 @@
     <div class="game-wrapper">
       <div class="spin-wrapper">
         <perx-core-spin-the-wheel
+          [enabled]="isEnabled"
+          [slotToLand]="config | slotPipe:willWin"
           [classPosition]="spinPosition"
           [pointerImg]="config.pointerImg"
           [wheelImg]="config.wheelImg"
+          (completed)="gameCompleted()"
           [slices]="config| slicesPipe">
         </perx-core-spin-the-wheel>
 

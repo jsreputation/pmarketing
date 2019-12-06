@@ -35,6 +35,10 @@
   ],
   "rewardSlots": [
     {
+      "value": 0,
+      "viewValue": "0"
+    },
+    {
       "value": 1,
       "viewValue": "1"
     },
@@ -69,10 +73,6 @@
     {
       "value": 9,
       "viewValue": "9"
-    },
-    {
-      "value": 10,
-      "viewValue": "10"
     }
   ],
   "pointerImg": [

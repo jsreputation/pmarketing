@@ -13,7 +13,7 @@ import { TapComponent } from './tap/tap.component';
 import { ShakeComponent } from './shake/shake.component';
 import { ScratchComponent } from './scratch/scratch.component';
 import { GameComponent } from './game.component';
-import { ConfigToSlicesPipe, SpinComponent} from './spin/spin.component';
+import {ConfigToMappedSlotPipe, ConfigToSlicesPipe, SpinComponent} from './spin/spin.component';
 
 @NgModule({
   declarations: [
@@ -26,14 +26,16 @@ import { ConfigToSlicesPipe, SpinComponent} from './spin/spin.component';
     SpinTheWheelComponent,
     GameComponent,
     SpinComponent,
-    ConfigToSlicesPipe
+    ConfigToSlicesPipe,
+    ConfigToMappedSlotPipe
   ],
   exports: [
     TapComponent,
     ShakeComponent,
     ScratchComponent,
     SpinComponent,
-    ConfigToSlicesPipe
+    ConfigToSlicesPipe,
+    ConfigToMappedSlotPipe
   ],
   imports: [
     CommonModule,

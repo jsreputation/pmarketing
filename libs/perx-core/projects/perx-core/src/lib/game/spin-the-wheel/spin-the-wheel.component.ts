@@ -18,6 +18,9 @@ interface Pattern {
 })
 export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   @Input()
+  public enabled: boolean = true;
+
+  @Input()
   public slices: ISlice[] = [];
 
   @Input()
@@ -304,6 +307,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     const that = this;
     this.spinTimeout = window.setTimeout(() => {
       that.rotateWheel();
+      this.completed.emit();
     }, 10); // change from 30
   }
 
@@ -323,12 +327,18 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private handleStart(): void {
+    console.log(this.enabled);
+    if (!this.enabled) {
+      return;
+    }
     this.dragging = true;
   }
 
   private handleMove(e: any): void {
+    if (!this.enabled) {
+      return;
+    }
     if (this.dragging) {
-
       // get the center of the wheel as an array of [x, y]
       const targetCenter = [
         SpinTheWheelComponent.findLeft(this.canvas) + this.canvas.offsetWidth / 2,
@@ -353,6 +363,9 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private handleEnd(): void {
+    if (!this.enabled) {
+      return;
+    }
     // set the dragging to false
     this.dragging = false;
 

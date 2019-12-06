@@ -12,7 +12,8 @@ import {
   TapComponent,
   ScratchComponent,
   SpinComponent,
-  ConfigToSlicesPipe
+  ConfigToSlicesPipe,
+  ConfigToMappedSlotPipe
 } from '@perx/blackcomb-pages';
 
 import { GameRoutingModule } from './game-routing.module';
@@ -24,7 +25,8 @@ import { GameRoutingModule } from './game-routing.module';
     TapComponent,
     ScratchComponent,
     SpinComponent,
-    ConfigToSlicesPipe
+    ConfigToSlicesPipe,
+    ConfigToMappedSlotPipe
   ],
   imports: [
     CommonModule,

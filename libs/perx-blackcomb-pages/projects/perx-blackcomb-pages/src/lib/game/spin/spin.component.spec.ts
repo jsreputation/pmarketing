@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {ConfigToSlicesPipe, SpinComponent} from './spin.component';
+import {ConfigToMappedSlotPipe, ConfigToSlicesPipe, SpinComponent} from './spin.component';
 import {SpinTheWheelComponent} from '@perx/core';
 import {
   GameType
@@ -35,7 +35,8 @@ describe('SpinComponent', () => {
       declarations: [
         SpinComponent,
         SpinTheWheelComponent,
-        ConfigToSlicesPipe
+        ConfigToSlicesPipe,
+        ConfigToMappedSlotPipe
       ]
     }).compileComponents();
   }));

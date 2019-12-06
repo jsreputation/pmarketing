@@ -9,6 +9,7 @@ export { ShakeComponent } from './lib/game/shake/shake.component';
 export { ScratchComponent } from './lib/game/scratch/scratch.component';
 export { SpinComponent } from './lib/game/spin/spin.component';
 export {ConfigToSlicesPipe} from './lib/game/spin/spin.component';
+export {ConfigToMappedSlotPipe} from './lib/game/spin/spin.component';
 export { HistoryComponent } from './lib/history/history.component';
 export { HomeComponent } from './lib/home/home.component';
 export { RewardComponent } from './lib/reward/reward.component';
