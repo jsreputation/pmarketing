@@ -9,10 +9,12 @@ export class ApiConfig {
   public static commsEventsPath: string = `${ApiConfig.basePath}/comm/events`;
   public static outcomesPath: string = `${ApiConfig.basePath}/outcome/possible_outcomes`;
   public static rewardsPath: string = `${ApiConfig.basePath}/reward/entities`;
+  public static rewardsTierPath: string = `${ApiConfig.basePath}/reward/tier_reward_costs`;
   public static allCredentialPath: string = `${ApiConfig.baseAPIPath}/credentials`;
   public static IAMUsersPath: string = `${ApiConfig.baseAPIPath}/users`;
   public static IAMGroupsPath: string = `${ApiConfig.baseAPIPath}/groups`;
   public static baseAPIUserPath: string = `${ApiConfig.basePath}/cognito`;
+  public static cognitoEndpoints: string = `${ApiConfig.basePath}/cognito/endpoints`;
   public static getAllUsers: string = `${ApiConfig.baseAPIUserPath}/users`;
   public static getAudiences: string = `${ApiConfig.baseAPIUserPath}/pools`;
   public static signIn: string = `${ApiConfig.IAMUsersPath}/sign_in`;

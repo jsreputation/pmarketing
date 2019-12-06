@@ -1,23 +1,26 @@
 <div class="card-header">
-  <h2 class="card-title">{{title | translate}}</h2>
+  <h2 class="card-title"><span *ngIf="slotNumber > 0">{{title | translate}}</span></h2>
   <cl-button classList="tertiary ph-0" (click)="openDialogSelectReward()">{{'CAMPAIGN.ADD_REWARDS' | translate}}</cl-button>
 </div>
-<div class="card-content" *ngIf="group && rewards?.controls?.length > 0">
+<div class="card-content" *ngIf="outcomes && outcomes.length > 0">
   <div>
-    <mat-checkbox color="primary" [formControl]="enableProbability">
+    <mat-checkbox color="primary" [(ngModel)]="enableProbability" (change)="updateOutcomes()">
       {{'CAMPAIGN.INCLUDE_PROBABILITY' | translate}}
     </mat-checkbox>
   </div>
   <div>
-    <div [formGroup]="rewards">
+    <div *ngFor="let outcome of outcomes; let i = index">
       <cl-reward-item class="item"
-                      *ngFor="let reward of rewards?.controls; let i = index"
-                      [group]="reward"
-                      (clickDelete)="removeReward(i)">
+        *ngIf="outcome.outcome.slotNumber === slotNumber"
+        [outcomeData]="outcome"
+        [enableProbability]="enableProbability"
+        [isInvalid]="sumMoreThanError"
+        (updateOutcome)="updateOutcomeData(i, $event)"
+        (clickDelete)="removeOutcome(i)">
       </cl-reward-item>
-      <mat-error class="error" *ngIf="sumMoreThanError">
-        {{'CAMPAIGN.THE_TOTAL_PROBABILITY' | translate}}
-      </mat-error>
-    </div>
+  </div>
+    <mat-error class="error" *ngIf="sumMoreThanError">
+      {{'CAMPAIGN.THE_TOTAL_PROBABILITY' | translate}}
+    </mat-error>
   </div>
 </div>
