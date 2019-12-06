@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges
+} from '@angular/core';
 import { NotificationsMenu } from '../../models/notifications-menu-enum';
 import { CampaignChannelsFormService } from '../../services/campaign-channels-form.service';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
@@ -12,12 +14,12 @@ import { StampsService } from '@cl-core-services';
   selector: 'cl-new-campaign-notifications',
   templateUrl: './new-campaign-notifications.component.html',
   styleUrls: ['./new-campaign-notifications.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignNotificationsComponent implements OnInit, OnDestroy {
+export class NewCampaignNotificationsComponent implements OnInit, OnDestroy, OnChanges {
+  @Input() public channelForm: FormGroup;
   public notificationsMenu: typeof NotificationsMenu = NotificationsMenu;
   public selectedMenu: string = NotificationsMenu.onCampaignLaunch;
-  public form: FormGroup;
   public destroy$: Subject<void> = new Subject<void>();
   public campaign: ICampaign;
   public shortCodes: any[];
@@ -30,14 +32,13 @@ export class NewCampaignNotificationsComponent implements OnInit, OnDestroy {
               private stampsService: StampsService) {}
 
   public ngOnInit(): void {
-    this.getForm();
     this.getShortCodes();
     this.getStampData();
     this.subscribeToStore();
   }
 
   public patchForm(value: any): void {
-    this.campaignChannelsFormService.patchForm(this.form, value);
+    this.campaignChannelsFormService.patchForm(this.channelForm, value);
   }
 
   public ngOnDestroy(): void {
@@ -49,100 +50,96 @@ export class NewCampaignNotificationsComponent implements OnInit, OnDestroy {
     this.selectedMenu = currentItem;
   }
 
-  private getForm(): void {
-    this.form = this.campaignChannelsFormService.getForm();
-  }
-
   public addNewLaunchGroup(): void {
-    this.campaignChannelsFormService.addNewLaunchGroup(this.form);
+    this.campaignChannelsFormService.addNewLaunchGroup(this.channelForm);
   }
 
   public deleteLaunchGroup(index: number): void {
-    this.campaignChannelsFormService.deleteLaunchGroup(this.form, index);
+    this.campaignChannelsFormService.deleteLaunchGroup(this.channelForm, index);
   }
 
   public addNewCompletedGroup(): void {
-    this.campaignChannelsFormService.addNewCompletedGroup(this.form);
+    this.campaignChannelsFormService.addNewCompletedGroup(this.channelForm);
   }
 
   public deleteCompletedGroup(index: number): void {
-    this.campaignChannelsFormService.deleteCompletedGroup(this.form, index);
+    this.campaignChannelsFormService.deleteCompletedGroup(this.channelForm, index);
   }
 
   public addNewCampaignEndsGroup(): void {
-    this.campaignChannelsFormService.addNewCampaignEndsGroup(this.form);
+    this.campaignChannelsFormService.addNewCampaignEndsGroup(this.channelForm);
   }
 
   public deleteRewardExpiresGroup(index: number): void {
-    this.campaignChannelsFormService.deleteRewardExpiresGroup(this.form, index);
+    this.campaignChannelsFormService.deleteRewardExpiresGroup(this.channelForm, index);
   }
 
   public addNewRewardExpiresGroup(): void {
-    this.campaignChannelsFormService.addNewRewardExpiresGroup(this.form);
+    this.campaignChannelsFormService.addNewRewardExpiresGroup(this.channelForm);
   }
 
   public deleteCampaignEndsGroup(index: number): void {
-    this.campaignChannelsFormService.deleteCampaignEndsGroup(this.form, index);
+    this.campaignChannelsFormService.deleteCampaignEndsGroup(this.channelForm, index);
   }
 
   public addNewNoStampsRewardGroup(): void {
-    this.campaignChannelsFormService.addNewNoStampsRewardGroup(this.form);
+    this.campaignChannelsFormService.addNewNoStampsRewardGroup(this.channelForm);
   }
 
   public deleteNoStampsRewardGroup(index: number): void {
-    this.campaignChannelsFormService.deleteNoStampsRewardGroup(this.form, index);
+    this.campaignChannelsFormService.deleteNoStampsRewardGroup(this.channelForm, index);
   }
 
   public addNewEarnedStampGroup(): void {
-    this.campaignChannelsFormService.addNewEarnedStampGroup(this.form);
+    this.campaignChannelsFormService.addNewEarnedStampGroup(this.channelForm);
   }
 
   public deleteEarnedStampGroup(index: number): void {
-    this.campaignChannelsFormService.deleteEarnedStampGroup(this.form, index);
+    this.campaignChannelsFormService.deleteEarnedStampGroup(this.channelForm, index);
   }
 
   public addNewEarnedRewardGroup(): void {
-    this.campaignChannelsFormService.addNewEarnedRewardGroup(this.form);
+    this.campaignChannelsFormService.addNewEarnedRewardGroup(this.channelForm);
   }
 
   public deleteEarnedRewardGroup(index: number): void {
-    this.campaignChannelsFormService.deleteEarnedRewardGroup(this.form, index);
+    this.campaignChannelsFormService.deleteEarnedRewardGroup(this.channelForm, index);
   }
 
   public getLaunchGroup(): FormArray {
-    return (this.form.get(this.notificationsMenu.onCampaignLaunch) as FormArray);
+    return (this.channelForm.get(this.notificationsMenu.onCampaignLaunch) as FormArray);
   }
 
   public getCompletedGroup(): FormArray {
-    return (this.form.get(this.notificationsMenu.campaignNotCompleted) as FormArray);
+    return (this.channelForm.get(this.notificationsMenu.campaignNotCompleted) as FormArray);
   }
 
   public getCampaignEndsGroup(): FormArray {
-    return (this.form.get(this.notificationsMenu.beforeCampaignEnds) as FormArray);
+    return (this.channelForm.get(this.notificationsMenu.beforeCampaignEnds) as FormArray);
   }
 
   public getRewardExpiresGroup(): FormArray {
-    return (this.form.get(this.notificationsMenu.beforeRewardExpires) as FormArray);
+    return (this.channelForm.get(this.notificationsMenu.beforeRewardExpires) as FormArray);
   }
 
   public getNoStampsRewardGroup(): FormArray {
-    return (this.form.get(this.notificationsMenu.noOfStampsToNextReward) as FormArray);
+    return (this.channelForm.get(this.notificationsMenu.noOfStampsToNextReward) as FormArray);
   }
 
   public getEarnedStampGroup(): FormArray {
-    return (this.form.get(this.notificationsMenu.earnedStamp) as FormArray);
+    return (this.channelForm.get(this.notificationsMenu.earnedStamp) as FormArray);
   }
 
   public getEarnedRewardGroup(): FormArray {
-    return (this.form.get(this.notificationsMenu.earnedReward) as FormArray);
+    return (this.channelForm.get(this.notificationsMenu.earnedReward) as FormArray);
   }
 
   public getWebLink(): FormControl {
-    return (this.form.get('webLink') as FormControl);
+    return (this.channelForm.get('webLink') as FormControl);
   }
 
   public getSms(): FormControl {
-    return (this.form.get('sms') as FormControl);
+    return (this.channelForm.get('sms') as FormControl);
   }
 
   public getShortCodes(): void {
@@ -187,5 +184,10 @@ export class NewCampaignNotificationsComponent implements OnInit, OnDestroy {
 
   public checkIsStamp(campaign: ICampaign): boolean {
     return campaign && campaign.template && campaign.template.attributes_type === 'stamps';
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    this.cd.markForCheck();
   }
 }

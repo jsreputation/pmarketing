@@ -1,12 +1,12 @@
 import { Before, Given, Then, When, setDefaultTimeout } from 'cucumber';
 import { expect } from 'chai';
 import { protractor, browser, ProtractorExpectedConditions } from 'protractor';
-import { DashboardAppPage, EngagementAppPage, LoginAppPage } from '../pages/candylandApp.po';
+import { DashboardAppPage, ElementApp, EngagementAppPage, LoginAppPage } from '../pages/candylandApp.po';
 
 let DashboardPage: DashboardAppPage;
 let EngagementPage: EngagementAppPage;
-let LoginApp: LoginAppPage;
 const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
+const Element = ElementApp;
 
 // setting step timeout time
 setDefaultTimeout(60 * 1000);
@@ -14,23 +14,22 @@ Before( () => {
   // initializing page objects instances
   DashboardPage = new DashboardAppPage();
   EngagementPage = new EngagementAppPage();
-  LoginApp = new LoginAppPage();
 });
 
 // Engagements tab is visible to customer
 Given(/^1_I am on the dashboard page.$/, async () => {
   // login process
-  await LoginApp.navigateToLogin();
+  await LoginAppPage.navigateToLogin();
   // Waiting for account id field to load
-  await browser.wait(ec.elementToBeClickable(LoginApp.accountIDField()), 5000);
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
   // entering correct account id
-  await LoginApp.accountIDField().sendKeys(LoginApp.getAccountId());
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
   // entering correct testUserAccount
-  await LoginApp.userAccountField().sendKeys(LoginApp.getUserAccount());
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
   // entering correct pw
-  await LoginApp.pwField().sendKeys(LoginApp.getPassword());
-   // pressing the enter key on the accountID field to log in
-  await LoginApp.accountIDField().sendKeys(protractor.Key.ENTER);
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
   await browser.sleep(3000);
   // await browser.executeScript('WalkMeAPI.stopFlow()');
   await DashboardPage.navigateToDashboard();
@@ -41,7 +40,7 @@ Given(/^1_I am on the dashboard page.$/, async () => {
 When(/^1_I take no action.$/, () => {});
 
 Then(/^1_I should see the engagment tab.$/, async () => {
- // doing an assertion based on the text string of the tab
+  // doing an assertion based on the text string of the tab
   await browser.wait(ec.elementToBeClickable(EngagementPage.engagementTabOption()), 5000);
   expect(await EngagementPage.engagementTabOption().getText()).to.be.equal('Engagements');
 });
@@ -66,12 +65,12 @@ Then(/^2_I will be redirected to the the engagment page.$/, async () => {
 Given(/^3_that i am at the engagement page.$/, async () => {
   await EngagementPage.navigateToEngagement();
   await browser.sleep(3000);
-  await browser.executeScript('WalkMeAPI.stopFlow()');
+  // await browser.executeScript('WalkMeAPI.stopFlow()');
 });
 
 When(/^3_I click on the create new button.$/, async () => {
-  await browser.wait(ec.elementToBeClickable(EngagementPage.engagementCreateNewButton()), 6000);
-  await EngagementPage.engagementCreateNewButton().click();
+  await browser.wait(ec.elementToBeClickable(Element.clButton()), 6000);
+  await Element.clButton().click();
 });
 
 Then(/^3_the dialg box is present.$/, async () => {
@@ -82,7 +81,7 @@ Then(/^3_the dialg box is present.$/, async () => {
 // The four engagment options are present.
 Given(/^4_I am on the create engagement option dialog$/, async () => {
   await EngagementPage.navigateToEngagement();
-  await EngagementPage.engagementCreateNewButton().click();
+  await Element.clButton().click();
 });
 
 When(/4_I do nothing.$/, () => {});
@@ -94,7 +93,7 @@ Then(/^4_There are 4 engagement options available.$/, async () => {
 // Client is able interact with the engagement campaign options
 Given(/^5_I am on the create option dialog box.$/, async () => {
   await EngagementPage.navigateToEngagement();
-  await EngagementPage.engagementCreateNewButton().click();
+  await Element.clButton().click();
 });
 
 When(/^5_I click on the stamps option.$/, async () => {

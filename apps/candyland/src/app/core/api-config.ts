@@ -13,6 +13,7 @@ export class ApiConfig {
   public static IAMUsersPath: string = `${ApiConfig.baseAPIPath}/users`;
   public static IAMGroupsPath: string = `${ApiConfig.baseAPIPath}/groups`;
   public static baseAPIUserPath: string = `${ApiConfig.basePath}/cognito`;
+  public static cognitoEndpoints: string = `${ApiConfig.basePath}/cognito/endpoints`;
   public static getAllUsers: string = `${ApiConfig.baseAPIUserPath}/users`;
   public static getAudiences: string = `${ApiConfig.baseAPIUserPath}/pools`;
   public static signIn: string = `${ApiConfig.IAMUsersPath}/sign_in`;

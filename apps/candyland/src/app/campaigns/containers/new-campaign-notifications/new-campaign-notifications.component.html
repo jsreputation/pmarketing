@@ -1,4 +1,4 @@
-<section class="channels" [formGroup]="form">
+<section class="channels" [formGroup]="channelForm">
   <mat-expansion-panel class="card" expanded>
     <!--select channel-->
     <mat-expansion-panel-header class="card-header">
@@ -13,11 +13,6 @@
           <mat-checkbox color="primary" class="channels-margin" formControlName="webLink">Weblink</mat-checkbox>
           <mat-checkbox color="primary" class="channels-margin" formControlName="sms">SMS</mat-checkbox>
         </section>
-        <!--<mat-radio-group color="primary" [formControl]="channel.get('type')">-->
-        <!--<ng-container *ngFor="let type of config?.channelTypes">-->
-        <!--<mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>-->
-        <!--</ng-container>-->
-        <!--</mat-radio-group>-->
       </div>
     </div>
   </mat-expansion-panel>
@@ -57,7 +52,7 @@
         <div class="flex">
           <div class="sub-menu-block">
             <cl-sub-menu [activeItem]="selectedMenu"
-                         [form]="form"
+                         [form]="channelForm"
                          [campaign]="campaign"
                          (selectMenu)="selectMenu($event)"
             >
@@ -67,7 +62,7 @@
             </cl-sub-menu>
           </div>
         </div>
-        <ng-container *ngIf="form">
+        <ng-container *ngIf="channelForm">
           <section class="message-container" [ngSwitch]="selectedMenu">
             <ng-container *ngSwitchCase="notificationsMenu.onCampaignLaunch">
               <cl-campaign-launch-message *ngFor="let group of getLaunchGroup().controls; let index = index"
@@ -164,9 +159,6 @@
                 + Add another message
               </cl-button>
             </ng-container>
-
-
-
           </section>
         </ng-container>
       </div>

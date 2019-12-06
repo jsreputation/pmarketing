@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { ICampaign, CampaignType, ICampaignService, IGameService, IGame } from '@perx/core';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
+import { IMacaron, MacaronService } from '../../services/macaron.service';
 
 @Component({
   selector: 'app-campaigns',
@@ -17,26 +18,29 @@ export class CampaignsComponent implements OnInit {
 
   constructor(
     private campaignService: ICampaignService,
-    private gameService: IGameService
-  ) {}
+    private gameService: IGameService,
+    private macaronService: MacaronService,
+  ) { }
 
   public ngOnInit(): void {
 
     this.campaignService.getCampaigns().pipe(
-        map((campaigns: ICampaign[]) => campaigns.filter((campaign) => campaign.type === CampaignType.game)),
-        tap((campaigns: ICampaign[]) => this.campaigns = campaigns),
-        switchMap(
-          (campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.gameService.getGamesFromCampaign(campaign.id)))
-          ),
-        map((games: IGame[][]) => [].concat(...games))
-        )
-        .subscribe((games: IGame[]) => {
-          this.games = games;
-          this.campaigns = this.campaigns.filter(
-            (campaign) => {
-              return ((games.filter((game) => game.campaignId === campaign.id).length) > 0);
-            }
-          );
+      map((campaigns: ICampaign[]) => campaigns.filter((campaign) => campaign.type === CampaignType.game)),
+      tap((campaigns: ICampaign[]) => this.campaigns = campaigns),
+      switchMap(
+        (campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.gameService.getGamesFromCampaign(campaign.id)))
+      ),
+      map((games: IGame[][]) => [].concat(...games as []) as IGame[])
+    )
+      .subscribe((games: IGame[]) => {
+        this.games = games;
+        this.campaigns = this.campaigns.filter(
+          (campaign) => {
+            const currentDate = new Date();
+            const isComingSoon = campaign.beginsAt && campaign.beginsAt.getTime() > currentDate.getTime();
+            return isComingSoon || ((games.filter((game) => game.campaignId === campaign.id).length) > 0);
+          }
+        );
       });
   }
 
@@ -46,6 +50,10 @@ export class CampaignsComponent implements OnInit {
     if (gameWithCampaign) {
       this.tapped.emit(gameWithCampaign.id);
     }
+  }
+
+  public getCampaignMacaron(campaign: ICampaign): IMacaron | null {
+    return this.macaronService.getCampaignMacaron(campaign);
   }
 
 }

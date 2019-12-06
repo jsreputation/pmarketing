@@ -4,7 +4,11 @@
     <h1>Sign Up</h1>
     <p>Have an account? <span routerLink="/login" class="link">Sign in</span></p>
 
-    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+    <form
+        #form='ngForm'
+        [formGroup]="signUpForm"
+        (ngSubmit)="onSubmit()"
+    >
       <mat-form-field appearance="fill" class="full-width__input">
         <mat-label>First Name</mat-label>
         <input matInput placeholder="First Name" formControlName="firstName">
@@ -39,10 +43,19 @@
         </mat-error>
       </mat-form-field>
       <div class="checkbox-container">
-        <mat-checkbox formControlName="accept_terms"></mat-checkbox>
-        <span>
-          I have read and agree to the Terms and Privacy Policy and to receive email newsletters from PLUS! Rewards.
-        </span>
+        <div class="checkbox-content">
+          <mat-checkbox formControlName="accept_terms"></mat-checkbox>
+          <span>
+            I have read and agree to the Terms and Privacy Policy and to receive email newsletters from PLUS! Rewards.
+          </span>
+        </div>
+        <mat-error
+          *ngIf="signUpForm.get('accept_terms').invalid &&
+                 (signUpForm.get('accept_terms').touched || form.submitted)"
+          class="checkbox-error"
+        >
+          Please accept the terms and conditions
+        </mat-error>
       </div>
       <button mat-flat-button type="submit" color="primary" class="full-width__button">Sign Up</button>
     </form>

@@ -1,3 +1,4 @@
+import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
 import { IWOutcomeAttributes } from '@perx/whistler';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 
@@ -8,25 +9,26 @@ export class OutcomesHttpAdapter {
       resultId: data.attributes.result_id,
       resultType: data.attributes.result_type,
       probability: data.attributes.probability ? data.attributes.probability * 100 : null,
-      lootBoxId: data.attributes.loot_box_id,
+      slotNumber: data.attributes.loot_box_id || 0,
+      limit: data.attributes.max_issuance_per_campaign || null
     };
   }
 
   public static transformFromOutcomes(
-    data: { value: IRewardEntity, probability: number },
-    enableProbability: boolean,
+    data: ICampaignOutcome,
     campaignId: string,
-    slotNumber: number
   ): IJsonApiItem<IWOutcomeAttributes> {
     return {
       type: 'possible_outcomes',
       attributes: {
-        result_id: data.value && parseInt(data.value.id, 10),
+        result_id: data && data.reward && parseInt(data.reward.id, 10) || null,
         result_type: 'Perx::Reward::Entity',
-        probability: enableProbability ? data.probability / 100 : null,
-        loot_box_id: slotNumber,
-        no_outcome: !data.value.id,
-        campaign_entity_id: campaignId && parseInt(campaignId, 10)
+        probability: data.enableProbability ? data.outcome.probability / 100 : 0,
+        loot_box_id: data.outcome.slotNumber,
+        no_outcome: data && !data.reward,
+        domain_id: campaignId && parseInt(campaignId, 10),
+        domain_type: 'Perx::Campaign::Entity',
+        max_issuance_per_campaign: data.outcome.limit || null
       }
     };
   }

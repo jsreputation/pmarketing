@@ -1,0 +1,15 @@
+<div class="custom-line-wrap"
+     *ngIf="!vertical; else verticalTemplate"
+>
+  <div class="custom-line-bar"></div>
+  <div class="custom-line-progress" [ngStyle]="{width: calcSize()}"
+  ></div>
+</div>
+
+<ng-template #verticalTemplate>
+  <div class="custom-line-wrap vertical">
+    <div class="vertical custom-line-bar"></div>
+    <div class="vertical custom-line-progress" [ngStyle]="{height: calcSize()}"
+    ></div>
+  </div>
+</ng-template>

@@ -46,7 +46,10 @@ export class AppComponent implements OnInit {
     );
 
     this.notificationService.$popup
-      .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
+      .subscribe(
+        (data: IPopupConfig) => this.dialog.open(PopupComponent, { data }),
+        (err) => console.log(err)
+      );
 
     this.router.events
       .pipe(

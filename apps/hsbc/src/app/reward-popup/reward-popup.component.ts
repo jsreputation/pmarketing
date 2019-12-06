@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { IPopupConfig } from '@perx/core';
+import {IPopupConfig, isEmptyString} from '@perx/core';
 
 export interface IRewardPopupConfig extends IPopupConfig {
   afterClosedCallBackRedirect?: PopUpClosedCallBack;
@@ -55,7 +55,11 @@ export class RewardPopupComponent {
     }
 
     if (this.data.afterClosedCallBackRedirect) {
-      this.data.afterClosedCallBackRedirect.closeAndRedirect(this.data.url, this.data.didWin);
+      if (isEmptyString(this.data.url)) {
+        throw new Error(`url is required`);
+      }
+
+      this.data.afterClosedCallBackRedirect.closeAndRedirect(this.data.url as string, this.data.didWin as boolean);
     }
   }
 }

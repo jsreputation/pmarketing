@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NotificationService, ISurvey, SurveyService, IPopupConfig } from '@perx/core';
+import { NotificationService, ISurvey, SurveyService, IPopupConfig, IPrePlayStateData, AuthenticationService } from '@perx/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
-import { filter, switchMap, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, of } from 'rxjs';
+import { filter, switchMap, takeUntil, map, catchError } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 interface IAnswer {
   question_id: string;
@@ -21,8 +22,10 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public answers: IAnswer[];
   public totalLength: number;
   public currentPointer: number;
+  private isAnonymousUser: boolean;
+  private informationCollectionSetting: string;
   private destroy$: Subject<any> = new Subject();
-
+  private popupData: IPopupConfig;
   public successPopUp: IPopupConfig = {
     title: 'SURVEY_SUCCESS_TITLE',
     text: 'SURVEY_SUCCESS_TEXT',
@@ -38,12 +41,24 @@ export class SurveyComponent implements OnInit, OnDestroy {
   };
 
   private initTranslate(): void {
-    this.translate.get(this.successPopUp.title).subscribe((text) => this.successPopUp.title = text);
-    this.translate.get(this.successPopUp.text).subscribe((text) => this.successPopUp.text = text);
-    this.translate.get(this.successPopUp.buttonTxt).subscribe((text) => this.successPopUp.buttonTxt = text);
-    this.translate.get(this.noRewardsPopUp.title).subscribe((text) => this.noRewardsPopUp.title = text);
-    this.translate.get(this.noRewardsPopUp.text).subscribe((text) => this.noRewardsPopUp.text = text);
-    this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
+    if (this.successPopUp.title) {
+      this.translate.get(this.successPopUp.title).subscribe((text) => this.successPopUp.title = text);
+    }
+    if (this.successPopUp.text) {
+      this.translate.get(this.successPopUp.text).subscribe((text) => this.successPopUp.text = text);
+    }
+    if (this.successPopUp.buttonTxt) {
+      this.translate.get(this.successPopUp.buttonTxt).subscribe((text) => this.successPopUp.buttonTxt = text);
+    }
+    if (this.noRewardsPopUp.title) {
+      this.translate.get(this.noRewardsPopUp.title).subscribe((text) => this.noRewardsPopUp.title = text);
+    }
+    if (this.noRewardsPopUp.text) {
+      this.translate.get(this.noRewardsPopUp.text).subscribe((text) => this.noRewardsPopUp.text = text);
+    }
+    if (this.noRewardsPopUp.buttonTxt) {
+      this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
+    }
   }
 
   constructor(
@@ -52,15 +67,17 @@ export class SurveyComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private surveyService: SurveyService,
     private translate: TranslateService,
+    private auth: AuthenticationService
   ) { }
 
   public ngOnInit(): void {
     this.initTranslate();
+    this.isAnonymousUser = this.auth.getAnonymous();
     this.data$ = this.route.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
-        switchMap((params: ParamMap) => {
-          const id: string = params.get('id');
+        map((params: ParamMap) => params.get('id')),
+        switchMap((id: string) => {
           const idN = Number.parseInt(id, 10);
           return this.surveyService.getSurveyFromCampaign(idN);
         }),
@@ -70,15 +87,18 @@ export class SurveyComponent implements OnInit, OnDestroy {
       (survey: ISurvey) => {
         this.survey = survey;
         const { displayProperties } = this.survey;
+        if (displayProperties && displayProperties.informationCollectionSetting) {
+          this.informationCollectionSetting = displayProperties.informationCollectionSetting;
+        }
         if (displayProperties && displayProperties.successPopUp) {
-          this.successPopUp.title = displayProperties.successPopUp.headLine || this.successPopUp.title;
-          this.successPopUp.text = displayProperties.successPopUp.subHeadLine || this.successPopUp.text;
+          this.successPopUp.title = displayProperties.successPopUp.headLine;
+          this.successPopUp.text = displayProperties.successPopUp.subHeadLine;
           this.successPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.successPopUp.imageUrl;
           this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
         }
         if (displayProperties && displayProperties.noRewardsPopUp) {
-          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine || this.noRewardsPopUp.title;
-          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine || this.noRewardsPopUp.text;
+          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
+          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
           this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
           this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
         }
@@ -101,20 +121,53 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public get surveyComplete(): boolean {
     return this.currentPointer === this.totalLength;
   }
+
   public onSubmit(): void {
-    this.surveyService.postSurveyAnswer(this.answers, this.survey, this.route.snapshot.params.id)
-      .subscribe(
-        (res) => {
-          let popupConfig: IPopupConfig = null;
-          if (res.hasOutcomes) {
-            popupConfig = this.successPopUp;
-          } else {
-            popupConfig = this.noRewardsPopUp;
-          }
-          this.router.navigate(['/wallet']);
-          this.notificationService.addPopup(popupConfig);
-        }
+    const surveyId = this.survey && this.survey.id ? Number.parseInt(this.survey.id, 10) : null;
+    const isCollectDataRequired = !!(this.informationCollectionSetting === 'pi_required' || this.informationCollectionSetting === 'signup_required');
+    const userAction$: Observable<{ hasOutcomes: boolean; }> = !surveyId || (this.isAnonymousUser && isCollectDataRequired) ?
+      of({ hasOutcomes: true }) :
+      this.surveyService.postSurveyAnswer(this.answers, this.route.snapshot.params.id, surveyId).pipe(
+        catchError((err: HttpErrorResponse) => {
+          this.popupData = this.noRewardsPopUp;
+          throw err;
+        })
       );
+
+    userAction$.subscribe(
+      (res) => {
+        this.popupData = res.hasOutcomes ? this.successPopUp : this.noRewardsPopUp;
+        this.redirectUrlAndPopUp();
+      },
+      () => {
+        this.popupData = this.noRewardsPopUp;
+        this.redirectUrlAndPopUp();
+      }
+    );
+  }
+
+  private redirectUrlAndPopUp(): void {
+    const surveyId = this.survey && this.survey.id ? Number.parseInt(this.survey.id, 10) : null;
+    const campaignId = this.route.snapshot.params.id ? Number.parseInt(this.route.snapshot.params.id, 10) : null;
+    const state: IPrePlayStateData = {
+      popupData: this.popupData,
+      engagementType: 'survey',
+      surveyId,
+      collectInfo: true,
+      campaignId,
+      answers: this.answers
+    };
+
+    if (this.isAnonymousUser && this.informationCollectionSetting === 'pi_required') {
+      this.router.navigate(['/pi'], { state });
+    } else if (this.isAnonymousUser && this.informationCollectionSetting === 'signup_required') {
+      this.router.navigate(['/signup'], { state });
+    } else {
+      this.router.navigate(['/wallet']);
+      if (this.popupData && this.isAnonymousUser) {
+        this.notificationService.addPopup(this.popupData);
+      }
+    }
   }
 
   public setTotalLength(totalLength: number): void {

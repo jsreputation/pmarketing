@@ -10,8 +10,6 @@ import { StampDataService } from '../../shared/stamp-data.service';
 import { ControlsName } from '../../../../models/controls-name';
 import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWEngagementAttributes } from '@perx/whistler';
 
@@ -93,7 +91,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.initTenants();
+    this.initTenantsSettings();
     this.createStampForm();
     combineLatest([this.getStampData(), this.handleRouteParams()])
       .subscribe(
@@ -194,7 +192,8 @@ export class NewStampComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         value => {
-          for (let i = 0; i <= value; i++) {
+          this.stamps = [];
+          for (let i = 1; i <= value; i++) {
             this.stamps.push({
               id: 1,
               state: PuzzleCollectStampState.redeemed
@@ -241,11 +240,11 @@ export class NewStampComponent implements OnInit, OnDestroy {
     };
   }
 
-  private initTenants(): void {
-    this.settingsService.getTenants()
+  private initTenantsSettings(): void {
+    this.settingsService.getTenant()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res: Tenants) => {
-        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+      .subscribe((res: ITenantsProperties) => {
+        this.tenantSettings = res;
         this.cd.detectChanges();
       });
   }

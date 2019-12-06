@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RewardsService } from './rewards.service';
-import { Observable, combineLatest, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IReward, ICatalog, IPrice, RedemptionType } from './models/reward.model';
 import { Config } from '../config/config';
-import { IJsonApiItemPayload, IJsonApiItem, IJsonApiListPayload } from '../jsonapi.payload';
-import { map, switchMap, catchError, tap } from 'rxjs/operators';
-import { IMerchant } from '../merchants/models/merchants.model';
-import { IMerchantsService } from '../merchants/imerchants.service';
-import { IWRewardEntityAttributes } from '@perx/whistler';
+import { map, tap } from 'rxjs/operators';
 
-interface IWMetaData {
-  totalPages?: number;
-  currentPage?: number;
-}
+import {
+  IWRewardEntityAttributes,
+  IWMetaData,
+  IJsonApiItemPayload,
+  IJsonApiItem,
+  IJsonApiListPayload,
+  IWTierRewardCostsAttributes,
+  IWMerchantAttributes,
+  IWRelationshipsDataType
+} from '@perx/whistler';
+import { oc } from 'ts-optchain';
+import { WRedemptionType } from '@perx/whistler';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,42 +27,53 @@ export class WhistlerRewardsService implements RewardsService {
   // basic local cache
   private rewards: { [k: number]: IReward } = {};
 
-  constructor(private http: HttpClient, config: Config, private merchantService: IMerchantsService) {
+  constructor(private http: HttpClient, config: Config) {
     this.baseUrl = `${config.apiHost}/reward/entities`;
   }
 
-  private static WRedemptionToRT(rt: string): RedemptionType {
-    if (rt === 'Promo Code') {
+  private static WRedemptionToRT(rt: WRedemptionType): RedemptionType {
+    if (rt === WRedemptionType.promoCode) {
       return RedemptionType.txtCode;
     }
-    if (rt === 'QR Code') {
+    if (rt === WRedemptionType.qrCode) {
       return RedemptionType.qr;
     }
-    if (rt === 'Merchant PIN') {
+    if (rt === WRedemptionType.merchantPin) {
       return RedemptionType.pin;
     }
 
     return RedemptionType.none;
   }
 
-  private static WRewardToReward(r: IJsonApiItem<IWRewardEntityAttributes>, merchant: IMerchant | null, metaData?: IWMetaData): IReward {
+  private static WRewardToReward(
+    r: IJsonApiItem<IWRewardEntityAttributes>,
+    merchants: IJsonApiItem<IWMerchantAttributes>[] | null,
+    tierRewardCost: IJsonApiItem<IWTierRewardCostsAttributes>[] | null,
+    metaData?: IWMetaData
+  ): IReward {
     return {
       // @ts-ignore
       id: (typeof r.id) === 'string' ? Number.parseInt(r.id, 10) : r.id,
       name: r.attributes.name,
-      description: r.attributes.description,
+      description: oc(r).attributes.description(''),
       subtitle: '',
-      validFrom: new Date(r.attributes.created_at),
+      validFrom: r.attributes.created_at ? new Date(r.attributes.created_at) : new Date(),
       validTo: null,
       rewardThumbnail: r.attributes.image_url,
-      rewardBanner: r.attributes.image_url,
-      merchantId: Number.parseInt(r.attributes.organization_id, 10),
-      merchantImg: merchant && merchant.images && merchant.images.length > 0 ? merchant.images[0].url : null,
-      merchantName: merchant ? merchant.name : null,
-      rewardPrice: [],
-      termsAndConditions: r.attributes.terms_conditions,
+      rewardBanner: oc(r).attributes.image_url(''),
+      merchantId: merchants && merchants[0] ? Number.parseInt(merchants[0].id, 10) : undefined,
+      merchantImg: oc(merchants)[0].attributes.properties.logo_image('') || undefined,
+      merchantName: oc(merchants)[0].attributes.name('') || undefined,
+      rewardPrice: [
+        {
+          price: r.attributes.cost_of_reward,
+          currencyCode: r.attributes.currency,
+          points: tierRewardCost && tierRewardCost[0] ? Number.parseInt(tierRewardCost[0].attributes.tier_value, 10) : undefined
+        }
+      ],
+      termsAndConditions: oc(r).attributes.terms_conditions(''),
       // howToRedeem: r.attributes.redemption_type,
-      redemptionText: ('redemption_text' in r.attributes.display_properties) ? r.attributes.display_properties.redemption_text : null,
+      redemptionText: oc(r).attributes.display_properties.redemption_text(),
       categoryTags: [
         {
           id: 0,
@@ -67,15 +83,15 @@ export class WhistlerRewardsService implements RewardsService {
       redemptionType: WhistlerRewardsService.WRedemptionToRT(r.attributes.redemption_type),
       rawPayload: metaData,
       displayProperties: {
-        merchantPinText: r.attributes.display_properties.merchantPinText,
-        rewardSuccessPopUp: r.attributes.display_properties.rewardSuccessPopUp,
-        codeInstructionsText: r.attributes.display_properties.codeInstructionsText,
-        errorPopUp: r.attributes.display_properties.errorPopUp,
+        merchantPinText: oc(r).attributes.display_properties.merchantPinText(),
+        rewardSuccessPopUp: oc(r).attributes.display_properties.rewardSuccessPopUp(),
+        codeInstructionsText: oc(r).attributes.display_properties.codeInstructionsText(),
+        errorPopUp: oc(r).attributes.display_properties.errorPopUp(),
       }
     };
   }
 
-  public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
+  public getAllRewards(tags?: string[] | null, categories?: string[]): Observable<IReward[]> {
     return new Observable(subject => {
       let current: IReward[] = [];
       let meta: IWMetaData = { currentPage: 1, totalPages: 1 };
@@ -103,7 +119,7 @@ export class WhistlerRewardsService implements RewardsService {
   public getRewards(
     page: number,
     pageSize: number = 10,
-    tags?: string[],
+    tags?: string[] | null,
     categories?: string[],
   ): Observable<IReward[]> {
     const tagsString = tags && tags.join(',');
@@ -111,7 +127,8 @@ export class WhistlerRewardsService implements RewardsService {
     let metaData: IWMetaData = {};
     const params = {
       'page[number]': page.toString(),
-      'page[size]': pageSize.toString()
+      'page[size]': pageSize.toString(),
+      include: 'organization,tier_reward_costs'
     };
     if (tagsString) {
       params['filter[tags]'] = tagsString;
@@ -131,23 +148,33 @@ export class WhistlerRewardsService implements RewardsService {
           totalPages: res.meta && res.meta.page_count
         };
       }),
-      map(res => {
-        const merchantIds: { [k: number]: boolean } = {};
-        res.data.forEach((r) => !!r.attributes.organization_id && (merchantIds[r.attributes.organization_id] = true));
-        return { rewards: res.data, mIds: Object.keys(merchantIds) };
-      }),
-      switchMap(
-        (obj) => combineLatest(
-          of(obj.rewards),
-          obj.mIds.length > 0 ? combineLatest(...obj.mIds.map(id => this.merchantService.getMerchant(Number.parseInt(id, 10)))) : of([])
-        )
-      ),
-      map(([rewards, merchants]: [IJsonApiItem<IWRewardEntityAttributes>[], IMerchant[]]) => rewards.map(
-        r => WhistlerRewardsService.WRewardToReward(
-          r,
-          merchants.find(m => m.id === Number.parseInt(r.attributes.organization_id, 10)),
-          metaData
-        )
+      map(res => ({
+        rewards: res.data,
+        merchantsIC: res.included && res.included.length > 0 ?
+          res.included.filter(include => include.type === 'Ros::Organization::Org') : null,
+        tierRewardCostsIC: res.included && res.included.length > 0 ?
+          res.included.filter(include => include.type === 'tier_reward_costs') : null
+      })),
+      map((res) => res.rewards.map(
+        (r: IJsonApiItem<IWRewardEntityAttributes>) => {
+          const merchants = res.merchantsIC && res.merchantsIC.length > 0 ? res.merchantsIC.filter(mIC => {
+            const merchantRS = r.relationships && r.relationships.organization.data as IWRelationshipsDataType;
+            return merchantRS && merchantRS.id === mIC.id && merchantRS.type === 'Ros::Organization::Org';
+          }) : null;
+
+          const tierRCosts = res.tierRewardCostsIC && res.tierRewardCostsIC.length > 0 ? res.tierRewardCostsIC.filter(cost =>
+            oc(r).relationships.tier_reward_costs.data ?
+              (oc(r).relationships.tier_reward_costs.data([]) as IWRelationshipsDataType[]).some(
+                rewardCost => rewardCost.id === cost.attributes.entity_id.toString() && rewardCost.type === 'tier_reward_costs'
+              ) : false
+          ) || null : null;
+          return WhistlerRewardsService.WRewardToReward(
+            r,
+            merchants,
+            tierRCosts,
+            metaData,
+          );
+        }
       )
       ),
       // save each reward in local cache
@@ -161,20 +188,21 @@ export class WhistlerRewardsService implements RewardsService {
       return of(this.rewards[id]);
     }
 
-    return this.http.get<IJsonApiItemPayload<IWRewardEntityAttributes>>(`${this.baseUrl}/${id}`)
+    const params = {
+      include: 'organization,tier_reward_costs'
+    };
+    return this.http.get<IJsonApiItemPayload<IWRewardEntityAttributes>>(`${this.baseUrl}/${id}`, { params })
       .pipe(
-        switchMap((reward: IJsonApiItemPayload<IWRewardEntityAttributes>) => {
-          if (!reward.data.attributes.organization_id || reward.data.attributes.organization_id === null) {
-            return of([reward, null]);
-          }
-          return combineLatest(
-            of(reward),
-            this.merchantService.getMerchant(Number.parseInt(reward.data.attributes.organization_id, 10))
-              .pipe(catchError(() => of(null)))
-          );
+        map((reward: IJsonApiItemPayload<IWRewardEntityAttributes>) => {
+          const tierRewardCosts = reward.included && reward.included.length > 0 ? reward.included.filter(include => include.type === 'tier_reward_costs') : null;
+          const merchants = reward.included && reward.included.length > 0 ? reward.included.filter(include => include.type === 'Ros::Organization::Org') : null;
+          return {
+            reward: reward.data,
+            merchants,
+            tierRewardCosts
+          };
         }),
-        map(([reward, merchant]: [IJsonApiItemPayload<IWRewardEntityAttributes>, IMerchant | null]) =>
-          WhistlerRewardsService.WRewardToReward(reward.data, merchant)),
+        map(res => WhistlerRewardsService.WRewardToReward(res.reward, res.merchants, res.tierRewardCosts)),
         // save reward in local cache
         tap((reward: IReward) => this.rewards[id] = reward)
       );

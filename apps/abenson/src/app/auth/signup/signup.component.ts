@@ -10,9 +10,9 @@ import { AuthenticationService } from '@perx/core';
 })
 export class SignUpComponent implements OnInit {
   public signUpForm: FormGroup;
-  public errorMessage: string;
+  public errorMessage?: string;
   public hide: boolean = true;
-
+  public appAccessTokenFetched: boolean;
   constructor(
     private fb: FormBuilder,
     private authService: AuthenticationService,
@@ -21,6 +21,16 @@ export class SignUpComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initForm();
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
   }
 
   public initForm(): void {
@@ -29,18 +39,18 @@ export class SignUpComponent implements OnInit {
       lastName: ['', Validators.required],
       phone: ['', Validators.required],
       password: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
-      accept_terms: [false, Validators.required]
+      accept_terms: [false, Validators.requiredTrue]
     });
   }
 
   public onSubmit(): void {
-    const password: string = this.signUpForm.get('password').value;
-    const termsConditions = this.signUpForm.get('accept_terms').value as boolean;
+    const password: string = this.signUpForm.value.password;
+    const termsConditions = this.signUpForm.value.accept_terms as boolean;
     if (!termsConditions) {
       return;
     }
 
-    this.errorMessage = null;
+    this.errorMessage = undefined;
     const profile = this.signUpForm.value;
     delete profile.accept_terms;
     profile.password_confirmation = password;
@@ -48,8 +58,8 @@ export class SignUpComponent implements OnInit {
     this.authService.signup(profile).subscribe(() => {
       this.router.navigate(['sms-validation'], { queryParams: { identifier: profile.phone } });
     },
-    (e) => {
-      console.log(e);
-    });
+      (e) => {
+        console.log(e);
+      });
   }
 }

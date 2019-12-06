@@ -21,6 +21,7 @@ import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-ad
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
 import { WINDOW } from '@cl-core/services/window.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NewShakePageComponent', () => {
   let component: NewShakePageComponent;
@@ -47,6 +48,7 @@ describe('NewShakePageComponent', () => {
         MatDialogModule,
         ConfirmModalModule,
         DirectivesModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [ NewShakePageComponent ],
       providers: [

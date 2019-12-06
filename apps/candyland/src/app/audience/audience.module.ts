@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AudienceRoutingModule } from './audience-routing.module';
 import { ChangeExpiryDatePopupComponent } from './containers/change-expiry-date-popup/change-expiry-date-popup.component';
-import { AddUserPopupComponent } from './containers/add-user-popup/add-user-popup.component';
+import { UpsertUserPopupComponent } from './containers/upsert-user-popup/upsert-user-popup.component';
 import { ManageListPopupComponent } from './containers/manage-list-popup/manage-list-popup.component';
 import { AudiencesListComponent } from './components/audiences-list/audiences-list.component';
 import { AudiencesPageComponent } from './containers/audiences-page/audiences-page.component';
@@ -30,11 +30,12 @@ import { AudiencesVouchersListComponent } from './components/audiences-vouchers-
 import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';
 import { SelectRewardPopupModule } from '@cl-shared/containers/select-reward-popup/select-reward-popup.module';
 import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
     ChangeExpiryDatePopupComponent,
-    AddUserPopupComponent,
+    UpsertUserPopupComponent,
     ManageListPopupComponent,
     AudiencesListComponent,
     AudiencesPageComponent,
@@ -70,11 +71,12 @@ import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
     MatTabsModule,
     DatePickerModule,
     SelectRewardPopupModule,
-    PaginationModule
+    PaginationModule,
+    TranslateModule,
   ],
   entryComponents: [
     ChangeExpiryDatePopupComponent,
-    AddUserPopupComponent,
+    UpsertUserPopupComponent,
     ManageListPopupComponent,
   ]
 })

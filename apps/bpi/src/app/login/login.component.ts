@@ -12,9 +12,8 @@ import { FormGroup } from '@angular/forms';
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public isHidden: boolean = true;
-
   protected preAuth: boolean;
-
+  public appAccessTokenFetched: boolean;
   constructor(
     private router: Router,
     private authService: AuthenticationService,
@@ -23,14 +22,23 @@ export class LoginComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => {
         this.preAuth = config.preAuth as boolean;
+        this.onSubmit();
       }
     );
 
-    this.onSubmit();
   }
 
   public onSubmit(): void {

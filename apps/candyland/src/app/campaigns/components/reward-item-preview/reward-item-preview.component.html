@@ -4,7 +4,7 @@
     <img class="reward-item-no-img" *ngIf="!data?.image" src="assets/images/icons/deactivate.svg">
   </div>
   <div class="reward-item-info">
-    <p class="reward-item-name">{{data?.name || 'No reward'}}</p>
+    <p class="reward-item-name">{{data?.name || ('CAMPAIGN.NO_REWARD' | translate)}}</p>
     <p class="reward-item-type" *ngIf="data?.category">{{data?.category}}</p>
   </div>
 <!--  <cl-progress-bar class="reward-item-progress"-->
@@ -13,8 +13,10 @@
 <!--                   [total]="data?.total">-->
 
 <!--  </cl-progress-bar>-->
+<div *ngIf="limit">
+    <span class="reward-item-probability-label probability-preview">{{'CAMPAIGN.LIMIT' | translate}} {{limit}}</span>
+  </div>
   <div *ngIf="enableProbability && probability">
-    <span class="reward-item-probability-label probability-preview">Probability {{probability}}%</span>
+    <span class="reward-item-probability-label probability-preview">{{'CAMPAIGN.PROBABILITY' | translate}} {{probability}}%</span>
   </div>
 </div>
-

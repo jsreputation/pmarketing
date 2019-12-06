@@ -8,6 +8,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NewInstantRewardManagePageComponent', () => {
   let component: NewInstantRewardManagePageComponent;
@@ -20,7 +21,8 @@ describe('NewInstantRewardManagePageComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot(),
       ],
       providers: [
         {provide: LocalStorageService, useValue: {}}

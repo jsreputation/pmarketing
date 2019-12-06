@@ -39,11 +39,11 @@ export class LocationsComponent implements OnInit {
         filter((params: Params) => params.rid),
         map((params: Params) => params.rid),
         switchMap((rid: number) => this.rewardsService.getReward(rid)),
-        filter((reward: IReward) => (reward.categoryTags && reward.categoryTags.length > 0))
+        filter((reward: IReward) => !!reward.categoryTags && reward.categoryTags.length > 0)
       )
       .subscribe(
         (reward: IReward) => {
-          const category = reward.categoryTags[0].title;
+          const category = reward.categoryTags ? reward.categoryTags[0].title : '';
           this.analytics.addEvent({
             pageName: `rewards:discover:locations:${category}:${reward.name}`,
             pageType: PageType.detailPage,

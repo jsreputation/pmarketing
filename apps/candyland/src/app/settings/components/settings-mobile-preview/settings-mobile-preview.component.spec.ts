@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTabsModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SettingsMobilePreviewComponent } from './settings-mobile-preview.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('GameMobilePreviewComponent', () => {
   let component: SettingsMobilePreviewComponent;
@@ -11,7 +12,8 @@ describe('GameMobilePreviewComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
-        MatTabsModule
+        MatTabsModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [ SettingsMobilePreviewComponent ]
     })

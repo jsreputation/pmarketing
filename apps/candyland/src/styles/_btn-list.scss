@@ -38,7 +38,7 @@
 
 .btn-list {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   margin: ($vertical-padding * 0.5) 0;
 
   .mat-radio-button {

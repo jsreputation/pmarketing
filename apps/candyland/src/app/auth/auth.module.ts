@@ -4,8 +4,9 @@ import { LoginComponent } from './containers/login/login.component';
 import { ButtonModule } from '../shared/components/button/button.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginFormComponent } from './components/login-form/login-form.component';
-import { MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
+import { MatFormFieldModule, MatIconModule, MatInputModule, MatToolbarModule} from '@angular/material';
 import { LogoModule } from '../shared/components/logo/logo.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,9 @@ import { LogoModule } from '../shared/components/logo/logo.module';
     LogoModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatToolbarModule,
+    TranslateModule
   ],
   exports: [
     LoginComponent,

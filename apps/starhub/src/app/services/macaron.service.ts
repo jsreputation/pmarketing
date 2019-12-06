@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IReward } from '@perx/core';
+import {ICampaign, IReward} from '@perx/core';
 
 export interface IMacaron {
   label: string;
@@ -18,7 +18,7 @@ export class MacaronService {
     const validToDate = reward.validTo;
 
     const nowTime: number = (new Date()).getTime();
-    if (reward.sellingFrom && sellingFrom.getTime() > nowTime) {
+    if (sellingFrom && sellingFrom.getTime() > nowTime) {
       return {
         label: 'Coming Soon',
         class: 'coming-soon',
@@ -45,7 +45,7 @@ export class MacaronService {
       };
     }
 
-    if (reward.validTo && validToDate.getTime() < nowTime) {
+    if (validToDate && validToDate.getTime() < nowTime) {
       return {
         label: 'Expired',
         class: 'expired',
@@ -58,13 +58,13 @@ export class MacaronService {
       return {
         label: 'Running out',
         class: 'running-out',
-        rewardBalance: reward.inventory.rewardTotalBalance,
+        rewardBalance: reward.inventory && reward.inventory.rewardTotalBalance || undefined,
         isButtonEnabled: true
       };
     }
 
     const thirtySixHours = 36 * 60 * 60 * 1000;
-    if (reward.validTo && (validToDate.getTime() - nowTime) < thirtySixHours) {
+    if (validToDate && (validToDate.getTime() - nowTime) < thirtySixHours) {
       return {
         label: 'Expiring Soon',
         class: 'expiring',
@@ -73,11 +73,24 @@ export class MacaronService {
     }
 
     const seventyTwoHours = 72 * 60 * 60 * 1000;
-    if (reward.sellingFrom && (nowTime - sellingFrom.getTime()) < seventyTwoHours) {
+    if (sellingFrom && (nowTime - sellingFrom.getTime()) < seventyTwoHours) {
       return {
         label: 'Just added',
         class: 'just-added',
         isButtonEnabled: true
+      };
+    }
+    return null;
+  }
+
+  public getCampaignMacaron(campaign: ICampaign): IMacaron | null {
+    const currentDate = new Date();
+    const isComingSoon = campaign.beginsAt && campaign.beginsAt.getTime() > currentDate.getTime();
+    if (isComingSoon) {
+      return {
+        label: 'Coming Soon',
+        class: 'coming-soon',
+        isButtonEnabled: false
       };
     }
     return null;

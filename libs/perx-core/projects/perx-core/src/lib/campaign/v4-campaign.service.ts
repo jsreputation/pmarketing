@@ -55,15 +55,17 @@ export class V4CampaignService implements ICampaignService {
     const thumbnail = campaign.images.find(image => ['catalog_thumbnail', 'campaign_thumbnail'].some(ty => ty === image.type));
     const thumbnailUrl = thumbnail ? thumbnail.url : undefined;
     const rewards = campaign.rewards && campaign.rewards.map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward));
+
     return {
       id: campaign.id,
       name: campaign.name,
       description: campaign.description,
       type: campaign.campaign_type,
       state: campaign.state,
-      endsAt: new Date(campaign.ends_at) || undefined,
+      endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null,
+      beginsAt: campaign.begins_at ? new Date(campaign.begins_at) : null,
       rewards,
-      thumbnailUrl
+      thumbnailUrl,
     };
   }
 

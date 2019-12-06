@@ -6,11 +6,11 @@ import {
   IVoucherService,
   RedemptionType,
   IPopupConfig,
-  PopupComponent,
+  NotificationService,
+  PopUpClosedCallBack,
 } from '@perx/core';
 import { Observable, Subject } from 'rxjs';
 import { filter, switchMap, takeUntil, map, tap } from 'rxjs/operators';
-import { MatDialog, MatDialogRef } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './redeem.component.html',
   styleUrls: ['./redeem.component.scss']
 })
-export class RedeemComponent implements OnInit, OnDestroy {
+export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
   public voucher$: Observable<Voucher>;
   public voucherId: number;
   public redemptionType: RedemptionType;
@@ -43,20 +43,30 @@ export class RedeemComponent implements OnInit, OnDestroy {
   private initTranslate(): void {
     this.translate.get('ENTER_CODE').subscribe((text) => this.headLine = text);
     this.translate.get('REDEMPTION_CODE').subscribe((text) => this.subHeadLine = text);
-    this.translate.get(this.rewardSuccessPopUp.title).subscribe((text) => this.rewardSuccessPopUp.title = text);
-    this.translate.get(this.rewardSuccessPopUp.text).subscribe((text) => this.rewardSuccessPopUp.text = text);
-    this.translate.get(this.rewardSuccessPopUp.buttonTxt).subscribe((text) => this.rewardSuccessPopUp.buttonTxt = text);
-    this.translate.get(this.errorPopUp.title).subscribe((text) => this.errorPopUp.title = text);
-    this.translate.get(this.errorPopUp.buttonTxt).subscribe((text) => this.errorPopUp.buttonTxt = text);
+    if (this.rewardSuccessPopUp.title) {
+      this.translate.get(this.rewardSuccessPopUp.title).subscribe((text) => this.rewardSuccessPopUp.title = text);
+    }
+    if (this.rewardSuccessPopUp.text) {
+      this.translate.get(this.rewardSuccessPopUp.text).subscribe((text) => this.rewardSuccessPopUp.text = text);
+    }
+    if (this.rewardSuccessPopUp.buttonTxt) {
+      this.translate.get(this.rewardSuccessPopUp.buttonTxt).subscribe((text) => this.rewardSuccessPopUp.buttonTxt = text);
+    }
+    if (this.errorPopUp.title) {
+      this.translate.get(this.errorPopUp.title).subscribe((text) => this.errorPopUp.title = text);
+    }
+    if (this.errorPopUp.buttonTxt) {
+      this.translate.get(this.errorPopUp.buttonTxt).subscribe((text) => this.errorPopUp.buttonTxt = text);
+    }
   }
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private vouchersService: IVoucherService,
-    private dialog: MatDialog,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private notificationService: NotificationService
   ) {
   }
 
@@ -65,30 +75,40 @@ export class RedeemComponent implements OnInit, OnDestroy {
     this.voucher$ = this.route.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
-        map((params: ParamMap) => Number.parseInt(params.get('id'), 10)),
+        map((params: ParamMap) => params.get('id')),
+        map((id: string) => Number.parseInt(id, 10)),
         tap((id: number) => this.voucherId = id),
         switchMap((id: number) => this.vouchersService.get(id)),
         tap((voucher: Voucher) => {
-          this.rewardSuccessPopUp.text = this.rewardSuccessPopUp.text.replace('{{reward}}', voucher.reward.name);
-          this.redemptionType = voucher.reward.redemptionType;
-          if (voucher.reward.displayProperties && voucher.reward.displayProperties.merchantPinText) {
-            this.headLine = voucher.reward.displayProperties.merchantPinText.headLine || this.headLine;
-            this.subHeadLine = voucher.reward.displayProperties.merchantPinText.subHeadLine || this.subHeadLine;
+          if (this.rewardSuccessPopUp.text && voucher.reward) {
+            this.rewardSuccessPopUp.text = this.rewardSuccessPopUp.text.replace('{{reward}}', voucher.reward.name);
           }
+          this.redemptionType = voucher.reward && voucher.reward.redemptionType ? voucher.reward.redemptionType : RedemptionType.none;
+          if (voucher.reward) {
+            if (voucher.reward.displayProperties && voucher.reward.displayProperties.merchantPinText) {
+              this.headLine = voucher.reward.displayProperties.merchantPinText.headLine || this.headLine;
+              this.subHeadLine = voucher.reward.displayProperties.merchantPinText.subHeadLine || this.subHeadLine;
+            }
 
-          if (voucher.reward.displayProperties && voucher.reward.displayProperties.rewardSuccessPopUp) {
-            this.rewardSuccessPopUp.title = voucher.reward.displayProperties.rewardSuccessPopUp.headLine;
-            this.rewardSuccessPopUp.text = voucher.reward.displayProperties.rewardSuccessPopUp.subHeadLine || this.rewardSuccessPopUp.text;
-            this.rewardSuccessPopUp.imageUrl = voucher.reward.displayProperties.rewardSuccessPopUp.imageURL;
-          }
+            if (voucher.reward.displayProperties && voucher.reward.displayProperties.rewardSuccessPopUp) {
+              this.rewardSuccessPopUp.title = voucher.reward.displayProperties.rewardSuccessPopUp.headLine;
+              this.rewardSuccessPopUp.text = voucher.reward.displayProperties.rewardSuccessPopUp.subHeadLine;
+              this.rewardSuccessPopUp.imageUrl = voucher.reward.displayProperties.rewardSuccessPopUp.imageURL
+                || this.rewardSuccessPopUp.imageUrl;
+              this.rewardSuccessPopUp.buttonTxt = voucher.reward.displayProperties.rewardSuccessPopUp.buttonTxt
+                || this.rewardSuccessPopUp.buttonTxt;
+            }
 
-          if (voucher.reward.displayProperties && voucher.reward.displayProperties.codeInstructionsText) {
-            this.codeInstructionsText = voucher.reward.displayProperties.codeInstructionsText.headLine;
-          }
+            if (voucher.reward.displayProperties && voucher.reward.displayProperties.codeInstructionsText) {
+              this.codeInstructionsText = voucher.reward.displayProperties.codeInstructionsText.headLine || '';
+            }
 
-          if (voucher.reward.displayProperties && voucher.reward.displayProperties.errorPopUp) {
-            this.errorPopUp.title = voucher.reward.displayProperties.errorPopUp.headLine;
-            this.errorPopUp.imageUrl = voucher.reward.displayProperties.errorPopUp.imageURL;
+            if (voucher.reward.displayProperties && voucher.reward.displayProperties.errorPopUp) {
+              this.errorPopUp.title = voucher.reward.displayProperties.errorPopUp.headLine;
+              this.errorPopUp.text = voucher.reward.displayProperties.errorPopUp.subHeadLine;
+              this.errorPopUp.buttonTxt = voucher.reward.displayProperties.errorPopUp.buttonTxt || this.errorPopUp.buttonTxt;
+              this.errorPopUp.imageUrl = voucher.reward.displayProperties.errorPopUp.imageURL || this.errorPopUp.imageUrl;
+            }
           }
         }),
         takeUntil(this.destroy$)
@@ -114,21 +134,27 @@ export class RedeemComponent implements OnInit, OnDestroy {
   }
 
   public needLoginPopup(): void {
-    this.translate.get(['REEDEM_QUEST', 'GO_TO_LOGIN']).pipe(map((dictionary) => this.popup({
-      title: dictionary.REEDEM_QUEST,
-      buttonTxt: dictionary.GO_TO_LOGIN
-    }).afterClosed())).subscribe(() => this.router.navigate(['/login']));
+    this.translate.get(['REEDEM_QUEST', 'GO_TO_LOGIN'])
+      .subscribe((dictionary) => this.popup({
+        title: dictionary.REEDEM_QUEST,
+        buttonTxt: dictionary.GO_TO_LOGIN
+      }));
   }
 
   public errorPopup(): void {
     this.popup(this.errorPopUp);
   }
 
-  public popup(data: IPopupConfig): MatDialogRef<PopupComponent> {
-    return this.dialog.open(PopupComponent, { data });
+  public popup(data: IPopupConfig): void {
+    data.afterClosedCallBack = this;
+    return this.notificationService.addPopup(data);
   }
 
   public goBack(): void {
     this.location.back();
+  }
+
+  public dialogClosed(): void {
+    this.router.navigate(['/login']);
   }
 }

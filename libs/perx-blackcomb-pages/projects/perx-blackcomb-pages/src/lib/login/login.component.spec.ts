@@ -4,9 +4,10 @@ import { LoginComponent } from './login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationService, Config, ThemesService } from '@perx/core';
+import { AuthenticationService, Config, ConfigService, ThemesService } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
+import { IWAppAccessTokenResponse } from '@perx/whistler';
 
 const configStub: Partial<Config> = {
   preAuth: false
@@ -17,11 +18,18 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
 
   const authenticationServiceStub: Partial<AuthenticationService> = {
-    getUserAccessToken: () => ''
+    getUserAccessToken: () => '',
+    getAppToken: () => of({} as IWAppAccessTokenResponse),
+    getAppAccessToken: () => 'token'
   };
 
   const themeServiceStub: Partial<ThemesService> = {
-    getActiveTheme: () => of()
+    getActiveTheme: () => of(),
+    getThemeSetting: () => of()
+  };
+
+  const configServiceStub = {
+    readAppConfig: () => of()
   };
 
   beforeEach(async(() => {
@@ -41,7 +49,8 @@ describe('LoginComponent', () => {
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ThemesService, useValue: themeServiceStub },
-        { provide: Config, useValue: configStub }
+        { provide: Config, useValue: configStub },
+        { provide: ConfigService, useValue: configServiceStub}
       ]
     })
       .compileComponents();

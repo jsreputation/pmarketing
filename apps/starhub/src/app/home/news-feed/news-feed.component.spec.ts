@@ -76,7 +76,7 @@ describe('NewsFeedComponent', () => {
     });
 
     it('should update newsAfterScroll to [] on updateScrollIndex', () => {
-      component.items = null;
+      component.items = [];
       component.updateScrollIndex(0);
       expect(component.newsAfterScroll).toEqual([]);
     });
@@ -93,6 +93,20 @@ describe('NewsFeedComponent', () => {
     const openSpy = spyOn(dialog, 'open');
     component.readMore(items[0]);
     expect(openSpy).toHaveBeenCalled();
+  });
+
+  describe('getFirstLine', () => {
+    it('should return empty if string is empty', () => {
+      const text: string = '';
+      const firstLine = component.getFirstLine(text);
+      expect(firstLine).toBe('');
+    });
+
+    it('should return the first line if there is a new line', () => {
+      const text: string = 'Lorem ipsum dolor sit amet \n consectetur adipiscing elit';
+      const firstLine = component.getFirstLine(text);
+      expect(firstLine).toBe('Lorem ipsum dolor sit amet ');
+    });
   });
 
 });

@@ -6,6 +6,7 @@ import { LogoModule } from '../logo/logo.module';
 import { UserModule } from '../user/user.module';
 import { SidenavMenuModule } from '../sidenav-menu/sidenav-menu.module';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { RouterModule } from '@angular/router';
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
+    TranslateModule,
   ]
 })
 export class SideNavModule { }

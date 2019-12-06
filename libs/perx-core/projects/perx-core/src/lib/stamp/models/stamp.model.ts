@@ -1,6 +1,6 @@
 import { IVoucher } from '../../vouchers/models/voucher.model';
 import { PuzzleCollectReward } from '../../puzzles/models/puzzle-stamp.model';
-import { IProperties } from '../../perx-core.models';
+import { IWProperties } from '@perx/whistler';
 
 export interface IReward {
   id: number;
@@ -43,6 +43,12 @@ export interface IStamp {
   vouchers?: IVoucher[];
 }
 
+export interface ICampaignConfig {
+  totalSlots: number;
+  rewards?: IReward[];
+  collectionRewards?: PuzzleCollectReward[];
+}
+
 export interface IStampCard {
   title?: string; // added
   subTitle?: string; // added
@@ -52,11 +58,7 @@ export interface IStampCard {
   state: StampCardState;
   campaignId?: number; // made optional
   cardNumber?: number; // made optional
-  campaignConfig: {
-    totalSlots: number;
-    rewards?: IReward[];
-    collectionRewards?: PuzzleCollectReward[];
-  };
+  campaignConfig: ICampaignConfig | null | undefined;
   displayProperties: {
     numberOfCols?: number; // made optional
     numberOfRows?: number; // made optional
@@ -75,13 +77,13 @@ export interface IStampCard {
     displayCampaignAs: string;
     backgroundImg?: {
       value?: {
-        imageUrl: string;
+        imageUrl: string | null;
       }
     };
     rewardPositions?: number[]
     thumbnailImg?: string;
-    noRewardsPopUp?: IProperties;
-    successPopUp?: IProperties;
+    noRewardsPopUp?: IWProperties;
+    successPopUp?: IWProperties;
   };
   stamps?: IStamp[];
 }

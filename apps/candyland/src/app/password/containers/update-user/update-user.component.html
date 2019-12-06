@@ -1,0 +1,53 @@
+<div class="parent-container">
+    <div class="perx-logo">
+      <img src="/assets/icons/icon-72x72.png" alt="perxlogo">
+    </div>
+    <div *ngIf="routeEnd === 'reset'">
+      <div class="text-container">
+        <div class="main-text">
+          <h1 class="Hello-there">Reset your password</h1>
+          <p>Enter your new password.</p>
+        </div>
+        <div class="inputs-related">
+          <mat-form-field>
+            <input matInput [placeholder]="'Enter password'" [type]="hide ? 'password' : 'text'">
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </mat-form-field>
+          <cl-button [classList]="'primary btn-block'" class="btn-block">Submit</cl-button>
+        </div>
+        <p class="foot-msg">© 2019 Perx Technologies. All rights reserved.</p>
+      </div>
+    </div>
+
+    <div *ngIf="routeEnd === 'invalid'">
+      <div class="text-container">
+        <div class="main-text">
+          <h1 class="Hello-there">Reset your password</h1>
+          <p>It looks like this password reset link can't be used anymore. Kindly request for a new password link.</p>
+        </div>
+        <a [routerLink]="['/login']" class="back-to-login">Back To Login</a>
+        <p class="foot-msg">© 2019 Perx Technologies. All rights reserved.</p>
+      </div>
+    </div>
+
+    <div *ngIf="routeEnd === 'new'">
+      <div class="intro-pic">
+        <img src="/assets/images/team/welcome.png" alt="" class="image-nice">
+      </div>
+      <div class="text-container">
+        <div class="main-text">
+          <h1 class="Hello-there">Welcome to the team!</h1>
+          <p>Create a password to continue.</p>
+        </div>
+
+        <div class="inputs-related">
+          <mat-form-field>
+            <input matInput [placeholder]="'Enter password'" [type]="hide ? 'password' : 'text'">
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </mat-form-field>
+          <cl-button [classList]="'primary btn-block'" class="btn-block">Submit</cl-button>
+        </div>
+        <p class="foot-msg">© 2019 Perx Technologies. All rights reserved.</p>
+      </div>
+    </div>
+</div>

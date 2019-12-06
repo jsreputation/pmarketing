@@ -1,3 +1,10 @@
+export enum WRedemptionType {
+  promoCode = 'Promo Code',
+  qrCode = 'QR Code',
+  merchantPin = 'Merchant PIN',
+  barCode = 'Bar Code'
+}
+
 export interface IWRewardEntityAttributes {
   urn?: string;
   created_at?: string;
@@ -6,7 +13,7 @@ export interface IWRewardEntityAttributes {
   image_url?: string;
   reward_type: string;
   category: string;
-  redemption_type: string;
+  redemption_type: WRedemptionType;
   cost_of_reward: number;
   tags: string[];
   currency?: string;
@@ -38,9 +45,25 @@ export interface IWRewardEntityAttributes {
   organization_id?: string;
 }
 
+export interface IWMetaData {
+  totalPages?: number;
+  currentPage?: number;
+}
+
 interface IWProperties {
   headLine?: string;
   subHeadLine?: string;
   imageURL?: string;
   buttonTxt?: string;
+}
+
+export interface IWTierRewardCostsAttributes {
+  urn?: string;
+  created_at?: string;
+  updated_at?: string;
+  apply_tier_discout: boolean;
+  tier_value: string;
+  tier_id: number;
+  tier_type: string;
+  entity_id: number;
 }

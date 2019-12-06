@@ -25,11 +25,11 @@ export interface PopUpClosedCallBack {
   styleUrls: ['./popup.component.scss']
 })
 export class PopupComponent {
-  public title: string|null = null;
-  public text: string|null = null;
-  public imageUrl: string|null = null;
-  public buttonTxt: string = 'close';
-  public buttonTxt2: string|null = null;
+  public title: string | null = null;
+  public text: string | null = null;
+  public imageUrl: string | null = null;
+  public buttonTxt: string | null = 'close';
+  public buttonTxt2: string | null = null;
 
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,
@@ -58,7 +58,7 @@ export class PopupComponent {
   // todo: only set up host listener if disableOverlayClose = true
   @HostListener('window:keyup.esc')
   public onKeyUp(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   public buttonPressed(): void {

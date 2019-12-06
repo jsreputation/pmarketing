@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { OutcomesHttpAdapter } from '@cl-core/http-adapters/outcomes-http-adapter';
 import { IWOutcomeAttributes } from '@perx/whistler';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
+import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,22 +26,21 @@ export class OutcomesService {
   }
 
   public updateOutcome(
-    data: { value: IRewardEntity, probability: number },
+    data: ICampaignOutcome,
     campaignId: string,
-    enableProbability: boolean,
-    slotNumber: number
   ): Observable<IJsonApiPayload<IWOutcomeAttributes>> {
-    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data, enableProbability, campaignId, slotNumber);
-    return this.outcomesHttpsService.updateOutcome(data.value.outcomeId, { data: { id: data.value.outcomeId, ...sendData } });
+    const sendData = OutcomesHttpAdapter.transformFromOutcomes(
+      data,
+      campaignId,
+    );
+    return this.outcomesHttpsService.updateOutcome(data.outcome.id, { data: { id: data.outcome.id, ...sendData } });
   }
 
   public createOutcome(
-    data: { value: IRewardEntity, probability: number },
+    data: ICampaignOutcome,
     campaignId: string,
-    enableProbability: boolean,
-    slotNumber: number
   ): Observable<IJsonApiPayload<IWOutcomeAttributes>> {
-    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data, enableProbability, campaignId, slotNumber);
+    const sendData = OutcomesHttpAdapter.transformFromOutcomes(data, campaignId);
     return this.outcomesHttpsService.createOutcome({ data: sendData });
   }
 

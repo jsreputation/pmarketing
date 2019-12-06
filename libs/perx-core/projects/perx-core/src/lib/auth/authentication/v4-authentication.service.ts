@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { tap, mergeMap, catchError, map } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { TokenStorage } from './token-storage.service';
 import { AuthenticationService } from './authentication.service';
 import { IProfile } from '../../profile/profile.model';
 import {
@@ -16,6 +15,7 @@ import { IWMessageResponse, IWAppAccessTokenResponse, IWLoginResponse } from '@p
 import { ProfileService } from '../../profile/profile.service';
 import { Config } from '../../config/config';
 import { IV4ProfileResponse, V4ProfileService } from '../../profile/v4-profile.service';
+import { TokenStorage } from '../../utils/storage/token-storage.service';
 
 interface IV4SignUpData {
   first_name?: string;
@@ -121,9 +121,9 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       url: location.host,
       username: user,
       password: pass,
-      ...mechId && {mech_id: mechId},
-      ...campaignId && {campaign_id: campaignId},
-      ...scope && {scope}
+      ...mechId && { mech_id: mechId },
+      ...campaignId && { campaign_id: campaignId },
+      ...scope && { scope }
     };
     return this.http.post<IWLoginResponse>(this.userAuthEndPoint + '/token', authenticateBody);
   }
@@ -148,7 +148,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   // @ts-ignore
-  public createUserAndAutoLogin(pi: string): Observable<any> {
+  public createUserAndAutoLogin(pi: string, userObj?: { [key: string]: any }, anonymous?: boolean): Observable<any> {
     return throwError('Not implement yet');
   }
 
@@ -182,12 +182,12 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   public logout(): void {
-    this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'pi']);
+    this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'pi', 'anonymous']);
   }
 
   // @ts-ignore
   public forgotPassword(phone: string): Observable<IWMessageResponse> {
-    return this.http.get<IWMessageResponse>(`${this.customersEndPoint}/forget_password`, {params: {phone}})
+    return this.http.get<IWMessageResponse>(`${this.customersEndPoint}/forget_password`, { params: { phone } })
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -215,7 +215,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
 
   // @ts-ignore
   public resendOTP(phone: string): Observable<IWMessageResponse> {
-    return this.http.get<IWMessageResponse>(`${this.customersEndPoint}/resend_confirmation`, {params: {phone}})
+    return this.http.get<IWMessageResponse>(`${this.customersEndPoint}/resend_confirmation`, { params: { phone } })
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -229,6 +229,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       last_name: data.lastName || '',
       first_name: data.firstName,
       birthday: data.birthDay,
+      password_confirmation: data.passwordConfirmation,
       ...data
     };
   }
@@ -248,7 +249,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
 
   // @ts-ignore
   public verifyOTP(phone: string, otp: string): Observable<IWMessageResponse> {
-    return this.http.patch<IWMessageResponse>(`${this.customersEndPoint}/confirm`, {phone, confirmation_token: otp})
+    return this.http.patch<IWMessageResponse>(`${this.customersEndPoint}/confirm`, { phone, confirmation_token: otp })
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -350,5 +351,27 @@ export class V4AuthenticationService extends AuthenticationService implements Au
 
   public savePI(pi: string): void {
     this.tokenStorage.setAppInfoProperty(pi, 'pi');
+  }
+
+  public getAnonymous(): boolean {
+    return !!this.tokenStorage.getAppInfoProperty('anonymous');
+  }
+
+  public saveAnonymous(anonymous: boolean): void {
+    this.tokenStorage.setAppInfoProperty(anonymous, 'anonymous');
+  }
+
+  public getUserId(): number | null {
+    const id: string | undefined = this.tokenStorage.getAppInfoProperty('id');
+    return id ? Number.parseInt(id, 10) : null;
+  }
+
+  public saveUserId(id: number): void {
+    this.tokenStorage.setAppInfoProperty(id, 'id');
+  }
+
+  // @ts-ignore
+  public mergeUserById(fromIds: number[], toId: number): Observable<void> {
+    return throwError('Not implement yet');
   }
 }

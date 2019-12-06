@@ -1,33 +1,46 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-
-import { HomeComponent } from './home.component';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
+import { Type } from '@angular/core';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
+
 import {
   RewardsService,
   LoyaltyModule,
   RewardsModule,
   ProfileService,
-  LoyaltyService
+  LoyaltyService,
+  IReward, ThemesService
 } from '@perx/core';
-import { of } from 'rxjs';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Type } from '@angular/core';
-import { Router } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+
+import { HomeComponent } from './home.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  const reward = {
+
+  const themesServiceStub = {
+    getThemeSetting: () => of()
+  };
+  const reward: IReward = {
     id: 149,
     name: '100 HSBC Bonus Points',
-    description: null,
-    subtitle: null,
+    description:  '',
+    subtitle: '',
     validFrom: new Date('2019-07-04T09:58:07.000Z'),
     validTo: new Date('2020-07-19T16:00:00Z'),
     rewardThumbnail: '',
     rewardBanner: '',
-    merchantImg: null,
+    merchantImg: undefined,
     rewardPrice: [
       {
         id: 23,
@@ -35,10 +48,10 @@ describe('HomeComponent', () => {
         price: 0
       }
     ],
-    merchantId: null,
-    merchantName: null,
-    merchantWebsite: null,
-    termsAndConditions: null,
+    merchantId: undefined,
+    merchantName: undefined,
+    merchantWebsite: undefined,
+    termsAndConditions: '',
     howToRedeem: '',
   };
 
@@ -86,7 +99,13 @@ describe('HomeComponent', () => {
             })
           }
         },
-        { provide: Router, useValue: { navigateByUrl: () => {} } },
+        {
+          provide: Router,
+          useValue: { navigateByUrl: () => {} } },
+        {
+          provide: ThemesService,
+          useValue: themesServiceStub,
+        },
       ]
     })
       .compileComponents();

@@ -1,17 +1,17 @@
 {
-  "properties": {
     "name": "Dark",
     "properties": {
       "--font": "Roboto",
-      "--logo": "https://cdn.uat.whistler.perxtech.io/dev1/tenants/222222222/daiichi-logo@2x.png",
-      "--title": "Dai-ichi Life",
-      "--accent": "#ff0000",
+      "--logo": "assets/header_logo.png",
+      "--title": "all-it",
+      "--accent": "#0088D1",
       "--primary": "#ffffff",
       "--button_text_color": "#ffffff",
-      "--button_background_color": "#ff0000",
-      "--header_color": "#ffffff",
-      "--background": "#1f2935",
-      "--font_color": "#fff"
+      "--button_background_color": "#0F69AF",
+      "--header_color": "#000000",
+      "--background": "#ffffff",
+      "--font_color": "#212121",
+      "--login_background_colour": "#000",
+      "--account_background_color": "#EDEDED"
     }
-  }
 }

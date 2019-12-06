@@ -20,6 +20,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { QuestionFormFieldService } from '@cl-shared/questions/question-form-field/shared/services/question-form-field.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('QuestionFormFieldComponent', () => {
   let component: QuestionFormFieldComponent;
@@ -45,6 +46,7 @@ describe('QuestionFormFieldComponent', () => {
         MatInputModule,
         MatSlideToggleModule,
         DragDropModule,
+        TranslateModule.forRoot()
       ],
       declarations: [
         QuestionFormFieldComponent,

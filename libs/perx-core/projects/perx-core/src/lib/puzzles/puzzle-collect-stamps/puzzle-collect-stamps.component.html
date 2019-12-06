@@ -10,9 +10,17 @@
       </p>
       <div class="row" *ngFor="let rowItemsCount of currentActiveOrientation; let rowNum = index">
         <div class="dummy-container" *ngFor="let box of counter(rowItemsCount); let i = index">
-          <img class="add"
-            (click)="onAvailableStampClicked(i, rowNum)"
-            [src]="getStampImage(i, rowNum)" />
+          <ng-container *ngIf="hasCustomStamp() else defaultStamp">
+            <img
+              (click)="onAvailableStampClicked(i, rowNum)"
+              [src]="getStampImage(i, rowNum)" />
+          </ng-container>
+          <ng-template #defaultStamp>
+            <img [src]="getStampImage(i, rowNum)" />
+            <div (click)="onAvailableStampClicked(i, rowNum)" *ngIf="isIssued(i, rowNum)" class="add">
+              <span>+</span>
+            </div>
+          </ng-template>
         </div>
       </div>
     </div>

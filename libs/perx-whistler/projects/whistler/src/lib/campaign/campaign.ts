@@ -1,4 +1,5 @@
 import { WEngagementType } from '../engagement/engagement';
+import { IWProperties } from '../whistler.models';
 
 export interface IWCampaignAttributes {
   id?: string;
@@ -8,27 +9,27 @@ export interface IWCampaignAttributes {
   urn?: string;
   status?: string;
   start_date_time: string;
-  end_date_time: string;
+  end_date_time?: string;
   goal?: string | null;
   engagement_type: WEngagementType;
   engagement_id: number;
   possible_outcomes?: any;
   comm?: any;
   comm_channel?: null;
-  pool_id?: string | null;
+  // pool_id is mandatory, if left empty during campaign edition, then it should be null
+  pool_id: number | null;
   labels?: string[];
-  display_properties?: {
-    noRewardsPopUp?: {
-      headLine?: string;
-      subHeadLine?: string;
-      imageURL?: string;
-      buttonTxt?: string;
-    };
-    successPopUp?: {
-      headLine?: string;
-      subHeadLine?: string;
-      imageURL?: string;
-      buttonTxt?: string;
-    };
-  };
+  display_properties?: IWCampaignDisplayProperties;
+}
+
+export interface IWCampaignDisplayProperties {
+  informationCollectionSetting?: WInformationCollectionSettingType;
+  noRewardsPopUp?: IWProperties;
+  successPopUp?: IWProperties;
+}
+
+export enum WInformationCollectionSettingType {
+  not_required = 'not_required',
+  pi_required = 'pi_required',
+  signup_required = 'signup_required'
 }

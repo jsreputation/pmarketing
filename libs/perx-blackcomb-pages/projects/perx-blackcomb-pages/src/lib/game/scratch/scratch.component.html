@@ -7,7 +7,7 @@
     <div class="scratch-wrapper">
       <perx-core-scratch-card
         [coverImg]="config.coverImg"
-        [underlyingImg]="config.underlyingImg"
+        [underlyingImg]="willWin ? config.underlyingSuccessImg : config.underlyingFailImg"
         [uncoverPortionToTrigger]="config.uncoverPortionToTrigger"
         [enabled]="isEnabled"
         (completed)="gameCompleted()">
@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="game-footer">
-    <button
+    <button class="js-play"
       mat-flat-button
       color="primary"
       [hidden]="isEnabled"

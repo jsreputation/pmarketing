@@ -6,7 +6,7 @@
         <img class="reward-item-no-img" *ngIf="!data?.image" src="assets/images/icons/deactivate.svg">
       </div>
       <div class="reward-item-info">
-        <p class="reward-item-name">{{data?.name || 'No reward'}}</p>
+        <p class="reward-item-name">{{data?.name || ('CAMPAIGN.NO_REWARD' | translate)}}</p>
         <p class="reward-item-type" *ngIf="data?.merchantName">{{data?.merchantName}}</p>
       </div>
       <!-- <cl-progress-bar class="reward-item-progress"
@@ -14,9 +14,25 @@
                       [current]="data?.current"
                       [total]="data?.total">
       </cl-progress-bar> -->
+      <div class="reward-item-limit">
+          <span class="reward-item-limit-label">
+              {{'CAMPAIGN.LIMIT' | translate}}
+            </span>
+        <mat-form-field class="reward-item-limit-input">
+          <input
+            type="number"
+            min="0"
+            step="1"
+            matInput
+            [class.invalid]="isInvalid"
+            [formControl]="limit">
+        </mat-form-field>
+      </div>
     </div>
-    <div class="reward-item-probability" *ngIf="probability.enabled">
-      <span class="reward-item-probability-label">Probability</span>
+    <div class="reward-item-probability" *ngIf="enableProbability">
+      <span class="reward-item-probability-label">
+        {{'CAMPAIGN.PROBABILITY' | translate}}
+      </span>
       <mat-form-field class="reward-item-probability-input">
         <input
           type="number"
@@ -31,9 +47,6 @@
     </div>    
   </div>
   <div class="reward-item-actions">
-    <!--    <button mat-icon-button (click)="delete()">-->
-    <!--      <i class="icon delete-action"></i>-->
-    <!--    </button>-->
     <button mat-icon-button *ngIf="data?.name" (click)="delete()">
       <i class="icon full-with delete-action"></i>
     </button>

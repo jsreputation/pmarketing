@@ -1,5 +1,10 @@
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { IWIAMUserAttributes, IWTenantDisplayProperties } from '@perx/whistler';
+import {
+  IWIAMUserAttributes,
+  IWTenantDisplayProperties,
+  IWCognitoEndpointAttributes
+} from '@perx/whistler';
+import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
 
 export interface IColor {
   labelView: string;
@@ -7,22 +12,18 @@ export interface IColor {
 }
 
 export class SettingsHttpAdapter {
-
-  // tslint:disable
-  public static transformInviteUser(data: IAMUser): IJsonApiPayload<IWIAMUserAttributes> {
-    const res: any = {
+  public static transformInviteUser(data: IAMUser): IJsonApiItem<IWIAMUserAttributes> {
+    const res: IJsonApiItem<IWIAMUserAttributes> = {
       type: 'users',
       attributes: {
         username: data.name,
         api: true,
         console: true,
-        properties: {
-          email: data.email
-        }
+        email: data.email || null
       },
       relationships: {
         groups: {
-          data: [{id: data.roleId, type: 'groups'}]
+          data: [{ id: data.roleId, type: 'groups' }]
         }
       }
     };
@@ -33,7 +34,7 @@ export class SettingsHttpAdapter {
     return res;
   }
 
-  public static transformToIAMUser(data: IJsonApiItem<IWIAMUserAttributes>): IAMUser {
+  private static transformToIAMUser(data: IJsonApiItem<IWIAMUserAttributes>): IAMUser {
     return {
       id: data.id,
       type: data.type,
@@ -50,8 +51,9 @@ export class SettingsHttpAdapter {
       jwt_payload_iss: data.attributes.jwt_payload.iss,
       jwt_payload_sub: data.attributes.jwt_payload.sub,
       attached_policies: data.attributes.attached_policies,
-      relationships_groups_id: this.setGroupId(data),
-      email: data.attributes.properties.email
+      relationships_groups_id: SettingsHttpAdapter.setGroupId(data),
+      // tslint:disable-next-line: deprecation
+      email: data.attributes.email || data.attributes.properties.email
     };
   }
 
@@ -68,24 +70,25 @@ export class SettingsHttpAdapter {
       }
       return user;
     });
-    return {data: formatData, meta: data.meta};
+    return { data: formatData, meta: data.meta };
   }
 
   private static setGroupId(data: any): number | null {
-    let relationships_groups_id = null;
-    data && data.relationships && data.relationships.groups && data.relationships.groups.data &&
-    data.relationships.groups.data.forEach((item) => {
-      relationships_groups_id = item ? item.id : null;
-    });
-    return relationships_groups_id;
+    let relationshipsGroupsId = null;
+    if (data && data.relationships && data.relationships.groups && data.relationships.groups.data) {
+      data.relationships.groups.data.forEach((item) => {
+        relationshipsGroupsId = item ? item.id : null;
+      });
+    }
+    return relationshipsGroupsId;
   }
 
-  public static transformGeneralSettings(data: any): any {
-    return {
-      time_zone: data.timeZone,
-      currency: data.currency
-    };
-  }
+  // public static transformGeneralSettings(data: any): { time_zone: string, currency: string } {
+  //   return {
+  //     time_zone: data.timeZone,
+  //     currency: data.currency
+  //   };
+  // }
 
   public static transformSettingsBrandingFormToAPI(data: IBrandingForm): any {
     return {
@@ -116,7 +119,7 @@ export class SettingsHttpAdapter {
     };
   }
 
-  public static getColorObj(listColors: IColor[], color: string): IColor {
+  private static getColorObj(listColors: IColor[], color: string): IColor {
     const col: IColor = listColors.find(item => item.color === color);
     if (col !== undefined) {
       return col;
@@ -124,7 +127,7 @@ export class SettingsHttpAdapter {
     if (listColors.length > 0) {
       return listColors[0];
     }
-    return {labelView: 'Primary Color', color: '#ffffff'};
+    return { labelView: 'Primary Color', color: '#ffffff' };
   }
 
   public static getTenantsSettings(data: any): ITenantsProperties {
@@ -144,11 +147,11 @@ export class SettingsHttpAdapter {
     };
   }
 
-  public static getTenantProperty(property: string, data: Tenants): any {
+  private static getTenantProperty(property: string, data: Tenants): any | null {
     return data && data.display_properties ? data.display_properties[property] : null;
   }
 
-  public static tenantLogo(data: Tenants): string {
+  private static tenantLogo(data: Tenants): string {
     const logo = SettingsHttpAdapter.getTenantProperty('theme.logo', data);
     const title = SettingsHttpAdapter.getTenantProperty('theme.title', data);
     if (title) {
@@ -163,7 +166,25 @@ export class SettingsHttpAdapter {
    * this method need for get right type of logo img or text in the component
    */
   // @ts-ignore
-  public static tenantTypeLogo(data: Tenants): boolean {
+  private static tenantTypeLogo(data: Tenants): boolean {
     return true; // !(SettingsHttpAdapter.getTenantProperty('theme.title', data) as any);
+  }
+
+  public static transformToCognitoEndpoint(data: IJsonApiItem<IWCognitoEndpointAttributes>): ICognitoEndpoint {
+    return {
+      url: data.attributes.url || '',
+      targetType: data.attributes.target_type,
+      targetId: data.attributes.target_id
+    };
+  }
+
+  public static transformFromCognitoEndpoint(data: ICognitoEndpoint): IJsonApiItem<IWCognitoEndpointAttributes> {
+    return {
+      type: 'endpoints',
+      attributes: {
+        url: data.url || 'https://generic-blackcomb-dev1.uat.whistler.perxtech.io/',
+        target_type: data.targetType || 'blackcomb',
+      }
+    };
   }
 }

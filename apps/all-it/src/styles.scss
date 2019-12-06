@@ -4,15 +4,15 @@
 
 :root {
   --font: Roboto;
-  --logo: "";
-  --title: "";
-  --accent: #96289a;
-  --primary: #147dd3;
-  --button_text_color: #fff;
-  --button_background_color: #147dd3;
-  --header_color: #147dd3;
-  --background: #fafafa;
-  --font_color: #333;
+  --logo: "assets/header_logo.png";
+  --title: "all-it";
+  --accent: #0088D1;
+  --primary: #ffffff;
+  --button_text_color: #ffffff;
+  --button_background_color: #0F69AF;
+  --header_color: #000000;
+  --background: #ffffff;
+  --font_color: #212121;
 }
 
 html {
@@ -31,12 +31,7 @@ body {
 }
 
 .mat-primary {
-  color: var(--primary) !important;
-}
-
-button {
-  background-color: var(--button_background_color) !important;
-  color: var(--button_text_color) !important;
+  color: black !important;
 }
 
 button.mat-primary {
@@ -61,6 +56,7 @@ button.mat-default {
 button.mat-stroked-button {
   background-color: white !important;
   color: var(--accent) !important;
+  border: 1px solid var(--accent) !important;
 }
 
 .mat-toolbar {
@@ -87,5 +83,5 @@ button.mat-stroked-button {
 }
 
 .backArrow {
-  color: var(--accent);
+  color: var(--button_text_color);
 }

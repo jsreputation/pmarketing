@@ -1,4 +1,4 @@
-import { AuthenticationService, NotificationService, Config, ITheme, ThemesService } from '@perx/core';
+import { AuthenticationService, NotificationService, Config, ITheme, ThemesService, ConfigService, IConfig } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
@@ -14,12 +14,13 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
-  public errorMessage: string;
+  public errorMessage: string | null;
   public preAuth: boolean;
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
   public theme: Observable<ITheme>;
-
+  public appConfig: Observable<IConfig>;
+  public appAccessTokenFetched: boolean;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -27,14 +28,26 @@ export class LoginComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private themesService: ThemesService,
     private config: Config,
+    private configService: ConfigService,
     public translate: TranslateService
   ) {
-    this.preAuth = this.config ? this.config.preAuth : false;
+    this.preAuth = this.config.preAuth ? this.config.preAuth : false;
   }
 
   public ngOnInit(): void {
     this.initForm();
-    this.theme = this.themesService.getActiveTheme();
+    this.theme = this.themesService.getThemeSetting();
+    this.appConfig = this.configService.readAppConfig();
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
   }
 
   public ngOnDestroy(): void {
@@ -53,9 +66,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
+  public goToSignup(): void {
+    this.router.navigateByUrl('/signup');
+  }
+
   public onSubmit(): void {
-    const username = (this.loginForm.get('customerID').value as string);
-    const password: string = this.loginForm.get('password').value;
+    const customerIdField = this.loginForm.get('customerID');
+    const username: string = customerIdField !== null && customerIdField.value ? customerIdField.value : '';
+    const pwdField = this.loginForm.get('password');
+    const password: string = pwdField ? pwdField.value : '';
     this.errorMessage = null;
     this.authService.login(username, password, '2')
       .pipe(

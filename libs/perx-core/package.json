@@ -18,12 +18,13 @@
     "@angular/compiler": "~8.0.0",
     "@angular/core": "~8.0.0",
     "@angular/forms": "~8.0.0",
-    "@angular/material": "^8.0.1",
+    "@angular/material": "~8.0.1",
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
     "@perx/whistler": "^0.0.0",
     "angularx-qrcode": "^1.6.1",
+    "ngx-ellipsis": "^2.0.9",
     "ngx-multi-line-ellipsis": "^1.0.4",
     "rxjs": "~6.4.0",
     "ts-optchain": "^0.1.7",
@@ -59,6 +60,7 @@
     "tsickle": "^0.35.0",
     "tslint": "~5.19.0",
     "tslint-consistent-codestyle": "^1.15.1",
+    "tslint-no-focused-test": "^0.5.0",
     "typescript": "~3.4.3"
   },
   "main": "./dist/perx-core/bundles/perx-core.umd.js",
@@ -80,9 +82,18 @@
         "files": [
           "**/*.ts?(x)"
         ],
-        "excludedFiles": ["**/*.service.spec.ts", "**/*.service.ts", "**/*.component.ts"],
+        "excludedFiles": [
+          "**/*.service.spec.ts",
+          "**/*.service.ts",
+          "**/*.component.ts"
+        ],
         "rules": {
-          "camelcase": ["error", {"ignoreDestructuring": true}]
+          "camelcase": [
+            "error",
+            {
+              "ignoreDestructuring": true
+            }
+          ]
         }
       }
     ]

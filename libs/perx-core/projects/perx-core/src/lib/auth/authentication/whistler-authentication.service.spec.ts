@@ -1,14 +1,14 @@
 import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { WhistlerAuthenticationService } from './whistler-authentication.service';
-import { TokenStorage } from './token-storage.service';
 import { ProfileModule } from '../../profile/profile.module';
 import { ConfigModule } from '../../config/config.module';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { TokenStorage } from '../../utils/storage/token-storage.service';
 
 const tokenStorageStub = {
-  getAppInfoProperty: () => { },
+  getAppInfoProperty: () => null,
   clearAppInfoProperty: () => { },
   setAppInfoProperty: () => { }
 };
@@ -79,7 +79,17 @@ describe('WhistlerAuthenticationService', () => {
     (auth: WhistlerAuthenticationService, http: HttpClient) => {
       const spy = spyOn(auth, 'savePI');
       spyOn(http, 'post').and.returnValue(of({ data: [{ attributes: { jwt: 'token' } }] }));
-      auth.createUserAndAutoLogin('test').subscribe(() => { });
+      auth.createUserAndAutoLogin(
+        'test',
+        {
+          title: 'test',
+          firstName: 'test',
+          lastName: 'test',
+          phoneNumber: '999',
+          emailAddress: 'test',
+          primaryIdentifier: 'null'
+        }
+      ).subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
     })));
@@ -121,5 +131,77 @@ describe('WhistlerAuthenticationService', () => {
         tick();
       };
       expect(errorFunction).toThrowError();
+    })));
+
+  it('handle error', fakeAsync(inject([WhistlerAuthenticationService], (whService: WhistlerAuthenticationService) => {
+    const checkError = (err) => expect(err).toBe('Not implement yet');
+    whService.getAppToken().subscribe(() => { }, checkError);
+    whService.forgotPassword('').subscribe(() => { }, checkError);
+    whService.resetPassword({ phone: 'string', newPassword: 'string', otp: 'string', passwordConfirmation: 'string' })
+      .subscribe(() => { }, checkError);
+    whService.resendOTP('99').subscribe(() => { }, checkError);
+    whService.signup({ phone: 'string;', password: 'string;', passwordConfirmation: 'string;' }).subscribe(() => { }, checkError);
+    whService.requestVerificationToken('').subscribe(() => { }, checkError);
+    whService.changePhone({ phone: '', otp: '' }).subscribe(() => { }, checkError);
+    whService.verifyOTP('', '').subscribe(() => { }, checkError);
+    whService.changePassword({ newPassword: 'string;', passwordConfirmation: 'string;', oldPassword: 'string;', otp: 'string;', })
+      .subscribe(() => { }, checkError);
+  })));
+
+  it('handle InterruptedUrl', inject([WhistlerAuthenticationService], (whService: WhistlerAuthenticationService) => {
+    const url = 'google';
+    whService.setInterruptedUrl(url);
+    expect(whService.getInterruptedUrl()).toBe(url);
+  }));
+
+  it('logout', inject([WhistlerAuthenticationService, TokenStorage],
+    (auth: WhistlerAuthenticationService, tokenStorage: TokenStorage) => {
+      const spy = spyOn(tokenStorage, 'clearAppInfoProperty');
+      auth.logout();
+      expect(spy).toHaveBeenCalled();
+    }));
+
+  it('getAccessToken', fakeAsync(inject([WhistlerAuthenticationService], (auth: WhistlerAuthenticationService) => {
+    auth.getAccessToken().subscribe((token) => {
+      expect(token).toBe(auth.getUserAccessToken() ? auth.getUserAccessToken() : auth.getUserAccessToken());
+    });
+    tick();
+    spyOn(auth, 'getUserAccessToken').and.returnValue('token');
+    auth.getAccessToken().subscribe((token) => {
+      expect(token).toBe('token');
+    });
+    tick();
+  })));
+
+  it('should call tokenStorage', inject([WhistlerAuthenticationService, TokenStorage],
+    (auth: WhistlerAuthenticationService, tokenStorage: TokenStorage) => {
+      const setAppInfoProperty = spyOn(tokenStorage, 'setAppInfoProperty');
+      auth.saveAppAccessToken('token');
+      expect(setAppInfoProperty).toHaveBeenCalledWith('token', 'appAccessToken');
+      auth.savePI('pi');
+      expect(setAppInfoProperty).toHaveBeenCalledWith('pi', 'pi');
+    }));
+
+  it('should  get anonymous', fakeAsync(inject([WhistlerAuthenticationService, TokenStorage],
+    (auth: WhistlerAuthenticationService, storage: TokenStorage) => {
+      spyOn(storage, 'getAppInfoProperty').and.returnValue('true');
+      expect(auth.getAnonymous()).toBeTruthy();
+    })));
+
+  it('should  getUserId', fakeAsync(inject([WhistlerAuthenticationService, TokenStorage],
+    (auth: WhistlerAuthenticationService, storage: TokenStorage) => {
+      const spy = spyOn(storage, 'getAppInfoProperty');
+      spy.and.returnValue('30');
+      expect(auth.getUserId()).toBe(30);
+      spy.and.returnValue(undefined);
+      expect(auth.getUserId()).toBe(null);
+    })));
+
+  it('mergeUserById', fakeAsync(inject([WhistlerAuthenticationService, HttpClient],
+    (auth: WhistlerAuthenticationService, http: HttpClient) => {
+      const spy = spyOn(http, 'post').and.returnValue(of());
+      auth.mergeUserById([1], 2);
+      tick();
+      expect(spy).toHaveBeenCalled();
     })));
 });

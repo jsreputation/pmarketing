@@ -1,23 +1,25 @@
-export interface IWJsonApiListPayload<T, S = any> {
-  data: IWJsonApiItem<T>[];
-  included?: IWJsonApiItem<S>[];
-  meta?: IWMeta;
+/* tslint:disable:naming-convention */
+
+export interface IJsonApiListPayload<T, S = any> {
+  data: IJsonApiItem<T>[];
+  included?: IJsonApiItem<S>[];
+  meta?: IMeta;
 }
 
-export interface IWMeta {
+export interface IMeta {
   record_count?: number;
   page_count?: number;
 }
 
-export interface IWJsonApiItemPayload<T, S = any> {
-  data: IWJsonApiItem<T>;
-  included?: IWJsonApiItem<S>[];
+export interface IJsonApiItemPayload<T, S = any> {
+  data: IJsonApiItem<T>;
+  included?: IJsonApiItem<S>[];
 }
 
-export interface IWJsonApiItem<T> {
+export interface IJsonApiItem<T> {
   id: string;
   type: string;
-  links: {
+  links?: {
     self: string;
   };
   attributes: T;
@@ -27,30 +29,32 @@ export interface IWJsonApiItem<T> {
         self: string;
         related: string;
       },
-      data?: {
-        id: string;
-        type: string;
-      }[]
+      data?: IWRelationshipsDataType[] | IWRelationshipsDataType
     }
   };
 }
 
-export interface IWJsonApiPatchItem<T> {
-  data: IWJsonApiPatchData<T>;
+export interface IWRelationshipsDataType {
+  id: string;
+  type: string;
 }
 
-export interface IWJsonApiPatchData<T> {
+export interface IJsonApiPatchItem<T> {
+  data: IJsonApiPatchData<T>;
+}
+
+export interface IJsonApiPatchData<T> {
   attributes?: Partial<T>;
   id: string;
   type: string;
   relationships?: any;
 }
 
-export interface IWJsonApiPostItem<T> {
-  data: IWJsonApiPostData<T>;
+export interface IJsonApiPostItem<T> {
+  data: IJsonApiPostData<T>;
 }
 
-export interface IWJsonApiPostData<T> {
+export interface IJsonApiPostData<T> {
   type?: string;
   attributes: T;
   relationships?: any;

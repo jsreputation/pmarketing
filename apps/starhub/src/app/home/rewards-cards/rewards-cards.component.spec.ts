@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { RewardsCardsComponent } from './rewards-cards.component';
 import { MatIconModule, MatCardModule } from '@angular/material';
-import { RewardsService } from '@perx/core';
+import { RewardsService, IReward } from '@perx/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { MacaronService } from 'src/app/services/macaron.service';
@@ -95,7 +95,7 @@ describe('RewardsCardsComponent', () => {
   it('should call macaronService.getMacaron getMacaron', () => {
     const macaronService = TestBed.get<MacaronService>(MacaronService as Type<MacaronService>);
     const macaronServiceSpy = spyOn(macaronService, 'getMacaron').and.returnValue(null);
-    const macaron = component.getMacaron(null);
+    const macaron = component.getMacaron({} as IReward);
     expect(macaron).toBe(null);
     expect(macaronServiceSpy).toHaveBeenCalled();
   });

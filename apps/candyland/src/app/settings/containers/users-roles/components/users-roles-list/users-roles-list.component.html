@@ -2,7 +2,7 @@
   <table class="table" mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="username" sticky>
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="username">Name</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="username">{{'SETTINGS_FEATURE.NAME' | translate}}</th>
       <td mat-cell *matCellDef="let element">
         <div class="name">
           <div class="thumbnail profilepic">
@@ -16,7 +16,7 @@
     <ng-container matColumnDef="role">
       <th mat-header-cell *matHeaderCellDef>
         <div class="info-cell">
-          <div mat-sort-header="role">Role</div>
+          <div mat-sort-header="role">{{'SETTINGS_FEATURE.ROLE' | translate}}</div>
           <!-- hint-->
           <cl-info-hint classList="light">
             <mat-card class="card">
@@ -27,8 +27,8 @@
                     <cl-role-label [role]="role.id"></cl-role-label>
                   </div>
                   <div>
-                    <h4 class="role-info-name">{{role.title}}</h4>
-                    <p class="role-info-description">{{role.description}}</p>
+                    <h4 class="role-info-name">{{role.title | translate}}</h4>
+                    <p class="role-info-description">{{role.description | translate}}</p>
                   </div>
                 </div>
               </div>
@@ -43,7 +43,8 @@
     </ng-container>
 
     <ng-container matColumnDef="created_at">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="created_at">Invited Date</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="created_at">{{'SETTINGS_FEATURE.INVITED_DATE' | translate}}
+      </th>
       <td mat-cell *matCellDef="let element">
         <time datetime="">
           <span>{{element?.created_at | date: DATE_FORMAT}}</span>
@@ -58,8 +59,9 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #itemMenu="matMenu">
-          <button mat-menu-item (click)="editItem(element)">Edit</button>
-          <button mat-menu-item (click)="deleteItem(element?.id)">Delete</button>
+          <button mat-menu-item (click)="editItem(element)">{{'BTN_EDIT' | translate}}</button>
+          <button mat-menu-item (click)="deleteItem(element?.id)">{{'BTN_DELETE' | translate}}</button>
+          <button mat-menu-item (click)="resetItemPassword(element)">Reset password</button>
         </mat-menu>
       </td>
     </ng-container>

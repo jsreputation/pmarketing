@@ -3,9 +3,8 @@ import { Injectable } from '@angular/core';
 import { of, Observable, throwError, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { IProfile, IProfileAttributes } from '../../profile/profile.model';
+import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
-import { TokenStorage } from './token-storage.service';
 import {
   IResetPasswordData,
   ISignUpData,
@@ -13,20 +12,34 @@ import {
   IChangePhoneData
 } from './models/authentication.model';
 import { Config } from '../../config/config';
-import { IJsonApiListPayload } from '../../jsonapi.payload';
 import {
   IWAppAccessTokenResponse,
-  IWMessageResponse
+  IWMessageResponse,
+  IWCognitoLogin,
+  IJsonApiListPayload,
+  IWProfileAttributes,
 } from '@perx/whistler';
-
-interface ICognitoLogin {
-  jwt: string;
-}
+import { TokenStorage } from '../../utils/storage/token-storage.service';
 
 interface IUserJWTRequest {
   identifier: string;
   url: string;
-  profile?: IProfileAttributes;
+  anonymous?: boolean;
+  profile?: { [key: string]: any };
+}
+
+enum APIAttributesMap {
+  fistName = 'first_name',
+  first_name = 'first_name',
+  lastName = 'last_name',
+  last_name = 'last_name',
+  primary_identifier = 'primary_identifier',
+  primaryIdentifier = 'primary_identifier',
+  phone_number = 'phone_number',
+  phoneNumber = 'phone_number',
+  email_address = 'email_address',
+  emailAddress = 'email_address',
+  title = 'title'
 }
 
 @Injectable({
@@ -62,6 +75,29 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return this.$failedAuthObservableSubject;
   }
 
+  private static UsertoWUser(userObj: { [key: string]: any }, PI: string): IWProfileAttributes {
+    const profile: IWProfileAttributes = {
+      title: null,
+      first_name: null,
+      last_name: null,
+      phone_number: null,
+      email_address: null,
+      primary_identifier: PI,
+      properties: {}
+    };
+
+    Object.entries(userObj).forEach(field => {
+      if (APIAttributesMap[field[0]] !== undefined) {
+        profile[APIAttributesMap[field[0]]] = field[1];
+      } else {
+        if (!profile.properties) {
+          profile.properties = {};
+        }
+        profile.properties[field[0]] = field[1];
+      }
+    });
+    return profile;
+  }
   public isAuthorized(): Observable<boolean> {
     const token = this.tokenStorage
       .getAppInfoProperty('userAccessToken');
@@ -96,52 +132,64 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   public autoLogin(): Observable<any> {
     return this.getUserWithPI().pipe(
       tap(
-        (res: IJsonApiListPayload<ICognitoLogin>) => {
+        (res: IJsonApiListPayload<IWCognitoLogin>) => {
           const userBearer = res.data[0].attributes.jwt;
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
           }
+          const pi = (window as any).primaryIdentifier || this.getPI();
+          this.savePI(pi);
+          this.saveUserId(Number.parseInt(res.data[0].id, 10));
           this.saveUserAccessToken(userBearer);
         }
       )
     );
   }
 
-  public createUserAndAutoLogin(pi: string, userObj?: IProfileAttributes): Observable<any> {
-    return this.createUserWithPI(pi, userObj).pipe(
+  public createUserAndAutoLogin(pi: string, userObj?: { [key: string]: any }, anonymous?: boolean): Observable<any> {
+    return this.createUserWithPI(pi, userObj, anonymous).pipe(
       tap(
-        (res: IJsonApiListPayload<ICognitoLogin>) => {
+        (res: IJsonApiListPayload<IWCognitoLogin>) => {
           const userBearer = res.data[0].attributes.jwt;
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
+          }
+          if (anonymous === undefined) {
+            anonymous = false;
           }
           this.savePI(pi);
+          this.saveAnonymous(anonymous);
+          this.saveUserId(Number.parseInt(res.data[0].id, 10));
           this.saveUserAccessToken(userBearer);
         }
       )
     );
   }
 
-  private getUserWithPI(): Observable<IJsonApiListPayload<ICognitoLogin>> {
-    const user = (window as any).primaryIdentifier || this.getPI();
+  private getUserWithPI(): Observable<IJsonApiListPayload<IWCognitoLogin>> {
+    const user: string = (window as any).primaryIdentifier || this.getPI();
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: user
     };
 
-    return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
+    return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
   }
 
-  private createUserWithPI(pi: string, userObj?: IProfileAttributes): Observable<IJsonApiListPayload<ICognitoLogin>> {
+  private createUserWithPI(
+    pi: string,
+    userObj?: { [key: string]: any },
+    anonymous?: boolean
+  ): Observable<IJsonApiListPayload<IWCognitoLogin>> {
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
-      identifier: pi
+      identifier: pi,
+      anonymous
     };
     if (userObj) {
-      userJWTRequest.profile = userObj;
+      userJWTRequest.profile = WhistlerAuthenticationService.UsertoWUser(userObj, pi);
     }
-
-    return this.http.post<IJsonApiListPayload<ICognitoLogin>>(this.createUsersEndPoint, userJWTRequest);
+    return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.createUsersEndPoint, userJWTRequest);
   }
 
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
@@ -149,7 +197,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public verifyTokenRequest(url: string): boolean {
-    return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token') || url.endsWith('/v2/cognito/login');
+    return url.endsWith('/preauth') || url.endsWith('/v4/oauth/token') || url.endsWith('/v2/oauth/token') || url.endsWith('/cognito/login');
   }
 
   // @ts-ignore
@@ -193,7 +241,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public logout(): void {
-    this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'pi']);
+    this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'pi', 'anonymous']);
   }
 
   // @ts-ignore
@@ -258,10 +306,53 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public getPI(): string {
-    return this.tokenStorage.getAppInfoProperty('pi') || '';
+    const pi = this.tokenStorage.getAppInfoProperty('pi') || '';
+    // eventually refresh window param for GTM
+    if (pi !== undefined && pi !== '') {
+      (window as any).primaryIdentifier = pi;
+    }
+    return pi;
   }
 
   public savePI(pi: string): void {
     this.tokenStorage.setAppInfoProperty(pi, 'pi');
+    // update global property for GTM
+    (window as any).primaryIdentifier = pi;
+  }
+
+  public getAnonymous(): boolean {
+    return !!this.tokenStorage.getAppInfoProperty('anonymous');
+  }
+
+  public saveAnonymous(anonymous: boolean): void {
+    this.tokenStorage.setAppInfoProperty(anonymous, 'anonymous');
+  }
+
+  public getUserId(): number | null {
+    const id: string | undefined = this.tokenStorage.getAppInfoProperty('id');
+    return id ? Number.parseInt(id, 10) : null;
+  }
+
+  public saveUserId(id: number): void {
+    this.tokenStorage.setAppInfoProperty(id, 'id');
+  }
+
+  public mergeUserById(fromIds: number[], toId: number): Observable<void> {
+    return this.http.post<any>(this.apiHost + '/cognito/chown_requests',
+      {
+        data: {
+          type: 'chown_requests',
+          attributes: {
+            from_ids: fromIds,
+            to_id: toId
+          }
+        }
+      },
+      {
+        headers: {
+          'Content-Type': 'application/vnd.api+json'
+        }
+      }
+    );
   }
 }

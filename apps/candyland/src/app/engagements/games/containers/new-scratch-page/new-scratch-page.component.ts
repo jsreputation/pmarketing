@@ -34,8 +34,6 @@ import {
 } from 'rxjs';
 
 import { ImageControlValue } from '@cl-helpers/image-control-value';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import {
   AvailableNewEngagementService,
   ScratchService,
@@ -81,10 +79,6 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
     return this.form.get(ControlsName.buttonText);
   }
 
-  public get lastButtonText(): AbstractControl {
-    return this.form.get(ControlsName.lastButtonText);
-  }
-
   public get preScratchImage(): AbstractControl {
     return this.form.get(ControlsName.preScratchImage);
   }
@@ -119,7 +113,7 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.getTenants();
+    this.initTenantSettings();
     this.initScratchForm();
     combineLatest([this.getScratchData(), this.handleRouteParams()])
       .subscribe(
@@ -202,11 +196,6 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
         Validators.minLength(2),
         Validators.maxLength(20)
       ]],
-      lastButtonText: ['Back To Wallet', [
-        Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(20)
-      ]],
       preScratchImage: [null, [Validators.required]],
       postScratchSuccessImage: [null, [Validators.required]],
       postScratchFailImage: [null, [Validators.required]],
@@ -220,7 +209,6 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
       headlineMessage: 'Scratch it!',
       subHeadlineMessage: 'Scratch it to get a reward!',
       buttonText: 'Start Playing',
-      lastButtonText: 'Back To Wallet',
       [ControlsName.preScratchImage]: data.preScratchImage[0],
       [ControlsName.postScratchSuccessImage]: data.postScratchSuccessImage[0],
       [ControlsName.postScratchFailImage]: data.postScratchFailImage[0],
@@ -233,10 +221,11 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
     return this.scratchService.getScratchData();
   }
 
-  private getTenants(): void {
-    this.settingsService.getTenants()
-      .subscribe((res: Tenants) => {
-        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
+  private initTenantSettings(): void {
+    this.settingsService.getTenant()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res: ITenantsProperties) => {
+        this.tenantSettings = res;
         this.cd.detectChanges();
       });
   }

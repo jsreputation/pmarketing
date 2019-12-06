@@ -4,8 +4,8 @@ import { SettingsHttpService } from '@cl-core/http-services/settings-http.servic
 import { AuthService } from '@cl-core/services/auth.service';
 import { TimeZoneSort } from '@cl-helpers/time-zone-sort';
 import Utils from '@cl-helpers/utils';
-import { Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { DataStore } from '@cl-core/http-adapters/datastore';
@@ -17,6 +17,9 @@ import { IamUser } from '@cl-core/http-adapters/iam-user';
 import { IWIAMUserAttributes } from '@perx/whistler';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { IReward } from '@perx/core';
+import { RoleLabelConfig } from '@cl-shared';
+import { HttpParams } from '@angular/common/http';
+import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
 
 export enum DefaultSetting {
   style = 'Light',
@@ -45,7 +48,7 @@ export const settingsFonts: ISimpleValue[] = [{
   providedIn: 'root'
 })
 export class SettingsService implements ITableService {
-  private tenants: Tenants;
+  private tenant: Tenants;
 
   constructor(
     private settingsHttpService: SettingsHttpService,
@@ -152,28 +155,38 @@ export class SettingsService implements ITableService {
   }
 
   public getAllGroups(): Observable<JsonApiQueryData<Groups>> {
-    return this.dataStore.findAll(Groups, { page: { size: 10, number: 1 } });
+    return this.dataStore.findAll(Groups, {page: {size: 10, number: 1}});
   }
 
-  public getTenants(): Observable<Tenants> {
-    return this.dataStore.findAll(Tenants, { page: { size: 10, number: 1 } })
+  public findTenant(): Observable<Tenants> {
+    return this.dataStore.findAll(Tenants, {page: {size: 10, number: 1}})
       .pipe(
         map(tenants => tenants.getModels()[0]),
-        tap(tenant => this.tenants = tenant)
+        tap(tenant => this.tenant = tenant)
       );
   }
 
+  public getTenant(): Observable<ITenantsProperties> {
+    let response;
+    if (this.tenant) {
+      response = of(this.tenant).pipe(take(1));
+    } else {
+      response = this.findTenant();
+    }
+    return response.pipe(map(tenant => SettingsHttpAdapter.getTenantsSettings(tenant)));
+  }
+
   public getTenantsSettings(): Observable<ITenantsProperties> {
-    return this.dataStore.findAll(Tenants, { page: { size: 10, number: 1 } })
+    return this.dataStore.findAll(Tenants, {page: {size: 10, number: 1}})
       .pipe(
         map(response => SettingsHttpAdapter.getTenantsSettings(response))
       );
   }
 
   public updateTenants(value: ITenantsProperties): Observable<IamUser> {
-    const newProperties = {...this.tenants.display_properties, ...value};
-    this.tenants.display_properties = {...newProperties};
-    return this.tenants.save().pipe(
+    const newProperties = { ...this.tenant.display_properties, ...value };
+    this.tenant.display_properties = { ...newProperties };
+    return this.tenant.save().pipe(
       switchMap(() => this.authService.updateUser())
     );
   }
@@ -204,4 +217,41 @@ export class SettingsService implements ITableService {
     };
   }
 
+  public getRoleLabel(): Observable<{ [key: string]: RoleLabelConfig }> {
+    return this.settingsHttpService.getRoleLabel();
+  }
+
+  public getCognitoEndpoint(id: string, params: HttpParams): Observable<ICognitoEndpoint> {
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.settingsHttpService.getCognitoEndpoint(id, httpParams).pipe(
+      map(response => SettingsHttpAdapter.transformToCognitoEndpoint(response.data))
+    );
+  }
+
+  public getCognitoEndpoints(params: HttpParamsOptions): Observable<ICognitoEndpoint[]> {
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.settingsHttpService.getCognitoEndpoints(httpParams).pipe(
+      map(
+        response => response.data.map(item => SettingsHttpAdapter.transformToCognitoEndpoint(item))
+      ));
+  }
+
+  public createCognitoEndpoint(data: ICognitoEndpoint = null): Observable<ICognitoEndpoint> {
+    const sendData = SettingsHttpAdapter.transformFromCognitoEndpoint(data);
+    return this.settingsHttpService.createCognitoEndpoint({data: sendData}).pipe(
+      map(response => SettingsHttpAdapter.transformToCognitoEndpoint(response.data))
+    );
+  }
+
+  public findAndCreateCognitoEndpoint(): Observable<ICognitoEndpoint> {
+    const params: HttpParamsOptions = {'page[number]': '1', 'page[size]': '1'};
+    return this.getCognitoEndpoints(params).pipe(
+      switchMap(data => {
+        if (data && data.length > 0) {
+          return of(data[0]);
+        }
+        return this.createCognitoEndpoint();
+      })
+    );
+  }
 }

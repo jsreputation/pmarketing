@@ -10,7 +10,11 @@ import {
   ICampaignService,
   StampService,
   IStampCard,
-  StampCardState, AuthenticationService
+  StampCardState,
+  AuthenticationService,
+  IVoucherService,
+  ThemesService,
+  ConfigService
 } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SoundModule } from '../sound/sound.module';
@@ -52,6 +56,10 @@ describe('PuzzleComponent', () => {
     getCards: () => of([mockCard])
   };
 
+  const configServiceStub = {
+    readAppConfig: () => of()
+  };
+
   const authenticationServiceStub = {};
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -70,6 +78,7 @@ describe('PuzzleComponent', () => {
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: StampService, useValue: stampServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: ConfigService, useValue: configServiceStub},
         {
           provide: ActivatedRoute,
           useValue: {
@@ -77,7 +86,9 @@ describe('PuzzleComponent', () => {
               paramMap: convertToParamMap({ campaignId: 1 })
             }
           }
-        }
+        },
+        { provide: IVoucherService, useValue: {} },
+        { provide: ThemesService, useValue: {} }
       ]
     })
       .compileComponents();

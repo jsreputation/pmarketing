@@ -1,13 +1,20 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 
 import { WhistlerCampaignService } from './whistler-campaign.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ConfigModule } from '../config/config.module';
 import { ICampaign } from './models/campaign.model';
 import { Type } from '@angular/core';
-import { IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '../jsonapi.payload';
-import { IWCampaignAttributes, WEngagementType } from '@perx/whistler';
-// import { tap } from 'rxjs/operators';
+
+import {
+  IWCampaignAttributes,
+  WEngagementType,
+  IJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiItemPayload,
+} from '@perx/whistler';
+import { HttpClient } from '@angular/common/http';
+import { of } from 'rxjs';
 
 describe('WhistlerCampaignService', () => {
   let httpTestingController: HttpTestingController;
@@ -21,6 +28,27 @@ describe('WhistlerCampaignService', () => {
     baseHref: '/'
   };
 
+  const now = new Date();
+  const tomorrow = (new Date());
+  tomorrow.setDate(now.getDate() + 1);
+  const campaingMock = {
+    data: [{
+      id: '111',
+      type: 'test',
+      links: {
+        self: 'test'
+      }, attributes: {
+        start_date_time: null,
+        name: '',
+        engagement_type:
+          WEngagementType.games,
+        engagement_id: 1
+      }
+    }], meta: {
+      page_count: 3
+    }
+  };
+
   const mockCampaign: IJsonApiItem<IWCampaignAttributes> = {
     id: '2',
     type: '',
@@ -28,17 +56,14 @@ describe('WhistlerCampaignService', () => {
       self: ''
     },
     attributes: {
+      pool_id: null,
       name: 'I love that stuff',
-      start_date_time: null,
-      end_date_time: null,
+      start_date_time: now.toISOString(),
       engagement_type: WEngagementType.survey,
       engagement_id: 1
     }
   };
 
-  const now = new Date();
-  const tomorrow = (new Date());
-  tomorrow.setDate(now.getDate() + 1);
   const mockFutureCampaign: IJsonApiItem<IWCampaignAttributes> = {
     id: '2',
     type: '',
@@ -46,9 +71,9 @@ describe('WhistlerCampaignService', () => {
       self: ''
     },
     attributes: {
+      pool_id: null,
       name: '',
       start_date_time: tomorrow.toISOString(),
-      end_date_time: null,
       engagement_type: WEngagementType.survey,
       engagement_id: 1
     }
@@ -63,8 +88,9 @@ describe('WhistlerCampaignService', () => {
       self: ''
     },
     attributes: {
+      pool_id: null,
       name: '',
-      start_date_time: null,
+      start_date_time: yesterday.toISOString(),
       end_date_time: yesterday.toISOString(),
       engagement_type: WEngagementType.survey,
       engagement_id: 1
@@ -150,12 +176,22 @@ describe('WhistlerCampaignService', () => {
   });
 
   it('endDate should be null if end_date_time is null or not defined', () => {
-    const { endsAt } =  WhistlerCampaignService.WhistlerCampaignToCampaign(mockCampaign);
+    const { endsAt } = WhistlerCampaignService.WhistlerCampaignToCampaign(mockCampaign);
     expect(endsAt).toEqual(null);
   });
 
   it('endDate should be proper Date object if end_date_time is defined', () => {
-    const { endsAt } =  WhistlerCampaignService.WhistlerCampaignToCampaign(mockExpiredCampaign);
+    const { endsAt } = WhistlerCampaignService.WhistlerCampaignToCampaign(mockExpiredCampaign);
     expect(endsAt).toEqual(yesterday);
   });
+
+  it('startsAfter handle null values', fakeAsync(inject([WhistlerCampaignService, HttpClient],
+    (campaign: WhistlerCampaignService, http: HttpClient) => {
+      const spy = spyOn(http, 'get').and.returnValue(of(campaingMock));
+      campaign.getCampaigns().subscribe(() => { });
+      // second call for write value to cashe
+      campaign.getCampaigns().subscribe(() => { });
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })));
 });

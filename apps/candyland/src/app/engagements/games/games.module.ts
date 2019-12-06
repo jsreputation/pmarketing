@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  MatCardModule,
+  MatCardModule, MatCheckboxModule,
   MatFormFieldModule,
   MatInputModule,
   MatSelectModule,
@@ -26,9 +26,14 @@ import { GamesRoutingModule } from './games-routing.module';
 import { NewShakePageComponent } from './containers/new-shake-page/new-shake-page.component';
 import { NewPinataPageComponent } from './containers/new-pinata-page/new-pinata-page.component';
 import { NewScratchPageComponent } from './containers/new-scratch-page/new-scratch-page.component';
+import { NewSpinPageComponent } from './containers/new-spin-page/new-spin-page.component';
 import { GameComponent } from './containers/game/game.component';
 
 import { SettingsMobilePreviewModule } from '../../settings/components/settings-mobile-preview/settings-mobile-preview.module';
+import { TranslateModule } from '@ngx-translate/core';
+import {ClColorPickerModule} from '@cl-shared/components/cl-color-picker/cl-color-picker.module';
+import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
+import {UploadGraphicModule} from '@cl-shared/components/upload-graphic/upload-graphic.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +41,7 @@ import { SettingsMobilePreviewModule } from '../../settings/components/settings-
     NewPinataPageComponent,
     NewScratchPageComponent,
     GameComponent,
+    NewSpinPageComponent,
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -49,14 +55,18 @@ import { SettingsMobilePreviewModule } from '../../settings/components/settings-
     GameModule,
     SimpleMobileViewModule,
     SettingsMobilePreviewModule,
-
+    ClColorPickerModule,
+    UploadGraphicModule,
+    CheckboxGroupModule,
     MatTabsModule,
     MatCardModule,
     MatFormFieldModule,
+    MatCheckboxModule,
     MatInputModule,
     MatSelectModule,
     MatSliderModule,
     DirectivesModule,
+    TranslateModule,
   ]
 })
 export class GamesModule {

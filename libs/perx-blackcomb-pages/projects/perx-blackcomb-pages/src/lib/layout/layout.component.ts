@@ -1,13 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { PopupComponent, NotificationService, IPopupConfig, ThemesService, ITheme, AuthenticationService, Config } from '@perx/core';
-// import {
-//   HomeComponent,
-//   HistoryComponent,
-//   AccountComponent,
-//   LoginComponent,
-//   WalletComponent
-// } from '@perx/blackcomb-pages';
+import {
+  ThemesService,
+  ITheme,
+  AuthenticationService,
+  Config,
+  ConfigService,
+  IConfig
+} from '@perx/core';
 import { Location } from '@angular/common';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
@@ -16,6 +15,8 @@ import { HomeComponent } from '../home/home.component';
 import { HistoryComponent } from '../history/history.component';
 import { AccountComponent } from '../account/account.component';
 import { WalletComponent } from '../wallet/wallet.component';
+import { WalletHistoryComponent } from '../wallet-history/wallet-history.component';
+import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
   selector: 'perx-blackcomb-games-layout',
@@ -29,25 +30,29 @@ export class LayoutComponent implements OnInit {
   public leftIcon: string = '';
   public preAuth: boolean;
   public theme: ITheme;
+  public appConfig: IConfig;
 
   constructor(
-    private notificationService: NotificationService,
-    private dialog: MatDialog,
     private location: Location,
     private router: Router,
     private themesService: ThemesService,
     private authService: AuthenticationService,
     private cd: ChangeDetectorRef,
-    private config: Config
+    private config: Config,
+    private configService: ConfigService,
   ) {
     if (config) {
-      this.preAuth = this.config.preAuth;
+      this.preAuth = this.config.preAuth || false;
     }
   }
 
   public ngOnInit(): void {
     this.themesService.getThemeSetting().subscribe(
       theme => this.theme = theme
+    );
+
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig) => this.appConfig = config
     );
 
     this.authService.$failedAuth.subscribe(
@@ -58,8 +63,8 @@ export class LayoutComponent implements OnInit {
       }
     );
 
-    this.notificationService.$popup
-      .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
+    // this.notificationService.$popup
+    //   .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
 
     this.router.events
       .pipe(
@@ -73,7 +78,12 @@ export class LayoutComponent implements OnInit {
           '/tnc',
           '/contact-us',
           '/reward-detail',
-          '/c'
+          '/c',
+          '/qr',
+          '/profile',
+          '/transaction-history',
+          '/change-password',
+          '/enter-pin'
         ];
         // if current url starts with any of the above segments, use arrow_backward
         this.leftIcon = urlsWithBack.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
@@ -86,7 +96,9 @@ export class LayoutComponent implements OnInit {
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||
-      ref instanceof WalletComponent;
+      ref instanceof WalletComponent ||
+      ref instanceof WalletHistoryComponent ||
+      ref instanceof ProfileComponent ;
     this.cd.detectChanges();
   }
 

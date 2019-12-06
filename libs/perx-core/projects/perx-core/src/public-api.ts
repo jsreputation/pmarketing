@@ -2,7 +2,12 @@
  * Public API Surface of perx-core
  */
 export { PerxCoreModule } from './lib/perx-core.module';
-export { IRewardDisplayProperties, ICampaignDisplayProperties } from './lib/perx-core.models';
+
+/**
+ * Shared
+ */
+export { isEmptyString } from './lib/utils/shared/helpers.util';
+
 /**
  * Merchants
  */
@@ -33,7 +38,7 @@ export { QrcodeRedemptionComponent } from './lib/vouchers/qrcode-redemption/qrco
  */
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
 export { AuthenticationService } from './lib/auth/authentication/authentication.service';
-export { TokenStorage } from './lib/auth/authentication/token-storage.service';
+export { TokenStorage } from './lib/utils/storage/token-storage.service';
 export { IChangePasswordData, ISignUpData } from './lib/auth/authentication/models/authentication.model';
 export { IFormsService } from './lib/auth/authentication/iforms.service';
 
@@ -71,15 +76,18 @@ export {
   IPinata,
   ITree,
   IScratch,
+  ISpin,
   defaultTree,
   IPlayOutcome,
   ISlice,
+  IEngagementTransaction
 } from './lib/game/game.model';
 export { IGameService } from './lib/game/igame.service';
 export { IGameComponent } from './lib/game/igame.component';
 export { ShakeTreeComponent } from './lib/game/shake-tree/shake-tree.component';
 export { PinataComponent } from './lib/game/pinata/pinata.component';
 export { ScratchCardComponent } from './lib/game/scratch-card/scratch-card.component';
+export { SpinTheWheelComponent } from './lib/game/spin-the-wheel/spin-the-wheel.component';
 
 /**
  * Profile
@@ -89,8 +97,7 @@ export { ProfileService } from './lib/profile/profile.service';
 export {
   IProfile,
   ICardNumber,
-  ICustomProperties,
-  IProfileAttributes
+  ICustomProperties
 } from './lib/profile/profile.model';
 
 /**
@@ -110,7 +117,7 @@ export {
 } from './lib/loyalty/models/loyalty.model';
 export { TransactionPipe } from './lib/loyalty/loyalty-transactions-list/transaction.pipe';
 export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-summary.component';
-
+export { LoyaltyTransactionsListComponent } from './lib/loyalty/loyalty-transactions-list/loyalty-transactions-list.component';
 /**
  * Rewards
  */
@@ -143,6 +150,9 @@ export { GeneralStaticDataService } from './lib/utils/general-static-data/genera
 export { ICountryCode } from './lib/utils/general-static-data/country-code';
 export { RepeatTimesDirective } from './lib/utils/directives/repeat-times.directive';
 export { NewsfeedComponent } from './lib/utils/newsfeed/newsfeed.component';
+export { LanguageService } from './lib/utils/language/language.service';
+export { LanguageInterceptor } from './lib/utils/language.interceptor';
+export { LocaleIdFactory } from './lib/utils/language/locale-id.factory';
 /**
  * Puzzles
  */
@@ -169,7 +179,7 @@ export { GeoLocationService } from './lib/location/geolocation.service';
  */
 export { SurveyModule } from './lib/survey/survey.module';
 export { SurveyService } from './lib/survey/survey.service';
-export { ISurvey, SurveyQuestionType, IQuestion } from './lib/survey/models/survey.model';
+export { ISurvey, SurveyQuestionType, IQuestion, IAnswer } from './lib/survey/models/survey.model';
 export { SurveyComponent } from './lib/survey/survey/survey.component';
 export { QuestionComponent } from './lib/survey/question/question.component';
 export { SelectComponent } from './lib/survey/question/select/select.component';
@@ -186,16 +196,19 @@ export { DateComponent } from './lib/survey/question/date/date.component';
 export { ConfigModule } from './lib/config/config.module';
 export { Config } from './lib/config/config';
 export { ConfigService } from './lib/config/config.service';
-export { IConfig, IMicrositeSettings } from './lib/config/models/config.model';
+export { IConfig, IMicrositeSettings, PagesObject, AccountPageObject } from './lib/config/models/config.model';
 
+/**
+ * PrePlay
+ */
+export {
+  IPrePlayStateData
+} from './lib/utils/pre-play/pre-play.model';
 /**
  * Theme
  */
 export {
-  ITheme,
-  PagesObject,
-  WhistlerITenant,
-  AccountPageObject,
+  ITheme
 } from './lib/utils/themes/themes.model';
 export { ThemesService } from './lib/utils/themes/themes.service';
 /**
@@ -204,7 +217,6 @@ export { ThemesService } from './lib/utils/themes/themes.service';
 export { InstantOutcomeService } from './lib/outcome/instant-outcome.service';
 export { IOutcome } from './lib/outcome/models/outcome.model';
 export { OutcomeModule } from './lib/outcome/outcome.module';
-
 /**
  * Tenants
  */

@@ -16,9 +16,9 @@ export interface StatusLabelConfig {
 export class StatusLabelComponent implements OnChanges {
   @Input() public status: StatusLabel = StatusLabel.DRAFT;
   public statusConfig: StatusLabelConfig;
-  private config: { [key: string]: StatusLabelConfig } = {
+  @Input() public config: { [key: string]: StatusLabelConfig } = {
     [StatusLabel.DRAFT]: {title: 'Draft', class: 'draft'},
-    [StatusLabel.ACTIVE]: {title: 'Active', class: 'active'},
+    [StatusLabel.ACTIVE]: {title: 'ACTIVE', class: 'active'},
     [StatusLabel.PROCESSED]: {title: 'Processed', class: 'processed'},
     [StatusLabel.FAILED]: {title: 'Failed', class: 'failed'},
     [StatusLabel.INACTIVE]: {title: 'Inactive', class: 'inactive'},
@@ -29,6 +29,9 @@ export class StatusLabelComponent implements OnChanges {
   };
 
   public ngOnChanges(): void {
+    if (!this.status || !this.config) {
+      return;
+    }
     this.statusConfig = this.config[this.status];
   }
 }

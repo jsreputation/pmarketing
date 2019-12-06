@@ -1,9 +1,12 @@
 <div class="page">
-  <div class="code">
-    <ngx-barcode
-      [bc-value]="code"
-      [bc-display-value]="true"
-    ></ngx-barcode>
+  <div class="code" *ngIf="voucher$ | async as voucher">
+    <div class="reward-image-container" *ngIf=voucher.reward>
+      <img class="reward-image" src="{{voucher.reward.rewardBanner}}">
+    </div>
+    <div class="reward-name">
+        {{voucher.reward?.name}}
+    </div>
+    <ngx-barcode *ngIf="voucher.code" [bc-value]="voucher.code" [bc-display-value]="true"></ngx-barcode>
     <div class="title">
       Present this bar code to the cashier to complete your transaction.
     </div>

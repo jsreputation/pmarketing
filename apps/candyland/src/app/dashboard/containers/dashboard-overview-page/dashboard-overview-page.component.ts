@@ -4,6 +4,8 @@ import { switchMap, tap, takeUntil } from 'rxjs/operators';
 
 import { DashboardService } from '@cl-core/services';
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
+import { CardType } from '@perx/chart';
+import { ITotal } from '@cl-core/models/dashboard/total-active-interface';
 
 @Component({
   selector: 'cl-dashboard-overview-page',
@@ -17,12 +19,14 @@ export class DashboardOverviewPageComponent implements OnInit, OnDestroy {
   public params: { [key: string]: string };
   public activeTab: any = 'activeCustomers';
   public tabs: ITotal[] = [
-    { name: 'activeCustomers', id: 106, title: 'Total Active Customers' },
-    { name: 'issuedRewards', id: 147, title: 'Total Issued Rewards' },
-    { name: 'activeCampaigns', id: 153, title: 'Total Running Campaigns' }
+    { name: 'activeCustomers', id: 'overview_total_active_customer', title: 'OVERVIEW_GRAPHIC_PAGE.TOTAL_ACTIVE_CUSTOMERS' },
+    { name: 'issuedRewards', id: 'overview_total_issued_rewards', title: 'OVERVIEW_GRAPHIC_PAGE.TOTAL_ISSUED_REWARDS' },
+    { name: 'activeCampaigns', id: 'overview_total_running_campaigns', title: 'OVERVIEW_GRAPHIC_PAGE.TOTAL_RUNNING_CAMPAIGNS' }
   ];
   public tabsValue: any;
-  public get tabsIds(): number[] {
+  public ct: typeof CardType = CardType;
+
+  public get tabsIds(): string[] {
     return this.tabs.map(tab => tab.id);
   }
 

@@ -6,15 +6,15 @@ import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { IJsonApiItemPayload } from '../jsonapi.payload';
 
 import {
   IWSurveyEngagementAttributes,
   IWPostAnswerAttributes,
-  WSurveyQuestionType
+  WSurveyQuestionType,
+  IJsonApiItemPayload
 } from '@perx/whistler';
 
-import { ICampaignDisplayProperties } from '../perx-core.models';
+import { IWCampaignDisplayProperties } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -37,23 +37,26 @@ export class SurveyService {
 
   public static WSurveyToSurvey(survey: IJsonApiItemPayload<Partial<IWSurveyEngagementAttributes>>): ISurvey {
     const dp = survey.data.attributes.display_properties;
-    const questions: IQuestion[] = dp.questions.map(q => {
-      const payload = { ...q.payload, type: SurveyService.WQTypeToQType(q.payload.type) };
-      return { ...q, payload };
-    });
-    return {
-      id: survey.data.id,
-      title: survey.data.attributes.title,
-      subTitle: dp.sub_title,
-      progressBarColor: MaterialColor[dp.progress_bar_color],
-      cardBackgroundImgUrl: dp.card_background_img_url,
-      backgroundImgUrl: dp.background_img_url,
-      questions
-    };
+    if (dp) {
+      const questions: IQuestion[] = dp.questions.map(q => {
+        const payload = { ...q.payload, type: SurveyService.WQTypeToQType(q.payload.type) };
+        return { ...q, payload };
+      });
+      return {
+        id: survey.data.id,
+        title: survey.data.attributes.title || '',
+        subTitle: dp.sub_title,
+        progressBarColor: MaterialColor[dp.progress_bar_color],
+        cardBackgroundImgUrl: dp.card_background_img_url,
+        backgroundImgUrl: dp.background_img_url,
+        questions
+      };
+    }
+    throw new Error('Display properties does not exist for mapping to occur');
   }
 
   public getSurveyFromCampaign(id: number): Observable<ISurvey> {
-    let disProp: ICampaignDisplayProperties | undefined;
+    let disProp: IWCampaignDisplayProperties | undefined;
     return this.campaignService.getCampaign(id)
       .pipe(
         switchMap(
@@ -72,12 +75,12 @@ export class SurveyService {
       );
   }
 
-  public postSurveyAnswer(answers: IAnswer[], survey: ISurvey, campaignId: number): Observable<{ hasOutcomes: boolean }> {
+  public postSurveyAnswer(answers: IAnswer[], campaignId: number, surveyId: number): Observable<{ hasOutcomes: boolean }> {
     const body = {
       data: {
         type: 'answers',
         attributes: {
-          engagement_id: survey.id,
+          engagement_id: surveyId,
           campaign_entity_id: campaignId,
           content: answers
         }

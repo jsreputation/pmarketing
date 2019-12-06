@@ -1,10 +1,13 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 
 import { Subject } from 'rxjs';
-import { switchMap, tap, takeUntil } from 'rxjs/operators';
+import { switchMap, tap, takeUntil, filter } from 'rxjs/operators';
 
 import { DashboardService } from '@cl-core/services';
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
+import { CardType } from '@perx/chart';
+import { ITotal } from '@cl-core/models/dashboard/total-active-interface';
+import { FormControl } from '@angular/forms';
 
 export enum DictionaryTotal {
   activeCustomers = 'activeCustomers',
@@ -23,15 +26,17 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
   public params: { [key: string]: string };
   public activeTab: string = 'survey';
   public tabs: ITotal[] = [
-    { id: 174, name: 'survey', title: 'Survey' },
-    { id: 181, name: 'games', title: 'Games' },
-    { id: 173, name: 'stamps', title: 'Stamps' },
-    { id: 180, name: 'reward', title: 'Instant Reward' }
+    { id: 'campaigns_total_running_survey_campaigns', name: 'survey', title: 'CAMPAIGN_GRAPHIC_PAGE.NAV_TITLE_SURVEY' },
+    { id: 'campaigns_survey_engagement_rate', name: 'games', title: 'CAMPAIGN_GRAPHIC_PAGE.NAV_TITLE_GAMES' },
+    { id: 'campaigns_active_stamps_campaign', name: 'stamps', title: 'CAMPAIGN_GRAPHIC_PAGE.NAV_TITLE_STAMPS' },
+    { id: 'campaigns_active_instant_rewards_campaigns', name: 'reward', title: 'CAMPAIGN_GRAPHIC_PAGE.NAV_TITLE_INSTANT_REWARD' }
   ];
   public tabsValue: any;
   public activeCampaigns: number;
+  public ct: typeof CardType = CardType;
+  public tableSearch: FormControl = new FormControl();
 
-  public get tabsIds(): number[] {
+  public get tabsIds(): string[] {
     return this.tabs.map(tab => tab.id);
   }
 
@@ -46,8 +51,8 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.handelChartsParamsChanges();
-    this.handelActiveCampaigns();
+    this.handleChartsParamsChanges();
+    this.handleActiveCampaigns();
   }
 
   public ngOnDestroy(): void {
@@ -59,7 +64,7 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
     this.activeTab = tab;
   }
 
-  private handelChartsParamsChanges(): void {
+  private handleChartsParamsChanges(): void {
     this.chartsParametersService.params$
       .pipe(
         tap(value => this.params = value),
@@ -70,11 +75,12 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
       .subscribe(() => this.cd.detectChanges());
   }
 
-  private handelActiveCampaigns(): void {
+  private handleActiveCampaigns(): void {
     this.chartsParametersService.params$
       .pipe(
-        switchMap(params => this.dashboardService.getTabValue(176, params)),
-        tap(value => this.activeCampaigns = value),
+        switchMap(params => this.dashboardService.getTabValue('campaigns_total_running_campaigns', params)),
+        filter(value => typeof value === 'number'),
+        tap((value: number) => this.activeCampaigns = value),
         takeUntil(this.destroy$),
       )
       .subscribe(() => this.cd.detectChanges());

@@ -1,0 +1,11 @@
+<div class="copy-link">
+  <mat-form-field appearance="outline" class="copy-link-field">
+    <mat-icon matPrefix color="md-dark">link</mat-icon>
+    <input #linkInput matInput type="text" [value]="link" readonly>
+  </mat-form-field>
+  <div (click)="copyInputMessage(linkInput)">
+    <ng-content></ng-content>
+<!--    <cs-button classList="primary" class="copy-link-btn" (click)="copyInputMessage(linkInput)">Copy</cs-button>-->
+  </div>
+<!--  <cs-button classList="primary" class="copy-link-btn" (click)="copyInputMessage(linkInput)">Copy</cs-button>-->
+</div>

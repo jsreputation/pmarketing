@@ -3,16 +3,16 @@
   <mat-expansion-panel class="card" expanded>
     <mat-expansion-panel-header class="card-header">
       <h2 class="card-title">
-        Campaign Info
+        {{'CAMPAIGN.CAMPAIGN_INFO' | translate}}
       </h2>
     </mat-expansion-panel-header>
 
     <div class="card-content">
       <!--goal-->
       <mat-form-field class="card-row">
-        <mat-select [formControl]="campaignInfo.get('goal')" placeholder="Campaign goal">
+        <mat-select [formControl]="campaignInfo.get('goal')" [placeholder]="'CAMPAIGN.CAMPAIGN_GOAL' | translate">
           <ng-container *ngFor="let goal of config?.goals">
-            <mat-option [value]="goal?.value">{{goal?.title}}</mat-option>
+            <mat-option [value]="goal?.value">{{goal?.title | translate}}</mat-option>
           </ng-container>
         </mat-select>
       </mat-form-field>
@@ -23,25 +23,29 @@
           </cl-date-picker>
           <cl-time-picker [formControl]="campaignInfo.get('startTime')"></cl-time-picker>
         </div>
-        <span>to</span>
+        <span>
+          {{'TO' | translate}}
+        </span>
         <div class="input-group">
           <div class="date-field">
             <cl-date-picker [control]="campaignInfo.get('endDate')" [min]="campaignInfo.get('startDate').value">
             </cl-date-picker>
             <mat-error class="date-field-error"
               *ngIf="campaignInfo.get('endDate').hasError('required') && campaignInfo.get('endDate').touched">
-              This field is required
+              {{'ERROR_THIS_FIELD_IS_REQUIRED' | translate}}
             </mat-error>
           </div>
           <div class="date-field">
             <cl-time-picker [formControl]="campaignInfo.get('endTime')"></cl-time-picker>
             <mat-error class="date-field-error"
               *ngIf="campaignInfo.get('endTime').hasError('required') && campaignInfo.get('endTime').touched">
-              This field is required
+              {{' This field is required' | translate}}
             </mat-error>
           </div>
         </div>
-        <mat-checkbox color="primary" [formControl]="campaignInfo.get('disabledEndDate')">Does not end</mat-checkbox>
+        <mat-checkbox color="primary" [formControl]="campaignInfo.get('disabledEndDate')">
+          {{'CAMPAIGN.DOES_NOT_END' | translate}}
+        </mat-checkbox>
       </div>
       <!--labels-->
       <cl-chip-list class="card-row" [addOnBlur]="isFirstInit && triggerLabelsChip" [formControl]="campaignInfo.get('labels')"></cl-chip-list>
@@ -51,7 +55,7 @@
   <mat-expansion-panel class="card" expanded>
     <mat-expansion-panel-header class="card-header">
       <h2 class="card-title">
-        Select channel
+        {{'CAMPAIGN.SELECT_CHANNEL' | translate}}
       </h2>
     </mat-expansion-panel-header>
     <!--channel type-->
@@ -59,7 +63,14 @@
       <div class="card-row">
         <mat-radio-group color="primary" [formControl]="channel.get('type')">
           <ng-container *ngFor="let type of config?.channelTypes">
-            <mat-radio-button [value]="type?.value">{{type?.title}}</mat-radio-button>
+            <mat-radio-button [value]="type?.value">{{type?.title | translate}}</mat-radio-button>
+          </ng-container>
+        </mat-radio-group>
+      </div>
+      <div class="information-collection-type" *ngIf="campaignInfo.get('informationCollectionSetting').enabled">
+        <mat-radio-group color="primary" [formControl]="campaignInfo.get('informationCollectionSetting')">
+          <ng-container *ngFor="let type of config?.informationCollectionSettingTypes">
+            <mat-radio-button [value]="type?.value">{{type?.title | translate}}</mat-radio-button>
           </ng-container>
         </mat-radio-group>
       </div>
@@ -67,7 +78,7 @@
       <div class="card-section" *ngIf="channel.get('message').enabled">
         <div class="card-header">
           <h3 class="card-title">
-            Message
+            {{'CAMPAIGN.MESSAGE' | translate}}
           </h3>
         </div>
         <div class="card-content">
@@ -79,14 +90,14 @@
 
         <div class="card-header">
           <h3 class="card-title">
-            Schedule the sending date
+            {{'CAMPAIGN.SCHEDULE_THE_SENDING_DATE' | translate}}
           </h3>
         </div>
         <div class="card-content">
           <!--send date-->
           <div class="card-row">
             <div class="input-group">
-              <cl-date-picker [control]="schedule.get('sendDate')" [min]="datenow" placeholder="Send date">
+              <cl-date-picker [control]="schedule.get('sendDate')" [min]="datenow" [placeholder]="'CAMPAIGN.SEND_DATE' | translate">
               </cl-date-picker>
               <cl-time-picker [control]="schedule.get('sendTime')">
               </cl-time-picker>
@@ -136,16 +147,18 @@
   <mat-expansion-panel class="card" expanded>
     <mat-expansion-panel-header class="card-header">
       <h2 class="card-title">
-        Select audience
+        {{'CAMPAIGN.SELECT_AUDIENCE' | translate}}
       </h2>
     </mat-expansion-panel-header>
     <div class="card-content">
       <div class="card-row">
         <mat-form-field>
-          <mat-select placeholder="Select audience" [formControl]="audience.get('select')">
+          <mat-select [placeholder]="'CAMPAIGN.SELECT_AUDIENCE' | translate" [formControl]="audience.get('select')">
             <mat-option *ngFor="let pool of pools" [value]="pool?.value?.id">{{pool?.name}}</mat-option>
           </mat-select>
-          <mat-error *ngIf="audience.get('select').hasError('required') && audience.get('select').touched">Required field.</mat-error>
+          <mat-error *ngIf="audience.get('select').hasError('required') && audience.get('select').touched">
+            {{'ERROR_REQUIRED' | translate}}.
+          </mat-error>
         </mat-form-field>
       </div>
     </div>

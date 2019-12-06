@@ -1,9 +1,9 @@
 <aside class="dialog" role="dialog" aria-labelledby="dialogTitle-createMerchant">
   <header class="dialog-header-wrap">
     <h2 class="dialog-title">
-      <span *ngIf="data; else creatTitle" id="dialogTitle-createMerchant">Edit Merchant</span>
+      <span *ngIf="data; else creatTitle" id="dialogTitle-createMerchant"><span translate>EDIT_MERCHANT</span></span>
       <ng-template #creatTitle id="dialogTitle-createMerchant">
-        <span>Create Merchant</span>
+        <span translate>CREATE_MERCHANT</span>
       </ng-template>
     </h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
@@ -20,13 +20,15 @@
   <footer class="dialog-actions">
 
     <cl-button [classList]="'secondary'" class="actions-close" (click)="close()" [disableRipple]="true">
-      <span>Cancel</span>
+      <span>{{'BTN_CANCEL' | translate}}</span>
     </cl-button>
 
     <cl-button [classList]="'primary'" (click)="addMerchant()" [disableRipple]="true">
-      <span *ngIf="data; else editBtnText">Save Merchant</span>
+      <span *ngIf="data; else editBtnText">{{'SAVE_MERCHANT' | translate}}</span>
       <ng-template #editBtnText>
-        <span>Add Merchant</span>
+        <span>
+          {{'ADD_MERCHANT' | translate}}
+        </span>
       </ng-template>
     </cl-button>
   </footer>

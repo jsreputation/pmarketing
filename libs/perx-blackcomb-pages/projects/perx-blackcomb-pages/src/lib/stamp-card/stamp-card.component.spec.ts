@@ -5,7 +5,7 @@ import { PuzzlesModule, StampService } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
-describe('CardComponent', () => {
+describe('StampCardComponent', () => {
   let component: StampCardComponent;
   let fixture: ComponentFixture<StampCardComponent>;
 
@@ -21,7 +21,7 @@ describe('CardComponent', () => {
           { path: 'wallet', redirectTo: '/' }
         ]),
         PuzzlesModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
       ],
       providers: [
         { provide: StampService, useValue: stampServiceStub },

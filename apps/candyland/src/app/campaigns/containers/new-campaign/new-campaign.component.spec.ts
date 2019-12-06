@@ -12,6 +12,8 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule } from '@angular/material';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { MessageService } from '@cl-core-services';
 
 describe('NewCampaignComponent', () => {
   let component: NewCampaignComponent;
@@ -25,7 +27,8 @@ describe('NewCampaignComponent', () => {
         ReactiveFormsModule,
         MatDialogModule,
         EngagementItemModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [NewCampaignComponent],
       providers: [
@@ -40,6 +43,11 @@ describe('NewCampaignComponent', () => {
           provide: StepConditionService, useValue: {
             registerStepCondition: () => ({}),
             getStepCondition: () => ({})
+          }
+        },
+        {
+          provide: MessageService, useValue: {
+            show: () => ({})
           }
         },
         { provide: LocalStorageService, useValue: {} }

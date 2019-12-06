@@ -15,6 +15,7 @@
     "importHelpers": true,
     "target": "es2015",
     "types": ["jasmine"],
+    "strictNullChecks": true,
     "typeRoots": [
       "node_modules/@types"
     ],

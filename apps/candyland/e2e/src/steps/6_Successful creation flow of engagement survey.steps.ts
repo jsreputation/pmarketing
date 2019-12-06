@@ -1,59 +1,74 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
-import { browser, element, by , protractor } from 'protractor';
-import { EngagementAppPage } from '../pages/candylandApp.po';
+import { browser, protractor, ProtractorExpectedConditions } from 'protractor';
+import { CreateSurveyAppPage, ElementApp, EngagementAppPage, LoginAppPage } from '../pages/candylandApp.po';
 
-let PageEngagement: EngagementAppPage ;
+let PageEngagement: EngagementAppPage;
+let CreateSurveyPage: CreateSurveyAppPage;
+const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 
 Before( () => {
   // initializing page objects instances
   PageEngagement = new EngagementAppPage();
+  CreateSurveyPage = new CreateSurveyAppPage();
 });
 
 // Successful creation of survey engagement
 Given(/^12_I am on the engagment page.$/, async () => {
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  // entering correct account id
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
+
   await PageEngagement.navigateToEngagement();
 });
 
 Given(/^12_I click on create new button.$/, async () => {
-  await element.all(by.css('button')).get(2).click();
+  await browser.wait(ec.elementToBeClickable(ElementApp.clButton()), 6000);
+  // clicking on the create new button
+  await ElementApp.clButton().click();
 });
 // default option is survey, so no action taken.
 Given(/^12_I click on survey option.$/, () => {});
 
 Given(/^12_I click on the next button.$/, async () => {
-  await element.all(by.css('cl-button')).last().click();
+  await browser.wait(ec.elementToBeClickable(PageEngagement.engagementNextButton()), 6000);
+  await PageEngagement.engagementNextButton().click();
 });
 
 Given(/^12_I type the test string.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   // waiting for header text field
-  await browser.wait(ec.presenceOf(element.all(by.css('div.mat-form-field-infix>input')).first()), 7000 );
+  await browser.wait(ec.presenceOf(CreateSurveyPage.headerTextField()), 7000 );
   // clearing the current default string
-  await element.all(by.css('div.mat-form-field-infix>input')).first().clear();
+  await CreateSurveyPage.headerTextField().clear();
   // entering a test string in the header text field
-  await element.all(by.css('div.mat-form-field-infix>input')).first().sendKeys('TestSurvey_0101');
+  await CreateSurveyPage.headerTextField().sendKeys('TestSurvey_0101');
   // entering a test string in the headline text field
-  await element.all(by.css('div.mat-form-field-infix>input')).get(1).sendKeys('TestHeadline_0101');
+  await CreateSurveyPage.headlineTextField().sendKeys('TestHeadline_0101');
   // entering a test string in the sub-headline text field
-  await element.all(by.css('div.mat-form-field-infix>input')).get(2).sendKeys('TestSubHeadline_0101');
-  // entering a test string in the question text field
-  await element.all(by.css('div.mat-form-field-infix>input')).get(3).sendKeys('TestQuestion_0101');
+  await CreateSurveyPage.subHeadlineTextField().sendKeys('TestSubHeadline_0101');
 });
 
 When(/^12_I press save button.$/, async () => {
-  const ec = protractor.ExpectedConditions;
   // clicking on the save button
-  await element.all(by.css('cl-button')).get(1).click();
+  await ElementApp.clButtonArray().get(1).click();
   // Wait for engagement tab to appear
-  await browser.wait(ec.presenceOf(element(by.css('cl-confirm-modal'))), 6000);
+  await browser.wait(ec.presenceOf(CreateSurveyPage.confirmModal()), 6000);
   // clicking on the launch now button
-  await element.all(by.css('cl-button')).get(2).click();
+  await ElementApp.clButtonArray().get(2).click();
 });
 
 Then(/^12_Game is present under the engagment category .$/, async () => {
-  const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.presenceOf(element.all(by.css('p.engagement-item-name')).first()), 5000);
+  await browser.wait(ec.presenceOf(PageEngagement.itemName()), 5000);
   // doing an assertion based on the title of the survey engagement
-  expect(await element.all(by.css('div.engagement-item-info>p.engagement-item-name')).first().getText()).to.contain('TestSurvey_0101');
+  expect(await PageEngagement.itemInfo().getText()).to.contain('TestSurvey_0101');
 });

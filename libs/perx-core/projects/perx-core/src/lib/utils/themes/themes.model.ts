@@ -1,6 +1,6 @@
 export interface ITheme {
-    name: string;
-    properties: IThemeProperties;
+  name: string;
+  properties: IThemeProperties;
 }
 
 interface IThemeProperties {
@@ -14,7 +14,19 @@ interface IThemeProperties {
     '--header_color'?: string;
     '--background': string;
     '--font_color': string;
-    'showHomePage'?: boolean;
+    '--login_background_colour'?: string;
+    'stampCard'?: IStampCardTheme;
+}
+
+interface IStampCardTheme {
+  '--pre_stamp_image'?: string;
+  '--post_stamp_image'?: string;
+  '--reward_pre_stamp_image'?: string;
+  '--reward_post_stamp_image'?: string;
+  '--available_stamp_image'?: string;
+  '--available_reward_image'?: string;
+  '--background_image'?: string;
+  '--card_background_image'?: string;
 }
 
 export const LIGHT: ITheme = {
@@ -32,39 +44,3 @@ export const DARK: ITheme = {
     '--font_color': '#fff'
   }
 };
-
-export interface AccountPageObject {
-  title: string;
-  content_url: string;  // eslint-disable-line
-  key: string;
-}
-
-export interface PagesObject {
-  pages: AccountPageObject[];
-}
-
-// Whistler settings should be moved to whistler folder, sep branch
-/* eslint-disable */
-export interface WhistlerISetting {
-  currency: number;
-  time_zone: number;
-  'theme.accent': string;
-  'theme.button_text_color': string;
-  'theme.button_background_color': string;
-  'theme.font': string;
-  'theme.header_color': string;
-  'theme.logo': string;
-  'theme.primary': string;
-  'theme.style': string;
-  'theme.title': string;
-  'account': PagesObject;
-}
-
-export interface WhistlerITenant {
-  account_id: string;
-  alias: string;
-  created_at: string;
-  name: string;
-  display_properties: WhistlerISetting;
-}
-/* eslint-enable */

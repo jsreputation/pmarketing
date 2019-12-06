@@ -73,7 +73,7 @@ import {
 } from './components/new-campaign-stamp-rule-form-group/new-campaign-stamp-rule-form-group.component';
 import { ReviewCampaignComponent } from './containers/review-campaign/review-campaign.component';
 import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
-import { NewCampaignRewardsSurveyPageComponent } from './containers/new-campaign-rewards-survey-page/new-campaign-rewards-survey-page.component';
+import { NewCampaignRewardsLimitsPageComponent } from './containers/new-campaign-rewards-limits-page/new-campaign-rewards-limits-page.component';
 import { SimpleMobileViewModule, PipesModule } from '@cl-shared';
 import { SurveyModule as PerxSurveyModule, GameModule, ConfigModule, PuzzlesModule, RewardsModule as PerxRewardsModule } from '@perx/core';
 import { environment } from '@cl-environments/environment';
@@ -89,6 +89,7 @@ import { BeforeRewardExpiresFormGroupComponent } from './components/before-rewar
 import { NoStampsToNextRewardFormGroupComponent } from './components/no-stamps-to-next-reward-form-group/no-stamps-to-next-reward-form-group.component';
 import { EarnedStampFormGroupComponent } from './components/earned-stamp-form-group/earned-stamp-form-group.component';
 import { EarnedRewardFormGroupComponent } from './components/earned-reward-form-group/earned-reward-form-group.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   providers: [
@@ -114,7 +115,7 @@ import { EarnedRewardFormGroupComponent } from './components/earned-reward-form-
     NewCampaignRewardsFormGroupComponent,
     NewCampaignStampRuleFormGroupComponent,
     ReviewCampaignComponent,
-    NewCampaignRewardsSurveyPageComponent,
+    NewCampaignRewardsLimitsPageComponent,
     CampaignsMobilePreviewComponent,
     NewCampaignNotificationsComponent,
     SubMenuComponent,
@@ -179,6 +180,7 @@ import { EarnedRewardFormGroupComponent } from './components/earned-reward-form-
     GameModule,
     PuzzlesModule,
     PerxRewardsModule,
+    TranslateModule,
   ],
   entryComponents: [
     NewCampaignDonePopupComponent

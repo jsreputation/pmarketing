@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
 import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'cl-new-campaign-review-page',
@@ -34,12 +35,32 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
       });
   }
 
+  public get informationCollectionSettingTitle(): string {
+    const informationCollectionSetting = oc(this.campaign).campaignInfo.informationCollectionSetting();
+    if (informationCollectionSetting) {
+      return this.config.informationCollectionSettingTypes.find(types => types.value === informationCollectionSetting).title;
+    }
+    return '';
+  }
+
+  public get slots(): number[] {
+    return this.campaign.template.slots || [0];
+  }
+
+  public hasRewardsInSlot(slot: number): boolean {
+    const slotOutcomes = this.campaign.outcomes.filter(outcomeData => outcomeData.outcome.slotNumber === slot);
+    if (slotOutcomes) {
+      return slotOutcomes.length > 0;
+    }
+    return false;
+  }
+
   public checkStampsHasRewards(campaign: ICampaign): void {
-    if (!campaign.rewardsListCollection) {
+    if (!campaign.outcomes) {
       this.stampsHasRewards = false;
     } else {
-      campaign.rewardsListCollection.forEach(data => {
-        if (data.rewardsOptions.rewards && data.rewardsOptions.rewards.length > 0) {
+      campaign.outcomes.forEach(data => {
+        if (data.reward) {
           this.stampsHasRewards = true;
         }
       });

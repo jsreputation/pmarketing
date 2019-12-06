@@ -22,7 +22,8 @@ import {
 } from './models/reward.model';
 
 import { Config } from '../config/config';
-import { IRewardDisplayProperties } from '../perx-core.models';
+import { IWRewardDisplayProperties } from '@perx/whistler';
+import { oc } from 'ts-optchain';
 
 export interface IV4Tag {
   id: number;
@@ -74,7 +75,7 @@ export interface IV4Reward {
   inventory?: IV4Inventory;
   selling_from?: string;
   merchant_logo_url?: string;
-  display_properties?: IRewardDisplayProperties;
+  display_properties?: IWRewardDisplayProperties;
 }
 
 interface IV4Price {
@@ -143,8 +144,8 @@ export class V4RewardsService extends RewardsService {
     }
     const thumbnailImg = thumbnail && thumbnail.url;
     const banner = images.find((image: IV4Image) => image.type === 'reward_banner');
-    const rewardBanner = banner && banner.url;
-    const merchantImg = reward.merchant_logo_url ? reward.merchant_logo_url : null;
+    const rewardBanner: string = oc(banner).url('');
+    const merchantImg = oc(reward).merchant_logo_url();
     const sellingFrom = reward.selling_from ? new Date(reward.selling_from) : undefined;
 
     const v4Invent = reward.inventory;
@@ -153,7 +154,7 @@ export class V4RewardsService extends RewardsService {
       rewardTotalLimit: v4Invent.reward_total_limit !== undefined ? v4Invent.reward_total_limit : null,
       rewardLimitPerUserBalance: v4Invent.reward_limit_per_user_balance !== undefined && v4Invent.reward_limit_per_user_balance !== null ?
         v4Invent.reward_limit_per_user_balance.available_amount : null
-    } : null;
+    } : undefined;
     return {
       id: reward.id,
       name: reward.name,
@@ -165,7 +166,7 @@ export class V4RewardsService extends RewardsService {
         price: price.price,
         points: price.points,
         identifier: price.identifier
-      })) : null,
+      })) : undefined,
       rewardThumbnail: thumbnailImg,
       rewardBanner,
       validFrom: new Date(reward.valid_from),
@@ -175,8 +176,8 @@ export class V4RewardsService extends RewardsService {
       merchantName: reward.merchant_name,
       merchantImg,
       merchantWebsite: reward.merchant_website,
-      termsAndConditions: reward.terms_and_conditions,
-      howToRedeem: reward.how_to_redeem,
+      termsAndConditions: oc(reward).terms_and_conditions(''),
+      howToRedeem: oc(reward).how_to_redeem(''),
       categoryTags: reward.category_tags,
       inventory,
       displayProperties: reward.display_properties,
@@ -189,9 +190,9 @@ export class V4RewardsService extends RewardsService {
     if (thumbnail === undefined) {
       thumbnail = images.find((image: IV4Image) => image.type === 'catalog_logo');
     }
-    const thumbnailImg = thumbnail && thumbnail.url;
+    const thumbnailImg = oc(thumbnail).url('');
     const banner = images.find((image: IV4Image) => image.type === 'catalog_banner');
-    const catalogBanner = banner && banner.url;
+    const catalogBanner = oc(banner).url('');
     const rewards = catalog.rewards && catalog.rewards.map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward));
     return {
       id: catalog.id,
@@ -215,7 +216,8 @@ export class V4RewardsService extends RewardsService {
     };
   }
 
-  public getAllRewards(tags?: string[], categories?: string[]): Observable<IReward[]> {
+  public getAllRewards(tags?: string[] | null, categories?: string[], locale: string = 'en'): Observable<IReward[]> {
+
     return new Observable(subject => {
       const pageSize = 10;
       let current: IReward[] = [];
@@ -230,17 +232,24 @@ export class V4RewardsService extends RewardsService {
         } else {
           // otherwise get next page
           page++;
-          this.getRewards(page, undefined, tags, categories)
+          this.getRewards(page, undefined, tags, categories, locale)
             .subscribe(process);
         }
       };
       // do the first query
-      this.getRewards(1, undefined, tags, categories)
+      this.getRewards(1, undefined, tags, categories, locale)
         .subscribe(process);
     });
   }
 
-  public getRewards(page: number = 1, pageSize: number = 10, tags?: string[], categories?: string[]): Observable<IReward[]> {
+  public getRewards(
+    page: number = 1,
+    pageSize: number = 10,
+    tags?: string[] | null,
+    categories?: string[],
+    locale: string = 'en'
+  ): Observable<IReward[]> {
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', pageSize.toString());
@@ -252,7 +261,7 @@ export class V4RewardsService extends RewardsService {
       params = params.set('categories', categories.join());
     }
 
-    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards`, { params })
+    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards`, { headers, params })
       .pipe(
         map((res: IV4GetRewardsResponse) => res.data),
         map((rewards: IV4Reward[]) => rewards.map(
@@ -261,10 +270,10 @@ export class V4RewardsService extends RewardsService {
       );
   }
 
-  public getReward(id: number, userId: string = ''): Observable<IReward> {
+  public getReward(id: number, userId: string = '', locale: string = 'en'): Observable<IReward> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json')
-      .set('user-id', userId);
-
+      .set('user-id', userId)
+      .set('Accept-Language', locale);
     return this.http.get<IV4GetRewardResponse>(
       `${this.apiHost}/v4/rewards/${id}`, { headers }
     ).pipe(
@@ -273,7 +282,7 @@ export class V4RewardsService extends RewardsService {
     );
   }
 
-  public getAllCatalogs(): Observable<ICatalog[]> {
+  public getAllCatalogs(locale: string = 'en'): Observable<ICatalog[]> {
     return new Observable(subject => {
       const pageSize = 100;
       let current: ICatalog[] = [];
@@ -287,20 +296,22 @@ export class V4RewardsService extends RewardsService {
         } else {
           // otherwise get next page
           page++;
-          this.getCatalogs(page + 1, pageSize)
+          this.getCatalogs(page + 1, pageSize, locale)
             .subscribe(process);
         }
       };
       // do the first query
-      this.getCatalogs(1, pageSize)
+      this.getCatalogs(1, pageSize, locale)
         .subscribe(process);
     });
   }
 
-  private getCatalogs(page: number = 1, pageSize: number = 10): Observable<ICatalog[]> {
+  private getCatalogs(page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<ICatalog[]> {
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4GetCatalogsResponse>(
       `${this.apiHost}/v4/catalogs`,
       {
+        headers,
         params: {
           page: `${page}`,
           size: `${pageSize}`
@@ -314,18 +325,21 @@ export class V4RewardsService extends RewardsService {
     );
   }
 
-  public getCatalog(id: number): Observable<ICatalog> {
+  public getCatalog(id: number, locale: string = 'en'): Observable<ICatalog> {
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4GetCatalogResponse>(
-      `${this.apiHost}/v4/catalogs/${id}`
+      `${this.apiHost}/v4/catalogs/${id}`,
+      { headers }
     ).pipe(
       map(res => res.data),
       map((catalog: IV4Catalog) => V4RewardsService.v4CatalogToCatalog(catalog))
     );
   }
 
-  public getRewardPricesOptions(id: number): Observable<IPrice[]> {
+  public getRewardPricesOptions(id: number, locale: string = 'en'): Observable<IPrice[]> {
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4GetRewardPricesResponse>(
-      `${this.apiHost}/v4/rewards/${id}/prices`
+      `${this.apiHost}/v4/rewards/${id}/prices`, { headers }
     ).pipe(
       map(res => res.data),
       map((prices: IV4Price[]) => prices.map(

@@ -17,6 +17,7 @@ import { WhistlerThemesService } from './themes/whistler-themes.service';
 import { Config } from '../config/config';
 import { V4ThemesService } from './themes/v4-themes.service';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
+import { StorageModule } from './storage/storage.module';
 
 export function themesServiceFactory(http: HttpClient, config: Config): ThemesService {
   if (config.isWhistler) {
@@ -37,12 +38,22 @@ const components = [
   NewsfeedComponent
 ];
 
+// make sure we have only one instance of the NotificationService
+export function notificationServiceFactory(): NotificationService {
+  // @ts-ignore
+  if (window.notificationService === undefined) {
+    // @ts-ignore
+    window.notificationService = new NotificationService();
+  }
+  // @ts-ignore
+  return window.notificationService;
+}
+
 @NgModule({
   declarations: [
     ...directives,
     ...components,
-    DistancePipe,
-    NewsfeedComponent
+    DistancePipe
   ],
   entryComponents: [
     ...components,
@@ -52,7 +63,8 @@ const components = [
     MatDialogModule,
     MatButtonModule,
     ReactiveFormsModule,
-    MatCardModule
+    MatCardModule,
+    StorageModule
   ],
   exports: [
     ...directives,
@@ -60,10 +72,11 @@ const components = [
     DistancePipe
   ],
   providers: [
-    NotificationService,
+    { provide: NotificationService, useFactory: notificationServiceFactory },
     FeedReaderService,
     GeneralStaticDataService,
-    { provide: ThemesService,
+    {
+      provide: ThemesService,
       useFactory: themesServiceFactory,
       deps: [HttpClient, Config]
     }

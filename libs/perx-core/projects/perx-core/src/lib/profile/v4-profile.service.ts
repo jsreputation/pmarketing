@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
 import {
   IProfile,
   ICustomProperties,
-  IProfileProperty,
   ICardNumber,
 } from './profile.model';
 import { ProfileService } from './profile.service';
@@ -93,14 +92,13 @@ export class V4ProfileService extends ProfileService {
   }
 
   public getCustomProperties(): Observable<ICustomProperties> {
-    return this.whoAmI().pipe(
-      map(
-        (profile: IProfile) => profile.customProperties
-      )
-    );
+    return this.whoAmI()
+      .pipe(
+        map((profile: IProfile) => profile.customProperties || {})
+      );
   }
 
-  public updateUserInfo(data: IProfileProperty): Observable<void> {
+  public updateUserInfo(data: IProfile): Observable<void> {
     return this.whoAmI().pipe(
       mergeMap(
         (profile: IProfile) => this.http.patch<void>(

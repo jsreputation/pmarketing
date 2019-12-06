@@ -1,13 +1,19 @@
 import { IVoucher } from '../vouchers/models/voucher.model';
-import { ICampaignDisplayProperties } from '../perx-core.models';
+import { IWCampaignDisplayProperties } from '@perx/whistler';
 
 export enum GameType {
   unknown = -1,
   shakeTheTree = 'shake',
   pinata = 'tap',
   scratch = 'scratch',
+  spin = 'spin'
 }
 
+export interface IEngagementTransaction {
+  id: number;
+  voucherIds?: number[];
+  rewardIds?: number[];
+}
 export interface IGameOutcome {
   title: string;
   subTitle: string;
@@ -19,7 +25,7 @@ export interface IGame {
   campaignId?: number;
   type: GameType;
   remainingNumberOfTries: number;
-  config: ITree | IPinata | IScratch;
+  config: ITree | IPinata | IScratch | ISpin | null;
   backgroundImg?: string;
   texts: {
     title?: string;
@@ -31,7 +37,7 @@ export interface IGame {
     noOutcome?: IGameOutcome;
   };
   imgUrl?: string;
-  displayProperties?: ICampaignDisplayProperties;
+  displayProperties?: IWCampaignDisplayProperties;
 }
 
 export function defaultTree(): ITree {
@@ -55,10 +61,41 @@ export function defaultPinata(): IPinata {
 export function defaultScratch(): IScratch {
   return {
     coverImg: '',
-    underlyingImg: '',
+    underlyingFailImg: '',
+    underlyingSuccessImg: '',
     uncoverPortionToTrigger: 90,
     nbTaps: 5
   };
+}
+
+export function defaultSpin(): ISpin {
+  return {
+    numberOfWedges: 5,
+    rewardSlots: [2, 4],
+    colorCtrls: {
+      0: 'red',
+      1: 'yellow',
+      2: 'green',
+      3: 'blue',
+      4: 'black'
+    },
+    rewardIcon: '',
+    wheelImg: '',
+    wheelPosition: '',
+    pointerImg: '',
+    background: ''
+  };
+}
+
+export interface ISpin {
+  numberOfWedges: number;
+  rewardSlots: number[];
+  colorCtrls: {[index: number]: string};
+  rewardIcon: string;
+  wheelImg: string;
+  wheelPosition: string;
+  pointerImg: string;
+  background: string;
 }
 
 export interface ITree {
@@ -83,7 +120,8 @@ export interface IPinata {
 
 export interface IScratch {
   coverImg: string;
-  underlyingImg: string;
+  underlyingSuccessImg: string;
+  underlyingFailImg: string;
   uncoverPortionToTrigger: number;
   nbTaps: number;
 }

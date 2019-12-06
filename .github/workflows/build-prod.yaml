@@ -9,13 +9,20 @@ jobs:
       - uses: azure/k8s-actions/k8s-set-context@master
         with:
           kubeconfig: ${{ secrets.BUILDER_KUBE_CONFIG }}
+      - name: Check branch name
+        run: |
+          REGEX="[[:alpha:]]+-[[:digit:]]+"
+          if [[ ! ${GITHUB_HEAD_REF} =~ ${REGEX} ]]; then
+            echo "Branch name ${GITHUB_HEAD_REF} doesn't meet naming convention: ${REGEX}"
+            exit 1
+          fi
       - name: Get list of apps
         run: |
           APPS=$(cd apps; ls -d *)
           echo ::set-env name=APPS::${APPS[@]}
       - name: Download tekton cli and install parallel
         run: |
-          curl -L https://github.com/tektoncd/cli/releases/download/v0.4.0/tkn_0.4.0_Linux_x86_64.tar.gz \
+          curl -L https://github.com/tektoncd/cli/releases/download/v0.5.1/tkn_0.5.1_Linux_x86_64.tar.gz \
           | sudo tar xzv -C /usr/local/bin tkn
           sudo apt-get update && sudo apt-get install -y parallel
       - name: Remove existing tasks

@@ -1,34 +1,34 @@
 {
   "roleTypes": [
     {
-      "title": "Admin",
+      "title": "ROLE_TYPES.ADMIN_TITLE",
       "value": "Administrators",
       "id": 1,
-      "description": "Has full access to the internal group settings provided by the Super Admin, can invite users to the group"
+      "description": "ROLE_TYPES.ADMIN_DESCRIPTION"
     },
     {
-      "title": "Creator",
+      "title": "ROLE_TYPES.CREATOR_TITLE",
       "value": "creator",
       "id": 2,
-      "description": "Has access to customer support features and view only"
+      "description": "ROLE_TYPES.CREATOR_DESCRIPTION"
     },
     {
-      "title": "Customer Support",
+      "title": "ROLE_TYPES.CUSTOMER_TITLE",
       "value": "customer",
       "id": 3,
-      "description": "Has access to create, update within the scope of module provided access to. Manager can launch campaigns"
+      "description": "ROLE_TYPES.CUSTOMER_DESCRIPTION"
     },
     {
-      "title": "Manager",
+      "title": "ROLE_TYPES.MANAGER_TITLE",
       "value": "manager",
       "id": 4,
-      "description": "Has access to create, update within the scope of modules provided access to. Creator may not launch campaigns"
+      "description": "ROLE_TYPES.MANAGER_DESCRIPTION"
     },
     {
-      "title": "Viewer",
+      "title": "ROLE_TYPES.VIEWER_TITLE",
       "value": "viewer",
       "id": 5,
-      "description": "Has access to view only"
+      "description": "ROLE_TYPES.VIEWER_DESCRIPTION"
     }
   ],
   "durationLimits": [

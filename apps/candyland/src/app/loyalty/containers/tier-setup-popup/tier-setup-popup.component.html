@@ -1,38 +1,50 @@
 <aside class="dialog loyalty" role="dialog" aria-labelledby="dialogTitle-tierSetup">
   <header class="dialog-header-wrap">
-    <h2 class="dialog-title" id="dialogTitle-tierSetup">Tier Setup</h2>
+    <h2 class="dialog-title" id="dialogTitle-tierSetup">
+      {{'LOYALTY_FEATURE.TIER_SETUP' | translate}}
+    </h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
   </header>
   <div class="dialog-content" [formGroup]="form">
     <mat-form-field class="loyalty-name-input">
-      <input type="text" matInput formControlName="name" placeholder="Tier's name">
-      <mat-error *ngIf="name.hasError('required') && name.touched">Required field</mat-error>
-      <mat-error *ngIf="name.hasError('minlength') && name.touched">Min length 1</mat-error>
-      <mat-error *ngIf="name.hasError('maxlength') && name.touched">Max length 60</mat-error>
+      <input type="text" matInput formControlName="name" [placeholder]="'LOYALTY_FEATURE.TIERS_NAME' | translate">
+      <mat-error *ngIf="name.hasError('required') && name.touched">{{'ERROR_REQUIRED' | translate}}</mat-error>
+      <mat-error *ngIf="name.hasError('minlength') && name.touched">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
+      <mat-error *ngIf="name.hasError('maxlength') && name.touched">{{'ERROR_MAX_LENGTH' | translate}} 60</mat-error>
     </mat-form-field>
 
-    <label class="loyalty-label">Qualification Criteria</label>
+    <label class="loyalty-label">
+      {{'LOYALTY_FEATURE.QUALIFICATION_CRITERIA' | translate}}
+    </label>
     <ng-container formGroupName="joinMethod">
       <div class="loyalty-row input-group">
-        <mat-checkbox color="primary" formControlName="pointsThreshold">Points Threshold</mat-checkbox>
+        <mat-checkbox color="primary" formControlName="pointsThreshold">
+          {{'LOYALTY_FEATURE.POINTS_THRESHOLD' | translate}}
+        </mat-checkbox>
         <mat-form-field class="loyalty-points-input">
           <input matInput type="number" formControlName="points">
-          <mat-error *ngIf="points.hasError('required') && points.touched">Required field</mat-error>
-          <mat-error *ngIf="points.hasError('min') && points.touched">Min value 1</mat-error>
+          <mat-error *ngIf="points.hasError('required') && points.touched">{{'ERROR_REQUIRED' | translate}}</mat-error>
+          <mat-error *ngIf="points.hasError('min') && points.touched">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
         </mat-form-field>
-        <span>Points</span>
+        <span>
+          {{'LOYALTY_FEATURE.POINTS' | translate}}
+        </span>
       </div>
       <div class="loyalty-row">
-        <mat-checkbox color="primary" formControlName="inviteOnly">Invite-only</mat-checkbox>
+        <mat-checkbox color="primary" formControlName="inviteOnly">
+          {{'LOYALTY_FEATURE.INVITE_ONLY' | translate}}
+        </mat-checkbox>
       </div>
       <mat-error *ngIf="joinMethod.hasError('requiredGroup')">
-        At least one option must be selected.
+        {{'ERROR_SELECT_AT_LEAST_ONE' | translate}}
       </mat-error>
     </ng-container>
 
-    <label class="loyalty-label">Tier Image</label>
+    <label class="loyalty-label">
+      {{'LOYALTY_FEATURE.TIER_IMAGE' | translate}}
+    </label>
     <div class="loyalty-row loyalty-row-uploader">
       <cl-upload-graphic [isRequired]="imageUrl.hasError('required') && imageUrl.touched"
                          formControlName="imageUrl"
@@ -40,52 +52,72 @@
       ></cl-upload-graphic>
     </div>
 
-    <label class="loyalty-label">Accelerated Earn for Tier</label>
+    <label class="loyalty-label">
+      {{'LOYALTY_FEATURE.ACCELERATED_EARN_FOR_TIER' | translate}}
+    </label>
     <div class="loyalty-row input-group">
-      <span>Users in this tier will earn</span>
+      <span>
+        {{'LOYALTY_FEATURE.USERS_IN_THIS_TIER_WILL_EARN' | translate}}
+      </span>
       <mat-form-field floatLabel="never">
         <input type="number" [min]="1" [max]="100" [step]="0" matInput formControlName="earnBonus">
-        <mat-error *ngIf="earnBonus.hasError('required') && earnBonus.touched">Required field</mat-error>
-        <mat-error *ngIf="earnBonus.hasError('min') && earnBonus.touched">Min value 1</mat-error>
-        <mat-error *ngIf="earnBonus.hasError('max') && earnBonus.touched">Max value 100</mat-error>
+        <mat-error *ngIf="earnBonus.hasError('required') && earnBonus.touched">{{'ERROR_REQUIRED' | translate}}</mat-error>
+        <mat-error *ngIf="earnBonus.hasError('min') && earnBonus.touched">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
+        <mat-error *ngIf="earnBonus.hasError('max') && earnBonus.touched">{{'ERROR_MAX_LENGTH' | translate}} 100</mat-error>
       </mat-form-field>
-      <span>% more points.</span>
+      <span>
+       % {{'LOYALTY_FEATURE.MORE_POINTS' | translate}}.
+      </span>
     </div>
 
-    <label class="loyalty-label">Accelerated Burn Rule</label>
+    <label class="loyalty-label">
+      {{'LOYALTY_FEATURE.ACCELERATED_BURN_RULE' | translate}}
+    </label>
     <div class="loyalty-row input-group">
-      <span>Users in this tier get a discount of</span>
+      <span>
+        {{'LOYALTY_FEATURE.USERS_IN_THIS_TIER' | translate}}
+      </span>
       <mat-form-field floatLabel="never">
         <input type="number" [min]="0" [max]="100" matInput formControlName="burnDiscount">
-        <mat-error *ngIf="burnDiscount.hasError('required') && burnDiscount.touched">Required field</mat-error>
-        <mat-error *ngIf="burnDiscount.hasError('min') && burnDiscount.touched">Min value 1</mat-error>
-        <mat-error *ngIf="burnDiscount.hasError('max') && burnDiscount.touched">Max value 100</mat-error>
+        <mat-error *ngIf="burnDiscount.hasError('required') && burnDiscount.touched">{{'ERROR_REQUIRED' | translate}}</mat-error>
+        <mat-error *ngIf="burnDiscount.hasError('min') && burnDiscount.touched">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
+        <mat-error *ngIf="burnDiscount.hasError('max') && burnDiscount.touched">{{'ERROR_MAX_LENGTH' | translate}}100</mat-error>
       </mat-form-field>
-      <span>% when spending points for rewards.</span>
+      <span>
+        % {{'LOYALTY_FEATURE.WHEN_SPENDING_POINTS' | translate}}.
+      </span>
     </div>
 
-    <label class="loyalty-label">Points Expiry</label>
+    <label class="loyalty-label">
+      {{'LOYALTY_FEATURE.POINTS_EXPIRY' | translate}}
+    </label>
     <ng-container formGroupName="pointsExpiry">
       <div>
         <div class="loyalty-row input-group">
-          <span>Points expire</span>
+          <span>
+            {{'LOYALTY_FEATURE.POINTS_EXPIRE' | translate}}
+          </span>
           <mat-form-field floatLabel="never">
             <input type="number" [min]="1" matInput formControlName="amount">
-            <mat-error *ngIf="amount.hasError('required') && amount.touched">Required field</mat-error>
-            <mat-error *ngIf="amount.hasError('min') && amount.touched">Min value 1</mat-error>
+            <mat-error *ngIf="amount.hasError('required') && amount.touched">{{'ERROR_REQUIRED' | translate}}</mat-error>
+            <mat-error *ngIf="amount.hasError('min') && amount.touched">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
           </mat-form-field>
           <mat-form-field>
             <mat-select formControlName="type">
-              <mat-option [value]="pointsExpirePeriodType.day">Day</mat-option>
-              <mat-option [value]="pointsExpirePeriodType.week">Week</mat-option>
-              <mat-option [value]="pointsExpirePeriodType.month">Month</mat-option>
-              <mat-option [value]="pointsExpirePeriodType.year">Year</mat-option>
+              <mat-option [value]="pointsExpirePeriodType.day">{{'DAY' | translate}}</mat-option>
+              <mat-option [value]="pointsExpirePeriodType.week">{{'WEEK' | translate}}</mat-option>
+              <mat-option [value]="pointsExpirePeriodType.month">{{'MONTH' | translate}}</mat-option>
+              <mat-option [value]="pointsExpirePeriodType.year">{{'YEAR' | translate}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field class="loyalty-points-expiry-type-input">
             <mat-select formControlName="trigger">
-              <mat-option value="accrual">from when the point was earned.</mat-option>
-              <mat-option value="inactivity">from user inactivity.</mat-option>
+              <mat-option value="accrual">
+                {{'LOYALTY_FEATURE.FROM_WHEN_THE_POINT' | translate}}.
+              </mat-option>
+              <mat-option value="inactivity">
+                {{'LOYALTY_FEATURE.FROM_USER_INACTIVITY' | translate}}.
+              </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -99,14 +131,14 @@
                (click)="close()"
                [disableRipple]="true">
         <span>
-          Cancel
+          {{'BTN_CANCEL' | translate}}
         </span>
     </cl-button>
 
     <cl-button classList="primary"
                (click)="apply()">
         <span>
-         {{data?.tier ? 'Apply' : 'Save'}}
+         {{data?.tier ? 'BTN_APPLY' : 'BTN_SAVE' | translate}}
         </span>
     </cl-button>
   </footer>

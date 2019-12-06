@@ -1,14 +1,16 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { NotificationService, IConfig, ConfigService } from '@perx/core';
+import { NotificationService, IConfig, ConfigService, TokenStorage } from '@perx/core';
 import {
   PageProperties,
   BarSelectedItem,
-  PageAppearence } from './page-properties';
+  PageAppearence
+} from './page-properties';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 import { Location } from '@angular/common';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'mc-root',
@@ -36,6 +38,8 @@ export class AppComponent implements OnInit {
     private snackBar: MatSnackBar,
     private location: Location,
     private configService: ConfigService,
+    private translateService: TranslateService,
+    private store: TokenStorage
   ) {
     this.notificationService.$snack.subscribe((message: string) => {
       this.snackBar.openFromComponent(CustomSnackbarComponent, {
@@ -50,12 +54,16 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
 
+    const lang  = this.store.getAppInfoProperty('merck-customer') || this.translateService.currentLang || this.translateService.defaultLang;
+    this.translateService.use(lang);
+    this.translateService.onLangChange.subscribe((change: LangChangeEvent) => {
+      this.store.setAppInfoProperty(change.lang, 'merck-customer');
+    });
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => {
         this.preAuth = config.preAuth as boolean;
       }
     );
-
     if (!this.preAuth) {
       return;
     }
@@ -69,7 +77,7 @@ export class AppComponent implements OnInit {
   public onActivate(ref: any): void {
     const activeComponent = ref as PageAppearence;
     this.pageProperties = activeComponent.getPageProperties();
-    this.leftIconToShow =  this.pageProperties.backButtonEnabled ? 'arrow_back_ios' : '';
+    this.leftIconToShow = this.pageProperties.backButtonEnabled ? 'arrow_back_ios' : '';
   }
 
   public onLeftActionClick(): void {
