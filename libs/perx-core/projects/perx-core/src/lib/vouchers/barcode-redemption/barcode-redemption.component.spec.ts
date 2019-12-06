@@ -34,7 +34,7 @@ describe('BarcodeRedemptionComponent', () => {
         },
       ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
