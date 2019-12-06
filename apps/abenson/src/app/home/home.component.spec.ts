@@ -2,7 +2,17 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
-import { IVoucherService, VouchersModule, ICampaignService, LoyaltyModule, ProfileModule, ProfileService, LoyaltyService, IProfile } from '@perx/core';
+import {
+  IVoucherService,
+  VouchersModule,
+  ICampaignService,
+  LoyaltyModule,
+  ProfileModule,
+  ProfileService,
+  LoyaltyService,
+  IProfile,
+  ConfigService
+} from '@perx/core';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material';
 
@@ -12,7 +22,9 @@ describe('HomeComponent', () => {
   const router = {
     navigate: jasmine.createSpy('navigate')
   };
-
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({})
+  };
   const vouchersServiceStub = {
     getAll: () => of()
   };
@@ -49,8 +61,9 @@ describe('HomeComponent', () => {
         { provide: Router, useValue: router },
         { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
-        { provide: ProfileService, useValue: profileServiceStub},
-        { provide: LoyaltyService, useValue: loyaltyServiceStub}
+        { provide: ProfileService, useValue: profileServiceStub },
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();
