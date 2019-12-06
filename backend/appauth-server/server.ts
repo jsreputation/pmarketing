@@ -25,6 +25,9 @@ app.use(express.json());
 app.use('/static', express.static('static'));
 
 const PORT = process.env.PORT || 4000;
+console.log("============================");
+console.log(process.env);
+console.log("============================");
 const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
 const BASE_HREF = process.env.BASE_HREF || '/';
 
