@@ -48,6 +48,7 @@ export class DashboardRewardsPageComponent implements OnInit, OnDestroy {
           , 0);
       }),
       takeUntil(this.destroy$)
+      /* tslint:disable-next-line */
     ).subscribe();
   }
 
