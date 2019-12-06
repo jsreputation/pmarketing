@@ -30,7 +30,9 @@ export class WalletComponent implements OnInit {
 
   public ngOnInit(): void {
     const feed = this.vouchersService.getAll();
-    this.configService.readAppConfig().subscribe((config) => this.comingSoon = config.comingSoon as boolean);
+    this.configService.readAppConfig<{comingSoon: boolean}>().subscribe((config) => {
+      this.comingSoon = config.custom ? config.custom.comingSoon as boolean : false;
+    });
     this.issuedVouchers = feed
       .pipe(
         map((vouchers: Voucher[]) => vouchers.filter(voucher => voucher.state === VoucherState.issued))

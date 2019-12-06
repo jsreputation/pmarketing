@@ -22,7 +22,9 @@ export class HomeComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig().subscribe((val) => this.comingSoon = val.comingSoon as boolean);
+    this.configService.readAppConfig<{comingSoon: boolean}>().subscribe((val) => {
+      this.comingSoon = val.custom ? val.custom.comingSoon as boolean : false;
+    });
     this.campaigns$ = this.campaignService.getCampaigns()
       .pipe(map((compaing) => compaing.filter(el => el.type === CampaignType.game)));
     this.vouchers$ = this.vouchersService.getAll();
