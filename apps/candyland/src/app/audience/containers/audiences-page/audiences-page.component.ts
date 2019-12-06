@@ -27,7 +27,7 @@ import {
 
 import {
   IWAudiences,
-  IWUser,
+  IWProfileAttributes,
 } from '@perx/whistler';
 import { AudiencesService } from '@cl-core/services';
 import { SettingsService } from '@cl-core-services';
@@ -57,7 +57,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public tabs: FormControl;
   public search: FormControl;
   public searchKey: string = 'query';
-  public dataSource: CustomDataSource<IWUser>;
+  public dataSource: CustomDataSource<IWProfileAttributes>;
   public audiencesDataSource: CustomDataSource<IWAudiences>;
   public dataSourceStates: typeof DataSourceStates = DataSourceStates;
 
@@ -75,7 +75,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     public dialog: MatDialog,
     public snack: MatSnackBar
   ) {
-    this.dataSource = new CustomDataSource<IWUser>(this.audiencesUserService);
+    this.dataSource = new CustomDataSource<IWProfileAttributes>(this.audiencesUserService);
     this.audiencesDataSource = new CustomDataSource<IWAudiences>(this.audiencesService);
     this.tabs = new FormControl('users');
     this.search = new FormControl('');
@@ -133,7 +133,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
       case 'users':
       default:
         // this.searchKey = 'query';
-        this.dataSource = new CustomDataSource<IWUser>(this.audiencesUserService);
+        this.dataSource = new CustomDataSource<IWProfileAttributes>(this.audiencesUserService);
     }
     this.currentTab = tab;
     this.cd.detectChanges();

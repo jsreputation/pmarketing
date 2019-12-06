@@ -26,12 +26,13 @@ export class RewardLoyaltySetupGroupComponent implements OnInit {
     return !this.loyalty.customTiers ? 0 : this.loyalty.customTiers[index].burnDiscount;
   }
 
-  public getPercentCalculate(valuePoints: any, isAppliesDiscount: boolean, index: number): any {
-    if (!isAppliesDiscount) {
+  public getPercentCalculate(item: any, index: number): void {
+    const valuePoints = item.get('tierValue').value;
+    if (!item.get('statusDiscount').value) {
       return valuePoints;
     }
     const value =  Math.floor(1 - this.getDiscount(index) * valuePoints);
-    return  value < 0 ? 0 : value;
+    item.get('tireDiscountValue').patchValue(value < 0 ? 0 : value);
   }
 
 }
