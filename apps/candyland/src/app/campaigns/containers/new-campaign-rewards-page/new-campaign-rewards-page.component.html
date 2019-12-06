@@ -1,52 +1,61 @@
-<div class="phonepreview-wrapper">
-  <div class="forms-container" [formGroup]="form">
-    <!--Rewards-->
-    <mat-card class="card">
-      <cl-new-campaign-rewards-form-group
-        [formControl]="form.get('rewardsOptions')"></cl-new-campaign-rewards-form-group>
-    </mat-card>
-    <!--/ Rewards-->
-    <!--limits-->
-    <mat-card class="card" formGroupName="limits">
-      <div class="card-header">
-        <h2 class="card-title">
-          {{'CAMPAIGN.PLAY_LIMITS' | translate}}
-        </h2>
-      </div>
-      <div class="card-content">
-        <div class="card-row stretch">
-          <div>
-            <mat-form-field>
-              <mat-label class="card-label">
-                {{'CAMPAIGN.PER_USER' | translate}}
-              </mat-label>
-              <input matInput type="number" [min]="1" formControlName="times" autocomplete="off">
-              <span matSuffix>
-                {{'CAMPAIGN.PLAY' | translate}}
-              </span>
-              <mat-error *ngIf="times?.hasError('min')">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
-              <mat-error *ngIf="times?.hasError('max')">{{'ERROR_MAX_LENGTH' | translate}} 60</mat-error>
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field>
-              <mat-label class="card-label">
-                {{'CAMPAIGN.PER_DURATION' | translate}}
-              </mat-label>
-              <mat-select formControlName="duration">
-                <mat-option *ngFor="let option of config?.durationLimits"
-                            [value]="option?.value">
-                  {{option?.title | translate}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
+<ng-container *ngIf="campaignType === 'game'; else elseBlock">
+  <mat-card class="card" [formGroup]="limits">
+    <div class="card-header">
+      <h2 class="card-title">
+        {{'CAMPAIGN.PLAY_LIMITS' | translate}}
+      </h2>
+    </div>
+    <div class="card-content">
+      <div class="card-row stretch">
+        <div>
+          <mat-form-field>
+            <mat-label class="card-label">
+              {{'CAMPAIGN.PER_USER' | translate}}
+            </mat-label>
+            <input matInput type="number" [min]="1" formControlName="times" autocomplete="off">
+            <span matSuffix>
+              {{'CAMPAIGN.PLAY' | translate}}
+            </span>
+            <mat-error *ngIf="times?.hasError('min')">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
+            <mat-error *ngIf="times?.hasError('max')">{{'ERROR_MAX_LENGTH' | translate}} 60</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label class="card-label">
+              {{'CAMPAIGN.PER_DURATION' | translate}}
+            </mat-label>
+            <mat-select formControlName="duration">
+              <mat-option *ngFor="let option of config?.durationLimits" [value]="option?.value">
+                {{option?.title | translate}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
-    </mat-card>
-  </div>
-  <cl-campaigns-mobile-preview [storeTemplate$]="store.template$"
-                               [tenantSettings]="tenantSettings"
-  >
-  </cl-campaigns-mobile-preview>
-</div>
+    </div>
+  </mat-card>
+</ng-container>
+<ng-template #elseBlock>
+  <mat-card class="card" [formGroup]="limits">
+    <div class="card-header">
+      <h2 class="card-title">
+        {{'CAMPAIGN.RESPONSE_LIMITS' | translate}}
+      </h2>
+    </div>
+    <div class="card-content">
+      <div class="card-row stretch">
+        <div>
+          <mat-form-field>
+            <mat-label>
+              {{'CAMPAIGN.PER_USER' | translate}}
+            </mat-label>
+            <input matInput type="number" [min]="1" formControlName="times">
+            <mat-error *ngIf="times?.hasError('min')">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
+            <mat-error *ngIf="times?.hasError('max')">{{'ERROR_MAX_LENGTH' | translate}} 60</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</ng-template>
