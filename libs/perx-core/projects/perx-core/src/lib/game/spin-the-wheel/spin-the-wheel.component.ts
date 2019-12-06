@@ -113,16 +113,16 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   private attachListeners(): void {
     this.canvas.style.cursor = 'move';
-    this.canvas.addEventListener('touchstart', this.handleStart.bind(this));
-    this.canvas.addEventListener('mousedown', this.handleStart.bind(this));
+    this.canvas.addEventListener('touchstart', this.handleStart.bind(this), {once: true});
+    this.canvas.addEventListener('mousedown', this.handleStart.bind(this), {once: true});
 
     // listen while dragging
-    this.canvas.addEventListener('touchend', this.handleEnd.bind(this));
-    this.canvas.addEventListener('mouseup', this.handleEnd.bind(this));
+    this.canvas.addEventListener('touchend', this.handleEnd.bind(this), {once: true});
+    this.canvas.addEventListener('mouseup', this.handleEnd.bind(this), {once: true});
 
     // listen after dragging is complete
-    this.canvas.addEventListener('touchmove', this.handleMove.bind(this));
-    this.canvas.addEventListener('mousemove', this.handleMove.bind(this));
+    this.canvas.addEventListener('touchmove', this.handleMove.bind(this), {once: true});
+    this.canvas.addEventListener('mousemove', this.handleMove.bind(this), {once: true});
   }
 
   private init(): void {
@@ -174,12 +174,11 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   private drawWheel(): void {
     const outsideRadius = (this.size / 1.1) / 2 - 5;
-
+    this.ctx.translate((this.size) / 2, (this.size) / 2);
+    this.ctx.rotate(this.startAngle);
     if (this.wheelImgLoaded) {
       this.ctx.save();
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      this.ctx.translate(this.canvas.width / 2, this.canvas.width / 2);
-      this.ctx.rotate(Math.PI / 180 * (this.startAngle) * 5); // spin faster higher the number, faster, tested 5 to be ok
       this.ctx.translate(-(this.canvas.width / 2), -(this.canvas.width / 2));
       this.ctx
         .drawImage(this.wheelImgLoaded,
@@ -188,8 +187,6 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
       this.ctx.restore();
     }
 
-    this.ctx.translate((this.size) / 2, (this.size) / 2);
-    this.ctx.rotate(this.startAngle);
     this.slices.forEach((slice: ISlice, i: number) => {
       const angle = i * this.arc;
       // render background color
@@ -287,7 +284,6 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private spin(): void {
-    // this.spinAngleStart = Math.random() * 10 + 10;
     this.spinAngleStart = this.angleToBeSpun / 32.807503994186335;
     this.spinTime = 0;
     this.spinTimeTotal = this.spinDuration * 3 + 4 * 1000;
