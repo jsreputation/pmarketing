@@ -34,6 +34,13 @@ export class CampaignCreationStoreService {
       { title: 'MONTH', value: 'month' },
       { title: 'CAMPAIGN.CAMPAIGN_LIMIT', value: 'campaign' }
     ],
+    goals: [
+      { title: 'CAMPAIGN.BUILD_AWARE', value: 'Build awareness' },
+      { title: 'CAMPAIGN.ACQUIRE_CUST', value: 'Acquire customers' },
+      { title: 'CAMPAIGN.DRIVE_SALES', value: 'Drive sales' },
+      { title: 'CAMPAIGN.REENGAGE_AUD', value: 'Re-engage audience' },
+      { title: 'CAMPAIGN.SURPRISE_DELIGHT', value: 'Surprise & Delight' },
+    ],
     days: [
       { title: 'S', value: 'sunday' },
       { title: 'M', value: 'monday' },
@@ -44,18 +51,11 @@ export class CampaignCreationStoreService {
       { title: 'S', value: 'Saturday' },
     ],
     shortcodes: [
-      { title: 'Campaign Url', value: '[campaignUrl]' },
-      { title: 'User ID', value: '[userId]' },
-      { title: 'First name', value: '[userFirstName]' },
-      { title: 'Last name', value: '[userLastName]' },
-      { title: 'Salutation', value: '[salutation]' },
-    ],
-    goals: [
-      { title: 'Build awareness', value: 'Build awareness' },
-      { title: 'Acquire customers', value: 'Acquire customers' },
-      { title: 'Drive sales', value: 'Drive sales' },
-      { title: 'Re-engage audience', value: 'Re-engage audience' },
-      { title: 'Surprise & Delight', value: 'Surprise & Delight' },
+      { title: 'CAMPAIGN.URL', value: '[campaignUrl]' },
+      { title: 'CAMPAIGN.USER_ID', value: '[userId]' },
+      { title: 'CAMPAIGN.FIRST_NAME', value: '[userFirstName]' },
+      { title: 'CAMPAIGN.LAST_NAME', value: '[userLastName]' },
+      { title: 'CAMPAIGN.SALUTATION', value: '[salutation]' },
     ],
     channelTypes: [
       { title: 'CAMPAIGN.ChannelTypes.WEBLINK', value: 'weblink' },
@@ -77,9 +77,6 @@ export class CampaignCreationStoreService {
   }
 
   public updateCampaign(value: ICampaign): void {
-    if ('rewards' in value) {
-      this.currentCampaign.rewards = value.rewards;
-    }
     this.currentCampaign = Object.assign(this.currentCampaign, value);
   }
 

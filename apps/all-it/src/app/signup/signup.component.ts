@@ -76,27 +76,24 @@ export class SignupComponent {
 
     const emailValue = this.signupForm.value.email;
 
+    const titleString = this.signupForm.value.title;
+    const postcodeString = this.signupForm.value.postcode;
+
     const signUpData: ISignUpData = {
       lastName: name,
       birthDay: dob,
       phone: codeAndMobile,
       password: passwordString,
       passwordConfirmation: confirmPassword,
-      email: emailValue
+      email: emailValue,
+      title: titleString,
+      postcode: postcodeString
     };
-
-    const title = this.signupForm.value.title;
-    const postcode = this.signupForm.value.postcode;
-
-    console.log(`Title ${title}`);
-    console.log(`Post code: ${postcode}`);
 
     this.authService.signup(signUpData)
     .subscribe(
       () => {
-        // TODO: Use ProfileService::setCustomProperties to set postcode & title
-        // TODO: Navigate to otp page
-        // this.router.navigateByUrl('/enter-pin/register')
+        this.router.navigateByUrl('enter-pin/register', { state: { mobileNo: codeAndMobile } });
       },
       err => {
         this.notificationService.addSnack(err.error.message);
