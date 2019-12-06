@@ -73,6 +73,7 @@ describe('ChangeCityComponent', () => {
     const spyLog = spyOn(console, 'log');
     spyOnProfile.and.returnValue(throwError('message'));
     component.onSubmit();
+    tick();
     fixture.detectChanges();
     expect(spyLog).toHaveBeenCalled();
   }));
