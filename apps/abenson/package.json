@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run config && ng serve --host 0.0.0.0",
+    "start:csdisable": "COMING_SOON=false npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
     "build:abenson:prod": "PRODUCTION=true npm run config && ng build --prod",
     "config": "ts-node --project tsconfig.node.json set-env.ts",

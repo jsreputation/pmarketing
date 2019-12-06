@@ -1,6 +1,8 @@
-import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
 import { IWOutcomeAttributes } from '@perx/whistler';
+
+import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
+import { SOURCE_TYPE } from '../../app.constants';
 
 export class OutcomesHttpAdapter {
   public static transformAPIResponseToOutcome(data: IJsonApiItem<IWOutcomeAttributes>): IOutcome {
@@ -22,7 +24,7 @@ export class OutcomesHttpAdapter {
       type: 'possible_outcomes',
       attributes: {
         result_id: data && data.reward && parseInt(data.reward.id, 10) || null,
-        result_type: 'Perx::Reward::Entity',
+        result_type: SOURCE_TYPE,
         probability: data.enableProbability ? data.outcome.probability / 100 : 0,
         loot_box_id: data.outcome.slotNumber,
         no_outcome: data && !data.reward,

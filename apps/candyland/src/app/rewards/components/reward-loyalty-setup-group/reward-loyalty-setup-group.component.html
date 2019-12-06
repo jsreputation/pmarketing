@@ -2,7 +2,8 @@
   <div class="loyalty-row input-group">
     <span translate>COST_OF_REWARD</span>
     <mat-form-field floatLabel="never">
-      <input type="number" [min]="0" matInput formControlName="costReward">
+      <input type="number" [min]="0" matInput [formControl]="group.get('basicTier.tierValue')">
+      <!--costReward-->
     </mat-form-field>
     <span><span translate>POINTS_BURN_RULE</span> {{loyalty?.tiersConversions?.globalBurnRule.points}} <span translate>POINTS_TO</span> {{loyalty?.tiersConversions?.globalBurnRule.amount}} {{currency || "SGD"}})</span>
   </div>
@@ -12,11 +13,25 @@
   <section class="list-checkbox flex align-items-center tier-form-group" *ngFor="let item of tiers; let index = index;" [formGroup]="item">
     <mat-checkbox [color]="'primary'" class="tier-name" [formControl]="item.get('statusTiers')" >{{item.get('name').value}}</mat-checkbox>
 
-    <p class="tier-points">
-      {{getPercentCalculate(group.get('costReward').value, item.get('statusDiscount').value, index)}} <span translate>POINTS</span>
-    </p>
+    <div class="tier-points">
+      <div class="loyalty-row input-group" *ngIf="!item.get('statusDiscount').value">
+        <mat-form-field floatLabel="never">
+          <input type="number" [min]="0" matInput [formControl]="item.get('tierValue')">
+        </mat-form-field>
+      </div>
+
+      <div class="loyalty-row input-group" *ngIf="item.get('statusDiscount').value">
+        <mat-form-field floatLabel="never">
+          <input type="number" [min]="0" matInput [formControl]="item.get('tireDiscountValue')">
+        </mat-form-field>
+      </div>
+      <span class="tier-points-text" translate>POINTS</span>
+    </div>
+
     <div class="flex align-items-center">
-      <mat-checkbox [color]="'primary'" class="transaction-amount" [formControl]="item.get('statusDiscount')" > {{'APPLY_TIER_DISCOUNT' | translate}} {{ calculateDiscount(index)  +'%)'}}</mat-checkbox>
+      <mat-checkbox [color]="'primary'"
+                    (change)="getPercentCalculate(item, index)"
+                    class="transaction-amount" [formControl]="item.get('statusDiscount')" > {{'APPLY_TIER_DISCOUNT' | translate}} {{ calculateDiscount(index)  +'%)'}}</mat-checkbox>
 
       <!--      <mat-form-field>-->
 <!--        <input matInput  type="number" >[formControlName]="'amount'"-->
