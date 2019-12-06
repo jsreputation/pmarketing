@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, AfterViewInit, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
+import {Component, Input, OnChanges, AfterViewInit, SimpleChanges, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
 import { ISlice } from '../game.model';
 
 interface ImageForPattern {
@@ -34,6 +34,9 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   @Input()
   public slotToLand: number = 0;
+
+  @Output()
+  public completed: EventEmitter<void> = new EventEmitter<void>();
 
   // tslint:disable-next-line:variable-name
   private ctx_: CanvasRenderingContext2D;
@@ -95,6 +98,10 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     return b + c * (tc + -3 * ts + 3 * t);
   }
 
+  constructor() {
+    this.tapped = this.tapped.bind(this);
+  }
+
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes.slices && this.slices)
       || (changes.wheelImg && this.wheelImg)
@@ -106,6 +113,10 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   public ngAfterViewInit(): void {
     this.generateCanvas();
     this.attachListeners();
+  }
+
+  public tapped(): void {
+    console.log('i am tapped');
   }
 
   private generateCanvas(): void {
