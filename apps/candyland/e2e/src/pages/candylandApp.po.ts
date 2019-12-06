@@ -416,11 +416,11 @@ export class CreateRewardAppPage {
   public uploadSection(): ElementFinder {
     return element(by.css('input.upload-file-input.ng-star-inserted'));
   }
-  public merchantButton(): ElementFinder {
-    return element.all(by.css('mat-radio-button')).get(0);
+  public merchantButtonArray(): ElementArrayFinder {
+    return element.all(by.css('.merchant-btn.mat-stroked-button.mat-primary'));
   }
   public firstMerchantsRow(): ElementFinder {
-    return element.all(by.css('tr.merchant-row.mat-row.ng-star-inserted')).get(0);
+    return element.all(by.css('tr.mat-row.ng-star-inserted')).get(0);
   }
   public dropDownMenu(): ElementArrayFinder {
     return element.all(by.className('mat-select-arrow-wrapper'));
