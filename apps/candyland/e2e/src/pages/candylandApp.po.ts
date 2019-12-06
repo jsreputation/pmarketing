@@ -54,7 +54,7 @@ export class EngagementAppPage {
   }
 
   public gamePinataOptions(): ElementFinder {
-    return element.all('img[alt="game-icon"]').get(1);
+    return element.all(by.css('img[alt="game-icon"]')).get(1);
   }
 
   public confirmModal(): ElementFinder {
@@ -743,7 +743,7 @@ export class ElementApp {
   }
 
   public static engagementCreated(): ElementFinder {
-    return element.all(by.css('p.engagement-item-name.linkable')).get(0);
+    return element.all(by.css('p.engagement-item-name')).get(0);
   }
 
   public static errorUploadMessage(): ElementFinder {
