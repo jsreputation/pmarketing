@@ -6,18 +6,31 @@ import {
   ChangeDetectionStrategy,
   Input,
 } from '@angular/core';
+import {
+  FormGroup,
+  FormBuilder,
+} from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
-import { combineLatest, of } from 'rxjs';
-import { map, catchError, takeUntil } from 'rxjs/operators';
-import { RewardsService } from '@cl-core/services/rewards.service';
-import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
+
+import {
+  combineLatest,
+  of,
+} from 'rxjs';
+import {
+  map,
+  catchError,
+  takeUntil,
+} from 'rxjs/operators';
+
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
+import { RewardsService } from '@cl-core/services/rewards.service';
+import { ClValidators } from '@cl-helpers/cl-validators';
+import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
+import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
 import { StepConditionService } from '../../services/step-condition.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { ClValidators } from '@cl-helpers/cl-validators';
+import { SOURCE_TYPE } from '../../../app.constants';
 
 @Component({
   selector: 'cl-new-campaign-rewards-form-group',
@@ -97,7 +110,7 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
               probability: 0,
               limit: null,
               resultId: Number.parseInt(reward.id, 10),
-              resultType: 'Ros::Reward::Entity',
+              resultType: SOURCE_TYPE,
               slotNumber: this.slotNumber
             },
             enableProbability: this.enableProbability,
