@@ -228,7 +228,8 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
         this.ctxWheelWrap.save();
         this.ctxWheelWrap.clearRect(0, 0, this.canvasWheelWrap.width, this.canvasWheelWrap.height);
         this.ctxWheelWrap.translate(this.canvasWheelWrap.width / 2, this.canvasWheelWrap.width / 2);
-        this.ctxWheelWrap.rotate(Math.PI / 180 * (this.startAngle));
+        this.ctxWheelWrap.rotate(Math.PI / 180 * (this.startAngle) * 3);
+        // this.ctxWheelWrap.rotate(angle  + this.arc / 2);
         this.ctxWheelWrap.translate(-(this.canvasWheelWrap.width / 2), -(this.canvasWheelWrap.width / 2));
         this.ctxWheelWrap
           .drawImage(this.wheelImgLoaded,
@@ -237,7 +238,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
         this.ctxWheelWrap.restore();
       }
 
-      // render label
+      // render label for testing purposes
       if (slice.label) {
         this.ctx.save();
         this.ctx.shadowOffsetX = -1;

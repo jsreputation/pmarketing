@@ -2,23 +2,32 @@
   height: 100%;
 }
 
-.spin-wheel-container {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  display: block;
+.main-wrap {
+  height: 40rem;
 
   &.down {
-    zoom: 1.5;
-    top: 12%;
-    height: 80%;
     overflow: hidden;
   }
 }
 
-#wheel-canvas-stop {
+.spin-wheel-container {
+  transition: transform 0s;
+  position: relative;
+  height: 100%;
+  width: 24rem;
   display: block;
-  z-index: 3;
+
+  &.down {
+    transform: scale(1.4);
+    top: 30%;
+    height: 80%;
+  }
+}
+
+#wheel-canvas-stop {
+  position: relative;
+  display: block;
+  z-index: 5;
   top: 0;
   margin: 0 auto;
 }
@@ -33,4 +42,5 @@
   position: absolute;
   z-index: 1;
   width: 100%;
+  transform: scale(1.15);
 }
