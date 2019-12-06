@@ -76,21 +76,19 @@ export class SignupComponent {
 
     const emailValue = this.signupForm.value.email;
 
+    const titleString = this.signupForm.value.title;
+    const postcodeString = this.signupForm.value.postcode;
+
     const signUpData: ISignUpData = {
       lastName: name,
       birthDay: dob,
       phone: codeAndMobile,
       password: passwordString,
       passwordConfirmation: confirmPassword,
-      email: emailValue
+      email: emailValue,
+      title: titleString,
+      postcode: postcodeString
     };
-
-    const titleString = this.signupForm.value.title;
-    const postcode = this.signupForm.value.postcode;
-
-    console.log(`Title ${titleString}`);
-    console.log(`Post code: ${postcode}`);
-    // TODO: How to pass these values in SignUpData.
 
     this.authService.signup(signUpData)
     .subscribe(
