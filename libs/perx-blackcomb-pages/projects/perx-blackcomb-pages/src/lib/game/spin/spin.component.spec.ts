@@ -9,8 +9,7 @@ describe('SpinComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SpinComponent ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

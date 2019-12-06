@@ -40,8 +40,6 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   // tslint:disable-next-line:variable-name
   private ctx_: CanvasRenderingContext2D;
-  // tslint:disable-next-line:variable-name
-  private ctxWheelWrap_: CanvasRenderingContext2D;
   private arcDeg: number;
   private arc: number;
   private startAngle: number;
@@ -57,29 +55,17 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   @ViewChild('canvas', {static: true})
   private canvasEl: ElementRef<HTMLCanvasElement>;
-  @ViewChild('wheelWrap', {static: true})
-  private canvasWheelWrapEl: ElementRef<HTMLCanvasElement>;
   @ViewChild('wheel', {static: true})
   private wheelEl: ElementRef<HTMLDivElement>;
-  @ViewChild('container', {static: true})
-  private containerEl: ElementRef<HTMLDivElement>;
 
   private get canvas(): HTMLCanvasElement { return this.canvasEl.nativeElement; }
-  private get canvasWheelWrap(): HTMLCanvasElement { return this.canvasWheelWrapEl.nativeElement; }
+  // private get canvasWheelWrap(): HTMLCanvasElement { return this.canvasWheelWrapEl.nativeElement; }
   private get wheel(): HTMLDivElement { return this.wheelEl.nativeElement; }
-  private get container(): HTMLDivElement { return this.containerEl.nativeElement; }
   private get ctx(): CanvasRenderingContext2D {
     if (!this.ctx_ && this.canvas.getContext) {
       this.ctx_ = this.canvas.getContext('2d') as CanvasRenderingContext2D;
     }
     return this.ctx_;
-  }
-
-  private get ctxWheelWrap(): CanvasRenderingContext2D {
-    if (!this.ctxWheelWrap_ && this.canvasWheelWrap.getContext) {
-      this.ctxWheelWrap_ = this.canvasWheelWrap.getContext('2d') as CanvasRenderingContext2D;
-    }
-    return this.ctxWheelWrap_;
   }
 
   private static findTop(element: HTMLElement): number {
@@ -120,25 +106,23 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private generateCanvas(): void {
-    this.size = this.wheel.offsetWidth;
-    this.canvas.width = this.wheel.offsetWidth;
-    this.canvas.height = this.wheel.offsetWidth;
-    this.canvasWheelWrap.height = this.wheel.offsetWidth * 1.15;
-    this.canvasWheelWrap.width =  this.wheel.offsetWidth * 1.15;
+    this.size = this.wheel.offsetWidth * 1.2;
+    this.canvas.width = this.wheel.offsetWidth * 1.2;
+    this.canvas.height = this.wheel.offsetWidth * 1.2;
   }
 
   private attachListeners(): void {
     this.canvas.style.cursor = 'move';
-    this.canvas.addEventListener('touchstart', this.handleStart.bind(this), {once: true});
-    this.canvas.addEventListener('mousedown', this.handleStart.bind(this), {once: true});
+    this.canvas.addEventListener('touchstart', this.handleStart.bind(this));
+    this.canvas.addEventListener('mousedown', this.handleStart.bind(this));
 
     // listen while dragging
-    this.canvas.addEventListener('touchend', this.handleEnd.bind(this), {once: true});
-    this.canvas.addEventListener('mouseup', this.handleEnd.bind(this), {once: true});
+    this.canvas.addEventListener('touchend', this.handleEnd.bind(this));
+    this.canvas.addEventListener('mouseup', this.handleEnd.bind(this));
 
     // listen after dragging is complete
-    this.canvas.addEventListener('touchmove', this.handleMove.bind(this), {once: true});
-    this.canvas.addEventListener('mousemove', this.handleMove.bind(this), {once: true});
+    this.canvas.addEventListener('touchmove', this.handleMove.bind(this));
+    this.canvas.addEventListener('mousemove', this.handleMove.bind(this));
   }
 
   private init(): void {
@@ -158,7 +142,6 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     let count: number = 0;
     const images: ImageForPattern[] = [];
     //
-    // this.fillArrowStyle();
     this.fillWheelWrapStyle();
 
     slicesWithImg.forEach((item) => {
@@ -190,10 +173,23 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private drawWheel(): void {
-    const outsideRadius = this.size / 2 - 5; // how does this come about ?
-    this.ctx.translate(this.size / 2, this.size / 2);
-    this.ctx.rotate(this.startAngle); // why have a start angle, just center it if dont have?
-    // draw slices
+    const outsideRadius = (this.size / 1.1) / 2 - 5;
+
+    if (this.wheelImgLoaded) {
+      this.ctx.save();
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.translate(this.canvas.width / 2, this.canvas.width / 2);
+      this.ctx.rotate(Math.PI / 180 * (this.startAngle) * 5); // spin faster higher the number, faster, tested 5 to be ok
+      this.ctx.translate(-(this.canvas.width / 2), -(this.canvas.width / 2));
+      this.ctx
+        .drawImage(this.wheelImgLoaded,
+          0 , 0,
+          this.canvas.width , this.canvas.height);
+      this.ctx.restore();
+    }
+
+    this.ctx.translate((this.size) / 2, (this.size) / 2);
+    this.ctx.rotate(this.startAngle);
     this.slices.forEach((slice: ISlice, i: number) => {
       const angle = i * this.arc;
       // render background color
@@ -222,20 +218,6 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
           this.ctx.fill();
           this.ctx.restore();
         }
-      }
-
-      if (this.wheelImgLoaded) {
-        this.ctxWheelWrap.save();
-        this.ctxWheelWrap.clearRect(0, 0, this.canvasWheelWrap.width, this.canvasWheelWrap.height);
-        this.ctxWheelWrap.translate(this.canvasWheelWrap.width / 2, this.canvasWheelWrap.width / 2);
-        this.ctxWheelWrap.rotate(Math.PI / 180 * (this.startAngle) * 3);
-        // this.ctxWheelWrap.rotate(angle  + this.arc / 2);
-        this.ctxWheelWrap.translate(-(this.canvasWheelWrap.width / 2), -(this.canvasWheelWrap.width / 2));
-        this.ctxWheelWrap
-          .drawImage(this.wheelImgLoaded,
-            0 , 0,
-            this.canvasWheelWrap.width , this.canvasWheelWrap.height);
-        this.ctxWheelWrap.restore();
       }
 
       // render label for testing purposes
@@ -273,11 +255,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     wheelImg.onload = () => {
       if (this.wheelImgLoaded !== wheelImg) {
         this.wheelImgLoaded = wheelImg;
-        this.ctxWheelWrap.clearRect(0, 0 , this.canvasWheelWrap.width, this.canvasWheelWrap.height); // critical to clear first to not ghost
-        this.ctxWheelWrap
-          .drawImage(this.wheelImgLoaded,
-            0 , 0,
-            this.canvasWheelWrap.width , this.canvasWheelWrap.height);
+        this.drawWheel();
       }
     };
   }
@@ -357,8 +335,8 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
       // get the center of the wheel as an array of [x, y]
       const targetCenter = [
-        SpinTheWheelComponent.findLeft(this.container) + this.container.offsetWidth / 2,
-        SpinTheWheelComponent.findTop(this.container) + this.container.offsetHeight / 2
+        SpinTheWheelComponent.findLeft(this.canvas) + this.canvas.offsetWidth / 2,
+        SpinTheWheelComponent.findTop(this.canvas) + this.canvas.offsetHeight / 2
       ];
 
       // get the angle needed to rotate the wheel to follow the mouse/touch
