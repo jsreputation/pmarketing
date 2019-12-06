@@ -142,9 +142,6 @@ export class CreateShakeTheTreeAppPage {
   public uploadedImageObj(): ElementFinder {
     return element(by.css('div.image-wrap.ng-star-inserted>img'));
   }
-  public errorUploadMessage(): ElementFinder {
-    return element.all(by.css('p.upload-error.ng-star-inserted')).get(1);
-  }
   public emptyInputFields(): ElementArrayFinder {
     return element.all(by.css('input[type="file"]'));
   }
@@ -205,10 +202,10 @@ export class LoginAppPage {
 export class CreateSurveyAppPage {
 
   public navigateToSurvey(): Promise<string> {
-    return browser.get('engagements/new-survey/questions') as Promise<string>;
+    return browser.get('engagements/new-survey') as Promise<string>;
   }
   public surveyCreateNewButton(): ElementFinder {
-    return element.all(by.css('button')).get(2);
+    return element(by.className('btn mat-flat-button primary'));
   }
   public questionButton(): ElementFinder {
     return element.all(by.css('cl-button')).last();
@@ -232,7 +229,7 @@ export class CreateSurveyAppPage {
     return element.all(by.css('mat-option.mat-option.ng-star-inserted'));
   }
   public previewElement(): ElementFinder {
-    return element(by.className('mobile-preview-mobile'));
+    return element(by.className('mobile-preview'));
   }
   public questionForm(): ElementFinder {
     return element.all(by.css('div.question-form-header')).last();
@@ -404,11 +401,11 @@ export class CreateRewardAppPage {
   public inputFileField(): ElementFinder {
     return element(by.css('input[type=file]'));
   }
+  public imageClear(): ElementFinder {
+    return element(by.css('.image-clear'));
+  }
   public fileUploaded(): ElementFinder {
     return element(by.css('div.image-wrap.ng-star-inserted>img'));
-  }
-  public errorUploadFile(): ElementFinder {
-    return element(by.css('span.upload-error'));
   }
   public fileName(): ElementFinder {
     return element(by.css('span.upload-file-file-name'));
@@ -419,11 +416,11 @@ export class CreateRewardAppPage {
   public uploadSection(): ElementFinder {
     return element(by.css('input.upload-file-input.ng-star-inserted'));
   }
-  public merchantButton(): ElementFinder {
-    return element.all(by.css('mat-radio-button')).get(0);
+  public merchantButtonArray(): ElementArrayFinder {
+    return element.all(by.css('.merchant-btn.mat-stroked-button.mat-primary'));
   }
   public firstMerchantsRow(): ElementFinder {
-    return element.all(by.css('tr.merchant-row.mat-row.ng-star-inserted')).get(0);
+    return element.all(by.css('tr.mat-row.ng-star-inserted')).get(0);
   }
   public dropDownMenu(): ElementArrayFinder {
     return element.all(by.className('mat-select-arrow-wrapper'));
@@ -747,6 +744,10 @@ export class ElementApp {
 
   public static engagementCreated(): ElementFinder {
     return element.all(by.css('p.engagement-item-name.linkable')).get(0);
+  }
+
+  public static errorUploadMessage(): ElementFinder {
+    return element.all(by.css('p.upload-error.ng-star-inserted')).get(1);
   }
 
 }
