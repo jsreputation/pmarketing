@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { ChangePasswordComponent } from './change-password.component';
 import { MatInputModule, MatButtonModule } from '@angular/material';
@@ -60,6 +60,7 @@ describe('ChangePasswordComponent', () => {
     const sharedSpy = spyOn(sharedData, 'addData');
     const routerSpy = spyOn(router, 'navigate');
     component.changePassword();
+    tick();
     expect(sharedSpy).toHaveBeenCalled();
     expect(routerSpy).toHaveBeenCalled();
   }));

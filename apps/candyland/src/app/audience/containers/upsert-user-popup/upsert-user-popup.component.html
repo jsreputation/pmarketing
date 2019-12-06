@@ -9,8 +9,7 @@
   <mat-dialog-content
     class="dialog-content"
     [ngClass]="(data.type=='Add') ? 'add-form':'edit-form'"
-    [formGroup]="form"
-  >
+    [formGroup]="form">
     <mat-tab-group>
       <mat-tab label="Custom user">
         <div class="dialog-tab-content">
@@ -18,33 +17,44 @@
 
           <div class="dialog-input-group">
             <mat-form-field>
-              <input matInput type="text" formControlName="firstName" [placeholder]="'AUDIENCE_FEATURE.FIRST_NAME' | translate">
-              <mat-error *ngIf="this.form.get('firstName').hasError('required')">{{'ERROR_REQUIRED' | translate}}</mat-error>
+              <input matInput type="text" formControlName="firstName"
+                [placeholder]="'AUDIENCE_FEATURE.FIRST_NAME' | translate">
+              <mat-error *ngIf="this.form.get('firstName').hasError('required')">{{'ERROR_REQUIRED' | translate}}
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput type="text" formControlName="lastName" [placeholder]="'AUDIENCE_FEATURE.LAST_NAME' | translate">
-              <mat-error *ngIf="this.form.get('lastName').hasError('required')">{{'ERROR_REQUIRED' | translate}}</mat-error>
+              <input matInput type="text" formControlName="lastName"
+                [placeholder]="'AUDIENCE_FEATURE.LAST_NAME' | translate">
+              <mat-error *ngIf="this.form.get('lastName').hasError('required')">{{'ERROR_REQUIRED' | translate}}
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput type="email" formControlName="email" [placeholder]="'AUDIENCE_FEATURE.EMAIL_ADDRESS' | translate">
-              <mat-error *ngIf="this.form.get('email').hasError('required')">{{'ERROR_REQUIRED' | translate}}</mat-error>
-              <mat-error *ngIf="this.form.get('email').hasError('email')">{{'ERROR_WRONG_FORMAT_OF_EMAIL' | translate}}</mat-error>
+              <input matInput type="email" formControlName="email"
+                [placeholder]="'AUDIENCE_FEATURE.EMAIL_ADDRESS' | translate">
+              <mat-error *ngIf="this.form.get('email').hasError('required')">{{'ERROR_REQUIRED' | translate}}
+              </mat-error>
+              <mat-error *ngIf="this.form.get('email').hasError('email')">{{'ERROR_WRONG_FORMAT_OF_EMAIL' | translate}}
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput type="tel" formControlName="phone" [placeholder]="'AUDIENCE_FEATURE.MOBILE_NUMBER' | translate">
-              <mat-error *ngIf="this.form.get('phone').hasError('required')">{{'ERROR_REQUIRED' | translate}}</mat-error>
+              <input matInput type="tel" formControlName="phone"
+                [placeholder]="'AUDIENCE_FEATURE.MOBILE_NUMBER' | translate">
+              <mat-error *ngIf="this.form.get('phone').hasError('required')">{{'ERROR_REQUIRED' | translate}}
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field>
               <mat-select [placeholder]="'AUDIENCE_FEATURE.GENDER' | translate" formControlName="gender">
-                <mat-option *ngFor="let option of config.gender" [value]="option?.value">{{option?.title | translate}}</mat-option>
+                <mat-option *ngFor="let option of genders" [value]="option?.value">{{option?.title | translate}}
+                </mat-option>
               </mat-select>
             </mat-form-field>
 
-            <cl-date-picker [placeholder]="'AUDIENCE_FEATURE.BIRTHDAY' | translate" formControlName="birthday"></cl-date-picker>
+            <cl-date-picker [placeholder]="'AUDIENCE_FEATURE.BIRTHDAY' | translate" formControlName="birthday">
+            </cl-date-picker>
 
             <mat-form-field>
               <input matInput type="text" formControlName="race" [placeholder]="'AUDIENCE_FEATURE.RACE' | translate">
@@ -58,7 +68,8 @@
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput type="text" formControlName="nationality" [placeholder]="'AUDIENCE_FEATURE.NATIONALITY' | translate">
+              <input matInput type="text" formControlName="nationality"
+                [placeholder]="'AUDIENCE_FEATURE.NATIONALITY' | translate">
             </mat-form-field>
 
             <mat-form-field>
@@ -76,8 +87,7 @@
               <mat-select formControlName="audienceList" multiple>
                 <mat-option
                   *ngFor="let option of pools"
-                  [value]="option.value"
-                >
+                  [value]="option.value">
                   {{option.name | translate}}
                 </mat-option>
               </mat-select>
@@ -87,11 +97,10 @@
       </mat-tab>
       <mat-tab
         *ngIf="data.type === 'Add'"
-        label="Upload by file"
-      >
+        label="Upload by file">
         <div class="dialog-tab-content">
           <cl-upload-file formControlName="file"
-                          [isRequired]="form.get('file').getError('required') && form.get('file').touched">
+            [isRequired]="form.get('file').getError('required') && form.get('file').touched">
           </cl-upload-file>
         </div>
       </mat-tab>
@@ -99,19 +108,19 @@
   </mat-dialog-content>
   <footer class="dialog-actions">
     <cl-button classList="secondary"
-               class="actions-close"
-               (click)="close()"
-               [disableRipple]="true">
-        <span>
-          {{'BTN_CANCEL' | translate}}
-        </span>
+      class="actions-close"
+      (click)="close()"
+      [disableRipple]="true">
+      <span>
+        {{'BTN_CANCEL' | translate}}
+      </span>
     </cl-button>
 
     <cl-button classList="primary"
-               (click)="upsert()">
-        <span>
-          {{btnLabel | translate}}
-        </span>
+      (click)="upsert()">
+      <span>
+        {{btnLabel | translate}}
+      </span>
     </cl-button>
   </footer>
 </aside>
