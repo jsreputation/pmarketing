@@ -284,26 +284,26 @@ export class CreateInstantRewardAppPage {
     return element.all(by.css('button.engagement-selector')).get(3);
   }
 
-  public navigateToCreateInstantReward(): Promise<string> {
+  public static navigateToCreateInstantReward(): Promise<string> {
     return browser.get('engagements/new-instant-reward') as Promise<string> ;
   }
 
-  public mobileHeadline(): ElementFinder {
+  public static mobileHeadline(): ElementFinder {
     return element(by.css('p.mobile-preview-headline'));
   }
-  public mobileSubHeadline(): ElementFinder {
+  public static mobileSubHeadline(): ElementFinder {
     return element(by.css('p.mobile-preview-sub-headline'));
   }
 
-  public cardPreview(): ElementFinder {
+  public static cardPreview(): ElementFinder {
     return element(by.css('div.mobile-preview-card'));
   }
 
-  public backgroundPreview(): ElementFinder {
+  public static backgroundPreview(): ElementFinder {
     return element(by.css('div.mobile-preview-background'));
   }
 
-  public mobileButtonPreview(): ElementFinder {
+  public static mobileButtonPreview(): ElementFinder {
     return element(by.css('button.mobile-preview-btn'));
   }
 
