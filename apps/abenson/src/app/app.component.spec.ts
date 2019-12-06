@@ -61,6 +61,7 @@ describe('AppComponent', () => {
     location = TestBed.get<Location>(Location as Type<Location>);
     configService = TestBed.get<ConfigService>(ConfigService as Type<ConfigService>);
     app.ngOnInit();
+    tick();
   }));
   it('should create the app', () => {
     expect(app).toBeTruthy();
