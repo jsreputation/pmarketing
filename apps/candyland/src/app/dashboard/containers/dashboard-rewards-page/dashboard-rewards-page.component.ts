@@ -15,7 +15,7 @@ import {DashboardService} from '@cl-core-services';
 export class DashboardRewardsPageComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
 
-  public rewardTabValue: any;
+  public rewardTabValue: number | null;
   public params: { [key: string]: string };
   public ct: typeof CardType = CardType;
 
@@ -31,7 +31,7 @@ export class DashboardRewardsPageComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public get RewardValue(): number {
+  public get RewardValue(): number | null {
     return this.rewardTabValue || null;
   }
 
