@@ -11,17 +11,17 @@
         {{reward.name}}
       </p>
       <p *ngIf="!didProceed && reward.rewardPrice.length > 0" class="point">
-        {{getPrice()}} points will be deducted
+        {{getPrice()}}
       </p>
     </div>
   </div>
   <div class="btn-container">
     <div *ngIf="!didProceed && payload else proceeded">
-      <button mat-flat-button (click)="onProceed()" class="full-width__button btn-blue">Proceed</button>
-      <button mat-flat-button (click)="onClose()" class="full-width__button btn-transparent">Cancel</button>
+      <button mat-flat-button (click)="onProceed()" class="full-width__button btn-blue">{{"PROCEED"|translate}}</button>
+      <button mat-flat-button (click)="onClose()" class="full-width__button btn-transparent">{{"CANCEL"|translate}}</button>
     </div>
     <ng-template #proceeded>
-      <button mat-flat-button (click)="onClose()" class="full-width__button btn-blue">Close</button>
+      <button mat-flat-button (click)="onClose()" class="full-width__button btn-blue">{{"CLOSE"|translate}}</button>
     </ng-template>
   </div>
 </div>
