@@ -11,6 +11,9 @@ import {
 import {
   map,
 } from 'rxjs/operators';
+import { oc } from 'ts-optchain';
+
+import { IWRewardDisplayProperties } from '@perx/whistler';
 
 import { RewardsService } from './rewards.service';
 import {
@@ -18,12 +21,10 @@ import {
   ICatalog,
   IPrice,
   ICategoryTags,
-  RedemptionType,
 } from './models/reward.model';
 
 import { Config } from '../config/config';
-import { IWRewardDisplayProperties } from '@perx/whistler';
-import { oc } from 'ts-optchain';
+import { RedemptionType } from '../perx-core.models';
 
 export interface IV4Tag {
   id: number;

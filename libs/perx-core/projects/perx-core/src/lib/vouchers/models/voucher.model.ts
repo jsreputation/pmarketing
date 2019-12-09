@@ -1,4 +1,5 @@
 import { IReward } from '../../rewards/models/reward.model';
+import { RedemptionType } from '../../perx-core.models';
 
 export enum VoucherState {
   issued = 'issued',
@@ -6,14 +7,6 @@ export enum VoucherState {
   expired = 'expired',
   reserved = 'reserved',
   released = 'released',
-}
-
-export enum RedemptionType {
-  pin = 'pin',
-  txtCode = 'txtCode',
-  qr = 'qrcode',
-  none = 'none',
-  offline = 'offline'
 }
 
 export type StatusLabelMapping = {
