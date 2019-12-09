@@ -6,7 +6,7 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 import { map } from 'rxjs/operators';
 import { LoyaltyHttpAdapter } from '@cl-core/http-adapters/loyalty-http-adapter';
 import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { IWCustomTierAttributes  } from '@perx/whistler';
+import { IWCustomTierAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +45,7 @@ export class LoyaltyCustomTierService implements ITableService {
     );
   }
 
-  public deleteCustomTier(id: string): Observable<IJsonApiPayload<IWCustomTierAttributes >> {
+  public deleteCustomTier(id: string): Observable<IJsonApiPayload<IWCustomTierAttributes>> {
     return this.loyaltyHttpService.deleteCustomTier(id);
   }
 }

@@ -7,6 +7,7 @@ import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 import { distinctUntilChanged, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import Utils from '@cl-helpers/utils';
 import { CRUDParser, RequestType } from '@cl-helpers/crud-parser';
+import { ILoyaltyRuleCondition } from '@cl-core/models/loyalty/loyalty-rules.model';
 
 @Component({
   selector: 'cl-rule-setup-popup',
@@ -101,30 +102,6 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
       'limit' in condition && conditions[condition.value] >= condition.limit;
   }
 
-  // public isHideAddCondition(condition: any): boolean {
-  //   return condition.value in this.conditionTypes &&
-  //     'limit' in condition &&
-  //     this.conditionTypes[condition.value] >= condition.limit;
-  // }
-
-  // public get filterTypes(): void {
-  //   const types = this.data.config.conditionType;
-  //   const selectedConditions = this.conditions.value.map(condition => condition.type);
-  //   let result;
-  //   if (selectedConditions.lenght > 0) {
-  //     result = types.filter(type => !selectedConditions.includes(type.value));
-  //   } else {
-  //     result = types;
-  //   }
-  //   console.log('filterTypes', result);
-  // }
-  //   return this.conditions.valueChanges.pipe(
-  //     distinctUntilChanged(Utils.isEqual),
-  //     map(conditions => conditions.map(condition => condition.type)),
-  //     takeUntil(this.destroy$)
-  //   ).subscribe(avaibleConditionsTypes => this.conditionTypes = avaibleConditionsTypes);
-  // }
-
   public close(): void {
     this.dialogRef.close();
   }
@@ -156,8 +133,8 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
     this.form.patchValue(pathValue);
   }
 
-  private getConditionsRequests(ruleId: string, currentConditions: any[], updatedConditions: any[]): Observable<any>[] {
-    return CRUDParser.buildRequestList(currentConditions, updatedConditions, (type, data) => {
+  private getConditionsRequests(ruleId: string, currentConditions: any[], updatedConditions: any[]): Observable<ILoyaltyRuleCondition>[] {
+    return CRUDParser.buildRequestList<ILoyaltyRuleCondition>(currentConditions, updatedConditions, (type, data) => {
       switch (type) {
         case RequestType.CREATE:
           return this.ruleService.createRuleCondition(ruleId, data);
