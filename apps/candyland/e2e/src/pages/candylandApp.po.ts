@@ -54,7 +54,11 @@ export class EngagementAppPage {
   }
 
   public gamePinataOptions(): ElementFinder {
-    return element.all('img[alt="game-icon"]').get(1);
+    return element.all(by.css('img[alt="game-icon"]')).get(1);
+  }
+
+  public gamePinataName(): ElementFinder {
+    return element.all(by.css('.engagement-selector-game>.engagement-selector-name')).get(1);
   }
 
   public confirmModal(): ElementFinder {
@@ -482,8 +486,8 @@ export class AudienceAppPage {
     return element(by.css('mat-select[formcontrolname=audienceList]'));
   }
 
-  public static audienceSpan(): ElementFinder {
-    return element(by.xpath('(//*[@href="/audience/1"][1]/span)[2]'));
+  public static audienceSpan(): ElementArrayFinder {
+    return element.all(by.css('tr.mat-row.ng-star-inserted>.column-featured span'));
   }
 
   public static audienceColumnList(): ElementArrayFinder {
