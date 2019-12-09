@@ -4,6 +4,7 @@
     "build:lib": "lerna run build:lib",
     "build": "lerna run build:lib && lerna run build -- ",
     "build:hsbc": "lerna run build:lib && lerna run build:hsbc -- ",
+    "build:blackcomb": "lerna run build:lib && lerna run build:blackcomb -- ",
     "build:components-demo": "lerna run build:lib && lerna run build:components-demo -- ",
     "build:abenson:prod": "lerna run build:lib && lerna run build:abenson:prod --",
     "build:blackcomb:prod": "lerna run build:lib && lerna run build:blackcomb:prod --",
