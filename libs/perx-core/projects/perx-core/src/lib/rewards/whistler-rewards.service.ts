@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RewardsService } from './rewards.service';
 import { Observable, of } from 'rxjs';
-import { IReward, ICatalog, IPrice, RedemptionType } from './models/reward.model';
+import { IReward, ICatalog, IPrice } from './models/reward.model';
 import { Config } from '../config/config';
 import { map, tap } from 'rxjs/operators';
 
@@ -19,6 +19,8 @@ import {
 import { oc } from 'ts-optchain';
 import { WRedemptionType } from '@perx/whistler';
 
+import { RedemptionType } from '../perx-core.models';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,17 +34,18 @@ export class WhistlerRewardsService implements RewardsService {
   }
 
   private static WRedemptionToRT(rt: WRedemptionType): RedemptionType {
-    if (rt === WRedemptionType.promoCode) {
-      return RedemptionType.txtCode;
+    switch (rt) {
+      case WRedemptionType.promoCode:
+        return RedemptionType.txtCode;
+      case WRedemptionType.qrCode:
+        return RedemptionType.qr;
+      case WRedemptionType.barCode:
+        return RedemptionType.barcode;
+      case WRedemptionType.merchantPin:
+        return RedemptionType.pin;
+      default:
+        return RedemptionType.none;
     }
-    if (rt === WRedemptionType.qrCode) {
-      return RedemptionType.qr;
-    }
-    if (rt === WRedemptionType.merchantPin) {
-      return RedemptionType.pin;
-    }
-
-    return RedemptionType.none;
   }
 
   private static WRewardToReward(
