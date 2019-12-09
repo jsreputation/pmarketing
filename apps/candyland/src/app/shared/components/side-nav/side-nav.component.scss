@@ -173,8 +173,8 @@
 
 @media (min-width: $tablet-width + 1) {
   .sidenav {
-    visibility: visible;
-    transform: none;
+    visibility: visible !important;
+    transform: none !important;
   }
 
   .mat-drawer-content {
