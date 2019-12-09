@@ -451,7 +451,7 @@ export class CreateCampaignAppPage {
   }
 
   public static campaignMatRadioSms(): ElementFinder {
-    return element(by.xpath('//*[@id="mat-radio-8"]/label/div[1]/div[1]'));
+    return element(by.xpath('//*[@id="mat-radio-3"]/label/div[1]/div[1]'));
   }
 
 }
