@@ -64,12 +64,12 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     {value: 'cod', title: 'COD'},
     {value: 'store', title: 'STORE'},
   ];
-  private conditionType: OptionConfig[] = [
-    {value: 'transaction', title: 'Makes a transaction TYPE'},
-    {value: 'amount', title: 'Makes a transaction AMOUNT'},
-    {value: 'currency', title: 'Makes a transaction CURRENCY'},
-    {value: 'fromDate', title: 'Transacts from DATE'},
-    {value: 'toDate', title: 'Transacts to DATE'},
+  private conditionType: any[] = [
+    {value: 'transaction', title: 'Makes a transaction TYPE', limit: 2},
+    {value: 'amount', title: 'Makes a transaction AMOUNT', limit: 1},
+    {value: 'currency', title: 'Makes a transaction CURRENCY', limit: 1},
+    {value: 'fromDate', title: 'Transacts from DATE', limit: 1},
+    {value: 'toDate', title: 'Transacts to DATE', limit: 1},
   ];
   protected destroy$: Subject<void> = new Subject();
 

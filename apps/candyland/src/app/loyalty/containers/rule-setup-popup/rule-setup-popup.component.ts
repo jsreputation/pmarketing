@@ -4,7 +4,7 @@ import { combineLatest, Observable, Subject } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LoyaltyEarnRulesFormsService } from '../../services/loyalty-earn-rules-forms.service';
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
-import { distinctUntilChanged, map, switchMap, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import Utils from '@cl-helpers/utils';
 import { CRUDParser, RequestType } from '@cl-helpers/crud-parser';
 
@@ -17,7 +17,8 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   protected destroy$: Subject<void> = new Subject();
   public titleError: string;
-  public conditionTypes: OptionConfig[];
+  public isHideAddCondition: boolean = false;
+  public conditionTypes: { [value: string]: number } = {};
 
   public get name(): AbstractControl {
     return this.form.get('name') || null;
@@ -49,8 +50,8 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initForm();
-    this.fillForm();
     this.handleConditionTypes();
+    this.fillForm();
   }
 
   public ngOnDestroy(): void {
@@ -59,6 +60,7 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   }
 
   public addCondition(type: string = 'transaction'): void {
+    console.log('closed', type);
     this.conditions.push(this.formsService.createFormField(type));
   }
 
@@ -68,21 +70,60 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
 
   public updateCondition(index: number, type: string): void {
     const id = this.conditions.at(index).value.id;
-    // this.deleteCondition(index);
     this.conditions.setControl(index, this.formsService.createFormField(type));
     if (id) {
       this.conditions.at(index).get('id').patchValue(id);
     }
-    // this.conditions.insert(index, this.formsService.createFormField(type));
   }
 
   public handleConditionTypes(): void {
     this.conditions.valueChanges.pipe(
+      map((conditions) => Utils.uniqValuesMap(conditions, 'type')),
       distinctUntilChanged(Utils.isEqual),
-      map(conditions => conditions.map(condition => condition.type)),
+      map(conditions => this.data.config.conditionType.map(
+        conditionType => ({...conditionType, hide: this.hideOption(conditionType, conditions)})
+      )),
+      tap(conditionsTypes => this.conditionTypes = conditionsTypes),
+      map(conditionsTypes => !!conditionsTypes.find(condition => condition.hide === false)),
+      tap(conditionsTypes => this.isHideAddCondition = conditionsTypes),
       takeUntil(this.destroy$)
-    ).subscribe(avaibleConditionsTypes => this.conditionTypes = avaibleConditionsTypes);
+    ).subscribe();
   }
+
+  public isHideOption(condition: any): boolean {
+    return condition.value in this.conditionTypes &&
+      'limit' in condition &&
+      this.conditionTypes[condition.value] >= condition.limit;
+  }
+
+  public hideOption(condition: any, conditions: any): boolean {
+    return condition.value in conditions &&
+      'limit' in condition && conditions[condition.value] >= condition.limit;
+  }
+
+  // public isHideAddCondition(condition: any): boolean {
+  //   return condition.value in this.conditionTypes &&
+  //     'limit' in condition &&
+  //     this.conditionTypes[condition.value] >= condition.limit;
+  // }
+
+  // public get filterTypes(): void {
+  //   const types = this.data.config.conditionType;
+  //   const selectedConditions = this.conditions.value.map(condition => condition.type);
+  //   let result;
+  //   if (selectedConditions.lenght > 0) {
+  //     result = types.filter(type => !selectedConditions.includes(type.value));
+  //   } else {
+  //     result = types;
+  //   }
+  //   console.log('filterTypes', result);
+  // }
+  //   return this.conditions.valueChanges.pipe(
+  //     distinctUntilChanged(Utils.isEqual),
+  //     map(conditions => conditions.map(condition => condition.type)),
+  //     takeUntil(this.destroy$)
+  //   ).subscribe(avaibleConditionsTypes => this.conditionTypes = avaibleConditionsTypes);
+  // }
 
   public close(): void {
     this.dialogRef.close();
@@ -133,6 +174,7 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
     const ruleSetId = this.data.ruleSet.id;
     const currentRule = this.data.rule;
     const updatedRule = this.form.value;
+    console.log('updatedRule', updatedRule);
     if (currentRule) {
       const ruleId = this.data.rule.id;
       request = combineLatest([

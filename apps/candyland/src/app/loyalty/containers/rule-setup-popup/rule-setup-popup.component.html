@@ -15,10 +15,13 @@
     </mat-form-field>
 
     <label class="loyalty-label">If the customer...</label>
-    <ng-container *ngFor="let conditionGroup of conditions.controls;let index = index; let first = first">
-      <div class="row" *ngIf="!first || conditions.controls > 1">
-        <label class="loyalty-label">AND</label>
-        <button class="question-remove btn-transparent" (click)="deleteCondition(index)">
+    <ng-container *ngFor="let conditionGroup of conditions.controls; let index = index; let first = first">
+      <div class="row">
+<!--           *ngIf="!first || conditions.controls.length > 1">-->
+        <label class="loyalty-label">{{!first ? 'AND' : ''}}</label>
+        <button class="question-remove btn-transparent"
+                *ngIf="conditions.controls.length > 1"
+                (click)="deleteCondition(index)">
           <i class="icon delete"></i>
         </button>
       </div>
@@ -27,14 +30,12 @@
           <mat-form-field>
             <mat-select [formControl]="conditionGroup.get('type')"
                         (valueChange)="updateCondition(index, $event)">
-              <ng-container *ngFor="let conditionOption of data.config?.conditionType">
-                <mat-option [value]="conditionOption?.value">{{conditionOption?.title}}</mat-option>
+              <ng-container *ngFor="let conditionOption of conditionTypes">
+                <mat-option [class.disabled-type-option]="conditionOption?.hide"
+                            [value]="conditionOption?.value">
+                  {{conditionOption?.title}}
+                </mat-option>
               </ng-container>
-<!--              <mat-option value="transaction">Makes a transaction TYPE</mat-option>-->
-<!--              <mat-option value="amount">Makes a transaction AMOUNT</mat-option>-->
-<!--              <mat-option value="currency">Makes a transaction CURRENCY</mat-option>-->
-<!--              <mat-option value="fromDate">Transacts from DATE</mat-option>-->
-<!--              <mat-option value="toDate">Transacts to DATE</mat-option>-->
             </mat-select>
           </mat-form-field>
         </div>
@@ -48,65 +49,81 @@
     </ng-container>
 
     <br>
-    <cl-button [classList]="'tertiary'" (click)="addCondition()">
+
+    <cl-button *ngIf="isHideAddCondition"
+               [classList]="'tertiary'"
+               mat-icon-button
+               [matMenuTriggerFor]="addConditionMenu">
         <span>
          + Add another subcondition
         </span>
     </cl-button>
 
+    <mat-menu #addConditionMenu="matMenu">
+      <ng-container *ngFor="let conditionOption of conditionTypes">
+        <button mat-menu-item
+                [class.disabled-type-option]="conditionOption?.hide"
+                (click)="addCondition(conditionOption?.value)">
+          {{conditionOption?.title}}
+        </button>
+      </ng-container>
+      <!--      <button mat-menu-item>Settings</button>-->
+      <!--      <button mat-menu-item>Help</button>-->
+    </mat-menu>
 
-<!--    <label class="loyalty-label">THEN</label>-->
-<!--    <ng-container formGroupName="result">-->
-<!--      <div class="card-section card-content">-->
-<!--        <mat-form-field>-->
-<!--          <mat-select formControlName="typePoints">-->
-<!--            <mat-option value="bonus">Bonus Points</mat-option>-->
-<!--            <mat-option value="discount">Discount Points</mat-option>-->
-<!--          </mat-select>-->
-<!--        </mat-form-field>-->
-<!--        <div class="loyalty-row input-group ">-->
-<!--          <span>Award</span>-->
-<!--          <mat-form-field floatLabel="never" class="loyalty-rule-input">-->
-<!--            <input type="number" [min]="1" matInput formControlName="awardPoints"-->
-<!--                   placeholder="e.g. 100">-->
-<!--            <mat-error *ngIf="awardPoints.hasError('required') && awardPoints.touched">Required field</mat-error>-->
-<!--            <mat-error *ngIf="awardPoints.hasError('min') && awardPoints.touched">Min value 1</mat-error>-->
-<!--          </mat-form-field>-->
-<!--          <span>Points</span>-->
-<!--        </div>-->
-<!--      </div>-->
 
-<!--      <div class="card-section card-content">-->
-<!--        <mat-form-field>-->
-<!--          <mat-select formControlName="typeMultiplier">-->
-<!--            <mat-option value="multiplier">Multiplier</mat-option>-->
-<!--            <mat-option value="multiplier2">Multiplier 2</mat-option>-->
-<!--          </mat-select>-->
-<!--        </mat-form-field>-->
-<!--        <div class="loyalty-row input-group ">-->
-<!--          <span>Apply</span>-->
-<!--          <mat-form-field floatLabel="never" class="loyalty-rule-input">-->
-<!--            <input type="number" [min]="1" matInput formControlName="applyMultiplier"-->
-<!--                   placeholder="e.g. 2x">-->
-<!--            <mat-error *ngIf="applyMultiplier.hasError('required') && applyMultiplier.touched">Required field-->
-<!--            </mat-error>-->
-<!--            <mat-error *ngIf="applyMultiplier.hasError('min') && applyMultiplier.touched">Min value 1</mat-error>-->
-<!--          </mat-form-field>-->
-<!--          <span>Multiplier to points</span>-->
-<!--        </div>-->
-<!--        <div class="loyalty-row input-group ">-->
-<!--          <span>Up to a maximum of</span>-->
-<!--          <mat-form-field floatLabel="never" class="loyalty-rule-input">-->
-<!--            <input type="number" [min]="1" matInput formControlName="maximumPoints"-->
-<!--                   placeholder="e.g. 2x">-->
-<!--            <mat-error *ngIf="maximumPoints.hasError('required') && maximumPoints.touched">Required field-->
-<!--            </mat-error>-->
-<!--            <mat-error *ngIf="maximumPoints.hasError('min') && maximumPoints.touched">Min value 1</mat-error>-->
-<!--          </mat-form-field>-->
-<!--          <span>Points</span>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </ng-container>-->
+    <!--    <label class="loyalty-label">THEN</label>-->
+    <!--    <ng-container formGroupName="result">-->
+    <!--      <div class="card-section card-content">-->
+    <!--        <mat-form-field>-->
+    <!--          <mat-select formControlName="typePoints">-->
+    <!--            <mat-option value="bonus">Bonus Points</mat-option>-->
+    <!--            <mat-option value="discount">Discount Points</mat-option>-->
+    <!--          </mat-select>-->
+    <!--        </mat-form-field>-->
+    <!--        <div class="loyalty-row input-group ">-->
+    <!--          <span>Award</span>-->
+    <!--          <mat-form-field floatLabel="never" class="loyalty-rule-input">-->
+    <!--            <input type="number" [min]="1" matInput formControlName="awardPoints"-->
+    <!--                   placeholder="e.g. 100">-->
+    <!--            <mat-error *ngIf="awardPoints.hasError('required') && awardPoints.touched">Required field</mat-error>-->
+    <!--            <mat-error *ngIf="awardPoints.hasError('min') && awardPoints.touched">Min value 1</mat-error>-->
+    <!--          </mat-form-field>-->
+    <!--          <span>Points</span>-->
+    <!--        </div>-->
+    <!--      </div>-->
+
+    <!--      <div class="card-section card-content">-->
+    <!--        <mat-form-field>-->
+    <!--          <mat-select formControlName="typeMultiplier">-->
+    <!--            <mat-option value="multiplier">Multiplier</mat-option>-->
+    <!--            <mat-option value="multiplier2">Multiplier 2</mat-option>-->
+    <!--          </mat-select>-->
+    <!--        </mat-form-field>-->
+    <!--        <div class="loyalty-row input-group ">-->
+    <!--          <span>Apply</span>-->
+    <!--          <mat-form-field floatLabel="never" class="loyalty-rule-input">-->
+    <!--            <input type="number" [min]="1" matInput formControlName="applyMultiplier"-->
+    <!--                   placeholder="e.g. 2x">-->
+    <!--            <mat-error *ngIf="applyMultiplier.hasError('required') && applyMultiplier.touched">Required field-->
+    <!--            </mat-error>-->
+    <!--            <mat-error *ngIf="applyMultiplier.hasError('min') && applyMultiplier.touched">Min value 1</mat-error>-->
+    <!--          </mat-form-field>-->
+    <!--          <span>Multiplier to points</span>-->
+    <!--        </div>-->
+    <!--        <div class="loyalty-row input-group ">-->
+    <!--          <span>Up to a maximum of</span>-->
+    <!--          <mat-form-field floatLabel="never" class="loyalty-rule-input">-->
+    <!--            <input type="number" [min]="1" matInput formControlName="maximumPoints"-->
+    <!--                   placeholder="e.g. 2x">-->
+    <!--            <mat-error *ngIf="maximumPoints.hasError('required') && maximumPoints.touched">Required field-->
+    <!--            </mat-error>-->
+    <!--            <mat-error *ngIf="maximumPoints.hasError('min') && maximumPoints.touched">Min value 1</mat-error>-->
+    <!--          </mat-form-field>-->
+    <!--          <span>Points</span>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </ng-container>-->
   </div>
 
   <footer class="dialog-actions">

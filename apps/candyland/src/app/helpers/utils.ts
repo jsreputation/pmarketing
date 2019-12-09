@@ -39,6 +39,14 @@ export default class Utils {
       .reduce((res, key) => (res[key] = obj[key], res), {});
   }
 
+  static uniqValuesMap(arr: any[], field: string = null): { [value: string]: number } {
+    return arr.reduce((acc, item) => {
+      const value = field ? item[field] : item;
+      acc[value] = acc[value] === undefined ? 1 : acc[value] += 1;
+      return acc;
+    }, {});
+  }
+
   static nestedObjectAssign(target, ...sources) {
     if (!sources.length) {
       return target;
@@ -164,10 +172,10 @@ export default class Utils {
   static getFiles<T>(model: T): Partial<T> {
     const partialModel: Partial<T> = {};
     Object.keys(model).forEach((key: string) => {
-      if (model[key] && model[key].hasOwnProperty('image')) {
-        partialModel[key] = model[key];
+        if (model[key] && model[key].hasOwnProperty('image')) {
+          partialModel[key] = model[key];
+        }
       }
-    }
     );
     return partialModel;
   }
