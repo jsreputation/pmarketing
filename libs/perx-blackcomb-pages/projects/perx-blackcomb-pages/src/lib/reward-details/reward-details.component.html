@@ -1,11 +1,11 @@
 <perx-core-reward
     class="core-reward"
-    *ngIf="appConfig.custom"
+    *ngIf="appConfig"
     [reward]="reward$"
     [displayPriceFn]="displayPriceFn"
     [descriptionLabel]="descriptionLabel"
     [tncLabel]="tncLabel"
-    [showExpiry]="appConfig.custom.showExpiryOnRewardDetail"></perx-core-reward>
+    [showExpiry]="appConfig.showExpiryOnRewardDetail"></perx-core-reward>
 <div class="action">
   <button mat-raised-button color="primary" class="reward-buy"
   (click)="buyReward()">

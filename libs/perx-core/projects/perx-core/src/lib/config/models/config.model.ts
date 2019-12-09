@@ -13,6 +13,9 @@ export interface IConfig<T> {
   displayProperties?: IWSetting;
   showHistoryPage?: boolean;
   showHomePage?: boolean;
+  showExpiryOnRewardDetail?: boolean;
+  showNewsfeedOnHomepage?: boolean;
+  showQrPageSubtitle?: boolean;
 }
 
 export interface IMicrositeSettings {

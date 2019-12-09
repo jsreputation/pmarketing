@@ -2,7 +2,7 @@
   <div class="top-section" *ngIf="rewardDetails && appConfig && theme">
     <qrcode [qrdata]="rewardDetails" [size]="150"></qrcode>
     <h4 translate>QR_TO_MERCHANT</h4>
-    <h5 *ngIf="appConfig.custom && appConfig.custom.showQrPageSubtitle">Thank you for shopping at {{theme.properties['--title']}}!</h5>
+    <h5 *ngIf="appConfig.showQrPageSubtitle">Thank you for shopping at {{theme.properties['--title']}}!</h5>
   </div>
   <button mat-stroked-button color="primary" (click)="onCancel()">
     {{'CANCEL' | translate }}
