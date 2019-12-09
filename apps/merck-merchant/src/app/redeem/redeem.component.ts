@@ -9,6 +9,7 @@ import {
 } from '@perx/core';
 import { flatMap } from 'rxjs/operators';
 import { HttpResponseBase } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 interface IHttpResponseBase extends HttpResponseBase {
   error: {
@@ -26,12 +27,14 @@ export class RedeemComponent implements OnInit {
   public payload: IPayload;
   public didProceed: boolean = false;
   public reward: IReward;
+  public language: string;
 
   constructor(
     private router: Router,
     private notificationService: NotificationService,
     private rewardsService: RewardsService,
-    private merchantService: IMerchantAdminService
+    private merchantService: IMerchantAdminService,
+    private translateService: TranslateService,
   ) {
   }
 
@@ -46,6 +49,7 @@ export class RedeemComponent implements OnInit {
         this.notificationService.addSnack('Invalid Merck QR Code');
       }
     }
+    this.language = this.translateService.currentLang || this.translateService.defaultLang;
   }
 
   public onClose(): void {
@@ -68,7 +72,8 @@ export class RedeemComponent implements OnInit {
       );
   }
 
-  public getPrice(): number {
-    return this.reward.rewardPrice && this.reward.rewardPrice[0].points || 0;
+  public getPrice(): string {
+    const points = this.reward.rewardPrice && this.reward.rewardPrice[0].points || 0;
+    return this.language === 'zh' ? `將扣除${points}積分` : `${points} points will be deducted`;
   }
 }
