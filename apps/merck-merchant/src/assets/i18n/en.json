@@ -1,0 +1,22 @@
+{
+  "LOGIN_SUBTITLE": "Diabetes Loyalty Program",
+  "WELCOME": "Welcome",
+  "NAME": "Name",
+  "NAME_IS": "Name is",
+  "EMAIL_ADDRESS": "Email Address",
+  "EMAIL_ADDRESS_IS": "Email Address is",
+  "PASSWORD": "Password",
+  "PASSWORD_IS": "Password is",
+  "FORGOT_PASSWORD": "Forgot password",
+  "LOGIN": "Login",
+  "SALES_CONTACT": "Sales Contact",
+  "SALES_SCAN": "Sales Scan",
+  "REDEMPTION": "Redemption",
+  "LOGOUT": "Log Out",
+  "NEXT": "Next",
+  "CANCEL": "Cancel",
+  "CONFIRM": "Confirm",
+  "BACK": "Back",
+  "PROCEED": "Proceed",
+  "CLOSE": "Close"
+}

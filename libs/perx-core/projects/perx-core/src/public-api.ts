@@ -76,6 +76,7 @@ export {
   IPinata,
   ITree,
   IScratch,
+  ISpin,
   defaultTree,
   IPlayOutcome,
   ISlice,
@@ -86,6 +87,7 @@ export { IGameComponent } from './lib/game/igame.component';
 export { ShakeTreeComponent } from './lib/game/shake-tree/shake-tree.component';
 export { PinataComponent } from './lib/game/pinata/pinata.component';
 export { ScratchCardComponent } from './lib/game/scratch-card/scratch-card.component';
+export { SpinTheWheelComponent } from './lib/game/spin-the-wheel/spin-the-wheel.component';
 
 /**
  * Profile
@@ -150,6 +152,7 @@ export { RepeatTimesDirective } from './lib/utils/directives/repeat-times.direct
 export { NewsfeedComponent } from './lib/utils/newsfeed/newsfeed.component';
 export { LanguageService } from './lib/utils/language/language.service';
 export { LanguageInterceptor } from './lib/utils/language.interceptor';
+export { LocaleIdFactory } from './lib/utils/language/locale-id.factory';
 /**
  * Puzzles
  */

@@ -1,0 +1,126 @@
+<aside class="dialog" role="dialog" aria-labelledby="dialogTitle-upsertUser">
+  <header class="dialog-header-wrap">
+    <!--<h2 mat-dialog-title class="dialog-title" id="dialogTitle-addUser">Create Engagement</h2>-->
+    <h2 class="dialog-title" id="dialogTitle-upsertUser">{{title | translate}}</h2>
+    <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+  <mat-dialog-content
+    class="dialog-content"
+    [ngClass]="(data.type=='Add') ? 'add-form':'edit-form'"
+    [formGroup]="form">
+    <mat-tab-group>
+      <mat-tab label="Custom user">
+        <div class="dialog-tab-content">
+          <label class="dialog-content-title">{{'AUDIENCE_FEATURE.USER_DETAILS' | translate}}</label>
+
+          <div class="dialog-input-group">
+            <mat-form-field>
+              <input matInput type="text" formControlName="firstName"
+                [placeholder]="'AUDIENCE_FEATURE.FIRST_NAME' | translate">
+              <mat-error *ngIf="this.form.get('firstName').hasError('required')">{{'ERROR_REQUIRED' | translate}}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput type="text" formControlName="lastName"
+                [placeholder]="'AUDIENCE_FEATURE.LAST_NAME' | translate">
+              <mat-error *ngIf="this.form.get('lastName').hasError('required')">{{'ERROR_REQUIRED' | translate}}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput type="email" formControlName="email"
+                [placeholder]="'AUDIENCE_FEATURE.EMAIL_ADDRESS' | translate">
+              <mat-error *ngIf="this.form.get('email').hasError('required')">{{'ERROR_REQUIRED' | translate}}
+              </mat-error>
+              <mat-error *ngIf="this.form.get('email').hasError('email')">{{'ERROR_WRONG_FORMAT_OF_EMAIL' | translate}}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput type="tel" formControlName="phone"
+                [placeholder]="'AUDIENCE_FEATURE.MOBILE_NUMBER' | translate">
+              <mat-error *ngIf="this.form.get('phone').hasError('required')">{{'ERROR_REQUIRED' | translate}}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select [placeholder]="'AUDIENCE_FEATURE.GENDER' | translate" formControlName="gender">
+                <mat-option *ngFor="let option of genders" [value]="option?.value">{{option?.title | translate}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <cl-date-picker [placeholder]="'AUDIENCE_FEATURE.BIRTHDAY' | translate" formControlName="birthday">
+            </cl-date-picker>
+
+            <mat-form-field>
+              <input matInput type="text" formControlName="race" [placeholder]="'AUDIENCE_FEATURE.RACE' | translate">
+            </mat-form-field>
+          </div>
+          <div class="dialog-input-group last">
+            <mat-form-field *ngIf="countriesList$ | async as countriesList">
+              <mat-select [placeholder]="'AUDIENCE_FEATURE.COUNTRY' | translate" formControlName="country">
+                <mat-option *ngFor="let option of countriesList" [value]="option?.name">{{option?.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput type="text" formControlName="nationality"
+                [placeholder]="'AUDIENCE_FEATURE.NATIONALITY' | translate">
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput type="text" formControlName="city" [placeholder]="'AUDIENCE_FEATURE.CITY' | translate">
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput type="text" formControlName="state" [placeholder]="'AUDIENCE_FEATURE.STATE' | translate">
+            </mat-form-field>
+          </div>
+
+          <label class="dialog-content-title">{{'AUDIENCE_FEATURE.ADD_TO_AUDIENCE_LIST' | translate}}</label>
+          <div class="dialog-input-group">
+            <mat-form-field>
+              <mat-select formControlName="audienceList" multiple>
+                <mat-option
+                  *ngFor="let option of pools"
+                  [value]="option.value">
+                  {{option.name | translate}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab
+        *ngIf="data.type === 'Add'"
+        label="Upload by file">
+        <div class="dialog-tab-content">
+          <cl-upload-file formControlName="file"
+            [isRequired]="form.get('file').getError('required') && form.get('file').touched">
+          </cl-upload-file>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-dialog-content>
+  <footer class="dialog-actions">
+    <cl-button classList="secondary"
+      class="actions-close"
+      (click)="close()"
+      [disableRipple]="true">
+      <span>
+        {{'BTN_CANCEL' | translate}}
+      </span>
+    </cl-button>
+
+    <cl-button classList="primary"
+      (click)="upsert()">
+      <span>
+        {{btnLabel | translate}}
+      </span>
+    </cl-button>
+  </footer>
+</aside>

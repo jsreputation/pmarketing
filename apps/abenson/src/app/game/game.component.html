@@ -1,6 +1,6 @@
 <div *ngIf="gameData$ | async as game" class="h-100">
   <ng-container [ngSwitch]="game.type">
-    <app-shake [game]="game" *ngSwitchCase="0" (broken)=gameCompleted()></app-shake>
-    <app-tap [game]="game" *ngSwitchCase="1" (broken)=gameCompleted()></app-tap>
+    <app-shake [game]="game" *ngSwitchCase="gt.shakeTheTree" (broken)=gameCompleted()></app-shake>
+    <app-tap [game]="game" *ngSwitchCase="gt.pinata" (broken)=gameCompleted()></app-tap>
   </ng-container>
 </div>

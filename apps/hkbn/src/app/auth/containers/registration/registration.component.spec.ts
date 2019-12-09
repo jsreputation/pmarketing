@@ -21,7 +21,9 @@ import { Type } from '@angular/core';
 import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 
 const authenticationService = {
-  signup: () => of(null)
+  signup: () => of(null),
+  getAppToken: () => of({}),
+  getAppAccessToken: () => ''
 };
 const mockUser: ISignUpData = {
   phone: '111',
