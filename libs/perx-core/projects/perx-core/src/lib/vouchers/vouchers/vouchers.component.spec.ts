@@ -12,7 +12,8 @@ import { IVoucherService } from '../ivoucher.service';
 import { RewardsService } from '../../rewards/rewards.service';
 import { By } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
-import { RedemptionType } from '../../rewards/models/reward.model';
+
+import { RedemptionType } from '../../perx-core.models';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;

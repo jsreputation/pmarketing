@@ -12,11 +12,11 @@ import {
 import {
   IVoucher,
   VoucherState,
-  RedemptionType,
 } from './models/voucher.model';
 import { VouchersModule } from './vouchers.module';
 
 import { ConfigModule } from '../config/config.module';
+import { RedemptionType } from '../perx-core.models';
 
 describe('V4VouchersService', () => {
   let httpTestingController: HttpTestingController;
