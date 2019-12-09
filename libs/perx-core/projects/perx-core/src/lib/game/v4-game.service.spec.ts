@@ -12,8 +12,8 @@ import { V4GameService } from './v4-game.service';
 import { Type } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { RedemptionType } from '../vouchers/models/voucher.model';
 import { ConfigModule } from '../config/config.module';
+import { RedemptionType } from '../perx-core.models';
 
 describe('V4GameService', () => {
   let httpTestingController: HttpTestingController;

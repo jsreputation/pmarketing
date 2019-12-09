@@ -1,12 +1,5 @@
 import { IWRewardDisplayProperties } from '@perx/whistler';
-
-export enum RedemptionType {
-  pin = 'pin',
-  txtCode = 'txtCode',
-  qr = 'qrcode',
-  none = 'none',
-  offline = 'offline'
-}
+import { RedemptionType } from '../../perx-core.models';
 
 export interface IReward {
   id: number;
