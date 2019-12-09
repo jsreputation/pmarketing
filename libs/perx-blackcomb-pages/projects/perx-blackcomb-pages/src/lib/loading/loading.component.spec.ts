@@ -5,7 +5,7 @@ import { MatProgressSpinnerModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService, ICampaignService, IGameService, Config, NotificationService } from '@perx/core';
 import { of } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoadingComponent', () => {
@@ -46,7 +46,15 @@ describe('LoadingComponent', () => {
         { provide: IGameService, useValue: iGameSvcStub },
         { provide: Router, useValue: routerStub },
         { provide: Config, useValue: configStub },
-        { provide: NotificationService, useValue: notificationServiceStub }
+        { provide: NotificationService, useValue: notificationServiceStub },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              queryParams: convertToParamMap({ cid: 1, pi: 'jones' })
+            }
+          }
+        },
       ]
     })
       .compileComponents();
