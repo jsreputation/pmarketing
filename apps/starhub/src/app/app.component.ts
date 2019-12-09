@@ -11,7 +11,9 @@ import {
   IReward,
   // IGameService,
   IGame,
-  TokenStorage
+  TokenStorage,
+  ThemesService,
+  ITheme
 } from '@perx/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -57,7 +59,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   public reward?: IReward;
   public game?: IGame;
   private token: string;
-
+  public theme: ITheme;
   constructor(
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
@@ -68,7 +70,8 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     private snackBar: MatSnackBar,
     // private gameService: IGameService,
     private tokenStorage: TokenStorage,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    private themeService: ThemesService
   ) {
     this.data.pageName = '';
     this.data.channel = 'msa';
@@ -89,9 +92,11 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   }
 
   public ngOnInit(): void {
+    this.themeService.getThemeSetting().subscribe((theme) => {this.theme = theme; console.log(theme)});
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) =>
-        this.dialog.open(PopupComponent, { data, ... data.panelClass && {panelClass: data.panelClass }
+        this.dialog.open(PopupComponent, {
+          data, ...data.panelClass && { panelClass: data.panelClass }
         }));
 
     this.notificationService.$snack.subscribe((msg: string) => this.snackBar.open(msg, 'x', { duration: 2000 }));
