@@ -18,11 +18,14 @@ const generateRowData = async (url: string) => {
   const tenantsList = await getTenantsList(rootToken);
   for (let index = 0; index < tenantsList.length; index++) {
     const tenant = tenantsList[index];
+    console.log('tenant', tenant);
     const createTokenData = await createToken(rootToken, tenant.accountId);
+    console.log('createTokenData: ', createTokenData.headers.authorization);
     const tenantToken = createTokenData.headers.authorization;
     const tenantEndPointRawData = await getEndPoints(tenantToken);
+    console.log('tenantEndPointRawData: ', tenantEndPointRawData);
     const tenantUrl = tenantEndPointRawData.data.data.attributes.url;
-
+    console.log('tenantUrl: ', tenantUrl);
     cache.get(tenantUrl, (_: Error, result: tokenTableRowData) => {
       if (!result) {
         cache.set(url, {
@@ -42,17 +45,18 @@ export function getCredential(url: string): Promise<ICredentials> {
     perx_access_key_id: '',
     perx_secret_access_key: ''
   };
-
+  console.log('request URL: ', url);
   cache.get(url, async (_: Error, result: tokenTableRowData) => {
     if (!result) {
       generateRowData(url);
-      cache.get(url, async (_: Error, newResult: tokenTableRowData) => {
-        if (newResult) {
-          credential.basic_token = newResult.token;
-        }
-      });
+      // cache.get(url, async (_: Error, newResult: tokenTableRowData) => {
+      //   if (newResult) {
+      //     credential.basic_token = newResult.token;
+      //   }
+      // });
+    } else {
+      credential.basic_token = result.token;
     }
-    credential.basic_token = result.token;
   });
   return Promise.resolve(credential);
 };
