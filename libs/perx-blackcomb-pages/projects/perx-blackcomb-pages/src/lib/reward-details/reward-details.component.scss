@@ -8,6 +8,11 @@
   button {
     width: 100%;
   }
+
+  button:disabled {
+    background: #EBEBEB!important;
+    color: #989797;
+  }
 }
 
 :host {
