@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
   LocationsService,
@@ -6,23 +6,22 @@ import {
   ILocation,
   IReward,
   NotificationService,
-  PopupComponent,
   LoyaltyService,
   ILoyalty,
   IPrice,
-  IVoucherService
+  IVoucherService,
+  PopUpClosedCallBack
 } from '@perx/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, flatMap, map } from 'rxjs/operators';
-import { forkJoin, Observable, of, SubscriptionLike, throwError } from 'rxjs';
-import { MatDialog } from '@angular/material';
+import { forkJoin, Observable, of, throwError } from 'rxjs';
 
 @Component({
   selector: 'perx-blackcomb-pages-redemption-booking',
   templateUrl: './redemption-booking.component.html',
   styleUrls: ['./redemption-booking.component.scss']
 })
-export class RedemptionBookingComponent implements OnInit, OnDestroy {
+export class RedemptionBookingComponent implements OnInit, PopUpClosedCallBack {
 
   public rewardId: number;
   public prices: IPrice[];
@@ -31,7 +30,6 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
   public quantities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   public bookingForm: FormGroup;
   private loyalty: ILoyalty;
-  private popupSubscription: SubscriptionLike;
   private merchantAllLocations: ILocation[] = [];
   private lastMerchantPage: number = 1;
   private isCurrentMerchantPageLoaded: boolean = false;
@@ -45,22 +43,13 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private build: FormBuilder,
     private notificationService: NotificationService,
-    private router: Router,
-    private dialog: MatDialog
+    private router: Router
   ) {}
 
   public ngOnInit(): void {
-    this.popupSubscription = this.notificationService.$popup.subscribe(data => {
-      this.dialog.open(PopupComponent, { data });
-    });
-
     this.getData();
     this.getLoyalty();
     this.buildForm();
-  }
-
-  public ngOnDestroy(): void {
-    this.popupSubscription.unsubscribe();
   }
 
   private getData(): void {
@@ -147,7 +136,13 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
           sourceType: ''
         })
     )).subscribe(() => {
-      this.router.navigate(['wallet']);
+      this.notificationService.addPopup({
+        text: 'You can access your voucher from the wallet',
+        title: 'Download Successful!',
+        buttonTxt: 'Go to Wallet',
+        imageUrl: 'assets/congrats_image.png',
+        afterClosedCallBack: this
+      });
     }, (err) => {
       if (err.code === 40) {
         this.notificationService.addPopup({
@@ -176,5 +171,9 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
         });
       }
     );
+  }
+
+  public dialogClosed(): void {
+    this.router.navigateByUrl('wallet');
   }
 }
