@@ -1,0 +1,33 @@
+<div class="main-container">
+    <div class="reward-body">
+        <form class="booking-form" [formGroup]="bookingForm" (ngSubmit)="submitForm()">
+            <div class="mat-select-wrap">
+                <mat-select placeholder="Quantity" formControlName="quantity">
+                    <mat-option *ngFor="let quantity of quantities" [value]="quantity">{{quantity}}</mat-option>
+                </mat-select>
+            </div>
+            <div class="mat-select-wrap">
+                <mat-select placeholder="Location" formControlName="location" msInfiniteScroll (infiniteScroll)="getMerchantData()">
+                    <mat-option>location 1</mat-option>
+                    <mat-option>location 2</mat-option>                      
+                </mat-select>
+            </div>
+            <mat-radio-group class="radio-group" formControlName="priceId">
+                <mat-radio-button class="radio-button">
+                      Use
+                      <span>price</span>
+                    </mat-radio-button>
+                </mat-radio-group>
+            <div class="agreement">
+                <mat-checkbox formControlName="agreement"></mat-checkbox>
+                <p>
+                I have read, understood the <a [routerLink]="[ '/terms-and-conditions']"> ALL IT Hypermarket Terms of Service</a>
+                and agree to all clauses stated therein*
+                </p>
+            </div>
+            <div class="redeem-container">
+                <button mat-flat-button type="submit" color="primary" [disabled]="bookingForm.invalid">Submit</button>
+            </div>           
+        </form>
+    </div>
+</div>

@@ -27,3 +27,4 @@ export { ProfileComponent } from './lib/profile/profile.component';
 export { TransactionHistoryComponent } from './lib/transaction-history/transaction-history.component';
 export { ChangePasswordComponent } from './lib/change-password/change-password.component';
 export { EnterPinComponent } from './lib/enter-pin/enter-pin.component';
+export { RedemptionBookingComponent } from './lib/redemption-booking/redemption-booking.component';

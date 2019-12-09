@@ -58,9 +58,9 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
       switchMap((config: IConfig) => {
         if (config.showVoucherBookingFromRewardsPage) {
           return this.translate.get('GET_VOUCHER');
-        } else {
-          return this.translate.get('REDEEM');
         }
+
+        return this.translate.get('REDEEM');
       })
     ).subscribe((text) => this.buttonLabel = text);
 
@@ -86,10 +86,14 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   }
 
   public buyReward(): void {
-    this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
-      .subscribe(
-        (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`])
-      );
+    if (this.appConfig.showVoucherBookingFromRewardsPage) {
+      this.router.navigateByUrl(`booking/${this.rewardData.id}`);
+    } else {
+      this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
+        .subscribe(
+          (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`])
+        );
+    }
   }
 
   public ngOnDestroy(): void {
