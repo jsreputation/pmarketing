@@ -11,7 +11,7 @@ export class ConfigToSlicesPipe implements PipeTransform {
     let standardProperties;
     for (let i = 0; i < configObject.numberOfWedges; i++) {
       standardProperties = {id: i, backgroundColor: configObject.colorCtrls[i], label: i.toString()};
-      if (configObject.rewardSlots.includes(i + 1)) {
+      if (configObject.rewardSlots.includes(i)) {
         islices = [...islices, {...standardProperties, backgroundImage: configObject.rewardIcon}];
         continue;
       }
@@ -68,7 +68,6 @@ export class SpinComponent {
   }
 
   public gameCompleted(): void {
-    console.log('completed, therefore in called');
     this.broken.emit();
   }
 
