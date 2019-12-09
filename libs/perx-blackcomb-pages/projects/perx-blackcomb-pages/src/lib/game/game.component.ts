@@ -115,7 +115,6 @@ export class GameComponent implements OnInit, OnDestroy {
         if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
           const count = gameTransaction.voucherIds.length.toString();
           this.willWin = true;
-          console.log(this.willWin, 'will i win?');
           this.successPopUp.text =
             this.successPopUp.text ? this.successPopUp.text.replace('{{rewards}}', count) : `You earned ${count} rewards`;
           this.popupData = this.successPopUp;
