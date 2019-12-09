@@ -15,7 +15,7 @@ import {
 import { HomeModule } from '../home/home.module';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { VouchersModule, RewardsModule, GameModule } from '@perx/core';
+import { VouchersModule, RewardsModule, GameModule, LocationModule } from '@perx/core';
 import { WalletModule } from '../wallet/wallet.module';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -46,7 +46,8 @@ import { MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/mat
     TranslateModule,
     MatSelectModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    LocationModule
 
   ]
 })

@@ -8,16 +8,18 @@
             </div>
             <div class="mat-select-wrap">
                 <mat-select placeholder="Location" formControlName="location" msInfiniteScroll (infiniteScroll)="getMerchantData()">
-                    <mat-option>location 1</mat-option>
-                    <mat-option>location 2</mat-option>                      
+                    <mat-option *ngFor="let location of locationData | async" [value]="location.locationId">{{location.name}}</mat-option>   
                 </mat-select>
             </div>
             <mat-radio-group class="radio-group" formControlName="priceId">
-                <mat-radio-button class="radio-button">
-                      Use
-                      <span>price</span>
-                    </mat-radio-button>
-                </mat-radio-group>
+                <mat-radio-button *ngFor="let price of prices" class="radio-button" [value]="price.id">
+                    Use
+                    <span *ngIf="price.points">{{price.points}} points</span>
+                    <span *ngIf="price.points && price.price"> + </span>
+                    <span *ngIf="price.price">{{price.currencyCode}} {{price.price | number: '1.0-0'}}</span>
+                    <span *ngIf="price.identifier"> (code: {{price.identifier}})</span>
+                </mat-radio-button>
+            </mat-radio-group>
             <div class="agreement">
                 <mat-checkbox formControlName="agreement"></mat-checkbox>
                 <p>
