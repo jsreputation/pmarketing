@@ -1,3 +1,4 @@
+export { PopupComponent } from './lib/popup/popup.component';
 export { LoadingComponent } from './lib/loading/loading.component';
 export { PerxBlackcombPagesModule } from './lib/perx-blackcomb-pages.module';
 export { AccountComponent } from './lib/account/account.component';
