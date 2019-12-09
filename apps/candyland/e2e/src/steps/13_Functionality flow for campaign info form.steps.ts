@@ -15,11 +15,26 @@ import {
   CreateCampaignAppPage,
   EngagementAppPage,
   ElementApp,
+  LoginAppPage,
 } from '../pages/candylandApp.po';
 
 // Verifying that the relevant input text fields are present.
 Given(/^13_that I am on the campaign info page$/, async () => {
   const ec = protractor.ExpectedConditions;
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  // entering correct account id
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
+
   await CreateCampaignAppPage.navigateToCreateCampaign();
   // waiting for the search bar to load
   await browser.wait(ec.elementToBeClickable(ElementApp.inputTextArray().get(1)), 6000);
@@ -98,19 +113,19 @@ When(/^15_I click on the campaign goal$/, async () => {
   // const urlDebugging = await browser.getCurrentUrl();
   // console.log('The current url is ' + urlDebugging);
   // waiting for campaign goal to load
-  await browser.wait(ec.elementToBeClickable(ElementApp.matSelect().get(1)), 8000);
-  await ElementApp.matSelect().get(1).click();
+  await browser.wait(ec.elementToBeClickable(ElementApp.matSelect().get(2)), 8000);
+  await ElementApp.matSelect().get(2).click();
 });
 
 Then(/^15_I should see five options.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the options to load
-  await browser.wait(ec.elementToBeClickable(ElementApp.matSelectValueArray().get(1)), 6000);
+  await browser.wait(ec.elementToBeClickable(ElementApp.matSelectValueArray().get(2)), 6000);
   expect(await ElementApp.spanMatOptionText().count()).to.equal(5);
 });
 
 // Verifying that functionality of audience upload form
-// might be deprecated.
+// This scenario is not valid for now
 Given(/^16_that I am on the campaign info page.$/, async () => {
   const ec = protractor.ExpectedConditions;
   await CreateCampaignAppPage.navigateToCreateCampaign();
