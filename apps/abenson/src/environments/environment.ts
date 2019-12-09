@@ -3,6 +3,5 @@ export const environment = {
   production: false,
   preAuth: false,
   isWhistler: false,
-  baseHref: '/',
-  comingSoon: 'false'
+  baseHref: '/'
 };

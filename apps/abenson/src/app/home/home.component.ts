@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   public campaigns$: Observable<ICampaign[]>;
   public vouchers$: Observable<Voucher[]>;
   public filter: string[];
-  public comingSoon: boolean = false;
+  public comingSoon: boolean = true;
   constructor(
     private router: Router,
     private vouchersService: IVoucherService,
