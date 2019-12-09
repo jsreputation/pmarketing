@@ -1,7 +1,7 @@
 Feature: 27_Testing Blackcomb flow for new signups for campaign creation using survey engagement.
 
 This will be the test flow for new signs up for blackcomb
-@runThis1
+
 Scenario: Inputting the url link leads to the webpage
   Given 1_I am on the launch page with the url generated
   When  1_Navigating to the webpage with the url generated
@@ -16,7 +16,7 @@ Scenario: Ensure that instant reward page have relevant elements
   Given 3_I am on the blackcomb page
   When  3_I do nothing
   Then  3_I should see the relevant elements of the blackcomb
-@runThis1
+
 Scenario: Ensure that instant reward page have relevant elements
   Given 4_I am on the blackcomb page
   When  4_I do nothing

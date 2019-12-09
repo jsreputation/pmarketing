@@ -149,7 +149,7 @@ Given(/^4_I am on the blackcomb page$/, async () => {
   // waiting for the search bar to load
   await browser.wait(ec.elementToBeClickable(ElementApp.inputTextArray().get(1)), 6000);
   // entering search criteria for survey in search bar
-  await ElementApp.inputTextArray().get(1).sendKeys('Survey');
+  await ElementApp.inputTextArray().get(1).sendKeys('Survey Template');
   // selecting first element
   await browser.wait(ec.elementToBeClickable(EngagementAppPage.engagementItemArray().first()), 5000);
   // asserting the presence of the card and title of the card
@@ -187,7 +187,7 @@ Given(/^5_I am on the campaign review page$/, async () => {
   // waiting for the search bar to load
   await browser.wait(ec.elementToBeClickable(ElementApp.inputTextArray().get(1)), 6000);
   // entering search criteria for survey in search bar
-  await ElementApp.inputTextArray().get(1).sendKeys('Survey');
+  await ElementApp.inputTextArray().get(1).sendKeys('Survey Template');
   // selecting first element
   await browser.wait(ec.elementToBeClickable(EngagementAppPage.engagementItemArray().first()), 5000);
   // asserting the presence of the card and title of the card
