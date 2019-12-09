@@ -11,6 +11,7 @@ import {from, of} from 'rxjs';
 import {Type} from '@angular/core';
 import {IMerchantAdminService, NotificationService, TokenStorage} from '@perx/core';
 import {Location} from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('OrderComponent', () => {
   let component: OrderComponent;
@@ -123,7 +124,14 @@ describe('OrderComponent', () => {
         HeaderComponent,
         OrderQuantityComponent
       ],
-      imports: [MatIconModule, MatToolbarModule, FormsModule, MatListModule, MatDividerModule],
+      imports: [
+        MatIconModule,
+        MatToolbarModule,
+        FormsModule,
+        MatListModule,
+        MatDividerModule,
+        TranslateModule.forRoot()
+      ],
       providers: [
         {provide: Router, useValue: routerStub},
         {provide: ProductService, useValue: productServiceStub},
