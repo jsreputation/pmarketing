@@ -1,4 +1,9 @@
-import { IWVoucherStatsApi, IWVouchersApi } from '@perx/whistler';
+import {
+  IWVoucherStatsApi,
+  IWVouchersApi,
+} from '@perx/whistler';
+
+import { SOURCE_TYPE } from '../../app.constants';
 
 export class VouchersHttpAdapter {
   // tslint:disable
@@ -17,7 +22,7 @@ export class VouchersHttpAdapter {
       attributes: {
         amount: data.amount,
         start_date: data.start_date,
-        source_type: 'Ros::Reward::Entity',
+        source_type: SOURCE_TYPE,
         source_id: data.source_id,
         code_type: data.code_type,
         code: data.code
@@ -31,7 +36,7 @@ export class VouchersHttpAdapter {
       attributes: {
         amount: data.amount,
         start_date: data.start_date,
-        source_type: 'Ros::Reward::Entity',
+        source_type: SOURCE_TYPE,
         source_id: data.source_id,
         code_type: data.code_type,
         prefix: data.prefix,

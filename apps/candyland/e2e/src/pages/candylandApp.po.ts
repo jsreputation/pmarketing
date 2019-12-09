@@ -54,7 +54,11 @@ export class EngagementAppPage {
   }
 
   public gamePinataOptions(): ElementFinder {
-    return element.all('img[alt="game-icon"]').get(1);
+    return element.all(by.css('img[alt="game-icon"]')).get(1);
+  }
+
+  public gamePinataName(): ElementFinder {
+    return element.all(by.css('.engagement-selector-game>.engagement-selector-name')).get(1);
   }
 
   public confirmModal(): ElementFinder {
@@ -416,11 +420,11 @@ export class CreateRewardAppPage {
   public uploadSection(): ElementFinder {
     return element(by.css('input.upload-file-input.ng-star-inserted'));
   }
-  public merchantButton(): ElementFinder {
-    return element.all(by.css('mat-radio-button')).get(0);
+  public merchantButtonArray(): ElementArrayFinder {
+    return element.all(by.css('.merchant-btn.mat-stroked-button.mat-primary'));
   }
   public firstMerchantsRow(): ElementFinder {
-    return element.all(by.css('tr.merchant-row.mat-row.ng-star-inserted')).get(0);
+    return element.all(by.css('tr.mat-row.ng-star-inserted')).get(0);
   }
   public dropDownMenu(): ElementArrayFinder {
     return element.all(by.className('mat-select-arrow-wrapper'));
@@ -451,7 +455,7 @@ export class CreateCampaignAppPage {
   }
 
   public static campaignMatRadioSms(): ElementFinder {
-    return element(by.xpath('//*[@id="mat-radio-8"]/label/div[1]/div[1]'));
+    return element(by.xpath('//*[@id="mat-radio-3"]/label/div[1]/div[1]'));
   }
 
 }
@@ -482,8 +486,8 @@ export class AudienceAppPage {
     return element(by.css('mat-select[formcontrolname=audienceList]'));
   }
 
-  public static audienceSpan(): ElementFinder {
-    return element(by.xpath('(//*[@href="/audience/1"][1]/span)[2]'));
+  public static audienceSpan(): ElementArrayFinder {
+    return element.all(by.css('tr.mat-row.ng-star-inserted>.column-featured span'));
   }
 
   public static audienceColumnList(): ElementArrayFinder {
