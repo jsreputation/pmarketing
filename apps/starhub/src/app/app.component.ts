@@ -92,7 +92,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   }
 
   public ngOnInit(): void {
-    this.themeService.getThemeSetting().subscribe((theme) => {this.theme = theme; console.log(theme)});
+    this.themeService.getThemeSetting().subscribe((theme) => this.theme = theme);
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) =>
         this.dialog.open(PopupComponent, {
