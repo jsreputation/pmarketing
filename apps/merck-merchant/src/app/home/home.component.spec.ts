@@ -7,6 +7,7 @@ import { SalesContactComponent } from '../sales-contact/sales-contact.component'
 import { MatToolbarModule, MatIconModule } from '@angular/material';
 import { Type } from '@angular/core';
 import { Location } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -25,7 +26,7 @@ describe('HomeComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [ HomeComponent, HeaderComponent, SalesContactComponent ],
-      imports: [ MatToolbarModule, MatIconModule ],
+      imports: [ MatToolbarModule, MatIconModule, TranslateModule.forRoot() ],
       providers: [
         { provide: Router, useValue: routerStub },
         { provide: Location, useValue: locationStub },
