@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TransactionConditionGroupComponent } from './transaction-condition-group.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MatMenuModule } from '@angular/material';
 
 describe('TransactionConditionGroupComponent', () => {
   let component: TransactionConditionGroupComponent;
@@ -8,9 +10,11 @@ describe('TransactionConditionGroupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TransactionConditionGroupComponent ]
+      imports: [MatMenuModule],
+      declarations: [TransactionConditionGroupComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

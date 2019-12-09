@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RuleSetupPopupComponent } from './rule-setup-popup.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('RuleSetupPopupComponent', () => {
   let component: RuleSetupPopupComponent;
@@ -8,7 +9,8 @@ describe('RuleSetupPopupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RuleSetupPopupComponent ]
+      declarations: [ RuleSetupPopupComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));

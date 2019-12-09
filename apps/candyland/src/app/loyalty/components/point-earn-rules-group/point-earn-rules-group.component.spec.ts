@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PointEarnRulesGroupComponent } from './point-earn-rules-group.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('PointEarnRulesGroupComponent', () => {
   let component: PointEarnRulesGroupComponent;
@@ -8,7 +9,8 @@ describe('PointEarnRulesGroupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PointEarnRulesGroupComponent ]
+      declarations: [ PointEarnRulesGroupComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

@@ -5,8 +5,6 @@
         <ng-container *ngFor="let operatorOption of config?.ruleOperators">
           <mat-option [value]="operatorOption?.value">{{operatorOption?.title}}</mat-option>
         </ng-container>
-        <!--        <mat-option value="equal">equal to</mat-option>-->
-        <!--        <mat-option value="unequal">not equal to</mat-option>-->
       </mat-select>
     </mat-form-field>
     <mat-form-field floatLabel="never" class="loyalty-rule-input">
