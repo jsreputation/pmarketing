@@ -455,7 +455,7 @@ export class CreateCampaignAppPage {
   }
 
   public static campaignMatRadioSms(): ElementFinder {
-    return element(by.xpath('//*[@id="mat-radio-8"]/label/div[1]/div[1]'));
+    return element(by.xpath('//*[@id="mat-radio-3"]/label/div[1]/div[1]'));
   }
 
 }
@@ -486,8 +486,8 @@ export class AudienceAppPage {
     return element(by.css('mat-select[formcontrolname=audienceList]'));
   }
 
-  public static audienceSpan(): ElementFinder {
-    return element(by.xpath('(//*[@href="/audience/1"][1]/span)[2]'));
+  public static audienceSpan(): ElementArrayFinder {
+    return element.all(by.css('tr.mat-row.ng-star-inserted>.column-featured span'));
   }
 
   public static audienceColumnList(): ElementArrayFinder {
