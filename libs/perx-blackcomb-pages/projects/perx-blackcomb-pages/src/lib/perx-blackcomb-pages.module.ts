@@ -29,6 +29,7 @@ import {
   PinRedemptionComponent,
   BcodeRedemptionComponent,
   QrcodeRedemptionComponent,
+  BarcodeRedemptionComponent,
   RewardComponent as PerxRewardComponent,
   SurveyComponent as PerxSurveyComponent,
   PuzzleCollectStampsComponent,
@@ -54,6 +55,7 @@ import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { LoadingComponent } from './loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
+import { NgxBarcodeModule } from 'ngx-barcode';
 import { LoginComponent } from './login/login.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { QRComponent } from './qr/qr.component';
@@ -73,6 +75,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
+import { FeedItemPopupComponent } from './feed-item-popup/feed-item-popup.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -86,6 +89,7 @@ const comps: any[] = [
   PinRedemptionComponent,
   BcodeRedemptionComponent,
   QrcodeRedemptionComponent,
+  BarcodeRedemptionComponent,
   LoadingComponent,
   RedeemComponent,
   LoginComponent,
@@ -121,7 +125,8 @@ const comps: any[] = [
   ProfileComponent,
   ChangePasswordComponent,
   EnterPinComponent,
-  PinInputComponent
+  PinInputComponent,
+  FeedItemPopupComponent
 ];
 
 @NgModule({
@@ -141,6 +146,7 @@ const comps: any[] = [
     FormsModule,
     ReactiveFormsModule,
     QRCodeModule,
+    NgxBarcodeModule,
     MatFormFieldModule,
     MatRadioModule,
     MatCheckboxModule,

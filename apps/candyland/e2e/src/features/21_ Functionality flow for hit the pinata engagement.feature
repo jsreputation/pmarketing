@@ -4,10 +4,10 @@ This will be the test flow for all the features of hit the pinata engagement typ
 @runThis
 Scenario: Ensure functionality of headline and and sub-headline message
   Given 4_I am on the hit the pinata creation page
-  When  4_I input a test string in the headlline and sub headline field.
+  When  4_I input a test string in the headline and sub headline field.
   Then  4_I should see the test string in the preview element.
 
-Scenario: Verifying the fucnctionality of the game graphic options
+Scenario: Verifying the functionality of the game graphic options
   Given 5_I am on the hit the pinata creation page
   When  5_I select an option for the pinata and the background.
   Then  5_I should see the change in the preview element.
