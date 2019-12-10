@@ -1,6 +1,5 @@
 import {Component, Input, OnChanges, AfterViewInit, SimpleChanges, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
 import { ISlice } from '../game.model';
-import {Event} from '@angular/router';
 
 interface ImageForPattern {
   id: string;
