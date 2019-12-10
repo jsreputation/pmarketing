@@ -3,7 +3,7 @@
     <mat-form-field>
       <mat-select formControlName="value">
         <ng-container *ngFor="let options of config?.transactionType">
-          <mat-option [value]="options?.value">{{options?.title}}</mat-option>
+          <mat-option [value]="options?.value">{{options?.title | translate}}</mat-option>
         </ng-container>
       </mat-select>
     </mat-form-field>

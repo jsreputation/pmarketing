@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
+import { ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
 
 @Component({
   selector: 'cl-loyalty-rule-card',
@@ -11,7 +12,7 @@ export class LoyaltyRuleCardComponent {
   @Input() public tierId: string;
   @Input() public tierType: string = 'basicTier';
   @Input() public tierName: string;
-  @Input() public ruleSet: any;
+  @Input() public ruleSet: ILoyaltyRuleSet;
   @Output() public rulesAction: EventEmitter<{ action: NewLoyaltyActions, data?: any }> = new EventEmitter();
 
   public handleTiersAction(data: { action: NewLoyaltyActions, data?: any }): void {

@@ -3,6 +3,7 @@ import { AmountConditionGroupComponent } from './amount-condition-group.componen
 // tslint:disable-next-line
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AmountConditionGroupComponent', () => {
   let component: AmountConditionGroupComponent;
@@ -10,7 +11,7 @@ describe('AmountConditionGroupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [],
+      imports: [TranslateModule.forRoot()],
       declarations: [AmountConditionGroupComponent],
       schemas: [NO_ERRORS_SCHEMA]
     })

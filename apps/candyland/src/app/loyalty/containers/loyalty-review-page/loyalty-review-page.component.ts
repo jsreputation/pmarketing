@@ -10,6 +10,7 @@ import { StatusLabelConfig } from '@cl-shared';
 import { ConfigService } from '@cl-core-services';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
+import { ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
 
 @Component({
   selector: 'cl-loyalty-review-page',
@@ -21,8 +22,8 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
   public loader: boolean = false;
   public loyalty: ILoyaltyForm;
   public customTierDataSource: CustomDataSource<ICustomTireForm>;
-  public basicTierRuleSet: any;
-  public customTierRuleSetMap: any = {};
+  public basicTierRuleSet: ILoyaltyRuleSet;
+  public customTierRuleSetMap: { [id: string]: ILoyaltyRuleSet } = {};
   public statusLabel: { [key: string]: StatusLabelConfig };
   protected destroy$: Subject<void> = new Subject();
 

@@ -23,6 +23,7 @@ import { RuleSetupPopupComponent } from '../rule-setup-popup/rule-setup-popup.co
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { StatusLabelConfig } from '@cl-shared/components/status-label/status-label.component';
+import { ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
 
 @Component({
   selector: 'cl-manage-loyalty-page',
@@ -40,8 +41,8 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   public stepProgress: number = null;
   private stepProgress$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   public customTierDataSource: CustomDataSource<ICustomTireForm>;
-  public basicTierRuleSet: any;
-  public customTierRuleSetMap: any = {};
+  public basicTierRuleSet: ILoyaltyRuleSet;
+  public customTierRuleSetMap: {[id: string]: ILoyaltyRuleSet} = {};
   public ruleLoader: boolean = false;
   public pools: IWPools;
   public isEditPage: boolean = false;
@@ -60,16 +61,16 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     {value: 'greater_or_equal', title: '≥'},
   ];
   private transactionType: OptionConfig[] = [
-    {value: 'prepaid', title: 'PREPAID'},
-    {value: 'cod', title: 'COD'},
-    {value: 'store', title: 'STORE'},
+    {value: 'prepaid', title: 'LOYALTY_FEATURE.TRANSACTION_TYPE.PREPAID'},
+    {value: 'cod', title: 'LOYALTY_FEATURE.TRANSACTION_TYPE.COD'},
+    {value: 'store', title: 'LOYALTY_FEATURE.TRANSACTION_TYPE.STORE'},
   ];
-  private conditionType: any[] = [
-    {value: 'transaction', title: 'Makes a transaction TYPE', limit: 2},
-    {value: 'amount', title: 'Makes a transaction AMOUNT', limit: 1},
-    {value: 'currency', title: 'Makes a transaction CURRENCY', limit: 1},
-    {value: 'fromDate', title: 'Transacts from DATE', limit: 1},
-    {value: 'toDate', title: 'Transacts to DATE', limit: 1},
+  private conditionType: { value: string, title: string, limit?: number }[] = [
+    {value: 'transaction', title: 'LOYALTY_FEATURE.CONDITION_TYPE.TRANSACTION', limit: 2},
+    {value: 'amount', title: 'LOYALTY_FEATURE.CONDITION_TYPE.AMOUNT', limit: 1},
+    {value: 'currency', title: 'LOYALTY_FEATURE.CONDITION_TYPE.CURRENCY', limit: 1},
+    {value: 'fromDate', title: 'LOYALTY_FEATURE.CONDITION_TYPE.FROM_DATE', limit: 1},
+    {value: 'toDate', title: 'LOYALTY_FEATURE.CONDITION_TYPE.TO_DATE', limit: 1},
   ];
   protected destroy$: Subject<void> = new Subject();
 

@@ -7,7 +7,7 @@ import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 import { distinctUntilChanged, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import Utils from '@cl-helpers/utils';
 import { CRUDParser, RequestType } from '@cl-helpers/crud-parser';
-import { ILoyaltyRuleCondition } from '@cl-core/models/loyalty/loyalty-rules.model';
+import { ILoyaltyRule, ILoyaltyRuleCondition, ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
 
 @Component({
   selector: 'cl-rule-setup-popup',
@@ -45,7 +45,7 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<RuleSetupPopupComponent>,
     private formsService: LoyaltyEarnRulesFormsService,
     public ruleService: LoyaltyRuleService,
-    @Inject(MAT_DIALOG_DATA) public data: { ruleSet: any, rule?: any | null, config: any }
+    @Inject(MAT_DIALOG_DATA) public data: { ruleSet: ILoyaltyRuleSet, rule?: ILoyaltyRule | null, config: any }
   ) {
   }
 
@@ -148,7 +148,7 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
     let request;
     const ruleSetId = this.data.ruleSet.id;
     const currentRule = this.data.rule;
-    const updatedRule = this.form.value;;
+    const updatedRule = this.form.value;
     if (currentRule) {
       const ruleId = this.data.rule.id;
       request = combineLatest([

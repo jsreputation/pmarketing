@@ -4,6 +4,7 @@ import { TransactionConditionGroupComponent } from './transaction-condition-grou
 // tslint:disable-next-line
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatMenuModule } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TransactionConditionGroupComponent', () => {
   let component: TransactionConditionGroupComponent;
@@ -11,7 +12,7 @@ describe('TransactionConditionGroupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MatMenuModule],
+      imports: [TranslateModule.forRoot(), MatMenuModule],
       declarations: [TransactionConditionGroupComponent],
       schemas: [NO_ERRORS_SCHEMA]
     })

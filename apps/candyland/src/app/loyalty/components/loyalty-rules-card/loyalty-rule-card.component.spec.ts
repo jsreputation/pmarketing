@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoyaltyRuleCardComponent } from './loyalty-rule-card.component';
 // tslint:disable-next-line
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoyaltyRuleCardComponent', () => {
   let component: LoyaltyRuleCardComponent;
@@ -10,6 +11,7 @@ describe('LoyaltyRuleCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [TranslateModule.forRoot()],
       declarations: [LoyaltyRuleCardComponent],
       schemas: [NO_ERRORS_SCHEMA]
     })

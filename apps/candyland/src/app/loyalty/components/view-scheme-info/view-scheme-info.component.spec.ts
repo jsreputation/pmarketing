@@ -11,13 +11,13 @@ describe('ViewSchemeInfoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          PipesModule,
-          TranslateModule.forRoot()
-        ],
-        declarations: [ViewSchemeInfoComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      imports: [
+        PipesModule,
+        TranslateModule.forRoot()
+      ],
+      declarations: [ViewSchemeInfoComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 
