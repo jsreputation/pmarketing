@@ -1,13 +1,28 @@
 import { Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, protractor } from 'protractor';
-import { EngagementAppPage, ElementApp } from '../pages/candylandApp.po';
+import { EngagementAppPage, ElementApp, LoginAppPage } from '../pages/candylandApp.po';
 import * as path from 'path' ;
 
 let PageEngagement: EngagementAppPage;
 const Element = ElementApp;
 // Verifying successful creation of hit the pinata engagment
 Given(/^8_I am on engagement page$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  // entering correct account id
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
+
   PageEngagement = new EngagementAppPage();
   await PageEngagement.navigateToEngagement();
 });
@@ -88,5 +103,5 @@ Then(/^8_I should see the game created.$/, async () => {
   // waiting for the card to be loaded
   await browser.wait(ec.presenceOf(Element.engagementCreated()), 6000);
   // doing an assertion on the text string of the card
-  expect(await Element.engagementCreated().getText()).to.contain('hit the pinata');
+  expect(await Element.engagementCreated().getText()).to.contain('Hit the Pinata Template');
 });
