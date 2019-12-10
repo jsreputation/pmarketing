@@ -6,7 +6,7 @@ import { AuthenticationService } from '../auth/authentication/authentication.ser
 import { map, switchMap, tap } from 'rxjs/operators';
 import { ICustomProperties } from '../profile/profile.model';
 import { ConfigService } from './config.service';
-import { IWSetting } from '@perx/whistler';
+import { ICSetting } from '../settings/display';
 
 interface IV4MicrositeSettingsResponse {
   data: IV4MicrositeSettings;
@@ -65,7 +65,7 @@ export class V4ConfigService extends ConfigService {
   public getAccountSettings<T>(): Observable<PagesObject> {
     return this.http.get<IConfig<T>>('assets/config/app-config.json').pipe(
       map(res => res.displayProperties),
-      map((displayProps: IWSetting) => displayProps.account || { pages: [] }),
+      map((displayProps: ICSetting) => displayProps.account || { pages: [] }),
       map((account) => this.settings = account)
     );
   }

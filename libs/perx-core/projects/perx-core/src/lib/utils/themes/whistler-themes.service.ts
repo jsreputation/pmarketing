@@ -1,13 +1,14 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ITheme, DARK, LIGHT } from './themes.model';
-import { IWSetting, IWTenant, } from '@perx/whistler';
+import { IWTenant, } from '@perx/whistler';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
 import { map, tap } from 'rxjs/operators';
 import { ThemesService } from './themes.service';
 
 import { IJsonApiListPayload } from '@perx/whistler';
+import { ICSetting } from '../../settings/display';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class WhistlerThemesService extends ThemesService {
     }
   }
 
-  private static WThemeToTheme(setting: IWSetting): ITheme {
+  private static WThemeToTheme(setting: ICSetting): ITheme {
     if (!setting) {
       return LIGHT;
     }
