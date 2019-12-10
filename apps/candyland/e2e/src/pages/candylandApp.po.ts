@@ -289,7 +289,7 @@ export class CreateHitThePinataAppPage {
     return browser.get('engagements/games/new-pinata') as Promise<string>;
   }
   public uploadedBackgroundImageObj(): ElementFinder {
-    return element(by.css('div.image-wrap.ng-star-inserted>img.image'));
+    return element(by.css('div.image-wrap.ng-star-inserted>img'));
   }
   public pinataImage(): ElementFinder {
     return element(by.css('img.img'));
