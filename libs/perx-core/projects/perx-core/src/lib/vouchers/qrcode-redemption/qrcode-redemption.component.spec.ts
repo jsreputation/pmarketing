@@ -7,8 +7,8 @@ import { IVoucherService } from '../ivoucher.service';
 import { of } from 'rxjs';
 import { IVoucher, VoucherState } from '../models/voucher.model';
 import { Type, SimpleChange } from '@angular/core';
-import { RedemptionType } from '../../rewards/models/reward.model';
 import { oc } from 'ts-optchain';
+import { RedemptionType } from '../../perx-core.models';
 
 describe('QrcodeRedemptionComponent', () => {
   let component: QrcodeRedemptionComponent;
