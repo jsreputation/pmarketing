@@ -42,7 +42,6 @@ describe('V4VouchersService', () => {
         merchantWebsite: '',
         termsAndConditions: '',
         howToRedeem: '',
-        redemptionType: RedemptionType.none,
         categoryTags: [],
       },
       state: VoucherState.issued,

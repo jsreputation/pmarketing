@@ -58,7 +58,6 @@ describe('RewardComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: null,
       categoryTags: [],
       inventory: null,
     },

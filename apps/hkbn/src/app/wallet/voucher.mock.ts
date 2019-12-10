@@ -19,7 +19,6 @@ export const mockVoucher: Voucher = {
         merchantWebsite: '',
         termsAndConditions: '',
         howToRedeem: '',
-        redemptionType: null,
         categoryTags: [],
         inventory: null,
       },

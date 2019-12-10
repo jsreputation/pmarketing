@@ -12,8 +12,6 @@ import { IVoucher, VoucherState } from '../models/voucher.model';
 import { Type, SimpleChange } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import { RedemptionType } from '../../perx-core.models';
-
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
   let fixture: ComponentFixture<VoucherComponent>;
@@ -37,7 +35,6 @@ describe('VoucherComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: RedemptionType.none,
       categoryTags: [],
     },
     state: VoucherState.issued,

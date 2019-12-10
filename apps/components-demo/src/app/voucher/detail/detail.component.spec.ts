@@ -26,7 +26,6 @@ describe('DetailComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: null,
       categoryTags: [],
       inventory: null,
     },

@@ -34,7 +34,6 @@ describe('RedemptionComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: null,
       categoryTags: [],
       inventory: null,
     },

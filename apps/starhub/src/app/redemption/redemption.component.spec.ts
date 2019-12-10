@@ -44,7 +44,6 @@ describe('RedemptionComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: undefined,
       categoryTags: [{
         id: 1,
         title: 'test'
