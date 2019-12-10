@@ -13,6 +13,7 @@ import {
 import { AuthenticationService } from '@perx/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
@@ -29,7 +30,8 @@ describe('ResetPasswordComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatRippleModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         {

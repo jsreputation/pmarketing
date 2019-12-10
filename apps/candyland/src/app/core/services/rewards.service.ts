@@ -69,9 +69,12 @@ export class RewardsService implements ITableService {
     return this.rewardHttp.updateReward(id, {data: sendData});
   }
 
-  public getRewardTierList(): Observable<ITierRewardCost[]> {
+  public getRewardTierList(id: string): Observable<ITierRewardCost[]> {
+    if (!id) {
+      return of([]);
+    }
     const tempData: Partial<IWTierRewardCostsAttributes>[] = [];
-    return this.rewardHttp.getRewardTierList(1)
+    return this.rewardHttp.getRewardTierList(1, id)
       .pipe(switchMap((data: IJsonApiListPayload<Partial<IWTierRewardCostsAttributes>[]>) => {
         if (data.meta.page_count <= 1) {
           return of([data]);
@@ -80,7 +83,7 @@ export class RewardsService implements ITableService {
         tempData.push(...data.data as any);
 
         for (let index = 2; index <= data.meta.page_count; index++) {
-          listQuery.push(this.getRewardTierPage(index));
+          listQuery.push(this.getRewardTierPage(index, id));
         }
 
         return forkJoin(listQuery);
@@ -124,8 +127,8 @@ export class RewardsService implements ITableService {
     return this.rewardHttp.deleteRewardTier(loyaltyCostValue);
   }
 
-  private getRewardTierPage(page: number): Observable<IJsonApiListPayload<Partial<IWTierRewardCostsAttributes>[]>> {
-    return this.rewardHttp.getRewardTierList(page);
+  private getRewardTierPage(page: number, id: string): Observable<IJsonApiListPayload<Partial<IWTierRewardCostsAttributes>[]>> {
+    return this.rewardHttp.getRewardTierList(page, id);
   }
 
   private prepareTransformationLoyaltyCost(data: any[]): any {
