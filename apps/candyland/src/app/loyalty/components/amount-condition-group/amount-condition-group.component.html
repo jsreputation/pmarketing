@@ -1,5 +1,5 @@
-<ng-container [formGroup]="group">
-  <div class="loyalty-row input-group ">
+<ng-container [formGroup]="group" *ngIf="group">
+  <div class="loyalty-row input-group">
     <mat-form-field floatLabel="never" class="loyalty-rule-input">
       <mat-select formControlName="operator">
         <ng-container *ngFor="let operatorOption of config?.ruleOperators">

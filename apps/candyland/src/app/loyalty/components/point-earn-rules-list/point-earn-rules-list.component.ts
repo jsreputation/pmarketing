@@ -22,7 +22,7 @@ export class PointEarnRulesListComponent {
 
   // @ViewChild('table', {static: false}) public table: MatTable<any>;
   public get rules(): any[] {
-    return this.ruleSet.rules;
+    return this.ruleSet.rules || null;
   }
 
   public get displayedColumnsWithEdit(): string[] {
