@@ -1,12 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PopupComponent } from './popup.component';
+import { FeedItemPopupComponent } from './feed-item-popup.component';
 import { MatIconModule, MAT_DIALOG_DATA } from '@angular/material';
 import { FeedItem } from '@perx/core';
 
-describe('PopupComponent', () => {
-  let component: PopupComponent;
-  let fixture: ComponentFixture<PopupComponent>;
+describe('FeedItemPopupComponent', () => {
+  let component: FeedItemPopupComponent;
+  let fixture: ComponentFixture<FeedItemPopupComponent>;
   const dataMock: FeedItem = {
     title: '',
     description: '',
@@ -17,7 +17,7 @@ describe('PopupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PopupComponent],
+      declarations: [FeedItemPopupComponent],
       imports: [
         MatIconModule
       ],
@@ -29,7 +29,7 @@ describe('PopupComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PopupComponent);
+    fixture = TestBed.createComponent(FeedItemPopupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
