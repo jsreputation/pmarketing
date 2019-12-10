@@ -106,5 +106,28 @@ describe('VoucherComponent', () => {
       params.next({ id: null });
       expect(component.voucher).toBe(undefined);
     });
+
+    it('Redeem button should be disabled with future selling date', () => {
+      const today = new Date();
+      component.reward = {
+        id: 1,
+        name: 'Reward Test',
+        description: 'Reward Description',
+        subtitle: 'Reward Subtitle',
+        validFrom: today,
+        sellingFrom: new Date(today.setHours(today.getHours() + 1)),
+        validTo: today,
+        rewardBanner: '',
+        termsAndConditions: '',
+        howToRedeem: '',
+        inventory: {
+          rewardTotalBalance: 100,
+          rewardTotalLimit: 100,
+          rewardLimitPerUserBalance: 100
+        }
+      };
+      const result: boolean = component.isButtonDisabled();
+      expect(result).toBe(true);
+    });
   });
 });
