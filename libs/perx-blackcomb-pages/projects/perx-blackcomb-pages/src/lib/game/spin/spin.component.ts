@@ -30,17 +30,17 @@ export class ConfigToMappedSlotPipe implements PipeTransform {
     let slotToLandIndex = config
       .rewardSlots[Math.floor(Math.random() * config.rewardSlots.length)]; // which index of reward Positions
     if (willWin) {
-      console.log(slotToLandIndex, 'slot to land index');
-      console.log('actual slot', config.rewardSlots[slotToLandIndex]);
+      // console.log(slotToLandIndex, 'slot to land index');
+      // console.log('actual slot', config.rewardSlots[slotToLandIndex]);
       return config.rewardSlots[slotToLandIndex]; // get a random number out of the reward slots
     }
     // return first index not inside of the array of winning indexes
     // using color ctrls as proxy to each index position
     // problem: what if all of the slots contains reward? -> should we enforce must have one non-reward slot?
     // issue is that audience sees a rewardIcon expects a reward but preplay shows no rewards to be redeemed,
-    console.log(config.rewardSlots, 'reward slots'); // double confirm the one returned below is not inside
+    //     console.log(config.rewardSlots, 'reward slots'); // double confirm the one returned below is not inside
     slotToLandIndex = +Object.keys(config.colorCtrls).filter(key => !config.rewardSlots.includes(+key))[0];
-    console.log(slotToLandIndex, 'non winning slot chosen');
+    //     console.log(slotToLandIndex, 'non winning slot chosen');
     return slotToLandIndex;
   }
 }
