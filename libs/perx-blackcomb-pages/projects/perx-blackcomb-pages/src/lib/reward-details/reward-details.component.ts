@@ -29,7 +29,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public buttonLabel: string = 'Redeem';
   public appConfig: IConfig;
   public rewardData: IReward;
-  private loyalty: ILoyalty;
+  public loyalty: ILoyalty;
 
   private initTranslate(): void {
     this.translate.get('REDEEM').subscribe((text) => this.buttonLabel = text);

@@ -63,7 +63,6 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.handleMerchantIdChanges();
     this.handleRouteParams();
     this.setTranslateLanguage();
-    this.patchLoyaltiesForm();
   }
 
   public ngOnDestroy(): void {
@@ -77,8 +76,9 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    if (this.form.invalid) {
+    if (this.form.invalid || this.rewardLoyaltyForm.invalid) {
       this.form.markAllAsTouched();
+      this.rewardLoyaltyForm.markAllAsTouched();
       return;
     }
 
@@ -197,7 +197,10 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   private handleRouteParams(): void {
     this.route.paramMap.pipe(
       map((params: ParamMap) => params.get('id')),
-      tap((id: any) => this.id = id),
+      tap((id: any) => {
+        this.id = id;
+        this.patchLoyaltiesForm(this.id);
+      }),
       switchMap((id: string) => id ? this.rewardsService.getRewardToForm(id) : of(null)),
       takeUntil(this.destroy$),
     )
@@ -248,8 +251,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       });
   }
 
-  private getRewardTierList(): Observable<ITierRewardCost[]> {
-    return this.rewardsService.getRewardTierList();
+  private getRewardTierList(id: string): Observable<ITierRewardCost[]> {
+    return this.rewardsService.getRewardTierList(id);
   }
 
   private createRewardTiers(rewardLoyaltyForm: ILoyaltyFormGroup[], id: string)
@@ -289,8 +292,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     return result.length ? forkJoin(result) : of(null);
   }
 
-  private patchLoyaltiesForm(): void {
-    combineLatest([this.getLoyalties(), this.getRewardTierList()])
+  private patchLoyaltiesForm(id: string): void {
+    combineLatest([this.getLoyalties(), this.getRewardTierList(id)])
       .subscribe(([loyalties, rewardTierList]) => {
         const rewardTierMap = this.filterRewardTierList(rewardTierList);
         this.handlerTierCost(loyalties, rewardTierMap);
@@ -373,9 +376,15 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   private sendTiers(): Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>>[] {
     const result = [];
     this.tierForSent.update.forEach(tier => {
+      if (!tier.tierId) {
+        return;
+      }
       result.push(this.rewardsService.patchRewardTier(tier, this.id));
     });
     this.tierForSent.delete.forEach(tier => {
+      if (!tier.tierId) {
+        return;
+      }
       result.push(this.rewardsService.deleteRewardTier(tier));
     });
     this.tierForSent.create.forEach(tier => {
