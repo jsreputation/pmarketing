@@ -6,7 +6,8 @@ import {
   PinInputComponent,
   NotificationService,
   ICategoryTags,
-  IReward
+  IReward,
+  isEmptyArray,
 } from '@perx/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
@@ -50,7 +51,7 @@ export class RedemptionComponent implements OnInit {
         tap((voucher: Voucher) => {
           this.voucher = voucher;
           const categories: ICategoryTags[] = voucher.reward && voucher.reward.categoryTags ? voucher.reward.categoryTags : [];
-          const category: string | undefined = categories && categories.length > 0 ? categories[0].title : undefined;
+          const category: string | undefined = !isEmptyArray(categories) ? categories[0].title : undefined;
           if (category !== undefined) {
             const pageName: string = `rewards:vouchers:redemption:${category}:
             ${voucher.reward && voucher.reward.name ? voucher.reward.name : ''}`;
