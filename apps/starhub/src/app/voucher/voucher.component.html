@@ -5,7 +5,7 @@
     [macaron]="macaron"
   ></app-reward-detail>
   <div class="button-area">
-    <button class="full-width" mat-flat-button color="primary" [routerLink]="[ '/redemption' ]"
+    <button [disabled]="isButtonDisabled()" class="full-width" mat-flat-button color="primary" [routerLink]="[ '/redemption' ]"
       [queryParams]="{id:voucher.id}">Redeem now</button>
   </div>
 </div>

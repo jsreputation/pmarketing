@@ -26,10 +26,10 @@ export class PromosComponent implements OnInit {
     this.itemsGroup$ = [
       {
         label: 'Exclusives',
-        items: this.reader.getFromUrl('https://cdn.perxtech.io/content/starhub/rss.xml')
+        items: this.reader.getFromUrl('https://cors-proxy.perxtech.io/?url=https://plusrewards.wordpress.com/')
       }, {
         label: 'Promotions',
-        items: this.reader.getFromUrl('https://cdn.perxtech.io/content/starhub/rss.xml')
+        items: this.reader.getFromUrl('https://cors-proxy.perxtech.io/?url=https://plusrewards.wordpress.com/')
       }
     ];
   }
