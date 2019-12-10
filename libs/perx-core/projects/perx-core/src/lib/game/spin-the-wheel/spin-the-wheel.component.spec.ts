@@ -1,6 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { SpinTheWheelComponent } from './spin-the-wheel.component';
+import { SimpleChange } from '@angular/core';
+import { ISlice } from '../game.model';
 
 describe('SpinTheWheelComponent', () => {
   let component: SpinTheWheelComponent;
@@ -8,7 +10,7 @@ describe('SpinTheWheelComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SpinTheWheelComponent ]
+      declarations: [SpinTheWheelComponent]
     })
       .compileComponents();
   }));
@@ -21,5 +23,29 @@ describe('SpinTheWheelComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('ngOnChanges', fakeAsync(() => {
+    // else flow
+    component.ngOnChanges({
+      wheelImg: {} as SimpleChange,
+      pointerImg: {} as SimpleChange
+    });
+    component.slices = [{
+      id: '1',
+      backgroundImage: 'image.img'
+    } as ISlice]
+    component.ngOnChanges({
+      slices: {} as SimpleChange,
+      wheelImg: {} as SimpleChange,
+      pointerImg: {} as SimpleChange
+    });
+    tick();
+    expect(component.size).toBeTruthy();
+  }));
+
+  it('ngAfterViewInit', ()=>{
+    component.ngAfterViewInit();
+    expect(component.size).toBeTruthy();
   });
 });
