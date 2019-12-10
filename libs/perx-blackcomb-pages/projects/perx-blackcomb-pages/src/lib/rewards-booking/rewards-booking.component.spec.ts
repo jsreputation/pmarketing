@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RedemptionBookingComponent } from './redemption-booking.component';
+import { RewardsBookingComponent } from './rewards-booking.component';
 import {
   LocationModule,
   RewardsService,
@@ -20,9 +20,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material/dialog';
 
-describe('RedemptionBookingComponent', () => {
-  let component: RedemptionBookingComponent;
-  let fixture: ComponentFixture<RedemptionBookingComponent>;
+describe('RewardsBookingComponent', () => {
+  let component: RewardsBookingComponent;
+  let fixture: ComponentFixture<RewardsBookingComponent>;
 
   const rewardServiceStub: Partial<RewardsService> = {
     getReward: () => of(),
@@ -47,7 +47,7 @@ describe('RedemptionBookingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RedemptionBookingComponent ],
+      declarations: [ RewardsBookingComponent ],
       imports: [
         LocationModule,
         MatRadioModule,
@@ -71,7 +71,7 @@ describe('RedemptionBookingComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RedemptionBookingComponent);
+    fixture = TestBed.createComponent(RewardsBookingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -75,7 +75,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
-import { RedemptionBookingComponent } from './redemption-booking/redemption-booking.component';
+import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -126,7 +126,7 @@ const comps: any[] = [
   ChangePasswordComponent,
   EnterPinComponent,
   PinInputComponent,
-  RedemptionBookingComponent
+  RewardsBookingComponent
 ];
 
 @NgModule({

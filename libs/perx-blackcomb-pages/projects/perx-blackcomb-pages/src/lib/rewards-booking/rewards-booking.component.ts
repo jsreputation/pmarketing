@@ -17,11 +17,11 @@ import { switchMap, flatMap, map } from 'rxjs/operators';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
 
 @Component({
-  selector: 'perx-blackcomb-pages-redemption-booking',
-  templateUrl: './redemption-booking.component.html',
-  styleUrls: ['./redemption-booking.component.scss']
+  selector: 'perx-blackcomb-pages-rewards-booking',
+  templateUrl: './rewards-booking.component.html',
+  styleUrls: ['./rewards-booking.component.scss']
 })
-export class RedemptionBookingComponent implements OnInit, PopUpClosedCallBack {
+export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
 
   public rewardId: number;
   public prices: IPrice[];

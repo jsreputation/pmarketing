@@ -10,7 +10,7 @@ import {
   ContentComponent,
   LayoutComponent,
   SignInComponent,
-  RedemptionBookingComponent
+  RewardsBookingComponent
 } from '@perx/blackcomb-pages';
 import { HomeModule } from '../home/home.module';
 
@@ -30,7 +30,7 @@ import { MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/mat
     RewardDetailsComponent,
     ContentComponent,
     SignInComponent,
-    RedemptionBookingComponent
+    RewardsBookingComponent
   ],
   imports: [
     WalletModule,
