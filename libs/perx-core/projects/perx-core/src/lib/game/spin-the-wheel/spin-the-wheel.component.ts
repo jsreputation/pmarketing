@@ -1,5 +1,6 @@
 import {Component, Input, OnChanges, AfterViewInit, SimpleChanges, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
 import { ISlice } from '../game.model';
+import {Event} from '@angular/router';
 
 interface ImageForPattern {
   id: string;
@@ -87,10 +88,6 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     return b + c * (tc + -3 * ts + 3 * t);
   }
 
-  constructor() {
-    this.tapped = this.tapped.bind(this);
-  }
-
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes.slices && this.slices)
       || (changes.wheelImg && this.wheelImg)
@@ -102,10 +99,6 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   public ngAfterViewInit(): void {
     this.generateCanvas();
     this.attachListeners();
-  }
-
-  public tapped(): void {
-    console.log('i am tapped');
   }
 
   private generateCanvas(): void {
@@ -327,14 +320,13 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private handleStart(): void {
-    console.log(this.enabled);
     if (!this.enabled) {
       return;
     }
     this.dragging = true;
   }
 
-  private handleMove(e: any): void {
+  private handleMove(e: MouseEvent): void {
     if (!this.enabled) {
       return;
     }
