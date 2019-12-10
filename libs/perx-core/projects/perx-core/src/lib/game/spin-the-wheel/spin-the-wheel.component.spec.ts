@@ -34,7 +34,7 @@ describe('SpinTheWheelComponent', () => {
     component.slices = [{
       id: '1',
       backgroundImage: 'image.img'
-    } as ISlice]
+    } as ISlice];
     component.ngOnChanges({
       slices: {} as SimpleChange,
       wheelImg: {} as SimpleChange,
@@ -44,7 +44,7 @@ describe('SpinTheWheelComponent', () => {
     expect(component.size).toBeTruthy();
   }));
 
-  it('ngAfterViewInit', ()=>{
+  it('ngAfterViewInit', () => {
     component.ngAfterViewInit();
     expect(component.size).toBeTruthy();
   });

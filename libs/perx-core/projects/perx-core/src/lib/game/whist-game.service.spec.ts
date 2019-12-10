@@ -273,7 +273,7 @@ describe('WhistlerGameService', () => {
         }
       }));
       spyOn(voucherService, 'getFullVoucher').and.returnValue(of());
-      gameService.play(1, 1).subscribe((val) => { expect(val.vouchers.length).toBe(1) });
+      gameService.play(1, 1).subscribe((val) => expect(val.vouchers.length).toBe(1));
       tick();
     })));
 
@@ -291,14 +291,14 @@ describe('WhistlerGameService', () => {
           }
         }
       }));
-      gameService.prePlay(1).subscribe((val) => { expect(val.id).toBe(1) });
+      gameService.prePlay(1).subscribe((val) => expect(val.id).toBe(1));
       tick();
     })));
 
   it('should handle prePlayConfirm', fakeAsync(inject([WhistlerGameService, HttpClient],
     (gameService: WhistlerGameService, http: HttpClient) => {
-      spyOn(http, 'patch').and.returnValue(of({}))
-      gameService.prePlayConfirm(1).subscribe((val) => { expect(val).toBeFalsy() });
+      spyOn(http, 'patch').and.returnValue(of({}));
+      gameService.prePlayConfirm(1).subscribe((val) => expect(val).toBeFalsy());
       tick();
     })));
 });
