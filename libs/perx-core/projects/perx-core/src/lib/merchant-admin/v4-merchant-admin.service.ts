@@ -17,9 +17,9 @@ import {
 } from '../rewards/v4-rewards.service';
 import {
   IVoucher,
-  RedemptionType,
   VoucherState,
 } from '../vouchers/models/voucher.model';
+import { RedemptionType } from '../perx-core.models';
 
 interface IV4MerchantAdminTransaction {
   id: number;

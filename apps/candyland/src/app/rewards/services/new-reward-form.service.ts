@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.interface';
+import { RewardTierTypes } from '../models/reward-tier-types.enum';
 
 @Injectable()
 export class NewRewardFormService {
+  public tierTypes: typeof RewardTierTypes = RewardTierTypes;
+  public defaultRewardTiers: any = {};
+
+  public setDefaultRewardTiers(tier: any): void {
+    this.defaultRewardTiers[tier.tierId] = tier;
+  }
   constructor(private fb: FormBuilder) {
   }
 
@@ -146,17 +153,71 @@ export class NewRewardFormService {
   public getLoyaltyFormGroup(): FormGroup {
     return new FormGroup({
       programId: new FormControl(null),
-      costReward: new FormControl(null, [Validators.min(1)]),
-      tiers: new FormArray([])
+
+      tiers: new FormArray([]),
+      basicTier: new FormGroup({
+        tierRewardCostsId: new FormControl(null),
+        tierValue: new FormControl(1, [Validators.min(0)]),
+        tierType: new FormControl(this.tierTypes.basicType),
+        tierId: new FormControl(null),
+        entityId: new FormControl(null)
+      })
     });
   }
 
   public getRewardLoyaltyTiersGroup(): FormGroup {
     return new FormGroup({
-      customTierId: new FormControl(null),
+      tierRewardCostsId: new FormControl(null),
+      tierId: new FormControl(null),
       name: new FormControl(null),
       statusTiers: new FormControl(null),
-      statusDiscount: new FormControl(null)
+      statusDiscount: new FormControl(null),
+      tierType: new FormControl(this.tierTypes.customType),
+      tierValue: new FormControl(1, [Validators.min(0)]),
+      tireDiscountValue: new FormControl({disabled: true, value: 1}, )
     });
+  }
+
+  public handlerTierUpdate(tier: ILoyaltyTiersFormGroup | IBasicTier, tiersMap: any): void {
+    const tempTier = this.defaultRewardTiers[tier.tierId];
+
+    if (
+      tempTier
+      && !tier.statusTiers
+      && tier.tierRewardCostsId
+      && tier.tierType === this.tierTypes.customType) {
+      return tiersMap.delete.push(tier);
+    }
+
+    // create custom tier
+    if (
+      !tier.tierRewardCostsId
+      && tier.statusTiers
+      && tier.tierType === this.tierTypes.customType
+    ) {
+      return tiersMap.create.push(tier);
+    }
+
+    // update custom tier
+    if (
+      tempTier
+      && tier.tierRewardCostsId
+      && tier.tierType === this.tierTypes.customType
+      && (
+        tier.tierValue !== tempTier.tierValue
+        || tier.statusDiscount !== tempTier.statusDiscount
+      )
+    ) {
+      return tiersMap.update.push(tier);
+    }
+
+    // update basic tier
+    if (
+      tempTier
+      && tempTier.tierValue !== tier.tierValue
+      && tempTier.tierType === this.tierTypes.basicType
+    ) {
+      tiersMap.update.push(tier);
+    }
   }
 }
