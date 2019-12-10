@@ -10,6 +10,7 @@ import {
   IJsonApiItem,
   IJsonApiItemPayload,
   IJsonApiListPayload,
+  WRedemptionType,
 } from '@perx/whistler';
 
 import { IVoucher } from './models/voucher.model';
@@ -63,6 +64,7 @@ describe('WhistlerVouchersService', () => {
       source_type: '42',
       valid_from: '42',
       status: WAssignedStatus.issued,
+      redemption_type: WRedemptionType.barCode,
       updated_at: '42',
       urn: '42',
     }

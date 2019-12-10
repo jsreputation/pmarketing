@@ -4,5 +4,5 @@ export const environment = {
   preAuth: false,
   isWhistler: false,
   baseHref: '/',
-  comingSoon: 'false'
+  comingSoon: 'true'
 };

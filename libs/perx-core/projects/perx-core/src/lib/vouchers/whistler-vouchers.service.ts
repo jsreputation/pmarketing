@@ -14,9 +14,11 @@ import {
   IJsonApiListPayload,
   IJsonApiItem,
   IJsonApiItemPayload,
-  IWPurchaseAttributes
+  IWPurchaseAttributes,
+  WRedemptionType
 } from '@perx/whistler';
 import { oc } from 'ts-optchain';
+import { RedemptionType } from '../perx-core.models';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +32,20 @@ export class WhistlerVouchersService implements IVoucherService {
     private config: Config,
     private rewardsService: RewardsService,
   ) { }
-
+  private static WRedemptionToRT(rt: WRedemptionType): RedemptionType {
+    switch (rt) {
+      case WRedemptionType.promoCode:
+        return RedemptionType.txtCode;
+      case WRedemptionType.qrCode:
+        return RedemptionType.qr;
+      case WRedemptionType.barCode:
+        return RedemptionType.barcode;
+      case WRedemptionType.merchantPin:
+        return RedemptionType.pin;
+      default:
+        return RedemptionType.none;
+    }
+  }
   private static WVoucherStatusToState(stat: WAssignedStatus): VoucherState {
     switch (stat) {
       case WAssignedStatus.assigned:
@@ -52,6 +67,7 @@ export class WhistlerVouchersService implements IVoucherService {
       state: WhistlerVouchersService.WVoucherStatusToState(voucher.attributes.status),
       code: voucher.attributes.value,
       expiry: voucher.attributes.valid_to ? new Date(voucher.attributes.valid_to) : null,
+      redemptionType: WhistlerVouchersService.WRedemptionToRT(voucher.attributes.redemption_type),
     };
   }
 
