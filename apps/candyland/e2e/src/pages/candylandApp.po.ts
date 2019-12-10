@@ -747,7 +747,7 @@ export class ElementApp {
   }
 
   public static engagementCreated(): ElementFinder {
-    return element.all(by.css('p.engagement-item-name.linkable')).get(0);
+    return element.all(by.css('p.engagement-item-name')).get(0);
   }
 
   public static errorUploadMessage(): ElementFinder {
