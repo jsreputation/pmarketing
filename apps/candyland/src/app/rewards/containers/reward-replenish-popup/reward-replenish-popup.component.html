@@ -52,14 +52,14 @@
 
       <!-- Unique codes: User Upload-->
       <ng-container *ngIf="voucherSettings?.voucherCode?.type === 'user_uploaded'">
-        <cl-upload-file label="Unique codes: User Upload"
+        <cl-upload-file label="Voucher Codes Upload"
           (uploadFile)="setReplenishVoucherCodes(20000)"
           (deleteFile)="setReplenishVoucherCodes($event)">
         </cl-upload-file>
         <div class="code-preview" *ngIf="replenishVoucherCodes">
           <label class="dialog-content-title">Total Number of Voucher</label>
           <p class="code-preview-value">
-            {{replenishVoucherCodes | number: '2.'}}
+            {{replenishVoucherCodes | number}}
           </p>
         </div>
       </ng-container>
