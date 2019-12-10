@@ -184,10 +184,12 @@ export class NewRewardFormService {
     if (
       tempTier
       && !tier.statusTiers
+      && tier.tierRewardCostsId
       && tier.tierType === this.tierTypes.customType) {
       return tiersMap.delete.push(tier);
     }
 
+    // create custom tier
     if (
       !tier.tierRewardCostsId
       && tier.statusTiers
@@ -196,6 +198,7 @@ export class NewRewardFormService {
       return tiersMap.create.push(tier);
     }
 
+    // update custom tier
     if (
       tempTier
       && tier.tierRewardCostsId
@@ -208,6 +211,7 @@ export class NewRewardFormService {
       return tiersMap.update.push(tier);
     }
 
+    // update basic tier
     if (
       tempTier
       && tempTier.tierValue !== tier.tierValue
