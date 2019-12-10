@@ -41,7 +41,7 @@
     </mat-step>
     <!--step 3-->
     <mat-step completed="false">
-      <ng-template matStepLabel>Point Earn Rules</ng-template>
+      <ng-template matStepLabel>{{'LOYALTY_FEATURE.POINT_EARN_RULES' | translate}}</ng-template>
       <cl-loyalty-form-step-earn-rules *ngIf="stepProgress >= 2"
                                        [loader]="ruleLoader"
                                        [basicTierId]="basicTierId"
@@ -62,9 +62,6 @@
                        [customTierRuleSetMap]="customTierRuleSetMap"
                        [statusLabel]="statusLabel"
       ></cl-view-loyalty>
-<!--      <cl-loyalty-form-step-review *ngIf="stepProgress >= 3"-->
-<!--                                   [dataSource]="customTierDataSource"-->
-<!--                                   [group]="form"></cl-loyalty-form-step-review>-->
     </mat-step>
   </mat-horizontal-stepper>
 </section>
