@@ -61,7 +61,6 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   }
 
   public addCondition(type: string = 'transaction'): void {
-    console.log('closed', type);
     this.conditions.push(this.formsService.createFormField(type));
   }
 
@@ -149,8 +148,7 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
     let request;
     const ruleSetId = this.data.ruleSet.id;
     const currentRule = this.data.rule;
-    const updatedRule = this.form.value;
-    console.log('updatedRule', updatedRule);
+    const updatedRule = this.form.value;;
     if (currentRule) {
       const ruleId = this.data.rule.id;
       request = combineLatest([
