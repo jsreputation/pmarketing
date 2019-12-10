@@ -1,9 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { Voucher, ILocation, IVoucherService, IReward, ICategoryTags } from '@perx/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
-import { AnalyticsService, PageType } from '../analytics.service';
-import { IMacaron, MacaronService } from '../services/macaron.service';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  Params,
+} from '@angular/router';
+
+import {
+  filter,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
+
+import {
+  Voucher,
+  ILocation,
+  IVoucherService,
+  IReward,
+  ICategoryTags,
+  isEmptyArray,
+} from '@perx/core';
+
+import {
+  AnalyticsService,
+  PageType,
+} from '../analytics.service';
+import {
+  IMacaron,
+  MacaronService,
+} from '../services/macaron.service';
 
 @Component({
   selector: 'app-voucher',
@@ -33,7 +60,7 @@ export class VoucherComponent implements OnInit {
         tap((voucher: Voucher) => {
           this.voucher = voucher;
           const categories: ICategoryTags[] = voucher.reward && voucher.reward.categoryTags || [];
-          const category: string = categories && categories.length > 0 ? categories[0].title : '';
+          const category: string = !isEmptyArray(categories) ? categories[0].title : '';
           if (category !== undefined) {
             const pageName: string = `rewards:vouchers:${category.toLowerCase()}:${voucher.reward && voucher.reward.name}`;
             this.analytics.addEvent({
