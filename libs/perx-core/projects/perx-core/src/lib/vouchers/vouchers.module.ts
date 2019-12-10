@@ -1,19 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+
+import { QRCodeModule } from 'angularx-qrcode';
+import { NgxBarcodeModule } from 'ngx-barcode';
+
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { VoucherComponent } from './voucher/voucher.component';
-import { MaterialModule } from '../shared/material.module';
-import { IVoucherService } from './ivoucher.service';
 import { BcodeRedemptionComponent } from './bcode-redemption/bcode-redemption.component';
 import { PinRedemptionComponent } from './pin-redemption/pin-redemption.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { QrcodeRedemptionComponent } from './qrcode-redemption/qrcode-redemption.component';
-import { QRCodeModule } from 'angularx-qrcode';
-import { UtilsModule } from '../utils/utils.module';
-import { HttpClient } from '@angular/common/http';
-import { Config } from '../config/config';
+import { BarcodeRedemptionComponent } from './barcode-redemption/barcode-redemption.component';
+import { IVoucherService } from './ivoucher.service';
 import { V4VouchersService } from './v4-vouchers.service';
 import { WhistlerVouchersService } from './whistler-vouchers.service';
+
+import { MaterialModule } from '../shared/material.module';
+import { UtilsModule } from '../utils/utils.module';
+import { Config } from '../config/config';
 import { RewardsService } from '../rewards/rewards.service';
 
 export function vouchersServiceFactory(
@@ -33,7 +38,8 @@ const components = [
   VoucherComponent,
   BcodeRedemptionComponent,
   PinRedemptionComponent,
-  QrcodeRedemptionComponent
+  QrcodeRedemptionComponent,
+  BarcodeRedemptionComponent,
 ];
 
 @NgModule({
@@ -43,6 +49,7 @@ const components = [
   imports: [
     CommonModule,
     QRCodeModule,
+    NgxBarcodeModule,
     ReactiveFormsModule,
     MaterialModule,
     UtilsModule

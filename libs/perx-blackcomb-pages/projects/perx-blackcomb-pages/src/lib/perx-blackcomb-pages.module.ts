@@ -29,6 +29,7 @@ import {
   PinRedemptionComponent,
   BcodeRedemptionComponent,
   QrcodeRedemptionComponent,
+  BarcodeRedemptionComponent,
   RewardComponent as PerxRewardComponent,
   SurveyComponent as PerxSurveyComponent,
   PuzzleCollectStampsComponent,
@@ -54,6 +55,7 @@ import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { LoadingComponent } from './loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
+import { NgxBarcodeModule } from 'ngx-barcode';
 import { LoginComponent } from './login/login.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { QRComponent } from './qr/qr.component';
@@ -86,6 +88,7 @@ const comps: any[] = [
   PinRedemptionComponent,
   BcodeRedemptionComponent,
   QrcodeRedemptionComponent,
+  BarcodeRedemptionComponent,
   LoadingComponent,
   RedeemComponent,
   LoginComponent,
@@ -141,6 +144,7 @@ const comps: any[] = [
     FormsModule,
     ReactiveFormsModule,
     QRCodeModule,
+    NgxBarcodeModule,
     MatFormFieldModule,
     MatRadioModule,
     MatCheckboxModule,
