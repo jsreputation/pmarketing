@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticationService, NotificationService, ProfileService } from '@perx/core';
@@ -32,7 +32,8 @@ export class LoginComponent implements OnInit, PageAppearence {
     private authService: AuthenticationService,
     private notificationService: NotificationService,
     private profileService: ProfileService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private cd: ChangeDetectorRef
   ) {
     this.initForm();
     this.preAuth = environment.preAuth;
@@ -47,14 +48,17 @@ export class LoginComponent implements OnInit, PageAppearence {
   }
 
   public ngOnInit(): void {
-    this.authService.getAppToken().subscribe(
-      () => {
+    this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
-      },
-      (err) => {
-        console.log('Error' + err);
-      }
-    );
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
 
     if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
       this.authService.autoLogin().subscribe(
@@ -139,6 +143,7 @@ export class LoginComponent implements OnInit, PageAppearence {
   }
 
   public switchLanguage(): void {
-    this.translateService.setDefaultLang(this.currentSelectedLanguage);
+    this.translateService.use(this.currentSelectedLanguage);
+    this.cd.detectChanges();
   }
 }

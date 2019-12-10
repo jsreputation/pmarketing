@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { AccountComponent } from './account.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -53,6 +53,7 @@ describe('AccountComponent', () => {
 
   it('expect recive profile', fakeAsync(() => {
     component.ngOnInit();
+    tick();
     expect(component.profile).toBe(profile);
   }));
 

@@ -1,13 +1,13 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, protractor, ElementFinder, ProtractorExpectedConditions } from 'protractor';
-import { RewardAppPage, CreateRewardAppPage } from '../pages/candylandApp.po';
+import { RewardAppPage, CreateRewardAppPage, ElementApp, LoginAppPage } from '../pages/candylandApp.po';
 import * as path from 'path' ;
 
 let RewardPage: RewardAppPage;
 let CreateRewardPage: CreateRewardAppPage;
-// creating var for protractor expected conditions
-// const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
+const Element = ElementApp;
+const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 
 Before( () => {
   // initializing page objects instance
@@ -16,25 +16,37 @@ Before( () => {
 });
 
 Given(/^19_I am on the rewards page.$/, async () => {
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  // entering correct account id
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
+
   await RewardPage.navigateToReward();
 });
 
 Given(/^19_I click on create new button.$/, async () => {
-  const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
-  await browser.wait(ec.presenceOf(RewardPage.createNewButton()), 6000);
+  await browser.wait(ec.presenceOf(Element.clButton()), 6000);
   // clicking on the create new button
-  await RewardPage.createNewButton().click();
+  await Element.clButton().click();
 
 });
 
 Given(/^19_I click on option for reward type.$/, async () => {
-  const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
   // selecting the free option for the reward type for the prudential case
   // waiting for reward type field
   await CreateRewardPage.navigateToRewardCreate();
   await browser.sleep(3000);
   // removing the walkme
-  await browser.executeScript('document.getElementById("walkme-player").remove();');
+  // await browser.executeScript('document.getElementById("walkme-player").remove();');
   // making the position header absolute so it will not obstruct element
   // await browser.executeScript('document.querySelector("div.page-header.full-with").style.position = "absolute"');
   await browser.wait(ec.elementToBeClickable(CreateRewardPage.selectField().get(0)), 10000 );
@@ -45,9 +57,10 @@ Given(/^19_I click on option for reward type.$/, async () => {
 });
 
 Given(/^19_I click on option for category.$/, async () => {
+  // enter a test string for title
+  await ElementApp.inputTextArray().first().sendKeys('Test title');
   // selecting other for the category section
   // waiting for category field
-  const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(CreateRewardPage.selectField().get(1)), 10000 );
   await CreateRewardPage.selectField().get(1).click();
   await CreateRewardPage.rewardOptions().last().click();
@@ -55,12 +68,10 @@ Given(/^19_I click on option for category.$/, async () => {
 
 Given(/^19_I click on option for redemption type.$/, async () => {
   // waiting for redemption type
-  const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(CreateRewardPage.selectField().get(2)), 6000 );
   await CreateRewardPage.selectField().get(2).click();
   // selecting qr code option
   CreateRewardPage.rewardOptions().first().click();
-
 });
 
 Given(/^19_I enter a test string for description.$/, async () => {
@@ -73,29 +84,25 @@ Given(/^19_I enter a test string for T&Cs.$/, async () => {
 
 Given(/^19_I select an existing merchant.$/, async () => {
   // clicking on  the select existing merchant button
-  const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
-  await CreateRewardPage.merchantButton().click();
+  await CreateRewardPage.merchantButtonArray().get(0).click();
   // clicking the first row of merchants
   await browser.wait(ec.elementToBeClickable(CreateRewardPage.firstMerchantsRow()), 6000);
   // clicking on the first row of merchant
-  await CreateRewardPage.firstMerchantsRow().get(0).click();
+  await CreateRewardPage.firstMerchantsRow().click();
   // clicking on the add merchant button
-  await CreateRewardPage.addMerchantButton().click();
+  await Element.clButtonArray().last().click();
 
 });
 
 Given(/^19_I enter a value for cost of reward.$/, async () => {
   // waiting for reward field to load
-  const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
   await browser.wait(ec.presenceOf(CreateRewardPage.numberField().get(0)), 6000);
   // entering a test value for the cost of reward field
   await CreateRewardPage.numberField().get(0).sendKeys(1);
-
 });
 
 Given(/^19_I select user upload option for unique codes.$/, async () => {
   // waiting for user upload radio button to load
-  const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
   // making the position header absolute so it will not obstruct element
   await browser.executeScript('document.querySelector("div.page-header.full-with").style.position = "absolute"');
   await browser.wait(ec.elementToBeClickable(CreateRewardPage.radioPrimaryButton()), 6000);
@@ -106,7 +113,7 @@ Given(/^19_I select user upload option for unique codes.$/, async () => {
     elementRadioButton.click();
   });
 });
-
+// this step is not valid for now
 Given(/^19_I select upload a csv file under unique codes.$/, async () => {
   const FileToUpload = './testArtifacts/pru-event-reward-test.csv';
   const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
@@ -114,7 +121,7 @@ Given(/^19_I select upload a csv file under unique codes.$/, async () => {
   await CreateRewardPage.uploadSection().sendKeys(absolutePath);
   await browser.sleep(3000);
 });
-
+// this step is not valid for now
 Given(/^19_I enter a valid date range for voucher validity.$/, () => {
   // inputing date into the from date field
   // await element.all(by.css('input.mat-date-picker')).get(0).sendKeys('9/17/2019');
@@ -125,10 +132,9 @@ Given(/^19_I enter a valid date range for voucher validity.$/, () => {
   // inputing time into to date field
   // await element.all(by.css('input.time-picker-toggle')).get(0).sendKeys('12:00 am');
 });
-
+// this step is not valid for now
 Given(/^19_I enter test values for Voucher Limits Per Campaign.$/, async () => {
   // waiting for the slider to load for voucher limits per campaign
-  const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(CreateRewardPage.checkboxField().get(1)), 6000);
   // clicking on the slider
   await CreateRewardPage.slider().get(0).click();
@@ -139,10 +145,9 @@ Given(/^19_I enter test values for Voucher Limits Per Campaign.$/, async () => {
   // selecting the day value
   await CreateRewardPage.rewardOptions().get(0).click();
 });
-
+// this step is not valid for now
 Given(/^19_I enter test values for Issuance Limits Per User.$/, async () => {
   // waiting for the slider to load for value for issuance limit per user
-  const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(CreateRewardPage.checkboxField().get(2)), 6000);
   // clicking on the slider
   await CreateRewardPage.slider().get(1).click();
@@ -153,10 +158,9 @@ Given(/^19_I enter test values for Issuance Limits Per User.$/, async () => {
   // selecting the day value
   await CreateRewardPage.rewardOptions().get(0).click();
   });
-
+// this step is not valid for now
 Given(/^19_I enter test values for Redemption Limits Per User.$/, async () => {
     // waiting for the slider to load for value for redemption limits per user
-  const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
   await browser.wait(ec.elementToBeClickable(CreateRewardPage.checkboxField().get(3)), 6000);
   // clicking on the slider
   await CreateRewardPage.slider().get(2).click();
@@ -170,9 +174,9 @@ Given(/^19_I enter test values for Redemption Limits Per User.$/, async () => {
 
 When(/^19_I press save button.$/, async () => {
   // clicking on the save button
-  await CreateRewardPage.saveButton().click();
+  await Element.clButtonArray().get(1).click();
   // press the close button
-  await CreateRewardPage.closeButton().click();
+  await Element.clButtonArray().get(2).click();
 });
 
 Then(/^19_Reward is present under the reward category .$/, () => {

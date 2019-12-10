@@ -55,8 +55,18 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #itemMenu="matMenu">
-          <button mat-menu-item (click)="manageList(element)">{{'AUDIENCE_FEATURE.MANAGE_LIST' | translate}}</button>
-          <!-- <button mat-menu-item (click)="deactivateItem(element)">Deactivate</button> -->
+          <button
+            mat-menu-item
+            (click)="manageList(element)"
+          >
+            {{'AUDIENCE_FEATURE.MANAGE_LIST' | translate}}
+          </button>
+          <button
+            mat-menu-item
+            (click)="openEditUserDialog(element)"
+          >
+            {{'AUDIENCE_FEATURE.EDIT' | translate}}
+          </button>
         </mat-menu>
       </td>
     </ng-container>

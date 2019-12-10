@@ -1,7 +1,7 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, protractor } from 'protractor';
-import { CreateHitThePinataAppPage, ElementApp } from '../pages/candylandApp.po';
+import { CreateHitThePinataAppPage, ElementApp, LoginAppPage } from '../pages/candylandApp.po';
 import * as path from 'path' ;
 
 let PageHitThePinata: CreateHitThePinataAppPage;
@@ -15,11 +15,26 @@ Before( () => {
 
 // Ensure functionality of headline and and sub-headline message
 Given(/^4_I am on the hit the pinata creation page$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  // entering correct account id
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
+
   await PageHitThePinata.navigateToHitThePinata();
   await browser.sleep(3000);
 });
 
-When(/^4_I input a test string in the headlline and sub headline field.$/, async () => {
+When(/^4_I input a test string in the headline and sub headline field.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for headline field to load
   await browser.wait(ec.presenceOf(Element.inputTextArray().get(1)), 6000);
@@ -42,7 +57,7 @@ Then(/^4_I should see the test string in the preview element.$/, async () => {
   expect(await PageHitThePinata.subHeadlinePreview().getText()).to.contain('TestString0002');
 });
 
-// Verifying the fucnctionality of the game graphic options
+// Verifying the functionality of the game graphic options
 
 Given(/^5_I am on the hit the pinata creation page$/, async () => {
   PageHitThePinata = new CreateHitThePinataAppPage();
@@ -54,13 +69,13 @@ When(/^5_I select an option for the pinata and the background.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the pinata and the ground field to load
   // waiting for the pinata field to load
-  await browser.wait(ec.presenceOf(PageHitThePinata.pinataDesign()), 6000);
+  await browser.wait(ec.presenceOf(Element.designImageArray().get(1)), 6000);
   // waiting for the background field to load
-  await browser.wait(ec.presenceOf(PageHitThePinata.pinataBackgroundDesign()), 6000);
+  await browser.wait(ec.presenceOf(Element.designImageArray().get(4)), 6000);
   // clicking on the second option of the pinata
-  await PageHitThePinata.pinataDesign().click();
+  await Element.designImageArray().get(1).click();
   // clicking on the second option of the background
-  await PageHitThePinata.pinataBackgroundDesign().click();
+  await Element.designImageArray().get(4).click();
   await browser.sleep(3000);
 });
 

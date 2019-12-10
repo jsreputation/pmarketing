@@ -5,7 +5,7 @@ import {
   PLATFORM_ID,
   OnDestroy,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 
 import {
@@ -102,6 +102,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthenticationService,
     private campaignSvc: ICampaignService,
     private config: Config,
@@ -113,11 +114,10 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     if (this.preAuth && isPlatformBrowser(this.platformId)) {
-      const param = location.search;
-      const params = new URLSearchParams(param);
-      (window as any).primaryIdentifier = params.get('pi');
-      const cid: string | null = params.get('cid');
-      this.campaignId = cid ? Number.parseInt(cid, 10) : null;
+      const params = this.route.snapshot.queryParams;
+      (window as any).primaryIdentifier = params.pi;
+      const cid: string | null = params.cid;
+      this.campaignId = cid ? Number.parseInt(cid, 10) : (window as any).campaignId;
       (window as any).campaignId = this.campaignId;
       /*
       * Later when API ready, the logic is:
@@ -139,11 +139,11 @@ export class LoadingComponent implements OnInit, OnDestroy {
         ),
         takeUntil(this.destroy$)
       );
-      const getPI$ = of(new URLSearchParams(param).get('pi'));
+      const getPI$ = this.route.queryParams;
 
       getPI$.pipe(
         switchMap(
-          pi => iif(() => !!pi, PIHandler$, noPIHandler$)
+          queryParams => iif(() => !!queryParams.pi, PIHandler$, noPIHandler$)
         ),
         takeUntil(this.destroy$)
       ).subscribe(

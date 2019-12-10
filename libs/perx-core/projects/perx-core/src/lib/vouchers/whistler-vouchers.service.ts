@@ -66,18 +66,6 @@ export class WhistlerVouchersService implements IVoucherService {
     return 0;
   }
 
-  private static PurchaseToVoucher(purchaseData: IJsonApiItem<IWPurchaseAttributes>): IJsonApiItem<IWAssignedAttributes> {
-    const voucherData = purchaseData.attributes.voucher;
-    return {
-      id: voucherData.id ? voucherData.id.toString() : '',
-      type: 'vouchers',
-      attributes: {
-        ...voucherData,
-        source_id: purchaseData.attributes.reward_entity_id,
-        source_type: 'Perx::Reward::Entity'
-      }
-    };
-  }
   // @ts-ignore
   public getAll(voucherParams?: IGetVoucherParams): Observable<IVoucher[]> {
     return new Observable(subscriber => {
@@ -111,7 +99,10 @@ export class WhistlerVouchersService implements IVoucherService {
     return this.http.get<IJsonApiListPayload<IWAssignedAttributes>>(`${this.vouchersUrl}?page[number]=${page}&page[size]=${size}`);
   }
 
-  private getFullVoucher(voucher: IJsonApiItem<IWAssignedAttributes>): Observable<IVoucher> {
+  /**
+   * @package
+   */
+  public getFullVoucher(voucher: IJsonApiItem<IWAssignedAttributes>): Observable<IVoucher> {
     return combineLatest(of(voucher), this.rewardsService.getReward(voucher.attributes.source_id))
       .pipe(
         map(([v, reward]: [IJsonApiItem<IWAssignedAttributes>, IReward]) => WhistlerVouchersService.WVoucherToVoucher(v, reward))
@@ -165,9 +156,8 @@ export class WhistlerVouchersService implements IVoucherService {
         }
       }
     ).pipe(
-      map(res => res.data),
-      map((res: IJsonApiItem<IWPurchaseAttributes>) => WhistlerVouchersService.PurchaseToVoucher(res)),
-      switchMap((voucher: IJsonApiItem<IWAssignedAttributes>) => this.getFullVoucher(voucher))
+      map(res => res.data.attributes.voucher_id),
+      switchMap((voucherId: number) => this.get(voucherId))
     );
   }
 

@@ -1,14 +1,14 @@
-declare interface IRewardEntity {
+import { WRedemptionType } from "@perx/whistler";
+
+export interface IRewardEntity {
   id: string;
   image: string;
   name: string;
   type: string;
   rewardType: string;
-  redemptionType?: string;
+  redemptionType?: WRedemptionType;
   current: number;
   total: number;
-  limit?: number;
-  probability?: number | null;
   category: string;
   voucherInfo?: {
     type: string;
@@ -27,5 +27,4 @@ declare interface IRewardEntity {
   merchantId?: string;
   merchantName?: string;
   tags: string[];
-  outcomeId?: string;
 }

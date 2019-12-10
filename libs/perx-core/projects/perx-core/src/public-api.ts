@@ -10,6 +10,7 @@ export {
   isEmptyString,
   isEmptyArray,
 } from './lib/utils/shared/helpers.util';
+export { RedemptionType } from './lib/perx-core.models';
 
 /**
  * Merchants
@@ -31,10 +32,11 @@ export { IVoucherService } from './lib/vouchers/ivoucher.service';
 export { PinService } from './lib/vouchers/pin.service';
 export { VouchersComponent } from './lib/vouchers/vouchers/vouchers.component';
 export { VoucherComponent } from './lib/vouchers/voucher/voucher.component';
-export { IVoucher as Voucher, RedemptionType, VoucherState, StatusLabelMapping } from './lib/vouchers/models/voucher.model';
+export { IVoucher as Voucher, VoucherState, StatusLabelMapping } from './lib/vouchers/models/voucher.model';
 export { PinRedemptionComponent } from './lib/vouchers/pin-redemption/pin-redemption.component';
 export { BcodeRedemptionComponent } from './lib/vouchers/bcode-redemption/bcode-redemption.component';
 export { QrcodeRedemptionComponent } from './lib/vouchers/qrcode-redemption/qrcode-redemption.component';
+export { BarcodeRedemptionComponent } from './lib/vouchers/barcode-redemption/barcode-redemption.component';
 
 /**
  * Authentication
@@ -79,6 +81,7 @@ export {
   IPinata,
   ITree,
   IScratch,
+  ISpin,
   defaultTree,
   IPlayOutcome,
   ISlice,
@@ -89,6 +92,7 @@ export { IGameComponent } from './lib/game/igame.component';
 export { ShakeTreeComponent } from './lib/game/shake-tree/shake-tree.component';
 export { PinataComponent } from './lib/game/pinata/pinata.component';
 export { ScratchCardComponent } from './lib/game/scratch-card/scratch-card.component';
+export { SpinTheWheelComponent } from './lib/game/spin-the-wheel/spin-the-wheel.component';
 
 /**
  * Profile
@@ -118,7 +122,7 @@ export {
 } from './lib/loyalty/models/loyalty.model';
 export { TransactionPipe } from './lib/loyalty/loyalty-transactions-list/transaction.pipe';
 export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-summary.component';
-
+export { LoyaltyTransactionsListComponent } from './lib/loyalty/loyalty-transactions-list/loyalty-transactions-list.component';
 /**
  * Rewards
  */
@@ -153,6 +157,7 @@ export { RepeatTimesDirective } from './lib/utils/directives/repeat-times.direct
 export { NewsfeedComponent } from './lib/utils/newsfeed/newsfeed.component';
 export { LanguageService } from './lib/utils/language/language.service';
 export { LanguageInterceptor } from './lib/utils/language.interceptor';
+export { LocaleIdFactory } from './lib/utils/language/locale-id.factory';
 /**
  * Puzzles
  */
@@ -203,6 +208,12 @@ export {
   AccountPageObject,
 } from './lib/config/models/config.model';
 
+/**
+ * PrePlay
+ */
+export {
+  IPrePlayStateData
+} from './lib/utils/pre-play/pre-play.model';
 /**
  * Theme
  */

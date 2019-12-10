@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ILoyalty, ITransaction, ITransactionHistory } from './models/loyalty.model';
+
 import { Observable } from 'rxjs';
-import { Config } from '../config/config';
-import { map } from 'rxjs/operators';
+import {
+  map,
+  filter
+} from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
 import {
@@ -12,7 +14,17 @@ import {
   IJsonApiListPayload,
   IJsonApiItem,
   IJsonApiItemPayload,
+  IWRelationshipsDataType
 } from '@perx/whistler';
+
+import {
+  ILoyalty,
+  ITransaction,
+  ITransactionHistory,
+} from './models/loyalty.model';
+import { LoyaltyService } from './loyalty.service';
+
+import { Config } from '../config/config';
 import { AuthenticationService } from '../auth/authentication/authentication.service';
 
 const DEFAULT_PAGE_COUNT: number = 10;
@@ -20,7 +32,7 @@ const DEFAULT_PAGE_COUNT: number = 10;
 @Injectable({
   providedIn: 'root'
 })
-export class WhistlerLoyaltyService {
+export class WhistlerLoyaltyService extends LoyaltyService {
   private hostName: string;
 
   constructor(
@@ -28,8 +40,10 @@ export class WhistlerLoyaltyService {
     config: Config,
     private authService: AuthenticationService
   ) {
+    super();
     this.hostName = config.apiHost as string;
   }
+
   // Each program may have multiple cards, here only take first one
   public static WLoyaltyToLoyalty(
     loyalty: IJsonApiItem<IWLoyalty>,
@@ -38,7 +52,8 @@ export class WhistlerLoyaltyService {
   ): ILoyalty {
     const card = cards && cards.find(cardTemp =>
       cardTemp.type === 'cards' && cardTemp.attributes.user_id === userId &&
-      oc(loyalty).relationships.cards.data([]).filter(rCard => rCard.type === 'cards' && rCard.id === cardTemp.id).length > 0
+      (oc(loyalty).relationships.cards.data([]) as IWRelationshipsDataType[])
+        .filter(rCard => rCard.type === 'cards' && rCard.id === cardTemp.id).length > 0
     );
     return {
       id: Number.parseInt(loyalty.id, 10),
@@ -68,7 +83,17 @@ export class WhistlerLoyaltyService {
     );
   }
 
-  public getLoyalty(id?: number): Observable<ILoyalty> {
+  // @ts-ignore
+  public getLoyalty(id?: number, locale?: string): Observable<ILoyalty> {
+    // if there is no id, query for the user's list of loyalties and return the first one
+    if (!id) {
+      return this.getLoyalties()
+        .pipe(
+          filter((loyalties: ILoyalty[]) => loyalties.length > 0),
+          map((loyalties: ILoyalty[]) => loyalties[0])
+        );
+    }
+
     const userId = this.authService.getUserId() || 0;
     return this.http.get<IJsonApiItemPayload<IWLoyalty, IWLoyaltyCard>>(
       `${this.hostName}/loyalty/programs/${id}?include=cards`

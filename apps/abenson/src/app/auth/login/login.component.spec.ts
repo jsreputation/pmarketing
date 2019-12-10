@@ -15,7 +15,9 @@ describe('LoginComponent', () => {
   let auth: AuthenticationService;
   let notificationService: NotificationService;
   const authenticationServiceStub = {
-    login: () => of(null)
+    login: () => of(null),
+    getAppAccessToken: () => 'token',
+    getAppToken: () => of({})
   };
 
   beforeEach(async(() => {
@@ -65,6 +67,7 @@ describe('LoginComponent', () => {
     const spyAuth = spyOn(auth, 'login');
     spyAuth.and.returnValue(throwError(new HttpErrorResponse({ status: 401 })));
     component.onSubmit();
+    tick();
     expect(component.errorMessage).toBe('Invalid credentials');
   }));
 
@@ -82,6 +85,7 @@ describe('LoginComponent', () => {
     component.loginForm.setValue({ mobileNumber: '12345', pinCode: '12345' });
     spyOn(auth, 'login').and.returnValue(throwError('error'));
     component.onSubmit();
+    tick();
     expect(component.errorMessage).toBe('error');
   }));
 
@@ -89,6 +93,7 @@ describe('LoginComponent', () => {
     component.errorMessage = undefined;
     spyOn(auth, 'login').and.returnValue(throwError(new HttpErrorResponse({ status: 403 })));
     component.onSubmit();
+    tick();
     expect(component.errorMessage).toBe(undefined);
   }));
 
@@ -96,6 +101,7 @@ describe('LoginComponent', () => {
     spyOn(auth, 'login').and.returnValue(throwError(new HttpErrorResponse({ status: 0 })));
     const spy = spyOn(notificationService, 'addPopup');
     component.onSubmit();
+    tick();
     expect(spy).toHaveBeenCalled();
   }));
 });

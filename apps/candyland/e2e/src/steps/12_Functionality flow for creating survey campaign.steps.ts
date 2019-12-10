@@ -14,12 +14,27 @@ import {
   CreateCampaignAppPage,
   EngagementAppPage,
   ElementApp,
+  LoginAppPage,
 } from '../pages/candylandApp.po';
 
 const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 
 // Ensure that survey template is present under the campaign page
 Given(/^5_I am on the campaign creation page$/, async () => {
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  // entering correct account id
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
+
   await CreateCampaignAppPage.navigateToCreateCampaign();
 });
 
@@ -110,6 +125,7 @@ Given(/^9_that I am on the campaign creation page.$/, async () => {
   await EngagementAppPage.engagementItemArray().first().click();
   // clicking on the next button
   await ElementApp.clButtonArray().get(1).click();
+  await browser.sleep(3000);
 });
 
 Given(/^9_I select add rewards button$/, async () => {
@@ -117,6 +133,7 @@ Given(/^9_I select add rewards button$/, async () => {
   await browser.wait(ec.elementToBeClickable(ElementApp.matFlatButtonArray().get(3)), 6000);
   // clicking on the add reward button
   await ElementApp.matFlatButtonArray().get(3).click();
+  await browser.sleep(3000);
 });
 Given(/^9_I select a reward./, async () => {
   // waiting for the row to load
@@ -155,6 +172,7 @@ Given(/^10_that I am on the campaign creation page.$/, async () => {
   await EngagementAppPage.engagementItemArray().first().click();
   // clicking on the next button
   await ElementApp.clButtonArray().get(1).click();
+  await browser.sleep(3000);
 });
 
 Given(/^10_I added a reward to the reward list.$/, async () => {
@@ -175,7 +193,7 @@ Given(/^10_I added a reward to the reward list.$/, async () => {
 
 When(/^10_I click on the include probability box$/, async () => {
   // waiting for include probability box to be loaded
-  await browser.executeScript('document.getElementById("walkme-player").remove();');
+  // await browser.executeScript('document.getElementById("walkme-player").remove();');
   await browser.wait(ec.elementToBeClickable(ElementApp.matCheckboxFrame().get(0)), 6000);
   // clicking on the probability box
   await ElementApp.matCheckboxInnerContainer().get(0).click();

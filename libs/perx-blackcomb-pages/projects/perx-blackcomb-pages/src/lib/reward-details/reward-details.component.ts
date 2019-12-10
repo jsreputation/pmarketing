@@ -29,15 +29,10 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public buttonLabel: string = 'Redeem';
   public appConfig: IConfig;
   public rewardData: IReward;
-  private loyalty: ILoyalty;
+  public loyalty: ILoyalty;
 
   private initTranslate(): void {
     this.translate.get('REDEEM').subscribe((text) => this.buttonLabel = text);
-    this.translate.get('POINTS')
-      .subscribe((points: string) => {
-        this.displayPriceFn = (price: IPrice) => `${price.price} ${points}`;
-
-      });
     this.translate.get('DESCRIPTION')
       .subscribe((desc: string) => {
         this.descriptionLabel = desc;
@@ -87,9 +82,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public buyReward(): void {
     this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
       .subscribe(
-        (res: Voucher) => {
-          this.router.navigate([`/voucher-detail/${res.id}`]);
-        },
+        (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`])
       );
   }
 

@@ -1,5 +1,4 @@
 import {
-  Before,
   Given,
   Then,
   When,
@@ -12,33 +11,25 @@ import { expect } from 'chai';
 
 import {
   AudienceAppPage,
-  EngagementAppPage,
   ElementApp,
 } from '../pages/candylandApp.po';
-
-let engagementAppPage: EngagementAppPage;
-
-Before( () => {
-  // initializing page objects instances
-  engagementAppPage = new EngagementAppPage();
-});
 
 // Ensure that audience tab is present
 Then(/^1_The audience tab should be present.$/, async () => {
   // waiting for the audience tab to load
-  await browser.executeScript('WalkMeAPI.stopFlow()');
+  // await browser.executeScript('WalkMeAPI.stopFlow()');
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.presenceOf(ElementApp.h3Array().get(5)), 6000);
-  expect(await ElementApp.h3Array().get(5).isPresent()).to.equal(true);
+  await browser.wait(ec.presenceOf(ElementApp.h3Array().get(6)), 6000);
+  expect(await ElementApp.h3Array().get(6).isPresent()).to.equal(true);
 });
 
 // Ensure that clicking on the audience tab leads to the audience page
 When(/^2_I click on the audience tab$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for audience tab to load
-  await browser.wait(ec.presenceOf(ElementApp.h3Array().get(5)), 6000);
+  await browser.wait(ec.presenceOf(ElementApp.h3Array().get(6)), 6000);
   // clicking on the audience tab
-  await ElementApp.h3Array().get(5).click();
+  await ElementApp.h3Array().get(6).click();
   await browser.sleep(3000);
 
 });
@@ -58,10 +49,10 @@ Then(/^3_I should see the relevant elements for audience page.$/, async () => {
   // wait for the search bar to load
   await browser.wait(ec.presenceOf(ElementApp.inputText()), 6000);
   // wait for add user button to load
-  await browser.wait(ec.presenceOf(engagementAppPage.engagementCreateNewButton()), 6000);
+  await browser.wait(ec.presenceOf(ElementApp.clButton()), 6000);
   // doing an assertion on the presence of the elements
   // search bar
   expect(await ElementApp.inputText().isDisplayed()).to.equal(true);
   // add user button
-  expect(await engagementAppPage.engagementCreateNewButton().isDisplayed()).to.equal(true);
+  expect(await ElementApp.clButton().isDisplayed()).to.equal(true);
 });

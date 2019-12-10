@@ -1,7 +1,12 @@
 import { Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, protractor } from 'protractor';
-import { EngagementAppPage, CreateHitThePinataAppPage, ElementApp } from '../pages/candylandApp.po';
+import {
+  EngagementAppPage,
+  CreateHitThePinataAppPage,
+  ElementApp,
+  LoginAppPage,
+} from '../pages/candylandApp.po';
 
 let PageEngagement: EngagementAppPage;
 let PageHitThePinata: CreateHitThePinataAppPage;
@@ -9,6 +14,21 @@ const Element = ElementApp;
 
 // Ensure that hit the pinata engagement type option is present.
 Given(/^1_I am on engagement page$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  // entering correct account id
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
+
   PageEngagement = new EngagementAppPage();
   await PageEngagement.navigateToEngagement();
   await browser.sleep(3000);
@@ -18,9 +38,9 @@ Given(/^1_I am on engagement page$/, async () => {
 Given(/^1_I click on the create new button$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the create new button to load
-  await browser.wait(ec.elementToBeClickable(PageEngagement.engagementCreateNewButton()), 6000);
+  await browser.wait(ec.elementToBeClickable(Element.clButton()), 6000);
   // clicking on the create new button
-  await PageEngagement.engagementCreateNewButton().click();
+  await Element.clButton().click();
 });
 
 When(/^1_I Click on the game option.$/, async () => {
@@ -37,7 +57,7 @@ Then(/^1_The hit the pinata game should be present.$/, async () => {
   await browser.wait(ec.elementToBeClickable(PageEngagement.gamePinataOptions()), 6000);
   // doing an assertion on the presence of the element and the text of the option
   expect(await PageEngagement.gamePinataOptions().isDisplayed()).to.equal(true);
-  expect(await PageEngagement.gamePinataOptions().getText()).to.contain('Hit the pinata');
+  expect(await PageEngagement.gamePinataName().getText()).to.contain('Hit the pinata');
 });
 
 // Ensure that selecting the hit the pinata option and clicking next navigates to template creation.
@@ -53,9 +73,9 @@ Given(/^2_I am on engagement page$/, async () => {
 Given(/^2_I click on the create new button$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the create new button to load
-  await browser.wait(ec.elementToBeClickable(PageEngagement.engagementCreateNewButton()), 6000);
+  await browser.wait(ec.elementToBeClickable(Element.clButton()), 6000);
   // clicking on the create new button
-  await PageEngagement.engagementCreateNewButton().click();
+  await Element.clButton().click();
 });
 
 Given(/^2_I Click on the game option.$/, async () => {
@@ -75,7 +95,7 @@ Given(/^2_I click on hit the pinata option$/, async () => {
 });
 
 When(/^2_I click next$/, async () => {
-  await Element.matFlatButtonArray().click();
+  await Element.matFlatButtonArray().get(2).click();
   await browser.sleep(3000);
 });
 
@@ -89,7 +109,7 @@ Given(/^3_I am on the hit the pinata creation page.$/, async () => {
   PageHitThePinata = new CreateHitThePinataAppPage();
   await PageHitThePinata.navigateToHitThePinata();
   await browser.sleep(3000);
-  await browser.executeScript('WalkMeAPI.stopFlow()');
+  // await browser.executeScript('WalkMeAPI.stopFlow()');
 });
 
 Then(/^3_I should see the relevant elements for hit the pinata creation page.$/, async () => {

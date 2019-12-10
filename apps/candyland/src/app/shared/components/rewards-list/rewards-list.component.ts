@@ -2,6 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from
 import { MatSort } from '@angular/material';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { RewardsTableMenuActions } from '../../../rewards/rewards-actions/rewards-table-menu-actions';
+import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
 @Component({
   selector: 'cl-rewards-list',
@@ -64,5 +65,4 @@ export class RewardsListComponent implements AfterViewInit {
   public useAsCaptionItem(reward: IRewardEntity): void {
     this.itemAction.emit({ action: RewardsTableMenuActions.useAsCaption, data: reward });
   }
-
 }

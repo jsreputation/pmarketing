@@ -13,16 +13,27 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public errorMessage?: string;
   public preAuth: boolean;
-
+  public appAccessTokenFetched: boolean;
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthenticationService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {
   }
 
   public ngOnInit(): void {
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
+
     this.initForm();
   }
 
