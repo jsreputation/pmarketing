@@ -46,7 +46,6 @@ import { ViewLoyaltyComponent } from './components/view-loyalty/view-loyalty.com
 import { ViewGlobalEarnBurnRulesComponent } from './components/view-global-earn-burn-rules/view-global-earn-burn-rules.component';
 import { LoyaltyReviewPageComponent } from './containers/loyalty-review-page/loyalty-review-page.component';
 import { LoyaltyFormStepEarnRulesComponent } from './components/loyalty-form-step-earn-rules/loyalty-form-step-earn-rules.component';
-import { PointEarnRulesGroupComponent } from './components/point-earn-rules-group/point-earn-rules-group.component';
 import { PointEarnRulesListComponent } from './components/point-earn-rules-list/point-earn-rules-list.component';
 import { RuleSetupPopupComponent } from './containers/rule-setup-popup/rule-setup-popup.component';
 import { LoyaltyCustomTierFormsService } from './services/loyalty-custom-tier-forms.service';
@@ -86,7 +85,6 @@ import { ConditionInfoPipe } from './condition-info.pipe';
     ViewGlobalEarnBurnRulesComponent,
     LoyaltyReviewPageComponent,
     LoyaltyFormStepEarnRulesComponent,
-    PointEarnRulesGroupComponent,
     PointEarnRulesListComponent,
     RuleSetupPopupComponent,
     DateConditionGroupComponent,

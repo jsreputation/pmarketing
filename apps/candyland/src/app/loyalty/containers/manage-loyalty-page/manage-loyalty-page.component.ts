@@ -274,12 +274,17 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
 
   private createCustomTire(): void {
     this.getRefDialogSetupTier()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((tier) => {
+      .pipe(
+        switchMap((tier) => {
+          if (this.stepProgress >= 2) {
+            return this.createCustomTierRuleSet(tier.id);
+          }
+          return of(tier);
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(() => {
         this.updateCustomTiersDataSource();
-        if (this.stepProgress >= 2) {
-          this.createCustomTierRuleSet(tier.id).subscribe();
-        }
       });
   }
 
@@ -296,13 +301,18 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
 
   private deleteCustomTier(id: string): void {
     this.customTierService.deleteCustomTier(id)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        switchMap((response) => {
+          if (this.stepProgress >= 2) {
+            const ruleSetId = this.customTierRuleSetMap[id].id;
+            return this.ruleService.deleteRuleSet(ruleSetId);
+          }
+          return of(response);
+        }),
+        takeUntil(this.destroy$)
+      )
       .subscribe(() => {
         this.updateCustomTiersDataSource();
-        if (this.stepProgress >= 2) {
-          const ruleSetId = this.customTierRuleSetMap[id].id;
-          this.ruleService.deleteRuleSet(ruleSetId).subscribe();
-        }
       });
   }
 
@@ -312,22 +322,8 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
         this.customTierService,
         20,
         {'filter[program_id]': this.loyaltyId});
-      // this.customTierDataSource.filter = {program_id: this.loyaltyId};
-      // this.customTierDataSource.updateData();
-      // this.setBasicTierIdToCustomTiersDataSourceFilter(this.basicTierId);
     }
   }
-
-  // private setBasicTierIdToCustomTiersDataSourceFilter(basicTierId: string): void {
-  //   this.customTierDataSource.filter = {program_id: basicTierId};
-  // }
-
-  // public addRule(): void {
-  //   const dialogRef = this.dialog.open(AddRulePopupComponent);
-  //
-  //   dialogRef.afterClosed().subscribe(() => {
-  //   });
-  // }
 
   private getRefDialogSetupRule(data: any = null): Observable<MatDialogRef<RuleSetupPopupComponent>> {
     const dialogRef: MatDialogRef<RuleSetupPopupComponent> = this.dialog.open(RuleSetupPopupComponent, {
@@ -370,7 +366,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe((updatedRule) => {
-        data.ruleSet.rules = Utils.updateAtArray( data.ruleSet.rules, data.rule, updatedRule);
+        data.ruleSet.rules = Utils.updateAtArray(data.ruleSet.rules, data.rule, updatedRule);
         this.cd.detectChanges();
       });
   }
@@ -460,8 +456,8 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   private getBasicTierRuleSet(): Observable<any> {
     return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', this.basicTierId)
       .pipe(
-        takeUntil(this.destroy$),
         tap(ruleSet => this.basicTierRuleSet = ruleSet),
+        takeUntil(this.destroy$)
       );
   }
 
@@ -493,13 +489,17 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     this.ruleLoader = true;
     concat(this.getBasicTierRuleSet(), this.getAllCustomTierRuleSet())
       .pipe(
-        takeUntil(this.destroy$),
         filter(Boolean),
         tap(() => this.cd.detectChanges()),
         last(),
-        finalize(() => this.ruleLoader = false)
+        finalize(() => this.ruleLoader = false),
+        takeUntil(this.destroy$)
       )
-      .subscribe();
+      .subscribe(
+        () => {
+        },
+        (error: Error) => console.warn(error.message)
+      );
   }
 
   private initStatusesLabel(): void {

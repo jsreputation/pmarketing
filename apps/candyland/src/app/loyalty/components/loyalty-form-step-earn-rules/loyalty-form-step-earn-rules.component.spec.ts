@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoyaltyFormStepEarnRulesComponent } from './loyalty-form-step-earn-rules.component';
+// tslint:disable-next-line
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CustomDataSource } from '@cl-shared/table';
 import { of } from 'rxjs';
@@ -26,8 +27,8 @@ describe('LoyaltyFormStepEarnRulesComponent', () => {
 
           data: [(params)],
           meta: {
-            'page_count': 1,
-            'record_count': 3
+            page_count: 1,
+            record_count: 3
           }
         });
       }

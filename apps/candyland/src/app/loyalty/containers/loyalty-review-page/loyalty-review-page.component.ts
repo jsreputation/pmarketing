@@ -53,7 +53,6 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
 
   private handleRouteParams(): void {
     this.route.paramMap.pipe(
-      takeUntil(this.destroy$),
       map((params: ParamMap) => params.get('id')),
       tap(() => this.loader = true),
       switchMap(id => this.getLoyalty(id)),
@@ -63,7 +62,8 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
       tap(() => {
         this.loader = false;
         this.cd.detectChanges();
-      })
+      }),
+      takeUntil(this.destroy$)
     ).subscribe(() => {
       },
       (error: Error) => {
@@ -97,8 +97,8 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
   private getBasicTierRuleSet(basicTierId: string): Observable<any> {
     return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', basicTierId)
       .pipe(
-        takeUntil(this.destroy$),
-        tap(ruleSet => this.basicTierRuleSet = ruleSet)
+        tap(ruleSet => this.basicTierRuleSet = ruleSet),
+        takeUntil(this.destroy$)
       );
   }
 

@@ -268,6 +268,7 @@
 
   &-rule-input {
     max-width: 17rem !important;
+
     input {
       padding-left: 1rem;
       text-align: left;
@@ -290,7 +291,7 @@
     }
   }
 
-  .dialog-content{
+  .dialog-content {
     overflow-y: auto;
   }
 }

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MerchantBranchComponent } from './merchant-branch.component';
-// tslint:disable
+// tslint:disable-next-line
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -13,7 +13,7 @@ describe('MerchantBranchComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [MerchantBranchComponent],
-      imports: [   TranslateModule.forRoot(),],
+      imports: [TranslateModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA],
     })
       .compileComponents();

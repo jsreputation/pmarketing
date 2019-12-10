@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop, Subject } from 'rxjs';
+import Utils from '@cl-helpers/utils';
 
 @Component({
   selector: 'cl-date-picker',
@@ -56,8 +57,8 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, Contro
   public ngOnInit(): void {
     this.control.valueChanges
       .pipe(
+        distinctUntilChanged(Utils.isEqual),
         takeUntil(this.destroy$),
-        distinctUntilChanged(),
       )
       .subscribe((value: Date) => {
         this.onChange(value);

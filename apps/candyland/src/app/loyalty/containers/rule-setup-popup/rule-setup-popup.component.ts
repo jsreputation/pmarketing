@@ -86,9 +86,8 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
       )),
       tap(conditionsTypes => this.conditionTypes = conditionsTypes),
       map(conditionsTypes => !!conditionsTypes.find(condition => condition.hide === false)),
-      tap(conditionsTypes => this.isHideAddCondition = conditionsTypes),
       takeUntil(this.destroy$)
-    ).subscribe();
+    ).subscribe(conditionsTypes => this.isHideAddCondition = conditionsTypes);
   }
 
   public isHideOption(condition: any): boolean {

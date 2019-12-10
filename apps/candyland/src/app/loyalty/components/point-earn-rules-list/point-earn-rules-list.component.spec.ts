@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PointEarnRulesListComponent } from './point-earn-rules-list.component';
+// tslint:disable-next-line
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { MatMenuModule, MatTableModule } from '@angular/material';
 
