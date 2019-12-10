@@ -45,10 +45,11 @@ export class RewardHttpService {
     return this.http.patch<IJsonApiPayload<IWRewardEntityAttributes>>(ApiConfig.rewardsPath + '/' + id, data);
   }
 
-  public getRewardTierList(page: number): Observable<IJsonApiListPayload<Partial<IWTierRewardCostsAttributes>[]>> {
+  public getRewardTierList(page: number, id: string): Observable<IJsonApiListPayload<Partial<IWTierRewardCostsAttributes>[]>> {
     const params: any = {
       'page[number]': page ? page : 1,
-      'page[size]': 20
+      'page[size]': 20,
+      'filter[entity_id]': id
     };
     return this.http.get<IJsonApiListPayload<Partial<IWTierRewardCostsAttributes>[]>>(ApiConfig.rewardsTierPath, { params: params });
   }
