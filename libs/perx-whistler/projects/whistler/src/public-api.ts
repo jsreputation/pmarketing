@@ -16,7 +16,7 @@ export {
 export { IWRewardDisplayProperties, IWProperties, IWAttbsObjEntity } from './lib/whistler.models';
 
 export { IWVoucherStatsApi } from './lib/voucher/stats';
-export { IWVouchersApi } from './lib/voucher/vouchers-api';
+export { IWVouchersApi, WCodeType, WStatus } from './lib/voucher/vouchers-api';
 export {
   WAssignedStatus,
   IWAssignedAttributes,
