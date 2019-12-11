@@ -25,7 +25,7 @@ function resolveTenant(accountId: string, rootToken: ICredentials): Promise<void
   };
   // check cache for token
   return new Promise((resolve) => {
-    cache.get(accountId, async (_: Error, result: ITokenTableRowData) => {
+    cache.get(accountId, async (_tokenErr: Error, result: ITokenTableRowData) => {
       if (!result || !result.token) {
         // otherwise fetch it and put in cache
         const createTokenData = await createToken(rootToken, accountId);
@@ -41,8 +41,8 @@ function resolveTenant(accountId: string, rootToken: ICredentials): Promise<void
       const tenantURLs = tenantEndPointRawData.data.data;
       tenantURLs.forEach((tenantURLData: IJsonApiItem<IWCognitoEndpointAttributes>) => {
         const tenantUrl = tenantURLData.attributes.url;
-        cache.get(tenantUrl, (_: Error, result: IURLTableRowData) => {
-          if (!result) {
+        cache.get(tenantUrl, (_urlErr: Error, resultURL: IURLTableRowData) => {
+          if (!resultURL) {
             cache.set(tenantUrl, {
               accountId
             }, 0);
@@ -82,22 +82,22 @@ export const getCredential = (url: string): Promise<ICredentials> => {
   };
 
   return new Promise((resolve, reject) => {
-    cache.get(url, async (_: Error, result: IURLTableRowData) => {
+    cache.get(url, async (_urlErr: Error, result: IURLTableRowData) => {
       const rootToken: ICredentials = await getRootCredentials();
 
       if (!result || !result.accountId) {
         try {
           await updateMapping(rootToken);
         } catch (err) { reject(err); }
-        cache.get(url, (_: Error, newResult: IURLTableRowData) => {
+        cache.get(url, (_urlErrNest: Error, newResult: IURLTableRowData) => {
           if (newResult && newResult.accountId) {
-            cache.get(newResult.accountId, (_: Error, newTokenResult: ITokenTableRowData) => {
+            cache.get(newResult.accountId, (__: Error, newTokenResult: ITokenTableRowData) => {
               resolve(cbFn(newTokenResult, rootToken.target_url));
             });
           }
         });
       } else {
-        cache.get(result.accountId, (_: Error, tokenResult: ITokenTableRowData) => {
+        cache.get(result.accountId, (_urlErrNest: Error, tokenResult: ITokenTableRowData) => {
           resolve(cbFn(tokenResult, rootToken.target_url));
         });
       }
