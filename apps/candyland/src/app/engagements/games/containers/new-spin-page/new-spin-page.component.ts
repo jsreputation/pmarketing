@@ -228,14 +228,13 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       .subscribe(
         value => {
           const tempISlices: ISlice[] = [];
-          // this.iSlices = [];
           for (let i = 0; i < value; i++) {
             tempISlices.push({
               id: `${i}`,
               backgroundColor: this.colorCtrls.get(`${i}`).value,
             });
           }
-          this.rewardSlotNumbers = this.allRewardSlotNumbers.filter((slot) => +slot.value <= value); // not working
+          this.rewardSlotNumbers = this.allRewardSlotNumbers.filter((slot) => +slot.value < value);
           this.iSlices = tempISlices;
           this.formSpin.get('rewardSlots').patchValue([]);
           this.patchForm('rewardSlots', [this.rewardSlotNumbers[this.rewardSlotNumbers.length - 1].value]);
@@ -251,7 +250,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
         return;
       }
       this.rewardSlotNumberData = slots.map(
-        (item: number) => ({rewardPosition: item - 1})
+        (item: number) => ({rewardPosition: item})
       );
       const tempISlices = [];
 
@@ -259,7 +258,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
         for (let i = 0; i < this.numberOfWedges.value; i++) {
           tempISlices.push({
             id: `${i}`,
-            // label: `${i}win`, // hard code same
+            // label: `${i}win`, // hard code for testing
             backgroundColor: this.colorCtrls.get(`${i}`).value,
           });
         }
