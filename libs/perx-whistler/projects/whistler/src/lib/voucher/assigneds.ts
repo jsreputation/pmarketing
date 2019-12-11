@@ -19,7 +19,7 @@ export interface IWAssignedAttributes {
   status: WAssignedStatus;
   updated_at: string;
   urn: string;
-  redemption_type: WRedemptionType
+  redemption_type: WRedemptionType;
 }
 
 export interface IWPurchaseAttributes {
