@@ -12,7 +12,7 @@ import { login, users } from './ctrl/cognito';
 import { v4Token } from './ctrl/v4-token';
 import { v2Token } from './ctrl/v2-token';
 import { themes } from './ctrl/themes';
-// import { manifest } from './ctrl/manifest';
+import { manifest } from './ctrl/manifest';
 import { language } from './ctrl/language';
 import { getCredentials } from './utils/credentials';
 import { getCredential } from './ctrl/autoGenerateTenantToken';
@@ -42,7 +42,7 @@ app.post(`${BASE_HREF}cognito/users`, users(getTokens));
 
 app.post(`${BASE_HREF}themes`, themes(getTokens));
 
-// app.get(`${BASE_HREF}manifest.webmanifest`, manifest(getTokens));
+app.get(`${BASE_HREF}manifest.webmanifest`, manifest(getTokens));
 
 app.get(`${BASE_HREF}lang`, language());
 
