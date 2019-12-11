@@ -67,7 +67,8 @@ export class WhistlerVouchersService implements IVoucherService {
       state: WhistlerVouchersService.WVoucherStatusToState(voucher.attributes.status),
       code: voucher.attributes.value,
       expiry: voucher.attributes.valid_to ? new Date(voucher.attributes.valid_to) : null,
-      redemptionType: WhistlerVouchersService.WRedemptionToRT(voucher.attributes.redemption_type),
+      // @ts-ignore
+      redemptionType: reward.redemptionType,
     };
   }
 
