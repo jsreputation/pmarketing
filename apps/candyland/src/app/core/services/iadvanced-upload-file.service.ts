@@ -13,5 +13,5 @@ export interface IUploadFileStatus {
 }
 
 export abstract class IAdvancedUploadFileService {
-  public abstract uploadFile(file: File): Observable<IUploadFileStatus>;
+  public abstract uploadFile(file: File, options?: any): Observable<IUploadFileStatus>;
 }

@@ -19,14 +19,16 @@ export class UploadFileComponent implements ControlValueAccessor {
   public MAX_SIZE: number = 1;
   @Input() public label: string = '';
   @Input() public isRequired: boolean;
+  @Input() public options: any;
   @Output() public deleteFile: EventEmitter<void> = new EventEmitter();
-  @Output() public uploadFile: EventEmitter<string | null> = new EventEmitter();
+  @Output() public uploadFile: EventEmitter<number> = new EventEmitter();
 
   public lock: boolean;
   public fileName: string;
   public file: IUploadedFile | null;
   public message: string;
   public loadedFile: boolean = false;
+  public loadingFile: boolean = false;
 
   public onChange: any = () => { };
 
@@ -93,7 +95,7 @@ export class UploadFileComponent implements ControlValueAccessor {
   }
 
   private fetchFile(file: File): void {
-    this.uploadFileService.uploadFile(file)
+    this.uploadFileService.uploadFile(file, this.options)
       .subscribe(
         (res: IUploadFileStatus) => {
           switch (res.status) {
@@ -101,16 +103,21 @@ export class UploadFileComponent implements ControlValueAccessor {
               this.loadedFile = true;
               this.setSelectedFile(res.fileName);
               this.message = null;
+              this.loadingFile = false;
+              this.uploadFile.emit(res.nbRecords || null);
               break;
             case UploadStatus.ERROR:
               this.loadedFile = false;
               this.setSelectedFile(null);
+              this.uploadFile.emit(null);
               this.message = res.errorMsg || 'File haven\'t loaded successfully!';
+              this.loadingFile = false;
               break;
             case UploadStatus.UPLOADING:
               this.loadedFile = false;
               this.setSelectedFile(res.fileName);
               this.message = null;
+              this.loadingFile = true;
               break;
           }
           this.cd.markForCheck();
@@ -123,7 +130,7 @@ export class UploadFileComponent implements ControlValueAccessor {
 
   private setError(message: string, serverError?: string): void {
     this.onTouched();
-    this.loadedFile = null;
+    this.loadedFile = false;
     this.setSelectedFile(null);
     this.message = message;
     if (serverError) {
@@ -132,7 +139,7 @@ export class UploadFileComponent implements ControlValueAccessor {
   }
 
   private setSelectedFile(file: string | null): void {
-    this.uploadFile.emit(file);
+    // this.uploadFile.emit(file);
     this.onChange(file);
     this.onTouched();
   }
