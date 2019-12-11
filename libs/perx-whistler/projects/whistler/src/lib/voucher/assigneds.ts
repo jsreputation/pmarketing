@@ -1,5 +1,3 @@
-import { WRedemptionType } from '../reward/reward';
-
 export enum WAssignedStatus {
   issued = 'issued',
   assigned = 'assigned',
