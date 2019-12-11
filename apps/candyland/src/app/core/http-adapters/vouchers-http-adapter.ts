@@ -7,7 +7,7 @@ import { SOURCE_TYPE } from '../../app.constants';
 
 export class VouchersHttpAdapter {
   // tslint:disable
-  public static transformCreateVoucher(data: any): IJsonApiItem<IWVouchersApi> {
+  public static transformCreateVoucher(data: IWVouchersApi): IJsonApiItem<IWVouchersApi> {
     switch (data.code_type) {
       case 'single_code':
         return VouchersHttpAdapter.transformVoucherToApiSingleForm(data);
