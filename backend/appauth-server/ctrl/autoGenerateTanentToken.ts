@@ -13,32 +13,41 @@ interface tokenTableRowData {
   tenantId: string;
 }
 
-const generateRowData = async (url: string) => {
+const generateRowData = async () => {
   const rootToken: ICredentials = await getRootCredentials();
   const tenantsList = await getTenantsList(rootToken);
   for (let index = 0; index < tenantsList.length; index++) {
     const tenant = tenantsList[index];
-    console.log('tenant', tenant);
     const createTokenData = await createToken(rootToken, tenant.accountId);
-    console.log('createTokenData: ', createTokenData.headers.authorization);
     const tenantToken = createTokenData.headers.authorization;
-    const tenantEndPointRawData = await getEndPoints(tenantToken);
-    console.log('tenantEndPointRawData: ', tenantEndPointRawData);
-    const tenantUrl = tenantEndPointRawData.data.data.attributes.url;
-    console.log('tenantUrl: ', tenantUrl);
-    cache.get(tenantUrl, (_: Error, result: tokenTableRowData) => {
-      if (!result) {
-        cache.set(url, {
-          accountId: tenant.accountId,
-          token: tenantToken,
-          tenantId: tenant.id
-        }, 0);
-      }
-    });
+    const newCredentials = {
+      target_url: rootToken.target_url,
+      basic_token: tenantToken
+    } as ICredentials;
+    const tenantEndPointRawData = await getEndPoints(newCredentials);
+    const tenantURLs = tenantEndPointRawData.data.data;
+    for (let indexURL = 0; indexURL < tenantURLs.length; indexURL++) {
+      const tenantUrl = tenantURLs[indexURL].attributes.url;
+      console.log('tenantUrl', tenantUrl);
+      cache.get(tenantUrl, (_: Error, result: tokenTableRowData) => {
+        if (!result) {
+          cache.set(tenantUrl, {
+            accountId: tenant.accountId,
+            token: tenantToken,
+            tenantId: tenant.id
+          }, 0);
+        }
+      });
+    }
   };
 }
 
 export function getCredential(url: string): Promise<ICredentials> {
+  if (url.includes('localhost')) {
+    url = 'https://generic-blackcomb-dev1.uat.whistler.perxtech.io/';
+  } else {
+    url += '/';
+  }
   let credential: ICredentials = {
     target_url: url,
     basic_token: '',
@@ -48,13 +57,19 @@ export function getCredential(url: string): Promise<ICredentials> {
   console.log('request URL: ', url);
   cache.get(url, async (_: Error, result: tokenTableRowData) => {
     if (!result) {
-      generateRowData(url);
-      // cache.get(url, async (_: Error, newResult: tokenTableRowData) => {
-      //   if (newResult) {
-      //     credential.basic_token = newResult.token;
-      //   }
-      // });
+      generateRowData();
+      cache.get(url, async (_: Error, newResult: tokenTableRowData) => {
+        console.log('=======================');
+        console.log('newResult:', newResult);
+        console.log('=======================');
+        if (newResult) {
+          credential.basic_token = newResult.token;
+        }
+      });
     } else {
+      console.log('=======================');
+      console.log('result:', result);
+      console.log('=======================');
       credential.basic_token = result.token;
     }
   });
