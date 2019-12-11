@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,7 +12,8 @@ import {
   MatRippleModule,
   MatSnackBarModule,
   MatIconModule,
-  MatListModule
+  MatListModule,
+  MatSelectModule
 } from '@angular/material';
 import {
   AuthenticationModule,
@@ -22,7 +23,10 @@ import {
   MerchantsModule,
   ConfigModule,
   ProfileModule,
-  MerchantAdminModule
+  MerchantAdminModule,
+  LanguageInterceptor,
+  ConfigService,
+  TokenStorage
 } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,10 +41,16 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
 import { OrderComponent } from './order/order.component';
 import { OrderQuantityComponent } from './order/order-quantity/order-quantity.component';
 import { RedeemComponent } from './redeem/redeem.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { PerxTranslateLoader } from './custom-translate.service';
 
+export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
+  translateService.setDefaultLang(environment.defaultLang);
+  resolve();
+});
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,6 +78,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatRippleModule,
     MatIconModule,
     MatListModule,
+    MatSelectModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     FormsModule,
@@ -80,9 +91,19 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MerchantAdminModule,
     LoyaltyModule,
     VouchersModule,
-    HttpClientModule
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useClass: PerxTranslateLoader,
+        deps: [HttpClient, ConfigService, TokenStorage]
+      }
+    })
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true},
+    { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [CustomSnackbarComponent]
 })

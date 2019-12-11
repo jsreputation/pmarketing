@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticationService, NotificationService, TokenStorage } from '@perx/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -12,13 +13,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
+  public currentSelectedLanguage: string = 'en';
   public appAccessTokenFetched: boolean;
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private notificationService: NotificationService,
-    private tokenStorage: TokenStorage
+    private tokenStorage: TokenStorage,
+    private translateService: TranslateService,
+    private cd: ChangeDetectorRef
   ) {
     this.initForm();
   }
@@ -32,6 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
     const token = this.authService.getAppAccessToken();
     if (token) {
       this.appAccessTokenFetched = true;
@@ -82,6 +87,11 @@ export class LoginComponent implements OnInit {
 
   public onForgotPassword(): void {
     this.router.navigateByUrl('/reset');
+  }
+
+  public switchLanguage(): void {
+    this.translateService.use(this.currentSelectedLanguage);
+    this.cd.detectChanges();
   }
 
 }

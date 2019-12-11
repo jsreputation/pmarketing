@@ -16,7 +16,7 @@ export {
 export { IWRewardDisplayProperties, IWProperties, IWAttbsObjEntity } from './lib/whistler.models';
 
 export { IWVoucherStatsApi } from './lib/voucher/stats';
-export { IWVouchersApi } from './lib/voucher/vouchers-api';
+export { IWVouchersApi, WCodeType, WStatus } from './lib/voucher/vouchers-api';
 export {
   WAssignedStatus,
   IWAssignedAttributes,
@@ -48,12 +48,11 @@ export {
 export { IWCampaignAttributes, IWCampaignDisplayProperties, WInformationCollectionSettingType } from './lib/campaign/campaign';
 export {
   IWAudiences,
-  IWPoolsApi,
   IWPools,
-  IWUser,
 } from './lib/audiences/audiences.model';
 export {
   IWProfileAttributes,
+  IWCustomProperties,
   IWPoolsAttributes,
   IWCognitoLogin,
   IWUserJWTRequest,

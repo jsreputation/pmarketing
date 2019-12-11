@@ -1,5 +1,9 @@
 @import "variables";
 
+.stamps-limits-container {
+  margin-top: ($vertical-padding * 0.5);
+}
+
 .stamp-rule {
   display: flex;
   flex-flow: row nowrap;
