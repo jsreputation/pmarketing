@@ -8,11 +8,11 @@ import { IJsonApiItem, IWCognitoEndpointAttributes } from '@perx/whistler';
 
 const cache = cacheManager.caching({ store: 'memory', max: 100, ttl: 0 });
 
-interface tokenTableRowData {
+interface ITokenTableRowData {
   token: string;
 }
 
-interface urlTableRowData {
+interface IURLTableRowData {
   accountId: string;
 }
 
@@ -23,13 +23,13 @@ function resolveTenant(accountId: string, rootToken: ICredentials): Promise<void
     perx_access_key_id: '',
     perx_secret_access_key: ''
   };
-  //check cache for token
+  // check cache for token
   return new Promise((resolve) => {
-    cache.get(accountId, async (_: Error, result: tokenTableRowData) => {
+    cache.get(accountId, async (_: Error, result: ITokenTableRowData) => {
       if (!result || !result.token) {
-        //otherwise fetch it and put in cache
+        // otherwise fetch it and put in cache
         const createTokenData = await createToken(rootToken, accountId);
-        const token = createTokenData.headers.authorization
+        const token = createTokenData.headers.authorization;
         tenantCredential.basic_token = token;
         cache.set(accountId, {
           token
@@ -41,7 +41,7 @@ function resolveTenant(accountId: string, rootToken: ICredentials): Promise<void
       const tenantURLs = tenantEndPointRawData.data.data;
       tenantURLs.forEach((tenantURLData: IJsonApiItem<IWCognitoEndpointAttributes>) => {
         const tenantUrl = tenantURLData.attributes.url;
-        cache.get(tenantUrl, (_: Error, result: urlTableRowData) => {
+        cache.get(tenantUrl, (_: Error, result: IURLTableRowData) => {
           if (!result) {
             cache.set(tenantUrl, {
               accountId
@@ -69,35 +69,35 @@ export const getCredential = (url: string): Promise<ICredentials> => {
     url += '/';
   }
 
-  let credential: ICredentials = {
+  const credential: ICredentials = {
     target_url: '',
     basic_token: '',
     perx_access_key_id: '',
     perx_secret_access_key: ''
   };
-  const cbFn = (result: tokenTableRowData, targetUrl: string): ICredentials => {
+  const cbFn = (result: ITokenTableRowData, targetUrl: string): ICredentials => {
     credential.basic_token = result.token;
     credential.target_url = targetUrl;
-    return credential
-  }
+    return credential;
+  };
 
   return new Promise((resolve, reject) => {
-    cache.get(url, async (_: Error, result: urlTableRowData) => {
+    cache.get(url, async (_: Error, result: IURLTableRowData) => {
       const rootToken: ICredentials = await getRootCredentials();
 
       if (!result || !result.accountId) {
         try {
           await updateMapping(rootToken);
-        } catch (err) { reject(err) }
-        cache.get(url, (_: Error, newResult: urlTableRowData) => {
+        } catch (err) { reject(err); }
+        cache.get(url, (_: Error, newResult: IURLTableRowData) => {
           if (newResult && newResult.accountId) {
-            cache.get(newResult.accountId, (_: Error, newTokenResult: tokenTableRowData) => {
+            cache.get(newResult.accountId, (_: Error, newTokenResult: ITokenTableRowData) => {
               resolve(cbFn(newTokenResult, rootToken.target_url));
             });
           }
         });
       } else {
-        cache.get(result.accountId, async (_: Error, tokenResult: tokenTableRowData) => {
+        cache.get(result.accountId, (_: Error, tokenResult: ITokenTableRowData) => {
           resolve(cbFn(tokenResult, rootToken.target_url));
         });
       }

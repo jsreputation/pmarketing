@@ -10,5 +10,5 @@ export const fetchTheme = async (endpointCredential: ICredentials, pageNumber: n
         'Content-Type': 'text/plain'
       }
     }
-  )
+  );
 };

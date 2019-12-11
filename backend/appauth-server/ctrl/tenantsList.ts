@@ -27,11 +27,11 @@ const updateTenantsList = async (tenantsListData: ITenantListData[] | [], pageRa
     .filter((tenant: IJsonApiItem<IWTenant>) => tenant.attributes.account_id !== 0 && tenant.attributes.alias !== 'owner')
     .map((tenant: IJsonApiItem<IWTenant>) => transformToTenantListData(tenant));
   return [...tenantsListData, ...pageData];
-}
+};
 
 const transformToTenantListData = (tenantsRawData: IJsonApiItem<IWTenant>): ITenantListData => {
   return {
     id: tenantsRawData.id,
     accountId: tenantsRawData.attributes.alias
   };
-}
+};
