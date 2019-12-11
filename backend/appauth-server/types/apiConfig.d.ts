@@ -11,7 +11,7 @@ export interface IWhistlerConfig {
 export interface ICredentials extends IVStarConfig, IWhistlerConfig { }
 
 export interface ApiConfig {
-  root: ICredentials,
+  root: ICredentials;
   credentials: {
     [k: string]: ICredentials;
   };

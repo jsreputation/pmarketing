@@ -29,9 +29,7 @@ const updateTenantsList = async (tenantsListData: ITenantListData[] | [], pageRa
   return [...tenantsListData, ...pageData];
 };
 
-const transformToTenantListData = (tenantsRawData: IJsonApiItem<IWTenant>): ITenantListData => {
-  return {
-    id: tenantsRawData.id,
-    accountId: tenantsRawData.attributes.alias
-  };
-};
+const transformToTenantListData = (tenantsRawData: IJsonApiItem<IWTenant>): ITenantListData => ({
+  id: tenantsRawData.id,
+  accountId: tenantsRawData.attributes.alias
+});
