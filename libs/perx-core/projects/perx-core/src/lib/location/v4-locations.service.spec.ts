@@ -12,7 +12,8 @@ import { ILocation } from './ilocation';
 
 describe('V4LocationService', () => {
   const merchantsServiceStub = {
-    getMerchant: () => of()
+    getMerchant: () => of(),
+    getMerchants: () => of([])
   };
 
   beforeEach(() => TestBed.configureTestingModule({
@@ -46,9 +47,45 @@ describe('V4LocationService', () => {
         .subscribe(() => { });
       // with tags
       tick();
-      locationService.getAllLocations(of([{ id: 1 } as IMerchant]), ['tag'])
+      locationService.getAllLocations(of([{ id: 1, tags: [{ name: 'tag', id: 1 }] } as IMerchant,
+      { id: 2 } as IMerchant]), ['tag'])
         .subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
     })));
+
+  it('should get locatiion', fakeAsync(inject([V4LocationsService, IMerchantsService],
+    (location: V4LocationsService, merchantService: IMerchantsService) => {
+      const spy = spyOn(location, 'getFromMerchant').and.returnValue(of([]));
+      const merchSpy = spyOn(merchantService, 'getMerchants');
+      merchSpy.and.returnValue(of([]))
+      location.getLocations().subscribe(() => { });
+      tick();
+      merchSpy.and.returnValue(of([{
+        tags: [{ id: 1, name: 'test' }]
+      } as IMerchant]));
+      location.getLocations(1, ['test']).subscribe(() => { });
+      tick();
+      merchSpy.and.returnValue(of([{
+        id: 1
+      } as IMerchant]));
+      location.getLocations(1, ['test']).subscribe(() => { });
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })));
+
+  it('getFromMerchant', fakeAsync(inject([V4LocationsService, IMerchantsService],
+    (location: V4LocationsService, merchantService: IMerchantsService) => {
+      const spy = spyOn(merchantService, 'getMerchant').and.returnValue(of({
+        outlets: [{ coordinates: { lat: 1, lng: 2 }, tags: [{ id: 1, name: 'test' }], }]
+      } as IMerchant));
+      location.getFromMerchant(1).subscribe(() => { });
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })));
+
+  it('getTags', fakeAsync(inject([V4LocationsService], (location: V4LocationsService) => {
+    location.getTags(of([{ tags: [{ name: 'test', id: 1 }] } as IMerchant]))
+    .subscribe((val) => { expect(val).toEqual(['test']) });
+  })));
 });
