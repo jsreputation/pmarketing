@@ -14,8 +14,8 @@ import { v2Token } from './ctrl/v2-token';
 import { themes } from './ctrl/themes';
 // import { manifest } from './ctrl/manifest';
 import { language } from './ctrl/language';
-// import { getCredentials } from './utils/credentials';
-import { getCredential } from './ctrl/autoGenerateTanentToken';
+import { getCredentials } from './utils/credentials';
+import { getCredential } from './ctrl/autoGenerateTenantToken';
 // Express server
 const app = express();
 app.use(compression());
@@ -27,8 +27,7 @@ app.use('/static', express.static('static'));
 const PORT = process.env.PORT || 4000;
 const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
 const BASE_HREF = process.env.BASE_HREF || '/';
-// const getTokens = process.env.IS_WHISTLER ? getCredential : getCredentials;
-const getTokens = getCredential;
+const getTokens = process.env.IS_WHISTLER ? getCredential : getCredentials;
 app.options('*', cors());
 
 app.get('/preauth', preauth(getTokens));
