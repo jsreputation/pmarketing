@@ -1,16 +1,26 @@
-import { Before, Given, Then, When } from 'cucumber';
+import {
+  Before,
+  Given,
+  Then,
+  When,
+} from 'cucumber';
+import {
+  browser,
+  protractor,
+} from 'protractor';
 import { expect } from 'chai';
-import { browser, protractor } from 'protractor';
-import { LoginAppPage, DashboardAppPage } from '../pages/candylandApp.po';
 import * as browserLogs from 'protractor-browser-logs';
-// declaring page variable
-let DashboardPage: DashboardAppPage;
+
+import {
+  ElementApp,
+  LoginAppPage,
+  DashboardAppPage,
+} from '../pages/candylandApp.po';
+
 // initializing log variable
 let logs: any ;
 
 Before( () => {
-  // initializing page objects instances
-  DashboardPage = new DashboardAppPage();
   // initalizing logging feature
   logs = browserLogs(browser);
   logs.ignore(logs.DEBUG);
@@ -19,7 +29,7 @@ Before( () => {
 
 // Login with correct credentials
 Given(/^31_I am on the login page$/, async () => {
-  await DashboardPage.navigateToDashboard();
+  await DashboardAppPage.navigateToDashboard();
   browser.waitForAngularEnabled(false);
   // clearing session token in local storage
   await browser.executeScript('window.localStorage.clear();');
@@ -48,7 +58,7 @@ Then(/^31_I am able to login successfully$/, async () => {
 
 // Login with incorrect username
 Given(/^32_I am on the login page$/, async () => {
-  await DashboardPage.navigateToDashboard();
+  await DashboardAppPage.navigateToDashboard();
   // clearing session token in local storage
   await browser.executeScript('window.localStorage.clear();');
   await LoginAppPage.navigateToLogin();
@@ -133,7 +143,7 @@ Then(/^34_I am not able to login.$/, async () => {
 
 // Verifying presence of message prompt to user.
 Given(/^35_I am on the login page.$/, async () => {
-  await DashboardPage.navigateToDashboard();
+  await DashboardAppPage.navigateToDashboard();
   // clearing session token in local storage
   await browser.executeScript('window.localStorage.clear();');
   await LoginAppPage.navigateToLogin();
