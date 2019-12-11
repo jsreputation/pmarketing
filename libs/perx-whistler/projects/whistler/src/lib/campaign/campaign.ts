@@ -22,14 +22,6 @@ export interface IWCampaignAttributes {
   display_properties?: IWCampaignDisplayProperties;
 }
 
-export interface IWCampaignIncludedPoolAttributes {
-  created_at?: string;
-  updated_at?: string;
-  urn?: string;
-  name: string;
-  properties: null;
-}
-
 export interface IWCampaignDisplayProperties {
   informationCollectionSetting?: WInformationCollectionSettingType;
   noRewardsPopUp?: IWProperties;

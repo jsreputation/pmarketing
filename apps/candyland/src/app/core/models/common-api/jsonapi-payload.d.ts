@@ -60,9 +60,3 @@ declare interface IJsonApiSendItem<T> {
 
 declare type IJsonApiSendData<T> = IJsonApiPatchData<T> |  IJsonApiPostData<T>;
 
-declare interface IJsonIncludedPool<T> {
-  id?: string;
-  type?: string;
-  links: {self: string};
-  attributes: T;
-}

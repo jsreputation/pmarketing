@@ -6,7 +6,7 @@ import {
 import {
   IWCampaignAttributes,
   WEngagementType,
-  IWCampaignIncludedPoolAttributes,
+  IWAudiences,
   WInformationCollectionSettingType,
 } from '@perx/whistler';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign.interface';
@@ -25,15 +25,10 @@ export class CampaignsHttpAdapter {
 
   public static transformToCampaign(
     data: IJsonApiItem<IWCampaignAttributes>,
-    includedPools?: IJsonIncludedPool<IWCampaignIncludedPoolAttributes>[]): ICampaignTableData {
+    includedPools?: IJsonApiItem<Partial<IWAudiences>>[]): ICampaignTableData {
     const audienceCheck = includedPools
       .find(pool => +pool.id === (data.attributes.pool_id || Number.MAX_SAFE_INTEGER));
-    let audience;
-    if (audienceCheck) {
-      audience = audienceCheck.attributes.name;
-    } else {
-      audience = 'null';
-    }
+    const audience = audienceCheck ? audienceCheck.attributes.name : '-';
     const eType = data.attributes.engagement_type ?
       CampaignsHttpAdapter.EngagementTypePipeTransform(EngagementTypeFromAPIMapping[data.attributes.engagement_type])
       : '';
