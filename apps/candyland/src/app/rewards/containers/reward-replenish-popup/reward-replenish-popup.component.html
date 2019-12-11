@@ -52,14 +52,15 @@
 
       <!-- Unique codes: User Upload-->
       <ng-container *ngIf="voucherSettings?.voucherCode?.type === 'user_uploaded'">
-        <cl-upload-file label="Unique codes: User Upload"
-          (uploadFile)="setReplenishVoucherCodes(20000)"
-          (deleteFile)="setReplenishVoucherCodes($event)">
+        <cl-upload-file
+          [options]="{rewardId: data.id}"
+          (uploadFile)="setReplenishVoucherCodes($event)"
+          (deleteFile)="setReplenishVoucherCodes()">
         </cl-upload-file>
         <div class="code-preview" *ngIf="replenishVoucherCodes">
           <label class="dialog-content-title">Total Number of Voucher</label>
           <p class="code-preview-value">
-            {{replenishVoucherCodes | number: '2.'}}
+            {{replenishVoucherCodes | number}}
           </p>
         </div>
       </ng-container>
@@ -88,7 +89,9 @@
     </div>
   </mat-dialog-content>
   <footer class="dialog-actions">
-    <cl-button classList="secondary"
+    <cl-button
+      *ngIf="voucherSettings?.voucherCode?.type !== 'user_uploaded'"
+      classList="secondary"
       class="actions-close"
       (click)="close()"
       [disableRipple]="true">
@@ -97,12 +100,24 @@
       </span>
     </cl-button>
 
-    <cl-button classList="primary"
+    <cl-button
+      *ngIf="voucherSettings?.voucherCode?.type !== 'user_uploaded'"
+      classList="primary"
       (click)="replenish()"
       [disable]="!replenishVoucherCodes"
       [disableRipple]="true">
       <span>
         {{'REPLENISH' | translate}}
+      </span>
+    </cl-button>
+
+    <cl-button
+      *ngIf="voucherSettings?.voucherCode?.type === 'user_uploaded'"
+      classList="primary"
+      (click)="close()"
+      [disableRipple]="true">
+      <span>
+        {{'BTN_CLOSE' | translate}}
       </span>
     </cl-button>
   </footer>
