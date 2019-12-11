@@ -83,8 +83,9 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
       .asObservable()
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
-        const isFirstTimeRenderFromAPIResponse = data && data.id && data.template && data.template.id && data.outcomes && this.isFirstInit;
-        if (isFirstTimeRenderFromAPIResponse) {
+        const isCreateNew = data && !data.id && data.campaignInfo && this.isFirstInit;
+        const isFirstTimeRenderFromEdit = data && data.id && data.template && data.template.id && data.outcomes && this.isFirstInit;
+        if (isCreateNew || isFirstTimeRenderFromEdit) {
           this.isFirstInit = false;
           this.initOutcomesList();
         }
@@ -122,7 +123,7 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
   }
 
   public initOutcomesList(): void {
-    const noOutcomeData = this.campaign.outcomes.find(data => data.outcome.slotNumber === this.slotNumber && !data.outcome.resultId);
+    const noOutcomeData = this.campaign.outcomes && this.campaign.outcomes.find(data => data.outcome.slotNumber === this.slotNumber && !data.outcome.resultId);
     if (noOutcomeData && noOutcomeData.outcome) {
       noOutcomeData.enableProbability = true;
       this.outcomes = [noOutcomeData];
@@ -133,7 +134,7 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
       ];
       this.enableProbability = false;
     }
-    const possibleOutcomes = this.campaign.outcomes.filter(
+    const possibleOutcomes = this.campaign.outcomes && this.campaign.outcomes.filter(
       data => {
         if (!data.outcome.resultId) {
           return false;
@@ -144,7 +145,7 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
         return data.outcome.slotNumber === this.slotNumber;
       }
     );
-    const possibleOutcomes$ = possibleOutcomes.map(data =>
+    const possibleOutcomes$ = possibleOutcomes && possibleOutcomes.map(data =>
       this.rewardsService.getReward(data.outcome.resultId).pipe(
         map((reward: IRewardEntity) =>
           ({ ...data, reward })),
