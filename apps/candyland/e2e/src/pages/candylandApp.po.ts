@@ -13,7 +13,6 @@ export class DashboardAppPage {
 }
 
 export class EngagementAppPage {
-
   public static navigateToEngagement(): Promise<string> {
     return browser.get('engagements') as Promise<string>;
   }
@@ -38,11 +37,7 @@ export class EngagementAppPage {
     return element(by.css('button.engagement-selector.active'));
   }
 
-  public static itemName(): ElementFinder {
-    return element.all(by.css('p.engagement-item-name')).first();
-  }
-
-  public  static itemInfo(): ElementFinder {
+  public static itemInfo(): ElementFinder {
     return element.all(by.css('div.engagement-item-info>p.engagement-item-name')).first();
   }
 
@@ -53,19 +48,11 @@ export class EngagementAppPage {
   public static gamePinataName(): ElementFinder {
     return element.all(by.css('.engagement-selector-game>.engagement-selector-name')).get(1);
   }
-
-  public confirmModal(): ElementFinder {
-    return element(by.css('cl-confirm-modal'));
-  }
 }
 
 export class CreateShakeTheTreeAppPage {
   public static navigateToShakeTheTree(): Promise<string> {
     return browser.get('engagements/games/new-shake') as Promise<string> ;
-  }
-
-  public static shakeTreeGamesButton(): ElementFinder {
-    return element(by.className('btn mat-flat-button primary'));
   }
 
   public static shakeTreeTypeOptions(): ElementFinder {
@@ -120,14 +107,6 @@ export class CreateShakeTheTreeAppPage {
     return element(by.className('gift-img gift-img__1 ng-star-inserted'));
   }
 
-  public static uploadedImageObj(): ElementFinder {
-    return element(by.css('div.image-wrap.ng-star-inserted>img'));
-  }
-
-  public static errorUploadMessage(): ElementFinder {
-    return element.all(by.css('p.upload-error.ng-star-inserted')).get(1);
-  }
-
   public static giftPreview(): ElementFinder {
     return element(by.css('div.gift-wrapper.gift-wrapper__1.hang.ng-star-inserted>img'));
   }
@@ -148,22 +127,10 @@ export class CreateShakeTheTreeAppPage {
     return element(by.css('button.btn.mat-flat-button.secondary'));
   }
 }
-export class LoginAppPage {
 
+export class LoginAppPage {
   public static navigateToLogin(): Promise<string> {
     return browser.get('login') as Promise<string> ;
-  }
-
-  public static accountIDField(): ElementFinder {
-    return element.all(by.css('input')).first();
-  }
-
-  public static userAccountField(): ElementFinder {
-    return element.all(by.css('input')).get(1);
-  }
-
-  public static pwField(): ElementFinder {
-    return element.all(by.css('input')).get(2);
   }
 
   public static getAccountId(): string {
@@ -177,11 +144,9 @@ export class LoginAppPage {
   public static getPassword(): string {
     return 'asdfjkl;';
   }
-
 }
 
 export class CreateSurveyAppPage {
-
   public static navigateToSurvey(): Promise<string> {
     return browser.get('engagements/new-survey') as Promise<string>;
   }
@@ -248,7 +213,6 @@ export class CreateSurveyAppPage {
 }
 
 export class CreateHitThePinataAppPage {
-
   public static navigateToHitThePinata(): Promise<string> {
     return browser.get('engagements/games/new-pinata') as Promise<string>;
   }
@@ -264,33 +228,17 @@ export class CreateHitThePinataAppPage {
   public static pinataImage(): ElementFinder {
     return element(by.css('img.img'));
   }
-
-  public uploadedBackgroundImageObj(): ElementFinder {
-    return element(by.css('div.image-wrap.ng-star-inserted>img'));
-  }
-  public backgroundElement(): ElementFinder {
-    return element(by.css('div.mobile-preview-background'));
-  }
-  public buttonTextPreview(): ElementFinder {
-    return element(by.css('button.mobile-preview-btn'));
-  }
-  public loadPreviewElement(): ElementFinder {
-    return element(by.className('mobile-preview-headline'));
-  }
 }
+
 export class CreateInstantRewardAppPage {
+  public static navigateToCreateInstantReward(): Promise<string> {
+    return browser.get('engagements/new-instant-reward') as Promise<string> ;
+  }
 
   public static instantRewardBtn(): ElementFinder {
     return element.all(by.css('button.engagement-selector')).get(3);
   }
 
-  public static navigateToCreateInstantReward(): Promise<string> {
-    return browser.get('engagements/new-instant-reward') as Promise<string> ;
-  }
-
-  public static mobileHeadline(): ElementFinder {
-    return element(by.css('p.mobile-preview-headline'));
-  }
   public static mobileSubHeadline(): ElementFinder {
     return element(by.css('p.mobile-preview-sub-headline'));
   }
@@ -298,19 +246,9 @@ export class CreateInstantRewardAppPage {
   public static cardPreview(): ElementFinder {
     return element(by.css('div.mobile-preview-card'));
   }
-
-  public static backgroundPreview(): ElementFinder {
-    return element(by.css('div.mobile-preview-background'));
-  }
-
-  public static mobileButtonPreview(): ElementFinder {
-    return element(by.css('button.mobile-preview-btn'));
-  }
-
 }
 
 export class RewardAppPage {
-
   public static navigateToReward(): Promise<string> {
     return browser.get('rewards') as Promise<string>;
   }
@@ -329,7 +267,6 @@ export class RewardAppPage {
 }
 
 export class CreateRewardAppPage {
-
   public static navigateToRewardCreate(): Promise<string> {
     return browser.get('rewards/new-reward') as Promise<string>;
   }
@@ -381,44 +318,15 @@ export class CreateRewardAppPage {
   public static dropDownMenu(): ElementArrayFinder {
     return element.all(by.className('mat-select-arrow-wrapper'));
   }
-
-  public selectField(): ElementArrayFinder {
-    return element.all(by.css('div.mat-select-trigger'));
-  }
-  public rewardOptions(): ElementArrayFinder {
-    return element.all(by.css('span.mat-option-text'));
-  }
-  public fileUploadField(): ElementFinder {
-    return element.all(by.css('input[type=file]')).get(1);
-  }
-  public numberField(): ElementArrayFinder {
-    return element.all(by.css('input[type=number]'));
-  }
-  public inputFileField(): ElementFinder {
-    return element(by.css('input[type=file]'));
-  }
-  public fileUploaded(): ElementFinder {
-    return element(by.css('div.image-wrap.ng-star-inserted>img'));
-  }
-  public fileName(): ElementFinder {
-    return element(by.css('span.upload-file-file-name'));
-  }
-  public firstMerchantsRow(): ElementFinder {
-    return element.all(by.css('tr.mat-row.ng-star-inserted')).get(0);
-  }
-
 }
 
 export class CampaignAppPage {
-
   public static navigateToCampaign(): Promise<string> {
     return browser.get('campaigns') as Promise<string> ;
   }
-
 }
 
 export class CreateCampaignAppPage {
-
   public static navigateToCreateCampaign(): Promise<string> {
     return browser.get('campaigns/new-campaign') as Promise<string> ;
   }
@@ -434,27 +342,21 @@ export class CreateCampaignAppPage {
   public static campaignMatRadioSms(): ElementFinder {
     return element(by.xpath('//*[@id="mat-radio-3"]/label/div[1]/div[1]'));
   }
-
 }
 
 export class GeneralSettingsAppPage {
-
   public static navigateToGeneralSettings(): Promise<string> {
     return browser.get('settings/general') as Promise<string> ;
   }
-
 }
 
 export class BrandingSettingsAppPage {
-
   public static navigateToBrandingSettings(): Promise<string> {
     return browser.get('settings/branding') as Promise<string> ;
   }
-
 }
 
 export class AudienceAppPage {
-
   public static navigateToAudience(): Promise<string> {
     return browser.get('audience') as Promise<string> ;
   }
@@ -470,7 +372,6 @@ export class AudienceAppPage {
   public static audienceColumnList(): ElementArrayFinder {
     return element.all(by.css('td.column-audiencelist'));
   }
-
 }
 
 export class BlackcombWalletAppPage {
@@ -715,6 +616,7 @@ export class ElementApp {
   public static matTabLabelContent(): ElementArrayFinder {
     return element.all(by.css('div.mat-tab-label-content'));
   }
+
   public static inputArray(): ElementArrayFinder {
     return element.all(by.css('input'));
   }
@@ -723,8 +625,8 @@ export class ElementApp {
     return element.all(by.css('cl-images-preview'));
   }
 
-  public static engagementCreated(): ElementFinder {
-    return element.all(by.css('p.engagement-item-name')).get(0);
+  public static engagementItemArray(): ElementArrayFinder {
+    return element.all(by.css('p.engagement-item-name'));
   }
 
   public static mobilePreviewHeadline(): ElementFinder {

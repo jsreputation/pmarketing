@@ -48,7 +48,7 @@ When(/^21_I upload a file$/, async () => {
 
 Then(/^21_The file uploaded is present in the upload field under the gift box category .$/, async () => {
   // doing an assertion based on the attribute of the img obj
-  expect(await CreateShakeTheTreeAppPage.uploadedImageObj().getAttribute('alt')).to.be.contain('upload');
+  expect(await ElementApp.imageWrap().getAttribute('alt')).to.be.contain('upload');
 });
 
 // Successful file upload for background image
@@ -67,7 +67,7 @@ When(/^22_I upload a file$/, async () => {
 
 Then(/^22_The file uploaded is present in the upload field under the background category.$/, async () => {
   // doing an assertion based on the attribute of the img obj
-  expect(await CreateShakeTheTreeAppPage.uploadedImageObj().getAttribute('alt')).to.be.contain('upload');
+  expect(await ElementApp.imageWrap().getAttribute('alt')).to.be.contain('upload');
 });
 
 // Wrong file upload for gift box
@@ -127,7 +127,7 @@ When(/^25_I upload a file with the appropriate format for gift box$/, async () =
 
 Then(/^25_gift box design reflects the file upload.$/, async () => {
   // initializing variables for attributes src
-  const srcUploadField = await CreateShakeTheTreeAppPage.uploadedImageObj().getAttribute('src');
+  const srcUploadField = await ElementApp.imageWrap().getAttribute('src');
   const srcElementPreview = await CreateShakeTheTreeAppPage.giftPreview().getAttribute('src');
   // initializing regex looking for ','
   const regex = /,/;
@@ -155,7 +155,7 @@ When(/^26_I upload a file with the appropriate format for background$/, async ()
 
 Then(/^26_background reflects the file upload.$/, async () => {
   // initializing variables for attributes src
-  const srcUploadField = await CreateShakeTheTreeAppPage.uploadedImageObj().getAttribute('src');
+  const srcUploadField = await ElementApp.imageWrap().getAttribute('src');
   const srcElementPreviewStyle = await ElementApp.mobilePreviewBackground().getAttribute('style');
   // get background-image url from style
   const bgUrl = srcElementPreviewStyle.split('"')[1];

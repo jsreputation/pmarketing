@@ -30,15 +30,15 @@ Given(/^31_I am on the login page$/, async () => {
 When(/^31_I enter the right credentials$/, async () => {
   const ec = protractor.ExpectedConditions;
   // Waiting for account id field to load
-  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  await browser.wait(ec.elementToBeClickable(ElementApp.inputArray().first()), 5000);
   // entering correct account id
-  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  await ElementApp.inputArray().first().sendKeys(LoginAppPage.getAccountId());
   // entering correct testUserAccount
-  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  await ElementApp.inputArray().get(1).sendKeys(LoginAppPage.getUserAccount());
   // entering correct pw
-  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  await ElementApp.inputArray().get(2).sendKeys(LoginAppPage.getPassword());
   // pressing the enter key on the accountID field to log in
-  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await ElementApp.inputArray().first().sendKeys(protractor.Key.ENTER);
   await browser.sleep(3000);
 });
 Then(/^31_I am able to login successfully$/, async () => {
@@ -58,15 +58,15 @@ Given(/^32_I am on the login page$/, async () => {
 When(/^32_I entered the incorrect username with the valid p\/w$/, async () => {
   const ec = protractor.ExpectedConditions;
   // Waiting for account id field to load
-  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  await browser.wait(ec.elementToBeClickable(ElementApp.inputArray().first()), 5000);
   // entering correct account id
-  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  await ElementApp.inputArray().first().sendKeys(LoginAppPage.getAccountId());
   // entering incorrect useraccount
-  await LoginAppPage.userAccountField().sendKeys('test0101');
+  await ElementApp.inputArray().get(1).sendKeys('test0101');
   // entering correct pw
-  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  await ElementApp.inputArray().get(2).sendKeys(LoginAppPage.getPassword());
   // pressing the enter key on the accountID field to log in
-  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await ElementApp.inputArray().first().sendKeys(protractor.Key.ENTER);
 });
 
 Then(/^32_I am not able to login.$/, async () => {
@@ -86,15 +86,15 @@ Given(/^33_I am on the login page.$/, async () => {
 When(/^33_I entered the correct email and invalid p\/w$/, async () => {
   const ec = protractor.ExpectedConditions;
   // Waiting for account id field to load
-  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  await browser.wait(ec.elementToBeClickable(ElementApp.inputArray().first()), 5000);
   // entering correct account id
-  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  await ElementApp.inputArray().first().sendKeys(LoginAppPage.getAccountId());
   // entering correct testUserAccount
-  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  await ElementApp.inputArray().get(1).sendKeys(LoginAppPage.getUserAccount());
   // entering incorrect pw
-  await LoginAppPage.pwField().sendKeys('test0101');
+  await ElementApp.inputArray().get(2).sendKeys('test0101');
   // pressing the enter key on the accountID field to log in
-  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await ElementApp.inputArray().first().sendKeys(protractor.Key.ENTER);
 });
 
 Then(/^33_I am not able to login.$/, async () => {
@@ -115,15 +115,15 @@ Given(/^34_I am on the login page.$/, async () => {
 When(/^34_I entered the correct email and p\/w with invalid accountId$/, async () => {
   const ec = protractor.ExpectedConditions;
   // Waiting for account id field to load
-  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  await browser.wait(ec.elementToBeClickable(ElementApp.inputArray().first()), 5000);
   // entering incorrect account id
-  await LoginAppPage.accountIDField().sendKeys('300');
+  await ElementApp.inputArray().first().sendKeys('300');
   // entering correct testUserAccount
-  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  await ElementApp.inputArray().get(1).sendKeys(LoginAppPage.getUserAccount());
   // entering correct pw
-  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  await ElementApp.inputArray().get(2).sendKeys(LoginAppPage.getPassword());
   // pressing the enter key on the accountID field to log in
-  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await ElementApp.inputArray().first().sendKeys(protractor.Key.ENTER);
 });
 
 Then(/^34_I am not able to login.$/, async () => {
@@ -143,15 +143,15 @@ Given(/^35_I am on the login page.$/, async () => {
 When(/^35_I entered the correct email and invalid p\/w$/, async () => {
   const ec = protractor.ExpectedConditions;
   // Waiting for account id field to load
-  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  await browser.wait(ec.elementToBeClickable(ElementApp.inputArray().first()), 5000);
   // entering correct account id
-  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  await ElementApp.inputArray().first().sendKeys(LoginAppPage.getAccountId());
   // entering correct testUserAccount
-  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  await ElementApp.inputArray().get(1).sendKeys(LoginAppPage.getUserAccount());
   // entering incorrect pw
-  await LoginAppPage.pwField().sendKeys('test0101');
+  await ElementApp.inputArray().get(2).sendKeys('test0101');
   // pressing the enter key on the accountID field to log in
-  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await ElementApp.inputArray().first().sendKeys(protractor.Key.ENTER);
 });
 
 Then(/^35_I see the message prompt for invalid login$/, async () => {

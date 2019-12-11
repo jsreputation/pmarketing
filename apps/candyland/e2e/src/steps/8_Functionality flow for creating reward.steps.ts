@@ -30,9 +30,9 @@ Given(/^6_that I am on the reward creation page$/, async () => {
   // entering correct testUserAccount
   await ElementApp.inputArray().get(1).sendKeys(LoginAppPage.getUserAccount());
   // entering correct pw
-  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  await ElementApp.inputArray().get(2).sendKeys(LoginAppPage.getPassword());
   // pressing the enter key on the accountID field to log in
-  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await ElementApp.inputArray().first().sendKeys(protractor.Key.ENTER);
   await browser.sleep(3000);
 
   await CreateRewardAppPage.navigateToRewardCreate();

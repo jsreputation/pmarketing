@@ -28,9 +28,9 @@ Given(/^1_I am on dashboard page$/, async () => {
   // entering correct account id
   await ElementApp.inputArray().first().sendKeys(LoginAppPage.getAccountId());
   // entering correct testUserAccount
-  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  await ElementApp.inputArray().get(1).sendKeys(LoginAppPage.getUserAccount());
   // entering correct pw
-  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  await ElementApp.inputArray().get(2).sendKeys(LoginAppPage.getPassword());
   // pressing the enter key on the accountID field to log in
   await ElementApp.inputArray().first().sendKeys(protractor.Key.ENTER);
   await browser.sleep(3000);

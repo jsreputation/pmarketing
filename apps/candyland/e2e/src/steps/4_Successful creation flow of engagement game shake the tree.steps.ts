@@ -45,7 +45,7 @@ Given(/^27_I am on the engagment page.$/, async () => {
 });
 
 Given(/^27_I click on create new button.$/, async () => {
-  await CreateShakeTheTreeAppPage.shakeTreeGamesButton().click();
+  await ElementApp.matFlatButtonPrimary().click();
 });
 
 Given(/^27_I click on games button.$/, async () => {
@@ -80,7 +80,7 @@ When(/^27_I press launch now button$/, async () => {
 
 Then(/^27_Game is present under the engagment category .$/, async () => {
   // Verifying that the latest card has the correct item name
-  await browser.wait(ec.presenceOf(EngagementAppPage.itemName()), 6000);
+  await browser.wait(ec.presenceOf(EngagementAppPage.engagementItemArray().first()), 6000);
   expect(await EngagementAppPage.itemInfo().getText()).to.contain('Test - launch now');
   // Verifying the current date of transaction
   await browser.wait(ec.presenceOf(CreateShakeTheTreeAppPage.transactionDate()), 6000);
@@ -95,7 +95,7 @@ Given(/^28_I am on the engagment page.$/, async () => {
 });
 
 Given(/^28_I click on create new button.$/, async () => {
-  await CreateShakeTheTreeAppPage.shakeTreeGamesButton().click();
+  await ElementApp.matFlatButtonPrimary().click();
 });
 
 Given(/^28_I click on games button.$/, async () => {
@@ -127,7 +127,7 @@ When(/^28_I press launch later button$/, async () => {
 
 Then(/^28_Game is present under the engagment category .$/, async () => {
   // Verifying that the latest card has the correct item name
-  await browser.wait(ec.presenceOf(EngagementAppPage.itemName()), 6000);
+  await browser.wait(ec.presenceOf(EngagementAppPage.engagementItemArray().first()), 6000);
   expect(await EngagementAppPage.itemInfo().getText()).to.contain('Test - launch later');
   // Verifying the current date of transaction
   await browser.wait(ec.presenceOf(CreateShakeTheTreeAppPage.transactionDate()), 6000);

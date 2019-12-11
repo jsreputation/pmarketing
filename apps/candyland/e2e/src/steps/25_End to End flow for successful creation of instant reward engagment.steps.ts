@@ -66,7 +66,7 @@ When(/^8_I click on an option in the engagment dialog box.$/, async () => {
 
 Then(/^8_I should see the instant reward created.$/, async () => {
   // waiting for the card to load
-  await browser.wait(ec.presenceOf(ElementApp.engagementCreated()), 6000);
+  await browser.wait(ec.presenceOf(ElementApp.engagementItemArray().get(0)), 6000);
   // doing an assertion on the name of the card
-  expect(await ElementApp.engagementCreated().getText()).to.equal('Instant Reward Template');
+  expect(await ElementApp.engagementItemArray().get(0).getText()).to.equal('Instant Reward Template');
 });

@@ -41,9 +41,9 @@ Given(/^6_I am on the customer engagment dialog box$/, async () => {
 });
 
 When(/^6_I click on the games option$/,  async () => {
-  await browser.wait(ec.elementToBeClickable(CreateShakeTheTreeAppPage.shakeTreeGamesButton()), 5000);
+  await browser.wait(ec.elementToBeClickable(ElementApp.matFlatButtonPrimary()), 5000);
   // clicking on the create new button
-  await CreateShakeTheTreeAppPage.shakeTreeGamesButton().click();
+  await ElementApp.matFlatButtonPrimary().click();
   await CreateShakeTheTreeAppPage.shakeTreeTypeOptions().click();
 });
 
@@ -61,9 +61,9 @@ Given(/^7_I am on the engagement creation dialog box$/, async () => {
 });
 
 When(/^7_I click the next button$/, async () => {
-  await browser.wait(ec.elementToBeClickable(CreateShakeTheTreeAppPage.shakeTreeGamesButton()), 5000);
+  await browser.wait(ec.elementToBeClickable(ElementApp.matFlatButtonPrimary()), 5000);
   // clicking on the create new button
-  await CreateShakeTheTreeAppPage.shakeTreeGamesButton().click();
+  await ElementApp.matFlatButtonPrimary().click();
   // clicking on the games option
   await CreateShakeTheTreeAppPage.shakeTreeTypeOptions().click();
   // clicking on the next button

@@ -28,9 +28,9 @@ Given(/^12_I am on the engagment page.$/, async () => {
   // entering correct account id
   await ElementApp.inputArray().first().sendKeys(LoginAppPage.getAccountId());
   // entering correct testUserAccount
-  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  await ElementApp.inputArray().get(1).sendKeys(LoginAppPage.getUserAccount());
   // entering correct pw
-  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  await ElementApp.inputArray().get(2).sendKeys(LoginAppPage.getPassword());
   // pressing the enter key on the accountID field to log in
   await ElementApp.inputArray().first().sendKeys(protractor.Key.ENTER);
   await browser.sleep(3000);
@@ -74,7 +74,7 @@ When(/^12_I press save button.$/, async () => {
 });
 
 Then(/^12_Game is present under the engagment category .$/, async () => {
-  await browser.wait(ec.presenceOf(EngagementAppPage.itemName()), 5000);
+  await browser.wait(ec.presenceOf(EngagementAppPage.engagementItemArray().first()), 5000);
   // doing an assertion based on the title of the survey engagement
   expect(await EngagementAppPage.itemInfo().getText()).to.contain('TestSurvey_0101');
 });

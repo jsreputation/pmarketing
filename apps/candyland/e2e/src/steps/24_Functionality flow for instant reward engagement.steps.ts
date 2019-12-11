@@ -54,10 +54,10 @@ When(/^4_I input a test string in the headline and sub headline field for instan
 
 Then(/^4_I should see the test string in the preview element for instant reward.$/, async () => {
   // waiting for element to load for preview element
-  await browser.wait(ec.presenceOf(CreateInstantRewardAppPage.mobileHeadline()), 6000);
+  await browser.wait(ec.presenceOf(ElementApp.pMobilePreviewHeadline()), 6000);
   await browser.wait(ec.presenceOf(CreateInstantRewardAppPage.mobileSubHeadline()), 6000);
   // asserting the text value shown in mobile preview element
-  expect(await CreateInstantRewardAppPage.mobileHeadline().getText()).to.contain('teststring001');
+  expect(await ElementApp.pMobilePreviewHeadline().getText()).to.contain('teststring001');
   expect(await CreateInstantRewardAppPage.mobileSubHeadline().getText()).to.contain('teststring002');
 });
 
@@ -84,7 +84,7 @@ Then(/^5_I should see the change in the preview element for instant reward.$/, a
   // doing an assertion on the style attribute value for the card on the preview element
   expect(await CreateInstantRewardAppPage.cardPreview().getAttribute('style')).to.match(cardBackgroundRegex);
   // doing an assertion on the style attribute value for mobile preview element
-  expect(await CreateInstantRewardAppPage.backgroundPreview().getAttribute('style')).to.match(backgroundRegex);
+  expect(await ElementApp.mobilePreviewBackground().getAttribute('style')).to.match(backgroundRegex);
 
 });
 
@@ -113,7 +113,7 @@ Then(/^6_I should see the background and card background in the preview element 
   const uploadFileRegex = /666666666/;
   expect(await CreateInstantRewardAppPage.cardPreview().getAttribute('style')).to.match(uploadFileRegex);
   // doing an assertion on the style attribute value for mobile preview element
-  expect(await CreateInstantRewardAppPage.backgroundPreview().getAttribute('style')).to.match(uploadFileRegex);
+  expect(await ElementApp.mobilePreviewBackground().getAttribute('style')).to.match(uploadFileRegex);
 });
 
 // Verifying the functionality of button text field
@@ -131,7 +131,7 @@ When(/^7_I input a test string on the button text for instant reward.$/, async (
 
 Then(/^7_I should see the change in the preview element for instant reward.$/, async () => {
   // waiting for the mobile button preview element to load
-  await browser.wait(ec.presenceOf(CreateInstantRewardAppPage.mobileButtonPreview()), 6000);
+  await browser.wait(ec.presenceOf(ElementApp.mobileButtonPreview()), 6000);
   // doing the assertion based in the text element of the button
-  expect(await CreateInstantRewardAppPage.mobileButtonPreview().getText()).to.contain('testbuttontext001');
+  expect(await ElementApp.mobileButtonPreview().getText()).to.contain('testbuttontext001');
 });
