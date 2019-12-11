@@ -38,7 +38,7 @@ When(/^2_I click next button on the engagement dialog.$/, async () => {
   await Element.clButtonArray().get(2).click();
   await browser.sleep(3000);
   // stopping the walkme widget
-  await browser.executeScript('WalkMeAPI.stopFlow()');
+  // await browser.executeScript('WalkMeAPI.stopFlow()');
 });
 
 Then(/^2_I should be navigated to the instant reward page.$/, async () => {
