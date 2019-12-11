@@ -1,0 +1,38 @@
+@import "../../mixins";
+
+.main-puzzle-container {
+  @include main-wrap;
+
+  h1 {
+    @include game-headline;
+
+    margin-top: $app-margin;
+    color: white;
+  }
+
+  h3 {
+    @include game-subheadline;
+
+    color: white;
+  }
+}
+
+.game-wrapper {
+  @include game-wrap;
+
+  margin-top: 0;
+  height: 40rem;
+}
+
+.game-footer {
+  @include game-cta;
+}
+
+.spin-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}

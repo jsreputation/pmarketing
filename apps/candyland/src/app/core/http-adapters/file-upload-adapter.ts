@@ -10,7 +10,7 @@ export class FileUploadAdapter {
     };
   }
 
-  public static transformToUploadedFile(data: any, filePath: string): Partial<IUploadedFile> {
+  public static transformToUploadedFile(data: any, filePath: string): IUploadedFile {
     return {
       created_at: data.attributes.created_at,
       updated_at: data.attributes.updated_at,

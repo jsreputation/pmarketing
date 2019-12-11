@@ -1,0 +1,17 @@
+{
+    "name": "Dark",
+    "properties": {
+      "--font": "Roboto",
+      "--logo": "assets/header_logo.png",
+      "--title": "abenson",
+      "--accent": "#0088D1",
+      "--primary": "#ffffff",
+      "--button_text_color": "#ffffff",
+      "--button_background_color": "#0F69AF",
+      "--header_color": "#000000",
+      "--background": "#ffffff",
+      "--font_color": "#212121",
+      "--login_background_colour": "#000",
+      "--account_background_color": "#EDEDED"
+    }
+}
