@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import {ConfigToMappedSlotPipe, ConfigToSlicesPipe, SpinComponent} from './spin/spin.component';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -49,6 +50,9 @@ describe('GameComponent', () => {
         ShakeComponent,
         TapComponent,
         ScratchComponent,
+        SpinComponent,
+        ConfigToSlicesPipe,
+        ConfigToMappedSlotPipe
       ],
       imports: [
         MatProgressBarModule,
