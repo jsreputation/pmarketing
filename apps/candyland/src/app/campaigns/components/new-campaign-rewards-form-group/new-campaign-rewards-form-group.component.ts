@@ -123,7 +123,8 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
   }
 
   public initOutcomesList(): void {
-    const noOutcomeData = this.campaign.outcomes && this.campaign.outcomes.find(data => data.outcome.slotNumber === this.slotNumber && !data.outcome.resultId);
+    const noOutcomeData = this.campaign.outcomes && this.campaign.outcomes.find(
+      data => data.outcome.slotNumber === this.slotNumber && !data.outcome.resultId);
     if (noOutcomeData && noOutcomeData.outcome) {
       noOutcomeData.enableProbability = true;
       this.outcomes = [noOutcomeData];
