@@ -58,7 +58,7 @@ describe('V4LocationService', () => {
     (location: V4LocationsService, merchantService: IMerchantsService) => {
       const spy = spyOn(location, 'getFromMerchant').and.returnValue(of([]));
       const merchSpy = spyOn(merchantService, 'getMerchants');
-      merchSpy.and.returnValue(of([]))
+      merchSpy.and.returnValue(of([]));
       location.getLocations().subscribe(() => { });
       tick();
       merchSpy.and.returnValue(of([{
@@ -86,6 +86,6 @@ describe('V4LocationService', () => {
 
   it('getTags', fakeAsync(inject([V4LocationsService], (location: V4LocationsService) => {
     location.getTags(of([{ tags: [{ name: 'test', id: 1 }] } as IMerchant]))
-    .subscribe((val) => { expect(val).toEqual(['test']) });
+      .subscribe((val) => expect(val).toEqual(['test']));
   })));
 });

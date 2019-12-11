@@ -75,7 +75,6 @@ export class V4LocationsService extends LocationsService {
         if (tags && tags.length > 0) {
           filteredMerchants = merchants.filter(merchant => {
             let found = false;
-        
             if (merchant.tags !== undefined) {
               const tagNames: string[] = merchant.tags.map(t => t.name.toLowerCase());
               // @ts-ignore

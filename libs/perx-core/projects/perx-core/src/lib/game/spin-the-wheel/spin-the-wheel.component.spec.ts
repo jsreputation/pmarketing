@@ -8,18 +8,18 @@ import { By } from '@angular/platform-browser';
 describe('SpinTheWheelComponent', () => {
   let component: SpinTheWheelComponent;
   let fixture: ComponentFixture<SpinTheWheelComponent>;
-  let imageOnload: Function[] = [];
+  let imageOnload: (() => void)[];
   let debugElement: DebugElement;
   beforeAll(() => {
     Object.defineProperty(Image.prototype, 'onload', {
-      get: function () {
-        return this._onload
+      get(): any {
+        return this._onload;
       },
-      set: function (fn: Function) {
+      set(fn: () => any): void {
         imageOnload.push(fn);
         this._onload = fn;
       }
-    })
+    });
   });
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -61,7 +61,7 @@ describe('SpinTheWheelComponent', () => {
 
   it('ngOnChanges', fakeAsync(() => {
     imageOnload = [];
-    spyOn(component.ctx, 'createPattern').and.returnValue({setTransform(){}});
+    spyOn(component.ctx, 'createPattern').and.returnValue({ setTransform(): void { } });
     component.ngOnChanges({
       wheelImg: {} as SimpleChange,
       pointerImg: {} as SimpleChange
@@ -87,7 +87,7 @@ describe('SpinTheWheelComponent', () => {
     expect(component.size).toBeTruthy();
   });
 
-  it('handle mouse event', ()=>{
+  it('handle mouse event', () => {
     const eventMouseUp = new MouseEvent('mouseup');
     debugElement.query(By.css('#ng-wheel-canvas')).nativeElement.dispatchEvent(eventMouseUp);
     expect(component.dragging).toBeFalsy();
