@@ -31,6 +31,8 @@ import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.
 import { SelectRewardPopupModule } from '@cl-shared/containers/select-reward-popup/select-reward-popup.module';
 import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { IAdvancedUploadFileService } from '@cl-core/services/iadvanced-upload-file.service';
+import { UsersUploadService } from '@cl-core/services/users-upload.service';
 
 @NgModule({
   declarations: [
@@ -78,6 +80,9 @@ import { TranslateModule } from '@ngx-translate/core';
     ChangeExpiryDatePopupComponent,
     UpsertUserPopupComponent,
     ManageListPopupComponent,
+  ],
+  providers: [
+    { provide: IAdvancedUploadFileService, useClass: UsersUploadService }
   ]
 })
 export class AudienceModule {
