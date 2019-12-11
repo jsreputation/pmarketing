@@ -72,5 +72,6 @@
   "STATIC_RESET_PASSWORD": "Reset your password",
   "STATIC_RESET_PASSWORD_SUBHEADING": "Enter the 6-digit One-Time Password (OTP) sent to your mobile number ",
   "REDEND_OTP": "Resend OTP",
-  "STATIC_NEW_REGISTER": "Thank you for registering"
+  "STATIC_NEW_REGISTER": "Thank you for registering",
+  "GET_VOUCHER": "Get Voucher"
 }

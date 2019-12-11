@@ -295,10 +295,6 @@ export class CreateRewardAppPage {
     return element.all(by.className('mat-slide-toggle-thumb-container'));
   }
 
-  public static imageClear(): ElementFinder {
-    return element(by.css('.image-clear'));
-  }
-
   public static radioPrimaryButton(): ElementFinder {
     return element.all(by.className('mat-radio-button mat-primary ng-star-inserted')).get(2);
   }
@@ -513,8 +509,8 @@ export class ElementApp {
     return element.all(by.css('div.mat-radio-inner-circle'));
   }
 
-  public static spanUploadError(): ElementFinder {
-    return element(by.css('span.upload-error'));
+  public static pUploadError(): ElementFinder {
+    return element(by.css('p.upload-error'));
   }
 
   public static matFormFieldFlex(): ElementArrayFinder {
@@ -667,5 +663,9 @@ export class ElementApp {
 
   public static mobileButtonPreview(): ElementFinder {
     return element(by.css('button.mobile-preview-btn'));
+  }
+
+  public static imageClear(): ElementFinder {
+    return element(by.css('button.image-clear'));
   }
 }
