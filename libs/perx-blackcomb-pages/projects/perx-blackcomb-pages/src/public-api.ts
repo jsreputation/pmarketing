@@ -1,3 +1,4 @@
+export { FeedItemPopupComponent } from './lib/feed-item-popup/feed-item-popup.component';
 export { LoadingComponent } from './lib/loading/loading.component';
 export { PerxBlackcombPagesModule } from './lib/perx-blackcomb-pages.module';
 export { AccountComponent } from './lib/account/account.component';
@@ -7,6 +8,9 @@ export { GameModule } from './lib/game/game.module';
 export { TapComponent } from './lib/game/tap/tap.component';
 export { ShakeComponent } from './lib/game/shake/shake.component';
 export { ScratchComponent } from './lib/game/scratch/scratch.component';
+export { SpinComponent } from './lib/game/spin/spin.component';
+export {ConfigToSlicesPipe} from './lib/game/spin/spin.component';
+export {ConfigToMappedSlotPipe} from './lib/game/spin/spin.component';
 export { HistoryComponent } from './lib/history/history.component';
 export { HomeComponent } from './lib/home/home.component';
 export { RewardComponent } from './lib/reward/reward.component';
