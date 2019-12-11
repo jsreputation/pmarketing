@@ -12,7 +12,8 @@ import {
   ICampaign,
   // IGame,
   // GameType,
-  TokenStorage
+  TokenStorage,
+  ThemesService
 } from '@perx/core';
 import { of, throwError, BehaviorSubject } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -130,7 +131,8 @@ describe('AppComponent', () => {
         { provide: Router, useValue: routerStub },
         { provide: MatSnackBar, useValue: matSnackBarStub },
         { provide: TokenStorage, useValue: tokenStorageStub },
-        { provide: AnalyticsService, useValue: analyticsServiceStub }
+        { provide: AnalyticsService, useValue: analyticsServiceStub },
+        { provide: ThemesService, useValue: { getThemeSetting: () => of({}) } }
       ],
     });
     TestBed.overrideModule(BrowserDynamicTestingModule, {
