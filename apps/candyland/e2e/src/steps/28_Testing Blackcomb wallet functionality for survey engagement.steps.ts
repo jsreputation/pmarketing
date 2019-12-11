@@ -4,12 +4,10 @@ import { browser, protractor, ProtractorExpectedConditions } from 'protractor';
 import { BlackcombWalletAppPage, ElementApp } from '../pages/candylandApp.po';
 
 const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
-let BlackcombWalletApp: BlackcombWalletAppPage;
 
 // Ensuring wallet has the relevant elements
 Given(/^6_I am  at the wallet blackcomb page$/, async () => {
-  BlackcombWalletApp = new BlackcombWalletAppPage();
-  await BlackcombWalletApp.navigateBlackcombWalletApp();
+  await BlackcombWalletAppPage.navigateBlackcombWalletApp();
 });
 
 Then(/^6_I see the navigation bar$/, async () => {
@@ -27,8 +25,7 @@ Then(/^6_I see the navigation bar$/, async () => {
 
 //  Ensuring functionality of stamp card
 Given(/^7_I am  at the wallet blackcomb page$/, async () => {
-  BlackcombWalletApp = new BlackcombWalletAppPage();
-  await BlackcombWalletApp.navigateBlackcombWalletApp();
+  await BlackcombWalletAppPage.navigateBlackcombWalletApp();
 });
 
 When(/^7_I click on the stamp card$/, async () => {
@@ -46,8 +43,7 @@ Then(/^7_I should be navigated to the stamp card page.$/, async () => {
 
 // Ensuring functionality of voucher wallet
 Given(/^8_I am  at the wallet blackcomb page$/, async () => {
-  BlackcombWalletApp = new BlackcombWalletAppPage();
-  await BlackcombWalletApp.navigateBlackcombWalletApp();
+  await BlackcombWalletAppPage.navigateBlackcombWalletApp();
 });
 
 When(/^8_I click on a voucher$/, async () => {
