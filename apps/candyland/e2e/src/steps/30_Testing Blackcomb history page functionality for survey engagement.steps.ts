@@ -10,9 +10,9 @@ import {
 } from 'protractor';
 import { expect } from 'chai';
 import {
+  ElementApp,
   BlackcombHistoryAppPage,
   BlackcombWalletAppPage,
-  ElementApp,
 } from '../pages/candylandApp.po';
 
 const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
