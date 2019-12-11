@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {
+  map,
+  filter
+} from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
 import {
@@ -80,9 +83,15 @@ export class WhistlerLoyaltyService extends LoyaltyService {
     );
   }
 
-  public getLoyalty(id?: number): Observable<ILoyalty> {
+  // @ts-ignore
+  public getLoyalty(id?: number, locale?: string): Observable<ILoyalty> {
+    // if there is no id, query for the user's list of loyalties and return the first one
     if (!id) {
-      throw new Error('WhistlerLoyaltyService::getLoyalty:id is missing !');
+      return this.getLoyalties()
+        .pipe(
+          filter((loyalties: ILoyalty[]) => loyalties.length > 0),
+          map((loyalties: ILoyalty[]) => loyalties[0])
+        );
     }
 
     const userId = this.authService.getUserId() || 0;
