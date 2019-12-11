@@ -306,16 +306,16 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   private stopRotateWheel(): void {
     if (!this.ctx) { return; }
     clearTimeout(this.spinTimeout);
-    this.ctx.save();
-    this.ctx.font = 'bold 20px Helvetica, Arial';
-    this.ctx.fillStyle = 'black';
-    const text = this.slices[this.slotToLand].label || '';
-    this.ctx.fillText(
-      text,
-      this.size / 2 - this.ctx.measureText(text).width / 2,
-      this.size / 2 + 10
-    );
-    this.ctx.restore();
+    // this.ctx.save();
+    // this.ctx.font = 'bold 20px Helvetica, Arial';
+    // this.ctx.fillStyle = 'black';
+    // const text = this.slices[this.slotToLand].label || '';
+    // this.ctx.fillText(
+    //   text,
+    //   this.size / 2 - this.ctx.measureText(text).width / 2,
+    //   this.size / 2 + 10
+    // );
+    // this.ctx.restore();
   }
 
   private handleStart(): void {
