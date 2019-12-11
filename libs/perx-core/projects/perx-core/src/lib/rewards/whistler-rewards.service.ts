@@ -14,9 +14,11 @@ import {
   IJsonApiListPayload,
   IWTierRewardCostsAttributes,
   IWMerchantAttributes,
-  IWRelationshipsDataType
+  IWRelationshipsDataType,
+  WRedemptionType
 } from '@perx/whistler';
 import { oc } from 'ts-optchain';
+import { RedemptionType } from '../perx-core.models';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +31,20 @@ export class WhistlerRewardsService implements RewardsService {
   constructor(private http: HttpClient, config: Config) {
     this.baseUrl = `${config.apiHost}/reward/entities`;
   }
-
+  private static WRedemptionToRT(rt: WRedemptionType): RedemptionType {
+    switch (rt) {
+      case WRedemptionType.promoCode:
+        return RedemptionType.txtCode;
+      case WRedemptionType.qrCode:
+        return RedemptionType.qr;
+      case WRedemptionType.barCode:
+        return RedemptionType.barcode;
+      case WRedemptionType.merchantPin:
+        return RedemptionType.pin;
+      default:
+        return RedemptionType.none;
+    }
+  }
   private static WRewardToReward(
     r: IJsonApiItem<IWRewardEntityAttributes>,
     merchants: IJsonApiItem<IWMerchantAttributes>[] | null,
@@ -65,7 +80,7 @@ export class WhistlerRewardsService implements RewardsService {
           title: r.attributes.category
         }
       ],
-      // redemptionType: WhistlerRewardsService.WRedemptionToRT(r.attributes.redemption_type),
+      redemptionType: WhistlerRewardsService.WRedemptionToRT(r.attributes.redemption_type),
       rawPayload: metaData,
       displayProperties: {
         merchantPinText: oc(r).attributes.display_properties.merchantPinText(),
