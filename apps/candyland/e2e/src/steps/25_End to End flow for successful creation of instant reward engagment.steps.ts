@@ -40,7 +40,8 @@ Given(/^8_I upload a background image for card background and background.$/, asy
   // uploading file for card background
   await Element.inputFileArray().get(0).sendKeys(absolutePath);
   // uploading file for background
-  await Element.inputFileArray().get(1).sendKeys(absolutePath);
+  // after uploading card background, there is only one file input remains, so the index is again 0
+  await Element.inputFileArray().get(0).sendKeys(absolutePath);
   await browser.sleep(3000);
 });
 
@@ -56,5 +57,5 @@ Then(/^8_I should see the instant reward created.$/, async () => {
   // waiting for the card to load
   await browser.wait(ec.presenceOf(Element.engagementCreated()), 6000);
   // doing an assertion on the name of the card
-  expect(await Element.engagementCreated().getText()).to.equal('Instant Reward');
+  expect(await Element.engagementCreated().getText()).to.equal('Instant Reward Template');
 });
