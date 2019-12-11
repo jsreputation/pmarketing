@@ -16,7 +16,7 @@ import {
   IStamp,
   StampCardState,
   StampState,
-  IReward,
+  ICampaignOutcome,
 } from './models/stamp.model';
 
 import { IVoucher } from '../vouchers/models/voucher.model';
@@ -146,7 +146,7 @@ export class V4StampService implements StampService {
     };
   }
 
-  private static v4RewardToReward(reward: IV4Reward): IReward {
+  private static v4RewardToReward(reward: IV4Reward): ICampaignOutcome {
     return {
       id: reward.id,
       campaignId: reward.campaign_id,
