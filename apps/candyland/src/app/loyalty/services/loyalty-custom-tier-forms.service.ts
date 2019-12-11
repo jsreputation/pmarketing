@@ -42,8 +42,8 @@ export class LoyaltyCustomTierFormsService {
       joinMethod: {
         inviteOnly: true
       },
-      // imageUrl: null,
-      imageUrl: 'https://remontka.pro/images/make-screenshot-windows-10.png',
+      imageUrl: null,
+      // imageUrl: 'https://remontka.pro/images/make-screenshot-windows-10.png',
       earnBonus: 0,
       burnDiscount: 0,
       pointsExpiry: {
