@@ -4,9 +4,8 @@ import { Injectable } from '@angular/core';
 import { UploadFileService } from '@cl-core-services';
 import { VouchersService } from './vouchers.service';
 import { map, switchMap, retryWhen, mergeMap, delay } from 'rxjs/operators';
-import { IWVouchersApi } from '@perx/whistler';
+import { IWVouchersApi, WStatus } from '@perx/whistler';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +25,7 @@ export class VouchersUploadService extends IAdvancedUploadFileService {
     );
     let maxRetryTimes = 5;
     let delayUnitTime = 1000;
-    let retryTimes = SSL_OP_SSLEAY_080_CLIENT_DH_BUG;
+    let retryTimes = 0;
     this.uploadService.uploadFile(file)
       .pipe(
         map((res: IUploadedFile) => res.url),
@@ -34,12 +33,18 @@ export class VouchersUploadService extends IAdvancedUploadFileService {
         switchMap(
           (batch: IJsonApiPayload<IWVouchersApi>) =>
             this.vouchersService.getVouchersBatch(Number.parseInt(batch.data.id)).pipe(
+              switchMap((res: IJsonApiPayload<IWVouchersApi>) => {
+                if (res.data.attributes.status !== WStatus.success) {
+                  throw of(new Error('codes are not ready'));
+                }
+                return of(res);
+              }),
               retryWhen(
-                (err: Observable<HttpErrorResponse>) => err.pipe(
+                (err: Observable<Error>) => err.pipe(
                   mergeMap(error => {
                     if (retryTimes < maxRetryTimes) {
                       retryTimes++;
-                      return of(error.status).pipe(delay(delayUnitTime));
+                      return of(error).pipe(delay(delayUnitTime));
                     }
                     return throwError(error);
                   })
