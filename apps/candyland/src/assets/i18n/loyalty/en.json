@@ -6,6 +6,7 @@
     "TIERS": "Tiers",
     "LOYALTY_DETAILS": "Loyalty Details",
     "TIERS_CONVERSIONS": "Tiers & Conversions",
+    "POINT_EARN_RULES": "Point Earn Rules",
     "REVIEW": "Review",
     "POINTS_INFO": "Points Info",
     "POINTS_NAME": "Points Name",
@@ -55,6 +56,43 @@
     "GLOBAL_EARN_AND_BURN_RULES": "Global Earn and Burn Rules",
     "POINTS_EARNING_CONVERSION_RATE": "Points Earning Conversion Rate",
     "SPENDING": "spending",
-    "POINTS_BURNING_CONVERSION_RATE": "Points Burning Conversion Rate"
+    "POINTS_BURNING_CONVERSION_RATE": "Points Burning Conversion Rate",
+    "PROGRAM_PICTURE": "Loyalty program picture",
+    "ADD_RULE": "Add Rule",
+    "EDIT_RULE": "Edit Rule",
+    "TITLE_CONDITIONS": "If the customer...",
+    "AND": "AND",
+    "ADD_CONDITION": "+ Add another subcondition",
+    "AMOUNT_PLACEHOLDER": "e.g. 10",
+    "DATE_PLACEHOLDER": "date",
+    "GENERAL_RULES": "General Rules",
+    "RULES_APPLICATION": "Rules Application",
+    "POINTS_EARN_RULES": "Points Earn Rules",
+    "POINTS_EARN_RULES_NO_DATA": "There are currently no points earn rules for the ",
+    "SPECIALS_RULES": "Special Rules",
+    "SPECIALS_RULES_NO_DATA": "There are currently no special rules for the ",
+    "CREATE_RULE": "+ Create new rule",
+    "MATCH_TYPE": {
+      "MATCH_FIRST": "Apply First Matching Rule",
+      "MATCH_ALL": "Apply All Matching Rule",
+      "HINT": "Perx will apply only the topmost rule in the list that matches the conditions."
+    },
+    "TRANSACTION_TYPE": {
+      "PREPAID": "PREPAID",
+      "COD": "COD",
+      "STORE": "STORE"
+    },
+    "CONDITION_TYPE": {
+      "TRANSACTION": "Makes a transaction TYPE",
+      "AMOUNT": "Makes a transaction AMOUNT",
+      "CURRENCY": "Makes a transaction CURRENCY",
+      "FROM_DATE": "Transacts from DATE",
+      "TO_DATE": "Transacts to DATE"
+    },
+    "PRIORITY": "Priority",
+    "RULE_NAME": "Rule Name",
+    "CONDITIONS": "Conditions",
+    "POINTS_EARNED": "Points Earned",
+    "TIERS_NO_DATA_MESSAGE": "Your loyalty scheme currently has no tiers."
   }
 }

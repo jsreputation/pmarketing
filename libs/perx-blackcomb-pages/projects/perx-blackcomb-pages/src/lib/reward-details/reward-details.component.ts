@@ -29,10 +29,9 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public buttonLabel: string = 'Redeem';
   public appConfig: IConfig;
   public rewardData: IReward;
-  private loyalty: ILoyalty;
+  public loyalty: ILoyalty;
 
   private initTranslate(): void {
-    this.translate.get('REDEEM').subscribe((text) => this.buttonLabel = text);
     this.translate.get('DESCRIPTION')
       .subscribe((desc: string) => {
         this.descriptionLabel = desc;
@@ -54,9 +53,16 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig) => this.appConfig = config
-    );
+    this.configService.readAppConfig().pipe(
+      tap((config: IConfig) => this.appConfig = config),
+      switchMap((config: IConfig) => {
+        if (config.showVoucherBookingFromRewardsPage) {
+          return this.translate.get('GET_VOUCHER');
+        }
+
+        return this.translate.get('REDEEM');
+      })
+    ).subscribe((text) => this.buttonLabel = text);
 
     this.initTranslate();
     this.loyaltyService.getLoyalties().pipe(
@@ -80,10 +86,14 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   }
 
   public buyReward(): void {
-    this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
-      .subscribe(
-        (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`])
-      );
+    if (this.appConfig.showVoucherBookingFromRewardsPage) {
+      this.router.navigateByUrl(`booking/${this.rewardData.id}`);
+    } else {
+      this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
+        .subscribe(
+          (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`])
+        );
+    }
   }
 
   public ngOnDestroy(): void {
