@@ -153,7 +153,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   public clickGoNext(): void {
-    if (this.form.invalid) {
+    if ((this.stepProgress > 0 && this.form.invalid) || (this.stepProgress === 0 && (this.name.invalid || this.stepOne.invalid))) {
       this.form.markAllAsTouched();
       return;
     }
