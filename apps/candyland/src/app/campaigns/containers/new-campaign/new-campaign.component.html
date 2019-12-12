@@ -1,6 +1,6 @@
-<header class="page-header full-with" [formGroup]="form">
-  <mat-form-field class="pagetitle-input" floatLabel="never" >
-    <input type="text" matInput formControlName="name" [placeholder]="'ENTER_TITLE_HERE' | translate">
+<header class="page-header full-with">
+  <mat-form-field class="pagetitle-input" floatLabel="never" *ngIf="form">
+    <input type="text" matInput [formControl]="name" [placeholder]="'ENTER_TITLE_HERE' | translate">
     <mat-error *ngIf="name.hasError('required')">{{'ERROR_REQUIRED' | translate}}</mat-error>
     <mat-error *ngIf="name.hasError('minlength')">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
     <mat-error *ngIf="name.hasError('maxlength')">{{'ERROR_MAX_LENGTH' | translate}} 60</mat-error>
@@ -14,7 +14,9 @@
       {{'BTN_NEXT' | translate}}
     </cl-button>
     <!--    [disable]="getStepCondition(stepper.selectedIndex)"-->
-    <cl-button *ngIf="isLastStep && store.currentCampaign?.status !== 'active'" classList="primary cta cta-save cta-save-launch" (click)="save()">{{'BTN_LAUNCH' | translate}}</cl-button>
+    <cl-button *ngIf="isLastStep && store.currentCampaign?.status !== 'active'"
+               classList="primary cta cta-save cta-save-launch"
+               (click)="save()">{{'BTN_LAUNCH' | translate}}</cl-button>
   </div>
 </header>
 
@@ -22,7 +24,8 @@
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper (selectionChange)="goNext($event)">
     <mat-step [completed]="getStepCondition(0)">
       <ng-template matStepLabel>{{'CAMPAIGN.SELECT_ENGAGEMENT' | translate}}</ng-template>
-      <cl-new-campaign-select-engagement-page [tenantSettings]="tenantSettings"></cl-new-campaign-select-engagement-page>
+      <cl-new-campaign-select-engagement-page
+        [tenantSettings]="tenantSettings"></cl-new-campaign-select-engagement-page>
     </mat-step>
     <mat-step [completed]="getStepCondition(1) && getStepCondition(1.1)">
       <ng-template matStepLabel>{{'CAMPAIGN.REWARDS_LIMITS' | translate}}</ng-template>
