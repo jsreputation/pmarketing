@@ -64,6 +64,11 @@ const routes: Routes = [
         loadChildren: (): any => import('../change-password/change-password.module')
                       .then((mod: any) => mod.ChangePasswordModule)
       },
+      {
+        path: 'edit-profile/:id',
+        loadChildren: (): any => import('../edit-profile-field/edit-profile-field.module')
+                      .then((mod: any) => mod.EditProfileFieldModule)
+      },
       { path: 'reward-detail/:id', component: RewardDetailsComponent },
       { path: 'booking/:id', component: RewardsBookingComponent },
       { path: 'c/:key', component: ContentComponent },
