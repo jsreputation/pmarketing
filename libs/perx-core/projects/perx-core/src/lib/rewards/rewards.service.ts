@@ -5,10 +5,11 @@ export abstract class RewardsService {
   public abstract getAllRewards(tags?: string[] | null, categories?: string[], locale?: string): Observable<IReward[]>;
 
   public abstract getRewards(
-    age: number,
-    pageSize: number, tags?: string[],
-    categories?: string[],
-    locale?: string
+    page: number,
+    pageSize: number,
+    tags?: string[] | null,
+    categories?: string[] | null,
+    locale?: string | null,
   ): Observable<IReward[]>;
 
   public abstract getReward(id: number, userId?: string, locale?: string): Observable<IReward>;
