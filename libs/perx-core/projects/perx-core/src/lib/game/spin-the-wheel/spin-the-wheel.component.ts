@@ -213,30 +213,30 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
       }
 
       // render label for testing purposes
-      // if (slice.label) {
-      //   this.ctx.save();
-      //   this.ctx.shadowOffsetX = -1;
-      //   this.ctx.shadowOffsetY = -1;
-      //   this.ctx.shadowBlur = 0;
-      //   this.ctx.fillStyle = slice.labelColor || 'black';
-      //
-      //   this.ctx.rotate(angle + this.arc / 2);
-      //   this.ctx.translate(this.size / 4, 0);
-      //   this.ctx.font = 'bold 15px Helvetica, Arial';
-      //
-      //   const text = slice.label || '';
-      //
-      //   const textArray = text.split(' ');
-      //   for (let index = 0; index < textArray.length; index++) {
-      //     const element = textArray[index];
-      //     this.ctx.fillText(
-      //       element,
-      //       -this.ctx.measureText(element).width / 2,
-      //       index * 15
-      //     );
-      //   }
-      //   this.ctx.restore();
-      // }
+      if (slice.label) {
+        this.ctx.save();
+        this.ctx.shadowOffsetX = -1;
+        this.ctx.shadowOffsetY = -1;
+        this.ctx.shadowBlur = 0;
+        this.ctx.fillStyle = slice.labelColor || 'black';
+
+        this.ctx.rotate(angle + this.arc / 2);
+        this.ctx.translate(this.size / 4, 0);
+        this.ctx.font = 'bold 15px Helvetica, Arial';
+
+        const text = slice.label || '';
+
+        const textArray = text.split(' ');
+        for (let index = 0; index < textArray.length; index++) {
+          const element = textArray[index];
+          this.ctx.fillText(
+            element,
+            -this.ctx.measureText(element).width / 2,
+            index * 15
+          );
+        }
+        this.ctx.restore();
+      }
     });
     this.ctx.resetTransform();
   }
