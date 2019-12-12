@@ -89,7 +89,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       (changes.enableProbability.currentValue !== changes.enableProbability.previousValue)) {
       this.updateOutcomeProbabilitySetting();
       this.updateOutcomesInCampaign();
-      // this.updateOutcomes();
     }
   }
 
@@ -181,14 +180,10 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
 
   public passSlotCount(slotRemove?: boolean): void {
-    // include some console logs but comment out so easier to understand and debug later on
-    // log(this.outcomes.length !== 0, 'set me as slotNotEmpty');
-    // log('before anything this is the outcoems array', this.outcomes);
     const currentTotal = this.formParent.get('slotsNotEmpty').value[0];
     const actualTotal =  this.formParent.get('slotsNotEmpty').value[1];
     // this function is triggered after this.outcomes value is changed either from remove / add
     if (slotRemove && this.outcomes.length === 0) { // will be adjusted to > 1 when the no outcome thing works (andrew)
-      // log('i am being called to remove from the current total');
       this.formParent.patchValue({
         slotsNotEmpty: [(currentTotal - 1), actualTotal]
       });
@@ -196,7 +191,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     }
     // Check alrdy been patched be4, idw to add again if alrdy been patched
     if (!slotRemove && this.outcomes.length !== 0 && !this.patchedReward) { // will be adjusted to if <= 1
-      // log(' i am being called to add to the current total');
       this.formParent.patchValue({
         slotsNotEmpty: [(currentTotal + 1), actualTotal]
       });
@@ -217,7 +211,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       totalProbability:  (currentTotal + totalNum)
     });
     this.formParent.updateValueAndValidity();
-    // return totalNum > 100;
   }
 
   public updateOutcomeData(index: number, value: { probability: number, limit: number, oldProbability: number }): void {
@@ -239,11 +232,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
 
   public updateOutcomes(): void {
-    // if (this.enableProbability) {
-    //   this.outcomes[0].outcome.slotNumber = this.slotNumber; // maybe forEach
-    // } else {
-    //   this.outcomes[0].outcome.slotNumber = -1;
-    // }
     this.updateOutcomeProbabilitySetting();
     this.updateOutcomesInCampaign();
     this.cd.detectChanges();
