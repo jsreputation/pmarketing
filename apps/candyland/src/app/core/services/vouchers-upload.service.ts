@@ -5,7 +5,6 @@ import { UploadFileService } from '@cl-core-services';
 import { VouchersService } from './vouchers.service';
 import { map, switchMap, retryWhen, mergeMap, delay } from 'rxjs/operators';
 import { IWVouchersApi, WStatus } from '@perx/whistler';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
