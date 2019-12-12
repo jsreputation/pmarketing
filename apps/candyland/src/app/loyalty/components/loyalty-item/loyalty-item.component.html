@@ -1,14 +1,17 @@
 <div class="loyalty-item">
-  <div class="loyalty-item-img-container" [class.linkable]="linkable" (click)="navigateToReview()">
+  <div class="loyalty-item-img-container"
+       [class.linkable]="linkable"
+       (click)="navigateToReview()">
     <img class="loyalty-item-img"
-      *ngIf="data?.details?.imageUrl"
-      [src]="data?.details?.imageUrl"
-      alt="Loyalty program picture">
+         *ngIf="data?.details?.imageUrl"
+         [src]="data?.details?.imageUrl"
+         [alt]="'LOYALTY_FEATURE.PROGRAM_PICTURE' | translate">
   </div>
   <div class="loyalty-item-info">
     <p class="loyalty-item-name" [class.linkable]="linkable" (click)="navigateToReview()">{{data?.name}}</p>
     <p class="loyalty-item-group">{{data?.details?.pointsName}}</p>
-    <p class="loyalty-item-tiers" *ngIf="data?.customTiersCount > 0">{{data?.customTiersCount}} {{'LOYALTY_FEATURE.TIERS' | translate}}</p>
+    <p class="loyalty-item-tiers"
+       *ngIf="data?.customTiersCount > 0">{{data?.customTiersCount}} {{'LOYALTY_FEATURE.TIERS' | translate}}</p>
     <cl-status-label [status]="data?.status"
                      [config]="statusLabel"
     ></cl-status-label>
@@ -19,12 +22,13 @@
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item
-        *ngIf="data?.status === statusType.ACTIVE"
-        (click)="tapped({action: loyaltyAction.pause})">{{'PAUSE' | translate}}</button>
+              *ngIf="data?.status === statusType.ACTIVE"
+              (click)="tapped({action: loyaltyAction.pause})">{{'PAUSE' | translate}}</button>
       <button mat-menu-item
-        *ngIf="data?.status === statusType.PAUSED"
-        (click)="tapped({action: loyaltyAction.activate})">{{'ACTIVE' | translate}}</button>
-      <button mat-menu-item *ngFor="let action of menuOptions" (click)="tapped(action)">{{action.label | translate}}</button>
+              *ngIf="data?.status === statusType.PAUSED"
+              (click)="tapped({action: loyaltyAction.activate})">{{'ACTIVE' | translate}}</button>
+      <button mat-menu-item *ngFor="let action of menuOptions"
+              (click)="tapped(action)">{{action.label | translate}}</button>
     </mat-menu>
   </div>
 </div>

@@ -201,7 +201,12 @@ export { DateComponent } from './lib/survey/question/date/date.component';
 export { ConfigModule } from './lib/config/config.module';
 export { Config } from './lib/config/config';
 export { ConfigService } from './lib/config/config.service';
-export { IConfig, IMicrositeSettings, PagesObject, AccountPageObject } from './lib/config/models/config.model';
+export {
+  IConfig,
+  IMicrositeSettings,
+  PagesObject,
+  AccountPageObject,
+} from './lib/config/models/config.model';
 
 /**
  * PrePlay
@@ -212,9 +217,7 @@ export {
 /**
  * Theme
  */
-export {
-  ITheme
-} from './lib/utils/themes/themes.model';
+export { ITheme } from './lib/utils/themes/themes.model';
 export { ThemesService } from './lib/utils/themes/themes.service';
 /**
  * Outcome
