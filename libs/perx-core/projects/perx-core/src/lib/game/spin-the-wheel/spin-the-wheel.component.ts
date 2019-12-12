@@ -213,30 +213,30 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
       }
 
       // render label for testing purposes
-      if (slice.label) {
-        this.ctx.save();
-        this.ctx.shadowOffsetX = -1;
-        this.ctx.shadowOffsetY = -1;
-        this.ctx.shadowBlur = 0;
-        this.ctx.fillStyle = slice.labelColor || 'black';
-
-        this.ctx.rotate(angle + this.arc / 2);
-        this.ctx.translate(this.size / 4, 0);
-        this.ctx.font = 'bold 15px Helvetica, Arial';
-
-        const text = slice.label || '';
-
-        const textArray = text.split(' ');
-        for (let index = 0; index < textArray.length; index++) {
-          const element = textArray[index];
-          this.ctx.fillText(
-            element,
-            -this.ctx.measureText(element).width / 2,
-            index * 15
-          );
-        }
-        this.ctx.restore();
-      }
+      // if (slice.label) {
+      //   this.ctx.save();
+      //   this.ctx.shadowOffsetX = -1;
+      //   this.ctx.shadowOffsetY = -1;
+      //   this.ctx.shadowBlur = 0;
+      //   this.ctx.fillStyle = slice.labelColor || 'black';
+      //
+      //   this.ctx.rotate(angle + this.arc / 2);
+      //   this.ctx.translate(this.size / 4, 0);
+      //   this.ctx.font = 'bold 15px Helvetica, Arial';
+      //
+      //   const text = slice.label || '';
+      //
+      //   const textArray = text.split(' ');
+      //   for (let index = 0; index < textArray.length; index++) {
+      //     const element = textArray[index];
+      //     this.ctx.fillText(
+      //       element,
+      //       -this.ctx.measureText(element).width / 2,
+      //       index * 15
+      //     );
+      //   }
+      //   this.ctx.restore();
+      // }
     });
     this.ctx.resetTransform();
   }
@@ -306,16 +306,16 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   private stopRotateWheel(): void {
     if (!this.ctx) { return; }
     clearTimeout(this.spinTimeout);
-    // this.ctx.save();
-    // this.ctx.font = 'bold 20px Helvetica, Arial';
-    // this.ctx.fillStyle = 'black';
-    // const text = this.slices[this.slotToLand].label || '';
-    // this.ctx.fillText(
-    //   text,
-    //   this.size / 2 - this.ctx.measureText(text).width / 2,
-    //   this.size / 2 + 10
-    // );
-    // this.ctx.restore();
+    this.ctx.save();
+    this.ctx.font = 'bold 20px Helvetica, Arial';
+    this.ctx.fillStyle = 'black';
+    const text = this.slices[this.slotToLand].label || '';
+    this.ctx.fillText(
+      text,
+      this.size / 2 - this.ctx.measureText(text).width / 2,
+      this.size / 2 + 10
+    );
+    this.ctx.restore();
   }
 
   private handleStart(): void {
