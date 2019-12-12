@@ -52,7 +52,9 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
     this.form1pt1.valueChanges.subscribe(
       (values) => {
         this.sumMoreThanError = values.totalProbability > 100;
-        this.rewardNotAllPatchedError = values.slotsNotEmpty[0] !== values.slotsNotEmpty[1];
+        if (this.isSpinEngagement) {
+          this.rewardNotAllPatchedError = values.slotsNotEmpty[0] !== values.slotsNotEmpty[1];
+        }
       }
     );
   }
