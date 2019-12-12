@@ -55,11 +55,12 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private messageService: MessageService
   ) {
     store.resetCampaign();
+    this.initForm();
   }
 
   public ngOnInit(): void {
     this.initTenantSettings();
-    this.initForm();
+    // this.initForm();
     this.form.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {

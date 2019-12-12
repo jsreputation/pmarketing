@@ -4,17 +4,16 @@ import {
   OnDestroy,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
-  Input,
+  Input, OnChanges, SimpleChanges,
 } from '@angular/core';
 import {
-  FormGroup,
-  FormBuilder,
+  FormGroup
 } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 
 import {
   combineLatest,
-  of,
+  of, Subject,
 } from 'rxjs';
 import {
   map,
@@ -25,11 +24,8 @@ import {
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
 import { RewardsService } from '@cl-core/services/rewards.service';
-import { ClValidators } from '@cl-helpers/cl-validators';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
-import { AbstractStepWithForm } from '../../step-page-with-form';
-import { StepConditionService } from '../../services/step-condition.service';
 import { SOURCE_TYPE } from '../../../app.constants';
 
 @Component({
@@ -38,13 +34,18 @@ import { SOURCE_TYPE } from '../../../app.constants';
   styleUrls: ['./new-campaign-rewards-form-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
+export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, OnChanges {
+  private destroy$: Subject<void> = new Subject();
+
+  @Input() public isSpinEngagement: boolean = false;
   @Input() public title: string = 'CAMPAIGN.REWARDS';
   @Input() public slotNumber: number = 0;
-  public form: FormGroup;
+  @Input() public formParent: FormGroup; // turn into an input
+  @Input() public enableProbability: boolean = false;
+
   public outcomes: ICampaignOutcome[] = [];
   private isFirstInit: boolean;
-  public enableProbability: boolean = false;
+  public patchedReward: boolean = false;
   public sumMoreThanError: boolean = false;
   public noOutcome: ICampaignOutcome = {
     outcome: {
@@ -59,18 +60,8 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
     public store: CampaignCreationStoreService,
-    public stepConditionService: StepConditionService,
     private rewardsService: RewardsService,
-    private fb: FormBuilder
   ) {
-    super(1.1, store, stepConditionService);
-    this.initForm();
-  }
-
-  private initForm(): void {
-    this.form = this.fb.group({
-      totalProbability: [null, [ClValidators.sumMoreThan()]]
-    });
   }
 
   public get campaign(): any {
@@ -87,15 +78,23 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
         if (isFirstTimeRenderFromAPIResponse) {
           this.isFirstInit = false;
           this.initOutcomesList();
+          this.cd.detectChanges();
         }
       });
-    if (this.form) {
-      this.stepConditionService.registerStepCondition(1.1, this.form);
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (this.outcomes.length !== 0 && changes.enableProbility !== undefined &&
+      (changes.enableProbability.currentValue !== changes.enableProbability.previousValue)) {
+      this.updateOutcomeProbabilitySetting();
+      this.updateOutcomesInCampaign();
+      // this.updateOutcomes();
     }
   }
 
   public ngOnDestroy(): void {
-    super.ngOnDestroy();
+    this.destroy$.next();
+    this.destroy$.complete();
     this.cd.detach();
   }
 
@@ -116,6 +115,9 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
             enableProbability: this.enableProbability,
             reward
           });
+          if (this.isSpinEngagement) {
+            this.passSlotCount();
+          }
           this.updateOutcomesInCampaign();
         }
       });
@@ -176,40 +178,70 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
     this.campaign.outcomes = [...otherSlotOutcomes, ...this.outcomes];
   }
 
-  public isSumMoreThan(): boolean {
+  public passSlotCount(slotRemove?: boolean): void {
+    // include some console logs but comment out so easier to understand and debug later on
+    // console.log(this.outcomes.length !== 0, 'set me as slotNotEmpty');
+    // console.log('before anything this is the outcoems array', this.outcomes);
+    const currentTotal = this.formParent.get('slotsNotEmpty').value[0];
+    const actualTotal =  this.formParent.get('slotsNotEmpty').value[1];
+    // this function is triggered after this.outcomes value is changed either from remove / add
+    if (slotRemove && this.outcomes.length === 0) { // will be adjusted to > 1 when the no outcome thing works (andrew)
+      // console.log('i am being called to remove from the current total');
+      this.formParent.patchValue({
+        slotsNotEmpty: [(currentTotal - 1), actualTotal]
+      });
+      this.patchedReward = false; // able to patch again when outcomes are empty
+    }
+    // Check alrdy been patched be4, idw to add again if alrdy been patched
+    if (!slotRemove && this.outcomes.length !== 0 && !this.patchedReward) { // will be adjusted to if <= 1
+      // console.log(' i am being called to add to the current total');
+      this.formParent.patchValue({
+        slotsNotEmpty: [(currentTotal + 1), actualTotal]
+      });
+      this.patchedReward = true;
+    }
+    this.formParent.updateValueAndValidity();
+  }
+
+  public isSumMoreThan(oldValue: number): void {
     const totalNum = this.outcomes.reduce((total, item) => {
       if (item.outcome.probability) {
         total += item.outcome.probability;
       }
       return total;
-    }, 0);
-    this.form.patchValue({
-      totalProbability: totalNum
+    }, 0) - oldValue;
+    const currentTotal = this.formParent.get('totalProbability').value;
+    this.formParent.patchValue({
+      totalProbability:  (currentTotal + totalNum)
     });
-    this.form.updateValueAndValidity();
-    return totalNum > 100;
+    this.formParent.updateValueAndValidity();
+    // return totalNum > 100;
   }
 
-  public updateOutcomeData(index: number, value: { probability: number, limit: number }): void {
+  public updateOutcomeData(index: number, value: { probability: number, limit: number, oldProbability: number }): void {
     this.outcomes[index].outcome.probability = value.probability;
     this.outcomes[index].outcome.limit = value.limit;
     this.updateOutcomesInCampaign();
-    this.sumMoreThanError = this.isSumMoreThan();
+    this.isSumMoreThan(value.oldProbability);
   }
 
   public removeOutcome(index: number): void {
     if (index > -1) {
       this.outcomes[index].outcome.slotNumber = -1;
     }
+    this.outcomes.splice(index, 1);
     this.updateOutcomesInCampaign();
+    if (this.isSpinEngagement) {
+      this.passSlotCount(true);
+    }
   }
 
   public updateOutcomes(): void {
-    if (this.enableProbability) {
-      this.outcomes[0].outcome.slotNumber = this.slotNumber;
-    } else {
-      this.outcomes[0].outcome.slotNumber = -1;
-    }
+    // if (this.enableProbability) {
+    //   this.outcomes[0].outcome.slotNumber = this.slotNumber; // maybe forEach
+    // } else {
+    //   this.outcomes[0].outcome.slotNumber = -1;
+    // }
     this.updateOutcomeProbabilitySetting();
     this.updateOutcomesInCampaign();
     this.cd.detectChanges();

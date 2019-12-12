@@ -21,17 +21,25 @@ export class ClValidators extends Validators {
     return null;
   }
 
-  public static sumMoreThan(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: boolean } | null => {
-      if (!control || !control.value) {
-        return null;
-      }
-      const total = control.value;
-      if (total > 100) {
-        return {sumMoreThan: true};
-      }
+  public static sumMoreThan(control: AbstractControl): { [key: string]: boolean } | null {
+    if (!control || !control.value) {
       return null;
-    };
+    }
+    const total = control.value;
+    if (total > 100) {
+      return {sumMoreThan: true};
+    }
+    return null;
+  }
+
+  public static rewardSlotted(control: AbstractControl): { [key: string]: boolean } | null {
+    if (!control || !control.value) {
+      return null;
+    }
+    if (control.value[0] !== control.value[1]) {
+      return {rewardsUnfilledError: true};
+    }
+    return null;
   }
 
   public static sumLessThan(options: any): ValidatorFn {

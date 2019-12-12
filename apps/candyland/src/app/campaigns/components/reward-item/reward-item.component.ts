@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'cl-reward-item',
@@ -16,12 +16,12 @@ export class RewardItemComponent implements OnInit {
   @Input() public enableProbability: boolean = false;
   @Input() public isInvalid: boolean;
   @Output() private clickDelete: EventEmitter<any> = new EventEmitter<any>();
-  @Output() private updateOutcome: EventEmitter<{ probability: number, limit: number }> =
-    new EventEmitter<{ probability: number, limit: number }>();
+  @Output() private updateOutcome: EventEmitter<{ probability: number, limit: number, oldProbability: number }> =
+    new EventEmitter<{ probability: number, limit: number, oldProbability: number }>();
 
   public group: FormGroup = new FormGroup({
-    probability: new FormControl(),
-    limit: new FormControl()
+    probability: new FormControl(null, {updateOn: 'blur'}),
+    limit: new FormControl(null, {updateOn: 'blur'})
   });
   private destroy$: Subject<void> = new Subject();
 
@@ -33,6 +33,8 @@ export class RewardItemComponent implements OnInit {
     return this.group.get('limit');
   }
 
+  public oldValueProbability: number;
+
   public get outcome(): IOutcome {
     return this.outcomeData.outcome;
   }
@@ -43,10 +45,17 @@ export class RewardItemComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initForm();
-    this.group.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(
+    this.group.valueChanges.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(
       () => {
         this.updateOutcomeData();
       }
+    );
+    this.probability.valueChanges.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(
+      () => this.oldValueProbability = this.group.value.probability
     );
   }
 
@@ -57,7 +66,8 @@ export class RewardItemComponent implements OnInit {
   public updateOutcomeData(): void {
     const updateData = {
       probability: this.group.get('probability').value || null,
-      limit: this.group.get('limit').value || null
+      limit: this.group.get('limit').value || null,
+      oldProbability: this.oldValueProbability
     };
     this.updateOutcome.emit(updateData);
   }
