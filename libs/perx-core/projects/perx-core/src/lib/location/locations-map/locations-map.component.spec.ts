@@ -63,16 +63,16 @@ describe('LocationsMapComponent', () => {
   }));
 
   it('gMapUrl', fakeAsync(() => {
-    const url = `https://www.google.com/maps/search/?api=1&query=${coords.coords.latitude},${coords.coords.longitude}`
+    const url = `https://www.google.com/maps/search/?api=1&query=${coords.coords.latitude},${coords.coords.longitude}`;
     expect(component.gMapUrl({
       latitude: coords.coords.latitude,
       longitude: coords.coords.longitude, name: 'test'
     }))
       .toBe(url);
-      tick();
+    tick();
   }));
 
-  afterAll(fakeAsync(()=>{
+  afterAll(fakeAsync(() => {
     component.ngOnDestroy();
     tick();
     fixture.destroy();
