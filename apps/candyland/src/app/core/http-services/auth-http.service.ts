@@ -32,4 +32,17 @@ export class AuthHttpService {
 
     return this.http.post<IJsonApiPayload<void>>(`${ApiConfig.IAMUsersPath}/password`, req);
   }
+
+  public changePassword(password: string, token: string): Observable<any> {
+    const req = {
+      data: {
+        attributes: {
+          token,
+          password,
+          password_confirmation: password
+        }
+      }
+    };
+    return this.http.put<IJsonApiPayload<void>>(`${ApiConfig.IAMUsersPath}/password`, req);
+  }
 }
