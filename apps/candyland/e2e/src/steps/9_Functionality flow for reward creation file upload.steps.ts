@@ -35,8 +35,8 @@ When(/^14_I do nothing$/, () => {});
 
 Then(/^14_I should see the file upload field.$/, async () => {
   // clear default image
-  await browser.wait(ec.presenceOf(CreateRewardPage.imageClear()), 5000);
-  await CreateRewardPage.imageClear().click();
+  await browser.wait(ec.presenceOf(ElementApp.imageClear()), 5000);
+  await ElementApp.imageClear().click();
 
   await browser.wait(ec.presenceOf(CreateRewardPage.inputFileField()), 5000);
   expect(await CreateRewardPage.inputFileField().isPresent()).to.equal(true);
@@ -49,8 +49,8 @@ Given(/^15_that I am on reward creation page$/, async () => {
 
 When(/^15_I upload a file$/, async () => {
   // clear default image
-  await browser.wait(ec.presenceOf(CreateRewardPage.imageClear()), 5000);
-  await CreateRewardPage.imageClear().click();
+  await browser.wait(ec.presenceOf(ElementApp.imageClear()), 5000);
+  await ElementApp.imageClear().click();
 
   const FileToUpload = './testArtifacts/testimg.png';
   const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
@@ -70,8 +70,8 @@ Given(/^16_that I am on reward creation page$/, async () => {
 
 When(/^16_I upload a file with an inappropriate format$/, async () => {
   // clear default image
-  await browser.wait(ec.presenceOf(CreateRewardPage.imageClear()), 5000);
-  await CreateRewardPage.imageClear().click();
+  await browser.wait(ec.presenceOf(ElementApp.imageClear()), 5000);
+  await ElementApp.imageClear().click();
 
   const FileToUpload = './testArtifacts/testfile.xyz';
   const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later

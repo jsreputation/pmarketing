@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatSlideToggleModule } from '@angular/material';
 import { UploadImageComponent } from '@cl-shared/questions/question-picture-choice-field/upload-image/upload-image.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// tslint:disable
+// tslint:disable-next-line
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -30,7 +30,7 @@ describe('QuestionPictureChoiceFieldComponent', () => {
         QuestionPictureChoiceFieldComponent,
         UploadImageComponent
       ],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));
