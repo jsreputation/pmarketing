@@ -1,0 +1,68 @@
+<header class="page-header full-with" [formGroup]="form">
+  <mat-form-field class="pagetitle-input" floatLabel="never">
+    <input type="text" matInput formControlName="name" [placeholder]="'ENTER_TITLE_HERE' | translate">
+    <mat-error *ngIf="name.hasError('required')">{{'ERROR_REQUIRED' | translate}}</mat-error>
+    <mat-error *ngIf="name.hasError('minlength')">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
+    <mat-error *ngIf="name.hasError('maxlength')">{{'ERROR_MAX_LENGTH' | translate}} 60</mat-error>
+  </mat-form-field>
+  <!--  buttons-->
+  <div class="btn-group">
+    <cl-button classList="tertiary" *ngIf="!isEditPage" (click)="cancel()">{{'BTN_CANCEL' | translate}}</cl-button>
+    <cl-button classList="tertiary" *ngIf="isEditPage" (click)="navigateToList()">{{'BTN_BACK' | translate}}</cl-button>
+    <cl-button classList="secondary" *ngIf="!isLastStep && showDraftButton"
+               (click)="saveAsDraft()">{{'BTN_SAVE_AS_DRAFT' | translate}}</cl-button>
+    <cl-button classList="primary cta cta-next" *ngIf="!isLastStep"
+               (click)="clickGoNext()">{{'BTN_NEXT' | translate}}</cl-button>
+    <cl-button *ngIf="isLastStep" classList="primary cta cta-save cta-save-launch"
+               (click)="launch()">{{'BTN_LAUNCH' | translate}}</cl-button>
+  </div>
+  <!--/  buttons-->
+</header>
+
+<section class="content form-limiter loyalty">
+  <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0" disableRipple>
+    <!--step 1-->
+    <mat-step completed="false">
+      <ng-template matStepLabel>{{'LOYALTY_FEATURE.LOYALTY_DETAILS' | translate}}</ng-template>
+      <cl-loyalty-form-step-details *ngIf="form && stepOne" [group]="stepOne"
+                                    [pools]="pools">
+      </cl-loyalty-form-step-details>
+    </mat-step>
+    <!--step 2-->
+    <mat-step completed="false">
+      <ng-template matStepLabel>{{'LOYALTY_FEATURE.TIERS_CONVERSIONS' | translate}}</ng-template>
+      <cl-loyalty-form-step-tiers-conversions *ngIf="stepProgress >= 1"
+                                              [group]="stepTwo"
+                                              [customTierDataSource]="customTierDataSource"
+                                              (tiersConversionsAction)="handleLoyaltyActions($event)"
+                                              [currency]="currency$ | async">
+
+      </cl-loyalty-form-step-tiers-conversions>
+    </mat-step>
+    <!--step 3-->
+    <mat-step completed="false">
+      <ng-template matStepLabel>{{'LOYALTY_FEATURE.POINT_EARN_RULES' | translate}}</ng-template>
+      <cl-loyalty-form-step-earn-rules *ngIf="stepProgress >= 2"
+                                       [loader]="ruleLoader"
+                                       [basicTierId]="basicTierId"
+                                       [basicTierRuleSet]="basicTierRuleSet"
+                                       [customTierRuleSetMap]="customTierRuleSetMap"
+                                       [customTierDataSource]="customTierDataSource"
+                                       (rulesAction)="handleLoyaltyActions($event)"></cl-loyalty-form-step-earn-rules>
+      <div>
+      </div>
+    </mat-step>
+    <!--step 4-->
+    <mat-step completed="false">
+      <ng-template matStepLabel>{{'LOYALTY_FEATURE.REVIEW' | translate}}</ng-template>
+      <cl-view-loyalty *ngIf="stepProgress >= 3"
+                       [loyaltyData]="form.value"
+                       [dataSource]="customTierDataSource"
+                       [basicTierRuleSet]="basicTierRuleSet"
+                       [customTierRuleSetMap]="customTierRuleSetMap"
+                       [statusLabel]="statusLabel"
+      ></cl-view-loyalty>
+    </mat-step>
+  </mat-horizontal-stepper>
+</section>
+

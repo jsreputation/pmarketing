@@ -60,12 +60,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initTenantSettings();
-    // this.initForm();
+    this.initForm();
     this.form.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
         this.store.updateCampaign(value);
       });
+    this.handleCampaignNameChanges();
     this.handleRouteParams();
   }
 
@@ -122,7 +123,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
     saveCampaign$.pipe(
       // tap((res: IJsonApiPayload<IWCampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
-      map((res: IJsonApiPayload<IWCampaignAttributes>) => ({ ...this.store.currentCampaign, id: res.data.id } as ICampaign)),
+      map((res: IJsonApiPayload<IWCampaignAttributes>) => ({...this.store.currentCampaign, id: res.data.id} as ICampaign)),
       switchMap(
         (campaign: ICampaign) => combineLatest(
           of(campaign),
@@ -301,7 +302,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.getCampaignDoneDialogData(campaign)
       .pipe(
         switchMap((config) => this.dialog.open(NewCampaignDonePopupComponent,
-          { data: config }).afterClosed())
+          {data: config}).afterClosed())
       )
       .subscribe(() => this.router.navigate(['/campaigns']));
   }
@@ -336,12 +337,12 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private outcomeToRewardCollection(outcomes: IOutcome[]): ICampaignOutcome[] {
     const collections: ICampaignOutcome[] = [];
-    outcomes.forEach(outcome => collections.push({ outcome }));
+    outcomes.forEach(outcome => collections.push({outcome}));
     return collections;
   }
 
   private getCognitoUrl(): Observable<string> {
-    const params = { 'page[number]': '1', 'page[size]': '1' };
+    const params = {'page[number]': '1', 'page[size]': '1'};
     return this.settingsService.getCognitoEndpoints(params).pipe(
       tap((data: any[]) => {
         if (data.length === 0) {
@@ -354,6 +355,14 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       map((data: any[]) => (data.length > 0) ? data[0].url : ''),
       takeUntil(this.destroy$)
     );
+  }
+
+  private handleCampaignNameChanges(): void {
+    this.form.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(value => {
+        this.store.updateCampaign(value);
+      });
   }
 
   private handleRouteParams(): void {
@@ -373,15 +382,15 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       ).pipe(
         map(
           ([campaign, commEvent, outcomes]:
-            [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
-              ...campaign,
-              audience: { select: commEvent && commEvent.poolId || null },
-              channel: {
-                type: commEvent && commEvent.channel || 'weblink',
-                ...commEvent
-              },
-              outcomes: this.outcomeToRewardCollection(outcomes)
-            }))
+             [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
+            ...campaign,
+            audience: {select: commEvent && commEvent.poolId || null},
+            channel: {
+              type: commEvent && commEvent.channel || 'weblink',
+              ...commEvent
+            },
+            outcomes: this.outcomeToRewardCollection(outcomes)
+          }))
       ).subscribe(
         campaign => {
           this.campaign = Object.assign({}, campaign);

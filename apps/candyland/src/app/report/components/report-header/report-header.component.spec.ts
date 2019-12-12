@@ -11,10 +11,10 @@ describe('ReportHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        declarations: [ReportHeaderComponent],
-        imports: [TranslateModule.forRoot()],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      declarations: [ReportHeaderComponent],
+      imports: [TranslateModule.forRoot()],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 
