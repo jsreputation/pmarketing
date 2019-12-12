@@ -3,9 +3,8 @@ import {
   CustomDataSource,
   DataSourceStates, DataSourceUpdateSchema
 } from '@cl-shared/table/data-source/custom-data-source';
-import { CampaignsService, ConfigService } from '@cl-core/services';
+import { CampaignsService, ConfigService, MessageService } from '@cl-core/services';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
 import { ICampaignTableData } from '@cl-core/models/campaign/campaign.interface';
 import { StatusLabelConfig } from '@cl-shared';
 import { Subject } from 'rxjs';
@@ -27,7 +26,7 @@ export class CampaignsListPageComponent implements OnInit, OnDestroy {
   private campaignStatuses: typeof CampaignAction = CampaignAction;
   constructor(private campaignsService: CampaignsService,
               private router: Router,
-              private snack: MatSnackBar,
+              private messageService: MessageService,
               private configService: ConfigService,
               private cd: ChangeDetectorRef) {
     this.dataSource = new CustomDataSource<ICampaignTableData>(this.campaignsService, 5, {include: 'pool'});
@@ -42,7 +41,7 @@ export class CampaignsListPageComponent implements OnInit, OnDestroy {
       .subscribe(
         () => this.dataSource.updateData(),
         () => {
-          this.snack.open('Duplication failed, please try again.', 'x', { duration: 2000 });
+          this.messageService.show('Duplication failed, please try again.', 'warning');
         });
   }
 

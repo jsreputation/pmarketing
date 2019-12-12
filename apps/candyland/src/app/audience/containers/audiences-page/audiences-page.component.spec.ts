@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AudiencesPageComponent } from './audiences-page.component';
-import { SettingsService, AudiencesService, AuthService } from '@cl-core-services';
+import {SettingsService, AudiencesService, AuthService, MessageService} from '@cl-core-services';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import {
   ButtonModule,
@@ -18,8 +18,7 @@ import {
   MatSortModule,
   MatTabsModule,
   MatMenuModule,
-  MatDialogModule,
-  MatSnackBarModule
+  MatDialogModule
 } from '@angular/material';
 import { AudiencesListComponent } from '../../components/audiences-list/audiences-list.component';
 import { AudiencesUsersListComponent } from '../../components/audiences-users-list/audiences-users-list.component';
@@ -57,7 +56,6 @@ describe('AudiencesPageComponent', () => {
           StatusLabelModule,
           RouterTestingModule,
           MatDialogModule,
-          MatSnackBarModule,
           BrowserAnimationsModule,
           NoopAnimationsModule,
           TranslateModule.forRoot(),
@@ -67,6 +65,11 @@ describe('AudiencesPageComponent', () => {
           AudiencesService,
           AudiencesUserService,
           LocalStorageService,
+          {
+            provide: MessageService, useValue: {
+              show: () => ({})
+            }
+          },
           AuthService
         ],
         declarations: [
