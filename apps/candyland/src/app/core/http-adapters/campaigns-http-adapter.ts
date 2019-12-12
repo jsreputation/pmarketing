@@ -6,7 +6,8 @@ import {
 import {
   IWCampaignAttributes,
   WEngagementType,
-  WInformationCollectionSettingType
+  IWAudiences,
+  WInformationCollectionSettingType,
 } from '@perx/whistler';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
@@ -23,7 +24,12 @@ export class CampaignsHttpAdapter {
     };
   }
 
-  public static transformToCampaign(data: IJsonApiItem<IWCampaignAttributes>): ICampaignTableData {
+  public static transformToCampaign(
+    data: IJsonApiItem<IWCampaignAttributes>,
+    includedPools?: IJsonApiItem<Partial<IWAudiences>>[]): ICampaignTableData {
+    const audienceCheck = includedPools
+      .find(pool => +pool.id === (data.attributes.pool_id || Number.MAX_SAFE_INTEGER));
+    const audience = audienceCheck ? audienceCheck.attributes.name : '-';
     const eType = data.attributes.engagement_type ?
       CampaignsHttpAdapter.EngagementTypePipeTransform(EngagementTypeFromAPIMapping[data.attributes.engagement_type])
       : '';
@@ -33,7 +39,7 @@ export class CampaignsHttpAdapter {
       status: data.attributes.status,
       begin: DateTimeParser.stringToDate(data.attributes.start_date_time),
       end: DateTimeParser.stringToDate(data.attributes.end_date_time),
-      audience: data.attributes.pool_id,
+      audience,
       goal: data.attributes.goal,
       engagementType: eType
     };
@@ -47,7 +53,7 @@ export class CampaignsHttpAdapter {
 
   public static transformTableData(data: IJsonApiListPayload<IWCampaignAttributes>): ITableData<ICampaignTableData> {
     return {
-      data: data.data.map(item => CampaignsHttpAdapter.transformToCampaign(item)),
+      data: data.data.map(item => CampaignsHttpAdapter.transformToCampaign(item, data.included)),
       meta: data.meta
     };
   }
