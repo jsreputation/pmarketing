@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RedemptionComponent } from './redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule, MatDividerModule } from '@angular/material';
-import { VouchersModule, IVoucherService, VoucherState, UtilsModule, Voucher } from '@perx/core';
+import { VouchersModule, IVoucherService, VoucherState, UtilsModule, Voucher, RedemptionType } from '@perx/core';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
@@ -38,6 +38,7 @@ describe('RedemptionComponent', () => {
       inventory: null,
     },
     state: VoucherState.expired,
+    redemptionType: RedemptionType.none,
     expiry: null,
   };
 

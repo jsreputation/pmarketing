@@ -1,4 +1,4 @@
-import { Voucher, VoucherState } from '@perx/core';
+import { Voucher, VoucherState, RedemptionType } from '@perx/core';
 
 export const mock: Voucher[] = [
     {
@@ -24,6 +24,7 @@ export const mock: Voucher[] = [
             inventory: null,
           },
         state: VoucherState.issued,
+        redemptionType: RedemptionType.none,
         expiry: new Date(),
     },
     {
@@ -49,6 +50,7 @@ export const mock: Voucher[] = [
             inventory: null,
           },
         state: VoucherState.issued,
+        redemptionType: RedemptionType.none,
         expiry: new Date(),
     },
     {
@@ -74,6 +76,7 @@ export const mock: Voucher[] = [
             inventory: null,
           },
         state: VoucherState.issued,
+        redemptionType: RedemptionType.none,
         expiry: new Date(),
     },
 ];

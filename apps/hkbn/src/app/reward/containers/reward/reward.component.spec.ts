@@ -13,7 +13,8 @@ import {
   Voucher,
   VoucherState,
   IVoucherService,
-  RewardsService
+  RewardsService,
+  RedemptionType
 } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
@@ -62,6 +63,7 @@ describe('RewardComponent', () => {
       inventory: null,
     },
     state: VoucherState.issued,
+    redemptionType: RedemptionType.none,
     expiry: null,
   };
 

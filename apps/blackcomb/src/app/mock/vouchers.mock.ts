@@ -1,4 +1,4 @@
-import { Voucher, VoucherState, IVoucherService } from '@perx/core';
+import { Voucher, VoucherState, IVoucherService, RedemptionType } from '@perx/core';
 import { of, BehaviorSubject } from 'rxjs';
 
 export const vouchersServiceStub: IVoucherService = {
@@ -36,6 +36,7 @@ export const vouchers: Voucher[] = [
       inventory: null,
     },
     state: VoucherState.issued,
+    redemptionType: RedemptionType.pin,
     code: 'XXXX - XXXX - XXXX - XXXX',
     expiry: new Date(),
   },
@@ -62,6 +63,7 @@ export const vouchers: Voucher[] = [
       inventory: null,
     },
     state: VoucherState.issued,
+    redemptionType: RedemptionType.pin,
     expiry: null,
   },
   {
@@ -87,6 +89,7 @@ export const vouchers: Voucher[] = [
       inventory: null,
     },
     state: VoucherState.issued,
+    redemptionType: RedemptionType.pin,
     code: 'XXXX - XXXX - XXXX - XXXX',
     expiry: new Date(),
   },
@@ -113,6 +116,7 @@ export const vouchers: Voucher[] = [
       inventory: null,
     },
     state: VoucherState.issued,
+    redemptionType: RedemptionType.pin,
     expiry: null,
   },
   {
@@ -138,6 +142,7 @@ export const vouchers: Voucher[] = [
       inventory: null,
     },
     state: VoucherState.expired,
+    redemptionType: RedemptionType.pin,
     expiry: null,
   },
   {
@@ -163,6 +168,7 @@ export const vouchers: Voucher[] = [
       inventory: null,
     },
     state: VoucherState.redeemed,
+    redemptionType: RedemptionType.pin,
     expiry: null,
   }
 ];

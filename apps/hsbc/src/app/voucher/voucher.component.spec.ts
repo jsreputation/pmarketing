@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VoucherComponent } from './voucher.component';
-import { VouchersModule, CampaignModule, IVoucherService, Voucher, VoucherState, ConfigService } from '@perx/core';
+import { VouchersModule, CampaignModule, IVoucherService, Voucher, VoucherState, ConfigService, RedemptionType } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatProgressBarModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,6 +33,7 @@ describe('VoucherComponent', () => {
       inventory: null,
     },
     state: VoucherState.issued,
+    redemptionType: RedemptionType.none,
     code: 'string;',
     expiry: null,
     redemptionDate: null,

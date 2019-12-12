@@ -1,4 +1,4 @@
-import { Voucher, VoucherState, IVoucherService } from '@perx/core';
+import { Voucher, VoucherState, IVoucherService, RedemptionType } from '@perx/core';
 import { of, BehaviorSubject } from 'rxjs';
 
 export const vouchersServiceStub: IVoucherService = {
@@ -35,6 +35,7 @@ export const vouchers: Voucher[] = [
       categoryTags: [],
       inventory: null,
     },
+    redemptionType: RedemptionType.pin,
     state: VoucherState.issued,
     code: 'XXXX - XXXX - XXXX - XXXX',
     expiry: new Date(),
@@ -61,6 +62,7 @@ export const vouchers: Voucher[] = [
       categoryTags: [],
       inventory: null,
     },
+    redemptionType: RedemptionType.none,
     state: VoucherState.issued,
     expiry: null,
   },
@@ -86,6 +88,7 @@ export const vouchers: Voucher[] = [
       categoryTags: [],
       inventory: null,
     },
+    redemptionType: RedemptionType.none,
     state: VoucherState.issued,
     code: 'XXXX - XXXX - XXXX - XXXX',
     expiry: new Date(),
@@ -112,6 +115,7 @@ export const vouchers: Voucher[] = [
       categoryTags: [],
       inventory: null,
     },
+    redemptionType: RedemptionType.none,
     state: VoucherState.issued,
     expiry: null,
   },
@@ -137,6 +141,7 @@ export const vouchers: Voucher[] = [
       categoryTags: [],
       inventory: null,
     },
+    redemptionType: RedemptionType.none,
     state: VoucherState.expired,
     expiry: null,
   },
@@ -162,6 +167,7 @@ export const vouchers: Voucher[] = [
       categoryTags: [],
       inventory: null,
     },
+    redemptionType: RedemptionType.none,
     state: VoucherState.redeemed,
     expiry: null,
   }

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DetailComponent } from './detail.component';
-import { VouchersModule, IVoucherService, Voucher, VoucherState } from '@perx/core';
+import { VouchersModule, IVoucherService, Voucher, VoucherState, RedemptionType } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('DetailComponent', () => {
@@ -30,6 +30,7 @@ describe('DetailComponent', () => {
       inventory: null,
     },
     state: VoucherState.expired,
+    redemptionType: RedemptionType.none,
     expiry: null,
   };
   const vouchersServiceStub = {
