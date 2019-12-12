@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
-import { PopupComponent, NotificationService, IPopupConfig } from '@perx/core';
+import {
+  PopupComponent,
+  NotificationService,
+  IPopupConfig,
+  ITheme,
+  ThemesService,
+  ConfigService,
+  IConfig
+} from '@perx/core';
 import { LoginComponent } from './auth/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HistoryComponent } from './history/history.component';
@@ -20,6 +28,7 @@ import { FaqComponent } from './account/profile-additions/containers/faq/faq.com
 import { PrivacyPolicyComponent } from './account/profile-additions/containers/privacy-policy/privacy-policy.component';
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
 import { CustomerSupportComponent } from './account/customer-support/customer-support.component';
+import { flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -33,15 +42,22 @@ export class AppComponent implements OnInit {
   public showLogo: boolean = false;
   public showPageTitle: boolean = false;
   public headerTitle: string = '';
-
+  public theme: ITheme;
   constructor(
     private notificationService: NotificationService,
     private dialog: MatDialog,
     private location: Location,
     private snackBar: MatSnackBar,
+    private themeService: ThemesService,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
+    this.configService.readAppConfig<ITheme>()
+      .pipe(flatMap((config: IConfig<ITheme>) => this.themeService.getThemeSetting(config)));
+    this.themeService.getThemeSetting().subscribe(
+      theme => this.theme = theme
+    );
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
     this.notificationService.$snack
@@ -49,7 +65,7 @@ export class AppComponent implements OnInit {
   }
 
   public onActivate(ref: any): void {
-    this.showHeader = !(ref instanceof LoginComponent || ref instanceof SignUpComponent );
+    this.showHeader = !(ref instanceof LoginComponent || ref instanceof SignUpComponent);
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof PromosComponent ||
@@ -77,7 +93,7 @@ export class AppComponent implements OnInit {
                 ref instanceof FaqComponent ? 'FAQ' :
                   ref instanceof CustomerSupportComponent ? 'Customer Support' :
                     ref instanceof PrivacyPolicyComponent ? 'Privacy Policy' :
-                      ref instanceof TermsAndConditionComponent ? 'Terms & Conditions' : '' ;
+                      ref instanceof TermsAndConditionComponent ? 'Terms & Conditions' : '';
   }
 
   public goBack(): void {

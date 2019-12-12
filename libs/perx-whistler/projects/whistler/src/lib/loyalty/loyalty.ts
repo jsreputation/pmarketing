@@ -50,3 +50,29 @@ export interface IWJoinMethod {
   points_threshold?: boolean;
   points?: number;
 }
+
+export interface IWLoyaltyRuleSetAttributes {
+  domain_id: string;
+  domain_type?: string;
+  match_type: string;
+}
+
+export interface IWLoyaltyRuleAttributes {
+  priority?: number;
+  rule_set_id?: string;
+  reward_type?: string;
+  reward_id?: number;
+  name: string;
+  conditions?: IWLoyaltyRuleConditionAttributes[];
+}
+
+export type IWLoyaltyRuleConditionValueType = 'string' | 'integer' | 'date';
+
+export type IWLoyaltyRuleConditionSign = 'equal' | 'unequal' | 'less' | 'greater' | 'less_or_equal' | 'greater_or_equal';
+
+export interface IWLoyaltyRuleConditionAttributes {
+  field: string;
+  sign: IWLoyaltyRuleConditionSign;
+  value: string | number | Date | null;
+  value_type: IWLoyaltyRuleConditionValueType;
+}

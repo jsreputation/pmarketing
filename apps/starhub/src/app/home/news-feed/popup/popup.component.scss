@@ -28,6 +28,9 @@
 
   .icon {
     @include icon();
+
+    background: var(--button_background_color);
+    color: var(--button_text_color);
   }
 }
 

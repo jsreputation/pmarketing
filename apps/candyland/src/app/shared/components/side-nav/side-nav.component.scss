@@ -105,7 +105,7 @@
   width: 5.6rem;
   height: $modal-header-height;
   padding: 0;
-  margin-left: 1.2rem;
+  margin-left: 0;
   border: none;
   outline: none;
   background: none;
@@ -129,7 +129,7 @@
     color: rgba($secondary-color, 0);
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: calc(50% + 0.6rem);
     transform: translate(-50%, -50%) rotate(0deg);
   }
 
@@ -168,6 +168,17 @@
     bottom: 50%;
     transform: scaleX(1.5);
     transform: translateY(50%) rotate(-45deg);
+  }
+}
+
+@media (min-width: $tablet-width + 1) {
+  .sidenav {
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  .mat-drawer-content {
+    margin-left: 170px;
   }
 }
 

@@ -15,6 +15,11 @@ import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
+interface IRewardConfig {
+  showExpiryOnRewardDetail: boolean;
+  showVoucherBookingFromRewardsPage: boolean;
+}
+
 @Component({
   selector: 'perx-blackcomb-reward-details',
   templateUrl: './reward-details.component.html',
@@ -27,12 +32,11 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public descriptionLabel: string = 'Description';
   public tncLabel: string = 'Terms and Conditions';
   public buttonLabel: string = 'Redeem';
-  public appConfig: IConfig<{showExpiryOnRewardDetail: boolean}>;
+  public appConfig: IConfig<IRewardConfig>;
   public rewardData: IReward;
-  private loyalty: ILoyalty;
+  public loyalty: ILoyalty;
 
   private initTranslate(): void {
-    this.translate.get('REDEEM').subscribe((text) => this.buttonLabel = text);
     this.translate.get('DESCRIPTION')
       .subscribe((desc: string) => {
         this.descriptionLabel = desc;
@@ -54,9 +58,16 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig<{showExpiryOnRewardDetail: boolean}>().subscribe(
-      (config: IConfig<{showExpiryOnRewardDetail: boolean}>) => this.appConfig = config
-    );
+    this.configService.readAppConfig<IRewardConfig>().pipe(
+      tap((config: IConfig<IRewardConfig>) => this.appConfig = config),
+      switchMap((config: IConfig<IRewardConfig>) => {
+        if (config.custom && config.custom.showVoucherBookingFromRewardsPage) {
+          return this.translate.get('GET_VOUCHER');
+        }
+
+        return this.translate.get('REDEEM');
+      })
+    ).subscribe((text) => this.buttonLabel = text);
 
     this.initTranslate();
     this.loyaltyService.getLoyalties().pipe(
@@ -80,10 +91,14 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   }
 
   public buyReward(): void {
-    this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
-      .subscribe(
-        (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`])
-      );
+    if (this.appConfig.custom && this.appConfig.custom.showVoucherBookingFromRewardsPage) {
+      this.router.navigateByUrl(`booking/${this.rewardData.id}`);
+    } else {
+      this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
+        .subscribe(
+          (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`])
+        );
+    }
   }
 
   public ngOnDestroy(): void {

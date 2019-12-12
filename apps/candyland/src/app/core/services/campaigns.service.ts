@@ -3,7 +3,7 @@ import { CampaignsHttpAdapter } from '@cl-core/http-adapters/campaigns-http-adap
 import { CampaignsHttpsService } from '@cl-core/http-services/campaigns-https.service';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { IWCampaignAttributes } from '@perx/whistler';
 import { ICampaign, ICampaignTableData } from '@cl-core/models/campaign/campaign.interface';

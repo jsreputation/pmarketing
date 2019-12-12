@@ -6,6 +6,7 @@ import { MatToolbarModule, MatIconModule, MatDialogModule } from '@angular/mater
 import { ThemesService, AuthenticationService, ConfigModule, ConfigService } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
+import {Title} from '@angular/platform-browser';
 
 const themesServiceStub: Partial<ThemesService> = {};
 const authServiceStub: Partial<AuthenticationService> = {};
@@ -43,8 +44,8 @@ describe('LayoutComponent', () => {
         {
           provide: ConfigService,
           useValue: configServiceStub
-        }
-
+        },
+        Title
       ]
     }).compileComponents();
   }));

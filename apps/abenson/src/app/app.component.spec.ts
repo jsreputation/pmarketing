@@ -2,7 +2,7 @@ import { TestBed, async, fakeAsync, ComponentFixture, tick } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule, MatToolbarModule, MatIconModule, MatSnackBarModule, MatDialog, MatSnackBar } from '@angular/material';
-import { NotificationService, AuthenticationService, IVoucherService, ICampaignService, ProfileService, ConfigService } from '@perx/core';
+import { NotificationService, AuthenticationService, IVoucherService, ICampaignService, ProfileService, ConfigService, ThemesService } from '@perx/core';
 import { HomeComponent } from './home/home.component';
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
 import { ProfileComponent } from './account/profile/profile.component';
@@ -54,7 +54,8 @@ describe('AppComponent', () => {
         AppComponent
       ],
       providers: [
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: ThemesService, useValue: { getThemeSetting: () => of({}) } }
       ]
     }).compileComponents();
   }));

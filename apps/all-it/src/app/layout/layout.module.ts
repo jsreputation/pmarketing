@@ -9,15 +9,17 @@ import {
   RewardDetailsComponent,
   ContentComponent,
   LayoutComponent,
-  SignInComponent
+  SignInComponent,
+  RewardsBookingComponent
 } from '@perx/blackcomb-pages';
 import { HomeModule } from '../home/home.module';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { VouchersModule, RewardsModule, GameModule } from '@perx/core';
+import { VouchersModule, RewardsModule, GameModule, LocationModule } from '@perx/core';
 import { WalletModule } from '../wallet/wallet.module';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { TranslateModule } from '@ngx-translate/core';
     RewardDetailsComponent,
     ContentComponent,
     SignInComponent,
+    RewardsBookingComponent
   ],
   imports: [
     WalletModule,
@@ -40,7 +43,12 @@ import { TranslateModule } from '@ngx-translate/core';
     RewardsModule,
     GameModule,
     SharedModule,
-    TranslateModule
+    TranslateModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    LocationModule
+
   ]
 })
 export class LayoutModule { }
