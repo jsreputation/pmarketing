@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { EditProfileFieldComponent } from '@perx/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [{
   path: '',
@@ -17,6 +18,7 @@ const routes: Routes = [{
   imports: [
     CommonModule,
     RouterModule,
+    SharedModule,
     TranslateModule.forChild(),
     RouterModule.forChild(routes)
   ]

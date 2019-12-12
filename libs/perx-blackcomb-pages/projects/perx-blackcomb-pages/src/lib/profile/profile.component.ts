@@ -24,10 +24,10 @@ export class ProfileComponent implements OnInit {
   }
 
   public onEditEmailClicked(): void {
-    console.log('Email clicked');
+    this.router.navigateByUrl('edit-profile/email');
   }
 
   public onEditPostcodeClicked(): void {
-    console.log('Post code clicked');
+    this.router.navigateByUrl('edit-profile/postcode');
   }
 }

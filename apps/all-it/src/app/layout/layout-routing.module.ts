@@ -65,7 +65,7 @@ const routes: Routes = [
                       .then((mod: any) => mod.ChangePasswordModule)
       },
       {
-        path: 'edit-profile/:id',
+        path: 'edit-profile/:type',
         loadChildren: (): any => import('../edit-profile-field/edit-profile-field.module')
                       .then((mod: any) => mod.EditProfileFieldModule)
       },
