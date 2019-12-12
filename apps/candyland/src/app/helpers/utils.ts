@@ -3,7 +3,6 @@ import _transform from 'lodash.transform';
 import _isEmpty from 'lodash.isempty';
 
 // tslint:disable
-
 export default class Utils {
 
   static convertArrToObj(arr: any, propKey: string): { [key: string]: any } {
@@ -19,6 +18,17 @@ export default class Utils {
     });
   }
 
+  static replaceAt(array: any[], index: number, value: any): any[] {
+    const ret = array.slice(0);
+    ret[index] = value;
+    return ret;
+  }
+
+  static updateAtArray(array: any[], current: number, updated: any): any[] {
+    const index = array.findIndex(item => Utils.isEqual(item, current));
+    return Utils.replaceAt(array, index, updated);
+  }
+
   static filterUniq(arr: any[]): any[] {
     return arr.filter((item, pos, array) => array.indexOf(item) === pos);
   }
@@ -27,6 +37,14 @@ export default class Utils {
     return Object.keys(obj)
       .filter(key => predicate(obj[key]))
       .reduce((res, key) => (res[key] = obj[key], res), {});
+  }
+
+  static uniqValuesMap(arr: any[], field: string = null): { [value: string]: number } {
+    return arr.reduce((acc, item) => {
+      const value = field ? item[field] : item;
+      acc[value] = acc[value] === undefined ? 1 : acc[value] += 1;
+      return acc;
+    }, {});
   }
 
   static nestedObjectAssign(target, ...sources) {
@@ -129,7 +147,6 @@ export default class Utils {
       return map;
     }, {});
   }
-
 
   static getChanges(changedObject, base) {
     return _transform(changedObject, (result, value, key) => {

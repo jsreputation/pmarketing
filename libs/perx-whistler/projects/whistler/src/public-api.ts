@@ -16,7 +16,7 @@ export {
 export { IWRewardDisplayProperties, IWProperties, IWAttbsObjEntity } from './lib/whistler.models';
 
 export { IWVoucherStatsApi } from './lib/voucher/stats';
-export { IWVouchersApi } from './lib/voucher/vouchers-api';
+export { IWVouchersApi, WCodeType, WStatus } from './lib/voucher/vouchers-api';
 export {
   WAssignedStatus,
   IWAssignedAttributes,
@@ -75,7 +75,12 @@ export {
   IWLoyaltyAttributes,
   IWBasicTierAttributes,
   IWCustomTierAttributes,
-  IWJoinMethod
+  IWJoinMethod,
+  IWLoyaltyRuleSetAttributes,
+  IWLoyaltyRuleAttributes,
+  IWLoyaltyRuleConditionValueType,
+  IWLoyaltyRuleConditionSign,
+  IWLoyaltyRuleConditionAttributes
 } from './lib/loyalty/loyalty';
 
 export {

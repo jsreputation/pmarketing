@@ -1,3 +1,4 @@
+export { FeedItemPopupComponent } from './lib/feed-item-popup/feed-item-popup.component';
 export { LoadingComponent } from './lib/loading/loading.component';
 export { PerxBlackcombPagesModule } from './lib/perx-blackcomb-pages.module';
 export { AccountComponent } from './lib/account/account.component';
@@ -30,3 +31,4 @@ export { ProfileComponent } from './lib/profile/profile.component';
 export { TransactionHistoryComponent } from './lib/transaction-history/transaction-history.component';
 export { ChangePasswordComponent } from './lib/change-password/change-password.component';
 export { EnterPinComponent } from './lib/enter-pin/enter-pin.component';
+export { RewardsBookingComponent } from './lib/rewards-booking/rewards-booking.component';
