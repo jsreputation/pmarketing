@@ -64,6 +64,7 @@ export class MetaCardComponent implements OnChanges, OnDestroy {
 
   private loadData(): void {
     this.showLoading = true;
+    this.showReload = false;
     this.cancelCurrentRequest();
     this.currentRequest = this.dataService.getData(this.id, this.parameters)
       .pipe(takeUntil(this.destroy$))
@@ -73,7 +74,11 @@ export class MetaCardComponent implements OnChanges, OnDestroy {
           this.showLoading = false;
           this.cd.detectChanges();
         },
-        () => this.showReload = true,
+        () => {
+          this.showLoading = false;
+          this.showReload = true;
+          this.cd.detectChanges();
+        }
       );
   }
 
