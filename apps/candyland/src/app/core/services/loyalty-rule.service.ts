@@ -45,17 +45,17 @@ export class LoyaltyRuleService {
     );
   }
 
-  public createRuleSet(data: any, basicTierId: string): Observable<ILoyaltyRuleSet> {
-    const sendData: any = LoyaltyRuleHttpAdapter.transformFromRuleSetForm(data, basicTierId);
+  public createRuleSet(typeTier: string, tierId: string): Observable<ILoyaltyRuleSet> {
+    const sendData: any = LoyaltyRuleHttpAdapter.transformFromRuleSetFormCreate(typeTier, tierId);
     return this.rulesHttpService.createRuleSet({data: sendData}).pipe(
       map((response: IJsonApiPayload<IWLoyaltyRuleSetAttributes>) => LoyaltyRuleHttpAdapter.transformToRuleSetForm(response.data))
     );
   }
 
-  public updateRuleSet(RuleSetId: string, typeTier: string, basicTierId: string): Observable<IJsonApiPayload<IWLoyaltyRuleSetAttributes>> {
-    const sendData: any = LoyaltyRuleHttpAdapter.transformFromRuleSetForm(typeTier, basicTierId);
-    sendData.id = RuleSetId;
-    return this.rulesHttpService.updateRuleSet(RuleSetId, {data: sendData});
+  public updateRuleSet(ruleSet: ILoyaltyRuleSet): Observable<IJsonApiPayload<IWLoyaltyRuleSetAttributes>> {
+    const sendData: any = LoyaltyRuleHttpAdapter.transformFromRuleSetFormUpdate(ruleSet);
+    console.log('sendData', sendData);
+    return this.rulesHttpService.updateRuleSet(ruleSet.id, {data: sendData});
   }
 
   public deleteRuleSet(id: string): Observable<IJsonApiPayload<void>> {

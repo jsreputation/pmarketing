@@ -5,12 +5,10 @@ import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.
 import { concatMap, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { from, Observable, Subject } from 'rxjs';
 import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
-
-import { StatusLabelConfig } from '@cl-shared';
-import { ConfigService } from '@cl-core-services';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 import { ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
+import { LoyaltyConfigService } from '../../services/loyalty-config.service';
 
 @Component({
   selector: 'cl-loyalty-review-page',
@@ -24,7 +22,7 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
   public customTierDataSource: CustomDataSource<ICustomTireForm>;
   public basicTierRuleSet: ILoyaltyRuleSet;
   public customTierRuleSetMap: { [id: string]: ILoyaltyRuleSet } = {};
-  public statusLabel: { [key: string]: StatusLabelConfig };
+  public config: { [key: string]: any };
   protected destroy$: Subject<void> = new Subject();
 
   constructor(
@@ -32,7 +30,7 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
     private customTierService: LoyaltyCustomTierService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private configService: ConfigService,
+    private configService: LoyaltyConfigService,
     private loyaltyService: LoyaltyService,
     private ruleService: LoyaltyRuleService,
   ) {
@@ -120,10 +118,10 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
   }
 
   private initStatusesLabel(): void {
-    this.configService.prepareStatusesLabel()
+    this.configService.getLoyaltyViewConfig()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((statuses) => {
-        this.statusLabel = statuses;
+      .subscribe((config) => {
+        this.config = config;
       });
   }
 }

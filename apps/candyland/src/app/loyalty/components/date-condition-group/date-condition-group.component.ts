@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { DateTimeParser } from '@cl-helpers/date-time-parser';
 
 @Component({
   selector: 'cl-date-condition-group',
@@ -9,4 +10,8 @@ import { FormGroup } from '@angular/forms';
 export class DateConditionGroupComponent {
   @Input() public group: FormGroup;
   @Input() public config: any;
+
+  public get minDate(): Date {
+    return DateTimeParser.getNextDay();
+  }
 }

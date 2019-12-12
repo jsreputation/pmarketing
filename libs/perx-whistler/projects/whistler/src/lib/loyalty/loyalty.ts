@@ -55,6 +55,7 @@ export interface IWLoyaltyRuleSetAttributes {
   domain_id: string;
   domain_type?: string;
   match_type: string;
+  rules?: {id: string; priority: number}[];
 }
 
 export interface IWLoyaltyRuleAttributes {

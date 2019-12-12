@@ -23,8 +23,9 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<TierSetupPopupComponent>,
     private customTierFormsService: LoyaltyCustomTierFormsService,
     private customTierService: LoyaltyCustomTierService,
-    @Inject(MAT_DIALOG_DATA) public data: { basicTierId: string, tier: ICustomTireForm | null }
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: { basicTierId: string, tier: ICustomTireForm | null, config: any }
+  ) {
+  }
 
   public get pointsThreshold(): AbstractControl {
     return this.form.get('joinMethod.pointsThreshold') || null;
@@ -102,12 +103,12 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$),
     ).subscribe((value: boolean) => {
       if (value) {
-        this.points.enable({ onlySelf: true, emitEvent: false });
+        this.points.enable({onlySelf: true, emitEvent: false});
       } else {
-        this.points.reset(null, { onlySelf: true, emitEvent: false });
-        this.points.disable({ onlySelf: true, emitEvent: false });
+        this.points.reset(null, {onlySelf: true, emitEvent: false});
+        this.points.disable({onlySelf: true, emitEvent: false});
       }
-      this.points.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+      this.points.updateValueAndValidity({onlySelf: true, emitEvent: false});
     });
   }
 }

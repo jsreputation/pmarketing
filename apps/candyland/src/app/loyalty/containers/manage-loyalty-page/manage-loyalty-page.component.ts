@@ -8,8 +8,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { LoyaltyStepForm } from '../../models/loyalty-step-form.enum';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from '@cl-core/services/user.service';
-import { BehaviorSubject, concat, from, Observable, of, Subject } from 'rxjs';
-import { AudiencesService, ConfigService, SettingsService } from '@cl-core-services';
+import { BehaviorSubject, combineLatest, concat, from, Observable, of, Subject } from 'rxjs';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -18,12 +17,12 @@ import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.
 import Utils from '@cl-helpers/utils';
 import { StatusLabel } from '@cl-helpers/status-label.enum';
 import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { IWBasicTierAttributes, IWPools } from '@perx/whistler';
+import { IWBasicTierAttributes } from '@perx/whistler';
 import { RuleSetupPopupComponent } from '../rule-setup-popup/rule-setup-popup.component';
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
-import { StatusLabelConfig } from '@cl-shared/components/status-label/status-label.component';
 import { ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
+import { LoyaltyConfigService } from '../../services/loyalty-config.service';
 
 @Component({
   selector: 'cl-manage-loyalty-page',
@@ -38,40 +37,20 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   public loyaltyId: string;
   public basicTierId: string;
   public form: FormGroup;
+  public prevFormValue: ILoyaltyForm;
   public stepProgress: number = null;
   private stepProgress$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  public customTierDataSource: CustomDataSource<ICustomTireForm>;
   public basicTierRuleSet: ILoyaltyRuleSet;
-  public customTierRuleSetMap: {[id: string]: ILoyaltyRuleSet} = {};
+  public customTierDataSource: CustomDataSource<ICustomTireForm>;
+  public customTierRuleSetMap: { [id: string]: ILoyaltyRuleSet } = {};
+  public manageConfig: any;
+  public ruleSetupDialogConfig: any;
+  public viewConfig: any;
   public ruleLoader: boolean = false;
-  public pools: IWPools;
   public isEditPage: boolean = false;
   public showDraftButton: boolean = true;
-  public prevFormValue: ILoyaltyForm;
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
-  public statusLabel: { [key: string]: StatusLabelConfig };
-  private currencyList: Currency[];
-  private ruleOperators: OptionConfig[] = [
-    {value: 'equal', title: '='},
-    {value: 'unequal', title: '≠'},
-    {value: 'less', title: '<'},
-    {value: 'greater', title: '>'},
-    {value: 'less_or_equal', title: '≤'},
-    {value: 'greater_or_equal', title: '≥'},
-  ];
-  private transactionType: OptionConfig[] = [
-    {value: 'prepaid', title: 'LOYALTY_FEATURE.TRANSACTION_TYPE.PREPAID'},
-    {value: 'cod', title: 'LOYALTY_FEATURE.TRANSACTION_TYPE.COD'},
-    {value: 'store', title: 'LOYALTY_FEATURE.TRANSACTION_TYPE.STORE'},
-  ];
-  private conditionType: { value: string, title: string, limit?: number }[] = [
-    {value: 'transaction', title: 'LOYALTY_FEATURE.CONDITION_TYPE.TRANSACTION', limit: 2},
-    {value: 'amount', title: 'LOYALTY_FEATURE.CONDITION_TYPE.AMOUNT', limit: 1},
-    {value: 'currency', title: 'LOYALTY_FEATURE.CONDITION_TYPE.CURRENCY', limit: 1},
-    {value: 'fromDate', title: 'LOYALTY_FEATURE.CONDITION_TYPE.FROM_DATE', limit: 1},
-    {value: 'toDate', title: 'LOYALTY_FEATURE.CONDITION_TYPE.TO_DATE', limit: 1},
-  ];
   protected destroy$: Subject<void> = new Subject();
 
   public get stepOne(): FormGroup {
@@ -103,14 +82,12 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private configService: ConfigService,
     private loyaltyFormsService: LoyaltyFormsService,
     private loyaltyService: LoyaltyService,
     private ruleService: LoyaltyRuleService,
-    private settingsService: SettingsService,
     private customTierService: LoyaltyCustomTierService,
+    private configService: LoyaltyConfigService,
     private userService: UserService,
-    private audiencesService: AudiencesService,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -119,8 +96,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.initPools();
-    this.initStatusesLabel();
+    this.initConfigs();
     this.initForm();
     this.handleRouteParams()
       .subscribe(
@@ -138,7 +114,6 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
             this.initCustomTiersDataSource();
             break;
           case 2:
-            this.initCurrencyList();
             this.initAllRuleSet();
             break;
         }
@@ -152,54 +127,36 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public clickGoNext(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
-    if (this.isNotChangedFormValue()) {
-      this.goNext();
-      return;
-    }
-
-    this.getLoyaltyWithBasicTierRequest()
-      .subscribe(() => {
-        this.prevFormValue = this.form.value; // save current form value for checking changes in next step
-        this.goNext();
-      });
-  }
-
-  private goNext(): void {
-    this.stepper.selected.completed = true;   // complete the current step
-    this.stepper.next();                      // move to next step
-    this.updateStepProgress();
-  }
-
-  private updateStepProgress(): void {
-    if (this.currentStep > this.stepProgress$.value) {
-      this.stepProgress$.next(this.currentStep);
-    }
-  }
-
-  public saveAsDraft(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
-    if (this.isNotChangedFormValue()) {
+  // events
+  public clickCancel(): void {
+    if (!this.loyaltyId) {
       this.navigateToList();
       return;
     }
 
-    this.getLoyaltyWithBasicTierRequest()
-      .subscribe(() => {
-        this.navigateToList();
+    this.loyaltyService.deleteLoyalty(this.loyaltyId)
+      .subscribe(() => this.navigateToList());
+  }
+
+  public clickGoNext(): void {
+    this.getSaveByStep(this.currentStep)
+      .subscribe((isUpdated: boolean) => {
+        if (isUpdated) {
+          this.goNext();
+        }
       });
   }
 
-  public launch(): void {
+  public clickSaveAsDraft(): void {
+    this.getSaveByStep(this.currentStep)
+      .subscribe((isUpdated: boolean) => {
+        if (isUpdated) {
+          this.navigateToList();
+        }
+      });
+  }
+
+  public clickLaunch(): void {
     const currentStatus = this.form.get('status').value;
     if (currentStatus && currentStatus !== StatusLabel.DRAFT) {
       this.navigateToList();
@@ -212,22 +169,11 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  public cancel(): void {
-    if (!this.loyaltyId) {
-      this.navigateToList();
-      return;
-    }
-
-    this.loyaltyService.deleteLoyalty(this.loyaltyId)
-      .subscribe(() => this.navigateToList());
-
+  public clickBack(): void {
+    this.navigateToList();
   }
 
-  public navigateToList(): void {
-    this.router.navigate(['/loyalty']);
-  }
-
-  public handleLoyaltyActions(data: { action: NewLoyaltyActions, data?: ICustomTireForm }): void {
+  public handleLoyaltyActions(data: { action: NewLoyaltyActions, data?: any }): void {
     switch (data.action) {
       case NewLoyaltyActions.createTier:
         this.createCustomTire();
@@ -250,11 +196,182 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
       case NewLoyaltyActions.dropRule:
         this.dropRule(data.data);
         break;
+      case NewLoyaltyActions.updateRuleSetMatchType:
+        this.updateRuleSetMatchType(data.data);
+        break;
     }
   }
 
+  private getSaveByStep(currentStep: number): Observable<boolean> {
+    switch (currentStep) {
+      case 0:
+        return this.getSaveOnFirstStep();
+      case 1:
+        return this.getSaveOnSecondStep();
+      case 2:
+        return this.getSaveOnThirdStep();
+    }
+  }
+
+  private getSaveOnFirstStep(): Observable<boolean> {
+    if (this.name.invalid || this.stepOne.invalid) {
+      this.name.markAsTouched();
+      this.stepOne.markAllAsTouched();
+      return of(false);
+    }
+
+    if (this.isNotChangedFormValue()) {
+      return of(true);
+    }
+
+    return this.getLoyaltyWithBasicTierRequest()
+      .pipe(
+        tap(() => this.prevFormValue = this.form.value), // save current form value for checking changes in next step
+        map(response => !!response)
+      );
+  }
+
+  private getSaveOnSecondStep(): Observable<boolean> {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return of(false);
+    }
+
+    if (this.isNotChangedFormValue()) {
+      return of(true);
+    }
+
+    this.getLoyaltyWithBasicTierRequest().pipe(
+      tap(() => this.prevFormValue = this.form.value), // save current form value for checking changes in next step
+      map(response => !!response)
+    );
+  }
+
+  private getSaveOnThirdStep(): Observable<boolean> {
+    const ruleSets = [this.basicTierRuleSet, ...Utils.convertObjToArr(this.customTierRuleSetMap)];
+    const ruleSetRequests = [];
+    ruleSets.forEach((ruleSet: ILoyaltyRuleSet) =>
+      ruleSetRequests.push(this.ruleService.updateRuleSet(ruleSet))
+    );
+    console.log(ruleSetRequests);
+    return combineLatest(ruleSetRequests)
+      .pipe(
+        tap(res => console.log('res', res)),
+        map(response => !!response),
+        takeUntil(this.destroy$)
+      );
+  }
+
+  private goNext(): void {
+    this.stepper.selected.completed = true;   // complete the current step
+    this.stepper.next();                      // move to next step
+    // this.stepper.selectionChange.subscribe();
+    this.updateStepProgress();
+  }
+
+  private updateStepProgress(): void {
+    if (this.currentStep > this.stepProgress$.value) {
+      this.stepProgress$.next(this.currentStep);
+    }
+  }
+
+  private navigateToList(): void {
+    this.router.navigate(['/loyalty']);
+  }
+
+  private handleRouteParams(): Observable<ILoyaltyForm | null> {
+    return this.route.paramMap
+      .pipe(
+        map((params: ParamMap) => params.get('id')),
+        switchMap(id => {
+          if (id) {
+            return this.loyaltyService.getLoyalty(id);
+          }
+          return of(null);
+        }),
+        takeUntil(this.destroy$)
+      );
+  }
+
+  // loyalty and basic tier
   private initForm(): void {
     this.form = this.loyaltyFormsService.getFormLoyalty();
+  }
+
+  private getLoyaltyWithBasicTierRequest(): Observable<IJsonApiPayload<IWBasicTierAttributes>> {
+    const newLoyalty = this.form.value;
+    return this.loyaltyService.getLoyaltyRequest(newLoyalty, this.loyaltyId)
+      .pipe(
+        tap(loyalty => {
+          this.loyaltyId = loyalty.id;
+          this.form.get('createdAt').patchValue(loyalty.createdAt);
+        }),
+        switchMap(() => this.loyaltyService.getBasicTierRequest(newLoyalty, this.loyaltyId, this.basicTierId)),
+        filter(Boolean),
+        tap(basicTier => this.setBasicTierId(basicTier.data.id)),
+        takeUntil(this.destroy$)
+      );
+  }
+
+  private setBasicTierId(basicTierId: string): void {
+    if (basicTierId && basicTierId !== this.basicTierId) {
+      this.basicTierId = basicTierId;
+      // this.setBasicTierIdToCustomTiersDataSourceFilter(this.loyaltyId);
+    }
+  }
+
+  private initLoyaltyData(loyalty: ILoyaltyForm): void {
+    if (loyalty) {
+      this.loyaltyId = loyalty.id;
+      this.setBasicTierId(loyalty.basicTierId);
+      this.form.patchValue(loyalty);
+      this.prevFormValue = this.form.value;
+    } else {
+      this.form.patchValue(this.getDefaultValue());
+    }
+    this.isEditPage = !!this.loyaltyId;
+    this.showDraftButton = !loyalty || loyalty.status === StatusLabel.DRAFT;
+    this.stepProgress$.next(0);
+  }
+
+  private getDefaultValue(): ILoyaltyForm {
+    return this.loyaltyFormsService.getDefaultValueForm();
+  }
+
+  private isNotChangedFormValue(): boolean {
+    return Utils.isEqual(this.form.value, this.prevFormValue);
+  }
+
+  // custom tiers
+  private initCustomTiersDataSource(): void {
+    if (!this.customTierDataSource) {
+      this.customTierDataSource = new CustomDataSource<ICustomTireForm>(
+        this.customTierService,
+        20,
+        {'filter[program_id]': this.loyaltyId});
+    }
+  }
+
+  private updateCustomTiersDataSource(): void {
+    this.customTierDataSource.updateData();
+    // this.customTiersCount.patchValue(this.customTierDataSource.length || 0);
+  }
+
+  private createCustomTierRuleSet(id: string): Observable<ILoyaltyRuleSet> {
+    this.ruleLoader = true;
+    return this.ruleService.createRuleSet('Perx::Loyalty::CustomTier', id)
+      .pipe(
+        tap(ruleSet => this.customTierRuleSetMap[id] = ruleSet),
+        filter(Boolean),
+        finalize(() => this.ruleLoader = false)
+      );
+  }
+
+  private getCustomTierRuleSet(id: string): Observable<ILoyaltyRuleSet> {
+    return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::CustomTier', id)
+      .pipe(
+        tap(ruleSet => this.customTierRuleSetMap[id] = ruleSet),
+      );
   }
 
   private getRefDialogSetupTier(data: ICustomTireForm = null): Observable<MatDialogRef<TierSetupPopupComponent>> {
@@ -262,7 +379,8 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
       panelClass: 'tier-setup-dialog',
       data: {
         basicTierId: this.basicTierId,
-        tier: data
+        tier: data,
+        config: this.manageConfig
       }
     });
 
@@ -289,11 +407,6 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  private updateCustomTiersDataSource(): void {
-    this.customTierDataSource.updateData();
-    // this.customTiersCount.patchValue(this.customTierDataSource.length || 0);
-  }
-
   private editCustomTire(data: ICustomTireForm): void {
     this.getRefDialogSetupTier(data)
       .pipe(takeUntil(this.destroy$))
@@ -317,26 +430,50 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  private initCustomTiersDataSource(): void {
-    if (!this.customTierDataSource) {
-      this.customTierDataSource = new CustomDataSource<ICustomTireForm>(
-        this.customTierService,
-        20,
-        {'filter[program_id]': this.loyaltyId});
-    }
+  // Rule Sets
+  private getBasicTierRuleSet(): Observable<ILoyaltyRuleSet> {
+    return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', this.basicTierId)
+      .pipe(
+        tap(ruleSet => this.basicTierRuleSet = ruleSet),
+        takeUntil(this.destroy$)
+      );
   }
 
+  private getAllCustomTierRuleSet(): Observable<ILoyaltyRuleSet> {
+    const customTierIds = this.customTierDataSource.data.map(item => item.id);
+    return from(customTierIds).pipe(
+      concatMap(id => this.getCustomTierRuleSet(id)),
+    );
+  }
+
+  private initAllRuleSet(): void {
+    this.ruleLoader = true;
+    concat(this.getBasicTierRuleSet(), this.getAllCustomTierRuleSet())
+      .pipe(
+        filter(Boolean),
+        tap(() => this.cd.detectChanges()),
+        last(),
+        finalize(() => this.ruleLoader = false),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        () => {
+        },
+        (error: Error) => console.warn(error.message)
+      );
+  }
+
+  private updateRuleSetMatchType(data: { ruleSet: ILoyaltyRuleSet, value: string }): void {
+    data.ruleSet.matchType = data.value;
+  }
+
+  // rules
   private getRefDialogSetupRule(data: any = null): Observable<MatDialogRef<RuleSetupPopupComponent>> {
     const dialogRef: MatDialogRef<RuleSetupPopupComponent> = this.dialog.open(RuleSetupPopupComponent, {
       panelClass: 'tier-setup-dialog',
       data: {
         ...data,
-        config: {
-          conditionType: this.conditionType,
-          currencyList: this.currencyList,
-          ruleOperators: this.ruleOperators,
-          transactionType: this.transactionType
-        }
+        config: this.ruleSetupDialogConfig
       }
     });
 
@@ -388,132 +525,21 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     data.ruleSet.rules = newRules;
   }
 
-  private initPools(): void {
-    this.audiencesService.getAudiencesList()
+  // config
+  private initConfigs(): void {
+    combineLatest([
+      this.configService.getLoyaltyManageConfig(),
+      this.configService.getLoyaltySetupRuleConfig(),
+      this.configService.getLoyaltyViewConfig()
+    ])
       .pipe(takeUntil(this.destroy$))
-      .subscribe((data: IWPools) => {
-        this.pools = data;
+      .subscribe(([manageConfig, setupRuleConfig, viewConfig]) => {
+        this.manageConfig = manageConfig;
+        this.ruleSetupDialogConfig = setupRuleConfig;
+        this.viewConfig = viewConfig;
       });
-  }
+    {
 
-  private getLoyaltyWithBasicTierRequest(): Observable<IJsonApiPayload<IWBasicTierAttributes>> {
-    const newLoyalty = this.form.value;
-    return this.loyaltyService.getLoyaltyRequest(newLoyalty, this.loyaltyId)
-      .pipe(
-        tap(loyalty => {
-          this.loyaltyId = loyalty.id;
-          this.form.get('createdAt').patchValue(loyalty.createdAt);
-        }),
-        switchMap(() => this.loyaltyService.getBasicTierRequest(newLoyalty, this.loyaltyId, this.basicTierId)),
-        filter(Boolean),
-        tap(basicTier => this.setBasicTierId(basicTier.data.id)),
-        filter(Boolean),
-        takeUntil(this.destroy$)
-      );
-  }
-
-  private setBasicTierId(basicTierId: string): void {
-    if (basicTierId && basicTierId !== this.basicTierId) {
-      this.basicTierId = basicTierId;
-      // this.setBasicTierIdToCustomTiersDataSourceFilter(this.loyaltyId);
     }
-  }
-
-  private handleRouteParams(): Observable<ILoyaltyForm | null> {
-    return this.route.paramMap
-      .pipe(
-        map((params: ParamMap) => params.get('id')),
-        switchMap(id => {
-          if (id) {
-            return this.loyaltyService.getLoyalty(id);
-          }
-          return of(null);
-        }),
-        takeUntil(this.destroy$)
-      );
-  }
-
-  private initLoyaltyData(loyalty: ILoyaltyForm): void {
-    if (loyalty) {
-      this.loyaltyId = loyalty.id;
-      this.setBasicTierId(loyalty.basicTierId);
-      this.form.patchValue(loyalty);
-      this.prevFormValue = this.form.value;
-    } else {
-      this.form.patchValue(this.getDefaultValue());
-    }
-    this.isEditPage = !!this.loyaltyId;
-    this.showDraftButton = !loyalty || loyalty.status === StatusLabel.DRAFT;
-  }
-
-  private getDefaultValue(): ILoyaltyForm {
-    return this.loyaltyFormsService.getDefaultValueForm();
-  }
-
-  private isNotChangedFormValue(): boolean {
-    return Utils.isEqual(this.form.value, this.prevFormValue);
-  }
-
-  private getBasicTierRuleSet(): Observable<any> {
-    return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', this.basicTierId)
-      .pipe(
-        tap(ruleSet => this.basicTierRuleSet = ruleSet),
-        takeUntil(this.destroy$)
-      );
-  }
-
-  private createCustomTierRuleSet(id: string): Observable<any> {
-    this.ruleLoader = true;
-    return this.ruleService.createRuleSet('Perx::Loyalty::CustomTier', id)
-      .pipe(
-        tap(ruleSet => this.customTierRuleSetMap[id] = ruleSet),
-        filter(Boolean),
-        finalize(() => this.ruleLoader = false)
-      );
-  }
-
-  private getCustomTierRuleSet(id: string): Observable<any> {
-    return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::CustomTier', id)
-      .pipe(
-        tap(ruleSet => this.customTierRuleSetMap[id] = ruleSet),
-      );
-  }
-
-  private getAllCustomTierRuleSet(): Observable<any> {
-    const customTierIds = this.customTierDataSource.data.map(item => item.id);
-    return from(customTierIds).pipe(
-      concatMap(id => this.getCustomTierRuleSet(id)),
-    );
-  }
-
-  private initAllRuleSet(): void {
-    this.ruleLoader = true;
-    concat(this.getBasicTierRuleSet(), this.getAllCustomTierRuleSet())
-      .pipe(
-        filter(Boolean),
-        tap(() => this.cd.detectChanges()),
-        last(),
-        finalize(() => this.ruleLoader = false),
-        takeUntil(this.destroy$)
-      )
-      .subscribe(
-        () => {
-        },
-        (error: Error) => console.warn(error.message)
-      );
-  }
-
-  private initStatusesLabel(): void {
-    this.configService.prepareStatusesLabel()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((statuses) => {
-        this.statusLabel = statuses;
-      });
-  }
-
-  private initCurrencyList(): void {
-    this.settingsService.getCurrency()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(currencyList => this.currencyList = currencyList);
   }
 }

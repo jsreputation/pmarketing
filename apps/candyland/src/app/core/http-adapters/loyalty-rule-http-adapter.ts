@@ -19,7 +19,7 @@ export class LoyaltyRuleHttpAdapter {
     };
   }
 
-  public static transformFromRuleSetForm(typeTier: string, tierId: string): IJsonApiItem<IWLoyaltyRuleSetAttributes> {
+  public static transformFromRuleSetFormCreate(typeTier: string, tierId: string): IJsonApiItem<IWLoyaltyRuleSetAttributes> {
     return {
       type: 'rule_sets',
       attributes: {
@@ -27,6 +27,26 @@ export class LoyaltyRuleHttpAdapter {
         domain_id: tierId,
         match_type: 'match_all'
       }
+    };
+  }
+
+  public static transformFromRuleSetFormUpdate(ruleSet: ILoyaltyRuleSet): IJsonApiItem<IWLoyaltyRuleSetAttributes> {
+    return {
+      type: 'rule_sets',
+      id: ruleSet.id,
+      attributes: {
+        domain_type: ruleSet.tierType,
+        domain_id: ruleSet.tierId,
+        match_type: ruleSet.matchType,
+        rules: ruleSet.rules.map(rule => LoyaltyRuleHttpAdapter.transformRuleForRuleSetUpdate(rule))
+      }
+    };
+  }
+
+  public static transformRuleForRuleSetUpdate(rule: ILoyaltyRule): {id: string, priority: number } {
+    return {
+      id: rule.id,
+      priority: rule.priority
     };
   }
 
