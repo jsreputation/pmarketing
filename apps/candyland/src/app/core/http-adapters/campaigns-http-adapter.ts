@@ -37,8 +37,8 @@ export class CampaignsHttpAdapter {
       id: data.id,
       name: data.attributes.name,
       status: data.attributes.status,
-      begin: CampaignsHttpAdapter.stringToDate(data.attributes.start_date_time),
-      end: CampaignsHttpAdapter.stringToDate(data.attributes.end_date_time),
+      begin: DateTimeParser.stringToDate(data.attributes.start_date_time),
+      end: DateTimeParser.stringToDate(data.attributes.end_date_time),
       audience,
       goal: data.attributes.goal,
       engagementType: eType
