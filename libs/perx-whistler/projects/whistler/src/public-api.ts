@@ -45,7 +45,7 @@ export {
   IWCommTemplateAttributes,
   IWCommEventAttributes
 } from './lib/comm/comm';
-export { IWCampaignAttributes, IWCampaignDisplayProperties, IWCampaignIncludedPoolAttributes, WInformationCollectionSettingType } from './lib/campaign/campaign';
+export { IWCampaignAttributes, IWCampaignDisplayProperties, WInformationCollectionSettingType } from './lib/campaign/campaign';
 export {
   IWAudiences,
   IWPools,
