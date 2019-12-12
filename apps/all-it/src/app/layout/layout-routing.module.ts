@@ -9,7 +9,8 @@ import {
   ContentComponent,
   RewardDetailsComponent,
   LayoutComponent,
-  SignInComponent
+  SignInComponent,
+  RewardsBookingComponent
 } from '@perx/blackcomb-pages';
 import { WalletGuard } from '../wallet.guard';
 
@@ -64,6 +65,7 @@ const routes: Routes = [
                       .then((mod: any) => mod.ChangePasswordModule)
       },
       { path: 'reward-detail/:id', component: RewardDetailsComponent },
+      { path: 'booking/:id', component: RewardsBookingComponent },
       { path: 'c/:key', component: ContentComponent },
     ]
   }

@@ -75,7 +75,12 @@ export {
   IWLoyaltyAttributes,
   IWBasicTierAttributes,
   IWCustomTierAttributes,
-  IWJoinMethod
+  IWJoinMethod,
+  IWLoyaltyRuleSetAttributes,
+  IWLoyaltyRuleAttributes,
+  IWLoyaltyRuleConditionValueType,
+  IWLoyaltyRuleConditionSign,
+  IWLoyaltyRuleConditionAttributes
 } from './lib/loyalty/loyalty';
 
 export {
