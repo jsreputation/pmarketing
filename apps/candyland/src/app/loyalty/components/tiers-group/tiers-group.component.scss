@@ -1,0 +1,14 @@
+@import "variables";
+
+.no-record-cell {
+  height: 12rem;
+  text-align: center !important;
+  vertical-align: middle !important;
+  font-size: 1.4rem;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.21;
+  letter-spacing: normal;
+  color: rgba($secondary-font-color, 0.5);
+}

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DatePickerComponent } from './date-picker.component';
-// tslint:disable
+// tslint:disable-next-line
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';

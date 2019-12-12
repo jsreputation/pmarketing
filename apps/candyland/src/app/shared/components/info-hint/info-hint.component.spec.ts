@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InfoHintComponent } from './info-hint.component';
 import { MatIconModule } from '@angular/material';
-// tslint:disable
+// tslint:disable-next-line
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('InfoHintComponent', () => {
