@@ -90,4 +90,8 @@ export class AuthService {
   public resetPassword(accountId: string, username: string): Observable<any> {
     return this.http.resetPassword(accountId, username);
   }
+
+  public changePassword(password: string, token: string): Observable<void> {
+    return this.http.changePassword(password, token);
+  }
 }
