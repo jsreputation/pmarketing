@@ -17,6 +17,7 @@ import { AccountComponent } from '../account/account.component';
 import { WalletComponent } from '../wallet/wallet.component';
 import { WalletHistoryComponent } from '../wallet-history/wallet-history.component';
 import { ProfileComponent } from '../profile/profile.component';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'perx-blackcomb-games-layout',
@@ -37,6 +38,7 @@ export class LayoutComponent implements OnInit {
     private router: Router,
     private themesService: ThemesService,
     private authService: AuthenticationService,
+    private titleService: Title,
     private cd: ChangeDetectorRef,
     private config: Config,
     private configService: ConfigService,
@@ -48,7 +50,11 @@ export class LayoutComponent implements OnInit {
 
   public ngOnInit(): void {
     this.themesService.getThemeSetting().subscribe(
-      theme => this.theme = theme
+      theme => {
+        this.theme = theme;
+        const title = (theme.properties ? theme.properties['--title'] : undefined) || 'Blackcomb';
+        this.titleService.setTitle(title);
+      }
     );
 
     this.configService.readAppConfig().subscribe(
@@ -109,4 +115,5 @@ export class LayoutComponent implements OnInit {
       this.location.back();
     }
   }
+
 }
