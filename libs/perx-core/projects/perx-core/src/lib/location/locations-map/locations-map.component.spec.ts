@@ -7,7 +7,7 @@ import { GeoLocationService } from '../geolocation.service';
 import { Type } from '@angular/core';
 
 const coords = {
-  timestamp: 1333,
+  timestamp: 113,
   coords: {
     latitude: 20,
     longitude: 30,
@@ -45,36 +45,25 @@ describe('LocationsMapComponent', () => {
     fixture.detectChanges();
     tick();
   }));
-  beforeEach(fakeAsync(() => {
+
+  it('updateLocations', fakeAsync(() => {
     spyOn(geolocation, 'positions').and.returnValue(of(
       coords
     ));
     component.userLocation = new Subject();
     component.locations = of([{ name: 'test', latitude: 34, longitude: 31 }]);
-    tick(3000);
-  }));
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-  it('updateLocations', fakeAsync(() => {
     component.userLocation.next(coords);
-    tick();
     expect(component.markersArray).toBeTruthy();
+    component.ngOnDestroy();
+    tick();
   }));
 
-  it('gMapUrl', fakeAsync(() => {
+  it('gMapUrl', () => {
     const url = `https://www.google.com/maps/search/?api=1&query=${coords.coords.latitude},${coords.coords.longitude}`;
     expect(component.gMapUrl({
       latitude: coords.coords.latitude,
       longitude: coords.coords.longitude, name: 'test'
     }))
       .toBe(url);
-    tick();
-  }));
-
-  afterAll(fakeAsync(() => {
-    component.ngOnDestroy();
-    tick();
-    fixture.destroy();
-  }));
+  });
 });
