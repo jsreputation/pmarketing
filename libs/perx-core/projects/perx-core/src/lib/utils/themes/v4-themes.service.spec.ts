@@ -18,7 +18,7 @@ describe('ThemesService', () => {
   }));
   beforeEach(() => {
     service = TestBed.get(V4ThemesService);
-  })
+  });
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
@@ -26,10 +26,10 @@ describe('ThemesService', () => {
   it('should get theme setting', fakeAsync(inject([HttpClient], (http: HttpClient) => {
     spyOn(http, 'get').and.returnValue(of(DARK));
     service.getThemeSetting({ sourceType: 'test', baseHref: 'test' } as IConfig)
-      .subscribe((val) => { expect(val).toEqual(DARK) });
+      .subscribe((val) => expect(val).toEqual(DARK));
     tick();
     service.getThemeSetting()
-      .subscribe((val) => { expect(val).toEqual(DARK) });
+      .subscribe((val) => expect(val).toEqual(DARK));
     tick();
   })));
 });

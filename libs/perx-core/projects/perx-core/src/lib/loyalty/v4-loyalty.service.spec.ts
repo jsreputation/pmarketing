@@ -126,7 +126,7 @@ const historyRaw: IV4PointHistory = {
   points_balance_converted_to_currency: 21,
   points_date: '1.1.1',
   properties: 3
-}
+};
 
 const loyaltyRaw: IV4Loyalty = {
   id: 2,
@@ -148,7 +148,7 @@ const loyaltyRaw: IV4Loyalty = {
     points_date: 'test',
     properties: {}
   }]
-}
+};
 describe('LoyaltyService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
@@ -227,14 +227,14 @@ describe('LoyaltyService', () => {
       loyaltyService.getTransactions(1).subscribe(() => { });
       tick();
       spy.and.returnValue(of({ data: loyaltyRaw, meta: { historyMeta: 'test', total_pages: 3 } }));
-      loyaltyService.getAllTransactions().subscribe((val) => { expect(val[0].id).toBe(1) });
+      loyaltyService.getAllTransactions().subscribe((val) => expect(val[0].id).toBe(1));
       tick();
     })));
 
   it('should get transaction history', fakeAsync(inject([V4LoyaltyService, HttpClient],
     (loyaltyService: V4LoyaltyService, http: HttpClient) => {
       spyOn(http, 'get').and.returnValue(of({ data: [transactionRaw] }));
-      loyaltyService.getTransactionHistory().subscribe((val) => { expect(val[0].id) });
+      loyaltyService.getTransactionHistory().subscribe((val) => expect(val[0].id));
       tick();
     })));
 });

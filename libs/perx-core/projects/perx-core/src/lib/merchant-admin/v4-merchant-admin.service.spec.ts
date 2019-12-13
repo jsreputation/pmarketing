@@ -104,7 +104,7 @@ const merchantAdminVoucherRaw: IV4MerchantAdminVoucher = {
   voucher_code: 'test',
   voucher_key: 'test',
   voucher_type: RedemptionType.txtCode
-}
+};
 const profileRaw: IV4MerchantProfile = {
   id: 1,
   email: 'test',
@@ -131,7 +131,7 @@ const profileRaw: IV4MerchantProfile = {
   updated_at: new Date(),
   password_changed_at: new Date(),
   state: 'test'
-}
+};
 
 const reward: IV4Reward = {
   id: 1,
@@ -155,9 +155,9 @@ const reward: IV4Reward = {
   selling_from: 'test',
   merchant_logo_url: 'test',
   display_properties: undefined,
-}
+};
 describe('V4MerchantsService', () => {
-  let service: V4MerchantAdminService
+  let service: V4MerchantAdminService;
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientTestingModule,
@@ -166,7 +166,7 @@ describe('V4MerchantsService', () => {
   }));
   beforeEach(() => {
     service = TestBed.get(V4MerchantAdminService);
-  })
+  });
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
@@ -199,7 +199,7 @@ describe('V4MerchantsService', () => {
 
   it('issueVoucher', fakeAsync(inject([HttpClient], (http: HttpClient) => {
     spyOn(http, 'post').and.returnValue(of({ data: merchantAdminVoucherRaw }));
-    service.issueVoucher(1).subscribe((voucher) => { expect(voucher.id).toBe(1) });
+    service.issueVoucher(1).subscribe((voucher) => expect(voucher.id).toBe(1));
     tick();
   })));
 
@@ -207,7 +207,7 @@ describe('V4MerchantsService', () => {
     spyOn(http, 'get').and.returnValue(of({ data: profileRaw }));
     service.validateInvite('token', 'test').subscribe((val) =>
       expect(val.locationId).toBe(1)
-    )
+    );
     tick();
   })));
 
@@ -222,7 +222,7 @@ describe('V4MerchantsService', () => {
     spyOn(http, 'get').and.returnValue(of({ data: profileRaw }));
     service.getMerchantProfile().subscribe((val) =>
       expect(val.locationId).toBe(1)
-    )
+    );
     tick();
   })));
 });

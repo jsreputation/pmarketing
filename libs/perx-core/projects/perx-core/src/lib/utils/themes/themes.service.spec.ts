@@ -19,13 +19,13 @@ describe('ThemesService', () => {
   }));
   beforeEach(() => {
     service = TestBed.get(ThemesService);
-  })
+  });
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
   it('get avalable themes', () => {
-    expect(service.getAvailableThemes()[0]).toEqual(LIGHT)
+    expect(service.getAvailableThemes()[0]).toEqual(LIGHT);
   });
 
   it('ActiveTheme', fakeAsync(() => {

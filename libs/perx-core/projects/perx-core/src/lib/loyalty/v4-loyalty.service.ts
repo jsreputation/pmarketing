@@ -298,7 +298,6 @@ export class V4LoyaltyService extends LoyaltyService {
             ...res.meta
           };
         }
-        
         return res.data;
       }),
       map((loyalty: IV4Loyalty) => oc(loyalty).points_history([]).map(
