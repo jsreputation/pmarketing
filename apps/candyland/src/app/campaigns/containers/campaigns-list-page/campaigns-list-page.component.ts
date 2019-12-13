@@ -1,19 +1,18 @@
 import { Component, ChangeDetectionStrategy, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import {
   CustomDataSource,
-  DataSourceStates, DataSourceUpdateSchema
+  DataSourceStates,
+  DataSourceUpdateSchema
 } from '@cl-shared/table/data-source/custom-data-source';
-import { CampaignsService, ConfigService, MessageService } from '@cl-core/services';
+import { CampaignsService, ConfigService, CsvReportService } from '@cl-core/services';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { StatusLabelConfig } from '@cl-shared';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-// import { CampaignAction } from '../../model/campaign-action.enum';
 import { CampaignStatus } from '@cl-core/models/campaign/campaign-status.enum';
 import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
-import { DataService } from '@perx/chart';
 
 @Component({
   selector: 'cl-campaigns-list-page',
@@ -34,8 +33,7 @@ export class CampaignsListPageComponent implements OnInit, OnDestroy {
     private snack: MatSnackBar,
     private configService: ConfigService,
     private cd: ChangeDetectorRef,
-    private dataService: DataService,
-    private messageService: MessageService
+    private csvReportService: CsvReportService,
   ) {
     this.dataSource = new CustomDataSource<ICampaignTableData>(this.campaignsService, 5, { include: 'pool' });
   }
@@ -79,11 +77,8 @@ export class CampaignsListPageComponent implements OnInit, OnDestroy {
     if (hasPage) {
       this.router.navigateByUrl(url);
     } else {
-      this.dataService.getReport('campaign_report', { cid: segments[segments.length - 1] })
-        .subscribe(
-          (res: string) => console.log(res),
-          () => this.messageService.show('Could not download report', 'danger')
-        );
+      const campaignId = segments[segments.length - 1];
+      this.csvReportService.downloadReport('campaign_report', { campaign_id: campaignId });
     }
   }
 

@@ -97,7 +97,7 @@ export class DataService {
             .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
             .join('&') : '';
 
-          return this.http.get<string>(`${this.metabasePath}/api/embed/card/${token}/query/${format}?${query}`);
+          return this.http.get(`${this.metabasePath}/api/embed/card/${token}/query/${format}?${query}`, { responseType: 'text' });
         })
       );
   }
