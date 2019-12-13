@@ -17,7 +17,7 @@ import { ImagesPreviewModule } from '@cl-shared/components/images-preview/images
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
-import {SimpleMobileViewModule} from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
+import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 
 import { NewScratchPageComponent } from './new-scratch-page.component';
 
@@ -54,7 +54,7 @@ describe('NewScratchComponent', () => {
         {provide: LocalStorageService, useValue: {}}
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
