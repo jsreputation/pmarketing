@@ -24,6 +24,10 @@ export {
   IWAssignRequestAttributes
 } from './lib/voucher/assigneds';
 export {
+  IWDocumentAttributes,
+  IWDocumentBlob
+} from './lib/storage/documents';
+export {
   IWRewardEntityAttributes,
   IWMetaData,
   IWTierRewardCostsAttributes,
