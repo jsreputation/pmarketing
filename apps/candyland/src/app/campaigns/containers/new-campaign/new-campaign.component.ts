@@ -61,6 +61,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.initTenantSettings();
     this.initForm();
+    this.store.currentCampaign$.subscribe((v) => console.log(v,' value according to currencampaign subscription'));
     this.form.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
@@ -233,13 +234,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const updateOutcomesArr$ = [];
     const oldCampaignListToDelete = data.filter(outcomeData => !slots.includes(outcomeData.outcome.slotNumber));
     const campaignList = data.filter(outcomeData => slots.includes(outcomeData.outcome.slotNumber));
-    const deleteOutcomes$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
-    const updateOutcomes$ = outcomeData =>
+    const deletedOutcome$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
+    const updatedOutcome$ = outcomeData =>
       this.outcomesService.updateOutcome(
         outcomeData,
         campaign.id
       );
-    const createOutcomes$ = outcomeData =>
+    const createdOutcome$ = outcomeData =>
       this.outcomesService.createOutcome(
         outcomeData,
         campaign.id
@@ -247,15 +248,15 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
     campaignList.forEach(outcomeData => {
       if (this.store.currentCampaign.id && outcomeData.outcome.id) {
-        updateOutcomesArr$.push(updateOutcomes$(outcomeData));
+        updateOutcomesArr$.push(updatedOutcome$(outcomeData));
       } else {
-        updateOutcomesArr$.push(createOutcomes$(outcomeData));
+        updateOutcomesArr$.push(createdOutcome$(outcomeData));
       }
     });
     if (oldCampaignListToDelete && oldCampaignListToDelete.length >= 0) {
       oldCampaignListToDelete.forEach(oldReward => {
         if (oldReward.outcome.id) {
-          updateOutcomesArr$.push(deleteOutcomes$(oldReward.outcome.id));
+          updateOutcomesArr$.push(deletedOutcome$(oldReward.outcome.id));
         }
       });
     }

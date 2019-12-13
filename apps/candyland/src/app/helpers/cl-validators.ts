@@ -33,10 +33,10 @@ export class ClValidators extends Validators {
   }
 
   public static rewardSlotted(control: AbstractControl): { [key: string]: boolean } | null {
-    if (!control || !control.value) {
+    if (!control) {
       return null;
     }
-    if (control.value[0] !== control.value[1]) {
+    if (control.value === 0) {
       return {rewardsUnfilledError: true};
     }
     return null;

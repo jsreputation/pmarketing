@@ -36,27 +36,32 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
     // just to get error out , console will nag you that formGroups needs to be inside html
     // html is put but if it is not initalised earlier it says that [formGroup] is not passed a FormGroup
     // will be overwritten on subscription where initForm() is called.
-    this.form1pt1 = this.fb.group({
-      ctrlX: [null]
-    });
+    this.form1pt1 = this.fb.group({});
   }
 
   private initForm(): void {
-    this.form1pt1 = this.fb.group({
-      totalProbability: [null, [ClValidators.sumMoreThan]],
+    this.form1pt1 = this.fb.group({});
+    this.slots.forEach((slotIndex) => {
+      this.form1pt1.addControl(`totalProbability-${slotIndex}`, this.fb.control(0, ClValidators.sumMoreThan));
+      if (this.isSpinEngagement) {
+        this.form1pt1.addControl(`notEmpty-${slotIndex}`, this.fb.control(0, ClValidators.rewardSlotted));
+      }
     });
-    if (this.isSpinEngagement) {
-      this.form1pt1.addControl('slotsNotEmpty', this.fb.control([0, this.slots.length], ClValidators.rewardSlotted));
-    }
     this.stepConditionService.registerStepCondition(1.1, this.form1pt1);
     this.form1pt1.valueChanges.subscribe(
       (values) => {
-        this.sumMoreThanError = values.totalProbability > 100;
+        console.log(values);
         if (this.isSpinEngagement) {
-          this.rewardNotAllPatchedError = values.slotsNotEmpty[0] !== values.slotsNotEmpty[1];
+          let totalNum = 0;
+          let totalSlotted = 0;
+          this.slots.forEach((slotIndex) => {
+            totalNum += values[`totalProbability-${slotIndex}`];
+            totalSlotted += values[`notEmpty-${slotIndex}`];
+          });
+          this.rewardNotAllPatchedError = totalSlotted !== this.slots.length;
+          this.sumMoreThanError = totalNum > 100;
         }
-      }
-    );
+      });
   }
 
   public ngOnInit(): void {
@@ -66,6 +71,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
         const hasTemplate = data && data.template;
         if (hasTemplate) {
           this.slots = this.store.currentCampaign.template.slots || [0];
+          console.log(this.store.currentCampaign$, 'stores current campaign');
           this.campaignEngagementType = data.template.attributes_type;
           this.isSpinEngagement = data.template.game_type === 'spin';
           this.initForm();

@@ -14,5 +14,8 @@
         (clickDelete)="removeOutcome(i)">
       </cl-reward-item>
   </div>
+    <mat-error class="error" *ngIf="sumMoreThanError && !isSpinEngagement">
+      {{'CAMPAIGN.THE_TOTAL_PROBABILITY' | translate}}
+    </mat-error>
   </div>
 </div>

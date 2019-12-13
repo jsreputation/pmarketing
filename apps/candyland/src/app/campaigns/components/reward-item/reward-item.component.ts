@@ -16,8 +16,8 @@ export class RewardItemComponent implements OnInit {
   @Input() public enableProbability: boolean = false;
   @Input() public isInvalid: boolean;
   @Output() private clickDelete: EventEmitter<any> = new EventEmitter<any>();
-  @Output() private updateOutcome: EventEmitter<{ probability: number, limit: number, oldProbability: number }> =
-    new EventEmitter<{ probability: number, limit: number, oldProbability: number }>();
+  @Output() private updateOutcome: EventEmitter<{ probability: number, limit: number }> =
+    new EventEmitter<{ probability: number, limit: number }>();
 
   public group: FormGroup = new FormGroup({
     probability: new FormControl(null, {updateOn: 'blur'}),
@@ -32,8 +32,6 @@ export class RewardItemComponent implements OnInit {
   public get limit(): AbstractControl {
     return this.group.get('limit');
   }
-
-  public oldValueProbability: number;
 
   public get outcome(): IOutcome {
     return this.outcomeData.outcome;
@@ -52,11 +50,6 @@ export class RewardItemComponent implements OnInit {
         this.updateOutcomeData();
       }
     );
-    this.probability.valueChanges.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(
-      () => this.oldValueProbability = this.group.value.probability
-    );
   }
 
   private initForm(): void {
@@ -67,7 +60,6 @@ export class RewardItemComponent implements OnInit {
     const updateData = {
       probability: this.group.get('probability').value || null,
       limit: this.group.get('limit').value || null,
-      oldProbability: this.oldValueProbability
     };
     this.updateOutcome.emit(updateData);
   }
