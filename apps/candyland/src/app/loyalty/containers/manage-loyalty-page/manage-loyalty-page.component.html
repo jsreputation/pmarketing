@@ -24,7 +24,8 @@
     <!--step 1-->
     <mat-step completed="false">
       <ng-template matStepLabel>{{'LOYALTY_FEATURE.LOYALTY_DETAILS' | translate}}</ng-template>
-      <cl-loyalty-form-step-details *ngIf="form && stepOne" [group]="stepOne"
+      <cl-loyalty-form-step-details *ngIf="stepOne"
+                                    [group]="stepOne"
                                     [pools]="pools">
       </cl-loyalty-form-step-details>
     </mat-step>
