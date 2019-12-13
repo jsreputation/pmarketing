@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StampComponent } from './stamp.component';
-// tslint:disable
+// tslint:disable-next-line
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { StampsService } from '@cl-core-services';
@@ -20,11 +20,13 @@ describe('StampComponent', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
-        {provide: StampsService, useValue: {
-            getStampsReport (id: any) {
-              return of({id})
+        {
+          provide: StampsService, useValue: {
+            getStampsReport: (id: string) => {
+              return of({id});
+            }
+          }
         }
-          }}
       ],
       imports: [
         HttpClientTestingModule,
@@ -32,7 +34,7 @@ describe('StampComponent', () => {
         TranslateModule.forRoot(),
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
