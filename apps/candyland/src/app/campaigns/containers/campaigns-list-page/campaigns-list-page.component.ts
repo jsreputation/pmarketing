@@ -30,7 +30,7 @@ export class CampaignsListPageComponent implements OnInit, OnDestroy {
               private snack: MatSnackBar,
               private configService: ConfigService,
               private cd: ChangeDetectorRef) {
-    this.dataSource = new CustomDataSource<ICampaignTableData>(this.campaignsService);
+    this.dataSource = new CustomDataSource<ICampaignTableData>(this.campaignsService, 5, {include: 'pool'});
   }
 
   public editCampaign(campaign: ICampaignTableData): void {
