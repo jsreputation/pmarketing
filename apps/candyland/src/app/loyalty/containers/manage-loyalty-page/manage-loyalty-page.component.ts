@@ -12,7 +12,7 @@ import { BehaviorSubject, combineLatest, concat, from, Observable, of, Subject }
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { CustomDataSource } from '@cl-shared/table';
+import { CustomDataSource, DataSourceStates } from '@cl-shared/table';
 import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
 import Utils from '@cl-helpers/utils';
 import { StatusLabel } from '@cl-helpers/status-label.enum';
@@ -38,15 +38,16 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   public basicTierId: string;
   public form: FormGroup;
   public prevFormValue: ILoyaltyForm;
-  public stepProgress: number = null;
   private stepProgress$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  public stepProgress: number = null;
+  private loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public loading: boolean = false;
   public basicTierRuleSet: ILoyaltyRuleSet;
   public customTierDataSource: CustomDataSource<ICustomTireForm>;
   public customTierRuleSetMap: { [id: string]: ILoyaltyRuleSet } = {};
   public manageConfig: any;
   public ruleSetupDialogConfig: any;
   public viewConfig: any;
-  public ruleLoader: boolean = false;
   public isEditPage: boolean = false;
   public showDraftButton: boolean = true;
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
@@ -120,6 +121,13 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
         this.stepProgress = stepProgress;
       }
     );
+
+    this.loading$.pipe(
+      takeUntil(this.destroy$),
+    ).subscribe(loading => {
+      this.loading = loading;
+      this.cd.detectChanges();
+    });
   }
 
   public ngOnDestroy(): void {
@@ -129,17 +137,27 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
 
   // events
   public clickCancel(): void {
+    this.setLoading(true);
     if (!this.loyaltyId) {
       this.navigateToList();
       return;
     }
 
     this.loyaltyService.deleteLoyalty(this.loyaltyId)
+      .pipe(
+        finalize(() => this.setLoading(false)),
+        takeUntil(this.destroy$)
+      )
       .subscribe(() => this.navigateToList());
   }
 
   public clickGoNext(): void {
+    this.setLoading(true);
     this.getSaveByStep(this.currentStep)
+      .pipe(
+        finalize(() => this.setLoading(false)),
+        takeUntil(this.destroy$)
+      )
       .subscribe((isUpdated: boolean) => {
         if (isUpdated) {
           this.goNext();
@@ -148,7 +166,12 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   public clickSaveAsDraft(): void {
+    this.setLoading(true);
     this.getSaveByStep(this.currentStep)
+      .pipe(
+        finalize(() => this.setLoading(false)),
+        takeUntil(this.destroy$)
+      )
       .subscribe((isUpdated: boolean) => {
         if (isUpdated) {
           this.navigateToList();
@@ -157,6 +180,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   public clickLaunch(): void {
+    this.setLoading(true);
     const currentStatus = this.form.get('status').value;
     if (currentStatus && currentStatus !== StatusLabel.DRAFT) {
       this.navigateToList();
@@ -164,6 +188,10 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     }
 
     this.loyaltyService.updateLoyaltyStatus(this.loyaltyId, StatusLabel.ACTIVE)
+      .pipe(
+        finalize(() => this.setLoading(false)),
+        takeUntil(this.destroy$)
+      )
       .subscribe(() => {
         this.navigateToList();
       });
@@ -232,7 +260,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   private getSaveOnSecondStep(): Observable<boolean> {
-    if (this.form.invalid) {
+    if (this.form.invalid || !this.customTierDataSource || this.customTierDataSource.state === DataSourceStates.firstLoading) {
       this.form.markAllAsTouched();
       return of(false);
     }
@@ -241,7 +269,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
       return of(true);
     }
 
-    this.getLoyaltyWithBasicTierRequest().pipe(
+    return this.getLoyaltyWithBasicTierRequest().pipe(
       tap(() => this.prevFormValue = this.form.value), // save current form value for checking changes in next step
       map(response => !!response)
     );
@@ -256,7 +284,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     console.log(ruleSetRequests);
     return combineLatest(ruleSetRequests)
       .pipe(
-        tap(res => console.log('res', res)),
+        tap(res => console.log('res______', res)),
         map(response => !!response),
         takeUntil(this.destroy$)
       );
@@ -273,6 +301,12 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     if (this.currentStep > this.stepProgress$.value) {
       this.stepProgress$.next(this.currentStep);
     }
+  }
+
+  private setLoading(value: boolean): void {
+    // if (value !== this.loading$.value) {
+      this.loading$.next(value);
+    // }
   }
 
   private navigateToList(): void {
@@ -306,7 +340,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
           this.loyaltyId = loyalty.id;
           this.form.get('createdAt').patchValue(loyalty.createdAt);
         }),
-        switchMap(() => this.loyaltyService.getBasicTierRequest(newLoyalty, this.loyaltyId, this.basicTierId)),
+        switchMap((loyalty) => this.loyaltyService.getBasicTierRequest(newLoyalty,  loyalty.id, this.basicTierId)),
         filter(Boolean),
         tap(basicTier => this.setBasicTierId(basicTier.data.id)),
         takeUntil(this.destroy$)
@@ -358,12 +392,12 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   private createCustomTierRuleSet(id: string): Observable<ILoyaltyRuleSet> {
-    this.ruleLoader = true;
+    this.setLoading(true);
     return this.ruleService.createRuleSet('Perx::Loyalty::CustomTier', id)
       .pipe(
         tap(ruleSet => this.customTierRuleSetMap[id] = ruleSet),
         filter(Boolean),
-        finalize(() => this.ruleLoader = false)
+        finalize(() => this.setLoading(false))
       );
   }
 
@@ -447,13 +481,15 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   private initAllRuleSet(): void {
-    this.ruleLoader = true;
+    this.setLoading(true);
+    console.log('start');
     concat(this.getBasicTierRuleSet(), this.getAllCustomTierRuleSet())
       .pipe(
         filter(Boolean),
         tap(() => this.cd.detectChanges()),
         last(),
-        finalize(() => this.ruleLoader = false),
+        finalize(() => this.setLoading(false)),
+        finalize(() => console.log('end')),
         takeUntil(this.destroy$)
       )
       .subscribe(

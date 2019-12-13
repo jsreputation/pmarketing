@@ -7,20 +7,46 @@
   </mat-form-field>
   <!--  buttons-->
   <div class="btn-group">
-    <cl-button classList="tertiary" *ngIf="!isEditPage" (click)="clickCancel()">{{'BTN_CANCEL' | translate}}</cl-button>
-    <cl-button classList="tertiary" *ngIf="isEditPage" (click)="clickBack()">{{'BTN_BACK' | translate}}</cl-button>
-    <cl-button classList="secondary" *ngIf="!isLastStep && showDraftButton"
-               (click)="clickSaveAsDraft()">{{'BTN_SAVE_AS_DRAFT' | translate}}</cl-button>
-    <cl-button classList="primary cta cta-next" *ngIf="!isLastStep"
-               (click)="clickGoNext()">{{'BTN_NEXT' | translate}}</cl-button>
-    <cl-button *ngIf="isLastStep" classList="primary cta cta-save cta-save-launch"
-               (click)="clickLaunch()">{{'BTN_LAUNCH' | translate}}</cl-button>
+    <cl-button classList="tertiary"
+               *ngIf="!isEditPage"
+               [disable]="loading"
+               (click)="clickCancel()">
+      {{'BTN_CANCEL' | translate}}
+    </cl-button>
+    <cl-button classList="tertiary"
+               *ngIf="isEditPage"
+               [disable]="loading"
+               (click)="clickBack()">
+      {{'BTN_BACK' | translate}}
+    </cl-button>
+    <cl-button classList="secondary"
+               *ngIf="!isLastStep && showDraftButton"
+               [disable]="loading"
+               (click)="clickSaveAsDraft()">
+      {{'BTN_SAVE_AS_DRAFT' | translate}}
+    </cl-button>
+    <cl-button classList="primary cta cta-next"
+               *ngIf="!isLastStep"
+               [disable]="loading"
+               (click)="clickGoNext()">
+      {{'BTN_NEXT' | translate}}
+    </cl-button>
+    <cl-button *ngIf="isLastStep"
+               classList="primary cta cta-save cta-save-launch"
+               [disable]="loading"
+               (click)="clickLaunch()">
+      {{'BTN_LAUNCH' | translate}}
+    </cl-button>
   </div>
   <!--/  buttons-->
 </header>
 
 <section class="content form-limiter loyalty">
-  <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0" disableRipple>
+  {{loading}}
+  <div class="loyalty-loader">
+    <mat-progress-bar class="loyalty-loader-bar" *ngIf="loading$ | async" mode="indeterminate"></mat-progress-bar>
+  </div>
+  <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0" [disableRipple]="loading">
     <!--step 1-->
     <mat-step completed="false">
       <ng-template matStepLabel>{{'LOYALTY_FEATURE.LOYALTY_DETAILS' | translate}}</ng-template>
@@ -43,8 +69,7 @@
     <mat-step completed="false">
       <ng-template matStepLabel>{{'LOYALTY_FEATURE.POINT_EARN_RULES' | translate}}</ng-template>
       <cl-loyalty-form-step-earn-rules *ngIf="stepProgress >= 2"
-                                       [config] = "manageConfig"
-                                       [loader]="ruleLoader"
+                                       [config]="manageConfig"
                                        [basicTierId]="basicTierId"
                                        [basicTierRuleSet]="basicTierRuleSet"
                                        [customTierRuleSetMap]="customTierRuleSetMap"
@@ -57,7 +82,7 @@
     <mat-step completed="false">
       <ng-template matStepLabel>{{'LOYALTY_FEATURE.REVIEW' | translate}}</ng-template>
       <cl-view-loyalty *ngIf="stepProgress >= 3"
-                       [config] = "viewConfig"
+                       [config]="viewConfig"
                        [loyaltyData]="form.value"
                        [dataSource]="customTierDataSource"
                        [basicTierRuleSet]="basicTierRuleSet"

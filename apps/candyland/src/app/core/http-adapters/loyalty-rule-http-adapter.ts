@@ -43,7 +43,7 @@ export class LoyaltyRuleHttpAdapter {
     };
   }
 
-  public static transformRuleForRuleSetUpdate(rule: ILoyaltyRule): {id: string, priority: number } {
+  public static transformRuleForRuleSetUpdate(rule: ILoyaltyRule): {id: string; priority: number} {
     return {
       id: rule.id,
       priority: rule.priority
