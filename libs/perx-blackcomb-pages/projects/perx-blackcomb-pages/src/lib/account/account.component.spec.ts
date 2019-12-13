@@ -119,4 +119,10 @@ describe('AccountComponent', () => {
     expect(routerSpy).toHaveBeenCalledWith(['/login']);
     expect(authSpy).toHaveBeenCalled();
   });
+
+  it('should navigate to profile', () => {
+    const routerSpy = spyOn(router, 'navigateByUrl');
+    component.onProfileClicked();
+    expect(routerSpy).toHaveBeenCalledWith('profile');
+  });
 });
