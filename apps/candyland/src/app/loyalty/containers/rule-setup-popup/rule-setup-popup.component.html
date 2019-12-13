@@ -1,0 +1,93 @@
+<aside class="dialog loyalty" role="dialog" aria-labelledby="dialogTitle-tierSetup">
+  <header class="dialog-header-wrap">
+    <h2 class="dialog-title"
+        id="dialogTitle-tierSetup">{{(data?.rule ? 'LOYALTY_FEATURE.EDIT_RULE' : 'LOYALTY_FEATURE.ADD_RULE') | translate}}</h2>
+    <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+  <div class="dialog-content" [formGroup]="form">
+    <mat-form-field>
+      <input type="text" matInput formControlName="name" placeholder="Rule name">
+      <mat-error *ngIf="name.hasError('required') && name.touched">{{'ERROR_REQUIRED' | translate}}</mat-error>
+      <mat-error *ngIf="name.hasError('minlength') && name.touched">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
+      <mat-error *ngIf="name.hasError('maxlength') && name.touched">{{'ERROR_MAX_LENGTH' | translate}} 60</mat-error>
+      <mat-error *ngIf="name.hasError('title') && name.touched">{{titleError}}</mat-error>
+    </mat-form-field>
+
+    <label class="loyalty-label">{{'LOYALTY_FEATURE.TITLE_CONDITIONS' | translate}}</label>
+    <ng-container *ngFor="let conditionGroup of conditions.controls; let index = index; let first = first">
+      <div class="row">
+        <!--           *ngIf="!first || conditions.controls.length > 1">-->
+        <label class="loyalty-label">{{(!first ? 'LOYALTY_FEATURE.AND' : '') | translate}}</label>
+        <button class="question-remove btn-transparent"
+                *ngIf="conditions.controls.length > 1"
+                (click)="deleteCondition(index)">
+          <i class="icon delete"></i>
+        </button>
+      </div>
+      <div class="card-section card-content">
+        <div class="row">
+          <mat-form-field>
+            <mat-select [formControl]="conditionGroup.get('type')"
+                        (valueChange)="updateCondition(index, $event)">
+              <ng-container *ngFor="let conditionOption of conditionTypes">
+                <mat-option [class.disabled-type-option]="conditionOption?.hide"
+                            [value]="conditionOption?.value">
+                  {{conditionOption?.title | translate}}
+                </mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <ng-container clDynamicFormGroup
+                      [group]="conditionGroup"
+                      [type]="conditionGroup.get('type')?.value"
+                      [config]="data?.config"
+        >
+        </ng-container>
+      </div>
+    </ng-container>
+
+    <br>
+
+    <cl-button *ngIf="isHideAddCondition"
+               [classList]="'tertiary'"
+               mat-icon-button
+               [matMenuTriggerFor]="addConditionMenu">
+        <span>
+         {{'LOYALTY_FEATURE.ADD_CONDITION' | translate}}
+        </span>
+    </cl-button>
+
+    <mat-menu #addConditionMenu="matMenu">
+      <ng-container *ngFor="let conditionOption of conditionTypes">
+        <button mat-menu-item
+                [class.disabled-type-option]="conditionOption?.hide"
+                (click)="addCondition(conditionOption?.value)">
+          {{conditionOption?.title | translate}}
+        </button>
+      </ng-container>
+    </mat-menu>
+  </div>
+
+  <footer class="dialog-actions">
+    <cl-button classList="tertiary"
+               class="actions-close"
+               (click)="close()"
+               [disableRipple]="true">
+        <span>
+          {{'BTN_CANCEL' | translate}}
+        </span>
+    </cl-button>
+
+    <cl-button classList="primary"
+               (click)="apply()">
+        <span>
+          {{data?.rule ? 'BTN_APPLY' : 'BTN_SAVE' | translate}}
+        </span>
+    </cl-button>
+  </footer>
+</aside>
+
+
