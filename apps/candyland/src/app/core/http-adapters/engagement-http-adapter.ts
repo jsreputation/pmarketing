@@ -342,7 +342,7 @@ export class EngagementHttpAdapter {
           button: data.buttonText,
           sub_title: data.subHeadlineMessage,
           nb_of_wedges: +data.numberOfWedges,
-          slots: data.rewardSlots, // indeterminate should be iControl i think
+          slots: data.rewardSlots.sort((a, b) => a - b),
           wedge_colors: Object.values(data.colorCtrls),
           reward_icon: ImageControlValue.getImagePath(data.rewardIcon),
           wheel_img: ImageControlValue.getImagePath(data.wheelImg),
@@ -495,7 +495,7 @@ export class EngagementHttpAdapter {
       background: data.attributes.display_properties.background_img_url,
       buttonText: data.attributes.display_properties.button,
       numberOfWedges: data.attributes.display_properties.nb_of_wedges,
-      rewardSlots: data.attributes.display_properties.slots,
+      rewardSlots: data.attributes.display_properties.slots.sort((a,b) => a - b),
       colorCtrls: Object.assign(data.attributes.display_properties.wedge_colors),
       rewardIcon: data.attributes.display_properties.reward_icon,
       wheelImg: data.attributes.display_properties.wheel_img,

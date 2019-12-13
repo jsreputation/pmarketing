@@ -1,19 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ForgetPasswordComponent } from './forget-password.component';
-import { MatFormFieldModule, MatIconModule, MatInputModule, MatSnackBarModule } from '@angular/material';
+import { MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '@cl-core-services';
+import { AuthService, MessageService } from '@cl-core-services';
 
 describe('ForgetPasswordComponent', () => {
   let component: ForgetPasswordComponent;
   let fixture: ComponentFixture<ForgetPasswordComponent>;
   const authServiceStub: Partial<AuthService> = {};
+  const messageServiceStub: Partial<MessageService> = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -25,12 +26,12 @@ describe('ForgetPasswordComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         MatInputModule,
-        NoopAnimationsModule,
-        MatSnackBarModule
+        NoopAnimationsModule
       ],
       providers: [
         { provide: Location, useClass: SpyLocation },
-        { provide: AuthService, useValue: authServiceStub }
+        { provide: AuthService, useValue: authServiceStub },
+        { provide: MessageService, useValue: messageServiceStub }
       ]
     }).compileComponents();
   }));

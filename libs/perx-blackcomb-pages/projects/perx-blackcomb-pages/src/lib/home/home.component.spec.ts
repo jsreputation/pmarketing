@@ -20,6 +20,7 @@ import { GamesCollectionComponent } from './games-collection/games-collection.co
 import { TranslateModule } from '@ngx-translate/core';
 import { profile } from '../mock/profile.mock';
 import { HttpClientModule } from '@angular/common/http';
+import {Title} from '@angular/platform-browser';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getAllRewards: () => of([])
@@ -61,6 +62,7 @@ describe('HomeComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
+        Title,
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
