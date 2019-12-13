@@ -7,12 +7,17 @@ import { Location } from '@angular/common';
 import { TransactionHistoryComponent } from './transaction-history.component';
 import { TransactionHistoryPipe } from './transaction-history.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { of } from 'rxjs';
+import { IMerchantAdminService } from '@perx/core';
 
 describe('TransactionHistoryComponent', () => {
   let component: TransactionHistoryComponent;
   let fixture: ComponentFixture<TransactionHistoryComponent>;
   const locationStub = {
     goBack: () => {}
+  };
+  const merchantAdminServiceStub = {
+    getTransactionHistory: () => of()
   };
 
   beforeEach(async(() => {
@@ -31,7 +36,8 @@ describe('TransactionHistoryComponent', () => {
         LoyaltyModule
       ],
       providers: [
-        { provide: Location, useValue: locationStub }
+        { provide: Location, useValue: locationStub },
+        { provide: IMerchantAdminService, useValue: merchantAdminServiceStub }
       ]
     })
     .compileComponents();
