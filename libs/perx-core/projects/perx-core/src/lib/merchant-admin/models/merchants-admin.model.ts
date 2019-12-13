@@ -42,3 +42,45 @@ export interface IMerchantProfile {
   updatedAt: Date;
   state: string;
 }
+
+export const enum MerchantTransactionDetailType {
+  'transaction' = 'Transaction',
+  'reward' = 'Reward::Transaction'
+}
+
+export interface IMerchantPurchaseTransactionHistory {
+  id: number;
+  productName?: string;
+  pharmacyName?: string;
+  issuerName?: string;
+  transactionDate?: Date;
+  transactionRef?: string;
+  price?: number;
+  currency?: string;
+}
+
+export interface IMerchantRewardTransactionHistory {
+  id: number;
+  state: string;
+  voucherExpiry: Date;
+  userAccount: string;
+  rewardName: string;
+  redemptionLocation?: string;
+}
+
+export interface IMerchantCustomProperties {
+  [key: string]: string | number | boolean;
+}
+
+export interface IMerchantTransactionHistory {
+  id: number;
+  name?: string;
+  identifier?: string;
+  transactedAt?: Date;
+  pointsAmount?: number;
+  properties?: IMerchantCustomProperties;
+  transactionDetails?: {
+    type?: MerchantTransactionDetailType,
+    data?: IMerchantPurchaseTransactionHistory | IMerchantRewardTransactionHistory
+  };
+}
