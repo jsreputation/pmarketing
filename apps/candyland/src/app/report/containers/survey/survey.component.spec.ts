@@ -6,13 +6,12 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { MessageService } from '@cl-core-services';
-import { DatePipe } from '@angular/common';
+import { CsvReportService } from '@cl-core-services';
 
 describe('SurveyComponent', () => {
   let component: SurveyComponent;
   let fixture: ComponentFixture<SurveyComponent>;
-  const messageServiceStub: Partial<MessageService> = {};
+  const csvReportServiceStub: Partial<CsvReportService> = {};
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SurveyComponent],
@@ -25,8 +24,7 @@ describe('SurveyComponent', () => {
         TranslateModule.forRoot(),
       ],
       providers: [
-        DatePipe,
-        { provide: MessageService, useValue: messageServiceStub }
+        { provide: CsvReportService, useValue: csvReportServiceStub }
       ]
     })
       .compileComponents();
