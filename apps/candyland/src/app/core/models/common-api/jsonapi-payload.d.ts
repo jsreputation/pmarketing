@@ -59,3 +59,4 @@ declare interface IJsonApiSendItem<T> {
 }
 
 declare type IJsonApiSendData<T> = IJsonApiPatchData<T> |  IJsonApiPostData<T>;
+

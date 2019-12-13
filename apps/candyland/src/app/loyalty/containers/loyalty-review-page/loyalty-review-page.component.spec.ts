@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { LoyaltyReviewComponent } from './loyalty-review.component';
+import { LoyaltyReviewPageComponent } from './loyalty-review-page.component';
 // tslint:disable-next-line:import-blacklist
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -7,8 +7,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoyaltyReviewComponent', () => {
-  let component: LoyaltyReviewComponent;
-  let fixture: ComponentFixture<LoyaltyReviewComponent>;
+  let component: LoyaltyReviewPageComponent;
+  let fixture: ComponentFixture<LoyaltyReviewPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -17,14 +17,14 @@ describe('LoyaltyReviewComponent', () => {
         HttpClientTestingModule,
         TranslateModule.forRoot(),
       ],
-      declarations: [ LoyaltyReviewComponent ],
+      declarations: [ LoyaltyReviewPageComponent ],
       schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoyaltyReviewComponent);
+    fixture = TestBed.createComponent(LoyaltyReviewPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -32,4 +32,7 @@ export class ApiConfig {
   public static loyaltyPath: string = `${ApiConfig.basePath}/loyalty/programs`;
   public static loyaltyBasicTierPath: string = `${ApiConfig.basePath}/loyalty/basic_tiers`;
   public static getLoyaltyCustomTierPath: string = `${ApiConfig.basePath}/loyalty/custom_tiers`;
+  public static getLoyaltyRuleSetPath: string = `${ApiConfig.basePath}/outcome/rule_sets`;
+  public static getLoyaltyRulePath: string = `${ApiConfig.basePath}/outcome/rules`;
+  public static getLoyaltyRuleConditionPath: string = `${ApiConfig.basePath}/outcome/rule_conditions`;
 }
