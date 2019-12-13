@@ -1,0 +1,32 @@
+<mat-toolbar class="toolbar" mat-elevation-z4 mat-toolbar mat-toolbar-single-row>
+	<button mat-icon-button (click)="onLeftActionClick()">
+		<mat-icon>arrow_back_ios</mat-icon>
+  </button>
+  <p class="label">{{"TRANSACTION_HISTORY"|translate}}</p>
+  <span></span>
+</mat-toolbar>
+<div class="main-container">
+  <mat-tab-group mat-stretch-tabs class="tabs">
+    <mat-tab label="Sales">
+      <perx-core-loyalty-transactions-list
+        *ngIf="transactions"
+        [transactions]="transactions | transactionHistory: true"
+        [titleFn]="purchasesTitleFn"
+        [subTitleFn]="subTitleFn"
+        [descFn]="descFn"
+        [priceLabelFn]="priceLabelFn"
+      >
+      </perx-core-loyalty-transactions-list>
+    </mat-tab>
+    <mat-tab label="Redemption">
+      <perx-core-loyalty-transactions-list
+        *ngIf="transactions"
+        [transactions]="transactions | transactionHistory: false"
+        [titleFn]="redemptionsTitleFn"
+        [subTitleFn]="subTitleFn"
+        [priceLabelFn]="priceLabelFn"
+      >
+      </perx-core-loyalty-transactions-list>
+    </mat-tab>
+  </mat-tab-group>
+</div>
