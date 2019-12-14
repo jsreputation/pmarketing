@@ -9,7 +9,6 @@
     <mat-list-item>
       <p matLine class="label">Mobile Phone</p>
       <p matLine>{{profile.phone}}</p>
-      <mat-icon (click)="onEditMobileClicked()">edit</mat-icon>
     </mat-list-item>
   
     <mat-divider></mat-divider>
@@ -17,6 +16,7 @@
     <mat-list-item>
         <p matLine class="label">Email Address</p>
         <p matLine>{{profile.email}}</p>
+        <mat-icon (click)="onEditEmailClicked()">edit</mat-icon>
     </mat-list-item>
 
     <mat-divider></mat-divider>
@@ -31,6 +31,7 @@
     <mat-list-item>
         <p matLine class="label">Postcode</p>
         <p matLine>{{(profile.customProperties && profile.customProperties.postcode) ? profile.customProperties.postcode : ''}}</p>
+        <mat-icon (click)="onEditPostcodeClicked()">edit</mat-icon>
     </mat-list-item>
 
     <mat-divider></mat-divider>

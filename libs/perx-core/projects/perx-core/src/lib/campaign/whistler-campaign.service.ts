@@ -15,6 +15,7 @@ import {
   IJsonApiListPayload,
   IJsonApiItem,
   IJsonApiItemPayload,
+  WCampaignStatus,
 } from '@perx/whistler';
 
 import {
@@ -47,6 +48,17 @@ export class WhistlerCampaignService implements ICampaignService {
     return WhistlerCampaignType[ty];
   }
 
+  private static WCStatus2CampaignState(status?: WCampaignStatus): CampaignState {
+    switch (status) {
+      case WCampaignStatus.active:
+        return CampaignState.active;
+      case undefined:
+      case WCampaignStatus.ended:
+      default:
+        return CampaignState.inactive;
+    }
+  }
+
   public static WhistlerCampaignToCampaign(campaign: IJsonApiItem<IWCampaignAttributes>): ICampaign {
     const cAttributes = campaign.attributes;
     return {
@@ -54,7 +66,7 @@ export class WhistlerCampaignService implements ICampaignService {
       name: cAttributes.name,
       description: cAttributes.goal || null,
       type: WhistlerCampaignService.WhistlerTypeToType(cAttributes.engagement_type),
-      state: cAttributes.status as CampaignState,
+      state: WhistlerCampaignService.WCStatus2CampaignState(cAttributes.status),
       endsAt: cAttributes.end_date_time ? new Date(cAttributes.end_date_time) : null,
       engagementId: cAttributes.engagement_id,
       rawPayload: cAttributes,
