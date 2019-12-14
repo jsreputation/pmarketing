@@ -19,7 +19,7 @@ export class V4FormsService implements IFormsService {
             type: SurveyQuestionType.questionGroup,
             questions: [
               {
-                id: 'first_name',
+                id: 'firstName',
                 question: 'First Name',
                 required: true,
                 payload: {
@@ -27,7 +27,7 @@ export class V4FormsService implements IFormsService {
                 }
               },
               {
-                id: 'last_name',
+                id: 'lastName',
                 question: 'Last Name',
                 required: true,
                 payload: {
@@ -44,7 +44,7 @@ export class V4FormsService implements IFormsService {
                 }
               },
               {
-                id: 'pin',
+                id: 'password',
                 question: 'Create your 4-Digit Pin Code',
                 required: true,
                 payload: {
@@ -53,8 +53,7 @@ export class V4FormsService implements IFormsService {
               },
             ]
           }
-        },
-
+        }
       ]
     });
   }
