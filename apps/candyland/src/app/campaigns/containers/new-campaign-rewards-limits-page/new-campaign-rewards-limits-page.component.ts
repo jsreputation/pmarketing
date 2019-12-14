@@ -23,6 +23,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
   public form1pt1: FormGroup;
   // Slot 0 for those outcomes not caterorized, -1 for those outcomes need to be deleted
   public slots: number[] = [0];
+  public firstInit: boolean = false;
   private destroyed: boolean = false;
   protected destroy$: Subject<void> = new Subject();
 
@@ -33,14 +34,10 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
     private fb: FormBuilder
   ) {
     super(1.1, store, stepConditionService);
-    // just to get error out , console will nag you that formGroups needs to be inside html
-    // html is put but if it is not initalised earlier it says that [formGroup] is not passed a FormGroup
-    // will be overwritten on subscription where initForm() is called.
     this.form1pt1 = this.fb.group({});
   }
 
   private initForm(): void {
-    this.form1pt1 = this.fb.group({});
     this.slots.forEach((slotIndex) => {
       this.form1pt1.addControl(`totalProbability-${slotIndex}`, this.fb.control(0, ClValidators.sumMoreThan));
       if (this.isSpinEngagement) {
@@ -48,9 +45,29 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
       }
     });
     this.stepConditionService.registerStepCondition(1.1, this.form1pt1);
+    this.firstInit = true;
+  }
+
+  public ngOnInit(): void {
+    super.ngOnInit();
+    this.store.currentCampaign$
+      .asObservable()
+      .subscribe((data: ICampaign) => {
+        const hasTemplate = data && data.template;
+        if (hasTemplate) {
+          this.slots = this.store.currentCampaign.template.slots || [0];
+          this.campaignEngagementType = data.template.attributes_type;
+          this.isSpinEngagement = data.template.game_type === 'spin';
+          if (!this.firstInit) {
+            this.initForm();
+          }
+          if (!this.destroyed) {
+            this.cd.detectChanges();
+          }
+        }
+      });
     this.form1pt1.valueChanges.subscribe(
       (values) => {
-        console.log(values);
         if (this.isSpinEngagement) {
           let totalNum = 0;
           let totalSlotted = 0;
@@ -60,24 +77,6 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
           });
           this.rewardNotAllPatchedError = totalSlotted !== this.slots.length;
           this.sumMoreThanError = totalNum > 100;
-        }
-      });
-  }
-
-  public ngOnInit(): void {
-    this.store.currentCampaign$
-      .asObservable()
-      .subscribe((data: ICampaign) => {
-        const hasTemplate = data && data.template;
-        if (hasTemplate) {
-          this.slots = this.store.currentCampaign.template.slots || [0];
-          console.log(this.store.currentCampaign$, 'stores current campaign');
-          this.campaignEngagementType = data.template.attributes_type;
-          this.isSpinEngagement = data.template.game_type === 'spin';
-          this.initForm();
-          if (!this.destroyed) {
-            this.cd.detectChanges();
-          }
         }
       });
   }

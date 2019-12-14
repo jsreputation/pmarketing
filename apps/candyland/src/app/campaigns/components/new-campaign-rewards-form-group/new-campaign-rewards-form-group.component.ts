@@ -72,7 +72,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
 
   public ngOnInit(): void {
     this.isFirstInit = true;
-    console.log(this.formParent, 'i am form parent');
     this.store.currentCampaign$
       .asObservable()
       .pipe(takeUntil(this.destroy$))
@@ -101,8 +100,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
 
   public openDialogSelectReward(): void {
-    console.log(this.formParent, ' i am form aprentttt');
-    console.log(this.formParent.value, 'calling formparent vlaue meomenet open up');
     this.dialog
       .open<SelectRewardPopupComponent, void, IRewardEntity>(SelectRewardPopupComponent)
       .afterClosed()
@@ -139,8 +136,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       ];
       this.enableProbability = false;
     }
-    console.log(this.campaign.outcomes, 'this campaign outcomes init on formgroup');
-    console.log(this.outcomes, 'this outcomes init on formgroup');
 
     const possibleOutcomes = this.campaign.outcomes && this.campaign.outcomes.filter(
       data => {
@@ -176,7 +171,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     }
     this.cd.detectChanges();
   }
-
   public updateOutcomesInCampaign(): void {
     const otherSlotOutcomes = this.campaign.outcomes && this.campaign.outcomes.length > 0 ?
       this.campaign.outcomes.filter(
@@ -186,14 +180,11 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
 
   public updateSlotCount(): this {
-    const checkedOutcomes = this.outcomes.filter(outcome => outcome.outcome.slotNumber >= 0);
-    console.log(checkedOutcomes, 'i am checked outcomes, HELLO');
-    if (checkedOutcomes.length === 0) { // will be adjusted to > 1 when the no outcome thing works (andrew)
-      console.log('patching 0 SHIT');
+    const checkedOutcomes = this.outcomes.filter(outcome => outcome.outcome.slotNumber >= 0 && outcome.reward);
+    if (checkedOutcomes.length === 0) {
       this.formParent.patchValue({[`notEmpty-${this.slotNumber}`]: 0});
     }
-    if (checkedOutcomes.length > 0) { // will be adjusted to if <= 1
-      console.log('patching 1 gz');
+    if (checkedOutcomes.length > 0) {
       this.formParent.patchValue({[`notEmpty-${this.slotNumber}`]: 1});
     }
     this.formParent.updateValueAndValidity();
@@ -225,21 +216,19 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   public removeOutcome(index: number): void {
     if (index > -1) {
       this.outcomes[index].outcome.slotNumber = -1;
+      this.outcomes[index].outcome.probability = 0;
     }
     this.updateOutcomesInCampaign();
     this.isSpinEngagement ?
-      (this.updateSlotCount()) : (this.sumMoreThanError = this.updateSumMoreThanCheck());
+      (this.updateSlotCount().updateSumMoreThanCheck()) : (this.sumMoreThanError = this.updateSumMoreThanCheck());
   }
 
   public updateOutcomes(): void {
-    console.log('am i inside update outcomes');
-    console.log(this.enableProbability, ' is  probability enabled?');
     if (this.enableProbability) {
       this.outcomes[0].outcome.slotNumber = this.slotNumber;
     } else {
       this.outcomes[0].outcome.slotNumber = -1;
     }
-    console.log(this.outcomes, ' see my outcome sinside of opdate outcomes')
     this.updateOutcomeProbabilitySetting();
     this.updateOutcomesInCampaign();
     this.isSpinEngagement ?
