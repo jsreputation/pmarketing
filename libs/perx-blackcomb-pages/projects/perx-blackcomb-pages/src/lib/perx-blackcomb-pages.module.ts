@@ -77,6 +77,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
 import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
 import { FeedItemPopupComponent } from './feed-item-popup/feed-item-popup.component';
+import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -128,7 +129,8 @@ const comps: any[] = [
   EnterPinComponent,
   PinInputComponent,
   RewardsBookingComponent,
-  FeedItemPopupComponent
+  FeedItemPopupComponent,
+  EditProfileFieldComponent
 ];
 
 @NgModule({
