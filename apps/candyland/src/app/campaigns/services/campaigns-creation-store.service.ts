@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 
 export interface ICampaignChoice {
   title: string;

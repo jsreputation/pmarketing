@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import { IWCommTemplateAttributes, IWCommEventAttributes } from '@perx/whistler';
 import { IComm } from '@cl-core/models/comm/schedule';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 
 export class CommsHttpAdapter {
   public static transformTemplateAPIResponseToComm(data: IJsonApiItem<IWCommTemplateAttributes>): IComm {

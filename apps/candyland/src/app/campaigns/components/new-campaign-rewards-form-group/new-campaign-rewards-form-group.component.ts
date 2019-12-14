@@ -23,7 +23,7 @@ import {
 } from 'rxjs/operators';
 
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
-import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { RewardsService } from '@cl-core/services/rewards.service';
 import { ClValidators } from '@cl-helpers/cl-validators';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
