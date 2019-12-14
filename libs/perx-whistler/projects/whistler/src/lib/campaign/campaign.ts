@@ -1,13 +1,20 @@
 import { WEngagementType } from '../engagement/engagement';
 import { IWProperties } from '../whistler.models';
 
+export enum WCampaignStatus {
+  scheduled = 'scheduled',
+  paused = 'paused',
+  active = 'active',
+  ended = 'ended'
+}
+
 export interface IWCampaignAttributes {
   id?: string;
   name: string;
   created_at?: string;
   updated_at?: string;
   urn?: string;
-  status?: string;
+  status?: WCampaignStatus;
   start_date_time: string;
   end_date_time?: string;
   goal?: string | null;

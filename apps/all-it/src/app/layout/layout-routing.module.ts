@@ -69,6 +69,11 @@ const routes: Routes = [
         loadChildren: (): any => import('../barcode/barcode.module')
                       .then((mod: any) => mod.BarcodeModule)
       },
+      {
+        path: 'edit-profile/:type',
+        loadChildren: (): any => import('../edit-profile-field/edit-profile-field.module')
+                      .then((mod: any) => mod.EditProfileFieldModule)
+      },
       { path: 'reward-detail/:id', component: RewardDetailsComponent },
       { path: 'booking/:id', component: RewardsBookingComponent },
       { path: 'c/:key', component: ContentComponent },

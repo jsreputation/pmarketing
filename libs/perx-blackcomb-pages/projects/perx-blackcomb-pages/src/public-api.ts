@@ -33,3 +33,4 @@ export { ChangePasswordComponent } from './lib/change-password/change-password.c
 export { EnterPinComponent } from './lib/enter-pin/enter-pin.component';
 export { RewardsBookingComponent } from './lib/rewards-booking/rewards-booking.component';
 export { BarcodeComponent } from './lib/barcode/barcode.component';
+export { EditProfileFieldComponent } from './lib/edit-profile-field/edit-profile-field.component';

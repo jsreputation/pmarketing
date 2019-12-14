@@ -75,5 +75,7 @@
   "REDEND_OTP": "Resend OTP",
   "STATIC_NEW_REGISTER": "Thank you for registering",
   "GET_VOUCHER": "Get Voucher",
-  "MY_BAR_CODE": "My Barcode"
+  "MY_BAR_CODE": "My Barcode",
+  "ENTER_EMAIL": "Enter Email",
+  "ENTER_POSTCODE": "Enter Postcode"
 }
