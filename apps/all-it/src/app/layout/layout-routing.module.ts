@@ -64,6 +64,11 @@ const routes: Routes = [
         loadChildren: (): any => import('../change-password/change-password.module')
                       .then((mod: any) => mod.ChangePasswordModule)
       },
+      {
+        path: 'barcode',
+        loadChildren: (): any => import('../barcode/barcode.module')
+                      .then((mod: any) => mod.BarcodeModule)
+      },
       { path: 'reward-detail/:id', component: RewardDetailsComponent },
       { path: 'booking/:id', component: RewardsBookingComponent },
       { path: 'c/:key', component: ContentComponent },
