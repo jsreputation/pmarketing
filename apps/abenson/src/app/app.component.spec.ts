@@ -27,7 +27,7 @@ const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({})
 };
 
-describe('AppComponent', () => {
+fdescribe('AppComponent', () => {
   let app: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let ntfs: NotificationService;
@@ -121,6 +121,12 @@ describe('AppComponent', () => {
 
   it('should navigate back', () => {
     const spy = spyOn(location, 'back');
+    app.goBack();
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call goBack', () => {
+    const spy = spyOn(app, 'goBack');
     app.goBack();
     expect(spy).toHaveBeenCalled();
   });
