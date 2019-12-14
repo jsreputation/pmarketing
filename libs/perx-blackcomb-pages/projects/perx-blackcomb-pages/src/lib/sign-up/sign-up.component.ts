@@ -80,7 +80,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public get surveyComplete(): boolean {
+  public get formComplete(): boolean {
     return this.currentPointer === this.totalLength;
   }
 
@@ -92,7 +92,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.currentPointer = currentPointer;
   }
 
-  public updateSurveyStatus(answers: IAnswer[]): void {
+  public updateFormStatus(answers: IAnswer[]): void {
     this.answers = answers;
   }
 
@@ -103,26 +103,27 @@ export class SignUpComponent implements OnInit, OnDestroy {
         userObj[answer.questionId] = answer.content;
       }
     });
-    const PI = userObj.primary_identifier;
-    if (PI) {
+    const pi = userObj.primary_identifier;
+    if (pi) {
       if (this.stateData && this.stateData.collectInfo) {
-        this.submitDataAndCollectInformation(PI, userObj);
+        this.submitDataAndCollectInformation(pi, userObj);
       }
-      this.submitData(PI, userObj);
+      this.submitData(pi, userObj);
     }
   }
 
-  private submitData(PI: string, userObj: ISignupAttributes): void {
-    this.authService.createUserAndAutoLogin(PI, userObj).subscribe(
-      () => {
-        this.snack.open('User successfully created.', 'x', { duration: 2000 });
-        this.router.navigate(['/wallet']);
-      },
-      (err) => console.error(err)
-    );
+  private submitData(pi: string, userObj: ISignupAttributes): void {
+    this.authService.createUserAndAutoLogin(pi, userObj)
+      .subscribe(
+        () => {
+          this.snack.open('User successfully created.', 'x', { duration: 2000 });
+          this.router.navigate(['/wallet']);
+        },
+        (err) => console.error(err)
+      );
   }
 
-  private submitDataAndCollectInformation(PI: string, userObj: ISignupAttributes): void {
+  private submitDataAndCollectInformation(pi: string, userObj: ISignupAttributes): void {
     this.errorMessage = null;
 
     if (userObj) {
@@ -142,68 +143,72 @@ export class SignUpComponent implements OnInit, OnDestroy {
       }
       let newUserId;
       let newToken;
-      this.authService.createUserAndAutoLogin(PI, userObj, false).pipe(
-        catchError(() => { throw new Error(''); }),
-        tap(() => {
-          if (this.oldAnonymousStatus) {
-            newUserId = this.authService.getUserId();
-            newToken = this.authService.getUserAccessToken();
-            this.authService.savePI(this.oldPI);
-            this.authService.saveUserId(oldUserId);
-            this.authService.saveUserAccessToken(this.oldToken);
-          }
-        }),
-        switchMap((res) => iif(
-          () => this.oldAnonymousStatus && !!oldUserId, this.authService.mergeUserById([oldUserId], newUserId), of(res))),
-        catchError((err: Error) => {
-          throw err.message.startsWith('PI_') ? err : new Error('PI_MERGE_FAIL');
-        }),
-        tap(() => {
-          if (this.oldAnonymousStatus) {
-            this.authService.savePI(PI);
-            this.authService.saveUserId(newUserId);
-            this.authService.saveUserAccessToken(newToken);
-            this.authService.saveAnonymous(false);
-          }
-        }),
-        switchMap(() => {
-          if (
-            this.stateData &&
-            this.stateData.engagementType === 'survey' &&
-            this.stateData.campaignId &&
-            this.stateData.answers &&
-            this.stateData.surveyId
-          ) {
-            return this.surveyService.postSurveyAnswer(this.stateData.answers, this.stateData.campaignId, this.stateData.surveyId);
-          }
-          if (this.stateData && this.stateData.engagementType === 'game' && this.stateData.transactionId) {
-            return this.gameService.prePlayConfirm(this.stateData.transactionId).pipe(
-              retryWhen(
-                retryWhenTransactionFailed
-              )
-            );
-          }
-          if (this.stateData && this.stateData.engagementType === 'instant_outcome' && this.stateData.transactionId) {
-            return this.instantOutcomeService.prePlayConfirm(this.stateData.transactionId).pipe(
-              retryWhen(
-                retryWhenTransactionFailed
-              )
-            );
-          }
-          throw new Error('PI_NO_TRANSACTION_MATCH');
-        }),
-        catchError((err: Error) => {
-          throw err.message.startsWith('PI_') ? err : new Error('PI_TRANSACTION_CONFIRM_FAIL');
-        }),
-      ).subscribe(
-        () => {
-          this.router.navigate(['/wallet']);
-          if (this.stateData && this.stateData.popupData) {
-            this.notificationService.addPopup(this.stateData.popupData);
-          }
-        },
-        (error: Error) => this.updateErrorMessage(error.message)
-      );
+      this.authService.createUserAndAutoLogin(pi, userObj, false)
+        .pipe(
+          catchError(() => { throw new Error(''); }),
+          tap(() => {
+            if (this.oldAnonymousStatus) {
+              newUserId = this.authService.getUserId();
+              newToken = this.authService.getUserAccessToken();
+              this.authService.savePI(this.oldPI);
+              this.authService.saveUserId(oldUserId);
+              this.authService.saveUserAccessToken(this.oldToken);
+            }
+          }),
+          switchMap((res) => iif(
+            () => this.oldAnonymousStatus && !!oldUserId,
+            this.authService.mergeUserById([oldUserId], newUserId),
+            of(res)
+          )),
+          catchError((err: Error) => {
+            throw err.message.startsWith('PI_') ? err : new Error('PI_MERGE_FAIL');
+          }),
+          tap(() => {
+            if (this.oldAnonymousStatus) {
+              this.authService.savePI(pi);
+              this.authService.saveUserId(newUserId);
+              this.authService.saveUserAccessToken(newToken);
+              this.authService.saveAnonymous(false);
+            }
+          }),
+          switchMap(() => {
+            if (
+              this.stateData &&
+              this.stateData.engagementType === 'survey' &&
+              this.stateData.campaignId &&
+              this.stateData.answers &&
+              this.stateData.surveyId
+            ) {
+              return this.surveyService.postSurveyAnswer(this.stateData.answers, this.stateData.campaignId, this.stateData.surveyId);
+            }
+            if (this.stateData && this.stateData.engagementType === 'game' && this.stateData.transactionId) {
+              return this.gameService.prePlayConfirm(this.stateData.transactionId).pipe(
+                retryWhen(
+                  retryWhenTransactionFailed
+                )
+              );
+            }
+            if (this.stateData && this.stateData.engagementType === 'instant_outcome' && this.stateData.transactionId) {
+              return this.instantOutcomeService.prePlayConfirm(this.stateData.transactionId).pipe(
+                retryWhen(
+                  retryWhenTransactionFailed
+                )
+              );
+            }
+            throw new Error('PI_NO_TRANSACTION_MATCH');
+          }),
+          catchError((err: Error) => {
+            throw err.message.startsWith('PI_') ? err : new Error('PI_TRANSACTION_CONFIRM_FAIL');
+          }),
+        ).subscribe(
+          () => {
+            this.router.navigate(['/wallet']);
+            if (this.stateData && this.stateData.popupData) {
+              this.notificationService.addPopup(this.stateData.popupData);
+            }
+          },
+          (error: Error) => this.updateErrorMessage(error.message)
+        );
     }
   }
 

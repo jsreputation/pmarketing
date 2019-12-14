@@ -1,0 +1,61 @@
+import { Observable, of } from 'rxjs';
+import { IFormsService } from './iforms.service';
+import { Injectable } from '@angular/core';
+import { ISurvey, SurveyQuestionType } from '../../survey/models/survey.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class V4FormsService implements IFormsService {
+  public getSignupForm(): Observable<ISurvey | undefined> {
+    return of({
+      title: '',
+      questions: [
+        {
+          id: 'sign-up',
+          question: '',
+          required: false,
+          payload: {
+            type: SurveyQuestionType.questionGroup,
+            questions: [
+              {
+                id: 'first_name',
+                question: 'First Name',
+                required: true,
+                payload: {
+                  type: SurveyQuestionType.longText
+                }
+              },
+              {
+                id: 'last_name',
+                question: 'Last Name',
+                required: true,
+                payload: {
+                  type: SurveyQuestionType.longText
+                }
+              },
+              {
+                id: 'primary_identifier',
+                question: 'Phone Number',
+                required: true,
+                payload: {
+                  type: SurveyQuestionType.phone,
+                  default_country_code: '+63'
+                }
+              },
+              {
+                id: 'pin',
+                question: 'Create your 4-Digit Pin Code',
+                required: true,
+                payload: {
+                  type: SurveyQuestionType.longText
+                }
+              },
+            ]
+          }
+        },
+
+      ]
+    });
+  }
+}

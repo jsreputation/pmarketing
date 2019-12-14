@@ -9,10 +9,10 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  templateUrl: './sign-in-2.component.html',
+  styleUrls: ['./sign-in-2.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class SignIn2Component implements OnInit, OnDestroy {
   public loginForm: FormGroup;
   public errorMessage: string | null;
   public preAuth: boolean;
@@ -64,10 +64,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       customerID: ['', Validators.required],
       password: ['', Validators.required]
     });
-  }
-
-  public goToSignup(): void {
-    this.router.navigateByUrl('/signup');
   }
 
   public onSubmit(): void {

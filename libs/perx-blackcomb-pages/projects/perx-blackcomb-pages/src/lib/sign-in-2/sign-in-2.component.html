@@ -1,10 +1,13 @@
-<div class="content-container" *ngIf="theme | async as th" [ngStyle]="{'background-color': th?.properties['--login_background_colour']}">
+<div class="content-container" *ngIf="theme | async as th"
+  [ngStyle]="{'background-color': th?.properties['--login_background_colour']}">
   <div class="login-image">
     <img class="logo" [attr.src]="th?.properties['--logo']" [attr.alt]="th?.properties['--title']" />
   </div>
   <div *ngIf="appConfig | async as aConfig" class="login-form">
     <h1 translate>LOGIN</h1>
-    <div class="subtitle" *ngIf="aConfig.showSubtitleLogin">Not a member? <span class="link" (click)="goToSignup()">Sign up</span></div>
+    <div class="subtitle" *ngIf="aConfig.showSubtitleLogin">
+      Not a member? <a class="link" [routerLink]="'/signup'">Sign up</a>
+    </div>
     <div class="error_msg">
       <span>{{errorMessage}}</span>
     </div>

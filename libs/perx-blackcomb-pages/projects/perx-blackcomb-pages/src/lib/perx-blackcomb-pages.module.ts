@@ -56,7 +56,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { NgxBarcodeModule } from 'ngx-barcode';
-import { LoginComponent } from './login/login.component';
+import { SignIn2Component } from './sign-in-2/sign-in-2.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { QRComponent } from './qr/qr.component';
 import { RedeemComponent } from './redeem/redeem.component';
@@ -93,7 +93,7 @@ const comps: any[] = [
   BarcodeRedemptionComponent,
   LoadingComponent,
   RedeemComponent,
-  LoginComponent,
+  SignIn2Component,
   SignInComponent,
   QRComponent,
   RewardDetailsComponent,

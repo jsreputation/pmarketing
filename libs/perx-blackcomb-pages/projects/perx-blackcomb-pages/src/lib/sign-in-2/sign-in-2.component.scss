@@ -43,6 +43,7 @@ button {
 
     .link {
       color: #eb202f;
+      text-decoration: none;
     }
   }
 
@@ -63,4 +64,8 @@ button {
   }
 
   border-radius: 0.8rem;
+
+  span {
+    border-top: 1rem;
+  }
 }

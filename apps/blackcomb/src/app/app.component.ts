@@ -5,7 +5,7 @@ import {
   HomeComponent,
   HistoryComponent,
   AccountComponent,
-  LoginComponent,
+  SignIn2Component,
   WalletComponent
 } from '@perx/blackcomb-pages';
 import { Location } from '@angular/common';
@@ -71,7 +71,7 @@ export class AppComponent implements OnInit {
 
   }
   public onActivate(ref: any): void {
-    this.showHeader = !(ref instanceof LoginComponent);
+    this.showHeader = !(ref instanceof SignIn2Component);
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||
