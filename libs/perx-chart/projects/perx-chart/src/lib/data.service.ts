@@ -25,14 +25,23 @@ interface IMetabaseResponse {
   data: IData;
 }
 
+export enum ReportFormat {
+  csv = 'csv',
+  xlsx = 'xlsx',
+  json = 'json'
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
   public tokenBasePath: string | null = null; // 'https://api-dev1.uat.whistler.perxtech.io';
+  private metabasePath: string = 'https://metabase-api.perxtech.io';
+
   constructor(
     private datePipe: DatePipe,
-    private http: HttpClient, config?: EnvConfig
+    private http: HttpClient,
+    config?: EnvConfig
   ) {
     if (config && config.tokenBasePath) {
       this.tokenBasePath = config.tokenBasePath;
@@ -51,7 +60,7 @@ export class DataService {
             .join('&') : '';
 
           return this.http.get<IMetabaseResponse>(
-            `https://metabase-api.perxtech.io/api/embed/card/${token}/query?${query}`
+            `${this.metabasePath}/api/embed/card/${token}/query?${query}`
           );
         }),
         map((res: IMetabaseResponse) => DataSerializer.from(res.data)),
@@ -73,6 +82,23 @@ export class DataService {
       .pipe(
         retry(2),
         map((res: ITokenResponse) => res.token)
+      );
+  }
+
+  public getReport(
+    id: number | string,
+    params: { [key: string]: string } = {},
+    format: ReportFormat = ReportFormat.csv
+  ): Observable<string> {
+    return this.getToken(id)
+      .pipe(
+        switchMap((token: string) => {
+          const query: string = params ? Object.keys(params)
+            .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
+            .join('&') : '';
+
+          return this.http.get(`${this.metabasePath}/api/embed/card/${token}/query/${format}?${query}`, { responseType: 'text' });
+        })
       );
   }
 }
