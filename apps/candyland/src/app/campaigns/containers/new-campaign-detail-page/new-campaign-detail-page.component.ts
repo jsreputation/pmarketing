@@ -8,7 +8,7 @@ import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-cam
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { ActivatedRoute } from '@angular/router';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { Subject } from 'rxjs';
 import Utils from '@cl-helpers/utils';
 
@@ -85,7 +85,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   public ngOnInit(): void {
     super.ngOnInit();
     this.channelType.valueChanges
-      .pipe(takeUntil(this.destroy$)).subscribe( value => {
+      .pipe(takeUntil(this.destroy$)).subscribe(value => {
         if (value === 'sms') {
           this.pool.setValidators([Validators.required]);
           this.message.setValidators([Validators.required]);

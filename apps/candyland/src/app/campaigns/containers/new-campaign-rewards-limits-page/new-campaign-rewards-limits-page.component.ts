@@ -1,11 +1,11 @@
 import {Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Input, OnDestroy} from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import {AbstractStepWithForm} from '../../step-page-with-form';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {StepConditionService} from '../../services/step-condition.service';
 import {ClValidators} from '@cl-helpers/cl-validators';
 import {Subject} from 'rxjs';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 
 @Component({
   selector: 'cl-new-campaign-rewards-limits-page',

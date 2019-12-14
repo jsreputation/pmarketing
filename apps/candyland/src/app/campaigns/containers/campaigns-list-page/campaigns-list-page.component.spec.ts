@@ -10,29 +10,34 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import { CsvReportService } from '@cl-core-services';
 
 describe('CampaignsListPageComponent', () => {
   let component: CampaignsListPageComponent;
   let fixture: ComponentFixture<CampaignsListPageComponent>;
+  const csvReportServiceStub: Partial<CsvReportService> = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          TableFiltersModule,
-          BrowserDynamicTestingModule,
-          MatFormFieldModule,
-          MatInputModule,
-          MatSelectModule,
-          HttpClientTestingModule,
-          RouterTestingModule,
-          MatSnackBarModule,
-          BrowserAnimationsModule,
-          NoopAnimationsModule,
-          TranslateModule.forRoot(),
-        ],
-        declarations: [CampaignsListPageComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      imports: [
+        TableFiltersModule,
+        BrowserDynamicTestingModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+        MatSnackBarModule,
+        BrowserAnimationsModule,
+        NoopAnimationsModule,
+        TranslateModule.forRoot(),
+      ],
+      declarations: [CampaignsListPageComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        { provide: CsvReportService, useValue: csvReportServiceStub }
+      ]
+    })
       .compileComponents();
   }));
 
