@@ -52,7 +52,7 @@ describe('WhistlerAuthenticationService', () => {
     auth.refreshToken().subscribe(() => { });
     expect(spyLogOut).toHaveBeenCalled();
     spyOn(auth, 'getPI').and.returnValue('2');
-    const spyLogin = spyOn(auth, 'autoLogin').and.returnValue(of(null));
+    const spyLogin = spyOn(auth, 'autoLogin').and.returnValue(of(void 0));
     auth.refreshToken().subscribe(() => { });
     expect(spyLogin).toHaveBeenCalled();
   }));

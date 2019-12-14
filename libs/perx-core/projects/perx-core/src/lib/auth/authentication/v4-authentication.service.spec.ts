@@ -326,11 +326,17 @@ describe('V4AuthenticationService', () => {
       }
     })));
 
-  it('should throw error', inject([V4AuthenticationService], (auth: V4AuthenticationService) => {
-    const obs = { error: () => { } };
-    const spyObs = spyOn(obs, 'error');
-    auth.createUserAndAutoLogin('').subscribe(() => { }, obs.error);
+  it('should signup', inject([V4AuthenticationService, HttpClient], (auth: V4AuthenticationService, http: HttpClient) => {
+    const obs = { login: () => { } };
+    const spyObs = spyOn(obs, 'login');
+    const spy = spyOn(http, 'post');
+    spy.and.returnValue(of({ data: {} }));
+    auth.createUserAndAutoLogin('')
+      .subscribe(
+        obs.login
+      );
     expect(spyObs).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
   }));
 
   it('should verify otp', fakeAsync(inject([V4AuthenticationService, HttpClient],
