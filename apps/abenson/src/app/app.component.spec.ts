@@ -27,7 +27,7 @@ const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({})
 };
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   let app: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let ntfs: NotificationService;

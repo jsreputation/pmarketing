@@ -9,7 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import {Type} from '@angular/core';
 
-fdescribe('SignupComponent', () => {
+describe('SignupComponent', () => {
   let component: SignUpComponent;
   let fixture: ComponentFixture<SignUpComponent>;
   let auth: AuthenticationService;
