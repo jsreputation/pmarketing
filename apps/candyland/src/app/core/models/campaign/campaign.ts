@@ -37,7 +37,6 @@ export interface ICampaign {
   displayProperties?: any;
 }
 
-
 export interface ICampaignOutcome {
   outcome?: IOutcome;
   enableProbability?: boolean;
