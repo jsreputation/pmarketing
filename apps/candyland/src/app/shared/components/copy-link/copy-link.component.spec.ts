@@ -9,6 +9,9 @@ import {MessageService} from '@cl-core-services';
 describe('DownloadLinkComponent', () => {
   let component: CopyLinkComponent;
   let fixture: ComponentFixture<CopyLinkComponent>;
+  const msgSvcStub: Partial<MessageService> = {
+    show: () => ({})
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -17,9 +20,7 @@ describe('DownloadLinkComponent', () => {
       ],
       providers: [
         {
-          provide: MessageService, useValue: {
-            show: () => ({})
-          }
+          provide: MessageService, useValue: msgSvcStub
         }
       ],
       declarations: [ CopyLinkComponent ],

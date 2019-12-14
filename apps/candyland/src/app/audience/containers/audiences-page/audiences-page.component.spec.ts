@@ -33,6 +33,9 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('AudiencesPageComponent', () => {
   let component: AudiencesPageComponent;
   let fixture: ComponentFixture<AudiencesPageComponent>;
+  const msgSvcStub: Partial<MessageService> = {
+    show: () => ({})
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -66,9 +69,7 @@ describe('AudiencesPageComponent', () => {
           AudiencesUserService,
           LocalStorageService,
           {
-            provide: MessageService, useValue: {
-              show: () => ({})
-            }
+            provide: MessageService, useValue:  msgSvcStub
           },
           AuthService
         ],
@@ -76,7 +77,6 @@ describe('AudiencesPageComponent', () => {
           AudiencesPageComponent,
           AudiencesListComponent,
           AudiencesUsersListComponent
-
         ]
       })
       .compileComponents();

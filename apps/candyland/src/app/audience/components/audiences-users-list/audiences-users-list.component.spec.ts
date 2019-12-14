@@ -22,6 +22,9 @@ import {MessageService} from '@cl-core-services';
 describe('AudiencesUsersListComponent', () => {
   let component: AudiencesUsersListComponent;
   let fixture: ComponentFixture<AudiencesUsersListComponent>;
+  const msgSvcStub: Partial<MessageService> = {
+    show: () => ({})
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -38,9 +41,7 @@ describe('AudiencesUsersListComponent', () => {
       providers: [
         AudiencesUserService,
         {
-          provide: MessageService, useValue: {
-            show: () => ({})
-          }
+          provide: MessageService, useValue: msgSvcStub
         }
       ],
       declarations: [
