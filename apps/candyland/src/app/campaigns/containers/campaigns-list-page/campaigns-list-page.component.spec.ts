@@ -11,35 +11,37 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import {MessageService} from '@cl-core-services';
+import { CsvReportService } from '@cl-core-services';
 
 describe('CampaignsListPageComponent', () => {
   let component: CampaignsListPageComponent;
   let fixture: ComponentFixture<CampaignsListPageComponent>;
+  const csvReportServiceStub: Partial<CsvReportService> = {};
+  const msgSvcStub: Partial<MessageService> = {
+    show: () => ({})
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          TableFiltersModule,
-          BrowserDynamicTestingModule,
-          MatFormFieldModule,
-          MatInputModule,
-          MatSelectModule,
-          HttpClientTestingModule,
-          RouterTestingModule,
-          BrowserAnimationsModule,
-          NoopAnimationsModule,
-          TranslateModule.forRoot(),
-        ],
-        providers: [
-          {
-            provide: MessageService, useValue: {
-              show: () => ({})
-            }
-          }
-        ],
-        declarations: [CampaignsListPageComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      imports: [
+        TableFiltersModule,
+        BrowserDynamicTestingModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+        BrowserAnimationsModule,
+        NoopAnimationsModule,
+        TranslateModule.forRoot(),
+      ],
+      declarations: [CampaignsListPageComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        { provide: MessageService, useValue: msgSvcStub },
+        { provide: CsvReportService, useValue: csvReportServiceStub }
+      ]
+    })
       .compileComponents();
   }));
 
