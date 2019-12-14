@@ -6,33 +6,54 @@ import {
 import {
   IWCampaignAttributes,
   WEngagementType,
+  IWAudiences,
   WInformationCollectionSettingType,
 } from '@perx/whistler';
-import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
+import { DateTimeParser } from '@cl-helpers/date-time-parser';
+import { WCampaignStatus } from '@perx/whistler';
+import { CampaignStatus } from '@cl-core/models/campaign/campaign-status.enum';
 
 export class CampaignsHttpAdapter {
+  private static WStat2Stat: { [k in WCampaignStatus]: CampaignStatus } = {
+    scheduled: CampaignStatus.scheduled,
+    paused: CampaignStatus.paused,
+    active: CampaignStatus.active,
+    ended: CampaignStatus.ended
+  };
+  private static Stat2WStat: { [k in CampaignStatus]: WCampaignStatus } = {
+    scheduled: WCampaignStatus.scheduled,
+    paused: WCampaignStatus.paused,
+    active: WCampaignStatus.active,
+    ended: WCampaignStatus.ended
+  };
 
-  public static transformCampaignStatus(status: string): IJsonApiItem<Partial<IWCampaignAttributes>> {
+  public static transformCampaignStatus(status: CampaignStatus): IJsonApiItem<Partial<IWCampaignAttributes>> {
     return {
       type: 'entities',
       attributes: {
-        status
+        status: CampaignsHttpAdapter.Stat2WStat[status]
       }
     };
   }
 
-  public static transformToCampaign(data: IJsonApiItem<IWCampaignAttributes>): ICampaignTableData {
-    const eType = data.attributes.engagement_type ?
-      CampaignsHttpAdapter.EngagementTypePipeTransform(EngagementTypeFromAPIMapping[data.attributes.engagement_type])
-      : '';
+  public static transformToCampaign(
+    data: IJsonApiItem<IWCampaignAttributes>,
+    includedPools?: IJsonApiItem<IWAudiences>[]
+  ): ICampaignTableData {
+    const audienceCheck: IJsonApiItem<IWAudiences> | undefined = includedPools ? includedPools
+      .find(pool => +pool.id === (data.attributes.pool_id || Number.MAX_SAFE_INTEGER)) : undefined;
+    const audience: string = audienceCheck ? audienceCheck.attributes.name : '-';
+    const eType: string = data.attributes.engagement_type ?
+      CampaignsHttpAdapter.EngagementTypePipeTransform(EngagementTypeFromAPIMapping[data.attributes.engagement_type]) : '';
     return {
       id: data.id,
       name: data.attributes.name,
-      status: data.attributes.status,
-      begin: CampaignsHttpAdapter.stringToDate(data.attributes.start_date_time),
-      end: CampaignsHttpAdapter.stringToDate(data.attributes.end_date_time),
-      audience: data.attributes.pool_id,
+      status: CampaignsHttpAdapter.WStat2Stat[data.attributes.status],
+      begin: DateTimeParser.stringToDate(data.attributes.start_date_time),
+      end: DateTimeParser.stringToDate(data.attributes.end_date_time),
+      audience,
       goal: data.attributes.goal,
       engagementType: eType
     };
@@ -46,7 +67,7 @@ export class CampaignsHttpAdapter {
 
   public static transformTableData(data: IJsonApiListPayload<IWCampaignAttributes>): ITableData<ICampaignTableData> {
     return {
-      data: data.data.map(item => CampaignsHttpAdapter.transformToCampaign(item)),
+      data: data.data.map(item => CampaignsHttpAdapter.transformToCampaign(item, data.included)),
       meta: data.meta
     };
   }
@@ -72,17 +93,17 @@ export class CampaignsHttpAdapter {
     return {
       id: data.id,
       name: campaignData.name,
-      status: campaignData.status,
+      status: CampaignsHttpAdapter.WStat2Stat[campaignData.status],
       engagement_id: `${campaignData.engagement_id}`,
       engagement_type: EngagementTypeFromAPIMapping[campaignData.engagement_type],
       campaignInfo: {
         informationCollectionSetting: CampaignsHttpAdapter.transformInformationCollectionType(
           campaignData.display_properties.informationCollectionSetting),
         goal: campaignData.goal,
-        startDate: campaignData.start_date_time ? new Date(campaignData.start_date_time) : null,
-        startTime: campaignData.start_date_time ? moment(campaignData.start_date_time).format('LT') : '',
-        endDate: campaignData.end_date_time ? new Date(campaignData.end_date_time) : null,
-        endTime: campaignData.end_date_time ? moment(campaignData.end_date_time).format('LT') : '',
+        startDate: DateTimeParser.stringToDate(campaignData.start_date_time),
+        startTime: DateTimeParser.stringToTime(campaignData.start_date_time, 'LT'),
+        endDate: DateTimeParser.stringToDate(campaignData.end_date_time),
+        endTime: DateTimeParser.stringToTime(campaignData.end_date_time, 'LT'),
         disabledEndDate: !campaignData.end_date_time,
         labels: campaignData.labels
       },
@@ -107,7 +128,7 @@ export class CampaignsHttpAdapter {
         name: data.name,
         engagement_type: EngagementTypeAPIMapping[data.template.attributes_type] as WEngagementType,
         engagement_id: data.template.id,
-        status: 'scheduled',
+        status: WCampaignStatus.scheduled,
         start_date_time: startDate,
         end_date_time: endDate,
         goal: data.campaignInfo.goal,
@@ -116,9 +137,5 @@ export class CampaignsHttpAdapter {
         display_properties: { ...data.displayProperties, informationCollectionSetting }
       }
     };
-  }
-
-  private static stringToDate(stringDate: string | null): Date | null {
-    return stringDate ? new Date(stringDate) : null;
   }
 }

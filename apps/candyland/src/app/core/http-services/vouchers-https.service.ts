@@ -32,6 +32,10 @@ export class VouchersHttpService {
     return this.http.post<IJsonApiPayload<IWVouchersApi>>(ApiConfig.voucherBatchPath, data);
   }
 
+  public getBatch(id: number): Observable<IJsonApiPayload<IWVouchersApi>> {
+    return this.http.get<IJsonApiPayload<IWVouchersApi>>(`${ApiConfig.voucherBatchPath}/${id}`);
+  }
+
   public getStats(rewardId: string): Observable<IJsonApiPayload<IWVoucherStatsApi>> {
     return this.http.get<IJsonApiPayload<IWVoucherStatsApi>>(
       `${ApiConfig.basePath}/voucher-service/stats?source_id=${rewardId}&source_type=${SOURCE_TYPE}`

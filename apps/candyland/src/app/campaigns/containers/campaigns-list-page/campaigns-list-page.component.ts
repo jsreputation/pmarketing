@@ -1,16 +1,18 @@
 import { Component, ChangeDetectionStrategy, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import {
   CustomDataSource,
-  DataSourceStates, DataSourceUpdateSchema
+  DataSourceStates,
+  DataSourceUpdateSchema
 } from '@cl-shared/table/data-source/custom-data-source';
-import { CampaignsService, ConfigService } from '@cl-core/services';
+import { CampaignsService, ConfigService, CsvReportService } from '@cl-core/services';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-import { ICampaignTableData } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { StatusLabelConfig } from '@cl-shared';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CampaignAction } from '../../model/campaign-action.enum';
+import { CampaignStatus } from '@cl-core/models/campaign/campaign-status.enum';
+import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
 
 @Component({
   selector: 'cl-campaigns-list-page',
@@ -24,13 +26,16 @@ export class CampaignsListPageComponent implements OnInit, OnDestroy {
   public displayedColumns: string[] = ['name', 'status', 'begin', 'end', 'audience', 'engagementType', 'actions'];
   public statusLabel: { [key: string]: StatusLabelConfig };
   private destroy$: Subject<void> = new Subject();
-  private campaignStatuses: typeof CampaignAction = CampaignAction;
-  constructor(private campaignsService: CampaignsService,
-              private router: Router,
-              private snack: MatSnackBar,
-              private configService: ConfigService,
-              private cd: ChangeDetectorRef) {
-    this.dataSource = new CustomDataSource<ICampaignTableData>(this.campaignsService);
+
+  constructor(
+    private campaignsService: CampaignsService,
+    private router: Router,
+    private snack: MatSnackBar,
+    private configService: ConfigService,
+    private cd: ChangeDetectorRef,
+    private csvReportService: CsvReportService,
+  ) {
+    this.dataSource = new CustomDataSource<ICampaignTableData>(this.campaignsService, 5, { include: 'pool' });
   }
 
   public editCampaign(campaign: ICampaignTableData): void {
@@ -46,15 +51,15 @@ export class CampaignsListPageComponent implements OnInit, OnDestroy {
         });
   }
 
-  public activateCampaign(campaign: any): void {
-    this.updateCampaignStatus(campaign.id, this.campaignStatuses.activate);
+  public activateCampaign(campaign: ICampaign): void {
+    this.updateCampaignStatus(campaign.id, CampaignStatus.active);
   }
 
-  public pauseCampaign(campaign: any): void {
-    this.updateCampaignStatus(campaign.id, this.campaignStatuses.pause);
+  public pauseCampaign(campaign: ICampaign): void {
+    this.updateCampaignStatus(campaign.id, CampaignStatus.paused);
   }
 
-  private updateCampaignStatus(campaignId: string, newStatus: CampaignAction): void {
+  private updateCampaignStatus(campaignId: string, newStatus: CampaignStatus): void {
     this.campaignsService.updateCampaignStatus(campaignId, newStatus)
       .subscribe(() => {
         this.dataSource.updateData(DataSourceUpdateSchema.currentPage);
@@ -63,7 +68,18 @@ export class CampaignsListPageComponent implements OnInit, OnDestroy {
   }
 
   public openReport(url: string): void {
-    this.router.navigateByUrl(url);
+    const segments: string[] = url.split('/');
+    // for reports with a dedicated page
+    const hasPage: boolean = [
+      EngagementType.survey,
+      EngagementType.stamp
+    ].some(typ => segments.some(s => s === typ));
+    if (hasPage) {
+      this.router.navigateByUrl(url);
+    } else {
+      const campaignId = segments[segments.length - 1];
+      this.csvReportService.downloadReport('campaign_report', { campaign_id: campaignId });
+    }
   }
 
   public ngOnInit(): void {
@@ -82,5 +98,4 @@ export class CampaignsListPageComponent implements OnInit, OnDestroy {
         this.statusLabel = statuses;
       });
   }
-
 }

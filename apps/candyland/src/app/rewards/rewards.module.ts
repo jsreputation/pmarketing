@@ -55,10 +55,13 @@ import { RewardLoyaltyFormGroupComponent } from './components/reward-loyalty-for
 import { MatTabsModule } from '@angular/material/tabs';
 import { RewardLoyaltySetupGroupComponent } from './components/reward-loyalty-setup-group/reward-loyalty-setup-group.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { VouchersUploadService } from '@cl-core/services/vouchers-upload.service';
+import { IAdvancedUploadFileService } from '@cl-core/services/iadvanced-upload-file.service';
 
 @NgModule({
   providers: [
-    NewRewardFormService
+    NewRewardFormService,
+    { provide: IAdvancedUploadFileService, useClass: VouchersUploadService }
   ],
   declarations: [
     RewardsListPageComponent,

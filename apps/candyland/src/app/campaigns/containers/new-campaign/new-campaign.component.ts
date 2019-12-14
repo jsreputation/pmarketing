@@ -18,7 +18,7 @@ import {
   IWLimitAttributes,
   IWProfileAttributes
 } from '@perx/whistler';
-import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
@@ -60,11 +60,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.initTenantSettings();
     this.initForm();
-    this.form.valueChanges
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(value => {
-        this.store.updateCampaign(value);
-      });
+    this.handleCampaignNameChanges();
     this.handleRouteParams();
   }
 
@@ -353,6 +349,14 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       map((data: any[]) => (data.length > 0) ? data[0].url : ''),
       takeUntil(this.destroy$)
     );
+  }
+
+  private handleCampaignNameChanges(): void {
+    this.form.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(value => {
+        this.store.updateCampaign(value);
+      });
   }
 
   private handleRouteParams(): void {
