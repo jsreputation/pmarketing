@@ -4,7 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { oc } from 'ts-optchain';
 
 @Component({

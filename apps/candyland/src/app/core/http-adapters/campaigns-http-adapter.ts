@@ -9,34 +9,48 @@ import {
   IWAudiences,
   WInformationCollectionSettingType,
 } from '@perx/whistler';
-import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
+import { WCampaignStatus } from '@perx/whistler';
+import { CampaignStatus } from '@cl-core/models/campaign/campaign-status.enum';
 
 export class CampaignsHttpAdapter {
+  private static WStat2Stat: { [k in WCampaignStatus]: CampaignStatus } = {
+    scheduled: CampaignStatus.scheduled,
+    paused: CampaignStatus.paused,
+    active: CampaignStatus.active,
+    ended: CampaignStatus.ended
+  };
+  private static Stat2WStat: { [k in CampaignStatus]: WCampaignStatus } = {
+    scheduled: WCampaignStatus.scheduled,
+    paused: WCampaignStatus.paused,
+    active: WCampaignStatus.active,
+    ended: WCampaignStatus.ended
+  };
 
-  public static transformCampaignStatus(status: string): IJsonApiItem<Partial<IWCampaignAttributes>> {
+  public static transformCampaignStatus(status: CampaignStatus): IJsonApiItem<Partial<IWCampaignAttributes>> {
     return {
       type: 'entities',
       attributes: {
-        status
+        status: CampaignsHttpAdapter.Stat2WStat[status]
       }
     };
   }
 
   public static transformToCampaign(
     data: IJsonApiItem<IWCampaignAttributes>,
-    includedPools?: IJsonApiItem<Partial<IWAudiences>>[]): ICampaignTableData {
-    const audienceCheck = includedPools
-      .find(pool => +pool.id === (data.attributes.pool_id || Number.MAX_SAFE_INTEGER));
-    const audience = audienceCheck ? audienceCheck.attributes.name : '-';
-    const eType = data.attributes.engagement_type ?
-      CampaignsHttpAdapter.EngagementTypePipeTransform(EngagementTypeFromAPIMapping[data.attributes.engagement_type])
-      : '';
+    includedPools?: IJsonApiItem<IWAudiences>[]
+  ): ICampaignTableData {
+    const audienceCheck: IJsonApiItem<IWAudiences> | undefined = includedPools ? includedPools
+      .find(pool => +pool.id === (data.attributes.pool_id || Number.MAX_SAFE_INTEGER)) : undefined;
+    const audience: string = audienceCheck ? audienceCheck.attributes.name : '-';
+    const eType: string = data.attributes.engagement_type ?
+      CampaignsHttpAdapter.EngagementTypePipeTransform(EngagementTypeFromAPIMapping[data.attributes.engagement_type]) : '';
     return {
       id: data.id,
       name: data.attributes.name,
-      status: data.attributes.status,
+      status: CampaignsHttpAdapter.WStat2Stat[data.attributes.status],
       begin: DateTimeParser.stringToDate(data.attributes.start_date_time),
       end: DateTimeParser.stringToDate(data.attributes.end_date_time),
       audience,
@@ -79,7 +93,7 @@ export class CampaignsHttpAdapter {
     return {
       id: data.id,
       name: campaignData.name,
-      status: campaignData.status,
+      status: CampaignsHttpAdapter.WStat2Stat[campaignData.status],
       engagement_id: `${campaignData.engagement_id}`,
       engagement_type: EngagementTypeFromAPIMapping[campaignData.engagement_type],
       campaignInfo: {
@@ -114,7 +128,7 @@ export class CampaignsHttpAdapter {
         name: data.name,
         engagement_type: EngagementTypeAPIMapping[data.template.attributes_type] as WEngagementType,
         engagement_id: data.template.id,
-        status: 'scheduled',
+        status: WCampaignStatus.scheduled,
         start_date_time: startDate,
         end_date_time: endDate,
         goal: data.campaignInfo.goal,
