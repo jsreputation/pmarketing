@@ -1,6 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
 import {
   IFormsService,
   AuthenticationService,
@@ -10,13 +9,16 @@ import {
   IPrePlayStateData,
   ISurvey,
   IAnswer,
-  SurveyService
+  SurveyService,
+  ThemesService,
+  ITheme
 } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject, iif, of, throwError } from 'rxjs';
 import { catchError, tap, switchMap, retryWhen, delay, mergeMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Location } from '@angular/common';
+import { PinMode } from '../enter-pin/enter-pin.component';
 
 interface ISignupAttributes {
   [key: string]: any;
@@ -42,21 +44,23 @@ export class SignUpComponent implements OnInit, OnDestroy {
   private oldToken: string;
   private oldAnonymousStatus: boolean;
   public appAccessTokenFetched: boolean;
+  public theme: Observable<ITheme>;
 
   constructor(
     private formSvc: IFormsService,
     private authService: AuthenticationService,
-    public snack: MatSnackBar,
     private notificationService: NotificationService,
     private router: Router,
     private translate: TranslateService,
     private gameService: IGameService,
     private surveyService: SurveyService,
     private location: Location,
-    private instantOutcomeService: InstantOutcomeService
+    private instantOutcomeService: InstantOutcomeService,
+    private themesService: ThemesService,
   ) { }
 
   public ngOnInit(): void {
+    this.theme = this.themesService.getThemeSetting();
     this.data$ = this.formSvc.getSignupForm();
     this.oldPI = this.authService.getPI();
     this.oldToken = this.authService.getUserAccessToken();
@@ -108,19 +112,26 @@ export class SignUpComponent implements OnInit, OnDestroy {
       if (this.stateData && this.stateData.collectInfo) {
         this.submitDataAndCollectInformation(pi, userObj);
       }
-      this.submitData(pi, userObj);
+      this.authService.createUserAndAutoLogin(pi, userObj)
+        .subscribe(
+          () => {
+            this.notificationService.addSnack('User successfully created.');
+            this.router.navigate(['/wallet']);
+          },
+          (err) => {
+            if (err.name && err.name === 'RequiresOtpError') {
+              this.router.navigate(
+                ['/otp', PinMode.register],
+                { state: { mobileNo: pi } });
+            } else if (err.error && err.error.message) {
+              console.log(err.error.message);
+              this.notificationService.addSnack(err.error.message);
+            } else {
+              this.notificationService.addSnack('Something unexpected happened');
+            }
+          }
+        );
     }
-  }
-
-  private submitData(pi: string, userObj: ISignupAttributes): void {
-    this.authService.createUserAndAutoLogin(pi, userObj)
-      .subscribe(
-        () => {
-          this.snack.open('User successfully created.', 'x', { duration: 2000 });
-          this.router.navigate(['/wallet']);
-        },
-        (err) => console.error(err)
-      );
   }
 
   private submitDataAndCollectInformation(pi: string, userObj: ISignupAttributes): void {

@@ -1,3 +1,5 @@
+@import "../mixins";
+
 .content-container {
   display: flex;
   flex-direction: column;
@@ -37,14 +39,11 @@ button {
   font-size: 1.6rem;
 
   .subtitle {
-    font-weight: normal;
-    font-size: 1.4rem;
-    margin-bottom: 2.4rem;
+    @include form-subtitle;
+  }
 
-    .link {
-      color: #eb202f;
-      text-decoration: none;
-    }
+  span {
+    border-top: 1rem;
   }
 
   .error_msg {
@@ -64,8 +63,4 @@ button {
   }
 
   border-radius: 0.8rem;
-
-  span {
-    border-top: 1rem;
-  }
 }

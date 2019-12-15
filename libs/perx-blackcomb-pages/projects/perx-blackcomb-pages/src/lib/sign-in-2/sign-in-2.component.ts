@@ -1,11 +1,12 @@
 import { AuthenticationService, NotificationService, Config, ITheme, ThemesService, ConfigService, IConfig } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, Navigation } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'perx-blackcomb-pages-login',
@@ -60,8 +61,10 @@ export class SignIn2Component implements OnInit, OnDestroy {
   }
 
   public initForm(): void {
+    const nav: Navigation | null = this.router.getCurrentNavigation();
+    const custId: string = oc(nav).extras.state.pi('');
     this.loginForm = this.fb.group({
-      customerID: ['', Validators.required],
+      customerID: [custId, Validators.required],
       password: ['', Validators.required]
     });
   }
@@ -72,7 +75,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
     const pwdField = this.loginForm.get('password');
     const password: string = pwdField ? pwdField.value : '';
     this.errorMessage = null;
-    this.authService.login(username, password, '2')
+    this.authService.login(username, password)
       .pipe(
         takeUntil(this.destroy$)
       )

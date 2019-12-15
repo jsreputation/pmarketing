@@ -69,9 +69,6 @@ export class LayoutComponent implements OnInit {
       }
     );
 
-    // this.notificationService.$popup
-    //   .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
-
     this.router.events
       .pipe(
         filter((event: Event) => event instanceof NavigationEnd),

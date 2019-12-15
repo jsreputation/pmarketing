@@ -19,6 +19,7 @@ import {
   IWProfileAttributes,
 } from '@perx/whistler';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
+import { IMessageResponse } from './authentication.service';
 
 interface IUserJWTRequest {
   identifier: string;
@@ -219,7 +220,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   // @ts-ignore
-  public resendOTP(phone: string): Observable<void> {
+  public resendOTP(phone: string): Observable<IMessageResponse> {
     return throwError('Not implement yet');
   }
 
@@ -270,7 +271,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   // @ts-ignore
-  public verifyOTP(phone: string, otp: string): Observable<void> {
+  public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
     return throwError('Not implement yet');
   }
 

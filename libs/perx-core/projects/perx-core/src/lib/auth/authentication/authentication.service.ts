@@ -16,6 +16,13 @@ export interface IMessageResponse {
   message: string;
 }
 
+export class RequiresOtpError extends Error {
+  constructor() {
+    super('OTP validation is required');
+    this.name = 'RequiresOtpError';
+  }
+}
+
 export abstract class AuthenticationService implements AuthService {
   public abstract get $failedAuth(): Observable<boolean>;
 
@@ -76,11 +83,11 @@ export abstract class AuthenticationService implements AuthService {
 
   public abstract resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse>;
 
-  public abstract resendOTP(phone: string): Observable<void>;
+  public abstract resendOTP(phone: string): Observable<IMessageResponse>;
 
   public abstract signup(profile: ISignUpData): Observable<IProfile>;
 
-  public abstract verifyOTP(phone: string, otp: string): Observable<void>;
+  public abstract verifyOTP(phone: string, otp: string): Observable<IMessageResponse>;
 
   public abstract requestVerificationToken(phone?: string): Observable<void>;
 

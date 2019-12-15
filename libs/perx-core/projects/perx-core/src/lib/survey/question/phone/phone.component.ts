@@ -3,7 +3,7 @@ import { IAnswer } from '../../models/survey.model';
 import { Observable, Subject } from 'rxjs';
 import { GeneralStaticDataService } from '../../../utils/general-static-data/general-static-data.service';
 import { debounceTime } from 'rxjs/operators';
-import { ICountryCode } from 'perx-core/perx-core';
+import { ICountryCode } from '../../../utils/general-static-data/country-code';
 
 interface IPayloadPhone {
   type: string;

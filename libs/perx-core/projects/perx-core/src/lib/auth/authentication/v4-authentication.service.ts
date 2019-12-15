@@ -1,9 +1,9 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
-import { tap, mergeMap, catchError, map } from 'rxjs/operators';
-import { Observable, of, throwError } from 'rxjs';
+import { tap, mergeMap, catchError, map, switchMap } from 'rxjs/operators';
+import { Observable, of, throwError, iif } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { AuthenticationService, IMessageResponse } from './authentication.service';
+import { AuthenticationService, IMessageResponse, RequiresOtpError } from './authentication.service';
 import { IProfile } from '../../profile/profile.model';
 import {
   ISignUpData,
@@ -212,14 +212,13 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     );
   }
 
-  public resendOTP(phone: string): Observable<void> {
+  public resendOTP(phone: string): Observable<IMessageResponse> {
     return this.http.get<IMessageResponse>(`${this.customersEndPoint}/resend_confirmation`, { params: { phone } })
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
           error => console.log(error)
         ),
-        map(() => void 0)
       );
   }
 
@@ -271,7 +270,12 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       passwordConfirmation: oc(userObj).password(undefined),
       anonymous
     };
-    return this.signup(profile).pipe(map(() => void 0));
+    const otp$ = throwError(new RequiresOtpError());
+    const success$ = of(void 0);
+    return this.signup(profile)
+      .pipe(
+        switchMap((p: IProfile) => iif(() => p.state === 'initial', otp$, success$))
+      );
   }
 
   public signup(profile: ISignUpData): Observable<IProfile> {
@@ -279,21 +283,20 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     return this.http.post<IV4ProfileResponse>(`${this.customersEndPoint}/signup`, profileV4)
       .pipe(
         tap( // Log the result or error
-          data => console.log(data),
+          (/*data*/) => {/*console.log(data)*/ },
           error => console.log(error)
         ),
         map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
       );
   }
 
-  public verifyOTP(phone: string, otp: string): Observable<void> {
+  public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
     return this.http.patch<IMessageResponse>(`${this.customersEndPoint}/confirm`, { phone, confirmation_token: otp })
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
           error => console.log(error)
-        ),
-        map(() => void 0)
+        )
       );
   }
 

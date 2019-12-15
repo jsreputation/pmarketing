@@ -1,20 +1,24 @@
-<div class="sign-up">
-  <div class="error_msg">
-    <span>{{errorMessage}}</span>
+<div class="content-container">
+  <div class="sign-up">
+    <div class="error_msg">
+      <span>{{errorMessage}}</span>
+    </div>
+    <perx-core-survey
+      [hideIndex]="true"
+      [data]="data$"
+      (surveyDone)="updateFormStatus($event)"
+      (totalLength)="setTotalLength($event)"
+      (currentPointer)="setCurrentPointer($event)"></perx-core-survey>
+
+    <button
+      [disabled]="!formComplete"
+      mat-flat-button
+      color="primary"
+      (click)="onSubmit()">
+      Sign up
+    </button>
+    <div class="subtitle">
+      Already a member? <a class="link" [routerLink]="'/login'">Login</a>
+    </div>
   </div>
-  <perx-core-survey
-    [hideIndex]="true"
-    [data]="data$"
-    (surveyDone)="updateFormStatus($event)"
-    (totalLength)="setTotalLength($event)"
-    (currentPointer)="setCurrentPointer($event)"></perx-core-survey>
-
-  <button
-    [disabled]="!formComplete"
-    mat-flat-button
-    color="primary"
-    (click)="onSubmit()">
-    Submit
-  </button>
-
 </div>

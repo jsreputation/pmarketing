@@ -13,6 +13,7 @@ const routes: Routes = [
     loadChildren: () => import('./sign-up/sign-up.module').then((mod) => mod.SignUpModule),
     canActivate: [PublicGuard, PreAuthGuard]
   },
+  { path: 'otp/:type', loadChildren: () => import('./otp/otp.module').then((mod) => mod.OtpModule) },
   {
     path: 'loading',
     loadChildren: () => import('./loading/loading.module').then((mod) => mod.LoadingModule)
@@ -23,7 +24,7 @@ const routes: Routes = [
     canActivate: [ProtectedGuard]
   },
   { path: '**', redirectTo: '/wallet', canActivate: [ProtectedGuard] },
-  { path: '**', redirectTo: '/loading', canActivate: [PublicGuard] }
+  { path: '**', redirectTo: '/loading', canActivate: [PublicGuard] },
 ];
 
 @NgModule({
