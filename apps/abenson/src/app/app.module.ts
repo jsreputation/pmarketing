@@ -37,7 +37,6 @@ import { HomeComponent } from './home/home.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { LoadingComponent } from './loading/loading.component';
 import { HistoryComponent } from './history/history.component';
 import { PromosComponent } from './promos/promos.component';
 import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
@@ -55,7 +54,6 @@ import { PopupComponent } from './popup/popup.component';
     LoginComponent,
     HomeComponent,
     RedeemComponent,
-    LoadingComponent,
     HistoryComponent,
     PromosComponent,
     SignUpComponent,

@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 
 @Component({
   selector: 'cl-new-campaign-rewards-limits-page',
