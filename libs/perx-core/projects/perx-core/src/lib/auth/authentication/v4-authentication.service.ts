@@ -283,7 +283,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     return this.http.post<IV4ProfileResponse>(`${this.customersEndPoint}/signup`, profileV4)
       .pipe(
         tap( // Log the result or error
-          (/*data*/) => {/*console.log(data)*/ },
+          data => console.log(data),
           error => console.log(error)
         ),
         map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
