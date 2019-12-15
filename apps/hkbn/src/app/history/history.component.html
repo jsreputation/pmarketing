@@ -1,10 +1,27 @@
 <div class="container">
-    <mat-tab-group mat-stretch-tabs>
-        <mat-tab label="{{'YOU_CURRENTLY_HAVE' | translate }}">
-            <perx-core-loyalty-transactions-list [priceLabelFn]="priceLabelFn" [transactions]="accrued"></perx-core-loyalty-transactions-list>
-        </mat-tab>
-        <mat-tab label="{{ 'TRANSATION_HISTORY'| translate }}">
-            <perx-core-loyalty-transactions-list [priceLabelFn]="priceLabelFn" [transactions]="redeemed"></perx-core-loyalty-transactions-list>
-        </mat-tab>
-    </mat-tab-group>
+  <mat-tab-group mat-stretch-tabs>
+    <mat-tab label="{{'YOU_CURRENTLY_HAVE' | translate }}">
+      <div
+        class="accrued-container"
+        infiniteScroll
+        [infiniteScrollDistance]="2"
+        [infiniteScrollThrottle]="500"
+        (scrolled)="onScroll()"
+        [scrollWindow]="false"
+      >
+        <perx-core-loyalty-transactions-list
+          *ngIf="accrued"
+          [priceLabelFn]="priceLabelFn"
+          [transactions]="accrued"
+        ></perx-core-loyalty-transactions-list>
+      </div>
+    </mat-tab>
+    <mat-tab label="{{ 'TRANSATION_HISTORY'| translate }}">
+      <perx-core-loyalty-transactions-list
+        *ngIf="redeemed"
+        [priceLabelFn]="priceLabelFn"
+        [transactions]="redeemed"
+      ></perx-core-loyalty-transactions-list>
+    </mat-tab>
+  </mat-tab-group>
 </div>

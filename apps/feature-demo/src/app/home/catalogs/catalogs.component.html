@@ -1,6 +1,15 @@
 <div *ngIf="(catalogs$ | async) as catalogs" class="main-container">
     <h1 *ngIf="catalogs.length > 0">More to enjoy</h1>
-    <div *ngIf="catalogs.length > 0" class="cards">
+    <div
+      *ngIf="catalogs.length > 0"
+      class="cards"
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="500"
+      (scrolled)="onScroll()"
+      [scrollWindow]="false"
+      [horizontal]="true"
+    >
         <mat-card *ngFor="let catalog of catalogs" (click)="selected(catalog)" matRipple>
             <img mat-card-image [src]="catalog.catalogBanner">
             <mat-card-content>
