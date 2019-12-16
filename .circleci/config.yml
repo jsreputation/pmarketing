@@ -216,7 +216,7 @@ jobs:
             --build-arg preauth=$PREAUTH \
             --build-arg iswhistler=$IS_WHISTLER \
             --build-arg sourcetype=$SOURCE_TYPE \
-            --build-arg env=$APP_ENV
+            --build-arg env=$APP_ENV \
             --build-arg appbase=$APP_BASE
       - run:
           name: Push docker
