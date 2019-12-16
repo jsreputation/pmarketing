@@ -79,6 +79,16 @@ const routes: Routes = [
       {
         path: 'profile',
         loadChildren: (): any => import('../profile/profile.module').then((mod: any) => mod.ProfileModule)
+      },
+      {
+        path: 'change-password',
+        loadChildren: (): any => import('../change-password/change-password.module')
+                      .then((mod: any) => mod.ChangePasswordModule)
+      },
+      {
+        path: 'edit-profile/:type',
+        loadChildren: (): any => import('../edit-profile-field/edit-profile-field.module')
+                      .then((mod: any) => mod.EditProfileFieldModule)
       }
     ]
   }
