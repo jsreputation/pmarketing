@@ -45,6 +45,7 @@ describe('V4VouchersService', () => {
         categoryTags: [],
       },
       state: VoucherState.issued,
+      redemptionType: RedemptionType.none,
       // code: null,
       expiry: new Date('Fri Jan 31 2020 23:59:00 GMT+0800 (Philippine Standard Time)'),
     }

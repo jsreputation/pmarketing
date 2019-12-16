@@ -9,6 +9,7 @@ import { IVoucherService } from '../ivoucher.service';
 import { IVoucher, VoucherState } from '../models/voucher.model';
 import { Type, SimpleChange } from '@angular/core';
 import { oc } from 'ts-optchain';
+import { RedemptionType } from '../../perx-core.models';
 
 describe('BcodeRedemptionComponent', () => {
   let component: BcodeRedemptionComponent;
@@ -35,6 +36,7 @@ describe('BcodeRedemptionComponent', () => {
       categoryTags: [],
     },
     state: VoucherState.issued,
+    redemptionType: RedemptionType.none,
     code: 'GFY2019',
     expiry: new Date('2019-09-05T03:24:00'),
   };

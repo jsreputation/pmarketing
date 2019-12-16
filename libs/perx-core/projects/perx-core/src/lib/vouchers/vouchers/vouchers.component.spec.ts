@@ -12,6 +12,7 @@ import { IVoucherService } from '../ivoucher.service';
 import { RewardsService } from '../../rewards/rewards.service';
 import { By } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
+import { RedemptionType } from '../../perx-core.models';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
@@ -28,6 +29,7 @@ describe('VouchersComponent', () => {
     id: 21,
     expiry: null,
     state: VoucherState.redeemed,
+    redemptionType: RedemptionType.txtCode,
     reward: {
       id: 21,
       name: '',
@@ -53,6 +55,7 @@ describe('VouchersComponent', () => {
     id: 21,
     expiry: null,
     state: VoucherState.issued,
+    redemptionType: RedemptionType.txtCode,
     reward: {
       id: 21,
       name: '',
@@ -130,6 +133,7 @@ describe('VouchersComponent', () => {
         id: 1,
         expiry: null,
         state: VoucherState.redeemed,
+        redemptionType: RedemptionType.txtCode,
         reward: {
           id: 1,
           name: '',
@@ -154,6 +158,7 @@ describe('VouchersComponent', () => {
         id: 2,
         expiry: null,
         state: VoucherState.redeemed,
+        redemptionType: RedemptionType.txtCode,
         reward: {
           id: 2,
           name: '',
@@ -187,6 +192,7 @@ describe('VouchersComponent', () => {
         id: 1,
         expiry: null,
         state: VoucherState.redeemed,
+        redemptionType: RedemptionType.none,
         reward: {
           id: 1,
           name: 'First Voucher',
@@ -211,6 +217,7 @@ describe('VouchersComponent', () => {
         id: 2,
         expiry: null,
         state: VoucherState.redeemed,
+        redemptionType: RedemptionType.none,
         reward: {
           id: 2,
           name: 'Second Voucher',
@@ -244,6 +251,7 @@ describe('VouchersComponent', () => {
         id: 1,
         expiry: null,
         state: VoucherState.redeemed,
+        redemptionType: RedemptionType.none,
         reward: {
           id: 1,
           name: 'First voucher',
@@ -268,6 +276,7 @@ describe('VouchersComponent', () => {
         id: 2,
         expiry: null,
         state: VoucherState.redeemed,
+        redemptionType: RedemptionType.none,
         reward: {
           id: 2,
           name: 'Second Voucher',
@@ -301,6 +310,7 @@ describe('VouchersComponent', () => {
         id: 1,
         expiry: null,
         state: VoucherState.redeemed,
+        redemptionType: RedemptionType.none,
         reward: {
           id: 1,
           name: 'First voucher',
@@ -325,6 +335,7 @@ describe('VouchersComponent', () => {
         id: 2,
         expiry: null,
         state: VoucherState.redeemed,
+        redemptionType: RedemptionType.none,
         reward: {
           id: 2,
           name: 'Second Voucher',
@@ -363,6 +374,7 @@ describe('VouchersComponent', () => {
         id: 1,
         expiry: null,
         state: VoucherState.redeemed,
+        redemptionType: RedemptionType.none,
         reward: {
           id: 1,
           name: 'First voucher',
@@ -387,6 +399,7 @@ describe('VouchersComponent', () => {
         id: 2,
         expiry: null,
         state: VoucherState.issued,
+        redemptionType: RedemptionType.none,
         reward: {
           id: 2,
           name: 'Second Voucher',
@@ -430,6 +443,7 @@ describe('VouchersComponent', () => {
         id: 1,
         expiry: null,
         state: VoucherState.redeemed,
+        redemptionType: RedemptionType.none,
         reward: {
           id: 1,
           name: 'First voucher',
@@ -454,6 +468,7 @@ describe('VouchersComponent', () => {
         id: 2,
         expiry: null,
         state: VoucherState.issued,
+        redemptionType: RedemptionType.none,
         reward: {
           id: 2,
           name: 'Second Voucher',
