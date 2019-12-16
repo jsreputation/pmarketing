@@ -65,6 +65,7 @@ if (process.env.PRODUCTION) {
   });
 }
 app.use('/assets', express.static('assets'));
+app.use(Sentry.Handlers.errorHandler());
 // Start up the Node server
 const server = app.listen(PORT, () => {
   console.log(`Node server listening on http://localhost:${PORT}`);
