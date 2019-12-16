@@ -23,6 +23,11 @@ export class ProfileComponent implements OnInit {
     this.router.navigateByUrl('change-password');
   }
 
-  public onEditMobileClicked(): void {
+  public onEditEmailClicked(): void {
+    this.router.navigateByUrl('edit-profile/email');
+  }
+
+  public onEditPostcodeClicked(): void {
+    this.router.navigateByUrl('edit-profile/postcode');
   }
 }

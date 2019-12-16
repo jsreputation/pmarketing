@@ -5,17 +5,21 @@ import { CampaignsListPageComponent } from './campaigns-list-page.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TableFiltersModule } from '@cl-shared';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { MatFormFieldModule, MatSnackBarModule, MatInputModule, MatSelectModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import {MessageService} from '@cl-core-services';
 import { CsvReportService } from '@cl-core-services';
 
 describe('CampaignsListPageComponent', () => {
   let component: CampaignsListPageComponent;
   let fixture: ComponentFixture<CampaignsListPageComponent>;
   const csvReportServiceStub: Partial<CsvReportService> = {};
+  const msgSvcStub: Partial<MessageService> = {
+    show: () => ({})
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -27,7 +31,6 @@ describe('CampaignsListPageComponent', () => {
         MatSelectModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        MatSnackBarModule,
         BrowserAnimationsModule,
         NoopAnimationsModule,
         TranslateModule.forRoot(),
@@ -35,6 +38,7 @@ describe('CampaignsListPageComponent', () => {
       declarations: [CampaignsListPageComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        { provide: MessageService, useValue: msgSvcStub },
         { provide: CsvReportService, useValue: csvReportServiceStub }
       ]
     })

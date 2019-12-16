@@ -4,9 +4,8 @@ import {
   DataSourceStates,
   DataSourceUpdateSchema
 } from '@cl-shared/table/data-source/custom-data-source';
-import { CampaignsService, ConfigService, CsvReportService } from '@cl-core/services';
+import {CampaignsService, ConfigService, CsvReportService, MessageService} from '@cl-core/services';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { StatusLabelConfig } from '@cl-shared';
 import { Subject } from 'rxjs';
@@ -30,7 +29,7 @@ export class CampaignsListPageComponent implements OnInit, OnDestroy {
   constructor(
     private campaignsService: CampaignsService,
     private router: Router,
-    private snack: MatSnackBar,
+    private messageService: MessageService,
     private configService: ConfigService,
     private cd: ChangeDetectorRef,
     private csvReportService: CsvReportService,
@@ -47,7 +46,7 @@ export class CampaignsListPageComponent implements OnInit, OnDestroy {
       .subscribe(
         () => this.dataSource.updateData(),
         () => {
-          this.snack.open('Duplication failed, please try again.', 'x', { duration: 2000 });
+          this.messageService.show('Duplication failed, please try again.', 'warning');
         });
   }
 

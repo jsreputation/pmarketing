@@ -4,7 +4,7 @@ import { AudiencesUserInfoPageComponent } from './audiences-user-info-page.compo
 import { AudiencesUserInfoComponent } from '../../components/audiences-user-info/audiences-user-info.component';
 import {
   MatFormFieldModule, MatInputModule, MatTableModule, MatTabsModule, MatIconModule,
-  MatMenuModule, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule, MatSnackBarModule, MatSortModule
+  MatMenuModule, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule, MatSortModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
@@ -19,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import {MessageService} from '@cl-core-services';
 
 describe('AudiencesUserInfoPageComponent', () => {
   let component: AudiencesUserInfoPageComponent;
@@ -48,10 +49,14 @@ describe('AudiencesUserInfoPageComponent', () => {
           HttpClientTestingModule,
           MatDialogModule,
           BrowserDynamicTestingModule,
-          MatSnackBarModule,
           TranslateModule.forRoot(),
         ],
         providers: [
+          {
+            provide: MessageService, useValue: {
+              show: () => ({})
+            }
+          },
           AudiencesUserService,
           AudiencesVouchersService,
           {
