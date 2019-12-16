@@ -10,6 +10,7 @@ export interface ISignUpData {
   title?: string;
   password: string;
   passwordConfirmation: string;
+  anonymous?: boolean;
 }
 
 export interface IResetPasswordData {
