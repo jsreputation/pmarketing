@@ -196,6 +196,12 @@ jobs:
             fi
             echo "after second set APP: ${APP}"
 
+            if [ $APP == 'petron-demo' ]
+            then
+              export APP_BASE="blackcomb"
+            fi
+            echo "APP_BASE: ${APP_BASE}"
+
             export APP_ENV="prod"
             if [ $APP == 'starhub' ] && [ $TARGET_ENV != 'production' ]
             then
@@ -210,7 +216,8 @@ jobs:
             --build-arg preauth=$PREAUTH \
             --build-arg iswhistler=$IS_WHISTLER \
             --build-arg sourcetype=$SOURCE_TYPE \
-            --build-arg env=$APP_ENV
+            --build-arg env=$APP_ENV \
+            --build-arg appbase=$APP_BASE
       - run:
           name: Push docker
           command: |
