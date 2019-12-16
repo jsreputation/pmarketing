@@ -76,7 +76,6 @@ import { TransactionHistoryComponent } from './transaction-history/transaction-h
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
 import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
-import { FeedItemPopupComponent } from './feed-item-popup/feed-item-popup.component';
 import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
 
 const comps: any[] = [
@@ -129,8 +128,7 @@ const comps: any[] = [
   EnterPinComponent,
   PinInputComponent,
   RewardsBookingComponent,
-  FeedItemPopupComponent,
-  EditProfileFieldComponent
+  EditProfileFieldComponent,
 ];
 
 @NgModule({
@@ -158,7 +156,7 @@ const comps: any[] = [
     MatDatepickerModule,
     TranslateModule.forChild(),
     MatToolbarModule,
-    MatListModule
+    MatListModule,
   ],
   exports: [
     ...comps,
