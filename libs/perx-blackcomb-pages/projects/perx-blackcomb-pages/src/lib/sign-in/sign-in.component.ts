@@ -38,6 +38,8 @@ import {
   NotificationService,
   IPrePlayStateData,
   SurveyService,
+  IConfig,
+  ConfigService,
 } from '@perx/core';
 
 @Component({
@@ -57,6 +59,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   private oldPI: string;
   private oldToken: string;
   private oldAnonymousStatus: boolean;
+  private appConfig: IConfig;
 
   private initForm(): void {
     this.PIForm = this.fb.group({
@@ -67,6 +70,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private config: Config,
+    private configService: ConfigService,
     private router: Router,
     private gameService: IGameService,
     private surveyService: SurveyService,
@@ -80,6 +84,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.configService.readAppConfig().subscribe((conf) => this.appConfig = conf);
     this.initForm();
     this.oldPI = this.authService.getPI();
     this.oldToken = this.authService.getUserAccessToken();
@@ -173,7 +178,7 @@ export class SignInComponent implements OnInit, OnDestroy {
         }),
       ).subscribe(
         () => {
-          this.router.navigate(['/wallet']);
+          this.router.navigate([this.appConfig && this.appConfig.redirectAfterLogin || 'home']);
           if (this.stateData.popupData) {
             this.notificationService.addPopup(this.stateData.popupData);
           }
