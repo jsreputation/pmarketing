@@ -22,6 +22,8 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public theme: Observable<ITheme>;
   public appConfig: Observable<IConfig>;
   public appAccessTokenFetched: boolean;
+  private custId: string;
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -33,6 +35,8 @@ export class SignIn2Component implements OnInit, OnDestroy {
     public translate: TranslateService
   ) {
     this.preAuth = this.config.preAuth ? this.config.preAuth : false;
+    const nav: Navigation | null = this.router.getCurrentNavigation();
+    this.custId = oc(nav).extras.state.pi('');
   }
 
   public ngOnInit(): void {
@@ -61,10 +65,8 @@ export class SignIn2Component implements OnInit, OnDestroy {
   }
 
   public initForm(): void {
-    const nav: Navigation | null = this.router.getCurrentNavigation();
-    const custId: string = oc(nav).extras.state.pi('');
     this.loginForm = this.fb.group({
-      customerID: [custId, Validators.required],
+      customerID: [this.custId, Validators.required],
       password: ['', Validators.required]
     });
   }
