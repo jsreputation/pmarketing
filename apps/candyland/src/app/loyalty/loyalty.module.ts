@@ -59,6 +59,8 @@ import { LoyaltyRuleCardComponent } from './components/loyalty-rules-card/loyalt
 import { CurrencyConditionGroupComponent } from './components/currency-condition-group/currency-condition-group.component';
 import { ConditionInfoPipe } from './condition-info.pipe';
 import { LoyaltyConfigService } from './services/loyalty-config.service';
+import { MultiplierResultGroupComponent } from './components/multiplier-result-group/multiplier-result-group.component';
+import { BonusResultGroupComponent } from './components/bonus-result-group/bonus-result-group.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +95,8 @@ import { LoyaltyConfigService } from './services/loyalty-config.service';
     DynamicFormGroupDirective,
     LoyaltyRuleCardComponent,
     ConditionInfoPipe,
+    MultiplierResultGroupComponent,
+    BonusResultGroupComponent
   ],
   imports: [
     CommonModule,
@@ -139,7 +143,9 @@ import { LoyaltyConfigService } from './services/loyalty-config.service';
     DateConditionGroupComponent,
     AmountConditionGroupComponent,
     TransactionConditionGroupComponent,
-    CurrencyConditionGroupComponent
+    CurrencyConditionGroupComponent,
+    MultiplierResultGroupComponent,
+    BonusResultGroupComponent
   ]
 })
 export class LoyaltyModule {

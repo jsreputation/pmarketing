@@ -8,6 +8,12 @@ import { distinctUntilChanged, map, switchMap, takeUntil, tap } from 'rxjs/opera
 import Utils from '@cl-helpers/utils';
 import { CRUDParser, RequestType } from '@cl-helpers/crud-parser';
 import { ILoyaltyRule, ILoyaltyRuleCondition, ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
+import { TransactionConditionGroupComponent } from '../../components/transaction-condition-group/transaction-condition-group.component';
+import { AmountConditionGroupComponent } from '../../components/amount-condition-group/amount-condition-group.component';
+import { CurrencyConditionGroupComponent } from '../../components/currency-condition-group/currency-condition-group.component';
+import { DateConditionGroupComponent } from '../../components/date-condition-group/date-condition-group.component';
+import { BonusResultGroupComponent } from '../../components/bonus-result-group/bonus-result-group.component';
+import { MultiplierResultGroupComponent } from '../../components/multiplier-result-group/multiplier-result-group.component';
 
 @Component({
   selector: 'cl-rule-setup-popup',
@@ -20,22 +26,37 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   public titleError: string;
   public isHideAddCondition: boolean = false;
   public conditionTypes: { [value: string]: number } = {};
+  public conditionComponentMap: { [type: string]: any } = {
+    transaction: TransactionConditionGroupComponent,
+    amount: AmountConditionGroupComponent,
+    currency: CurrencyConditionGroupComponent,
+    fromDate: DateConditionGroupComponent,
+    toDate: DateConditionGroupComponent,
+  };
+  public resultsComponentsMap: { [type: string]: any } = {
+    bonus: BonusResultGroupComponent,
+    multiplier: MultiplierResultGroupComponent,
+  };
 
   public get name(): AbstractControl {
     return this.form.get('name') || null;
   }
 
-  public get applyMultiplier(): AbstractControl {
-    return this.form.get('result.applyMultiplier');
+  public get result(): AbstractControl {
+    return this.form.get('result') || null;
   }
 
-  public get awardPoints(): AbstractControl {
-    return this.form.get('result.awardPoints');
-  }
-
-  public get maximumPoints(): AbstractControl {
-    return this.form.get('result.maximumPoints');
-  }
+  // public get applyMultiplier(): AbstractControl {
+  //   return this.form.get('result.applyMultiplier');
+  // }
+  //
+  // public get awardPoints(): AbstractControl {
+  //   return this.form.get('result.awardPoints');
+  // }
+  //
+  // public get maximumPoints(): AbstractControl {
+  //   return this.form.get('result.maximumPoints');
+  // }
 
   public get conditions(): FormArray {
     return this.form.get('conditions') as FormArray;
@@ -61,7 +82,7 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   }
 
   public addCondition(type: string = 'transaction'): void {
-    this.conditions.push(this.formsService.createFormField(type));
+    this.conditions.push(this.formsService.createConditionFormField(type));
   }
 
   public deleteCondition(index: number): void {
@@ -70,10 +91,20 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
 
   public updateCondition(index: number, type: string): void {
     const id = this.conditions.at(index).value.id;
-    this.conditions.setControl(index, this.formsService.createFormField(type));
+    this.conditions.setControl(index, this.formsService.createConditionFormField(type));
     if (id) {
       this.conditions.at(index).get('id').patchValue(id);
     }
+  }
+
+  public updateResult(type: string): void {
+    // const id = this.result.value.id;
+    this.form.setControl('result', this.formsService.createResultFormField(type));
+    // this.result = this.formsService.createResultFormField(type);
+    // this.result.set();
+    // if (id) {
+    //   this.conditions.at(index).get('id').patchValue(id);
+    // }
   }
 
   public handleConditionTypes(): void {
@@ -159,9 +190,18 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
           map(() => ruleId)
         );
     } else {
-      request = this.ruleService.createRule(ruleSetId, updatedRule).pipe(
-        map((rule: any) => rule.id)
-      );
+      request = this.ruleService.createRulePoint(updatedRule.result)
+        .pipe(
+          map(response => response.data.id),
+          tap(id => console.log(id)),
+          map(id => updatedRule.result.id = id),
+          tap(rrr => console.log(rrr)),
+          switchMap(data => this.ruleService.createRule(ruleSetId, data)),
+          map((rule: any) => rule.id)
+        );
+      //  this.ruleService.createRule(ruleSetId, updatedRule).pipe(
+      //   map((rule: any) => rule.id)
+      // );
     }
     request = request.pipe(
       switchMap((id: string) => this.ruleService.getRule(id)),

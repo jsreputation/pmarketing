@@ -1,7 +1,12 @@
 import { JsonApiParser } from '@cl-helpers/json-api-parser';
 import Utils from '@cl-helpers/utils';
-import { ILoyaltyRule, ILoyaltyRuleCondition, ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
-import { IWLoyaltyRuleAttributes, IWLoyaltyRuleConditionAttributes, IWLoyaltyRuleSetAttributes } from '@perx/whistler';
+import { ILoyaltyRule, ILoyaltyRuleCondition, ILoyaltyRulePoint, ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
+import {
+  IWLoyaltyRuleAttributes,
+  IWLoyaltyRuleConditionAttributes,
+  IWLoyaltyRulePointAttributes,
+  IWLoyaltyRuleSetAttributes
+} from '@perx/whistler';
 
 export class LoyaltyRuleHttpAdapter {
 
@@ -43,7 +48,7 @@ export class LoyaltyRuleHttpAdapter {
     };
   }
 
-  public static transformRuleForRuleSetUpdate(rule: ILoyaltyRule): {id: string; priority: number} {
+  public static transformRuleForRuleSetUpdate(rule: ILoyaltyRule): { id: string; priority: number } {
     return {
       id: rule.id,
       priority: rule.priority
@@ -65,8 +70,8 @@ export class LoyaltyRuleHttpAdapter {
       type: 'rules',
       attributes: {
         rule_set_id: ruleSetId,
-        reward_type: 'Perx::Reward::Entity',
-        reward_id: 1,
+        reward_type: 'Perx::Loyalty::PointCalculator',
+        reward_id: data.result.id,
         name: data.name,
         conditions: data.conditions.map(condition =>
           LoyaltyRuleHttpAdapter.transformFromCondition(condition)
@@ -115,6 +120,31 @@ export class LoyaltyRuleHttpAdapter {
           }
         }
       }
+    };
+  }
+
+  public static transformFromPointForm(data: ILoyaltyRulePoint): IJsonApiItem<IWLoyaltyRulePointAttributes>  {
+    return {
+      type: data.type || 'point_calculators',
+      attributes: {
+        amount: data.amount,
+        applier_type: data.applierType
+      },
+    };
+  }
+
+  public static transformToPointForm(data: IJsonApiItem<IWLoyaltyRulePointAttributes>): ILoyaltyRulePoint {
+    return {
+      id: data.id,
+      amount: data.attributes.amount,
+      applierType: data.attributes.applier_type
+    };
+  }
+
+  public static transformPossibleOutcome(data: IJsonApiItem<any>): any {
+    return {
+      id: data.attributes.result_id,
+      type: data.attributes.result_type,
     };
   }
 

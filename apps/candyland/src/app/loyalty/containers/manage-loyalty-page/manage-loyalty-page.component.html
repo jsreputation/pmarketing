@@ -42,9 +42,8 @@
 </header>
 
 <section class="content form-limiter loyalty">
-  {{loading}}
   <div class="loyalty-loader">
-    <mat-progress-bar class="loyalty-loader-bar" *ngIf="loading$ | async" mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar class="loyalty-loader-bar" *ngIf="loading" mode="indeterminate"></mat-progress-bar>
   </div>
   <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0" [disableRipple]="loading">
     <!--step 1-->

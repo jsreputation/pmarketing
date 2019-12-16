@@ -1,4 +1,4 @@
-import { IWLoyaltyRuleConditionSign, IWLoyaltyRuleConditionValueType } from '@perx/whistler';
+import { IWLoyaltyRuleConditionSign, IWLoyaltyRuleConditionValueType, IWLoyaltyRulePointApplierType } from '@perx/whistler';
 
 declare interface ILoyaltyRuleSet {
   id: string;
@@ -16,10 +16,17 @@ declare interface ILoyaltyRule {
   result: any;
 }
 
-export interface ILoyaltyRuleCondition {
+declare interface ILoyaltyRuleCondition {
   id: string;
   type: string;
   value: string | Date | number | null;
   operator: IWLoyaltyRuleConditionSign;
   valueType: IWLoyaltyRuleConditionValueType;
+}
+
+declare interface ILoyaltyRulePoint {
+  id: string;
+  amount: string;
+  type?: string;
+  applierType: IWLoyaltyRulePointApplierType;
 }

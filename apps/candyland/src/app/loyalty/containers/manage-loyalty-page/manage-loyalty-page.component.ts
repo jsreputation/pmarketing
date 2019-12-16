@@ -305,7 +305,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
 
   private setLoading(value: boolean): void {
     // if (value !== this.loading$.value) {
-      this.loading$.next(value);
+    this.loading$.next(value);
     // }
   }
 
@@ -340,7 +340,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
           this.loyaltyId = loyalty.id;
           this.form.get('createdAt').patchValue(loyalty.createdAt);
         }),
-        switchMap((loyalty) => this.loyaltyService.getBasicTierRequest(newLoyalty,  loyalty.id, this.basicTierId)),
+        switchMap((loyalty) => this.loyaltyService.getBasicTierRequest(newLoyalty, loyalty.id, this.basicTierId)),
         filter(Boolean),
         tap(basicTier => this.setBasicTierId(basicTier.data.id)),
         takeUntil(this.destroy$)
@@ -481,15 +481,13 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   private initAllRuleSet(): void {
-    this.setLoading(true);
-    console.log('start');
     concat(this.getBasicTierRuleSet(), this.getAllCustomTierRuleSet())
       .pipe(
+        tap(() => this.setLoading(true)),
         filter(Boolean),
         tap(() => this.cd.detectChanges()),
         last(),
         finalize(() => this.setLoading(false)),
-        finalize(() => console.log('end')),
         takeUntil(this.destroy$)
       )
       .subscribe(

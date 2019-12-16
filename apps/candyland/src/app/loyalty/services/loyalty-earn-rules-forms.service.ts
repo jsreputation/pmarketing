@@ -12,6 +12,11 @@ export class LoyaltyEarnRulesFormsService {
     toDate: (type) => this.toDateGroup(type),
   };
 
+  public resultsGroups: { [key: string]: any } = {
+    bonus: (type) => this.bonusGroup(type),
+    multiplier: (type) => this.multiplierGroup(type),
+  };
+
   public getRuleForm(): FormGroup {
     return new FormGroup({
       id: new FormControl(null),
@@ -26,6 +31,11 @@ export class LoyaltyEarnRulesFormsService {
       name: new FormControl(null,
         [Validators.required, Validators.minLength(1), Validators.maxLength(60)]),
       conditions: new FormArray([]),
+      result: new FormGroup({
+        id: new FormControl(null),
+        amount: new FormControl(null, [Validators.required, Validators.min(1)]),
+        applierType: new FormControl('multiplier', [Validators.required]),
+      })
       // result: new FormGroup({
       //   typePoints: new FormControl(null, [Validators.required]),
       //   awardPoints: new FormControl(null, [Validators.required, Validators.min(1)]),
@@ -46,18 +56,25 @@ export class LoyaltyEarnRulesFormsService {
         value: 'prepaid',
         valueType: 'string',
       }],
-      // result: {
-      //   typePoints: 'bonus',
-      //   awardPoints: 100,
-      //   typeMultiplier: 'multiplier',
-      //   applyMultiplier: 2,
-      //   maximumPoints: 3
-      // }
+      result: {
+        id: null,
+        amount: 0,
+        applierType: 'multiplier'
+        // typePoints: 'bonus',
+        // awardPoints: 100,
+        // typeMultiplier: 'multiplier',
+        // applyMultiplier: 2,
+        // maximumPoints: 3
+      }
     };
   }
 
-  public createFormField(type: string): FormGroup {
+  public createConditionFormField(type: string): FormGroup {
     return this.conditionGroups[type](type) as FormGroup;
+  }
+
+  public createResultFormField(type: string): FormGroup {
+    return this.resultsGroups[type](type) as FormGroup;
   }
 
   public transactionGroup(type: string): FormGroup {
@@ -107,6 +124,28 @@ export class LoyaltyEarnRulesFormsService {
       operator: new FormControl('less_or_equal', [Validators.required]),
       value: new FormControl(Date.now(), [Validators.required]),
       valueType: new FormControl('date')
+    });
+  }
+
+  public bonusGroup(type: string): FormGroup {
+    return new FormGroup({
+      id: new FormControl(null),
+      applierType: new FormControl(type),
+      amount: new FormControl(0, [
+        // Validators.required,
+        // Validators.min[0]
+      ]),
+    });
+  }
+
+  public multiplierGroup(type: string): FormGroup {
+    return new FormGroup({
+      id: new FormControl(null),
+      applierType: new FormControl(type),
+      amount: new FormControl(1, [
+        // Validators.required,
+        // Validators.min[1]
+      ]),
     });
   }
 }
