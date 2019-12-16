@@ -76,6 +76,10 @@ const routes: Routes = [
         loadChildren: (): any => import('../content/content.module').then((mod: any) => mod.ContentModule),
         canActivate: [ProtectedGuard]
       },
+      {
+        path: 'profile',
+        loadChildren: (): any => import('../profile/profile.module').then((mod: any) => mod.ProfileModule)
+      }
     ]
   }
 
