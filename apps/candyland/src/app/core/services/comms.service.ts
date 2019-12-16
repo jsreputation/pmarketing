@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { CommsHttpAdapter } from '@cl-core/http-adapters/comms-http-adapter';
 import { IWCommTemplateAttributes, IWCommEventAttributes } from '@perx/whistler';
 import { IComm } from '@cl-core/models/comm/schedule';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 
 @Injectable({
   providedIn: 'root'

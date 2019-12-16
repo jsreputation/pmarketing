@@ -14,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, map, catchError, takeUntil } from 'rxjs/operators';
 import { combineLatest, of, Observable, Subject } from 'rxjs';
 
-import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { ILimit } from '@cl-core/models/limit/limit.interface';

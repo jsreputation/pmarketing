@@ -23,7 +23,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatSnackBarModule } from '@angular/material';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { SignUpModule } from './sign-up/sign-up.module';
@@ -95,6 +95,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     PerxCampaignModule,
     HttpClientModule,
     MatDialogModule,
+    MatSnackBarModule,
     RewardsModule,
     TranslateModule.forRoot({
       loader: {
