@@ -27,8 +27,7 @@ import {
   MatSlideToggleModule,
   MatSortModule,
   MatStepperModule,
-  MatTableModule,
-  MatSnackBarModule
+  MatTableModule
 } from '@angular/material';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
@@ -79,13 +78,15 @@ import { SurveyModule as PerxSurveyModule, GameModule, ConfigModule, PuzzlesModu
 import { environment } from '@cl-environments/environment';
 import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-preview/campaigns-mobile-preview.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { MessageService } from '@cl-core-services';
 
 @NgModule({
   providers: [
     CampaignCreationStoreService,
     StepConditionService,
     NewCampaignDetailFormService,
-    NewCampaignRewardsStampsFormService
+    NewCampaignRewardsStampsFormService,
+    MessageService
   ],
   declarations: [
     CampaignsListComponent,
@@ -121,7 +122,6 @@ import { TranslateModule } from '@ngx-translate/core';
     MatSortModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSnackBarModule,
     MatSelectModule,
     MatStepperModule,
     StatusLabelModule,

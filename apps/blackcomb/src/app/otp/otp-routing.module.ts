@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LandingComponent } from './landing.component';
+import { EnterPinComponent } from '@perx/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',
-  component: LandingComponent
+  component: EnterPinComponent
 }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class LandingRoutingModule { }
+export class OtpRoutingModule { }
