@@ -83,7 +83,7 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
           if (this.rewardSuccessPopUp.text && voucher.reward) {
             this.rewardSuccessPopUp.text = this.rewardSuccessPopUp.text.replace('{{reward}}', voucher.reward.name);
           }
-          this.redemptionType = voucher.reward && voucher.reward.redemptionType ? voucher.reward.redemptionType : RedemptionType.none;
+          this.redemptionType = voucher.redemptionType ? voucher.redemptionType : RedemptionType.none;
           if (voucher.reward) {
             if (voucher.reward.displayProperties && voucher.reward.displayProperties.merchantPinText) {
               this.headLine = voucher.reward.displayProperties.merchantPinText.headLine || this.headLine;

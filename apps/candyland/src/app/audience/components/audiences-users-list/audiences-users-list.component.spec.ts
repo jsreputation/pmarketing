@@ -7,8 +7,7 @@ import {
   MatTableModule,
   MatMenuModule,
   MatIconModule,
-  MatDialogModule,
-  MatSnackBarModule,
+  MatDialogModule
 } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -18,10 +17,14 @@ import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { AudiencesUsersListComponent } from './audiences-users-list.component';
+import {MessageService} from '@cl-core-services';
 
 describe('AudiencesUsersListComponent', () => {
   let component: AudiencesUsersListComponent;
   let fixture: ComponentFixture<AudiencesUsersListComponent>;
+  const msgSvcStub: Partial<MessageService> = {
+    show: () => ({})
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -32,12 +35,14 @@ describe('AudiencesUsersListComponent', () => {
         MatMenuModule,
         MatIconModule,
         MatDialogModule,
-        MatSnackBarModule,
         HttpClientTestingModule,
         TranslateModule.forRoot(),
       ],
       providers: [
         AudiencesUserService,
+        {
+          provide: MessageService, useValue: msgSvcStub
+        }
       ],
       declarations: [
         AudiencesUsersListComponent,

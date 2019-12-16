@@ -55,7 +55,6 @@ export class GroupComponent implements OnChanges {
       const currentPoint = this.calculatePoints();
       this.updatePoints.emit(currentPoint);
     }
-    return;
   }
 
   public calculatePoints(): number {
