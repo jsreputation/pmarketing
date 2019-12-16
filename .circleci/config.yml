@@ -134,6 +134,20 @@ commands:
             fi
             echo "export IS_WHISTLER=$IS_WHISTLER" >> $BASH_ENV
             echo $IS_WHISTLER
+  set_redirect_dest:
+    description: customise the app landing page after login
+    steps:
+      - run:
+          name: Setup REDIRECT_AFTER_LOGIN var
+          command: |
+            if [ $APP == 'petron-demo' ]
+            then
+              REDIRECT_AFTER_LOGIN="/home"
+            elif [ $APP == 'blackcomb' ]
+              REDIRECT_AFTER_LOGIN="/wallet"
+            fi
+            echo "export REDIRECT_AFTER_LOGIN=$REDIRECT_AFTER_LOGIN" >> $BASH_ENV
+            echo $REDIRECT_AFTER_LOGIN
   setup_buildkitd:
     description: Enable docker experimental feature and setup buildkit environment
     steps:
@@ -177,6 +191,7 @@ jobs:
       - set_basehref
       - set_iswhistler
       - set_sourcetype
+      - set_redirect_dest
       - run:
           name: Build docker image
           command: |
@@ -217,7 +232,8 @@ jobs:
             --build-arg iswhistler=$IS_WHISTLER \
             --build-arg sourcetype=$SOURCE_TYPE \
             --build-arg env=$APP_ENV \
-            --build-arg appbase=$APP_BASE
+            --build-arg appbase=$APP_BASE \
+            --build-arg redirectdest=$REDIRECT_AFTER_LOGIN
       - run:
           name: Push docker
           command: |
