@@ -4,7 +4,7 @@ import { NewCampaignRewardsLimitsPageComponent } from './new-campaign-rewards-li
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { MatCheckboxModule } from '@angular/material';
 import { ButtonModule } from '@cl-shared';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 // tslint:disable-next-line:import-blacklist
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
@@ -28,6 +28,7 @@ describe('NewCampaignRewardsLimitsPageComponent', () => {
           BrowserDynamicTestingModule,
           MatCheckboxModule,
           ButtonModule,
+          FormsModule,
           ReactiveFormsModule,
           TranslateModule.forRoot(),
         ],

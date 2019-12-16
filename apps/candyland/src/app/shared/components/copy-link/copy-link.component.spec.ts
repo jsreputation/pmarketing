@@ -4,17 +4,24 @@ import { CopyLinkComponent } from './copy-link.component';
 // tslint:disable-next-line
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { MatSnackBarModule } from '@angular/material';
+import {MessageService} from '@cl-core-services';
 
 describe('DownloadLinkComponent', () => {
   let component: CopyLinkComponent;
   let fixture: ComponentFixture<CopyLinkComponent>;
+  const msgSvcStub: Partial<MessageService> = {
+    show: () => ({})
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         BrowserDynamicTestingModule,
-        MatSnackBarModule
+      ],
+      providers: [
+        {
+          provide: MessageService, useValue: msgSvcStub
+        }
       ],
       declarations: [ CopyLinkComponent ],
       schemas: [ NO_ERRORS_SCHEMA ]

@@ -47,7 +47,7 @@ export { BarcodeRedemptionComponent } from './lib/vouchers/barcode-redemption/ba
  * Authentication
  */
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
-export { AuthenticationService } from './lib/auth/authentication/authentication.service';
+export { AuthenticationService, RequiresOtpError, IMessageResponse } from './lib/auth/authentication/authentication.service';
 export { TokenStorage } from './lib/utils/storage/token-storage.service';
 export { IChangePasswordData, ISignUpData } from './lib/auth/authentication/models/authentication.model';
 export { IFormsService } from './lib/auth/authentication/iforms.service';

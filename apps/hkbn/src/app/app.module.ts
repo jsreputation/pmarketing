@@ -1,10 +1,28 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { AuthModule } from './auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  APP_INITIALIZER,
+  NgModule,
+} from '@angular/core';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpClientModule,
+} from '@angular/common/http';
+import {
+  MatButtonModule,
+  MatDialogModule,
+  MatTabsModule,
+} from '@angular/material';
+
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
+
 import {
   AuthenticationModule,
   AuthenticationService,
@@ -14,17 +32,18 @@ import {
   UtilsModule,
   VouchersModule,
   MerchantsModule,
-  ConfigModule
+  ConfigModule,
 } from '@perx/core';
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+
 import { environment } from '../environments/environment';
-import { MatButtonModule, MatDialogModule, MatTabsModule } from '@angular/material';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AuthModule } from './auth/auth.module';
 import { ContentContainerModule } from './ui/content-container/content-container.module';
 import { HomeModule } from './home/home.module';
 import { WalletComponent } from './wallet/wallet.component';
 import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
 import { SnackbarModule } from './ui/snackbar/snackbar.module';
 import { HistoryComponent } from './history/history.component';
@@ -43,7 +62,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 const PROVIDERS = [
   {provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true},
   {provide: APP_INITIALIZER, useFactory: getAppAccessToken, deps: [AuthenticationService], multi: true},
-  {provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true}
+  {provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true},
 ];
 
 @NgModule({
@@ -79,7 +98,8 @@ const PROVIDERS = [
     BrowserAnimationsModule,
     MatTabsModule,
     MatButtonModule,
-    SnackbarModule
+    SnackbarModule,
+    InfiniteScrollModule,
   ],
   providers: [
     ...PROVIDERS

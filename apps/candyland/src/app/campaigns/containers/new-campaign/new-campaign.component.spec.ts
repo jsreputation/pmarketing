@@ -19,7 +19,9 @@ describe('NewCampaignComponent', () => {
   let component: NewCampaignComponent;
   let fixture: ComponentFixture<NewCampaignComponent>;
   let form: FormGroup;
-
+  const msgSvcStub: Partial<MessageService> = {
+    show: () => ({})
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -46,9 +48,7 @@ describe('NewCampaignComponent', () => {
           }
         },
         {
-          provide: MessageService, useValue: {
-            show: () => ({})
-          }
+          provide: MessageService, useValue: msgSvcStub
         },
         { provide: LocalStorageService, useValue: {} }
       ],
