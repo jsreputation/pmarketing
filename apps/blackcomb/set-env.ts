@@ -12,6 +12,23 @@ require('dotenv').config();
 
 // Debug environment variables
 
+const displayProperties = `"display_properties": {
+  "account": {
+      "pages": [
+          {
+              "key": "contact-us",
+              "title": "Contact Us",
+              "content_url": ""
+          },
+          {
+              "key": "tnc",
+              "title": "Terms and Conditions",
+              "content_url": ""
+          }
+      ]
+  }
+}`;
+
 // `environment.ts` file structure that uses the environment variables
 const envConfigFile = `export const environment = {
   apiHost: '${process.env.APIHOST ? process.env.APIHOST : 'https://api-dev1.uat.whistler.perxtech.io'}',
@@ -37,8 +54,9 @@ const appConfigFile = `{
   "showQrPageSubtitle": ${process.env.SHOW_QRPAGE_SUBTITLE ? process.env.SHOW_QRPAGE_SUBTITLE : false},
   "showExpiryOnRewardDetail": ${process.env.SHOW_EXPIRY_REWARD_DETAIL ? process.env.SHOW_EXPIRY_REWARD_DETAIL : true},
   "showUserInfoOnAccountsPage": ${process.env.SHOW_USERINFO_ACCOUNTS ? process.env.SHOW_USERINFO_ACCOUNTS : false},
-  "showTransactionHistoryOnAccountsPage": ${process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS ? process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS : false}
-  "showVoucherBookingFromRewardsPage":  ${process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS ? process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS : false}
+  "showTransactionHistoryOnAccountsPage": ${process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS ? process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS : false},
+  "showVoucherBookingFromRewardsPage":  ${process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS ? process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS : false},
+  ${displayProperties}
 }
 `;
 

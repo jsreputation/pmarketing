@@ -65,7 +65,7 @@ export class V4ConfigService extends ConfigService {
   public getAccountSettings<T>(): Observable<PagesObject> {
     return this.http.get<IConfig<T>>('assets/config/app-config.json').pipe(
       map(res => res.displayProperties),
-      map((displayProps: ICSetting) => displayProps.account || { pages: [] }),
+      map((displayProps: ICSetting) => displayProps && displayProps.account ? displayProps.account : { pages: [] }),
       map((account) => this.settings = account)
     );
   }

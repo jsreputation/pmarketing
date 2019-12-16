@@ -1,15 +1,53 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { IReward, RewardsService, ICatalog } from '@perx/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  NgZone,
+} from '@angular/core';
+import {
+  ScrollDispatcher,
+  CdkScrollable,
+} from '@angular/cdk/scrolling';
+import {
+  Router,
+  ActivatedRoute,
+} from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
-import { CategorySelectComponent, CategoryBottomSheetClosedCallBack } from './category-select/category-select.component';
-import { CategorySortComponent, SortBottomSheetClosedCallBack } from './category-sort/category-sort.component';
-import { Observable } from 'rxjs';
+
+import {
+  BehaviorSubject,
+  Observable,
+} from 'rxjs';
+import {
+  map,
+  scan,
+} from 'rxjs/operators';
+
+import {
+  IReward,
+  RewardsService,
+  ICatalog,
+} from '@perx/core';
+
+import {
+  CategorySelectComponent,
+  CategoryBottomSheetClosedCallBack,
+} from './category-select/category-select.component';
+import {
+  CategorySortComponent,
+  SortBottomSheetClosedCallBack,
+} from './category-sort/category-sort.component';
 import { SortingMode } from './category.model';
-import { map } from 'rxjs/operators';
-import { ScrollDispatcher, CdkScrollable } from '@angular/cdk/scrolling';
-import { MacaronService, IMacaron } from '../services/macaron.service';
-import { AnalyticsService, PageType } from '../analytics.service';
+
+import {
+  MacaronService,
+  IMacaron,
+} from '../services/macaron.service';
+import {
+  AnalyticsService,
+  PageType,
+} from '../analytics.service';
+
+const REQ_PAGE_SIZE: number = 10;
 
 @Component({
   selector: 'app-category',
@@ -18,11 +56,39 @@ import { AnalyticsService, PageType } from '../analytics.service';
 })
 export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallBack, SortBottomSheetClosedCallBack {
 
-  public rewards: Observable<IReward[]>;
+  public rewards$: Observable<IReward[]>;
+  public rewardsLoaded: boolean = false;
+  public rewardsEnded: boolean = false;
+  private rewardsPageId: number = 1;
+  private rewards: BehaviorSubject<IReward[]> = new BehaviorSubject<IReward[]>([]);
 
   public selectedCategory: string;
   public selectedSortingCraeteria: SortingMode = SortingMode.ending_soon;
   public showToolbarTitle: boolean = false;
+
+  private fetchRewards(): void {
+    this.rewardsLoaded = false;
+    const categories: string[] | null = this.selectedCategory === 'All' ? null : [this.selectedCategory];
+
+    this.rewardsService.getRewards(this.rewardsPageId, REQ_PAGE_SIZE, null, categories)
+      .subscribe((rewards: IReward[]) => {
+        if (!rewards) {
+          return;
+        }
+
+        this.rewards.next(rewards);
+        this.rewardsLoaded = true;
+        if (rewards.length < REQ_PAGE_SIZE) {
+          this.rewardsEnded = true;
+        }
+      });
+  }
+
+  private initRewardsScan(): void {
+    this.rewards$ = this.rewards.asObservable().pipe(
+      scan((acc, curr) => [...acc, ...curr ? curr : []], [])
+    );
+  }
 
   constructor(
     private router: Router,
@@ -33,7 +99,9 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
     private zone: NgZone,
     private macaronService: MacaronService,
     private analytics: AnalyticsService
-  ) { }
+  ) {
+    this.initRewardsScan();
+  }
 
   public ngOnInit(): void {
     const categoryName = this.activeRoute.snapshot.queryParamMap.get('category');
@@ -52,7 +120,7 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
       if (!catalogId) {
         return;
       }
-      this.rewards = this.rewardsService.getCatalog(parseInt(catalogId, 10)).pipe(
+      this.rewards$ = this.rewardsService.getCatalog(parseInt(catalogId, 10)).pipe(
         map((catalog: ICatalog) => {
           this.selectedCategory = catalog.name;
           this.analytics.addEvent({
@@ -78,15 +146,6 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
         this.showToolbarTitle = false;
       }
     });
-  }
-
-  private fetchRewards(): void {
-    if (this.selectedCategory === 'All') {
-      this.rewards = this.rewardsService.getAllRewards();
-      return;
-    }
-
-    this.rewards = this.rewardsService.getAllRewards(undefined, [this.selectedCategory]);
   }
 
   public selected(reward: IReward): void {
@@ -124,5 +183,14 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
 
   public getCurrentSelectedOrder(): SortingMode {
     return this.selectedSortingCraeteria;
+  }
+
+  public onScroll(): void {
+    if (this.rewardsEnded) {
+      return;
+    }
+
+    this.rewardsPageId++;
+    this.fetchRewards();
   }
 }

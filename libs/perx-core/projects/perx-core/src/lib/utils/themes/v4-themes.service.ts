@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ThemesService } from './themes.service';
 import { ITheme } from './themes.model';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, catchError } from 'rxjs/operators';
 import { IConfig } from '../../config/models/config.model';
+import { LIGHT } from './themes.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,8 @@ export class V4ThemesService extends ThemesService {
     }
     return this.http.get(url).pipe(
       map((res) => res as ITheme),
-      tap((theme) => this.setActiveTheme(theme))
+      tap((theme) => this.setActiveTheme(theme)),
+      catchError(() => of(LIGHT))
     );
   }
 }
