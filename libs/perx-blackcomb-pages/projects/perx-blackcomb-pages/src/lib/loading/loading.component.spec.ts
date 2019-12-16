@@ -14,7 +14,8 @@ describe('LoadingComponent', () => {
 
   const authenticationServiceStub: Partial<AuthenticationService> = {
     getUserAccessToken: () => '',
-    autoLogin: () => of()
+    autoLogin: () => of(),
+    getAccessToken: () => of('')
   };
 
   const iCampaignSvcStub: Partial<ICampaignService> = {

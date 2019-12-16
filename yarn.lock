@@ -9858,7 +9858,7 @@ ngx-ellipsis@^2.0.9:
     element-resize-detector "^1.1.15"
     tslib "^1.9.0"
 
-ngx-infinite-scroll@^8.0.0:
+ngx-infinite-scroll@^8.0.0, ngx-infinite-scroll@^8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/ngx-infinite-scroll/-/ngx-infinite-scroll-8.0.1.tgz#95b9d7e51f8ed5ee6821889b4e4e3cfe8ddb5838"
   integrity sha512-YpgkTPDNT7UCEp0GRX178V1nF+M2slCPJ2TX3CpvPZb5AR99JYwj/fNivcue5lN51oUaTySEG27qjVU73vKhjw==
@@ -13722,7 +13722,7 @@ ts-node@~8.3.0:
     source-map-support "^0.5.6"
     yn "^3.0.0"
 
-ts-optchain@^0.1.7:
+ts-optchain@^0.1.7, ts-optchain@^0.1.8:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/ts-optchain/-/ts-optchain-0.1.8.tgz#4e97e3c07a98ac1d9c48715460d25a3df2addc59"
   integrity sha512-crvloFKZlPIysdVcP7Ej1w4HijBx7NmLdeorqfxOvt87DcUIbhKV4ZaSgCL+IQ+zzTgDx5zDuNHRvUbTIr9aqw==

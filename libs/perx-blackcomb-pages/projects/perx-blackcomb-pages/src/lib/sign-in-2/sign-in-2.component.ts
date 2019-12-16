@@ -1,18 +1,19 @@
 import { AuthenticationService, NotificationService, Config, ITheme, ThemesService, ConfigService, IConfig } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, Navigation } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'perx-blackcomb-pages-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  templateUrl: './sign-in-2.component.html',
+  styleUrls: ['./sign-in-2.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class SignIn2Component implements OnInit, OnDestroy {
   public loginForm: FormGroup;
   public errorMessage: string | null;
   public preAuth: boolean;
@@ -21,6 +22,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   public theme: Observable<ITheme>;
   public appConfig: Observable<IConfig>;
   public appAccessTokenFetched: boolean;
+  private custId: string;
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -32,6 +35,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     public translate: TranslateService
   ) {
     this.preAuth = this.config.preAuth ? this.config.preAuth : false;
+    const nav: Navigation | null = this.router.getCurrentNavigation();
+    this.custId = oc(nav).extras.state.pi('');
   }
 
   public ngOnInit(): void {
@@ -61,13 +66,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public initForm(): void {
     this.loginForm = this.fb.group({
-      customerID: ['', Validators.required],
+      customerID: [this.custId, Validators.required],
       password: ['', Validators.required]
     });
-  }
-
-  public goToSignup(): void {
-    this.router.navigateByUrl('/signup');
   }
 
   public onSubmit(): void {
@@ -76,7 +77,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     const pwdField = this.loginForm.get('password');
     const password: string = pwdField ? pwdField.value : '';
     this.errorMessage = null;
-    this.authService.login(username, password, '2')
+    this.authService.login(username, password)
       .pipe(
         takeUntil(this.destroy$)
       )
