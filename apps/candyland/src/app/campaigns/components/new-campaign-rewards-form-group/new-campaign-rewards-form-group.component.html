@@ -4,11 +4,6 @@
 </div>
 <div class="card-content" *ngIf="outcomes && outcomes.length > 0">
   <div>
-    <mat-checkbox color="primary" [(ngModel)]="enableProbability" (change)="updateOutcomes()">
-      {{'CAMPAIGN.INCLUDE_PROBABILITY' | translate}}
-    </mat-checkbox>
-  </div>
-  <div>
     <div *ngFor="let outcome of outcomes; let i = index">
       <cl-reward-item class="item"
         *ngIf="outcome.outcome.slotNumber === slotNumber"
@@ -19,7 +14,7 @@
         (clickDelete)="removeOutcome(i)">
       </cl-reward-item>
   </div>
-    <mat-error class="error" *ngIf="sumMoreThanError">
+    <mat-error class="error" *ngIf="sumMoreThanError && !isSpinEngagement">
       {{'CAMPAIGN.THE_TOTAL_PROBABILITY' | translate}}
     </mat-error>
   </div>
