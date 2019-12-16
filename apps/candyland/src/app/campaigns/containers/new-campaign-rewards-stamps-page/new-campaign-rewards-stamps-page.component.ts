@@ -28,6 +28,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   ) {
     super(1, store, stepConditionService);
     this.initForm();
+    console.log(this.form, 'gimme my form');
   }
 
   public ngOnInit(): void {
@@ -95,7 +96,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
         takeUntil(this.destroy$)
       )
       .subscribe(() => {
-        const toggleConfig = this.formService.getToggleConfig(this.form);
+        const toggleConfig = this.formService.getToggleConfig(this.limitData);
         this.toggleControlService.updateFormStructure(toggleConfig);
         if (this.toggleControlService.formChanged) {
           this.updateForm();

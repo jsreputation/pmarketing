@@ -10,8 +10,7 @@ import {
   Renderer2
 } from '@angular/core';
 import {
-  MatDialog,
-  MatSnackBar,
+  MatDialog
 } from '@angular/material';
 import {
   ActivatedRoute,
@@ -39,7 +38,7 @@ import { CustomDataSource } from '@cl-shared';
 import { AudiencesVouchersService } from '@cl-core/services/audiences-vouchers.service';
 import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
-
+import { MessageService} from '@cl-core/services';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
 import { UpsertUserPopupComponent } from '../upsert-user-popup/upsert-user-popup.component';
 import {
@@ -74,7 +73,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     private router: Router,
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
-    private snack: MatSnackBar,
+    private messageService: MessageService,
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
   ) {
@@ -109,10 +108,10 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       )
       .subscribe(
         () => {
-          this.snack.open('Expiry voucher date successfully changed.', 'x', { duration: 2000 });
+          this.messageService.show('Expiry voucher date successfully changed.');
           this.dataSource.updateData();
         },
-        () => this.snack.open('Failed to update voucher expiration date.', 'x', { duration: 2000 })
+        () =>  this.messageService.show('Failed to update voucher expiration date.')
       );
   }
 
@@ -129,10 +128,10 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       )
       .subscribe(
         () => {
-          this.snack.open('Voucher assigned to user.', 'x', { duration: 2000 });
+          this.messageService.show('Voucher assigned to user.');
           this.dataSource.updateData();
         },
-        () => this.snack.open('Could not assign voucher to user. Make sure that the reward has enough stock.', 'x', { duration: 2000 })
+        () => this.messageService.show('Could not assign voucher to user. Make sure that the reward has enough stock.')
       );
   }
 
@@ -185,7 +184,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       )
       .subscribe(async () => {
         await this.updateLocalUser();
-        this.snack.open('User successfully updated.', 'x', {duration: 2000});
+        this.messageService.show('User successfully updated.');
       });
   }
 }

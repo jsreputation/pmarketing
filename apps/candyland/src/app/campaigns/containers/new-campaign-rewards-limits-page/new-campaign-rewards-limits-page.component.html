@@ -1,13 +1,31 @@
 <div class="phonepreview-wrapper">
   <div class="forms-container">
+    <!--DummyToRemove Error-->
+    <form [formGroup]="form1pt1">
+    </form>
+    <!--DummyToRemove Error-->
     <!--Rewards-->
     <mat-card class="card">
-      <ng-container *ngFor="let slot of slots">
+      <div class="card-header">
+        <mat-checkbox color="primary" [(ngModel)]="enableProbability">
+          {{'CAMPAIGN.INCLUDE_PROBABILITY' | translate}}
+        </mat-checkbox>
+      </div>
+      <ng-container *ngFor="let slot of slots;">
         <cl-new-campaign-rewards-form-group
+          [isSpinEngagement]="isSpinEngagement"
+          [enableProbability]="enableProbability"
+          [formParent]="form1pt1"
           [slotNumber]="slot"
           [title]="('CAMPAIGN.REWARDS_FOR_SLOT' | translate) + ' ' + slot">
         </cl-new-campaign-rewards-form-group>
       </ng-container>
+      <mat-error class="error" *ngIf="sumMoreThanError">
+        {{'CAMPAIGN.THE_TOTAL_PROBABILITY' | translate}}
+      </mat-error>
+      <mat-error class="error" *ngIf="rewardNotAllPatchedError && isSpinEngagement">
+        Please fill in rewards for all slots
+      </mat-error>
     </mat-card>
     <!--/ Rewards-->
     <!-- Stamps Rule-->
