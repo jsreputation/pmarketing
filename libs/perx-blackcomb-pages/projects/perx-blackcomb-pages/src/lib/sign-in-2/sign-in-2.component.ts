@@ -62,7 +62,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   public redirectAfterLogin(): void {
     this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl()
-      : this.appConfig && this.appConfig.redirectAfterLogin as string || 'home');
+      : this.appConfig && this.appConfig.redirectAfterLogin as string || 'wallet');
   }
 
   public initForm(): void {

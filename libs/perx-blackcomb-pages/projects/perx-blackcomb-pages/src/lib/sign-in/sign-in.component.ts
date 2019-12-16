@@ -178,7 +178,7 @@ export class SignInComponent implements OnInit, OnDestroy {
         }),
       ).subscribe(
         () => {
-          this.router.navigate([this.appConfig && this.appConfig.redirectAfterLogin || 'home']);
+          this.router.navigate([this.appConfig && this.appConfig.redirectAfterLogin || 'wallet']);
           if (this.stateData.popupData) {
             this.notificationService.addPopup(this.stateData.popupData);
           }
