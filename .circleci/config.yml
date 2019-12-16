@@ -144,6 +144,7 @@ commands:
             then
               REDIRECT_AFTER_LOGIN="/home"
             elif [ $APP == 'blackcomb' ]
+            then
               REDIRECT_AFTER_LOGIN="/wallet"
             fi
             echo "export REDIRECT_AFTER_LOGIN=$REDIRECT_AFTER_LOGIN" >> $BASH_ENV
