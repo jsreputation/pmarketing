@@ -12,7 +12,7 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 import { ActivatedRoute } from '@angular/router';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 

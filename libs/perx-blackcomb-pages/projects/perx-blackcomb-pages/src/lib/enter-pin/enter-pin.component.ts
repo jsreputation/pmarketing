@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {
   ProfileService,
   IProfile,
@@ -8,8 +8,10 @@ import {
   NotificationService,
   PopUpClosedCallBack,
   ThemesService,
-  ITheme
+  ITheme,
+  IMessageResponse
 } from '@perx/core';
+import { filter, map } from 'rxjs/operators';
 
 export enum PinMode {
   password = 'password',
@@ -22,7 +24,6 @@ export enum PinMode {
   styleUrls: ['./enter-pin.component.scss']
 })
 export class EnterPinComponent implements PopUpClosedCallBack {
-
   public MAX_DIGITS_COUNT: number = 6;
 
   public changePasswordData: IChangePasswordData;
@@ -40,22 +41,23 @@ export class EnterPinComponent implements PopUpClosedCallBack {
     private notificationService: NotificationService,
     private themeService: ThemesService
   ) {
-
-    this.route.paramMap.subscribe(params => {
-      if (params.get('type') !== null) {
-        this.pinMode = params.get('type') as PinMode;
-
+    this.route.paramMap
+      .pipe(
+        // filter((p: ParamMap) => p.has('type')),
+        map((p: ParamMap) => p.get('type')),
+        filter((type: string | null) => type !== null),
+      )
+      .subscribe((typ: string) => {
+        this.pinMode = typ as PinMode;
         if (this.pinMode === PinMode.password) {
           this.getChangedPasswordDataFromNavigation();
         } else if (this.pinMode === PinMode.register) {
           this.getMobileNumberFromNavigation();
         }
-      }
-    });
+      });
 
-    this.themeService.getThemeSetting().subscribe(
-      (th: ITheme) => this.theme = th
-    );
+    this.themeService.getThemeSetting()
+      .subscribe((th: ITheme) => this.theme = th);
   }
 
   private getChangedPasswordDataFromNavigation(): void {
@@ -89,7 +91,6 @@ export class EnterPinComponent implements PopUpClosedCallBack {
   }
 
   public onPinEntered(enteredPin: string): void {
-
     if (this.pinMode === PinMode.password) {
       this.changePasswordData.otp = enteredPin;
       this.authService.changePassword(this.changePasswordData).subscribe(
@@ -106,15 +107,14 @@ export class EnterPinComponent implements PopUpClosedCallBack {
           this.notificationService.addSnack(err.statusText);
         });
     } else if (this.pinMode === PinMode.register && this.userPhone) {
-      this.authService.verifyOTP(this.userPhone, enteredPin).subscribe(
-        (response) => {
-          this.notificationService.addSnack(response.message);
-          this.router.navigate(['login']);
-        },
-        err => {
-          this.notificationService.addSnack(err.error.message);
-        }
-      );
+      this.authService.verifyOTP(this.userPhone, enteredPin)
+        .subscribe(
+          (response: IMessageResponse) => {
+            this.notificationService.addSnack(response.message);
+            this.router.navigate(['login'], { state: { pi: this.userPhone } });
+          },
+          err => this.notificationService.addSnack(err.error.message)
+        );
     }
   }
 
@@ -125,9 +125,10 @@ export class EnterPinComponent implements PopUpClosedCallBack {
         break;
       case PinMode.password:
         if (this.userPhone) {
-          this.authService.resendOTP(this.userPhone).subscribe(
-            (res) => this.notificationService.addSnack(res.message)
-          );
+          this.authService.resendOTP(this.userPhone)
+            .subscribe(
+              (res) => this.notificationService.addSnack(res.message)
+            );
         }
         break;
     }

@@ -1,21 +1,8 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import {
-  AuthenticationModule,
-  UtilsModule,
-  ProfileModule,
-  RewardsModule,
-  VouchersModule,
-  GameModule,
-  LocationModule,
-  ConfigModule,
-  CampaignModule,
-  MerchantsModule
-} from '@perx/core';
-import { environment } from '../environments/environment';
 import {
   MatDialogModule,
   MatIconModule,
@@ -27,7 +14,26 @@ import {
   MatDividerModule,
   MatSnackBarModule
 } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { QRCodeModule } from 'angularx-qrcode';
+import { NgxBarcodeModule } from 'ngx-barcode';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
+import {
+  AuthenticationModule,
+  UtilsModule,
+  ProfileModule,
+  RewardsModule,
+  VouchersModule,
+  GameModule,
+  LocationModule,
+  ConfigModule,
+  CampaignModule,
+  MerchantsModule,
+} from '@perx/core';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 import { CategoryComponent } from './category/category.component';
 import { RewardComponent } from './reward/reward.component';
 import { LocationsComponent } from './locations/locations.component';
@@ -43,11 +49,9 @@ import { GameComponent } from './game/game.component';
 import { CongratsComponent } from './congrats/congrats.component';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
-import { HttpClientModule } from '@angular/common/http';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ErrorComponent } from './error/error.component';
-import {QRCodeModule} from 'angularx-qrcode';
-import {NgxBarcodeModule} from 'ngx-barcode';
+
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -97,7 +101,8 @@ import {NgxBarcodeModule} from 'ngx-barcode';
     CampaignModule,
     MerchantsModule,
     QRCodeModule,
-    NgxBarcodeModule
+    NgxBarcodeModule,
+    InfiniteScrollModule,
   ],
   entryComponents: [
     CategorySelectComponent,

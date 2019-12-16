@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, Optional} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, Optional } from '@angular/core';
 import { IQuestion, SurveyQuestionType, IAnswer, IPoints, IErrors } from '../models/survey.model';
 
 @Component({
@@ -110,9 +110,11 @@ export class QuestionComponent implements OnChanges {
     if (this.question && this.question.required && this.point !== 1) {
       this.errorState.isRequired = true;
       this.errorState.hasError = true;
-    } else if (this.question.payload['max-length']
+    } else if (
+      this.question.payload['max-length']
       && typeof this.question.answer === 'string'
-      && this.question.payload['max-length'] < this.question.answer.length) {
+      && this.question.payload['max-length'] < this.question.answer.length
+    ) {
       this.errorState.exceedMaxLength = true;
       this.errorState.hasError = true;
     } else if (this.question.id === 'email_address' && !this.validateEmail(this.question.answer)) {

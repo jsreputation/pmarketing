@@ -37,10 +37,9 @@ export interface ICampaign {
   displayProperties?: any;
 }
 
-
 export interface ICampaignOutcome {
   outcome?: IOutcome;
-  enableProbability?: boolean
+  enableProbability?: boolean;
   reward?: IRewardEntity;
 }
 
@@ -50,7 +49,7 @@ export interface ICampaignTableData {
   status: string;
   begin: Date;
   end: Date;
-  audience: number;
+  audience: string;
   goal: string;
   engagementType: string;
 }

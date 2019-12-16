@@ -3,6 +3,7 @@ import { IAnswer } from '../../models/survey.model';
 import { Observable, Subject } from 'rxjs';
 import { GeneralStaticDataService } from '../../../utils/general-static-data/general-static-data.service';
 import { debounceTime } from 'rxjs/operators';
+import { ICountryCode } from '../../../utils/general-static-data/country-code';
 
 interface IPayloadPhone {
   type: string;
@@ -24,7 +25,7 @@ export class PhoneComponent implements OnChanges, OnInit {
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
 
-  public countriesList$: Observable<any[]>;
+  public countriesList$: Observable<ICountryCode[]>;
   public answer: number;
   public countryCode: string;
   private subject: Subject<number> = new Subject();
@@ -43,6 +44,9 @@ export class PhoneComponent implements OnChanges, OnInit {
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.flush && changes.flush.currentValue !== undefined) {
       this.updateInput(this.answer);
+    }
+    if (changes.payload && this.payload.default_country_code) {
+      this.countryCode = this.payload.default_country_code;
     }
   }
 

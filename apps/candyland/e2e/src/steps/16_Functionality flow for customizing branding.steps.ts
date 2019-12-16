@@ -14,10 +14,26 @@ import {
   GeneralSettingsAppPage,
   BrandingSettingsAppPage,
   ElementApp,
+  LoginAppPage,
 } from '../pages/candylandApp.po';
 
 // Ensure functionality of the branding tab
 Given(/^4_I am on the general settings page.$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  // entering correct account id
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
+
   await GeneralSettingsAppPage.navigateToGeneralSettings();
 });
 
@@ -88,9 +104,9 @@ Given(/^7_that I am on the settings branding page.$/, async () => {
 When(/^7_I select the Lato option.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for font type drop down to load
-  await browser.wait(ec.elementToBeClickable(ElementApp.matSelectValueArray().get(1)), 6000);
+  await browser.wait(ec.elementToBeClickable(ElementApp.matSelectValueArray().get(0)), 6000);
   // clicking on the font type drop down
-  await ElementApp.matSelectValueArray().get(1).click();
+  await ElementApp.matSelectValueArray().get(0).click();
   await browser.sleep(3000);
   // selecting the lato option
   await ElementApp.spanMatOptionText().get(1).click();
@@ -110,9 +126,9 @@ Given(/^8_that I am on the settings branding page.$/, async () => {
 When(/^8_I select a color.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for color field for header and navbar to load
-  await browser.wait(ec.presenceOf(ElementApp.matSelectValueArray().get(2)), 5000);
+  await browser.wait(ec.presenceOf(ElementApp.matSelectValueArray().get(1)), 5000);
   // clicking on the colour field drop down
-  await ElementApp.matSelectValueArray().get(2).click();
+  await ElementApp.matSelectValueArray().get(1).click();
   await browser.sleep(3000);
   // selecting the primary colour option
   await ElementApp.spanMatOptionText().get(0).click();
@@ -133,9 +149,9 @@ Given(/^9_that I am on the settings branding page.$/, async () => {
 When(/^9_I select a color.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for color field for header and navbar to load
-  await browser.wait(ec.presenceOf(ElementApp.matSelectValueArray().get(2)), 5000);
+  await browser.wait(ec.presenceOf(ElementApp.matSelectValueArray().get(1)), 5000);
   // clicking on the colour field drop down
-  await ElementApp.matSelectValueArray().get(2).click();
+  await ElementApp.matSelectValueArray().get(1).click();
   await browser.sleep(3000);
   // selecting the primary colour option
   await ElementApp.spanMatOptionText().get(1).click();
@@ -149,6 +165,7 @@ Then(/^9_I should see the change reflected in the preview element$/, async () =>
 // Verifying the functionality of logo header upload field
 Given(/^10_that I am on the settings branding page.$/, async () => {
   await BrandingSettingsAppPage.navigateToBrandingSettings();
+  await browser.sleep(3000);
 });
 
 When(/^10_I upload a picture.$/, async () => {
@@ -156,13 +173,9 @@ When(/^10_I upload a picture.$/, async () => {
   const FileToUpload = './testArtifacts/testimg.png';
   const absolutePath = path.resolve(__dirname, FileToUpload);
   // waiting for logo header button to load
-  await browser.wait(ec.elementToBeClickable(ElementApp.matRadioInnerCircle().get(0)), 8000);
-  // clicking on the radio button
-  ElementApp.matRadioInnerCircle().get(0).click();
-  // waiting for upload field to load
-  // await browser.wait(ec.presenceOf(element(by.css('img.image'))), 6000);
+  await browser.wait(ec.elementToBeClickable(ElementApp.imageClear()), 8000);
   // clearing the default picture choice
-  // await element(by.css('button.image-clear')).click();
+  await ElementApp.imageClear().click();
   // waiting for empty file upload field to load
   await browser.wait(ec.presenceOf(ElementApp.inputFile()), 8000);
   // uploading img in the img upload field
@@ -178,6 +191,7 @@ Then(/^10_I should see the change reflected in the preview element$/, async () =
 // Verifying the assertions of logo header upload field
 Given(/^11_that I am on the settings branding page.$/, async () => {
   await BrandingSettingsAppPage.navigateToBrandingSettings();
+  await browser.sleep(3000);
 });
 
 When(/^11_I upload a non image file.$/, async () => {
@@ -185,13 +199,9 @@ When(/^11_I upload a non image file.$/, async () => {
   const FileToUpload = './testArtifacts/testfile.xyz';
   const absolutePath = path.resolve(__dirname, FileToUpload);
   // waiting for logo header button to load
-  await browser.wait(ec.elementToBeClickable(ElementApp.matRadioInnerCircle().get(0)), 8000);
-  // clicking on the radio button
-  ElementApp.matRadioInnerCircle().get(0).click();
-  // waiting for upload field to load
-  // await browser.wait(ec.presenceOf(element(by.css('img.image'))), 6000);
+  await browser.wait(ec.elementToBeClickable(ElementApp.imageClear()), 8000);
   // clearing the default picture choice
-  // await element(by.css('button.image-clear')).click();
+  await ElementApp.imageClear().click();
   // waiting for empty file upload field to load
   await browser.wait(ec.presenceOf(ElementApp.inputFile()), 8000);
   // uploading img in the img upload field
@@ -201,9 +211,10 @@ When(/^11_I upload a non image file.$/, async () => {
 
 Then(/^11_I should a message indicating this is an invalid file.$/, async () => {
   // asserting the presence of an error message
-  expect(await ElementApp.spanUploadError().isPresent()).to.equal(true);
+  expect(await ElementApp.pUploadError().isPresent()).to.equal(true);
 });
 
+// This scenario is not valid for now
 // Verifying the functionality of text header on preview element
 Given(/^12_that I am on the settings branding page.$/, async () => {
   await BrandingSettingsAppPage.navigateToBrandingSettings();

@@ -7,8 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import {
-  MatDialog,
-  MatSnackBar,
+  MatDialog
 } from '@angular/material';
 import { FormControl } from '@angular/forms';
 
@@ -29,8 +28,7 @@ import {
   IWAudiences,
   IWProfileAttributes,
 } from '@perx/whistler';
-import { AudiencesService } from '@cl-core/services';
-import { SettingsService } from '@cl-core-services';
+import { AudiencesService, MessageService, SettingsService } from '@cl-core/services';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import {
   CustomDataSource,
@@ -73,7 +71,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     private audiencesUserService: AudiencesUserService,
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
-    public snack: MatSnackBar
+    public messageService: MessageService
   ) {
     this.dataSource = new CustomDataSource<IWProfileAttributes>(this.audiencesUserService);
     this.audiencesDataSource = new CustomDataSource<IWAudiences>(this.audiencesService);
@@ -107,7 +105,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
       )
       .subscribe(() => {
         this.dataSource.updateData();
-        this.snack.open('User successfully created.', 'x', {duration: 2000});
+        this.messageService.show('User successfully created.');
         this.currentTab = 'users';
       });
   }
