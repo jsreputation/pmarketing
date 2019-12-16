@@ -10,7 +10,7 @@
       <mat-select [placeholder]="'LOYALTY_FEATURE.SELECT_AUDIENCE' | translate" [formControl]="poolId">
         <mat-option *ngFor="let pool of pools" [value]="pool?.value?.id">{{pool?.name}}</mat-option>
       </mat-select>
-      <mat-error *ngIf="poolId.hasError('required') && poolId.touched">Required field.</mat-error>
+      <mat-error *ngIf="poolId.hasError('required') && poolId.touched">{{'ERROR_REQUIRED' | translate}}</mat-error>
     </mat-form-field>
 <!--    <cl-upload-file *ngIf="type.value === 'list-audience'" [formControlName]="'file'"></cl-upload-file>-->
   </div>

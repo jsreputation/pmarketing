@@ -75,6 +75,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
+import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
+import { FeedItemPopupComponent } from './feed-item-popup/feed-item-popup.component';
+import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -124,7 +127,10 @@ const comps: any[] = [
   ProfileComponent,
   ChangePasswordComponent,
   EnterPinComponent,
-  PinInputComponent
+  PinInputComponent,
+  RewardsBookingComponent,
+  FeedItemPopupComponent,
+  EditProfileFieldComponent
 ];
 
 @NgModule({
