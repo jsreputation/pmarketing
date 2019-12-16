@@ -24,6 +24,10 @@ FROM node:lts-alpine
 
 ARG app
 ARG appbase=${app}
+RUN echo "stage 2:"
+RUN echo "app: ${app}"
+RUN echo "appbase: ${appbase}"
+
 COPY --from=builder /service/apps/$appbase/dist/$appbase /service/perx-microsite/
 COPY --from=builder /service/backend/appauth-server /service/express/
 
