@@ -23,7 +23,12 @@ RUN BASE_HREF=${basehref} yarn build:backend
 FROM node:lts-alpine
 
 ARG app
-COPY --from=builder /service/apps/$app/dist/$app /service/perx-microsite/
+ARG appbase=${app}
+RUN echo "stage 2:"
+RUN echo "app: ${app}"
+RUN echo "appbase: ${appbase}"
+
+COPY --from=builder /service/apps/$appbase/dist/$appbase /service/perx-microsite/
 COPY --from=builder /service/backend/appauth-server /service/express/
 
 RUN cat /service/perx-microsite/index.html

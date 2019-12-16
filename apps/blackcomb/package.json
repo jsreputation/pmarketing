@@ -8,6 +8,7 @@
     "start-ru": "DEFAULT_LANG=ru npm run config && ng serve",
     "build": "npm run config && ng build",
     "build:blackcomb:prod": "PRODUCTION=true npm run config && ng build --prod",
+    "build:petron-demo:prod": "PREAUTH=false APIHOST=https://api.perxtech.io IS_WHISTLER=false SHOW_HOME_PAGE=true SHOW_HISTORY_PAGE=true SHOW_USERINFO_ACCOUNTS=true SHOW_TRANSANCTION_HISTORY_ACCOUNTS=false SHOW_EXPIRY_REWARD_DETAIL=true SHOW_LOGIN_SUBTITLE=true PRODUCTION=true npm run config && ng build --prod",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "test": "ng test",
     "lint": "ng lint && stylelint \"src/**/*.*css\" && eslint \"./src/*/*.ts\"",
