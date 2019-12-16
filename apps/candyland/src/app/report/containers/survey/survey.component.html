@@ -1,6 +1,5 @@
 <cl-report-header (closePage)="onClose()"
-                  [title]="data.title"
-></cl-report-header>
+  [title]="data.title"></cl-report-header>
 <article class="report-page">
   <mat-card class="card full-width report-info-block">
     <div class="height-line"></div>
@@ -16,11 +15,10 @@
         </div>
 
         <cl-button (click)="downloadReport()"
-                   classList="primary"
-        >
-      <span>
-        Download Report
-      </span>
+          classList="primary">
+          <span>
+            Download Report
+          </span>
         </cl-button>
       </div>
     </div>
@@ -33,8 +31,7 @@
   </p>
 
   <cl-single-report-card *ngFor="let question of data.questions; let i = index"
-                         [data]="question"
-                         [currentIndex]="i"
-  >
+    [data]="question"
+    [currentIndex]="i">
   </cl-single-report-card>
 </section>

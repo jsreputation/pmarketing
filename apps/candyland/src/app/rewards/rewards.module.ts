@@ -21,8 +21,7 @@ import {
   MatSelectModule,
   MatSlideToggleModule,
   MatSortModule,
-  MatTableModule,
-  MatSnackBarModule
+  MatTableModule
 } from '@angular/material';
 import { RewardInfoFormGroupComponent } from './components/reward-info-form-group/reward-info-form-group.component';
 import { RewardMerchantCardComponent } from 'src/app/rewards/components/reward-merchant-card/reward-merchant-card.component';
@@ -57,10 +56,12 @@ import { RewardLoyaltySetupGroupComponent } from './components/reward-loyalty-se
 import { TranslateModule } from '@ngx-translate/core';
 import { VouchersUploadService } from '@cl-core/services/vouchers-upload.service';
 import { IAdvancedUploadFileService } from '@cl-core/services/iadvanced-upload-file.service';
+import {MessageService} from '@cl-core-services';
 
 @NgModule({
   providers: [
     NewRewardFormService,
+    MessageService,
     { provide: IAdvancedUploadFileService, useClass: VouchersUploadService }
   ],
   declarations: [
@@ -101,7 +102,6 @@ import { IAdvancedUploadFileService } from '@cl-core/services/iadvanced-upload-f
     MatCheckboxModule,
     MatExpansionModule,
     MatSlideToggleModule,
-    MatSnackBarModule,
     StatusLabelModule,
     TableFiltersModule,
     SearchFilterModule,

@@ -7,7 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { NewCampaignRewardsStampsFormService } from '../../services/new-campaign-rewards-stamps-form.service';
 
 @Component({

@@ -49,7 +49,12 @@ export {
   IWCommTemplateAttributes,
   IWCommEventAttributes
 } from './lib/comm/comm';
-export { IWCampaignAttributes, IWCampaignDisplayProperties, WInformationCollectionSettingType } from './lib/campaign/campaign';
+export {
+  IWCampaignAttributes,
+  IWCampaignDisplayProperties,
+  WInformationCollectionSettingType,
+  WCampaignStatus
+} from './lib/campaign/campaign';
 export {
   IWAudiences,
   IWPools,
