@@ -15,6 +15,11 @@ export { RedemptionType } from './lib/perx-core.models';
 /**
  * Merchants
  */
+export {
+  IMerchantTransactionHistory,
+  IMerchantPurchaseTransactionHistory,
+  IMerchantRewardTransactionHistory
+} from './lib/merchant-admin/models/merchants-admin.model';
 export { MerchantsModule } from './lib/merchants/merchants.module';
 export { IMerchantsService } from './lib/merchants/imerchants.service';
 

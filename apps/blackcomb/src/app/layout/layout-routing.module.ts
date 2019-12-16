@@ -76,6 +76,25 @@ const routes: Routes = [
         loadChildren: (): any => import('../content/content.module').then((mod: any) => mod.ContentModule),
         canActivate: [ProtectedGuard]
       },
+      {
+        path: 'profile',
+        loadChildren: (): any => import('../profile/profile.module').then((mod: any) => mod.ProfileModule)
+      },
+      {
+        path: 'transaction-history',
+        loadChildren: (): any => import('../transaction-history/transaction-history.module')
+                      .then((mod: any) => mod.TransactionHistoryModule)
+      },
+      {
+        path: 'change-password',
+        loadChildren: (): any => import('../change-password/change-password.module')
+                      .then((mod: any) => mod.ChangePasswordModule)
+      },
+      {
+        path: 'edit-profile/:type',
+        loadChildren: (): any => import('../edit-profile-field/edit-profile-field.module')
+                      .then((mod: any) => mod.EditProfileFieldModule)
+      }
     ]
   }
 

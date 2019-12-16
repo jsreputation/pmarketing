@@ -29,7 +29,9 @@ describe('SignIn2Component', () => {
   };
 
   const configServiceStub = {
-    readAppConfig: () => of()
+    readAppConfig: () => of({
+      redirectAfterLogin: '/home'
+    })
   };
 
   beforeEach(async(() => {

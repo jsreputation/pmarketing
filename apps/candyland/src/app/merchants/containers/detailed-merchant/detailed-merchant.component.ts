@@ -18,7 +18,7 @@ export class DetailedMerchantComponent {
       mollit anim id est laborum.`,
     countryCode: '+65',
     phone: '+3555 5556 6666',
-    address: '20 Upper Circular Rd, #02-21B Perx Technologies Pte Ltd, The Riverwalk',
+    address: '20 Maxwell Road #02-01, Maxwell House, 069113',
     city: 'Singapore',
     state: '-',
     postalCode: '6786546',
