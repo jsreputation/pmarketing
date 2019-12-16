@@ -49,7 +49,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   public size: number;
   private patternImg: Pattern[] = [];
   private spinTime: number;
-  private dragging: boolean = false;
+  public dragging: boolean = false;
   private spinTimeTotal: number = 0;
   private spinAngleStart: number = 0;
   private spinTimeout: number;
@@ -64,7 +64,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   private get canvas(): HTMLCanvasElement { return this.canvasEl.nativeElement; }
   // private get canvasWheelWrap(): HTMLCanvasElement { return this.canvasWheelWrapEl.nativeElement; }
   private get wheel(): HTMLDivElement { return this.wheelEl.nativeElement; }
-  private get ctx(): CanvasRenderingContext2D {
+  public get ctx(): CanvasRenderingContext2D {
     if (!this.ctx_ && this.canvas.getContext) {
       this.ctx_ = this.canvas.getContext('2d') as CanvasRenderingContext2D;
     }

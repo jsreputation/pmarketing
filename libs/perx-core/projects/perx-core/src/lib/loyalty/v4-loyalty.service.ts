@@ -269,7 +269,7 @@ export class V4LoyaltyService extends LoyaltyService {
           of(histories)
         ];
         for (let i = 2; i <= ((this.historyMeta && this.historyMeta.total_pages) ? this.historyMeta.total_pages : 0); i++) {
-          const stream = this.getTransactions((loyaltyId ? loyaltyId : 1), i, pageSize);
+          const stream = this.getTransactions((loyaltyId), i, pageSize);
           streams.push(stream);
         }
         return streams;
@@ -298,7 +298,6 @@ export class V4LoyaltyService extends LoyaltyService {
             ...res.meta
           };
         }
-
         return res.data;
       }),
       map((loyalty: IV4Loyalty) => oc(loyalty).points_history([]).map(

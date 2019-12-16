@@ -1,10 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 
 import { ScratchCardComponent } from './scratch-card.component';
 
 describe('ScratchCardComponent', () => {
   let component: ScratchCardComponent;
   let fixture: ComponentFixture<ScratchCardComponent>;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ScratchCardComponent]
@@ -38,4 +39,47 @@ describe('ScratchCardComponent', () => {
     component.canvas = null;
     expect(component.getFilledInPixels(5)).toBe(0);
   });
+
+  it('lastPointOffset', fakeAsync(() => {
+    component.lastPoint = { x: 1, y: 2 };
+    expect(component.lastPointOffset).toBeTruthy();
+  }));
+
+  it('handleMouseMove', () => {
+    const spy = spyOn(component, 'handlePercentage');
+    component.lastPoint = { x: 1, y: 2 };
+    component.canvas.height = 500;
+    component.canvas.width = 30;
+    component.handleMouseDown(new TouchEvent('touch', {
+      touches: [
+        new Touch({
+          identifier: 1,
+          target: new EventTarget(),
+          clientX: 50,
+          clientY: 100
+        })
+      ]
+    }));
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('handleMouseMove', () => {
+    const spy = spyOn(component.canvas, 'getContext').and.returnValue(null);
+    component.lastPoint = { x: 1, y: 2 };
+    component.canvas.height = 500;
+    component.canvas.width = 30;
+    component.getFilledInPixels(-32);
+    component.handleMouseDown(new TouchEvent('touch', {
+      touches: [
+        new Touch({
+          identifier: 1,
+          target: new EventTarget(),
+          clientX: 50,
+          clientY: 100
+        })
+      ]
+    }));
+    expect(spy).toHaveBeenCalled();
+  });
+
 });
