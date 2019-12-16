@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { LoginRoutingModule } from './login-routing.module';
-import { SignIn2Component } from '@perx/blackcomb-pages';
+import { OtpRoutingModule } from './otp-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { EnterPinComponent } from '@perx/blackcomb-pages';
+import { UtilsModule } from '@perx/core';
 
 @NgModule({
-  declarations: [SignIn2Component],
+  declarations: [EnterPinComponent],
   imports: [
     CommonModule,
-    LoginRoutingModule,
+    OtpRoutingModule,
+    UtilsModule,
     SharedModule,
     TranslateModule.forChild()
   ]
 })
-export class LoginModule { }
+export class OtpModule { }
