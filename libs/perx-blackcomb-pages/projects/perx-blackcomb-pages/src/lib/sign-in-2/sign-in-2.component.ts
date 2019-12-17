@@ -8,6 +8,11 @@ import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 
+interface ISigninConfig {
+  redirectAfterLogin: string;
+  showSubtitleLogin: boolean;
+}
+
 @Component({
   selector: 'perx-blackcomb-pages-login',
   templateUrl: './sign-in-2.component.html',
@@ -20,8 +25,10 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
   public theme: Observable<ITheme>;
-  public appConfig: Observable<IConfig<void>>;
+  public appConfig: IConfig<ISigninConfig>;
   public appAccessTokenFetched: boolean;
+  private custId: string;
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -33,12 +40,14 @@ export class SignIn2Component implements OnInit, OnDestroy {
     public translate: TranslateService
   ) {
     this.preAuth = this.config.preAuth ? this.config.preAuth : false;
+    const nav: Navigation | null = this.router.getCurrentNavigation();
+    this.custId = oc(nav).extras.state.pi('');
   }
 
   public ngOnInit(): void {
     this.initForm();
     this.theme = this.themesService.getThemeSetting();
-    this.appConfig = this.configService.readAppConfig();
+    this.configService.readAppConfig<ISigninConfig>().subscribe((conf) => this.appConfig = conf);
     const token = this.authService.getAppAccessToken();
     if (token) {
       this.appAccessTokenFetched = true;
@@ -57,14 +66,13 @@ export class SignIn2Component implements OnInit, OnDestroy {
   }
 
   public redirectAfterLogin(): void {
-    this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'wallet');
+    this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl()
+      : this.appConfig.custom && this.appConfig.custom.redirectAfterLogin as string || 'wallet');
   }
 
   public initForm(): void {
-    const nav: Navigation | null = this.router.getCurrentNavigation();
-    const custId: string = oc(nav).extras.state.pi('');
     this.loginForm = this.fb.group({
-      customerID: [custId, Validators.required],
+      customerID: [this.custId, Validators.required],
       password: ['', Validators.required]
     });
   }

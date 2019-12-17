@@ -11,7 +11,7 @@ require('dotenv').config();
 
 // Debug environment variables
 
-const displayProperties = `"display_properties": {
+const displayProperties = `"displayProperties": {
     "account": {
         "pages": [
             {
@@ -69,6 +69,7 @@ const appConfigFile = `{
     "showUserInfoOnAccountsPage": ${process.env.SHOW_USERINFO_ACCOUNTS ? process.env.SHOW_USERINFO_ACCOUNTS : true},
     "showTransactionHistoryOnAccountsPage": ${process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS ? process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS : true},
     "showVoucherBookingFromRewardsPage": ${process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS ? process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS : true},
+    "redirectAfterLogin": "${process.env.REDIRECT_AFTER_LOGIN ? process.env.REDIRECT_AFTER_LOGIN : '/wallet'}",
   },
   ${displayProperties}
 }

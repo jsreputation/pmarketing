@@ -12,7 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
 import {
@@ -22,6 +22,8 @@ import {
   AuthenticationService,
   NotificationService,
   SurveyService,
+  ConfigService,
+  IConfig,
 } from '@perx/core';
 
 import { SignInComponent } from './sign-in.component';
@@ -50,7 +52,11 @@ describe('SignInComponent', () => {
     getPI: () => '',
     getUserAccessToken: () => '',
     getAnonymous: () => true,
-    logout: () => {}
+    logout: () => { }
+  };
+
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: <T>(): Observable<IConfig<T>> => of()
   };
 
   const surveyServiceStub: Partial<SurveyService> = {
@@ -78,6 +84,7 @@ describe('SignInComponent', () => {
         { provide: InstantOutcomeService, useValue: instantOutcomeServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: SurveyService, useValue: surveyServiceStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();
