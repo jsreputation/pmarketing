@@ -25,7 +25,9 @@ import {
   Config,
   NotificationService,
   ICampaign,
-  ICampaignService
+  ICampaignService,
+  IConfig,
+  ConfigService
 } from '@perx/core';
 
 import * as uuid from 'uuid';
@@ -43,6 +45,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
   private campaignData: ICampaign | null = null;
 
   private destroy$: Subject<any> = new Subject();
+  private appConfig: IConfig;
 
   constructor(
     private router: Router,
@@ -50,6 +53,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
     private authService: AuthenticationService,
     private campaignSvc: ICampaignService,
     private config: Config,
+    private configService: ConfigService,
     private notificationService: NotificationService,
     @Inject(PLATFORM_ID) private platformId: object,
   ) {
@@ -57,6 +61,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.configService.readAppConfig().subscribe((conf) => this.appConfig = conf);
     const params = this.route.snapshot.queryParams;
     (window as any).primaryIdentifier = params.pi;
     const cid: string | null = params.cid;
@@ -122,8 +127,8 @@ export class LoadingComponent implements OnInit, OnDestroy {
     return endDate < now;
   }
 
-  private goWallet(): void {
-    this.router.navigate(['/wallet']);
+  private goToRouteFromConfig(): void {
+    this.router.navigate([this.appConfig && this.appConfig.redirectAfterLogin || 'wallet']);
   }
 
   private getCampaignData(): void {
@@ -135,10 +140,10 @@ export class LoadingComponent implements OnInit, OnDestroy {
         )
         .subscribe(
           () => this.redirectAfterLogin(),
-          () => this.goWallet()
+          () => this.goToRouteFromConfig()
         );
     } else {
-      this.goWallet();
+      this.goToRouteFromConfig();
     }
   }
 
@@ -157,7 +162,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
     } else if (this.campaignId && this.isCampaignEnded) {
       this.initCampaignEndedPopup();
     } else {
-      this.goWallet();
+      this.goToRouteFromConfig();
     }
   }
 
