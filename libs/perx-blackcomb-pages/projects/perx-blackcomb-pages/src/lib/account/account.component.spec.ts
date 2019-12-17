@@ -72,7 +72,10 @@ describe('AccountComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AccountComponent],
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([{
+          path: 'login',
+          component: AccountComponent
+        }]),
         ProfileModule,
         MatCardModule,
         MatListModule,
