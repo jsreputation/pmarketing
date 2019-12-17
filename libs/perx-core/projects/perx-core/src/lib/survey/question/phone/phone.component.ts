@@ -37,7 +37,7 @@ export class PhoneComponent implements OnChanges, OnInit {
     this.subject.pipe(
       debounceTime(500)
     ).subscribe(inputValue => {
-      this.updateAnswers.emit({ content: this.countryCode + ' ' + inputValue });
+      this.updateAnswers.emit({ content: `${this.countryCode}${inputValue}` });
     });
   }
 
