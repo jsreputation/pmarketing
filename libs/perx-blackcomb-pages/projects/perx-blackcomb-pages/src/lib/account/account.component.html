@@ -1,8 +1,9 @@
-<div class="page-container" *ngIf="theme | async as th"
-  [ngStyle]="{'background-color': th?.properties['--account_background_color']}">
-  <div *ngIf="appConfig | async as aConfig">
-    <div *ngIf="aConfig.showUserInfoOnAccountsPage" class="section">
-      <mat-card class="basic-info mat-elevation-z0" (click)="onProfileClicked()">
+<ng-container *ngIf="isProfileLoaded(); else ghostBlock">
+  <div class="page-container" *ngIf="theme | async as th"
+       [ngStyle]="{'background-color': th?.properties['--account_background_color']}">
+    <div *ngIf="appConfig | async as aConfig">
+      <div *ngIf="aConfig.showUserInfoOnAccountsPage" class="section">
+        <mat-card class="basic-info mat-elevation-z0" (click)="onProfileClicked()">
           <mat-card-header>
             <div mat-card-avatar>
               <img src="assets/avatar.png" alt="">
@@ -11,22 +12,35 @@
             <mat-card-subtitle *ngIf="loyalty">{{loyalty.membershipTierName}} TIER</mat-card-subtitle>
           </mat-card-header>
         </mat-card>
-    </div>
-    <div class="section">
-      <mat-nav-list>
-        <mat-list-item *ngIf="aConfig.showTransactionHistoryOnAccountsPage" routerLink="/transaction-history">
-          Transaction History
-        </mat-list-item>
+      </div>
+      <div class="section">
+        <mat-nav-list>
+          <mat-list-item *ngIf="aConfig.showTransactionHistoryOnAccountsPage" routerLink="/transaction-history">
+            Transaction History
+          </mat-list-item>
 
-        <mat-list-item [routerLink]="'/c/' +page.key" *ngFor="let page of pages">
-          {{page.title}}
-        </mat-list-item>
-      </mat-nav-list>
-    </div>
-    <div *ngIf="!preAuth" class="section">
-      <mat-nav-list>
-        <mat-list-item (click)="logout()">Log Out</mat-list-item>
-      </mat-nav-list>
+          <mat-list-item [routerLink]="'/c/' +page.key" *ngFor="let page of pages">
+            {{page.title}}
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+      <div *ngIf="!preAuth" class="section">
+        <mat-nav-list>
+          <mat-list-item (click)="logout()">Log Out</mat-list-item>
+        </mat-nav-list>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
+
+<ng-template #ghostBlock>
+  <div class="section">
+    <mat-card class="basic-info mat-elevation-z0">
+      <mat-card-header>
+        <div mat-card-avatar>
+          <img src="assets/avatar.png" alt="">
+        </div>
+      </mat-card-header>
+    </mat-card>
+  </div>
+</ng-template>
