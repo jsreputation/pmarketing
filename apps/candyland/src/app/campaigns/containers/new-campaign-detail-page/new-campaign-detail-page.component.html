@@ -180,7 +180,7 @@
             <div class="card-row" *ngFor="let age of ages.controls">
               <mat-form-field>
                 <mat-select [formControl]="age.get('from')">
-                  <mat-option *ngFor="let fromAge of ageRange | async ;let i= index" [value]="20">{{fromAge}}
+                  <mat-option *ngFor="let fromAge of ageRange | async;" [value]="fromAge">{{fromAge}} 
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -189,7 +189,7 @@
               </span>
               <mat-form-field>
                 <mat-select [formControl]="age.get('to')">
-                  <mat-option *ngFor="let toAge of ageRange | async ;let i= index" [value]="30">{{toAge}}</mat-option>
+                  <mat-option *ngFor="let toAge of ageRange | async;" [value]="toAge">{{toAge}}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
