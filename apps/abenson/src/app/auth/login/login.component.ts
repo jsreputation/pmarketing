@@ -1,7 +1,7 @@
 import { AuthenticationService, NotificationService } from '@perx/core';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import {Validators, FormBuilder, FormGroup, AbstractControl} from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -14,6 +14,15 @@ export class LoginComponent implements OnInit {
   public errorMessage?: string;
   public preAuth: boolean;
   public appAccessTokenFetched: boolean;
+
+  public get mobileNumber(): AbstractControl | null {
+    return this.loginForm.get('mobileNumber');
+  }
+
+  public get pinCode(): AbstractControl | null {
+    return this.loginForm.get('pinCode');
+  }
+
   constructor(
     private router: Router,
     private fb: FormBuilder,

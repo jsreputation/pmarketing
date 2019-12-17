@@ -13,7 +13,7 @@
         placeholder="Enter your existing card number"
         formControlName="cardNumber"
       >
-      <mat-error *ngIf="existingCardForm.get('cardNumber').hasError('required')">
+      <mat-error *ngIf="cardNumber && cardNumber.hasError('required')">
         Card number is <strong>required</strong>
       </mat-error>
     </mat-form-field>

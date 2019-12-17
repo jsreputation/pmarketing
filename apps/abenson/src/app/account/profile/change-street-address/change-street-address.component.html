@@ -16,7 +16,7 @@
         placeholder="Enter new street address"
         formControlName="newStreetAddress"
       >
-      <mat-error *ngIf="streetAddressChangeForm.get('newStreetAddress').hasError('required')">
+      <mat-error *ngIf="newStreetAddress && newStreetAddress.hasError('required')">
         New street address is <strong>required</strong>
       </mat-error>
     </mat-form-field>

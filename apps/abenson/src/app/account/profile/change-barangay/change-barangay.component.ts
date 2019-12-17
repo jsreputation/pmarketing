@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ICustomProperties, ProfileService } from '@perx/core';
 
 @Component({
@@ -11,6 +11,10 @@ import { ICustomProperties, ProfileService } from '@perx/core';
 export class ChangeBarangayComponent implements OnInit {
   public barangayChangeForm: FormGroup;
   public customProperties: ICustomProperties;
+
+  public get newBarangay(): AbstractControl | null {
+    return this.barangayChangeForm.get('newBarangay');
+  }
 
   constructor(
     private fb: FormBuilder,
