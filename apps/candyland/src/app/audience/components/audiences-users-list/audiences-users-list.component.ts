@@ -89,4 +89,12 @@ export class AudiencesUsersListComponent implements AfterViewInit {
         this.messageService.show('User successfully updated.');
       });
   }
+
+  public transformMailTo(email: string): string {
+    return email ? `mailto:${email}` : email;
+  }
+
+  public transformTelTo(tel: string): string {
+    return tel ? `tel:${tel}` : tel;
+  }
 }
