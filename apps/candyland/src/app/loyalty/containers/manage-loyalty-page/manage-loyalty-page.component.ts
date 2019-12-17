@@ -281,10 +281,8 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     ruleSets.forEach((ruleSet: ILoyaltyRuleSet) =>
       ruleSetRequests.push(this.ruleService.updateRuleSet(ruleSet))
     );
-    console.log(ruleSetRequests);
     return combineLatest(ruleSetRequests)
       .pipe(
-        tap(res => console.log('res______', res)),
         map(response => !!response),
         takeUntil(this.destroy$)
       );

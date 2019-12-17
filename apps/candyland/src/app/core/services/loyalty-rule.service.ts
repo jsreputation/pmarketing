@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, combineLatest } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { map, switchMap } from 'rxjs/operators';
 import { LoyaltyRulesHttpService } from '@cl-core/http-services/loyalty-rules-http.service';
@@ -9,7 +9,8 @@ import {
   IWLoyaltyRuleAttributes,
   IWLoyaltyRuleConditionAttributes,
   IWLoyaltyRulePointAttributes,
-  IWLoyaltyRuleSetAttributes
+  IWLoyaltyRuleSetAttributes,
+  IWOutcomeAttributes
 } from '@perx/whistler';
 import { ILoyaltyRule, ILoyaltyRuleCondition, ILoyaltyRulePoint, ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
 
@@ -29,15 +30,16 @@ export class LoyaltyRuleService {
 
   public findAndCreateRuleSet(tierType: string, tierId: string): Observable<ILoyaltyRuleSet> {
     const params = {
-      include: 'domain,rules.rule_conditions', //      'results',
+      include: 'domain,rules.rule_conditions,rules.results', //      'results',
       'filter[domain_id]': tierId,
       'filter[domain_type]': tierType
     };
+
     return this.getRuleSetList(params)
       .pipe(
         switchMap((response: IJsonApiListPayload<IWLoyaltyRuleSetAttributes>) => {
           if (response.data.length > 0) {
-            return of(LoyaltyRuleHttpAdapter.transformFromRuleSetWithIncludes(response));
+            return this.getRuleSetWithAdditionalData(response);
           }
           return this.createRuleSet(tierType, tierId);
         }),
@@ -51,6 +53,33 @@ export class LoyaltyRuleService {
     );
   }
 
+  private filterOutcomesArrayFromIncluded(response: IJsonApiListPayload<IWLoyaltyRuleSetAttributes>): IJsonApiItem<IWOutcomeAttributes>[] {
+    return response.included
+      .filter((entity: IJsonApiItem<any>) => entity.type === 'possible_outcomes' && entity.attributes.result_type === 'Perx::Loyalty::PointCalculator');
+  }
+
+  private getRuleSetWithAdditionalData(response: IJsonApiListPayload<IWLoyaltyRuleSetAttributes>): Observable<ILoyaltyRuleSet> {
+    const outcomes = this.filterOutcomesArrayFromIncluded(response);
+    if (outcomes.length > 0) {
+      return this.getRuleSetPointsMapByPossibleOutcomes(outcomes).pipe(
+        map((pointsMap: { [outcomeId: string]: ILoyaltyRulePoint }) =>
+          LoyaltyRuleHttpAdapter.transformFromRuleSetWithIncludes(response, pointsMap))
+      );
+    }
+    return of(LoyaltyRuleHttpAdapter.transformFromRuleSetWithIncludes(response));
+  }
+
+  private getRuleSetPointsMapByPossibleOutcomes(outcomes: any): Observable<{ [outcomeId: string]: ILoyaltyRulePoint }> {
+    const pointRequest: Observable<ILoyaltyRulePoint>[] = outcomes.map(outcome => this.getRulePoint(outcome.attributes.result_id));
+    return combineLatest(pointRequest).pipe(
+      map(pointArray => {
+        const pointsMap: { [possibleOutcomeId: string]: ILoyaltyRulePoint } = {};
+        outcomes.forEach((outcome, index) => pointsMap[outcome.id] = pointArray[index]);
+        return pointsMap;
+      })
+    );
+  }
+
   public createRuleSet(typeTier: string, tierId: string): Observable<ILoyaltyRuleSet> {
     const sendData: any = LoyaltyRuleHttpAdapter.transformFromRuleSetFormCreate(typeTier, tierId);
     return this.rulesHttpService.createRuleSet({data: sendData}).pipe(
@@ -60,7 +89,6 @@ export class LoyaltyRuleService {
 
   public updateRuleSet(ruleSet: ILoyaltyRuleSet): Observable<IJsonApiPayload<IWLoyaltyRuleSetAttributes>> {
     const sendData: any = LoyaltyRuleHttpAdapter.transformFromRuleSetFormUpdate(ruleSet);
-    console.log('sendData', sendData);
     return this.rulesHttpService.updateRuleSet(ruleSet.id, {data: sendData});
   }
 
@@ -71,7 +99,7 @@ export class LoyaltyRuleService {
   // rules
   public getRule(id: string): Observable<ILoyaltyRule> {
     const params = {
-      include: 'rule_conditions,'
+      include: 'rule_conditions,results'
       // 'results'
     };
     const httpParams = ClHttpParams.createHttpParams(params);
@@ -139,21 +167,33 @@ export class LoyaltyRuleService {
   }
 
   // points
-  // public getRulePoints(id: string, params: HttpParams): Observable<IJsonApiPayload<IWLoyaltyRulePointAttributes>> {
-  //   return this.rulesHttpService.get<IJsonApiPayload<IWLoyaltyRulePointAttributes>>(`${ApiConfig.getLoyaltyRulePointsCalculator}/${id}`, {params});
-  // }
+  public getRulePoint(id: string, params: HttpParamsOptions = {}): Observable<ILoyaltyRulePoint> {
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.rulesHttpService.getRulePoint(id, httpParams).pipe(
+      map((response: IJsonApiPayload<IWLoyaltyRulePointAttributes>) =>
+        LoyaltyRuleHttpAdapter.transformToPointForm(response.data))
+    );
+  }
 
   public createRulePoint(data: ILoyaltyRulePoint):
-    Observable<IJsonApiPayload<IWLoyaltyRulePointAttributes>> {
+    Observable<ILoyaltyRulePoint> {
     const sendData: any = LoyaltyRuleHttpAdapter.transformFromPointForm(data);
-    return this.rulesHttpService.createRulePoint({data: sendData});
+    return this.rulesHttpService.createRulePoint({data: sendData})
+      .pipe(
+        map((response: IJsonApiPayload<IWLoyaltyRulePointAttributes>) =>
+          LoyaltyRuleHttpAdapter.transformToPointForm(response.data))
+      );
   }
 
   public updateRulePoint(id: string, data: ILoyaltyRulePoint):
-    Observable<IJsonApiPayload<IWLoyaltyRulePointAttributes>> {
+    Observable<ILoyaltyRulePoint> {
     const sendData: any = LoyaltyRuleHttpAdapter.transformFromPointForm(data);
     sendData.id = id;
-    return this.rulesHttpService.updateRulePoint(id, {data: sendData});
+    return this.rulesHttpService.updateRulePoint(id, {data: sendData})
+      .pipe(
+        map((response: IJsonApiPayload<IWLoyaltyRulePointAttributes>) =>
+          LoyaltyRuleHttpAdapter.transformToPointForm(response.data))
+      );
   }
 
   public deleteRulePoint(id: string): Observable<IJsonApiPayload<IWLoyaltyRulePointAttributes>> {

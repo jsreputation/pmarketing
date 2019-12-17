@@ -123,7 +123,7 @@ export class LoyaltyRuleHttpAdapter {
     };
   }
 
-  public static transformFromPointForm(data: ILoyaltyRulePoint): IJsonApiItem<IWLoyaltyRulePointAttributes>  {
+  public static transformFromPointForm(data: ILoyaltyRulePoint): IJsonApiItem<IWLoyaltyRulePointAttributes> {
     return {
       type: data.type || 'point_calculators',
       attributes: {
@@ -148,7 +148,10 @@ export class LoyaltyRuleHttpAdapter {
     };
   }
 
-  public static transformFromRuleSetWithIncludes(data: IJsonApiListPayload<IWLoyaltyRuleSetAttributes>): ILoyaltyRuleSet {
+  public static transformFromRuleSetWithIncludes(
+    data: IJsonApiListPayload<IWLoyaltyRuleSetAttributes>,
+    outcomesIncludes: { [outcomeId: string]: ILoyaltyRulePoint } = null
+  ): ILoyaltyRuleSet {
     let formattedData = JsonApiParser.parseDataWithIncludes(data, LoyaltyRuleHttpAdapter.transformToRuleSetForm,
       {rules: {fieldName: 'rules'}});
     if (Utils.isArray(formattedData)) {
@@ -160,6 +163,13 @@ export class LoyaltyRuleHttpAdapter {
       const conditions = JsonApiParser.findRelations(rule, 'rule_conditions', conditionsIncludes);
       if (conditions) {
         formattedRule.conditions = conditions;
+      }
+      if (!outcomesIncludes) {
+        return formattedRule;
+      }
+      const outcomes = JsonApiParser.findRelations(rule, 'possible_outcomes', outcomesIncludes);
+      if (outcomes && outcomes[0]) {
+        formattedRule.result = outcomes[0];
       }
       return formattedRule;
     });

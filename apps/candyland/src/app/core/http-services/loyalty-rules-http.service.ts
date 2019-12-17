@@ -82,8 +82,9 @@ export class LoyaltyRulesHttpService {
   }
 
   // points
-  public getRulePoints(id: string, params: HttpParams): Observable<IJsonApiPayload<IWLoyaltyRulePointAttributes>> {
-    return this.http.get<IJsonApiPayload<IWLoyaltyRulePointAttributes>>(`${ApiConfig.getLoyaltyRulePointsCalculator}/${id}`, {params});
+  public getRulePoint(id: string, params: HttpParams): Observable<IJsonApiPayload<IWLoyaltyRulePointAttributes>> {
+    return this.http.get<IJsonApiPayload<IWLoyaltyRulePointAttributes>>
+    (`${ApiConfig.getLoyaltyRulePointsCalculator}/${id}`, {params});
   }
 
   public createRulePoint(data: IJsonApiPayload<IWLoyaltyRulePointAttributes>):

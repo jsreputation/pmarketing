@@ -7,7 +7,7 @@ import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 import { distinctUntilChanged, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import Utils from '@cl-helpers/utils';
 import { CRUDParser, RequestType } from '@cl-helpers/crud-parser';
-import { ILoyaltyRule, ILoyaltyRuleCondition, ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
+import { ILoyaltyRule, ILoyaltyRuleCondition, ILoyaltyRulePoint, ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
 import { TransactionConditionGroupComponent } from '../../components/transaction-condition-group/transaction-condition-group.component';
 import { AmountConditionGroupComponent } from '../../components/amount-condition-group/amount-condition-group.component';
 import { CurrencyConditionGroupComponent } from '../../components/currency-condition-group/currency-condition-group.component';
@@ -181,33 +181,43 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
     const currentRule = this.data.rule;
     const updatedRule = this.form.value;
     if (currentRule) {
-      const ruleId = this.data.rule.id;
-      request = combineLatest([
-        this.ruleService.updateRule(updatedRule, ruleId),
-        ...this.getConditionsRequests(ruleId, currentRule.conditions, updatedRule.conditions)
-      ])
+      request = combineLatest(this.getAllUpdateRequests(currentRule, updatedRule))
         .pipe(
-          map(() => ruleId)
+          map(() => currentRule.id)
         );
     } else {
       request = this.ruleService.createRulePoint(updatedRule.result)
         .pipe(
-          map(response => response.data.id),
-          tap(id => console.log(id)),
-          map(id => updatedRule.result.id = id),
-          tap(rrr => console.log(rrr)),
+          map((resultPoint: ILoyaltyRulePoint) => {
+            updatedRule.result = resultPoint;
+            return updatedRule;
+          }),
           switchMap(data => this.ruleService.createRule(ruleSetId, data)),
-          map((rule: any) => rule.id)
+          map((rule: ILoyaltyRule) => rule.id)
         );
-      //  this.ruleService.createRule(ruleSetId, updatedRule).pipe(
-      //   map((rule: any) => rule.id)
-      // );
     }
     request = request.pipe(
       switchMap((id: string) => this.ruleService.getRule(id)),
+      map((rule: any) => {
+        rule.result = updatedRule.result;
+        return rule;
+      }),
       takeUntil(this.destroy$)
     );
     return request;
   }
 
+  private getAllUpdateRequests(currentRule: ILoyaltyRule, updatedRule: ILoyaltyRule):
+    Observable<ILoyaltyRule | ILoyaltyRuleCondition | ILoyaltyRulePoint>[] {
+    const ruleId = currentRule.id;
+    const requestArray: Observable<ILoyaltyRule | ILoyaltyRuleCondition | ILoyaltyRulePoint>[] =
+      this.getConditionsRequests(ruleId, currentRule.conditions, updatedRule.conditions);
+    if (currentRule.name !== updatedRule.name) {
+      requestArray.push(this.ruleService.updateRule(updatedRule, ruleId));
+    }
+    if (!Utils.isEqual(currentRule.result, updatedRule.result)) {
+      requestArray.push(this.ruleService.updateRulePoint(updatedRule.result.id, updatedRule.result));
+    }
+    return requestArray;
+  }
 }
