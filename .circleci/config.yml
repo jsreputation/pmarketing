@@ -215,6 +215,8 @@ jobs:
             if [ $APP == 'petron-demo' ]
             then
               export APP_BASE="blackcomb"
+            else
+              export APP_BASE=$APP
             fi
             echo "APP_BASE: ${APP_BASE}"
 
@@ -242,7 +244,7 @@ jobs:
   deploy:
     executor:
       name: helm-deploy/default
-      docker_tag: '2.15.2'
+      docker_tag: "2.15.2"
     parameters:
       docker_tag:
         type: string
@@ -309,7 +311,7 @@ jobs:
   deploy-whistler:
     executor:
       name: helm-deploy/default
-      docker_tag: '2.15.2'
+      docker_tag: "2.15.2"
     parameters:
       docker_tag:
         type: string
@@ -378,8 +380,7 @@ jobs:
             chmod +x skaffold
       - run:
           name: Deploy microsite app and ingress
-          command:
-            ./skaffold deploy -f .circleci/skaffold/microsites-app-ng-${APP}.yaml --images perxtech/microsite-apps-ng
+          command: ./skaffold deploy -f .circleci/skaffold/microsites-app-ng-${APP}.yaml --images perxtech/microsite-apps-ng
   test-e2e-protractor:
     docker:
       - image: circleci/node:10-browsers
@@ -507,24 +508,24 @@ workflows:
               only: /engagements-proxy-\d+\.\d+\.\d+.*/
 
 daily_e2e_run_morning:
-    triggers:
-      - schedule:
-          # 12 noon SGT
-          cron: "0 4 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - test-e2e-protractor
+  triggers:
+    - schedule:
+        # 12 noon SGT
+        cron: "0 4 * * *"
+        filters:
+          branches:
+            only:
+              - master
+  jobs:
+    - test-e2e-protractor
 daily_e2e_run_evening:
-    triggers:
-      - schedule:
-          # 5.00 pm SGT
-          cron: "0 9 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - test-e2e-protractor
+  triggers:
+    - schedule:
+        # 5.00 pm SGT
+        cron: "0 9 * * *"
+        filters:
+          branches:
+            only:
+              - master
+  jobs:
+    - test-e2e-protractor
