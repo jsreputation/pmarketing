@@ -17,9 +17,9 @@
             [placeholder]="'CAMPAIGN.SEARCH_FOR_CAMPAIGN' | translate"></cl-search-filter>
         </ng-container>
         <div>
-          <ng-container *clTableFilter="'rangeDate'; let filter">
-            <cl-separate-range-date-picker-filter [formControl]="filter"></cl-separate-range-date-picker-filter>
-          </ng-container>
+          <!-- <ng-container *clTableFilter="'rangeDate'; let filter">
+          <cl-separate-range-date-picker-filter [formControl]="filter"></cl-separate-range-date-picker-filter>
+        </ng-container> -->
           <ng-container *clTableFilter="'status'; value: ''; let filter">
             <mat-form-field appearance="outline" class="control-input half-block">
               <mat-select [formControl]="filter" [placeholder]="'STATUSES_TYPE.ALL' | translate">
