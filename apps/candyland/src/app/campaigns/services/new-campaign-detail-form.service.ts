@@ -7,7 +7,7 @@ import * as moment from 'moment';
 export class NewCampaignDetailFormService {
   constructor(private fb: FormBuilder) {
   }
-//tslint:disable
+  //tslint:disable
   //TODO: need use momentJs for date handler
   public getForm(): FormGroup {
     return this.fb.group({
@@ -40,8 +40,19 @@ export class NewCampaignDetailFormService {
       audience: this.fb.group({
         type: ['select'],
         file: [],
-        select: []
+        select: [],
+        filters: this.fb.group({
+          ages: this.fb.array([this.createAge()]),
+          gender: ['male']
+        })
       })
+    });
+  }
+
+  public createAge(): FormGroup {
+    return this.fb.group({
+      from: [],
+      to: []
     });
   }
 
