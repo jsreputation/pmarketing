@@ -131,7 +131,7 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
           title: 'Successfully Redeemed!',
           text: `You have redeemed ${voucher.reward ? voucher.reward.name : ''}.`,
           buttonTxt: 'Close',
-          imageUrl: 'assets/success_redeem.png',
+          imageUrl: 'assets/redeem_success.png',
         });
         this.router.navigate(['wallet']);
       }
