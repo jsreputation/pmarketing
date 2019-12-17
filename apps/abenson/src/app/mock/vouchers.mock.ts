@@ -27,7 +27,7 @@ export const vouchers: Voucher[] = Array.from({length: 6}, (voucher, id) => ({
     categoryTags: [],
     inventory: undefined,
   },
-  state: VoucherState.issued,
+  state: VoucherState.redeemed,
   code: '',
   expiry: new Date(),
 }));
