@@ -24,6 +24,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   public isFirstInit: boolean;
   public triggerLabelsChip: boolean;
   public campaignId: string;
+  public audienceFiltersEnabled = false;
   protected destroy$: Subject<void> = new Subject();
 
   @Input()
@@ -72,7 +73,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   public get ages(): FormArray | null {
     return this.form.get('audience.filters.ages') as FormArray;
   }
-  
+
   public get pool(): AbstractControl | null {
     return this.form.get('audience.select');
   }

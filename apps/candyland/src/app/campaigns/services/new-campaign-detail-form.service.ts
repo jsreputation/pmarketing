@@ -42,6 +42,8 @@ export class NewCampaignDetailFormService {
         file: [],
         select: [],
         filters: this.fb.group({
+          agesEnabled: [false],
+          genderEnabled: [false],
           ages: this.fb.array([this.createAge()]),
           gender: ['male']
         })
