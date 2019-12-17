@@ -28,7 +28,7 @@ export const vouchers: Voucher[] = Array.from({length: 6}, (voucher, id) => ({
     inventory: undefined,
   },
   redemptionType: RedemptionType.none,
-  state: VoucherState.issued,
+  state: VoucherState.redeemed,
   code: '',
   expiry: new Date(),
 }));

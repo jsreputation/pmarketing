@@ -18,5 +18,6 @@
   "CONFIRM": "確認",
   "BACK": "返回",
   "PROCEED": "繼續",
-  "CLOSE": "關閉"
+  "CLOSE": "關閉",
+  "TRANSACTION_HISTORY": "交易記錄"
 }

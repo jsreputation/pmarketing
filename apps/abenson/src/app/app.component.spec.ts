@@ -124,4 +124,10 @@ describe('AppComponent', () => {
     app.goBack();
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should call goBack', () => {
+    const spy = spyOn(app, 'goBack');
+    app.goBack();
+    expect(spy).toHaveBeenCalled();
+  });
 });

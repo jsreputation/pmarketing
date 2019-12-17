@@ -16,8 +16,12 @@ import { manifest } from './ctrl/manifest';
 import { language } from './ctrl/language';
 import { getCredentials } from './utils/credentials';
 import { getCredential } from './ctrl/autoGenerateTenantToken';
+
+import * as Sentry from '@sentry/node';
 // Express server
 const app = express();
+Sentry.init({ dsn: 'https://394598311c2749ea9114efb557297005@sentry.io/1857840' });
+app.use(Sentry.Handlers.requestHandler());
 app.use(compression());
 const cors = require('cors');
 app.use(cors());
@@ -61,6 +65,7 @@ if (process.env.PRODUCTION) {
   });
 }
 app.use('/assets', express.static('assets'));
+app.use(Sentry.Handlers.errorHandler());
 // Start up the Node server
 const server = app.listen(PORT, () => {
   console.log(`Node server listening on http://localhost:${PORT}`);
