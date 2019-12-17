@@ -9,63 +9,62 @@
 
 <section class="content">
   <ng-container [ngSwitch]="dataSource.state$ | async">
-  <ng-container *ngSwitchCase="dataSourceStates.hasDataApi">
-    <!--    filters-->
-    <cl-table-filters [dataSource]="dataSource">
-      <ng-container *clTableFilter="'name'; let filter">
-        <cl-search-filter class="search-block" [control]="filter" [placeholder]="'CAMPAIGN.SEARCH_FOR_CAMPAIGN' | translate"></cl-search-filter>
-      </ng-container>
-      <div>
-        <ng-container *clTableFilter="'rangeDate'; let filter">
-          <cl-separate-range-date-picker-filter [formControl]="filter"></cl-separate-range-date-picker-filter>
+    <ng-container *ngSwitchCase="dataSourceStates.hasDataApi">
+      <!--    filters-->
+      <cl-table-filters [dataSource]="dataSource">
+        <ng-container *clTableFilter="'name'; let filter">
+          <cl-search-filter class="search-block" [control]="filter"
+            [placeholder]="'CAMPAIGN.SEARCH_FOR_CAMPAIGN' | translate"></cl-search-filter>
         </ng-container>
-        <ng-container *clTableFilter="'status'; value: ''; let filter">
-          <mat-form-field appearance="outline" class="control-input half-block">
-            <mat-select [formControl]="filter" [placeholder]="'STATUSES_TYPE.ALL' | translate">
-              <mat-option value="">{{'STATUSES_TYPE.ALL' | translate}}</mat-option>
-              <mat-option value="active">{{'STATUSES_TYPE.ACTIVE' | translate}}</mat-option>
-              <!--          <mat-option value="pending">pending</mat-option>-->
-              <mat-option value="draft">{{'STATUSES_TYPE.DRAFT' | translate}}</mat-option>
-              <mat-option value="sheduled">{{'STATUSES_TYPE.SCHEDULED' | translate}}</mat-option>
-              <mat-option value="paused">{{'STATUSES_TYPE.PAUSED' | translate}}</mat-option>
-              <mat-option value="ended">{{'STATUSES_TYPE.ENDED' | translate}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ng-container>
+        <div>
+          <ng-container *clTableFilter="'rangeDate'; let filter">
+            <cl-separate-range-date-picker-filter [formControl]="filter"></cl-separate-range-date-picker-filter>
+          </ng-container>
+          <ng-container *clTableFilter="'status'; value: ''; let filter">
+            <mat-form-field appearance="outline" class="control-input half-block">
+              <mat-select [formControl]="filter" [placeholder]="'STATUSES_TYPE.ALL' | translate">
+                <mat-option value="">{{'STATUSES_TYPE.ALL' | translate}}</mat-option>
+                <mat-option [value]="cs.active">{{'STATUSES_TYPE.ACTIVE' | translate}}</mat-option>
+                <!--          <mat-option value="pending">pending</mat-option>-->
+                <mat-option [value]="cs.draft">{{'STATUSES_TYPE.DRAFT' | translate}}</mat-option>
+                <mat-option [value]="cs.scheduled">{{'STATUSES_TYPE.SCHEDULED' | translate}}</mat-option>
+                <mat-option [value]="cs.paused">{{'STATUSES_TYPE.PAUSED' | translate}}</mat-option>
+                <mat-option [value]="cs.ended">{{'STATUSES_TYPE.ENDED' | translate}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ng-container>
+        </div>
+      </cl-table-filters>
+      <!--   / filters-->
+      <div class="table-card">
+        <!--  table-->
+        <cl-campaigns-list [dataSource]="dataSource"
+          [statusLabel]="statusLabel"
+          [displayedColumns]="displayedColumns"
+          (editAction)="editCampaign($event)"
+          (duplicateAction)="duplicateCampaign($event)"
+          (emitOpenReport)="openReport($event)"
+          (activateCampaign)="activateCampaign($event)"
+          (pauseCampaign)="pauseCampaign($event)">
+        </cl-campaigns-list>
+        <!--/ table-->
+
+        <!--paginator-->
+        <cl-paginator [dataSource]="dataSource"
+          [pageSize]="5"
+          [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
+        <!--/ paginator-->
       </div>
-    </cl-table-filters>
-    <!--   / filters-->
-    <div class="table-card">
-      <!--  table-->
-      <cl-campaigns-list [dataSource]="dataSource"
-                         [statusLabel]="statusLabel"
-                         [displayedColumns]="displayedColumns"
-                         (editAction)="editCampaign($event)"
-                         (duplicateAction)="duplicateCampaign($event)"
-                         (emitOpenReport)="openReport($event)"
-                         (activateCampaign)="activateCampaign($event)"
-                         (pauseCampaign)="pauseCampaign($event)"
-      >
-      </cl-campaigns-list>
-      <!--/ table-->
+    </ng-container>
 
-      <!--paginator-->
-      <cl-paginator [dataSource]="dataSource"
-                    [pageSize]="5"
-                    [pageSizeOptions]="[5, 10, 20]"
-      ></cl-paginator>
-      <!--/ paginator-->
-    </div>
-  </ng-container>
-
-  <cl-no-data *ngSwitchCase="dataSourceStates.noDataApi">
-    <img class="no-data-img" src="/assets/images/no-data/campaign-empty-illustration.svg" alt="">
-    <h2 class="no-data-title">
-      {{'CAMPAIGN.NO_DATA_TITLE' | translate}}
-    </h2>
-    <p class="no-data-text">
-      {{'CAMPAIGN.NO_DATA_TEXT' | translate}}
-    </p>
-  </cl-no-data>
+    <cl-no-data *ngSwitchCase="dataSourceStates.noDataApi">
+      <img class="no-data-img" src="/assets/images/no-data/campaign-empty-illustration.svg" alt="">
+      <h2 class="no-data-title">
+        {{'CAMPAIGN.NO_DATA_TITLE' | translate}}
+      </h2>
+      <p class="no-data-text">
+        {{'CAMPAIGN.NO_DATA_TEXT' | translate}}
+      </p>
+    </cl-no-data>
   </ng-container>
 </section>
