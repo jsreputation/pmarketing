@@ -1,4 +1,4 @@
-<ng-container *ngIf="isProfileLoaded(); else ghostBlock">
+<ng-container *ngIf="profile; else ghostBlock">
   <div class="page-container" *ngIf="theme | async as th"
        [ngStyle]="{'background-color': th?.properties['--account_background_color']}">
     <div *ngIf="appConfig | async as aConfig">

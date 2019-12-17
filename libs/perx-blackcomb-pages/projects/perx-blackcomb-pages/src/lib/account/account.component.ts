@@ -10,12 +10,8 @@ import {
   flatMap,
   map,
   filter,
-  delay,
 } from 'rxjs/operators';
-import {
-  Observable,
-  of,
-} from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -46,14 +42,6 @@ export class AccountComponent implements OnInit {
   public preAuth: boolean = false;
   public theme: Observable<ITheme>;
   public appConfig: Observable<IConfig>;
-  public repeatGhostCount: number = 20;
-  public ghostTimeOut: boolean;
-
-  private initGhostTimeOut(): void {
-    of(true).pipe(delay(2000)).subscribe(
-      () => this.ghostTimeOut = true
-    );
-  }
 
   constructor(
     public config: Config,
@@ -83,12 +71,6 @@ export class AccountComponent implements OnInit {
       .pipe(take(1))
       .subscribe(profile => this.profile = profile);
     this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.loyalty = loyalty);
-
-    this.initGhostTimeOut();
-  }
-
-  public isProfileLoaded(): boolean {
-    return !!this.profile || this.ghostTimeOut;
   }
 
   public logout(): void {
