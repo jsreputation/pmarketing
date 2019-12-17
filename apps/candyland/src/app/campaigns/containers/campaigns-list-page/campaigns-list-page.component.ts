@@ -4,7 +4,7 @@ import {
   DataSourceStates,
   DataSourceUpdateSchema
 } from '@cl-shared/table/data-source/custom-data-source';
-import {CampaignsService, ConfigService, CsvReportService, MessageService} from '@cl-core/services';
+import { CampaignsService, ConfigService, CsvReportService, MessageService } from '@cl-core/services';
 import { Router } from '@angular/router';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { StatusLabelConfig } from '@cl-shared';
@@ -25,6 +25,7 @@ export class CampaignsListPageComponent implements OnInit, OnDestroy {
   public displayedColumns: string[] = ['name', 'status', 'begin', 'end', 'audience', 'engagementType', 'actions'];
   public statusLabel: { [key: string]: StatusLabelConfig };
   private destroy$: Subject<void> = new Subject();
+  public cs: typeof CampaignStatus = CampaignStatus;
 
   constructor(
     private campaignsService: CampaignsService,
