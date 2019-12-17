@@ -62,7 +62,7 @@ interface IV4StampAllTransactionResponse {
   data: IV4StampCard;
 }
 
-interface IV4Reward {
+interface IV4Outcome {
   id: number;
   campaign_id: number;
   modularizable_type: string;
@@ -89,7 +89,7 @@ interface IV4StampCard {
   card_number: number;
   campaign_config?: {
     total_slots: number;
-    rewards: IV4Reward[];
+    rewards: IV4Outcome[];
   };
   display_properties: {
     number_of_cols?: number;
@@ -146,7 +146,7 @@ export class V4StampService implements StampService {
     };
   }
 
-  private static v4RewardToReward(reward: IV4Reward): ICampaignOutcome {
+  private static v4OutcomeToOutcome(reward: IV4Outcome): ICampaignOutcome {
     return {
       id: reward.id,
       campaignId: reward.campaign_id,
@@ -178,7 +178,7 @@ export class V4StampService implements StampService {
       campaignConfig: {
         totalSlots: oc(stampCard).campaign_config.total_slots(0),
         rewards: oc(stampCard).campaign_config.rewards([])
-          .map((rewards: IV4Reward) => V4StampService.v4RewardToReward(rewards)),
+          .map((rewards: IV4Outcome) => V4StampService.v4OutcomeToOutcome(rewards)),
       },
       displayProperties: {
         numberOfCols: stampCard.display_properties.number_of_cols,
