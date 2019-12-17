@@ -1,4 +1,3 @@
-export { FeedItemPopupComponent } from './lib/feed-item-popup/feed-item-popup.component';
 export { LoadingComponent } from './lib/loading/loading.component';
 export { PerxBlackcombPagesModule } from './lib/perx-blackcomb-pages.module';
 export { AccountComponent } from './lib/account/account.component';
