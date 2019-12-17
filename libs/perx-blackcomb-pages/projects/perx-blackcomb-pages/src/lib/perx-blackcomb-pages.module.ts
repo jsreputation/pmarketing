@@ -77,7 +77,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
 import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
 import { FeedItemPopupComponent } from './feed-item-popup/feed-item-popup.component';
-import { BarcodeComponent } from './barcode/barcode.component';
+import { ProfileBarcodeComponent } from './profile-barcode/profile-barcode.component';
 import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
 
 const comps: any[] = [
@@ -131,7 +131,7 @@ const comps: any[] = [
   PinInputComponent,
   RewardsBookingComponent,
   FeedItemPopupComponent,
-  BarcodeComponent,
+  ProfileBarcodeComponent,
   EditProfileFieldComponent
 ];
 

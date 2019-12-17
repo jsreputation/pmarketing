@@ -6,10 +6,10 @@ import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'perx-blackcomb-pages-barcode',
-  templateUrl: './barcode.component.html',
-  styleUrls: ['./barcode.component.scss']
+  templateUrl: './profile-barcode.component.html',
+  styleUrls: ['./profile-barcode.component.scss']
 })
-export class BarcodeComponent implements OnInit {
+export class ProfileBarcodeComponent implements OnInit {
 
   public userProfile: IProfile;
   public theme: ITheme;

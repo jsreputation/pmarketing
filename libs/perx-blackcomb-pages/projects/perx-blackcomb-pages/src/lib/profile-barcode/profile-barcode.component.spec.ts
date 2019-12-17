@@ -1,15 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BarcodeComponent } from './barcode.component';
+import { ProfileBarcodeComponent } from './profile-barcode.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { TranslateModule } from '@ngx-translate/core';
 import { Location } from '@angular/common';
 import { ProfileService, ThemesService, ConfigService } from '@perx/core';
 import { of } from 'rxjs';
 
-describe('BarcodeComponent', () => {
-  let component: BarcodeComponent;
-  let fixture: ComponentFixture<BarcodeComponent>;
+describe('ProfileBarcodeComponent', () => {
+  let component: ProfileBarcodeComponent;
+  let fixture: ComponentFixture<ProfileBarcodeComponent>;
   const locationStub: Partial<Location> = {
     back: () => { }
   };
@@ -28,7 +28,7 @@ describe('BarcodeComponent', () => {
         NgxBarcodeModule,
         TranslateModule.forRoot()
       ],
-      declarations: [ BarcodeComponent ],
+      declarations: [ ProfileBarcodeComponent ],
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: Location, useValue: locationStub },
@@ -40,7 +40,7 @@ describe('BarcodeComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BarcodeComponent);
+    fixture = TestBed.createComponent(ProfileBarcodeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
