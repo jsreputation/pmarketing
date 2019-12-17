@@ -7,7 +7,8 @@ import {
   Config,
   IGameService,
   InstantOutcomeService,
-  SurveyService
+  SurveyService,
+  ThemesService
 } from '@perx/core';
 import { SignUpComponent } from './sign-up.component';
 import { of } from 'rxjs';
@@ -49,6 +50,9 @@ const authServiceStub: Partial<AuthenticationService> = {
   getAppToken: () => of({} as IWAppAccessTokenResponse),
   getAppAccessToken: () => 'token'
 };
+const themeServiceStub: Partial<ThemesService> = {
+  getThemeSetting: () => of()
+};
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
@@ -75,21 +79,15 @@ describe('SignUpComponent', () => {
         ]),
       ],
       providers: [
-        {
-          provide: IFormsService, useValue: formSvcStub
-        },
-        {
-          provide: MatSnackBar, useValue: matSnackStub
-        },
-        {
-          provide: AuthenticationService, useValue: {}
-        },
+        { provide: IFormsService, useValue: formSvcStub },
+        { provide: MatSnackBar, useValue: matSnackStub },
         { provide: Config, useValue: configStub },
         { provide: IGameService, useValue: gameServiceStub },
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: InstantOutcomeService, useValue: instantOutcomeServiceStub },
         { provide: Location, useValue: locationStub },
         { provide: SurveyService, useValue: surveyServiceStub },
+        { provide: ThemesService, useValue: themeServiceStub }
       ]
     })
       .compileComponents();

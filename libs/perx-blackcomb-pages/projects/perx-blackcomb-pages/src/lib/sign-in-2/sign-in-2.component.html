@@ -1,26 +1,29 @@
-<div class="content-container" *ngIf="theme | async as th" [ngStyle]="{'background-color': th?.properties['--login_background_colour']}">
+<div class="content-container" *ngIf="theme | async as th"
+  [ngStyle]="{'background-color': th?.properties['--login_background_colour']}">
   <div class="login-image">
     <img class="logo" [attr.src]="th?.properties['--logo']" [attr.alt]="th?.properties['--title']" />
   </div>
-  <div *ngIf="appConfig | async as aConfig" class="login-form">
+  <div *ngIf="appConfig" class="login-form">
     <h1 translate>LOGIN</h1>
-    <div class="subtitle" *ngIf="aConfig.showSubtitleLogin">Not a member? <span class="link" (click)="goToSignup()">Sign up</span></div>
+    <div class="subtitle" *ngIf="appConfig.showSubtitleLogin">
+      Not a member? <a class="link" [routerLink]="'/signup'">Sign up</a>
+    </div>
     <div class="error_msg">
       <span>{{errorMessage}}</span>
     </div>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="fill" class="full-width__input">
         <mat-label translate>ENTER_CUSTOM_ID</mat-label>
-        <input matInput [placeholder]="'ENTER_CUSTOM_ID' | translate" formControlName="customerID">
+        <input matInput [placeholder]="'ENTER_CUSTOM_ID' | translate" formControlName="customerID" [value]="">
         <mat-error *ngIf="loginForm.hasError('customerID')">
-          Player code is <strong>required</strong>
+          This is <strong>required</strong>
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill" class="full-width__input">
         <mat-label translate>ENTER_PASSWORD</mat-label>
-        <input matInput [placeholder]="'ENTER_PASSWORD' | translate" formControlName="password">
+        <input matInput [placeholder]="'ENTER_PASSWORD' | translate" formControlName="password" type="password">
         <mat-error *ngIf="loginForm.hasError('password')">
-          Password is <strong>required</strong>
+          This is <strong>required</strong>
         </mat-error>
       </mat-form-field>
       <button mat-flat-button type="submit" color="primary" class="full-width__button">{{'LOGIN' | translate}}</button>

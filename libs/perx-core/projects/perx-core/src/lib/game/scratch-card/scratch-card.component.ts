@@ -76,7 +76,6 @@ export class ScratchCardComponent implements AfterViewInit {
     let x: number;
     let y: number;
     const canvas2dContext = this.canvas.getContext('2d');
-
     if (canvas2dContext) {
       for (let i = 0; i < dist; i++) {
         x = lastPoint.x + (Math.sin(angle) * i) - 25;
