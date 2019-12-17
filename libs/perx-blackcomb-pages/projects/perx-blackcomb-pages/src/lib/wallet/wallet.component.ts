@@ -56,8 +56,7 @@ export class WalletComponent implements OnInit, OnDestroy {
         map((campaigns: ICampaign[]) => campaigns.filter(c => c.type === CampaignType.stamp)),
         mergeMap((res) => combineLatest(
           ...res.map(c => this.stampService.getCurrentCard(c.id))
-          )
-        ),
+        )),
         map((stampCard: IStampCard[]) => stampCard.filter(c => c.title && c.title !== ''))
       );
     this.translate.get('MY_WALLET').subscribe(text => this.rewardsHeadline = text);
