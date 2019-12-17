@@ -1,0 +1,28 @@
+mat-toolbar {
+  display: flex;
+  height: 6rem;
+  -webkit-box-align: center;
+  align-items: center;
+  z-index: 4;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  background-color: #0F69AF;
+  position: fixed;
+  color: white;
+}
+
+.main-container {
+  overflow: scroll;
+  height: calc(100% - 6rem);
+  padding-top: 6rem;
+}
+
+perx-core-loyalty-transactions-list ::ng-deep {
+  .transaction-point {
+    color: #ddac27;
+  }
+}
+
+::ng-deep .mat-tab-label-active {
+  color: #0f69af;
+}

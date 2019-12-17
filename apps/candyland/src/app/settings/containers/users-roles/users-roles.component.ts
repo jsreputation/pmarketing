@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { SettingsService, AuthService } from '@cl-core/services';
+import { MatDialog } from '@angular/material';
+import { SettingsService, AuthService, MessageService } from '@cl-core/services';
 import { InviteNewUsersPopupComponent, InviteNewUsersPopupComponentData } from './containers/invite-new-users-popup/invite-new-users-popup.component';
 import { filter, switchMap } from 'rxjs/operators';
 import { CustomDataSource, DataSourceStates } from '@cl-shared/table/data-source/custom-data-source';
@@ -23,7 +23,7 @@ export class UsersRolesComponent implements AfterViewInit {
     private authService: AuthService,
     public cd: ChangeDetectorRef,
     private dialog: MatDialog,
-    private snack: MatSnackBar
+    private messageService: MessageService
   ) {
     this.dataSource = new CustomDataSource<IAMUser>(this.settingsService);
   }
@@ -82,8 +82,8 @@ export class UsersRolesComponent implements AfterViewInit {
     const urnSegments: string[] = user.urn.split(':');
     const accountId: string = urnSegments[urnSegments.length - 2];
     this.authService.resetPassword(accountId, user.username).subscribe(
-      () => this.snack.open('User will receive an email with reset instructions', 'x'),
-      () => this.snack.open('Something went wrong', 'x')
+      () => this.messageService.show('User will receive an email with reset instructions', 'success'),
+      () => this.messageService.show('Something went wrong', 'warning')
     );
   }
 }

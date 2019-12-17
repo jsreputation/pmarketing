@@ -18,7 +18,7 @@ import {
   IWLimitAttributes,
   IWProfileAttributes
 } from '@perx/whistler';
-import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
@@ -55,11 +55,17 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private messageService: MessageService
   ) {
     store.resetCampaign();
+    this.initForm();
   }
 
   public ngOnInit(): void {
     this.initTenantSettings();
     this.initForm();
+    this.form.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(value => {
+        this.store.updateCampaign(value);
+      });
     this.handleCampaignNameChanges();
     this.handleRouteParams();
   }
@@ -117,7 +123,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
     saveCampaign$.pipe(
       // tap((res: IJsonApiPayload<IWCampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
-      map((res: IJsonApiPayload<IWCampaignAttributes>) => ({...this.store.currentCampaign, id: res.data.id} as ICampaign)),
+      map((res: IJsonApiPayload<IWCampaignAttributes>) => ({ ...this.store.currentCampaign, id: res.data.id } as ICampaign)),
       switchMap(
         (campaign: ICampaign) => combineLatest(
           of(campaign),
@@ -227,13 +233,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const updateOutcomesArr$ = [];
     const oldCampaignListToDelete = data.filter(outcomeData => !slots.includes(outcomeData.outcome.slotNumber));
     const campaignList = data.filter(outcomeData => slots.includes(outcomeData.outcome.slotNumber));
-    const deleteOutcomes$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
-    const updateOutcomes$ = outcomeData =>
+    const deletedOutcome$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
+    const updatedOutcome$ = outcomeData =>
       this.outcomesService.updateOutcome(
         outcomeData,
         campaign.id
       );
-    const createOutcomes$ = outcomeData =>
+    const createdOutcome$ = outcomeData =>
       this.outcomesService.createOutcome(
         outcomeData,
         campaign.id
@@ -241,15 +247,15 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
     campaignList.forEach(outcomeData => {
       if (this.store.currentCampaign.id && outcomeData.outcome.id) {
-        updateOutcomesArr$.push(updateOutcomes$(outcomeData));
+        updateOutcomesArr$.push(updatedOutcome$(outcomeData));
       } else {
-        updateOutcomesArr$.push(createOutcomes$(outcomeData));
+        updateOutcomesArr$.push(createdOutcome$(outcomeData));
       }
     });
     if (oldCampaignListToDelete && oldCampaignListToDelete.length >= 0) {
       oldCampaignListToDelete.forEach(oldReward => {
         if (oldReward.outcome.id) {
-          updateOutcomesArr$.push(deleteOutcomes$(oldReward.outcome.id));
+          updateOutcomesArr$.push(deletedOutcome$(oldReward.outcome.id));
         }
       });
     }
@@ -296,7 +302,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.getCampaignDoneDialogData(campaign)
       .pipe(
         switchMap((config) => this.dialog.open(NewCampaignDonePopupComponent,
-          {data: config}).afterClosed())
+          { data: config }).afterClosed())
       )
       .subscribe(() => this.router.navigate(['/campaigns']));
   }
@@ -331,12 +337,12 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private outcomeToRewardCollection(outcomes: IOutcome[]): ICampaignOutcome[] {
     const collections: ICampaignOutcome[] = [];
-    outcomes.forEach(outcome => collections.push({outcome}));
+    outcomes.forEach(outcome => collections.push({ outcome }));
     return collections;
   }
 
   private getCognitoUrl(): Observable<string> {
-    const params = {'page[number]': '1', 'page[size]': '1'};
+    const params = { 'page[number]': '1', 'page[size]': '1' };
     return this.settingsService.getCognitoEndpoints(params).pipe(
       tap((data: any[]) => {
         if (data.length === 0) {
@@ -376,15 +382,15 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       ).pipe(
         map(
           ([campaign, commEvent, outcomes]:
-             [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
-            ...campaign,
-            audience: {select: commEvent && commEvent.poolId || null},
-            channel: {
-              type: commEvent && commEvent.channel || 'weblink',
-              ...commEvent
-            },
-            outcomes: this.outcomeToRewardCollection(outcomes)
-          }))
+            [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
+              ...campaign,
+              audience: { select: commEvent && commEvent.poolId || null },
+              channel: {
+                type: commEvent && commEvent.channel || 'weblink',
+                ...commEvent
+              },
+              outcomes: this.outcomeToRewardCollection(outcomes)
+            }))
       ).subscribe(
         campaign => {
           this.campaign = Object.assign({}, campaign);

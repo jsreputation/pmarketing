@@ -1,18 +1,18 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RouterTestingModule} from '@angular/router/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
-import {ResetPasswordComponent} from './reset-password.component';
-import {AuthenticationService, IProfile, NotificationService, ProfileService} from '@perx/core';
+import { ResetPasswordComponent } from './reset-password.component';
+import { AuthenticationService, IProfile, NotificationService, ProfileService } from '@perx/core';
 import {
   MatFormFieldModule,
   MatInputModule
 } from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {of} from 'rxjs';
-import {Type} from '@angular/core';
-import {Router} from '@angular/router';
-import {TranslateModule} from '@ngx-translate/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { of } from 'rxjs';
+import { Type } from '@angular/core';
+import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
@@ -52,7 +52,7 @@ describe('ResetPasswordComponent', () => {
             getInterruptedUrl: () => ''
           }
         },
-        {provide: ProfileService, useValue: profileServiceStub},
+        { provide: ProfileService, useValue: profileServiceStub },
         {
           provide: NotificationService,
           useValue: {
@@ -81,7 +81,7 @@ describe('ResetPasswordComponent', () => {
       component.resetPasswordForm.controls.password.setValue(1234);
       component.resetPasswordForm.controls.confirmPassword.setValue(123);
       const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
-      (NotificationService as Type<NotificationService>);
+        (NotificationService as Type<NotificationService>);
       const notificationServiceSpy = spyOn(notificationService, 'addSnack');
       component.onUpdatePassword();
       expect(notificationServiceSpy).toHaveBeenCalledWith('Passwords do not match.');
@@ -89,7 +89,7 @@ describe('ResetPasswordComponent', () => {
 
     it('should reset password and call login', (done: DoneFn) => {
       const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>
-      (AuthenticationService as Type<AuthenticationService>);
+        (AuthenticationService as Type<AuthenticationService>);
       const authenticationServiceSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(
         of({
           message: 'test',
@@ -100,7 +100,7 @@ describe('ResetPasswordComponent', () => {
       const profileServiceSpy = spyOn(profileService, 'whoAmI').and.returnValue(
         of(mockProfile)
       );
-      const loginSpy = spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
+      const loginSpy = spyOn(authenticationService, 'login').and.returnValue(of(void 0));
       spyOn(router, 'navigateByUrl').and.stub();
       component.onUpdatePassword();
       expect(profileServiceSpy).toHaveBeenCalled();
