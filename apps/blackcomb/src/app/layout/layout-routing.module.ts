@@ -81,6 +81,11 @@ const routes: Routes = [
         loadChildren: (): any => import('../profile/profile.module').then((mod: any) => mod.ProfileModule)
       },
       {
+        path: 'transaction-history',
+        loadChildren: (): any => import('../transaction-history/transaction-history.module')
+                      .then((mod: any) => mod.TransactionHistoryModule)
+      },
+      {
         path: 'change-password',
         loadChildren: (): any => import('../change-password/change-password.module')
                       .then((mod: any) => mod.ChangePasswordModule)

@@ -3,9 +3,9 @@
   <div class="login-image">
     <img class="logo" [attr.src]="th?.properties['--logo']" [attr.alt]="th?.properties['--title']" />
   </div>
-  <div *ngIf="appConfig | async as aConfig" class="login-form">
+  <div *ngIf="appConfig" class="login-form">
     <h1 translate>LOGIN</h1>
-    <div class="subtitle" *ngIf="aConfig.showSubtitleLogin">
+    <div class="subtitle" *ngIf="appConfig.showSubtitleLogin">
       Not a member? <a class="link" [routerLink]="'/signup'">Sign up</a>
     </div>
     <div class="error_msg">
@@ -21,7 +21,7 @@
       </mat-form-field>
       <mat-form-field appearance="fill" class="full-width__input">
         <mat-label translate>ENTER_PASSWORD</mat-label>
-        <input matInput [placeholder]="'ENTER_PASSWORD' | translate" formControlName="password">
+        <input matInput [placeholder]="'ENTER_PASSWORD' | translate" formControlName="password" type="password">
         <mat-error *ngIf="loginForm.hasError('password')">
           This is <strong>required</strong>
         </mat-error>
