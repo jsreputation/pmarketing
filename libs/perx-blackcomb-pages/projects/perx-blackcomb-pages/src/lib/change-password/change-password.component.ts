@@ -58,6 +58,6 @@ export class ChangePasswordComponent implements ShowTitleInHeader {
   }
 
   public getTitle(): string {
-    return "Change password";
+    return 'Change password';
   }
 }

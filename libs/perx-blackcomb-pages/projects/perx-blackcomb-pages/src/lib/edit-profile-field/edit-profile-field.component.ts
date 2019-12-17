@@ -61,6 +61,6 @@ export class EditProfileFieldComponent implements OnInit, ShowTitleInHeader {
   }
 
   public getTitle(): string {
-    return "Edit Profile";
+    return 'Edit Profile';
   }
 }

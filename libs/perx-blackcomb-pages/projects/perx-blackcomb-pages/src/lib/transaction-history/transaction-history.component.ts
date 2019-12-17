@@ -52,6 +52,6 @@ export class TransactionHistoryComponent implements OnInit, ShowTitleInHeader {
   }
 
   public getTitle(): string {
-    return "Transaction History";
+    return 'Transaction History';
   }
 }
