@@ -3,7 +3,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoadingComponent } from './loading.component';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, ICampaignService, IGameService, Config, NotificationService, ConfigService } from '@perx/core';
+import {
+  AuthenticationService,
+  ICampaignService,
+  IGameService,
+  Config,
+  NotificationService,
+  ConfigService
+} from '@perx/core';
 import { of } from 'rxjs';
 import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
