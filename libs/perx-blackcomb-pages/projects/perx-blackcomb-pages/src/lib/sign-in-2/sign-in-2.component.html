@@ -21,7 +21,7 @@
       </mat-form-field>
       <mat-form-field appearance="fill" class="full-width__input">
         <mat-label translate>ENTER_PASSWORD</mat-label>
-        <input matInput [placeholder]="'ENTER_PASSWORD' | translate" formControlName="password">
+        <input matInput [placeholder]="'ENTER_PASSWORD' | translate" formControlName="password" type="password">
         <mat-error *ngIf="loginForm.hasError('password')">
           This is <strong>required</strong>
         </mat-error>
