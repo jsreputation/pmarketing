@@ -326,12 +326,21 @@ describe('V4AuthenticationService', () => {
       }
     })));
 
-  it('should throw error', inject([V4AuthenticationService], (auth: V4AuthenticationService) => {
-    const obs = { error: () => { } };
-    const spyObs = spyOn(obs, 'error');
-    auth.createUserAndAutoLogin('').subscribe(() => { }, obs.error);
-    expect(spyObs).toHaveBeenCalled();
-  }));
+  it(
+    'should create User And Auto Login',
+    inject([V4AuthenticationService, HttpClient], (auth: V4AuthenticationService, http: HttpClient) => {
+      const obs = { login: () => { } };
+      const spyObs = spyOn(obs, 'login');
+      const spy = spyOn(http, 'post');
+      spy.and.returnValue(of({ data: {} }));
+      auth.createUserAndAutoLogin('')
+        .subscribe(
+          obs.login
+        );
+      expect(spyObs).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalled();
+    })
+  );
 
   it('should verify otp', fakeAsync(inject([V4AuthenticationService, HttpClient],
     (auth: V4AuthenticationService, http: HttpClient) => {
@@ -350,7 +359,7 @@ describe('V4AuthenticationService', () => {
       }
     })));
 
-  it('changePassword', fakeAsync(inject([V4AuthenticationService, HttpClient, ProfileService],
+  it('should change Password', fakeAsync(inject([V4AuthenticationService, HttpClient, ProfileService],
     (auth: V4AuthenticationService, http: HttpClient, profile: ProfileService) => {
       spyOn(profile, 'whoAmI').and.returnValue(of({ id: 1, firstName: '123', lastName: '123' }));
       const spy = spyOn(http, 'patch').and.returnValue(of({}));

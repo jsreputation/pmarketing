@@ -1,14 +1,22 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { DiscoverComponent } from './discover.component';
-import { NewsFeedComponent } from '../news-feed/news-feed.component';
-import { CategoriesComponent } from '../categories/categories.component';
-import { RewardsCardsComponent } from '../rewards-cards/rewards-cards.component';
-import { CatalogsComponent } from '../catalogs/catalogs.component';
-import { CampaignsComponent } from '../campaigns/campaigns.component';
-import { MatCardModule, MatIconModule, MatDialogModule } from '@angular/material';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
+import {
+  MatCardModule,
+  MatIconModule,
+  MatDialogModule,
+} from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { Router } from '@angular/router';
+import { Type } from '@angular/core';
+
+import { of } from 'rxjs';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
+
 import {
   GameModule,
   RewardsService,
@@ -16,21 +24,29 @@ import {
   FeedReaderService,
   IGameService,
   RewardsModule,
-  IProfile, ProfileModule as PerxProfileModule, LoyaltyModule as PerxLoyaltyModule, LoyaltyService, ProfileService
+  IProfile,
+  ProfileModule as PerxProfileModule,
+  LoyaltyModule as PerxLoyaltyModule,
+  LoyaltyService,
+  ProfileService,
 } from '@perx/core';
-import { of } from 'rxjs';
+
+import { DiscoverComponent } from './discover.component';
+
 import { rewards } from 'src/app/rewards.mock';
 import { catalogs } from 'src/app/catalogs.mock';
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { Router } from '@angular/router';
-import { Type } from '@angular/core';
+import { NewsFeedComponent } from '../news-feed/news-feed.component';
+import { CategoriesComponent } from '../categories/categories.component';
+import { RewardsCardsComponent } from '../rewards-cards/rewards-cards.component';
+import { CatalogsComponent } from '../catalogs/catalogs.component';
+import { CampaignsComponent } from '../campaigns/campaigns.component';
 
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
   let fixture: ComponentFixture<DiscoverComponent>;
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getAllRewards: () => of(rewards),
-    getAllCatalogs: () => of(catalogs)
+    getCatalogs: () => of(catalogs),
   };
 
   const campaignServiceStub = {
@@ -79,7 +95,8 @@ describe('DiscoverComponent', () => {
         GameModule,
         RewardsModule,
         PerxProfileModule,
-        PerxLoyaltyModule
+        PerxLoyaltyModule,
+        InfiniteScrollModule,
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },

@@ -13,13 +13,20 @@
         </mat-card>
     </div>
     <div class="section">
-      <a *ngIf="aConfig.showTransactionHistoryOnAccountsPage" routerLink="/transaction-history">Transaction History</a>
-      <a [routerLink]="'/c/' +page.key" *ngFor="let page of pages">{{page.title}}</a>
+      <mat-nav-list>
+        <mat-list-item *ngIf="aConfig.showTransactionHistoryOnAccountsPage" routerLink="/transaction-history">
+          Transaction History
+        </mat-list-item>
+
+        <mat-list-item [routerLink]="'/c/' +page.key" *ngFor="let page of pages">
+          {{page.title}}
+        </mat-list-item>
+      </mat-nav-list>
     </div>
     <div *ngIf="!preAuth" class="section">
-      <span (click)="logout()">
-        Log Out
-      </span>
+      <mat-nav-list>
+        <mat-list-item (click)="logout()">Log Out</mat-list-item>
+      </mat-nav-list>
     </div>
   </div>
 </div>

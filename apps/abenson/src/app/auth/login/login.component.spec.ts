@@ -56,7 +56,7 @@ describe('LoginComponent', () => {
   it('login', fakeAsync(() => {
     (window as any).primaryIdentifier = null;
     component.loginForm.setValue({ mobileNumber: '12345', pinCode: '12345' });
-    const spyAuth = spyOn(auth, 'login').and.returnValue(of(null));
+    const spyAuth = spyOn(auth, 'login').and.returnValue(of(void 0));
     component.onSubmit();
     tick();
     expect(spyAuth).toHaveBeenCalled();
@@ -75,7 +75,7 @@ describe('LoginComponent', () => {
     const primaryIdentifier = 'test';
     (window as any).primaryIdentifier = primaryIdentifier;
     component.loginForm.setValue({ mobileNumber: '12345', pinCode: '12345' });
-    spyOn(auth, 'login').and.returnValue(of(null));
+    spyOn(auth, 'login').and.returnValue(of(void 0));
     component.onSubmit();
     tick();
     expect((window as any).primaryIdentifier).toBe(primaryIdentifier);
