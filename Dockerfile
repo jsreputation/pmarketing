@@ -10,6 +10,7 @@ ARG iswhistler='false'
 ARG sourcetype
 ARG app
 ARG env='prod'
+ARG redirectdest
 
 RUN echo "apihost: ${apihost}"
 RUN echo "basehref: ${basehref}"
@@ -17,7 +18,7 @@ RUN echo "preauth: ${preauth}"
 RUN echo "iswhistler: ${iswhistler}"
 
 RUN yarn
-RUN SOURCE_TYPE=${sourcetype} APIHOST=${apihost} BASE_HREF=${basehref} PREAUTH=${preauth} IS_WHISTLER=${iswhistler} yarn build:${app}:${env} --base-href ${basehref} --rebase-root-relative-css-urls=true
+RUN SOURCE_TYPE=${sourcetype} APIHOST=${apihost} BASE_HREF=${basehref} PREAUTH=${preauth} IS_WHISTLER=${iswhistler} REDIRECT_AFTER_LOGIN=${redirectdest} yarn build:${app}:${env} --base-href ${basehref} --rebase-root-relative-css-urls=true
 RUN BASE_HREF=${basehref} yarn build:backend
 
 FROM node:lts-alpine
