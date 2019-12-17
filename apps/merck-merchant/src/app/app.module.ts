@@ -13,7 +13,8 @@ import {
   MatSnackBarModule,
   MatIconModule,
   MatListModule,
-  MatSelectModule
+  MatSelectModule,
+  MatTabsModule
 } from '@angular/material';
 import {
   AuthenticationModule,
@@ -46,6 +47,9 @@ import { RegisterComponent } from './register/register.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { PerxTranslateLoader } from './custom-translate.service';
+import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
+import { TransactionPipe } from './transaction-history/transaction.pipe';
+import { TransactionHistoryPipe } from './transaction-history/transaction-history.pipe';
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
   translateService.setDefaultLang(environment.defaultLang);
@@ -64,7 +68,10 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     OrderComponent,
     OrderQuantityComponent,
     RedeemComponent,
-    RegisterComponent
+    RegisterComponent,
+    TransactionHistoryComponent,
+    TransactionPipe,
+    TransactionHistoryPipe
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
@@ -80,6 +87,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     MatListModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatTabsModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
