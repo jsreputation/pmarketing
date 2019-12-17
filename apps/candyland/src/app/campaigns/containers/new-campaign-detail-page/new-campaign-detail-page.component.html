@@ -163,12 +163,12 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <div class="card-row">
+      <div class="card-row" *ngIf="false">
         <mat-checkbox color="primary" [(ngModel)]="audienceFiltersEnabled">
           {{'CAMPAIGN.AUDIENCE_FILTER' | translate}}
         </mat-checkbox>
       </div>
-      <div *ngIf="audienceFiltersEnabled">
+      <div *ngIf="audienceFiltersEnabled && false">
         <div class="card-section">
           <div class="card-header">
             <h3 class="card-title">
