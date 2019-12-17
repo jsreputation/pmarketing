@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { OutcomesHttpAdapter } from '@cl-core/http-adapters/outcomes-http-adapter';
 import { IWOutcomeAttributes } from '@perx/whistler';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
-import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 
 @Injectable({
   providedIn: 'root'

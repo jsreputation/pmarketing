@@ -7,7 +7,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { OrderComponent } from './order/order.component';
 import { RedeemComponent } from './redeem/redeem.component';
-import {RegisterComponent} from './register/register.component';
+import { RegisterComponent } from './register/register.component';
+import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
       { path: 'qrscanner/:path', component: QrscannerComponent },
       { path: 'order', component: OrderComponent },
       { path: 'redeem', component: RedeemComponent },
+      { path: 'transaction-history', component: TransactionHistoryComponent }
     ],
     canActivate: [ProtectedGuard]
   },

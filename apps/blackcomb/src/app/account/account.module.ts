@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UtilsModule } from '@perx/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountComponent } from '@perx/blackcomb-pages';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule, MatListModule } from '@angular/material';
 
 const routes: Routes = [{
   path: '',
@@ -16,6 +16,7 @@ const routes: Routes = [{
     CommonModule,
     UtilsModule,
     MatCardModule,
+    MatListModule,
     RouterModule.forChild(routes)
   ]
 })

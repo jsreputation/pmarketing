@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IMerchantAdminService } from './imerchant-admin.service';
 import { Observable } from 'rxjs';
-import { IMerchantAdminTransaction, IMerchantProfile } from './models/merchants-admin.model';
+import { IMerchantAdminTransaction, IMerchantProfile, IMerchantTransactionHistory } from './models/merchants-admin.model';
 import { IVoucher } from '../vouchers/models/voucher.model';
 
 @Injectable({
@@ -51,5 +51,10 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
 
   public getMerchantProfile(): Observable<IMerchantProfile> {
     throw new Error(`getMerchantProfile Method not implemented.`);
+  }
+
+  // @ts-ignore
+  public getTransactionHistory(page?: number, pageSize?: number, locale?: string): Observable<IMerchantTransactionHistory[]> {
+    throw new Error(`getTransactionHistory Method not implemented.`);
   }
 }

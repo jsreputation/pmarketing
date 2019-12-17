@@ -10,7 +10,7 @@ export class ConfigToSlicesPipe implements PipeTransform {
     let islices: ISlice[] = [];
     let standardProperties;
     for (let i = 0; i < configObject.numberOfWedges; i++) {
-      standardProperties = {id: i, backgroundColor: configObject.colorCtrls[i], label: i.toString()};
+      standardProperties = {id: i, backgroundColor: configObject.colorCtrls[i]};
       if (configObject.rewardSlots.includes(i)) {
         islices = [...islices, {...standardProperties, backgroundImage: configObject.rewardIcon}];
         continue;

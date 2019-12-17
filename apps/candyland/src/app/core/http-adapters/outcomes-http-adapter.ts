@@ -1,6 +1,6 @@
 import { IWOutcomeAttributes } from '@perx/whistler';
 
-import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { SOURCE_TYPE } from '../../app.constants';
 
