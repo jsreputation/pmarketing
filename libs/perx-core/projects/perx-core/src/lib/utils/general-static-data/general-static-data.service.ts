@@ -7,10 +7,19 @@ import { of, Observable } from 'rxjs';
 })
 export class GeneralStaticDataService {
 
+  public static getImageCors(src: string| undefined): HTMLImageElement {
+    const res = new Image();
+    res.setAttribute('crossOrigin', 'Anonymous');
+    res.src = src ? `${src}?v=${new Date().getTime()}` : '';
+    res.crossOrigin = 'Anonymous';
+    return res;
+  }
+
   public getCountriesList(countries?: string[]): Observable<ICountryCode[]> {
     if (!countries || !countries.length) {
       return of(countryCodes);
     }
     return of(countryCodes.filter(code => countries.includes(code.name)));
   }
+
 }
