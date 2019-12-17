@@ -1,6 +1,5 @@
 import {Component, Input, OnChanges, AfterViewInit, SimpleChanges, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
 import { ISlice } from '../game.model';
-import {GeneralStaticDataService} from '../../utils/general-static-data/general-static-data.service';
 
 interface ImageForPattern {
   id: string;
@@ -72,6 +71,15 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     return this.ctx_;
   }
 
+
+  public static getImageCors(src: string| undefined): HTMLImageElement {
+    const res = new Image();
+    res.setAttribute('crossOrigin', 'Anonymous');
+    res.src = src ? `${src}?v=${new Date().getTime()}` : '';
+    res.crossOrigin = 'Anonymous';
+    return res;
+  }
+
   private static findTop(element: HTMLElement): number {
     const rec = element.getBoundingClientRect();
     return rec.top + window.scrollY;
@@ -141,7 +149,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     this.fillWheelWrapStyle();
 
     slicesWithImg.forEach((item) => {
-      const image: HTMLImageElement = GeneralStaticDataService.getImageCors(item.backgroundImage);
+      const image: HTMLImageElement = SpinTheWheelComponent.getImageCors(item.backgroundImage);
       images.push({ id: item.id, image });
       image.onload = () => {
         count++;
@@ -242,7 +250,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private fillWheelWrapStyle(): void {
-    const wheelImg: HTMLImageElement = GeneralStaticDataService.getImageCors(this.wheelImg);
+    const wheelImg: HTMLImageElement = SpinTheWheelComponent.getImageCors(this.wheelImg);
     wheelImg.onload = () => {
       if (this.wheelImgLoaded !== wheelImg) {
         this.wheelImgLoaded = wheelImg;
