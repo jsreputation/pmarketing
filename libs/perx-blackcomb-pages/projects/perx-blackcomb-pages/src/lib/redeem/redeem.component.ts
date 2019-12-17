@@ -123,19 +123,19 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
         }),
         takeUntil(this.destroy$)
       ).subscribe((voucher: Voucher) => {
-      if (voucher.state === VoucherState.issued) {
-        this.status = voucher.state;
-      }
-      if (this.status === VoucherState.issued && voucher.state === VoucherState.redeemed) {
-        this.notificationService.addPopup({
-          title: 'Successfully Redeemed!',
-          text: `You have redeemed ${voucher.reward ? voucher.reward.name : ''}.`,
-          buttonTxt: 'Close',
-          imageUrl: 'assets/redeem_success.png',
-        });
-        this.router.navigate(['wallet']);
-      }
-    });
+        if (voucher.state === VoucherState.issued) {
+          this.status = voucher.state;
+        }
+        if (this.status === VoucherState.issued && voucher.state === VoucherState.redeemed) {
+          this.notificationService.addPopup({
+            title: 'Successfully Redeemed!',
+            text: `You have redeemed ${voucher.reward ? voucher.reward.name : ''}.`,
+            buttonTxt: 'Close',
+            imageUrl: 'assets/redeem_success.png',
+          });
+          this.router.navigate(['wallet']);
+        }
+      });
   }
 
   public ngOnDestroy(): void {
