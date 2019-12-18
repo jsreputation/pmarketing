@@ -5,6 +5,7 @@ import {
 } from '@angular/core';
 
 import { IWCustomProperties } from '@perx/whistler';
+import Utils from '@cl-helpers/utils';
 
 @Component({
   selector: 'cl-audiences-user-info',
@@ -14,6 +15,7 @@ import { IWCustomProperties } from '@perx/whistler';
 })
 
 export class AudiencesUserInfoComponent {
+  @Input() public user: any;
 
   public get properties(): IWCustomProperties | null {
     if (!this.user) {
@@ -23,5 +25,11 @@ export class AudiencesUserInfoComponent {
     return this.user.properties || null;
   }
 
-  @Input() public user: any;
+  public transformMailTo(email: string): string {
+    return Utils.transformMailTo(email);
+  }
+
+  public transformTelTo(tel: string): string {
+    return Utils.transformTelTo(tel);
+  }
 }

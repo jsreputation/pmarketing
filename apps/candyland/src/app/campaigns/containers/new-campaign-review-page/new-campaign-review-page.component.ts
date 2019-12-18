@@ -6,6 +6,8 @@ import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaig
 import { AbstractStepWithForm } from '../../step-page-with-form';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { oc } from 'ts-optchain';
+import {getEngagementRouterLink} from '@cl-helpers/get-engagement-router-link';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'cl-new-campaign-review-page',
@@ -20,7 +22,8 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
 
   constructor(
     public store: CampaignCreationStoreService,
-    public cd: ChangeDetectorRef
+    public cd: ChangeDetectorRef,
+    public router: Router
   ) {
     super(0, store, null);
   }
@@ -66,6 +69,13 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
       });
     }
     this.cd.detectChanges();
+  }
+
+  public navigateToEdit(): void {
+    const gameType = 'game_type' in this.campaign.template ? this.campaign.template.game_type : null;
+    let path = getEngagementRouterLink(this.campaign.engagement_type, gameType);
+    path += '/' + this.campaign.template.id;
+    this.router.navigate([path]);
   }
 
   public ngOnDestroy(): void {

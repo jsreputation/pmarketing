@@ -7,7 +7,7 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'wallet' },
+      { path: '', pathMatch: 'full', redirectTo: 'home' },
       {
         path: 'home', loadChildren: (): any => import('../home/home.module').then((mod: any) => mod.HomeModule),
         canActivate: [ProtectedGuard]
