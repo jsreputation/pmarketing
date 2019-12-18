@@ -27,7 +27,8 @@ export class PromosComponent implements OnInit {
       {
         label: 'Exclusives',
         items: this.reader.getFromUrl('https://cdn.perxtech.io/content/starhub/rss.xml')
-      }, {
+      },
+      {
         label: 'Promotions',
         items: this.reader.getFromUrl('https://cdn.perxtech.io/content/starhub/rss.xml')
       }
