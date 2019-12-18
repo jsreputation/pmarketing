@@ -4,15 +4,12 @@
   display: block;
   height: 100%;
   width: 100%;
-}
 
-.toolbar {
-  display: flex;
-  justify-content: space-between;
-  height: 6rem;
-  z-index: 800;
-  font-size: 2rem;
-  line-height: 1.9rem;
+  ::ng-deep {
+    .toolbar {
+      padding: 1.6rem 0;
+    }
+  }
 }
 
 .main-app-container {
