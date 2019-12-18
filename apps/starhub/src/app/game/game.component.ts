@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { IGameService, NotificationService, IGame, GameType, IPlayOutcome, Voucher } from '@perx/core';
 import { Location } from '@angular/common';
-import { map, take } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 import { AnalyticsService, PageType } from '../analytics.service';
 import { GameOutcomeService } from '../congrats/game-outcome/game-outcome.service';
 
@@ -35,96 +35,78 @@ export class GameComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-
-    this.activeRoute.queryParams.subscribe((params: Params) => {
-      if (params.id) {
-        const id = parseInt(params.id, 10);
-        this.fetchGame(id);
-
-      } else if (params.cid) {
-        const cid = parseInt(params.cid, 10);
-        this.fetchGameFromCampaign(cid);
-      }
-    });
-  }
-
-  private fetchGame(gameId: number): void {
-    this.gameService.get(gameId).subscribe(
-     (game: IGame) => {
-        this.game = game;
-        this.buttonText = game.texts.button || 'Start playing';
-        this.title = game.texts.title || 'Shake the Pinata';
-        this.subTitle = game.texts.subTitle || 'Shake the Pinata and Win!';
-        this.isGameAvailable = true;
-        this.isButtonDisabled = false;
-        if (game.config && ('nbTaps' in game.config)) {
-          this.numberOfTaps = game.config && game.config.nbTaps;
-        }
-
-        if (game.type === GameType.shakeTheTree) {
-          this.backgroundImage = game.backgroundImg || 'assets/tree/background.jpg';
-        }
-
-        if (game.type === GameType.pinata) {
-          this.backgroundImage = game.backgroundImg || '';
-        }
-
-        if (game.remainingNumberOfTries <= 0) {
-          this.isButtonDisabled = true;
-          this.notificationService.addPopup({
-            title: game.results.noOutcome && game.results.noOutcome.title,
-            text: game.results.noOutcome && game.results.noOutcome.subTitle,
-            buttonTxt: game.results.noOutcome && game.results.noOutcome.button,
-            afterClosedCallBack: this,
-            panelClass: 'custom-class'
-          });
-        }
-
-        this.analytics.addEvent({
-          pageName: `rewards:game:${this.title}`,
-          pageType: PageType.static,
-          siteSectionLevel2: 'rewards:game',
-          siteSectionLevel3: 'rewards:game'
-        });
-      },
-      (err: any) => {
-        console.log(err);
-        this.isEnabled = false;
-        this.notificationService.addPopup({
-          title: 'Oooops!',
-          text: 'Something is wrong, game cannot be played at the moment!',
-          panelClass: 'custom-class'
-        });
-      }
-    );
-  }
-
-  private fetchGameFromCampaign(campaignId: number): void {
-    this.gameService.getGamesFromCampaign(campaignId)
+    this.activeRoute.queryParams
       .pipe(
-        take(1),
-        map((games: IGame[]) => games[0])
+        switchMap((params: Params) => {
+          if (params.id) {
+            const id = parseInt(params.id, 10);
+            return this.gameService.get(id);
+          }
+
+          const cid = parseInt(params.cid, 10);
+          return this.gameService.getGamesFromCampaign(cid).pipe(
+            take(1),
+            map((games: IGame[]) => games[0])
+          );
+        })
       )
       .subscribe(
         (game: IGame) => {
           if (!game) {
-            this.notificationService.addPopup({
-              title: 'Oooops!',
-              text: 'Something is wrong, game cannot be played at the moment!'
-            });
+            this.showErrorPopup();
             return;
           }
-          this.fetchGame(game.id);
+
+          this.game = game;
+          this.buttonText = game.texts.button || 'Start playing';
+          this.title = game.texts.title || 'Shake the Pinata';
+          this.subTitle = game.texts.subTitle || 'Shake the Pinata and Win!';
+          this.isGameAvailable = true;
+          this.isButtonDisabled = false;
+          if (game.config && ('nbTaps' in game.config)) {
+            this.numberOfTaps = game.config && game.config.nbTaps;
+          }
+
+          if (game.type === GameType.shakeTheTree) {
+            this.backgroundImage = game.backgroundImg || 'assets/tree/background.jpg';
+          }
+
+          if (game.type === GameType.pinata) {
+            this.backgroundImage = game.backgroundImg || '';
+          }
+
+          if (game.remainingNumberOfTries <= 0) {
+            this.isButtonDisabled = true;
+            this.notificationService.addPopup({
+              title: game.results.noOutcome && game.results.noOutcome.title,
+              text: game.results.noOutcome && game.results.noOutcome.subTitle,
+              buttonTxt: game.results.noOutcome && game.results.noOutcome.button,
+              afterClosedCallBack: this,
+              panelClass: 'custom-class'
+            });
+          }
+
+          this.analytics.addEvent({
+            pageName: `rewards:game:${this.title}`,
+            pageType: PageType.static,
+            siteSectionLevel2: 'rewards:game',
+            siteSectionLevel3: 'rewards:game'
+          });
         },
         (err: any) => {
           console.log(err);
           this.isEnabled = false;
-          this.notificationService.addPopup({
-            title: 'Oooops!',
-            text: 'Something is wrong, game cannot be played at the moment!'
-          });
+          this.showErrorPopup();
         }
       );
+  }
+
+  private showErrorPopup(): void {
+    this.notificationService.addPopup({
+      title: 'Oooops!',
+      text: 'Something is wrong, game cannot be played at the moment!',
+      panelClass: 'custom-class'
+    });
   }
 
   public goBack(): void {
