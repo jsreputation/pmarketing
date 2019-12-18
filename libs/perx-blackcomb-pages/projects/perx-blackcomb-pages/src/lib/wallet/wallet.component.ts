@@ -3,7 +3,7 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 import {
   Observable,
@@ -25,8 +25,8 @@ import {
   StampService,
   IStampCard,
 } from '@perx/core';
-import { TranslateService } from '@ngx-translate/core';
-import { DatePipe } from '@angular/common';
+import {TranslateService} from '@ngx-translate/core';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'perx-blackcomb-pages-wallet',
@@ -56,8 +56,9 @@ export class WalletComponent implements OnInit, OnDestroy {
         map((campaigns: ICampaign[]) => campaigns.filter(c => c.type === CampaignType.stamp)),
         mergeMap((res) => combineLatest(
           ...res.map(c => this.stampService.getCurrentCard(c.id))
-        )
-        ));
+        )),
+        map((stampCard: IStampCard[]) => stampCard.filter(c => c.title && c.title !== ''))
+      );
     this.translate.get('MY_WALLET').subscribe(text => this.rewardsHeadline = text);
     this.vouchers$ = this.vouchersService.getAll();
     this.filter = [VoucherState.issued, VoucherState.released];
