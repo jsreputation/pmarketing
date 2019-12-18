@@ -7,7 +7,7 @@ const routes: Routes = [
   { path: 'forget', component: ForgetPasswordComponent },
   { path: 'invalid', component: UpdateUserComponent },
   { path: 'reset', component: UpdateUserComponent },
-  { path: 'confirm', component: UpdateUserComponent },
+  { path: 'new', component: UpdateUserComponent },
 ];
 
 @NgModule({

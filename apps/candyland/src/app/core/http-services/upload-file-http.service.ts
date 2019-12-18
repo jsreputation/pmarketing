@@ -1,3 +1,4 @@
+import { IJsonApiItemPayload, IWDocumentAttributes } from '@perx/whistler';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -14,11 +15,11 @@ export class UploadFileHttpService {
     return this.http.post(ApiConfig.uploadImagePath, formData);
   }
 
-  public uploadFile(formData: FormData): Observable<any> {
-    return this.http.post(ApiConfig.uploadFilePath, formData);
+  public uploadFile(formData: FormData): Observable<IJsonApiItemPayload<IWDocumentAttributes>> {
+    return this.http.post<IJsonApiItemPayload<IWDocumentAttributes>>(ApiConfig.uploadFilePath, formData);
   }
 
-  public getFile(id: string): Observable<any> {
-    return this.http.get(ApiConfig.uploadFilePath + '/' + id);
+  public getFile(id: string): Observable<IJsonApiItemPayload<IWDocumentAttributes>> {
+    return this.http.get<IJsonApiItemPayload<IWDocumentAttributes>>(ApiConfig.uploadFilePath + '/' + id);
   }
 }

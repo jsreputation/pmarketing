@@ -45,10 +45,10 @@ export class V4FormsService implements IFormsService {
               },
               {
                 id: 'password',
-                question: 'Create your 4-Digit Pin Code',
+                question: 'Create your Password',
                 required: true,
                 payload: {
-                  type: SurveyQuestionType.longText
+                  type: SurveyQuestionType.password
                 }
               },
             ]

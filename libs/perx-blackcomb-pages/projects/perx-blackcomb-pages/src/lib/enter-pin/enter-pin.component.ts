@@ -119,17 +119,20 @@ export class EnterPinComponent implements PopUpClosedCallBack {
   }
 
   public resendOtp(): void {
+    if (!this.userPhone) {
+      return;
+    }
     switch (this.pinMode) {
       case PinMode.register:
-        // TODO: still needs to work on registration flow
+        this.authService.resendOTP(this.userPhone).subscribe(
+          (res) => this.notificationService.addSnack(res.message)
+        );
         break;
       case PinMode.password:
-        if (this.userPhone) {
-          this.authService.resendOTP(this.userPhone)
-            .subscribe(
-              (res) => this.notificationService.addSnack(res.message)
-            );
-        }
+        this.authService.resendOTP(this.userPhone)
+          .subscribe(
+            (res) => this.notificationService.addSnack(res.message)
+          );
         break;
     }
   }

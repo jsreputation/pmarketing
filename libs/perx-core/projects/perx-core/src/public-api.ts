@@ -200,6 +200,7 @@ export { LongTextComponent } from './lib/survey/question/long-text/long-text.com
 export { GroupComponent } from './lib/survey/question/group/group.component';
 export { RatingComponent } from './lib/survey/question/rating/rating.component';
 export { DateComponent } from './lib/survey/question/date/date.component';
+export { PasswordComponent} from './lib/survey/question/password/password.component';
 
 /**
  * Config
