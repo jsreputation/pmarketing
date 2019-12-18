@@ -36,7 +36,24 @@ mat-icon {
   height: 100%;
   object-fit: cover;
 }
+.no-vouchers {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-content: center;
+  padding-top: 1rem;
 
+  .img-container {
+    display: flex;
+    justify-content: center;
+
+    img {
+      margin: 0 auto;
+      width: 70%;
+      max-height: 70vh;
+    }
+  }
+}
 .voucher-details {
   padding: 0 1.6rem;
   font-size: 1.4rem;
