@@ -30,7 +30,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public appConfig: IConfig;
   public rewardData: IReward;
   public loyalty: ILoyalty;
-  public maxReardCost?: number;
+  public maxRewardCost?: number;
   private initTranslate(): void {
     this.translate.get('DESCRIPTION')
       .subscribe((desc: string) => {
