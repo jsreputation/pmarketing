@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  max-width: 80rem;
+  min-height: 100%;
 
   .toolbar {
     display: flex;
@@ -12,9 +12,15 @@
     font-size: 2rem;
     line-height: 1.9rem;
   }
-
+  .page-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
   .content-container {
     margin: 0 2rem;
+    max-width: 80rem;
+    flex-grow: 1;
 
     h2 {
       font-style: normal;
