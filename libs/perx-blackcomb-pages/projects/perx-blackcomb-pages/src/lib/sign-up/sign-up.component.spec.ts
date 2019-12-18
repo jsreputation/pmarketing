@@ -81,6 +81,7 @@ describe('SignUpComponent', () => {
         TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([
           { path: 'wallet', redirectTo: '/' },
+          { path: 'login', redirectTo: '/' }
         ]),
       ],
       providers: [
