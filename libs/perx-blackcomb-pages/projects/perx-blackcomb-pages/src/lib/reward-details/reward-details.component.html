@@ -8,7 +8,7 @@
 </perx-core-reward>
 <div class="action" *ngIf="appConfig">
   <button mat-raised-button color="primary" class="reward-buy"
-    [disabled]="!loyalty || !loyalty.pointsBalance || (loyalty.pointsBalance < (maxReardCost || 0))"
+    [disabled]="!loyalty || !loyalty.pointsBalance || (loyalty.pointsBalance < (maxRewardCost || 0))"
     (click)="buyReward()">
     {{buttonLabel}}
   </button>
