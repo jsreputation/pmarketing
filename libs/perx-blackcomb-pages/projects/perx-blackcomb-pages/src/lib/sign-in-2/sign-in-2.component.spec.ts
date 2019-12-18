@@ -39,7 +39,8 @@ describe('SignIn2Component', () => {
       declarations: [SignIn2Component],
       imports: [
         RouterTestingModule.withRoutes([
-          { path: 'wallet', redirectTo: '/' }
+          { path: 'wallet', redirectTo: '/' },
+          { path: 'login', redirectTo: '/' }
         ]),
         FormsModule,
         MatFormFieldModule,
