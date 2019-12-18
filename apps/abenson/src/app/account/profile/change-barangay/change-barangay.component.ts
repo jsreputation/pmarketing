@@ -1,7 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Location } from '@angular/common';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { ICustomProperties, ProfileService } from '@perx/core';
+
+import {
+  ICustomProperties,
+  ProfileService,
+} from '@perx/core';
 
 @Component({
   selector: 'app-change-barangay',
