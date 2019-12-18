@@ -1,6 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+  AbstractControl,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import {Validators, FormBuilder, FormGroup, AbstractControl} from '@angular/forms';
+
 import { AuthenticationService } from '@perx/core';
 
 @Component({

@@ -1,8 +1,20 @@
-import { AuthenticationService, NotificationService } from '@perx/core';
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+  AbstractControl,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import {Validators, FormBuilder, FormGroup, AbstractControl} from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+
+import {
+  AuthenticationService,
+  NotificationService,
+} from '@perx/core';
 
 @Component({
   selector: 'app-login',
