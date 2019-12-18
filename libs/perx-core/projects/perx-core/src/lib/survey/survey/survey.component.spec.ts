@@ -20,6 +20,8 @@ import { PictureSelectComponent } from './../question/picture-select/picture-sel
 import { LongTextComponent } from './../question/long-text/long-text.component';
 import { DateComponent } from './../question/date/date.component';
 import { PhoneComponent } from './../question/phone/phone.component';
+import { PasswordComponent } from '../question/password/password.component';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('SurveyComponent', () => {
@@ -37,6 +39,7 @@ describe('SurveyComponent', () => {
         PictureSelectComponent,
         LongTextComponent,
         DateComponent,
+        PasswordComponent,
         PhoneComponent
       ],
       imports: [
