@@ -7,8 +7,8 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 import { StampsService } from '@cl-core-services';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 
 @Component({
   selector: 'cl-new-campaign-notifications',

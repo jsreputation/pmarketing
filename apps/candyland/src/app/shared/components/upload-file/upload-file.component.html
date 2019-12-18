@@ -1,22 +1,26 @@
 <div class="upload-file"
-     [class.invalid]="isRequired || message">
+  [class.invalid]="isRequired || message">
   <div class="upload-file-head">
     <div class="upload-file-label">
       {{label}}
     </div>
-    <cl-download-button file="assets/files/Users_template.csv"><span translate>BTN_DOWNLOAD_A_SAMPLE_FILE</span></cl-download-button>
+    <cl-download-button [file]="downloadFile"><span translate>BTN_DOWNLOAD_A_SAMPLE_FILE</span>
+    </cl-download-button>
   </div>
 
   <div class="upload-file-wrap"
-       [class.field-lock]="lock">
+    [class.field-lock]="lock">
 
     <input #fileInput type="file"
-           *ngIf="!file"
-           class="upload-file-input"
-           accept='text/csv'
-           (change)="preview(fileInput.files)"/>
+      *ngIf="!file"
+      class="upload-file-input"
+      accept='text/csv'
+      (change)="preview(fileInput.files)" [disabled]="loadingFile" />
 
-    <button class="upload-file-btn" *ngIf="!file" (click)="fileInput.click()"><span translate>BTN_UPLOAD-FILE_A_LIST</span></button>
+    <button class="upload-file-btn" *ngIf="!file" (click)="fileInput.click()" [disabled]="loadingFile">
+      <span translate>BTN_UPLOAD-FILE_A_LIST</span>
+    </button>
+    <mat-progress-bar mode="indeterminate" *ngIf="loadingFile"></mat-progress-bar>
 
     <div class="upload-file-file" *ngIf="file">
       <div class="upload-file-file-icon">
@@ -36,5 +40,3 @@
     </div>
   </div>
 </div>
-
-

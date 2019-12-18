@@ -56,7 +56,7 @@ describe('LoginComponent', () => {
   it('login', fakeAsync(() => {
     (window as any).primaryIdentifier = null;
     component.loginForm.setValue({ mobileNumber: '12345', pinCode: '12345' });
-    const spyAuth = spyOn(auth, 'login').and.returnValue(of(null));
+    const spyAuth = spyOn(auth, 'login').and.returnValue(of(void 0));
     component.onSubmit();
     tick();
     expect(spyAuth).toHaveBeenCalled();
@@ -67,6 +67,7 @@ describe('LoginComponent', () => {
     const spyAuth = spyOn(auth, 'login');
     spyAuth.and.returnValue(throwError(new HttpErrorResponse({ status: 401 })));
     component.onSubmit();
+    tick();
     expect(component.errorMessage).toBe('Invalid credentials');
   }));
 
@@ -74,7 +75,7 @@ describe('LoginComponent', () => {
     const primaryIdentifier = 'test';
     (window as any).primaryIdentifier = primaryIdentifier;
     component.loginForm.setValue({ mobileNumber: '12345', pinCode: '12345' });
-    spyOn(auth, 'login').and.returnValue(of(null));
+    spyOn(auth, 'login').and.returnValue(of(void 0));
     component.onSubmit();
     tick();
     expect((window as any).primaryIdentifier).toBe(primaryIdentifier);
@@ -84,6 +85,7 @@ describe('LoginComponent', () => {
     component.loginForm.setValue({ mobileNumber: '12345', pinCode: '12345' });
     spyOn(auth, 'login').and.returnValue(throwError('error'));
     component.onSubmit();
+    tick();
     expect(component.errorMessage).toBe('error');
   }));
 
@@ -91,6 +93,7 @@ describe('LoginComponent', () => {
     component.errorMessage = undefined;
     spyOn(auth, 'login').and.returnValue(throwError(new HttpErrorResponse({ status: 403 })));
     component.onSubmit();
+    tick();
     expect(component.errorMessage).toBe(undefined);
   }));
 
@@ -98,6 +101,7 @@ describe('LoginComponent', () => {
     spyOn(auth, 'login').and.returnValue(throwError(new HttpErrorResponse({ status: 0 })));
     const spy = spyOn(notificationService, 'addPopup');
     component.onSubmit();
+    tick();
     expect(spy).toHaveBeenCalled();
   }));
 });

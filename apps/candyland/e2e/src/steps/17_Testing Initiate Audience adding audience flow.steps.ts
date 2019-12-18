@@ -17,19 +17,19 @@ import {
 // Ensure that audience tab is present
 Then(/^1_The audience tab should be present.$/, async () => {
   // waiting for the audience tab to load
-  await browser.executeScript('WalkMeAPI.stopFlow()');
+  // await browser.executeScript('WalkMeAPI.stopFlow()');
   const ec = protractor.ExpectedConditions;
-  await browser.wait(ec.presenceOf(ElementApp.h3Array().get(5)), 6000);
-  expect(await ElementApp.h3Array().get(5).isPresent()).to.equal(true);
+  await browser.wait(ec.presenceOf(ElementApp.h3Array().get(6)), 6000);
+  expect(await ElementApp.h3Array().get(6).isPresent()).to.equal(true);
 });
 
 // Ensure that clicking on the audience tab leads to the audience page
 When(/^2_I click on the audience tab$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for audience tab to load
-  await browser.wait(ec.presenceOf(ElementApp.h3Array().get(5)), 6000);
+  await browser.wait(ec.presenceOf(ElementApp.h3Array().get(6)), 6000);
   // clicking on the audience tab
-  await ElementApp.h3Array().get(5).click();
+  await ElementApp.h3Array().get(6).click();
   await browser.sleep(3000);
 
 });

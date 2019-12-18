@@ -5,8 +5,10 @@ import {
   IWCustomProperties,
   IWPoolsAttributes,
   IWAudiences,
-  IWPools
+  IWPools,
 } from '@perx/whistler';
+
+import { SOURCE_TYPE } from '../../app.constants';
 
 export class AudiencesHttpAdapter {
 
@@ -20,7 +22,6 @@ export class AudiencesHttpAdapter {
         last_name: data.lastName,
         phone_number: data.phone,
         email_address: data.email,
-        primary_identifier: data.firstName + 'identifier',
         properties: AudiencesHttpAdapter.transformCustomProps(data),
       }
     };
@@ -81,7 +82,7 @@ export class AudiencesHttpAdapter {
       type: 'vouchers',
       attributes: {
         source_id: source,
-        source_type: 'Perx::Reward::Entity',
+        source_type: SOURCE_TYPE,
         assigned_to_id: assigned
       }
     };

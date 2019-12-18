@@ -54,7 +54,11 @@ export class EngagementAppPage {
   }
 
   public gamePinataOptions(): ElementFinder {
-    return element.all('img[alt="game-icon"]').get(1);
+    return element.all(by.css('img[alt="game-icon"]')).get(1);
+  }
+
+  public gamePinataName(): ElementFinder {
+    return element.all(by.css('.engagement-selector-game>.engagement-selector-name')).get(1);
   }
 
   public confirmModal(): ElementFinder {
@@ -285,7 +289,7 @@ export class CreateHitThePinataAppPage {
     return browser.get('engagements/games/new-pinata') as Promise<string>;
   }
   public uploadedBackgroundImageObj(): ElementFinder {
-    return element(by.css('div.image-wrap.ng-star-inserted>img.image'));
+    return element(by.css('div.image-wrap.ng-star-inserted>img'));
   }
   public pinataImage(): ElementFinder {
     return element(by.css('img.img'));
@@ -312,26 +316,26 @@ export class CreateInstantRewardAppPage {
     return element.all(by.css('button.engagement-selector')).get(3);
   }
 
-  public navigateToCreateInstantReward(): Promise<string> {
+  public static navigateToCreateInstantReward(): Promise<string> {
     return browser.get('engagements/new-instant-reward') as Promise<string> ;
   }
 
-  public mobileHeadline(): ElementFinder {
+  public static mobileHeadline(): ElementFinder {
     return element(by.css('p.mobile-preview-headline'));
   }
-  public mobileSubHeadline(): ElementFinder {
+  public static mobileSubHeadline(): ElementFinder {
     return element(by.css('p.mobile-preview-sub-headline'));
   }
 
-  public cardPreview(): ElementFinder {
+  public static cardPreview(): ElementFinder {
     return element(by.css('div.mobile-preview-card'));
   }
 
-  public backgroundPreview(): ElementFinder {
+  public static backgroundPreview(): ElementFinder {
     return element(by.css('div.mobile-preview-background'));
   }
 
-  public mobileButtonPreview(): ElementFinder {
+  public static mobileButtonPreview(): ElementFinder {
     return element(by.css('button.mobile-preview-btn'));
   }
 
@@ -401,9 +405,6 @@ export class CreateRewardAppPage {
   public inputFileField(): ElementFinder {
     return element(by.css('input[type=file]'));
   }
-  public imageClear(): ElementFinder {
-    return element(by.css('.image-clear'));
-  }
   public fileUploaded(): ElementFinder {
     return element(by.css('div.image-wrap.ng-star-inserted>img'));
   }
@@ -416,11 +417,11 @@ export class CreateRewardAppPage {
   public uploadSection(): ElementFinder {
     return element(by.css('input.upload-file-input.ng-star-inserted'));
   }
-  public merchantButton(): ElementFinder {
-    return element.all(by.css('mat-radio-button')).get(0);
+  public merchantButtonArray(): ElementArrayFinder {
+    return element.all(by.css('.merchant-btn.mat-stroked-button.mat-primary'));
   }
   public firstMerchantsRow(): ElementFinder {
-    return element.all(by.css('tr.merchant-row.mat-row.ng-star-inserted')).get(0);
+    return element.all(by.css('tr.mat-row.ng-star-inserted')).get(0);
   }
   public dropDownMenu(): ElementArrayFinder {
     return element.all(by.className('mat-select-arrow-wrapper'));
@@ -451,7 +452,7 @@ export class CreateCampaignAppPage {
   }
 
   public static campaignMatRadioSms(): ElementFinder {
-    return element(by.xpath('//*[@id="mat-radio-8"]/label/div[1]/div[1]'));
+    return element(by.xpath('//*[@id="mat-radio-3"]/label/div[1]/div[1]'));
   }
 
 }
@@ -482,8 +483,8 @@ export class AudienceAppPage {
     return element(by.css('mat-select[formcontrolname=audienceList]'));
   }
 
-  public static audienceSpan(): ElementFinder {
-    return element(by.xpath('(//*[@href="/audience/1"][1]/span)[2]'));
+  public static audienceSpan(): ElementArrayFinder {
+    return element.all(by.css('tr.mat-row.ng-star-inserted>.column-featured span'));
   }
 
   public static audienceColumnList(): ElementArrayFinder {
@@ -631,8 +632,8 @@ export class ElementApp {
     return element.all(by.css('div.mat-radio-inner-circle'));
   }
 
-  public static spanUploadError(): ElementFinder {
-    return element(by.css('span.upload-error'));
+  public static pUploadError(): ElementFinder {
+    return element(by.css('p.upload-error'));
   }
 
   public static matFormFieldFlex(): ElementArrayFinder {
@@ -743,11 +744,14 @@ export class ElementApp {
   }
 
   public static engagementCreated(): ElementFinder {
-    return element.all(by.css('p.engagement-item-name.linkable')).get(0);
+    return element.all(by.css('p.engagement-item-name')).get(0);
   }
 
   public static errorUploadMessage(): ElementFinder {
     return element.all(by.css('p.upload-error.ng-star-inserted')).get(1);
   }
 
+  public static imageClear(): ElementFinder {
+    return element(by.css('button.image-clear'));
+  }
 }

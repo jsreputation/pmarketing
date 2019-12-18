@@ -2,7 +2,7 @@ import { TestBed, async, fakeAsync, ComponentFixture, tick } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule, MatToolbarModule, MatIconModule, MatSnackBarModule, MatDialog, MatSnackBar } from '@angular/material';
-import { NotificationService, AuthenticationService, IVoucherService, ICampaignService, ProfileService, ConfigService } from '@perx/core';
+import { NotificationService, AuthenticationService, IVoucherService, ICampaignService, ProfileService, ConfigService, ThemesService } from '@perx/core';
 import { HomeComponent } from './home/home.component';
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
 import { ProfileComponent } from './account/profile/profile.component';
@@ -48,7 +48,8 @@ describe('AppComponent', () => {
         AppComponent
       ],
       providers: [
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: ThemesService, useValue: { getThemeSetting: () => of({}) } }
       ]
     }).compileComponents();
   }));
@@ -61,6 +62,7 @@ describe('AppComponent', () => {
     location = TestBed.get<Location>(Location as Type<Location>);
     configService = TestBed.get<ConfigService>(ConfigService as Type<ConfigService>);
     app.ngOnInit();
+    tick();
   }));
   it('should create the app', () => {
     expect(app).toBeTruthy();
@@ -119,6 +121,12 @@ describe('AppComponent', () => {
 
   it('should navigate back', () => {
     const spy = spyOn(location, 'back');
+    app.goBack();
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call goBack', () => {
+    const spy = spyOn(app, 'goBack');
     app.goBack();
     expect(spy).toHaveBeenCalled();
   });

@@ -8,18 +8,29 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IMerchantAdminService } from './imerchant-admin.service';
-import { IMerchantAdminTransaction, IMerchantProfile, IMerchantAccount } from './models/merchants-admin.model';
+import {
+  IMerchantAdminTransaction,
+  IMerchantProfile,
+  IMerchantAccount,
+  IMerchantTransactionHistory,
+  IMerchantCustomProperties,
+  MerchantTransactionDetailType,
+  IMerchantPurchaseTransactionHistory,
+  IMerchantRewardTransactionHistory
+} from './models/merchants-admin.model';
 
 import { Config } from '../config/config';
 import {
   IV4Reward,
   V4RewardsService,
+  IV4Tag,
 } from '../rewards/v4-rewards.service';
 import {
   IVoucher,
-  RedemptionType,
   VoucherState,
 } from '../vouchers/models/voucher.model';
+import { RedemptionType } from '../perx-core.models';
+import { oc } from 'ts-optchain';
 
 interface IV4MerchantAdminTransaction {
   id: number;
@@ -108,12 +119,117 @@ interface IV4MerchantProfile {
   state: string;
 }
 
+interface IV4MerchantPurchaseTransactionHistory {
+  id: number;
+  user_account_id: number;
+  updated_at: Date;
+  transaction_type: string;
+  amount: number;
+  transaction_date: Date;
+  currency: string;
+  workflow_id?: number;
+  created_at: Date;
+  properties?: IMerchantCustomProperties;
+  transaction_reference: string;
+}
+
+interface IV4MerchantRewardTransactionHistory {
+  id: number;
+  state: string;
+  voucher_code?: string;
+  reserved_expires_at?: Date;
+  voucher_key?: string;
+  voucher_expires_at: Date;
+  user_account: {
+    identifier: string;
+  };
+  reward: IV4Reward;
+  redemption_location?: string;
+  tags?: IV4Tag[];
+}
+
+interface IV4MerchantTransactionHistory {
+  id: number;
+  name: string;
+  identifier: string;
+  transacted_at: Date;
+  amount: number;
+  transacted_cents?: number; // property will probably be removed
+  properties: IMerchantCustomProperties;
+  transaction_details: {
+    type: MerchantTransactionDetailType;
+    data: IV4MerchantPurchaseTransactionHistory | IV4MerchantRewardTransactionHistory;
+  };
+}
+
+interface IV4MerchantTransactionHistoryResponse {
+  data: IV4MerchantTransactionHistory[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class V4MerchantAdminService implements IMerchantAdminService {
+  public apiHost: string;
 
-  constructor(private http: HttpClient, private config: Config) { }
+  constructor(
+    private http: HttpClient,
+    private config: Config,
+  ) {
+    this.apiHost = config.apiHost as string;
+  }
+
+  public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4MerchantTransactionHistory): IMerchantTransactionHistory {
+
+    const transactionDetails = oc(transactionHistory).transaction_details.data();
+    let data: IMerchantPurchaseTransactionHistory | IMerchantRewardTransactionHistory | undefined;
+
+    if (transactionDetails) {
+      switch (transactionHistory.transaction_details.type) {
+        case MerchantTransactionDetailType.reward:
+          const rthDetails = transactionDetails as IV4MerchantRewardTransactionHistory;
+          data = {
+            id: transactionDetails.id,
+            state: rthDetails.state,
+            voucherExpiry: rthDetails.voucher_expires_at,
+            userAccount: rthDetails.user_account.identifier,
+            rewardName: rthDetails.reward.name,
+            redemptionLocation: rthDetails.redemption_location,
+          };
+          break;
+        case MerchantTransactionDetailType.transaction:
+          const pthDetails = transactionDetails as IV4MerchantPurchaseTransactionHistory;
+          const pthProps = oc(pthDetails).properties() as {
+            merchant_username: string;
+            pharmacy: string;
+            product: string;
+          };
+          data = {
+            id: transactionDetails.id,
+            productName: oc(pthProps).product(),
+            pharmacyName: oc(pthProps).pharmacy(),
+            issuerName: oc(pthProps).merchant_username(),
+            transactionDate: pthDetails.transaction_date,
+            transactionRef: pthDetails.transaction_reference,
+            price: pthDetails.amount,
+            currency: pthDetails.currency,
+          };
+          break;
+      }
+    }
+    return {
+      id: transactionHistory.id,
+      name: transactionHistory.name,
+      identifier: transactionHistory.identifier,
+      transactedAt: transactionHistory.transacted_at,
+      pointsAmount: transactionHistory.amount,
+      properties: transactionHistory.properties,
+      transactionDetails: {
+        type: oc(transactionHistory).transaction_details.type(),
+        data
+      }
+    };
+  }
 
   public static v4TransactionToTransaction(transaction: IV4MerchantAdminTransaction): IMerchantAdminTransaction {
     return {
@@ -244,5 +360,25 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     return this.http.get<IV4MerchantUserInvitationResponse>(url).pipe(
       map((res) => V4MerchantAdminService.v4MerchantProfileToMerchantProfile(res.data)
       ));
+  }
+
+  public getTransactionHistory(page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<IMerchantTransactionHistory[]> {
+    const headers = new HttpHeaders().set('Accept-Language', locale);
+    return this.http.get<IV4MerchantTransactionHistoryResponse>(
+      `${this.apiHost}/v4/merchant_admin/transactions_history`,
+      {
+        headers,
+        params: {
+          page: `${page}`,
+          size: `${pageSize}`
+        }
+      }
+    ).pipe(
+      map((res: IV4MerchantTransactionHistoryResponse) => res.data),
+      map((transactionHistories: IV4MerchantTransactionHistory[]) => transactionHistories.map(
+        (transactionHistory: IV4MerchantTransactionHistory) =>
+          V4MerchantAdminService.v4TransactionHistoryToTransactionHistory(transactionHistory)
+      ))
+    );
   }
 }

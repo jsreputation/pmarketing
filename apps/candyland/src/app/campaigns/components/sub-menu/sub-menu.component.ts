@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NotificationsMenu } from '../../models/notifications-menu-enum';
 import { FormArray, FormGroup } from '@angular/forms';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 
 @Component({
   selector: 'cl-sub-menu',

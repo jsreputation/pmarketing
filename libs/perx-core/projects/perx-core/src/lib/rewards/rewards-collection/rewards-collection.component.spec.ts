@@ -10,13 +10,11 @@ import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 
 import { RewardsCollectionComponent } from './rewards-collection.component';
 
-import {
-  IReward,
-  RedemptionType,
-} from '../models/reward.model';
+import { IReward } from '../models/reward.model';
 import { MaterialModule } from '../../shared/material.module';
 import { UtilsModule } from '../../utils/utils.module';
 import { ThemesService } from '../../utils/themes/themes.service';
+import { RedemptionType } from '../../perx-core.models';
 
 describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;

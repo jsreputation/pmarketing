@@ -12,15 +12,30 @@ import { expect } from 'chai';
 import {
   AudienceAppPage,
   ElementApp,
+  LoginAppPage,
 } from '../pages/candylandApp.po';
 
 // Verifying successful creation of user
 Given(/^9_I am on the audience page.$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  // entering correct account id
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
   await AudienceAppPage.navigateToAudience();
   await browser.sleep(3000);
-  await browser.executeScript('WalkMeAPI.stopFlow()');
+  // await browser.executeScript('WalkMeAPI.stopFlow()');
   // removing walkme widget
-  await browser.executeScript('document.getElementById("walkme-player").remove()');
+  // await browser.executeScript('document.getElementById("walkme-player").remove()');
   // await browser.waitForAngularEnabled(false);
 });
 
@@ -91,17 +106,18 @@ When(/^9_I click on the add button$/, async () => {
   await browser.wait(ec.elementToBeClickable(ElementApp.clButtonArray().get(2)), 6000);
   // clicking the add button
   await ElementApp.clButtonArray().get(2).click();
+  await browser.sleep(3000);
 });
 
 Then(/^9_I should see the user created.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the search bar to load
-  await browser.wait(ec.presenceOf(ElementApp.inputText().get(0)), 6000);
+  await browser.wait(ec.presenceOf(ElementApp.inputTextArray().get(0)), 6000);
   // filtering the search results on the search bar
-  await ElementApp.inputText().get(0).sendKeys('testname01');
+  await ElementApp.inputTextArray().get(0).sendKeys('testname01');
   // waiting for the first row to be loaded
   await browser.wait(ec.presenceOf(ElementApp.matRowInserted().get(0)), 6000);
-  expect(await AudienceAppPage.audienceSpan().getText()).to.contain('testname01');
+  expect(await AudienceAppPage.audienceSpan().first().getText()).to.contain('testname01 testlastname01');
 });
 
 // Verifying the functionality of manage list feature

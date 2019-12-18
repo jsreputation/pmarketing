@@ -12,10 +12,25 @@ import { expect } from 'chai';
 import {
   AudienceAppPage,
   ElementApp,
+  LoginAppPage,
 } from '../pages/candylandApp.po';
 
 // Ensure functionality of the add user button.
 Given(/^4_I am on the audience page.$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  // entering correct account id
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
   await AudienceAppPage.navigateToAudience();
 });
 
@@ -70,7 +85,7 @@ Then(/^5_The essential fields are present for add audience engagement dialog.$/,
 
 // Verifying the number of options for add to audience list dropdown.
 Given(/^6_that I am on add audience dialog box.$/, async () => {
-  await browser.executeScript('WalkMeAPI.stopFlow()');
+  // await browser.executeScript('WalkMeAPI.stopFlow()');
   const ec = protractor.ExpectedConditions;
   await AudienceAppPage.navigateToAudience();
   await browser.wait(ec.presenceOf(ElementApp.clButton()), 6000);

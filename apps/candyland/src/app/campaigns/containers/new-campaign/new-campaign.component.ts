@@ -15,7 +15,7 @@ import { combineLatest, of, Observable, Subject } from 'rxjs';
 import {
   IWCampaignAttributes, IWCommTemplateAttributes, IWLimitAttributes, IWNotificationAttributes, IWProfileAttributes
 } from '@perx/whistler';
-import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
@@ -60,6 +60,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService
   ) {
     store.resetCampaign();
+    this.initForm();
   }
 
   public ngOnInit(): void {
@@ -70,6 +71,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       .subscribe(value => {
         this.store.updateCampaign(value);
       });
+    this.handleCampaignNameChanges();
     this.handleRouteParams();
     this.initChannelForm();
   }
@@ -240,13 +242,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const updateOutcomesArr$ = [];
     const oldCampaignListToDelete = data.filter(outcomeData => !slots.includes(outcomeData.outcome.slotNumber));
     const campaignList = data.filter(outcomeData => slots.includes(outcomeData.outcome.slotNumber));
-    const deleteOutcomes$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
-    const updateOutcomes$ = outcomeData =>
+    const deletedOutcome$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
+    const updatedOutcome$ = outcomeData =>
       this.outcomesService.updateOutcome(
         outcomeData,
         campaign.id
       );
-    const createOutcomes$ = outcomeData =>
+    const createdOutcome$ = outcomeData =>
       this.outcomesService.createOutcome(
         outcomeData,
         campaign.id
@@ -254,15 +256,15 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
     campaignList.forEach(outcomeData => {
       if (this.store.currentCampaign.id && outcomeData.outcome.id) {
-        updateOutcomesArr$.push(updateOutcomes$(outcomeData));
+        updateOutcomesArr$.push(updatedOutcome$(outcomeData));
       } else {
-        updateOutcomesArr$.push(createOutcomes$(outcomeData));
+        updateOutcomesArr$.push(createdOutcome$(outcomeData));
       }
     });
     if (oldCampaignListToDelete && oldCampaignListToDelete.length >= 0) {
       oldCampaignListToDelete.forEach(oldReward => {
         if (oldReward.outcome.id) {
-          updateOutcomesArr$.push(deleteOutcomes$(oldReward.outcome.id));
+          updateOutcomesArr$.push(deletedOutcome$(oldReward.outcome.id));
         }
       });
     }
@@ -362,6 +364,14 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       map((data: any[]) => (data.length > 0) ? data[0].url : ''),
       takeUntil(this.destroy$)
     );
+  }
+
+  private handleCampaignNameChanges(): void {
+    this.form.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(value => {
+        this.store.updateCampaign(value);
+      });
   }
 
   private handleRouteParams(): void {

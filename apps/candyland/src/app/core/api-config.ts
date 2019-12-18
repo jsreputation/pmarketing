@@ -10,6 +10,7 @@ export class ApiConfig {
   public static commsEventsPath: string = `${ApiConfig.basePath}/comm/events`;
   public static outcomesPath: string = `${ApiConfig.basePath}/outcome/possible_outcomes`;
   public static rewardsPath: string = `${ApiConfig.basePath}/reward/entities`;
+  public static rewardsTierPath: string = `${ApiConfig.basePath}/reward/tier_reward_costs`;
   public static allCredentialPath: string = `${ApiConfig.baseAPIPath}/credentials`;
   public static IAMUsersPath: string = `${ApiConfig.baseAPIPath}/users`;
   public static IAMGroupsPath: string = `${ApiConfig.baseAPIPath}/groups`;
@@ -32,4 +33,7 @@ export class ApiConfig {
   public static loyaltyPath: string = `${ApiConfig.basePath}/loyalty/programs`;
   public static loyaltyBasicTierPath: string = `${ApiConfig.basePath}/loyalty/basic_tiers`;
   public static getLoyaltyCustomTierPath: string = `${ApiConfig.basePath}/loyalty/custom_tiers`;
+  public static getLoyaltyRuleSetPath: string = `${ApiConfig.basePath}/outcome/rule_sets`;
+  public static getLoyaltyRulePath: string = `${ApiConfig.basePath}/outcome/rules`;
+  public static getLoyaltyRuleConditionPath: string = `${ApiConfig.basePath}/outcome/rule_conditions`;
 }

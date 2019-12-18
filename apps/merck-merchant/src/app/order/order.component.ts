@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService, IProduct } from '../services/product.service';
 import { IMerchantAdminService, IMerchantAdminTransaction, IMerchantProfile, NotificationService, TokenStorage } from '@perx/core';
-import { from, throwError } from 'rxjs';
+import { from, throwError, Observable, forkJoin } from 'rxjs';
 import { mergeMap, switchMap } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface IPayload {
   name: string;
@@ -28,13 +29,15 @@ export class OrderComponent implements OnInit {
   public isSummaryActivated: boolean = false;
   public selectedProducts: IProduct[] = [];
   public totalPoints: number;
+  public language: string;
 
   constructor(
     private router: Router,
     private productService: ProductService,
     private notificationService: NotificationService,
     private merchantAdminService: IMerchantAdminService,
-    private tokenStorage: TokenStorage
+    private tokenStorage: TokenStorage,
+    private translateService: TranslateService,
   ) {
   }
 
@@ -48,6 +51,7 @@ export class OrderComponent implements OnInit {
       }
     }
     this.productService.getProducts().subscribe(res => this.rewards = res);
+    this.language = this.translateService.currentLang || this.translateService.defaultLang;
   }
 
   public newQuantity(newData: Product): void {
@@ -77,6 +81,7 @@ export class OrderComponent implements OnInit {
     }
     // 0 padded date
     const date = new Date();
+    // @ts-ignore
     const dateStamp = ('0' + date.getDate()).slice(-2) + ('0' + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString();
 
     this.merchantAdminService.getMerchantProfile()
@@ -88,17 +93,29 @@ export class OrderComponent implements OnInit {
           }
           return from(this.selectedProducts).pipe(
             mergeMap((product: IProduct) => {
-
-              return this.merchantAdminService.createTransaction(
-                this.payload.id, merchantUsername, product.price, product.currency,
-                'purchase', dateStamp + '-' + this.payload.id, merchantName, product.name);
+              const partDataRequests: Observable<IMerchantAdminTransaction>[] = [];
+              if (product.quantity) {
+                for (let i = 0; i < product.quantity; i++) {
+                  partDataRequests.push(this.merchantAdminService.createTransaction(
+                    this.payload.id, merchantUsername, product.price, product.currency,
+                    'purchase', dateStamp + '-' + this.payload.id, merchantName, product.name));
+                }
+              }
+              return forkJoin(partDataRequests);
             })
           );
         })
       )
-      .subscribe((transaction: IMerchantAdminTransaction) => {
-        this.notificationService.addSnack('Transaction ID: ' + transaction.id + 'completed');
+      .subscribe((transactions: IMerchantAdminTransaction[]) => {
+        const ids = transactions.map(transaction => transaction.id);
+        const idsToString = ids.join(', ');
+        const message = this.language === 'zh' ? `交易 ID ${idsToString} 完成` : `Transaction ID: ${idsToString} completed`;
+        this.notificationService.addSnack(message);
         this.router.navigate(['/home']);
       });
+  }
+
+  public getPoints(): string {
+    return this.language === 'zh' ? `將獲得${this.totalPoints}積分` : `${this.totalPoints} points will be issued`;
   }
 }

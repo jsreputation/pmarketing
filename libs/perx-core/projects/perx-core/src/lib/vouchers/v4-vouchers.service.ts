@@ -6,11 +6,12 @@ import { interval, Observable, of } from 'rxjs';
 import { filter, flatMap, map, mergeAll, scan, switchMap, tap, mergeMap } from 'rxjs/operators';
 
 import { IVoucherService } from './ivoucher.service';
-import { IGetVoucherParams, IRedeemOptions, IVoucher, RedemptionType, VoucherState } from './models/voucher.model';
+import { IGetVoucherParams, IRedeemOptions, IVoucher, VoucherState } from './models/voucher.model';
 
 import { Config } from '../config/config';
 import { IRewardParams } from '../rewards/models/reward.model';
 import { IV4Reward, V4RewardsService } from '../rewards/v4-rewards.service';
+import { RedemptionType } from '../perx-core.models';
 
 interface IV4Meta {
   count?: number;
@@ -256,9 +257,11 @@ export class V4VouchersService implements IVoucherService {
       }),
       mergeAll(1),
       filter((voucher: IVoucher) => {
+        // todo: clean up this code because it creates 2 observables.
+        // workaround is to return true on first run to dispose of one observable
         if (current === 0) {
           previousState = voucher.state;
-          return false;
+          return true;
         }
 
         if (previousState === voucher.state) {
@@ -266,7 +269,6 @@ export class V4VouchersService implements IVoucherService {
         }
 
         previousState = voucher.state;
-
         return true;
       })
     );

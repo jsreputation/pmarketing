@@ -29,6 +29,7 @@ import {
   PinRedemptionComponent,
   BcodeRedemptionComponent,
   QrcodeRedemptionComponent,
+  BarcodeRedemptionComponent,
   RewardComponent as PerxRewardComponent,
   SurveyComponent as PerxSurveyComponent,
   PuzzleCollectStampsComponent,
@@ -46,7 +47,8 @@ import {
   LoyaltySummaryComponent,
   LoyaltyTransactionsListComponent,
   NewsfeedComponent,
-  PinInputComponent
+  PinInputComponent,
+  PasswordComponent
 } from '@perx/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -54,7 +56,8 @@ import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { LoadingComponent } from './loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
-import { LoginComponent } from './login/login.component';
+import { NgxBarcodeModule } from 'ngx-barcode';
+import { SignIn2Component } from './sign-in-2/sign-in-2.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { QRComponent } from './qr/qr.component';
 import { RedeemComponent } from './redeem/redeem.component';
@@ -73,6 +76,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
+import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
+import { ProfileBarcodeComponent } from './profile-barcode/profile-barcode.component';
+import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -86,9 +92,10 @@ const comps: any[] = [
   PinRedemptionComponent,
   BcodeRedemptionComponent,
   QrcodeRedemptionComponent,
+  BarcodeRedemptionComponent,
   LoadingComponent,
   RedeemComponent,
-  LoginComponent,
+  SignIn2Component,
   SignInComponent,
   QRComponent,
   RewardDetailsComponent,
@@ -102,6 +109,7 @@ const comps: any[] = [
   PhoneComponent,
   GroupComponent,
   RatingComponent,
+  PasswordComponent,
   PictureSelectComponent,
   LongTextComponent,
   DateComponent,
@@ -121,7 +129,10 @@ const comps: any[] = [
   ProfileComponent,
   ChangePasswordComponent,
   EnterPinComponent,
-  PinInputComponent
+  PinInputComponent,
+  RewardsBookingComponent,
+  ProfileBarcodeComponent,
+  EditProfileFieldComponent
 ];
 
 @NgModule({
@@ -141,6 +152,7 @@ const comps: any[] = [
     FormsModule,
     ReactiveFormsModule,
     QRCodeModule,
+    NgxBarcodeModule,
     MatFormFieldModule,
     MatRadioModule,
     MatCheckboxModule,
@@ -148,7 +160,7 @@ const comps: any[] = [
     MatDatepickerModule,
     TranslateModule.forChild(),
     MatToolbarModule,
-    MatListModule
+    MatListModule,
   ],
   exports: [
     ...comps,

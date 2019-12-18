@@ -12,7 +12,7 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 import { ActivatedRoute } from '@angular/router';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 
@@ -32,7 +32,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   public hasData: boolean;
   public noData: boolean;
   public templateIndex: number;
-  @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
 
   public get template(): AbstractControl {
     return this.form.get('template');
@@ -142,7 +142,10 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
 
   }
 
-  private getLimits(campaignData: ICampaign, findTemplate: IEngagementType): void {
+  private getLimits(campaignData: ICampaign, findTemplate?: IEngagementType): void {
+    if (!findTemplate) {
+      return;
+    }
     const params: HttpParamsOptions = {
       'filter[campaign_entity_id]': campaignData.id
     };

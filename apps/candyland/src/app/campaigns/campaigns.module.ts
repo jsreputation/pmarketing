@@ -27,8 +27,7 @@ import {
   MatSlideToggleModule,
   MatSortModule,
   MatStepperModule,
-  MatTableModule,
-  MatSnackBarModule
+  MatTableModule
 } from '@angular/material';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
@@ -90,12 +89,15 @@ import { NoStampsToNextRewardFormGroupComponent } from './components/no-stamps-t
 import { EarnedStampFormGroupComponent } from './components/earned-stamp-form-group/earned-stamp-form-group.component';
 import { EarnedRewardFormGroupComponent } from './components/earned-reward-form-group/earned-reward-form-group.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { MessageService } from '@cl-core-services';
 
 @NgModule({
   providers: [
     CampaignCreationStoreService,
     StepConditionService,
     NewCampaignDetailFormService,
+    NewCampaignRewardsStampsFormService,
+    MessageService,
     NewCampaignRewardsStampsFormService,
     CampaignChannelsFormService,
   ],
@@ -143,7 +145,6 @@ import { TranslateModule } from '@ngx-translate/core';
     MatSortModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSnackBarModule,
     MatSelectModule,
     MatStepperModule,
     StatusLabelModule,

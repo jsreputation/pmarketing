@@ -1,4 +1,4 @@
-<section class="channels" [formGroup]="channelForm">
+<section class="channels" *ngIf="channelForm" [formGroup]="channelForm">
   <mat-expansion-panel class="card" expanded>
     <!--select channel-->
     <mat-expansion-panel-header class="card-header">

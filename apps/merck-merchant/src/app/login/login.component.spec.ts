@@ -11,10 +11,12 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatRippleModule,
+  MatSelectModule,
 } from '@angular/material';
 import { SalesContactComponent } from '../sales-contact/sales-contact.component';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -30,12 +32,14 @@ describe('LoginComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
+        MatSelectModule,
         MatToolbarModule,
         MatFormFieldModule,
         MatInputModule,
         MatRippleModule,
         BrowserAnimationsModule,
         AuthenticationModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: Router, useValue: routerStub },
@@ -78,7 +82,7 @@ describe('LoginComponent', () => {
     component.loginForm.controls['email'].setValue('test@test.com');
     component.loginForm.controls['password'].setValue('test1234');
 
-    const authSpy = spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
+    const authSpy = spyOn(authenticationService, 'login').and.returnValue(of(void 0));
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     const routerSpy = spyOn(routerStub, 'navigateByUrl').and.stub();
 

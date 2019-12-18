@@ -5,7 +5,7 @@ import {
   PLATFORM_ID,
   OnDestroy,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 
 import {
@@ -17,6 +17,7 @@ import {
   of,
   iif,
   Subject,
+  throwError,
 } from 'rxjs';
 
 import {
@@ -24,7 +25,9 @@ import {
   Config,
   NotificationService,
   ICampaign,
-  ICampaignService
+  ICampaignService,
+  IConfig,
+  ConfigService
 } from '@perx/core';
 
 import * as uuid from 'uuid';
@@ -42,6 +45,75 @@ export class LoadingComponent implements OnInit, OnDestroy {
   private campaignData: ICampaign | null = null;
 
   private destroy$: Subject<any> = new Subject();
+  private appConfig: IConfig;
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private authService: AuthenticationService,
+    private campaignSvc: ICampaignService,
+    private config: Config,
+    private configService: ConfigService,
+    private notificationService: NotificationService,
+    @Inject(PLATFORM_ID) private platformId: object,
+  ) {
+    this.preAuth = this.config && this.config.preAuth ? this.config.preAuth : false;
+  }
+
+  public ngOnInit(): void {
+    this.configService.readAppConfig().subscribe((conf) => this.appConfig = conf);
+    const params = this.route.snapshot.queryParams;
+    (window as any).primaryIdentifier = params.pi;
+    const cid: string | null = params.cid;
+    this.campaignId = cid ? Number.parseInt(cid, 10) : (window as any).campaignId;
+    (window as any).campaignId = this.campaignId;
+    if (this.preAuth && isPlatformBrowser(this.platformId)) {
+      /*
+      * The logic is:
+      * 1. check PI, then will call autoLogin
+      * 2. check hasToken,then go to next page based on campaign id. Then need to finish refreshToken function to handle 401 from API return
+      * 3. If no PI and no token found, then call autoLoginWithoutPI to create new account and auto login
+      * */
+      const PIHandler$ = this.authService.autoLogin();
+      const createUserAndAutoLogin$ = pi => this.authService.createUserAndAutoLogin(pi, undefined, true);
+      const autoLoginWithoutPI$ = of(uuid.v4()).pipe(
+        switchMap(newPI => createUserAndAutoLogin$(newPI)),
+        takeUntil(this.destroy$)
+      );
+      const getLocalToken$ = this.authService.getAccessToken();
+      const noPIHandler$ = getLocalToken$.pipe(
+        switchMap(
+          localToken => iif(() => !!localToken, of(localToken), autoLoginWithoutPI$)
+        ),
+        takeUntil(this.destroy$)
+      );
+      const getPI$ = this.route.queryParams;
+
+      getPI$.pipe(
+        switchMap(
+          queryParams => iif(() => !!queryParams.pi, PIHandler$, noPIHandler$)
+        ),
+        takeUntil(this.destroy$)
+      ).subscribe(
+        () => this.getCampaignData(),
+        () => this.router.navigate(['/login'])
+      );
+    } else {
+      this.authService.getAccessToken().pipe(
+        switchMap(localToken => iif(() => !!localToken, of(localToken), throwError('no token'))),
+        takeUntil(this.destroy$)
+      )
+        .subscribe(
+          () => this.getCampaignData(),
+          () => this.router.navigate(['/login'])
+        );
+    }
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   public get isCampaignEnded(): boolean {
     if (!this.campaignData) {
@@ -55,8 +127,8 @@ export class LoadingComponent implements OnInit, OnDestroy {
     return endDate < now;
   }
 
-  private goWallet(): void {
-    this.router.navigate(['/wallet']);
+  private goToRouteFromConfig(): void {
+    this.router.navigate([this.appConfig && this.appConfig.redirectAfterLogin || 'wallet']);
   }
 
   private getCampaignData(): void {
@@ -68,10 +140,10 @@ export class LoadingComponent implements OnInit, OnDestroy {
         )
         .subscribe(
           () => this.redirectAfterLogin(),
-          () => this.goWallet()
+          () => this.goToRouteFromConfig()
         );
     } else {
-      this.goWallet();
+      this.goToRouteFromConfig();
     }
   }
 
@@ -90,7 +162,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
     } else if (this.campaignId && this.isCampaignEnded) {
       this.initCampaignEndedPopup();
     } else {
-      this.goWallet();
+      this.goToRouteFromConfig();
     }
   }
 
@@ -98,63 +170,5 @@ export class LoadingComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(
       this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${this.campaignId}`
     );
-  }
-
-  constructor(
-    private router: Router,
-    private authService: AuthenticationService,
-    private campaignSvc: ICampaignService,
-    private config: Config,
-    private notificationService: NotificationService,
-    @Inject(PLATFORM_ID) private platformId: object,
-  ) {
-    this.preAuth = this.config && this.config.preAuth ? this.config.preAuth : false;
-  }
-
-  public ngOnInit(): void {
-    if (this.preAuth && isPlatformBrowser(this.platformId)) {
-      const param = location.search;
-      const params = new URLSearchParams(param);
-      (window as any).primaryIdentifier = params.get('pi');
-      const cid: string | null = params.get('cid');
-      this.campaignId = cid ? Number.parseInt(cid, 10) : (window as any).campaignId;
-      (window as any).campaignId = this.campaignId;
-      /*
-      * Later when API ready, the logic is:
-      * 1. check PI, then will call autoLogin
-      * 2. check hasToken,then go to next page based on campaign id. Then need to finish refreshToken function to handle 401 from API return
-      * 3. If no PI and no token found, then call autoLoginWithoutPI to create new account and auto login
-      * */
-
-      const PIHandler$ = this.authService.autoLogin();
-      const createUserAndAutoLogin$ = pi => this.authService.createUserAndAutoLogin(pi, undefined, true);
-      const autoLoginWithoutPI$ = of(uuid.v4()).pipe(
-        switchMap(newPI => createUserAndAutoLogin$(newPI)),
-        takeUntil(this.destroy$)
-      );
-      const getLocalToken$ = this.authService.getAccessToken();
-      const noPIHandler$ = getLocalToken$.pipe(
-        switchMap(
-          localToken => iif(() => !!localToken, of(localToken), autoLoginWithoutPI$)
-        ),
-        takeUntil(this.destroy$)
-      );
-      const getPI$ = of(new URLSearchParams(param).get('pi'));
-
-      getPI$.pipe(
-        switchMap(
-          pi => iif(() => !!pi, PIHandler$, noPIHandler$)
-        ),
-        takeUntil(this.destroy$)
-      ).subscribe(
-        () => this.getCampaignData(),
-        () => this.router.navigate(['/login'])
-      );
-    }
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

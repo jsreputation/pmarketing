@@ -16,13 +16,17 @@ export {
 export { IWRewardDisplayProperties, IWProperties, IWAttbsObjEntity } from './lib/whistler.models';
 
 export { IWVoucherStatsApi } from './lib/voucher/stats';
-export { IWVouchersApi } from './lib/voucher/vouchers-api';
+export { IWVouchersApi, WCodeType, WStatus } from './lib/voucher/vouchers-api';
 export {
   WAssignedStatus,
   IWAssignedAttributes,
   IWPurchaseAttributes,
   IWAssignRequestAttributes
 } from './lib/voucher/assigneds';
+export {
+  IWDocumentAttributes,
+  IWDocumentBlob
+} from './lib/storage/documents';
 export {
   IWRewardEntityAttributes,
   IWMetaData,
@@ -45,10 +49,14 @@ export {
   IWCommTemplateAttributes,
   IWCommEventAttributes
 } from './lib/comm/comm';
-export { IWCampaignAttributes, IWCampaignDisplayProperties, WInformationCollectionSettingType } from './lib/campaign/campaign';
+export {
+  IWCampaignAttributes,
+  IWCampaignDisplayProperties,
+  WInformationCollectionSettingType,
+  WCampaignStatus
+} from './lib/campaign/campaign';
 
 export { IWNotificationAttributes } from './lib/campaign/notification';
-
 export {
   IWAudiences,
   IWPools,
@@ -78,7 +86,12 @@ export {
   IWLoyaltyAttributes,
   IWBasicTierAttributes,
   IWCustomTierAttributes,
-  IWJoinMethod
+  IWJoinMethod,
+  IWLoyaltyRuleSetAttributes,
+  IWLoyaltyRuleAttributes,
+  IWLoyaltyRuleConditionValueType,
+  IWLoyaltyRuleConditionSign,
+  IWLoyaltyRuleConditionAttributes
 } from './lib/loyalty/loyalty';
 
 export {

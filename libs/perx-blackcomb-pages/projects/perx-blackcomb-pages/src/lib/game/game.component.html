@@ -17,6 +17,12 @@
       [game]="game"
       (broken)=gameCompleted()
     ></perx-blackcomb-pages-scratch>
+    <perx-blackcomb-pages-spin
+      *ngSwitchCase="gt.spin"
+      [willWin]="willWin"
+      [game]="game"
+      (broken)=gameCompleted()
+    ></perx-blackcomb-pages-spin>
   </div>
   <mat-progress-bar *ngIf="progressValue" [value]="progressValue" class="loader"></mat-progress-bar>
 </div>

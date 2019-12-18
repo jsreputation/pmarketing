@@ -4,7 +4,7 @@
   display: flex;
   flex-basis: auto;
   flex-grow: 1;
-  justify-content: flex-start;
+  justify-content: center;
   height: 100%;
 
   .reward-img__wrapper {
@@ -73,6 +73,28 @@
       color: #ddac27;
       align-content: flex-end;
       margin-top: auto;
+    }
+  }
+
+  .no-rewards {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    padding-top: 1rem;
+
+    h3 {
+      text-align: center;
+    }
+
+    .img-container {
+      display: flex;
+      justify-content: center;
+
+      img {
+        margin: 0 auto;
+        width: 70%;
+        height: 100%;
+      }
     }
   }
 }
