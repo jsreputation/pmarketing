@@ -13,7 +13,6 @@ export class EarnedStampFormGroupComponent {
   @Input() public stampNumbers: CommonSelect[];
   @Output() public deleteGroup: EventEmitter<number> = new EventEmitter<number>();
   public sendTestSms(): void {
-    console.log('sendTestSms');
   }
 
   public deleteEarnedStampGroup(): void {

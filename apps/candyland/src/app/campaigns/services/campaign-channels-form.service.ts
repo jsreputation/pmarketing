@@ -9,76 +9,110 @@ export class CampaignChannelsFormService {
 
   public getForm(): FormGroup {
     return new FormGroup({
-      webLink: new FormControl(null),
+      webNotification: new FormGroup({
+        webLink: new FormControl(null),
+        webLinkOptions: new FormControl(null),
+        id: new FormControl(null),
+      }),
       sms: new FormControl(null),
-      webLinkOptions: new FormControl(null),
-      launch: new FormArray([this.getLaunchGroup()]),
-      completed: new FormArray([this.getCompletedGroup()]),
+      launch: new FormArray([]), // this.getLaunchGroup()
+      completed: new FormArray([]), // this.getCompletedGroup()
       campaignEnds: new FormArray([]),
-      rewardExpires: new FormArray([]),
-      noStampsReward: new FormArray([]),
-      earnedStamp: new FormArray([]),
-      earnedReward: new FormArray([]),
+      // rewardExpires: new FormArray([]),
+      // noStampsReward: new FormArray([]),
+      // earnedStamp: new FormArray([]),
+      // earnedReward: new FormArray([]),
     });
   }
 
   public getLaunchGroup(): FormGroup {
     return new FormGroup({
+      id: new FormControl(null),
       sentType: new FormControl(null, [Validators.required]),
-      sentDay: new FormControl(null, [Validators.required]),
-      sentTime: new FormControl(null, [Validators.required]),
-      message: new FormControl(null, [Validators.required]),
+      template: new FormGroup({
+        message: new FormControl(null, [Validators.required]),
+        templateId: new FormControl(null),
+      }),
       birthdayTime: new FormControl(null),
+      launchDateTime: new FormControl(null),
       monthDay: new FormControl(null, [Validators.min(1), Validators.max(31)]),
+      channel: new FormControl('sms'),
+      campaignId: new FormControl(null),
     });
   }
 
   public getCompletedGroup(): FormGroup {
     return new FormGroup({
+      id: new FormControl(null),
+      sentType: new FormControl('campaign_incomplete'),
       numberPeriod: new FormControl(null, [Validators.required, Validators.min(1)]),
       type: new FormControl(null, [Validators.required]),
       time: new FormControl(null, [Validators.required]),
-      message: new FormControl(null, [Validators.required]),
+      template: new FormGroup({
+        message: new FormControl(null, [Validators.required]),
+        templateId: new FormControl(null),
+      }),
     });
   }
 
   public getRewardExpiresGroup(): FormGroup {
     return new FormGroup({
+      id: new FormControl(null),
       numberPeriod: new FormControl(null, [Validators.required, Validators.min(1)]),
       type: new FormControl(null, [Validators.required]),
       time: new FormControl(null, [Validators.required]),
-      message: new FormControl(null, [Validators.required]),
+      template: new FormGroup({
+        message: new FormControl(null, [Validators.required]),
+        templateId: new FormControl(null),
+      }),
     });
   }
 
   public getCampaignEndsGroup(): FormGroup {
     return new FormGroup({
+      id: new FormControl(null),
+      sentType: new FormControl('campaign_status_update'),
       numberPeriod: new FormControl(null, [Validators.required, Validators.min(1)]),
       type: new FormControl(null, [Validators.required]),
       time: new FormControl(null, [Validators.required]),
-      message: new FormControl(null, [Validators.required]),
+      template: new FormGroup({
+        message: new FormControl(null, [Validators.required]),
+        templateId: new FormControl(null),
+      }),
     });
   }
 
   public getNoStampsRewardGroup(): FormGroup {
     return new FormGroup({
+      id: new FormControl(null),
       stamp: new FormControl(null, [Validators.required, Validators.min(1)]),
       slot: new FormControl(null, [Validators.required]),
-      message: new FormControl(null, [Validators.required]),
+      template: new FormGroup({
+        message: new FormControl(null, [Validators.required]),
+        templateId: new FormControl(null),
+      }),
     });
   }
 
   public getEarnedStampGroup(): FormGroup {
     return new FormGroup({
+      id: new FormControl(null),
       stamp: new FormControl(null, [Validators.required, Validators.min(1)]),
-      message: new FormControl(null, [Validators.required]),
+      template: new FormGroup({
+        message: new FormControl(null, [Validators.required]),
+        templateId: new FormControl(null),
+      }),
     });
   }
 
   public getEarnedRewardGroup(): FormGroup {
     return new FormGroup({
+      id: new FormControl(null),
       slot: new FormControl(null, [Validators.required, Validators.min(1)]),
-      message: new FormControl(null, [Validators.required]),
+      template: new FormGroup({
+        message: new FormControl(null, [Validators.required]),
+        templateId: new FormControl(null),
+      }),
     });
   }
 
@@ -210,6 +244,7 @@ export class CampaignChannelsFormService {
   }
 
   public patchForm(form: FormGroup, value: any): void {
+    form.patchValue(value);
     Object.keys(value).forEach((key) => {
       if (Utils.isArray(value[key])) {
         value[key].forEach((item) => {

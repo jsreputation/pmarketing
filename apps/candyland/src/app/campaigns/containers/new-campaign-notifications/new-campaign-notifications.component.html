@@ -10,7 +10,7 @@
     <div class="card-content">
       <div class="card-row">
         <section>
-          <mat-checkbox color="primary" class="channels-margin" formControlName="webLink">Weblink</mat-checkbox>
+          <mat-checkbox color="primary" class="channels-margin" [formControl]="getWebLink()">Weblink</mat-checkbox>
           <mat-checkbox color="primary" class="channels-margin" formControlName="sms">SMS</mat-checkbox>
         </section>
       </div>
@@ -28,10 +28,10 @@
   <!--web link options-->
   <div class="card-content">
     <div class="card-row">
-      <mat-radio-group color="primary" formControlName="webLinkOptions">
-        <mat-radio-button value="collect_identifier">Collect Identifier</mat-radio-button>
-        <mat-radio-button value="enable_sign_up">Enable Sign-up</mat-radio-button>
-        <mat-radio-button value="no_sign_up_identifier">No sign-up/identifier</mat-radio-button>
+      <mat-radio-group color="primary" [formControl]="channelForm.get('webNotification.webLinkOptions')">
+        <mat-radio-button value="not_required">Collect Identifier</mat-radio-button>
+        <mat-radio-button value="pi_required">Enable Sign-up</mat-radio-button>
+        <mat-radio-button value="signup_required">No sign-up/identifier</mat-radio-button>
       </mat-radio-group>
     </div>
   </div>
@@ -72,6 +72,7 @@
                                           [shortCodes]="shortCodes"
                                           [index]="index"
                                           (deleteGroup)="deleteLaunchGroup($event)"
+                                          (sendSms)="onSendSms($event)"
               ></cl-campaign-launch-message>
               <cl-button classList="tertiary ph-0" (click)="addNewLaunchGroup()">
                 + Add another message
@@ -84,6 +85,7 @@
                                                     [shortCodes]="shortCodes"
                                                     [index]="index"
                                                     (deleteGroup)="deleteCompletedGroup($event)"
+                                                    (sendSms)="onSendSms($event)"
               >
               </cl-campaign-not-completed-form-group>
               <cl-button classList="tertiary ph-0" (click)="addNewCompletedGroup()">
@@ -97,6 +99,7 @@
                                                     [shortCodes]="shortCodes"
                                                     [index]="index"
                                                     (deleteGroup)="deleteCampaignEndsGroup($event)"
+                                                    (sendSms)="onSendSms($event)"
               >
               </cl-before-campaign-ends-form-group>
               <cl-button classList="tertiary ph-0" (click)="addNewCampaignEndsGroup()">

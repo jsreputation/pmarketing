@@ -77,5 +77,4 @@ export class CampaignsService implements ITableService {
       map(response => CampaignsHttpAdapter.transformToCampaign(response.data))
     );
   }
-
 }

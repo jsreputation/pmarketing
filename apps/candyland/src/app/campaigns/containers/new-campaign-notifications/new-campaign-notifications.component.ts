@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges
+  ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output
 } from '@angular/core';
 import { NotificationsMenu } from '../../models/notifications-menu-enum';
 import { CampaignChannelsFormService } from '../../services/campaign-channels-form.service';
@@ -14,10 +14,10 @@ import { StampsService } from '@cl-core-services';
   selector: 'cl-new-campaign-notifications',
   templateUrl: './new-campaign-notifications.component.html',
   styleUrls: ['./new-campaign-notifications.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignNotificationsComponent implements OnInit, OnDestroy, OnChanges {
+export class NewCampaignNotificationsComponent implements OnInit, OnDestroy {
   @Input() public channelForm: FormGroup;
+  @Output() public sendTestSms: EventEmitter<any> = new EventEmitter();
   public notificationsMenu: typeof NotificationsMenu = NotificationsMenu;
   public selectedMenu: string = NotificationsMenu.onCampaignLaunch;
   public destroy$: Subject<void> = new Subject<void>();
@@ -35,6 +35,10 @@ export class NewCampaignNotificationsComponent implements OnInit, OnDestroy, OnC
     this.getShortCodes();
     this.getStampData();
     this.subscribeToStore();
+  }
+
+  public onSendSms(sms: any): void {
+    this.sendTestSms.emit(sms);
   }
 
   public patchForm(value: any): void {
@@ -135,7 +139,7 @@ export class NewCampaignNotificationsComponent implements OnInit, OnDestroy, OnC
   }
 
   public getWebLink(): FormControl {
-    return (this.channelForm.get('webLink') as FormControl);
+    return (this.channelForm.get('webNotification.webLink') as FormControl);
   }
 
   public getSms(): FormControl {
@@ -184,10 +188,5 @@ export class NewCampaignNotificationsComponent implements OnInit, OnDestroy, OnC
 
   public checkIsStamp(campaign: ICampaign): boolean {
     return campaign && campaign.template && campaign.template.attributes_type === 'stamps';
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-    this.cd.markForCheck();
   }
 }

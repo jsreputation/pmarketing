@@ -46,6 +46,9 @@ export {
   IWCommEventAttributes
 } from './lib/comm/comm';
 export { IWCampaignAttributes, IWCampaignDisplayProperties, WInformationCollectionSettingType } from './lib/campaign/campaign';
+
+export { IWNotificationAttributes } from './lib/campaign/notification';
+
 export {
   IWAudiences,
   IWPools,

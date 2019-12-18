@@ -5,6 +5,7 @@ import { NewCampaignNotificationsComponent } from './new-campaign-notifications.
 import { CampaignChannelsFormService } from '../../services/campaign-channels-form.service';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormGroup } from '@angular/forms';
 
 describe('NewCampaignNotificationsComponent', () => {
   let component: NewCampaignNotificationsComponent;
@@ -28,6 +29,7 @@ describe('NewCampaignNotificationsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NewCampaignNotificationsComponent);
     component = fixture.componentInstance;
+    component.channelForm = new FormGroup({});
     fixture.detectChanges();
   });
 

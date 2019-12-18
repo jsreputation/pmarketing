@@ -12,9 +12,10 @@ export class BeforeCampaignEndsFormGroupComponent {
   @Input() public shortCodes: any[];
   @Input() public index: number;
   @Output() public deleteGroup: EventEmitter<number> = new EventEmitter<number>();
+  @Output() public sendSms: EventEmitter<any> = new EventEmitter();
   public periodType: typeof PeriodType = PeriodType;
   public sendTestSms(): void {
-    console.log('sendTestSms');
+    this.sendSms.emit({group: this.group, index: this.index});
   }
 
   public deleteCampaignEndsGroup(): void {

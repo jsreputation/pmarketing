@@ -14,7 +14,6 @@ export class BeforeRewardExpiresFormGroupComponent {
   @Output() public deleteGroup: EventEmitter<number> = new EventEmitter<number>();
   public periodType: typeof PeriodType = PeriodType;
   public sendTestSms(): void {
-    console.log('sendTestSms');
   }
 
   public deleteRewardExpiresGroup(): void {
