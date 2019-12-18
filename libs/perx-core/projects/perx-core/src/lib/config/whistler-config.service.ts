@@ -3,10 +3,9 @@ import { Observable, of } from 'rxjs';
 import { IConfig, IMicrositeSettings, PagesObject } from './models/config.model';
 import { ConfigService } from './config.service';
 import { HttpClient } from '@angular/common/http';
-import { IJsonApiListPayload, IWTenant } from '@perx/whistler';
+import { IJsonApiListPayload, IWTenant, IWSetting } from '@perx/whistler';
 import { map } from 'rxjs/operators';
 import { Config } from './config';
-import { ICSetting } from '../settings/display';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +23,7 @@ export class WhistlerConfigService extends ConfigService {
     }
   }
 
-  private static WTenantToConfig<T>(setting: ICSetting, config: Config): IConfig<T> {
+  private static WTenantToConfig<T>(setting: IWSetting, config: Config): IConfig<T> {
     return {
       showHistoryPage: setting.showHistoryPage || true,
       showHomePage: setting.showHomePage || false,

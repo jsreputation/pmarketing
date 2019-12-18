@@ -1,5 +1,5 @@
 import { TokenType } from '../../utils/storage/models/token-storage.model';
-import { ICSetting } from '../../settings/display';
+import { IWSetting } from '@perx/whistler';
 
 export interface IConfig<T> {
   apiHost: string;
@@ -10,7 +10,7 @@ export interface IConfig<T> {
   defaultLang?: string;
   sourceType?: string;
   custom?: T;
-  displayProperties?: ICSetting;
+  displayProperties?: IWSetting;
   showHistoryPage?: boolean;
   showHomePage?: boolean;
   showExpiryOnRewardDetail?: boolean;

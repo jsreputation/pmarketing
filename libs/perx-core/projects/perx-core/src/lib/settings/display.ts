@@ -12,8 +12,6 @@ export interface ICSetting {
   'theme.title': string;
   'theme.login_background_colour'?: string;
   account: ICPagesObject;
-  showHistoryPage: boolean;
-  showHomePage: boolean;
 }
 
 export interface ICAccountPageObject {
