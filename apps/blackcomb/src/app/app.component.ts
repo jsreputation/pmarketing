@@ -1,11 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { PopupComponent, NotificationService, IPopupConfig, ITheme, AuthenticationService } from '@perx/core';
 import {
   HomeComponent,
   HistoryComponent,
   AccountComponent,
-  LoginComponent,
+  SignIn2Component,
   WalletComponent
 } from '@perx/blackcomb-pages';
 import { Location } from '@angular/common';
@@ -31,7 +31,8 @@ export class AppComponent implements OnInit {
     private location: Location,
     private router: Router,
     private authService: AuthenticationService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private snack: MatSnackBar
   ) {
     this.preAuth = environment.preAuth;
   }
@@ -48,7 +49,12 @@ export class AppComponent implements OnInit {
     this.notificationService.$popup
       .subscribe(
         (data: IPopupConfig) => this.dialog.open(PopupComponent, { data }),
-        (err) => console.log(err)
+        (err) => console.error(err)
+      );
+    this.notificationService.$snack
+      .subscribe(
+        (msg: string) => this.snack.open(msg, 'x', { duration: 2000 }),
+        (err) => console.error(err)
       );
 
     this.router.events
@@ -71,7 +77,7 @@ export class AppComponent implements OnInit {
 
   }
   public onActivate(ref: any): void {
-    this.showHeader = !(ref instanceof LoginComponent);
+    this.showHeader = !(ref instanceof SignIn2Component);
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||

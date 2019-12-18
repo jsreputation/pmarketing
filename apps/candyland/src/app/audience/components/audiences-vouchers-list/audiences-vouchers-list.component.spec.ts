@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AudiencesVouchersListComponent } from './audiences-vouchers-list.component';
 import { MatTableModule, MatMenuModule, MatIconModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AudiencesVouchersListComponent', () => {
   let component: AudiencesVouchersListComponent;
@@ -13,6 +14,7 @@ describe('AudiencesVouchersListComponent', () => {
         MatTableModule,
         MatMenuModule,
         MatIconModule,
+        RouterTestingModule,
         TranslateModule.forRoot(),
       ],
       providers: [],

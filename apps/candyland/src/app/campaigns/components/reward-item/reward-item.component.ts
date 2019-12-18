@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'cl-reward-item',
@@ -20,8 +20,8 @@ export class RewardItemComponent implements OnInit {
     new EventEmitter<{ probability: number, limit: number }>();
 
   public group: FormGroup = new FormGroup({
-    probability: new FormControl(),
-    limit: new FormControl()
+    probability: new FormControl(null, {updateOn: 'blur'}),
+    limit: new FormControl(null, {updateOn: 'blur'})
   });
   private destroy$: Subject<void> = new Subject();
 
@@ -43,7 +43,9 @@ export class RewardItemComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initForm();
-    this.group.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(
+    this.group.valueChanges.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(
       () => {
         this.updateOutcomeData();
       }
@@ -57,7 +59,7 @@ export class RewardItemComponent implements OnInit {
   public updateOutcomeData(): void {
     const updateData = {
       probability: this.group.get('probability').value || null,
-      limit: this.group.get('limit').value || null
+      limit: this.group.get('limit').value || null,
     };
     this.updateOutcome.emit(updateData);
   }

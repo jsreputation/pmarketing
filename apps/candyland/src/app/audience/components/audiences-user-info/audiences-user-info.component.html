@@ -15,9 +15,16 @@
 
     <div class="user-info-item">
       <div class="control-input">
-        <mat-form-field>
-          <input matInput [placeholder]="'AUDIENCE_FEATURE.CONTACT_NO' | translate" value="{{user?.phone_number || '-' }}" disabled>
-        </mat-form-field>
+        <a
+          class="control-link"
+          [href]="transformTelTo(user?.phone_number)">
+          <mat-form-field>
+            <input
+              matInput
+              [placeholder]="'AUDIENCE_FEATURE.CONTACT_NO' | translate"
+              value="{{user?.phone_number || '-' }}" disabled>
+          </mat-form-field>
+        </a>
       </div>
     </div>
 
@@ -47,9 +54,17 @@
 
     <div class="user-info-item">
       <div class="control-input">
-        <mat-form-field>
-          <input matInput [placeholder]="'AUDIENCE_FEATURE.EMAIL' | translate" value="{{user?.email_address || '-'}}" disabled>
-        </mat-form-field>
+        <a
+          class="control-link"
+          [href]="transformMailTo(user?.email_address)"
+        >
+          <mat-form-field>
+            <input
+              matInput
+              [placeholder]="'AUDIENCE_FEATURE.EMAIL' | translate"
+              value="{{user?.email_address || '-'}}" disabled>
+          </mat-form-field>
+        </a>
       </div>
     </div>
 

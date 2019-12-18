@@ -31,7 +31,10 @@ describe('SignupComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([{
+          component: SignupComponent,
+          path: 'login'
+        }]),
         MatButtonModule,
         MatCheckboxModule,
         MatFormFieldModule,
