@@ -57,11 +57,15 @@ describe('AccountComponent', () => {
     expect(component.profile).toBe(profile);
   }));
 
-  it('should log out', () => {
+  it('should navigate /login after log out', () => {
     const routerSpy = spyOn(router, 'navigate');
-    const authSpy = spyOn(auth, 'logout');
     component.logout();
     expect(routerSpy).toHaveBeenCalledWith(['/login']);
+  });
+
+  it('should call log out', () => {
+    const authSpy = spyOn(auth, 'logout');
+    component.logout();
     expect(authSpy).toHaveBeenCalled();
   });
 });

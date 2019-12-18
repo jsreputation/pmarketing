@@ -3,7 +3,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoadingComponent } from './loading.component';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, ICampaignService, IGameService, Config, NotificationService } from '@perx/core';
+import {
+  AuthenticationService,
+  ICampaignService,
+  IGameService,
+  Config,
+  NotificationService,
+  ConfigService
+} from '@perx/core';
 import { of } from 'rxjs';
 import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -14,7 +21,8 @@ describe('LoadingComponent', () => {
 
   const authenticationServiceStub: Partial<AuthenticationService> = {
     getUserAccessToken: () => '',
-    autoLogin: () => of()
+    autoLogin: () => of(),
+    getAccessToken: () => of('')
   };
 
   const iCampaignSvcStub: Partial<ICampaignService> = {
@@ -28,6 +36,12 @@ describe('LoadingComponent', () => {
   };
   const notificationServiceStub: Partial<NotificationService> = {
     addPopup: () => { }
+  };
+
+  const configServiceStub = {
+    readAppConfig: () => of({
+      redirectAfterLogin: '/home'
+    })
   };
 
   beforeEach(async(() => {
@@ -55,6 +69,7 @@ describe('LoadingComponent', () => {
             }
           }
         },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();

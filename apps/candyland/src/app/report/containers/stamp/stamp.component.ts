@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { RoutingStateService, StampsService } from '@cl-core-services';
+import { RoutingStateService, StampsService, CsvReportService } from '@cl-core-services';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
@@ -14,44 +14,45 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 export class StampComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
 
-  public params: {start_date: string, end_date: string} = {
+  public params: { start_date: string, end_date: string } = {
     start_date: '2019-07-01',
     end_date: '2019-08-31'
   };
   public data: StampsGraphicData;
-  constructor(private stampsService: StampsService,
-              private route: ActivatedRoute,
-              private routingState: RoutingStateService) { }
+  private id: string;
+
+  constructor(
+    private stampsService: StampsService,
+    private route: ActivatedRoute,
+    private routingState: RoutingStateService,
+    private csvReportService: CsvReportService
+  ) { }
 
   public ngOnInit(): void {
-    this.subscribeToRoute();
+    this.route.paramMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((params: ParamMap) => {
+        const id = params.get('id');
+        this.id = id;
+        this.getData(id);
+      });
   }
 
   public downloadReport(): void {
-    // TODO: download implement here
+    this.csvReportService.downloadReport('stamp_campaign_report', { campaign_id: this.id });
   }
 
   public onClose(): void {
     this.routingState.comeBackPreviousUrl();
   }
 
-  private getReportStamp(id: string): void {
+  private getData(id: string): void {
     this.stampsService.getStampsReport(id)
       .subscribe((res) => this.data = res);
-  }
-
-  private subscribeToRoute(): void {
-    this.route.paramMap
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((params: ParamMap) => {
-        const id = params.get('id');
-        this.getReportStamp(id);
-    });
   }
 
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }

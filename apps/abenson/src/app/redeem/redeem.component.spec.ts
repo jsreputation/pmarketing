@@ -40,4 +40,26 @@ describe('RedeemComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should open popup after pinInputSuccess', () => {
+    const popupSpy = spyOn(component, 'popup');
+    component.voucherId = 0;
+    component.pinInputSuccess();
+    expect(popupSpy).toHaveBeenCalledWith({
+      title: 'Redeem Successfully',
+      text: 'ID: 0',
+    });
+  });
+
+  it('should call needLoginPopup if status === 401, errorHandler', () => {
+    const needLoginPopupSpy = spyOn(component, 'needLoginPopup');
+    component.errorHandler(401);
+    expect(needLoginPopupSpy).toHaveBeenCalled();
+  });
+
+  it('should call errorPopup if status !== 401, errorHandler', () => {
+    const errorPopupSpy = spyOn(component, 'errorPopup');
+    component.errorHandler(400);
+    expect(errorPopupSpy).toHaveBeenCalled();
+  });
 });

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '@cl-core-services';
-import { MatSnackBar } from '@angular/material';
+import { AuthService, MessageService } from '@cl-core-services';
 
 interface StateObjIntf {
   id: string;
@@ -22,7 +21,7 @@ export class ForgetPasswordComponent implements OnInit {
     private location: Location,
     private fb: FormBuilder,
     private authService: AuthService,
-    private snack: MatSnackBar
+    private messageService: MessageService
   ) { }
 
   get accountId(): AbstractControl | null { return this.formForget.get('account_id'); }
@@ -52,8 +51,8 @@ export class ForgetPasswordComponent implements OnInit {
   public onSubmit(): void {
     this.authService.resetPassword(this.formForget.value.account_id, this.formForget.value.username)
       .subscribe(
-        () => this.snack.open('Check your email', 'x'),
-        () => this.snack.open('Something went wrong', 'x'),
+        () => this.messageService.show('Check your emails 📧'),
+        () => this.messageService.show('Something went wrong', 'warning'),
       );
   }
 }

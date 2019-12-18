@@ -41,6 +41,7 @@ import {
   ConfigService
 } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
+import {Title} from '@angular/platform-browser';
 
 const stubTabs: ITabConfigExtended[] = [
   {
@@ -172,6 +173,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private rewardsService: RewardsService,
     private gamesService: IGameService,
     private router: Router,
+    private titleService: Title,
     private translate: TranslateService,
     private feedService: FeedReaderService,
     private themesService: ThemesService,
@@ -186,10 +188,14 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
     this.initCampaign();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
-    this.getTabedList();
+    this.getTabbedList();
 
     this.themesService.getThemeSetting().subscribe(
-      theme => this.theme = theme
+      theme => {
+        this.theme = theme;
+        const title = (theme.properties ? theme.properties['--title'] : undefined) || 'Blackcomb';
+        this.titleService.setTitle(title);
+      }
     );
 
     this.configService.readAppConfig().subscribe(
@@ -202,7 +208,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private getTabedList(): void {
+  private getTabbedList(): void {
     this.getTabs()
       .pipe(mergeMap((tabs) => {
         this.staticTab = tabs;

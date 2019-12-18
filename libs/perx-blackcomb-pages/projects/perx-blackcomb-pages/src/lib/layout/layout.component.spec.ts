@@ -1,16 +1,35 @@
-import { async, TestBed } from '@angular/core/testing';
+import { async, TestBed, ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { Title } from '@angular/platform-browser';
+import { Router} from '@angular/router';
+import { Location } from '@angular/common';
 
 import { LayoutComponent } from './layout.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatToolbarModule, MatIconModule, MatDialogModule } from '@angular/material';
-import { ThemesService, AuthenticationService, ConfigModule, ConfigService } from '@perx/core';
+import { ThemesService, AuthenticationService, ConfigModule, ConfigService, ITheme } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
-const themesServiceStub: Partial<ThemesService> = {};
-const authServiceStub: Partial<AuthenticationService> = {};
-
 describe('LayoutComponent', () => {
+  const mockTheme: ITheme = {
+    name: 'theme',
+    properties: {
+      '--background': 'red',
+      '--font_color': 'black'
+    }
+  };
+
+  let component: LayoutComponent;
+  let fixture: ComponentFixture<LayoutComponent>;
+  let router: Router;
+  let location: Location;
+
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of(mockTheme)
+  };
+  const authServiceStub: Partial<AuthenticationService> = {
+    $failedAuth: of(true)
+  };
 
   const configServiceStub = {
     readAppConfig: () => of()
@@ -43,15 +62,35 @@ describe('LayoutComponent', () => {
         {
           provide: ConfigService,
           useValue: configServiceStub
-        }
-
+        },
+        Title
       ]
     }).compileComponents();
   }));
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(LayoutComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+  beforeEach(() => {
+    fixture = TestBed.createComponent(LayoutComponent);
+    router = TestBed.get(Router);
+    location = TestBed.get(Location);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should fetch theme', fakeAsync(() => {
+    const routerSpy = spyOn(router, 'navigate');
+    component.ngOnInit();
+    expect(component.theme).toBe(mockTheme);
+    expect(routerSpy).toHaveBeenCalledWith(['/login']);
+  }));
+
+  it('should location back', () => {
+    component.leftIcon = 'back';
+    spyOn(location, 'back');
+    component.leftClick();
+    expect(location.back).toHaveBeenCalled();
   });
 });

@@ -4,17 +4,17 @@ import {
   OnDestroy,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
-  Input,
+  Input, OnChanges, SimpleChanges,
 } from '@angular/core';
 import {
-  FormGroup,
-  FormBuilder,
+  AbstractControl,
+  FormGroup
 } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 
 import {
   combineLatest,
-  of,
+  of, Subject,
 } from 'rxjs';
 import {
   map,
@@ -23,13 +23,10 @@ import {
 } from 'rxjs/operators';
 
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
-import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { RewardsService } from '@cl-core/services/rewards.service';
-import { ClValidators } from '@cl-helpers/cl-validators';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
-import { AbstractStepWithForm } from '../../step-page-with-form';
-import { StepConditionService } from '../../services/step-condition.service';
 import { SOURCE_TYPE } from '../../../app.constants';
 
 @Component({
@@ -38,14 +35,20 @@ import { SOURCE_TYPE } from '../../../app.constants';
   styleUrls: ['./new-campaign-rewards-form-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
+export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, OnChanges {
   @Input() public title: string = 'CAMPAIGN.REWARDS';
   @Input() public slotNumber: number = 0;
-  public form: FormGroup;
+
+  private destroy$: Subject<void> = new Subject();
+
+  @Input() public formParent: FormGroup | AbstractControl; // turn into an input
+  @Input() public enableProbability: boolean = false;
+  @Input() public isSpinEngagement: boolean = false;
+
   public outcomes: ICampaignOutcome[] = [];
   private isFirstInit: boolean;
-  public enableProbability: boolean = false;
   public sumMoreThanError: boolean = false;
+
   public noOutcome: ICampaignOutcome = {
     outcome: {
       limit: null,
@@ -59,18 +62,8 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
     public store: CampaignCreationStoreService,
-    public stepConditionService: StepConditionService,
     private rewardsService: RewardsService,
-    private fb: FormBuilder
   ) {
-    super(1.1, store, stepConditionService);
-    this.initForm();
-  }
-
-  private initForm(): void {
-    this.form = this.fb.group({
-      totalProbability: [null, [ClValidators.sumMoreThan()]]
-    });
   }
 
   public get campaign(): any {
@@ -83,19 +76,26 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
       .asObservable()
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
-        const isFirstTimeRenderFromAPIResponse = data && data.id && data.template && data.template.id && data.outcomes && this.isFirstInit;
-        if (isFirstTimeRenderFromAPIResponse) {
+        const isCreateNew = data && !data.id && data.campaignInfo && this.isFirstInit;
+        const isFirstTimeRenderFromEdit = data && data.id && data.template && data.template.id && data.outcomes && this.isFirstInit;
+        if (isCreateNew || isFirstTimeRenderFromEdit) {
           this.isFirstInit = false;
           this.initOutcomesList();
+          this.cd.detectChanges();
         }
       });
-    if (this.form) {
-      this.stepConditionService.registerStepCondition(1.1, this.form);
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (this.outcomes.length !== 0 && changes.enableProbability !== undefined &&
+      (changes.enableProbability.currentValue !== changes.enableProbability.previousValue)) {
+      this.updateOutcomes();
     }
   }
 
   public ngOnDestroy(): void {
-    super.ngOnDestroy();
+    this.destroy$.next();
+    this.destroy$.complete();
     this.cd.detach();
   }
 
@@ -116,13 +116,16 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
             enableProbability: this.enableProbability,
             reward
           });
+          this.isSpinEngagement ?
+            (this.updateSlotCount().updateSumMoreThanCheck()) : (this.sumMoreThanError = this.updateSumMoreThanCheck());
           this.updateOutcomesInCampaign();
         }
       });
   }
 
   public initOutcomesList(): void {
-    const noOutcomeData = this.campaign.outcomes.find(data => data.outcome.slotNumber === this.slotNumber && !data.outcome.resultId);
+    const noOutcomeData = this.campaign.outcomes && this.campaign.outcomes.find(
+      data => data.outcome.slotNumber === this.slotNumber && !data.outcome.resultId);
     if (noOutcomeData && noOutcomeData.outcome) {
       noOutcomeData.enableProbability = true;
       this.outcomes = [noOutcomeData];
@@ -133,7 +136,8 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
       ];
       this.enableProbability = false;
     }
-    const possibleOutcomes = this.campaign.outcomes.filter(
+
+    const possibleOutcomes = this.campaign.outcomes && this.campaign.outcomes.filter(
       data => {
         if (!data.outcome.resultId) {
           return false;
@@ -144,7 +148,7 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
         return data.outcome.slotNumber === this.slotNumber;
       }
     );
-    const possibleOutcomes$ = possibleOutcomes.map(data =>
+    const possibleOutcomes$ = possibleOutcomes && possibleOutcomes.map(data =>
       this.rewardsService.getReward(data.outcome.resultId).pipe(
         map((reward: IRewardEntity) =>
           ({ ...data, reward })),
@@ -167,7 +171,6 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
     }
     this.cd.detectChanges();
   }
-
   public updateOutcomesInCampaign(): void {
     const otherSlotOutcomes = this.campaign.outcomes && this.campaign.outcomes.length > 0 ?
       this.campaign.outcomes.filter(
@@ -176,17 +179,29 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
     this.campaign.outcomes = [...otherSlotOutcomes, ...this.outcomes];
   }
 
-  public isSumMoreThan(): boolean {
+  public updateSlotCount(): this {
+    const checkedOutcomes = this.outcomes.filter(outcome => outcome.outcome.slotNumber >= 0 && outcome.reward);
+    if (checkedOutcomes.length === 0) {
+      this.formParent.patchValue({[`notEmpty-${this.slotNumber}`]: 0});
+    }
+    if (checkedOutcomes.length > 0) {
+      this.formParent.patchValue({[`notEmpty-${this.slotNumber}`]: 1});
+    }
+    this.formParent.updateValueAndValidity();
+    return this;
+  }
+  // called for non spin campaigns
+  public updateSumMoreThanCheck(): boolean {
     const totalNum = this.outcomes.reduce((total, item) => {
       if (item.outcome.probability) {
         total += item.outcome.probability;
       }
       return total;
     }, 0);
-    this.form.patchValue({
-      totalProbability: totalNum
+    this.formParent.patchValue({
+      [`totalProbability-${this.slotNumber}`]: totalNum
     });
-    this.form.updateValueAndValidity();
+    this.formParent.updateValueAndValidity();
     return totalNum > 100;
   }
 
@@ -194,14 +209,18 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
     this.outcomes[index].outcome.probability = value.probability;
     this.outcomes[index].outcome.limit = value.limit;
     this.updateOutcomesInCampaign();
-    this.sumMoreThanError = this.isSumMoreThan();
+    this.isSpinEngagement ?
+      (this.updateSlotCount().updateSumMoreThanCheck()) : (this.sumMoreThanError = this.updateSumMoreThanCheck());
   }
 
   public removeOutcome(index: number): void {
     if (index > -1) {
       this.outcomes[index].outcome.slotNumber = -1;
+      this.outcomes[index].outcome.probability = 0;
     }
     this.updateOutcomesInCampaign();
+    this.isSpinEngagement ?
+      (this.updateSlotCount().updateSumMoreThanCheck()) : (this.sumMoreThanError = this.updateSumMoreThanCheck());
   }
 
   public updateOutcomes(): void {
@@ -212,6 +231,8 @@ export class NewCampaignRewardsFormGroupComponent extends AbstractStepWithForm i
     }
     this.updateOutcomeProbabilitySetting();
     this.updateOutcomesInCampaign();
+    this.isSpinEngagement ?
+      (this.updateSlotCount().updateSumMoreThanCheck()) : (this.sumMoreThanError = this.updateSumMoreThanCheck());
     this.cd.detectChanges();
   }
 
