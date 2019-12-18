@@ -11,7 +11,6 @@ export class ChartCardComponent {
   @Input() public id: number;
   @Input() public cardType: CardType;
   @Input() public params: { [key: string]: string };
-  @Input() public reloadInterval: (number | null | undefined);
 
   constructor() {
     this.params = {
