@@ -42,7 +42,6 @@ export class ListMerchantViewComponent implements AfterViewInit {
   }
 
   public editItem(element: Merchant): void {
-    console.log(element, 'this is how element looks like');
     this.itemAction.emit({ action: 'edit', merchant: element });
   }
 
