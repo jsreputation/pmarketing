@@ -1,7 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { take, tap, flatMap, map, filter } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
+
+import {
+  take,
+  tap,
+  flatMap,
+  map,
+  filter,
+} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+import { TranslateService } from '@ngx-translate/core';
+
 import {
   ProfileService,
   IProfile,
@@ -14,9 +27,8 @@ import {
   ITheme,
   ThemesService,
   LoyaltyService,
-  ILoyalty
+  ILoyalty,
 } from '@perx/core';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'perx-blackcomb-pages-account',
@@ -24,7 +36,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
-  public profile: IProfile;
+  public profile: IProfile | null = null;
   public loyalty: ILoyalty;
   public pages!: AccountPageObject[];
   public preAuth: boolean = false;

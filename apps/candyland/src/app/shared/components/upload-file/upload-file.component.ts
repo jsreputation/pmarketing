@@ -19,6 +19,7 @@ export class UploadFileComponent implements ControlValueAccessor {
   public MAX_SIZE: number = 1;
   @Input() public label: string = '';
   @Input() public isRequired: boolean;
+  @Input() public downloadFile: string = 'assets/files/Users_template.csv';
   @Input() public options: any;
   @Output() public deleteFile: EventEmitter<void> = new EventEmitter();
   @Output() public uploadFile: EventEmitter<number> = new EventEmitter();
