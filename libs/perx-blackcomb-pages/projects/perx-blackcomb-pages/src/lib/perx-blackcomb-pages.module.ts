@@ -47,7 +47,8 @@ import {
   LoyaltySummaryComponent,
   LoyaltyTransactionsListComponent,
   NewsfeedComponent,
-  PinInputComponent
+  PinInputComponent,
+  PasswordComponent
 } from '@perx/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -107,6 +108,7 @@ const comps: any[] = [
   PhoneComponent,
   GroupComponent,
   RatingComponent,
+  PasswordComponent,
   PictureSelectComponent,
   LongTextComponent,
   DateComponent,
