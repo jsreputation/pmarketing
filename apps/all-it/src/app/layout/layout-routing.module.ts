@@ -65,6 +65,11 @@ const routes: Routes = [
                       .then((mod: any) => mod.ChangePasswordModule)
       },
       {
+        path: 'barcode',
+        loadChildren: (): any => import('../barcode/barcode.module')
+                      .then((mod: any) => mod.BarcodeModule)
+      },
+      {
         path: 'edit-profile/:type',
         loadChildren: (): any => import('../edit-profile-field/edit-profile-field.module')
                       .then((mod: any) => mod.EditProfileFieldModule)
