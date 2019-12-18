@@ -257,9 +257,11 @@ export class V4VouchersService implements IVoucherService {
       }),
       mergeAll(1),
       filter((voucher: IVoucher) => {
+        // todo: clean up this code because it creates 2 observables.
+        // workaround is to return true on first run to dispose of one observable
         if (current === 0) {
           previousState = voucher.state;
-          return false;
+          return true;
         }
 
         if (previousState === voucher.state) {
@@ -267,7 +269,6 @@ export class V4VouchersService implements IVoucherService {
         }
 
         previousState = voucher.state;
-
         return true;
       })
     );

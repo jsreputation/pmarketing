@@ -40,7 +40,7 @@ describe('LayoutComponent', () => {
       imports: [
         RouterTestingModule.withRoutes([
           { path: 'wallet', redirectTo: '/' },
-          { path: 'login', redirectTo: '/'}
+          { path: 'login', redirectTo: '/' }
         ]),
         MatToolbarModule,
         MatIconModule,
