@@ -27,6 +27,12 @@ export class UploadFileService {
       );
   }
 
+  public getFile(id: string): Observable<IUploadedFile> {
+    return this.uploadFileHttpService.getFile(id).pipe(
+      map(res => FileUploadAdapter.transformToUploadedFile(res.data))
+    );
+  }
+
   public uploadMultipleFile(files: File[]): Observable<IUploadedFile[]> {
     const arrayRequest: Observable<IUploadedFile>[] = files.map(file => this.uploadImage(file));
     return combineLatest(...arrayRequest);

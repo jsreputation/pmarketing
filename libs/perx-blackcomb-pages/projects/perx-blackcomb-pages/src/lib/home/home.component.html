@@ -7,9 +7,20 @@
         class="enlarge home-qr-button"
         routerLink="/qr"
         translate
+        *ngIf="!appConfig.showBarcodeOnHomeProfilePage"
       >
         {{ 'MY_QR' | translate }}
       </a>
+      <a
+        mat-raised-button
+        class="enlarge home-qr-button"
+        routerLink="/barcode"
+        translate
+        *ngIf="appConfig.showBarcodeOnHomeProfilePage"
+      >
+        {{ 'MY_BAR_CODE' | translate }}
+      </a>
+
     </div>
   </div>
   <perx-core-newsfeed [items$]="newsFeedItems" *ngIf="appConfig.showNewsfeedOnHomepage"></perx-core-newsfeed>

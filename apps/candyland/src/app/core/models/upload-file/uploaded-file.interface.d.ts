@@ -5,6 +5,7 @@ declare interface IUploadedFile {
   cdn?: string;
   name?: string;
   key?: string;
+  record_count?: number;
   created_at: string;
   updated_at: string;
 }
