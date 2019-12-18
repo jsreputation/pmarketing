@@ -213,7 +213,9 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   public resendOTP(phone: string): Observable<IMessageResponse> {
-    return this.http.get<IMessageResponse>(`${this.customersEndPoint}/resend_confirmation`, { params: { phone } })
+    const encodedURIPhone = encodeURIComponent(phone);
+    // using the options.param argument prepends extra encoded characters, no idea why
+    return this.http.get<IMessageResponse>(`${this.customersEndPoint}/resend_confirmation?phone=` + encodedURIPhone)
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
