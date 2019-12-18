@@ -19,7 +19,7 @@
         <article class="chart-card">
           <h3 class="chart-card-title" translate>OVERVIEW_GRAPHIC_PAGE.TOTAL_ACTIVE_CUSTOMERS</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="'overview_total_active_customer_breakdown'" [cardType]="ct.verticalBar"
+            <cl-chart-card [id]="'overview_total_active_customer_breakdown'" [reloadInterval]="3000" [cardType]="ct.verticalBar"
               [params]="params"></cl-chart-card>
           </div>
         </article>

@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { DataService } from '../data.service';
-import { Observable, of, Subject, Subscription } from 'rxjs';
+import {combineLatest, NEVER, Observable, of, Subject, Subscription, timer} from 'rxjs';
 import { IData } from '../data.model';
-import { takeUntil } from 'rxjs/operators';
+import {startWith, takeUntil} from 'rxjs/operators';
 
 export enum CardType {
   pie = 'pie',
@@ -30,6 +30,8 @@ export class MetaCardComponent implements OnChanges, OnDestroy {
   public id: number | string;
   @Input()
   public cardType: CardType = CardType.verticalBar;
+  @Input()
+  public reloadInterval: (number | null | undefined);
 
   public data: Observable<IData>;
 
@@ -38,6 +40,8 @@ export class MetaCardComponent implements OnChanges, OnDestroy {
   @Input()
   public showReload: boolean = false;
 
+  private requestData$: Observable<IData>;
+  private reloadInterval$: Observable<number>;
   private currentRequest: Subscription;
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -66,20 +70,46 @@ export class MetaCardComponent implements OnChanges, OnDestroy {
     this.showLoading = true;
     this.showReload = false;
     this.cancelCurrentRequest();
-    this.currentRequest = this.dataService.getData(this.id, this.parameters)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (data) => {
-          this.data = of(data);
-          this.showLoading = false;
-          this.cd.detectChanges();
-        },
-        () => {
-          this.showLoading = false;
-          this.showReload = true;
-          this.cd.detectChanges();
-        }
-      );
+    this.requestData$ = this.dataService.getData(this.id, this.parameters);
+
+    if (this.reloadInterval) {
+      this.reloadInterval$ = timer(0, this.reloadInterval); // should be forkjoined only conditionally for performance
+      this.currentRequest =
+        combineLatest(
+          this.requestData$,
+          this.reloadInterval$,
+          NEVER.pipe(startWith(0)) // kick start the process and maintain the lifeline
+        ).pipe(
+          takeUntil(this.destroy$)
+        ).subscribe(
+          (arrayDataNum) => {
+            this.data = of(arrayDataNum[0]);
+            this.showLoading = false;
+            this.cd.detectChanges();
+          },
+          () => {
+            this.showLoading = false;
+            this.showReload = true;
+            this.cd.detectChanges();
+          }
+        );
+    } else {
+      this.currentRequest =
+          this.requestData$.pipe(
+          takeUntil(this.destroy$)
+        ).subscribe(
+          (data) => {
+            this.data = of(data);
+            this.showLoading = false;
+            this.cd.detectChanges();
+          },
+          () => {
+            this.showLoading = false;
+            this.showReload = true;
+            this.cd.detectChanges();
+          }
+        );
+    }
   }
 
   public reload(): void {
