@@ -16,6 +16,12 @@ export interface IConfig<T> {
   showExpiryOnRewardDetail?: boolean;
   showNewsfeedOnHomepage?: boolean;
   showQrPageSubtitle?: boolean;
+  showBarcodeOnHomeProfilePage?: boolean;
+  showSubtitleLogin?: boolean;
+  redirectAfterLogin?: string;
+  showUserInfoOnAccountsPage?: boolean;
+  showTransactionHistoryOnAccountsPage?: boolean;
+  showVoucherBookingFromRewardsPage?: boolean;
 }
 
 export interface IMicrositeSettings {

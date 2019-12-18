@@ -108,7 +108,7 @@ const stubTabs: ITabConfigExtended[] = [
 export class HomeComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
   public theme: ITheme;
-  public appConfig: IConfig<{showNewsfeedOnHomepage: boolean}>;
+  public appConfig: IConfig<void>;
   public newsFeedItems: Observable<FeedItem[]>;
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
@@ -188,7 +188,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
     this.initCampaign();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
-    this.getTabedList();
+    this.getTabbedList();
 
     this.themesService.getThemeSetting().subscribe(
       theme => {
@@ -198,8 +198,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.configService.readAppConfig<{showNewsfeedOnHomepage: boolean}>().subscribe(
-      (config: IConfig<{showNewsfeedOnHomepage: boolean}>) => this.appConfig = config
+    this.configService.readAppConfig<void>().subscribe(
+      (config: IConfig<void>) => this.appConfig = config
     );
   }
 
@@ -208,7 +208,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private getTabedList(): void {
+  private getTabbedList(): void {
     this.getTabs()
       .pipe(mergeMap((tabs) => {
         this.staticTab = tabs;

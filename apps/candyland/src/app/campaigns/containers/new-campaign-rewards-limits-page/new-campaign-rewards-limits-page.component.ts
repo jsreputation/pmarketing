@@ -17,6 +17,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
   @Input() public tenantSettings: ITenantsProperties;
   public enableProbability: boolean = false;
   public campaignEngagementType: string;
+  public templateID: string;
   public isSpinEngagement: boolean = false;
   public sumMoreThanError: boolean = false;
   public rewardNotAllPatchedError: boolean = true;
@@ -58,7 +59,9 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
           this.slots = this.store.currentCampaign.template.slots || [0];
           this.campaignEngagementType = data.template.attributes_type;
           this.isSpinEngagement = data.template.game_type === 'spin';
-          if (!this.firstInit) {
+          if (!this.firstInit || this.templateID !== data.template.id) {
+            this.templateID = data.template.id;
+            this.form1pt1 = this.fb.group({}); // resetting
             this.initForm();
           }
           if (!this.destroyed) {
