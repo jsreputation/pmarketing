@@ -11,7 +11,9 @@ import {
   IAnswer,
   SurveyService,
   ThemesService,
-  ITheme
+  ITheme,
+  ConfigService,
+  IConfig
 } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject, iif, of, throwError } from 'rxjs';
@@ -37,6 +39,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public totalLength: number;
   public currentPointer: number;
   public errorMessage: string | null = null;
+  public appConfig: IConfig;
   private stateData: IPrePlayStateData;
   private maxRetryTimes: number = 5;
   private retryTimes: number = 0;
@@ -57,9 +60,11 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private location: Location,
     private instantOutcomeService: InstantOutcomeService,
     private themesService: ThemesService,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
+    this.configService.readAppConfig().subscribe((conf) => this.appConfig = conf);
     this.theme = this.themesService.getThemeSetting();
     this.data$ = this.formSvc.getSignupForm();
     this.oldPI = this.authService.getPI();

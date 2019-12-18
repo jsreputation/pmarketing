@@ -24,12 +24,12 @@
             <mat-form-field appearance="outline" class="control-input half-block">
               <mat-select [formControl]="filter" [placeholder]="'STATUSES_TYPE.ALL' | translate">
                 <mat-option value="">{{'STATUSES_TYPE.ALL' | translate}}</mat-option>
-                <mat-option value="active">{{'STATUSES_TYPE.ACTIVE' | translate}}</mat-option>
+                <mat-option [value]="cs.active">{{'STATUSES_TYPE.ACTIVE' | translate}}</mat-option>
                 <!--          <mat-option value="pending">pending</mat-option>-->
-                <mat-option value="draft">{{'STATUSES_TYPE.DRAFT' | translate}}</mat-option>
-                <mat-option value="sheduled">{{'STATUSES_TYPE.SCHEDULED' | translate}}</mat-option>
-                <mat-option value="paused">{{'STATUSES_TYPE.PAUSED' | translate}}</mat-option>
-                <mat-option value="ended">{{'STATUSES_TYPE.ENDED' | translate}}</mat-option>
+                <mat-option [value]="cs.draft">{{'STATUSES_TYPE.DRAFT' | translate}}</mat-option>
+                <mat-option [value]="cs.scheduled">{{'STATUSES_TYPE.SCHEDULED' | translate}}</mat-option>
+                <mat-option [value]="cs.paused">{{'STATUSES_TYPE.PAUSED' | translate}}</mat-option>
+                <mat-option [value]="cs.ended">{{'STATUSES_TYPE.ENDED' | translate}}</mat-option>
               </mat-select>
             </mat-form-field>
           </ng-container>
