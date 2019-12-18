@@ -49,7 +49,8 @@ export enum SurveyQuestionType {
   multipleChoice = 'select',
   questionGroup = 'group',
   date = 'date',
-  phone = 'phone'
+  phone = 'phone',
+  password = 'password'
 }
 
 export interface IErrors {
