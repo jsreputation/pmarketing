@@ -1,7 +1,7 @@
 <div class="phonepreview-wrapper">
   <div class="forms-container">
     <!--template-->
-    <mat-card class="card" *ngIf="campaign?.template">
+    <mat-card class="card linkable" *ngIf="campaign?.template" (click)="navigateToEdit()">
       <div class="card-header">
         <h2 class="card-title">
           {{'CAMPAIGN.TEMPLATE' | translate}}
