@@ -188,7 +188,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
     this.initCampaign();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
-    this.getTabedList();
+    this.getTabbedList();
 
     this.themesService.getThemeSetting().subscribe(
       theme => {
@@ -208,7 +208,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private getTabedList(): void {
+  private getTabbedList(): void {
     this.getTabs()
       .pipe(mergeMap((tabs) => {
         this.staticTab = tabs;

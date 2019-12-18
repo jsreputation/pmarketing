@@ -20,13 +20,15 @@ export class CampaignsHttpAdapter {
     scheduled: CampaignStatus.scheduled,
     paused: CampaignStatus.paused,
     active: CampaignStatus.active,
-    ended: CampaignStatus.ended
+    ended: CampaignStatus.ended,
+    draft: CampaignStatus.draft
   };
   private static Stat2WStat: { [k in CampaignStatus]: WCampaignStatus } = {
     scheduled: WCampaignStatus.scheduled,
     paused: WCampaignStatus.paused,
     active: WCampaignStatus.active,
-    ended: WCampaignStatus.ended
+    ended: WCampaignStatus.ended,
+    draft: WCampaignStatus.draft
   };
 
   public static transformCampaignStatus(status: CampaignStatus): IJsonApiItem<Partial<IWCampaignAttributes>> {
