@@ -96,19 +96,19 @@ export class MetaCardComponent implements OnChanges, OnDestroy {
     } else {
       this.currentRequest =
           this.requestData$.pipe(
-          takeUntil(this.destroy$)
-        ).subscribe(
-          (data) => {
-            this.data = of(data);
-            this.showLoading = false;
-            this.cd.detectChanges();
-          },
-          () => {
-            this.showLoading = false;
-            this.showReload = true;
-            this.cd.detectChanges();
-          }
-        );
+            takeUntil(this.destroy$)
+          ).subscribe(
+            (data) => {
+              this.data = of(data);
+              this.showLoading = false;
+              this.cd.detectChanges();
+            },
+            () => {
+              this.showLoading = false;
+              this.showReload = true;
+              this.cd.detectChanges();
+            }
+          );
     }
   }
 
