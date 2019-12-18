@@ -26,7 +26,8 @@ import {
   Type,
 } from '../../audience.model';
 import { UpsertUserPopupComponent } from '../../containers/upsert-user-popup/upsert-user-popup.component';
-import {MessageService} from '@cl-core-services';
+import { MessageService } from '@cl-core-services';
+import Utils from '@cl-helpers/utils';
 
 @Component({
   selector: 'cl-audiences-users-list',
@@ -91,10 +92,10 @@ export class AudiencesUsersListComponent implements AfterViewInit {
   }
 
   public transformMailTo(email: string): string {
-    return email ? `mailto:${email}` : email;
+    return Utils.transformMailTo(email);
   }
 
   public transformTelTo(tel: string): string {
-    return tel ? `tel:${tel}` : tel;
+    return Utils.transformTelTo(tel);
   }
 }
