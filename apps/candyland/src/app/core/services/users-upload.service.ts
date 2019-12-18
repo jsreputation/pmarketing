@@ -18,18 +18,18 @@ export class UsersUploadService extends IAdvancedUploadFileService {
     const subject: BehaviorSubject<IUploadFileStatus> = new BehaviorSubject<IUploadFileStatus>(
       { fileName: file.name, status: UploadStatus.UPLOADING }
     );
-    let maxRetryTimes = 5;
-    let delayUnitTime = 1000;
+    const maxRetryTimes = 60;
+    const delayUnitTime = 1000;
     let retryTimes = 0;
     this.uploadService.uploadFile(file)
       .pipe(
         switchMap(
           (res: IUploadedFile) => this.uploadService.getFile(res.id).pipe(
-            switchMap((res: IUploadedFile) => {
-              if (!res.record_count) {
+            switchMap((fileRes: IUploadedFile) => {
+              if (!fileRes.record_count) {
                 throw of(new Error('users are not ready'));
               }
-              return of(res);
+              return of(fileRes);
             }),
             retryWhen(
               (err: Observable<Error>) => err.pipe(
