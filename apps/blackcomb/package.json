@@ -14,7 +14,7 @@
     "lint": "ng lint && stylelint \"src/**/*.*css\" && eslint \"./src/*/*.ts\"",
     "lint:fix": "ng lint --fix && stylelint \"src/**/*.*css\" --fix",
     "e2e": "ng e2e",
-    "start:v4": "PREAUTH=false APIHOST=https://api.perxtech.io IS_WHISTLER=false SHOW_HOME_PAGE=true SHOW_HISTORY_PAGE=true SHOW_USERINFO_ACCOUNTS=true SHOW_TRANSANCTION_HISTORY_ACCOUNTS=true SHOW_VOUCHER_BOOKING_FROM_REWARDS=false SHOW_EXPIRY_REWARD_DETAIL=true SHOW_LOGIN_SUBTITLE=true REDIRECT_AFTER_LOGIN=/home npm run config && ng serve --host 0.0.0.0"
+    "start:v4": "PREAUTH=false APIHOST=https://api.perxtech.io IS_WHISTLER=false SHOW_HOME_PAGE=true SHOW_HISTORY_PAGE=true SHOW_USERINFO_ACCOUNTS=true SHOW_TRANSANCTION_HISTORY_ACCOUNTS=true SHOW_EXPIRY_REWARD_DETAIL=true SHOW_LOGIN_SUBTITLE=true REDIRECT_AFTER_LOGIN=/home npm run config && ng serve --host 0.0.0.0"
   },
   "private": true,
   "dependencies": {
