@@ -5,14 +5,17 @@ import { HttpClient } from '@angular/common/http';
 import { ProfileService } from '../../profile/profile.service';
 import { WhistlerAuthenticationService } from './whistler-authentication.service';
 import { V4AuthenticationService } from './v4-authentication.service';
+
 import { WhistlerFormsService } from './whistler-forms.service';
+import { V4FormsService } from './v4-forms.service';
+
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { UtilsModule } from '../../utils/utils.module';
 import { LocalTokenStorage } from '../../utils/storage/local-token-storage.service';
 import { TokenType } from '../../utils/storage/models/token-storage.model';
 import { TokenStorageServiceFactory } from '../../utils/storage/storage.module';
 
-describe('should create module', () => {
+describe('AuthenticationModule', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientTestingModule,
@@ -38,8 +41,10 @@ describe('should create module', () => {
     }));
 
   it('should create formsService', inject([HttpClient], (http: HttpClient) => {
-    const service = FormsServiceFactory({}, http);
+    let service = FormsServiceFactory({ isWhistler: true }, http);
     expect(service instanceof WhistlerFormsService).toBeTruthy();
+    service = FormsServiceFactory({ isWhistler: false }, http);
+    expect(service instanceof V4FormsService).toBeTruthy();
   }));
 
   it('should create tokenService', () => {

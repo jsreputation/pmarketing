@@ -1,8 +1,16 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
+import {
+  MatIconModule,
+  MAT_DIALOG_DATA,
+} from '@angular/material';
 
 import { FeedItemPopupComponent } from './feed-item-popup.component';
-import { MatIconModule, MAT_DIALOG_DATA } from '@angular/material';
-import { FeedItem } from '@perx/core';
+
+import { FeedItem } from '../feed-reader.service';
 
 describe('FeedItemPopupComponent', () => {
   let component: FeedItemPopupComponent;

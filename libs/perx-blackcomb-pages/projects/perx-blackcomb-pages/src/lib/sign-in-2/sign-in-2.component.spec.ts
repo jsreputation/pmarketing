@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { LoginComponent } from './login.component';
+import { SignIn2Component } from './sign-in-2.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,9 +13,9 @@ const configStub: Partial<Config> = {
   preAuth: false
 };
 
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+describe('SignIn2Component', () => {
+  let component: SignIn2Component;
+  let fixture: ComponentFixture<SignIn2Component>;
 
   const authenticationServiceStub: Partial<AuthenticationService> = {
     getUserAccessToken: () => '',
@@ -29,12 +29,14 @@ describe('LoginComponent', () => {
   };
 
   const configServiceStub = {
-    readAppConfig: () => of()
+    readAppConfig: () => of({
+      redirectAfterLogin: '/home'
+    })
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoginComponent],
+      declarations: [SignIn2Component],
       imports: [
         RouterTestingModule.withRoutes([
           { path: 'wallet', redirectTo: '/' }
@@ -50,14 +52,14 @@ describe('LoginComponent', () => {
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ThemesService, useValue: themeServiceStub },
         { provide: Config, useValue: configStub },
-        { provide: ConfigService, useValue: configServiceStub}
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(SignIn2Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
