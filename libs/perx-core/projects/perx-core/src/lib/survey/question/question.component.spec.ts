@@ -19,6 +19,7 @@ import { RatingComponent } from './rating/rating.component';
 import { LongTextComponent } from './long-text/long-text.component';
 import { DateComponent } from './date/date.component';
 import { PhoneComponent } from './phone/phone.component';
+import { PasswordComponent } from './password/password.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('QuestionComponent', () => {
@@ -35,7 +36,8 @@ describe('QuestionComponent', () => {
         PictureSelectComponent,
         LongTextComponent,
         DateComponent,
-        PhoneComponent
+        PhoneComponent,
+        PasswordComponent
       ],
       imports: [
         MatFormFieldModule,
