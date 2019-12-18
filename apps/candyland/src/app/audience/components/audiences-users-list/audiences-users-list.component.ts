@@ -26,7 +26,8 @@ import {
   Type,
 } from '../../audience.model';
 import { UpsertUserPopupComponent } from '../../containers/upsert-user-popup/upsert-user-popup.component';
-import {MessageService} from '@cl-core-services';
+import { MessageService } from '@cl-core-services';
+import Utils from '@cl-helpers/utils';
 
 @Component({
   selector: 'cl-audiences-users-list',
@@ -88,5 +89,13 @@ export class AudiencesUsersListComponent implements AfterViewInit {
         this.dataSource.updateData();
         this.messageService.show('User successfully updated.');
       });
+  }
+
+  public transformMailTo(email: string): string {
+    return Utils.transformMailTo(email);
+  }
+
+  public transformTelTo(tel: string): string {
+    return Utils.transformTelTo(tel);
   }
 }
