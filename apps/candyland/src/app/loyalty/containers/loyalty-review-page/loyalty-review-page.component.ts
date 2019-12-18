@@ -46,8 +46,12 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public comeBack(): void {
+  public clickBack(): void {
     this.router.navigateByUrl('/loyalty');
+  }
+
+  public clickEdit(): void {
+    this.router.navigateByUrl('/loyalty/edit/' + this.loyalty.id);
   }
 
   private handleRouteParams(): void {
@@ -55,6 +59,7 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
       map((params: ParamMap) => params.get('id')),
       tap(() => this.loader = true),
       switchMap(id => this.getLoyalty(id)),
+      filter(Boolean),
       tap((loyalty: ILoyaltyForm) => this.initCustomTiersDataSource(loyalty.id)),
       switchMap((loyalty: ILoyaltyForm) => this.getBasicTierRuleSet(loyalty.basicTierId)),
       switchMap(() => this.getAllCustomTierRuleSet()),
@@ -72,7 +77,7 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getLoyalty(id: string): Observable<any> {
+  private getLoyalty(id: string): Observable<ILoyaltyForm> {
     return this.loyaltyService.getLoyalty(id)
       .pipe(
         tap(loyalty => {
@@ -93,7 +98,7 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getBasicTierRuleSet(basicTierId: string): Observable<any> {
+  private getBasicTierRuleSet(basicTierId: string): Observable<ILoyaltyRuleSet> {
     return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', basicTierId)
       .pipe(
         tap(ruleSet => this.basicTierRuleSet = ruleSet),
@@ -101,14 +106,14 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
       );
   }
 
-  private getCustomTierRuleSet(id: string): Observable<any> {
+  private getCustomTierRuleSet(id: string): Observable<ILoyaltyRuleSet> {
     return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::CustomTier', id)
       .pipe(
         tap(ruleSet => this.customTierRuleSetMap[id] = ruleSet),
       );
   }
 
-  private getAllCustomTierRuleSet(): Observable<any> {
+  private getAllCustomTierRuleSet(): Observable<ILoyaltyRuleSet[]> {
     const customTierIds = this.customTierDataSource.data.map(item => item.id);
     return from(customTierIds).pipe(
       concatMap(id => this.getCustomTierRuleSet(id)),

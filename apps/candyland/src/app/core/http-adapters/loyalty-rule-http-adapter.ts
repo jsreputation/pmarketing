@@ -8,6 +8,9 @@ import {
   IWLoyaltyRuleSetAttributes
 } from '@perx/whistler';
 import { RulePointType } from '@cl-core/models/loyalty/rule-point-type.enum';
+import { RuleSetMatchType } from '@cl-core/models/loyalty/rule-set-match-type.enum';
+import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.enum';
+import { RuleOperatorType } from '@cl-core/models/loyalty/rule-operator-type.enum';
 
 export class LoyaltyRuleHttpAdapter {
 
@@ -31,7 +34,7 @@ export class LoyaltyRuleHttpAdapter {
       attributes: {
         domain_type: typeTier,
         domain_id: tierId,
-        match_type: 'match_all'
+        match_type: RuleSetMatchType.all
       }
     };
   }
@@ -93,9 +96,9 @@ export class LoyaltyRuleHttpAdapter {
   public static transformToConditionForm(data: IJsonApiItem<IWLoyaltyRuleConditionAttributes>): ILoyaltyRuleCondition {
     return {
       id: data.id,
-      type: data.attributes.field,
+      type: RuleConditionType[data.attributes.field],
       value: data.attributes.value,
-      operator: data.attributes.sign,
+      operator: RuleOperatorType[data.attributes.sign],
       valueType: data.attributes.value_type
     };
   }

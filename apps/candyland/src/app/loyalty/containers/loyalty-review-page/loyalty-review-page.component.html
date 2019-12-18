@@ -1,8 +1,12 @@
 <header class="page-header full-with">
   <h1 class="title">{{loyalty?.name}}</h1>
   <div class="btn-group">
-    <cl-button classList="primary"
-               (click)="comeBack()">{{'BTN_COME_BACK' | translate}}
+    <cl-button classList="secondary"
+               (click)="clickBack()">{{'BTN_COME_BACK' | translate}}
+    </cl-button>
+    <cl-button classList="primary cta cta-edit"
+      (click)="clickEdit()">
+      {{'BTN_EDIT' | translate}}
     </cl-button>
   </div>
 </header>

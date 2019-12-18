@@ -15,7 +15,7 @@ import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TierSetupPopupComponent implements OnInit, OnDestroy {
-  public loading = false;
+  public loading: boolean = false;
   public form: FormGroup;
   protected destroy$: Subject<void> = new Subject();
   public pointsExpirePeriodType: typeof PeriodType = PeriodType;

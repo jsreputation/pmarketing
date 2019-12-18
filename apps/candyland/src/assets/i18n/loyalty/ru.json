@@ -31,6 +31,7 @@
     "POINTS_EXPIRY": "Срок годности очков",
     "POINTS_EXPIRE": "Срок годности очков закончится",
     "FROM_WHEN_ACCRUAL_THE_POINT_WAS_EARNED": "с даты получения очков",
+    "FROM_ACCRUAL": "с даты получения очков",
     "FROM_USER_INACTIVITY": "с неактивности пользователя",
     "NAME": "Name",
     "QUALIFICATION": "Квалификация",
@@ -84,10 +85,33 @@
     },
     "CONDITION_TYPE": {
       "TRANSACTION": "ТИП транзакции",
-      "AMOUNT": "КОЛИЧЕСТВО транзакций",
-      "ВАЛЮТА": "ВАЛЮТА транзакции",
+      "AMOUNT": "количество транзакций",
+      "CURRENCY": "Валюта транзакции",
       "FROM_DATE": "Транзакции от ДАТЫ",
       "TO_DATE": "Транзакции до ДАТЫ"
+    },
+    "CONDITION_TYPE_TEMPLATE": {
+      "TRANSACTION": "Совершить транзакцию типа {{value}}",
+      "AMOUNT": "Совешить транзакцию на сумму {{operator}} {{value}} у.е.",
+      "CURRENCY": "Совершить транзакцию {{value}} валюте",
+      "FROM_DATE": "Совершить транзакцию с {{value}}",
+      "TO_DATE": "Совершить транзакцию по {{value}}"
+    },
+    "RULE_POINT_TYPE": {
+      "MULTIPLIER": "Множитель",
+      "BONUS": "Бонусные баллы"
+    },
+    "RULE_POINT_TEMPLATE": {
+      "MULTIPLIER": "Применить {{amount}}x множитель",
+      "BONUS": "{{amount}} бонусных баллов"
+    },
+    "OPERATOR_TYPE": {
+      "EQUAL": "равно",
+      "UNEQUAL": "не равно",
+      "LESS": "меньше",
+      "GREATER": "больше",
+      "lESS_OR_EQUAL": "меньше или равно",
+      "GREATER_OR_EQUAL": "больше или равно"
     },
     "PRIORITY": "Приоритет",
     "RULE_NAME": "Имя правила",

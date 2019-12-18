@@ -15,6 +15,7 @@ import { DateConditionGroupComponent } from '../../components/date-condition-gro
 import { BonusResultGroupComponent } from '../../components/bonus-result-group/bonus-result-group.component';
 import { MultiplierResultGroupComponent } from '../../components/multiplier-result-group/multiplier-result-group.component';
 import { RulePointType } from '@cl-core/models/loyalty/rule-point-type.enum';
+import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.enum';
 
 @Component({
   selector: 'cl-rule-setup-popup',
@@ -29,11 +30,11 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
   protected destroy$: Subject<void> = new Subject();
   public conditionComponentMap: { [type: string]: any } = {
-    transaction: TransactionConditionGroupComponent,
-    amount: AmountConditionGroupComponent,
-    currency: CurrencyConditionGroupComponent,
-    fromDate: DateConditionGroupComponent,
-    toDate: DateConditionGroupComponent,
+    [RuleConditionType.transaction]: TransactionConditionGroupComponent,
+    [RuleConditionType.amount]: AmountConditionGroupComponent,
+    [RuleConditionType.currency]: CurrencyConditionGroupComponent,
+    [RuleConditionType.fromDate]: DateConditionGroupComponent,
+    [RuleConditionType.toDate]: DateConditionGroupComponent,
   };
   public resultsComponentsMap: { [type: string]: any } = {
     [RulePointType.bonus]: BonusResultGroupComponent,
@@ -47,18 +48,6 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   public get result(): AbstractControl {
     return this.form.get('result') || null;
   }
-
-  // public get applyMultiplier(): AbstractControl {
-  //   return this.form.get('result.applyMultiplier');
-  // }
-  //
-  // public get awardPoints(): AbstractControl {
-  //   return this.form.get('result.awardPoints');
-  // }
-  //
-  // public get maximumPoints(): AbstractControl {
-  //   return this.form.get('result.maximumPoints');
-  // }
 
   public get conditions(): FormArray {
     return this.form.get('conditions') as FormArray;

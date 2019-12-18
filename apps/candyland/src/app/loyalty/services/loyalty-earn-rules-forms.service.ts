@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RulePointType } from '@cl-core/models/loyalty/rule-point-type.enum';
+import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.enum';
+import { RuleOperatorType } from '@cl-core/models/loyalty/rule-operator-type.enum';
+import { ILoyaltyRule } from '@cl-core/models/loyalty/loyalty-rules.model';
 
 @Injectable()
 export class LoyaltyEarnRulesFormsService {
 
-  public conditionGroups: { [key: string]: any } = {
-    transaction: (type) => this.transactionGroup(type),
-    amount: (type) => this.amountGroup(type),
-    currency: (type) => this.currencyGroup(type),
-    fromDate: (type) => this.fromDateGroup(type),
-    toDate: (type) => this.toDateGroup(type),
+  public conditionGroups: { [key: string]: (type: string) => FormGroup } = {
+    [RuleConditionType.transaction]: (type) => this.transactionGroup(type),
+    [RuleConditionType.amount]: (type) => this.amountGroup(type),
+    [RuleConditionType.currency]: (type) => this.currencyGroup(type),
+    [RuleConditionType.fromDate]: (type) => this.fromDateGroup(type),
+    [RuleConditionType.toDate]: (type) => this.toDateGroup(type),
   };
 
-  public resultsGroups: { [key: string]: any } = {
+  public resultsGroups: { [type: string]: (type: string) => FormGroup } = {
     [RulePointType.bonus]: (type) => this.bonusGroup(type),
     [RulePointType.multiplier]: (type) => this.multiplierGroup(type),
   };
@@ -37,23 +40,18 @@ export class LoyaltyEarnRulesFormsService {
         amount: new FormControl(null, [Validators.required, Validators.min(1)]),
         applierType: new FormControl(null, [Validators.required]),
       })
-      // result: new FormGroup({
-      //   typePoints: new FormControl(null, [Validators.required]),
-      //   awardPoints: new FormControl(null, [Validators.required, Validators.min(1)]),
-      //   typeMultiplier: new FormControl(null, [Validators.required]),
-      //   applyMultiplier: new FormControl(null, [Validators.required, Validators.min(1)]),
-      //   maximumPoints: new FormControl(null, [Validators.required, Validators.min(1)])
-      // })
     });
   }
 
-  public getDefaultValue(): any {
+  public getDefaultValue(): ILoyaltyRule {
     return {
+      id: null,
       priority: 1,
       name: 'rule name',
       conditions: [{
-        type: 'transaction',
-        operator: 'equal',
+        id: null,
+        type: RuleConditionType.transaction,
+        operator: RuleOperatorType.equal,
         value: 'prepaid',
         valueType: 'string',
       }],
@@ -77,7 +75,7 @@ export class LoyaltyEarnRulesFormsService {
     return new FormGroup({
       id: new FormControl(null),
       type: new FormControl(type),
-      operator: new FormControl('equal', [Validators.required]),
+      operator: new FormControl(RuleOperatorType.equal, [Validators.required]),
       value: new FormControl('prepaid', [Validators.required]),
       valueType: new FormControl('string'),
     });
@@ -87,7 +85,7 @@ export class LoyaltyEarnRulesFormsService {
     return new FormGroup({
       id: new FormControl(null),
       type: new FormControl(type),
-      operator: new FormControl('equal', [Validators.required]),
+      operator: new FormControl(RuleOperatorType.equal, [Validators.required]),
       value: new FormControl('SGD', [Validators.required]),
       valueType: new FormControl('string'),
     });
@@ -97,7 +95,7 @@ export class LoyaltyEarnRulesFormsService {
     return new FormGroup({
       id: new FormControl(null),
       type: new FormControl(type),
-      operator: new FormControl('equal', [Validators.required]),
+      operator: new FormControl(RuleOperatorType.equal, [Validators.required]),
       value: new FormControl(0, [Validators.required]),
       valueType: new FormControl('integer'),
     });
@@ -107,7 +105,7 @@ export class LoyaltyEarnRulesFormsService {
     return new FormGroup({
       id: new FormControl(null),
       type: new FormControl(type),
-      operator: new FormControl('greater_or_equal', [Validators.required]),
+      operator: new FormControl(RuleOperatorType.greaterOrEqual, [Validators.required]),
       value: new FormControl(Date.now(), [Validators.required]),
       valueType: new FormControl('date')
     });
@@ -117,13 +115,13 @@ export class LoyaltyEarnRulesFormsService {
     return new FormGroup({
       id: new FormControl(null),
       type: new FormControl(type),
-      operator: new FormControl('less_or_equal', [Validators.required]),
+      operator: new FormControl(RuleOperatorType.lessOrEqual, [Validators.required]),
       value: new FormControl(Date.now(), [Validators.required]),
       valueType: new FormControl('date')
     });
   }
 
-  public bonusGroup(type: RulePointType): FormGroup {
+  public bonusGroup(type: string): FormGroup {
     return new FormGroup({
       id: new FormControl(null),
       applierType: new FormControl(type),
@@ -134,7 +132,7 @@ export class LoyaltyEarnRulesFormsService {
     });
   }
 
-  public multiplierGroup(type: RulePointType): FormGroup {
+  public multiplierGroup(type: string): FormGroup {
     return new FormGroup({
       id: new FormControl(null),
       applierType: new FormControl(type),

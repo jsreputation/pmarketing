@@ -61,7 +61,8 @@ import { ConditionInfoPipe } from './condition-info.pipe';
 import { LoyaltyConfigService } from './services/loyalty-config.service';
 import { MultiplierResultGroupComponent } from './components/multiplier-result-group/multiplier-result-group.component';
 import { BonusResultGroupComponent } from './components/bonus-result-group/bonus-result-group.component';
-import { ClPointsEarnedInfoPipe } from './points-earned-info.pipe';
+import { PointsEarnedInfoPipe } from './points-earned-info.pipe';
+import { PointsExpiredInfoPipe } from './points-expired-info.pipe';
 
 @NgModule({
   declarations: [
@@ -98,7 +99,8 @@ import { ClPointsEarnedInfoPipe } from './points-earned-info.pipe';
     ConditionInfoPipe,
     MultiplierResultGroupComponent,
     BonusResultGroupComponent,
-    ClPointsEarnedInfoPipe
+    PointsEarnedInfoPipe,
+    PointsExpiredInfoPipe
   ],
   imports: [
     CommonModule,

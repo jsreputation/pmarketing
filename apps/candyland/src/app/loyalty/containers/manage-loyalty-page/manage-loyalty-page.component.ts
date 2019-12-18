@@ -21,7 +21,7 @@ import { IWBasicTierAttributes } from '@perx/whistler';
 import { RuleSetupPopupComponent } from '../rule-setup-popup/rule-setup-popup.component';
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
-import { ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
+import { ILoyaltyRule, ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
 import { LoyaltyConfigService } from '../../services/loyalty-config.service';
 
 @Component({
@@ -302,9 +302,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   private setLoading(value: boolean): void {
-    // if (value !== this.loading$.value) {
     this.loading$.next(value);
-    // }
   }
 
   private navigateToList(): void {
@@ -500,7 +498,8 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   // rules
-  private getRefDialogSetupRule(data: any = null): Observable<MatDialogRef<RuleSetupPopupComponent>> {
+  private getRefDialogSetupRule(data: { ruleSet: ILoyaltyRuleSet, rule?: ILoyaltyRule | null } = null):
+    Observable<MatDialogRef<RuleSetupPopupComponent>> {
     const dialogRef: MatDialogRef<RuleSetupPopupComponent> = this.dialog.open(RuleSetupPopupComponent, {
       panelClass: 'tier-setup-dialog',
       data: {
@@ -516,7 +515,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
       );
   }
 
-  private createRule(data: any): void {
+  private createRule(data: { ruleSet: ILoyaltyRuleSet }): void {
     this.getRefDialogSetupRule(data)
       .pipe(
         filter(Boolean),
@@ -529,19 +528,19 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  private editRule(data: any): void {
+  private editRule(data: { ruleSet: ILoyaltyRuleSet, rule: ILoyaltyRule }): void {
     this.getRefDialogSetupRule(data)
       .pipe(
         filter(Boolean),
         takeUntil(this.destroy$)
       )
       .subscribe((updatedRule) => {
-        data.ruleSet.rules = Utils.updateAtArray(data.ruleSet.rules, data.rule, updatedRule);
+        data.ruleSet.rules = Utils.updateAtArray<ILoyaltyRule>(data.ruleSet.rules, data.rule, updatedRule);
         this.cd.detectChanges();
       });
   }
 
-  private deleteRule(data: any): void {
+  private deleteRule(data: { ruleSet: ILoyaltyRuleSet, rule: ILoyaltyRule }): void {
     const ruleId = data.rule.id;
     this.ruleService.deleteRule(ruleId)
       .pipe(takeUntil(this.destroy$))

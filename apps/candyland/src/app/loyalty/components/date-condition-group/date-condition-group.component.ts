@@ -12,6 +12,6 @@ export class DateConditionGroupComponent {
   @Input() public config: any;
 
   public get minDate(): Date {
-    return ('fromDate' in this.config && this.config.fromDate) ? this.config.fromDate : DateTimeParser.getNextDay();
+    return (this.config && 'fromDate' in this.config && this.config.fromDate) ? this.config.fromDate : DateTimeParser.getNextDay();
   }
 }

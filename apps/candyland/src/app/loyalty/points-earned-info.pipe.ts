@@ -6,7 +6,7 @@ import { RulePointType } from '@cl-core/models/loyalty/rule-point-type.enum';
 @Pipe({
   name: 'clPointsEarnedInfo'
 })
-export class ClPointsEarnedInfoPipe implements PipeTransform {
+export class PointsEarnedInfoPipe implements PipeTransform {
 
   constructor(private translate: TranslateService) {
   }

@@ -1,8 +1,10 @@
-import { IWLoyaltyRuleConditionSign, IWLoyaltyRuleConditionValueType } from '@perx/whistler';
+import { IWLoyaltyRuleConditionValueType } from '@perx/whistler';
 import { RulePointType } from '@cl-core/models/loyalty/rule-point-type.enum';
+import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.enum';
+import { RuleOperatorType } from '@cl-core/models/loyalty/rule-operator-type.enum';
 
 declare interface ILoyaltyRuleSet {
-  id: string;
+  id: string | null;
   matchType: string;
   tierType: string;
   tierId: string;
@@ -10,7 +12,7 @@ declare interface ILoyaltyRuleSet {
 }
 
 declare interface ILoyaltyRule {
-  id: string;
+  id: string | null;
   priority: number;
   name: string;
   conditions?: ILoyaltyRuleCondition[];
@@ -18,15 +20,15 @@ declare interface ILoyaltyRule {
 }
 
 declare interface ILoyaltyRuleCondition {
-  id: string;
-  type: string;
+  id: string | null;
+  type: RuleConditionType;
   value: string | Date | number | null;
-  operator: IWLoyaltyRuleConditionSign;
+  operator: RuleOperatorType;
   valueType: IWLoyaltyRuleConditionValueType;
 }
 
 declare interface ILoyaltyRulePoint {
-  id: string;
+  id: string | null;
   amount: number;
   type?: string;
   applierType: RulePointType;
