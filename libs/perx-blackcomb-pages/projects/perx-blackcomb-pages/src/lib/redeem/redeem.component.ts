@@ -7,10 +7,10 @@ import {
   RedemptionType,
   IPopupConfig,
   NotificationService,
-  PopUpClosedCallBack,
+  PopUpClosedCallBack, VoucherState
 } from '@perx/core';
-import { Observable, Subject } from 'rxjs';
-import { filter, switchMap, takeUntil, map, tap } from 'rxjs/operators';
+import {of, Subject, Subscription} from 'rxjs';
+import {filter, switchMap, takeUntil, map, tap} from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -19,7 +19,9 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./redeem.component.scss']
 })
 export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
-  public voucher$: Observable<Voucher>;
+  public status: VoucherState;
+
+  public voucher$: Subscription;
   public voucherId: number;
   public redemptionType: RedemptionType;
   private destroy$: Subject<void> = new Subject<void>();
@@ -111,12 +113,33 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
             }
           }
         }),
+        switchMap((voucher: Voucher) => {
+          if (voucher.redemptionType === RedemptionType.txtCode ||
+            voucher.redemptionType === RedemptionType.qr ||
+            voucher.redemptionType === RedemptionType.barcode) {
+            return this.vouchersService.stateChangedForVoucher(voucher.id, 1000);
+          }
+          return of(voucher);
+        }),
         takeUntil(this.destroy$)
-      );
-
+      ).subscribe((voucher: Voucher) => {
+        if (voucher.state === VoucherState.issued) {
+          this.status = voucher.state;
+        }
+        if (this.status === VoucherState.issued && voucher.state === VoucherState.redeemed) {
+          this.notificationService.addPopup({
+            title: 'Successfully Redeemed!',
+            text: `You have redeemed ${voucher.reward ? voucher.reward.name : ''}.`,
+            buttonTxt: 'Close',
+            imageUrl: 'assets/redeem_success.png',
+          });
+          this.router.navigate(['wallet']);
+        }
+      });
   }
 
   public ngOnDestroy(): void {
+    this.voucher$.unsubscribe();
     this.destroy$.next();
     this.destroy$.complete();
   }
