@@ -51,7 +51,10 @@ describe('LoadingComponent', () => {
       declarations: [LoadingComponent],
       imports: [
         MatProgressSpinnerModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'home', component: LoadingComponent },
+          { path: 'login', component: LoadingComponent }
+        ]),
         TranslateModule.forRoot()
       ],
       providers: [
