@@ -18,5 +18,6 @@
   "CONFIRM": "Confirm",
   "BACK": "Back",
   "PROCEED": "Proceed",
-  "CLOSE": "Close"
+  "CLOSE": "Close",
+  "TRANSACTION_HISTORY": "Transaction History"
 }

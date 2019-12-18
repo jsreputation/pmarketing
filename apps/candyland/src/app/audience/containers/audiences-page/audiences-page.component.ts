@@ -60,8 +60,8 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public dataSourceStates: typeof DataSourceStates = DataSourceStates;
 
   public tabsFilterConfig: OptionConfig[] = [
-    {title: 'Users', value: 'users'},
-    {title: 'Audience List', value: 'audience'}
+    { title: 'Customers', value: 'users' },
+    { title: 'Audience List', value: 'audience' }
   ];
   public config: any[];
 
@@ -95,7 +95,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   public openAddUserDialog(): void {
-    const dialogData: IUpsertUserPopup = { panelClass: 'audience-dialog', data: {type: Type.Add} };
+    const dialogData: IUpsertUserPopup = { panelClass: 'audience-dialog', data: { type: Type.Add } };
     const dialogRef = this.dialog.open(UpsertUserPopupComponent, dialogData);
 
     dialogRef.afterClosed()
@@ -111,7 +111,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   public openManageListDialog(item: number): void {
-    const dialogRef = this.dialog.open(ManageListPopupComponent, {panelClass: 'manage-list-dialog', data: item});
+    const dialogRef = this.dialog.open(ManageListPopupComponent, { panelClass: 'manage-list-dialog', data: item });
     dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
@@ -125,7 +125,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     switch (tab) {
       case 'audience':
         this.audiencesDataSource = new CustomDataSource<IWAudiences>(this.audiencesService);
-        const params: HttpParamsOptions = {include: 'users'};
+        const params: HttpParamsOptions = { include: 'users' };
         this.audiencesDataSource.params = params;
         break;
       case 'users':

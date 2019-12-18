@@ -29,7 +29,9 @@ describe('SignIn2Component', () => {
   };
 
   const configServiceStub = {
-    readAppConfig: () => of()
+    readAppConfig: () => of({
+      redirectAfterLogin: '/home'
+    })
   };
 
   beforeEach(async(() => {
@@ -37,7 +39,8 @@ describe('SignIn2Component', () => {
       declarations: [SignIn2Component],
       imports: [
         RouterTestingModule.withRoutes([
-          { path: 'wallet', redirectTo: '/' }
+          { path: 'wallet', redirectTo: '/' },
+          { path: 'login', redirectTo: '/' }
         ]),
         FormsModule,
         MatFormFieldModule,

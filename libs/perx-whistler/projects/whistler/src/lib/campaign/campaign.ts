@@ -5,7 +5,8 @@ export enum WCampaignStatus {
   scheduled = 'scheduled',
   paused = 'paused',
   active = 'active',
-  ended = 'ended'
+  ended = 'ended',
+  draft = 'draft'
 }
 
 export interface IWCampaignAttributes {

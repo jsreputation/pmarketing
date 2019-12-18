@@ -47,7 +47,8 @@ import {
   LoyaltySummaryComponent,
   LoyaltyTransactionsListComponent,
   NewsfeedComponent,
-  PinInputComponent
+  PinInputComponent,
+  PasswordComponent
 } from '@perx/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -76,7 +77,7 @@ import { TransactionHistoryComponent } from './transaction-history/transaction-h
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
 import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
-import { FeedItemPopupComponent } from './feed-item-popup/feed-item-popup.component';
+import { ProfileBarcodeComponent } from './profile-barcode/profile-barcode.component';
 import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
 
 const comps: any[] = [
@@ -108,6 +109,7 @@ const comps: any[] = [
   PhoneComponent,
   GroupComponent,
   RatingComponent,
+  PasswordComponent,
   PictureSelectComponent,
   LongTextComponent,
   DateComponent,
@@ -129,7 +131,7 @@ const comps: any[] = [
   EnterPinComponent,
   PinInputComponent,
   RewardsBookingComponent,
-  FeedItemPopupComponent,
+  ProfileBarcodeComponent,
   EditProfileFieldComponent
 ];
 
@@ -158,7 +160,7 @@ const comps: any[] = [
     MatDatepickerModule,
     TranslateModule.forChild(),
     MatToolbarModule,
-    MatListModule
+    MatListModule,
   ],
   exports: [
     ...comps,

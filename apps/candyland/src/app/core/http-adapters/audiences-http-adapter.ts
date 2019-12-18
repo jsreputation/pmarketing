@@ -22,7 +22,6 @@ export class AudiencesHttpAdapter {
         last_name: data.lastName,
         phone_number: data.phone,
         email_address: data.email,
-        primary_identifier: data.firstName + 'identifier',
         properties: AudiencesHttpAdapter.transformCustomProps(data),
       }
     };
