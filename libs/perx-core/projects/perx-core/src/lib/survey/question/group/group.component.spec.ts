@@ -19,6 +19,7 @@ import { LongTextComponent } from '../long-text/long-text.component';
 import { DateComponent } from '../date/date.component';
 import { PhoneComponent } from '../phone/phone.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {PasswordComponent} from '../password/password.component';
 
 describe('GroupComponent', () => {
   let component: GroupComponent;
@@ -34,7 +35,8 @@ describe('GroupComponent', () => {
         PictureSelectComponent,
         LongTextComponent,
         DateComponent,
-        PhoneComponent
+        PhoneComponent,
+        PasswordComponent
       ],
       imports: [
         MatFormFieldModule,
