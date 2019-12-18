@@ -10,11 +10,11 @@ export class FileUploadAdapter {
     };
   }
 
-  public static transformToUploadedFile(data: any, filePath: string): IUploadedFile {
+  public static transformToUploadedFile(data: any): IUploadedFile {
     return {
       created_at: data.attributes.created_at,
       updated_at: data.attributes.updated_at,
-      url: filePath + '/' + data.id,
+      url: data.attributes.url,
       name: data.attributes.blob.filename,
       key: data.attributes.blob.key,
       id: data.id,

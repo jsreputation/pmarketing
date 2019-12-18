@@ -22,8 +22,8 @@ export class VouchersUploadService extends IAdvancedUploadFileService {
     const subject: BehaviorSubject<IUploadFileStatus> = new BehaviorSubject<IUploadFileStatus>(
       { fileName: file.name, status: UploadStatus.UPLOADING }
     );
-    let maxRetryTimes = 5;
-    let delayUnitTime = 1000;
+    const maxRetryTimes = 60;
+    const delayUnitTime = 1000;
     let retryTimes = 0;
     this.uploadService.uploadFile(file)
       .pipe(
@@ -31,7 +31,7 @@ export class VouchersUploadService extends IAdvancedUploadFileService {
         switchMap((url: string) => this.vouchersService.uploadVouchers(url, options.rewardId)),
         switchMap(
           (batch: IJsonApiPayload<IWVouchersApi>) =>
-            this.vouchersService.getVouchersBatch(Number.parseInt(batch.data.id)).pipe(
+            this.vouchersService.getVouchersBatch(Number.parseInt(batch.data.id, 10)).pipe(
               switchMap((res: IJsonApiPayload<IWVouchersApi>) => {
                 if (res.data.attributes.status !== WStatus.success) {
                   throw of(new Error('codes are not ready'));
