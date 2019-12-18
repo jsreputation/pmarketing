@@ -23,7 +23,7 @@ const routes: Routes = [
     loadChildren: () => import('./layout/layout.module').then((mod) => mod.LayoutModule),
     canActivate: [ProtectedGuard]
   },
-  { path: '**', redirectTo: '/wallet', canActivate: [ProtectedGuard] },
+  { path: '**', redirectTo: '/home', canActivate: [ProtectedGuard] },
   { path: '**', redirectTo: '/loading', canActivate: [PublicGuard] },
 ];
 
