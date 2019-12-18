@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { RulePointType } from '@cl-core/models/loyalty/rule-point-type.enum';
 
 @Injectable()
 export class LoyaltyEarnRulesFormsService {
@@ -13,8 +14,8 @@ export class LoyaltyEarnRulesFormsService {
   };
 
   public resultsGroups: { [key: string]: any } = {
-    bonus: (type) => this.bonusGroup(type),
-    multiplier: (type) => this.multiplierGroup(type),
+    [RulePointType.bonus]: (type) => this.bonusGroup(type),
+    [RulePointType.multiplier]: (type) => this.multiplierGroup(type),
   };
 
   public getRuleForm(): FormGroup {
@@ -34,7 +35,7 @@ export class LoyaltyEarnRulesFormsService {
       result: new FormGroup({
         id: new FormControl(null),
         amount: new FormControl(null, [Validators.required, Validators.min(1)]),
-        applierType: new FormControl('multiplier', [Validators.required]),
+        applierType: new FormControl(null, [Validators.required]),
       })
       // result: new FormGroup({
       //   typePoints: new FormControl(null, [Validators.required]),
@@ -59,12 +60,7 @@ export class LoyaltyEarnRulesFormsService {
       result: {
         id: null,
         amount: 0,
-        applierType: 'multiplier'
-        // typePoints: 'bonus',
-        // awardPoints: 100,
-        // typeMultiplier: 'multiplier',
-        // applyMultiplier: 2,
-        // maximumPoints: 3
+        applierType: RulePointType.bonus
       }
     };
   }
@@ -127,24 +123,24 @@ export class LoyaltyEarnRulesFormsService {
     });
   }
 
-  public bonusGroup(type: string): FormGroup {
+  public bonusGroup(type: RulePointType): FormGroup {
     return new FormGroup({
       id: new FormControl(null),
       applierType: new FormControl(type),
       amount: new FormControl(0, [
-        // Validators.required,
-        // Validators.min[0]
+        Validators.required,
+        Validators.min(0)
       ]),
     });
   }
 
-  public multiplierGroup(type: string): FormGroup {
+  public multiplierGroup(type: RulePointType): FormGroup {
     return new FormGroup({
       id: new FormControl(null),
       applierType: new FormControl(type),
       amount: new FormControl(1, [
-        // Validators.required,
-        // Validators.min[1]
+        Validators.required,
+        Validators.min(1)
       ]),
     });
   }

@@ -1,4 +1,5 @@
-import { IWLoyaltyRuleConditionSign, IWLoyaltyRuleConditionValueType, IWLoyaltyRulePointApplierType } from '@perx/whistler';
+import { IWLoyaltyRuleConditionSign, IWLoyaltyRuleConditionValueType } from '@perx/whistler';
+import { RulePointType } from '@cl-core/models/loyalty/rule-point-type.enum';
 
 declare interface ILoyaltyRuleSet {
   id: string;
@@ -26,7 +27,7 @@ declare interface ILoyaltyRuleCondition {
 
 declare interface ILoyaltyRulePoint {
   id: string;
-  amount: string;
+  amount: number;
   type?: string;
-  applierType: IWLoyaltyRulePointApplierType;
+  applierType: RulePointType;
 }

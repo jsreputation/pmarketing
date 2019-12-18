@@ -11,6 +11,6 @@ export class BonusResultGroupComponent {
   @Input() public config: any;
 
   public get amount(): AbstractControl {
-    return this.group.get('amount') || null;
+    return this.group && this.group.get('amount') ?  this.group.get('amount') : null;
   }
 }

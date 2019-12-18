@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
 import { PeriodType } from '@cl-core/models/period-type.enum';
 import { LoyaltyPointsExpireTrigger } from '../models/loyalty-points-expire-trigger.enum';
+import { RulePointType } from '@cl-core/models/loyalty/rule-point-type.enum';
 
 const matchType: OptionConfig[] = [
   {value: 'match_first', title: 'LOYALTY_FEATURE.MATCH_TYPE.MATCH_FIRST'},
@@ -45,6 +46,11 @@ const pointsExpireTrigger: OptionConfig[] = [
   {value: LoyaltyPointsExpireTrigger.inactivity, title: 'LOYALTY_FEATURE.FROM_USER_INACTIVITY'},
 ];
 
+const rulePointsType: OptionConfig[] = [
+  {value: RulePointType.bonus, title: 'LOYALTY_FEATURE.RULE_POINT_TYPE.BONUS'},
+  {value: RulePointType.multiplier, title: 'LOYALTY_FEATURE.RULE_POINT_TYPE.MULTIPLIER'},
+];
+
 @Injectable()
 export class LoyaltyConfigService {
   constructor(private configService: ConfigService,
@@ -75,7 +81,8 @@ export class LoyaltyConfigService {
         currencyList,
         ruleOperators,
         transactionType,
-        conditionType
+        conditionType,
+        rulePointsType
       }))
     );
   }

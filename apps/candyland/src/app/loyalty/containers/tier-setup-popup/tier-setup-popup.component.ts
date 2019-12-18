@@ -15,6 +15,7 @@ import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TierSetupPopupComponent implements OnInit, OnDestroy {
+  public loading = false;
   public form: FormGroup;
   protected destroy$: Subject<void> = new Subject();
   public pointsExpirePeriodType: typeof PeriodType = PeriodType;
@@ -80,12 +81,16 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
       return;
     }
     let request;
+    this.loading = true;
     if (this.data.tier) {
       request = this.customTierService.updateCustomTier(this.data.tier.id, this.form.value, this.data.basicTierId);
     } else {
       request = this.customTierService.createCustomTier(this.form.value, this.data.basicTierId);
     }
-    request.subscribe(data => this.dialogRef.close(data));
+    request.subscribe(
+      data => this.dialogRef.close(data),
+      () => this.loading = false
+    );
   }
 
   private initForm(): void {

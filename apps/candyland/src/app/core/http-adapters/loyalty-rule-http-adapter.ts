@@ -7,6 +7,7 @@ import {
   IWLoyaltyRulePointAttributes,
   IWLoyaltyRuleSetAttributes
 } from '@perx/whistler';
+import { RulePointType } from '@cl-core/models/loyalty/rule-point-type.enum';
 
 export class LoyaltyRuleHttpAdapter {
 
@@ -127,7 +128,7 @@ export class LoyaltyRuleHttpAdapter {
     return {
       type: data.type || 'point_calculators',
       attributes: {
-        amount: data.amount,
+        amount: data.amount.toFixed(0),
         applier_type: data.applierType
       },
     };
@@ -136,8 +137,8 @@ export class LoyaltyRuleHttpAdapter {
   public static transformToPointForm(data: IJsonApiItem<IWLoyaltyRulePointAttributes>): ILoyaltyRulePoint {
     return {
       id: data.id,
-      amount: data.attributes.amount,
-      applierType: data.attributes.applier_type
+      amount: +data.attributes.amount,
+      applierType: data.attributes.applier_type as RulePointType
     };
   }
 

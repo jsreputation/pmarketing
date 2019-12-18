@@ -15,12 +15,10 @@ import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
 })
 export class PointEarnRulesListComponent {
   @Input() public editable: boolean = false;
-  // @Input() public dataSource: any;
   @Input() public ruleSet: any;
   @Input() public displayedColumns: string[] = ['priority', 'name', 'conditions', 'pointsEarned'];
   @Output() public rulesAction: EventEmitter<{ action: NewLoyaltyActions, data?: any }> = new EventEmitter();
 
-  // @ViewChild('table', {static: false}) public table: MatTable<any>;
   public get rules(): any[] {
     return this.ruleSet.rules || null;
   }

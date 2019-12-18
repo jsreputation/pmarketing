@@ -39,7 +39,7 @@
     <ng-container matColumnDef="pointsEarned">
       <th mat-header-cell *matHeaderCellDef>{{'LOYALTY_FEATURE.POINTS_EARNED' | translate}}</th>
       <td mat-cell *matCellDef="let element">
-        <span>{{element?.pointsEarned}}</span>
+        <span>{{element?.result | clPointsEarnedInfo  }}</span>
       </td>
     </ng-container>
 

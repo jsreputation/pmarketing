@@ -89,6 +89,14 @@
       "FROM_DATE": "Transacts from DATE",
       "TO_DATE": "Transacts to DATE"
     },
+    "RULE_POINT_TYPE": {
+      "MULTIPLIER": "Multiplier",
+      "BONUS": "Bonus Points"
+    },
+    "RULE_POINT_TEMPLATE": {
+      "MULTIPLIER": "Apply {{amount}} multiplier",
+      "BONUS": "{{amount}} Bonus Points"
+    },
     "PRIORITY": "Priority",
     "RULE_NAME": "Rule Name",
     "CONDITIONS": "Conditions",
