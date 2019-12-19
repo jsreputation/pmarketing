@@ -41,9 +41,11 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.config.readAppConfig().pipe(switchMap((conf)=>this.translate.getTranslation(conf.defaultLang as string))).subscribe(()=>{
-      this.loaded = true;
-    });
+    this.config.readAppConfig()
+      .pipe(switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
+      .subscribe(() => {
+        this.loaded = true;
+      });
     this.authService.$failedAuth.subscribe(
       res => {
         if (res) {
