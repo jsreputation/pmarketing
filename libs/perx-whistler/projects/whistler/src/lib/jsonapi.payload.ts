@@ -17,7 +17,7 @@ export interface IJsonApiItemPayload<T, S = any> {
 }
 
 export interface IJsonApiItem<T> {
-  id: string;
+  id?: string;
   type: string;
   links?: {
     self: string;
@@ -25,11 +25,12 @@ export interface IJsonApiItem<T> {
   attributes: T;
   relationships?: {
     [source: string]: {
-      links: {
+      links?: {
         self: string;
         related: string;
       },
-      data?: IWRelationshipsDataType[] | IWRelationshipsDataType
+      // data?: IWRelationshipsDataType[] | IWRelationshipsDataType
+      data?: any
     }
   };
 }

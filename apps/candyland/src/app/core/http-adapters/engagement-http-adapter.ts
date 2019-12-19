@@ -9,7 +9,8 @@ import {
   IWSurveyEngagementAttributes,
   IWTreeGameEngagementAttributes,
   IWSpinGameEngagementAttributes,
-  WGameType
+  WGameType,
+  IJsonApiItem
 } from '@perx/whistler';
 import {
   IEngagementInstantReward,
@@ -218,7 +219,7 @@ export class EngagementHttpAdapter {
       created_at: data.attributes.created_at,
       updated_at: data.attributes.updated_at,
       nb_of_wedges: data.attributes.display_properties.nb_of_wedges,
-      slots: data.attributes.display_properties.slots.sort((a,b) => a - b),
+      slots: data.attributes.display_properties.slots.sort((a, b) => a - b),
       wedge_colors: data.attributes.display_properties.wedge_colors,
       reward_icon: data.attributes.display_properties.reward_icon,
       wheel_img: data.attributes.display_properties.wheel_img,
@@ -495,7 +496,7 @@ export class EngagementHttpAdapter {
       background: data.attributes.display_properties.background_img_url,
       buttonText: data.attributes.display_properties.button,
       numberOfWedges: data.attributes.display_properties.nb_of_wedges,
-      rewardSlots: data.attributes.display_properties.slots.sort((a,b) => a - b),
+      rewardSlots: data.attributes.display_properties.slots.sort((a, b) => a - b),
       colorCtrls: Object.assign(data.attributes.display_properties.wedge_colors),
       rewardIcon: data.attributes.display_properties.reward_icon,
       wheelImg: data.attributes.display_properties.wheel_img,

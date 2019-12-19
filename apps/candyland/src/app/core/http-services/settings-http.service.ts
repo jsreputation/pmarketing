@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IWIAMUserAttributes, IWTenantAttributes } from '@perx/whistler';
+import { IWIAMUserAttributes, IWTenantAttributes, IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '@perx/whistler';
 import { RoleLabelConfig } from '@cl-shared';
 import { IWCognitoEndpointAttributes } from '@perx/whistler';
 
@@ -35,27 +35,29 @@ export class SettingsHttpService {
   }
 
   public getAllIMAUsers(params: HttpParams): Observable<IJsonApiListPayload<IWIAMUserAttributes>> {
-    return this.http.get<IJsonApiListPayload<IWIAMUserAttributes>>(ApiConfig.IAMUsersPath, {params});
+    return this.http.get<IJsonApiListPayload<IWIAMUserAttributes>>(ApiConfig.IAMUsersPath, { params });
   }
 
-  public inviteNewUser(body: IJsonApiItem<IWIAMUserAttributes>): Observable<IJsonApiPayload<IWIAMUserAttributes>> {
-    return this.http.post<IJsonApiPayload<IWIAMUserAttributes>>(ApiConfig.IAMUsersPath, {data: body});
+  public inviteNewUser(body: IJsonApiItem<IWIAMUserAttributes>): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
+    return this.http.post<IJsonApiItemPayload<IWIAMUserAttributes>>(ApiConfig.IAMUsersPath, { data: body });
   }
 
-  public patchUser(id: string, patchValue: Partial<IJsonApiItem<IWIAMUserAttributes>>): Observable<IJsonApiPayload<IWIAMUserAttributes>> {
-    return this.http.patch<IJsonApiPayload<IWIAMUserAttributes>>(`${ApiConfig.IAMUsersPath}/${id}`, {data: patchValue});
+  public patchUser(
+    id: string, patchValue: Partial<IJsonApiItem<IWIAMUserAttributes>>
+  ): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
+    return this.http.patch<IJsonApiItemPayload<IWIAMUserAttributes>>(`${ApiConfig.IAMUsersPath}/${id}`, { data: patchValue });
   }
 
-  public deleteUser(id: string): Observable<IJsonApiPayload<IWIAMUserAttributes>> {
-    return this.http.delete<IJsonApiPayload<IWIAMUserAttributes>>(`${ApiConfig.IAMUsersPath}/${id}`);
+  public deleteUser(id: string): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
+    return this.http.delete<IJsonApiItemPayload<IWIAMUserAttributes>>(`${ApiConfig.IAMUsersPath}/${id}`);
   }
 
   public getAllGroups(): Observable<any> {
     return this.http.get(ApiConfig.IAMGroupsPath);
   }
 
-  public patchSettings(data: IJsonApiPayload<any>): Observable<any> {
-    return this.http.patch(`${ApiConfig.tenantsPath}`, {data});
+  public patchSettings(data: IJsonApiItemPayload<any>): Observable<any> {
+    return this.http.patch(`${ApiConfig.tenantsPath}`, { data });
   }
 
   public getTenants(): Observable<IJsonApiListPayload<IWTenantAttributes>> {
@@ -66,25 +68,25 @@ export class SettingsHttpService {
     return this.http.get<{ [key: string]: RoleLabelConfig }>('assets/actives/role-label/role-label.json');
   }
 
-  public getCognitoEndpoint(id: string, params: HttpParams): Observable<IJsonApiPayload<IWCognitoEndpointAttributes>> {
-    return this.http.get<IJsonApiPayload<IWCognitoEndpointAttributes>>(`${ApiConfig.cognitoEndpoints}/${id}`, {params});
+  public getCognitoEndpoint(id: string, params: HttpParams): Observable<IJsonApiItemPayload<IWCognitoEndpointAttributes>> {
+    return this.http.get<IJsonApiItemPayload<IWCognitoEndpointAttributes>>(`${ApiConfig.cognitoEndpoints}/${id}`, { params });
   }
 
   public getCognitoEndpoints(params: HttpParams): Observable<IJsonApiListPayload<IWCognitoEndpointAttributes>> {
-    return this.http.get<IJsonApiListPayload<IWCognitoEndpointAttributes>>(ApiConfig.cognitoEndpoints, {params});
+    return this.http.get<IJsonApiListPayload<IWCognitoEndpointAttributes>>(ApiConfig.cognitoEndpoints, { params });
   }
 
-  public createCognitoEndpoint(data: IJsonApiPayload<IWCognitoEndpointAttributes>):
-    Observable<IJsonApiPayload<IWCognitoEndpointAttributes>> {
-    return this.http.post<IJsonApiPayload<IWCognitoEndpointAttributes>>(ApiConfig.cognitoEndpoints + '/', data);
+  public createCognitoEndpoint(data: IJsonApiItemPayload<IWCognitoEndpointAttributes>):
+    Observable<IJsonApiItemPayload<IWCognitoEndpointAttributes>> {
+    return this.http.post<IJsonApiItemPayload<IWCognitoEndpointAttributes>>(ApiConfig.cognitoEndpoints + '/', data);
   }
 
-  public updateCognitoEndpoint(id: string, data: IJsonApiPayload<IWCognitoEndpointAttributes>):
-    Observable<IJsonApiPayload<IWCognitoEndpointAttributes>> {
-    return this.http.patch<IJsonApiPayload<IWCognitoEndpointAttributes>>(ApiConfig.cognitoEndpoints + '/' + id, data);
+  public updateCognitoEndpoint(id: string, data: IJsonApiItemPayload<IWCognitoEndpointAttributes>):
+    Observable<IJsonApiItemPayload<IWCognitoEndpointAttributes>> {
+    return this.http.patch<IJsonApiItemPayload<IWCognitoEndpointAttributes>>(ApiConfig.cognitoEndpoints + '/' + id, data);
   }
 
-  public deleteCognitoEndpoin(id: string): Observable<IJsonApiPayload<IWCognitoEndpointAttributes>> {
-    return this.http.delete<IJsonApiPayload<IWCognitoEndpointAttributes>>(ApiConfig.cognitoEndpoints + '/' + id);
+  public deleteCognitoEndpoin(id: string): Observable<IJsonApiItemPayload<IWCognitoEndpointAttributes>> {
+    return this.http.delete<IJsonApiItemPayload<IWCognitoEndpointAttributes>>(ApiConfig.cognitoEndpoints + '/' + id);
   }
 }

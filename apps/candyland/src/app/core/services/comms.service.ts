@@ -4,7 +4,7 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 import { CommsHttpsService } from '@cl-core/http-services/comms-https.service';
 import { map } from 'rxjs/operators';
 import { CommsHttpAdapter } from '@cl-core/http-adapters/comms-http-adapter';
-import { IWCommTemplateAttributes, IWCommEventAttributes } from '@perx/whistler';
+import { IWCommTemplateAttributes, IWCommEventAttributes, IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '@perx/whistler';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
 
@@ -49,12 +49,12 @@ export class CommsService {
     );
   }
 
-  public updateCommsEvent(data: ICampaign, templateId: string, campaignId: string): Observable<IJsonApiPayload<IWCommEventAttributes>> {
+  public updateCommsEvent(data: ICampaign, templateId: string, campaignId: string): Observable<IJsonApiItemPayload<IWCommEventAttributes>> {
     const sendData = CommsHttpAdapter.transformFromCommsEvents(data, templateId, campaignId);
     return this.commsHttpsService.updateCommsEvent(data.channel.eventId, { data: { id: data.channel.eventId, ...sendData } });
   }
 
-  public createCommsEvent(data: ICampaign, templateId: string, campaignId: string): Observable<IJsonApiPayload<IWCommEventAttributes>> {
+  public createCommsEvent(data: ICampaign, templateId: string, campaignId: string): Observable<IJsonApiItemPayload<IWCommEventAttributes>> {
     const sendData = CommsHttpAdapter.transformFromCommsEvents(data, templateId, campaignId);
     return this.commsHttpsService.createCommsEvent({ data: sendData });
   }
@@ -63,17 +63,17 @@ export class CommsService {
     return this.commsHttpsService.deleteCommsEvent(id);
   }
 
-  public updateCommsTemplate(data: IComm): Observable<IJsonApiPayload<IWCommTemplateAttributes>> {
+  public updateCommsTemplate(data: IComm): Observable<IJsonApiItemPayload<IWCommTemplateAttributes>> {
     const sendData = CommsHttpAdapter.transformFromCommsTemplates(data);
     return this.commsHttpsService.updateCommsTemplate(data.templateId, { data: { id: data.templateId, ...sendData } });
   }
 
-  public createCommsTemplate(data: IComm): Observable<IJsonApiPayload<IWCommTemplateAttributes>> {
+  public createCommsTemplate(data: IComm): Observable<IJsonApiItemPayload<IWCommTemplateAttributes>> {
     const sendData = CommsHttpAdapter.transformFromCommsTemplates(data);
     return this.commsHttpsService.createCommsTemplate({ data: sendData });
   }
 
-  public deleteCommsTemplate(id: string): Observable<IJsonApiPayload<IWCommTemplateAttributes>> {
+  public deleteCommsTemplate(id: string): Observable<IJsonApiItemPayload<IWCommTemplateAttributes>> {
     return this.commsHttpsService.deleteCommsTemplate(id);
   }
 }

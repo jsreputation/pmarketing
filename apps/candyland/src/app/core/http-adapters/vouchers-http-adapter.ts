@@ -1,6 +1,8 @@
 import {
   IWVoucherStatsApi,
   IWVouchersApi,
+  IJsonApiItemPayload,
+  IJsonApiItem,
 } from '@perx/whistler';
 
 import { SOURCE_TYPE } from '../../app.constants';
@@ -46,7 +48,7 @@ export class VouchersHttpAdapter {
     };
   }
 
-  public static transformToVoucherStatsObj(res: IJsonApiPayload<IWVoucherStatsApi>): { [k: string]: number } {
+  public static transformToVoucherStatsObj(res: IJsonApiItemPayload<IWVoucherStatsApi>): { [k: string]: number } {
     const { code, voucher } = res.data.attributes;
     const result = {};
 

@@ -2,7 +2,8 @@ import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import {
   IWIAMUserAttributes,
   IWTenantDisplayProperties,
-  IWCognitoEndpointAttributes
+  IWCognitoEndpointAttributes,
+  IJsonApiItem
 } from '@perx/whistler';
 import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
 

@@ -6,6 +6,8 @@ import {
   IWCampaignAttributes, WEngagementType,
   IWAudiences,
   WInformationCollectionSettingType,
+  IJsonApiItem,
+  IJsonApiListPayload,
 } from '@perx/whistler';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';

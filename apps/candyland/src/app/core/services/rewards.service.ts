@@ -6,7 +6,7 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { RewardHttpAdapter } from '@cl-core/http-adapters/reward-http-adapter';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { IWRewardEntityAttributes, IWTierRewardCostsAttributes } from '@perx/whistler';
+import { IWRewardEntityAttributes, IWTierRewardCostsAttributes, IJsonApiListPayload, IJsonApiItemPayload, IJsonApiItem } from '@perx/whistler';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
 
@@ -35,7 +35,7 @@ export class RewardsService implements ITableService {
   }
 
   public getReward(id: string): Observable<IRewardEntity> {
-    const params = {include: 'organization'};
+    const params = { include: 'organization' };
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.rewardHttp.getReward(id, httpParams).pipe(
       map(response => {
@@ -52,21 +52,21 @@ export class RewardsService implements ITableService {
     );
   }
 
-  public createReward(data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]): Observable<IJsonApiPayload<IWRewardEntityAttributes>> {
+  public createReward(data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
     const sendData: IJsonApiItem<IWRewardEntityAttributes> = RewardHttpAdapter.transformFromRewardForm(data, loyalties);
-    return this.rewardHttp.createReward({data: sendData});
+    return this.rewardHttp.createReward({ data: sendData });
   }
 
-  public duplicateReward(data: IRewardEntity): Observable<IJsonApiPayload<IWRewardEntityAttributes>> {
+  public duplicateReward(data: IRewardEntity): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
     const sendData: IJsonApiItem<IWRewardEntityAttributes> = RewardHttpAdapter.transformFromReward(data);
-    return this.rewardHttp.createReward({data: sendData});
+    return this.rewardHttp.createReward({ data: sendData });
   }
 
   public updateReward(id: string, data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]):
-    Observable<IJsonApiPayload<IWRewardEntityAttributes>> {
+    Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
     const sendData: IJsonApiItem<IWRewardEntityAttributes> = RewardHttpAdapter.transformFromRewardForm(data, loyalties);
     sendData.id = id;
-    return this.rewardHttp.updateReward(id, {data: sendData});
+    return this.rewardHttp.updateReward(id, { data: sendData });
   }
 
   public getRewardTierList(id: string): Observable<ITierRewardCost[]> {
@@ -115,7 +115,7 @@ export class RewardsService implements ITableService {
     return this.rewardHttp.createRewardTier(loyaltyCostValue);
   }
 
-  public patchRewardTier(tier: ILoyaltyTiersFormGroup , id: string)
+  public patchRewardTier(tier: ILoyaltyTiersFormGroup, id: string)
     : Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>> {
     const loyaltyCostValue = RewardHttpAdapter.transformFromLoyaltyForm(tier, id);
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
-import { IWLimitAttributes } from '@perx/whistler';
+import { IWLimitAttributes, IJsonApiListPayload, IJsonApiItemPayload } from '@perx/whistler';
 import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 import { map } from 'rxjs/operators';
 
@@ -20,20 +20,20 @@ export class LimitsHttpsService {
 
   public updateLimit(
     id: string,
-    data: IJsonApiPayload<IWLimitAttributes>,
+    data: IJsonApiItemPayload<IWLimitAttributes>,
     engagementType: string
-  ): Observable<IJsonApiPayload<IWLimitAttributes>> {
+  ): Observable<IJsonApiItemPayload<IWLimitAttributes>> {
     const eType = this.getEngagementTypeLink(engagementType);
     const url = `${ApiConfig.basePath}/${eType}/limits/${id}`;
-    return this.http.patch<IJsonApiPayload<IWLimitAttributes>>(url, data);
+    return this.http.patch<IJsonApiItemPayload<IWLimitAttributes>>(url, data);
   }
 
   public createLimit(
-    data: IJsonApiPayload<IWLimitAttributes>,
+    data: IJsonApiItemPayload<IWLimitAttributes>,
     engagementType: string
-  ): Observable<IJsonApiPayload<IWLimitAttributes>> {
+  ): Observable<IJsonApiItemPayload<IWLimitAttributes>> {
     const eType = this.getEngagementTypeLink(engagementType);
-    return this.http.post<IJsonApiPayload<IWLimitAttributes>>(
+    return this.http.post<IJsonApiItemPayload<IWLimitAttributes>>(
       `${ApiConfig.basePath}/${eType}/limits`,
       data
     );

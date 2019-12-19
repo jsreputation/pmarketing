@@ -5,7 +5,9 @@ import {
   IWLoyaltyRuleAttributes,
   IWLoyaltyRuleConditionAttributes,
   IWLoyaltyRulePointAttributes,
-  IWLoyaltyRuleSetAttributes
+  IWLoyaltyRuleSetAttributes,
+  IJsonApiItem,
+  IJsonApiListPayload
 } from '@perx/whistler';
 import { RulePointType } from '@cl-core/models/loyalty/rule-point-type.enum';
 import { RuleSetMatchType } from '@cl-core/models/loyalty/rule-set-match-type.enum';
@@ -157,7 +159,7 @@ export class LoyaltyRuleHttpAdapter {
     outcomesIncludes: { [outcomeId: string]: ILoyaltyRulePoint } = null
   ): ILoyaltyRuleSet {
     let formattedData = JsonApiParser.parseDataWithIncludes(data, LoyaltyRuleHttpAdapter.transformToRuleSetForm,
-      {rules: {fieldName: 'rules'}});
+      { rules: { fieldName: 'rules' } });
     if (Utils.isArray(formattedData)) {
       formattedData = formattedData[0];
     }

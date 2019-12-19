@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
-import { IWCampaignAttributes } from '@perx/whistler';
+import {
+  IWCampaignAttributes,
+  IJsonApiListPayload,
+  IJsonApiItemPayload
+} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -15,19 +19,22 @@ export class CampaignsHttpsService {
     return this.http.get<IJsonApiListPayload<IWCampaignAttributes>>(ApiConfig.campaignsPath, { params });
   }
 
-  public getCampaign(id: string): Observable<IJsonApiPayload<IWCampaignAttributes>> {
-    return this.http.get<IJsonApiPayload<IWCampaignAttributes>>(`${ApiConfig.campaignsPath}/${id}`);
+  public getCampaign(id: string): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
+    return this.http.get<IJsonApiItemPayload<IWCampaignAttributes>>(`${ApiConfig.campaignsPath}/${id}`);
   }
 
-  public updateCampaign(id: string, data: IJsonApiPayload<IWCampaignAttributes>): Observable<IJsonApiPayload<IWCampaignAttributes>> {
-    return this.http.patch<IJsonApiPayload<IWCampaignAttributes>>(ApiConfig.campaignsPath + '/' + id, data);
+  public updateCampaign(
+    id: string,
+    data: IJsonApiItemPayload<IWCampaignAttributes>
+  ): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
+    return this.http.patch<IJsonApiItemPayload<IWCampaignAttributes>>(ApiConfig.campaignsPath + '/' + id, data);
   }
 
-  public createCampaign(data: IJsonApiPayload<IWCampaignAttributes>): Observable<IJsonApiPayload<IWCampaignAttributes>> {
-    return this.http.post<IJsonApiPayload<IWCampaignAttributes>>(ApiConfig.campaignsPath, data);
+  public createCampaign(data: IJsonApiItemPayload<IWCampaignAttributes>): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
+    return this.http.post<IJsonApiItemPayload<IWCampaignAttributes>>(ApiConfig.campaignsPath, data);
   }
 
-  public deleteCampaign(id: string): Observable<IJsonApiPayload<IWCampaignAttributes>> {
-    return this.http.delete<IJsonApiPayload<IWCampaignAttributes>>(`${ApiConfig.campaignsPath}/${id}`);
+  public deleteCampaign(id: string): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
+    return this.http.delete<IJsonApiItemPayload<IWCampaignAttributes>>(`${ApiConfig.campaignsPath}/${id}`);
   }
 }

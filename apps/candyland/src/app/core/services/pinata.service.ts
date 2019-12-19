@@ -3,7 +3,7 @@ import { PinataHttpService } from '@cl-core/http-services/pinata-http.service';
 import { Observable } from 'rxjs';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { map } from 'rxjs/operators';
-import { IWPinataGameEngagementAttributes } from '@perx/whistler';
+import { IWPinataGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -23,14 +23,14 @@ export class PinataService {
     );
   }
 
-  public createPinata(data: IPinataForm): Observable<IJsonApiPayload<IWPinataGameEngagementAttributes>> {
+  public createPinata(data: IPinataForm): Observable<IJsonApiItemPayload<IWPinataGameEngagementAttributes>> {
     const sendData = EngagementHttpAdapter.transformFromPinataForm(data);
-    return this.pinataHttpService.createPinata({data: sendData});
+    return this.pinataHttpService.createPinata({ data: sendData });
   }
 
-  public updatePinata(id: string, data: IPinataForm): Observable<IJsonApiPayload<IWPinataGameEngagementAttributes>> {
+  public updatePinata(id: string, data: IPinataForm): Observable<IJsonApiItemPayload<IWPinataGameEngagementAttributes>> {
     const sendData = EngagementHttpAdapter.transformFromPinataForm(data);
     sendData.id = id;
-    return this.pinataHttpService.updatePinata(id, {data: sendData});
+    return this.pinataHttpService.updatePinata(id, { data: sendData });
   }
 }

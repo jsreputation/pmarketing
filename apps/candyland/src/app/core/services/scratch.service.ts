@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { ScratchHttpService } from '@cl-core/http-services/scratch-http.service';
-import { IWScratchGameEngagementAttributes } from '@perx/whistler';
+import { IWScratchGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -25,14 +25,14 @@ export class ScratchService {
     );
   }
 
-  public createScratch(data: IScratchForm): Observable<IJsonApiPayload<IWScratchGameEngagementAttributes>> {
+  public createScratch(data: IScratchForm): Observable<IJsonApiItemPayload<IWScratchGameEngagementAttributes>> {
     const sendData = EngagementHttpAdapter.transformFromScratchForm(data);
-    return this.scratchHttpService.createScratch({data: sendData});
+    return this.scratchHttpService.createScratch({ data: sendData });
   }
 
-  public updateScratch(id: string, data: IScratchForm): Observable<IJsonApiPayload<IWScratchGameEngagementAttributes>> {
+  public updateScratch(id: string, data: IScratchForm): Observable<IJsonApiItemPayload<IWScratchGameEngagementAttributes>> {
     const sendData = EngagementHttpAdapter.transformFromScratchForm(data);
     sendData.id = id;
-    return this.scratchHttpService.updateScratch(id, {data: sendData});
+    return this.scratchHttpService.updateScratch(id, { data: sendData });
   }
 }

@@ -1,4 +1,4 @@
-import { IWOutcomeAttributes } from '@perx/whistler';
+import { IWOutcomeAttributes, IJsonApiItem } from '@perx/whistler';
 
 import { ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { IOutcome } from '@cl-core/models/outcome/outcome';

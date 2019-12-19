@@ -1,5 +1,5 @@
 import { MerchantBranch } from './merchant';
-import { IWMerchantAttributes, IWMerchantBranchAttributes } from '@perx/whistler';
+import { IWMerchantAttributes, IWMerchantBranchAttributes, IJsonApiItem } from '@perx/whistler';
 
 export class MerchantHttpAdapter {
   public static transformToMerchantForm(data: IWMerchantAttributes): IMerchantForm {

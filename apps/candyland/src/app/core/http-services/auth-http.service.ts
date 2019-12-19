@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
-import { IWLoginAttributes, IWProfileAttributes } from '@perx/whistler';
+import { IWLoginAttributes, IWProfileAttributes, IJsonApiItemPayload, IJsonApiPostData } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -11,16 +11,16 @@ export class AuthHttpService {
   constructor(private http: HttpClient) {
   }
 
-  public signIn(data: IJsonApiItem<ILogin>): Observable<HttpResponse<IJsonApiPayload<IWLoginAttributes>>> {
-    return this.http.post<IJsonApiPayload<IWLoginAttributes>>(
+  public signIn(data: IJsonApiPostData<ILogin>): Observable<HttpResponse<IJsonApiItemPayload<IWLoginAttributes>>> {
+    return this.http.post<IJsonApiItemPayload<IWLoginAttributes>>(
       ApiConfig.signIn, { data }, { observe: 'response', params: { include: 'groups,credentials' } });
   }
 
-  public getUser(id: string): Observable<IJsonApiPayload<IWProfileAttributes>> {
-    return this.http.get<IJsonApiPayload<IWProfileAttributes>>(ApiConfig.IAMUsersPath + '/' + id);
+  public getUser(id: string): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
+    return this.http.get<IJsonApiItemPayload<IWProfileAttributes>>(ApiConfig.IAMUsersPath + '/' + id);
   }
 
-  public resetPassword(accountId: string, username: string): Observable<IJsonApiPayload<void>> {
+  public resetPassword(accountId: string, username: string): Observable<IJsonApiItemPayload<void>> {
     const req = {
       data: {
         attributes: {
@@ -30,7 +30,7 @@ export class AuthHttpService {
       }
     };
 
-    return this.http.post<IJsonApiPayload<void>>(`${ApiConfig.IAMUsersPath}/password`, req);
+    return this.http.post<IJsonApiItemPayload<void>>(`${ApiConfig.IAMUsersPath}/password`, req);
   }
 
   public changePassword(password: string, token: string): Observable<any> {
@@ -43,6 +43,6 @@ export class AuthHttpService {
         }
       }
     };
-    return this.http.put<IJsonApiPayload<void>>(`${ApiConfig.IAMUsersPath}/password`, req);
+    return this.http.put<IJsonApiItemPayload<void>>(`${ApiConfig.IAMUsersPath}/password`, req);
   }
 }

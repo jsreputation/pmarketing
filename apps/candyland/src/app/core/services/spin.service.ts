@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { map } from 'rxjs/operators';
-import {SpinHttpService} from '@cl-core/http-services/spin-http.service';
-import {IWSpinGameEngagementAttributes} from '@perx/whistler';
+import { SpinHttpService } from '@cl-core/http-services/spin-http.service';
+import { IWSpinGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -23,14 +23,14 @@ export class SpinService {
     );
   }
 
-  public createSpin(data: ISpinEntityForm): Observable<IJsonApiPayload<IWSpinGameEngagementAttributes>> {
+  public createSpin(data: ISpinEntityForm): Observable<IJsonApiItemPayload<IWSpinGameEngagementAttributes>> {
     const sentData = EngagementHttpAdapter.transformFromSpinForm(data);
-    return this.spinHttpService.createSpin({data: sentData});
+    return this.spinHttpService.createSpin({ data: sentData });
   }
 
-  public updateSpin(id: string, data: ISpinEntityForm): Observable<IJsonApiPayload<IWSpinGameEngagementAttributes>> {
+  public updateSpin(id: string, data: ISpinEntityForm): Observable<IJsonApiItemPayload<IWSpinGameEngagementAttributes>> {
     const sendData = EngagementHttpAdapter.transformFromSpinForm(data);
     sendData.id = id;
-    return this.spinHttpService.updateSpin(id, {data: sendData});
+    return this.spinHttpService.updateSpin(id, { data: sendData });
   }
 }

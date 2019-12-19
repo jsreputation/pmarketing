@@ -1,4 +1,4 @@
-import { IWRewardEntityAttributes, IWTierRewardCostsAttributes } from '@perx/whistler';
+import { IWRewardEntityAttributes, IWTierRewardCostsAttributes, IJsonApiItem } from '@perx/whistler';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';

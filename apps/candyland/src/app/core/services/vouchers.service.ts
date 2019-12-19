@@ -4,9 +4,10 @@ import { Observable } from 'rxjs';
 import { VouchersHttpService } from '@cl-core/http-services/vouchers-https.service';
 import { VouchersHttpAdapter } from '@cl-core/http-adapters/vouchers-http-adapter';
 import { map } from 'rxjs/operators';
-import { IWVouchersApi } from '@perx/whistler';
+import { IWVouchersApi, IJsonApiPostData } from '@perx/whistler';
 import { WCodeType } from '@perx/whistler';
 import { SOURCE_TYPE } from 'src/app/app.constants';
+import { IJsonApiItemPayload, IJsonApiItem } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -19,17 +20,17 @@ export class VouchersService {
     return this.vouchersHttp.getVouchers(params);
   }
 
-  public getVoucher(id: string): Observable<IJsonApiPayload<IWVouchersApi>> {
+  public getVoucher(id: string): Observable<IJsonApiItemPayload<IWVouchersApi>> {
     return this.vouchersHttp.getVoucher(id);
   }
 
-  public createVoucher(data: IWVouchersApi): Observable<IJsonApiPayload<IWVouchersApi>> {
+  public createVoucher(data: IWVouchersApi): Observable<IJsonApiItemPayload<IWVouchersApi>> {
     const formattedVoucher: IJsonApiItem<IWVouchersApi> = VouchersHttpAdapter.transformCreateVoucher(data);
     return this.vouchersHttp.createVoucher({ data: formattedVoucher });
   }
 
-  public uploadVouchers(url: string, rewardId: number): Observable<IJsonApiPayload<IWVouchersApi>> {
-    const data: IJsonApiItem<IWVouchersApi> = {
+  public uploadVouchers(url: string, rewardId: number): Observable<IJsonApiItemPayload<IWVouchersApi>> {
+    const data: IJsonApiPostData<IWVouchersApi> = {
       attributes: {
         source_type: SOURCE_TYPE,
         source_id: rewardId,
@@ -40,7 +41,7 @@ export class VouchersService {
     return this.vouchersHttp.createVoucher({ data });
   }
 
-  public getVouchersBatch(id: number): Observable<IJsonApiPayload<IWVouchersApi>> {
+  public getVouchersBatch(id: number): Observable<IJsonApiItemPayload<IWVouchersApi>> {
     return this.vouchersHttp.getBatch(id);
   }
 

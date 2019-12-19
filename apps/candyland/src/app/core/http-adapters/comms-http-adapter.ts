@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import { IWCommTemplateAttributes, IWCommEventAttributes } from '@perx/whistler';
+import { IWCommTemplateAttributes, IWCommEventAttributes, IJsonApiItem } from '@perx/whistler';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
 
