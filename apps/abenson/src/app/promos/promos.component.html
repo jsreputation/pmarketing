@@ -1,6 +1,6 @@
 <div class="container">
   <mat-tab-group mat-stretch-tabs>
-    <mat-tab label="Exclusives" *ngFor="let group of itemsGroup$">
+    <mat-tab label="{{group.label}}" *ngFor="let group of itemsGroup$">
       <div class="cards-container" *ngIf="group.items | async as items ">
         <mat-card *ngFor="let item of items" class="mat-item mat-elevation-z2">
           <img mat-card-image [src]="item.image" *ngIf="item.image">
