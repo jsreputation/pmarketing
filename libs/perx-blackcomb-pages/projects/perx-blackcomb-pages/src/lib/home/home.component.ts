@@ -12,7 +12,7 @@ import {
   of,
   Subject,
   combineLatest,
-  Subscriber,
+  Subscriber
 } from 'rxjs';
 import {
   tap,
@@ -20,7 +20,7 @@ import {
   map,
   retry,
   mergeMap,
-  takeLast,
+  takeLast
 } from 'rxjs/operators';
 
 import {
@@ -41,7 +41,7 @@ import {
   ConfigService
 } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
-import {Title} from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 
 const stubTabs: ITabConfigExtended[] = [
   {
@@ -237,5 +237,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   public goToReward(reward: IReward): void {
     this.router.navigate([`/reward-detail/${reward.id}`]);
+  }
+
+  //@ts-ignore
+  public onScroll(event): void {
+    const stTab = this.staticTab.find(tab => tab.rewardsType === 'Food & Beverage');
+    if (!stTab || !stTab.rewardsList) {
+      return;
+    }
+    if (!stTab.rewardsList) {
+      stTab.rewardsList = of([]);
+    }
+    forkJoin(this.rewardsService.getAllRewards(undefined, ['Food & Beverage']), stTab.rewardsList).subscribe((val) => {
+
+      stTab.rewardsList = of([...val[0], ...val[1]])
+    })
   }
 }
