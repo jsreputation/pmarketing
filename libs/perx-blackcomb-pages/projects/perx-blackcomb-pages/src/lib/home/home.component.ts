@@ -116,7 +116,7 @@ const stubTabs: ITabConfigExtended[] = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  private pageSize = 10;
+  private pageSize: number = 10;
   private currentTabIndex: number = 0;
   private destroy$: Subject<void> = new Subject();
   public theme: ITheme;
@@ -264,13 +264,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       stTab.currentPage,
       this.pageSize,
       undefined,
-      stTab.rewardsType ? [stTab.rewardsType] : undefined),
-      stTab.rewardsList).subscribe((val) => {
-        stTab.rewardsList = of([...val[0], ...val[1]])
-      })
+      stTab.rewardsType ? [stTab.rewardsType] : undefined), stTab.rewardsList
+    ).subscribe((val) => stTab.rewardsList = of([...val[0], ...val[1]]));
   }
 
-  public tabChanged(event: MatTabChangeEvent) {
+  public tabChanged(event: MatTabChangeEvent): void {
     this.currentTabIndex = event.index;
   }
 }

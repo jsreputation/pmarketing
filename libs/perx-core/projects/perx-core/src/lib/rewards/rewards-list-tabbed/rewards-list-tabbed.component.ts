@@ -13,7 +13,7 @@ export interface ITabConfig {
 
 export interface ITabConfigExtended extends ITabConfig {
   rewardsType: string | null;
-  currentPage?: number | null
+  currentPage?: number | null;
 }
 
 @Component({
