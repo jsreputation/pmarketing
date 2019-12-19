@@ -9,9 +9,10 @@
     <label class="card-label">{{'LOYALTY_FEATURE.RULES_APPLICATION' | translate}}</label>
     <div class="card-row" [class.match-type-field-only-view]="!editable">
       <mat-form-field>
-        <mat-select [value]="ruleSet?.matchType">
-          <mat-option value="match_first">{{'LOYALTY_FEATURE.MATCH_TYPE.MATCH_FIRST' | translate}}</mat-option>
-          <mat-option value="match_all">{{'LOYALTY_FEATURE.MATCH_TYPE.MATCH_ALL' | translate}}</mat-option>
+        <mat-select [value]="ruleSet.matchType" (valueChange)="changeMatchType($event)">
+          <ng-container *ngFor="let matchTypeOption of config?.matchType">
+            <mat-option [value]="matchTypeOption?.value">{{matchTypeOption?.title | translate}}</mat-option>
+          </ng-container>
         </mat-select>
         <mat-hint>{{'LOYALTY_FEATURE.MATCH_TYPE.HINT' | translate}}</mat-hint>
       </mat-form-field>
@@ -35,7 +36,7 @@
     </cl-point-earn-rules-list>
     <cl-button *ngIf="editable"
                [classList]="'tertiary'"
-               (click)="createRule(ruleSet)">
+               (click)="createRule()">
         <span>
          {{'LOYALTY_FEATURE.CREATE_RULE' | translate}}
         </span>

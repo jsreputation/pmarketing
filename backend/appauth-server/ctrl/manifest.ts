@@ -6,6 +6,7 @@ import { ICredentials } from '../types/apiConfig';
 import { Request, Response, NextFunction } from 'express';
 import { fetchTheme } from '../utils/theme';
 import { getQueryHost } from '../utils/utils';
+import { readFileSync } from 'fs';
 
 const exportedImgDirectory = '/static/generated';
 // max set to 1 so only most recent value will be kept, old will be replaced if new settings
@@ -63,7 +64,16 @@ const generateManifest = (
   };
 };
 
-export const manifest = (getCredentials: ((url: string) => Promise<ICredentials>)) => async (
+function getLocalManifest(appPath: string, res: Response, req: Request): void {
+  const manif: Manifest = JSON.parse(readFileSync(`${appPath}${req.path}`).toString());
+  if (manif) {
+    res.send(manif);
+  } else {
+    res.status(404).send('Not Found');
+  }
+}
+
+export const manifest = (getCredentials: ((url: string) => Promise<ICredentials>), appPath: string) => async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -75,6 +85,7 @@ export const manifest = (getCredentials: ((url: string) => Promise<ICredentials>
 
     const endpointTargetUrl = endpointCredential.target_url;
     const endpointRequest = await fetchTheme(endpointCredential);
+
     const tenantObj: IJsonApiItem<IWTenant> = endpointRequest.data.data[0];
     const displayProperties = tenantObj.attributes.display_properties;
     const hashedTheme = themeHasher(JSON.stringify(displayProperties)).toString(12);
@@ -94,7 +105,11 @@ export const manifest = (getCredentials: ((url: string) => Promise<ICredentials>
     if (e.response && e.response.data && e.response.status) {
       res.status(e.response.status).json(e.response.data);
     } else {
-      next(e);
+      try {
+        getLocalManifest(appPath, res, req);
+      } catch (e) {
+        next(e);
+      }
     }
   }
 };
