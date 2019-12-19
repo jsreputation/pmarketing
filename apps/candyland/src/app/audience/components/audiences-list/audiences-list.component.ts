@@ -1,4 +1,3 @@
-import { IWAudiences } from '@perx/whistler';
 import {
   Component,
   ChangeDetectionStrategy,
@@ -8,6 +7,9 @@ import {
   OnDestroy
 } from '@angular/core';
 import { MatSort } from '@angular/material';
+
+import { IWAudiences } from '@perx/whistler';
+
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 
 @Component({
