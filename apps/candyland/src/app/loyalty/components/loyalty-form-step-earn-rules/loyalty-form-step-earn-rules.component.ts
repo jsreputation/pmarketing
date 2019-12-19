@@ -14,6 +14,7 @@ export class LoyaltyFormStepEarnRulesComponent implements OnInit {
   @Input() public basicTierId: string;
   @Input() public basicTierRuleSet: ILoyaltyRuleSet;
   @Input() public customTierRuleSetMap: {[id: string]: ILoyaltyRuleSet};
+  @Input() public config: any;
   @Input() public loader: boolean;
   @Output() public rulesAction: EventEmitter<{ action: NewLoyaltyActions, data?: any }> = new EventEmitter();
 
