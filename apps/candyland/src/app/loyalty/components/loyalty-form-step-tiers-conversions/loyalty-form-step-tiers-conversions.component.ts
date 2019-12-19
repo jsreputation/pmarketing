@@ -11,7 +11,7 @@ import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 })
 export class LoyaltyFormStepTiersConversionsComponent implements OnInit {
   @Input() public group: FormGroup;
-  @Input() public currency: string;
+  @Input() public config: any;
   @Input() public customTierDataSource: CustomDataSource<ICustomTireForm>;
   @Output() public tiersConversionsAction: EventEmitter<{ action: NewLoyaltyActions, data?: ICustomTireForm }> = new EventEmitter();
 
