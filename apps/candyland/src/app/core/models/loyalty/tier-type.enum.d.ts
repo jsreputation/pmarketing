@@ -1,4 +1,4 @@
-declare enum TierType {
+export enum TierType {
   basicTier = 'basicTier',
   customTier = 'customTier'
 }

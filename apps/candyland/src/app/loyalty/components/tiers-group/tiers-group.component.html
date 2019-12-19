@@ -21,7 +21,7 @@
         <ng-container matColumnDef="joinMethod">
           <th mat-header-cell *matHeaderCellDef mat-sort-header="joinMethod"
               class="column-status">{{'LOYALTY_FEATURE.QUALIFICATION' | translate}}</th>
-          <td mat-cell *matCellDef="let element" class="column-status">
+          <td mat-cell *matCellDef="let element" class="column-status column-qualification">
             {{element.joinMethod | JoinMethod}}
           </td>
         </ng-container>
@@ -39,9 +39,7 @@
         <ng-container matColumnDef="pointsExpiry">
           <th mat-header-cell *matHeaderCellDef>{{'LOYALTY_FEATURE.POINTS_EXPIRY' | translate}}</th>
           <td mat-cell *matCellDef="let element">
-            {{element?.pointsExpiry?.amount}} {{element?.pointsExpiry?.type}} from
-            {{element?.pointsExpiry?.trigger === pointsExpireTrigger.accrual ? 'earning' : ''}}
-            {{element?.pointsExpiry?.trigger === pointsExpireTrigger.inactivity ? 'user inactivity' : ''}}
+            {{element?.pointsExpiry | clPointsExpiredInfo}}
           </td>
         </ng-container>
 
