@@ -36,4 +36,5 @@ export class ApiConfig {
   public static getLoyaltyRuleSetPath: string = `${ApiConfig.basePath}/outcome/rule_sets`;
   public static getLoyaltyRulePath: string = `${ApiConfig.basePath}/outcome/rules`;
   public static getLoyaltyRuleConditionPath: string = `${ApiConfig.basePath}/outcome/rule_conditions`;
+  public static getLoyaltyRulePointsCalculator: string = `${ApiConfig.basePath}/loyalty/point_calculators`;
 }
