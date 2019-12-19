@@ -75,10 +75,9 @@ export const removeCredentialCache = () => (
     const accountId = req.body.accountId;
     // @ts-ignore
     cache.get(accountId, (tokenErr: Error, result: ITokenTableRowData) => {
-      console.log('result: ' + result);
       cache.del(accountId);
     });
-    res.json(accountId + 'deleted successfully!');
+    res.json(accountId + ' deleted successfully!');
   } catch (e) {
     next(e);
   }
