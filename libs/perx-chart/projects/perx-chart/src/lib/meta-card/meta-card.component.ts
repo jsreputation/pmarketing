@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { DataService } from '../data.service';
-import {Observable, of, Subject, Subscription, timer} from 'rxjs';
+import { Observable, of, Subject, Subscription, timer } from 'rxjs';
 import { IData } from '../data.model';
-import {switchMap, takeUntil} from 'rxjs/operators';
+import { mergeMap, takeUntil } from 'rxjs/operators';
 
 export enum CardType {
   pie = 'pie',
@@ -76,7 +76,7 @@ export class MetaCardComponent implements OnChanges, OnDestroy {
       this.requestData$ =
         timer(0, this.reloadInterval * 1000)
           .pipe(
-            switchMap(() => this.dataService.getData(this.id, this.parameters)),
+            mergeMap(() => this.dataService.getData(this.id, this.parameters)),
             takeUntil(this.destroy$)
           );
     }
