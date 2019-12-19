@@ -31,7 +31,8 @@ app.use('/static', express.static('static'));
 const PORT = process.env.PORT || 4000;
 const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
 const BASE_HREF = process.env.BASE_HREF || '/';
-const getTokens = process.env.IS_WHISTLER ? getCredential : getCredentials;
+const IS_WHISTLER = process.env.IS_WHISTLER;
+const getTokens = IS_WHISTLER ? getCredential : getCredentials;
 console.log('process.env: ', process.env);
 app.options('*', cors());
 
@@ -72,6 +73,7 @@ app.use(Sentry.Handlers.errorHandler());
 // Start up the Node server
 const server = app.listen(PORT, () => {
   console.log(`Node server listening on http://localhost:${PORT}`);
+  console.log(`Node server is whistler: ${IS_WHISTLER}`);
 });
 
 const processInterruption = (signals: NodeJS.Signals) => {
