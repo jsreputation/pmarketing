@@ -72,7 +72,10 @@ describe('AccountComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AccountComponent],
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([{
+          path: 'login',
+          component: AccountComponent
+        }]),
         ProfileModule,
         MatCardModule,
         MatListModule,
@@ -119,5 +122,11 @@ describe('AccountComponent', () => {
     component.logout();
     expect(routerSpy).toHaveBeenCalledWith(['/login']);
     expect(authSpy).toHaveBeenCalled();
+  });
+
+  it('should navigate to profile', () => {
+    const routerSpy = spyOn(router, 'navigateByUrl');
+    component.onProfileClicked();
+    expect(routerSpy).toHaveBeenCalledWith('profile');
   });
 });

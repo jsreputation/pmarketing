@@ -1,0 +1,65 @@
+<div class="sub-menu-title">
+  <ng-content select=".title"></ng-content>
+</div>
+<div class="sub-menu-wrap">
+  <div class="sub-group-menu">
+    <p class="sub-menu-group-title">
+      Launch
+    </p>
+    <cl-sub-menu-item [count]="getCount(menuType.onCampaignLaunch)"
+                      title="On Campaign Launch"
+                      [class.active]="checkActiveMenu(menuType.onCampaignLaunch)"
+                      (click)="clickOnMenu(menuType.onCampaignLaunch)"
+    >
+    </cl-sub-menu-item>
+  </div>
+
+  <div class="sub-group-menu">
+    <p class="sub-menu-group-title">
+      Reminders
+    </p>
+    <cl-sub-menu-item [count]="getCount(menuType.campaignNotCompleted)"
+                      title="Campaign not completed"
+                      [class.active]="checkActiveMenu(menuType.campaignNotCompleted)"
+                      (click)="clickOnMenu(menuType.campaignNotCompleted)"
+    >
+    </cl-sub-menu-item>
+    <cl-sub-menu-item [count]="getCount(menuType.beforeCampaignEnds)"
+                      title="Before Campaign ends"
+                      [class.active]="checkActiveMenu(menuType.beforeCampaignEnds)"
+                      (click)="clickOnMenu(menuType.beforeCampaignEnds)"
+    >
+    </cl-sub-menu-item>
+    <!--<cl-sub-menu-item [count]="getCount(menuType.beforeRewardExpires)"-->
+                      <!--title="Before Reward expires"-->
+                      <!--[class.active]="checkActiveMenu(menuType.beforeRewardExpires)"-->
+                      <!--(click)="clickOnMenu(menuType.beforeRewardExpires)"-->
+    <!--&gt;-->
+    <!--</cl-sub-menu-item>-->
+    <!--<cl-sub-menu-item *ngIf="showSlotItem()"-->
+                      <!--[count]="getCount(menuType.noOfStampsToNextReward)"-->
+                      <!--title="No. of Stamps to Next Reward"-->
+                      <!--[class.active]="checkActiveMenu(menuType.noOfStampsToNextReward)"-->
+                      <!--(click)="clickOnMenu(menuType.noOfStampsToNextReward)"-->
+    <!--&gt;-->
+    <!--</cl-sub-menu-item>-->
+  </div>
+  <!--<div class="sub-group-menu">-->
+    <!--<p class="sub-menu-group-title">-->
+      <!--Thank You-->
+    <!--</p>-->
+    <!--<cl-sub-menu-item *ngIf="showSlotItem()"-->
+                      <!--[count]="getCount(menuType.earnedStamp)"-->
+                      <!--title="Earned a Stamp"-->
+                      <!--[class.active]="checkActiveMenu(menuType.earnedStamp)"-->
+                      <!--(click)="clickOnMenu(menuType.earnedStamp)"-->
+    <!--&gt;-->
+    <!--</cl-sub-menu-item>-->
+    <!--<cl-sub-menu-item [count]="getCount(menuType.earnedReward)"-->
+                      <!--title="Earned a Reward"-->
+                      <!--[class.active]="checkActiveMenu(menuType.earnedReward)"-->
+                      <!--(click)="clickOnMenu(menuType.earnedReward)"-->
+    <!--&gt;-->
+    <!--</cl-sub-menu-item>-->
+  <!--</div>-->
+</div>
