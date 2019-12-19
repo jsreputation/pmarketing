@@ -14,16 +14,20 @@ export class DashboardAppPage {
 
 export class EngagementAppPage {
 
+  public static engagementItemArray(): ElementArrayFinder {
+    return element.all(by.css('div.engagement-item'));
+  }
+
+  public static engagementItemTypeArray(): ElementArrayFinder {
+    return element.all(by.css('p.engagement-item-type'));
+  }
+
   public navigateToEngagement(): Promise<string> {
     return browser.get('engagements') as Promise<string>;
   }
 
   public engagementTabOption(): ElementFinder {
     return element.all(by.css('h3')).get(2);
-  }
-
-  public engagementCreateNewButton(): ElementFinder {
-    return element(by.css('cl-button'));
   }
 
   public selectEngagementTypeDialog(): ElementFinder {
@@ -49,6 +53,17 @@ export class EngagementAppPage {
     return element.all(by.css('div.engagement-item-info>p.engagement-item-name')).first();
   }
 
+  public gamePinataOptions(): ElementFinder {
+    return element.all(by.css('img[alt="game-icon"]')).get(1);
+  }
+
+  public gamePinataName(): ElementFinder {
+    return element.all(by.css('.engagement-selector-game>.engagement-selector-name')).get(1);
+  }
+
+  public confirmModal(): ElementFinder {
+    return element(by.css('cl-confirm-modal'));
+  }
 }
 
 export class CreateShakeTheTreeAppPage {
@@ -56,16 +71,13 @@ export class CreateShakeTheTreeAppPage {
   public navigateToShakeTheTree(): Promise<string> {
     return browser.get('engagements/games/new-shake') as Promise<string> ;
   }
-  public shakeTreeCreateNewButton(): ElementFinder {
-    return element.all(by.css('button')).get(2);
-  }
   public shakeTreeTypeOptions(): ElementFinder {
     return element.all(by.tagName('cl-type-item')).get(1);
   }
   public shakeTreeSaveButton(): ElementFinder {
     return element(by.css('button.btn.mat-flat-button.primary'));
   }
-  public shakeTreeLaunchButton(): ElementFinder {
+  public launchNowButton(): ElementFinder {
     return element.all(by.css('button.btn.mat-flat-button.primary')).last();
   }
   public shakeTreeGamesButton(): ElementFinder {
@@ -131,17 +143,8 @@ export class CreateShakeTheTreeAppPage {
   public previewMyChoice(): ElementFinder {
     return element(by.className('gift-img gift-img__1 ng-star-inserted'));
   }
-  public uploadGiftImage(): ElementFinder {
-    return element.all(by.css('input[type="file"]')).get(0);
-  }
-  public uploadBackgroundImage(): ElementFinder {
-    return element.all(by.css('input[type="file"]')).get(1);
-  }
   public uploadedImageObj(): ElementFinder {
-    return element(by.css('div.image-wrap.ng-star-inserted>img.image'));
-  }
-  public errorUploadMessage(): ElementFinder {
-    return element(by.css('div.upload-error-wrap.ng-star-inserted>span'));
+    return element(by.css('div.image-wrap.ng-star-inserted>img'));
   }
   public emptyInputFields(): ElementArrayFinder {
     return element.all(by.css('input[type="file"]'));
@@ -159,19 +162,13 @@ export class CreateShakeTheTreeAppPage {
     return element.all(by.css('input[type=text]')).get(0);
   }
   public launchLaterBtn(): ElementFinder {
-    return element(by.css('cl-button.actions-close'));
+    return element(by.css('button.btn.mat-flat-button.secondary'));
   }
   public fileDialog(): ElementFinder {
     return element(by.css('cl-confirm-modal'));
   }
   public transactionDate(): ElementFinder {
     return element.all(by.css('p.engagement-item-date')).first();
-  }
-  public firstDialogEl(): ElementFinder {
-    return element.all(by.css('cl-button')).get(1);
-  }
-  public secondDialogEl(): ElementFinder {
-    return element.all(by.css('cl-button')).get(2);
   }
 }
 export class LoginAppPage {
@@ -209,10 +206,10 @@ export class LoginAppPage {
 export class CreateSurveyAppPage {
 
   public navigateToSurvey(): Promise<string> {
-    return browser.get('engagements/new-survey/questions') as Promise<string>;
+    return browser.get('engagements/new-survey') as Promise<string>;
   }
   public surveyCreateNewButton(): ElementFinder {
-    return element.all(by.css('button')).get(2);
+    return element(by.className('btn mat-flat-button primary'));
   }
   public questionButton(): ElementFinder {
     return element.all(by.css('cl-button')).last();
@@ -236,7 +233,7 @@ export class CreateSurveyAppPage {
     return element.all(by.css('mat-option.mat-option.ng-star-inserted'));
   }
   public previewElement(): ElementFinder {
-    return element(by.className('mobile-preview-mobile'));
+    return element(by.className('mobile-preview'));
   }
   public questionForm(): ElementFinder {
     return element.all(by.css('div.question-form-header')).last();
@@ -280,17 +277,8 @@ export class CreateSurveyAppPage {
   public subHeadlineTextField(): ElementFinder {
     return element.all(by.css('div.mat-form-field-infix>input')).get(2);
   }
-  public questionTextField(): ElementFinder {
-    return element.all(by.css('div.mat-form-field-infix>input')).get(3);
-  }
   public confirmModal(): ElementFinder {
     return element(by.css('cl-confirm-modal'));
-  }
-  public saveButton(): ElementFinder {
-    return element.all(by.css('cl-button')).get(1);
-  }
-  public launchNowButton(): ElementFinder {
-    return element.all(by.css('cl-button')).get(2);
   }
 
 }
@@ -301,13 +289,7 @@ export class CreateHitThePinataAppPage {
     return browser.get('engagements/games/new-pinata') as Promise<string>;
   }
   public uploadedBackgroundImageObj(): ElementFinder {
-    return element(by.css('div.image-wrap.ng-star-inserted>img.image'));
-  }
-  public pinataDesign(): ElementFinder {
-    return element.all(by.css('cl-images-preview')).get(1);
-  }
-  public pinataBackgroundDesign(): ElementFinder {
-    return element.all(by.css('cl-images-preview')).get(4);
+    return element(by.css('div.image-wrap.ng-star-inserted>img'));
   }
   public pinataImage(): ElementFinder {
     return element(by.css('img.img'));
@@ -327,12 +309,34 @@ export class CreateHitThePinataAppPage {
   public subHeadlinePreview(): ElementArrayFinder {
     return element.all(by.className('mobile-preview-sub-headline'));
   }
-
 }
 export class CreateInstantRewardAppPage {
 
-  public navigateToCreateInstantReward(): Promise<string> {
+  public static instantRewardBtn(): ElementFinder {
+    return element.all(by.css('button.engagement-selector')).get(3);
+  }
+
+  public static navigateToCreateInstantReward(): Promise<string> {
     return browser.get('engagements/new-instant-reward') as Promise<string> ;
+  }
+
+  public static mobileHeadline(): ElementFinder {
+    return element(by.css('p.mobile-preview-headline'));
+  }
+  public static mobileSubHeadline(): ElementFinder {
+    return element(by.css('p.mobile-preview-sub-headline'));
+  }
+
+  public static cardPreview(): ElementFinder {
+    return element(by.css('div.mobile-preview-card'));
+  }
+
+  public static backgroundPreview(): ElementFinder {
+    return element(by.css('div.mobile-preview-background'));
+  }
+
+  public static mobileButtonPreview(): ElementFinder {
+    return element(by.css('button.mobile-preview-btn'));
   }
 
 }
@@ -341,21 +345,93 @@ export class RewardAppPage {
 
   public navigateToReward(): Promise<string> {
     return browser.get('rewards') as Promise<string> ;
-  }
-
+ }
+ public rewardTab(): ElementFinder {
+    return element.all(by.css('h3')).get(1);
+ }
+ public searchBar(): ElementFinder {
+    return element(by.css('input'));
+ }
+ public rewardList(): ElementFinder {
+    return element(by.css('table'));
+ }
+ public filterItems(): ElementFinder {
+    return element(by.className('name-cell__link'));
+ }
 }
 
 export class CreateRewardAppPage {
 
   public navigateToRewardCreate(): Promise<string> {
-    return browser.get('rewards/new-reward') as Promise<string> ;
+
+    return browser.get('rewards/new-reward') as Promise<string>;
+  }
+  public headerField(): ElementFinder {
+    return element.all(by.css('input[ng-reflect-type="text"]')).get(0);
+  }
+  public voucherCodeField(): ElementFinder {
+    return element.all(by.css('input[ng-reflect-type="text"]')).get(1);
+  }
+  public textField(): ElementArrayFinder {
+    return element.all(by.css('textarea'));
+  }
+  public selectField(): ElementArrayFinder {
+    return element.all(by.css('div.mat-select-trigger'));
+  }
+  public rewardOptions(): ElementArrayFinder {
+    return element.all(by.css('span.mat-option-text'));
+  }
+  public loadRadioButton(): ElementFinder {
+    return element.all(by.className('mat-radio-ripple mat-ripple')).get(4);
+  }
+  public radioButton(): ElementFinder {
+    return element.all(by.css('div.mat-radio-outer-circle')).get(4);
+  }
+  public radioPrimaryButton(): ElementFinder {
+    return element.all(by.className('mat-radio-button mat-primary ng-star-inserted')).get(2);
+  }
+  public fileUploadField(): ElementFinder {
+    return element.all(by.css('input[type=file]')).get(1);
+  }
+  public checkboxField(): ElementArrayFinder {
+    return element.all(by.css('input[type=checkbox]'));
+  }
+  public numberField(): ElementArrayFinder {
+    return element.all(by.css('input[type=number]'));
+  }
+  public slider(): ElementArrayFinder {
+    return element.all(by.className('mat-slide-toggle-thumb-container'));
+  }
+  public inputFileField(): ElementFinder {
+    return element(by.css('input[type=file]'));
+  }
+  public fileUploaded(): ElementFinder {
+    return element(by.css('div.image-wrap.ng-star-inserted>img'));
+  }
+  public fileName(): ElementFinder {
+    return element(by.css('span.upload-file-file-name'));
+  }
+  public errorMessage(): ElementFinder {
+    return element(by.className('error upload-file-error ng-star-inserted'));
+  }
+  public uploadSection(): ElementFinder {
+    return element(by.css('input.upload-file-input.ng-star-inserted'));
+  }
+  public merchantButtonArray(): ElementArrayFinder {
+    return element.all(by.css('.merchant-btn.mat-stroked-button.mat-primary'));
+  }
+  public firstMerchantsRow(): ElementFinder {
+    return element.all(by.css('tr.mat-row.ng-star-inserted')).get(0);
+  }
+  public dropDownMenu(): ElementArrayFinder {
+    return element.all(by.className('mat-select-arrow-wrapper'));
   }
 
 }
 
 export class CampaignAppPage {
 
-  public navigateToCampaign(): Promise<string> {
+  public static navigateToCampaign(): Promise<string> {
     return browser.get('campaigns') as Promise<string> ;
   }
 
@@ -363,8 +439,20 @@ export class CampaignAppPage {
 
 export class CreateCampaignAppPage {
 
-  public navigateToCreateCampaign(): Promise<string> {
+  public static navigateToCreateCampaign(): Promise<string> {
     return browser.get('campaigns/new-campaign') as Promise<string> ;
+  }
+
+  public static campaignDialogTitle(): ElementFinder {
+    return element(by.id('dialogTitle-selectRewards'));
+  }
+
+  public static campaignMatRadioAudience(): ElementFinder {
+    return element(by.xpath('//*[@id="mat-radio-5"]/label/div[1]/div[1]'));
+  }
+
+  public static campaignMatRadioSms(): ElementFinder {
+    return element(by.xpath('//*[@id="mat-radio-3"]/label/div[1]/div[1]'));
   }
 
 }
@@ -395,12 +483,8 @@ export class AudienceAppPage {
     return element(by.css('mat-select[formcontrolname=audienceList]'));
   }
 
-  public static audienceSpan(): ElementFinder {
-    return element(by.xpath('(//*[@href="/audience/1"][1]/span)[2]'));
-  }
-
-  public static audienceCheckboxContainer(): ElementArrayFinder {
-    return element.all(by.css('div.mat-checkbox-inner-container'));
+  public static audienceSpan(): ElementArrayFinder {
+    return element.all(by.css('tr.mat-row.ng-star-inserted>.column-featured span'));
   }
 
   public static audienceColumnList(): ElementArrayFinder {
@@ -410,24 +494,34 @@ export class AudienceAppPage {
 }
 
 export class BlackcombWalletAppPage {
-
   public navigateBlackcombWalletApp(): Promise<string> {
     return browser.get('https://generic-blackcomb-dev1.uat.whistler.perxtech.io/wallet') as Promise<string> ;
   }
-
 }
 
 export class BlackcombHomeAppPage {
-
-  public navigateToBlackcombHomeApp(): Promise<string> {
+  public static navigateToBlackcombHomeApp(): Promise<string> {
     return browser.get('https://generic-blackcomb-dev1.uat.whistler.perxtech.io/home') as Promise<string> ;
   }
+}
 
+export class BlackcombHistoryAppPage {
+  public static navigateToBlackcombHistoryApp(): Promise<string> {
+    return browser.get('https://generic-blackcomb-dev1.uat.whistler.perxtech.io/loading?cid=86') as Promise<string> ;
+  }
 }
 
 export class ElementApp {
   public static h3Array(): ElementArrayFinder {
     return element.all(by.css('h3'));
+  }
+
+  public static h1(): ElementFinder {
+    return element(by.css('h1'));
+  }
+
+  public static h4(): ElementFinder {
+    return element(by.css('h4'));
   }
 
   public static inputText(): ElementFinder {
@@ -448,6 +542,14 @@ export class ElementApp {
 
   public static inputFile(): ElementFinder {
     return element(by.css('input[type=file]'));
+  }
+
+  public static inputFileArray(): ElementArrayFinder {
+    return element.all(by.css('input[type=file]'));
+  }
+
+  public static inputNumberArray(): ElementArrayFinder {
+    return element.all(by.css('input[type=number]'));
   }
 
   public static clButton(): ElementFinder {
@@ -506,6 +608,18 @@ export class ElementApp {
     return element(by.css('mat-tab-group'));
   }
 
+  public static matToolbar(): ElementFinder {
+    return element.all(by.css('mat-toolbar')).get(1);
+  }
+
+  public static matToolbarLinkArray(): ElementArrayFinder {
+    return element.all(by.css('mat-toolbar>a'));
+  }
+
+  public static matCardArray(): ElementArrayFinder {
+    return element.all(by.css('mat-card'));
+  }
+
   public static clSimpleMobileView(): ElementFinder {
     return element(by.css('cl-simple-mobile-view'));
   }
@@ -518,8 +632,8 @@ export class ElementApp {
     return element.all(by.css('div.mat-radio-inner-circle'));
   }
 
-  public static spanUploadError(): ElementFinder {
-    return element(by.css('span.upload-error'));
+  public static pUploadError(): ElementFinder {
+    return element(by.css('p.upload-error'));
   }
 
   public static matFormFieldFlex(): ElementArrayFinder {
@@ -528,5 +642,116 @@ export class ElementApp {
 
   public static matSelectArrowWrapper(): ElementArrayFinder {
     return element.all(by.css('div.mat-select-arrow-wrapper'));
+  }
+
+  public static matFlatButtonArray(): ElementArrayFinder {
+    return element.all(by.css('button.btn.mat-flat-button'));
+  }
+
+  public static matTable(): ElementFinder {
+    return element(by.className('table mat-table'));
+  }
+
+  public static tdGridCell(): ElementArrayFinder {
+    return element.all(by.css('td[role=gridcell]'));
+  }
+
+  public static pRewardItem(): ElementArrayFinder {
+    return element.all(by.css('p.reward-item-name'));
+  }
+
+  public static matCheckboxFrame(): ElementArrayFinder {
+    return element.all(by.css('div.mat-checkbox-frame'));
+  }
+
+  public static matCheckboxInnerContainer(): ElementArrayFinder {
+    return element.all(by.css('div.mat-checkbox-inner-container'));
+  }
+
+  public static matExpansionPanel(): ElementArrayFinder {
+    return element.all(by.css('mat-expansion-panel'));
+  }
+
+  public static matExpansionPanelHeader(): ElementArrayFinder {
+    return element.all(by.css('mat-expansion-panel-header'));
+  }
+
+  public static matSelectTrigger(): ElementArrayFinder {
+    return element.all(by.css('div.mat-select-trigger'));
+  }
+
+  public static matRadioGroup(): ElementArrayFinder {
+    return element.all(by.css('mat-radio-group'));
+  }
+
+  public static matSelect(): ElementArrayFinder {
+    return element.all(by.css('mat-select'));
+  }
+
+  public static spanUploadFile(): ElementFinder {
+    return element(by.css('span.upload-file-file-name'));
+  }
+
+  public static matRadioButton(): ElementArrayFinder {
+    return element.all(by.css('mat-radio-button'));
+  }
+
+  public static matCard(): ElementFinder {
+    return element(by.css('mat-card'));
+  }
+
+  public static divQuestion(): ElementArrayFinder {
+    return element.all(by.css('div.question'));
+  }
+
+  public static divWelcomeText(): ElementFinder {
+    return element(by.css('div.welcome-text.ng-star-inserted'));
+  }
+
+  public static divTitle(): ElementArrayFinder {
+    return element.all(by.css('div[class=title]'));
+  }
+
+  public static matButtonRipple(): ElementFinder {
+    return element(by.css('div.mat-button-ripple'));
+  }
+
+  public static matTabList(): ElementFinder {
+    return element(by.css('div.mat-tab-list'));
+  }
+
+  public static spanMatButtonWrapper(): ElementFinder {
+    return element(by.css('span.mat-button-wrapper'));
+  }
+
+  public static imgArray(): ElementArrayFinder {
+    return element.all(by.css('img'));
+  }
+
+  public static button(): ElementFinder {
+    return element(by.css('button'));
+  }
+
+  public static matTabLabelContent(): ElementArrayFinder {
+    return element.all(by.css('div.mat-tab-label-content'));
+  }
+  public static inputArray(): ElementArrayFinder {
+    return element.all(by.css('input'));
+  }
+
+  public static designImageArray(): ElementArrayFinder {
+    return element.all(by.css('cl-images-preview'));
+  }
+
+  public static engagementCreated(): ElementFinder {
+    return element.all(by.css('p.engagement-item-name')).get(0);
+  }
+
+  public static errorUploadMessage(): ElementFinder {
+    return element.all(by.css('p.upload-error.ng-star-inserted')).get(1);
+  }
+
+  public static imageClear(): ElementFinder {
+    return element(by.css('button.image-clear'));
   }
 }

@@ -1,4 +1,4 @@
-import { ThemesService } from '@perx/core';
+import { ConfigService } from '@perx/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ContentComponent } from './content.component';
@@ -11,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('ContentComponent', () => {
   let component: ContentComponent;
   let fixture: ComponentFixture<ContentComponent>;
-  const themeSvcStub: Partial<ThemesService> = {
+  const configSvcStub: Partial<ConfigService> = {
     getAccountSettings: () => of()
   };
 
@@ -25,7 +25,7 @@ describe('ContentComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
-        { provide: ThemesService, useValue: themeSvcStub },
+        { provide: ConfigService, useValue: configSvcStub },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -54,8 +54,8 @@ describe('ContentComponent', () => {
     });
 
     it('should display the error message, If key is valid but the content cannot be downloaded', fakeAsync(() => {
-      const themesService: ThemesService = fixture.debugElement.injector.get<ThemesService>(
-        ThemesService as Type<ThemesService>);
+      const themesService: ConfigService = fixture.debugElement.injector.get<ConfigService>(
+        ConfigService as Type<ConfigService>);
 
       const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of(
         {
@@ -80,8 +80,8 @@ describe('ContentComponent', () => {
     }));
 
     it('If the key is valid and the content can be fetched, it should render the fetched content.', fakeAsync(() => {
-      const themesService: ThemesService = fixture.debugElement.injector.get<ThemesService>(
-        ThemesService as Type<ThemesService>);
+      const themesService: ConfigService = fixture.debugElement.injector.get<ConfigService>(
+        ConfigService as Type<ConfigService>);
 
       const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of(
         {
@@ -106,8 +106,8 @@ describe('ContentComponent', () => {
     }));
 
     it('should display a spinner', fakeAsync(() => {
-      const themesService: ThemesService = fixture.debugElement.injector.get<ThemesService>(
-        ThemesService as Type<ThemesService>);
+      const themesService: ConfigService = fixture.debugElement.injector.get<ConfigService>(
+        ConfigService as Type<ConfigService>);
 
       const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of(
         {
@@ -135,8 +135,8 @@ describe('ContentComponent', () => {
     }));
 
     it('If the key does not have any matching page, it should display the error message.', fakeAsync(() => {
-      const themesService: ThemesService = fixture.debugElement.injector.get<ThemesService>(
-        ThemesService as Type<ThemesService>);
+      const themesService: ConfigService = fixture.debugElement.injector.get<ConfigService>(
+        ConfigService as Type<ConfigService>);
 
       const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of());
       component.ngOnInit();
@@ -161,8 +161,8 @@ describe('ContentComponent', () => {
     });
 
     it('If there is no routeParam key, it should display the error message.', fakeAsync(() => {
-      const themesService: ThemesService = fixture.debugElement.injector.get<ThemesService>(
-        ThemesService as Type<ThemesService>);
+      const themesService: ConfigService = fixture.debugElement.injector.get<ConfigService>(
+        ConfigService as Type<ConfigService>);
 
       const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of());
       component.ngOnInit();

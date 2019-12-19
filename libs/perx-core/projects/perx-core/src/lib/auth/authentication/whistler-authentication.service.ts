@@ -1,7 +1,7 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
 import { of, Observable, throwError, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
@@ -14,12 +14,12 @@ import {
 import { Config } from '../../config/config';
 import {
   IWAppAccessTokenResponse,
-  IWMessageResponse,
   IWCognitoLogin,
   IJsonApiListPayload,
   IWProfileAttributes,
 } from '@perx/whistler';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
+import { IMessageResponse } from './authentication.service';
 
 interface IUserJWTRequest {
   identifier: string;
@@ -129,7 +129,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return of(isRefreshTokenComplete);
   }
 
-  public autoLogin(): Observable<any> {
+  public autoLogin(): Observable<void> {
     return this.getUserWithPI().pipe(
       tap(
         (res: IJsonApiListPayload<IWCognitoLogin>) => {
@@ -142,54 +142,19 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
           this.saveUserId(Number.parseInt(res.data[0].id, 10));
           this.saveUserAccessToken(userBearer);
         }
-      )
-    );
-  }
-
-  public createUserAndAutoLogin(pi: string, userObj?: { [key: string]: any }, anonymous?: boolean): Observable<any> {
-    return this.createUserWithPI(pi, userObj, anonymous).pipe(
-      tap(
-        (res: IJsonApiListPayload<IWCognitoLogin>) => {
-          const userBearer = res.data[0].attributes.jwt;
-          if (!userBearer) {
-            throw new Error('Get authentication token failed!');
-          }
-          if (anonymous === undefined) {
-            anonymous = false;
-          }
-          this.savePI(pi);
-          this.saveAnonymous(anonymous);
-          this.saveUserId(Number.parseInt(res.data[0].id, 10));
-          this.saveUserAccessToken(userBearer);
-        }
-      )
+      ),
+      map(() => void 0)
     );
   }
 
   private getUserWithPI(): Observable<IJsonApiListPayload<IWCognitoLogin>> {
-    const user = (window as any).primaryIdentifier || this.getPI();
+    const user: string = (window as any).primaryIdentifier || this.getPI();
     const userJWTRequest: IUserJWTRequest = {
       url: location.host,
       identifier: user
     };
 
     return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.preAuthEndpoint, userJWTRequest);
-  }
-
-  private createUserWithPI(
-    pi: string,
-    userObj?: { [key: string]: any },
-    anonymous?: boolean
-  ): Observable<IJsonApiListPayload<IWCognitoLogin>> {
-    const userJWTRequest: IUserJWTRequest = {
-      url: location.host,
-      identifier: pi,
-      anonymous
-    };
-    if (userObj) {
-      userJWTRequest.profile = WhistlerAuthenticationService.UsertoWUser(userObj, pi);
-    }
-    return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.createUsersEndPoint, userJWTRequest);
   }
 
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
@@ -201,7 +166,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   // @ts-ignore
-  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<any> {
+  public login(user: string, pass: string, mechId?: string, campaignId?: string): Observable<void> {
     return this.getIamUser(user, pass, mechId).pipe(
       tap(
         res => {
@@ -241,28 +206,60 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public logout(): void {
-    this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'pi']);
+    this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'pi', 'anonymous']);
   }
 
   // @ts-ignore
-  public forgotPassword(phone: string): Observable<IWMessageResponse> {
+  public forgotPassword(phone: string): Observable<IMessageResponse> {
     return throwError('Not implement yet');
   }
 
   // @ts-ignore
-  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IWMessageResponse> {
+  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
     return throwError('Not implement yet');
   }
 
   // @ts-ignore
-  public resendOTP(phone: string): Observable<IWMessageResponse> {
+  public resendOTP(phone: string): Observable<IMessageResponse> {
     return throwError('Not implement yet');
+  }
+
+  // TODO createUserAndAutoLogin and sinup should be merged
+  public createUserAndAutoLogin(pi: string, userObj?: { [key: string]: any }, anonymous?: boolean): Observable<void> {
+    const userJWTRequest: IUserJWTRequest = {
+      url: location.host,
+      identifier: pi,
+      anonymous
+    };
+    if (userObj) {
+      userJWTRequest.profile = WhistlerAuthenticationService.UsertoWUser(userObj, pi);
+    }
+    return this.http.post<IJsonApiListPayload<IWCognitoLogin>>(this.createUsersEndPoint, userJWTRequest)
+      .pipe(
+        tap(
+          (res: IJsonApiListPayload<IWCognitoLogin>) => {
+            const userBearer = res.data[0].attributes.jwt;
+            if (!userBearer) {
+              throw new Error('Get authentication token failed!');
+            }
+            if (anonymous === undefined) {
+              anonymous = false;
+            }
+            this.savePI(pi);
+            this.saveAnonymous(anonymous);
+            this.saveUserId(Number.parseInt(res.data[0].id, 10));
+            this.saveUserAccessToken(userBearer);
+          }
+        ),
+        map(() => void 0)
+      );
   }
 
   // @ts-ignore
   public signup(profile: ISignUpData): Observable<IProfile> {
     return throwError('Not implement yet');
   }
+
   // @ts-ignore
   public requestVerificationToken(phone?: string): Observable<void> {
     return throwError('Not implement yet');
@@ -274,12 +271,12 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   // @ts-ignore
-  public verifyOTP(phone: string, otp: string): Observable<IWMessageResponse> {
+  public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
     return throwError('Not implement yet');
   }
 
   // @ts-ignore
-  public changePassword(changePasswordData: IChangePasswordData): Observable<IWMessageResponse> {
+  public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
     return throwError('Not implement yet');
   }
 
@@ -306,11 +303,18 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public getPI(): string {
-    return this.tokenStorage.getAppInfoProperty('pi') || '';
+    const pi = this.tokenStorage.getAppInfoProperty('pi') || '';
+    // eventually refresh window param for GTM
+    if (pi !== undefined && pi !== '') {
+      (window as any).primaryIdentifier = pi;
+    }
+    return pi;
   }
 
   public savePI(pi: string): void {
     this.tokenStorage.setAppInfoProperty(pi, 'pi');
+    // update global property for GTM
+    (window as any).primaryIdentifier = pi;
   }
 
   public getAnonymous(): boolean {

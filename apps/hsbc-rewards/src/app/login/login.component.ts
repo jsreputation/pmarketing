@@ -15,8 +15,8 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
 
   public preAuth: boolean;
-
-  public errorMessage: string;
+  public appAccessTokenFetched: boolean;
+  public errorMessage: string | null;
 
   constructor(
     private router: Router,
@@ -37,6 +37,16 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => {
         this.preAuth = config.preAuth as boolean;
@@ -57,8 +67,8 @@ export class LoginComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const username = (this.loginForm.get('playerCode').value as string).toUpperCase();
-    const password: string = this.loginForm.get('hsbcCardLastFourDigits').value;
+    const username = (this.loginForm.value.playerCode as string).toUpperCase();
+    const password: string = this.loginForm.value.hsbcCardLastFourDigits;
     this.errorMessage = null;
     this.authService.login(username, password).subscribe(
       () => {

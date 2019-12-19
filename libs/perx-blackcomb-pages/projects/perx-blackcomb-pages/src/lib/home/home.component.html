@@ -1,4 +1,4 @@
-<div class="page" *ngIf="theme && theme.properties">
+<div class="page" *ngIf="theme && theme.properties && appConfig">
   <div class="loyalty-block">
     <perx-core-loyalty-summary [titleFn]="titleFn"></perx-core-loyalty-summary>
     <div class="loyalty-item loyalty-item-qr">
@@ -7,12 +7,23 @@
         class="enlarge home-qr-button"
         routerLink="/qr"
         translate
+        *ngIf="!appConfig.showBarcodeOnHomeProfilePage"
       >
         {{ 'MY_QR' | translate }}
       </a>
+      <a
+        mat-raised-button
+        class="enlarge home-qr-button"
+        routerLink="/barcode"
+        translate
+        *ngIf="appConfig.showBarcodeOnHomeProfilePage"
+      >
+        {{ 'MY_BAR_CODE' | translate }}
+      </a>
+
     </div>
   </div>
-  <perx-core-newsfeed [items$]="newsFeedItems" *ngIf="theme.properties['showNewsfeedOnHomepage']"></perx-core-newsfeed>
+  <perx-core-newsfeed [items$]="newsFeedItems" *ngIf="appConfig.showNewsfeedOnHomepage"></perx-core-newsfeed>
   <div class="games">
     <div *ngIf="showGames" class="title" translate>GAMES</div>
     <perx-blackcomb-games-collection [games]="games$"></perx-blackcomb-games-collection>
@@ -21,7 +32,7 @@
     <div class="title" translate>FEATURED_REWARDS</div>
     <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>
-  <div class="rewars-collection">
+  <div class="rewards-collection">
     <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)"></perx-core-rewards-list-tabbed>
   </div>
 </div>

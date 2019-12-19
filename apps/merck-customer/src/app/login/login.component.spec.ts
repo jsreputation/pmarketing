@@ -32,7 +32,7 @@ describe('LoginComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      declarations: [ LoginComponent ],
+      declarations: [LoginComponent],
       imports: [
         FormsModule,
         ReactiveFormsModule,
@@ -49,15 +49,16 @@ describe('LoginComponent', () => {
           provide: AuthenticationService,
           useValue: {
             isAuthorized: () => of({}),
-            login: () => {},
+            login: () => { },
             getInterruptedUrl: () => null,
-            getAppToken: () => of({})
+            getAppToken: () => of({}),
+            getAppAccessToken: () => 'token'
           }
         },
-        { provide: ProfileService, useValue: profileStub}
+        { provide: ProfileService, useValue: profileStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -88,7 +89,7 @@ describe('LoginComponent', () => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
       AuthenticationService as Type<AuthenticationService>
     );
-    const authSpy = spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
+    const authSpy = spyOn(authenticationService, 'login').and.returnValue(of(void 0));
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     const routerSpy = spyOn(routerStub, 'navigateByUrl').and.stub();
 

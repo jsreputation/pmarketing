@@ -1,11 +1,33 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {Router} from '@angular/router';
-import {isPlatformBrowser} from '@angular/common';
-import {AuthenticationService, ConfigService, IConfig, NotificationService, IMicrositeSettings, TokenStorage} from '@perx/core';
-import {Validators, FormBuilder, FormGroup} from '@angular/forms';
-import {HttpErrorResponse} from '@angular/common/http';
-import {switchMap, tap} from 'rxjs/operators';
+import {
+  Component,
+  Inject,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+  AbstractControl,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 
+import {
+  switchMap,
+  tap,
+} from 'rxjs/operators';
+
+import {
+  AuthenticationService,
+  ConfigService,
+  IConfig,
+  NotificationService,
+  IMicrositeSettings,
+  TokenStorage,
+  isEmptyString,
+} from '@perx/core';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,9 +38,11 @@ export class LoginComponent implements OnInit {
 
   public preAuth: boolean;
   public loginBackgroundUrl: string;
-  public errorMessage: string;
+  public errorMessage: string | null;
   public sourceType: string;
   public isLoading: boolean = true;
+  private campaignId: string;
+  public appAccessTokenFetched: boolean;
 
   constructor(
     private router: Router,
@@ -32,6 +56,14 @@ export class LoginComponent implements OnInit {
     this.initForm();
   }
 
+  public get playerCode(): AbstractControl | null {
+    return this.loginForm.get('playerCode');
+  }
+
+  public get hsbcCardLastFourDigits(): AbstractControl | null {
+    return this.loginForm.get('hsbcCardLastFourDigits');
+  }
+
   public initForm(): void {
     this.loginForm = this.fb.group({
       playerCode: ['', Validators.required],
@@ -40,8 +72,19 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+         this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
     this.configService.readAppConfig().pipe(
       tap((config: IConfig) => {
+        this.campaignId = config.campaignId as string;
         this.preAuth = config.preAuth as boolean;
         if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
           this.authService.autoLogin().subscribe(
@@ -61,18 +104,23 @@ export class LoginComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const username = (this.loginForm.get('playerCode').value as string).toUpperCase();
-    const password: string = this.loginForm.get('hsbcCardLastFourDigits').value;
+    const username: string | null = this.playerCode ? (this.playerCode.value as string).toUpperCase() : null;
+    const password: string | null = this.hsbcCardLastFourDigits ? (this.hsbcCardLastFourDigits.value as string).toUpperCase() : null;
     this.errorMessage = null;
+    if (isEmptyString(username) || isEmptyString(password)) {
+      throw new Error(`username or password is required`);
+    }
 
-    this.authService.login(username, password).subscribe(
+    this.authService.login(username as string, password as string).subscribe(
       () => {
         // set global userID var for GA tracking
         if (!((window as any).primaryIdentifier)) {
           (window as any).primaryIdentifier = username;
         }
 
-        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'puzzle');
+        const url = this.campaignId ? `puzzle/${this.campaignId}` : 'puzzle';
+
+        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : url);
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {

@@ -3,7 +3,8 @@
 
     <!--group block contain tabs and one graphic-->
     <div class="tabs-list-wrap business-insights-tabs-list-wrap">
-      <mat-radio-group color="primary" class="tabs-list business-insights-tabs-list" [value]="activeTab" (change)="selectedTab($event.value)">
+      <mat-radio-group color="primary" class="tabs-list business-insights-tabs-list" [value]="activeTab"
+        (change)="selectedTab($event.value)">
         <ng-container *ngFor="let tab of tabs; let index = index">
           <mat-radio-button [value]="tab?.name">
             <cl-tab-item-view [data]="tab" [value]="getTabValue(index)"></cl-tab-item-view>
@@ -18,28 +19,32 @@
         <article class="chart-card">
           <h3 class="chart-card-title" translate>OVERVIEW_GRAPHIC_PAGE.TOTAL_ACTIVE_CUSTOMERS</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="110" [cardType]="'verticalBar'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="'overview_total_active_customer_breakdown'" [cardType]="ct.verticalBar"
+              [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>OVERVIEW_GRAPHIC_PAGE.DEMOGRAPHICS</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="107" [cardType]="'calendardHeatmap'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="'overview_demographic'" [cardType]="ct.calendarHeatmap" [params]="params">
+            </cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>OVERVIEW_GRAPHIC_PAGE.POPULAR_REDEMPTION_DAYS</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="146" [cardType]="'calendardHeatmap'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="'overview_popular_redemption_day'" [cardType]="ct.calendarHeatmap" [params]="params">
+            </cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>OVERVIEW_GRAPHIC_PAGE.POPULAR_ENGAGEMENTS_DAYS</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="113" [cardType]="'calendardHeatmap'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="'overview_popular_engagement_day'" [cardType]="ct.calendarHeatmap" [params]="params">
+            </cl-chart-card>
           </div>
         </article>
       </ng-container>
@@ -49,35 +54,39 @@
         <article class="chart-card">
           <h3 class="chart-card-title" translate>OVERVIEW_GRAPHIC_PAGE.POPULAR_REWARDS_GRAPHIC</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="148" [cardType]="'line'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="'overview_rewards_breakdown'" [cardType]="ct.line" [params]="params"></cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>OVERVIEW_GRAPHIC_PAGE.TOP_5_CATEGORIES</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="149" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="'overview_top_categories'" [cardType]="ct.horizontalBar" [params]="params">
+            </cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>OVERVIEW_GRAPHIC_PAGE.TOP_3_REDEEMED_REWARDS_BY_REWARD_TYPE</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="152" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="'overview_top_redeemed_reward_by_type'" [cardType]="ct.advancedPie" [params]="params">
+            </cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>OVERVIEW_GRAPHIC_PAGE.TOP_5_MERCHANTS</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="150" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="'overview_top_merchants'" [cardType]="ct.horizontalBar" [params]="params">
+            </cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>OVERVIEW_GRAPHIC_PAGE.TOP_3_MERCHANTS_BY_REWARD_COST</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="151" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="'overview_top_merchants_by_reward_cost'" [cardType]="ct.advancedPie" [params]="params">
+            </cl-chart-card>
           </div>
         </article>
       </ng-container>
@@ -87,28 +96,44 @@
         <article class="chart-card">
           <h3 class="chart-card-title" translate>OVERVIEW_GRAPHIC_PAGE.CAMPAIGNS</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="154" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="'overview_running_campaigns_breakdown'" [cardType]="ct.line" [params]="params">
+            </cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card full-width">
           <h3 class="chart-card-title" translate>OVERVIEW_GRAPHIC_PAGE.ENGAGEMENT_RATE</h3>
-          <div class="chart-card-content">
-            <cl-chart-card [id]="157" [cardType]="'gridPie'" [params]="params"></cl-chart-card>
+          <div class="chart-card-content advanced_pie--splitter">
+            <cl-chart-card [id]="'overview_survey_engagement_rate'" [cardType]="ct.advancedPie" [params]="params">
+              <h4 class="chart-card-info-title">Survey</h4>
+            </cl-chart-card>
+            <cl-chart-card [id]="'overview_instant_reward_engagement_rate'" [cardType]="ct.advancedPie"
+              [params]="params">
+              <h4 class="chart-card-info-title">Stamps</h4>
+            </cl-chart-card>
+            <cl-chart-card [id]="'overview_game_engagement_rate'" [cardType]="ct.advancedPie" [params]="params">
+              <h4 class="chart-card-info-title">Game</h4>
+            </cl-chart-card>
+            <cl-chart-card [id]="'overview_instant_reward_engagement_rate'" [cardType]="ct.advancedPie"
+              [params]="params">
+              <h4 class="chart-card-info-title">Instant Rewards</h4>
+            </cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>OVERVIEW_GRAPHIC_PAGE.TOP_5_REWARDS</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="155" [cardType]="'horizontalBar'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="'overview_top_rewards'" [cardType]="ct.horizontalBar" [params]="params">
+            </cl-chart-card>
           </div>
         </article>
 
         <article class="chart-card">
           <h3 class="chart-card-title" translate>OVERVIEW_GRAPHIC_PAGE.REWARD_COST_BY_ENGAGEMENT_TYPE</h3>
           <div class="chart-card-content">
-            <cl-chart-card [id]="156" [cardType]="'advancedPie'" [params]="params"></cl-chart-card>
+            <cl-chart-card [id]="'overview_reward_cost_by_engagement_type'" [cardType]="ct.advancedPie"
+              [params]="params"></cl-chart-card>
           </div>
         </article>
       </ng-container>

@@ -1,4 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { CardType } from '@perx/chart';
 
 @Component({
   selector: 'cl-chart-card',
@@ -8,7 +9,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 })
 export class ChartCardComponent {
   @Input() public id: number;
-  @Input() public cardType: any;
+  @Input() public cardType: CardType;
   @Input() public params: { [key: string]: string };
 
   constructor() {

@@ -4,8 +4,22 @@
 export { PerxCoreModule } from './lib/perx-core.module';
 
 /**
+ * Shared
+ */
+export {
+  isEmptyString,
+  isEmptyArray,
+} from './lib/utils/shared/helpers.util';
+export { RedemptionType } from './lib/perx-core.models';
+
+/**
  * Merchants
  */
+export {
+  IMerchantTransactionHistory,
+  IMerchantPurchaseTransactionHistory,
+  IMerchantRewardTransactionHistory
+} from './lib/merchant-admin/models/merchants-admin.model';
 export { MerchantsModule } from './lib/merchants/merchants.module';
 export { IMerchantsService } from './lib/merchants/imerchants.service';
 
@@ -23,16 +37,17 @@ export { IVoucherService } from './lib/vouchers/ivoucher.service';
 export { PinService } from './lib/vouchers/pin.service';
 export { VouchersComponent } from './lib/vouchers/vouchers/vouchers.component';
 export { VoucherComponent } from './lib/vouchers/voucher/voucher.component';
-export { IVoucher as Voucher, RedemptionType, VoucherState, StatusLabelMapping } from './lib/vouchers/models/voucher.model';
+export { IVoucher as Voucher, VoucherState, StatusLabelMapping } from './lib/vouchers/models/voucher.model';
 export { PinRedemptionComponent } from './lib/vouchers/pin-redemption/pin-redemption.component';
 export { BcodeRedemptionComponent } from './lib/vouchers/bcode-redemption/bcode-redemption.component';
 export { QrcodeRedemptionComponent } from './lib/vouchers/qrcode-redemption/qrcode-redemption.component';
+export { BarcodeRedemptionComponent } from './lib/vouchers/barcode-redemption/barcode-redemption.component';
 
 /**
  * Authentication
  */
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
-export { AuthenticationService } from './lib/auth/authentication/authentication.service';
+export { AuthenticationService, RequiresOtpError, IMessageResponse } from './lib/auth/authentication/authentication.service';
 export { TokenStorage } from './lib/utils/storage/token-storage.service';
 export { IChangePasswordData, ISignUpData } from './lib/auth/authentication/models/authentication.model';
 export { IFormsService } from './lib/auth/authentication/iforms.service';
@@ -71,6 +86,7 @@ export {
   IPinata,
   ITree,
   IScratch,
+  ISpin,
   defaultTree,
   IPlayOutcome,
   ISlice,
@@ -81,6 +97,7 @@ export { IGameComponent } from './lib/game/igame.component';
 export { ShakeTreeComponent } from './lib/game/shake-tree/shake-tree.component';
 export { PinataComponent } from './lib/game/pinata/pinata.component';
 export { ScratchCardComponent } from './lib/game/scratch-card/scratch-card.component';
+export { SpinTheWheelComponent } from './lib/game/spin-the-wheel/spin-the-wheel.component';
 
 /**
  * Profile
@@ -110,7 +127,7 @@ export {
 } from './lib/loyalty/models/loyalty.model';
 export { TransactionPipe } from './lib/loyalty/loyalty-transactions-list/transaction.pipe';
 export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-summary.component';
-
+export { LoyaltyTransactionsListComponent } from './lib/loyalty/loyalty-transactions-list/loyalty-transactions-list.component';
 /**
  * Rewards
  */
@@ -143,7 +160,10 @@ export { GeneralStaticDataService } from './lib/utils/general-static-data/genera
 export { ICountryCode } from './lib/utils/general-static-data/country-code';
 export { RepeatTimesDirective } from './lib/utils/directives/repeat-times.directive';
 export { NewsfeedComponent } from './lib/utils/newsfeed/newsfeed.component';
-export { CustomTranslateLoader } from './lib/utils/lang/land.service';
+export { LanguageService } from './lib/utils/language/language.service';
+export { LanguageInterceptor } from './lib/utils/language.interceptor';
+export { LocaleIdFactory } from './lib/utils/language/locale-id.factory';
+export { FeedItemPopupComponent } from './lib/utils/feed-item-popup/feed-item-popup.component';
 /**
  * Puzzles
  */
@@ -180,6 +200,7 @@ export { LongTextComponent } from './lib/survey/question/long-text/long-text.com
 export { GroupComponent } from './lib/survey/question/group/group.component';
 export { RatingComponent } from './lib/survey/question/rating/rating.component';
 export { DateComponent } from './lib/survey/question/date/date.component';
+export { PasswordComponent} from './lib/survey/question/password/password.component';
 
 /**
  * Config
@@ -187,16 +208,23 @@ export { DateComponent } from './lib/survey/question/date/date.component';
 export { ConfigModule } from './lib/config/config.module';
 export { Config } from './lib/config/config';
 export { ConfigService } from './lib/config/config.service';
-export { IConfig, IMicrositeSettings } from './lib/config/models/config.model';
+export {
+  IConfig,
+  IMicrositeSettings,
+  PagesObject,
+  AccountPageObject,
+} from './lib/config/models/config.model';
 
+/**
+ * PrePlay
+ */
+export {
+  IPrePlayStateData
+} from './lib/utils/pre-play/pre-play.model';
 /**
  * Theme
  */
-export {
-  ITheme,
-  PagesObject,
-  AccountPageObject,
-} from './lib/utils/themes/themes.model';
+export { ITheme } from './lib/utils/themes/themes.model';
 export { ThemesService } from './lib/utils/themes/themes.service';
 /**
  * Outcome

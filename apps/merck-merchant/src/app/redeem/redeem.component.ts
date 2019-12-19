@@ -1,14 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {IPayload} from '../order/order.component';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { IPayload } from '../order/order.component';
+import { Router } from '@angular/router';
 import {
   NotificationService,
   RewardsService,
   IReward,
   IMerchantAdminService, Voucher
 } from '@perx/core';
-import {flatMap} from 'rxjs/operators';
-import {HttpResponseBase} from '@angular/common/http';
+import { flatMap } from 'rxjs/operators';
+import { HttpResponseBase } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 interface IHttpResponseBase extends HttpResponseBase {
   error: {
@@ -26,12 +27,14 @@ export class RedeemComponent implements OnInit {
   public payload: IPayload;
   public didProceed: boolean = false;
   public reward: IReward;
+  public language: string;
 
   constructor(
     private router: Router,
     private notificationService: NotificationService,
     private rewardsService: RewardsService,
-    private merchantService: IMerchantAdminService
+    private merchantService: IMerchantAdminService,
+    private translateService: TranslateService,
   ) {
   }
 
@@ -46,6 +49,7 @@ export class RedeemComponent implements OnInit {
         this.notificationService.addSnack('Invalid Merck QR Code');
       }
     }
+    this.language = this.translateService.currentLang || this.translateService.defaultLang;
   }
 
   public onClose(): void {
@@ -54,6 +58,9 @@ export class RedeemComponent implements OnInit {
 
   public onProceed(): void {
     this.didProceed = true;
+    if (!this.payload.rewardId) {
+      throw new Error('reward id is required');
+    }
     this.merchantService.issueVoucher(this.payload.rewardId, this.payload.identifier)
       .pipe(
         // flatMap((voucher: Voucher) => this.rewardsService.getRewardPricesOptions(voucher.rewardId)),
@@ -65,7 +72,8 @@ export class RedeemComponent implements OnInit {
       );
   }
 
-  public getPrice(): number {
-    return this.reward.rewardPrice[0].points;
+  public getPrice(): string {
+    const points = this.reward.rewardPrice && this.reward.rewardPrice[0].points || 0;
+    return this.language === 'zh' ? `將扣除${points}積分` : `${points} points will be deducted`;
   }
 }

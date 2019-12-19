@@ -1,7 +1,7 @@
 {
   "PAGE_NAME": "Dashboard",
-  "TITLE": "Welcome to Perx, Admin",
-  "DESCRIPTION": "Here is an overview of what’s going on with your active campaigns to help you get things done today.",
+  "TITLE": "Welcome to Perx, ",
+  "DESCRIPTION_DASHBOARD": "Here is an overview of what’s going on with your active campaigns to help you get things done today.",
   "SECTION_EXPLORE": "Explore Perx",
   "SECTION_BUSINESS": "Business Insight",
   "CARD_REWARD_TITLE": "Rewards",
@@ -55,12 +55,14 @@
     "GAME_ENGAGEMENT_RATE": "Game Engagement Rate",
     "SHAKE_THE_TREE": "Shake the tree",
     "HIT_THE_PINATA": "Hit the pinata",
+    "SPIN_THE_WHEEL": "Spin the wheel",
     "INSTANT_REWARDS": "Instant rewards",
     "STAMPS_ENGAGEMENT_RATE": "Stamps Engagement Rate",
     "STAMPS_CAMPAIGN_LISTS": "Stamps Campaign lists",
     "SEARCH_FOR_STAMPS_CAMPAIGNS": "Search for stamps campaigns",
     "INSTANT_REWARD_ENGAGEMENT_RATE": "Instant Reward Engagement Rate",
     "STAMPS_REWARDS_LISTS": "Stamps Rewards lists",
+    "SEARCH_FOR_SURVEY_CAMPAIGNS": "Search for survey campaigns",
     "SEARCH_FOR_REWARDS_CAMPAIGNS": "Search for rewards campaigns"
   }
 }

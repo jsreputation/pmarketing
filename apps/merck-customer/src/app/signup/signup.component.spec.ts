@@ -21,17 +21,20 @@ describe('SignupComponent', () => {
   let fixture: ComponentFixture<SignupComponent>;
   const routerStub = {
     navigateByUrl: () => ({}),
-    navigate: () => {}
+    navigate: () => { }
   };
-  const notificationServiceStub = { addSnack: () => {} };
+  const notificationServiceStub = { addSnack: () => { } };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SignupComponent ],
+      declarations: [SignupComponent],
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([{
+          component: SignupComponent,
+          path: 'login'
+        }]),
         MatButtonModule,
         MatCheckboxModule,
         MatFormFieldModule,
@@ -43,13 +46,17 @@ describe('SignupComponent', () => {
       providers: [
         {
           provide: AuthenticationService,
-          useValue: { signup: () => of() }
+          useValue: {
+            signup: () => of(),
+            getAppToken: () => of({}),
+            getAppAccessToken: () => 'token'
+          }
         },
         { provide: Router, useValue: routerStub },
         { provide: NotificationService, useValue: notificationServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

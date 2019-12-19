@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { AbstractControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { AudiencesService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
@@ -8,8 +8,9 @@ import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-cam
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { ActivatedRoute } from '@angular/router';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { Subject } from 'rxjs';
+import Utils from '@cl-helpers/utils';
 
 @Component({
   selector: 'cl-new-campaign-detail-page',
@@ -83,21 +84,6 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
 
   public ngOnInit(): void {
     super.ngOnInit();
-    this.channelType.valueChanges
-      .pipe(takeUntil(this.destroy$)).subscribe( value => {
-        if (value === 'sms') {
-          this.pool.setValidators([Validators.required]);
-          this.message.setValidators([Validators.required]);
-          this.scheduleSendDate.setValidators([Validators.required]);
-        } else {
-          this.pool.setValidators(null);
-          this.message.setValidators(null);
-          this.scheduleSendDate.setValidators(null);
-        }
-        this.pool.updateValueAndValidity();
-        this.message.updateValueAndValidity();
-        this.scheduleSendDate.updateValueAndValidity();
-      });
 
     this.campaignId = this.route.snapshot.params.id;
     this.isFirstInit = true;
@@ -122,8 +108,8 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     }
     this.form.valueChanges
       .pipe(
-        distinctUntilChanged(),
         debounceTime(500),
+        distinctUntilChanged(Utils.isEqual),
         takeUntil(this.destroy$)
       )
       .subscribe((val: ICampaign) => {

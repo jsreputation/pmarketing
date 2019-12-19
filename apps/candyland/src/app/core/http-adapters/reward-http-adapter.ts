@@ -1,15 +1,16 @@
-import * as moment from 'moment';
-import { IWRewardEntityAttributes } from '@perx/whistler';
+import { IWRewardEntityAttributes, IWTierRewardCostsAttributes } from '@perx/whistler';
+import { DateTimeParser } from '@cl-helpers/date-time-parser';
+import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
+import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
 export class RewardHttpAdapter {
-
   public static transformToTableData(data: any): ITableData<IRewardEntity> {
     const formatData = data.data.map((item) => {
       const formatItem = RewardHttpAdapter.transformToReward(item);
       formatItem.merchantName = RewardHttpAdapter.includeOrganization(item, data);
       return formatItem;
     });
-    return {data: formatData, meta: data.meta};
+    return { data: formatData, meta: data.meta };
   }
 
   public static includeOrganization(currentData: any, response: any): string {
@@ -34,7 +35,6 @@ export class RewardHttpAdapter {
       merchantId: data.attributes.organization_id || null,
       current: data.attributes.cost_of_reward,
       total: 100,
-      probability: null,
       category: data.attributes.category,
       tags: data.attributes.tags || []
     };
@@ -60,9 +60,9 @@ export class RewardHttpAdapter {
           type: voucher_properties.validity.type,
           period: {
             startDate: voucher_properties.validity.start_date,
-            startTime: moment(voucher_properties.validity.start_date).format('HH:mm'),
+            startTime: DateTimeParser.getTime(voucher_properties.validity.start_date, 'HH:mm'),
             endDate: voucher_properties.validity.end_date,
-            endTime: moment(voucher_properties.validity.end_date).format('HH:mm')
+            endTime: DateTimeParser.getTime(voucher_properties.validity.end_date, 'HH:mm')
           },
           issuanceDate: {
             times: voucher_properties.validity.times,
@@ -129,7 +129,8 @@ export class RewardHttpAdapter {
   }
 
   public static getVoucherProperties(data: IRewardEntityForm): { [key: string]: any } {
-    if (data.vouchers.voucherCode.type === 'single_code' || data.rewardInfo.redemptionType === 'Merchant PIN') {
+    if (data.vouchers.voucherCode.type === 'single_code'
+      || data.rewardInfo.redemptionType === 'Merchant PIN') {
       return {
         code_type: data.vouchers.voucherCode.type,
         code: data.vouchers.voucherCode.singleCode.code
@@ -143,7 +144,7 @@ export class RewardHttpAdapter {
         format_type: data.vouchers.voucherCode.uniqueGeneratedCode.codeFormat
       };
     }
-    return {code_type: data.vouchers.voucherCode.type};
+    return { code_type: data.vouchers.voucherCode.type };
   }
 
   public static getRewardValidity(data: any): { [key: string]: any } {
@@ -164,17 +165,12 @@ export class RewardHttpAdapter {
 
   public static getRewardDate(period: any): { [key: string]: any } {
     const res: any = {
-      start_date: RewardHttpAdapter.setTime(period.startDate, period.startTime)
+      start_date: DateTimeParser.setTime(period.startDate, period.startTime)
     };
     if (!period.disabledEndDate) {
-      res.end_date = RewardHttpAdapter.setTime(period.endDate, period.endTime);
+      res.end_date = DateTimeParser.setTime(period.endDate, period.endTime);
     }
     return res;
-  }
-
-  public static setTime(date: string, time: any): any {
-    const [hours, minutes] = time.split(':');
-    return moment(date).set({hours, minutes}).utc().toDate();
   }
 
   public static transformFromReward(data: IRewardEntity): IJsonApiItem<IWRewardEntityAttributes> {
@@ -206,6 +202,42 @@ export class RewardHttpAdapter {
           loyalties: null,
         }
       }
+    };
+  }
+
+  public static transformFromLoyaltyForm(
+    tier: ILoyaltyTiersFormGroup | IBasicTier,
+    rewardId: string
+  ): IJsonApiItem<Partial<IWTierRewardCostsAttributes>> {
+
+    const result: IJsonApiItem<Partial<IWTierRewardCostsAttributes>> = {
+      type: 'tier_reward_costs',
+      attributes: {
+        apply_tier_discount: tier.statusDiscount ? tier.statusDiscount : false,
+        tier_value: tier.tierValue ? '' + tier.tierValue : '0',
+        tier_id: +tier.tierId,
+        entity_id: +rewardId,
+        tier_type: tier.tierType
+      }
+    };
+
+    if (tier.tierRewardCostsId) {
+      result['id'] = tier.tierRewardCostsId;
+    }
+
+    return result;
+  }
+
+  public static transformToLoyaltyCost(data: IJsonApiItem<Partial<IWTierRewardCostsAttributes>>)
+    : ITierRewardCost {
+
+    return {
+      tierRewardCostsId: +data.id,
+      statusDiscount: data.attributes.apply_tier_discount,
+      tierId: '' + data.attributes.tier_id,
+      rewardId: data.attributes.entity_id,
+      tierValue: Number.parseInt(data.attributes.tier_value, 10),
+      tierType: data.attributes.tier_type
     };
   }
 }

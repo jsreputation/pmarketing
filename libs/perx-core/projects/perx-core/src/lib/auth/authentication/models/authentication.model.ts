@@ -6,8 +6,11 @@ export interface ISignUpData {
   email?: string;
   birthDay?: string;
   gender?: string;
+  postcode?: string;
+  title?: string;
   password: string;
   passwordConfirmation: string;
+  anonymous?: boolean;
 }
 
 export interface IResetPasswordData {

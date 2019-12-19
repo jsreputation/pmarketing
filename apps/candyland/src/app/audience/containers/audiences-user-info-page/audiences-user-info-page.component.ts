@@ -9,17 +9,42 @@ import {
   OnInit,
   Renderer2
 } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import {
+  MatDialog
+} from '@angular/material';
+import {
+  ActivatedRoute,
+  ParamMap,
+  Router,
+} from '@angular/router';
+
 import { Subject } from 'rxjs';
-import { map, switchMap, tap, filter, distinct, takeUntil } from 'rxjs/operators';
-import { IWAssignedAttributes } from '@perx/whistler';
-import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
+import {
+  map,
+  switchMap,
+  tap,
+  filter,
+  distinct,
+  takeUntil,
+} from 'rxjs/operators';
+
+import {
+  IWAssignedAttributes,
+  IWProfileAttributes,
+} from '@perx/whistler';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { CustomDataSource } from '@cl-shared';
 import { AudiencesVouchersService } from '@cl-core/services/audiences-vouchers.service';
 import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
+import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
+import { MessageService} from '@cl-core/services';
+import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
+import { UpsertUserPopupComponent } from '../upsert-user-popup/upsert-user-popup.component';
+import {
+  IUpsertUserPopup,
+  Type,
+} from '../../audience.model';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -31,9 +56,15 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   private destroy$: Subject<void> = new Subject();
 
   public userId: string;
-  public user: any;
+  public user: IWProfileAttributes;
   public tabsFilterConfig: OptionConfig[];
   public dataSource: CustomDataSource<any>;
+
+  private async updateLocalUser(): Promise<IWProfileAttributes> {
+    this.user = await this.audiencesUserService.getUser(this.userId).toPromise();
+    this.cd.detectChanges();
+    return this.user;
+  }
 
   constructor(
     private audiencesUserService: AudiencesUserService,
@@ -42,7 +73,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     private router: Router,
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
-    private snack: MatSnackBar,
+    private messageService: MessageService,
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
   ) {
@@ -77,10 +108,10 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       )
       .subscribe(
         () => {
-          this.snack.open('Expiry voucher date successfully changed.', 'x', { duration: 2000 });
+          this.messageService.show('Expiry voucher date successfully changed.');
           this.dataSource.updateData();
         },
-        () => this.snack.open('Failed to update voucher expiration date.', 'x', { duration: 2000 })
+        () =>  this.messageService.show('Failed to update voucher expiration date.')
       );
   }
 
@@ -97,10 +128,10 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       )
       .subscribe(
         () => {
-          this.snack.open('Voucher assigned to user.', 'x', { duration: 2000 });
+          this.messageService.show('Voucher assigned to user.');
           this.dataSource.updateData();
         },
-        () => this.snack.open('Could not assign voucher to user. Make sure that the reward has enough stock.', 'x', { duration: 2000 })
+        () => this.messageService.show('Could not assign voucher to user. Make sure that the reward has enough stock.')
       );
   }
 
@@ -114,7 +145,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       takeUntil(this.destroy$),
     )
       .subscribe(
-        user => {
+        (user: IWProfileAttributes) => {
           this.user = user;
           this.cd.detectChanges();
         },
@@ -134,5 +165,26 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       const counterObject = PrepareTableFilters.countFieldValue(data, 'status');
       this.tabsFilterConfig = PrepareTableFilters.prepareTabsFilterConfig(counterObject);
     });
+  }
+
+  public openEditUserDialog(): void {
+    const dialogData: IUpsertUserPopup = {
+      panelClass: 'audience-dialog',
+      data: {
+        type: Type.Edit,
+        formData: this.user,
+      }
+    };
+    const dialogRef = this.dialog.open(UpsertUserPopupComponent, dialogData);
+
+    dialogRef.afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap((newUser: any) => this.audiencesUserService.updateUser(this.user.id, newUser))
+      )
+      .subscribe(async () => {
+        await this.updateLocalUser();
+        this.messageService.show('User successfully updated.');
+      });
   }
 }

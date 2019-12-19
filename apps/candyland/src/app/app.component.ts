@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
         });
     }
 
-    this.routingState.loadRouting()
+    this.routingState.loadRouting() // what does this do?
       .subscribe(() => {
       });
   }

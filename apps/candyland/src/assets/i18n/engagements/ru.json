@@ -7,7 +7,7 @@
   "INSTANT_REWARD": "Мгновенные награды",
   "SHAKE_THE_TREE": "Потряси дерево",
   "HIT_THE_PINATA": "Разбей пинату",
-  "SCRATCH_THE_CARD": "Скретч карта (β)",
+  "SCRATCH_THE_CARD": "Скретч карта",
   "MESSAGES": "Сообщения",
   "HEADLINE_MESSAGE": "Текст заголовка",
   "SUB-HEADLINE_MESSAGE": "Текст подзаголовка",
@@ -37,7 +37,7 @@
   "GRAPHICS": "Графика",
   "PROGRESS_BAR_COLOR": "Цвет полосы прогресса",
   "CARD_BACKGROUND": "Фон карты",
-  "BACKGROUND": "фон",
+  "BACKGROUND": "Фон",
   "BUTTON": "Кнопка",
   "BUTTON_TEXT": "Текст кнопки",
   "ENTER_TITLE_HERE": "Введите заголовок",
@@ -62,5 +62,7 @@
   "REWARD_POST-STAMP": "Награда после штампа",
   "SINGLE_REWARD": "Единственная награда",
   "MULTIPLE_REWARDS": "Множественные награды",
-  "GIFTS": "подарки"
+  "GIFTS": "подарки",
+  "ADD_SUB_QUESTION": " + Добавить под вопрос",
+  "LAUNCH_AS_A_CAMPAIGN": "Запустить как кампанию"
 }

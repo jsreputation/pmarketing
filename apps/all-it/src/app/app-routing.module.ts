@@ -3,13 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
 const routes: Routes = [
   {
-    path: 'signin',
-    loadChildren: () => import('./login/login.module').then((mod) => mod.LoginModule),
-    canActivate: [PublicGuard]
-  },
-  {
     path: 'login',
-    loadChildren: () => import('./landing/landing.module').then((mod) => mod.LandingModule),
+    loadChildren: () => import('./login/login.module').then((mod) => mod.LoginModule),
     canActivate: [PublicGuard]
   },
   {
@@ -20,6 +15,11 @@ const routes: Routes = [
   {
     path: 'loading',
     loadChildren: () => import('./loading/loading.module').then((mod) => mod.LoadingModule)
+  },
+  {
+    path: 'enter-pin/:type',
+    loadChildren: (): any => import('./enter-pin/enter-pin.module')
+      .then((mod: any) => mod.EnterPinModule)
   },
   {
     path: '',

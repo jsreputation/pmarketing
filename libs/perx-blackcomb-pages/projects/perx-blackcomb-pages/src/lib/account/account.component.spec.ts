@@ -18,17 +18,22 @@ import {
   AuthenticationService,
   ProfileModule,
   ProfileService,
-  ThemesService,
+  LoyaltyService,
+  ConfigService,
   ConfigModule,
   IProfile,
   PagesObject,
   NotificationService,
+  IConfig,
+  ThemesService
 } from '@perx/core';
 
 import { AccountComponent } from './account.component';
 
 import { profile } from '../mock/profile.mock';
 import { pagesObject } from '../mock/pages.mock';
+
+import { MatCardModule, MatListModule } from '@angular/material';
 
 describe('AccountComponent', () => {
   const notificationServiceStub: Partial<NotificationService> = {};
@@ -47,26 +52,43 @@ describe('AccountComponent', () => {
   const profileServiceStub: Partial<ProfileService> = {
     whoAmI: (): Observable<IProfile> => of(profile)
   };
-  const themeServiceStub: Partial<ThemesService> = {
-    getAccountSettings: (): Observable<PagesObject> => of(pagesObject)
+  const configServiceStub: Partial<ConfigService> = {
+    getAccountSettings: (): Observable<PagesObject> => of(pagesObject),
+    readAppConfig: (): Observable<IConfig> => of({})
   };
   const authenticationServiceStub: Partial<AuthenticationService> = {
     logout: () => { }
   };
+  const loyalityServiceStub  = {
+    getLoyalty: () => of({})
+  };
+
+  const themeServiceStub: Partial<ThemesService> = {
+    getActiveTheme: () => of(),
+    getThemeSetting: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AccountComponent],
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([{
+          path: 'login',
+          component: AccountComponent
+        }]),
         ProfileModule,
+        MatCardModule,
+        MatListModule,
         TranslateModule.forRoot(),
         ConfigModule.forRoot({ ...environment })
       ],
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
-        { provide: ThemesService, useValue: themeServiceStub },
-        { provide: NotificationService, useValue: notificationServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: LoyaltyService, useValue: loyalityServiceStub },
+        { provide: ThemesService, useValue: themeServiceStub }
       ]
     })
       .compileComponents();
@@ -100,5 +122,11 @@ describe('AccountComponent', () => {
     component.logout();
     expect(routerSpy).toHaveBeenCalledWith(['/login']);
     expect(authSpy).toHaveBeenCalled();
+  });
+
+  it('should navigate to profile', () => {
+    const routerSpy = spyOn(router, 'navigateByUrl');
+    component.onProfileClicked();
+    expect(routerSpy).toHaveBeenCalledWith('profile');
   });
 });

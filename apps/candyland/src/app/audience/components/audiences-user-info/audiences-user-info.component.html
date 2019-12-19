@@ -15,8 +15,23 @@
 
     <div class="user-info-item">
       <div class="control-input">
+        <a
+          class="control-link"
+          [href]="transformTelTo(user?.phone_number)">
+          <mat-form-field>
+            <input
+              matInput
+              [placeholder]="'AUDIENCE_FEATURE.CONTACT_NO' | translate"
+              value="{{user?.phone_number || '-' }}" disabled>
+          </mat-form-field>
+        </a>
+      </div>
+    </div>
+
+    <div class="user-info-item">
+      <div class="control-input">
         <mat-form-field>
-          <input matInput [placeholder]="'AUDIENCE_FEATURE.CONTACT_NO' | translate" value="{{user?.phone_number || '-' }}" disabled>
+          <input matInput [placeholder]="'AUDIENCE_FEATURE.RACE' | translate" value="{{properties?.race || '-' }}" disabled>
         </mat-form-field>
       </div>
     </div>
@@ -24,7 +39,7 @@
     <div class="user-info-item">
       <div class="control-input">
         <mat-form-field>
-          <input matInput [placeholder]="'AUDIENCE_FEATURE.RACE' | translate" value="{{user?.race || '-' }}" disabled>
+          <input matInput [placeholder]="'AUDIENCE_FEATURE.COUNTRY' | translate" value="{{properties?.country || '-' }}" disabled>
         </mat-form-field>
       </div>
     </div>
@@ -32,7 +47,31 @@
     <div class="user-info-item">
       <div class="control-input">
         <mat-form-field>
-          <input matInput [placeholder]="'AUDIENCE_FEATURE.COUNTRY' | translate" value="{{user?.country || '-' }}" disabled>
+          <input matInput [placeholder]="'AUDIENCE_FEATURE.STATE' | translate" value="{{properties?.state || '-' }}" disabled>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="user-info-item">
+      <div class="control-input">
+        <a
+          class="control-link"
+          [href]="transformMailTo(user?.email_address)"
+        >
+          <mat-form-field>
+            <input
+              matInput
+              [placeholder]="'AUDIENCE_FEATURE.EMAIL' | translate"
+              value="{{user?.email_address || '-'}}" disabled>
+          </mat-form-field>
+        </a>
+      </div>
+    </div>
+
+    <div class="user-info-item">
+      <div class="control-input">
+        <mat-form-field>
+          <input matInput [placeholder]="'AUDIENCE_FEATURE.BIRTHDAY' | translate" value="{{(properties?.birthday | date) || '-' }}" disabled>
         </mat-form-field>
       </div>
     </div>
@@ -40,7 +79,7 @@
     <div class="user-info-item">
       <div class="control-input">
         <mat-form-field>
-          <input matInput [placeholder]="'AUDIENCE_FEATURE.STATE' | translate" value="{{user?.state || '-' }}" disabled>
+          <input matInput [placeholder]="'AUDIENCE_FEATURE.GENDER' | translate" value="{{properties?.gender || '-' }}" disabled>
         </mat-form-field>
       </div>
     </div>
@@ -48,31 +87,7 @@
     <div class="user-info-item">
       <div class="control-input">
         <mat-form-field>
-          <input matInput [placeholder]="'AUDIENCE_FEATURE.EMAIL' | translate" value="{{user?.email_address || '-'}}" disabled>
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div class="user-info-item">
-      <div class="control-input">
-        <mat-form-field>
-          <input matInput [placeholder]="'AUDIENCE_FEATURE.BIRTHDAY' | translate" value="{{user?.birthday || '-' }}" disabled>
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div class="user-info-item">
-      <div class="control-input">
-        <mat-form-field>
-          <input matInput [placeholder]="'AUDIENCE_FEATURE.GENDER' | translate" value="{{user?.gender || '-' }}" disabled>
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div class="user-info-item">
-      <div class="control-input">
-        <mat-form-field>
-          <input matInput [placeholder]="'AUDIENCE_FEATURE.CITY' | translate" value="{{user?.city || '-' }}" disabled>
+          <input matInput [placeholder]="'AUDIENCE_FEATURE.CITY' | translate" value="{{properties?.city || '-' }}" disabled>
         </mat-form-field>
       </div>
     </div>

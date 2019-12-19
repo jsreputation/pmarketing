@@ -1,15 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { take, tap, flatMap } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
+
+import {
+  take,
+  tap,
+  flatMap,
+  map,
+  filter,
+} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+import { TranslateService } from '@ngx-translate/core';
+
 import {
   ProfileService,
   IProfile,
-  ThemesService,
+  ConfigService,
+  IConfig,
   AuthenticationService,
   Config,
   PagesObject,
   AccountPageObject,
+  ITheme,
+  ThemesService,
+  LoyaltyService,
+  ILoyalty,
 } from '@perx/core';
 
 @Component({
@@ -18,39 +36,49 @@ import {
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
-  public profile: IProfile;
+  public profile: IProfile | null = null;
+  public loyalty: ILoyalty;
   public pages!: AccountPageObject[];
   public preAuth: boolean = false;
+  public theme: Observable<ITheme>;
+  public appConfig: Observable<IConfig>;
 
   constructor(
     public config: Config,
     private profileService: ProfileService,
-    private themeService: ThemesService,
+    private loyaltyService: LoyaltyService,
+    private configService: ConfigService,
     private translate: TranslateService,
     private router: Router,
     private authenticationService: AuthenticationService,
+    private themesService: ThemesService
   ) {
     this.preAuth = config.preAuth || false;
   }
 
   public ngOnInit(): void {
-    this.themeService.getAccountSettings()
+    this.theme = this.themesService.getThemeSetting();
+    this.configService.getAccountSettings()
       .pipe(
-        tap((settings: PagesObject) => this.pages = settings.pages),
-        flatMap((settings) => this.translate.get(settings.pages.map((page) => page.title))),
+        map((settings: PagesObject) => settings.pages),
+        tap((pages: AccountPageObject[]) => this.pages = pages),
+        filter((pages: AccountPageObject[]) => pages.length > 0),
+        flatMap((pages: AccountPageObject[]) => this.translate.get(pages.map((page: AccountPageObject) => page.title))),
       )
       .subscribe((translations) => this.pages.forEach((page) => page.title = translations[page.title]));
+    this.appConfig = this.configService.readAppConfig();
     this.profileService.whoAmI()
-      .pipe(
-        take(1)
-      )
-      .subscribe(profile => {
-        this.profile = profile;
-      });
+      .pipe(take(1))
+      .subscribe(profile => this.profile = profile);
+    this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.loyalty = loyalty);
   }
 
   public logout(): void {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
+  }
+
+  public onProfileClicked(): void {
+    this.router.navigateByUrl('profile');
   }
 }

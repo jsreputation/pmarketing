@@ -13,10 +13,36 @@ export class AuthHttpService {
 
   public signIn(data: IJsonApiItem<ILogin>): Observable<HttpResponse<IJsonApiPayload<IWLoginAttributes>>> {
     return this.http.post<IJsonApiPayload<IWLoginAttributes>>(
-      ApiConfig.signIn, {data}, {observe: 'response', params: {include: 'groups,credentials'}});
+      ApiConfig.signIn, { data }, { observe: 'response', params: { include: 'groups,credentials' } });
   }
 
   public getUser(id: string): Observable<IJsonApiPayload<IWProfileAttributes>> {
-    return this.http.get<any>(ApiConfig.IAMUsersPath + '/' + id);
+    return this.http.get<IJsonApiPayload<IWProfileAttributes>>(ApiConfig.IAMUsersPath + '/' + id);
+  }
+
+  public resetPassword(accountId: string, username: string): Observable<IJsonApiPayload<void>> {
+    const req = {
+      data: {
+        attributes: {
+          account_id: accountId,
+          username
+        }
+      }
+    };
+
+    return this.http.post<IJsonApiPayload<void>>(`${ApiConfig.IAMUsersPath}/password`, req);
+  }
+
+  public changePassword(password: string, token: string): Observable<any> {
+    const req = {
+      data: {
+        attributes: {
+          token,
+          password,
+          password_confirmation: password
+        }
+      }
+    };
+    return this.http.put<IJsonApiPayload<void>>(`${ApiConfig.IAMUsersPath}/password`, req);
   }
 }

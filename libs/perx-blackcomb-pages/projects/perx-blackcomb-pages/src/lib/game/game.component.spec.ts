@@ -11,6 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import { ConfigToMappedSlotPipe, ConfigToSlicesPipe, SpinComponent } from './spin/spin.component';
+import { WInformationCollectionSettingType } from '@perx/whistler';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -27,10 +29,24 @@ describe('GameComponent', () => {
     },
     texts: {},
     results: {},
+    displayProperties: {
+      informationCollectionSetting: WInformationCollectionSettingType.pi_required,
+      noRewardsPopUp: {
+        headLine: 'test headline',
+        subHeadLine: 'test subHeadline',
+        buttonTxt: 'btnText',
+      },
+      successPopUp: {
+        headLine: 'test headline',
+        subHeadLine: 'test subHeadline',
+        buttonTxt: 'btnText',
+      },
+    },
   };
   const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of([game]),
-    prePlay: () => of()
+    prePlay: () => of(),
+    prePlayConfirm: () => of(),
   };
   const routerStub: Partial<Router> = {
     navigate: () => Promise.resolve(true)
@@ -48,6 +64,9 @@ describe('GameComponent', () => {
         ShakeComponent,
         TapComponent,
         ScratchComponent,
+        SpinComponent,
+        ConfigToSlicesPipe,
+        ConfigToMappedSlotPipe
       ],
       imports: [
         MatProgressBarModule,

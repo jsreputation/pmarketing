@@ -1,5 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup} from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { ICampaignOutcome } from '@cl-core/models/campaign/campaign';
+import { IOutcome } from '@cl-core/models/outcome/outcome';
+import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'cl-reward-item',
@@ -7,29 +12,58 @@ import { AbstractControl, FormControl, FormGroup} from '@angular/forms';
   styleUrls: ['./reward-item.component.scss'],
 })
 export class RewardItemComponent implements OnInit {
-  @Input() public group: FormGroup = new FormGroup({
-    value: new FormControl(null),
-    probability: new FormControl({value: 0, disabled: true})
-  });
+  @Input() public outcomeData: ICampaignOutcome;
+  @Input() public enableProbability: boolean = false;
+  @Input() public isInvalid: boolean;
   @Output() private clickDelete: EventEmitter<any> = new EventEmitter<any>();
+  @Output() private updateOutcome: EventEmitter<{ probability: number, limit: number }> =
+    new EventEmitter<{ probability: number, limit: number }>();
 
-  public get data(): IRewardEntity | null {
-    return this.group.value.value;
-  }
+  public group: FormGroup = new FormGroup({
+    probability: new FormControl(null, {updateOn: 'blur'}),
+    limit: new FormControl(null, {updateOn: 'blur'})
+  });
+  private destroy$: Subject<void> = new Subject();
 
   public get probability(): AbstractControl {
     return this.group.get('probability');
   }
 
-  public get isInvalid(): boolean {
-    return this.group.parent.invalid;
+  public get limit(): AbstractControl {
+    return this.group.get('limit');
+  }
+
+  public get outcome(): IOutcome {
+    return this.outcomeData.outcome;
+  }
+
+  public get data(): IRewardEntity {
+    return this.outcomeData.reward;
   }
 
   public ngOnInit(): void {
+    this.initForm();
+    this.group.valueChanges.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(
+      () => {
+        this.updateOutcomeData();
+      }
+    );
   }
 
+  private initForm(): void {
+    this.group.patchValue({ probability: this.outcome.probability, limit: this.outcome.limit });
+  }
+
+  public updateOutcomeData(): void {
+    const updateData = {
+      probability: this.group.get('probability').value || null,
+      limit: this.group.get('limit').value || null,
+    };
+    this.updateOutcome.emit(updateData);
+  }
   public delete(): void {
-    this.clickDelete.emit(this.data);
+    this.clickDelete.emit(this.outcomeData);
   }
-
 }

@@ -1,7 +1,7 @@
 {
   "PAGE_NAME": "Доска",
-  "TITLE": "Добро пожаловать в Perx, Админ",
-  "DESCRIPTION": "Вот описание того, что происходит с вашими активными кампаниями. Это поможет вам добиться цели сегодня.",
+  "TITLE": "Добро пожаловать в Perx, ",
+  "DESCRIPTION_DASHBOARD": "Вот описание того, что происходит с вашими активными кампаниями. Это поможет вам добиться цели сегодня.",
   "SECTION_EXPLORE": "Изучите Perx",
   "SECTION_BUSINESS": "Понимание бизнеса",
   "CARD_REWARD_TITLE": "Награды",
@@ -18,7 +18,7 @@
   "NAV_LINK_CAMPAIGNS": "Кампании",
   "OVERVIEW_GRAPHIC_PAGE": {
     "TOTAL_ACTIVE_CUSTOMERS": "Всего активных клиентов",
-    "TOTAL_ISSUED_REWARDS": "Всего опубликованных наград",
+    "TOTAL_ISSUED_REWARDS": "Всего наград",
     "TOTAL_RUNNING_CAMPAIGNS": "Всего активных кампаний",
     "DEMOGRAPHICS": "Демография",
     "POPULAR_REDEMPTION_DAYS": "Популярные дни обмена",
@@ -61,6 +61,7 @@
     "SEARCH_FOR_STAMPS_CAMPAIGNS": "Поиск кампаний со штампами",
     "INSTANT_REWARD_ENGAGEMENT_RATE": "Степень вовлеченности по мгновенным наградам",
     "STAMPS_REWARDS_LISTS": "Списки наград штампов",
+    "SEARCH_FOR_SURVEY_CAMPAIGNS": "Поиск кампаний с опросами",
     "SEARCH_FOR_REWARDS_CAMPAIGNS": "Поиск кампаний с наградами"
   }
 }

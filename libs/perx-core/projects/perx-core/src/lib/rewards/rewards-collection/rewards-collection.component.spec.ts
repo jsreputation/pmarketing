@@ -1,16 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { RewardsCollectionComponent } from './rewards-collection.component';
-import { MaterialModule } from '../../shared/material.module';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-import { UtilsModule } from '../../utils/utils.module';
-import { IReward, RedemptionType } from '../models/reward.model';
-import { of } from 'rxjs';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { of } from 'rxjs';
+import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
+import { RewardsCollectionComponent } from './rewards-collection.component';
+import { IReward } from '../models/reward.model';
+import { MaterialModule } from '../../shared/material.module';
+import { UtilsModule } from '../../utils/utils.module';
+import { ThemesService } from '../../utils/themes/themes.service';
 
 describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;
   let fixture: ComponentFixture<RewardsCollectionComponent>;
+
+  const themesServiceStub = {
+    getThemeSetting: () => of()
+  };
 
   const rewards: IReward[] = [
     {
@@ -39,7 +47,6 @@ describe('RewardsCollectionComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: RedemptionType.pin,
       categoryTags: [],
       inventory: {
         rewardTotalBalance: 1,
@@ -73,7 +80,6 @@ describe('RewardsCollectionComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: RedemptionType.pin,
       categoryTags: [],
       inventory: {
         rewardTotalBalance: 2,
@@ -90,7 +96,13 @@ describe('RewardsCollectionComponent', () => {
         MaterialModule,
         NgxMultiLineEllipsisModule,
         UtilsModule
-      ]
+      ],
+      providers: [
+        {
+          provide: ThemesService,
+          useValue: themesServiceStub,
+        },
+      ],
     })
       .compileComponents();
   }));
@@ -160,7 +172,6 @@ describe('RewardsCollectionComponent', () => {
         merchantWebsite: '',
         termsAndConditions: '',
         howToRedeem: '',
-        redemptionType: RedemptionType.pin,
         categoryTags: [],
         inventory: {
           rewardTotalBalance: 1,
@@ -194,7 +205,6 @@ describe('RewardsCollectionComponent', () => {
         merchantWebsite: '',
         termsAndConditions: '',
         howToRedeem: '',
-        redemptionType: RedemptionType.pin,
         categoryTags: [],
         inventory: {
           rewardTotalBalance: 2,
@@ -243,7 +253,6 @@ describe('RewardsCollectionComponent', () => {
         merchantWebsite: '',
         termsAndConditions: '',
         howToRedeem: '',
-        redemptionType: RedemptionType.pin,
         categoryTags: [],
         inventory: {
           rewardTotalBalance: 1,
@@ -277,7 +286,6 @@ describe('RewardsCollectionComponent', () => {
         merchantWebsite: '',
         termsAndConditions: '',
         howToRedeem: '',
-        redemptionType: RedemptionType.pin,
         categoryTags: [],
         inventory: {
           rewardTotalBalance: 2,

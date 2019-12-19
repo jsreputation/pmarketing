@@ -33,7 +33,7 @@ export class WalletHistoryComponent implements OnInit {
     this.walletFilter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
     this.historyFilter = [VoucherState.redeemed, VoucherState.expired];
 
-    this.vouchers$ = this.vouchersService.getAll({ type: 'all', sourceType: 'hsbc-rewards' });
+    this.vouchers$ = this.vouchersService.getAll();
   }
 
   public voucherSelected(voucher: Voucher): void {

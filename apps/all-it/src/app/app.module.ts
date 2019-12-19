@@ -15,7 +15,7 @@ import {
   ProfileModule,
   RewardsModule,
   TokenStorage,
-  CustomTranslateLoader,
+  LanguageService,
   ConfigService
 } from '@perx/core';
 
@@ -25,6 +25,7 @@ import { environment } from '../environments/environment';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { MatDialogModule, MatSnackBarModule } from '@angular/material';
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
   translateService.setDefaultLang(environment.defaultLang);
@@ -48,11 +49,13 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     PerxCampaignModule,
     HttpClientModule,
     RewardsModule,
+    MatDialogModule,
+    MatSnackBarModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         deps: [HttpClient, ConfigService, TokenStorage],
-        useClass: CustomTranslateLoader
+        useClass: LanguageService
       }
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),

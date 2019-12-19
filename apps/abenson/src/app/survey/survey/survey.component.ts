@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, ISurvey, SurveyService } from '@perx/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 
 interface IAnswer {
@@ -33,7 +33,10 @@ export class SurveyComponent implements OnInit {
       .pipe(
         filter((params: ParamMap) => params.has('id')),
         switchMap((params: ParamMap) => {
-          const id: string = params.get('id');
+          const id: string | null = params.get('id');
+          if (!id) {
+            return throwError({ message: 'survey id is required' });
+          }
           const idN = Number.parseInt(id, 10);
           return this.surveyService.getSurveyFromCampaign(idN);
         }),
@@ -49,17 +52,20 @@ export class SurveyComponent implements OnInit {
     return this.currentPointer === this.totalLength;
   }
   public onSubmit(): void {
-    this.surveyService.postSurveyAnswer(this.answers, this.survey, this.route.snapshot.params.id).subscribe(
-      () => {
-        this.router.navigate(['/wallet']);
-        this.notificationService.addPopup({
-          text: 'Here is a reward for you.',
-          title: 'Thanks for completing the survey.',
-          buttonTxt: 'View Reward',
-          imageUrl: 'assets/congrats_image.png'
-        });
-      }
-    );
+    const surveyId = this.survey && this.survey.id ? Number.parseInt(this.survey.id, 10) : null;
+    if (surveyId) {
+      this.surveyService.postSurveyAnswer(this.answers, this.route.snapshot.params.id, surveyId).subscribe(
+        () => {
+          this.router.navigate(['/wallet']);
+          this.notificationService.addPopup({
+            text: 'Here is a reward for you.',
+            title: 'Thanks for completing the survey.',
+            buttonTxt: 'View Reward',
+            imageUrl: 'assets/congrats_image.png'
+          });
+        }
+      );
+    }
   }
 
   public setTotalLength(totalLength: number): void {

@@ -4,8 +4,10 @@ import { takeUntil } from 'rxjs/operators';
 
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { oc } from 'ts-optchain';
+import {getEngagementRouterLink} from '@cl-helpers/get-engagement-router-link';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'cl-new-campaign-review-page',
@@ -20,7 +22,8 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
 
   constructor(
     public store: CampaignCreationStoreService,
-    public cd: ChangeDetectorRef
+    public cd: ChangeDetectorRef,
+    public router: Router
   ) {
     super(0, store, null);
   }
@@ -43,17 +46,36 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
     return '';
   }
 
+  public get slots(): number[] {
+    return this.campaign.template.slots || [0];
+  }
+
+  public hasRewardsInSlot(slot: number): boolean {
+    const slotOutcomes = this.campaign.outcomes.filter(outcomeData => outcomeData.outcome.slotNumber === slot);
+    if (slotOutcomes) {
+      return slotOutcomes.length > 0;
+    }
+    return false;
+  }
+
   public checkStampsHasRewards(campaign: ICampaign): void {
-    if (!campaign.rewardsListCollection) {
+    if (!campaign.outcomes) {
       this.stampsHasRewards = false;
     } else {
-      campaign.rewardsListCollection.forEach(data => {
-        if (data.rewardsOptions.rewards && data.rewardsOptions.rewards.length > 0) {
+      campaign.outcomes.forEach(data => {
+        if (data.reward) {
           this.stampsHasRewards = true;
         }
       });
     }
     this.cd.detectChanges();
+  }
+
+  public navigateToEdit(): void {
+    const gameType = 'game_type' in this.campaign.template ? this.campaign.template.game_type : null;
+    let path = getEngagementRouterLink(this.campaign.engagement_type, gameType);
+    path += '/' + this.campaign.template.id;
+    this.router.navigate([path]);
   }
 
   public ngOnDestroy(): void {

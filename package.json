@@ -3,6 +3,9 @@
   "scripts": {
     "build:lib": "lerna run build:lib",
     "build": "lerna run build:lib && lerna run build -- ",
+    "build:hsbc": "lerna run build:lib && lerna run build:hsbc -- ",
+    "build:blackcomb": "lerna run build:lib && lerna run build:blackcomb -- ",
+    "build:components-demo": "lerna run build:lib && lerna run build:components-demo -- ",
     "build:abenson:prod": "lerna run build:lib && lerna run build:abenson:prod --",
     "build:blackcomb:prod": "lerna run build:lib && lerna run build:blackcomb:prod --",
     "build:all-it:prod": "lerna run build:lib && lerna run build:all-it:prod --",
@@ -14,11 +17,13 @@
     "build:prudential:prod": "echo 'skipping prudential build'",
     "build:merck-core:prod": "lerna run build:lib && lerna run build:merck-core:prod --",
     "build:starhub:prod": "lerna run build:lib && lerna run build:starhub:prod --",
+    "build:starhub:staging": "lerna run build:lib && lerna run build:starhub:staging --",
     "build:components-demo:prod": "lerna run build:lib && lerna run build:components-demo:prod --",
     "build:hkbn:prod": "lerna run build:lib && lerna run build:hkbn:prod --",
     "build:hsbc-rewards:prod": "lerna run build:lib && lerna run build:hsbc-rewards:prod --",
     "build:merck-customer:prod": "lerna run build:lib && lerna run build:merck-customer:prod --",
     "build:merck-merchant:prod": "lerna run build:lib && lerna run build:merck-merchant:prod --",
+    "build:petron-demo:prod": "lerna run build:lib && lerna run build:petron-demo:prod --",
     "build:oracle-pay:prod": "echo 'skipping oracle-pay build'",
     "build:backend": "lerna run build:backend",
     "clean": "lerna clean --yes && lerna run clean && rm -rf ./dist ./node_modules",
@@ -39,8 +44,6 @@
     "@typescript-eslint/parser": "^2.3.3",
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "lerna": "^3.14.1"
+    "lerna": "^3.14.1"   
   }
 }
-
-

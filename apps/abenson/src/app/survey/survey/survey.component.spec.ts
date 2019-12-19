@@ -53,4 +53,25 @@ describe('SurveyComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should set totalLength, setTotalLength', () => {
+    component.setTotalLength(1);
+    expect(component.totalLength).toBe(1);
+  });
+
+  it('should set currentPointer, setCurrentPointer', () => {
+    component.setCurrentPointer(1);
+    expect(component.currentPointer).toBe(1);
+  });
+
+  it('should set answers, updateSurveyStatus', () => {
+    const answers: [any] = [
+      {
+        question_id: '1',
+        content: '',
+      }
+    ];
+    component.updateSurveyStatus(answers);
+    expect(component.answers).toEqual(answers);
+  });
 });

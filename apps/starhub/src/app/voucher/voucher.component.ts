@@ -1,9 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { Voucher, ILocation, IVoucherService, IReward, ICategoryTags } from '@perx/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
-import { AnalyticsService, PageType } from '../analytics.service';
-import { IMacaron, MacaronService } from '../services/macaron.service';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  Params,
+} from '@angular/router';
+
+import {
+  filter,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
+
+import {
+  Voucher,
+  ILocation,
+  IVoucherService,
+  IReward,
+  ICategoryTags,
+  isEmptyArray,
+} from '@perx/core';
+
+import {
+  AnalyticsService,
+  PageType,
+} from '../analytics.service';
+import {
+  IMacaron,
+  MacaronService,
+} from '../services/macaron.service';
 
 @Component({
   selector: 'app-voucher',
@@ -11,11 +38,11 @@ import { IMacaron, MacaronService } from '../services/macaron.service';
   styleUrls: ['./voucher.component.scss']
 })
 export class VoucherComponent implements OnInit {
-  public voucher: Voucher;
+  public voucher?: Voucher;
   public reward: IReward;
   public locations: ILocation[];
   public isButtonEnable: boolean = false;
-  public macaron: IMacaron;
+  public macaron: IMacaron | null;
   constructor(
     private vouchersService: IVoucherService,
     private activeRoute: ActivatedRoute,
@@ -32,10 +59,10 @@ export class VoucherComponent implements OnInit {
         switchMap((id: number) => this.vouchersService.get(id)),
         tap((voucher: Voucher) => {
           this.voucher = voucher;
-          const categories: ICategoryTags[] = voucher.reward.categoryTags;
-          const category: string = categories && categories.length > 0 ? categories[0].title : undefined;
+          const categories: ICategoryTags[] = voucher.reward && voucher.reward.categoryTags || [];
+          const category: string = !isEmptyArray(categories) ? categories[0].title : '';
           if (category !== undefined) {
-            const pageName: string = `rewards:vouchers:${category.toLowerCase()}:${voucher.reward.name}`;
+            const pageName: string = `rewards:vouchers:${category.toLowerCase()}:${voucher.reward && voucher.reward.name}`;
             this.analytics.addEvent({
               pageName,
               pageType: PageType.detailPage,
@@ -53,5 +80,14 @@ export class VoucherComponent implements OnInit {
           this.isButtonEnable = true;
         }
       });
+  }
+
+  public isButtonDisabled(): boolean {
+    const nowTime: number = (new Date()).getTime();
+    const sellingFrom = this.reward.sellingFrom;
+    if (sellingFrom && sellingFrom.getTime() <= nowTime) {
+      return false;
+    }
+    return true;
   }
 }

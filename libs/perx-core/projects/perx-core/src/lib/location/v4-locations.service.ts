@@ -54,7 +54,6 @@ export class V4LocationsService extends LocationsService {
         }
 
         filteredMerchants = filteredMerchants ? filteredMerchants : merchants;
-
         return filteredMerchants.map((merchant: IMerchant) => this.getFromMerchant(merchant.id));
       }),
       mergeAll(5),
@@ -84,9 +83,7 @@ export class V4LocationsService extends LocationsService {
             return found;
           });
         }
-
         filteredMerchants = filteredMerchants ? filteredMerchants : merchants;
-
         return filteredMerchants.map((merchant: IMerchant) => this.getFromMerchant(merchant.id));
       }),
       mergeAll(5),
@@ -96,7 +93,7 @@ export class V4LocationsService extends LocationsService {
 
   public getFromMerchant(merchantId: number, page?: number): Observable<ILocation[]> {
     return this.merchantsService.getMerchant(merchantId, true, page).pipe(
-      filter((merchant: IMerchant) => (merchant.outlets !== undefined && merchant.outlets.length > 0)),
+      filter((merchant: IMerchant) => (merchant.outlets !== undefined && (merchant.outlets ? merchant.outlets.length > 0 : false))),
       // @ts-ignore
       map((merchant: IMerchant) => merchant.outlets.map((outlet: IOutlet) => ({
         merchantId: merchant.id,

@@ -11,6 +11,9 @@ import {
 import {
   map,
 } from 'rxjs/operators';
+import { oc } from 'ts-optchain';
+
+import { IWRewardDisplayProperties } from '@perx/whistler';
 
 import { RewardsService } from './rewards.service';
 import {
@@ -18,13 +21,8 @@ import {
   ICatalog,
   IPrice,
   ICategoryTags,
-  RedemptionType,
 } from './models/reward.model';
-
 import { Config } from '../config/config';
-import { IWRewardDisplayProperties } from '@perx/whistler';
-import { oc } from 'ts-optchain';
-
 export interface IV4Tag {
   id: number;
   name: string;
@@ -69,7 +67,6 @@ export interface IV4Reward {
   merchant_website?: string;
   terms_and_conditions?: string;
   how_to_redeem?: string;
-  redemption_type?: RedemptionType;
   tags?: IV4Tag[];
   category_tags?: ICategoryTags[];
   inventory?: IV4Inventory;
@@ -216,7 +213,7 @@ export class V4RewardsService extends RewardsService {
     };
   }
 
-  public getAllRewards(tags?: string[], categories?: string[], locale: string = 'en'): Observable<IReward[]> {
+  public getAllRewards(tags?: string[] | null, categories?: string[], locale: string = 'en'): Observable<IReward[]> {
 
     return new Observable(subject => {
       const pageSize = 10;
@@ -245,7 +242,7 @@ export class V4RewardsService extends RewardsService {
   public getRewards(
     page: number = 1,
     pageSize: number = 10,
-    tags?: string[],
+    tags?: string[] | null,
     categories?: string[],
     locale: string = 'en'
   ): Observable<IReward[]> {
@@ -306,7 +303,7 @@ export class V4RewardsService extends RewardsService {
     });
   }
 
-  private getCatalogs(page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<ICatalog[]> {
+  public getCatalogs(page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<ICatalog[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4GetCatalogsResponse>(
       `${this.apiHost}/v4/catalogs`,

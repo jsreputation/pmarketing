@@ -2,12 +2,14 @@
  "AUDIENCE_FEATURE": {
    "AUDIENCES": "Аудитории",
    "ADD_USER": "Добавить пользователя",
+   "EDIT": "Редактировать",
+   "EDIT_USER": "Редактировать пользователя",
    "SEARCH_FOR_USERS": "Поиск пользователей",
    "SEARCH_FOR_AUDIENCE": "Поиск аудитории",
    "ID": "Идентификатор",
    "NAME": "Имя",
    "EMAIL": "Электронная почта",
-   "STATE": "Состояние",
+   "STATE": "Штат",
    "CONTACT_NUMBER": "Контактный номер",
    "AUDIENCE_LIST": "Список аудитории",
    "PRIMARY_IDENTIFIER": "Первичный идентификатор",
@@ -43,6 +45,23 @@
    "CAMPAIGN": "Кампания",
    "SEARCH_VOUCHERS": "Поиск ваучера",
    "ISSUE_VOUCHER": "Публикация Ваучера",
-   "MANAGE_LIST": "Управление списком"
+   "MANAGE_LIST": "Управление списком",
+   "FROM": "",
+   "OLD": "Текущая",
+   "CURRENT_EXPIRY_DATE": "Текущая дата истечения",
+   "TO": "",
+   "NEW": "Новая",
+   "ENTER_NEW_EXPIRY_DATE": "Новая дата истечения"
  }
 }
+
+
+
+
+
+
+
+
+
+
+

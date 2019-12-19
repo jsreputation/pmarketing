@@ -4,19 +4,25 @@
     <div class="template-filters">
       <cl-table-filters [dataSource]="dataSource">
         <ng-container *clTableFilter="'title'; value: defaultSearchValue; let filter">
-          <cl-search-filter [control]="filter" [placeholder]="'CAMPAIGN.SEARCH_FOR_ENGAGEMENTS' | translate"></cl-search-filter>
+          <cl-search-filter [control]="filter"
+                            [placeholder]="'CAMPAIGN.SEARCH_FOR_ENGAGEMENTS' | translate">
+          </cl-search-filter>
         </ng-container>
         <ng-container *clTableFilter="'attributes_type'; value: defaultTypeValue; let filter">
           <mat-form-field appearance="outline" class="half-block">
             <mat-select [formControl]="filter" [placeholder]="'CAMPAIGN.FILTER_BY' | translate">
               <ng-container *ngFor="let option of typeFilterConfig">
-                <mat-option [value]="option.value">{{option.title | engagementType}}</mat-option>
+                <mat-option [value]="option.value">
+                  {{option.title | engagementType | replaceSpaceWithScore | translate}}
+                </mat-option>
               </ng-container>
             </mat-select>
           </mat-form-field>
         </ng-container>
       </cl-table-filters>
-      <cl-button classList="tertiary ph-0" (click)="createNewEngagement()">{{'CAMPAIGN.CREATE_NEW_ENGAGEMENT' | translate}}</cl-button>
+      <cl-button classList="tertiary ph-0" (click)="createNewEngagement()">
+        {{'CAMPAIGN.CREATE_NEW_ENGAGEMENT' | translate}}
+      </cl-button>
     </div>
     <ng-container *ngIf="hasData">
       <!--items-->

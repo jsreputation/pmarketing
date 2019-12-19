@@ -8,14 +8,21 @@
         class="full-width__button btn-blue"
         (click)="onSalesScan()"
       >
-        Sales Scan
+        {{"SALES_SCAN"|translate}}
       </button>
       <button
         mat-flat-button
         class="full-width__button btn-hollow-white"
         (click)="onRedemption()"
       >
-        Redemption
+        {{"REDEMPTION"|translate}}
+      </button>
+      <button
+        mat-flat-button
+        class="full-width__button btn-hollow-white"
+        (click)="onTransactionHistory()"
+      >
+        {{"TRANSACTION_HISTORY"|translate}}
       </button>
       <div class="sales-contact">
         <app-sales-contact></app-sales-contact>
@@ -29,7 +36,7 @@
         class="full-width__button cs-btn-transparent"
         (click)="onLogOut()"
       >
-        Log Out
+      {{"LOGOUT"|translate}}
       </button>
     </div>
   </div>

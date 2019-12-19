@@ -2,7 +2,9 @@
   <div *ngIf="rewards$; then thenBlock else elseBlock"></div>
   <ng-template #thenBlock>
     <ng-container *ngIf="rewards$ | async as rewards">
-      <mat-card matRipple *ngFor="let reward of rewards" (click)="rewardClickedHandler(reward)">
+      <div *ngIf="rewards.length > 0; then hasRewardsBlock else noRewardsBlock"></div>
+      <ng-template #hasRewardsBlock>
+        <mat-card matRipple *ngFor="let reward of rewards" (click)="rewardClickedHandler(reward)">
         <div class="reward-content">
           <div class="reward-img__wrapper">
             <img *ngIf="reward.rewardThumbnail || defaultImg"
@@ -23,13 +25,15 @@
               {{reward.merchantName}}
             </div>
             <ng-template #showDescription>
-              <div class="description" ngxEllipsis [lines]="2">
+              <div class="description" ellipsis>
                 {{reward.description}}
               </div>
             </ng-template>
-            <div class="reward-price-details">
-              <div *ngIf="reward.rewardPrice &&
-                  reward.rewardPrice.length > 0">
+            <div
+              class="reward-price-details"
+              [ngStyle]="{'color': themeFontColor ? themeFontColor : colorPrimary}"
+            >
+              <div *ngIf="reward.rewardPrice && reward.rewardPrice.length > 0">
                 <div *ngFor="let rewardPrice of reward.rewardPrice">
                   {{displayPriceFn(rewardPrice)}}
                 </div>
@@ -38,6 +42,17 @@
           </div>
         </div>
       </mat-card>
+      </ng-template>
+      <ng-template #noRewardsBlock>
+        <div class="reward-content">
+          <div class="no-rewards">
+            <h3>No rewards in this category!</h3>
+            <div class="img-container">
+              <img src="assets/empty_list.svg"/>
+            </div>
+          </div>
+        </div>
+      </ng-template>
     </ng-container>
   </ng-template>
   <ng-template #elseBlock>

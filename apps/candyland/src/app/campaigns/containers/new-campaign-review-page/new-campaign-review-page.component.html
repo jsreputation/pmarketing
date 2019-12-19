@@ -1,7 +1,7 @@
 <div class="phonepreview-wrapper">
   <div class="forms-container">
     <!--template-->
-    <mat-card class="card" *ngIf="campaign?.template">
+    <mat-card class="card linkable" *ngIf="campaign?.template" (click)="navigateToEdit()">
       <div class="card-header">
         <h2 class="card-title">
           {{'CAMPAIGN.TEMPLATE' | translate}}
@@ -12,39 +12,28 @@
       </div>
     </mat-card>
     <!--rewards-->
-    <mat-card class="card" *ngIf="campaign?.rewardsOptions?.rewards.length">
-      <div class="card-header">
-        <p class="card-title">
-          {{'CAMPAIGN.REWARDS' | translate}}
-        </p>
-      </div>
-      <div class="card-content">
-        <cl-reward-item-preview
-          *ngFor="let reward of campaign?.rewardsOptions?.rewards"
-          class="item"
-          [data]="reward?.value"
-          [probability]="reward?.probability"
-          [enableProbability]="campaign?.rewardsOptions?.enableProbability">
-        </cl-reward-item-preview>
-      </div>
-    </mat-card>
-    <!--stamp rewards-->
     <mat-card class="card" *ngIf="stampsHasRewards">
-      <div *ngFor="let rewardsData of campaign?.rewardsListCollection">
-        <div *ngIf="rewardsData?.rewardsOptions?.rewards?.length">
+      <div *ngFor="let slot of slots">
+        <div *ngIf="hasRewardsInSlot(slot)">
           <div class="card-header">
-            <p class="card-title">
-                    {{'CAMPAIGN.REWARDS_FOR_SLOT' | translate}}
-                    {{rewardsData?.stampSlotNumber}}</p>
+            <p class="card-title" *ngIf="slot > 0">
+                {{'CAMPAIGN.REWARDS_FOR_SLOT' | translate}}
+                {{slot}}
+            </p>
+            <p class="card-title" *ngIf="slot === 0">
+                {{'CAMPAIGN.REWARDS' | translate}}
+            </p>
           </div>
-          <div class="card-content">
-            <cl-reward-item-preview
-              *ngFor="let reward of rewardsData?.rewardsOptions?.rewards"
-              class="item"
-              [data]="reward?.value"
-              [probability]="reward?.probability"
-              [enableProbability]="rewardsData?.rewardsOptions?.enableProbability">
-            </cl-reward-item-preview>
+          <div *ngFor="let outcome of campaign?.outcomes">
+            <div class="card-content" *ngIf="outcome?.outcome?.slotNumber === slot">
+              <cl-reward-item-preview
+                class="item"
+                [data]="outcome?.reward"
+                [probability]="outcome?.outcome?.probability"
+                [limit]="outcome?.outcome?.limit"
+                [enableProbability]="outcome?.enableProbability">
+              </cl-reward-item-preview>
+            </div>
           </div>
         </div>
       </div>
@@ -136,13 +125,13 @@
       </div>
       <div class="card-content">
         <h3 class="card-label">
-          {{campaign?.channel?.type}}
+          {{campaign?.channel?.type | translate}}
         </h3>
         <!--Message-->
         <div class="card-section" *ngIf="campaign?.campaignInfo?.informationCollectionSetting">
           <div class="card-header">
             <h3 class="card-title">
-              {{ informationCollectionSettingTitle }}
+              {{ informationCollectionSettingTitle | translate}}
             </h3>
           </div>
         </div>

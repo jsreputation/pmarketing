@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardItemComponent } from './reward-item.component';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -9,7 +9,6 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('RewardItemComponent', () => {
   let component: RewardItemComponent;
   let fixture: ComponentFixture<RewardItemComponent>;
-  let group: FormGroup;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -23,11 +22,12 @@ describe('RewardItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RewardItemComponent);
     component = fixture.componentInstance;
-    group = new FormGroup({
-      test: new FormControl(),
-      test2: new FormGroup({probability: new FormControl(null)}, [])
-    });
-    component.group = (group.get('test2') as FormGroup);
+    component.outcomeData = {
+      outcome: {
+        probability: 0,
+        limit: null,
+      }
+    }
     fixture.detectChanges();
   });
 

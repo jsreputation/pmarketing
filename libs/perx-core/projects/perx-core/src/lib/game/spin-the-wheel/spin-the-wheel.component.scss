@@ -1,31 +1,39 @@
 :host {
-  display: flex;
-  justify-content: center;
-  width: 100%;
   height: 100%;
 }
 
-#wheel {
+.main-wrap {
+  height: 40rem;
+
+  &.down {
+    overflow: hidden;
+  }
+}
+
+.spin-wheel-container {
+  transition: transform 0s;
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
   height: 100%;
+  width: 24rem;
+  display: block;
+
+  &.down {
+    transform: scale(1.4);
+    top: 30%;
+    height: 80%;
+  }
 }
 
-#wheel-canvas-stop,
+#wheel-canvas-stop {
+  position: relative;
+  display: block;
+  z-index: 5;
+  top: 0;
+  margin: 0 auto;
+}
+
 #ng-wheel-canvas {
   position: absolute;
-}
-
-#container {
+  z-index: 2;
   width: 100%;
-  height: 100%;
-  text-align: center;
 }

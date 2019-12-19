@@ -22,10 +22,11 @@ import { ContentModule } from '../content/content.module';
     LayoutComponent
   ],
   imports: [
-    WalletModule,
-    CommonModule,
+    // LayoutRoutingModule must be listed first to use its '' routing paths
     LayoutRoutingModule,
     HomeModule,
+    WalletModule,
+    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     VouchersModule,
@@ -38,7 +39,7 @@ import { ContentModule } from '../content/content.module';
     VoucherDetailModule,
     PiModule,
     RewardsDetailModule,
-    ContentModule
+    ContentModule,
   ]
 })
 export class LayoutModule { }

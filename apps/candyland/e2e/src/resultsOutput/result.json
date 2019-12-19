@@ -1,2662 +1,3634 @@
 [
   {
-    "description": "Engagements tab is visible to customer.",
-    "assertions": [
+    "description": "The acceptance criteria:\n1. The 4 types of engagement options present: survey, games , instant rewards and stamp.\n2. Dialog box present when customer taps on create new button.\n3. Engagements tab visible to customer\n4. Engagment options are clickable.",
+    "keyword": "Feature",
+    "name": "Initiate creation of engagement campaign",
+    "line": 1,
+    "id": "initiate-creation-of-engagement-campaign",
+    "tags": [],
+    "uri": "src/features/1_InitiateCreateEngagementCpgn.feature",
+    "elements": [
       {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      }
-    ],
-    "events": [
-      {
-        "emitterEvent": "testPass",
-        "name": "Given 1_I am on the dashboard page.",
-        "category": "Initiate creation of engagement campaign: Engagements tab is visible to customer.",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/1_InitiateCreateEngagementCpgn.feature",
-          "line": 11,
-          "column": 3
-        },
-        "progress": {
-          "step": 1,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "When 1_I take no action.",
-        "category": "Initiate creation of engagement campaign: Engagements tab is visible to customer.",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/1_InitiateCreateEngagementCpgn.feature",
-          "line": 12,
-          "column": 3
-        },
-        "progress": {
-          "step": 2,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "Then 1_I should see the engagment tab.",
-        "category": "Initiate creation of engagement campaign: Engagements tab is visible to customer.",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/1_InitiateCreateEngagementCpgn.feature",
-          "line": 13,
-          "column": 3
-        },
-        "progress": {
-          "step": 3,
-          "steps": 3
-        }
-      }
-    ],
-    "emitToTestRunner": [
-      [
-        "testPass",
-        {
-          "name": "Given 1_I am on the dashboard page.",
-          "category": "Initiate creation of engagement campaign: Engagements tab is visible to customer.",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/1_InitiateCreateEngagementCpgn.feature",
+        "id": "initiate-creation-of-engagement-campaign;engagements-tab-is-visible-to-customer.",
+        "keyword": "Scenario",
+        "line": 10,
+        "name": "Engagements tab is visible to customer.",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 9
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
             "line": 11,
-            "column": 3
+            "name": "1_I am on the dashboard page.",
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:20"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10162000000
+            }
           },
-          "progress": {
-            "step": 1,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "When 1_I take no action.",
-          "category": "Initiate creation of engagement campaign: Engagements tab is visible to customer.",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/1_InitiateCreateEngagementCpgn.feature",
+          {
+            "arguments": [],
+            "keyword": "When ",
             "line": 12,
-            "column": 3
+            "name": "1_I take no action.",
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:40"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
           },
-          "progress": {
-            "step": 2,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "Then 1_I should see the engagment tab.",
-          "category": "Initiate creation of engagement campaign: Engagements tab is visible to customer.",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/1_InitiateCreateEngagementCpgn.feature",
+          {
+            "arguments": [],
+            "keyword": "Then ",
             "line": 13,
-            "column": 3
+            "name": "1_I should see the engagment tab.",
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:42"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 102000000
+            }
           },
-          "progress": {
-            "step": 3,
-            "steps": 3
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
           }
-        }
-      ]
-    ],
-    "duration": 11146
+        ]
+      }
+    ]
   },
   {
-    "description": "Ensure that campaign tab is present",
-    "assertions": [
+    "description": "This is to test the flow for creating rewards. Prioritization of test cases\nwill be on prudential features. Will enhance test coverage in the later run.",
+    "keyword": "Feature",
+    "name": "Testing Initiate creating survey campaign flow.",
+    "line": 1,
+    "id": "testing-initiate-creating-survey-campaign-flow.",
+    "tags": [],
+    "uri": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+    "elements": [
       {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      }
-    ],
-    "events": [
-      {
-        "emitterEvent": "testPass",
-        "name": "Given 1_I am on dashboard page",
-        "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign tab is present",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
-          "line": 7,
-          "column": 3
-        },
-        "progress": {
-          "step": 1,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "When 1_I do nothing",
-        "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign tab is present",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
-          "line": 8,
-          "column": 3
-        },
-        "progress": {
-          "step": 2,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "Then 1_The campaign tab should be present.",
-        "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign tab is present",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
-          "line": 9,
-          "column": 3
-        },
-        "progress": {
-          "step": 3,
-          "steps": 3
-        }
-      }
-    ],
-    "emitToTestRunner": [
-      [
-        "testPass",
-        {
-          "name": "Given 1_I am on dashboard page",
-          "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign tab is present",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+        "id": "testing-initiate-creating-survey-campaign-flow.;ensure-that-campaign-tab-is-present",
+        "keyword": "Scenario",
+        "line": 6,
+        "name": "Ensure that campaign tab is present",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 5
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
             "line": 7,
-            "column": 3
+            "name": "1_I am on dashboard page",
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1930000000
+            }
           },
-          "progress": {
-            "step": 1,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "When 1_I do nothing",
-          "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign tab is present",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          {
+            "arguments": [],
+            "keyword": "When ",
             "line": 8,
-            "column": 3
+            "name": "1_I do nothing",
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:20"
+            },
+            "result": {
+              "status": "passed"
+            }
           },
-          "progress": {
-            "step": 2,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "Then 1_The campaign tab should be present.",
-          "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign tab is present",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          {
+            "arguments": [],
+            "keyword": "Then ",
             "line": 9,
-            "column": 3
+            "name": "1_The campaign tab should be present.",
+            "match": {
+              "location": "src/steps/11_Testing Initiate creating survey campaign flow.steps.ts:18"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 827000000
+            }
           },
-          "progress": {
-            "step": 3,
-            "steps": 3
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
           }
-        }
-      ]
-    ],
-    "duration": 2905
-  },
-  {
-    "description": "Ensure that clicking on the campaign tab leads to the campaign page",
-    "assertions": [
-      {
-        "passed": true
+        ]
       },
       {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      }
-    ],
-    "events": [
-      {
-        "emitterEvent": "testPass",
-        "name": "Given 2_I am on dashboard page",
-        "category": "Testing Initiate creating survey campaign flow.: Ensure that clicking on the campaign tab leads to the campaign page",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
-          "line": 12,
-          "column": 3
-        },
-        "progress": {
-          "step": 1,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "When 2_I click on the campaign tab",
-        "category": "Testing Initiate creating survey campaign flow.: Ensure that clicking on the campaign tab leads to the campaign page",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
-          "line": 13,
-          "column": 3
-        },
-        "progress": {
-          "step": 2,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "Then 2_I should be navigated to the campaign page.",
-        "category": "Testing Initiate creating survey campaign flow.: Ensure that clicking on the campaign tab leads to the campaign page",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
-          "line": 14,
-          "column": 3
-        },
-        "progress": {
-          "step": 3,
-          "steps": 3
-        }
-      }
-    ],
-    "emitToTestRunner": [
-      [
-        "testPass",
-        {
-          "name": "Given 2_I am on dashboard page",
-          "category": "Testing Initiate creating survey campaign flow.: Ensure that clicking on the campaign tab leads to the campaign page",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+        "id": "testing-initiate-creating-survey-campaign-flow.;ensure-that-clicking-on-the-campaign-tab-leads-to-the-campaign-page",
+        "keyword": "Scenario",
+        "line": 11,
+        "name": "Ensure that clicking on the campaign tab leads to the campaign page",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 10
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
             "line": 12,
-            "column": 3
+            "name": "2_I am on dashboard page",
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:29"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1846000000
+            }
           },
-          "progress": {
-            "step": 1,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "When 2_I click on the campaign tab",
-          "category": "Testing Initiate creating survey campaign flow.: Ensure that clicking on the campaign tab leads to the campaign page",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          {
+            "arguments": [],
+            "keyword": "When ",
             "line": 13,
-            "column": 3
+            "name": "2_I click on the campaign tab",
+            "match": {
+              "location": "src/steps/11_Testing Initiate creating survey campaign flow.steps.ts:26"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 6971000000
+            }
           },
-          "progress": {
-            "step": 2,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "Then 2_I should be navigated to the campaign page.",
-          "category": "Testing Initiate creating survey campaign flow.: Ensure that clicking on the campaign tab leads to the campaign page",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          {
+            "arguments": [],
+            "keyword": "Then ",
             "line": 14,
-            "column": 3
+            "name": "2_I should be navigated to the campaign page.",
+            "match": {
+              "location": "src/steps/11_Testing Initiate creating survey campaign flow.steps.ts:38"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 9000000
+            }
           },
-          "progress": {
-            "step": 3,
-            "steps": 3
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2000000
+            }
           }
-        }
-      ]
-    ],
-    "duration": 8831
-  },
-  {
-    "description": "Ensure that campaign page have relevant element",
-    "assertions": [
-      {
-        "passed": true
+        ]
       },
       {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      }
-    ],
-    "events": [
-      {
-        "emitterEvent": "testPass",
-        "name": "Given 3_I am on the campaign page",
-        "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign page have relevant element",
-        "durationMillis": 2,
-        "sourceLocation": {
-          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
-          "line": 17,
-          "column": 3
-        },
-        "progress": {
-          "step": 1,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "When 3_I do nothing",
-        "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign page have relevant element",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
-          "line": 18,
-          "column": 3
-        },
-        "progress": {
-          "step": 2,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "Then 3_I should see the relevant elements.",
-        "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign page have relevant element",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
-          "line": 19,
-          "column": 3
-        },
-        "progress": {
-          "step": 3,
-          "steps": 3
-        }
-      }
-    ],
-    "emitToTestRunner": [
-      [
-        "testPass",
-        {
-          "name": "Given 3_I am on the campaign page",
-          "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign page have relevant element",
-          "durationMillis": 2,
-          "sourceLocation": {
-            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+        "id": "testing-initiate-creating-survey-campaign-flow.;ensure-that-campaign-page-have-relevant-element",
+        "keyword": "Scenario",
+        "line": 16,
+        "name": "Ensure that campaign page have relevant element",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 15
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
             "line": 17,
-            "column": 3
+            "name": "3_I am on the campaign page",
+            "match": {
+              "location": "src/steps/11_Testing Initiate creating survey campaign flow.steps.ts:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3365000000
+            }
           },
-          "progress": {
-            "step": 1,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "When 3_I do nothing",
-          "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign page have relevant element",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          {
+            "arguments": [],
+            "keyword": "When ",
             "line": 18,
-            "column": 3
+            "name": "3_I do nothing",
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:64"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
           },
-          "progress": {
-            "step": 2,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "Then 3_I should see the relevant elements.",
-          "category": "Testing Initiate creating survey campaign flow.: Ensure that campaign page have relevant element",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          {
+            "arguments": [],
+            "keyword": "Then ",
             "line": 19,
-            "column": 3
+            "name": "3_I should see the relevant elements.",
+            "match": {
+              "location": "src/steps/11_Testing Initiate creating survey campaign flow.steps.ts:56"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 519000000
+            }
           },
-          "progress": {
-            "step": 3,
-            "steps": 3
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
           }
-        }
-      ]
-    ],
-    "duration": 4108
-  },
-  {
-    "description": "Ensure that create new campaign button is functional",
-    "assertions": [
-      {
-        "passed": true
+        ]
       },
       {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      }
-    ],
-    "events": [
-      {
-        "emitterEvent": "testPass",
-        "name": "Given 4_I am on the campaign page",
-        "category": "Testing Initiate creating survey campaign flow.: Ensure that create new campaign button is functional",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
-          "line": 22,
-          "column": 3
-        },
-        "progress": {
-          "step": 1,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "When 4_I click on the create new button",
-        "category": "Testing Initiate creating survey campaign flow.: Ensure that create new campaign button is functional",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
-          "line": 23,
-          "column": 3
-        },
-        "progress": {
-          "step": 2,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "Then 4_I should be on the create new campaign page.",
-        "category": "Testing Initiate creating survey campaign flow.: Ensure that create new campaign button is functional",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
-          "line": 24,
-          "column": 3
-        },
-        "progress": {
-          "step": 3,
-          "steps": 3
-        }
-      }
-    ],
-    "emitToTestRunner": [
-      [
-        "testPass",
-        {
-          "name": "Given 4_I am on the campaign page",
-          "category": "Testing Initiate creating survey campaign flow.: Ensure that create new campaign button is functional",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+        "id": "testing-initiate-creating-survey-campaign-flow.;ensure-that-create-new-campaign-button-is-functional",
+        "keyword": "Scenario",
+        "line": 21,
+        "name": "Ensure that create new campaign button is functional",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 20
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
             "line": 22,
-            "column": 3
+            "name": "4_I am on the campaign page",
+            "match": {
+              "location": "src/steps/11_Testing Initiate creating survey campaign flow.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 6104000000
+            }
           },
-          "progress": {
-            "step": 1,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "When 4_I click on the create new button",
-          "category": "Testing Initiate creating survey campaign flow.: Ensure that create new campaign button is functional",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          {
+            "arguments": [],
+            "keyword": "When ",
             "line": 23,
-            "column": 3
+            "name": "4_I click on the create new button",
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3348000000
+            }
           },
-          "progress": {
-            "step": 2,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "Then 4_I should be on the create new campaign page.",
-          "category": "Testing Initiate creating survey campaign flow.: Ensure that create new campaign button is functional",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/11_Testing Initiate creating survey campaign flow.feature",
+          {
+            "arguments": [],
+            "keyword": "Then ",
             "line": 24,
-            "column": 3
+            "name": "4_I should be on the create new campaign page.",
+            "match": {
+              "location": "src/steps/11_Testing Initiate creating survey campaign flow.steps.ts:77"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 7000000
+            }
           },
-          "progress": {
-            "step": 3,
-            "steps": 3
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4000000
+            }
           }
-        }
-      ]
-    ],
-    "duration": 9453
+        ]
+      }
+    ]
   },
   {
-    "description": "Verifying that functionality of launch button",
-    "assertions": [
+    "description": "This is to test the flow for creating survey. Prioritization of test cases\nwill be on prudential features. Will enhance test coverage in the later run.",
+    "keyword": "Feature",
+    "name": "Functionality flow for campaign info form.",
+    "line": 1,
+    "id": "functionality-flow-for-campaign-info-form.",
+    "tags": [],
+    "uri": "src/features/13_Functionality flow for campaign info form.feature",
+    "elements": [
       {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      }
-    ],
-    "events": [
-      {
-        "emitterEvent": "testPass",
-        "name": "Given 17_that I am on the campaign review page.",
-        "category": "Functionality flow for campaign info form.: Verifying that functionality of launch button",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/13_Functionality flow for campaign info form.feature",
-          "line": 27,
-          "column": 3
-        },
-        "progress": {
-          "step": 1,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "When 17_I click on the launch button.",
-        "category": "Functionality flow for campaign info form.: Verifying that functionality of launch button",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/13_Functionality flow for campaign info form.feature",
-          "line": 28,
-          "column": 3
-        },
-        "progress": {
-          "step": 2,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "Then 17_I should see url link for campaign.",
-        "category": "Functionality flow for campaign info form.: Verifying that functionality of launch button",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/13_Functionality flow for campaign info form.feature",
-          "line": 29,
-          "column": 3
-        },
-        "progress": {
-          "step": 3,
-          "steps": 3
-        }
-      }
-    ],
-    "emitToTestRunner": [
-      [
-        "testPass",
-        {
-          "name": "Given 17_that I am on the campaign review page.",
-          "category": "Functionality flow for campaign info form.: Verifying that functionality of launch button",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/13_Functionality flow for campaign info form.feature",
+        "id": "functionality-flow-for-campaign-info-form.;verifying-that-functionality-of-launch-button",
+        "keyword": "Scenario",
+        "line": 26,
+        "name": "Verifying that functionality of launch button",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 25
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
             "line": 27,
-            "column": 3
+            "name": "17_that I am on the campaign review page.",
+            "match": {
+              "location": "src/steps/13_Functionality flow for campaign info form.steps.ts:157"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11566000000
+            }
           },
-          "progress": {
-            "step": 1,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "When 17_I click on the launch button.",
-          "category": "Functionality flow for campaign info form.: Verifying that functionality of launch button",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/13_Functionality flow for campaign info form.feature",
+          {
+            "arguments": [],
+            "keyword": "When ",
             "line": 28,
-            "column": 3
+            "name": "17_I click on the launch button.",
+            "match": {
+              "location": "src/steps/13_Functionality flow for campaign info form.steps.ts:179"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3220000000
+            }
           },
-          "progress": {
-            "step": 2,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "Then 17_I should see url link for campaign.",
-          "category": "Functionality flow for campaign info form.: Verifying that functionality of launch button",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/13_Functionality flow for campaign info form.feature",
+          {
+            "arguments": [],
+            "keyword": "Then ",
             "line": 29,
-            "column": 3
+            "name": "17_I should see url link for campaign.",
+            "match": {
+              "location": "src/steps/13_Functionality flow for campaign info form.steps.ts:188"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 780000000
+            }
           },
-          "progress": {
-            "step": 3,
-            "steps": 3
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2000000
+            }
           }
-        }
-      ]
-    ],
-    "duration": 15027
+        ]
+      }
+    ]
   },
   {
-    "description": "Ensure that hit the pinata engagement type option is present.",
-    "assertions": [
+    "description": "This will be the test flow for all the features of hit the pinata engagement type.",
+    "keyword": "Feature",
+    "name": "Testing Initiate creation of pinata game.",
+    "line": 1,
+    "id": "testing-initiate-creation-of-pinata-game.",
+    "tags": [],
+    "uri": "src/features/20_Testing Initiate creation of pinata game.feature",
+    "elements": [
       {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      }
-    ],
-    "events": [
-      {
-        "emitterEvent": "testPass",
-        "name": "Given 1_I am on engagement page",
-        "category": "Testing Initiate creation of pinata game.: Ensure that hit the pinata engagement type option is present.",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/20_Testing Initiate creation of pinata game.feature",
-          "line": 6,
-          "column": 3
-        },
-        "progress": {
-          "step": 1,
-          "steps": 4
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "And 1_I click on the create new button",
-        "category": "Testing Initiate creation of pinata game.: Ensure that hit the pinata engagement type option is present.",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/20_Testing Initiate creation of pinata game.feature",
-          "line": 7,
-          "column": 3
-        },
-        "progress": {
-          "step": 2,
-          "steps": 4
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "When 1_I Click on the game option.",
-        "category": "Testing Initiate creation of pinata game.: Ensure that hit the pinata engagement type option is present.",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/20_Testing Initiate creation of pinata game.feature",
-          "line": 8,
-          "column": 3
-        },
-        "progress": {
-          "step": 3,
-          "steps": 4
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "Then 1_The hit the pinata game should be present.",
-        "category": "Testing Initiate creation of pinata game.: Ensure that hit the pinata engagement type option is present.",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/20_Testing Initiate creation of pinata game.feature",
-          "line": 9,
-          "column": 3
-        },
-        "progress": {
-          "step": 4,
-          "steps": 4
-        }
-      }
-    ],
-    "emitToTestRunner": [
-      [
-        "testPass",
-        {
-          "name": "Given 1_I am on engagement page",
-          "category": "Testing Initiate creation of pinata game.: Ensure that hit the pinata engagement type option is present.",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/20_Testing Initiate creation of pinata game.feature",
+        "id": "testing-initiate-creation-of-pinata-game.;ensure-that-hit-the-pinata-engagement-type-option-is-present.",
+        "keyword": "Scenario",
+        "line": 5,
+        "name": "Ensure that hit the pinata engagement type option is present.",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 4
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
             "line": 6,
-            "column": 3
+            "name": "1_I am on engagement page",
+            "match": {
+              "location": "src/steps/20_Testing Initiate creation of pinata game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4557000000
+            }
           },
-          "progress": {
-            "step": 1,
-            "steps": 4
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "And 1_I click on the create new button",
-          "category": "Testing Initiate creation of pinata game.: Ensure that hit the pinata engagement type option is present.",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/20_Testing Initiate creation of pinata game.feature",
+          {
+            "arguments": [],
+            "keyword": "And ",
             "line": 7,
-            "column": 3
+            "name": "1_I click on the create new button",
+            "match": {
+              "location": "src/steps/20_Testing Initiate creation of pinata game.steps.ts:18"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 155000000
+            }
           },
-          "progress": {
-            "step": 2,
-            "steps": 4
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "When 1_I Click on the game option.",
-          "category": "Testing Initiate creation of pinata game.: Ensure that hit the pinata engagement type option is present.",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/20_Testing Initiate creation of pinata game.feature",
+          {
+            "arguments": [],
+            "keyword": "When ",
             "line": 8,
-            "column": 3
+            "name": "1_I Click on the game option.",
+            "match": {
+              "location": "src/steps/20_Testing Initiate creation of pinata game.steps.ts:26"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 142000000
+            }
           },
-          "progress": {
-            "step": 3,
-            "steps": 4
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "Then 1_The hit the pinata game should be present.",
-          "category": "Testing Initiate creation of pinata game.: Ensure that hit the pinata engagement type option is present.",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/20_Testing Initiate creation of pinata game.feature",
+          {
+            "arguments": [],
+            "keyword": "Then ",
             "line": 9,
-            "column": 3
+            "name": "1_The hit the pinata game should be present.",
+            "match": {
+              "location": "src/steps/20_Testing Initiate creation of pinata game.steps.ts:34"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 27000000,
+              "error_message": "TypeError: Invalid locator\n    at Object.check [as checkedLocator] (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/by.js:275:9)\n    at Driver.findElements (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:1041:18)\n    at ptor.waitForAngular.then (/usr/local/lib/node_modules/protractor/built/element.js:159:44)\n    at ManagedPromise.invokeCallback_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1376:14)\n    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)\n    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)\n    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2927:27)\n    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7\n    at process._tickCallback (internal/process/next_tick.js:68:7)\nFrom: Task: <anonymous>\n    at pollCondition (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2195:19)\n    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2191:7\n    at new ManagedPromise (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1077:7)\n    at ControlFlow.promise (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2505:12)\n    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2190:22\n    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)\n    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)\n    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2974:25)\n    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7\nFrom: Task: <anonymous wait>\n    at scheduleWait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2188:20)\n    at ControlFlow.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2517:12)\n    at Driver.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:934:29)\n    at run (/usr/local/lib/node_modules/protractor/built/browser.js:59:33)\n    at ProtractorBrowser.to.(anonymous function) [as wait] (/usr/local/lib/node_modules/protractor/built/browser.js:67:16)\n    at Object.<anonymous> (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/20_Testing Initiate creation of pinata game.steps.ts:37:17)\n    at step (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)\n    at Object.next (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)\n    at /Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:110:75\n    at new Promise (<anonymous>)\n    at Object.__awaiter (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:106:16)\n    at World.<anonymous> (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/20_Testing Initiate creation of pinata game.steps.ts:34:56)"
+            }
           },
-          "progress": {
-            "step": 4,
-            "steps": 4
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2000000
+            }
           }
-        }
-      ]
-    ],
-    "duration": 5078
+        ]
+      }
+    ]
   },
   {
-    "description": "Ensure functionality of headline and and sub-headline message",
-    "assertions": [
+    "description": "This will be the test flow for all the features of hit the pinata engagement type.",
+    "keyword": "Feature",
+    "name": "Functionality flow for hit the pinata engagement.",
+    "line": 1,
+    "id": "functionality-flow-for-hit-the-pinata-engagement.",
+    "tags": [],
+    "uri": "src/features/21_ Functionality flow for hit the pinata engagement.feature",
+    "elements": [
       {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      }
-    ],
-    "events": [
-      {
-        "emitterEvent": "testPass",
-        "name": "Given 4_I am on the hit the pinata creation page",
-        "category": "Functionality flow for hit the pinata engagement.: Ensure functionality of headline and and sub-headline message",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/21_ Functionality flow for hit the pinata engagement.feature",
-          "line": 6,
-          "column": 3
-        },
-        "progress": {
-          "step": 1,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "When 4_I input a test string in the headlline and sub headline field.",
-        "category": "Functionality flow for hit the pinata engagement.: Ensure functionality of headline and and sub-headline message",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/21_ Functionality flow for hit the pinata engagement.feature",
-          "line": 7,
-          "column": 3
-        },
-        "progress": {
-          "step": 2,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "Then 4_I should see the test string in the preview element.",
-        "category": "Functionality flow for hit the pinata engagement.: Ensure functionality of headline and and sub-headline message",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/21_ Functionality flow for hit the pinata engagement.feature",
-          "line": 8,
-          "column": 3
-        },
-        "progress": {
-          "step": 3,
-          "steps": 3
-        }
-      }
-    ],
-    "emitToTestRunner": [
-      [
-        "testPass",
-        {
-          "name": "Given 4_I am on the hit the pinata creation page",
-          "category": "Functionality flow for hit the pinata engagement.: Ensure functionality of headline and and sub-headline message",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/21_ Functionality flow for hit the pinata engagement.feature",
+        "id": "functionality-flow-for-hit-the-pinata-engagement.;ensure-functionality-of-headline-and-and-sub-headline-message",
+        "keyword": "Scenario",
+        "line": 5,
+        "name": "Ensure functionality of headline and and sub-headline message",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 4
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
             "line": 6,
-            "column": 3
+            "name": "4_I am on the hit the pinata creation page",
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:17"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 5223000000
+            }
           },
-          "progress": {
-            "step": 1,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "When 4_I input a test string in the headlline and sub headline field.",
-          "category": "Functionality flow for hit the pinata engagement.: Ensure functionality of headline and and sub-headline message",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/21_ Functionality flow for hit the pinata engagement.feature",
+          {
+            "arguments": [],
+            "keyword": "When ",
             "line": 7,
-            "column": 3
+            "name": "4_I input a test string in the headlline and sub headline field.",
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:22"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 444000000
+            }
           },
-          "progress": {
-            "step": 2,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "Then 4_I should see the test string in the preview element.",
-          "category": "Functionality flow for hit the pinata engagement.: Ensure functionality of headline and and sub-headline message",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/21_ Functionality flow for hit the pinata engagement.feature",
+          {
+            "arguments": [],
+            "keyword": "Then ",
             "line": 8,
-            "column": 3
+            "name": "4_I should see the test string in the preview element.",
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:36"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 77000000
+            }
           },
-          "progress": {
-            "step": 3,
-            "steps": 3
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
           }
-        }
-      ]
-    ],
-    "duration": 5750
+        ]
+      }
+    ]
   },
   {
-    "description": "Ensuring home page has the relevant elements",
-    "assertions": [
+    "keyword": "Feature",
+    "name": "29_Testing Blackcomb home page functionality for survey engagement.",
+    "line": 1,
+    "id": "29_testing-blackcomb-home-page-functionality-for-survey-engagement.",
+    "tags": [],
+    "uri": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+    "elements": [
       {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      }
-    ],
-    "events": [
-      {
-        "emitterEvent": "testPass",
-        "name": "Given 9_I am at the blackcomb home page",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring home page has the relevant elements",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 4,
-          "column": 3
-        },
-        "progress": {
-          "step": 1,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "When 9_I do nothing",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring home page has the relevant elements",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 5,
-          "column": 3
-        },
-        "progress": {
-          "step": 2,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "Then 9_I see the welcome message ,relevant headers, qr button and category tabs.",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring home page has the relevant elements",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 6,
-          "column": 3
-        },
-        "progress": {
-          "step": 3,
-          "steps": 3
-        }
-      }
-    ],
-    "emitToTestRunner": [
-      [
-        "testPass",
-        {
-          "name": "Given 9_I am at the blackcomb home page",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring home page has the relevant elements",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+        "id": "29_testing-blackcomb-home-page-functionality-for-survey-engagement.;ensuring-home-page-has-the-relevant-elements",
+        "keyword": "Scenario",
+        "line": 3,
+        "name": "Ensuring home page has the relevant elements",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 2
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
             "line": 4,
-            "column": 3
+            "name": "9_I am at the blackcomb home page",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:24"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 9851000000,
+              "error_message": "TimeoutError: Wait timed out after 5002ms\n    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2201:17\n    at ManagedPromise.invokeCallback_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1376:14)\n    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)\n    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)\n    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2927:27)\n    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7\n    at process._tickCallback (internal/process/next_tick.js:68:7)\nFrom: Task: <anonymous wait>\n    at scheduleWait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2188:20)\n    at ControlFlow.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2517:12)\n    at Driver.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:934:29)\n    at run (/usr/local/lib/node_modules/protractor/built/browser.js:59:33)\n    at ProtractorBrowser.to.(anonymous function) [as wait] (/usr/local/lib/node_modules/protractor/built/browser.js:67:16)\n    at Object.<anonymous> (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:32:17)\n    at step (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)\n    at Object.next (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)\n    at fulfilled (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:107:62)\n    at process._tickCallback (internal/process/next_tick.js:68:7)"
+            }
           },
-          "progress": {
-            "step": 1,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "When 9_I do nothing",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring home page has the relevant elements",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          {
+            "arguments": [],
+            "keyword": "When ",
             "line": 5,
-            "column": 3
+            "name": "9_I do nothing",
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:104"
+            },
+            "result": {
+              "status": "skipped"
+            }
           },
-          "progress": {
-            "step": 2,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "Then 9_I see the welcome message ,relevant headers, qr button and category tabs.",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring home page has the relevant elements",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          {
+            "arguments": [],
+            "keyword": "Then ",
             "line": 6,
-            "column": 3
+            "name": "9_I see the welcome message ,relevant headers, qr button and category tabs.",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:53"
+            },
+            "result": {
+              "status": "skipped"
+            }
           },
-          "progress": {
-            "step": 3,
-            "steps": 3
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
           }
-        }
-      ]
-    ],
-    "duration": 13589
-  },
-  {
-    "description": "Ensuring functionality of qr button.",
-    "assertions": [
-      {
-        "passed": true
+        ]
       },
       {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      }
-    ],
-    "events": [
-      {
-        "emitterEvent": "testPass",
-        "name": "Given 10_I am at the blackcomb home page",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of qr button.",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 9,
-          "column": 3
-        },
-        "progress": {
-          "step": 1,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "When 10_I click on the qr button",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of qr button.",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 10,
-          "column": 3
-        },
-        "progress": {
-          "step": 2,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "Then 10_I should be navigated to the qr card page.",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of qr button.",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 11,
-          "column": 3
-        },
-        "progress": {
-          "step": 3,
-          "steps": 3
-        }
-      }
-    ],
-    "emitToTestRunner": [
-      [
-        "testPass",
-        {
-          "name": "Given 10_I am at the blackcomb home page",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of qr button.",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+        "id": "29_testing-blackcomb-home-page-functionality-for-survey-engagement.;ensuring-functionality-of-qr-button.",
+        "keyword": "Scenario",
+        "line": 8,
+        "name": "Ensuring functionality of qr button.",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 7
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
             "line": 9,
-            "column": 3
+            "name": "10_I am at the blackcomb home page",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:74"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1480000000
+            }
           },
-          "progress": {
-            "step": 1,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "When 10_I click on the qr button",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of qr button.",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          {
+            "arguments": [],
+            "keyword": "When ",
             "line": 10,
-            "column": 3
+            "name": "10_I click on the qr button",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:78"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 6002000000,
+              "error_message": "TimeoutError: Wait timed out after 6000ms\n    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2201:17\n    at ManagedPromise.invokeCallback_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1376:14)\n    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)\n    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)\n    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2927:27)\n    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7\n    at process._tickCallback (internal/process/next_tick.js:68:7)\nFrom: Task: <anonymous wait>\n    at scheduleWait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2188:20)\n    at ControlFlow.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2517:12)\n    at Driver.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:934:29)\n    at run (/usr/local/lib/node_modules/protractor/built/browser.js:59:33)\n    at ProtractorBrowser.to.(anonymous function) [as wait] (/usr/local/lib/node_modules/protractor/built/browser.js:67:16)\n    at Object.<anonymous> (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:80:17)\n    at step (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)\n    at Object.next (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)\n    at /Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:110:75\n    at new Promise (<anonymous>)\n    at Object.__awaiter (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:106:16)\n    at World.<anonymous> (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:78:39)"
+            }
           },
-          "progress": {
-            "step": 2,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "Then 10_I should be navigated to the qr card page.",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of qr button.",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          {
+            "arguments": [],
+            "keyword": "Then ",
             "line": 11,
-            "column": 3
+            "name": "10_I should be navigated to the qr card page.",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:86"
+            },
+            "result": {
+              "status": "skipped"
+            }
           },
-          "progress": {
-            "step": 3,
-            "steps": 3
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
           }
-        }
-      ]
-    ],
-    "duration": 3643
-  },
-  {
-    "description": "Ensuring qr page has the relevant elements.",
-    "assertions": [
-      {
-        "passed": true
+        ]
       },
       {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      }
-    ],
-    "events": [
-      {
-        "emitterEvent": "testPass",
-        "name": "Given 11_I am at the blackcomb qr page.",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring qr page has the relevant elements.",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 14,
-          "column": 3
-        },
-        "progress": {
-          "step": 1,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "When 11_I do nothing",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring qr page has the relevant elements.",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 15,
-          "column": 3
-        },
-        "progress": {
-          "step": 2,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "Then 11_I should see the qr code and the message text below the qr code.",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring qr page has the relevant elements.",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 16,
-          "column": 3
-        },
-        "progress": {
-          "step": 3,
-          "steps": 3
-        }
-      }
-    ],
-    "emitToTestRunner": [
-      [
-        "testPass",
-        {
-          "name": "Given 11_I am at the blackcomb qr page.",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring qr page has the relevant elements.",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+        "id": "29_testing-blackcomb-home-page-functionality-for-survey-engagement.;ensuring-qr-page-has-the-relevant-elements.",
+        "keyword": "Scenario",
+        "line": 13,
+        "name": "Ensuring qr page has the relevant elements.",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 12
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
             "line": 14,
-            "column": 3
+            "name": "11_I am at the blackcomb qr page.",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:91"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 31576000000,
+              "error_message": "ScriptTimeoutError: script timeout\n  (Session info: headless chrome=78.0.3904.108)\n  (Driver info: chromedriver=78.0.3904.70 (edb9c9f3de0247fd912a77b7f6cae7447f6d3ad5-refs/branch-heads/3904@{#800}),platform=Mac OS X 10.13.6 x86_64)\n    at Object.checkLegacyResponse (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/error.js:546:15)\n    at parseHttpResponse (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/http.js:509:13)\n    at doSend.then.response (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/http.js:441:30)\n    at process._tickCallback (internal/process/next_tick.js:68:7)\nFrom: Task: Protractor.waitForAngular() - Locator: By(css selector, div.mat-button-ripple)\n    at Driver.schedule (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:807:17)\n    at ProtractorBrowser.executeAsyncScript_ (/usr/local/lib/node_modules/protractor/built/browser.js:425:28)\n    at angularAppRoot.then (/usr/local/lib/node_modules/protractor/built/browser.js:456:33)\n    at ManagedPromise.invokeCallback_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1376:14)\n    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)\n    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)\n    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2927:27)\n    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7\n    at process._tickCallback (internal/process/next_tick.js:68:7)\nFrom: Task: <anonymous>\n    at pollCondition (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2195:19)\n    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2191:7\n    at new ManagedPromise (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1077:7)\n    at ControlFlow.promise (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2505:12)\n    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2190:22\n    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)\n    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)\n    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2974:25)\n    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7\n    at process._tickCallback (internal/process/next_tick.js:68:7)\nFrom: Task: <anonymous wait>\n    at scheduleWait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2188:20)\n    at ControlFlow.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2517:12)\n    at Driver.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:934:29)\n    at run (/usr/local/lib/node_modules/protractor/built/browser.js:59:33)\n    at ProtractorBrowser.to.(anonymous function) [as wait] (/usr/local/lib/node_modules/protractor/built/browser.js:67:16)\n    at Object.<anonymous> (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:94:17)\n    at step (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)\n    at Object.next (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)\n    at fulfilled (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:107:62)\n    at process._tickCallback (internal/process/next_tick.js:68:7)"
+            }
           },
-          "progress": {
-            "step": 1,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "When 11_I do nothing",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring qr page has the relevant elements.",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          {
+            "arguments": [],
+            "keyword": "When ",
             "line": 15,
-            "column": 3
+            "name": "11_I do nothing",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:100"
+            },
+            "result": {
+              "status": "skipped"
+            }
           },
-          "progress": {
-            "step": 2,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "Then 11_I should see the qr code and the message text below the qr code.",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring qr page has the relevant elements.",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          {
+            "arguments": [],
+            "keyword": "Then ",
             "line": 16,
-            "column": 3
+            "name": "11_I should see the qr code and the message text below the qr code.",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:102"
+            },
+            "result": {
+              "status": "skipped"
+            }
           },
-          "progress": {
-            "step": 3,
-            "steps": 3
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3000000
+            }
           }
-        }
-      ]
-    ],
-    "duration": 3999
-  },
-  {
-    "description": "Ensuring functionality of cancel button for the qr code page",
-    "assertions": [
-      {
-        "passed": true
+        ]
       },
       {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      }
-    ],
-    "events": [
-      {
-        "emitterEvent": "testPass",
-        "name": "Given 12_I am at the blackcomb qr page.",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of cancel button for the qr code page",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 19,
-          "column": 3
-        },
-        "progress": {
-          "step": 1,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "When 12_I click on the cancel button",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of cancel button for the qr code page",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 20,
-          "column": 3
-        },
-        "progress": {
-          "step": 2,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "Then 12_I should be navigated to blackcomb home page.",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of cancel button for the qr code page",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 21,
-          "column": 3
-        },
-        "progress": {
-          "step": 3,
-          "steps": 3
-        }
-      }
-    ],
-    "emitToTestRunner": [
-      [
-        "testPass",
-        {
-          "name": "Given 12_I am at the blackcomb qr page.",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of cancel button for the qr code page",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+        "id": "29_testing-blackcomb-home-page-functionality-for-survey-engagement.;ensuring-functionality-of-cancel-button-for-the-qr-code-page",
+        "keyword": "Scenario",
+        "line": 18,
+        "name": "Ensuring functionality of cancel button for the qr code page",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 17
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
             "line": 19,
-            "column": 3
+            "name": "12_I am at the blackcomb qr page.",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:114"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 13635000000
+            }
           },
-          "progress": {
-            "step": 1,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "When 12_I click on the cancel button",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of cancel button for the qr code page",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          {
+            "arguments": [],
+            "keyword": "When ",
             "line": 20,
-            "column": 3
+            "name": "12_I click on the cancel button",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:123"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1115000000
+            }
           },
-          "progress": {
-            "step": 2,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "Then 12_I should be navigated to blackcomb home page.",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of cancel button for the qr code page",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          {
+            "arguments": [],
+            "keyword": "Then ",
             "line": 21,
-            "column": 3
+            "name": "12_I should be navigated to blackcomb home page.",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:131"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 9063000000
+            }
           },
-          "progress": {
-            "step": 3,
-            "steps": 3
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
           }
-        }
-      ]
-    ],
-    "duration": 5322
-  },
-  {
-    "description": "Ensuring functionality of rewards filter",
-    "assertions": [
-      {
-        "passed": true
+        ]
       },
       {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      }
-    ],
-    "events": [
-      {
-        "emitterEvent": "testPass",
-        "name": "Given 13_I am at the blackcomb home page",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards filter",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 24,
-          "column": 3
-        },
-        "progress": {
-          "step": 1,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "When 13_I click on a category",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards filter",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 25,
-          "column": 3
-        },
-        "progress": {
-          "step": 2,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "Then 13_I should see the relevant rewards under the category.",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards filter",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 26,
-          "column": 3
-        },
-        "progress": {
-          "step": 3,
-          "steps": 3
-        }
-      }
-    ],
-    "emitToTestRunner": [
-      [
-        "testPass",
-        {
-          "name": "Given 13_I am at the blackcomb home page",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards filter",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+        "id": "29_testing-blackcomb-home-page-functionality-for-survey-engagement.;ensuring-functionality-of-rewards-filter",
+        "keyword": "Scenario",
+        "line": 23,
+        "name": "Ensuring functionality of rewards filter",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 22
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
             "line": 24,
-            "column": 3
+            "name": "13_I am at the blackcomb home page",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:137"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1048000000
+            }
           },
-          "progress": {
-            "step": 1,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "When 13_I click on a category",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards filter",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          {
+            "arguments": [],
+            "keyword": "When ",
             "line": 25,
-            "column": 3
+            "name": "13_I click on a category",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:141"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10781000000
+            }
           },
-          "progress": {
-            "step": 2,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "Then 13_I should see the relevant rewards under the category.",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards filter",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          {
+            "arguments": [],
+            "keyword": "Then ",
             "line": 26,
-            "column": 3
+            "name": "13_I should see the relevant rewards under the category.",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:148"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 113000000,
+              "error_message": "AssertionError: expected 'disintermediate next-generation users' to include 'e-enable sticky architectures'\n    at Object.<anonymous> (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:153:46)\n    at step (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)\n    at Object.next (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)\n    at fulfilled (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:107:62)\n    at process._tickCallback (internal/process/next_tick.js:68:7)"
+            }
           },
-          "progress": {
-            "step": 3,
-            "steps": 3
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
           }
-        }
-      ]
-    ],
-    "duration": 2797
-  },
-  {
-    "description": "Ensuring functionality of feature rewards card",
-    "assertions": [
-      {
-        "passed": true
+        ]
       },
       {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      }
-    ],
-    "events": [
-      {
-        "emitterEvent": "testPass",
-        "name": "Given 14_I am at the blackcomb home page",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of feature rewards card",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 29,
-          "column": 3
-        },
-        "progress": {
-          "step": 1,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "When 14_I click on a featured reward",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of feature rewards card",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 30,
-          "column": 3
-        },
-        "progress": {
-          "step": 2,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "Then 14_I should be navigated to the reward description page",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of feature rewards card",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 31,
-          "column": 3
-        },
-        "progress": {
-          "step": 3,
-          "steps": 3
-        }
-      }
-    ],
-    "emitToTestRunner": [
-      [
-        "testPass",
-        {
-          "name": "Given 14_I am at the blackcomb home page",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of feature rewards card",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+        "id": "29_testing-blackcomb-home-page-functionality-for-survey-engagement.;ensuring-functionality-of-feature-rewards-card",
+        "keyword": "Scenario",
+        "line": 28,
+        "name": "Ensuring functionality of feature rewards card",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 27
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
             "line": 29,
-            "column": 3
+            "name": "14_I am at the blackcomb home page",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:157"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1117000000
+            }
           },
-          "progress": {
-            "step": 1,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "When 14_I click on a featured reward",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of feature rewards card",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          {
+            "arguments": [],
+            "keyword": "When ",
             "line": 30,
-            "column": 3
+            "name": "14_I click on a featured reward",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:161"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 13244000000
+            }
           },
-          "progress": {
-            "step": 2,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "Then 14_I should be navigated to the reward description page",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of feature rewards card",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
+          {
+            "arguments": [],
+            "keyword": "Then ",
             "line": 31,
-            "column": 3
+            "name": "14_I should be navigated to the reward description page",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:169"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15000000
+            }
           },
-          "progress": {
-            "step": 3,
-            "steps": 3
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
           }
-        }
-      ]
-    ],
-    "duration": 3753
+        ]
+      },
+      {
+        "id": "29_testing-blackcomb-home-page-functionality-for-survey-engagement.;ensuring-functionality-of-rewards-card",
+        "keyword": "Scenario",
+        "line": 33,
+        "name": "Ensuring functionality of rewards card",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 32
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 34,
+            "name": "15_I am at the blackcomb home page",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:174"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1146000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 35,
+            "name": "15_I click on a reward under the all category",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:178"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10571000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 36,
+            "name": "15_I should be navigated to the reward description page",
+            "match": {
+              "location": "src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:186"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 14000000
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed"
+            }
+          }
+        ]
+      }
+    ]
   },
   {
-    "description": "Ensuring functionality of rewards card",
-    "assertions": [
+    "description": "This is for testing the blackcomb history page.",
+    "keyword": "Feature",
+    "name": "30_Testing Blackcomb history page functionality for survey engagement.",
+    "line": 1,
+    "id": "30_testing-blackcomb-history-page-functionality-for-survey-engagement.",
+    "tags": [],
+    "uri": "src/features/30_Testing Blackcomb history page functionality for survey engagement.feature",
+    "elements": [
       {
-        "passed": true
+        "id": "30_testing-blackcomb-history-page-functionality-for-survey-engagement.;ensuring-functionality-of-history-tab",
+        "keyword": "Scenario",
+        "line": 5,
+        "name": "Ensuring functionality of history tab",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 4
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 6,
+            "name": "16_I am at the blackcomb wallet page",
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 8140000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 7,
+            "name": "16_I click on the history tab",
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:35"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3090000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 8,
+            "name": "16_I should be navigated history page",
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:43"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 12000000
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed"
+            }
+          }
+        ]
       },
       {
-        "passed": true
+        "id": "30_testing-blackcomb-history-page-functionality-for-survey-engagement.;ensuring-the-presence-of-the-history-tab-on-the-navigation-bar",
+        "keyword": "Scenario",
+        "line": 10,
+        "name": "Ensuring the presence of the history tab on the navigation bar",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 9
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 11,
+            "name": "17_I am at the blackcomb wallet page",
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:47"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 8061000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 12,
+            "name": "17_I do nothing",
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:55"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 13,
+            "name": "17_I should see the history tab in the nav bar",
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:57"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 42000000
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2000000
+            }
+          }
+        ]
       },
       {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
-      },
-      {
-        "passed": true
+        "id": "30_testing-blackcomb-history-page-functionality-for-survey-engagement.;ensuring-the-relevant-elements-of-the-page-is-present",
+        "keyword": "Scenario",
+        "line": 15,
+        "name": "Ensuring the relevant elements of the page is present",
+        "tags": [
+          {
+            "name": "@runThis",
+            "line": 14
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/1_InitiateCreateEngagementCpgn.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/10_Successful creation flow for reward creation.steps.ts:13"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/2_Functionality flow for creating shake the tree game.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/21_ Functionality flow for hit the pinata engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/3_File upload mechanism.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/4_Successful creation flow of engagement game shake the tree.steps.ts:15"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/5_Fuctionality flow for creating survey engagement.steps.ts:10"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/6_Successful creation flow of engagement survey.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/7_Testing Initiate creating rewards flow.steps.ts:10"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/8_Functionality flow for creating reward.steps.ts:7"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/9_Functionality flow for reward creation file upload.steps.ts:9"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "src/steps/Login functionality.steps.ts:11"
+            },
+            "result": {
+              "status": "passed"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 16,
+            "name": "18_I am at the blackcomb wallet page",
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:64"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 8184000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 17,
+            "name": "18_I click on the history tab",
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:72"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3092000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 18,
+            "name": "18_I should see the my history header on the history page",
+            "match": {
+              "location": "src/steps/30_Testing Blackcomb history page functionality for survey engagement.steps.ts:80"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 56000000
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "../../../node_modules/protractor-cucumber-framework/lib/resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          }
+        ]
       }
-    ],
-    "events": [
-      {
-        "emitterEvent": "testPass",
-        "name": "Given 15_I am at the blackcomb home page",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards card",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 34,
-          "column": 3
-        },
-        "progress": {
-          "step": 1,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "When 15_I click on a reward under the all category",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards card",
-        "durationMillis": 0,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 35,
-          "column": 3
-        },
-        "progress": {
-          "step": 2,
-          "steps": 3
-        }
-      },
-      {
-        "emitterEvent": "testPass",
-        "name": "Then 15_I should be navigated to the reward description page",
-        "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards card",
-        "durationMillis": 1,
-        "sourceLocation": {
-          "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-          "line": 36,
-          "column": 3
-        },
-        "progress": {
-          "step": 3,
-          "steps": 3
-        }
-      }
-    ],
-    "emitToTestRunner": [
-      [
-        "testPass",
-        {
-          "name": "Given 15_I am at the blackcomb home page",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards card",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-            "line": 34,
-            "column": 3
-          },
-          "progress": {
-            "step": 1,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "When 15_I click on a reward under the all category",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards card",
-          "durationMillis": 0,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-            "line": 35,
-            "column": 3
-          },
-          "progress": {
-            "step": 2,
-            "steps": 3
-          }
-        }
-      ],
-      [
-        "testPass",
-        {
-          "name": "Then 15_I should be navigated to the reward description page",
-          "category": "29_Testing Blackcomb home page functionality for survey engagement.: Ensuring functionality of rewards card",
-          "durationMillis": 1,
-          "sourceLocation": {
-            "filePath": "src/features/29_Testing Blackcomb home page functionality for survey engagement.feature",
-            "line": 36,
-            "column": 3
-          },
-          "progress": {
-            "step": 3,
-            "steps": 3
-          }
-        }
-      ]
-    ],
-    "duration": 3639
+    ]
   }
 ]

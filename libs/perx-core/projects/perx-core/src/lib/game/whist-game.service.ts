@@ -7,10 +7,11 @@ import {
   ITree,
   IPinata,
   IScratch,
+  ISpin,
   defaultScratch,
   defaultPinata,
   IPlayOutcome,
-  IEngagementTransaction
+  IEngagementTransaction, defaultSpin
 } from './game.model';
 import { Observable, combineLatest, of } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -28,8 +29,10 @@ import {
   IJsonApiItem,
   IWAttbsObjTrans,
   IWScratchDisplayProperties,
+  IWSpinDisplayProperties,
   IWCampaignDisplayProperties,
 } from '@perx/whistler';
+import { WhistlerVouchersService } from '../vouchers/whistler-vouchers.service';
 
 @Injectable({
   providedIn: 'root'
@@ -42,14 +45,18 @@ export class WhistlerGameService implements IGameService {
   constructor(
     private http: HttpClient,
     config: Config,
-    private whistVouchSvc: IVoucherService
+    private voucherService: IVoucherService
   ) {
     this.hostName = config.apiHost as string;
   }
 
+  private get whistlerVoucherService(): WhistlerVouchersService {
+    return this.voucherService as WhistlerVouchersService;
+  }
+
   private static WGameToGame(game: IJsonApiItem<IWGameEngagementAttributes>): IGame {
     let type = TYPE.unknown;
-    let config: ITree | IPinata | IScratch | null = null;
+    let config: ITree | IPinata | IScratch | ISpin | null = null;
     const { attributes } = game;
     if (attributes.game_type === WGameType.shakeTheTree) {
       type = TYPE.shakeTheTree;
@@ -78,6 +85,19 @@ export class WhistlerGameService implements IGameService {
         underlyingSuccessImg: scratchdp.post_scratch_success_img_url,
         underlyingFailImg: scratchdp.post_scratch_fail_img_url,
         coverImg: scratchdp.pre_scratch_img_url
+      };
+    } else if (attributes.game_type === WGameType.spin) {
+      type = TYPE.spin;
+      const spindp: IWSpinDisplayProperties = attributes.display_properties as IWSpinDisplayProperties;
+      config = {
+        ...defaultSpin(),
+        numberOfWedges: spindp.nb_of_wedges,
+        rewardSlots: spindp.slots,
+        colorCtrls: Object.assign(spindp.wedge_colors),
+        rewardIcon: spindp.reward_icon,
+        wheelImg: spindp.wheel_img,
+        wheelPosition: spindp.wheel_position,
+        pointerImg: spindp.pointer_img
       };
     }
 
@@ -125,7 +145,7 @@ export class WhistlerGameService implements IGameService {
     ).pipe(
       mergeMap(res => (
         combineLatest(...res.data.attributes.results.attributes.results.map(
-          (outcome: IJsonApiItem<IWAssignedAttributes>) => this.whistVouchSvc.get(Number.parseInt(outcome.id, 10))
+          (outcome: IJsonApiItem<IWAssignedAttributes>) => this.whistlerVoucherService.getFullVoucher(outcome)
         )).pipe(
           map((vouchArr) => vouchArr.reduce((acc, currVouch) =>
             ({ ...acc, vouchers: [...acc.vouchers, currVouch] }), { vouchers: [], rawPayload: res })
@@ -135,13 +155,10 @@ export class WhistlerGameService implements IGameService {
   }
 
   public get(engagementId: number, campaignId?: number): Observable<IGame> {
-    let campaignIdParams;
-    if (campaignId) {
-      campaignIdParams = `?campaign_id=${campaignId}`;
-    }
     if (this.cache[engagementId]) {
       return of(this.cache[engagementId]);
     }
+    const campaignIdParams: string = campaignId ? `?campaign_id=${campaignId}` : '';
     return this.http.get<IJsonApiItemPayload<IWGameEngagementAttributes>>(`${this.hostName}/game/engagements/${engagementId}${campaignIdParams}`)
       .pipe(
         map(res => res.data),

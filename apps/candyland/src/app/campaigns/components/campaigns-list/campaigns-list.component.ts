@@ -2,7 +2,9 @@ import { AfterViewInit, Component, Input, ViewChild, Output, EventEmitter } from
 import { MatSort } from '@angular/material';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
-import { ICampaignTableData } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaignTableData } from '@cl-core/models/campaign/campaign';
+import { StatusLabelConfig } from '@cl-shared';
+import { CampaignStatus } from '@cl-core/models/campaign/campaign-status.enum';
 
 @Component({
   selector: 'cl-campaigns-list',
@@ -13,12 +15,15 @@ export class CampaignsListComponent implements AfterViewInit {
   public DATE_FORMAT: string = 'mediumDate';
   public TIME_FORMAT: string = 'shortTime';
 
+  @Input() public statusLabel: { [key: string]: StatusLabelConfig };
   @Input() public dataSource: CustomDataSource<ICampaignTableData>;
   @Input() public displayedColumns: string[] = ['name', 'status', 'begin', 'end', 'audience', 'engagementType', 'actions'];
-  @ViewChild(MatSort, {static: false}) private sort: MatSort;
+  @ViewChild(MatSort, { static: false }) private sort: MatSort;
   @Output() public editAction: EventEmitter<ICampaignTableData> = new EventEmitter<ICampaignTableData>();
   @Output() public duplicateAction: EventEmitter<ICampaignTableData> = new EventEmitter<ICampaignTableData>();
   @Output() public emitOpenReport: EventEmitter<string> = new EventEmitter<string>();
+  @Output() public pauseCampaign: EventEmitter<ICampaignTableData> = new EventEmitter<ICampaignTableData>();
+  @Output() public activateCampaign: EventEmitter<ICampaignTableData> = new EventEmitter<ICampaignTableData>();
 
   public ngAfterViewInit(): void {
     this.dataSource.registerSort(this.sort);
@@ -32,28 +37,38 @@ export class CampaignsListComponent implements AfterViewInit {
     this.duplicateAction.emit(item);
   }
 
-  public pauseItem(): void {
+  public pauseItem(item: ICampaignTableData): void {
+    this.pauseCampaign.emit(item);
+  }
+
+  public activateItem(item: ICampaignTableData): void {
+    this.activateCampaign.emit(item);
   }
 
   public openReport(item: ICampaignTableData): void {
-    const lowerCaseType = this.lowerCaseType(item.engagementType);
+    const lowerCaseType = item.engagementType.toLocaleLowerCase();
     this.emitOpenReport.emit(`report/${lowerCaseType}/${item.id}`);
   }
 
   public canShowReportButton(item: ICampaignTableData): boolean {
-    return this.compareTypeEngagements(item.engagementType);
+    return [
+      CampaignStatus.active,
+      CampaignStatus.paused,
+      CampaignStatus.ended
+    ].some(s => s === item.status);
+    this.compareTypeEngagements(item.engagementType);
   }
 
   private compareTypeEngagements(type: string): any {
     if (typeof type !== 'string') {
       return false;
     }
-    const lowerCaseType = this.lowerCaseType(type);
-    return lowerCaseType === EngagementType.survey || lowerCaseType === EngagementType.stamp;
+    const lowerCaseType = type.toLocaleLowerCase();
+    return [
+      EngagementType.survey,
+      EngagementType.games,
+      EngagementType.instantReward,
+      // EngagementType.stamp
+    ].some(ty => ty === lowerCaseType);
   }
-
-  private lowerCaseType(type: string): string {
-    return type.toLocaleLowerCase();
-  }
-
 }

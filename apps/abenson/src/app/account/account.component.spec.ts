@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { AccountComponent } from './account.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -53,14 +53,19 @@ describe('AccountComponent', () => {
 
   it('expect recive profile', fakeAsync(() => {
     component.ngOnInit();
+    tick();
     expect(component.profile).toBe(profile);
   }));
 
-  it('should log out', () => {
+  it('should navigate /login after log out', () => {
     const routerSpy = spyOn(router, 'navigate');
-    const authSpy = spyOn(auth, 'logout');
     component.logout();
     expect(routerSpy).toHaveBeenCalledWith(['/login']);
+  });
+
+  it('should call log out', () => {
+    const authSpy = spyOn(auth, 'logout');
+    component.logout();
     expect(authSpy).toHaveBeenCalled();
   });
 });

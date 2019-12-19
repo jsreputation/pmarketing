@@ -1,7 +1,24 @@
-import { Injectable, Optional } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { map, mergeMap, concatAll, reduce } from 'rxjs/operators';
+import {
+  Injectable,
+  Optional,
+} from '@angular/core';
+import {
+  HttpClient,
+  HttpHeaders,
+} from '@angular/common/http';
+
+import {
+  Observable,
+  of,
+} from 'rxjs';
+import {
+  map,
+  mergeMap,
+  concatAll,
+  reduce,
+} from 'rxjs/operators';
+import { oc } from 'ts-optchain';
+
 import { LoyaltyService } from './loyalty.service';
 import {
   ILoyalty,
@@ -10,10 +27,10 @@ import {
   TransactionDetailType,
   ITransactionHistory
 } from './models/loyalty.model';
+
 import { Config } from '../config/config';
 import { IV4Reward, IV4Tag } from '../rewards/v4-rewards.service';
 import { ICustomProperties } from '../profile/profile.model';
-import { oc } from 'ts-optchain';
 
 const DEFAULT_PAGE_COUNT: number = 10;
 
@@ -252,7 +269,7 @@ export class V4LoyaltyService extends LoyaltyService {
           of(histories)
         ];
         for (let i = 2; i <= ((this.historyMeta && this.historyMeta.total_pages) ? this.historyMeta.total_pages : 0); i++) {
-          const stream = this.getTransactions((loyaltyId ? loyaltyId : 1), i, pageSize);
+          const stream = this.getTransactions((loyaltyId), i, pageSize);
           streams.push(stream);
         }
         return streams;
@@ -281,7 +298,6 @@ export class V4LoyaltyService extends LoyaltyService {
             ...res.meta
           };
         }
-
         return res.data;
       }),
       map((loyalty: IV4Loyalty) => oc(loyalty).points_history([]).map(

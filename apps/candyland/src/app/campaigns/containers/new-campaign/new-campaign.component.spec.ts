@@ -13,12 +13,16 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule } from '@angular/material';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { MessageService } from '@cl-core-services';
+import { CampaignChannelsFormService } from '../../services/campaign-channels-form.service';
 
 describe('NewCampaignComponent', () => {
   let component: NewCampaignComponent;
   let fixture: ComponentFixture<NewCampaignComponent>;
   let form: FormGroup;
-
+  const msgSvcStub: Partial<MessageService> = {
+    show: () => ({})
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -44,7 +48,15 @@ describe('NewCampaignComponent', () => {
             getStepCondition: () => ({})
           }
         },
-        { provide: LocalStorageService, useValue: {} }
+        {
+          provide: MessageService, useValue: msgSvcStub
+        },
+        { provide: LocalStorageService, useValue: {} },
+        { provide: CampaignChannelsFormService, useValue: {
+            getForm () {
+              return new FormGroup({});
+            }
+          } }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

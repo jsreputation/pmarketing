@@ -6,6 +6,7 @@ export enum WAssignedStatus {
 }
 
 export interface IWAssignedAttributes {
+  id?: number;
   assigned_to_id: number;
   value: string;
   created_at: string;
@@ -16,6 +17,12 @@ export interface IWAssignedAttributes {
   status: WAssignedStatus;
   updated_at: string;
   urn: string;
+}
+
+export interface IWPurchaseAttributes {
+  loyalty_card_id: number;
+  reward_entity_id: number;
+  voucher_id: number;
 }
 
 export interface IWAssignRequestAttributes {

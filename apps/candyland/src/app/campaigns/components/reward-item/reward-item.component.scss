@@ -72,7 +72,8 @@
     flex: 1;
   }
 
-  &-probability {
+  &-probability,
+  &-limit {
     display: flex;
     margin-left: auto;
     align-items: baseline;
@@ -80,14 +81,16 @@
     width: 14rem;
   }
 
-  &-probability-label {
+  &-probability-label,
+  &-limit-label {
     @include typo-body2;
 
     color: $secondary-color;
     margin: 0 1.4rem 0 0;
   }
 
-  &-probability-input {
+  &-probability-input,
+  &-limit-input {
     @include typo-input;
 
     width: 100%;
@@ -97,6 +100,10 @@
     .invalid {
       color: $warning-color;
     }
+  }
+
+  &-limit-input {
+    max-width: 5rem;
   }
 
   &-probability-preview {

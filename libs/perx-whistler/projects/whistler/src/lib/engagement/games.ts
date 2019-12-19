@@ -1,7 +1,8 @@
 export const enum WGameType {
   shakeTheTree = 'shake',
   pinata = 'tap',
-  scratch = 'scratch'
+  scratch = 'scratch',
+  spin = 'spin'
 }
 
 export interface IWGameDisplayProperties {
@@ -26,8 +27,17 @@ export interface IWPinataDisplayProperties extends IWGameDisplayProperties {
 }
 
 export interface IWScratchDisplayProperties extends IWGameDisplayProperties {
-  lastButtonText?: string;
   pre_scratch_img_url: string;
   post_scratch_success_img_url: string;
   post_scratch_fail_img_url: string;
+}
+
+export interface IWSpinDisplayProperties extends  IWGameDisplayProperties {
+  nb_of_wedges: number;
+  slots: number[];
+  wedge_colors: string[];
+  reward_icon: string;
+  wheel_img: string;
+  wheel_position: string;
+  pointer_img: string;
 }

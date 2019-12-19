@@ -27,11 +27,10 @@
   "BTN_LAUNCH": "Launch",
   "BTN_APPLY": "Apply",
   "BTN_REPORT": "Report",
-
-
+  "BTN_COME_BACK": "Back",
+  "BTN_CLOSE": "Close",
   "DESCRIPTION": "Description",
   "POINTS": "points",
-
   "ERROR_REQUIRED": "Required field",
   "ERROR_MIN_LENGTH": "Min length",
   "ERROR_MAX_LENGTH": "Max length",
@@ -42,8 +41,6 @@
   "ERROR_SELECT_AT_LEAST_ONE": "At least one option must be selected.",
   "ERROR_CHOOSE_TEMPLATE": "Please, choose template.",
   "ERROR_THIS_FIELD_IS_REQUIRED": "This field is required",
-
-
   "WEBLINK": "Weblink",
   "TO": "to",
   "DAY": "Day",
@@ -78,5 +75,6 @@
     "PAUSED": "Paused",
     "ENDED": "Ended"
   },
-  "NAME": "Name"
+  "NAME": "Name",
+  "ACTIVATE": "Activate"
 }

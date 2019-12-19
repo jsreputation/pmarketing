@@ -7,8 +7,8 @@ import { IVoucherService } from '../ivoucher.service';
 import { of } from 'rxjs';
 import { IVoucher, VoucherState } from '../models/voucher.model';
 import { Type, SimpleChange } from '@angular/core';
-import { RedemptionType } from '../../rewards/models/reward.model';
 import { oc } from 'ts-optchain';
+import { RedemptionType } from '../../perx-core.models';
 
 describe('QrcodeRedemptionComponent', () => {
   let component: QrcodeRedemptionComponent;
@@ -32,10 +32,10 @@ describe('QrcodeRedemptionComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: RedemptionType.none,
       categoryTags: [],
     },
     state: VoucherState.issued,
+    redemptionType: RedemptionType.none,
     code: 'GFY2019',
     expiry: new Date('2019-09-05T03:24:00'),
   };

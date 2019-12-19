@@ -16,7 +16,10 @@ describe('EnterPinComponent', () => {
       declarations: [ EnterPinComponent ],
       imports: [
         UtilsModule,
-        RouterTestingModule
+        RouterTestingModule.withRoutes([{
+          path: 'login',
+          component: EnterPinComponent
+        }])
       ],
       providers: [
         {

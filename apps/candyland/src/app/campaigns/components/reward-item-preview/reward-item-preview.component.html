@@ -4,17 +4,22 @@
     <img class="reward-item-no-img" *ngIf="!data?.image" src="assets/images/icons/deactivate.svg">
   </div>
   <div class="reward-item-info">
-    <p class="reward-item-name">{{data?.name || ('CAMPAIGN.NO_REWARD' | translate)}}</p>
+    <a *ngIf="data" class="reward-item-name"
+      [routerLink]="link">{{data?.name}}</a>
+    <p *ngIf="!data" class="reward-item-name">{{'CAMPAIGN.NO_REWARD' | translate}}</p>
     <p class="reward-item-type" *ngIf="data?.category">{{data?.category}}</p>
   </div>
-<!--  <cl-progress-bar class="reward-item-progress"-->
-<!--                   *ngIf="data?.current && data?.total"-->
-<!--                   [current]="data?.current"-->
-<!--                   [total]="data?.total">-->
+  <!--  <cl-progress-bar class="reward-item-progress"-->
+  <!--                   *ngIf="data?.current && data?.total"-->
+  <!--                   [current]="data?.current"-->
+  <!--                   [total]="data?.total">-->
 
-<!--  </cl-progress-bar>-->
+  <!--  </cl-progress-bar>-->
+  <div *ngIf="limit">
+    <span class="reward-item-probability-label probability-preview">{{'CAMPAIGN.LIMIT' | translate}} {{limit}}</span>
+  </div>
   <div *ngIf="enableProbability && probability">
-    <span class="reward-item-probability-label probability-preview">{{'CAMPAIGN.PROBABILITY' | translate}} {{probability}}%</span>
+    <span class="reward-item-probability-label probability-preview">{{'CAMPAIGN.PROBABILITY' | translate}}
+      {{probability}}%</span>
   </div>
 </div>
-

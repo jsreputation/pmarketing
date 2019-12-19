@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { VoucherComponent } from './voucher.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IVoucherService, VoucherState, RedemptionType, RewardsService } from '@perx/core';
+import { IVoucherService, VoucherState, RedemptionType, RewardsService, Voucher } from '@perx/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
@@ -23,9 +23,8 @@ describe('VoucherComponent', () => {
   let component: VoucherComponent;
   let fixture: ComponentFixture<VoucherComponent>;
   let analytics: AnalyticsService;
-  const voucher = {
+  const voucher: Voucher = {
     id: 1,
-    rewardId: 1,
     reward: {
       id: 1,
       name: 'reward test',
@@ -33,7 +32,7 @@ describe('VoucherComponent', () => {
       subtitle: '',
       validFrom: new Date(),
       validTo: new Date(),
-      sellingFrom: null,
+      sellingFrom: undefined,
       rewardThumbnail: '',
       rewardBanner: '',
       merchantImg: '',
@@ -47,23 +46,13 @@ describe('VoucherComponent', () => {
         id: 1,
         title: 'test'
       }],
-      inventory: null
+      inventory: undefined
     },
     state: VoucherState.issued,
-    name: '',
     code: '',
     redemptionType: RedemptionType.pin,
-    thumbnailImg: '',
-    rewardBanner: '',
-    merchantImg: '',
-    merchantName: '',
-    merchantId: 1,
     expiry: null,
     redemptionDate: null,
-    description: [],
-    redemptionSuccessTxt: '',
-    redemptionSuccessImg: '',
-    categories: ['test']
   };
   const vouchersServiceStub = {
     get: () => of(voucher)
@@ -117,6 +106,28 @@ describe('VoucherComponent', () => {
       params.next({ id: null });
       expect(component.voucher).toBe(undefined);
     });
-  });
 
+    it('Redeem button should be disabled with future selling date', () => {
+      const today = new Date();
+      component.reward = {
+        id: 1,
+        name: 'Reward Test',
+        description: 'Reward Description',
+        subtitle: 'Reward Subtitle',
+        validFrom: today,
+        sellingFrom: new Date(today.setHours(today.getHours() + 1)),
+        validTo: today,
+        rewardBanner: '',
+        termsAndConditions: '',
+        howToRedeem: '',
+        inventory: {
+          rewardTotalBalance: 100,
+          rewardTotalLimit: 100,
+          rewardLimitPerUserBalance: 100
+        }
+      };
+      const result: boolean = component.isButtonDisabled();
+      expect(result).toBe(true);
+    });
+  });
 });

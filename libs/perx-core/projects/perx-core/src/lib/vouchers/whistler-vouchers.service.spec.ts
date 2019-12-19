@@ -1,11 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-
-import { WhistlerVouchersService } from './whistler-vouchers.service';
-import { ConfigModule, RewardsService } from '../../public-api';
-import { of } from 'rxjs';
-import { IReward } from '../rewards/models/reward.model';
-import { IVoucher } from './models/voucher.model';
 import { HttpClient } from '@angular/common/http';
+
+import { of } from 'rxjs';
 import { last } from 'rxjs/operators';
 
 import {
@@ -13,8 +9,15 @@ import {
   WAssignedStatus,
   IJsonApiItem,
   IJsonApiItemPayload,
-  IJsonApiListPayload,
+  IJsonApiListPayload
 } from '@perx/whistler';
+
+import { IVoucher } from './models/voucher.model';
+import { WhistlerVouchersService } from './whistler-vouchers.service';
+
+import { ConfigModule } from '../config/config.module';
+import { IReward } from '../rewards/models/reward.model';
+import { RewardsService } from '../rewards/rewards.service';
 
 describe('WhistlerVouchersService', () => {
   let httpClientSpy: { get: jasmine.Spy };

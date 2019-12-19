@@ -14,6 +14,7 @@ import {
   IJsonApiListPayload,
   IJsonApiItem,
   IJsonApiItemPayload,
+  IWPurchaseAttributes,
 } from '@perx/whistler';
 import { oc } from 'ts-optchain';
 
@@ -51,6 +52,8 @@ export class WhistlerVouchersService implements IVoucherService {
       state: WhistlerVouchersService.WVoucherStatusToState(voucher.attributes.status),
       code: voucher.attributes.value,
       expiry: voucher.attributes.valid_to ? new Date(voucher.attributes.valid_to) : null,
+      // @ts-ignore
+      redemptionType: reward.redemptionType,
     };
   }
 
@@ -98,7 +101,10 @@ export class WhistlerVouchersService implements IVoucherService {
     return this.http.get<IJsonApiListPayload<IWAssignedAttributes>>(`${this.vouchersUrl}?page[number]=${page}&page[size]=${size}`);
   }
 
-  private getFullVoucher(voucher: IJsonApiItem<IWAssignedAttributes>): Observable<IVoucher> {
+  /**
+   * @package
+   */
+  public getFullVoucher(voucher: IJsonApiItem<IWAssignedAttributes>): Observable<IVoucher> {
     return combineLatest(of(voucher), this.rewardsService.getReward(voucher.attributes.source_id))
       .pipe(
         map(([v, reward]: [IJsonApiItem<IWAssignedAttributes>, IReward]) => WhistlerVouchersService.WVoucherToVoucher(v, reward))
@@ -137,9 +143,24 @@ export class WhistlerVouchersService implements IVoucherService {
   public reserveReward(rewardId: number, params?: IRewardParams): Observable<IVoucher> {
     throw new Error('Method not implemented.');
   }
+
   // @ts-ignore
-  public issueReward(rewardId: number): Observable<IVoucher> {
-    throw new Error('Method not implemented.');
+  public issueReward(rewardId: number, sourceType?: string, locale: string = 'en', cardId?: number): Observable<IVoucher> {
+
+    return this.http.post<IJsonApiItemPayload<IWPurchaseAttributes>>(`${this.config.apiHost}/voucher-service/purchase_requests`,
+      {
+        data: {
+          type: 'purchase_request',
+          attributes: {
+            loyalty_card_id: cardId,
+            reward_entity_id: rewardId
+          }
+        }
+      }
+    ).pipe(
+      map(res => res.data.attributes.voucher_id),
+      switchMap((voucherId: number) => this.get(voucherId))
+    );
   }
 
   private get vouchersUrl(): string {

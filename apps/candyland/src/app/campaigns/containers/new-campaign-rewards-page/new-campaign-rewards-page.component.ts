@@ -1,13 +1,14 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, Input } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 import { takeUntil } from 'rxjs/operators';
 
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
+import { NewCampaignRewardsStampsFormService } from '../../services/new-campaign-rewards-stamps-form.service';
 
 @Component({
   selector: 'cl-new-campaign-rewards-page',
@@ -17,24 +18,28 @@ import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
 })
 export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
+  @Input() public campaignType: string;
+  public form: FormGroup = this.formService.getLimitsForm(this.campaignType);
+
   public isFirstInit: boolean = true;
-  public form: FormGroup;
-  public defaultValue: any = {
-    rewardsOptions: {
-      enableProbability: false,
-      rewards: []
-    }
-  };
+
+  public get limits(): FormGroup {
+    return this.form.get('limits') as FormGroup;
+  }
 
   public get times(): FormControl {
     return this.form.get('limits.times') as FormControl;
+  }
+
+  public get duration(): FormControl {
+    return this.form.get('limits.duration') as FormControl;
   }
 
   constructor(
     public store: CampaignCreationStoreService,
     public stepConditionService: StepConditionService,
     public cd: ChangeDetectorRef,
-    private fb: FormBuilder,
+    private formService: NewCampaignRewardsStampsFormService,
     private route: ActivatedRoute
   ) {
     super(1, store, stepConditionService);
@@ -52,20 +57,10 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
   }
 
   private initForm(): void {
-    this.form = this.fb.group({
-      rewardsOptions: [],
-      limits: this.fb.group({
-        times: [null, [
-          // Validators.required,
-          Validators.min(1),
-          Validators.max(60)
-        ]],
-        duration: [null, [
-          // Validators.required
-        ]],
-        id: null
-      })
-    });
+    if (!this.form) {
+      return;
+    }
+
     if (this.route.snapshot.params.id) {
       this.store.currentCampaign$
         .asObservable()
@@ -79,7 +74,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
           }
         });
     } else {
-      this.form.patchValue(this.defaultValue);
+      this.form.patchValue(this.formService.getDefaultValue(this.campaignType));
     }
   }
 

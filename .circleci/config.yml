@@ -44,9 +44,13 @@ commands:
           command: |
             if [ $APP == 'blackcomb' ] || [ $APP == 'candyland' ]; then
               if [ ${TARGET_ENV} == 'uat' ]; then
-                APIHOST="https://api-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
+                if [ $TARGET_NAMESPACE == 'master' ]; then
+                  APIHOST="https://api.uat.whistler.perxtech.io"
+                else
+                  APIHOST="https://api-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
+                fi
               elif [ ${TARGET_ENV} == 'staging' ]; then
-                APIHOST="https://api.${TARGET_ENV}.whistler.perxtech.io"
+                APIHOST="https://api.staging.whistler.perxtech.io"
               elif [ ${TARGET_ENV} == 'production' ]; then
                 APIHOST="https://api.whistler.perxtech.io"
               fi
@@ -130,6 +134,21 @@ commands:
             fi
             echo "export IS_WHISTLER=$IS_WHISTLER" >> $BASH_ENV
             echo $IS_WHISTLER
+  set_redirect_dest:
+    description: customise the app landing page after login
+    steps:
+      - run:
+          name: Setup REDIRECT_AFTER_LOGIN var
+          command: |
+            if [ $APP == 'petron-demo' ]
+            then
+              REDIRECT_AFTER_LOGIN="/home"
+            elif [ $APP == 'blackcomb' ]
+            then
+              REDIRECT_AFTER_LOGIN="/wallet"
+            fi
+            echo "export REDIRECT_AFTER_LOGIN=$REDIRECT_AFTER_LOGIN" >> $BASH_ENV
+            echo $REDIRECT_AFTER_LOGIN
   setup_buildkitd:
     description: Enable docker experimental feature and setup buildkit environment
     steps:
@@ -173,6 +192,7 @@ jobs:
       - set_basehref
       - set_iswhistler
       - set_sourcetype
+      - set_redirect_dest
       - run:
           name: Build docker image
           command: |
@@ -192,6 +212,20 @@ jobs:
             fi
             echo "after second set APP: ${APP}"
 
+            if [ $APP == 'petron-demo' ]
+            then
+              export APP_BASE="blackcomb"
+            else
+              export APP_BASE=$APP
+            fi
+            echo "APP_BASE: ${APP_BASE}"
+
+            export APP_ENV="prod"
+            if [ $APP == 'starhub' ] && [ $TARGET_ENV != 'production' ]
+            then
+              export APP_ENV="staging"
+            fi
+
             docker build . -t ${DOCKER_REPO}:${CIRCLE_TAG} \
             --no-cache \
             --build-arg app=$APP \
@@ -199,7 +233,10 @@ jobs:
             --build-arg basehref=$BASE_HREF \
             --build-arg preauth=$PREAUTH \
             --build-arg iswhistler=$IS_WHISTLER \
-            --build-arg sourcetype=$SOURCE_TYPE
+            --build-arg sourcetype=$SOURCE_TYPE \
+            --build-arg env=$APP_ENV \
+            --build-arg appbase=$APP_BASE \
+            --build-arg redirectdest=$REDIRECT_AFTER_LOGIN
       - run:
           name: Push docker
           command: |
@@ -207,7 +244,7 @@ jobs:
   deploy:
     executor:
       name: helm-deploy/default
-      docker_tag: '2.15.2'
+      docker_tag: "2.15.2"
     parameters:
       docker_tag:
         type: string
@@ -274,7 +311,7 @@ jobs:
   deploy-whistler:
     executor:
       name: helm-deploy/default
-      docker_tag: '2.15.2'
+      docker_tag: "2.15.2"
     parameters:
       docker_tag:
         type: string
@@ -302,16 +339,28 @@ jobs:
             echo 'export HELM_REPO_URL=https://rails-on-services.github.io/helm-charts' >> $BASH_ENV
             echo 'export HELM_APP="$APP"' >> $BASH_ENV
             if [ $APP == 'candyland' ]; then
-              if [ $TARGET_NAMESPACE == 'master' ]; then
-                INGRESS_HOST="candyland.${TARGET_ENV}.whistler.perxtech.io"
+              if [ $TARGET_ENV == 'production' ]; then
+                INGRESS_HOST="candyland.whistler.perxtech.io"
+              elif [ $TARGET_ENV == 'staging' ]; then
+                INGRESS_HOST="candyland.staging.whistler.perxtech.io"
               else
-                INGRESS_HOST="candyland-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
+                if [ $TARGET_NAMESPACE == 'master' ]; then
+                  INGRESS_HOST="candyland.${TARGET_ENV}.whistler.perxtech.io"
+                else
+                  INGRESS_HOST="candyland-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
+                fi
               fi
             elif [ $APP == 'blackcomb' ]; then
-              if [ $TARGET_NAMESPACE == 'master' ]; then
-                INGRESS_HOST="*-blackcomb.${TARGET_ENV}.whistler.perxtech.io"
+              if [ $TARGET_ENV == 'production' ]; then
+                INGRESS_HOST="*-blackcomb.whistler.perxtech.io"
+              elif [ $TARGET_ENV == 'staging' ]; then
+                INGRESS_HOST="*-blackcomb.staging.whistler.perxtech.io"
               else
-                INGRESS_HOST="*-blackcomb-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
+                if [ $TARGET_NAMESPACE == 'master' ]; then
+                  INGRESS_HOST="*-blackcomb.${TARGET_ENV}.whistler.perxtech.io"
+                else
+                  INGRESS_HOST="*-blackcomb-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
+                fi
               fi
             fi
             echo "export APIHOST=$APIHOST" >> $BASH_ENV
@@ -331,8 +380,7 @@ jobs:
             chmod +x skaffold
       - run:
           name: Deploy microsite app and ingress
-          command:
-            ./skaffold deploy -f .circleci/skaffold/microsites-app-ng-${APP}.yaml --images perxtech/microsite-apps-ng
+          command: ./skaffold deploy -f .circleci/skaffold/microsites-app-ng-${APP}.yaml --images perxtech/microsite-apps-ng
   test-e2e-protractor:
     docker:
       - image: circleci/node:10-browsers
@@ -460,24 +508,24 @@ workflows:
               only: /engagements-proxy-\d+\.\d+\.\d+.*/
 
 daily_e2e_run_morning:
-    triggers:
-      - schedule:
-          # 12 noon SGT
-          cron: "0 4 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - test-e2e-protractor
+  triggers:
+    - schedule:
+        # 12 noon SGT
+        cron: "0 4 * * *"
+        filters:
+          branches:
+            only:
+              - master
+  jobs:
+    - test-e2e-protractor
 daily_e2e_run_evening:
-    triggers:
-      - schedule:
-          # 5.00 pm SGT
-          cron: "0 9 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - test-e2e-protractor
+  triggers:
+    - schedule:
+        # 5.00 pm SGT
+        cron: "0 9 * * *"
+        filters:
+          branches:
+            only:
+              - master
+  jobs:
+    - test-e2e-protractor

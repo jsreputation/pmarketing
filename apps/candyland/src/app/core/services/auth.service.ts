@@ -32,7 +32,7 @@ export class AuthService {
     const localToken = this.localStorage.get('authToken');
     const localUserId = this.localStorage.get('userId');
     if (!localToken || !localUserId) {
-      this.logout();
+      this.clearCache();
       return;
     }
     this.sessionService.token = localToken;
@@ -75,11 +75,23 @@ export class AuthService {
     this.localStorage.set('userId', user.id);
   }
 
-  public logout(): void {
+  private clearCache(): void {
     this.sessionService.remove();
     this.userService.user = null;
     this.localStorage.remove('userId');
     this.localStorage.remove('authToken');
+  }
+
+  public logout(): void {
+    this.clearCache();
     this.router.navigate(['/login']);
+  }
+
+  public resetPassword(accountId: string, username: string): Observable<any> {
+    return this.http.resetPassword(accountId, username);
+  }
+
+  public changePassword(password: string, token: string): Observable<void> {
+    return this.http.changePassword(password, token);
   }
 }

@@ -1,21 +1,42 @@
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RewardComponent } from './reward.component';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { GameModule, RewardsModule, RewardsService, InstantOutcomeService, AuthenticationService, NotificationService } from '@perx/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+
+import {
+  GameModule,
+  RewardsModule,
+  RewardsService,
+  InstantOutcomeService,
+  AuthenticationService,
+  NotificationService,
+  ThemesService
+} from '@perx/core';
+
+import { RewardComponent } from './reward.component';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
+
+  const themesServiceStub = {
+    getThemeSetting: () => of()
+  };
 
   const rewardsServiceStub: Partial<RewardsService> = {
     getAllRewards: () => of(),
   };
 
   const instantOutStub: Partial<InstantOutcomeService> = {
-
+    getFromCampaign: () => of(),
+    prePlayConfirm: () => of(),
+    prePlay: () => of()
   };
 
   const authServiceStub: Partial<AuthenticationService> = {
@@ -40,10 +61,26 @@ describe('RewardComponent', () => {
         TranslateModule.forRoot(),
       ],
       providers: [
-        { provide: RewardsService, useValue: rewardsServiceStub },
-        { provide: InstantOutcomeService, useValue: instantOutStub },
-        { provide: AuthenticationService, useValue: authServiceStub },
-        { provide: NotificationService, useValue: notificationServiceStub }
+        {
+          provide: RewardsService,
+          useValue: rewardsServiceStub,
+        },
+        {
+          provide: InstantOutcomeService,
+          useValue: instantOutStub,
+        },
+        {
+          provide: AuthenticationService,
+          useValue: authServiceStub,
+        },
+        {
+          provide: NotificationService,
+          useValue: notificationServiceStub,
+        },
+        {
+          provide: ThemesService,
+          useValue: themesServiceStub,
+        },
       ]
     })
       .compileComponents();

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RedemptionComponent } from './redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule, MatDividerModule } from '@angular/material';
-import { VouchersModule, IVoucherService, VoucherState, UtilsModule, RewardsService, Voucher } from '@perx/core';
+import { VouchersModule, IVoucherService, VoucherState, UtilsModule, RewardsService, Voucher, RedemptionType } from '@perx/core';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
@@ -44,14 +44,14 @@ describe('RedemptionComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: null,
       categoryTags: [{
         id: 1,
         title: 'test'
       }],
-      inventory: null,
+      inventory: undefined,
     },
     state: VoucherState.expired,
+    redemptionType: RedemptionType.none,
     expiry: null,
   };
 
@@ -130,9 +130,10 @@ describe('RedemptionComponent', () => {
 
   describe('onInit', () => {
     it('should NOT get voucher based if queryParams id is NOT present', () => {
+      const defVal = component.voucher;
       params.next({ id: null });
       component.ngOnInit();
-      expect(component.voucher).toBe(undefined);
+      expect(component.voucher).toBe(defVal);
     });
 
     it('should get voucher based if queryParams id is present', () => {

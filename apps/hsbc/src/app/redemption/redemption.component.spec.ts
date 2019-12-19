@@ -2,19 +2,22 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RedemptionComponent } from './redemption.component';
 import {
-  VouchersModule,
-  IVoucherService,
-  Voucher,
-  VoucherState,
-  ThemesService,
-  FeedReaderService,
-  ProfileService,
   AuthenticationService,
-  ConfigService } from '@perx/core';
+  ConfigService,
+  FeedReaderService,
+  IVoucherService,
+  ProfileService,
+  ThemesService,
+  Voucher,
+  VouchersModule,
+  VoucherState,
+  RedemptionType,
+} from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import {ActivatedRoute} from '@angular/router';
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
@@ -38,11 +41,11 @@ describe('RedemptionComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: null,
       categoryTags: [],
       inventory: null,
     },
     state: VoucherState.issued,
+    redemptionType: RedemptionType.none,
     code: 'string;',
     expiry: null,
   };
@@ -55,6 +58,15 @@ describe('RedemptionComponent', () => {
   const profileServiceStub = {};
   const configServiceStub = {
     readAppConfig: () => of()
+  };
+  const activatedRouteStub = {
+    snapshot: {
+      paramMap: {
+        get(): number {
+          return 1;
+        }
+      }
+    }
   };
 
   beforeEach(async(() => {
@@ -72,7 +84,8 @@ describe('RedemptionComponent', () => {
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: IVoucherService, useValue: vouchersServiceStub },
-        { provide : ConfigService, useValue: configServiceStub}
+        { provide : ConfigService, useValue: configServiceStub},
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
       ]
     })
       .compileComponents();

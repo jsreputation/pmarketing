@@ -1,12 +1,28 @@
 import { Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
 import { browser, protractor } from 'protractor';
-import { EngagementAppPage } from '../pages/candylandApp.po';
+import { EngagementAppPage, ElementApp, LoginAppPage } from '../pages/candylandApp.po';
 import * as path from 'path' ;
 
 let PageEngagement: EngagementAppPage;
+const Element = ElementApp;
 // Verifying successful creation of hit the pinata engagment
 Given(/^8_I am on engagement page$/, async () => {
+  const ec = protractor.ExpectedConditions;
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  // entering correct account id
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
+
   PageEngagement = new EngagementAppPage();
   await PageEngagement.navigateToEngagement();
 });
@@ -14,9 +30,9 @@ Given(/^8_I am on engagement page$/, async () => {
 Given(/^8_I click on the create new button$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the create new button to load
-  await browser.wait(ec.elementToBeClickable(PageEngagement.engagementCreateNewButton()), 6000);
+  await browser.wait(ec.elementToBeClickable(Element.clButton()), 6000);
   // clicking on the create new button
-  await PageEngagement.engagementCreateNewButton().click();
+  await Element.clButton().click();
 });
 
 Given(/^8_I click on the game option.$/, async () => {
@@ -30,28 +46,28 @@ Given(/^8_I click on the game option.$/, async () => {
 Given(/^8_I select hit the pinata option$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the game engagement options to load
-  await browser.wait(ec.elementToBeClickable(PageEngagement.gameOptions()), 6000);
+  await browser.wait(ec.elementToBeClickable(PageEngagement.gamePinataOptions()), 6000);
   // clicking on the hit the pinata option
-  await PageEngagement.gameOptions().click();
+  await PageEngagement.gamePinataOptions().click();
 });
 
 Given(/^8_I click on the next button$/, async () => {
-  await PageEngagement.nextLaunchNowButton().click();
+  await Element.clButtonArray().get(2).click();
   await browser.sleep(3000);
 });
 
 Given(/^8_I enter a test string in the headline message and sub-headline message$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for headline field to load
-  await browser.wait(ec.presenceOf(PageEngagement.inputTextField().get(1)), 6000);
+  await browser.wait(ec.presenceOf(Element.inputTextArray().get(1)), 6000);
   // waiting for sub-headline field to load
-  await browser.wait(ec.presenceOf(PageEngagement.inputTextField().get(2)), 6000);
+  await browser.wait(ec.presenceOf(Element.inputTextArray().get(2)), 6000);
   // inputing a test string in the headline field
-  await PageEngagement.inputTextField().get(1).clear();
-  await PageEngagement.inputTextField().get(1).sendKeys('E2ETestString0001');
+  await Element.inputTextArray().get(1).clear();
+  await Element.inputTextArray().get(1).sendKeys('E2ETestString0001');
   // inputing a test string in the sub-headline field
-  await PageEngagement.inputTextField().get(2).clear();
-  await PageEngagement.inputTextField().get(2).sendKeys('E2ETestString0002');
+  await Element.inputTextArray().get(2).clear();
+  await Element.inputTextArray().get(2).sendKeys('E2ETestString0002');
 });
 
 Given(/^8_I upload a background image.$/, async () => {
@@ -59,18 +75,18 @@ Given(/^8_I upload a background image.$/, async () => {
   const absolutePath = path.resolve(__dirname, FileToUpload);
   const ec = protractor.ExpectedConditions;
   // waiting for the upload field to load
-  await browser.wait(ec.presenceOf(PageEngagement.inputFileField()), 6000);
+  await browser.wait(ec.presenceOf(Element.inputFile()), 6000);
   // uploading test img file into field
-  await PageEngagement.inputFileField().sendKeys(absolutePath);
+  await Element.inputFile().sendKeys(absolutePath);
   await browser.sleep(3000);
 });
 
 Given(/^8_I click on the save button.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the save button to load
-  await browser.wait(ec.elementToBeClickable(PageEngagement.saveButton()), 6000);
+  await browser.wait(ec.elementToBeClickable(Element.clButtonArray().get((1))), 6000);
   // clicking on the save button
-  await PageEngagement.saveButton().click();
+  await Element.clButtonArray().get((1)).click();
 });
 
 When(/^8_I click on an option in the engagment dialog box$/, async () => {
@@ -78,14 +94,14 @@ When(/^8_I click on an option in the engagment dialog box$/, async () => {
   // Wait for engagement tab to appear
   await browser.wait(ec.presenceOf(PageEngagement.confirmModal()), 6000);
   // clicking on the launch now button
-  await PageEngagement.nextLaunchNowButton().click();
+  await Element.clButtonArray().get(2).click();
   await browser.sleep(3000);
 });
 
 Then(/^8_I should see the game created.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the card to be loaded
-  await browser.wait(ec.presenceOf(PageEngagement.engagementCreated()), 6000);
+  await browser.wait(ec.presenceOf(Element.engagementCreated()), 6000);
   // doing an assertion on the text string of the card
-  expect(await PageEngagement.engagementCreated().getText()).to.contain('hit the pinata');
+  expect(await Element.engagementCreated().getText()).to.contain('Hit the Pinata Template');
 });

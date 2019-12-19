@@ -1,4 +1,4 @@
-<div class="parent-container" *ngIf="voucher$ | async as voucher">
+<div class="parent-container" *ngIf="voucher$">
   <div class="full-page-container-white">
     <div *ngIf="redemptionType === rt.pin">
       <p>
@@ -27,8 +27,12 @@
     <div *ngIf="redemptionType === rt.qr" class="code-container">
       <perx-core-qrcode-redemption [voucherId]="voucherId"></perx-core-qrcode-redemption>
       <div class="button-container">
-        <button mat-stroked-button color="primary" (click)="goBack()">>{{ "CANCEL" | translate }}</button>
+        <button mat-stroked-button color="primary" (click)="goBack()">{{ "CANCEL" | translate }}</button>
       </div>
+    </div>
+    <div *ngIf="redemptionType === rt.barcode" class="code-container">
+      <perx-core-barcode-redemption
+      [voucherId]="voucherId"></perx-core-barcode-redemption>
     </div>
   </div>
 </div>

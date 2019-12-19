@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { CampaignCreationStoreService, ICampaignConfig } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 
 export class AbstractStepWithForm implements OnInit, OnDestroy {
   protected destroy$: Subject<void> = new Subject();
@@ -27,7 +27,9 @@ export class AbstractStepWithForm implements OnInit, OnDestroy {
     this.store.currentCampaign$
       .asObservable()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(data => this.campaign = data);
+      .subscribe(
+        data => this.campaign = data
+      );
 
     if (this.stepIndex !== undefined && this.stepConditionService && this.form) {
       this.stepConditionService.registerStepCondition(this.stepIndex, this.form);

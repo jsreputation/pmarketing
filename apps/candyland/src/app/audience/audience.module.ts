@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AudienceRoutingModule } from './audience-routing.module';
 import { ChangeExpiryDatePopupComponent } from './containers/change-expiry-date-popup/change-expiry-date-popup.component';
-import { AddUserPopupComponent } from './containers/add-user-popup/add-user-popup.component';
+import { UpsertUserPopupComponent } from './containers/upsert-user-popup/upsert-user-popup.component';
 import { ManageListPopupComponent } from './containers/manage-list-popup/manage-list-popup.component';
 import { AudiencesListComponent } from './components/audiences-list/audiences-list.component';
 import { AudiencesPageComponent } from './containers/audiences-page/audiences-page.component';
@@ -15,7 +15,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatMenuModule, MatPaginatorModule, MatSelectModule, MatSortModule, MatTableModule, MatTabsModule, MatSnackBarModule
+  MatMenuModule, MatPaginatorModule, MatSelectModule, MatSortModule, MatTableModule, MatTabsModule
 } from '@angular/material';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
@@ -31,11 +31,14 @@ import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.
 import { SelectRewardPopupModule } from '@cl-shared/containers/select-reward-popup/select-reward-popup.module';
 import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { IAdvancedUploadFileService } from '@cl-core/services/iadvanced-upload-file.service';
+import { UsersUploadService } from '@cl-core/services/users-upload.service';
+import {MessageService} from '@cl-core-services';
 
 @NgModule({
   declarations: [
     ChangeExpiryDatePopupComponent,
-    AddUserPopupComponent,
+    UpsertUserPopupComponent,
     ManageListPopupComponent,
     AudiencesListComponent,
     AudiencesPageComponent,
@@ -59,7 +62,6 @@ import { TranslateModule } from '@ngx-translate/core';
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
-    MatSnackBarModule,
     StatusLabelModule,
     TableFiltersModule,
     SearchFilterModule,
@@ -76,8 +78,12 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
   entryComponents: [
     ChangeExpiryDatePopupComponent,
-    AddUserPopupComponent,
+    UpsertUserPopupComponent,
     ManageListPopupComponent,
+  ],
+  providers: [
+    MessageService,
+    { provide: IAdvancedUploadFileService, useClass: UsersUploadService }
   ]
 })
 export class AudienceModule {

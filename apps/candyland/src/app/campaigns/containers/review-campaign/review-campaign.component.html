@@ -1,10 +1,14 @@
 <header class="page-header full-with">
   <h1 class="title" *ngIf="campaign">{{campaign.name}}</h1>
-  <cl-button classList="primary cta cta-edit cta-edit-comeback"
-              (click)="comeBack()"> Come Back
-  </cl-button>
+  <div class="btn-group">
+    <cl-button classList="secondary"
+      (click)="comeBack()">{{'BTN_COME_BACK' | translate}}
+    </cl-button>
+    <cl-button *ngIf="campaign && campaign.status !== cs.active" classList="primary cta cta-edit"
+      [routerLink]="['/campaigns','edit',campaign.id]">{{'BTN_EDIT' | translate}}
+    </cl-button>
+  </div>
 </header>
 <section class="content form-limiter">
   <cl-new-campaign-review-page [tenantSettings]="tenantSettings"></cl-new-campaign-review-page>
 </section>
-

@@ -1,19 +1,11 @@
 import { IWRewardDisplayProperties } from '@perx/whistler';
 
-export enum RedemptionType {
-  pin = 'pin',
-  txtCode = 'txtCode',
-  qr = 'qrcode',
-  none = 'none',
-  offline = 'offline'
-}
-
 export interface IReward {
   id: number;
   name: string;
   description: string;
   subtitle: string;
-  validFrom: Date;
+  validFrom: Date | null;
   validTo: Date | null;
   sellingFrom?: Date;
   rewardThumbnail?: string;
@@ -24,10 +16,9 @@ export interface IReward {
   merchantName?: string;
   merchantWebsite?: string;
   termsAndConditions: string;
-  howToRedeem: string;
-  redemptionType?: RedemptionType;
+  howToRedeem?: string;
   categoryTags?: ICategoryTags[];
-  inventory?: Inventory;
+  inventory?: Inventory | null;
   redemptionText?: string;
   rawPayload?: any;
   displayProperties?: IWRewardDisplayProperties;
@@ -44,7 +35,7 @@ export interface ICatalog {
 }
 
 export interface IPrice {
-  id: number;
+  id?: number;
   rewardCampaignId?: number;
   price?: number;
   currencyCode?: string;

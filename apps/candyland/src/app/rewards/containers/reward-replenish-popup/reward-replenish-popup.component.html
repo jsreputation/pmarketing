@@ -1,22 +1,27 @@
 <aside class="dialog" role="dialog" aria-labelledby="dialogTitle-replenishVoucherCodes">
   <header class="dialog-header-wrap">
-    <h2 class="dialog-title" id="dialogTitle-replenishVoucherCodes">Replenish Voucher Codes</h2>
+    <h2 class="dialog-title" id="dialogTitle-replenishVoucherCodes">
+      {{'REPLENISH_VOUCHER_CODES' | translate}}
+    </h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
   </header>
   <mat-dialog-content>
     <div class="dialog-content">
-
       <!--      Single code-->
       <ng-container *ngIf="voucherSettings?.voucherCode?.type === 'single_code'">
         <mat-form-field>
           <input type="number" matInput [min]="0" [max]="10000"
-                 (input)="setReplenishVoucherCodes(+$event.target.value)"/>
-          <mat-hint>Voucher codes available: 10,000</mat-hint>
+            (input)="setReplenishVoucherCodes(+$event.target.value)" />
+          <mat-hint>
+            {{'VOUCHER_CODE_AVAILABLE' | translate}}
+          </mat-hint>
         </mat-form-field>
         <div class="code-preview">
-          <label class="dialog-content-title">Single code</label>
+          <label class="dialog-content-title">
+            {{'SINGLE_CODE' | translate}}
+          </label>
           <div class="code-preview-block">
             {{voucherSettings?.voucherCode?.singleCode?.code}}
           </div>
@@ -28,42 +33,53 @@
       <ng-container *ngIf="voucherSettings?.voucherCode?.type === 'system_generated'">
         <mat-form-field>
           <input type="number" matInput [min]="0" [max]="10000"
-                 (change)="setReplenishVoucherCodes(+$event.target.value)"/>
-          <mat-hint>Voucher codes available: 10,000</mat-hint>
+            (change)="setReplenishVoucherCodes(+$event.target.value)" />
+          <mat-hint>
+            {{'VOUCHER_CODE_AVAILABLE' | translate}}
+          </mat-hint>
         </mat-form-field>
         <div class="code-preview">
-          <label class="dialog-content-title">Unique codes: System generated</label>
+          <label class="dialog-content-title">
+            {{'VOUCHER_CODE_OPTIONS.UNIQUE_CODES:_SYSTEM_GENERATED' | translate}}
+          </label>
           <div class="code-preview-block">
-            {{voucherSettings?.voucherCode?.uniqueGeneratedCode?.prefix}} ({{voucherSettings?.voucherCode?.uniqueGeneratedCode?.codeFormat}})
+            {{voucherSettings?.voucherCode?.uniqueGeneratedCode?.prefix}}
+            ({{voucherSettings?.voucherCode?.uniqueGeneratedCode?.codeFormat}})
           </div>
         </div>
       </ng-container>
       <!--/ Unique codes: System generated-->
 
       <!-- Unique codes: User Upload-->
-      <!-- <ng-container *ngIf="data?.uniqueUserUploadCode">
-        <cl-upload-file label="Unique codes: User Upload"
-                        (uploadFile)="setReplenishVoucherCodes(20000)"
-                        (deleteFile)="setReplenishVoucherCodes($event)">
+      <ng-container *ngIf="voucherSettings?.voucherCode?.type === 'user_uploaded'">
+        <cl-upload-file
+          [options]="{rewardId: data.id}"
+          [downloadFile]="'assets/files/Vouchers_template.csv'"
+          (uploadFile)="setReplenishVoucherCodes($event)"
+          (deleteFile)="setReplenishVoucherCodes()">
         </cl-upload-file>
         <div class="code-preview" *ngIf="replenishVoucherCodes">
           <label class="dialog-content-title">Total Number of Voucher</label>
           <p class="code-preview-value">
-            {{replenishVoucherCodes | number: '2.'}}
+            {{replenishVoucherCodes | number}}
           </p>
         </div>
-      </ng-container> -->
+      </ng-container>
       <!--/ Unique codes: User Upload-->
 
       <!--Merchant PIN-->
       <ng-container *ngIf="voucherSettings?.merchantPIN">
         <mat-form-field>
           <input type="number" matInput [min]="0" [max]="10000"
-                 (change)="setReplenishVoucherCodes($event.target.value)"/>
-          <mat-hint>Voucher codes available: 10,000</mat-hint>
+            (change)="setReplenishVoucherCodes($event.target.value)" />
+          <mat-hint>
+            {{'VOUCHER_CODE_AVAILABLE' | translate}}
+          </mat-hint>
         </mat-form-field>
         <div class="code-preview">
-          <label class="dialog-content-title">Merchant PIN</label>
+          <label class="dialog-content-title">
+            {{'MERCHANT_PIN' | translate}}
+          </label>
           <div class="code-preview-block">
             {{voucherSettings?.merchantPIN?.code}}
           </div>
@@ -74,24 +90,36 @@
     </div>
   </mat-dialog-content>
   <footer class="dialog-actions">
-    <cl-button classList="secondary"
-               class="actions-close"
-               (click)="close()"
-               [disableRipple]="true">
-        <span>
-          Cancel
-        </span>
+    <cl-button
+      *ngIf="voucherSettings?.voucherCode?.type !== 'user_uploaded'"
+      classList="secondary"
+      class="actions-close"
+      (click)="close()"
+      [disableRipple]="true">
+      <span>
+        {{'BTN_CANCEL' | translate}}
+      </span>
     </cl-button>
 
-    <cl-button classList="primary"
-               (click)="replenish()"
-               [disable]="!replenishVoucherCodes"
-               [disableRipple]="true">
-        <span>
-          Replenish
-        </span>
+    <cl-button
+      *ngIf="voucherSettings?.voucherCode?.type !== 'user_uploaded'"
+      classList="primary"
+      (click)="replenish()"
+      [disable]="!replenishVoucherCodes"
+      [disableRipple]="true">
+      <span>
+        {{'REPLENISH' | translate}}
+      </span>
+    </cl-button>
+
+    <cl-button
+      *ngIf="voucherSettings?.voucherCode?.type === 'user_uploaded'"
+      classList="primary"
+      (click)="close()"
+      [disableRipple]="true">
+      <span>
+        {{'BTN_CLOSE' | translate}}
+      </span>
     </cl-button>
   </footer>
 </aside>
-
-

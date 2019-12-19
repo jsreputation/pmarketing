@@ -1,26 +1,57 @@
 import * as moment from 'moment';
 import {
-  EngagementTypeAPIMapping,
-  EngagementTypeFromAPIMapping
+  EngagementTypeAPIMapping, EngagementTypeFromAPIMapping
 } from '@cl-core/models/engagement/engagement-type.enum';
-import { IWCampaignAttributes, WEngagementType, WInformationCollectionSettingType } from '@perx/whistler';
-import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import {
+  IWCampaignAttributes, WEngagementType,
+  IWAudiences,
+  WInformationCollectionSettingType,
+} from '@perx/whistler';
+import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
+import { DateTimeParser } from '@cl-helpers/date-time-parser';
+import { WCampaignStatus } from '@perx/whistler';
+import { CampaignStatus } from '@cl-core/models/campaign/campaign-status.enum';
 
 export class CampaignsHttpAdapter {
-  public static transformToCampaign(data: any): ICampaignTableData {
-    const eType = data.attributes.engagement_type ?
-      CampaignsHttpAdapter.EngagementTypePipeTransform(EngagementTypeFromAPIMapping[data.attributes.engagement_type])
-      : '';
+  private static WStat2Stat: { [k in WCampaignStatus]: CampaignStatus } = {
+    scheduled: CampaignStatus.scheduled,
+    paused: CampaignStatus.paused,
+    active: CampaignStatus.active,
+    ended: CampaignStatus.ended,
+    draft: CampaignStatus.draft
+  };
+  private static Stat2WStat: { [k in CampaignStatus]: WCampaignStatus } = {
+    scheduled: WCampaignStatus.scheduled,
+    paused: WCampaignStatus.paused,
+    active: WCampaignStatus.active,
+    ended: WCampaignStatus.ended,
+    draft: WCampaignStatus.draft
+  };
+
+  public static transformCampaignStatus(status: CampaignStatus): IJsonApiItem<Partial<IWCampaignAttributes>> {
     return {
-      id: data.id,
-      name: data.attributes.name,
-      status: data.attributes.status,
-      begin: CampaignsHttpAdapter.stringToDate(data.attributes.start_date_time),
-      end: CampaignsHttpAdapter.stringToDate(data.attributes.end_date_time),
-      audience: data.attributes.pool_id,
-      goal: data.attributes.goal,
-      engagementType: eType
+      type: 'entities', attributes: {
+        status: CampaignsHttpAdapter.Stat2WStat[status]
+      }
+    };
+  }
+
+  public static transformToCampaign(
+    data: IJsonApiItem<IWCampaignAttributes>,
+    includedPools?: IJsonApiItem<IWAudiences>[]
+  ): ICampaignTableData {
+    const audienceCheck: IJsonApiItem<IWAudiences> | undefined = includedPools ? includedPools
+      .find(pool => +pool.id === (data.attributes.pool_id || Number.MAX_SAFE_INTEGER)) : undefined;
+    const audience: string = audienceCheck ? audienceCheck.attributes.name : '-';
+    const eType: string = data.attributes.engagement_type
+      ? CampaignsHttpAdapter.EngagementTypePipeTransform(EngagementTypeFromAPIMapping[data.attributes.engagement_type]) : '';
+    return {
+      id: data.id, name: data.attributes.name, status: CampaignsHttpAdapter.WStat2Stat[data.attributes.status],
+      begin: DateTimeParser.stringToDate(data.attributes.start_date_time),
+      end: DateTimeParser.stringToDate(data.attributes.end_date_time),
+      audience,
+      goal: data.attributes.goal, engagementType: eType
     };
   }
 
@@ -30,10 +61,9 @@ export class CampaignsHttpAdapter {
       .join(' ');
   }
 
-  public static transformTableData(data: any): ITableData<ICampaignTableData> {
+  public static transformTableData(data: IJsonApiListPayload<IWCampaignAttributes>): ITableData<ICampaignTableData> {
     return {
-      data: data.data.map(item => CampaignsHttpAdapter.transformToCampaign(item)),
-      meta: data.meta
+      data: data.data.map(item => CampaignsHttpAdapter.transformToCampaign(item, data.included)), meta: data.meta
     };
   }
 
@@ -52,57 +82,50 @@ export class CampaignsHttpAdapter {
     }
     return result;
   }
+
   public static transformAPIResponseToCampaign(data: IJsonApiItem<IWCampaignAttributes>): ICampaign {
     const campaignData = data.attributes;
     return {
+      audience: {
+        select: '' + data.attributes.pool_id
+      },
       id: data.id,
       name: campaignData.name,
+      status: CampaignsHttpAdapter.WStat2Stat[campaignData.status],
       engagement_id: `${campaignData.engagement_id}`,
-      engagement_type: EngagementTypeFromAPIMapping[campaignData.engagement_type],
-      campaignInfo: {
+      engagement_type: EngagementTypeFromAPIMapping[campaignData.engagement_type], campaignInfo: {
         informationCollectionSetting: CampaignsHttpAdapter.transformInformationCollectionType(
-          campaignData.display_properties.informationCollectionSetting),
+          campaignData.display_properties.informationCollectionSetting
+        ),
         goal: campaignData.goal,
-        startDate: campaignData.start_date_time ? new Date(campaignData.start_date_time) : null,
-        startTime: campaignData.start_date_time ? moment(campaignData.start_date_time).format('LT') : '',
-        endDate: campaignData.end_date_time ? new Date(campaignData.end_date_time) : null,
-        endTime: campaignData.end_date_time ? moment(campaignData.end_date_time).format('LT') : '',
-        disabledEndDate: !campaignData.end_date_time,
-        labels: campaignData.labels
-      },
-      template: {},
-      rewardsList: [],
-      displayProperties: { ...campaignData.display_properties }
+        startDate: DateTimeParser.stringToDate(campaignData.start_date_time),
+        startTime: DateTimeParser.stringToTime(campaignData.start_date_time, 'LT'),
+        endDate: DateTimeParser.stringToDate(campaignData.end_date_time),
+        endTime: DateTimeParser.stringToTime(campaignData.end_date_time, 'LT'),
+        disabledEndDate: !campaignData.end_date_time, labels: campaignData.labels
+      }, template: {}, outcomes: [], displayProperties: { ...campaignData.display_properties }
     };
   }
 
   public static transformFromCampaign(data: ICampaign): IJsonApiItem<IWCampaignAttributes> {
     const startTime = data.campaignInfo.startTime ? data.campaignInfo.startTime : moment().format('LT');
     const endTime = data.campaignInfo.endTime ? data.campaignInfo.endTime : moment().format('LT');
-    const startDate = data.campaignInfo.startDate ?
-      moment(moment(data.campaignInfo.startDate).format('l') + ' ' + startTime).format() : null;
+    const startDate = data.campaignInfo.startDate
+      ? moment(moment(data.campaignInfo.startDate).format('l') + ' ' + startTime).format()
+      : null;
     const endDate = data.campaignInfo.endDate ? moment(moment(data.campaignInfo.endDate).format('l') + ' ' + endTime).format() : null;
     // When user not select weblink, default the information collection setting back to not required. Double confirm with Nocolas
-    const informationCollectionSetting = data.channel.type === 'weblink' ?
-      data.campaignInfo.informationCollectionSetting : InformationCollectionSettingType.notRequired;
+    const informationCollectionSetting = data.channel.type === 'weblink'
+      ? data.campaignInfo.informationCollectionSetting
+      : InformationCollectionSettingType.notRequired;
     return {
-      type: 'entities',
-      attributes: {
-        name: data.name,
-        engagement_type: EngagementTypeAPIMapping[data.template.attributes_type] as WEngagementType,
-        engagement_id: data.template.id,
-        status: 'scheduled',
-        start_date_time: startDate,
-        end_date_time: endDate,
-        goal: data.campaignInfo.goal,
+      type: 'entities', attributes: {
+        name: data.name, engagement_type: EngagementTypeAPIMapping[data.template.attributes_type] as WEngagementType,
+        engagement_id: data.template.id, status: WCampaignStatus.scheduled, start_date_time: startDate, end_date_time: endDate,
+        goal: data.campaignInfo.goal, pool_id: data.audience.select ? Number.parseInt(data.audience.select, 10) : null,
         labels: data.campaignInfo.labels || [],
         display_properties: { ...data.displayProperties, informationCollectionSetting }
       }
     };
   }
-
-  private static stringToDate(stringDate: string | null): Date | null {
-    return stringDate ? new Date(stringDate) : null;
-  }
-
 }

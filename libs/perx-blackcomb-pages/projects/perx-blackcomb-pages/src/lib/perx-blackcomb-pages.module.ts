@@ -18,6 +18,7 @@ import {
   MatSelectModule,
   MatDatepickerModule,
   MatToolbarModule,
+  MatListModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
@@ -28,6 +29,7 @@ import {
   PinRedemptionComponent,
   BcodeRedemptionComponent,
   QrcodeRedemptionComponent,
+  BarcodeRedemptionComponent,
   RewardComponent as PerxRewardComponent,
   SurveyComponent as PerxSurveyComponent,
   PuzzleCollectStampsComponent,
@@ -43,7 +45,10 @@ import {
   RewardsListTabbedComponent,
   RewardsListComponent,
   LoyaltySummaryComponent,
-  NewsfeedComponent
+  LoyaltyTransactionsListComponent,
+  NewsfeedComponent,
+  PinInputComponent,
+  PasswordComponent
 } from '@perx/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -51,8 +56,9 @@ import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { LoadingComponent } from './loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
-import { LoginComponent } from './login/login.component';
-import { PIComponent } from './pi/pi.component';
+import { NgxBarcodeModule } from 'ngx-barcode';
+import { SignIn2Component } from './sign-in-2/sign-in-2.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 import { QRComponent } from './qr/qr.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { RewardDetailsComponent } from './reward-details/reward-details.component';
@@ -66,6 +72,13 @@ import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
 import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
 import { WalletHistoryComponent } from './wallet-history/wallet-history.component';
+import { ProfileComponent } from './profile/profile.component';
+import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { EnterPinComponent } from './enter-pin/enter-pin.component';
+import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
+import { ProfileBarcodeComponent } from './profile-barcode/profile-barcode.component';
+import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -79,10 +92,11 @@ const comps: any[] = [
   PinRedemptionComponent,
   BcodeRedemptionComponent,
   QrcodeRedemptionComponent,
+  BarcodeRedemptionComponent,
   LoadingComponent,
   RedeemComponent,
-  LoginComponent,
-  PIComponent,
+  SignIn2Component,
+  SignInComponent,
   QRComponent,
   RewardDetailsComponent,
   PerxRewardComponent,
@@ -95,6 +109,7 @@ const comps: any[] = [
   PhoneComponent,
   GroupComponent,
   RatingComponent,
+  PasswordComponent,
   PictureSelectComponent,
   LongTextComponent,
   DateComponent,
@@ -103,12 +118,21 @@ const comps: any[] = [
   WalletComponent,
   RewardsListTabbedComponent,
   LoyaltySummaryComponent,
+  LoyaltyTransactionsListComponent,
   RewardsListComponent,
   LayoutComponent,
   HomeComponent,
   GamesCollectionComponent,
   NewsfeedComponent,
-  WalletHistoryComponent
+  WalletHistoryComponent,
+  TransactionHistoryComponent,
+  ProfileComponent,
+  ChangePasswordComponent,
+  EnterPinComponent,
+  PinInputComponent,
+  RewardsBookingComponent,
+  ProfileBarcodeComponent,
+  EditProfileFieldComponent
 ];
 
 @NgModule({
@@ -128,13 +152,15 @@ const comps: any[] = [
     FormsModule,
     ReactiveFormsModule,
     QRCodeModule,
+    NgxBarcodeModule,
     MatFormFieldModule,
     MatRadioModule,
     MatCheckboxModule,
     MatSelectModule,
     MatDatepickerModule,
     TranslateModule.forChild(),
-    MatToolbarModule
+    MatToolbarModule,
+    MatListModule,
   ],
   exports: [
     ...comps,

@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnChanges, AfterViewInit, SimpleChanges, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
 import { ISlice } from '../game.model';
+import { getImageCors } from '../../utils/getImageCors';
 
 interface ImageForPattern {
   id: string;
@@ -16,33 +17,59 @@ interface Pattern {
   templateUrl: './spin-the-wheel.component.html',
   styleUrls: ['./spin-the-wheel.component.scss']
 })
-export class SpinTheWheelComponent implements OnInit {
+export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
+  @Input()
+  public enabled: boolean = true;
+
   @Input()
   public slices: ISlice[] = [];
 
   @Input()
-  public spinDuration: number = 3;
+  public spinDuration: number = 2;
+
+  @Input()
+  public wheelImg: string;
+
+  @Input()
+  public pointerImg: string;
+
+  @Input()
+  public classPosition: string;
+
+  @Input()
+  public slotToLand: number = 0;
+
+  @Output()
+  public completed: EventEmitter<void> = new EventEmitter<void>();
 
   // tslint:disable-next-line:variable-name
-  private ctx_: CanvasRenderingContext2D | null = null;
-  public ctxArrow: CanvasRenderingContext2D | null;
-  public canvas: HTMLCanvasElement;
-  public canvasArrow: HTMLCanvasElement;
-  public arcDeg: number;
-  public arc: number;
-  public startAngle: number;
-  public patternImg: Pattern[];
-  public spinTime: number;
-  public dragging: boolean = false;
-  public spinTimeTotal: number = 0;
-  public spinAngleStart: number = 0;
-  public spinTimeout: number;
+  private ctx_: CanvasRenderingContext2D;
+  private arcDeg: number;
+  private arc: number;
+  private startAngle: number;
   public size: number;
+  private patternImg: Pattern[] = [];
+  private spinTime: number;
+  public dragging: boolean = false;
+  private spinTimeTotal: number = 0;
+  private spinAngleStart: number = 0;
+  private spinTimeout: number;
+  private wheelImgLoaded!: HTMLImageElement;
+  private angleToBeSpun: number;
 
-  private static easeOut(t: number, b: number, c: number, d: number): number {
-    const ts = (t /= d) * t;
-    const tc = ts * t;
-    return b + c * (tc + -3 * ts + 3 * t);
+  @ViewChild('canvas', {static: true})
+  private canvasEl: ElementRef<HTMLCanvasElement>;
+  @ViewChild('wheel', {static: true})
+  private wheelEl: ElementRef<HTMLDivElement>;
+
+  private get canvas(): HTMLCanvasElement { return this.canvasEl.nativeElement; }
+  // private get canvasWheelWrap(): HTMLCanvasElement { return this.canvasWheelWrapEl.nativeElement; }
+  private get wheel(): HTMLDivElement { return this.wheelEl.nativeElement; }
+  public get ctx(): CanvasRenderingContext2D {
+    if (!this.ctx_ && this.canvas.getContext) {
+      this.ctx_ = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+    }
+    return this.ctx_;
   }
 
   private static findTop(element: HTMLElement): number {
@@ -55,85 +82,66 @@ export class SpinTheWheelComponent implements OnInit {
     return rec.left + window.scrollX;
   }
 
-  public ngOnInit(): void {
+  private static easeOut(t: number, b: number, c: number, d: number): number {
+    const ts = (t /= d) * t;
+    const tc = ts * t;
+    return b + c * (tc + -3 * ts + 3 * t);
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if ((changes.slices && this.slices)
+      || (changes.wheelImg && this.wheelImg)
+      || (changes.pointerImg && this.pointerImg)) {
+      this.init();
+    }
+  }
+
+  public ngAfterViewInit(): void {
     this.generateCanvas();
-    this.init();
     this.attachListeners();
   }
 
-  public generateCanvas(): void {
-    this.canvas = document.createElement('canvas');
-    this.canvas.setAttribute('id', 'ng-wheel-canvas');
-
-    this.canvasArrow = document.createElement('canvas');
-    this.canvasArrow.setAttribute('id', 'wheel-canvas-stop');
-
-    const parent: HTMLElement = document.getElementById('wheel') as HTMLElement;
-
-    this.size = parent.offsetWidth;
-    this.canvas.width = parent.offsetWidth;
-    this.canvas.height = parent.offsetHeight;
-    this.canvasArrow.width = parent.offsetWidth;
-    this.canvasArrow.height = parent.offsetHeight;
-
-    this.canvas.style.position = 'absolute';
-    this.canvasArrow.style.position = 'absolute';
-
-    parent.appendChild(this.canvas);
-    parent.appendChild(this.canvasArrow);
+  private generateCanvas(): void {
+    this.size = this.wheel.offsetWidth * 1.2;
+    this.canvas.width = this.wheel.offsetWidth * 1.2;
+    this.canvas.height = this.wheel.offsetWidth * 1.2;
   }
 
-  public attachListeners(): void {
-    const arrowCanvas = document.getElementById('wheel-canvas-stop') as HTMLCanvasElement;
-
-    arrowCanvas.style.cursor = 'move';
-    arrowCanvas.addEventListener('touchstart', this.handleStart.bind(this), false);
-    arrowCanvas.addEventListener('mousedown', this.handleStart.bind(this), false);
+  private attachListeners(): void {
+    this.canvas.style.cursor = 'move';
+    this.canvas.addEventListener('touchstart', this.handleStart.bind(this), {once: true});
+    this.canvas.addEventListener('mousedown', this.handleStart.bind(this), {once: true});
 
     // listen while dragging
-    arrowCanvas.addEventListener('touchend', this.handleEnd.bind(this), false);
-    arrowCanvas.addEventListener('mouseup', this.handleEnd.bind(this), false);
+    this.canvas.addEventListener('touchend', this.handleEnd.bind(this), {once: true});
+    this.canvas.addEventListener('mouseup', this.handleEnd.bind(this), {once: true});
 
     // listen after dragging is complete
-    arrowCanvas.addEventListener('touchmove', this.handleMove.bind(this), false);
-    arrowCanvas.addEventListener('mousemove', this.handleMove.bind(this), false);
+    this.canvas.addEventListener('touchmove', this.handleMove.bind(this), {once: true});
+    this.canvas.addEventListener('mousemove', this.handleMove.bind(this), {once: true});
   }
 
   private init(): void {
     this.arcDeg = 360 / this.slices.length;
     this.startAngle = this.arcDeg / 2 * Math.PI / 180;
-    this.arc = this.arcDeg * Math.PI / 180;
-    this.spinTimeout = 0;
+    this.arc = this.arcDeg * Math.PI / 180; // converting back to radians
+    const angleNeeded = this.getAngleNeeded(this.slotToLand);
 
-    // tslint:disable-next-line: no-unused-expression
-    this.ctx;
+    this.spinTimeout = 0;
+    // the latter part after angleToBeSpun makes it spin for x amt more rounds;
+    this.angleToBeSpun = angleNeeded + (Math.floor(Math.random() * 5) + 1)  * 360;
     this.loadImg();
   }
 
-  private get ctx(): CanvasRenderingContext2D {
-    if (this.ctx_ === null) {
-      const canvas = document.getElementById('ng-wheel-canvas') as HTMLCanvasElement;
-      if (canvas.getContext) {
-        this.ctx_ = canvas.getContext('2d');
-        this.loadImg();
-      }
-    }
-    return (this.ctx_ as CanvasRenderingContext2D);
-  }
-
-  public loadImg(): void {
+  private loadImg(): void {
     const slicesWithImg: ISlice[] = this.slices.filter(item => item.backgroundImage);
     let count: number = 0;
     const images: ImageForPattern[] = [];
-
-    if (slicesWithImg.length === 0) {
-      this.drawWheel();
-      return;
-    }
+    //
+    this.fillWheelWrapStyle();
 
     slicesWithImg.forEach((item) => {
-      const image: HTMLImageElement = new Image();
-      image.src = item.backgroundImage ? item.backgroundImage : '';
+      const image: HTMLImageElement = getImageCors(item.backgroundImage);
       images.push({ id: item.id, image });
       image.onload = () => {
         count++;
@@ -144,7 +152,7 @@ export class SpinTheWheelComponent implements OnInit {
     });
   }
 
-  public createPatterns(arr: ImageForPattern[]): void {
+  private createPatterns(arr: ImageForPattern[]): void {
     const patternImg = arr.filter(({id, image}) => id  && image)
       .map(item => (
         {
@@ -159,38 +167,61 @@ export class SpinTheWheelComponent implements OnInit {
     this.drawWheel();
   }
 
-  public drawWheel(): void {
-    const outsideRadius = this.size / 2 - 5;
-    const textRadius = this.size / 3;
+  private drawWheel(): void {
+    const outsideRadius = (this.size / 1.1) / 2 - 5;
+    this.ctx.translate((this.size) / 2, (this.size) / 2);
+    this.ctx.rotate(this.startAngle);
+    if (this.wheelImgLoaded) {
+      this.ctx.save();
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.translate(-(this.canvas.width / 2), -(this.canvas.width / 2));
+      this.ctx
+        .drawImage(this.wheelImgLoaded,
+          0 , 0,
+          this.canvas.width , this.canvas.height);
+      this.ctx.restore();
+    }
+
     this.slices.forEach((slice: ISlice, i: number) => {
-      if (this.ctx !== null) {
-        const angle = this.startAngle + i * this.arc;
+      const angle = i * this.arc;
+      // render background color
+      this.ctx.fillStyle = slice.backgroundColor || 'white';
+      this.ctx.beginPath();
+      this.ctx.arc(0, 0, outsideRadius, angle, angle + this.arc, false);
+      this.ctx.arc(0, 0, 0, angle + this.arc, angle, true);
 
-        if (slice.backgroundImage) {
-          const currentPattern = this.patternImg.find(item => item.id === slice.id);
-          if (currentPattern) {
-            this.ctx.fillStyle = currentPattern.pattern;
-          }
-        } else {
-          this.ctx.fillStyle = slice.backgroundColor || 'white';
+      this.ctx.stroke();
+      this.ctx.fill();
+      // render background image
+      if (slice.backgroundImage) {
+        const currentPattern: Pattern | undefined = this.patternImg.find(item => item.id === slice.id);
+        if (currentPattern) {
+          this.ctx.save();
+          this.ctx.rotate(angle  + this.arc / 2);
+
+          const stampSize: number = 500 / this.slices.length; // *** dynamic rectangle
+          this.ctx.translate(outsideRadius / 1.8,  - (Math.floor(outsideRadius / 5)) ); // 25 looks okay
+
+          this.ctx.globalCompositeOperation = 'source-atop';
+
+          this.ctx.fillStyle = currentPattern.pattern;
+          this.ctx.beginPath();
+          this.ctx.rect(0, 0 , stampSize, stampSize);
+          this.ctx.fill();
+          this.ctx.restore();
         }
+      }
 
-        this.ctx.beginPath();
-        this.ctx.arc(this.size / 2, this.size / 2, outsideRadius, angle, angle + this.arc, false);
-        this.ctx.arc(this.size / 2, this.size / 2, 0, angle + this.arc, angle, true);
-        this.ctx.stroke();
-        this.ctx.fill();
-
+      // render label for testing purposes
+      if (slice.label) {
         this.ctx.save();
         this.ctx.shadowOffsetX = -1;
         this.ctx.shadowOffsetY = -1;
         this.ctx.shadowBlur = 0;
         this.ctx.fillStyle = slice.labelColor || 'black';
-        this.ctx.translate(
-          this.size / 2 + Math.cos(angle + this.arc / 2) * textRadius,
-          this.size / 2 + Math.sin(angle + this.arc / 2) * textRadius
-        );
-        this.ctx.rotate(angle + this.arc / 2 + Math.PI);
+
+        this.ctx.rotate(angle + this.arc / 2);
+        this.ctx.translate(this.size / 4, 0);
         this.ctx.font = 'bold 15px Helvetica, Arial';
 
         const text = slice.label || '';
@@ -207,34 +238,53 @@ export class SpinTheWheelComponent implements OnInit {
         this.ctx.restore();
       }
     });
-
-    const canvasArrow = document.getElementById('wheel-canvas-stop') as HTMLCanvasElement;
-    if (canvasArrow.getContext) {
-      this.ctxArrow = canvasArrow.getContext('2d');
-
-      // Arrow
-      if (this.ctxArrow) {
-        this.ctxArrow.fillStyle = 'black';
-        this.ctxArrow.beginPath();
-
-        this.ctxArrow.moveTo(0, outsideRadius + 5);
-        this.ctxArrow.lineTo(0, outsideRadius - 5);
-        this.ctxArrow.lineTo(13, outsideRadius);
-        this.ctxArrow.lineTo(0, outsideRadius + 5);
-
-        this.ctxArrow.fill();
-      }
-    }
+    this.ctx.resetTransform();
   }
 
-  public spin(): void {
-    this.spinAngleStart = Math.random() * 10 + 10;
+  private fillWheelWrapStyle(): void {
+    const wheelImg: HTMLImageElement = getImageCors(this.wheelImg);
+    wheelImg.onload = () => {
+      if (this.wheelImgLoaded !== wheelImg) {
+        this.wheelImgLoaded = wheelImg;
+        this.drawWheel();
+      }
+    };
+  }
+
+  private getAngleNeeded(neededIndex: number): number {
+    const degrees = this.startAngle * 180 / Math.PI + 90;
+    let arcd = this.arc * 180 / Math.PI;
+    const currentIndex = Math.floor((360 - degrees % 360) / arcd);
+    if (this.slices.length === 6) {
+      arcd -= 10;
+    }
+
+    if (this.slices.length === 9) {
+      arcd -= 4;
+    }
+
+    if (this.slices.length === 10) {
+      arcd -= 4;
+    }
+    if (currentIndex === neededIndex) {
+      return 0;
+    }
+    if (currentIndex > neededIndex) {
+      return arcd * (currentIndex - neededIndex);
+    }
+    return (
+      arcd * (currentIndex + (this.slices.length - neededIndex))
+    );
+  }
+
+  private spin(): void {
+    this.spinAngleStart = this.angleToBeSpun / 32.807503994186335;
     this.spinTime = 0;
-    this.spinTimeTotal = this.spinDuration * 3 * 1000;
+    this.spinTimeTotal = this.spinDuration * 3 + 4 * 1000;
     this.rotateWheel();
   }
 
-  public rotateWheel(): void {
+  private rotateWheel(): void {
     this.spinTime += 30;
     if (this.spinTime >= this.spinTimeTotal) {
       this.stopRotateWheel();
@@ -248,20 +298,17 @@ export class SpinTheWheelComponent implements OnInit {
     const that = this;
     this.spinTimeout = window.setTimeout(() => {
       that.rotateWheel();
-    }, 30);
+      this.completed.emit();
+    }, 10); // change from 30
   }
 
-  public stopRotateWheel(): void {
+  private stopRotateWheel(): void {
     if (!this.ctx) { return; }
     clearTimeout(this.spinTimeout);
-    const degrees = this.startAngle * 180 / Math.PI + 180;
-    const arcd = this.arc * 180 / Math.PI;
-    const index = Math.floor((360 - degrees % 360) / arcd);
     this.ctx.save();
-
     this.ctx.font = 'bold 20px Helvetica, Arial';
     this.ctx.fillStyle = 'black';
-    const text = this.slices[index].label || '';
+    const text = this.slices[this.slotToLand].label || '';
     this.ctx.fillText(
       text,
       this.size / 2 - this.ctx.measureText(text).width / 2,
@@ -270,23 +317,27 @@ export class SpinTheWheelComponent implements OnInit {
     this.ctx.restore();
   }
 
-  public handleStart(): void {
+  private handleStart(): void {
+    if (!this.enabled) {
+      return;
+    }
     this.dragging = true;
   }
 
-  public handleMove(e: any): void {
+  private handleMove(e: MouseEvent): void {
+    if (!this.enabled) {
+      return;
+    }
     if (this.dragging) {
-      const container: HTMLElement | null = document.getElementById('container');
-
       // get the center of the wheel as an array of [x, y]
-      const targetCenter = container ? [
-        SpinTheWheelComponent.findLeft(container) + container.offsetWidth / 2,
-        SpinTheWheelComponent.findTop(container) + container.offsetHeight / 2
-      ] : [];
+      const targetCenter = [
+        SpinTheWheelComponent.findLeft(this.canvas) + this.canvas.offsetWidth / 2,
+        SpinTheWheelComponent.findTop(this.canvas) + this.canvas.offsetHeight / 2
+      ];
 
       // get the angle needed to rotate the wheel to follow the mouse/touch
       const angle = Math.round(
-        Math.atan2(e.pageX || e.touches[0].clientX - targetCenter[0], -(e.pageY || e.touches[0].clientY - targetCenter[1])) *
+        Math.atan2(e.pageX - targetCenter[0], -(e.pageY - targetCenter[1])) *
         (180 / Math.PI)
       );
 
@@ -296,15 +347,15 @@ export class SpinTheWheelComponent implements OnInit {
       styleString += '-moz-transform: rotate(' + angle + 'deg);';
       styleString += 'transform: rotate(' + angle + 'deg);';
 
-      const canvas: HTMLElement | null = document.getElementById('ng-wheel-canvas');
-      if (canvas) {
-        canvas.setAttribute('style', styleString);
-      }
+      this.canvas.setAttribute('style', styleString);
     }
     e.preventDefault();
   }
 
-  public handleEnd(): void {
+  private handleEnd(): void {
+    if (!this.enabled) {
+      return;
+    }
     // set the dragging to false
     this.dragging = false;
 
@@ -320,10 +371,7 @@ export class SpinTheWheelComponent implements OnInit {
     styleString += '-ms-transform: rotate(' + degree + 'deg);';
     styleString += '-ms-transform-origin: 50% 50%;';
 
-    const canvas: HTMLElement | null = document.getElementById('ng-wheel-canvas');
-    if (canvas) {
-      canvas.setAttribute('style', styleString);
-    }
+    this.canvas.setAttribute('style', styleString);
 
     this.spin();
   }

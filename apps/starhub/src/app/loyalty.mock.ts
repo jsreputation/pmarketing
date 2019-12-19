@@ -6,7 +6,7 @@ export const loyalty: ILoyalty = {
   currencyBalance: 80,
   description: 'Collect points',
   endDate: '2029-08-20T03:28:23.241Z',
-  expiringPoints: null,
+  expiringPoints: undefined,
   id: 100,
   membershipIdentifier: '8221151080374196',
   membershipTierName: 'Gold (Renewal)',

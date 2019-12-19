@@ -9,10 +9,8 @@
   <div [ngClass]="mobileImageClass">
     <div class="mobile-preview-background"
          clCreateImage
-         [ngStyle]="{
-         'background-image': 'url(' + background + ')',
-         'background-color': backgroundColor}"
     >
+      <img [src]="background" alt="backgroundimg" class="background-load" crossorigin>
       <ng-content select=".mobile-preview-header"></ng-content>
       <ng-content select=".plugin-block"></ng-content>
       <ng-content select=".mobile-preview-feedback"></ng-content>

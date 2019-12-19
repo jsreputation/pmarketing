@@ -19,7 +19,6 @@ import {
   takeUntil,
   map,
   retry,
-  switchMap,
   mergeMap,
   takeLast,
 } from 'rxjs/operators';
@@ -37,9 +36,12 @@ import {
   FeedReaderService,
   FeedItem,
   ThemesService,
-  ITheme
+  ITheme,
+  IConfig,
+  ConfigService
 } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
+import {Title} from '@angular/platform-browser';
 
 const stubTabs: ITabConfigExtended[] = [
   {
@@ -106,6 +108,7 @@ const stubTabs: ITabConfigExtended[] = [
 export class HomeComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
   public theme: ITheme;
+  public appConfig: IConfig;
   public newsFeedItems: Observable<FeedItem[]>;
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
@@ -131,8 +134,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         .pipe(
           map((cs: ICampaign[]) => cs.filter(c => c.type === CampaignType.game)),
           map((cs: ICampaign[]) => cs.filter(c => gameByCid[c.id] === undefined)),
-          switchMap((arrOfCampaigns: ICampaign[]) => {
-            let gameIds = arrOfCampaigns.map(c => c.engagementId);
+          mergeMap((arrOfCampaigns: ICampaign[]) => {
+            let gameIds: number[] = arrOfCampaigns.map(c => c.engagementId)
+              .filter((id: number) => id !== undefined) as number[];
             gameIds = gameIds.filter((item, index) => gameIds.indexOf(item) === index);
             return combineLatest(
               ...gameIds.filter(id => id !== undefined)
@@ -169,9 +173,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     private rewardsService: RewardsService,
     private gamesService: IGameService,
     private router: Router,
+    private titleService: Title,
     private translate: TranslateService,
     private feedService: FeedReaderService,
     private themesService: ThemesService,
+    private configService: ConfigService
   ) {
   }
 
@@ -182,10 +188,18 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
     this.initCampaign();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
-    this.getTabedList();
+    this.getTabbedList();
 
     this.themesService.getThemeSetting().subscribe(
-      theme => this.theme = theme
+      theme => {
+        this.theme = theme;
+        const title = (theme.properties ? theme.properties['--title'] : undefined) || 'Blackcomb';
+        this.titleService.setTitle(title);
+      }
+    );
+
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig) => this.appConfig = config
     );
   }
 
@@ -194,7 +208,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private getTabedList(): void {
+  private getTabbedList(): void {
     this.getTabs()
       .pipe(mergeMap((tabs) => {
         this.staticTab = tabs;

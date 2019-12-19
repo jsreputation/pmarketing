@@ -5,9 +5,7 @@ import { LoyaltyPointsExpireTrigger } from '../models/loyalty-points-expire-trig
 import { StatusLabel } from '@cl-helpers/status-label.enum';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class LoyaltyFormsService {
 
   public getFormLoyalty(): FormGroup {
@@ -44,7 +42,7 @@ export class LoyaltyFormsService {
           type: new FormControl(null, [Validators.required]),
           trigger: new FormControl(null, [Validators.required])
         })
-      })
+      }),
     });
   }
 
@@ -56,6 +54,7 @@ export class LoyaltyFormsService {
       details: {
         pointsName: 'Point',
         imageUrl: null,
+        // imageUrl: 'https://material.angular.io/assets/img/homepage/github-circle-white-transparent.svg',
         joinMethod: {
           inviteOnly: true
         },
@@ -78,37 +77,4 @@ export class LoyaltyFormsService {
       }
     };
   }
-
-  // public getStepName(index: number): string {
-  //   switch (index) {
-  //     case this.loyaltyFormType.stepDetails: {
-  //       return this.loyaltyFormType.details;
-  //     }
-  //     case this.loyaltyFormType.TiersConversions: {
-  //       return this.loyaltyFormType.tiers;
-  //     }
-  //     case this.loyaltyFormType.stepReview: {
-  //       return this.loyaltyFormType.review;
-  //     }
-  //   }
-  // }
-
-  // public getRuleForm(): FormGroup {
-  //   return new FormGroup({
-  //     name: new FormControl(null),
-  //     conditions: new FormArray([]),
-  //     result: new FormGroup({
-  //       bonus: new FormControl(null, [Validators.required]),
-  //       award: new FormControl(null),
-  //       points: new FormControl(null),
-  //       typeMultiplier: new FormControl(null, [Validators.required]),
-  //       applyMultiplier: new FormControl(null, [Validators.required]),
-  //       maximumPoints: new FormControl(null, [Validators.required]),
-  //     })
-  //   });
-  // }
-
-  // public checkExistingStepForm(form: FormGroup, step: string): boolean {
-  //   return !!form.get(step);
-  // }
 }

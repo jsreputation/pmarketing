@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CampaignsService, SettingsService, OutcomesService, CommsService, LimitsService } from '@cl-core-services';
+import { CampaignsService, SettingsService, OutcomesService, CommsService, LimitsService, MessageService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
 import {
@@ -9,23 +9,20 @@ import {
 } from '../new-campaign-done-popup/new-campaign-done-popup.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-
-import { map, switchMap, tap, catchError, takeUntil } from 'rxjs/operators';
-import { combineLatest, iif, of, Observable, Subject } from 'rxjs';
+import { map, switchMap, catchError, takeUntil, tap } from 'rxjs/operators';
+import { combineLatest, of, Observable, Subject } from 'rxjs';
 
 import {
-  IWCampaignAttributes,
-  IWCommTemplateAttributes,
-  IWLimitAttributes,
-  IWProfileAttributes
+  IWCampaignAttributes, IWCommTemplateAttributes, IWLimitAttributes, IWNotificationAttributes, IWProfileAttributes
 } from '@perx/whistler';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
-import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
+import { CampaignChannelsFormService } from '../../services/campaign-channels-form.service';
+import Utils from '@cl-helpers/utils';
+import { CRUDParser, RequestType } from '@cl-helpers/crud-parser';
+import { NotificationService } from '@cl-core/services/notification.service';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -34,12 +31,13 @@ import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignComponent implements OnInit, OnDestroy {
-  // private id: string;
+  public channelForm: FormGroup;
   public form: FormGroup;
   private campaign: ICampaign;
-  private campaignBaseURL: string;
   public tenantSettings: ITenantsProperties;
-  @ViewChild('stepper', {static: false}) private stepper: MatStepper;
+  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
+  public currentNotifications: Partial<IChannel>;
+  public campaignId: string;
 
   private destroy$: Subject<void> = new Subject();
 
@@ -56,26 +54,36 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private commsService: CommsService,
     private outcomesService: OutcomesService,
     private limitsService: LimitsService,
-    private audienceService: AudiencesUserService
+    private audienceService: AudiencesUserService,
+    private messageService: MessageService,
+    private campaignChannelsFormService: CampaignChannelsFormService,
+    private notificationService: NotificationService
   ) {
     store.resetCampaign();
+    this.initForm();
   }
 
   public ngOnInit(): void {
-    this.getTenants();
+    this.initTenantSettings();
     this.initForm();
     this.form.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
         this.store.updateCampaign(value);
       });
+    this.handleCampaignNameChanges();
     this.handleRouteParams();
+    this.initChannelForm();
   }
 
   public ngOnDestroy(): void {
     this.cdr.detach();
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  public sendTestSms(data: any): void {
+    console.log('send sms', data);
   }
 
   private initForm(): void {
@@ -102,9 +110,19 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public goNext(value?: MatStepper): void {
+
+    if (this.channelForm.invalid) {
+      this.channelForm.markAllAsTouched();
+      this.cdr.markForCheck();
+      return;
+    }
+
     const stepIndex = this.stepper.selectedIndex;
     this.stepConditionService.nextEvent(stepIndex);
     this.store.updateCampaign(this.stepConditionService.getStepFormValue(stepIndex));
+    if (stepIndex === 3) {
+      this.handlerWebLinkNotification();
+    }
     if (!value) {
       this.stepper.next();
     }
@@ -115,6 +133,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
+    this.handlerNotification();
+
     let saveCampaign$: Observable<IJsonApiPayload<IWCampaignAttributes>>;
     this.store.updateCampaign(this.form.value);
     if (this.store.currentCampaign.id) {
@@ -123,105 +143,87 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       saveCampaign$ = this.campaignsService.createCampaign(this.store.currentCampaign);
     }
 
-    const hasLimitData = () => this.store.currentCampaign.limits;
-    const generateLimitData$ = this.updateLimitFn();
-
     saveCampaign$.pipe(
-      tap((res: IJsonApiPayload<IWCampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
+      // tap((res: IJsonApiPayload<IWCampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
+      map((res: IJsonApiPayload<IWCampaignAttributes>) => ({ ...this.store.currentCampaign, id: res.data.id } as ICampaign)),
       switchMap(
-        (res: IJsonApiPayload<IWCampaignAttributes>) => combineLatest(
-          iif(hasLimitData, generateLimitData$(res.data), of(res)).pipe(catchError(() => of(null))),
-          this.updateOutcomes(res.data).pipe(catchError(() => of(null))),
-          this.updateComm(res.data).pipe(catchError(() => of(null)))
-        )
+        (campaign: ICampaign) => {
+          const data = [
+            of(campaign),
+            this.generateLimitData(campaign).pipe(catchError(() => of(null))),
+            this.updateOutcomes(campaign).pipe(catchError(() => of(null))),
+            this.updateComm(campaign).pipe(catchError(() => of(null)))
+          ];
+          return combineLatest(...data);
+        }
       ),
       takeUntil(this.destroy$)
     ).subscribe(
-      data => {
-        if (data) {
-          this.openDialog();
+      ([campaign]) => {
+        if (campaign) {
+          this.openCampaignDoneDialog(campaign);
         }
       },
       (error: Error) => console.warn(error.message)
     );
   }
 
-  private updateLimitFn(): (campaign: ICampaign) => Observable<IJsonApiPayload<IWLimitAttributes> | void> {
-    const updateLimit$ = (campaign: ICampaign) => this.limitsService.updateLimit(
-      this.store.currentCampaign.limits.id,
-      this.store.currentCampaign.limits,
-      this.store.currentCampaign.template.attributes_type,
-      Number.parseInt(campaign.id, 10),
-      this.store.currentCampaign.template.id
-    );
-    const createLimit$ = (campaign: ICampaign) => this.limitsService.createLimit(
-      this.store.currentCampaign.limits,
-      this.store.currentCampaign.template.attributes_type,
-      Number.parseInt(campaign.id, 10),
-      this.store.currentCampaign.template.id
-    );
+  private generateLimitData(campaign: ICampaign): Observable<IJsonApiPayload<IWLimitAttributes> | void> {
+    if (!campaign.limits) {
+      return of(void 0);
+    }
 
-    return (this.store.currentCampaign && this.store.currentCampaign.limits.id) ? updateLimit$ : createLimit$;
+    if (campaign.limits.id) {
+      return this.updateLimit(campaign);
+    }
+
+    return this.createLimit(campaign);
+  }
+
+  private updateLimit(campaign: ICampaign): Observable<IJsonApiPayload<IWLimitAttributes> | void> {
+    return this.limitsService.updateLimit(
+      campaign.limits.id,
+      campaign.limits,
+      campaign.template.attributes_type,
+      Number.parseInt(campaign.id, 10),
+      campaign.template.id
+    );
+  }
+
+  private createLimit(campaign: ICampaign): Observable<IJsonApiPayload<IWLimitAttributes> | void> {
+    return this.limitsService.createLimit(
+      campaign.limits,
+      campaign.template.attributes_type,
+      Number.parseInt(campaign.id, 10),
+      campaign.template.id
+    );
   }
 
   private updateComm(campaign: ICampaign): Observable<any> {
-    let templateAction$;
-    let eventAction$;
     const channelInfo = Object.assign({}, this.store.currentCampaign.channel);
-    const updateCommsTemplate$ = this.commsService.updateCommsTemplate(channelInfo);
-    const createCommsTemplate$ = this.commsService.createCommsTemplate(channelInfo);
-    const updateCommsEvent$ = newTemplateId =>
-      this.commsService.updateCommsEvent(this.store.currentCampaign, newTemplateId, campaign.id);
-    const createCommsEvent$ = newTemplateId =>
-      this.commsService.createCommsEvent(this.store.currentCampaign, newTemplateId, campaign.id);
 
-    if (channelInfo.type === 'sms') {
-      if (channelInfo.templateId) {
-        templateAction$ = updateCommsTemplate$;
-      } else {
-        templateAction$ = createCommsTemplate$;
-      }
-      if (channelInfo.eventId) {
-        eventAction$ = updateCommsEvent$;
-      } else {
-        eventAction$ = createCommsEvent$;
-      }
-
-      return templateAction$.pipe(
-        switchMap((template: IJsonApiPayload<IWCommTemplateAttributes>) => eventAction$(template.data.id))
-      );
+    if (channelInfo.eventId && channelInfo['status'] === 'remove') {
+      return this.deleteCommsEvent(channelInfo.eventId);
     }
+
     if (channelInfo.eventId) {
-      eventAction$ = updateCommsEvent$;
-    } else {
-      eventAction$ = createCommsEvent$;
+      return this.commsService.updateCommsEvent(this.store.currentCampaign, null, campaign.id);
     }
+    if (channelInfo['status'] !== 'remove') {
+      return this.commsService.createCommsEvent(this.store.currentCampaign, null, campaign.id);
+    }
+    return of(null);
+  }
 
-    return eventAction$(null);
+  private deleteCommsEvent(id: string): Observable<any> {
+    return this.commsService.deleteCommsEvent(id);
   }
 
   private updateOutcomes(campaign: ICampaign): Observable<any> {
     let updateOutcomesArr$ = [];
-    if (this.store.currentCampaign.template.attributes_type === EngagementType.stamp) {
-      this.store.currentCampaign.rewardsListCollection.forEach(
-        rewardsData => {
-          const updateOutcomeList = this.updateOutcomeWhenEdit(
-            campaign,
-            rewardsData.rewardsOptions && rewardsData.rewardsOptions.rewards,
-            rewardsData.rewardsOptions && rewardsData.rewardsOptions.enableProbability,
-            rewardsData.stampSlotNumber
-          );
-          updateOutcomesArr$ = [...updateOutcomesArr$, ...updateOutcomeList];
-
-        });
-    } else {
-      const rewardsOptions = this.store.currentCampaign.rewardsOptions;
-      updateOutcomesArr$ = this.updateOutcomeWhenEdit(
-        campaign,
-        rewardsOptions && rewardsOptions.rewards,
-        rewardsOptions && rewardsOptions.enableProbability
-      );
-    }
+    const rewardsCollection = this.store.currentCampaign.outcomes;
+    const updateOutcomeList = this.updateOutcomeWhenEdit(campaign, rewardsCollection);
+    updateOutcomesArr$ = [...updateOutcomesArr$, ...updateOutcomeList];
 
     if (updateOutcomesArr$.length <= 0) {
       return of([]);
@@ -231,46 +233,45 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private updateOutcomeWhenEdit(
     campaign: ICampaign,
-    data: { value: IRewardEntity, probability: number }[],
-    enableProbability: boolean,
-    slotNumber?: number
+    data: ICampaignOutcome[],
   ): Observable<any>[] {
     if (!data || data.length <= 0) {
       return [];
     }
+    const slots = this.store.currentCampaign.template && this.store.currentCampaign.template.slots || [0];
     const updateOutcomesArr$ = [];
-    const oldCampaignList = this.store.currentCampaign.rewardsList;
-    const deleteOutcomes$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
-    const updateOutcomes$ = outcomeData => this.outcomesService.updateOutcome(outcomeData, campaign.id, enableProbability, slotNumber);
-    const createOutcomes$ = outcomeData => this.outcomesService.createOutcome(outcomeData, campaign.id, enableProbability, slotNumber);
+    const oldCampaignListToDelete = data.filter(outcomeData => !slots.includes(outcomeData.outcome.slotNumber));
+    const campaignList = data.filter(outcomeData => slots.includes(outcomeData.outcome.slotNumber));
+    const deletedOutcome$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
+    const updatedOutcome$ = outcomeData =>
+      this.outcomesService.updateOutcome(
+        outcomeData,
+        campaign.id
+      );
+    const createdOutcome$ = outcomeData =>
+      this.outcomesService.createOutcome(
+        outcomeData,
+        campaign.id
+      );
 
-    data.forEach(outcome => {
-      if (this.store.currentCampaign.id) {
-        if (outcome.value.outcomeId) {
-          const oldRewardRecord = oldCampaignList.find(reward => reward.id === outcome.value.outcomeId);
-          const oldProbability = oldRewardRecord ? oldRewardRecord.probability : null;
-          if (oldProbability !== outcome.probability) {
-            updateOutcomesArr$.push(updateOutcomes$(outcome));
-          }
-        } else {
-          updateOutcomesArr$.push(createOutcomes$(outcome));
-        }
+    campaignList.forEach(outcomeData => {
+      if (this.store.currentCampaign.id && outcomeData.outcome.id) {
+        updateOutcomesArr$.push(updatedOutcome$(outcomeData));
       } else {
-        updateOutcomesArr$.push(createOutcomes$(outcome));
+        updateOutcomesArr$.push(createdOutcome$(outcomeData));
       }
     });
-    if (oldCampaignList && oldCampaignList.length >= 0) {
-      oldCampaignList.forEach(oldReward => {
-        const isOutcomeExist = data.find(oc => oc.value.outcomeId === oldReward.id);
-        if (!isOutcomeExist) {
-          updateOutcomesArr$.push(deleteOutcomes$(oldReward.id));
+    if (oldCampaignListToDelete && oldCampaignListToDelete.length >= 0) {
+      oldCampaignListToDelete.forEach(oldReward => {
+        if (oldReward.outcome.id) {
+          updateOutcomesArr$.push(deletedOutcome$(oldReward.outcome.id));
         }
       });
     }
     return updateOutcomesArr$;
   }
 
-  private getDialogData(campaign: ICampaign): Observable<NewCampaignDonePopupComponentData> {
+  private getCampaignDoneDialogData(campaign: ICampaign): Observable<NewCampaignDonePopupComponentData> {
     const type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
     const title: string = 'Yay! You just created a campaign';
     if (type === 'weblink' && campaign.audience && campaign.audience.select) {
@@ -291,11 +292,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         );
     }
     if (type === 'weblink') {
-      return this.blackcombUrl
+      return this.getCognitoUrl()
         .pipe(map(url => ({
           title,
           subTitle: 'Copy the link and share your campaign.',
-          url,
+          url: `${url}?cid=${campaign.id}`,
           type
         })));
     }
@@ -306,6 +307,15 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     });
   }
 
+  private openCampaignDoneDialog(campaign: ICampaign): void {
+    this.getCampaignDoneDialogData(campaign)
+      .pipe(
+        switchMap((config) => this.dialog.open(NewCampaignDonePopupComponent,
+          { data: config }).afterClosed())
+      )
+      .subscribe(() => this.router.navigate(['/campaigns']));
+  }
+
   private buildCampaignCsv(campaign: ICampaign): Observable<string> {
     const getUsersPis: Observable<string[]> = this.audienceService
       .getAllPoolUser(campaign.audience.select)
@@ -313,66 +323,88 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         map((users: IJsonApiItem<IWProfileAttributes>[]) => users.map(u => u.attributes.primary_identifier)),
         takeUntil(this.destroy$)
       );
-    return combineLatest(getUsersPis, this.blackcombUrl)
-      .pipe(map(([pis, url]: [string[], string]) => {
-        return pis.reduce((p: string, v: string) =>
-          `${p}${v},${url}&pi=${v},\n`, 'identifier,urls,\n');
-      }),
+    return combineLatest(getUsersPis, this.getCognitoUrl())
+      .pipe(
+        map(([pis, url]: [string[], string]) => {
+          return pis.reduce(
+            (p: string, v: string) => `${p}${v},${url}?cid=${campaign.id}&pi=${v},\n`,
+            'identifier,urls,\n'
+          );
+        }),
         takeUntil(this.destroy$)
       );
   }
 
-  private get blackcombUrl(): Observable<string> {
-    return of(this.campaignBaseURL);
-  }
-
-  private openDialog(): void {
-    this.getDialogData(this.store.currentCampaign)
-      .pipe(
-        switchMap((config) => this.dialog.open(NewCampaignDonePopupComponent,
-          {data: config}).afterClosed())
-      )
-      .subscribe(() => this.router.navigate(['/campaigns']));
-  }
-
-  private getTenants(): void {
-    this.settingsService.getTenants()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe((res: Tenants) => {
-        this.tenantSettings = SettingsHttpAdapter.getTenantsSettings(res);
-        this.campaignBaseURL = res.display_properties.campaign_base_url;
+  private initTenantSettings(): void {
+    this.settingsService.getTenant()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((tenantSettings: ITenantsProperties) => {
+        this.tenantSettings = tenantSettings;
         this.cdr.detectChanges();
       });
   }
 
+  private outcomeToRewardCollection(outcomes: IOutcome[]): ICampaignOutcome[] {
+    const collections: ICampaignOutcome[] = [];
+    outcomes.forEach(outcome => collections.push({ outcome }));
+    return collections;
+  }
+
+  private getCognitoUrl(): Observable<string> {
+    const params = { 'page[number]': '1', 'page[size]': '1' };
+    return this.settingsService.getCognitoEndpoints(params).pipe(
+      tap((data: any[]) => {
+        if (data.length === 0) {
+          this.messageService.show(
+            'Your account does not appear to be linked to a microsite, please contact your Customer Support',
+            'warning',
+            5000);
+        }
+      }),
+      map((data: any[]) => (data.length > 0) ? data[0].url : ''),
+      takeUntil(this.destroy$)
+    );
+  }
+
+  private handleCampaignNameChanges(): void {
+    this.form.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(value => {
+        this.store.updateCampaign(value);
+      });
+  }
+
   private handleRouteParams(): void {
-    const campaignId = this.route.snapshot.params.id;
+    this.campaignId = this.route.snapshot.params.id;
     const paramsComm: HttpParamsOptions = {
-      'filter[owner_id]': campaignId,
+      'filter[owner_id]': this.campaignId,
       include: 'template'
     };
     const paramsPO: HttpParamsOptions = {
-      'filter[campaign_entity_id]': campaignId
+      'filter[domain_id]': this.campaignId
     };
-    if (campaignId) {
+    if (this.campaignId) {
+
+      this.initChannelData();
+
       combineLatest(
-        this.campaignsService.getCampaign(campaignId).pipe(catchError(() => of(null))),
+        this.campaignsService.getCampaign(this.campaignId).pipe(catchError(() => of(null))),
         this.commsService.getCommsEvent(paramsComm).pipe(catchError(() => of(null))),
         this.outcomesService.getOutcomes(paramsPO).pipe(catchError(() => of(null)))
       ).pipe(
         map(
           ([campaign, commEvent, outcomes]:
-             [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
-            ...campaign,
-            audience: {select: commEvent && commEvent.poolId || null},
-            channel: {
-              type: commEvent && commEvent.channel || 'weblink',
-              ...commEvent
-            },
-            rewardsList: outcomes
-          }))
+            [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => {
+            return ({
+              ...campaign,
+              audience: { select: commEvent && commEvent.poolId || campaign && campaign.audience.select || null },
+              channel: {
+                type: commEvent && commEvent.channel || null,
+                ...commEvent
+              },
+              outcomes: this.outcomeToRewardCollection(outcomes)
+            });
+          })
       ).subscribe(
         campaign => {
           this.campaign = Object.assign({}, campaign);
@@ -380,9 +412,122 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
           this.form.patchValue({
             name: this.campaign.name
           });
+          this.patchNotificationWebLink(this.campaign);
         },
         () => this.router.navigateByUrl('/campaigns')
       );
     }
   }
+
+  private initChannelData(): void {
+    this.notificationService.getNotifications(this.campaignId)
+      .subscribe((result) => {
+        this.campaignChannelsFormService.patchForm(this.channelForm, result);
+        this.currentNotifications = this.channelForm.value;
+      });
+  }
+
+  private initChannelForm(): void {
+    this.channelForm = this.campaignChannelsFormService.getForm();
+    this.currentNotifications = this.channelForm.value;
+  }
+
+  private patchNotificationWebLink(data: any): void {
+    const channel = data['channel'];
+    if (channel.channel === 'weblink' && channel.eventId) {
+      this.channelForm.get('webNotification')
+        .patchValue({
+          webLink: true,
+          webLinkOptions: data.displayProperties.informationCollectionSetting
+        });
+    }
+  }
+
+  private handlerWebLinkNotification(): void {
+    const notification = this.channelForm.value['webNotification'];
+    const webLink: any = {
+      campaignInfo: {
+        ...this.campaign.campaignInfo,
+        informationCollectionSetting: notification.webLinkOptions
+      },
+      channel: {
+        ...this.campaign.channel,
+        type: notification.webLink ? 'weblink' : ''}
+    };
+
+    if (!notification.webLink) {
+      delete webLink.campaignInfo.informationCollectionSetting;
+      webLink.channel['status'] = 'remove';
+    }
+
+    this.store.updateCampaign(webLink);
+  }
+
+  private handlerNotification(): void {
+
+    const notifications: IChannel = this.channelForm.value;
+    Object.keys(notifications)
+      .forEach((key: string) => {
+        const notification: ICampaignNotificationGroup[] = notifications[key];
+        const defaultNotification: ICampaignNotificationGroup[] = this.currentNotifications[key];
+
+        if (Utils.isArray(notification)) {
+           const result: Observable<IJsonApiListPayload<IWNotificationAttributes>>[]
+             = this.getNotificationRequests(defaultNotification, notification);
+           combineLatest(result)
+             .subscribe(() => {});
+        }
+      });
+  }
+
+  public createTemplate(data: IComm): Observable<IJsonApiPayload<IWCommTemplateAttributes>> {
+    return this.commsService.createCommsTemplate(data);
+  }
+
+  public updateTemplate(data: IComm): Observable<IJsonApiPayload<IWCommTemplateAttributes>> {
+    return this.commsService.updateCommsTemplate(data);
+  }
+
+  public manageNotification(data: ICampaignNotificationGroup): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+    return this.createTemplate(data.template)
+      .pipe(
+        switchMap((res: IJsonApiPayload<IWCommTemplateAttributes>) => {
+          data['templateId'] = res.data.id;
+          return this.createNotification(data);
+        }));
+  }
+
+  public createNotification(data: ICampaignNotificationGroup): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+    return this.notificationService.createNotification(data, this.campaignId);
+
+  }
+
+  public updateNotification(data: ICampaignNotificationGroup): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+    return this.updateTemplate(data.template)
+      .pipe(
+        switchMap(res => {
+          data['templateId'] = res.data.id;
+          return this.notificationService.updateNotification(data, this.campaignId);
+        })
+      );
+  }
+
+  public deleteNotification(id: string): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+    return this.notificationService.deleteNotification(id);
+  }
+
+  private getNotificationRequests(currentConditions: ICampaignNotificationGroup[], updatedConditions: ICampaignNotificationGroup[])
+    : Observable<IJsonApiListPayload<IWNotificationAttributes>>[] {
+    return CRUDParser.buildRequestList(currentConditions, updatedConditions, (type, data) => {
+      switch (type) {
+        case RequestType.CREATE:
+          return this.manageNotification(data);
+        case RequestType.UPDATE:
+          return this.updateNotification(data);
+        case RequestType.DELETE:
+          return this.deleteNotification(data.id);
+      }
+    });
+  }
+
 }

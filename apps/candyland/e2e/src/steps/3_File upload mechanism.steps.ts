@@ -1,10 +1,11 @@
 import { Before, Given, Then, When } from 'cucumber';
 import { expect } from 'chai';
-import { browser } from 'protractor';
+import { browser, protractor, ProtractorExpectedConditions } from 'protractor';
 import * as path from 'path' ;
-import { CreateShakeTheTreeAppPage } from '../pages/candylandApp.po';
+import { CreateShakeTheTreeAppPage, LoginAppPage, ElementApp } from '../pages/candylandApp.po';
 
 let PageShakeTheTree: CreateShakeTheTreeAppPage;
+const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 
 // Successful file upload for gift box
 Before( () => {
@@ -12,6 +13,20 @@ Before( () => {
   PageShakeTheTree = new CreateShakeTheTreeAppPage();
 });
 Given(/^21_I am on the shake a tree game creation page$/, async () => {
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  // entering correct account id
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
+
   await PageShakeTheTree.navigateToShakeTheTree();
   await browser.sleep(3000);
 });
@@ -21,7 +36,7 @@ When(/^21_I upload a file$/, async () => {
  const FileToUpload = './testArtifacts/testimg.png';
  const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
  // upload the file to the gift img upload section
- await PageShakeTheTree.uploadGiftImage().sendKeys(absolutePath);
+ await ElementApp.inputFileArray().get(0).sendKeys(absolutePath);
 
 });
 
@@ -41,7 +56,7 @@ When(/^22_I upload a file$/, async () => {
   const FileToUpload = './testArtifacts/testimg.png';
   const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
   // upload the file to the gift background upload section
-  await PageShakeTheTree.uploadBackgroundImage().sendKeys(absolutePath);
+  await ElementApp.inputFileArray().get(1).sendKeys(absolutePath);
 });
 
 Then(/^22_The file uploaded is present in the upload field under the background category.$/, async () => {
@@ -60,12 +75,12 @@ When(/^23_I upload a file with wrong format$/, async () => {
   const FileToUpload = './testArtifacts/testfile.xyz';
   const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
   // upload the file to the gift background upload section
-  await PageShakeTheTree.uploadGiftImage().sendKeys(absolutePath);
+  await ElementApp.inputFileArray().get(0).sendKeys(absolutePath);
 });
 
 Then(/^23_my file should not be successfully uploaded.$/, async () =>  {
   // do an assertion based on the message shown
-  expect(await PageShakeTheTree.errorUploadMessage().getText()).to.contain('Only .JPG or .PNG are supported.');
+  expect(await ElementApp.errorUploadMessage().getText()).to.contain('Only .JPG, .PNG or .GIF are supported.');
   // do an assertion where there are still 2 empty input fields
   expect(await PageShakeTheTree.emptyInputFields().count()).to.be.equal(2);
 });
@@ -80,11 +95,11 @@ When(/^24_I upload a file with wrong format$/, async () => {
   const FileToUpload = './testArtifacts/testfile.xyz';
   const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
   // upload the file to the gift background upload section
-  await PageShakeTheTree.uploadBackgroundImage().sendKeys(absolutePath);
+  await ElementApp.inputFileArray().get(1).sendKeys(absolutePath);
 });
 
 Then(/^24_my file should not be successfully uploaded.$/, async () => {
-  expect(await PageShakeTheTree.errorUploadMessage().getText()).to.contain('Only .JPG or .PNG are supported.');
+  expect(await ElementApp.errorUploadMessage().getText()).to.contain('Only .JPG, .PNG or .GIF are supported.');
   // do an assertion where there are still 2 empty input fields
   expect(await PageShakeTheTree.emptyInputFields().count()).to.be.equal(2);
 });
@@ -100,7 +115,7 @@ When(/^25_I upload a file with the appropriate format for gift box$/, async () =
   const FileToUpload = './testArtifacts/testimg.png';
   const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
   // upload the file to the gift img upload section
-  await PageShakeTheTree.uploadGiftImage().sendKeys(absolutePath);
+  await ElementApp.inputFileArray().get(0).sendKeys(absolutePath);
   await browser.sleep(3000);
 });
 
@@ -128,19 +143,21 @@ When(/^26_I upload a file with the appropriate format for background$/, async ()
   const FileToUpload = './testArtifacts/testimg.png';
   const absolutePath = path.resolve(__dirname, FileToUpload); // __dirname when inplementing circle ci later
   // upload the file to the background img upload section
-  await PageShakeTheTree.uploadBackgroundImage().sendKeys(absolutePath);
+  await ElementApp.inputFileArray().get(1).sendKeys(absolutePath);
   await browser.sleep(3000);
 });
 
 Then(/^26_background reflects the file upload.$/, async () => {
   // initializing variables for attributes src
   const srcUploadField = await PageShakeTheTree.uploadField().getAttribute('src');
-  const srcElementPreview = await PageShakeTheTree.backgroundPreview().getAttribute('style');
+  const srcElementPreviewStyle = await PageShakeTheTree.backgroundPreview().getAttribute('style');
+  // get background-image url from style
+  const bgUrl = srcElementPreviewStyle.split('"')[1];
   // initializing regex looking for ','
   const regex = /,/;
   // doing a substring matching the first 6 characters of src attr
   const srcUploadFieldSubstr = srcUploadField.substring(srcUploadField.search(regex), srcUploadField.search(regex) + 5);
-  const srcElementPreviewSubstr = srcElementPreview.substring(srcElementPreview.search(regex), srcElementPreview.search(regex) + 5);
+  const srcElementPreviewSubstr = bgUrl.substring(bgUrl.search(regex), bgUrl.search(regex) + 5);
   // doing an assertion matching the src substring
   expect(await srcUploadFieldSubstr).to.contain(srcElementPreviewSubstr);
 });
