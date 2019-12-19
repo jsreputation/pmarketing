@@ -33,10 +33,10 @@ describe('BcodeRedemptionComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: RedemptionType.none,
       categoryTags: [],
     },
     state: VoucherState.issued,
+    redemptionType: RedemptionType.none,
     code: 'GFY2019',
     expiry: new Date('2019-09-05T03:24:00'),
   };
