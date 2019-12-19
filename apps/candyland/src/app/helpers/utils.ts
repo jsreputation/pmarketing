@@ -24,7 +24,7 @@ export default class Utils {
     return ret;
   }
 
-  static updateAtArray(array: any[], current: number, updated: any): any[] {
+  static updateAtArray<T = any>(array: T[], current: T, updated: T): T[] {
     const index = array.findIndex(item => Utils.isEqual(item, current));
     return Utils.replaceAt(array, index, updated);
   }
