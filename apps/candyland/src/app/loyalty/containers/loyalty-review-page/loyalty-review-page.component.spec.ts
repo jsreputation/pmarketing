@@ -5,6 +5,10 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { LoyaltyConfigService } from '../../services/loyalty-config.service';
+import { LoyaltyService } from '@cl-core/services/loyalty.service';
+import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
+import { of } from 'rxjs';
 
 describe('LoyaltyReviewComponent', () => {
   let component: LoyaltyReviewPageComponent;
@@ -17,7 +21,24 @@ describe('LoyaltyReviewComponent', () => {
         HttpClientTestingModule,
         TranslateModule.forRoot(),
       ],
-      declarations: [ LoyaltyReviewPageComponent ],
+      providers: [
+        {
+          provide: LoyaltyConfigService, useValue: {
+            getLoyaltyViewConfig: () => of([])
+          }
+        },
+        {
+          provide: LoyaltyService, useValue: {
+            getLoyalty: () => of(null),
+          }
+        },
+        {
+          provide: LoyaltyRuleService, useValue: {
+            findAndCreateRuleSet: () => of({}),
+          }
+        }
+      ],
+      declarations: [LoyaltyReviewPageComponent],
       schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();

@@ -91,7 +91,9 @@ export {
   IWLoyaltyRuleAttributes,
   IWLoyaltyRuleConditionValueType,
   IWLoyaltyRuleConditionSign,
-  IWLoyaltyRuleConditionAttributes
+  IWLoyaltyRuleConditionAttributes,
+  IWLoyaltyRulePointApplierType,
+  IWLoyaltyRulePointAttributes
 } from './lib/loyalty/loyalty';
 
 export {

@@ -5,7 +5,8 @@ import { ApiConfig } from '@cl-core/api-config';
 import {
   IWLoyaltyRuleConditionAttributes,
   IWLoyaltyRuleAttributes,
-  IWLoyaltyRuleSetAttributes
+  IWLoyaltyRuleSetAttributes,
+  IWLoyaltyRulePointAttributes
 } from '@perx/whistler';
 import { ILoyaltyRuleCondition } from '@cl-core/models/loyalty/loyalty-rules.model';
 
@@ -17,6 +18,7 @@ export class LoyaltyRulesHttpService {
   constructor(private http: HttpClient) {
   }
 
+  // RuleSets
   public getRuleSet(id: string, params: HttpParams): Observable<IJsonApiPayload<IWLoyaltyRuleSetAttributes>> {
     return this.http.get<IJsonApiPayload<IWLoyaltyRuleSetAttributes>>(`${ApiConfig.getLoyaltyRuleSetPath}/${id}`, {params});
   }
@@ -38,6 +40,7 @@ export class LoyaltyRulesHttpService {
     return this.http.delete<IJsonApiPayload<void>>(ApiConfig.getLoyaltyRuleSetPath + '/' + id);
   }
 
+  // rules
   public getRule(id: string, params: HttpParams): Observable<IJsonApiPayload<IWLoyaltyRuleAttributes>> {
     return this.http.get<IJsonApiPayload<IWLoyaltyRuleAttributes>>(`${ApiConfig.getLoyaltyRulePath}/${id}`, {params});
   }
@@ -59,6 +62,7 @@ export class LoyaltyRulesHttpService {
     return this.http.delete<IJsonApiPayload<void>>(ApiConfig.getLoyaltyRulePath + '/' + id);
   }
 
+  // conditions
   public getRuleCondition(id: string, params: HttpParams): Observable<IJsonApiPayload<IWLoyaltyRuleConditionAttributes>> {
     return this.http.get<IJsonApiPayload<IWLoyaltyRuleConditionAttributes>>(`${ApiConfig.getLoyaltyRuleConditionPath}/${id}`, {params});
   }
@@ -75,5 +79,25 @@ export class LoyaltyRulesHttpService {
 
   public deleteRuleCondition(id: string): Observable<IJsonApiPayload<ILoyaltyRuleCondition>> {
     return this.http.delete<IJsonApiPayload<ILoyaltyRuleCondition>>(ApiConfig.getLoyaltyRuleConditionPath + '/' + id);
+  }
+
+  // points
+  public getRulePoint(id: string, params: HttpParams): Observable<IJsonApiPayload<IWLoyaltyRulePointAttributes>> {
+    return this.http.get<IJsonApiPayload<IWLoyaltyRulePointAttributes>>
+    (`${ApiConfig.getLoyaltyRulePointsCalculator}/${id}`, {params});
+  }
+
+  public createRulePoint(data: IJsonApiPayload<IWLoyaltyRulePointAttributes>):
+    Observable<IJsonApiPayload<IWLoyaltyRulePointAttributes>> {
+    return this.http.post<IJsonApiPayload<IWLoyaltyRulePointAttributes>>(ApiConfig.getLoyaltyRulePointsCalculator + '/', data);
+  }
+
+  public updateRulePoint(id: string, data: IJsonApiPayload<IWLoyaltyRulePointAttributes>):
+    Observable<IJsonApiPayload<IWLoyaltyRulePointAttributes>> {
+    return this.http.patch<IJsonApiPayload<IWLoyaltyRulePointAttributes>>(ApiConfig.getLoyaltyRulePointsCalculator + '/' + id, data);
+  }
+
+  public deleteRulePoint(id: string): Observable<IJsonApiPayload<IWLoyaltyRulePointAttributes>> {
+    return this.http.delete<IJsonApiPayload<IWLoyaltyRulePointAttributes>>(ApiConfig.getLoyaltyRulePointsCalculator + '/' + id);
   }
 }

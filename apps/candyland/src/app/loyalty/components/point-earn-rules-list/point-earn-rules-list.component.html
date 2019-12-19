@@ -1,3 +1,4 @@
+<script src="../../containers/loyalty-review-page/loyalty-review-page.component.ts"></script>
 <div class="table-wrap">
   <table class="table rule-list"
          [class.rule-list-only-view]="!editable"
@@ -39,7 +40,7 @@
     <ng-container matColumnDef="pointsEarned">
       <th mat-header-cell *matHeaderCellDef>{{'LOYALTY_FEATURE.POINTS_EARNED' | translate}}</th>
       <td mat-cell *matCellDef="let element">
-        <span>{{element?.pointsEarned}}</span>
+        <span>{{element?.result | clPointsEarnedInfo  }}</span>
       </td>
     </ng-container>
 

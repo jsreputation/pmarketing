@@ -5,12 +5,10 @@ import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.
 import { concatMap, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { from, Observable, Subject } from 'rxjs';
 import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
-
-import { StatusLabelConfig } from '@cl-shared';
-import { ConfigService } from '@cl-core-services';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 import { ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
+import { LoyaltyConfigService } from '../../services/loyalty-config.service';
 
 @Component({
   selector: 'cl-loyalty-review-page',
@@ -24,7 +22,7 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
   public customTierDataSource: CustomDataSource<ICustomTireForm>;
   public basicTierRuleSet: ILoyaltyRuleSet;
   public customTierRuleSetMap: { [id: string]: ILoyaltyRuleSet } = {};
-  public statusLabel: { [key: string]: StatusLabelConfig };
+  public config: { [key: string]: any };
   protected destroy$: Subject<void> = new Subject();
 
   constructor(
@@ -32,7 +30,7 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
     private customTierService: LoyaltyCustomTierService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private configService: ConfigService,
+    private configService: LoyaltyConfigService,
     private loyaltyService: LoyaltyService,
     private ruleService: LoyaltyRuleService,
   ) {
@@ -48,8 +46,12 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public comeBack(): void {
+  public clickBack(): void {
     this.router.navigateByUrl('/loyalty');
+  }
+
+  public clickEdit(): void {
+    this.router.navigateByUrl('/loyalty/edit/' + this.loyalty.id);
   }
 
   private handleRouteParams(): void {
@@ -57,6 +59,7 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
       map((params: ParamMap) => params.get('id')),
       tap(() => this.loader = true),
       switchMap(id => this.getLoyalty(id)),
+      filter(Boolean),
       tap((loyalty: ILoyaltyForm) => this.initCustomTiersDataSource(loyalty.id)),
       switchMap((loyalty: ILoyaltyForm) => this.getBasicTierRuleSet(loyalty.basicTierId)),
       switchMap(() => this.getAllCustomTierRuleSet()),
@@ -74,7 +77,7 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getLoyalty(id: string): Observable<any> {
+  private getLoyalty(id: string): Observable<ILoyaltyForm> {
     return this.loyaltyService.getLoyalty(id)
       .pipe(
         tap(loyalty => {
@@ -95,7 +98,7 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getBasicTierRuleSet(basicTierId: string): Observable<any> {
+  private getBasicTierRuleSet(basicTierId: string): Observable<ILoyaltyRuleSet> {
     return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::BasicTier', basicTierId)
       .pipe(
         tap(ruleSet => this.basicTierRuleSet = ruleSet),
@@ -103,14 +106,14 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
       );
   }
 
-  private getCustomTierRuleSet(id: string): Observable<any> {
+  private getCustomTierRuleSet(id: string): Observable<ILoyaltyRuleSet> {
     return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::CustomTier', id)
       .pipe(
         tap(ruleSet => this.customTierRuleSetMap[id] = ruleSet),
       );
   }
 
-  private getAllCustomTierRuleSet(): Observable<any> {
+  private getAllCustomTierRuleSet(): Observable<ILoyaltyRuleSet[]> {
     const customTierIds = this.customTierDataSource.data.map(item => item.id);
     return from(customTierIds).pipe(
       concatMap(id => this.getCustomTierRuleSet(id)),
@@ -120,10 +123,10 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
   }
 
   private initStatusesLabel(): void {
-    this.configService.prepareStatusesLabel()
+    this.configService.getLoyaltyViewConfig()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((statuses) => {
-        this.statusLabel = statuses;
+      .subscribe((config) => {
+        this.config = config;
       });
   }
 }
