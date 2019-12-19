@@ -41,6 +41,8 @@ ENV PORT=8000
 ENV PRODUCTION='true'
 ENV BASE_HREF=${basehref}
 ENV IS_WHISTLER=${iswhistler}
+RUN echo "IS_WHISTLER: ${IS_WHISTLER}"
+RUN echo "iswhistler: ${iswhistler}"
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
