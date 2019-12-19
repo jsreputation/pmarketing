@@ -1,7 +1,39 @@
+import {
+  NgModule,
+  APP_INITIALIZER,
+  LOCALE_ID,
+  Injectable,
+  ErrorHandler,
+} from '@angular/core';
+import {
+  MatDialogModule,
+  MatSnackBarModule,
+} from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER, LOCALE_ID, Injectable, ErrorHandler } from '@angular/core';
-import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { registerLocaleData } from '@angular/common';
+import enGb from '@angular/common/locales/en-GB';
+import localesEnGbExtra from '@angular/common/locales/extra/en-GB';
+import zh from '@angular/common/locales/zh';
+import localeZhExtra from '@angular/common/locales/extra/zh';
+import ru from '@angular/common/locales/ru';
+import localesRuExtra from '@angular/common/locales/extra/ru';
+import vi from '@angular/common/locales/vi';
+import localesViExtra from '@angular/common/locales/extra/vi';
+import ko from '@angular/common/locales/ko';
+import localesKoExtra from '@angular/common/locales/extra/ko';
+import fr from '@angular/common/locales/fr';
+import localesFrExtra from '@angular/common/locales/extra/fr';
+
+import {
+  TranslateModule,
+  TranslateLoader,
+  TranslateService,
+} from '@ngx-translate/core';
+import * as Sentry from '@sentry/browser';
+
 import {
   PerxCoreModule,
   AuthenticationModule,
@@ -19,32 +51,12 @@ import {
   ConfigService,
   LocaleIdFactory
 } from '@perx/core';
+
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { environment } from '../environments/environment';
-
-import { MatDialogModule, MatSnackBarModule } from '@angular/material';
-
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { SignUpModule } from './sign-up/sign-up.module';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { AppComponent } from './app.component';
 
-import { registerLocaleData } from '@angular/common';
-
-import enGb from '@angular/common/locales/en-GB';
-import localesEnGbExtra from '@angular/common/locales/extra/en-GB';
-import zh from '@angular/common/locales/zh';
-import localeZhExtra from '@angular/common/locales/extra/zh';
-import ru from '@angular/common/locales/ru';
-import localesRuExtra from '@angular/common/locales/extra/ru';
-import vi from '@angular/common/locales/vi';
-import localesViExtra from '@angular/common/locales/extra/vi';
-import ko from '@angular/common/locales/ko';
-import localesKoExtra from '@angular/common/locales/extra/ko';
-import fr from '@angular/common/locales/fr';
-import localesFrExtra from '@angular/common/locales/extra/fr';
-
-import * as Sentry from '@sentry/browser';
+import { environment } from '../environments/environment';
 
 Sentry.init({
   dsn: 'https://736f7fc0afd74f4383fdc760f7c81e5a@sentry.io/1827240'
