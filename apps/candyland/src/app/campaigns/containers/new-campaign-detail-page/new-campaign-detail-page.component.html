@@ -53,98 +53,97 @@
     </div>
   </mat-expansion-panel>
   <!--Select channel-->
-  <mat-expansion-panel class="card" expanded>
-    <mat-expansion-panel-header class="card-header">
-      <h2 class="card-title">
-        {{'CAMPAIGN.SELECT_CHANNEL' | translate}}
-      </h2>
-    </mat-expansion-panel-header>
-    <!--channel type-->
-    <div class="card-content">
-      <div class="card-row">
-        <mat-radio-group color="primary" [formControl]="channel.get('type')">
-          <ng-container *ngFor="let type of config?.channelTypes">
-            <mat-radio-button [value]="type?.value">{{type?.title | translate}}</mat-radio-button>
-          </ng-container>
-        </mat-radio-group>
-      </div>
-      <div class="information-collection-type" *ngIf="campaignInfo.get('informationCollectionSetting').enabled">
-        <mat-radio-group color="primary" [formControl]="campaignInfo.get('informationCollectionSetting')">
-          <ng-container *ngFor="let type of config?.informationCollectionSettingTypes">
-            <mat-radio-button [value]="type?.value">{{type?.title | translate}}</mat-radio-button>
-          </ng-container>
-        </mat-radio-group>
-      </div>
-      <!--Message-->
-      <div class="card-section" *ngIf="channel.get('message').enabled">
-        <div class="card-header">
-          <h3 class="card-title">
-            {{'CAMPAIGN.MESSAGE' | translate}}
-          </h3>
-        </div>
-        <div class="card-content">
-          <cl-sms-editor [options]="config?.shortcodes" [control]="channel.get('message')"></cl-sms-editor>
-        </div>
-      </div>
-      <!--schedule-->
-      <div class="card-section" *ngIf="schedule.enabled">
+  <!--<mat-expansion-panel class="card" expanded>-->
+    <!--<mat-expansion-panel-header class="card-header">-->
+      <!--<h2 class="card-title">-->
+        <!--{{'CAMPAIGN.SELECT_CHANNEL' | translate}}-->
+      <!--</h2>-->
+    <!--</mat-expansion-panel-header>-->
+    <!--&lt;!&ndash;channel type&ndash;&gt;-->
+    <!--<div class="card-content">-->
+      <!--<div class="card-row">-->
+        <!--<mat-radio-group color="primary" [formControl]="channel.get('type')">-->
+          <!--<ng-container *ngFor="let type of config?.channelTypes">-->
+            <!--<mat-radio-button [value]="type?.value">{{type?.title | translate}}</mat-radio-button>-->
+          <!--</ng-container>-->
+        <!--</mat-radio-group>-->
+      <!--</div>-->
+      <!--<div class="information-collection-type" *ngIf="campaignInfo.get('informationCollectionSetting').enabled">-->
+        <!--<mat-radio-group color="primary" [formControl]="campaignInfo.get('informationCollectionSetting')">-->
+          <!--<ng-container *ngFor="let type of config?.informationCollectionSettingTypes">-->
+            <!--<mat-radio-button [value]="type?.value">{{type?.title | translate}}</mat-radio-button>-->
+          <!--</ng-container>-->
+        <!--</mat-radio-group>-->
+      <!--</div>-->
+      <!--&lt;!&ndash;Message&ndash;&gt;-->
+      <!--<div class="card-section" *ngIf="channel.get('message').enabled">-->
+        <!--<div class="card-header">-->
+          <!--<h3 class="card-title">-->
+            <!--{{'CAMPAIGN.MESSAGE' | translate}}-->
+          <!--</h3>-->
+        <!--</div>-->
+        <!--<div class="card-content">-->
+          <!--<cl-sms-editor [options]="config?.shortcodes" [control]="channel.get('message')"></cl-sms-editor>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--&lt;!&ndash;schedule&ndash;&gt;-->
+      <!--<div class="card-section" *ngIf="schedule.enabled">-->
 
-        <div class="card-header">
-          <h3 class="card-title">
-            {{'CAMPAIGN.SCHEDULE_THE_SENDING_DATE' | translate}}
-          </h3>
-        </div>
-        <div class="card-content">
-          <!--send date-->
-          <div class="card-row">
-            <div class="input-group">
-              <cl-date-picker [control]="schedule.get('sendDate')" [min]="datenow"
-                [placeholder]="'CAMPAIGN.SEND_DATE' | translate">
-              </cl-date-picker>
-              <cl-time-picker [control]="schedule.get('sendTime')">
-              </cl-time-picker>
-            </div>
-          </div>
-          <!--recurrence Settings
-          <div class="card-row form-field">
-            <mat-checkbox color="primary" [formControl]="schedule.get('enableRecurrence')">Recurrence Settings
-            </mat-checkbox>
-          </div>
-          <div class="card-row stretch" *ngIf="recurrence.enabled">
-            <div class="row">
-              <div>
-                <label class="card-label">Repeat every</label>
-                <div class="input-group">
-                  <mat-form-field>
-                    <input matInput type="number" [formControl]="recurrence.get('times')" [min]="0">
-                  </mat-form-field>
-                  <mat-form-field>
-                    <mat-select [formControl]="recurrence.get('period')">
-                      <mat-option value="day">Day</mat-option>
-                      <mat-option value="week">Week</mat-option>
-                      <mat-option value="month">Month</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </div>
-              <div>
-                <ng-container *ngIf="recurrence.get('repeatOn').enabled">
-                  <label class="card-label">Repeat on</label>
-                  <cl-checkbox-group class="btn-list" [formControl]="recurrence.get('repeatOn')">
-                    <ng-container *ngFor="let day of config?.days">
-                      <mat-checkbox color="primary" [value]="day.value">
-                        <div>{{day.title}}</div>
-                      </mat-checkbox>
-                    </ng-container>
-                  </cl-checkbox-group>
-                </ng-container>
-              </div>
-            </div>
-          </div>-->
-        </div>
-      </div>
-    </div>
-  </mat-expansion-panel>
+        <!--<div class="card-header">-->
+          <!--<h3 class="card-title">-->
+            <!--{{'CAMPAIGN.SCHEDULE_THE_SENDING_DATE' | translate}}-->
+          <!--</h3>-->
+        <!--</div>-->
+        <!--<div class="card-content">-->
+          <!--&lt;!&ndash;send date&ndash;&gt;-->
+          <!--<div class="card-row">-->
+            <!--<div class="input-group">-->
+              <!--<cl-date-picker [control]="schedule.get('sendDate')" [min]="datenow" [placeholder]="'CAMPAIGN.SEND_DATE' | translate">-->
+              <!--</cl-date-picker>-->
+              <!--<cl-time-picker [control]="schedule.get('sendTime')">-->
+              <!--</cl-time-picker>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--&lt;!&ndash;recurrence Settings-->
+          <!--<div class="card-row form-field">-->
+            <!--<mat-checkbox color="primary" [formControl]="schedule.get('enableRecurrence')">Recurrence Settings-->
+            <!--</mat-checkbox>-->
+          <!--</div>-->
+          <!--<div class="card-row stretch" *ngIf="recurrence.enabled">-->
+            <!--<div class="row">-->
+              <!--<div>-->
+                <!--<label class="card-label">Repeat every</label>-->
+                <!--<div class="input-group">-->
+                  <!--<mat-form-field>-->
+                    <!--<input matInput type="number" [formControl]="recurrence.get('times')" [min]="0">-->
+                  <!--</mat-form-field>-->
+                  <!--<mat-form-field>-->
+                    <!--<mat-select [formControl]="recurrence.get('period')">-->
+                      <!--<mat-option value="day">Day</mat-option>-->
+                      <!--<mat-option value="week">Week</mat-option>-->
+                      <!--<mat-option value="month">Month</mat-option>-->
+                    <!--</mat-select>-->
+                  <!--</mat-form-field>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div>-->
+                <!--<ng-container *ngIf="recurrence.get('repeatOn').enabled">-->
+                  <!--<label class="card-label">Repeat on</label>-->
+                  <!--<cl-checkbox-group class="btn-list" [formControl]="recurrence.get('repeatOn')">-->
+                    <!--<ng-container *ngFor="let day of config?.days">-->
+                      <!--<mat-checkbox color="primary" [value]="day.value">-->
+                        <!--<div>{{day.title}}</div>-->
+                      <!--</mat-checkbox>-->
+                    <!--</ng-container>-->
+                  <!--</cl-checkbox-group>-->
+                <!--</ng-container>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>&ndash;&gt;-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</mat-expansion-panel>-->
   <!--Select audience-->
   <mat-expansion-panel class="card" expanded>
     <mat-expansion-panel-header class="card-header">

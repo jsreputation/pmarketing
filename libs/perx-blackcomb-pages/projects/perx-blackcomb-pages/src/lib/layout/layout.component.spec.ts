@@ -39,7 +39,8 @@ describe('LayoutComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes([
-          { path: 'wallet', redirectTo: '/' }
+          { path: 'wallet', redirectTo: '/' },
+          { path: 'login', redirectTo: '/' }
         ]),
         MatToolbarModule,
         MatIconModule,

@@ -8,7 +8,8 @@ import {
   IGameService,
   InstantOutcomeService,
   SurveyService,
-  ThemesService
+  ThemesService,
+  ConfigService
 } from '@perx/core';
 import { SignUpComponent } from './sign-up.component';
 import { of } from 'rxjs';
@@ -21,6 +22,10 @@ import { IWAppAccessTokenResponse } from '@perx/whistler';
 
 const configStub: Partial<Config> = {
   preAuth: false
+};
+
+const configServiceStub: Partial<ConfigService> = {
+  readAppConfig: () => of({ redirectAfterLogin: '/home' })
 };
 
 const gameServiceStub: Partial<IGameService> = {
@@ -76,6 +81,7 @@ describe('SignUpComponent', () => {
         TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([
           { path: 'wallet', redirectTo: '/' },
+          { path: 'login', redirectTo: '/' }
         ]),
       ],
       providers: [
@@ -87,7 +93,8 @@ describe('SignUpComponent', () => {
         { provide: InstantOutcomeService, useValue: instantOutcomeServiceStub },
         { provide: Location, useValue: locationStub },
         { provide: SurveyService, useValue: surveyServiceStub },
-        { provide: ThemesService, useValue: themeServiceStub }
+        { provide: ThemesService, useValue: themeServiceStub },
+        { provide: ConfigService, useValue: configServiceStub}
       ]
     })
       .compileComponents();

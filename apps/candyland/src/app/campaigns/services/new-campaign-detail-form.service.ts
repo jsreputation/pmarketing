@@ -19,24 +19,24 @@ export class NewCampaignDetailFormService {
         endTime: [null, [Validators.required]],
         disabledEndDate: [false],
         labels: [],
-        informationCollectionSetting: ['not_required'],
+        // informationCollectionSetting: ['not_required'],
       }),
-      channel: this.fb.group({
-        eventId: [],
-        templateId: [],
-        type: ['weblink', [Validators.required]],
-        message: [],
-        schedule: this.fb.group({
-          sendDate: [],
-          sendTime: [],
-          // enableRecurrence: [],
-          // recurrence: this.fb.group({
-          //   times: [],
-          //   period: [],
-          //   repeatOn: []
-          // })
-        })
-      }),
+      // channel: this.fb.group({
+      //   eventId: [],
+      //   templateId: [],
+      //   type: ['weblink', [Validators.required]],
+      //   message: [],
+      //   schedule: this.fb.group({
+      //     sendDate: [],
+      //     sendTime: [],
+      //     // enableRecurrence: [],
+      //     // recurrence: this.fb.group({
+      //     //   times: [],
+      //     //   period: [],
+      //     //   repeatOn: []
+      //     // })
+      //   })
+      // }),
       audience: this.fb.group({
         type: ['select'],
         file: [],
@@ -65,14 +65,14 @@ export class NewCampaignDetailFormService {
         controls: [form.get('campaignInfo.endDate'), form.get('campaignInfo.endTime')],
         resetValue: true
       },
-      {
-        condition: form.get('channel.type').value === 'sms',
-        controls: [form.get('channel.message'), form.get('channel.schedule')]
-      },
-      {
-        condition: form.get('channel.type').value === 'weblink',
-        controls: [form.get('campaignInfo.informationCollectionSetting')]
-      },
+      // {
+      //   condition: form.get('channel.type').value === 'sms',
+      //   controls: [form.get('channel.message'), form.get('channel.schedule')]
+      // },
+      // {
+      //   condition: form.get('channel.type').value === 'weblink',
+      //   controls: [form.get('campaignInfo.informationCollectionSetting')]
+      // },
       // {
       //   condition: form.get('channel.schedule.enableRecurrence').value === true,
       //   controls: [form.get('channel.schedule.recurrence')]
