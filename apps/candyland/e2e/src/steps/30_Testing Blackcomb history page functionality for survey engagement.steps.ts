@@ -8,6 +8,7 @@ import {
   ProtractorExpectedConditions,
   protractor,
 } from 'protractor';
+
 import { expect } from 'chai';
 import {
   ElementApp,
