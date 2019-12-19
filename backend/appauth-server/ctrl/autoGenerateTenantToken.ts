@@ -6,6 +6,7 @@ import { getRootCredentials } from '../utils/credentialsWhistler';
 import { createToken } from './createToken';
 import { IJsonApiItem, IWCognitoEndpointAttributes } from '@perx/whistler';
 import { Request, Response, NextFunction } from 'express';
+import { getQueryHost } from '../utils/utils';
 
 const cache = cacheManager.caching({ store: 'memory', max: 100, ttl: 0 });
 
@@ -72,9 +73,15 @@ export const removeCredentialCache = () => (
 ) => {
   try {
     // check body parameter 'url'
-    const accountId = req.body.accountId;
+    let url: string = getQueryHost(req);
+    url = getTargetUrl(url);
+    const accountId: string = req.body.accountId;
     // @ts-ignore
     cache.get(accountId, (tokenErr: Error, result: ITokenTableRowData) => {
+      cache.del(accountId);
+    });
+    // @ts-ignore
+    cache.get(url, (urlErr: Error, urlResult: IURLTableRowData) => {
       cache.del(accountId);
     });
     res.json(accountId + ' deleted successfully!');
@@ -83,12 +90,16 @@ export const removeCredentialCache = () => (
   }
 };
 
-export const getCredential = (url: string): Promise<ICredentials> => {
+const getTargetUrl = (url: string) => {
   if (url.includes('localhost')) {
     url = 'https://generic-blackcomb-dev1.uat.whistler.perxtech.io/';
   } else {
     url += '/';
   }
+  return url;
+}
+export const getCredential = (url: string): Promise<ICredentials> => {
+  url = getTargetUrl(url);
 
   const credential: ICredentials = {
     target_url: '',

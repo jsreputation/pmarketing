@@ -357,8 +357,10 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public deleteExpressTokenCache(accountId: string): Observable<any> {
-    return this.http.post<string>(this.deleteTokenCacheEndPoint, {
+    const bodyData = {
+      url: location.host,
       accountId
-    });
+    };
+    return this.http.post<string>(this.deleteTokenCacheEndPoint, bodyData);
   }
 }
