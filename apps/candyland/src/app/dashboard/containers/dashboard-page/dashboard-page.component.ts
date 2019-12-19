@@ -9,6 +9,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
 import { UserService } from '@cl-core/services/user.service';
 import { DashboardGameCard } from '@cl-shared/models/dashboard/dashboard-game-car.interface';
+import { DateTimeParser } from '@cl-helpers/date-time-parser';
 
 @Component({
   selector: 'cl-dashboard-page',
@@ -63,29 +64,19 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   private handelDateRangeChanges(): void {
     this.dateRange.valueChanges.pipe(
       map((data: DatepickerRangeValue<Date>) => new Object({
-        start_date: this.dateToString(data.begin),
-        end_date: this.dateToString(data.end)
+        start_date: DateTimeParser.dateToString(data.begin),
+        end_date: DateTimeParser.dateToString(data.end)
       })
       ),
       takeUntil(this.destroy$),
     ).subscribe(value => this.chartsParametersService.params = value);
   }
 
-  private dateToString(date: Date): string {
-    return date.toISOString().substring(0, 10);
-  }
-
   private get defaultDateRange(): DatepickerRangeValue<Date> {
     return {
-      begin: this.getDateMountsAgo(3),
+      begin: DateTimeParser.getDateMountsAgo(3),
       end: new Date()
     };
-  }
-
-  private getDateMountsAgo(numberMonth: number = 1): Date {
-    const date = new Date();
-    date.setMonth(date.getMonth() - numberMonth);
-    return date;
   }
 
   private getGameCard(): void {
