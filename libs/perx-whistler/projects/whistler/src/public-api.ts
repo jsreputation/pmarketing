@@ -55,6 +55,8 @@ export {
   WInformationCollectionSettingType,
   WCampaignStatus
 } from './lib/campaign/campaign';
+
+export { IWNotificationAttributes } from './lib/campaign/notification';
 export {
   IWAudiences,
   IWPools,

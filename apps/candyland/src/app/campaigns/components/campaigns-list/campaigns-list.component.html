@@ -76,7 +76,7 @@
             {{'PAUSE' | translate}}
           </button>
 
-          <button mat-menu-item *ngIf="element?.status === 'paused'" (click)="activateItem(element)">
+          <button mat-menu-item *ngIf="element?.status === 'paused' || element?.status === 'scheduled' " (click)="activateItem(element)">
             {{'ACTIVATE' | translate}}
           </button>
 
