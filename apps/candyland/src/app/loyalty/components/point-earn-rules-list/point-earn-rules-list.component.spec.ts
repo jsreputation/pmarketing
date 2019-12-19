@@ -4,13 +4,23 @@ import { PointEarnRulesListComponent } from './point-earn-rules-list.component';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { MatMenuModule, MatTableModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
+import { ILoyaltyRuleCondition, ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
 
 @Pipe({
   name: 'clConditionInfo'
 })
 export class ConditionInfoPipe implements PipeTransform {
-  public transform(conditions: any[]): string {
+  public transform(conditions: ILoyaltyRuleCondition[]): string {
     return conditions.toString();
+  }
+}
+
+@Pipe({
+  name: 'clPointsEarnedInfo'
+})
+export class PointsEarnedInfo implements PipeTransform {
+  public transform(point: any): string {
+    return point.toString();
   }
 }
 
@@ -21,7 +31,7 @@ describe('PointEarnRulesListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot(), MatMenuModule, MatTableModule],
-      declarations: [PointEarnRulesListComponent, ConditionInfoPipe],
+      declarations: [PointEarnRulesListComponent, ConditionInfoPipe, PointsEarnedInfo],
       schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
@@ -30,7 +40,7 @@ describe('PointEarnRulesListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PointEarnRulesListComponent);
     component = fixture.componentInstance;
-    component.ruleSet = {rules: []};
+    component.ruleSet = {rules: []} as ILoyaltyRuleSet;
     fixture.detectChanges();
   });
 
