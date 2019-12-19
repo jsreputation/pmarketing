@@ -40,8 +40,17 @@ export class CampaignsHttpAdapter {
 
   public static transformAudienceFilter(audienceFilter: IAudienceFilter): IWAudienceFilter {
     return {
-      gender: audienceFilter.agesEnabled ? audienceFilter.gender || null : null,
-      ages: audienceFilter.genderEnabled ? [...audienceFilter.ages] || null : null,
+      gender: audienceFilter.genderEnabled ? audienceFilter.gender || null : null,
+      ages: audienceFilter.agesEnabled ? [...audienceFilter.ages] || null : null,
+    };
+  }
+
+  public static transformAudienceFilterFromAPI(audienceFilter: IWAudienceFilter): IAudienceFilter {
+    return {
+      agesEnabled: !!(audienceFilter.ages && audienceFilter.ages.length > 0),
+      genderEnabled: !!audienceFilter.gender,
+      gender: audienceFilter.gender || null,
+      ages: audienceFilter.ages ? [...audienceFilter.ages] : [],
     };
   }
 
@@ -95,7 +104,8 @@ export class CampaignsHttpAdapter {
     const campaignData = data.attributes;
     return {
       audience: {
-        select: '' + data.attributes.pool_id
+        select: '' + data.attributes.pool_id,
+        filters: CampaignsHttpAdapter.transformAudienceFilterFromAPI(data.attributes.audience_segment || {})
       },
       id: data.id,
       name: campaignData.name,

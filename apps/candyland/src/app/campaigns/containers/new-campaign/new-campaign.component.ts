@@ -66,6 +66,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.initTenantSettings();
     this.initForm();
+    this.store.currentCampaign$.subscribe(console.log);
     this.form.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
@@ -447,11 +448,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     const notification = this.channelForm.value['webNotification'];
     const webLink: any = {
       campaignInfo: {
-        ...this.campaign.campaignInfo,
+        ...this.store.currentCampaign.campaignInfo,
         informationCollectionSetting: notification.webLinkOptions
       },
       channel: {
-        ...this.campaign.channel,
+        ...this.store.currentCampaign.channel,
         type: notification.webLink ? 'weblink' : ''}
     };
 
