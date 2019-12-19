@@ -9,7 +9,7 @@ import {
   Observable,
 } from 'rxjs';
 import {
-  map,
+  map
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 

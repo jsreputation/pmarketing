@@ -1,7 +1,7 @@
 import {
   Component,
   OnInit,
-  OnDestroy,
+  OnDestroy
 } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -42,61 +42,71 @@ import {
 } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
+import { MatTabChangeEvent } from '@angular/material';
 
 const stubTabs: ITabConfigExtended[] = [
   {
     filterKey: null,
     filterValue: null,
     tabName: 'ALL',
-    rewardsType: null
+    rewardsType: null,
+    currentPage: 1
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'FOOD_BEVERAGE',
-    rewardsType: 'Food & Beverage'
+    rewardsType: 'Food & Beverage',
+    currentPage: 1
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'TRAVEL',
-    rewardsType: 'Travel'
+    rewardsType: 'Travel',
+    currentPage: 1
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'ELECTRONICS',
-    rewardsType: 'Electronics'
+    rewardsType: 'Electronics',
+    currentPage: 1
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'WELLNESS',
-    rewardsType: 'Wellness'
+    rewardsType: 'Wellness',
+    currentPage: 1
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'ENTERTAINMENT',
-    rewardsType: 'Entertainment'
+    rewardsType: 'Entertainment',
+    currentPage: 1
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'SHOPPING',
-    rewardsType: 'Shopping'
+    rewardsType: 'Shopping',
+    currentPage: 1
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'MERCHANT_SELF',
-    rewardsType: 'Merchant Self'
+    rewardsType: 'Merchant Self',
+    currentPage: 1
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'OTHERS',
-    rewardsType: 'Others'
+    rewardsType: 'Others',
+    currentPage: 1
   },
 ];
 
@@ -106,6 +116,8 @@ const stubTabs: ITabConfigExtended[] = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  private pageSize = 10;
+  private currentTabIndex: number = 0;
   private destroy$: Subject<void> = new Subject();
   public theme: ITheme;
   public appConfig: IConfig;
@@ -116,7 +128,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public staticTab: ITabConfigExtended[];
   public titleFn: (profile: IProfile) => string;
   public showGames: boolean = false;
-
   private static compareGamesByCid(a: IGame, b: IGame): number {
     if (!a.campaignId) {
       return -1;
@@ -214,9 +225,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.staticTab = tabs;
         this.tabs$.next(this.staticTab);
         return forkJoin(this.staticTab.map((tab) =>
-          this.rewardsService.getAllRewards(undefined, tab.rewardsType ? [tab.rewardsType] : undefined)
+          this.rewardsService.getRewards(1, this.pageSize, undefined, tab.rewardsType ? [tab.rewardsType] : undefined)
             .pipe(
               map((reward) => {
+                tab.currentPage = 1;
                 tab.rewardsList = of(reward);
                 this.tabs$.next(this.staticTab);
                 return tab;
@@ -239,18 +251,26 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate([`/reward-detail/${reward.id}`]);
   }
 
-  //@ts-ignore
-  public onScroll(event): void {
-    const stTab = this.staticTab.find(tab => tab.rewardsType === 'Food & Beverage');
+  public onScroll(): void {
+    const stTab = this.staticTab[this.currentTabIndex];
     if (!stTab || !stTab.rewardsList) {
       return;
     }
     if (!stTab.rewardsList) {
       stTab.rewardsList = of([]);
     }
-    forkJoin(this.rewardsService.getAllRewards(undefined, ['Food & Beverage']), stTab.rewardsList).subscribe((val) => {
+    stTab.currentPage = stTab.currentPage ? ++stTab.currentPage : 1;
+    forkJoin(this.rewardsService.getRewards(
+      stTab.currentPage,
+      this.pageSize,
+      undefined,
+      stTab.rewardsType ? [stTab.rewardsType] : undefined),
+      stTab.rewardsList).subscribe((val) => {
+        stTab.rewardsList = of([...val[0], ...val[1]])
+      })
+  }
 
-      stTab.rewardsList = of([...val[0], ...val[1]])
-    })
+  public tabChanged(event: MatTabChangeEvent) {
+    this.currentTabIndex = event.index;
   }
 }
