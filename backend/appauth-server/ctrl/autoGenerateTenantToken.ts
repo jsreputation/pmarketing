@@ -5,6 +5,7 @@ import { ICredentials } from '../types/apiConfig';
 import { getRootCredentials } from '../utils/credentialsWhistler';
 import { createToken } from './createToken';
 import { IJsonApiItem, IWCognitoEndpointAttributes } from '@perx/whistler';
+import { Request, Response, NextFunction } from 'express';
 
 const cache = cacheManager.caching({ store: 'memory', max: 100, ttl: 0 });
 
@@ -63,6 +64,25 @@ async function updateMapping(rootToken: ICredentials): Promise<void> {
 
   return Promise.resolve();
 }
+
+export const removeCredentialCache = () => (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // check body parameter 'url'
+    const accountId = req.body.accountId;
+    // @ts-ignore
+    cache.get(accountId, (tokenErr: Error, result: ITokenTableRowData) => {
+      console.log('result: ' + result);
+      cache.del(accountId);
+    });
+    res.json(accountId + 'deleted successfully!');
+  } catch (e) {
+    next(e);
+  }
+};
 
 export const getCredential = (url: string): Promise<ICredentials> => {
   if (url.includes('localhost')) {
