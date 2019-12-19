@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CustomDataSource } from '@cl-shared/table';
 import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { StatusLabelConfig } from '@cl-shared';
 import { ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
 
 @Component({
@@ -14,7 +13,7 @@ export class ViewLoyaltyComponent {
   @Input() public dataSource: CustomDataSource<ICustomTireForm>;
   @Input() public basicTierRuleSet: ILoyaltyRuleSet;
   @Input() public customTierRuleSetMap: { [id: string]: ILoyaltyRuleSet };
-  @Input() public statusLabel: { [key: string]: StatusLabelConfig };
+  @Input() public config: any;
 
   public getCustomTierRuleSet(id: string): ILoyaltyRuleSet | null {
     const condition = id

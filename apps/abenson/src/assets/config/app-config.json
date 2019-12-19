@@ -4,5 +4,6 @@
   "preAuth": false,
   "isWhistler": false,
   "baseHref": "/",
-  "sourceType": ""
+  "sourceType": "",
+  "redirectAfterLogin": "/wallet"
 }
