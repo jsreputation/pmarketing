@@ -14,6 +14,7 @@ import { MatDialogModule } from '@angular/material';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { MessageService } from '@cl-core-services';
+import { CampaignChannelsFormService } from '../../services/campaign-channels-form.service';
 
 describe('NewCampaignComponent', () => {
   let component: NewCampaignComponent;
@@ -50,7 +51,12 @@ describe('NewCampaignComponent', () => {
         {
           provide: MessageService, useValue: msgSvcStub
         },
-        { provide: LocalStorageService, useValue: {} }
+        { provide: LocalStorageService, useValue: {} },
+        { provide: CampaignChannelsFormService, useValue: {
+            getForm () {
+              return new FormGroup({});
+            }
+          } }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
