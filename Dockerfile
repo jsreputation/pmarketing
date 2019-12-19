@@ -40,6 +40,7 @@ ARG basehref='/'
 ENV PORT=8000
 ENV PRODUCTION='true'
 ENV BASE_HREF=${basehref}
+ENV IS_WHISTLER=${iswhistler}
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \

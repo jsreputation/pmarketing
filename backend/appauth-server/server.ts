@@ -32,6 +32,7 @@ const PORT = process.env.PORT || 4000;
 const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
 const BASE_HREF = process.env.BASE_HREF || '/';
 const getTokens = process.env.IS_WHISTLER ? getCredential : getCredentials;
+console.log('process.env: ', process.env);
 app.options('*', cors());
 
 app.get('/preauth', preauth(getTokens));
