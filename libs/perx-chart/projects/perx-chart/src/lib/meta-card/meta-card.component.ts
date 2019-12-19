@@ -48,8 +48,7 @@ export class MetaCardComponent implements OnChanges, OnDestroy {
   constructor(
     private dataService: DataService,
     private cd: ChangeDetectorRef
-  ) {
-  }
+  ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.parameters || changes.id) {
@@ -69,9 +68,8 @@ export class MetaCardComponent implements OnChanges, OnDestroy {
     this.showReload = false;
     this.cancelCurrentRequest();
 
-    this.requestData$ = this.dataService.getData(this.id, this.parameters).pipe(
-      takeUntil(this.destroy$)
-    );
+    this.requestData$ = this.dataService.getData(this.id, this.parameters)
+      .pipe(takeUntil(this.destroy$));
     if (this.reloadInterval) {
       this.requestData$ =
         timer(0, this.reloadInterval * 1000)
@@ -81,17 +79,17 @@ export class MetaCardComponent implements OnChanges, OnDestroy {
           );
     }
     this.currentRequest = this.requestData$.subscribe(
-        (data) => {
-          this.data = of(data);
-          this.showLoading = false;
-          this.cd.detectChanges();
-        },
-        () => {
-          this.showLoading = false;
-          this.showReload = true;
-          this.cd.detectChanges();
-        }
-      );
+      (data: IData) => {
+        this.data = of(data);
+        this.showLoading = false;
+        this.cd.detectChanges();
+      },
+      () => {
+        this.showLoading = false;
+        this.showReload = true;
+        this.cd.detectChanges();
+      }
+    );
   }
 
   public reload(): void {
