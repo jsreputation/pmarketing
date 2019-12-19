@@ -61,6 +61,7 @@ button {
   }
 
   &.disable {
+    pointer-events: none;
     color: $disable-color !important;
     background-color: $light-gray !important;
 

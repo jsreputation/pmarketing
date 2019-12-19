@@ -4,3 +4,7 @@
   display: inline-flex;
   height: initial;
 }
+
+:host(.disable) {
+  pointer-events: none;
+}

@@ -1,7 +1,6 @@
 /*
  * Public API Surface of perx-candyshop
  */
-
 export { IGraphic } from './models/graphic.interface';
 export { StatusType } from './models/status-type.enum';
 export { DatepickerRangeValue } from './models/datepicker-range-value.interface';
@@ -13,6 +12,7 @@ export { ButtonModule } from './lib/button/button.module';
 
 export { CopyLinkModule } from './lib/copy-link/copy-link.module';
 export { CopyLinkComponent } from './lib/copy-link/copy-link.component';
+export { CopyLinkButtonDirective } from './lib/copy-link/copy-link.component';
 
 export { CustomLineProgressModule } from './lib/custom-line-progress/custom-line-progress.module';
 export { CustomLineProgressComponent } from './lib/custom-line-progress/custom-line-progress.component';
@@ -23,6 +23,7 @@ export { DownloadButtonComponent } from './lib/download-button/download-button.c
 
 export { DownloadLinkModule } from './lib/download-link/download-link.module';
 export { DownloadLinkComponent } from './lib/download-link/download-link.component';
+export { DownloadLinkButtonDirective } from './lib/download-link/download-link.component';
 
 export { InfoHintModule } from './lib/info-hint/info-hint.module';
 export { InfoHintComponent } from './lib/info-hint/info-hint.component';
@@ -92,5 +93,5 @@ export { UserComponent } from './lib/user/user.component';
 export { VouchersProgressBarModule } from './lib/vouchers-progress-bar/vouchers-progress-bar.module';
 export { VouchersProgressBarComponent } from './lib/vouchers-progress-bar/vouchers-progress-bar.component';
 
-export {SepareteRangeDatePickerComponent} from './lib/separate-range-date-picker/separate-range-date-picker.component';
-export {SeparateRangeDatePickerModule} from './lib/separate-range-date-picker/separate-range-date-picker.module';
+export { SepareteRangeDatePickerComponent } from './lib/separate-range-date-picker/separate-range-date-picker.component';
+export { SeparateRangeDatePickerModule } from './lib/separate-range-date-picker/separate-range-date-picker.module';

@@ -3,11 +3,15 @@
     <input matInput type="text" [value]="fileName" readonly>
   </mat-form-field>
   <a [href]="safeLink" [download]="fileName">
-    <cs-button
-      class="download-link-btn"
-      classList="primary"
-      [disableRipple]="false">
-      Download
-    </cs-button>
+    <ng-container *ngTemplateOutlet="button ? button.template : defaultButtonTemplate"></ng-container>
+    <ng-content></ng-content>
   </a>
 </div>
+
+<ng-template #defaultButtonTemplate>
+  <cs-button class="download-link-btn"
+             classList="primary"
+             [disableRipple]="false">
+    <ng-content></ng-content>
+  </cs-button>
+</ng-template>
