@@ -11,7 +11,7 @@ export interface ICampaign {
     // type: string;
     select: string;
     // file: string;
-    filters: IAudienceFilter;
+    filters?: IAudienceFilter;
   };
   engagement_type?: string;
   engagement_id?: string;
@@ -56,13 +56,13 @@ export interface ICampaignTableData {
 }
 
 export interface IDateRange {
-  from: number;
-  to: number;
+  from: number | null;
+  to: number | null;
 }
 
 export interface IAudienceFilter {
   agesEnabled: boolean;
   genderEnabled: boolean;
-  gender: string;
-  ages: IDateRange[]
+  gender: string | null;
+  ages: IDateRange[] | null;
 }
