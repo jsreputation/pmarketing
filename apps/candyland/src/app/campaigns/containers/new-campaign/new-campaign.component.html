@@ -35,6 +35,13 @@
       <ng-template matStepLabel>{{'CAMPAIGN.CAMPAIGN_DETAILS' | translate}}</ng-template>
       <cl-new-campaign-detail-page></cl-new-campaign-detail-page>
     </mat-step>
+    <mat-step ><!--[completed]="getStepCondition(2)"-->
+      <ng-template matStepLabel>Channels</ng-template>
+      <cl-new-campaign-notifications
+        [channelForm]="channelForm"
+        (sendTestSms)="sendTestSms($event)"
+      ></cl-new-campaign-notifications>
+    </mat-step>
     <mat-step>
       <ng-template matStepLabel>{{'CAMPAIGN.REVIEW' | translate}}</ng-template>
       <cl-new-campaign-review-page [tenantSettings]="tenantSettings"
