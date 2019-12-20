@@ -74,7 +74,8 @@ async function updateMapping(rootToken: ICredentials): Promise<void> {
   console.log('=====================================');
   const tenantsTokenQuerries = tenantsList.map(tenant => resolveTenant(tenant.accountId, rootToken));
   await Promise.all(tenantsTokenQuerries);
-
+  console.log('updateMapping is finished');
+  console.log('=====================================');
   return Promise.resolve();
 }
 
@@ -140,11 +141,13 @@ export const getCredential = (url: string): Promise<ICredentials> => {
           console.log('=====================================');
           reject(err);
         }
+        console.log('before newResult: ');
+        console.log('=====================================');
         // @ts-ignore
         cache.get(url, (urlErrNest: Error, newResult: IURLTableRowData) => {
+          console.log('newResult: ', newResult);
+          console.log('=====================================');
           if (newResult && newResult.accountId) {
-            console.log('newResult: ', newResult);
-            console.log('=====================================');
             cache.get(newResult.accountId, (__: Error, newTokenResult: ITokenTableRowData) => {
               console.log('newTokenResult: ', newTokenResult);
               console.log('=====================================');
