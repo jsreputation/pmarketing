@@ -1,13 +1,13 @@
 export interface IWLoyalty {
-    name: string;
-    unit: string;
-    status: string;
-    custom_tiers_count: number;
+  name: string;
+  unit: string;
+  status: string;
+  custom_tiers_count: number;
 }
 
 export interface IWLoyaltyCard {
-    balance: number;
-    user_id: number;
+  balance: number;
+  user_id: number;
 }
 
 export interface IWLoyaltyAttributes {
@@ -31,7 +31,7 @@ export interface IWBasicTierAttributes {
   join_method: IWJoinMethod;
 }
 
-export interface IWCustomTierAttributes  {
+export interface IWCustomTierAttributes {
   name: string;
   image_url: string;
   bonus_ratio: string;
@@ -55,6 +55,7 @@ export interface IWLoyaltyRuleSetAttributes {
   domain_id: string;
   domain_type?: string;
   match_type: string;
+  rules?: { id: string; priority: number }[];
 }
 
 export interface IWLoyaltyRuleAttributes {
@@ -75,4 +76,11 @@ export interface IWLoyaltyRuleConditionAttributes {
   sign: IWLoyaltyRuleConditionSign;
   value: string | number | Date | null;
   value_type: IWLoyaltyRuleConditionValueType;
+}
+
+export type IWLoyaltyRulePointApplierType = 'multiplier' | 'adder';
+
+export interface IWLoyaltyRulePointAttributes {
+  amount: string;
+  applier_type: IWLoyaltyRulePointApplierType;
 }

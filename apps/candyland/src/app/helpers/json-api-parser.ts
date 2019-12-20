@@ -115,7 +115,11 @@ export class JsonApiParser {
   }
 
   public static getMapIncludes(source, type, adapterFunction?: (data: any) => any) {
+    if (!('included' in source) || !source.included) {
+      return {};
+    }
     const mapIncludes = {};
+
     source.included.forEach(item => {
       if (item.type.includes(type)) {
         mapIncludes[item.id] = (adapterFunction && typeof adapterFunction === 'function') ? adapterFunction(item) : item;

@@ -3,6 +3,7 @@
 </div>
 
 <cl-loyalty-rule-card *ngIf="basicTierRuleSet"
+                      [config] = "config"
                       [tierId]="basicTierId"
                       tierType="basicTier"
                       [ruleSet]="basicTierRuleSet"
@@ -11,6 +12,7 @@
 
 <ng-container *ngFor="let customTier of (customTierDataSource.data$ | async)">
   <cl-loyalty-rule-card *ngIf="getCustomTierRuleSet(customTier?.id) as customTierRuleSet"
+                        [config] = "config"
                         [tierId]="customTier?.id"
                         tierType="customTier"
                         [tierName]="customTier?.name"

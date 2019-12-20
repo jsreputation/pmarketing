@@ -1,0 +1,44 @@
+:host {
+  height: 3.6rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.1rem 0 1.1rem;
+  border-left: 0.4rem solid transparent;
+
+}
+
+:host(.active) {
+  border-left: 0.4rem solid #2665ee;
+  padding: 0 1.1rem 0 1.1rem;
+}
+
+.item {
+  &-title {
+    width: 80%;
+  }
+
+  &-badge-content {
+    color: rgb(255, 255, 255);
+    text-align: center;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    pointer-events: none;
+    background: rgb(63, 81, 181);
+    border-radius: 50%;
+    transition: transform 0.2s ease-in-out 0s;
+    overflow: hidden;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+  }
+
+}
+
+ //.mat-badge-content {
+ //  font-weight: 600;
+ //  font-size: 1.2rem;
+ //  font-family: Roboto;
+ //}
