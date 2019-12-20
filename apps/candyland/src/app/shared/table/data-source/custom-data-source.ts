@@ -59,6 +59,10 @@ export class CustomDataSource<T> extends DataSource<T> {
     return this.dataSubject.asObservable();
   }
 
+  public get state(): DataSourceStates {
+    return this.state$.value;
+  }
+
   public get hasData$(): Observable<boolean> {
     return this.dataSubject.pipe(
       map(data => data.length > 0)
@@ -184,7 +188,7 @@ export class CustomDataSource<T> extends DataSource<T> {
       const sort = sortData.direction === 'asc'
         ? `${sortData.active}`
         : `-${sortData.active}`;
-      return { sort };
+      return {sort};
     }
     return {};
   }

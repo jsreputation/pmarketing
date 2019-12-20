@@ -31,6 +31,7 @@
     "POINTS_EXPIRY": "Points Expiry",
     "POINTS_EXPIRE": "Points expire",
     "FROM_WHEN_ACCRUAL_THE_POINT_WAS_EARNED": "from when accrual the point was earned",
+    "FROM_ACCRUAL": "from earning",
     "FROM_USER_INACTIVITY": "from user inactivity",
     "NAME": "Name",
     "QUALIFICATION": "Qualification",
@@ -88,6 +89,29 @@
       "CURRENCY": "Makes a transaction CURRENCY",
       "FROM_DATE": "Transacts from DATE",
       "TO_DATE": "Transacts to DATE"
+    },
+    "CONDITION_TYPE_TEMPLATE": {
+      "TRANSACTION": "Makes a {{value}} transaction",
+      "AMOUNT": "Makes a transaction amount {{operator}} {{value}} cu",
+      "CURRENCY": "Makes a transaction in {{value}} currency",
+      "FROM_DATE": "Makes a transaction from {{value}}",
+      "TO_DATE": "Makes a transaction to {{value}}"
+    },
+    "RULE_POINT_TYPE": {
+      "MULTIPLIER": "Multiplier",
+      "BONUS": "Bonus Points"
+    },
+    "RULE_POINT_TEMPLATE": {
+      "MULTIPLIER": "Apply {{amount}}x multiplier",
+      "BONUS": "{{amount}} Bonus Points"
+    },
+    "OPERATOR_TYPE": {
+      "EQUAL": "equal",
+      "UNEQUAL": "not equal",
+      "LESS": "less",
+      "GREATER": "greater",
+      "lESS_OR_EQUAL": "less or equal",
+      "GREATER_OR_EQUAL": "greater or equal"
     },
     "PRIORITY": "Priority",
     "RULE_NAME": "Rule Name",

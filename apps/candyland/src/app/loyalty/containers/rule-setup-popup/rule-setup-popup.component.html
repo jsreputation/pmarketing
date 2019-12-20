@@ -41,6 +41,7 @@
           </mat-form-field>
         </div>
         <ng-container clDynamicFormGroup
+                      [componentMap]="conditionComponentMap"
                       [group]="conditionGroup"
                       [type]="conditionGroup.get('type')?.value"
                       [config]="data?.config"
@@ -69,11 +70,31 @@
         </button>
       </ng-container>
     </mat-menu>
-  </div>
 
+    <!--results-->
+    <label class="loyalty-label">THEN</label>
+    <ng-container>
+      <div class="card-section card-content">
+        <mat-form-field>
+          <mat-select [formControl]="result.get('applierType')" (valueChange)="updateResult($event)">
+            <ng-container *ngFor="let option of data?.config?.rulePointsType">
+              <mat-option [value]="option?.value">{{option?.title | translate}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+          <ng-container clDynamicFormGroup
+                        [componentMap]="resultsComponentsMap"
+                        [group]="result"
+                        [type]="result.get('applierType')?.value"
+                        [config]="data?.config">
+          </ng-container>
+      </div>
+    </ng-container>
+  </div>
   <footer class="dialog-actions">
     <cl-button classList="tertiary"
                class="actions-close"
+               [disable]="loading"
                (click)="close()"
                [disableRipple]="true">
         <span>
@@ -82,9 +103,10 @@
     </cl-button>
 
     <cl-button classList="primary"
+               [disable]="loading"
                (click)="apply()">
         <span>
-          {{data?.rule ? 'BTN_APPLY' : 'BTN_SAVE' | translate}}
+          {{(data?.rule ? 'BTN_APPLY' : 'BTN_SAVE') | translate}}
         </span>
     </cl-button>
   </footer>

@@ -35,7 +35,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public appConfig: IConfig<IRewardConfig>;
   public rewardData: IReward;
   public loyalty: ILoyalty;
-
+  public maxRewardCost?: number;
   private initTranslate(): void {
     this.translate.get('GET_VOUCHER').subscribe((text) => this.buttonLabel = text);
     this.translate.get('DESCRIPTION')
@@ -78,6 +78,9 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
           if (reward.displayProperties) {
             this.buttonLabel = reward.displayProperties.CTAButtonTxt || this.buttonLabel;
           }
+          this.maxRewardCost = reward.rewardPrice ? reward.rewardPrice
+            .map((price) => price.points)
+            .reduce((acc = 0, points) => acc >= (points || 0) ? acc : points) : 0;
         }),
         takeUntil(this.destroy$)
       );

@@ -14,11 +14,10 @@ import {
   IJsonApiListPayload,
   IWTierRewardCostsAttributes,
   IWMerchantAttributes,
-  IWRelationshipsDataType
+  IWRelationshipsDataType,
+  WRedemptionType
 } from '@perx/whistler';
 import { oc } from 'ts-optchain';
-import { WRedemptionType } from '@perx/whistler';
-
 import { RedemptionType } from '../perx-core.models';
 
 @Injectable({
@@ -32,7 +31,6 @@ export class WhistlerRewardsService implements RewardsService {
   constructor(private http: HttpClient, config: Config) {
     this.baseUrl = `${config.apiHost}/reward/entities`;
   }
-
   private static WRedemptionToRT(rt: WRedemptionType): RedemptionType {
     switch (rt) {
       case WRedemptionType.promoCode:
@@ -47,7 +45,6 @@ export class WhistlerRewardsService implements RewardsService {
         return RedemptionType.none;
     }
   }
-
   private static WRewardToReward(
     r: IJsonApiItem<IWRewardEntityAttributes>,
     merchants: IJsonApiItem<IWMerchantAttributes>[] | null,
