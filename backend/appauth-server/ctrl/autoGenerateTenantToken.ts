@@ -5,8 +5,6 @@ import { ICredentials } from '../types/apiConfig';
 import { getRootCredentials } from '../utils/credentialsWhistler';
 import { createToken } from './createToken';
 import { IJsonApiItem, IWCognitoEndpointAttributes } from '@perx/whistler';
-import { Request, Response, NextFunction } from 'express';
-import { getQueryHost } from '../utils/utils';
 
 const cache = cacheManager.caching({ store: 'memory', max: 100, ttl: 0 });
 
