@@ -32,6 +32,8 @@ function resolveTenant(accountId: string, rootToken: ICredentials): Promise<void
       if (!result || !result.token) {
         // otherwise fetch it and put in cache
         const createTokenData = await createToken(rootToken, accountId);
+        console.log('createTokenData: ', createTokenData.headers.authorization);
+        console.log('=====================================');
         const token = createTokenData.headers.authorization;
         tenantCredential.basic_token = token;
         cache.set(accountId, {
@@ -41,6 +43,8 @@ function resolveTenant(accountId: string, rootToken: ICredentials): Promise<void
         tenantCredential.basic_token = result.token;
       }
       const tenantEndPointRawData = await getEndPoints(tenantCredential);
+      console.log('tenantEndPointRawData: ', tenantEndPointRawData.data.data);
+      console.log('=====================================');
       const tenantURLs = tenantEndPointRawData.data.data;
       tenantURLs.forEach((tenantURLData: IJsonApiItem<IWCognitoEndpointAttributes>) => {
         const tenantUrl = tenantURLData.attributes.url;
@@ -60,6 +64,8 @@ function resolveTenant(accountId: string, rootToken: ICredentials): Promise<void
 
 async function updateMapping(rootToken: ICredentials): Promise<void> {
   const tenantsList = await getTenantsList(rootToken);
+  console.log('tenantsList: ', tenantsList);
+  console.log('=====================================');
   const tenantsTokenQuerries = tenantsList.map(tenant => resolveTenant(tenant.accountId, rootToken));
   await Promise.all(tenantsTokenQuerries);
 
