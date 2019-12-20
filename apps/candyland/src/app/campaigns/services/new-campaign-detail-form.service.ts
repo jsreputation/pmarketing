@@ -19,28 +19,11 @@ export class NewCampaignDetailFormService {
         endTime: [null, [Validators.required]],
         disabledEndDate: [false],
         labels: [],
-        // informationCollectionSetting: ['not_required'],
       }),
-      // channel: this.fb.group({
-      //   eventId: [],
-      //   templateId: [],
-      //   type: ['weblink', [Validators.required]],
-      //   message: [],
-      //   schedule: this.fb.group({
-      //     sendDate: [],
-      //     sendTime: [],
-      //     // enableRecurrence: [],
-      //     // recurrence: this.fb.group({
-      //     //   times: [],
-      //     //   period: [],
-      //     //   repeatOn: []
-      //     // })
-      //   })
-      // }),
       audience: this.fb.group({
         type: ['select'],
         file: [],
-        select: []
+        select: [null, [Validators.required]]
       })
     });
   }
@@ -90,15 +73,6 @@ export class NewCampaignDetailFormService {
         startDate: new Date(),
         goal: 'Acquire customers',
         disabledEndDate: true
-      },
-      channel: {
-        type: 'weblink',
-        schedule: {
-          enableRecurrence: false,
-          recurrence: {
-            repeatOn: []
-          }
-        }
       }
     };
   }

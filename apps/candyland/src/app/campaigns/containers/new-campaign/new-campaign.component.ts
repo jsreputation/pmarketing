@@ -122,6 +122,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.store.updateCampaign(this.stepConditionService.getStepFormValue(stepIndex));
     if (stepIndex === 3) {
       this.handlerWebLinkNotification();
+      this.addNotificationToStore();
     }
     if (!value) {
       this.stepper.next();
@@ -443,24 +444,30 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     }
   }
 
+  private addNotificationToStore(): void {
+    this.store.updateCampaign({notification: this.channelForm.value});
+  }
+
   private handlerWebLinkNotification(): void {
     const notification = this.channelForm.value['webNotification'];
-    const webLink: any = {
-      campaignInfo: {
-        ...this.campaign.campaignInfo,
-        informationCollectionSetting: notification.webLinkOptions
-      },
-      channel: {
-        ...this.campaign.channel,
-        type: notification.webLink ? 'weblink' : ''}
-    };
+    if (this.campaign) {
+      const webLink: any = {
+        campaignInfo: {
+          ...this.campaign.campaignInfo,
+          informationCollectionSetting: notification.webLinkOptions
+        },
+        channel: {
+          ...this.campaign.channel,
+          type: notification.webLink ? 'weblink' : ''}
+      };
 
-    if (!notification.webLink) {
-      delete webLink.campaignInfo.informationCollectionSetting;
-      webLink.channel['status'] = 'remove';
+      if (!notification.webLink) {
+        delete webLink.campaignInfo.informationCollectionSetting;
+        webLink.channel['status'] = 'remove';
+      }
+      this.store.updateCampaign(webLink);
     }
 
-    this.store.updateCampaign(webLink);
   }
 
   private handlerNotification(): void {

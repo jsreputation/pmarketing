@@ -29,6 +29,7 @@
   "BTN_REPORT": "Отчет",
   "BTN_COME_BACK": "Вернутся",
   "BTN_CLOSE": "Закрыть",
+  "BTN_ADD_QUESTION": "+ Добавить сообщение",
 
   "DESCRIPTION": "Описание",
   "POINTS": "очки",
@@ -43,7 +44,7 @@
   "ERROR_SELECT_AT_LEAST_ONE": "Должен быть выбран хотя бы один вариант.",
   "ERROR_CHOOSE_TEMPLATE": "Пожалуйста, выберите шаблон.",
   "ERROR_THIS_FIELD_IS_REQUIRED": "Это поле обязательно для заполнения",
-
+  "ERROR_MIN_VALUE": " Минимальное значение",
   "WEBLINK": "Веб-ссылка",
   "TO": "по",
   "DAY": "День",
