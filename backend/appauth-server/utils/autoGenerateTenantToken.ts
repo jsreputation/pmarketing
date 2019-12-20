@@ -64,12 +64,17 @@ async function updateMapping(rootToken: ICredentials): Promise<void> {
   return Promise.resolve();
 }
 
-export const getCredential = (url: string): Promise<ICredentials> => {
+const getTargetUrl = (url: string) => {
   if (url.includes('localhost')) {
     url = 'https://generic-blackcomb-dev1.uat.whistler.perxtech.io/';
   } else {
-    url += '/';
+    url = 'https://' + url + '/';
   }
+  return url;
+};
+
+export const getCredential = (url: string): Promise<ICredentials> => {
+  url = getTargetUrl(url);
 
   const credential: ICredentials = {
     target_url: '',
