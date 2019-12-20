@@ -153,16 +153,18 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
       .pipe(
         // for each campaign, get detailed version
         switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id)))),
-        map((campaigns: ICampaign[]) => campaigns.filter(c => !this.idExistsInStorage(c.id)))
+        map((campaigns: ICampaign[]) => campaigns.filter(c => !this.idExistsInStorage(c.id))),
+        map((campaigns: ICampaign[]) =>  campaigns
+          .filter(campaign => campaign.type === CampaignType.give_reward)
+          .filter(campaign => campaign.rewards && campaign.rewards.length > 0)),
       )
       .subscribe(
         (campaigns: ICampaign[]) => {
-          const firstComeFirstServed: ICampaign[] = campaigns
-            .filter(campaign => campaign.type === CampaignType.give_reward)
-            .filter(campaign => campaign.rewards && campaign.rewards.length > 0);
+          const firstComeFirstServed: ICampaign[] = campaigns;
           // if there is a 1st come 1st served campaign and it has rewards, display the popup
           if (firstComeFirstServed.length > 0) {
             const campaign = firstComeFirstServed[0];
+            // @ts-ignore
             this.reward = campaign.rewards[0];
 
             const data = {
@@ -171,6 +173,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
               buttonTxt: 'Claim!',
               rewardId: this.reward.id,
               afterClosedCallBack: this,
+              // @ts-ignore
               validTo: new Date(campaign.endsAt)
             };
             this.dialog.open(RewardPopupComponent, { data });
@@ -186,6 +189,9 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
           if (gameCampaign) {
             this.checkGame(gameCampaign);
           }
+        },
+        () => {
+          // no campaign that is popup eligible. fail silently.
         }
       );
   }
