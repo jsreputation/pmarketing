@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
-import { IWLimitAttributes, IJsonApiListPayload, IJsonApiItemPayload } from '@perx/whistler';
+import { IWLimitAttributes, IJsonApiListPayload, IJsonApiItemPayload, IJsonApiPatchItem, IJsonApiPostItem } from '@perx/whistler';
 import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 import { map } from 'rxjs/operators';
 
@@ -20,7 +20,7 @@ export class LimitsHttpsService {
 
   public updateLimit(
     id: string,
-    data: IJsonApiItemPayload<IWLimitAttributes>,
+    data: IJsonApiPatchItem<IWLimitAttributes>,
     engagementType: string
   ): Observable<IJsonApiItemPayload<IWLimitAttributes>> {
     const eType = this.getEngagementTypeLink(engagementType);
@@ -29,7 +29,7 @@ export class LimitsHttpsService {
   }
 
   public createLimit(
-    data: IJsonApiItemPayload<IWLimitAttributes>,
+    data: IJsonApiPostItem<IWLimitAttributes>,
     engagementType: string
   ): Observable<IJsonApiItemPayload<IWLimitAttributes>> {
     const eType = this.getEngagementTypeLink(engagementType);

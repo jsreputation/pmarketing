@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { map } from 'rxjs/operators';
 import { SpinHttpService } from '@cl-core/http-services/spin-http.service';
-import { IWSpinGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWSpinGameEngagementAttributes, IJsonApiItemPayload, IJsonApiPatchData } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +29,7 @@ export class SpinService {
   }
 
   public updateSpin(id: string, data: ISpinEntityForm): Observable<IJsonApiItemPayload<IWSpinGameEngagementAttributes>> {
-    const sendData = EngagementHttpAdapter.transformFromSpinForm(data);
-    sendData.id = id;
+    const sendData: IJsonApiPatchData<IWSpinGameEngagementAttributes> = { ...EngagementHttpAdapter.transformFromSpinForm(data), id };
     return this.spinHttpService.updateSpin(id, { data: sendData });
   }
 }

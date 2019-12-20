@@ -5,7 +5,7 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { IWCampaignAttributes, IJsonApiListPayload, IJsonApiItemPayload, IJsonApiItem } from '@perx/whistler';
+import { IWCampaignAttributes, IJsonApiListPayload, IJsonApiItemPayload, IJsonApiItem, IJsonApiPatchData } from '@perx/whistler';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { CampaignStatus } from '@cl-core/models/campaign/campaign-status.enum';
@@ -38,10 +38,11 @@ export class CampaignsService implements ITableService {
   }
 
   public updateCampaign(data: ICampaign): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
-    const sendData = CampaignsHttpAdapter.transformFromCampaign(data);
-    if (data.id) {
-      sendData.id = data.id;
-    }
+    const sendData: IJsonApiPatchData<IWCampaignAttributes> = {
+      ...CampaignsHttpAdapter.transformFromCampaign(data),
+      id: data.id
+    };
+
     return this.campaignsHttpsService.updateCampaign(data.id, { data: sendData });
   }
 
@@ -71,11 +72,11 @@ export class CampaignsService implements ITableService {
   }
 
   public updateCampaignStatus(id: string, status: CampaignStatus): Observable<ILoyaltyForm> {
-    // const sendData: any = CampaignsHttpAdapter.transformCampaignStatus(status);
-    const sendData: any = CampaignsHttpAdapter.transformCampaignStatus(status);
+    const sendData: IJsonApiPatchData<IWCampaignAttributes> = CampaignsHttpAdapter.transformCampaignStatus(status);
     sendData.id = id;
-    return this.campaignsHttpsService.updateCampaign(id, { data: sendData }).pipe(
-      map(response => CampaignsHttpAdapter.transformToCampaign(response.data))
-    );
+    return this.campaignsHttpsService.updateCampaign(id, { data: sendData })
+      .pipe(
+        map(response => CampaignsHttpAdapter.transformToCampaign(response.data))
+      );
   }
 }

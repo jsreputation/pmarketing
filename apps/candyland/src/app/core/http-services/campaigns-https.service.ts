@@ -5,7 +5,9 @@ import { Observable } from 'rxjs';
 import {
   IWCampaignAttributes,
   IJsonApiListPayload,
-  IJsonApiItemPayload
+  IJsonApiItemPayload,
+  IJsonApiPatchItem,
+  IJsonApiPostItem
 } from '@perx/whistler';
 
 @Injectable({
@@ -25,12 +27,12 @@ export class CampaignsHttpsService {
 
   public updateCampaign(
     id: string,
-    data: IJsonApiItemPayload<IWCampaignAttributes>
+    data: IJsonApiPatchItem<IWCampaignAttributes>
   ): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWCampaignAttributes>>(ApiConfig.campaignsPath + '/' + id, data);
   }
 
-  public createCampaign(data: IJsonApiItemPayload<IWCampaignAttributes>): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
+  public createCampaign(data: IJsonApiPostItem<IWCampaignAttributes>): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWCampaignAttributes>>(ApiConfig.campaignsPath, data);
   }
 

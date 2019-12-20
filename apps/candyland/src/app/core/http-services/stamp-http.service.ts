@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IWStampEngagementAttributes, IJsonApiPostItem, IJsonApiItemPayload } from '@perx/whistler';
+import { IWStampEngagementAttributes, IJsonApiPostItem, IJsonApiItemPayload, IJsonApiPatchItem } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class StampHttpService {
     return this.http.post<IJsonApiItemPayload<IWStampEngagementAttributes>>(ApiConfig.stampsPath + '/', data);
   }
 
-  public updateStamp(id: string, data: IJsonApiItemPayload<IWStampEngagementAttributes>):
+  public updateStamp(id: string, data: IJsonApiPatchItem<IWStampEngagementAttributes>):
     Observable<IJsonApiItemPayload<IWStampEngagementAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWStampEngagementAttributes>>(ApiConfig.engagementsPath + '/stamps/' + id, data);
   }

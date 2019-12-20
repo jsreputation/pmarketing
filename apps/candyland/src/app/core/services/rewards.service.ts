@@ -6,7 +6,15 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { RewardHttpAdapter } from '@cl-core/http-adapters/reward-http-adapter';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { IWRewardEntityAttributes, IWTierRewardCostsAttributes, IJsonApiListPayload, IJsonApiItemPayload, IJsonApiItem } from '@perx/whistler';
+import {
+  IWRewardEntityAttributes,
+  IWTierRewardCostsAttributes,
+  IJsonApiListPayload,
+  IJsonApiItemPayload,
+  IJsonApiItem,
+  IJsonApiPostData,
+  IJsonApiPatchData
+} from '@perx/whistler';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
 
@@ -53,19 +61,21 @@ export class RewardsService implements ITableService {
   }
 
   public createReward(data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
-    const sendData: IJsonApiItem<IWRewardEntityAttributes> = RewardHttpAdapter.transformFromRewardForm(data, loyalties);
+    const sendData: IJsonApiPostData<IWRewardEntityAttributes> = RewardHttpAdapter.transformFromRewardForm(data, loyalties);
     return this.rewardHttp.createReward({ data: sendData });
   }
 
   public duplicateReward(data: IRewardEntity): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
-    const sendData: IJsonApiItem<IWRewardEntityAttributes> = RewardHttpAdapter.transformFromReward(data);
+    const sendData: IJsonApiPostData<IWRewardEntityAttributes> = RewardHttpAdapter.transformFromReward(data);
     return this.rewardHttp.createReward({ data: sendData });
   }
 
   public updateReward(id: string, data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]):
     Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
-    const sendData: IJsonApiItem<IWRewardEntityAttributes> = RewardHttpAdapter.transformFromRewardForm(data, loyalties);
-    sendData.id = id;
+    const sendData: IJsonApiPatchData<IWRewardEntityAttributes> = {
+      ...RewardHttpAdapter.transformFromRewardForm(data, loyalties),
+      id
+    };
     return this.rewardHttp.updateReward(id, { data: sendData });
   }
 
@@ -73,35 +83,29 @@ export class RewardsService implements ITableService {
     if (!id) {
       return of([]);
     }
-    const tempData: Partial<IWTierRewardCostsAttributes>[] = [];
     return this.rewardHttp.getRewardTierList(1, id)
-      .pipe(switchMap((data: IJsonApiListPayload<Partial<IWTierRewardCostsAttributes>[]>) => {
-        if (data.meta.page_count <= 1) {
-          return of([data]);
-        }
-        const listQuery: Observable<IJsonApiListPayload<Partial<IWTierRewardCostsAttributes>[]>>[] = [];
-        tempData.push(...data.data as any);
+      .pipe(
+        map((data: IJsonApiListPayload<IWTierRewardCostsAttributes>) => {
+          const listQuery: Observable<IJsonApiListPayload<IWTierRewardCostsAttributes>>[] = [
+            of(data)
+          ];
+          if (!data.meta || data.meta.page_count <= 1) {
+            for (let index = 2; index <= data.meta.page_count; index++) {
+              listQuery.push(this.getRewardTierPage(index, id));
+            }
+          }
+          return listQuery;
+        }),
+        switchMap((listQuery: Observable<IJsonApiListPayload<IWTierRewardCostsAttributes>>[]) => forkJoin(listQuery)),
+        map((data: IJsonApiListPayload<IWTierRewardCostsAttributes>[]) => {
+          const result = [];
+          data.forEach((list: IJsonApiListPayload<IWTierRewardCostsAttributes>) => {
+            result.push(...this.prepareTransformationLoyaltyCost(list.data));
+          });
 
-        for (let index = 2; index <= data.meta.page_count; index++) {
-          listQuery.push(this.getRewardTierPage(index, id));
-        }
-
-        return forkJoin(listQuery);
-
-      }))
-      .pipe(map((data: any[]) => {
-        const result = [];
-        data.forEach((list: any) => {
-          const test = this.prepareTransformationLoyaltyCost(list.data);
-          result.push(...test);
-        });
-
-        if (tempData) {
-          result.push(...this.prepareTransformationLoyaltyCost(tempData));
-        }
-
-        return result;
-      }));
+          return result;
+        })
+      );
   }
 
   public getRewardTier(id: string): Observable<any> {
@@ -109,7 +113,7 @@ export class RewardsService implements ITableService {
   }
 
   public createRewardTier(tier: ILoyaltyTiersFormGroup | IBasicTier, id: string)
-    : Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>> {
+    : Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
     const loyaltyCostValue = RewardHttpAdapter.transformFromLoyaltyForm(tier, id);
 
     return this.rewardHttp.createRewardTier(loyaltyCostValue);
@@ -127,11 +131,11 @@ export class RewardsService implements ITableService {
     return this.rewardHttp.deleteRewardTier(loyaltyCostValue);
   }
 
-  private getRewardTierPage(page: number, id: string): Observable<IJsonApiListPayload<Partial<IWTierRewardCostsAttributes>[]>> {
+  private getRewardTierPage(page: number, id: string): Observable<IJsonApiListPayload<IWTierRewardCostsAttributes>> {
     return this.rewardHttp.getRewardTierList(page, id);
   }
 
-  private prepareTransformationLoyaltyCost(data: any[]): any {
+  private prepareTransformationLoyaltyCost(data: any[]): ITierRewardCost[] {
     return data.map((item) => RewardHttpAdapter.transformToLoyaltyCost(item));
   }
 

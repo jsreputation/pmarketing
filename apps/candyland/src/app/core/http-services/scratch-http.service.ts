@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IWScratchGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWScratchGameEngagementAttributes, IJsonApiItemPayload, IJsonApiPatchItem, IJsonApiPostItem } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +15,16 @@ export class ScratchHttpService {
     return this.http.get<IGameDefaultData>('assets/actives/scratch/scratch-data.json');
   }
 
-  public createScratch(data: IJsonApiItemPayload<any>): Observable<IJsonApiItemPayload<IWScratchGameEngagementAttributes>> {
+  public createScratch(
+    data: IJsonApiPostItem<IWScratchGameEngagementAttributes>
+  ): Observable<IJsonApiItemPayload<IWScratchGameEngagementAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWScratchGameEngagementAttributes>>(ApiConfig.engagementsPath + '/', data);
   }
 
-  public updateScratch(id: string, data: IResponseApi<any>): Observable<IJsonApiItemPayload<IWScratchGameEngagementAttributes>> {
+  public updateScratch(
+    id: string,
+    data: IJsonApiPatchItem<IWScratchGameEngagementAttributes>
+  ): Observable<IJsonApiItemPayload<IWScratchGameEngagementAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWScratchGameEngagementAttributes>>(ApiConfig.engagementsPath + '/game/' + id, data);
   }
 

@@ -2,7 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IWIAMUserAttributes, IWTenantAttributes, IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '@perx/whistler';
+import {
+  IWIAMUserAttributes,
+  IWTenantAttributes,
+  IJsonApiListPayload,
+  IJsonApiItemPayload,
+  IJsonApiPostItem,
+  IJsonApiPatchItem,
+  IJsonApiPostData,
+  IJsonApiPatchData
+} from '@perx/whistler';
 import { RoleLabelConfig } from '@cl-shared';
 import { IWCognitoEndpointAttributes } from '@perx/whistler';
 
@@ -38,12 +47,12 @@ export class SettingsHttpService {
     return this.http.get<IJsonApiListPayload<IWIAMUserAttributes>>(ApiConfig.IAMUsersPath, { params });
   }
 
-  public inviteNewUser(body: IJsonApiItem<IWIAMUserAttributes>): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
+  public inviteNewUser(body: IJsonApiPostData<IWIAMUserAttributes>): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWIAMUserAttributes>>(ApiConfig.IAMUsersPath, { data: body });
   }
 
   public patchUser(
-    id: string, patchValue: Partial<IJsonApiItem<IWIAMUserAttributes>>
+    id: string, patchValue: IJsonApiPatchData<IWIAMUserAttributes>
   ): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWIAMUserAttributes>>(`${ApiConfig.IAMUsersPath}/${id}`, { data: patchValue });
   }
@@ -56,7 +65,7 @@ export class SettingsHttpService {
     return this.http.get(ApiConfig.IAMGroupsPath);
   }
 
-  public patchSettings(data: IJsonApiItemPayload<any>): Observable<any> {
+  public patchSettings(data: IJsonApiPatchData<any>): Observable<any> {
     return this.http.patch(`${ApiConfig.tenantsPath}`, { data });
   }
 
@@ -76,12 +85,12 @@ export class SettingsHttpService {
     return this.http.get<IJsonApiListPayload<IWCognitoEndpointAttributes>>(ApiConfig.cognitoEndpoints, { params });
   }
 
-  public createCognitoEndpoint(data: IJsonApiItemPayload<IWCognitoEndpointAttributes>):
+  public createCognitoEndpoint(data: IJsonApiPostItem<IWCognitoEndpointAttributes>):
     Observable<IJsonApiItemPayload<IWCognitoEndpointAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWCognitoEndpointAttributes>>(ApiConfig.cognitoEndpoints + '/', data);
   }
 
-  public updateCognitoEndpoint(id: string, data: IJsonApiItemPayload<IWCognitoEndpointAttributes>):
+  public updateCognitoEndpoint(id: string, data: IJsonApiPatchItem<IWCognitoEndpointAttributes>):
     Observable<IJsonApiItemPayload<IWCognitoEndpointAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWCognitoEndpointAttributes>>(ApiConfig.cognitoEndpoints + '/' + id, data);
   }

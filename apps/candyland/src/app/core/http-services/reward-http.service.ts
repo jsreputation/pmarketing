@@ -2,7 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IWRewardEntityAttributes, IWTierRewardCostsAttributes, IJsonApiListPayload, IJsonApiItemPayload, IJsonApiItem } from '@perx/whistler';
+import {
+  IWRewardEntityAttributes,
+  IWTierRewardCostsAttributes,
+  IJsonApiListPayload,
+  IJsonApiItemPayload,
+  IJsonApiItem,
+  IJsonApiPostItem,
+  IJsonApiPatchItem,
+  IJsonApiPatchData,
+  IJsonApiPostData
+} from '@perx/whistler';
 // tslint:disable
 @Injectable({
   providedIn: 'root'
@@ -28,46 +38,36 @@ export class RewardHttpService {
     return this.http.get<OptionConfig[]>('assets/actives/rewards/rewards-options.json');
   }
 
-  // public getSingleReward(id: string): Observable<any> {
-  //   return this.http.get('assets/actives/rewards/rewards.json')
-  //     .pipe(
-  //       map((res: any[]) => {
-  //         return res.filter((item) => item.id === id)[0];
-  //       })
-  //     );
-  // }
-
-  public createReward(data: IJsonApiItemPayload<IWRewardEntityAttributes>): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
+  public createReward(data: IJsonApiPostItem<IWRewardEntityAttributes>): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWRewardEntityAttributes>>(ApiConfig.rewardsPath + '/', data);
   }
 
-  public updateReward(id: string, data: IJsonApiItemPayload<IWRewardEntityAttributes>): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
+  public updateReward(id: string, data: IJsonApiPatchItem<IWRewardEntityAttributes>): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWRewardEntityAttributes>>(ApiConfig.rewardsPath + '/' + id, data);
   }
 
-  public getRewardTierList(page: number, id: string): Observable<IJsonApiListPayload<Partial<IWTierRewardCostsAttributes>[]>> {
+  public getRewardTierList(page: number, id: string): Observable<IJsonApiListPayload<IWTierRewardCostsAttributes, void>> {
     const params: any = {
       'page[number]': page ? page : 1,
       'page[size]': 20,
       'filter[entity_id]': id
     };
-    return this.http.get<IJsonApiListPayload<Partial<IWTierRewardCostsAttributes>[]>>(ApiConfig.rewardsTierPath, { params });
+    return this.http.get<IJsonApiListPayload<IWTierRewardCostsAttributes>>(ApiConfig.rewardsTierPath, { params });
   }
 
-  public getRewardTier(id: string): Observable<any> {
-    return this.http.get(ApiConfig.rewardsTierPath + `/${id}`);
+  public getRewardTier(id: string): Observable<IJsonApiItemPayload<IWTierRewardCostsAttributes>> {
+    return this.http.get<IJsonApiItemPayload<any>>(ApiConfig.rewardsTierPath + `/${id}`);
   }
 
-  public createRewardTier(data: IJsonApiItem<Partial<IWTierRewardCostsAttributes>>): Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>> {
-    return this.http.post<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>>(ApiConfig.rewardsTierPath, { data });
+  public createRewardTier(data: IJsonApiPostData<IWTierRewardCostsAttributes>): Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
+    return this.http.post<IJsonApiItem<IWTierRewardCostsAttributes>>(ApiConfig.rewardsTierPath, { data });
   }
 
-  public patchRewardTier(data: any): Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>> {
-    return this.http.patch<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>>(`${ApiConfig.rewardsTierPath}/${data.id}`, { data });
+  public patchRewardTier(data: IJsonApiPatchData<IWTierRewardCostsAttributes>): Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
+    return this.http.patch<IJsonApiItem<IWTierRewardCostsAttributes>>(`${ApiConfig.rewardsTierPath}/${data.id}`, { data });
   }
 
-  public deleteRewardTier(tier: IJsonApiItem<Partial<IWTierRewardCostsAttributes>>): any {
+  public deleteRewardTier(tier: IJsonApiPatchData<IWTierRewardCostsAttributes>): any {
     return this.http.delete(`${ApiConfig.rewardsTierPath}/${tier.id}`)
   }
-
 }

@@ -17,7 +17,7 @@ export interface IJsonApiItemPayload<T, S = any> {
 }
 
 export interface IJsonApiItem<T> {
-  id?: string;
+  id: string;
   type: string;
   links?: {
     self: string;
@@ -45,8 +45,8 @@ export interface IJsonApiPatchItem<T> {
 }
 
 export interface IJsonApiPatchData<T> {
-  attributes?: Partial<T>;
-  id: string;
+  attributes: Partial<T>;
+  id?: string;
   type: string;
   relationships?: any;
 }

@@ -29,8 +29,7 @@ export class PinataService {
   }
 
   public updatePinata(id: string, data: IPinataForm): Observable<IJsonApiItemPayload<IWPinataGameEngagementAttributes>> {
-    const sendData = EngagementHttpAdapter.transformFromPinataForm(data);
-    sendData.id = id;
+    const sendData = { ...EngagementHttpAdapter.transformFromPinataForm(data), id };
     return this.pinataHttpService.updatePinata(id, { data: sendData });
   }
 }

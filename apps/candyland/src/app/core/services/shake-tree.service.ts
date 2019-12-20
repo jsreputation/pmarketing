@@ -29,8 +29,7 @@ export class ShakeTreeService {
   }
 
   public updateShakeTree(id: string, data: any): Observable<IJsonApiItemPayload<IWTreeGameEngagementAttributes>> {
-    const sendData = EngagementHttpAdapter.transformFromShakeTheTreeForm(data);
-    sendData.id = id;
+    const sendData = { ...EngagementHttpAdapter.transformFromShakeTheTreeForm(data), id };
     return this.shakeHttpService.updateShakeTree(id, { data: sendData });
   }
 }

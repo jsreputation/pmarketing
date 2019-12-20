@@ -8,7 +8,9 @@ import {
   IWLoyaltyAttributes,
   IJsonApiItemPayload,
   IJsonApiItem,
-  IJsonApiListPayload
+  IJsonApiListPayload,
+  IJsonApiPostData,
+  IJsonApiPatchData
 } from '@perx/whistler';
 
 export class LoyaltyHttpAdapter {
@@ -31,7 +33,7 @@ export class LoyaltyHttpAdapter {
     return { data: formatData, meta: data.meta };
   }
 
-  public static transformFromLoyaltyForm(data: ILoyaltyForm): IJsonApiItem<IWLoyaltyAttributes> {
+  public static transformFromLoyaltyForm(data: ILoyaltyForm): IJsonApiPostData<IWLoyaltyAttributes> {
     return {
       type: 'programs',
       attributes: {
@@ -42,7 +44,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformLoyaltyStatus(status: string): IJsonApiItem<Partial<IWLoyaltyAttributes>> {
+  public static transformLoyaltyStatus(status: string): IJsonApiPatchData<IWLoyaltyAttributes> {
     return {
       type: 'programs',
       attributes: {
@@ -51,7 +53,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformFromBasicTierForm(data: ILoyaltyForm, loyaltyId: string): IJsonApiItem<IWBasicTierAttributes> {
+  public static transformFromBasicTierForm(data: ILoyaltyForm, loyaltyId: string): IJsonApiPostData<IWBasicTierAttributes> {
     return {
       type: 'basic_tiers',
       attributes: {
@@ -76,7 +78,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformFromCustomTierForm(data: ICustomTireForm, basicTierId: string): IJsonApiItem<IWCustomTierAttributes> {
+  public static transformFromCustomTierForm(data: ICustomTireForm, basicTierId: string): IJsonApiPostData<IWCustomTierAttributes> {
     return {
       type: 'custom_tiers',
       attributes: {

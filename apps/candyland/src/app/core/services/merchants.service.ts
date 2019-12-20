@@ -34,7 +34,7 @@ export class MerchantsService implements ITableService {
   public createMerchant(data: IMerchantForm): Observable<number> {
     const sendData = MerchantHttpAdapter.transformFromMerchantForm(data);
     let merchantId;
-    let request: any = this.merchantHttpService.createMerchant({ data: sendData }).pipe(
+    let request: Observable<any> = this.merchantHttpService.createMerchant({ data: sendData }).pipe(
       tap((merchant) => merchantId = merchant.data.id)
     );
     if ('branches' in data && data.branches && data.branches.length > 0) {
@@ -55,8 +55,7 @@ export class MerchantsService implements ITableService {
   }
 
   public updateMerchantBranch(id: string, data: MerchantBranch): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
-    const sendData = MerchantHttpAdapter.transformFromMerchantBranchForm(data, id);
-    sendData.id = data.id;
+    const sendData = { ...MerchantHttpAdapter.transformFromMerchantBranchForm(data, id), id };
     return this.merchantHttpService.updateMerchantBranch(data.id, { data: sendData });
   }
 
@@ -64,8 +63,7 @@ export class MerchantsService implements ITableService {
     id: string,
     data: IMerchantForm
   ): Observable<IJsonApiItemPayload<IWMerchantAttributes | IWMerchantBranchAttributes[]>> {
-    const sendData = MerchantHttpAdapter.transformFromMerchantForm(data);
-    sendData.id = id;
+    const sendData = { ...MerchantHttpAdapter.transformFromMerchantForm(data), id };
     let request$: any = this.merchantHttpService.updateMerchant(id, { data: sendData });
     if ('branches' in data && data.branches && data.branches.length > 0) {
       request$ = request$.pipe(

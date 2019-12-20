@@ -29,8 +29,7 @@ export class InstantRewardsService {
   }
 
   public updateInstantReward(id: string, data: IRewardForm): Observable<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>> {
-    const sendData = EngagementHttpAdapter.transformFromInstantRewardForm(data);
-    sendData.id = id;
+    const sendData = { ...EngagementHttpAdapter.transformFromInstantRewardForm(data), id };
     return this.instantRewardsHttpService.updateInstantReward(id, { data: sendData });
   }
 }

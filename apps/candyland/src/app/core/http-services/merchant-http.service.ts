@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
-import { IWMerchantAttributes, IWMerchantBranchAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWMerchantAttributes, IWMerchantBranchAttributes, IJsonApiItemPayload, IJsonApiPostItem, IJsonApiPatchItem } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class MerchantHttpService {
   constructor(private http: HttpClient) {
   }
 
-  public createMerchant(data: IJsonApiItemPayload<IWMerchantAttributes>): Observable<IJsonApiItemPayload<IWMerchantAttributes>> {
+  public createMerchant(data: IJsonApiPostItem<IWMerchantAttributes>): Observable<IJsonApiItemPayload<IWMerchantAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWMerchantAttributes>>(ApiConfig.merchantsPath + '/orgs', data);
   }
 
@@ -27,12 +27,12 @@ export class MerchantHttpService {
   }
 
   public createMerchantBranch(
-    data: IJsonApiItemPayload<IWMerchantBranchAttributes>
+    data: IJsonApiPostItem<IWMerchantBranchAttributes>
   ): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWMerchantBranchAttributes>>(ApiConfig.merchantsPath + '/branches', data);
   }
 
-  public updateMerchantBranch(id: string, data: IJsonApiItemPayload<IWMerchantBranchAttributes>):
+  public updateMerchantBranch(id: string, data: IJsonApiPatchItem<IWMerchantBranchAttributes>):
     Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWMerchantBranchAttributes>>(ApiConfig.merchantsPath + '/branches/' + id, data);
   }

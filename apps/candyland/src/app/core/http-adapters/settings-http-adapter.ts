@@ -3,7 +3,8 @@ import {
   IWIAMUserAttributes,
   IWTenantDisplayProperties,
   IWCognitoEndpointAttributes,
-  IJsonApiItem
+  IJsonApiItem,
+  IJsonApiPostData,
 } from '@perx/whistler';
 import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
 
@@ -13,8 +14,8 @@ export interface IColor {
 }
 
 export class SettingsHttpAdapter {
-  public static transformInviteUser(data: IAMUser): IJsonApiItem<IWIAMUserAttributes> {
-    const res: IJsonApiItem<IWIAMUserAttributes> = {
+  public static transformInviteUser(data: IAMUser): IJsonApiPostData<IWIAMUserAttributes> {
+    return {
       type: 'users',
       attributes: {
         username: data.name,
@@ -28,11 +29,6 @@ export class SettingsHttpAdapter {
         }
       }
     };
-    if (data.id) {
-      res.id = data.id;
-    }
-
-    return res;
   }
 
   private static transformToIAMUser(data: IJsonApiItem<IWIAMUserAttributes>): IAMUser {
@@ -179,7 +175,7 @@ export class SettingsHttpAdapter {
     };
   }
 
-  public static transformFromCognitoEndpoint(data: ICognitoEndpoint): IJsonApiItem<IWCognitoEndpointAttributes> {
+  public static transformFromCognitoEndpoint(data: ICognitoEndpoint): IJsonApiPostData<IWCognitoEndpointAttributes> {
     return {
       type: 'endpoints',
       attributes: {

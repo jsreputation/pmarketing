@@ -31,8 +31,7 @@ export class ScratchService {
   }
 
   public updateScratch(id: string, data: IScratchForm): Observable<IJsonApiItemPayload<IWScratchGameEngagementAttributes>> {
-    const sendData = EngagementHttpAdapter.transformFromScratchForm(data);
-    sendData.id = id;
+    const sendData = { ...EngagementHttpAdapter.transformFromScratchForm(data), id };
     return this.scratchHttpService.updateScratch(id, { data: sendData });
   }
 }

@@ -1,4 +1,10 @@
-import { IWInstantOutcomeLimitAttributes, IWSurveyLimitAttributes, IWGameLimitAttributes, IJsonApiItem } from '@perx/whistler';
+import {
+  IWInstantOutcomeLimitAttributes,
+  IWSurveyLimitAttributes,
+  IWGameLimitAttributes,
+  IJsonApiItem,
+  IJsonApiPostData
+} from '@perx/whistler';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 
 enum LimitsDurationToAPIMapping {
@@ -44,7 +50,7 @@ export class LimitsHttpAdapter {
     type: string,
     campaignId: number,
     engagementId: number
-  ): IJsonApiItem<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes> {
+  ): IJsonApiPostData<IWInstantOutcomeLimitAttributes | IWSurveyLimitAttributes | IWGameLimitAttributes> {
     switch (type) {
       case 'game':
         return {

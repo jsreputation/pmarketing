@@ -1,4 +1,4 @@
-import { IWOutcomeAttributes, IJsonApiItem } from '@perx/whistler';
+import { IWOutcomeAttributes, IJsonApiItem, IJsonApiPostData } from '@perx/whistler';
 
 import { ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
@@ -19,7 +19,7 @@ export class OutcomesHttpAdapter {
   public static transformFromOutcomes(
     data: ICampaignOutcome,
     campaignId: string,
-  ): IJsonApiItem<IWOutcomeAttributes> {
+  ): IJsonApiPostData<IWOutcomeAttributes> {
     return {
       type: 'possible_outcomes',
       attributes: {

@@ -9,6 +9,8 @@ import {
   WInformationCollectionSettingType,
   IJsonApiItem,
   IJsonApiListPayload,
+  IJsonApiPatchData,
+  IJsonApiPostData,
 } from '@perx/whistler';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
@@ -32,9 +34,10 @@ export class CampaignsHttpAdapter {
     draft: WCampaignStatus.draft
   };
 
-  public static transformCampaignStatus(status: CampaignStatus): IJsonApiItem<Partial<IWCampaignAttributes>> {
+  public static transformCampaignStatus(status: CampaignStatus): IJsonApiPatchData<IWCampaignAttributes> {
     return {
-      type: 'entities', attributes: {
+      type: 'entities',
+      attributes: {
         status: CampaignsHttpAdapter.Stat2WStat[status]
       }
     };
@@ -127,7 +130,7 @@ export class CampaignsHttpAdapter {
     };
   }
 
-  public static transformFromCampaign(data: ICampaign): IJsonApiItem<IWCampaignAttributes> {
+  public static transformFromCampaign(data: ICampaign): IJsonApiPostData<IWCampaignAttributes> {
     const startTime = data.campaignInfo.startTime ? data.campaignInfo.startTime : moment().format('LT');
     const endTime = data.campaignInfo.endTime ? data.campaignInfo.endTime : moment().format('LT');
     const startDate = data.campaignInfo.startDate
@@ -139,7 +142,8 @@ export class CampaignsHttpAdapter {
       ? data.campaignInfo.informationCollectionSetting
       : InformationCollectionSettingType.notRequired;
     return {
-      type: 'entities', attributes: {
+      type: 'entities',
+      attributes: {
         name: data.name,
         engagement_type: EngagementTypeAPIMapping[data.template.attributes_type] as WEngagementType,
         engagement_id: data.template.id,

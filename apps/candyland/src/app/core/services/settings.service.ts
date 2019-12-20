@@ -14,7 +14,7 @@ import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { Role } from '@cl-helpers/role.enum';
 import { IamUser } from '@cl-core/http-adapters/iam-user';
-import { IWIAMUserAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWIAMUserAttributes, IJsonApiItemPayload, IJsonApiPatchData, IJsonApiPostData } from '@perx/whistler';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { IReward } from '@perx/core';
 import { RoleLabelConfig } from '@cl-shared';
@@ -139,14 +139,14 @@ export class SettingsService implements ITableService {
   }
 
   public inviteNewUser(newUser: IAMUser): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
-    const formattedNewUser = SettingsHttpAdapter.transformInviteUser(newUser);
+    const formattedNewUser: IJsonApiPostData<IWIAMUserAttributes> = SettingsHttpAdapter.transformInviteUser(newUser);
     return this.settingsHttpService.inviteNewUser(formattedNewUser);
   }
 
   public patchUser(currentUser: IAMUser, updatedUser: IAMUser): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
     const id = currentUser.id;
     const userChanges = Utils.nestedObjectAssign(currentUser, updatedUser);
-    const formattedUserChanges = SettingsHttpAdapter.transformInviteUser(userChanges);
+    const formattedUserChanges: IJsonApiPatchData<IWIAMUserAttributes> = { ...SettingsHttpAdapter.transformInviteUser(userChanges), id };
     return this.settingsHttpService.patchUser(id, formattedUserChanges);
   }
 

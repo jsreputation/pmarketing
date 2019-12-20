@@ -2,7 +2,15 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IWLoyaltyAttributes, IWBasicTierAttributes, IWCustomTierAttributes, IJsonApiItemPayload, IJsonApiListPayload } from '@perx/whistler';
+import {
+  IWLoyaltyAttributes,
+  IWBasicTierAttributes,
+  IWCustomTierAttributes,
+  IJsonApiItemPayload,
+  IJsonApiListPayload,
+  IJsonApiPostItem,
+  IJsonApiPatchItem
+} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +21,18 @@ export class LoyaltyHttpService {
   }
 
   public getLoyalty(id: string, params: HttpParams): Observable<IJsonApiItemPayload<IWLoyaltyAttributes>> {
-    return this.http.get<IJsonApiItemPayload<any>>(`${ApiConfig.loyaltyPath}/${id}`, { params });
+    return this.http.get<IJsonApiItemPayload<IWLoyaltyAttributes>>(`${ApiConfig.loyaltyPath}/${id}`, { params });
   }
 
   public getLoyalties(params: HttpParams): Observable<IJsonApiListPayload<IWLoyaltyAttributes>> {
     return this.http.get<IJsonApiListPayload<IWLoyaltyAttributes>>(ApiConfig.loyaltyPath, { params });
   }
 
-  public createLoyalty(data: IJsonApiItemPayload<IWLoyaltyAttributes>): Observable<IJsonApiItemPayload<IWLoyaltyAttributes>> {
+  public createLoyalty(data: IJsonApiPostItem<IWLoyaltyAttributes>): Observable<IJsonApiItemPayload<IWLoyaltyAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWLoyaltyAttributes>>(ApiConfig.loyaltyPath + '/', data);
   }
 
-  public updateLoyalty(id: string, data: IJsonApiItemPayload<IWLoyaltyAttributes>): Observable<IJsonApiItemPayload<IWLoyaltyAttributes>> {
+  public updateLoyalty(id: string, data: IJsonApiPatchItem<IWLoyaltyAttributes>): Observable<IJsonApiItemPayload<IWLoyaltyAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWLoyaltyAttributes>>(ApiConfig.loyaltyPath + '/' + id, data);
   }
 
@@ -32,13 +40,13 @@ export class LoyaltyHttpService {
     return this.http.delete<IJsonApiItemPayload<IWLoyaltyAttributes>>(ApiConfig.loyaltyPath + '/' + id);
   }
 
-  public createBasicTier(data: IJsonApiItemPayload<IWBasicTierAttributes>): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
+  public createBasicTier(data: IJsonApiPostItem<IWBasicTierAttributes>): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWBasicTierAttributes>>(ApiConfig.loyaltyBasicTierPath, data);
   }
 
   public updateBasicTier(
     id: string,
-    data: IJsonApiItemPayload<IWBasicTierAttributes>
+    data: IJsonApiPatchItem<IWBasicTierAttributes>
   ): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWBasicTierAttributes>>(ApiConfig.loyaltyBasicTierPath + '/' + id, data);
   }
@@ -55,11 +63,11 @@ export class LoyaltyHttpService {
     return this.http.get<IJsonApiListPayload<IWCustomTierAttributes>>(ApiConfig.getLoyaltyCustomTierPath, { params });
   }
 
-  public createCustomTier(data: IJsonApiItemPayload<IWCustomTierAttributes>): Observable<IJsonApiItemPayload<IWCustomTierAttributes>> {
+  public createCustomTier(data: IJsonApiPostItem<IWCustomTierAttributes>): Observable<IJsonApiItemPayload<IWCustomTierAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWCustomTierAttributes>>(ApiConfig.getLoyaltyCustomTierPath, data);
   }
 
-  public updateCustomTier(id: string, data: IJsonApiItemPayload<IWCustomTierAttributes>):
+  public updateCustomTier(id: string, data: IJsonApiPatchItem<IWCustomTierAttributes>):
     Observable<IJsonApiItemPayload<IWCustomTierAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWCustomTierAttributes>>(ApiConfig.getLoyaltyCustomTierPath + '/' + id, data);
   }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IWSpinGameEngagementAttributes, IJsonApiItemPayload, IJsonApiPostItem } from '@perx/whistler';
+import { IWSpinGameEngagementAttributes, IJsonApiItemPayload, IJsonApiPostItem, IJsonApiPatchItem } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class SpinHttpService {
     return this.http.post<IJsonApiItemPayload<IWSpinGameEngagementAttributes>>(ApiConfig.engagementsPath + '/', data);
   }
 
-  public updateSpin(id: string, data: IJsonApiItemPayload<IWSpinGameEngagementAttributes>):
+  public updateSpin(id: string, data: IJsonApiPatchItem<IWSpinGameEngagementAttributes>):
     Observable<IJsonApiItemPayload<IWSpinGameEngagementAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWSpinGameEngagementAttributes>>(ApiConfig.engagementsPath + '/game/' + id, data);
   }

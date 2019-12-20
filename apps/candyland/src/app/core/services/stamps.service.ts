@@ -29,8 +29,7 @@ export class StampsService {
   }
 
   public updateStamp(id: string, data: IStampsEntityForm): Observable<IJsonApiItemPayload<IWStampEngagementAttributes>> {
-    const sendData = EngagementHttpAdapter.transformStamp(data);
-    sendData.id = id;
+    const sendData = { ...EngagementHttpAdapter.transformStamp(data), id };
     return this.stampHttpService.updateStamp(id, { data: sendData });
   }
 

@@ -2,25 +2,25 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IWInstantOutcomeEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWInstantOutcomeEngagementAttributes, IJsonApiItemPayload, IJsonApiPatchItem, IJsonApiPostItem } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InstantRewardsHttpService {
-
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   public getRewardData(): Observable<IRewardDefaultValue> {
     return this.http.get<IRewardDefaultValue>('assets/actives/reward/reward-data.json');
   }
 
-  public createRewardGame(data: any): Observable<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>> {
+  public createRewardGame(
+    data: IJsonApiPostItem<IWInstantOutcomeEngagementAttributes>
+  ): Observable<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>>(ApiConfig.engagementsPath + '/', data);
   }
 
-  public updateInstantReward(id: string, data: IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>):
+  public updateInstantReward(id: string, data: IJsonApiPatchItem<IWInstantOutcomeEngagementAttributes>):
     Observable<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>>
       (ApiConfig.engagementsPath + '/instant_reward/' + id, data);

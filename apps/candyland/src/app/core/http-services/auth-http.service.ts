@@ -11,9 +11,12 @@ export class AuthHttpService {
   constructor(private http: HttpClient) {
   }
 
-  public signIn(data: IJsonApiPostData<ILogin>): Observable<HttpResponse<IJsonApiItemPayload<IWLoginAttributes>>> {
+  public signIn(data: Partial<IJsonApiPostData<ILogin>>): Observable<HttpResponse<IJsonApiItemPayload<IWLoginAttributes>>> {
     return this.http.post<IJsonApiItemPayload<IWLoginAttributes>>(
-      ApiConfig.signIn, { data }, { observe: 'response', params: { include: 'groups,credentials' } });
+      ApiConfig.signIn,
+      { data },
+      { observe: 'response', params: { include: 'groups,credentials' } }
+    );
   }
 
   public getUser(id: string): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
