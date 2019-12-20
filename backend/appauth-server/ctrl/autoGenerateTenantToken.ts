@@ -59,7 +59,15 @@ function resolveTenant(accountId: string, rootToken: ICredentials): Promise<void
           if (!resultURL || !resultURL.accountId) {
             cache.set(tenantUrl, {
               accountId
-            }, 0);
+            }, 0, (setErr: Error) => {
+              console.log(setErr);
+              // @ts-ignore
+              cache.get(tenantUrl, (urlErr1: Error, resultURL1: IURLTableRowData) => {
+                console.log('accountid: ', accountId);
+                console.log('resultURL1: ', resultURL1);
+                console.log('=====================================');
+              });
+            });
           }
         });
       });
