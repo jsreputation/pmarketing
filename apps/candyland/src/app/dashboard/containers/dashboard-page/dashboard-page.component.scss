@@ -8,9 +8,12 @@
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
+    transition: max-height 0.35s cubic-bezier(0.35, 0, 0.25, 1);
+    transition-delay: 0.25s;
 
     .title, .lead, .dashboard-title, .dashboard-explore-cards {
       transition: opacity 0.15s cubic-bezier(0.35, 0, 0.25, 1);
+      transition-delay: 0;
     }
 
     .lead, .dashboard-title, .dashboard-explore-cards {
@@ -31,7 +34,7 @@
      margin-left: auto;
      padding-left: 0.8rem;
      transform: none;
-     transition: transform 0.15s cubic-bezier(0.35, 0, 0.25, 1);
+     transition: transform 0.35s cubic-bezier(0.35, 0, 0.25, 1);
     }
   }
 
@@ -40,6 +43,7 @@
 
     margin: $vertical-padding 0 ($vertical-padding * 0.75);
     color: $base-font-color;
+    transition: margin-top 0.35s cubic-bezier(0.35, 0, 0.25, 1);
   }
 
   &-explore-cards {
@@ -83,9 +87,26 @@
   }
 }
 
+@media (max-width: $desktop-width) {
+  .dashboard-insights-card-header .mat-tab-link {
+    flex-grow: 1;
+    padding: 0 0.4rem;
+  }
+
+  .dashboard-insights-card-header cl-range-date-picker-filter {
+    margin-right: ($horizontal-padding * 0.5);
+  }
+}
+
+@media (max-width: $desktop-width) {
+  .dashboard-welcome {
+    max-height: 60rem;
+  }
+}
+
 .dashboard-welcome.dismissed {
-  height: 0;
   margin: 0;
+  max-height: 0;
 
   .title, .lead, .dashboard-title, .dashboard-explore-cards {
     opacity: 0;
@@ -106,13 +127,3 @@
   }
 }
 
-@media (max-width: $desktop-width) {
-  .dashboard-insights-card-header .mat-tab-link {
-    flex-grow: 1;
-    padding: 0 0.4rem;
-  }
-
-  .dashboard-insights-card-header cl-range-date-picker-filter {
-    margin-right: ($horizontal-padding * 0.5);
-  }
-}
