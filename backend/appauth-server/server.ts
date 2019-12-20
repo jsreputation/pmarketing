@@ -15,7 +15,7 @@ import { themes } from './ctrl/themes';
 import { manifest } from './ctrl/manifest';
 import { language } from './ctrl/language';
 import { getCredentials } from './utils/credentials';
-import { getCredential } from './ctrl/autoGenerateTenantToken';
+import { getCredential } from './utils/autoGenerateTenantToken';
 
 import * as Sentry from '@sentry/node';
 // Express server
@@ -30,6 +30,8 @@ app.use('/static', express.static('static'));
 
 const PORT = process.env.PORT || 4000;
 const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
+const appPath = join(EXPRESS_DIST_FOLDER, '../../perx-microsite');
+
 const BASE_HREF = process.env.BASE_HREF || '/';
 const getTokens = process.env.IS_WHISTLER ? getCredential : getCredentials;
 app.options('*', cors());
@@ -46,13 +48,12 @@ app.post(`${BASE_HREF}cognito/users`, users(getTokens));
 
 app.post(`${BASE_HREF}themes`, themes(getTokens));
 
-app.get(`${BASE_HREF}manifest.webmanifest`, manifest(getTokens));
+app.get(`${BASE_HREF}manifest.webmanifest`, manifest(getTokens, appPath));
 
 app.get(`${BASE_HREF}lang`, language());
 
 if (process.env.PRODUCTION) {
-  const appPath = join(EXPRESS_DIST_FOLDER, '../../perx-microsite');
-  console.log('production mode ON');
+  console.log('production mode ON', appPath);
   app.set('view engine', 'html');
   app.set('views', appPath);
   // Serve static files from /../../perx-microsite

@@ -1,5 +1,4 @@
 import { IWRewardDisplayProperties } from '@perx/whistler';
-import { RedemptionType } from '../../perx-core.models';
 
 export interface IReward {
   id: number;
@@ -18,7 +17,6 @@ export interface IReward {
   merchantWebsite?: string;
   termsAndConditions: string;
   howToRedeem?: string;
-  redemptionType?: RedemptionType | null;
   categoryTags?: ICategoryTags[];
   inventory?: Inventory | null;
   redemptionText?: string;

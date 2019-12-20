@@ -148,7 +148,6 @@ const reward: IV4Reward = {
   merchant_website: 'test',
   terms_and_conditions: 'test',
   how_to_redeem: 'test',
-  redemption_type: RedemptionType.qr,
   tags: [],
   category_tags: [],
   inventory: { reward_limit_per_user: 1, reward_limit_per_user_balance: null },
@@ -156,6 +155,7 @@ const reward: IV4Reward = {
   merchant_logo_url: 'test',
   display_properties: undefined,
 };
+
 describe('V4MerchantsService', () => {
   let service: V4MerchantAdminService;
   beforeEach(() => TestBed.configureTestingModule({
