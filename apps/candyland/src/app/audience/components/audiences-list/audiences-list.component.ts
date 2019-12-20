@@ -7,6 +7,9 @@ import {
   OnDestroy
 } from '@angular/core';
 import { MatSort } from '@angular/material';
+
+import { IWAudiences } from '@perx/whistler';
+
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { IAudience } from '@cl-core/models/audiences/audiences';
 
