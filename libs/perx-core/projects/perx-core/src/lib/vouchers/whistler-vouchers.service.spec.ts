@@ -9,7 +9,7 @@ import {
   WAssignedStatus,
   IJsonApiItem,
   IJsonApiItemPayload,
-  IJsonApiListPayload,
+  IJsonApiListPayload
 } from '@perx/whistler';
 
 import { IVoucher } from './models/voucher.model';

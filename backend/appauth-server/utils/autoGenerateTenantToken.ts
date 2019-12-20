@@ -1,9 +1,9 @@
-import { getEndPoints } from './getEndPoints';
-import { getTenantsList } from './tenantsList';
+import { getEndPoints } from '../ctrl/getEndPoints';
+import { getTenantsList } from '../ctrl/tenantsList';
 import cacheManager from 'cache-manager';
 import { ICredentials } from '../types/apiConfig';
-import { getRootCredentials } from '../utils/credentialsWhistler';
-import { createToken } from './createToken';
+import { getRootCredentials } from './credentialsWhistler';
+import { createToken } from '../ctrl/createToken';
 import { IJsonApiItem, IWCognitoEndpointAttributes } from '@perx/whistler';
 
 const cache = cacheManager.caching({ store: 'memory', max: 100, ttl: 0 });
