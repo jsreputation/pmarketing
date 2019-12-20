@@ -8,6 +8,7 @@ import {
 import {
   map,
   tap,
+  share,
 } from 'rxjs/operators';
 
 import { IJsonApiListPayload } from '@perx/whistler';
@@ -85,7 +86,8 @@ export class WhistlerThemesService extends ThemesService {
       this.themeSettingEndpoint, themesRequest).pipe(
         map(res => res.data && res.data[0].attributes.display_properties),
         map((setting: IWSetting) => WhistlerThemesService.WThemeToTheme(setting)),
-        tap((theme: ITheme) => this.setActiveTheme(theme))
+        tap((theme: ITheme) => this.setActiveTheme(theme)),
+        share()
     );
     response.subscribe((themeSetting: ITheme) => this.responseCache.set(this.themeSettingEndpoint, themeSetting));
     return response;
