@@ -13,12 +13,12 @@ describe('RedeemComponent', () => {
   let component: RedeemComponent;
   let fixture: ComponentFixture<RedeemComponent>;
   const locationStub = {
-    back: () => {}
+    back: () => { }
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RedeemComponent ],
+      declarations: [RedeemComponent],
       imports: [
         RouterTestingModule,
         QRCodeModule,
@@ -27,13 +27,12 @@ describe('RedeemComponent', () => {
       providers: [
         {
           provide: ProfileService,
-          useValue: { whoAmI: () => of({})}
+          useValue: { whoAmI: () => of({}) }
         },
         {
           provide: ActivatedRoute,
           useValue: {
-            snapshot:
-            {
+            snapshot: {
               paramMap: convertToParamMap({ rewardId: 1 })
             }
           }
@@ -41,7 +40,7 @@ describe('RedeemComponent', () => {
         { provide: Location, useValue: locationStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -54,7 +53,7 @@ describe('RedeemComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it ('should set rewardId and reward details onInit', fakeAsync(() => {
+  it('should set rewardId and reward details onInit', fakeAsync(() => {
     const profileService: ProfileService = fixture.debugElement.injector.get<ProfileService>
       (ProfileService as Type<ProfileService>);
     const profileSpy = spyOn(profileService, 'whoAmI').and.returnValue(
