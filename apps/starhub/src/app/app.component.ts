@@ -108,8 +108,9 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
       )
       .subscribe((token: string) => {
         this.authenticationService.saveUserAccessToken(token);
-        this.fetchCampaigns();
       });
+
+    this.fetchPopupCampaigns();
 
     this.analytics.events$.subscribe(
       (event: IEvent) => {
@@ -150,7 +151,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     }
   }
 
-  private fetchCampaigns(): void {
+  private fetchPopupCampaigns(): void {
     this.campaignService.getCampaigns()
       .pipe(
         catchError(() => {
