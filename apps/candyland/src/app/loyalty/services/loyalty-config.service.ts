@@ -95,7 +95,8 @@ export class LoyaltyConfigService {
       this.configService.prepareStatusesLabel(),
     ).pipe(
       map(([statusLabel]) => ({
-        statusLabel
+        statusLabel,
+        matchType
       }))
     );
   }
