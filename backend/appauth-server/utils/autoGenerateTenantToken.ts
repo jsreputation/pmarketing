@@ -71,7 +71,8 @@ const getTargetUrl = (url: string) => {
     url = 'https://' + url + '/';
   }
   return url;
-}
+};
+
 export const getCredential = (url: string): Promise<ICredentials> => {
   url = getTargetUrl(url);
 
