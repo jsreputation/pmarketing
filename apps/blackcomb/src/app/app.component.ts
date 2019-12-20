@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   public leftIcon: string = '';
   public preAuth: boolean;
   public theme: ITheme;
-  public loaded: boolean = false;
+  public translationLoaded: boolean = false;
 
   constructor(
     private notificationService: NotificationService,
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
     this.config.readAppConfig()
       .pipe(switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
       .subscribe(() => {
-        this.loaded = true;
+        this.translationLoaded = true;
       });
     this.authService.$failedAuth.subscribe(
       res => {
