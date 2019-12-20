@@ -3,7 +3,7 @@ import { ICampaign, ICampaignService, IVoucherService, VoucherState, Voucher, Ca
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IAbensonConfig } from '../model//IAbenson.model';
+import { IAbensonConfig } from '../model/IAbenson.model';
 
 @Component({
   selector: 'app-home',
