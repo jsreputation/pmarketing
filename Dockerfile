@@ -25,9 +25,11 @@ FROM node:lts-alpine
 
 ARG app
 ARG appbase=${app}
+ARG iswhistler='false'
 RUN echo "stage 2:"
 RUN echo "app: ${app}"
 RUN echo "appbase: ${appbase}"
+RUN echo "iswhistler: ${iswhistler}"
 
 COPY --from=builder /service/apps/$appbase/dist/$appbase /service/perx-microsite/
 COPY --from=builder /service/backend/appauth-server /service/express/
@@ -36,13 +38,13 @@ RUN cat /service/perx-microsite/index.html
 
 WORKDIR /service/express
 ARG basehref='/'
+ARG iswhistler='false'
 
 ENV PORT=8000
 ENV PRODUCTION='true'
 ENV BASE_HREF=${basehref}
 ENV IS_WHISTLER=${iswhistler}
 RUN echo "IS_WHISTLER: ${IS_WHISTLER}"
-RUN echo "iswhistler: ${iswhistler}"
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
