@@ -115,7 +115,7 @@ const getTargetUrl = (url: string) => {
   if (url.includes('localhost')) {
     url = 'https://generic-blackcomb-dev1.uat.whistler.perxtech.io/';
   } else {
-    url += '/';
+    url = 'https://' + url + '/';
   }
   return url;
 }
