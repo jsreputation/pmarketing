@@ -10,6 +10,7 @@ import { WhistlerGameService } from './whist-game.service';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { ScratchCardComponent } from './scratch-card/scratch-card.component';
 import { SpinTheWheelComponent } from './spin-the-wheel/spin-the-wheel.component';
+import { SnakeComponent } from './snake/snake.component';
 
 export function gameServiceFactory(http: HttpClient, config: Config, vouchSvc: IVoucherService): IGameService {
   // Make decision on what to instantiate base on config
@@ -25,6 +26,7 @@ export function gameServiceFactory(http: HttpClient, config: Config, vouchSvc: I
     PinataComponent,
     ScratchCardComponent,
     SpinTheWheelComponent,
+    SnakeComponent,
   ],
   imports: [
     CommonModule
