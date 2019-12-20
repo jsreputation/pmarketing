@@ -44,15 +44,19 @@ function resolveTenant(accountId: string, rootToken: ICredentials): Promise<void
         tenantCredential.basic_token = result.token;
       }
       const tenantEndPointRawData = await getEndPoints(tenantCredential);
-      console.log('accountid: ', accountId);
-      console.log('tenantEndPointRawData: ', tenantEndPointRawData.data.data);
-      console.log('=====================================');
       const tenantURLs = tenantEndPointRawData.data.data;
       tenantURLs.forEach((tenantURLData: IJsonApiItem<IWCognitoEndpointAttributes>) => {
         const tenantUrl = tenantURLData.attributes.url;
+
+        console.log('accountid: ', accountId);
+        console.log('tenantEndPointRawData: ', tenantURLData.attributes.url);
+        console.log('=====================================');
         // @ts-ignore
         cache.get(tenantUrl, (urlErr: Error, resultURL: IURLTableRowData) => {
-          if (!resultURL) {
+          console.log('accountid: ', accountId);
+          console.log('resultURL: ', resultURL);
+          console.log('=====================================');
+          if (!resultURL || !resultURL.accountId) {
             cache.set(tenantUrl, {
               accountId
             }, 0);
@@ -133,7 +137,11 @@ export const getCredential = (url: string): Promise<ICredentials> => {
         // @ts-ignore
         cache.get(url, (urlErrNest: Error, newResult: IURLTableRowData) => {
           if (newResult && newResult.accountId) {
+            console.log('newResult: ', newResult);
+            console.log('=====================================');
             cache.get(newResult.accountId, (__: Error, newTokenResult: ITokenTableRowData) => {
+              console.log('newTokenResult: ', newTokenResult);
+              console.log('=====================================');
               resolve(cbFn(newTokenResult, rootToken.target_url));
             });
           }
@@ -141,6 +149,8 @@ export const getCredential = (url: string): Promise<ICredentials> => {
       } else {
         // @ts-ignore
         cache.get(result.accountId, (urlErrNest: Error, tokenResult: ITokenTableRowData) => {
+          console.log('tokenResult: ', tokenResult);
+          console.log('=====================================');
           resolve(cbFn(tokenResult, rootToken.target_url));
         });
       }
