@@ -148,7 +148,7 @@ describe('WalletComponent', () => {
     expect(voucherServiceSpy).toHaveBeenCalled();
   }));
 
-  it('', () => {
+  it('should redirect to voucher detail on voucher selected', () => {
     const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
     const routerSpy = spyOn(router, 'navigate');
     component.voucherSelected(voucher[0]);
