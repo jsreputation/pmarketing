@@ -1,15 +1,15 @@
 import { ChangeDetectorRef, Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup, FormArray } from '@angular/forms';
 import { AudiencesService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, takeUntil, toArray } from 'rxjs/operators';
 import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { ActivatedRoute } from '@angular/router';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
-import { Subject } from 'rxjs';
+import { Subject, range, Observable } from 'rxjs';
 import Utils from '@cl-helpers/utils';
 
 @Component({
@@ -24,10 +24,15 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   public isFirstInit: boolean;
   public triggerLabelsChip: boolean;
   public campaignId: string;
+  public audienceFiltersEnabled: boolean = false;
   protected destroy$: Subject<void> = new Subject();
 
   @Input()
   public pools: any;
+
+  public get ageRange(): Observable<number[]> {
+    return range(1, 100).pipe(toArray());
+  }
 
   public get campaignInfo(): AbstractControl | null {
     return this.form.get('campaignInfo');
@@ -59,6 +64,14 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
 
   public get audience(): AbstractControl | null {
     return this.form.get('audience');
+  }
+
+  public get filters(): FormGroup | null {
+    return this.form.get('audience.filters') as FormGroup;
+  }
+
+  public get ages(): FormArray | null {
+    return this.form.get('audience.filters.ages') as FormArray;
   }
 
   public get pool(): AbstractControl | null {
@@ -151,5 +164,9 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
       .subscribe((data: any) => {
         this.pools = data;
       });
+  }
+
+  public addAge(): void {
+    this.ages.push(this.newCampaignDetailFormService.createAge());
   }
 }
