@@ -112,7 +112,8 @@ const getTargetUrl = (url: string) => {
 }
 export const getCredential = (url: string): Promise<ICredentials> => {
   url = getTargetUrl(url);
-
+  console.log('the url is: ', url);
+  console.log('=====================================');
   const credential: ICredentials = {
     target_url: '',
     basic_token: '',
@@ -129,11 +130,16 @@ export const getCredential = (url: string): Promise<ICredentials> => {
     // @ts-ignore
     cache.get(url, async (urlErr: Error, result: IURLTableRowData) => {
       const rootToken: ICredentials = await getRootCredentials();
-
+      console.log('the result is: ', result);
+      console.log('=====================================');
       if (!result || !result.accountId) {
         try {
           await updateMapping(rootToken);
-        } catch (err) { reject(err); }
+        } catch (err) {
+          console.log('the mapping error is: ', err);
+          console.log('=====================================');
+          reject(err);
+        }
         // @ts-ignore
         cache.get(url, (urlErrNest: Error, newResult: IURLTableRowData) => {
           if (newResult && newResult.accountId) {
