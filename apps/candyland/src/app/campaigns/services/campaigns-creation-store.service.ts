@@ -15,6 +15,7 @@ export interface ICampaignConfig {
   goals: ICampaignChoice[];
   channelTypes: ICampaignChoice[];
   informationCollectionSettingTypes: ICampaignChoice[];
+  genderTypes: ICampaignChoice[];
 }
 
 @Injectable()
@@ -65,6 +66,11 @@ export class CampaignCreationStoreService {
       { title: 'CAMPAIGN.InformationCollectionSettingTypes.NO_INFORMATION', value: 'not_required' },
       { title: 'CAMPAIGN.InformationCollectionSettingTypes.PI_INFORMATION', value: 'pi_required' },
       { title: 'CAMPAIGN.InformationCollectionSettingTypes.SIGNUP_INFORMATION', value: 'signup_required' },
+    ],
+    genderTypes: [
+      { title: 'CAMPAIGN.GenderTypes.MALE', value: 'male' },
+      { title: 'CAMPAIGN.GenderTypes.FEMALE', value: 'female' },
+      { title: 'CAMPAIGN.GenderTypes.NOT_SPECIFY', value: 'not_specify' },
     ]
   };
 
