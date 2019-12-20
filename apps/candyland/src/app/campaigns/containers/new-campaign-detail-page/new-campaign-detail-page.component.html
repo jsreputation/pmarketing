@@ -48,7 +48,8 @@
         </mat-checkbox>
       </div>
       <!--labels-->
-      <cl-chip-list class="card-row" [addOnBlur]="isFirstInit && triggerLabelsChip" [formControl]="campaignInfo.get('labels')"></cl-chip-list>
+      <cl-chip-list class="card-row" [addOnBlur]="isFirstInit && triggerLabelsChip"
+        [formControl]="campaignInfo.get('labels')"></cl-chip-list>
     </div>
   </mat-expansion-panel>
   <!--Select channel-->
@@ -160,6 +161,55 @@
             {{'ERROR_REQUIRED' | translate}}.
           </mat-error>
         </mat-form-field>
+      </div>
+      <div class="card-row">
+        <mat-checkbox color="primary" [(ngModel)]="audienceFiltersEnabled" [disabled]="!audience.get('select').value">
+          {{'CAMPAIGN.AUDIENCE_FILTER' | translate}}
+        </mat-checkbox>
+      </div>
+      <div *ngIf="audienceFiltersEnabled">
+        <div class="card-section">
+          <div class="card-header">
+            <h3 class="card-title">
+              {{'CAMPAIGN.AGE' | translate}}
+            </h3>
+            <mat-slide-toggle [formControl]="filters.get('agesEnabled')"></mat-slide-toggle>
+          </div>
+          <div class="card-content">
+            <div class="card-row" *ngFor="let age of ages.controls">
+              <mat-form-field>
+                <mat-select [formControl]="age.get('from')">
+                  <mat-option *ngFor="let fromAge of ageRange | async;" [value]="fromAge">{{fromAge}} 
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <span>
+                {{'TO' | translate}}
+              </span>
+              <mat-form-field>
+                <mat-select [formControl]="age.get('to')">
+                  <mat-option *ngFor="let toAge of ageRange | async;" [value]="toAge">{{toAge}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <cl-button classList="tertiary ph-0" (click)="addAge()">{{'CAMPAIGN.ADD_AGE_RANGE' | translate}}</cl-button>
+          </div>
+        </div>
+        <div class="card-section">
+          <div class="card-header">
+            <h3 class="card-title">
+              {{'CAMPAIGN.GENDER' | translate}}
+            </h3>
+            <mat-slide-toggle [formControl]="filters.get('genderEnabled')"></mat-slide-toggle>
+          </div>
+          <div class="card-content">
+            <mat-radio-group color="primary" [formControl]="filters.get('gender')">
+              <ng-container *ngFor="let type of config?.genderTypes">
+                <mat-radio-button [value]="type?.value">{{type?.title | translate}}</mat-radio-button>
+              </ng-container>
+            </mat-radio-group>
+          </div>
+        </div>
       </div>
     </div>
   </mat-expansion-panel>
