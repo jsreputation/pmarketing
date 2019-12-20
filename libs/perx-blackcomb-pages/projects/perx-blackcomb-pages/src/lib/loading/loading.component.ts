@@ -61,10 +61,6 @@ export class LoadingComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.authService.deleteExpressTokenCache('owner').subscribe(
-      () => console.log,
-      () => console.log
-    );
     this.configService.readAppConfig().subscribe((conf) => this.appConfig = conf);
     const params = this.route.snapshot.queryParams;
     (window as any).primaryIdentifier = params.pi;

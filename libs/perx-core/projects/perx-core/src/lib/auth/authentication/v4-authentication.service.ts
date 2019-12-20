@@ -418,9 +418,4 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   public mergeUserById(fromIds: number[], toId: number): Observable<void> {
     return throwError('Not implement yet');
   }
-
-  // @ts-ignore
-  public deleteExpressTokenCache(accountId: string): Observable<any> {
-    return throwError('Not implement yet');
-  }
 }

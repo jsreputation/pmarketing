@@ -48,7 +48,6 @@ enum APIAttributesMap {
 export class WhistlerAuthenticationService extends AuthenticationService implements AuthService {
   private apiHost: string;
   private preAuthEndpoint: string;
-  private deleteTokenCacheEndPoint: string;
   private createUsersEndPoint: string;
   private lastURL: string;
   private retries: number = 0;
@@ -65,11 +64,9 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     if (!config.production) {
       this.preAuthEndpoint = 'http://localhost:4000/cognito/login';
       this.createUsersEndPoint = 'http://localhost:4000/cognito/users';
-      this.deleteTokenCacheEndPoint = 'http://localhost:4000/delete_cache';
     } else {
       this.preAuthEndpoint = config.baseHref + 'cognito/login';
       this.createUsersEndPoint = config.baseHref + 'cognito/users';
-      this.deleteTokenCacheEndPoint = config.baseHref + 'delete_cache';
     }
     this.$failedAuthObservableSubject = new Subject();
   }
@@ -354,13 +351,5 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
         }
       }
     );
-  }
-
-  public deleteExpressTokenCache(accountId: string): Observable<any> {
-    const bodyData = {
-      url: location.host,
-      accountId
-    };
-    return this.http.post<string>(this.deleteTokenCacheEndPoint, bodyData);
   }
 }

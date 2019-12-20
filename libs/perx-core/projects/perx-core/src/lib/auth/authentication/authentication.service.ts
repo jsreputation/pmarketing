@@ -148,6 +148,4 @@ export abstract class AuthenticationService implements AuthService {
   public abstract saveUserId(id: number): void;
 
   public abstract mergeUserById(fromIds: number[], toId: number): Observable<void>;
-
-  public abstract deleteExpressTokenCache(accountId: string): Observable<any>;
 }

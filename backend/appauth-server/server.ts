@@ -15,7 +15,7 @@ import { themes } from './ctrl/themes';
 import { manifest } from './ctrl/manifest';
 import { language } from './ctrl/language';
 import { getCredentials } from './utils/credentials';
-import { getCredential, removeCredentialCache } from './ctrl/autoGenerateTenantToken';
+import { getCredential } from './ctrl/autoGenerateTenantToken';
 
 import * as Sentry from '@sentry/node';
 // Express server
@@ -46,8 +46,6 @@ app.post(`${BASE_HREF}cognito/login`, login(getTokens));
 app.post(`${BASE_HREF}cognito/users`, users(getTokens));
 
 app.post(`${BASE_HREF}themes`, themes(getTokens));
-
-app.post(`${BASE_HREF}delete_cache`, removeCredentialCache());
 
 app.get(`${BASE_HREF}manifest.webmanifest`, manifest(getTokens));
 
