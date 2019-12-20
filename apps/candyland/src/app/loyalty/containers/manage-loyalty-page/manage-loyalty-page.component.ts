@@ -278,9 +278,11 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   private getSaveOnThirdStep(): Observable<boolean> {
     const ruleSets = [this.basicTierRuleSet, ...Utils.convertObjToArr(this.customTierRuleSetMap)];
     const ruleSetRequests = [];
-    ruleSets.forEach((ruleSet: ILoyaltyRuleSet) =>
-      ruleSetRequests.push(this.ruleService.updateRuleSet(ruleSet))
-    );
+    ruleSets.forEach((ruleSet: ILoyaltyRuleSet) => {
+      if (ruleSet.rules.length > 1) {
+        ruleSetRequests.push(this.ruleService.updateRuleSet(ruleSet));
+      }
+    });
     return combineLatest(ruleSetRequests)
       .pipe(
         map(response => !!response),
