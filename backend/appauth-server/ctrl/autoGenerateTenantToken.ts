@@ -32,6 +32,7 @@ function resolveTenant(accountId: string, rootToken: ICredentials): Promise<void
       if (!result || !result.token) {
         // otherwise fetch it and put in cache
         const createTokenData = await createToken(rootToken, accountId);
+        console.log('accountid: ', accountId);
         console.log('createTokenData: ', createTokenData.headers.authorization);
         console.log('=====================================');
         const token = createTokenData.headers.authorization;
@@ -43,6 +44,7 @@ function resolveTenant(accountId: string, rootToken: ICredentials): Promise<void
         tenantCredential.basic_token = result.token;
       }
       const tenantEndPointRawData = await getEndPoints(tenantCredential);
+      console.log('accountid: ', accountId);
       console.log('tenantEndPointRawData: ', tenantEndPointRawData.data.data);
       console.log('=====================================');
       const tenantURLs = tenantEndPointRawData.data.data;
