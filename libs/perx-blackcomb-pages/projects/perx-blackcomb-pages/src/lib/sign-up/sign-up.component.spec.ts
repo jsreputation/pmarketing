@@ -120,7 +120,7 @@ describe('SignUpComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('', () => {
+  describe('onInit', () => {
     it('should call readAppConfig, getThemeSetting, getSignupForm, getPI, getUserAccessToken, getAnonymous, getAppAccessToken, getState and appAccessTokenFetched to be true', fakeAsync(() => {
       const configService: ConfigService = fixture.debugElement.injector.get<ConfigService>(
         ConfigService as Type<ConfigService>
