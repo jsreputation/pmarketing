@@ -18,18 +18,20 @@ import { V4FormsService } from './v4-forms.service';
 
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { UtilsModule } from '../../utils/utils.module';
+import { Router } from '@angular/router';
 
 export function AuthServiceFactory(
   http: HttpClient,
   config: Config,
   tokenStorage: TokenStorage,
   profileService: ProfileService,
+  router: Router
 ): AuthenticationService {
   // Make decision on what to instantiate based on config
   if (config.isWhistler) {
     return new WhistlerAuthenticationService(config, http, tokenStorage);
   }
-  return new V4AuthenticationService(config, http, tokenStorage, profileService);
+  return new V4AuthenticationService(config, http, tokenStorage, profileService, router);
 }
 
 export function FormsServiceFactory(config: Config, http: HttpClient): IFormsService {
@@ -54,7 +56,7 @@ export function FormsServiceFactory(config: Config, http: HttpClient): IFormsSer
     {
       provide: AUTH_SERVICE,
       useFactory: AuthServiceFactory,
-      deps: [HttpClient, Config, TokenStorage, ProfileService]
+      deps: [HttpClient, Config, TokenStorage, ProfileService, Router]
     },
     { provide: IFormsService, useFactory: FormsServiceFactory, deps: [Config, HttpClient] }
   ]

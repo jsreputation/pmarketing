@@ -17,6 +17,7 @@ import { Config } from '../../config/config';
 import { IV4ProfileResponse, V4ProfileService } from '../../profile/v4-profile.service';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { oc } from 'ts-optchain';
+import { Router } from '@angular/router';
 
 interface IV4SignUpData {
   first_name?: string;
@@ -56,12 +57,13 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   private retries: number = 0;
   private maxRetries: number = 2;
   public $failedAuthObservable: Observable<boolean>;
-
+  public preauth: boolean = false;
   constructor(
     config: Config,
     private http: HttpClient,
     private tokenStorage: TokenStorage,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private router: Router
   ) {
     super();
     if (!config.production) {
@@ -70,6 +72,9 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     } else {
       this.appAuthEndPoint = config.baseHref + 'v2/oauth';
       this.userAuthEndPoint = config.baseHref + 'v4/oauth';
+    }
+    if(config.preAuth) {
+      this.preauth = config.preAuth;
     }
     this.customersEndPoint = config.apiHost + '/v4/customers';
     this.$failedAuthObservable = new Observable();
@@ -86,10 +91,14 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     return of(!!token);
   }
 
-  // To be refactor, current not in use
   public refreshToken(): Observable<any> {
-    console.log('No refresh token function required for v*, always pass true to ngx-auth');
-    return of(true);
+    if(!this.preauth) {
+      this.autoLogin().pipe(tap(()=>this.router.navigate(['home'])))
+      return of(true);
+    } 
+    this.logout();
+    this.router.navigate(['login']);
+    return of(null);
   }
 
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
