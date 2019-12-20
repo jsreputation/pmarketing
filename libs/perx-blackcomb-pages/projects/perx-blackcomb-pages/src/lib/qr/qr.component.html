@@ -1,9 +1,12 @@
 <div class="main-container">
-  <div class="top-section" *ngIf="rewardDetails && appConfig && theme">
+  <div class="top-section" *ngIf="rewardDetails && appConfig && theme; else ghostQR"  >
     <qrcode [qrdata]="rewardDetails" [size]="150"></qrcode>
     <h4 translate>QR_TO_MERCHANT</h4>
     <h5 *ngIf="appConfig.showQrPageSubtitle">Thank you for shopping at {{theme.properties['--title']}}!</h5>
   </div>
+  <ng-template #ghostQR>
+    <div class="top-section"></div>
+  </ng-template>
   <button mat-stroked-button color="primary" (click)="onCancel()">
     {{'CANCEL' | translate }}
   </button>
