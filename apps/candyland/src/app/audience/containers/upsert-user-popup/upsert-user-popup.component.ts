@@ -42,8 +42,27 @@ export class UpsertUserPopupComponent implements OnInit {
     { title: 'Female', value: 'female' }
   ];
 
+  private initAudienceList(): void {
+    if (!(this.data && this.data.formData)) {
+      return;
+    }
+
+    const userPools: string = this.data.formData.pools;
+    const userAudienceList: any[] = this.pools.filter( (pool) => userPools.includes(pool.name));
+    const valuesAudienceList: string[] = userAudienceList.map( (audience) => audience.value);
+    this.audienceList.setValue(valuesAudienceList);
+  }
+
   private loadCountries(): void {
     this.countriesList$ = this.surveyService.getDefaultCountryCode();
+  }
+
+  private loadPools(): void {
+    this.audiencesService.getAudiencesList()
+      .subscribe((data) => {
+        this.pools = data;
+        this.initAudienceList();
+      });
   }
 
   constructor(
@@ -98,7 +117,7 @@ export class UpsertUserPopupComponent implements OnInit {
   public ngOnInit(): void {
     this.loadCountries();
     this.initForm();
-    this.getPools();
+    this.loadPools();
   }
 
   public close(): void {
@@ -162,10 +181,5 @@ export class UpsertUserPopupComponent implements OnInit {
       };
     }
     this.form = this.fb.group(controlsConfig);
-  }
-
-  private getPools(): void {
-    this.audiencesService.getAudiencesList()
-      .subscribe((data) => this.pools = data);
   }
 }

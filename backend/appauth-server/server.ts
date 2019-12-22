@@ -33,7 +33,8 @@ const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
 const appPath = join(EXPRESS_DIST_FOLDER, '../../perx-microsite');
 
 const BASE_HREF = process.env.BASE_HREF || '/';
-const getTokens = process.env.IS_WHISTLER ? getCredential : getCredentials;
+const IS_WHISTLER = process.env.IS_WHISTLER;
+const getTokens = IS_WHISTLER ? getCredential : getCredentials;
 app.options('*', cors());
 
 app.get('/preauth', preauth(getTokens));
@@ -70,6 +71,7 @@ app.use(Sentry.Handlers.errorHandler());
 // Start up the Node server
 const server = app.listen(PORT, () => {
   console.log(`Node server listening on http://localhost:${PORT}`);
+  console.log(`Node server is whistler: ${IS_WHISTLER}`);
 });
 
 const processInterruption = (signals: NodeJS.Signals) => {
