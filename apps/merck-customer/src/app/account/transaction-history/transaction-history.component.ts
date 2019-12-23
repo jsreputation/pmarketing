@@ -29,7 +29,8 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
   private pageSize: number = 10;
   // @ts-ignore
   private labelIndex: number = 0;
-  constructor(private loyaltyService: LoyaltyService,
+  constructor(
+    private loyaltyService: LoyaltyService,
     private datePipe: DatePipe,
     private transactionPipe: TransactionPipe) {
   }
@@ -65,7 +66,7 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
 
   public onScroll(): void {
     forkJoin(this.transactions, this.loyaltyService.getTransactionHistory(this.pageNumber, this.pageSize))
-      .subscribe((val) => this.transactions = of([...val[0], ...val[1]]))
+      .subscribe((val) => this.transactions = of([...val[0], ...val[1]]));
     this.pageNumber++;
   }
 
