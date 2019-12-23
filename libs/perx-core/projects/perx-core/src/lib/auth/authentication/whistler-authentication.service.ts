@@ -140,6 +140,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
           const pi = (window as any).primaryIdentifier || this.getPI();
           this.savePI(pi);
           this.saveUserId(Number.parseInt(res.data[0].id, 10));
+          this.saveAnonymous(false);
           this.saveUserAccessToken(userBearer);
         }
       ),
