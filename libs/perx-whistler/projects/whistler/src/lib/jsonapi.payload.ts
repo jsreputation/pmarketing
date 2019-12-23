@@ -25,11 +25,12 @@ export interface IJsonApiItem<T> {
   attributes: T;
   relationships?: {
     [source: string]: {
-      links: {
+      links?: {
         self: string;
         related: string;
       },
-      data?: IWRelationshipsDataType[] | IWRelationshipsDataType
+      // data?: IWRelationshipsDataType[] | IWRelationshipsDataType
+      data?: any
     }
   };
 }
@@ -44,7 +45,7 @@ export interface IJsonApiPatchItem<T> {
 }
 
 export interface IJsonApiPatchData<T> {
-  attributes?: Partial<T>;
+  attributes: Partial<T>;
   id: string;
   type: string;
   relationships?: any;
@@ -55,7 +56,7 @@ export interface IJsonApiPostItem<T> {
 }
 
 export interface IJsonApiPostData<T> {
-  type?: string;
+  type: string;
   attributes: T;
   relationships?: any;
 }

@@ -1,4 +1,4 @@
-import { IWDocumentAttributes } from '@perx/whistler';
+import { IWDocumentAttributes, IJsonApiItem } from '@perx/whistler';
 export class FileUploadAdapter {
   public static transformToUploadedImage(data: any): IUploadedFile {
     return {
