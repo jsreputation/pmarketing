@@ -4,7 +4,7 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 import { LimitsHttpsService } from '@cl-core/http-services/limits-https.service';
 import { map } from 'rxjs/operators';
 import { LimitsHttpAdapter } from '@cl-core/http-adapters/limits-http-adapter';
-import { IWLimitAttributes } from '@perx/whistler';
+import { IWLimitAttributes, IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '@perx/whistler';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 
 @Injectable({
@@ -31,7 +31,7 @@ export class LimitsService {
     type: string,
     campaignId: number,
     engagementId: number
-  ): Observable<IJsonApiPayload<IWLimitAttributes> | void> {
+  ): Observable<IJsonApiItemPayload<IWLimitAttributes> | void> {
     // if times is empty, limit should actually be deleted
     if (!data.times || data.times === null) {
       return this.limitsHttpsService.deleteLimit(type, id);
@@ -45,13 +45,13 @@ export class LimitsService {
     type: string,
     campaignId: number,
     engagementId: number
-  ): Observable<IJsonApiPayload<IWLimitAttributes> | void> {
+  ): Observable<IJsonApiItemPayload<IWLimitAttributes> | void> {
     // if times is empty limit should actully not be created
     if (!data.times || data.times === null) {
       return of(void 0);
     }
     const sendData = LimitsHttpAdapter.transformFromLimits(data, type, campaignId, engagementId);
-    return this.limitsHttpsService.createLimit({data: sendData}, type);
+    return this.limitsHttpsService.createLimit({ data: sendData }, type);
   }
 
   public deleteLimit(type: string, limitId: number): Observable<void> {

@@ -6,7 +6,7 @@ import { MerchantHttpService } from '@cl-core/http-services/merchant-http.servic
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { IWMerchantAttributes, IWMerchantBranchAttributes } from '@perx/whistler';
+import { IWMerchantAttributes, IWMerchantBranchAttributes, IJsonApiItemPayload } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -23,23 +23,23 @@ export class MerchantsService implements ITableService {
     params.include = 'branches';
     return this.datastore.findAll<Merchant>(Merchant, params)
       .pipe(
-        map(response => ({data: response.getModels(), meta: response.getMeta().meta}))
+        map(response => ({ data: response.getModels(), meta: response.getMeta().meta }))
       );
   }
 
   public getMerchant(id: string): Observable<Merchant | null> {
-    return id !== null ? this.datastore.findRecord<Merchant>(Merchant, id, {include: 'branches'}) : of(null);
+    return id !== null ? this.datastore.findRecord<Merchant>(Merchant, id, { include: 'branches' }) : of(null);
   }
 
   public createMerchant(data: IMerchantForm): Observable<number> {
     const sendData = MerchantHttpAdapter.transformFromMerchantForm(data);
     let merchantId;
-    let request: any = this.merchantHttpService.createMerchant({data: sendData}).pipe(
+    let request: Observable<any> = this.merchantHttpService.createMerchant({ data: sendData }).pipe(
       tap((merchant) => merchantId = merchant.data.id)
     );
     if ('branches' in data && data.branches && data.branches.length > 0) {
       request = request.pipe(
-        switchMap((merchant: IJsonApiPayload<IWMerchantAttributes>) => {
+        switchMap((merchant: IJsonApiItemPayload<IWMerchantAttributes>) => {
           const id = merchant.data.id;
           const branchRequests$ = data.branches.map(branch => this.createMerchantBranch(id, branch));
           return combineLatest(branchRequests$);
@@ -49,24 +49,25 @@ export class MerchantsService implements ITableService {
     return request.pipe(map(() => merchantId));
   }
 
-  public createMerchantBranch(merchantId: string, data: MerchantBranch): Observable<IJsonApiPayload<IWMerchantBranchAttributes>> {
+  public createMerchantBranch(merchantId: string, data: MerchantBranch): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
     const sendData = MerchantHttpAdapter.transformFromMerchantBranchForm(data, merchantId);
-    return this.merchantHttpService.createMerchantBranch({data: sendData});
+    return this.merchantHttpService.createMerchantBranch({ data: sendData });
   }
 
-  public updateMerchantBranch(id: string, data: MerchantBranch): Observable<IJsonApiPayload<IWMerchantBranchAttributes>> {
-    const sendData = MerchantHttpAdapter.transformFromMerchantBranchForm(data, id);
-    sendData.id = data.id;
-    return this.merchantHttpService.updateMerchantBranch(data.id, {data: sendData});
+  public updateMerchantBranch(id: string, data: MerchantBranch): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
+    const sendData = { ...MerchantHttpAdapter.transformFromMerchantBranchForm(data, id), id };
+    return this.merchantHttpService.updateMerchantBranch(data.id, { data: sendData });
   }
 
-  public updateMerchant(id: string, data: IMerchantForm): Observable<IJsonApiPayload<IWMerchantAttributes | IWMerchantBranchAttributes[]>> {
-    const sendData = MerchantHttpAdapter.transformFromMerchantForm(data);
-    sendData.id = id;
-    let request$: any = this.merchantHttpService.updateMerchant(id, {data: sendData});
+  public updateMerchant(
+    id: string,
+    data: IMerchantForm
+  ): Observable<IJsonApiItemPayload<IWMerchantAttributes | IWMerchantBranchAttributes[]>> {
+    const sendData = { ...MerchantHttpAdapter.transformFromMerchantForm(data), id };
+    let request$: any = this.merchantHttpService.updateMerchant(id, { data: sendData });
     if ('branches' in data && data.branches && data.branches.length > 0) {
       request$ = request$.pipe(
-        switchMap((merchant: IJsonApiPayload<IWMerchantAttributes>) => {
+        switchMap((merchant: IJsonApiItemPayload<IWMerchantAttributes>) => {
           const merchantId = merchant.data.id;
           const branchRequests$ = data.branches.map(branch => {
             if (branch.id) {
