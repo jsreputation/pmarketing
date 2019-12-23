@@ -22,6 +22,7 @@ import {
   AuthenticationService,
   NotificationService,
   SurveyService,
+  ConfigService,
 } from '@perx/core';
 
 import { SignInComponent } from './sign-in.component';
@@ -50,7 +51,11 @@ describe('SignInComponent', () => {
     getPI: () => '',
     getUserAccessToken: () => '',
     getAnonymous: () => true,
-    logout: () => {}
+    logout: () => { }
+  };
+
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({ redirectAfterLogin: '/home' })
   };
 
   const surveyServiceStub: Partial<SurveyService> = {
@@ -78,6 +83,7 @@ describe('SignInComponent', () => {
         { provide: InstantOutcomeService, useValue: instantOutcomeServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: SurveyService, useValue: surveyServiceStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();

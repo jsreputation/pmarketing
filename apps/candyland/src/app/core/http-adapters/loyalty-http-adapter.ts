@@ -1,12 +1,17 @@
 import Utils from '@cl-helpers/utils';
 import { LoyaltyJoinMethodMap } from '@cl-core/models/loyalty/loyalty-joing-method-map';
+import { ICustomTireForm, ILoyaltyDetails, ILoyaltyForm, ILoyaltyTiersConversions } from '@cl-core/models/loyalty/loyalty-form.model';
 import {
-  ICustomTireForm,
-  ILoyaltyDetails,
-  ILoyaltyForm,
-  ILoyaltyTiersConversions
-} from '@cl-core/models/loyalty/loyalty-form.model';
-import { IWBasicTierAttributes, IWCustomTierAttributes , IWJoinMethod, IWLoyaltyAttributes } from '@perx/whistler';
+  IWBasicTierAttributes,
+  IWCustomTierAttributes,
+  IWJoinMethod,
+  IWLoyaltyAttributes,
+  IJsonApiItemPayload,
+  IJsonApiItem,
+  IJsonApiListPayload,
+  IJsonApiPostData,
+  IJsonApiPatchData
+} from '@perx/whistler';
 
 export class LoyaltyHttpAdapter {
 
@@ -16,7 +21,7 @@ export class LoyaltyHttpAdapter {
       formLoyalty = LoyaltyHttpAdapter.setIncludedToLoyaltyForm(data, item, formLoyalty);
       return formLoyalty;
     });
-    return {data: formatData};
+    return { data: formatData };
   }
 
   public static transformToTableData(data: any): ITableData<ILoyaltyForm> {
@@ -25,10 +30,10 @@ export class LoyaltyHttpAdapter {
       formLoyalty = LoyaltyHttpAdapter.setIncludedToLoyaltyForm(data, item, formLoyalty);
       return formLoyalty;
     });
-    return {data: formatData, meta: data.meta};
+    return { data: formatData, meta: data.meta };
   }
 
-  public static transformFromLoyaltyForm(data: ILoyaltyForm): IJsonApiItem<IWLoyaltyAttributes> {
+  public static transformFromLoyaltyForm(data: ILoyaltyForm): IJsonApiPostData<IWLoyaltyAttributes> {
     return {
       type: 'programs',
       attributes: {
@@ -39,8 +44,9 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformLoyaltyStatus(status: string): IJsonApiItem<Partial<IWLoyaltyAttributes>> {
+  public static transformLoyaltyStatus(status: string, id: string): IJsonApiPatchData<IWLoyaltyAttributes> {
     return {
+      id,
       type: 'programs',
       attributes: {
         status
@@ -48,7 +54,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformFromBasicTierForm(data: ILoyaltyForm, loyaltyId: string): IJsonApiItem<IWBasicTierAttributes> {
+  public static transformFromBasicTierForm(data: ILoyaltyForm, loyaltyId: string): IJsonApiPostData<IWBasicTierAttributes> {
     return {
       type: 'basic_tiers',
       attributes: {
@@ -73,7 +79,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformFromCustomTierForm(data: ICustomTireForm, basicTierId: string): IJsonApiItem<IWCustomTierAttributes > {
+  public static transformFromCustomTierForm(data: ICustomTireForm, basicTierId: string): IJsonApiPostData<IWCustomTierAttributes> {
     return {
       type: 'custom_tiers',
       attributes: {
@@ -97,14 +103,15 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformToTableDataCustomTierForm(data: IJsonApiListPayload<IWCustomTierAttributes >): ITableData<ICustomTireForm> {
+  public static transformToTableDataCustomTierForm(data: IJsonApiListPayload<IWCustomTierAttributes>): ITableData<ICustomTireForm> {
     const formatData = data.data.map((item) => LoyaltyHttpAdapter.transformToCustomTierForm(item));
-    return {data: formatData, meta: data.meta};
+    return { data: formatData, meta: data.meta };
   }
 
-  public static transformToCustomTierForm(data: IJsonApiItem<IWCustomTierAttributes >): ICustomTireForm {
+  public static transformToCustomTierForm(data: IJsonApiItem<IWCustomTierAttributes>): ICustomTireForm {
     return {
       id: data.id,
+      type: 'customTier',
       name: data.attributes.name,
       joinMethod: LoyaltyHttpAdapter.transformJoinMethodFromApi(data.attributes.join_method),
       imageUrl: data.attributes.image_url,
@@ -119,7 +126,7 @@ export class LoyaltyHttpAdapter {
   }
 
   public static setIncludedToLoyaltyForm(
-    data: IJsonApiPayload<IWLoyaltyAttributes>,
+    data: IJsonApiItemPayload<IWLoyaltyAttributes>,
     item: IJsonApiItem<IWLoyaltyAttributes>,
     formLoyalty: ILoyaltyForm
   ): ILoyaltyForm {
@@ -167,8 +174,9 @@ export class LoyaltyHttpAdapter {
   }
 
   public static setPoolIdToLoyalty(
-    included: IJsonApiItem<{ id: string, type: string }>,
-    item: IJsonApiItem<IWLoyaltyAttributes>, index: number
+    included: IJsonApiItem<any>[],
+    item: IJsonApiItem<IWLoyaltyAttributes>,
+    index: number
   ): string {
     if (item.relationships.pool
       && item.relationships.pool.data

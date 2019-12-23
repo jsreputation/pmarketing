@@ -4,7 +4,7 @@ import { ITheme, DARK, LIGHT } from './themes.model';
 import { IWSetting, IWTenant, } from '@perx/whistler';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, share } from 'rxjs/operators';
 import { ThemesService } from './themes.service';
 
 import { IJsonApiListPayload } from '@perx/whistler';
@@ -63,7 +63,8 @@ export class WhistlerThemesService extends ThemesService {
     return this.http.post<IJsonApiListPayload<IWTenant>>(this.themeSettingEndpoint, themesRequest).pipe(
       map(res => res.data && res.data[0].attributes.display_properties),
       map((setting) => WhistlerThemesService.WThemeToTheme(setting)),
-      tap((theme) => this.setActiveTheme(theme))
+      tap((theme) => this.setActiveTheme(theme)),
+      share()
     );
   }
 }

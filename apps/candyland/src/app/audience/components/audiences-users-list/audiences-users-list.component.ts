@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import {
   MatDialog,
-  MatSnackBar,
   MatSort,
 } from '@angular/material';
 
@@ -27,6 +26,8 @@ import {
   Type,
 } from '../../audience.model';
 import { UpsertUserPopupComponent } from '../../containers/upsert-user-popup/upsert-user-popup.component';
+import { MessageService } from '@cl-core-services';
+import Utils from '@cl-helpers/utils';
 
 @Component({
   selector: 'cl-audiences-users-list',
@@ -51,8 +52,8 @@ export class AudiencesUsersListComponent implements AfterViewInit {
 
   constructor(
     public dialog: MatDialog,
-    public snack: MatSnackBar,
     private audiencesUserService: AudiencesUserService,
+    private messageService: MessageService
   ) { }
 
   public ngAfterViewInit(): void {
@@ -86,7 +87,15 @@ export class AudiencesUsersListComponent implements AfterViewInit {
       )
       .subscribe(() => {
         this.dataSource.updateData();
-        this.snack.open('User successfully updated.', 'x', {duration: 2000});
+        this.messageService.show('User successfully updated.');
       });
+  }
+
+  public transformMailTo(email: string): string {
+    return Utils.transformMailTo(email);
+  }
+
+  public transformTelTo(tel: string): string {
+    return Utils.transformTelTo(tel);
   }
 }

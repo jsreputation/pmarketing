@@ -9,7 +9,9 @@ import {
   IWSurveyEngagementAttributes,
   IWTreeGameEngagementAttributes,
   IWSpinGameEngagementAttributes,
-  WGameType
+  WGameType,
+  IJsonApiItem,
+  IJsonApiPostData
 } from '@perx/whistler';
 import {
   IEngagementInstantReward,
@@ -218,7 +220,7 @@ export class EngagementHttpAdapter {
       created_at: data.attributes.created_at,
       updated_at: data.attributes.updated_at,
       nb_of_wedges: data.attributes.display_properties.nb_of_wedges,
-      slots: data.attributes.display_properties.slots.sort((a,b) => a - b),
+      slots: data.attributes.display_properties.slots.sort((a, b) => a - b),
       wedge_colors: data.attributes.display_properties.wedge_colors,
       reward_icon: data.attributes.display_properties.reward_icon,
       wheel_img: data.attributes.display_properties.wheel_img,
@@ -305,7 +307,7 @@ export class EngagementHttpAdapter {
 
   public static transformFromInstantRewardForm(
     data: IRewardForm
-  ): IJsonApiItem<IWInstantOutcomeEngagementAttributes> {
+  ): IJsonApiPostData<IWInstantOutcomeEngagementAttributes> {
     return {
       type: "engagements",
       attributes: {
@@ -328,7 +330,7 @@ export class EngagementHttpAdapter {
 
   public static transformFromSpinForm(
     data: ISpinEntityForm
-  ): IJsonApiItem<IWSpinGameEngagementAttributes> {
+  ): IJsonApiPostData<IWSpinGameEngagementAttributes> {
     return {
       type: "engagements",
       attributes: {
@@ -342,7 +344,7 @@ export class EngagementHttpAdapter {
           button: data.buttonText,
           sub_title: data.subHeadlineMessage,
           nb_of_wedges: +data.numberOfWedges,
-          slots: data.rewardSlots, // indeterminate should be iControl i think
+          slots: data.rewardSlots.sort((a, b) => a - b),
           wedge_colors: Object.values(data.colorCtrls),
           reward_icon: ImageControlValue.getImagePath(data.rewardIcon),
           wheel_img: ImageControlValue.getImagePath(data.wheelImg),
@@ -356,7 +358,7 @@ export class EngagementHttpAdapter {
 
   public static transformFromShakeTheTreeForm(
     data: IShakeTreeForm
-  ): IJsonApiItem<IWTreeGameEngagementAttributes> {
+  ): IJsonApiPostData<IWTreeGameEngagementAttributes> {
     return {
       type: "engagements",
       attributes: {
@@ -380,7 +382,7 @@ export class EngagementHttpAdapter {
 
   public static transformFromPinataForm(
     data: IPinataForm
-  ): IJsonApiItem<IWPinataGameEngagementAttributes> {
+  ): IJsonApiPostData<IWPinataGameEngagementAttributes> {
     return {
       type: "engagements",
       attributes: {
@@ -403,7 +405,7 @@ export class EngagementHttpAdapter {
 
   public static transformFromScratchForm(
     data: IScratchForm
-  ): IJsonApiItem<IWScratchGameEngagementAttributes> {
+  ): IJsonApiPostData<IWScratchGameEngagementAttributes> {
     return {
       type: "engagements",
       attributes: {
@@ -432,7 +434,7 @@ export class EngagementHttpAdapter {
 
   public static transformStamp(
     data: IStampsEntityForm
-  ): IJsonApiItem<IWStampEngagementAttributes> {
+  ): IJsonApiPostData<IWStampEngagementAttributes> {
     return {
       type: "engagements",
       attributes: {
@@ -469,18 +471,15 @@ export class EngagementHttpAdapter {
       name: data.attributes.title,
       headlineMessage: data.attributes.display_properties.title,
       subHeadlineMessage: data.attributes.display_properties.sub_title,
-      cardBackground:
-        data.attributes.display_properties.card_background_img_url,
+      cardBackground: data.attributes.display_properties.card_background_img_url,
       background: data.attributes.display_properties.background_img_url,
       buttonText: data.attributes.display_properties.button,
       stampsNumber: data.attributes.display_properties.nb_of_slots,
       stampsSlotNumber: data.attributes.display_properties.slots,
       preStamp: data.attributes.display_properties.pre_stamp_img_url,
-      rewardPreStamps:
-        data.attributes.display_properties.reward_pre_stamp_img_url,
+      rewardPreStamps: data.attributes.display_properties.reward_pre_stamp_img_url,
       postStamps: data.attributes.display_properties.post_stamp_img_url,
-      rewardPostStamps:
-        data.attributes.display_properties.reward_post_stamp_img_url
+      rewardPostStamps: data.attributes.display_properties.reward_post_stamp_img_url
     };
   }
 
@@ -495,7 +494,7 @@ export class EngagementHttpAdapter {
       background: data.attributes.display_properties.background_img_url,
       buttonText: data.attributes.display_properties.button,
       numberOfWedges: data.attributes.display_properties.nb_of_wedges,
-      rewardSlots: data.attributes.display_properties.slots,
+      rewardSlots: data.attributes.display_properties.slots.sort((a, b) => a - b),
       colorCtrls: Object.assign(data.attributes.display_properties.wedge_colors),
       rewardIcon: data.attributes.display_properties.reward_icon,
       wheelImg: data.attributes.display_properties.wheel_img,

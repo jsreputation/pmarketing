@@ -1,0 +1,10 @@
+<div class="loyalty-row input-group " *ngIf="amount">
+  <span>{{'LOYALTY_FEATURE.APPLY' | translate}}</span>
+  <mat-form-field floatLabel="never" class="loyalty-rule-input">
+    <input type="number" [min]="1" [step]="1" matInput [formControl]="amount"
+           placeholder="e.g. 2">
+    <mat-error *ngIf="amount.hasError('required') && amount.touched">{{'ERROR_REQUIRED' | translate}}</mat-error>
+    <mat-error *ngIf="amount.hasError('min') && amount.touched">{{'ERROR_MIN' | translate}} 1</mat-error>
+  </mat-form-field>
+  <span>{{'LOYALTY_FEATURE.MULTIPLIER_TO_POINT' | translate}}</span>
+</div>

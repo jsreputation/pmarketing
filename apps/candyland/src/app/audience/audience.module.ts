@@ -15,7 +15,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatMenuModule, MatPaginatorModule, MatSelectModule, MatSortModule, MatTableModule, MatTabsModule, MatSnackBarModule
+  MatMenuModule, MatPaginatorModule, MatSelectModule, MatSortModule, MatTableModule, MatTabsModule
 } from '@angular/material';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
@@ -31,6 +31,9 @@ import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.
 import { SelectRewardPopupModule } from '@cl-shared/containers/select-reward-popup/select-reward-popup.module';
 import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { IAdvancedUploadFileService } from '@cl-core/services/iadvanced-upload-file.service';
+import { UsersUploadService } from '@cl-core/services/users-upload.service';
+import {MessageService} from '@cl-core-services';
 
 @NgModule({
   declarations: [
@@ -59,7 +62,6 @@ import { TranslateModule } from '@ngx-translate/core';
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
-    MatSnackBarModule,
     StatusLabelModule,
     TableFiltersModule,
     SearchFilterModule,
@@ -78,6 +80,10 @@ import { TranslateModule } from '@ngx-translate/core';
     ChangeExpiryDatePopupComponent,
     UpsertUserPopupComponent,
     ManageListPopupComponent,
+  ],
+  providers: [
+    MessageService,
+    { provide: IAdvancedUploadFileService, useClass: UsersUploadService }
   ]
 })
 export class AudienceModule {

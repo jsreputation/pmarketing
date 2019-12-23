@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IWStampEngagementAttributes } from '@perx/whistler';
+import { IWStampEngagementAttributes, IJsonApiPostItem, IJsonApiItemPayload, IJsonApiPatchItem } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -16,17 +16,17 @@ export class StampHttpService {
     return this.http.get<IStampsDefaultValue>('assets/actives/stamps/stamps-data.json');
   }
 
-  public createStamp(data: IJsonApiPostItem<IWStampEngagementAttributes>): Observable<IJsonApiPayload<IWStampEngagementAttributes>> {
-    return this.http.post<IJsonApiPayload<IWStampEngagementAttributes>>(ApiConfig.stampsPath + '/', data);
+  public createStamp(data: IJsonApiPostItem<IWStampEngagementAttributes>): Observable<IJsonApiItemPayload<IWStampEngagementAttributes>> {
+    return this.http.post<IJsonApiItemPayload<IWStampEngagementAttributes>>(ApiConfig.stampsPath + '/', data);
   }
 
-  public updateStamp(id: string, data: IJsonApiPayload<IWStampEngagementAttributes>):
-    Observable<IJsonApiPayload<IWStampEngagementAttributes>> {
-    return this.http.patch<IJsonApiPayload<IWStampEngagementAttributes>>(ApiConfig.engagementsPath + '/stamps/' + id, data);
+  public updateStamp(id: string, data: IJsonApiPatchItem<IWStampEngagementAttributes>):
+    Observable<IJsonApiItemPayload<IWStampEngagementAttributes>> {
+    return this.http.patch<IJsonApiItemPayload<IWStampEngagementAttributes>>(ApiConfig.engagementsPath + '/stamps/' + id, data);
   }
 
-  public getStamp(id: string): Observable<IJsonApiPayload<IWStampEngagementAttributes>> {
-    return this.http.get<IJsonApiPayload<IWStampEngagementAttributes>>(ApiConfig.engagementsPath + '/stamps/' + id);
+  public getStamp(id: string): Observable<IJsonApiItemPayload<IWStampEngagementAttributes>> {
+    return this.http.get<IJsonApiItemPayload<IWStampEngagementAttributes>>(ApiConfig.engagementsPath + '/stamps/' + id);
   }
 
   public getStampsReport(id: string): Observable<StampsGraphicData> {
