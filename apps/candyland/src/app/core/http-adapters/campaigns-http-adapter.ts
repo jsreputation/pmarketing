@@ -1,3 +1,4 @@
+import { IAudienceFilter } from './../models/campaign/campaign';
 import * as moment from 'moment';
 import {
   EngagementTypeAPIMapping, EngagementTypeFromAPIMapping
@@ -6,11 +7,15 @@ import {
   IWCampaignAttributes, WEngagementType,
   IWAudiences,
   WInformationCollectionSettingType,
+  IJsonApiItem,
+  IJsonApiListPayload,
+  IJsonApiPatchData,
+  IJsonApiPostData,
 } from '@perx/whistler';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
-import { WCampaignStatus } from '@perx/whistler';
+import { WCampaignStatus, IWAudienceFilter } from '@perx/whistler';
 import { CampaignStatus } from '@cl-core/models/campaign/campaign-status.enum';
 
 export class CampaignsHttpAdapter {
@@ -29,11 +34,29 @@ export class CampaignsHttpAdapter {
     draft: WCampaignStatus.draft
   };
 
-  public static transformCampaignStatus(status: CampaignStatus): IJsonApiItem<Partial<IWCampaignAttributes>> {
+  public static transformCampaignStatus(status: CampaignStatus, id: string): IJsonApiPatchData<IWCampaignAttributes> {
     return {
-      type: 'entities', attributes: {
+      id,
+      type: 'entities',
+      attributes: {
         status: CampaignsHttpAdapter.Stat2WStat[status]
       }
+    };
+  }
+
+  public static transformAudienceFilter(audienceFilter: IAudienceFilter): IWAudienceFilter {
+    return {
+      gender: audienceFilter.genderEnabled ? audienceFilter.gender || null : null,
+      ages: audienceFilter.agesEnabled ? [...audienceFilter.ages] || null : null,
+    };
+  }
+
+  public static transformAudienceFilterFromAPI(audienceFilter: IWAudienceFilter): IAudienceFilter {
+    return {
+      agesEnabled: !!(audienceFilter.ages && audienceFilter.ages.length > 0),
+      genderEnabled: !!audienceFilter.gender,
+      gender: audienceFilter.gender || null,
+      ages: audienceFilter.ages ? [...audienceFilter.ages] : [],
     };
   }
 
@@ -87,7 +110,8 @@ export class CampaignsHttpAdapter {
     const campaignData = data.attributes;
     return {
       audience: {
-        select: '' + data.attributes.pool_id
+        select: '' + data.attributes.pool_id,
+        filters: CampaignsHttpAdapter.transformAudienceFilterFromAPI(data.attributes.audience_segment || {})
       },
       id: data.id,
       name: campaignData.name,
@@ -107,7 +131,7 @@ export class CampaignsHttpAdapter {
     };
   }
 
-  public static transformFromCampaign(data: ICampaign): IJsonApiItem<IWCampaignAttributes> {
+  public static transformFromCampaign(data: ICampaign): IJsonApiPostData<IWCampaignAttributes> {
     const startTime = data.campaignInfo.startTime ? data.campaignInfo.startTime : moment().format('LT');
     const endTime = data.campaignInfo.endTime ? data.campaignInfo.endTime : moment().format('LT');
     const startDate = data.campaignInfo.startDate
@@ -119,11 +143,18 @@ export class CampaignsHttpAdapter {
       ? data.campaignInfo.informationCollectionSetting
       : InformationCollectionSettingType.notRequired;
     return {
-      type: 'entities', attributes: {
-        name: data.name, engagement_type: EngagementTypeAPIMapping[data.template.attributes_type] as WEngagementType,
-        engagement_id: data.template.id, status: WCampaignStatus.scheduled, start_date_time: startDate, end_date_time: endDate,
-        goal: data.campaignInfo.goal, pool_id: data.audience.select ? Number.parseInt(data.audience.select, 10) : null,
+      type: 'entities',
+      attributes: {
+        name: data.name,
+        engagement_type: EngagementTypeAPIMapping[data.template.attributes_type] as WEngagementType,
+        engagement_id: data.template.id,
+        status: WCampaignStatus.scheduled,
+        start_date_time: startDate,
+        end_date_time: endDate,
+        goal: data.campaignInfo.goal,
+        pool_id: data.audience.select ? Number.parseInt(data.audience.select, 10) : null,
         labels: data.campaignInfo.labels || [],
+        audience_segment: data.audience.select ? CampaignsHttpAdapter.transformAudienceFilter(data.audience.filters) : {},
         display_properties: { ...data.displayProperties, informationCollectionSetting }
       }
     };

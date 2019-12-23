@@ -175,4 +175,17 @@ describe('CategoryComponent', () => {
     expect(bottomSheetSpy).toHaveBeenCalled();
   }));
 
+  describe('onScroll', () => {
+    it('should be undefined', () => {
+      const onScroll = component.onScroll();
+      expect(onScroll).toBe(undefined);
+    });
+
+    it('should increment catalogsPageId', () => {
+      component.rewardsEnded = false;
+      component.onScroll();
+      expect(component['rewardsPageId']).toBe(2);
+    });
+  });
+
 });
