@@ -17,6 +17,7 @@ import {
   IWCognitoLogin,
   IJsonApiListPayload,
   IWProfileAttributes,
+  IJsonApiItem,
 } from '@perx/whistler';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { IMessageResponse } from './authentication.service';
@@ -133,13 +134,16 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return this.getUserWithPI().pipe(
       tap(
         (res: IJsonApiListPayload<IWCognitoLogin>) => {
-          const userBearer = res.data[0].attributes.jwt;
+          const user: IJsonApiItem<IWCognitoLogin> = res.data[0];
+          const userBearer = user.attributes.jwt;
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
           }
+          this.saveUserAccessToken(userBearer);
+
           const pi = (window as any).primaryIdentifier || this.getPI();
           this.savePI(pi);
-          this.saveUserId(Number.parseInt(res.data[0].id, 10));
+          this.saveUserId(Number.parseInt(user.id, 10));
           this.saveAnonymous(false);
           this.saveUserAccessToken(userBearer);
         }
@@ -239,17 +243,21 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
       .pipe(
         tap(
           (res: IJsonApiListPayload<IWCognitoLogin>) => {
-            const userBearer = res.data[0].attributes.jwt;
+            const user: IJsonApiItem<IWCognitoLogin> = res.data[0];
+            const userBearer = user.attributes.jwt;
             if (!userBearer) {
               throw new Error('Get authentication token failed!');
             }
+            this.saveUserAccessToken(userBearer);
+
             if (anonymous === undefined) {
               anonymous = false;
             }
-            this.savePI(pi);
             this.saveAnonymous(anonymous);
-            this.saveUserId(Number.parseInt(res.data[0].id, 10));
-            this.saveUserAccessToken(userBearer);
+
+            this.savePI(pi);
+
+            this.saveUserId(Number.parseInt(user.id, 10));
           }
         ),
         map(() => void 0)
