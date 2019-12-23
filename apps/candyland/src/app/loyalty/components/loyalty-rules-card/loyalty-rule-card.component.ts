@@ -12,6 +12,7 @@ export class LoyaltyRuleCardComponent {
   @Input() public tierId: string;
   @Input() public tierType: string = 'basicTier';
   @Input() public tierName: string;
+  @Input() public config: any;
   @Input() public ruleSet: ILoyaltyRuleSet;
   @Output() public rulesAction: EventEmitter<{ action: NewLoyaltyActions, data?: any }> = new EventEmitter();
 
@@ -19,8 +20,12 @@ export class LoyaltyRuleCardComponent {
     this.rulesAction.emit(data);
   }
 
-  public createRule(ruleSet: any): void {
-    this.rulesAction.emit({action: NewLoyaltyActions.createRule, data: {ruleSet}});
+  public createRule(): void {
+    this.rulesAction.emit({action: NewLoyaltyActions.createRule, data: {ruleSet: this.ruleSet}});
+  }
+
+  public changeMatchType(value: string): void {
+    this.rulesAction.emit({action: NewLoyaltyActions.updateRuleSetMatchType, data: {ruleSet: this.ruleSet, value}});
   }
 
 }

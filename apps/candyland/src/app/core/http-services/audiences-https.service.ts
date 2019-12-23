@@ -2,7 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@cl-core/api-config';
-import { IWAssignedAttributes, IWAssignRequestAttributes, IWProfileAttributes, IWPoolsAttributes} from '@perx/whistler';
+import {
+  IWAssignedAttributes,
+  IWAssignRequestAttributes,
+  IWProfileAttributes,
+  IWPoolsAttributes,
+  IWAudiences,
+  IJsonApiItemPayload,
+  IJsonApiListPayload,
+  IJsonApiItem,
+  IJsonApiPatchData,
+  IJsonApiPostData,
+} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -11,35 +22,31 @@ export class AudiencesHttpsService {
   constructor(private http: HttpClient) {
   }
 
-  public getUser(id: string, params: HttpParams): Observable<IJsonApiPayload<IWProfileAttributes>> {
-    return this.http.get<IJsonApiPayload<IWProfileAttributes>>(`${ApiConfig.getAllUsers}/${id}`, { params });
+  public getUser(id: string, params: HttpParams): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
+    return this.http.get<IJsonApiItemPayload<IWProfileAttributes>>(`${ApiConfig.getAllUsers}/${id}`, { params });
   }
 
-  public getAudiences(params: HttpParams): Observable<IJsonApiPayload<any>> {
-    return this.http.get<IJsonApiPayload<any>>(ApiConfig.getAudiences, { params });
+  public getAudiences(params: HttpParams): Observable<IJsonApiListPayload<IWAudiences>> {
+    return this.http.get<IJsonApiListPayload<IWAudiences>>(ApiConfig.getAudiences, { params });
   }
 
-  public getAudiencesList(params: HttpParams): Observable<IJsonApiListPayload<any>> {
-    return this.http.get<IJsonApiListPayload<any>>(ApiConfig.getAudiences, { params });
-  }
-
-  public getAudience(id: string, params: HttpParams): Observable<IJsonApiPayload<any>> {
-    return this.http.get<IJsonApiPayload<any>>(`${ApiConfig.getAudiences}/${id}`, { params });
+  public getAudience(id: string, params: HttpParams): Observable<IJsonApiItemPayload<IWAudiences>> {
+    return this.http.get<IJsonApiItemPayload<IWAudiences>>(`${ApiConfig.getAudiences}/${id}`, { params });
   }
 
   public getAllUsers(params: HttpParams): Observable<IJsonApiListPayload<any>> {
     return this.http.get<IJsonApiListPayload<any>>(ApiConfig.getAllUsers, { params });
   }
 
-  public createUser(data: IJsonApiItem<IWProfileAttributes>): Observable<IJsonApiPayload<IWProfileAttributes>> {
-    return this.http.post<IJsonApiPayload<IWProfileAttributes>>(ApiConfig.getAllUsers, { data });
+  public createUser(data: IJsonApiPostData<IWProfileAttributes>): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
+    return this.http.post<IJsonApiItemPayload<IWProfileAttributes>>(ApiConfig.getAllUsers, { data });
   }
 
-  public updateUser(id: string, data: IJsonApiItem<any>): Observable<IJsonApiPayload<IWProfileAttributes>> {
-    return this.http.patch<IJsonApiPayload<IWProfileAttributes>>(ApiConfig.getAllUsers + '/' + id, { data });
+  public updateUser(id: string, data: IJsonApiPatchData<IWProfileAttributes>): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
+    return this.http.patch<IJsonApiItemPayload<IWProfileAttributes>>(ApiConfig.getAllUsers + '/' + id, { data });
   }
 
-  public updateUserPools(data: IJsonApiItem<any>): Observable<IJsonApiListPayload<IWPoolsAttributes>> {
+  public updateUserPools(data: IJsonApiPatchData<IWProfileAttributes>): Observable<IJsonApiListPayload<IWPoolsAttributes>> {
     return this.http.patch<IJsonApiListPayload<IWPoolsAttributes>>(`${ApiConfig.getAllUsers}/${data.id}`, { data });
   }
 
@@ -47,11 +54,11 @@ export class AudiencesHttpsService {
     return this.http.get<IJsonApiListPayload<IWAssignedAttributes>>(ApiConfig.vouchersAssignedPath, { params });
   }
 
-  public voucherAssigned(data: IJsonApiItem<IWAssignRequestAttributes>): Observable<IJsonApiListPayload<IWAssignedAttributes>> {
+  public voucherAssigned(data: IJsonApiPostData<IWAssignRequestAttributes>): Observable<IJsonApiListPayload<IWAssignedAttributes>> {
     return this.http.post<IJsonApiListPayload<IWAssignedAttributes>>(ApiConfig.vouchersAssignedPath, { data });
   }
 
-  public updateVoucherExpiry(data: IJsonApiItem<Partial<IWAssignedAttributes>>): Observable<IJsonApiItem<IWAssignedAttributes>> {
+  public updateVoucherExpiry(data: IJsonApiPatchData<IWAssignedAttributes>): Observable<IJsonApiItem<IWAssignedAttributes>> {
     return this.http.patch<IJsonApiItem<IWAssignedAttributes>>(`${ApiConfig.vouchersAssignedPath}/${data.id}`, { data });
   }
 }

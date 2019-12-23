@@ -1,4 +1,4 @@
-import { Voucher, VoucherState } from '@perx/core';
+import { Voucher, VoucherState, RedemptionType } from '@perx/core';
 
 export const mock: Voucher[] = [
     {
@@ -20,11 +20,11 @@ export const mock: Voucher[] = [
             merchantWebsite: '',
             termsAndConditions: '',
             howToRedeem: '',
-            redemptionType: null,
             categoryTags: [],
             inventory: null,
           },
         state: VoucherState.issued,
+        redemptionType: RedemptionType.none,
         expiry: new Date(),
     },
     {
@@ -46,11 +46,11 @@ export const mock: Voucher[] = [
             merchantWebsite: '',
             termsAndConditions: '',
             howToRedeem: '',
-            redemptionType: null,
             categoryTags: [],
             inventory: null,
           },
         state: VoucherState.issued,
+        redemptionType: RedemptionType.none,
         expiry: new Date(),
     },
     {
@@ -72,11 +72,11 @@ export const mock: Voucher[] = [
             merchantWebsite: '',
             termsAndConditions: '',
             howToRedeem: '',
-            redemptionType: null,
             categoryTags: [],
             inventory: null,
           },
         state: VoucherState.issued,
+        redemptionType: RedemptionType.none,
         expiry: new Date(),
     },
 ];

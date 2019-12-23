@@ -2,7 +2,7 @@ import { IVoucher } from '../../vouchers/models/voucher.model';
 import { PuzzleCollectReward } from '../../puzzles/models/puzzle-stamp.model';
 import { IWProperties } from '@perx/whistler';
 
-export interface IReward {
+export interface ICampaignOutcome {
   id: number;
   campaignId: number;
   modularizableType: string;
@@ -45,7 +45,7 @@ export interface IStamp {
 
 export interface ICampaignConfig {
   totalSlots: number;
-  rewards?: IReward[];
+  rewards?: ICampaignOutcome[];
   collectionRewards?: PuzzleCollectReward[];
 }
 

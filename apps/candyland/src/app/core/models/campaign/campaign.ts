@@ -11,6 +11,7 @@ export interface ICampaign {
     // type: string;
     select: string;
     // file: string;
+    filters?: IAudienceFilter;
   };
   engagement_type?: string;
   engagement_id?: string;
@@ -35,6 +36,7 @@ export interface ICampaign {
   outcomes?: ICampaignOutcome[];
   limits?: any;
   displayProperties?: any;
+  notification?: IChannel;
 }
 
 export interface ICampaignOutcome {
@@ -52,4 +54,16 @@ export interface ICampaignTableData {
   audience: string;
   goal: string;
   engagementType: string;
+}
+
+export interface IDateRange {
+  from: number | null;
+  to: number | null;
+}
+
+export interface IAudienceFilter {
+  agesEnabled: boolean;
+  genderEnabled: boolean;
+  gender: string | null;
+  ages: IDateRange[] | null;
 }

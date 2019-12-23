@@ -22,10 +22,7 @@ import {
   IPrice,
   ICategoryTags,
 } from './models/reward.model';
-
 import { Config } from '../config/config';
-import { RedemptionType } from '../perx-core.models';
-
 export interface IV4Tag {
   id: number;
   name: string;
@@ -70,7 +67,6 @@ export interface IV4Reward {
   merchant_website?: string;
   terms_and_conditions?: string;
   how_to_redeem?: string;
-  redemption_type?: RedemptionType;
   tags?: IV4Tag[];
   category_tags?: ICategoryTags[];
   inventory?: IV4Inventory;
