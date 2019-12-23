@@ -35,6 +35,10 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     {
       path: 'campaigns',
       label: 'NAV_LINK_CAMPAIGNS'
+    },
+    {
+      path: 'loyalty',
+      label: 'NAV_LINK_LOYALTY'
     }
   ];
 

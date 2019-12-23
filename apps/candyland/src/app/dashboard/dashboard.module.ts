@@ -25,6 +25,7 @@ import { LinearChartModule, ChartCardModule } from '@cl-shared';
 import { DashboardRewardsPageComponent } from './containers/dashboard-rewards-page/dashboard-rewards-page.component';
 import { DashboardChartsParametersService } from './services/dashboard-charts-parameters.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { DashboardLoyaltyPageComponent } from './containers/dashboard-loyalty-page/dashboard-loyalty-page.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { TranslateModule } from '@ngx-translate/core';
     BusinessInsightComponent,
     TabItemViewComponent,
     DashboardRewardsPageComponent,
-    DashboardCampaignPageComponent
+    DashboardCampaignPageComponent,
+    DashboardLoyaltyPageComponent
   ],
   imports: [
     CommonModule,
