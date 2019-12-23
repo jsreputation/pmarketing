@@ -137,7 +137,7 @@ export class LoyaltyRuleHttpAdapter {
     return {
       type: data.type || 'point_calculators',
       attributes: {
-        amount: data.amount.toFixed(0),
+        amount: data.amount.toFixed(1),
         applier_type: data.applierType
       },
     };
