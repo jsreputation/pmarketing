@@ -1,3 +1,8 @@
-<div class="container">
-  <canvas id="c" width="640" height="480" style="background: #000;"></canvas>
+<div class="container"
+     (swipeleft)="left()"
+     (swiperight)="right()"
+     (swipeup)="up()"
+     (swipedown)="down()">
+  <canvas #canvasSnake id="c" width="400" height="400" style="background: #000;">
+  </canvas>
 </div>

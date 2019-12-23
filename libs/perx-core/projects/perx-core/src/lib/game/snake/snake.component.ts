@@ -1,19 +1,32 @@
 import { Number2 } from './number2';
-import {Input} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {getImageCors} from '../../utils/getImageCors';
 // https://codepen.io/mexitalian/pen/pNQgae // not very useful, not hammer js
-export class SnakeComponent {
+@Component({
+  selector: 'perx-core-snake-game',
+  templateUrl: './snake.component.html',
+  styleUrls: ['./snake.component.scss']
+})
+export class SnakeGameComponent implements  AfterViewInit, OnChanges {
   @Input()
   public target: string;
   @Input()
   public snake: string;
   @Input()
   public background: string;
+
+  @ViewChild('canvasSnake', {static: true})
+  public canvasEl: ElementRef<HTMLCanvasElement>;
+
+  // tslint:disable-next-line:variable-name
+  private ctx_: CanvasRenderingContext2D;
+  private get canv(): HTMLCanvasElement { return this.canvasEl.nativeElement; }
   // snake head position
   private p: Number2 = new Number2(10, 10);
   // square size
-  private gs = 20;
+  private gs: number = 20;
   // board size
-  private tc = 20;
+  private tc: number = 20;
   // target position
   private a: Number2 = new Number2(15, 15);
   // direction
@@ -21,22 +34,39 @@ export class SnakeComponent {
 
   private trail: Number2[] = [];
   // tail length
-  private tail = 20;
-  private ctx: CanvasRenderingContext2D;
+  private tail: number = 20;
+  private targetImgLoaded!: HTMLImageElement;
 
-  constructor(private canv: HTMLCanvasElement) {
-    this.ctx = this.canv.getContext('2d') as CanvasRenderingContext2D;
+  public get ctx(): CanvasRenderingContext2D {
+    if (!this.ctx_ && this.canv.getContext) {
+      this.ctx_ = this.canv.getContext('2d') as CanvasRenderingContext2D;
+    }
+    return this.ctx_;
+  }
 
+  constructor() {
     this.keyPush = this.keyPush.bind(this);
     this.game = this.game.bind(this);
     document.addEventListener('keydown', this.keyPush);
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if ((changes.target && this.target)
+      || (changes.snake && this.snake)
+      || (changes.background && this.background)) {
+      this.fillTargetStyle();
+    }
+  }
+
+  public ngAfterViewInit(): void {
+    this.start();
   }
 
   public start(): void {
     setInterval(() => { this.game(), this.render(); }, 1000 / 15);
   }
 
-  private game() {
+  private game(): void {
     this.p.add(this.v);
     if (this.p.x < 0) {
       this.p.x = this.tc - 1;
@@ -70,41 +100,55 @@ export class SnakeComponent {
 
   private render(): void {
     // render board
-    this.ctx.fillStyle = "black"; // will change base on input -> everything here on fillStyle
+    this.ctx.fillStyle = this.background || 'black'; // will change base on input -> everything here on fillStyle
     this.ctx.fillRect(0, 0, this.canv.width, this.canv.height);
 
     // render snake
-    this.ctx.fillStyle = "lime";
-    for (var i = 0; i < this.trail.length; i++) {
+    this.ctx.fillStyle = this.snake || 'lime';
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.trail.length; i++) {
       this.ctx.fillRect(this.trail[i].x * this.gs, this.trail[i].y * this.gs, this.gs - 2, this.gs - 2);
     }
 
-    //render target
-    this.ctx.fillStyle = "red";
-    this.ctx.fillRect(this.a.x * this.gs, this.a.y * this.gs, this.gs - 2, this.gs - 2);
+    // render target
+    if (!this.target) {
+      this.ctx.fillStyle = 'red';
+      this.ctx.fillRect(this.a.x * this.gs, this.a.y * this.gs, this.gs - 2, this.gs - 2);
+    } else {
+      this.ctx.drawImage(this.targetImgLoaded , this.a.x * this.gs, this.a.y * this.gs, this.gs - 2, this.gs - 2);
+    }
   }
 
-  private up(): void {
+  private fillTargetStyle(): void {
+    const targetImg: HTMLImageElement = getImageCors(this.target);
+    targetImg.onload = () => {
+      if (this.targetImgLoaded !== targetImg) {
+        this.targetImgLoaded = targetImg;
+      }
+    };
+  }
+
+  public down(): void {
     if (this.v.y === 0) {
       this.v.x = 0;
       this.v.y = 1;
     }
   }
 
-  private down(): void {
+  public up(): void {
     if (this.v.y === 0) {
       this.v.x = 0;
       this.v.y = -1;
     }
   }
-  private left(): void {
+  public left(): void {
     if (this.v.x === 0) {
       this.v.x = -1;
       this.v.y = 0;
     }
   }
 
-  private right(): void {
+  public right(): void {
     if (this.v.x === 0) {
       this.v.x = 1;
       this.v.y = 0;
@@ -113,21 +157,21 @@ export class SnakeComponent {
 
   private keyPush(evt: KeyboardEvent): void {
     switch (evt.keyCode) {
-      //left
+      // left
       case 37:
-        this.left()
+        this.left();
         break;
-      //down
+      // down
       case 38:
-        this.down();
+        this.up();
         break;
-      //right
+      // right
       case 39:
         this.right();
         break;
-      //up
+      // up
       case 40:
-        this.up();
+        this.down();
         break;
     }
   }
