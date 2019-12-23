@@ -10,7 +10,7 @@ describe('SnakeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ SnakeComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

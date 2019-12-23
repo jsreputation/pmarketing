@@ -173,7 +173,7 @@ export class SnakeGameComponent implements  AfterViewInit, OnChanges {
   }
 
   private keyPush(evt: KeyboardEvent): void {
-    switch (evt.key) {
+    switch (Number.parseInt(evt.key, 10)) {
       // left
       case 37:
         this.left();
