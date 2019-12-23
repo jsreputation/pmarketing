@@ -72,7 +72,7 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
       },
       (error: Error) => {
         console.warn(error.message);
-        this.router.navigateByUrl('/loyalty');
+        // this.router.navigateByUrl('/loyalty');
       }
     );
   }
@@ -85,6 +85,7 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
               this.loyalty = loyalty;
               this.cd.detectChanges();
             } else {
+              console.warn('There is no Loyalty Program with current id');
               this.router.navigateByUrl('/loyalty');
             }
           },
