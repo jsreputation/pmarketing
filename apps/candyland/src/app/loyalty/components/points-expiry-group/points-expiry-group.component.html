@@ -15,20 +15,16 @@
         </mat-form-field>
         <mat-form-field>
           <mat-select formControlName="type">
-            <mat-option [value]="pointsExpirePeriodType.day">{{'DAY' | translate}}</mat-option>
-            <mat-option [value]="pointsExpirePeriodType.week">{{'WEEK' | translate}}</mat-option>
-            <mat-option [value]="pointsExpirePeriodType.month">{{'MONTH' | translate}}</mat-option>
-            <mat-option [value]="pointsExpirePeriodType.year">{{'YEAR' | translate}}</mat-option>
+            <ng-container *ngFor="let option of config?.pointsExpirePeriodType">
+              <mat-option [value]="option?.value">{{option?.title | translate}}</mat-option>
+            </ng-container>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="loyalty-points-expiry-type-input">
           <mat-select formControlName="trigger">
-            <mat-option [value]="pointsExpireTrigger.accrual">
-              {{'LOYALTY_FEATURE.FROM_WHEN_ACCRUAL_THE_POINT_WAS_EARNED' | translate}}.
-            </mat-option>
-            <mat-option [value]="pointsExpireTrigger.inactivity">
-              {{'LOYALTY_FEATURE.FROM_USER_INACTIVITY' | translate}}.
-            </mat-option>
+            <ng-container *ngFor="let option of config?.pointsExpireTrigger">
+              <mat-option [value]="option?.value">{{option?.title | translate}}</mat-option>
+            </ng-container>
           </mat-select>
         </mat-form-field>
       </div>

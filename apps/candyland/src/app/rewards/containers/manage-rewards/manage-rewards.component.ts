@@ -13,7 +13,7 @@ import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-f
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
-import { IWTierRewardCostsAttributes } from '@perx/whistler';
+import { IWTierRewardCostsAttributes, IJsonApiItem } from '@perx/whistler';
 
 @Component({
   selector: 'cl-manage-rewards',
@@ -300,8 +300,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       });
   }
 
-  private filterRewardTierList(rewardTierList: ITierRewardCost[]): {[key: string]: ITierRewardCost} {
-    const result: {[key: string]: ITierRewardCost} = {};
+  private filterRewardTierList(rewardTierList: ITierRewardCost[]): { [key: string]: ITierRewardCost } {
+    const result: { [key: string]: ITierRewardCost } = {};
     rewardTierList.forEach((rewardTier) => {
       if ('' + this.id === '' + rewardTier.rewardId) {
         result[rewardTier.tierId] = rewardTier;
@@ -310,7 +310,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  private handlerTierCost(loyalties: { data: ILoyaltyForm[] }, rewardTierMap: {[key: string]: ITierRewardCost}): void {
+  private handlerTierCost(loyalties: { data: ILoyaltyForm[] }, rewardTierMap: { [key: string]: ITierRewardCost }): void {
     this.rewardLoyaltyForm = this.newRewardFormService.getRewardLoyaltyForm();
     loyalties.data.forEach((loyalty: ILoyaltyForm) => {
       const loyaltyFormGroup = this.newRewardFormService.getLoyaltyFormGroup();
@@ -351,7 +351,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.cd.detectChanges();
   }
 
-  private patchWithSavedLoyalties(rewardTierMap: {[key: string]: ITierRewardCost}, form: FormArray): void {
+  private patchWithSavedLoyalties(rewardTierMap: { [key: string]: ITierRewardCost }, form: FormArray): void {
     for (let index = 0; index < form.controls.length - 1; index++) {
       const loyaltyGroup: AbstractControl = form.at(index);
       if (rewardTierMap) {
@@ -362,7 +362,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
 
             rewardTier['statusTiers'] = true;
             this.newRewardFormService.setDefaultRewardTiers(rewardTier);
-            tier.patchValue({...rewardTier});
+            tier.patchValue({ ...rewardTier });
           }
         });
       }

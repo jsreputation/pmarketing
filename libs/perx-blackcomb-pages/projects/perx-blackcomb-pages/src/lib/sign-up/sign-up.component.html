@@ -17,7 +17,7 @@
       (click)="onSubmit()">
       Sign up
     </button>
-    <div class="subtitle"  *ngIf="appConfig.showSubtitleLogin">
+    <div class="subtitle" *ngIf="appConfig?.showSubtitleLogin">
       Already a member? <a class="link" [routerLink]="'/login'">Login</a>
     </div>
   </div>
