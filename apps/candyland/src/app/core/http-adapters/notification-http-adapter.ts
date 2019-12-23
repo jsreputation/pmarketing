@@ -1,4 +1,4 @@
-import { IWNotificationAttributes } from '@perx/whistler';
+import { IWNotificationAttributes, IJsonApiItem } from '@perx/whistler';
 import { CampaignChannelsLaunchType } from '../../campaigns/models/campaign-channels-launch-type.enum';
 import { NotificationsMenu } from '../../campaigns/models/notifications-menu-enum';
 
@@ -178,7 +178,7 @@ export class NotificationHttpAdapter {
           .push(item);
         return;
       }
-      if ( type === NotificationHttpAdapter.launchType.launchDate
+      if (type === NotificationHttpAdapter.launchType.launchDate
         || type === NotificationHttpAdapter.launchType.usersDateBirth
         || type === NotificationHttpAdapter.launchType.usersMonthBirth) {
         channelForm[NotificationHttpAdapter.notificationsFormGroups.onCampaignLaunch]
