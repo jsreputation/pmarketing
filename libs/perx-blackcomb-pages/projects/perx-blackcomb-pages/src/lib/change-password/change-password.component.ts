@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationService, IChangePasswordData, AuthenticationService } from '@perx/core';
 import { Router } from '@angular/router';
+import { ShowTitleInHeader } from '../layout/layout.component';
 
 @Component({
   selector: 'perx-blackcomb-pages-change-password',
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss']
 })
-export class ChangePasswordComponent {
+export class ChangePasswordComponent implements ShowTitleInHeader {
 
   public changePasswordForm: FormGroup;
 
@@ -56,4 +57,7 @@ export class ChangePasswordComponent {
     });
   }
 
+  public getTitle(): string {
+    return 'Change password';
+  }
 }
