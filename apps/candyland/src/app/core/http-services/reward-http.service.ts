@@ -67,7 +67,7 @@ export class RewardHttpService {
     return this.http.patch<IJsonApiItem<IWTierRewardCostsAttributes>>(`${ApiConfig.rewardsTierPath}/${data.id}`, { data });
   }
 
-  public deleteRewardTier(tier: IJsonApiPatchData<IWTierRewardCostsAttributes>): any {
-    return this.http.delete(`${ApiConfig.rewardsTierPath}/${tier.id}`)
+  public deleteRewardTier(id: string): Observable<void> {
+    return this.http.delete<void>(`${ApiConfig.rewardsTierPath}/${id}`)
   }
 }

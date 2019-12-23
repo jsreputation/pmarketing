@@ -95,7 +95,7 @@ export class LoyaltyRuleService {
     return this.rulesHttpService.updateRuleSet(ruleSet.id, { data: sendData });
   }
 
-  public deleteRuleSet(id: string): Observable<IJsonApiItemPayload<void>> {
+  public deleteRuleSet(id: string): Observable<void> {
     return this.rulesHttpService.deleteRuleSet(id);
   }
 
@@ -135,7 +135,7 @@ export class LoyaltyRuleService {
     );
   }
 
-  public deleteRule(id: string): Observable<IJsonApiItemPayload<void>> {
+  public deleteRule(id: string): Observable<void> {
     return this.rulesHttpService.deleteRule(id);
   }
 
@@ -165,7 +165,7 @@ export class LoyaltyRuleService {
     );
   }
 
-  public deleteRuleCondition(id: string): Observable<IJsonApiItemPayload<ILoyaltyRuleCondition>> {
+  public deleteRuleCondition(id: string): Observable<void> {
     return this.rulesHttpService.deleteRuleCondition(id);
   }
 
@@ -199,7 +199,7 @@ export class LoyaltyRuleService {
       );
   }
 
-  public deleteRulePoint(id: string): Observable<IJsonApiItemPayload<IWLoyaltyRulePointAttributes>> {
+  public deleteRulePoint(id: string): Observable<void> {
     return this.rulesHttpService.deleteRulePoint(id);
   }
 }

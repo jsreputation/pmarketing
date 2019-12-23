@@ -34,8 +34,9 @@ export class CampaignsHttpAdapter {
     draft: WCampaignStatus.draft
   };
 
-  public static transformCampaignStatus(status: CampaignStatus): IJsonApiPatchData<IWCampaignAttributes> {
+  public static transformCampaignStatus(status: CampaignStatus, id: string): IJsonApiPatchData<IWCampaignAttributes> {
     return {
+      id,
       type: 'entities',
       attributes: {
         status: CampaignsHttpAdapter.Stat2WStat[status]

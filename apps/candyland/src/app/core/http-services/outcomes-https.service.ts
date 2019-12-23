@@ -23,7 +23,7 @@ export class OutcomesHttpsService {
     return this.http.post<IJsonApiItemPayload<IWOutcomeAttributes>>(ApiConfig.outcomesPath, data);
   }
 
-  public deleteOutcome(id: string): Observable<IJsonApiItemPayload<IWOutcomeAttributes>> {
-    return this.http.delete<IJsonApiItemPayload<IWOutcomeAttributes>>(`${ApiConfig.outcomesPath}/${id}`);
+  public deleteOutcome(id: string): Observable<void> {
+    return this.http.delete<void>(`${ApiConfig.outcomesPath}/${id}`);
   }
 }

@@ -46,7 +46,7 @@ export interface IJsonApiPatchItem<T> {
 
 export interface IJsonApiPatchData<T> {
   attributes: Partial<T>;
-  id?: string;
+  id: string;
   type: string;
   relationships?: any;
 }
@@ -56,7 +56,7 @@ export interface IJsonApiPostItem<T> {
 }
 
 export interface IJsonApiPostData<T> {
-  type?: string;
+  type: string;
   attributes: T;
   relationships?: any;
 }

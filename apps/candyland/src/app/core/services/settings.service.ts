@@ -150,7 +150,7 @@ export class SettingsService implements ITableService {
     return this.settingsHttpService.patchUser(id, formattedUserChanges);
   }
 
-  public deleteUser(id: string): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
+  public deleteUser(id: string): Observable<void> {
     return this.settingsHttpService.deleteUser(id);
   }
 

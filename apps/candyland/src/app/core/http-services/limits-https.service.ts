@@ -4,7 +4,6 @@ import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
 import { IWLimitAttributes, IJsonApiListPayload, IJsonApiItemPayload, IJsonApiPatchItem, IJsonApiPostItem } from '@perx/whistler';
 import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -41,9 +40,7 @@ export class LimitsHttpsService {
 
   public deleteLimit(engagementType: string, limitId: number | string): Observable<void> {
     const eType = this.getEngagementTypeLink(engagementType);
-    return this.http.delete(`${ApiConfig.basePath}/${eType}/limits/${limitId}`)
-      // convert to a void observable in case of success
-      .pipe(map(() => { return; }));
+    return this.http.delete<void>(`${ApiConfig.basePath}/${eType}/limits/${limitId}`);
   }
 
   private getEngagementTypeLink(type: string): string {

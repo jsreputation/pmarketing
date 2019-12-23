@@ -60,8 +60,7 @@ export class LoyaltyService implements ITableService {
   }
 
   public updateLoyaltyStatus(id: string, status: string): Observable<ILoyaltyForm> {
-    const sendData: any = LoyaltyHttpAdapter.transformLoyaltyStatus(status);
-    sendData.id = id;
+    const sendData: any = LoyaltyHttpAdapter.transformLoyaltyStatus(status, id);
     return this.loyaltyHttpService.updateLoyalty(id, { data: sendData }).pipe(
       map(response => LoyaltyHttpAdapter.transformToLoyaltyForm(response.data))
     );
@@ -89,7 +88,7 @@ export class LoyaltyService implements ITableService {
     return this.loyaltyHttpService.updateBasicTier(basicTierId, { data: sendData });
   }
 
-  public deleteBasicTier(id: string): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
+  public deleteBasicTier(id: string): Observable<void> {
     return this.loyaltyHttpService.deleteBasicTier(id);
   }
 

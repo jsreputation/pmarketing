@@ -120,15 +120,15 @@ export class RewardsService implements ITableService {
   }
 
   public patchRewardTier(tier: ILoyaltyTiersFormGroup, id: string)
-    : Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>> {
-    const loyaltyCostValue = RewardHttpAdapter.transformFromLoyaltyForm(tier, id);
+    : Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
+    const loyaltyCostValue = { id, ...RewardHttpAdapter.transformFromLoyaltyForm(tier, id) };
 
     return this.rewardHttp.patchRewardTier(loyaltyCostValue);
   }
 
   public deleteRewardTier(tier: ILoyaltyTiersFormGroup | IBasicTier): Observable<any> {
-    const loyaltyCostValue = RewardHttpAdapter.transformFromLoyaltyForm(tier, '0');
-    return this.rewardHttp.deleteRewardTier(loyaltyCostValue);
+    // const loyaltyCostValue = RewardHttpAdapter.transformFromLoyaltyForm(tier, '0');
+    return this.rewardHttp.deleteRewardTier(tier.tierRewardCostsId);
   }
 
   private getRewardTierPage(page: number, id: string): Observable<IJsonApiListPayload<IWTierRewardCostsAttributes>> {

@@ -22,8 +22,8 @@ export class MerchantHttpService {
     return this.http.patch<IJsonApiItemPayload<IWMerchantAttributes>>(ApiConfig.merchantsPath + '/orgs/' + id, data);
   }
 
-  public deleteMerchant(id: string): Observable<IJsonApiItemPayload<IWMerchantAttributes>> {
-    return this.http.delete<IJsonApiItemPayload<IWMerchantAttributes>>(ApiConfig.merchantsPath + '/orgs/' + id);
+  public deleteMerchant(id: string): Observable<void> {
+    return this.http.delete<void>(ApiConfig.merchantsPath + '/orgs/' + id);
   }
 
   public createMerchantBranch(
@@ -37,7 +37,7 @@ export class MerchantHttpService {
     return this.http.patch<IJsonApiItemPayload<IWMerchantBranchAttributes>>(ApiConfig.merchantsPath + '/branches/' + id, data);
   }
 
-  public deleteMerchantBranch(id: string): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
-    return this.http.delete<IJsonApiItemPayload<IWMerchantBranchAttributes>>(ApiConfig.merchantsPath + '/branches/' + id);
+  public deleteMerchantBranch(id: string): Observable<void> {
+    return this.http.delete<void>(ApiConfig.merchantsPath + '/branches/' + id);
   }
 }

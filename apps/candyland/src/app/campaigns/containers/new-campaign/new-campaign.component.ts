@@ -480,8 +480,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         const defaultNotification: ICampaignNotificationGroup[] = this.currentNotifications[key];
 
         if (Utils.isArray(notification)) {
-          const result: Observable<IJsonApiListPayload<IWNotificationAttributes>>[]
-            = this.getNotificationRequests(defaultNotification, notification);
+          const result = this.getNotificationRequests(defaultNotification, notification);
           combineLatest(result)
             .subscribe(() => { });
         }

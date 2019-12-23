@@ -37,8 +37,8 @@ export class CommsHttpsService {
     return this.http.post<IJsonApiItemPayload<any>>(ApiConfig.commsEventsPath, data);
   }
 
-  public deleteCommsEvent(id: string): Observable<IJsonApiItemPayload<IWCommEventAttributes>> {
-    return this.http.delete<IJsonApiItemPayload<IWCommEventAttributes>>(`${ApiConfig.commsEventsPath}/${id}`);
+  public deleteCommsEvent(id: string): Observable<void> {
+    return this.http.delete<void>(`${ApiConfig.commsEventsPath}/${id}`);
   }
 
   public updateCommsTemplate(
@@ -54,7 +54,7 @@ export class CommsHttpsService {
     return this.http.post<IJsonApiItemPayload<IWCommTemplateAttributes>>(ApiConfig.commsTemplatesPath, data);
   }
 
-  public deleteCommsTemplate(id: string): Observable<IJsonApiItemPayload<IWCommTemplateAttributes>> {
-    return this.http.delete<IJsonApiItemPayload<IWCommTemplateAttributes>>(`${ApiConfig.commsTemplatesPath}/${id}`);
+  public deleteCommsTemplate(id: string): Observable<void> {
+    return this.http.delete<void>(`${ApiConfig.commsTemplatesPath}/${id}`);
   }
 }

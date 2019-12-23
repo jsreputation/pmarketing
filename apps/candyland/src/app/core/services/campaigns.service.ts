@@ -67,13 +67,12 @@ export class CampaignsService implements ITableService {
       );
   }
 
-  public deleteCampaign(id: string): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
+  public deleteCampaign(id: string): Observable<void> {
     return this.campaignsHttpsService.deleteCampaign(id);
   }
 
   public updateCampaignStatus(id: string, status: CampaignStatus): Observable<ILoyaltyForm> {
-    const sendData: IJsonApiPatchData<IWCampaignAttributes> = CampaignsHttpAdapter.transformCampaignStatus(status);
-    sendData.id = id;
+    const sendData: IJsonApiPatchData<IWCampaignAttributes> = CampaignsHttpAdapter.transformCampaignStatus(status, id);
     return this.campaignsHttpsService.updateCampaign(id, { data: sendData })
       .pipe(
         map(response => CampaignsHttpAdapter.transformToCampaign(response.data))

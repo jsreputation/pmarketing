@@ -36,8 +36,8 @@ export class LoyaltyHttpService {
     return this.http.patch<IJsonApiItemPayload<IWLoyaltyAttributes>>(ApiConfig.loyaltyPath + '/' + id, data);
   }
 
-  public deleteLoyalty(id: string): Observable<IJsonApiItemPayload<IWLoyaltyAttributes>> {
-    return this.http.delete<IJsonApiItemPayload<IWLoyaltyAttributes>>(ApiConfig.loyaltyPath + '/' + id);
+  public deleteLoyalty(id: string): Observable<void> {
+    return this.http.delete<void>(ApiConfig.loyaltyPath + '/' + id);
   }
 
   public createBasicTier(data: IJsonApiPostItem<IWBasicTierAttributes>): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
@@ -51,8 +51,8 @@ export class LoyaltyHttpService {
     return this.http.patch<IJsonApiItemPayload<IWBasicTierAttributes>>(ApiConfig.loyaltyBasicTierPath + '/' + id, data);
   }
 
-  public deleteBasicTier(id: string): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
-    return this.http.delete<IJsonApiItemPayload<any>>(ApiConfig.loyaltyBasicTierPath + '/' + id);
+  public deleteBasicTier(id: string): Observable<void> {
+    return this.http.delete<void>(ApiConfig.loyaltyBasicTierPath + '/' + id);
   }
 
   public getCustomTier(id: string, params: HttpParams): Observable<IJsonApiItemPayload<IWCustomTierAttributes>> {
@@ -72,7 +72,7 @@ export class LoyaltyHttpService {
     return this.http.patch<IJsonApiItemPayload<IWCustomTierAttributes>>(ApiConfig.getLoyaltyCustomTierPath + '/' + id, data);
   }
 
-  public deleteCustomTier(id: string): Observable<IJsonApiItemPayload<IWCustomTierAttributes>> {
-    return this.http.delete<IJsonApiItemPayload<IWCustomTierAttributes>>(ApiConfig.getLoyaltyCustomTierPath + '/' + id);
+  public deleteCustomTier(id: string): Observable<void> {
+    return this.http.delete<void>(ApiConfig.getLoyaltyCustomTierPath + '/' + id);
   }
 }

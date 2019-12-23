@@ -44,8 +44,9 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformLoyaltyStatus(status: string): IJsonApiPatchData<IWLoyaltyAttributes> {
+  public static transformLoyaltyStatus(status: string, id: string): IJsonApiPatchData<IWLoyaltyAttributes> {
     return {
+      id,
       type: 'programs',
       attributes: {
         status
