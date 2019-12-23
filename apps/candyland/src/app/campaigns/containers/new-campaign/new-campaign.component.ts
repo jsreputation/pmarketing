@@ -453,11 +453,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     if (this.campaign) {
       const webLink: any = {
         campaignInfo: {
-          ...this.campaign.campaignInfo,
+          ...this.store.currentCampaign.campaignInfo,
           informationCollectionSetting: notification.webLinkOptions
         },
         channel: {
-          ...this.campaign.channel,
+          ...this.store.currentCampaign.channel,
           type: notification.webLink ? 'weblink' : ''}
       };
 

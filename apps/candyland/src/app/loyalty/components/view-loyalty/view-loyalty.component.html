@@ -1,6 +1,6 @@
 <ng-container *ngIf="loyaltyData">
   <cl-view-scheme-info [loyalty]="loyaltyData"
-                       [statusLabel]="statusLabel"
+                       [statusLabel]="config?.statusLabel"
   ></cl-view-scheme-info>
   <cl-view-global-earn-burn-rules [loyalty]="loyaltyData">
   </cl-view-global-earn-burn-rules>
@@ -12,6 +12,7 @@
 </cl-tiers-group>
 
 <cl-loyalty-rule-card *ngIf="basicTierRuleSet && basicTierRuleSet?.rules?.length > 0"
+                      [config] = "config"
                       tierType="basicTier"
                       [editable]="false"
                       [ruleSet]="basicTierRuleSet">
@@ -19,6 +20,7 @@
 
 <ng-container *ngFor="let customTier of (dataSource?.data$ | async)">
   <cl-loyalty-rule-card *ngIf="getCustomTierRuleSet(customTier?.id) as customTierRuleSet"
+                        [config] = "config"
                         tierType="customTier"
                         [editable]="false"
                         [tierName]="customTier?.name"

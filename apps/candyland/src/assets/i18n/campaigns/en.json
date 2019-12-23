@@ -84,6 +84,11 @@
       "SURVEY": "Survey",
       "STAMPS": "Stamp"
     },
+    "GenderTypes": {
+      "MALE": "Male",
+      "FEMALE": "Female",
+      "NOT_SPECIFY": "Not specify"
+    },
     "BUILD_AWARE": "Build awareness",
     "ACQUIRE_CUST": "Acquire customers",
     "DRIVE_SALES": "Drive sales",
@@ -122,6 +127,10 @@
     "CAMPAIGN_NOT_COMPLETED_MESSAGE": "Campaign not completed Message",
     "AFTER_CAMPAIGN_STARTS": "after campaign starts",
     "NOT_COMPLETED_CAMPAIGN": "if user has not completed the campaign.",
-    "BEFORE_CAMPAIGN_ENDS_MESSAGE": "Before Campaign Ends Message"
+    "BEFORE_CAMPAIGN_ENDS_MESSAGE": "Before Campaign Ends Message",
+    "AUDIENCE_FILTER": "Filter Audience",
+    "AGE": "Age",
+    "GENDER": "Gender",
+    "ADD_AGE_RANGE": "+ Add Age Range"
   }
 }
