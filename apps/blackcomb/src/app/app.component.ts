@@ -9,7 +9,7 @@ import {
   WalletComponent
 } from '@perx/blackcomb-pages';
 import { Location } from '@angular/common';
-import { Router, NavigationEnd, Event } from '@angular/router';
+import { Router, NavigationEnd, Event, ActivatedRoute } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
@@ -36,12 +36,18 @@ export class AppComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private snack: MatSnackBar,
     private config: ConfigService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private activatedRoute: ActivatedRoute
   ) {
     this.preAuth = environment.preAuth;
   }
 
   public ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe((val)=>{
+      if(val.token) {
+        this.authService.saveUserAccessToken(val.token);
+      }
+    });
     this.config.readAppConfig()
       .pipe(switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
       .subscribe(() => {
