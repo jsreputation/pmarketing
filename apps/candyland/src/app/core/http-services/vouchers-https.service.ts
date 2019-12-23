@@ -9,6 +9,9 @@ import { Observable } from 'rxjs';
 import {
   IWVoucherStatsApi,
   IWVouchersApi,
+  IJsonApiListPayload,
+  IJsonApiItemPayload,
+  IJsonApiPostItem,
 } from '@perx/whistler';
 
 import { ApiConfig } from '@cl-core/api-config';
@@ -24,20 +27,20 @@ export class VouchersHttpService {
     return this.http.get<IJsonApiListPayload<IWVouchersApi>>(ApiConfig.vouchersEntitiesPath + '/', { params });
   }
 
-  public getVoucher(id: string): Observable<IJsonApiPayload<IWVouchersApi>> {
-    return this.http.get<IJsonApiPayload<IWVouchersApi>>(ApiConfig.vouchersEntitiesPath + '/' + id);
+  public getVoucher(id: string): Observable<IJsonApiItemPayload<IWVouchersApi>> {
+    return this.http.get<IJsonApiItemPayload<IWVouchersApi>>(ApiConfig.vouchersEntitiesPath + '/' + id);
   }
 
-  public createVoucher(data: IJsonApiPayload<IWVouchersApi>): Observable<IJsonApiPayload<IWVouchersApi>> {
-    return this.http.post<IJsonApiPayload<IWVouchersApi>>(ApiConfig.voucherBatchPath, data);
+  public createVoucher(data: IJsonApiPostItem<IWVouchersApi>): Observable<IJsonApiItemPayload<IWVouchersApi>> {
+    return this.http.post<IJsonApiItemPayload<IWVouchersApi>>(ApiConfig.voucherBatchPath, data);
   }
 
-  public getBatch(id: number): Observable<IJsonApiPayload<IWVouchersApi>> {
-    return this.http.get<IJsonApiPayload<IWVouchersApi>>(`${ApiConfig.voucherBatchPath}/${id}`);
+  public getBatch(id: number): Observable<IJsonApiItemPayload<IWVouchersApi>> {
+    return this.http.get<IJsonApiItemPayload<IWVouchersApi>>(`${ApiConfig.voucherBatchPath}/${id}`);
   }
 
-  public getStats(rewardId: string): Observable<IJsonApiPayload<IWVoucherStatsApi>> {
-    return this.http.get<IJsonApiPayload<IWVoucherStatsApi>>(
+  public getStats(rewardId: string): Observable<IJsonApiItemPayload<IWVoucherStatsApi>> {
+    return this.http.get<IJsonApiItemPayload<IWVoucherStatsApi>>(
       `${ApiConfig.basePath}/voucher-service/stats?source_id=${rewardId}&source_type=${SOURCE_TYPE}`
     );
   }
