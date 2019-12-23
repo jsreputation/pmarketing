@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { UploadFileService } from '@cl-core-services';
 import { VouchersService } from './vouchers.service';
 import { map, switchMap, retryWhen, mergeMap, delay } from 'rxjs/operators';
-import { IWVouchersApi, WStatus } from '@perx/whistler';
+import { IWVouchersApi, WStatus, IJsonApiItemPayload } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -30,9 +30,9 @@ export class VouchersUploadService extends IAdvancedUploadFileService {
         map((res: IUploadedFile) => res.url),
         switchMap((url: string) => this.vouchersService.uploadVouchers(url, options.rewardId)),
         switchMap(
-          (batch: IJsonApiPayload<IWVouchersApi>) =>
+          (batch: IJsonApiItemPayload<IWVouchersApi>) =>
             this.vouchersService.getVouchersBatch(Number.parseInt(batch.data.id, 10)).pipe(
-              switchMap((res: IJsonApiPayload<IWVouchersApi>) => {
+              switchMap((res: IJsonApiItemPayload<IWVouchersApi>) => {
                 if (res.data.attributes.status !== WStatus.success) {
                   throw of(new Error('codes are not ready'));
                 }
@@ -53,7 +53,7 @@ export class VouchersUploadService extends IAdvancedUploadFileService {
         )
       )
       .subscribe(
-        (res: IJsonApiPayload<IWVouchersApi>) => {
+        (res: IJsonApiItemPayload<IWVouchersApi>) => {
           subject.next({
             fileName: file.name,
             status: UploadStatus.COMPLETED,

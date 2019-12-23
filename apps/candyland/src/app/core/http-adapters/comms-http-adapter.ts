@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import { IWCommTemplateAttributes, IWCommEventAttributes } from '@perx/whistler';
+import { IWCommTemplateAttributes, IWCommEventAttributes, IJsonApiItem, IJsonApiPostData } from '@perx/whistler';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
 
@@ -23,7 +23,11 @@ export class CommsHttpAdapter {
     };
   }
 
-  public static transformFromCommsEvents(data: ICampaign, templateId: string, campaignId: string): IJsonApiItem<IWCommEventAttributes> {
+  public static transformFromCommsEvents(
+    data: ICampaign,
+    templateId: string,
+    campaignId: string
+  ): IJsonApiPostData<IWCommEventAttributes> {
     const sendTime = data.channel.schedule && data.channel.schedule.sendTime ? data.channel.schedule.sendTime : moment().format('LT');
     const sendAt = data.channel.schedule ?
       moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + sendTime).format() :
@@ -44,7 +48,7 @@ export class CommsHttpAdapter {
     };
   }
 
-  public static transformFromCommsTemplates(data: IComm): IJsonApiItem<IWCommTemplateAttributes> {
+  public static transformFromCommsTemplates(data: IComm): IJsonApiPostData<IWCommTemplateAttributes> {
     return {
       type: 'templates',
       attributes: {
