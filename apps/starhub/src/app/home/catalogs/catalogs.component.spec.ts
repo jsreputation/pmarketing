@@ -68,4 +68,17 @@ describe('CatalogsComponent', () => {
     component.selected(catalog);
     expect(component.tapped.emit).toHaveBeenCalledWith(catalog);
   });
+
+  describe('onScroll', () => {
+    it('should be undefined', () => {
+      const onScroll = component.onScroll();
+      expect(onScroll).toBe(undefined);
+    });
+
+    it('should increment catalogsPageId', () => {
+      component.catalogsEnded = false;
+      component.onScroll();
+      expect(component['catalogsPageId']).toBe(2);
+    });
+  });
 });
