@@ -1,4 +1,21 @@
-import { Number2 } from './number2';
+class Number2 {
+  constructor(public x: number, public y: number) { }
+
+  public equals(p: Number2): boolean {
+    return this.x === p.x && this.y === p.y;
+  }
+
+  public randomize(c: number): void {
+    this.x = Math.floor(Math.random() * c);
+    this.y = Math.floor(Math.random() * c);
+  }
+
+  public add(a: Number2): void {
+    this.x += a.x;
+    this.y += a.y;
+  }
+}
+
 import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {getImageCors} from '../../utils/getImageCors';
 // https://codepen.io/mexitalian/pen/pNQgae // not very useful, not hammer js
@@ -156,7 +173,7 @@ export class SnakeGameComponent implements  AfterViewInit, OnChanges {
   }
 
   private keyPush(evt: KeyboardEvent): void {
-    switch (evt.keyCode) {
+    switch (evt.key) {
       // left
       case 37:
         this.left();
