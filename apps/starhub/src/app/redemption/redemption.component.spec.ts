@@ -2,11 +2,11 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RedemptionComponent } from './redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule, MatDividerModule } from '@angular/material';
-import { VouchersModule, IVoucherService, VoucherState, UtilsModule, RewardsService, Voucher, RedemptionType } from '@perx/core';
+import { VouchersModule, IVoucherService, VoucherState, UtilsModule, RewardsService, Voucher, RedemptionType, NotificationService } from '@perx/core';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
-import { of, Subject } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
 import { vouchers } from '../vouchers.mock';
 import { Type } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -64,6 +64,10 @@ describe('RedemptionComponent', () => {
     back: () => { }
   };
 
+  const notificationServiceStub = {
+    addSnack: () => {}
+  };
+
   let params: Subject<Params>;
 
   const routerStub = { navigateByUrl: () => ({}) };
@@ -94,7 +98,8 @@ describe('RedemptionComponent', () => {
         },
         { provide: Location, useValue: locationStub },
         { provide: Router, useValue: routerStub },
-        { provide: RewardsService, useValue: rewardsServiceStub }
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub }
       ]
     })
       .compileComponents();
@@ -121,6 +126,21 @@ describe('RedemptionComponent', () => {
     tick(3500);
     expect(voucherServiceSpy).toHaveBeenCalled();
     expect(component.voucher.state).toBe(VoucherState.redeemed);
+  }));
+
+  it('should redeemVoucher failed', fakeAsync(() => {
+    const voucherCustom = { ...vouchers[0], ...{ reward: voucher.reward } };
+    const voucherServiceSpy = spyOn(voucherService, 'redeemVoucher')
+      .and.returnValue(throwError({}));
+    const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
+      (NotificationService as Type<NotificationService>);
+    const notificationSpy = spyOn(notificationService, 'addSnack').and.callThrough();
+    component.voucher = voucherCustom;
+    component.full('2222');
+    tick(3500);
+    expect(voucherServiceSpy).toHaveBeenCalled();
+    expect(component.pinInputError).toBe(true);
+    expect(notificationSpy).toHaveBeenCalledWith('Sorry! Voucher redemption failed.');
   }));
 
   it('should show pin ', () => {
@@ -172,4 +192,5 @@ describe('RedemptionComponent', () => {
     tick();
     expect(spy).toHaveBeenCalled();
   }));
+
 });

@@ -5,7 +5,10 @@ import {
   IWLoyaltyRuleAttributes,
   IWLoyaltyRuleConditionAttributes,
   IWLoyaltyRulePointAttributes,
-  IWLoyaltyRuleSetAttributes
+  IWLoyaltyRuleSetAttributes,
+  IJsonApiItem,
+  IJsonApiListPayload,
+  IJsonApiPostData
 } from '@perx/whistler';
 import { RulePointType } from '@cl-core/models/loyalty/rule-point-type.enum';
 import { RuleSetMatchType } from '@cl-core/models/loyalty/rule-set-match-type.enum';
@@ -28,7 +31,7 @@ export class LoyaltyRuleHttpAdapter {
     };
   }
 
-  public static transformFromRuleSetFormCreate(typeTier: string, tierId: string): IJsonApiItem<IWLoyaltyRuleSetAttributes> {
+  public static transformFromRuleSetFormCreate(typeTier: string, tierId: string): IJsonApiPostData<IWLoyaltyRuleSetAttributes> {
     return {
       type: 'rule_sets',
       attributes: {
@@ -69,7 +72,7 @@ export class LoyaltyRuleHttpAdapter {
     };
   }
 
-  public static transformFromRuleForm(data: any, ruleSetId: string): IJsonApiItem<IWLoyaltyRuleAttributes> {
+  public static transformFromRuleForm(data: any, ruleSetId: string): IJsonApiPostData<IWLoyaltyRuleAttributes> {
     return {
       type: 'rules',
       attributes: {
@@ -84,7 +87,7 @@ export class LoyaltyRuleHttpAdapter {
     };
   }
 
-  public static transformFromRuleFormUpdate(data: ILoyaltyRule): IJsonApiItem<IWLoyaltyRuleAttributes> {
+  public static transformFromRuleFormUpdate(data: ILoyaltyRule): IJsonApiPostData<IWLoyaltyRuleAttributes> {
     return {
       type: 'rules',
       attributes: {
@@ -112,7 +115,10 @@ export class LoyaltyRuleHttpAdapter {
     };
   }
 
-  public static transformFromConditionForm(data: ILoyaltyRuleCondition, ruleId: string): IJsonApiItem<IWLoyaltyRuleConditionAttributes> {
+  public static transformFromConditionForm(
+    data: ILoyaltyRuleCondition,
+    ruleId: string
+  ): IJsonApiPostData<IWLoyaltyRuleConditionAttributes> {
     return {
       type: 'rule_conditions',
       attributes: LoyaltyRuleHttpAdapter.transformFromCondition(data),
@@ -127,7 +133,7 @@ export class LoyaltyRuleHttpAdapter {
     };
   }
 
-  public static transformFromPointForm(data: ILoyaltyRulePoint): IJsonApiItem<IWLoyaltyRulePointAttributes> {
+  public static transformFromPointForm(data: ILoyaltyRulePoint): IJsonApiPostData<IWLoyaltyRulePointAttributes> {
     return {
       type: data.type || 'point_calculators',
       attributes: {
@@ -157,7 +163,7 @@ export class LoyaltyRuleHttpAdapter {
     outcomesIncludes: { [outcomeId: string]: ILoyaltyRulePoint } = null
   ): ILoyaltyRuleSet {
     let formattedData = JsonApiParser.parseDataWithIncludes(data, LoyaltyRuleHttpAdapter.transformToRuleSetForm,
-      {rules: {fieldName: 'rules'}});
+      { rules: { fieldName: 'rules' } });
     if (Utils.isArray(formattedData)) {
       formattedData = formattedData[0];
     }

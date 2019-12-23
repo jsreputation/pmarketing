@@ -17,7 +17,7 @@ import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.
 import Utils from '@cl-helpers/utils';
 import { StatusLabel } from '@cl-helpers/status-label.enum';
 import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { IWBasicTierAttributes } from '@perx/whistler';
+import { IWBasicTierAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { RuleSetupPopupComponent } from '../rule-setup-popup/rule-setup-popup.component';
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
@@ -29,7 +29,7 @@ import { LoyaltyConfigService } from '../../services/loyalty-config.service';
   templateUrl: './manage-loyalty-page.component.html',
   styleUrls: ['./manage-loyalty-page.component.scss'],
   providers: [{
-    provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
+    provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
   }]
 })
 
@@ -50,7 +50,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   public viewConfig: any;
   public isEditPage: boolean = false;
   public showDraftButton: boolean = true;
-  @ViewChild('stepper', {static: false}) private stepper: MatStepper;
+  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
   protected destroy$: Subject<void> = new Subject();
 
@@ -110,16 +110,16 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     this.stepProgress$.pipe(
       takeUntil(this.destroy$),
     ).subscribe(stepProgress => {
-        switch (stepProgress) {
-          case 1:
-            this.initCustomTiersDataSource();
-            break;
-          case 2:
-            this.initAllRuleSet();
-            break;
-        }
-        this.stepProgress = stepProgress;
+      switch (stepProgress) {
+        case 1:
+          this.initCustomTiersDataSource();
+          break;
+        case 2:
+          this.initAllRuleSet();
+          break;
       }
+      this.stepProgress = stepProgress;
+    }
     );
 
     this.loading$.pipe(
@@ -330,7 +330,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     this.form = this.loyaltyFormsService.getFormLoyalty();
   }
 
-  private getLoyaltyWithBasicTierRequest(): Observable<IJsonApiPayload<IWBasicTierAttributes>> {
+  private getLoyaltyWithBasicTierRequest(): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
     const newLoyalty = this.form.value;
     return this.loyaltyService.getLoyaltyRequest(newLoyalty, this.loyaltyId)
       .pipe(
@@ -380,7 +380,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
       this.customTierDataSource = new CustomDataSource<ICustomTireForm>(
         this.customTierService,
         20,
-        {'filter[program_id]': this.loyaltyId});
+        { 'filter[program_id]': this.loyaltyId });
     }
   }
 
