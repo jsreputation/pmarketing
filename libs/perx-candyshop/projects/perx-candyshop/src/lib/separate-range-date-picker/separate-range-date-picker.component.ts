@@ -20,7 +20,12 @@ import { DatepickerRangeValue } from '../../models/datepicker-range-value.interf
 })
 export class SepareteRangeDatePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() public appearance: string = 'outline';
-  public timeForm: FormGroup;
+  @Input() public startPlaceholder: string = 'Start Date';
+  @Input() public endPlaceholder: string = 'End Date';
+  public timeForm: FormGroup = new FormGroup({
+    begin: new FormControl(null, []),
+    end: new FormControl(null, [])
+  });
   public disabledState: boolean;
   private destroy$: Subject<void> = new Subject();
   private onChange: any = noop;
@@ -28,10 +33,7 @@ export class SepareteRangeDatePickerComponent implements OnInit, OnDestroy, Cont
   private onTouched: any = noop;
 
   constructor(private dateAdapter: DateAdapter<Date>) {
-    this.timeForm = new FormGroup({
-      begin: new FormControl(null, []),
-      end: new FormControl(null, [])
-    });
+
   }
 
   public ngOnInit(): void {

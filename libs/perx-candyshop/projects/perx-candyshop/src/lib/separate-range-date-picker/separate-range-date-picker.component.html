@@ -1,26 +1,42 @@
-<form class="range-date-picker control-input" [formGroup]="timeForm">
-  <mat-form-field appearance="outline">
-    <input
-      matInput
-      [matDatepicker]="startDatePicker"
-      [disabled]="disabledState"
-      placeholder="Start Date"
-      formControlName="begin"
-      aria-label="Start Date"
-      [max]="maxDate">
-    <mat-datepicker-toggle matPrefix [for]="startDatePicker"></mat-datepicker-toggle>
-    <mat-datepicker #startDatePicker></mat-datepicker>
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-datepicker-toggle matPrefix [for]="endDatePicker"></mat-datepicker-toggle>
-    <input
-      matInput
-      [matDatepicker]="endDatePicker"
-      [disabled]="disabledState"
-      formControlName="end"
-      placeholder="End Date"
-      aria-label="End Date"
-      [min]="minDate">
-    <mat-datepicker #endDatePicker></mat-datepicker>
-  </mat-form-field>
+<form class="cs-input-group"
+      *ngIf="timeForm"
+      [formGroup]="timeForm">
+  <cs-date-picker
+    [appearance]="appearance"
+    [disabled]="disabledState"
+    [placeholder]="startPlaceholder"
+    formControlName="begin"
+    [max]="maxDate"
+  ></cs-date-picker>
+  <cs-date-picker
+    [appearance]="appearance"
+    [disabled]="disabledState"
+    [placeholder]="endPlaceholder"
+    formControlName="end"
+    [min]="minDate"
+  ></cs-date-picker>
+  <!--  <mat-form-field appearance="outline">-->
+  <!--    <input-->
+  <!--      matInput-->
+  <!--      [matDatepicker]="startDatePicker"-->
+  <!--      [disabled]="disabledState"-->
+  <!--      placeholder="Start Date"-->
+  <!--      formControlName="begin"-->
+  <!--      aria-label="Start Date"-->
+  <!--      [max]="maxDate">-->
+  <!--    <mat-datepicker-toggle matPrefix [for]="startDatePicker"></mat-datepicker-toggle>-->
+  <!--    <mat-datepic <mat-form-field appearance="outline">-->
+  <!--    <mat-datepicker-toggle matPrefix [for]="endDatePicker"></mat-datepicker-toggle>-->
+  <!--    <input-->
+  <!--      matInput-->
+  <!--      [matDatepicker]="endDatePicker"-->
+  <!--      [disabled]="disabledState"-->
+  <!--      formControlName="end"-->
+  <!--      placeholder="End Date"-->
+  <!--      aria-label="End Date"-->
+  <!--      [min]="minDate">-->
+  <!--    <mat-datepicker #endDatePicker></mat-datepicker>-->
+  <!--  </mat-form-field>ker #startDatePicker></mat-datepicker>-->
+  <!--  </mat-form-field>-->
+  <!-- -->
 </form>

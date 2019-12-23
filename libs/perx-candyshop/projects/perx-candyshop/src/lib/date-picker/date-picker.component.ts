@@ -82,7 +82,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, Contro
   public minMaxFilter(d: Date): boolean {
     const from = this.min;
     const to = this.max;
-    return !((!!from && (d <= from)) || (!!to && (d >= to)));
+    return !((!!from && (d < from)) || (!!to && (d > to)));
   }
 
   public registerOnChange(fn: any): void {
