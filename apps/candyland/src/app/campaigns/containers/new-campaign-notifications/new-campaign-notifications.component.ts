@@ -150,6 +150,14 @@ export class NewCampaignNotificationsComponent implements OnInit, OnDestroy {
     this.shortCodes = this.campaignChannelsFormService.getShortCodes();
   }
 
+  public triggerWeblink(check: boolean): void {
+    const optionControl = this.channelForm.get('webNotification.webLinkOptions');
+    check ?
+      optionControl
+      .patchValue('not_required')
+      : optionControl.patchValue('');
+  }
+
   private getStampData(): void {
     this.stampsService.getStampsData()
       .subscribe((response) => {
