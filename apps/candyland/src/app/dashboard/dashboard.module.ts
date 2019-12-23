@@ -26,6 +26,7 @@ import { DashboardRewardsPageComponent } from './containers/dashboard-rewards-pa
 import { DashboardChartsParametersService } from './services/dashboard-charts-parameters.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { DashboardLoyaltyPageComponent } from './containers/dashboard-loyalty-page/dashboard-loyalty-page.component';
+import { InformationCardComponent } from './components/information-card/information-card.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { DashboardLoyaltyPageComponent } from './containers/dashboard-loyalty-pa
     TabItemViewComponent,
     DashboardRewardsPageComponent,
     DashboardCampaignPageComponent,
-    DashboardLoyaltyPageComponent
+    DashboardLoyaltyPageComponent,
+    InformationCardComponent
   ],
   imports: [
     CommonModule,
