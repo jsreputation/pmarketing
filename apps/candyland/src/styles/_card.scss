@@ -41,7 +41,7 @@
   }
 
   &-header {
-    height: 5.7rem;
+    min-height: 5.7rem;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
@@ -244,7 +244,7 @@
     justify-content: flex-start;
 
     .mat-form-field {
-      max-width: 7rem;
+      max-width: 7.4rem;
     }
 
     input {
