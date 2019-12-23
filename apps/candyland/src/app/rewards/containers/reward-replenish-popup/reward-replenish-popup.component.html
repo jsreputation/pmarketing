@@ -54,6 +54,7 @@
       <ng-container *ngIf="voucherSettings?.voucherCode?.type === 'user_uploaded'">
         <cl-upload-file
           [options]="{rewardId: data.id}"
+          [downloadFile]="'assets/files/Vouchers_template.csv'"
           (uploadFile)="setReplenishVoucherCodes($event)"
           (deleteFile)="setReplenishVoucherCodes()">
         </cl-upload-file>

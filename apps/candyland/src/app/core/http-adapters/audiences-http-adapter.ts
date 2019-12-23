@@ -6,13 +6,19 @@ import {
   IWPoolsAttributes,
   IWAudiences,
   IWPools,
+  IJsonApiItem,
+  IJsonApiPatchData,
+  IJsonApiItemPayload,
+  IJsonApiPostData,
+  IJsonApiListPayload,
 } from '@perx/whistler';
 
 import { SOURCE_TYPE } from '../../app.constants';
+import { IAudience } from '@cl-core/models/audiences/audiences';
 
 export class AudiencesHttpAdapter {
 
-  public static transformFromUserForm(data: IAudiencesUserForm): IJsonApiItem<IWProfileAttributes> {
+  public static transformFromUserForm(data: IAudiencesUserForm): IJsonApiPostData<IWProfileAttributes> {
     const optionalPool = data.audienceList ? { relationships: { pools: { data: data.audienceList } } } : {};
     const mainUserApiObject = {
       type: 'users',
@@ -22,14 +28,13 @@ export class AudiencesHttpAdapter {
         last_name: data.lastName,
         phone_number: data.phone,
         email_address: data.email,
-        primary_identifier: data.firstName + 'identifier',
         properties: AudiencesHttpAdapter.transformCustomProps(data),
       }
     };
     return Object.assign(mainUserApiObject, optionalPool);
   }
 
-  public static transformUpdateUserPools(data: IWProfileAttributes): IJsonApiItem<any> {
+  public static transformUpdateUserPools(data: IWProfileAttributes): IJsonApiPatchData<IWProfileAttributes> {
     return {
       type: data.type,
       id: data.id,
@@ -42,7 +47,7 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformUserWithPools(data: IJsonApiPayload<IWProfileAttributes>): IWProfileAttributes {
+  public static transformUserWithPools(data: IJsonApiItemPayload<IWProfileAttributes>): IWProfileAttributes {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const userData = AudiencesHttpAdapter.transformUser(data.data);
     userData.pools = data.data.relationships.pools.data.map((item: IJsonApiItem<IWPoolsAttributes>) => poolMap[item.id]).sort().join(', ');
@@ -62,9 +67,10 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformAudiencesTableData(data: any): ITableData<IWAudiences> {
+  public static transformAudiencesTableData(data: IJsonApiListPayload<IWAudiences>): ITableData<IAudience> {
     return {
-      data: data.data.map(item => AudiencesHttpAdapter.transformAudiences(item)), meta: data.meta
+      data: data.data.map(item => AudiencesHttpAdapter.transformAudiences(item)),
+      meta: data.meta
     };
   }
 
@@ -78,7 +84,7 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformVoucherAssignedToApi(source: string, assigned: string): IJsonApiItem<IWAssignRequestAttributes> {
+  public static transformVoucherAssignedToApi(source: string, assigned: string): IJsonApiPostData<IWAssignRequestAttributes> {
     return {
       type: 'vouchers',
       attributes: {
@@ -89,7 +95,7 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformVoucherPatchToApi(id: string, endData: string): IJsonApiItem<Partial<IWAssignedAttributes>> {
+  public static transformVoucherPatchToApi(id: string, endData: string): IJsonApiPatchData<IWAssignedAttributes> {
     return {
       id,
       type: 'vouchers',
@@ -129,11 +135,12 @@ export class AudiencesHttpAdapter {
   }
 
   // Audiences List
-  private static transformAudiences(data: any): IWAudiences {
+  private static transformAudiences(data: IJsonApiItem<IWAudiences>): IAudience {
     return {
-      id: data.id, type: data.type, self: data.links.self, urn: data.attributes.urn,
-      created_at: data.attributes.created_at, updated_at: data.attributes.updated_at, name: data.attributes.name,
-      properties: data.attributes.properties, users: data.relationships.users.data
+      id: data.id,
+      updated_at: data.attributes.updated_at,
+      name: data.attributes.name,
+      users_count: data.attributes.user_count
     };
   }
 

@@ -5,9 +5,10 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { IWCampaignAttributes } from '@perx/whistler';
-import { ICampaign, ICampaignTableData } from '@cl-core/models/campaign/campaign.interface';
+import { IWCampaignAttributes, IJsonApiListPayload, IJsonApiItemPayload, IJsonApiItem, IJsonApiPatchData } from '@perx/whistler';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
+import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
+import { CampaignStatus } from '@cl-core/models/campaign/campaign-status.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -31,25 +32,26 @@ export class CampaignsService implements ITableService {
 
   public getCampaign(id: string): Observable<ICampaign> {
     return this.campaignsHttpsService.getCampaign(id).pipe(
-      map((res: IJsonApiPayload<IWCampaignAttributes>) => res.data),
+      map((res: IJsonApiItemPayload<IWCampaignAttributes>) => res.data),
       map((res: IJsonApiItem<IWCampaignAttributes>) => CampaignsHttpAdapter.transformAPIResponseToCampaign(res))
     );
   }
 
-  public updateCampaign(data: ICampaign): Observable<IJsonApiPayload<IWCampaignAttributes>> {
-    const sendData = CampaignsHttpAdapter.transformFromCampaign(data);
-    if (data.id) {
-      sendData.id = data.id;
-    }
+  public updateCampaign(data: ICampaign): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
+    const sendData: IJsonApiPatchData<IWCampaignAttributes> = {
+      ...CampaignsHttpAdapter.transformFromCampaign(data),
+      id: data.id
+    };
+
     return this.campaignsHttpsService.updateCampaign(data.id, { data: sendData });
   }
 
-  public createCampaign(data: ICampaign): Observable<IJsonApiPayload<IWCampaignAttributes>> {
+  public createCampaign(data: ICampaign): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
     const sendData = CampaignsHttpAdapter.transformFromCampaign(data);
     return this.campaignsHttpsService.createCampaign({ data: sendData });
   }
 
-  public duplicateCampaign(id: string): Observable<IJsonApiPayload<IWCampaignAttributes>> {
+  public duplicateCampaign(id: string): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
     return this.campaignsHttpsService.getCampaign(id)
       .pipe(
         map(response => {
@@ -61,21 +63,19 @@ export class CampaignsService implements ITableService {
           delete response.data.attributes.urn;
           return response;
         }),
-        switchMap((data: IJsonApiPayload<IWCampaignAttributes>) => this.campaignsHttpsService.createCampaign(data))
+        switchMap((data: IJsonApiItemPayload<IWCampaignAttributes>) => this.campaignsHttpsService.createCampaign(data))
       );
   }
 
-  public deleteCampaign(id: string): Observable<IJsonApiPayload<IWCampaignAttributes>> {
+  public deleteCampaign(id: string): Observable<void> {
     return this.campaignsHttpsService.deleteCampaign(id);
   }
 
-  public updateCampaignStatus(id: string, status: string): Observable<ILoyaltyForm> {
-    // const sendData: any = CampaignsHttpAdapter.transformCampaignStatus(status);
-    const sendData: any = CampaignsHttpAdapter.transformCampaignStatus(status);
-    sendData.id = id;
-    return this.campaignsHttpsService.updateCampaign(id, {data: sendData}).pipe(
-      map(response => CampaignsHttpAdapter.transformToCampaign(response.data))
-    );
+  public updateCampaignStatus(id: string, status: CampaignStatus): Observable<ILoyaltyForm> {
+    const sendData: IJsonApiPatchData<IWCampaignAttributes> = CampaignsHttpAdapter.transformCampaignStatus(status, id);
+    return this.campaignsHttpsService.updateCampaign(id, { data: sendData })
+      .pipe(
+        map(response => CampaignsHttpAdapter.transformToCampaign(response.data))
+      );
   }
-
 }

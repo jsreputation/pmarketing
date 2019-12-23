@@ -3,12 +3,27 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EnterPinComponent, PinMode } from './enter-pin.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { UtilsModule, ProfileService, AuthenticationService, NotificationService, ThemesService } from '@perx/core';
+import {
+  UtilsModule,
+  ProfileService,
+  AuthenticationService,
+  NotificationService,
+  ThemesService,
+  ITheme
+} from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { MatToolbarModule } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
+
+const mockTheme: ITheme = {
+  name: 'theme',
+  properties: {
+    '--background': 'red',
+    '--font_color': 'black'
+  }
+};
 
 const profileServiceStub: Partial<ProfileService> = {
   whoAmI: () => of()
@@ -26,12 +41,13 @@ const notificationServiceStub: Partial<NotificationService> = {
 };
 
 const themeServiceStub: Partial<ThemesService> = {
-  getThemeSetting: () => of()
+  getThemeSetting: () => of(mockTheme)
 };
 
 describe('EnterPinComponent', () => {
   let component: EnterPinComponent;
   let fixture: ComponentFixture<EnterPinComponent>;
+  let router: Router;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -47,13 +63,15 @@ describe('EnterPinComponent', () => {
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub},
         { provide: NotificationService, useValue: notificationServiceStub},
-        { provide: ThemesService, useValue: themeServiceStub}
+        { provide: ThemesService, useValue: themeServiceStub},
+        { provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ type: 'password' })) } },
       ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
+    router = TestBed.get<Router>(Router as Type<Router>);
     fixture = TestBed.createComponent(EnterPinComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -93,7 +111,6 @@ describe('EnterPinComponent', () => {
         message: 'success'
       })
     );
-    const router: Router = TestBed.get<Router>(Router as Type<Router>);
     const routerSpy = spyOn(router, 'navigate');
 
     component.onPinEntered('123456');
@@ -115,5 +132,11 @@ describe('EnterPinComponent', () => {
     component.resendOtp();
     expect(authenticationServiceSpy).toHaveBeenCalled();
     expect(notificationServiceSpy).toHaveBeenCalled();
+  });
+
+  it('should navigate to home', () => {
+    const routerSpy = spyOn(router, 'navigateByUrl');
+    component.dialogClosed();
+    expect(routerSpy).toHaveBeenCalledWith('home');
   });
 });

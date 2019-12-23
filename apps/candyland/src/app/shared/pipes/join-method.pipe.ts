@@ -24,10 +24,10 @@ export class JoinMethodPipePipe implements PipeTransform, OnDestroy {
         const titleTemplate = LoyaltyJoinMethodMap[key].titleTemplate;
         switch (typeof (titleTemplate)) {
           case 'string':
-            result.push(this.getTranslate(titleTemplate));
+            result.push(this.getTranslate(titleTemplate).toLowerCase());
             break;
           case 'function':
-            const resCallback = titleTemplate(JoinMethods[key], this.getTranslate(key));
+            const resCallback = titleTemplate(JoinMethods[key], this.getTranslate(key).toLowerCase());
             result.push(resCallback);
             break;
         }

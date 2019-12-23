@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { IGameService, NotificationService, IGame, GameType, IPlayOutcome, Voucher } from '@perx/core';
 import { Location } from '@angular/common';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 import { AnalyticsService, PageType } from '../analytics.service';
 import { GameOutcomeService } from '../congrats/game-outcome/game-outcome.service';
 
@@ -37,12 +37,26 @@ export class GameComponent implements OnInit {
   public ngOnInit(): void {
     this.activeRoute.queryParams
       .pipe(
-        filter((params: Params) => params.id),
-        map((params: Params) => Number.parseInt(params.id, 10)),
-        switchMap((gameId: number) => this.gameService.get(gameId))
+        switchMap((params: Params) => {
+          if (params.id) {
+            const id = parseInt(params.id, 10);
+            return this.gameService.get(id);
+          }
+
+          const cid = parseInt(params.cid, 10);
+          return this.gameService.getGamesFromCampaign(cid).pipe(
+            take(1),
+            map((games: IGame[]) => games[0])
+          );
+        })
       )
       .subscribe(
         (game: IGame) => {
+          if (!game) {
+            this.showErrorPopup();
+            return;
+          }
+
           this.game = game;
           this.buttonText = game.texts.button || 'Start playing';
           this.title = game.texts.title || 'Shake the Pinata';
@@ -82,13 +96,17 @@ export class GameComponent implements OnInit {
         (err: any) => {
           console.log(err);
           this.isEnabled = false;
-          this.notificationService.addPopup({
-            title: 'Oooops!',
-            text: 'Something is wrong, game cannot be played at the moment!',
-            panelClass: 'custom-class'
-          });
+          this.showErrorPopup();
         }
       );
+  }
+
+  private showErrorPopup(): void {
+    this.notificationService.addPopup({
+      title: 'Oooops!',
+      text: 'Something is wrong, game cannot be played at the moment!',
+      panelClass: 'custom-class'
+    });
   }
 
   public goBack(): void {

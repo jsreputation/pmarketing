@@ -33,7 +33,7 @@ import { AccountComponent } from './account.component';
 import { profile } from '../mock/profile.mock';
 import { pagesObject } from '../mock/pages.mock';
 
-import { MatCardModule } from '@angular/material';
+import { MatCardModule, MatListModule } from '@angular/material';
 
 describe('AccountComponent', () => {
   const notificationServiceStub: Partial<NotificationService> = {};
@@ -72,9 +72,13 @@ describe('AccountComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AccountComponent],
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([{
+          path: 'login',
+          component: AccountComponent
+        }]),
         ProfileModule,
         MatCardModule,
+        MatListModule,
         TranslateModule.forRoot(),
         ConfigModule.forRoot({ ...environment })
       ],
@@ -118,5 +122,11 @@ describe('AccountComponent', () => {
     component.logout();
     expect(routerSpy).toHaveBeenCalledWith(['/login']);
     expect(authSpy).toHaveBeenCalled();
+  });
+
+  it('should navigate to profile', () => {
+    const routerSpy = spyOn(router, 'navigateByUrl');
+    component.onProfileClicked();
+    expect(routerSpy).toHaveBeenCalledWith('profile');
   });
 });

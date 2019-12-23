@@ -10,11 +10,11 @@ describe('ViewGlobalEarnBurnRulesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        declarations: [ViewGlobalEarnBurnRulesComponent],
-        imports: [TranslateModule.forRoot()
-        ],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      declarations: [ViewGlobalEarnBurnRulesComponent],
+      imports: [TranslateModule.forRoot()
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

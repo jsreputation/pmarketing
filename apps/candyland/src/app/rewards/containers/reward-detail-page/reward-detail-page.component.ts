@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
+import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import Utils from '@cl-helpers/utils';
 
@@ -8,7 +8,7 @@ import { map, switchMap, filter, takeUntil } from 'rxjs/operators';
 
 import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
-import { RewardsService, MerchantsService } from '@cl-core/services';
+import {RewardsService, MerchantsService, MessageService} from '@cl-core/services';
 import { VouchersService } from '@cl-core/services/vouchers.service';
 
 @Component({
@@ -43,7 +43,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
     private route: ActivatedRoute,
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
-    private snack: MatSnackBar
+    private messageService: MessageService
   ) { }
 
   public ngOnInit(): void {
@@ -68,8 +68,8 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
         switchMap((data: any) => this.vouchersService.createVoucher(data))
       )
       .subscribe(
-        () => this.snack.open('Vouchers succesfully replenished.', 'x', { duration: 2000 }),
-        () => this.snack.open('Could not replenish vouchers. Make sure that the configuration is correct.', 'x', { duration: 2000 })
+        () => this.messageService.show('Vouchers succesfully replenished.', 'success'),
+        () => this.messageService.show('Could not replenish vouchers. Make sure that the configuration is correct.', 'warning')
       );
   }
 

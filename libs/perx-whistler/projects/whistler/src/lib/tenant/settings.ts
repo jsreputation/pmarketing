@@ -17,7 +17,7 @@ export interface IWSetting {
 }
 
 export interface IWTenant {
-  account_id: string;
+  account_id: number;
   alias: string;
   created_at: string;
   name: string;

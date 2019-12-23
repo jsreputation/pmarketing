@@ -30,9 +30,9 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public appConfig: IConfig;
   public rewardData: IReward;
   public loyalty: ILoyalty;
-
+  public maxRewardCost?: number;
   private initTranslate(): void {
-    this.translate.get('REDEEM').subscribe((text) => this.buttonLabel = text);
+    this.translate.get('GET_VOUCHER').subscribe((text) => this.buttonLabel = text);
     this.translate.get('DESCRIPTION')
       .subscribe((desc: string) => {
         this.descriptionLabel = desc;
@@ -54,9 +54,8 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig) => this.appConfig = config
-    );
+    this.configService.readAppConfig()
+      .subscribe((config: IConfig) => this.appConfig = config);
 
     this.initTranslate();
     this.loyaltyService.getLoyalties().pipe(
@@ -74,16 +73,23 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
           if (reward.displayProperties) {
             this.buttonLabel = reward.displayProperties.CTAButtonTxt || this.buttonLabel;
           }
+          this.maxRewardCost = reward.rewardPrice ? reward.rewardPrice
+            .map((price) => price.points)
+            .reduce((acc = 0, points) => acc >= (points || 0) ? acc : points) : 0;
         }),
         takeUntil(this.destroy$)
       );
   }
 
   public buyReward(): void {
-    this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
-      .subscribe(
-        (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`])
-      );
+    if (this.appConfig.showVoucherBookingFromRewardsPage) {
+      this.router.navigateByUrl(`booking/${this.rewardData.id}`);
+    } else {
+      this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
+        .subscribe(
+          (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`])
+        );
+    }
   }
 
   public ngOnDestroy(): void {
