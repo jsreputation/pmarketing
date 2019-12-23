@@ -13,6 +13,7 @@
   --header_color: #147dd3;
   --background: #fafafa;
   --font_color: #333;
+  --disabled_text_color: #aaaaaa;
 }
 
 html {
@@ -37,6 +38,11 @@ body {
 button {
   background-color: var(--button_background_color) !important;
   color: var(--button_text_color) !important;
+}
+
+button:disabled {
+  background-color: var(--background) !important;
+  color: var(--disabled_text_color) !important;
 }
 
 button.mat-primary {
@@ -92,4 +98,8 @@ button.mat-stroked-button {
 
 .logo {
   height: 100%;
+}
+
+.toolbar {
+  padding: 1.6rem 0 !important;
 }

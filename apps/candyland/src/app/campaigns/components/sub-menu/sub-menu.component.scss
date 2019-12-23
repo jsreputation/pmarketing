@@ -1,0 +1,15 @@
+@import "variables";
+.sub-menu {
+ &-title {
+   padding: 3.8rem 0 0 1rem;
+   margin-bottom: calc(4.2rem - 2.7rem);
+ }
+
+  &-group-title {
+    font-size: $icon-font-size;
+    color: $secondary-font-color;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+    margin-top: 2.7rem;
+  }
+}

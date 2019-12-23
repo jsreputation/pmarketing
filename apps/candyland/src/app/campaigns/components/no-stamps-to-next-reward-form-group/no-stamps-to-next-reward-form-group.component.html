@@ -1,0 +1,39 @@
+<section class="notification-wrap" [formGroup]="group">
+  <h2 class="card-title">
+    No. of Stamps to Next Reward Message <span>{{index + 1}}</span>
+  </h2>
+  <div class="input-group notification-row">
+    <span>
+     Message will be sent when users are
+    </span>
+    <mat-form-field>
+      <input type="number" [min]="1" matInput formControlName="stamp">
+      <!--<mat-error *ngIf="amount.hasError('required') && amount.touched">Required field</mat-error>-->
+      <!--<mat-error *ngIf="amount.hasError('min') && amount.touched">Min value 1</mat-error>-->
+    </mat-form-field>
+      <span>stamp(s) before</span>
+    <mat-form-field>
+      <mat-select formControlName="slot">
+        <mat-option [value]="item.value" *ngFor="let item of stampSlotNumbers">Slot {{item.viewValue}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <section class="notification-message">
+    <h2 class="card-title">
+      Message Content
+    </h2>
+    <cl-sms-editor [options]="shortCodes" [control]="group.get('template.message')"></cl-sms-editor>
+  </section>
+  <section class="notification-actions flex justify-content-between align-items-center">
+    <cl-button classList="tertiary ph-0" (click)="sendTestSms()">
+      <i class="material-icons">
+        send
+      </i>
+      Send test SMS
+    </cl-button>
+    <cl-button classList="secondary" (click)="deleteNoStampsRewardGroup()">Delete</cl-button>
+  </section>
+</section>
+
+
