@@ -5,14 +5,14 @@ import { JsonApiParser } from '@cl-helpers/json-api-parser';
 import { Injectable } from '@angular/core';
 import { NotificationHttpService } from '@cl-core/http-services/notification-http.service';
 import { NotificationHttpAdapter } from '@cl-core/http-adapters/notification-http-adapter';
-import { IWNotificationAttributes } from '@perx/whistler';
+import { IWNotificationAttributes, IJsonApiListPayload } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
 
-  constructor(private notificationHttpService: NotificationHttpService) {}
+  constructor(private notificationHttpService: NotificationHttpService) { }
 
   public createNotification(data: ICampaignNotificationGroup, campaignId: string)
     : Observable<IJsonApiListPayload<IWNotificationAttributes>> {
@@ -28,16 +28,16 @@ export class NotificationService {
     return this.notificationHttpService.getNotifications(httpParams)
       .pipe(
         map(res => {
-            const notifications = JsonApiParser.parseDataWithIncludes(
-              res,
-              NotificationHttpAdapter.handlerTransformNotifications, {
-                'Ros::Comm::Template': {
-                  fieldName: 'template',
-                  adapterFunction: NotificationHttpAdapter.transformTemplate
-                }
-              });
-            return NotificationHttpAdapter.transformToChannelForm(notifications);
-          }
+          const notifications = JsonApiParser.parseDataWithIncludes(
+            res,
+            NotificationHttpAdapter.handlerTransformNotifications, {
+            'Ros::Comm::Template': {
+              fieldName: 'template',
+              adapterFunction: NotificationHttpAdapter.transformTemplate
+            }
+          });
+          return NotificationHttpAdapter.transformToChannelForm(notifications);
+        }
         ),
       );
   }

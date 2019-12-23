@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
-import { IWEngagementAttributes } from '@perx/whistler';
+import { IWEngagementAttributes, IJsonApiItemPayload, IJsonApiListPayload } from '@perx/whistler';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 
 @Injectable({
@@ -27,7 +27,7 @@ export class EngagementsService {
   public getEngagement(id: string, type: string): Observable<IEngagementType> {
     const eType = EngagementTypeAPIMapping[type].replace('_', '-');
     return this.http.getEngagement(id, eType).pipe(
-      map((res: IJsonApiPayload<IWEngagementAttributes>) => EngagementHttpAdapter.transformEngagementHandler(res.data, type))
+      map((res: IJsonApiItemPayload<IWEngagementAttributes>) => EngagementHttpAdapter.transformEngagementHandler(res.data, type))
     );
   }
 

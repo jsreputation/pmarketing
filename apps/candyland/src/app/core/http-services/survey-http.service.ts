@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable, of } from 'rxjs';
 import { GeneralStaticDataService, ICountryCode } from '@perx/core';
-import { IWSurveyEngagementAttributes, WSurveyQuestionType } from '@perx/whistler';
+import { IWSurveyEngagementAttributes, WSurveyQuestionType, IJsonApiItemPayload } from '@perx/whistler';
 import { ICountries } from '@cl-core/models/survey/survey-common.interface';
 
 @Injectable({
@@ -38,17 +38,19 @@ export class SurveyHttpService {
     return this.http.get<any>('assets/actives/survey/survey-data.json');
   }
 
-  public getSurvey(id: string): Observable<IJsonApiPayload<IWSurveyEngagementAttributes>> {
-    return this.http.get<IJsonApiPayload<IWSurveyEngagementAttributes>>(ApiConfig.engagementsPath + '/survey/' + id);
+  public getSurvey(id: string): Observable<IJsonApiItemPayload<IWSurveyEngagementAttributes>> {
+    return this.http.get<IJsonApiItemPayload<IWSurveyEngagementAttributes>>(ApiConfig.engagementsPath + '/survey/' + id);
   }
 
-  public createSurvey(data: IJsonApiPayload<IWSurveyEngagementAttributes>): Observable<IJsonApiPayload<IWSurveyEngagementAttributes>> {
-    return this.http.post<IJsonApiPayload<IWSurveyEngagementAttributes>>(ApiConfig.engagementsPath + '/', data);
+  public createSurvey(
+    data: IJsonApiItemPayload<IWSurveyEngagementAttributes>
+  ): Observable<IJsonApiItemPayload<IWSurveyEngagementAttributes>> {
+    return this.http.post<IJsonApiItemPayload<IWSurveyEngagementAttributes>>(ApiConfig.engagementsPath + '/', data);
   }
 
-  public updateSurvey(id: string, data: IJsonApiPayload<IWSurveyEngagementAttributes>):
-    Observable<IJsonApiPayload<IWSurveyEngagementAttributes>> {
-    return this.http.patch<IJsonApiPayload<IWSurveyEngagementAttributes>>(ApiConfig.engagementsPath + '/survey/' + id, data);
+  public updateSurvey(id: string, data: IJsonApiItemPayload<IWSurveyEngagementAttributes>):
+    Observable<IJsonApiItemPayload<IWSurveyEngagementAttributes>> {
+    return this.http.patch<IJsonApiItemPayload<IWSurveyEngagementAttributes>>(ApiConfig.engagementsPath + '/survey/' + id, data);
   }
 
   public getSurveyReport(id: string): Observable<IBaseQuestionReport> {

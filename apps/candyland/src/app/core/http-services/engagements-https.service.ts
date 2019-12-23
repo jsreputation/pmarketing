@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { IWEngagementAttributes } from '@perx/whistler';
+import { IWEngagementAttributes, IJsonApiListPayload, IJsonApiItemPayload } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +16,8 @@ export class EngagementsHttpsService {
     return this.http.get<IJsonApiListPayload<IWEngagementAttributes>>(ApiConfig.engagementsPath + '/');
   }
 
-  public getEngagement(id: string, type: string): Observable<IJsonApiPayload<IWEngagementAttributes>> {
-    return this.http.get<IJsonApiPayload<IWEngagementAttributes>>(`${ApiConfig.basePath}/${type}/engagements/${id}`);
+  public getEngagement(id: string, type: string): Observable<IJsonApiItemPayload<IWEngagementAttributes>> {
+    return this.http.get<IJsonApiItemPayload<IWEngagementAttributes>>(`${ApiConfig.basePath}/${type}/engagements/${id}`);
   }
 
   public getEngagementType(): Observable<IGraphic[]> {
