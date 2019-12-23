@@ -7,7 +7,7 @@ import * as moment from 'moment';
 export class NewCampaignDetailFormService {
   constructor(private fb: FormBuilder) {
   }
-//tslint:disable
+  //tslint:disable
   //TODO: need use momentJs for date handler
   public getForm(): FormGroup {
     return this.fb.group({
@@ -19,29 +19,25 @@ export class NewCampaignDetailFormService {
         endTime: [null, [Validators.required]],
         disabledEndDate: [false],
         labels: [],
-        // informationCollectionSetting: ['not_required'],
       }),
-      // channel: this.fb.group({
-      //   eventId: [],
-      //   templateId: [],
-      //   type: ['weblink', [Validators.required]],
-      //   message: [],
-      //   schedule: this.fb.group({
-      //     sendDate: [],
-      //     sendTime: [],
-      //     // enableRecurrence: [],
-      //     // recurrence: this.fb.group({
-      //     //   times: [],
-      //     //   period: [],
-      //     //   repeatOn: []
-      //     // })
-      //   })
-      // }),
       audience: this.fb.group({
         type: ['select'],
         file: [],
-        select: []
+        select: [null, [Validators.required]],
+        filters: this.fb.group({
+          agesEnabled: [false],
+          genderEnabled: [false],
+          ages: this.fb.array([this.createAge()]),
+          gender: ['male']
+        })
       })
+    });
+  }
+
+  public createAge(): FormGroup {
+    return this.fb.group({
+      from: [],
+      to: []
     });
   }
 
@@ -90,15 +86,6 @@ export class NewCampaignDetailFormService {
         startDate: new Date(),
         goal: 'Acquire customers',
         disabledEndDate: true
-      },
-      channel: {
-        type: 'weblink',
-        schedule: {
-          enableRecurrence: false,
-          recurrence: {
-            repeatOn: []
-          }
-        }
       }
     };
   }

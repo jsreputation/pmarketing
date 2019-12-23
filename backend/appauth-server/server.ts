@@ -17,11 +17,11 @@ import { language } from './ctrl/language';
 import { getCredentials } from './utils/credentials';
 import { getCredential } from './utils/autoGenerateTenantToken';
 
-import * as Sentry from '@sentry/node';
+// import * as Sentry from '@sentry/node';
 // Express server
 const app = express();
-Sentry.init({ dsn: 'https://394598311c2749ea9114efb557297005@sentry.io/1857840' });
-app.use(Sentry.Handlers.requestHandler());
+// Sentry.init({ dsn: 'https://394598311c2749ea9114efb557297005@sentry.io/1857840' });
+// app.use(Sentry.Handlers.requestHandler());
 app.use(compression());
 const cors = require('cors');
 app.use(cors());
@@ -33,7 +33,8 @@ const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
 const appPath = join(EXPRESS_DIST_FOLDER, '../../perx-microsite');
 
 const BASE_HREF = process.env.BASE_HREF || '/';
-const getTokens = process.env.IS_WHISTLER ? getCredential : getCredentials;
+const IS_WHISTLER = process.env.IS_WHISTLER;
+const getTokens = IS_WHISTLER ? getCredential : getCredentials;
 app.options('*', cors());
 
 app.get('/preauth', preauth(getTokens));
@@ -66,10 +67,14 @@ if (process.env.PRODUCTION) {
   });
 }
 app.use('/assets', express.static('assets'));
-app.use(Sentry.Handlers.errorHandler());
+// app.use(Sentry.Handlers.errorHandler());
+if (IS_WHISTLER) {
+  getTokens('').then(() => console.log('Init token list table.'));
+}
 // Start up the Node server
 const server = app.listen(PORT, () => {
   console.log(`Node server listening on http://localhost:${PORT}`);
+  console.log(`Node server is whistler: ${IS_WHISTLER}`);
 });
 
 const processInterruption = (signals: NodeJS.Signals) => {

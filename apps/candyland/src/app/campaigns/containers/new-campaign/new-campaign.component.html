@@ -36,7 +36,7 @@
       <cl-new-campaign-detail-page></cl-new-campaign-detail-page>
     </mat-step>
     <mat-step ><!--[completed]="getStepCondition(2)"-->
-      <ng-template matStepLabel>Channels</ng-template>
+      <ng-template matStepLabel>{{'CAMPAIGN.CHANNELS' | translate}}</ng-template>
       <cl-new-campaign-notifications
         [channelForm]="channelForm"
         (sendTestSms)="sendTestSms($event)"

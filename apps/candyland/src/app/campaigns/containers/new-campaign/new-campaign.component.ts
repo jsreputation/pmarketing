@@ -13,7 +13,14 @@ import { map, switchMap, catchError, takeUntil, tap } from 'rxjs/operators';
 import { combineLatest, of, Observable, Subject } from 'rxjs';
 
 import {
-  IWCampaignAttributes, IWCommTemplateAttributes, IWLimitAttributes, IWNotificationAttributes, IWProfileAttributes
+  IWCampaignAttributes,
+  IWCommTemplateAttributes,
+  IWLimitAttributes,
+  IWNotificationAttributes,
+  IWProfileAttributes,
+  IJsonApiItemPayload,
+  IJsonApiListPayload,
+  IJsonApiItem
 } from '@perx/whistler';
 import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
@@ -122,6 +129,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.store.updateCampaign(this.stepConditionService.getStepFormValue(stepIndex));
     if (stepIndex === 3) {
       this.handlerWebLinkNotification();
+      this.addNotificationToStore();
     }
     if (!value) {
       this.stepper.next();
@@ -135,7 +143,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public save(): void {
     this.handlerNotification();
 
-    let saveCampaign$: Observable<IJsonApiPayload<IWCampaignAttributes>>;
+    let saveCampaign$: Observable<IJsonApiItemPayload<IWCampaignAttributes>>;
     this.store.updateCampaign(this.form.value);
     if (this.store.currentCampaign.id) {
       saveCampaign$ = this.campaignsService.updateCampaign(this.store.currentCampaign);
@@ -144,8 +152,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     }
 
     saveCampaign$.pipe(
-      // tap((res: IJsonApiPayload<IWCampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
-      map((res: IJsonApiPayload<IWCampaignAttributes>) => ({ ...this.store.currentCampaign, id: res.data.id } as ICampaign)),
+      // tap((res: IJsonApiItemPayload<IWCampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
+      map((res: IJsonApiItemPayload<IWCampaignAttributes>) => ({ ...this.store.currentCampaign, id: res.data.id } as ICampaign)),
       switchMap(
         (campaign: ICampaign) => {
           const data = [
@@ -168,7 +176,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     );
   }
 
-  private generateLimitData(campaign: ICampaign): Observable<IJsonApiPayload<IWLimitAttributes> | void> {
+  private generateLimitData(campaign: ICampaign): Observable<IJsonApiItemPayload<IWLimitAttributes> | void> {
     if (!campaign.limits) {
       return of(void 0);
     }
@@ -180,7 +188,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.createLimit(campaign);
   }
 
-  private updateLimit(campaign: ICampaign): Observable<IJsonApiPayload<IWLimitAttributes> | void> {
+  private updateLimit(campaign: ICampaign): Observable<IJsonApiItemPayload<IWLimitAttributes> | void> {
     return this.limitsService.updateLimit(
       campaign.limits.id,
       campaign.limits,
@@ -190,7 +198,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     );
   }
 
-  private createLimit(campaign: ICampaign): Observable<IJsonApiPayload<IWLimitAttributes> | void> {
+  private createLimit(campaign: ICampaign): Observable<IJsonApiItemPayload<IWLimitAttributes> | void> {
     return this.limitsService.createLimit(
       campaign.limits,
       campaign.template.attributes_type,
@@ -443,24 +451,31 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     }
   }
 
+  private addNotificationToStore(): void {
+    this.store.updateCampaign({notification: this.channelForm.value});
+  }
+
   private handlerWebLinkNotification(): void {
     const notification = this.channelForm.value['webNotification'];
-    const webLink: any = {
-      campaignInfo: {
-        ...this.campaign.campaignInfo,
-        informationCollectionSetting: notification.webLinkOptions
-      },
-      channel: {
-        ...this.campaign.channel,
-        type: notification.webLink ? 'weblink' : ''}
+    if (this.campaign) {
+      const webLink: ICampaign = {
+        campaignInfo: {
+          ...this.store.currentCampaign.campaignInfo,
+          informationCollectionSetting: notification.webLinkOptions
+        },
+        channel: {
+          ...this.store.currentCampaign.channel,
+          type: notification.webLink ? 'weblink' : ''
+      }
     };
 
-    if (!notification.webLink) {
-      delete webLink.campaignInfo.informationCollectionSetting;
-      webLink.channel['status'] = 'remove';
+      if (!notification.webLink) {
+        delete webLink.campaignInfo.informationCollectionSetting;
+        webLink.channel['status'] = 'remove';
+      }
+      this.store.updateCampaign(webLink);
     }
 
-    this.store.updateCampaign(webLink);
   }
 
   private handlerNotification(): void {
@@ -472,26 +487,25 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         const defaultNotification: ICampaignNotificationGroup[] = this.currentNotifications[key];
 
         if (Utils.isArray(notification)) {
-           const result: Observable<IJsonApiListPayload<IWNotificationAttributes>>[]
-             = this.getNotificationRequests(defaultNotification, notification);
-           combineLatest(result)
-             .subscribe(() => {});
+          const result = this.getNotificationRequests(defaultNotification, notification);
+          combineLatest(result)
+            .subscribe(() => { });
         }
       });
   }
 
-  public createTemplate(data: IComm): Observable<IJsonApiPayload<IWCommTemplateAttributes>> {
+  public createTemplate(data: IComm): Observable<IJsonApiItemPayload<IWCommTemplateAttributes>> {
     return this.commsService.createCommsTemplate(data);
   }
 
-  public updateTemplate(data: IComm): Observable<IJsonApiPayload<IWCommTemplateAttributes>> {
+  public updateTemplate(data: IComm): Observable<IJsonApiItemPayload<IWCommTemplateAttributes>> {
     return this.commsService.updateCommsTemplate(data);
   }
 
   public manageNotification(data: ICampaignNotificationGroup): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
     return this.createTemplate(data.template)
       .pipe(
-        switchMap((res: IJsonApiPayload<IWCommTemplateAttributes>) => {
+        switchMap((res: IJsonApiItemPayload<IWCommTemplateAttributes>) => {
           data['templateId'] = res.data.id;
           return this.createNotification(data);
         }));

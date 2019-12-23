@@ -34,8 +34,7 @@ describe('QrComponent', () => {
 
   const activatedRouteStub = {
     paramMap: of(convertToParamMap({ rewardId: 1 })),
-    snapshot:
-    {
+    snapshot: {
       paramMap: convertToParamMap({ rewardId: 1 })
     }
   };
@@ -57,7 +56,7 @@ describe('QrComponent', () => {
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: Location, useValue: locationStub },
         { provide: ThemesService, useValue: themesServiceStub },
-        { provide: ConfigService, useValue: configServiceStub}
+        { provide: ConfigService, useValue: configServiceStub }
 
       ]
     })

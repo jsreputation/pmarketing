@@ -11,7 +11,7 @@ import {
 } from '@cl-core/services';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
-import { IWEngagementAttributes } from '@perx/whistler';
+import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 
 @Component({
   selector: 'cl-new-shake-page',
@@ -20,7 +20,7 @@ import { IWEngagementAttributes } from '@perx/whistler';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewShakePageComponent implements OnInit, OnDestroy {
-  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
+  @ViewChild(SimpleMobileViewComponent, { static: false }) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<void> = new Subject();
 
@@ -119,10 +119,10 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
             });
           }
           return this.shakeTreeService
-            .createShakeTree({...this.form.value as IShakeTreeForm, image_url: imageUrl.url})
+            .createShakeTree({ ...this.form.value as IShakeTreeForm, image_url: imageUrl.url })
             .pipe(
               tap(
-                (engagement: IJsonApiPayload<IWEngagementAttributes>) =>
+                (engagement: IJsonApiItemPayload<IWEngagementAttributes>) =>
                   this.availableNewEngagementService.transformAndSetNewEngagement(engagement)
               )
             );
@@ -147,12 +147,12 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
   private initShakeTreeForm(): void {
     this.form = this.fb.group({
       name: ['Shake the Tree Template', [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: ['Tap the Tree and Win!', [Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(60)]
+      Validators.minLength(5),
+      Validators.maxLength(60)]
       ],
       subHeadlineMessage: ['Tap the tree until you get a reward!', [
         Validators.minLength(5),

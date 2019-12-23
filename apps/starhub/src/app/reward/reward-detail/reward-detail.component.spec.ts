@@ -143,4 +143,11 @@ describe('RewardDetailComponent', () => {
     tick();
     expect(component.macaron && (component.macaron as IMacaron).label || '').toBe('Expiring');
   }));
+
+  it('should setToExpired and update macaron label', fakeAsync(() => {
+    component.macaron = { label: '', class: '', isButtonEnabled: false };
+    component.setToExpired();
+    tick();
+    expect(component.macaron && (component.macaron as IMacaron).label || '').toBe('Expiring');
+  }));
 });
