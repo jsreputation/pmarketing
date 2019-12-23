@@ -8,6 +8,7 @@ import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { oc } from 'ts-optchain';
 import {getEngagementRouterLink} from '@cl-helpers/get-engagement-router-link';
 import {Router} from '@angular/router';
+import { CampaignChannelsLaunchType } from '../../models/campaign-channels-launch-type.enum';
 
 @Component({
   selector: 'cl-new-campaign-review-page',
@@ -19,7 +20,7 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
   @Input() public tenantSettings: ITenantsProperties;
 
   public stampsHasRewards: boolean = false;
-
+  public launchType: typeof CampaignChannelsLaunchType = CampaignChannelsLaunchType;
   constructor(
     public store: CampaignCreationStoreService,
     public cd: ChangeDetectorRef,
@@ -39,7 +40,7 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
   }
 
   public get informationCollectionSettingTitle(): string {
-    const informationCollectionSetting = oc(this.campaign).campaignInfo.informationCollectionSetting();
+    const informationCollectionSetting = oc(this.campaign).notification.webNotification.webLinkOptions();
     if (informationCollectionSetting) {
       return this.config.informationCollectionSettingTypes.find(types => types.value === informationCollectionSetting).title;
     }
