@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RewardComponent } from './reward.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RewardsService, NotificationService, IVoucherService } from '@perx/core';
+import { RewardsService, NotificationService, IVoucherService, VoucherState } from '@perx/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward-detail/reward-detail.component';
 import { ExpireTimerComponent } from './expire-timer/expire-timer.component';
@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';
 import {IMacaron, MacaronService} from '../services/macaron.service';
+import { AnalyticsService } from '../analytics.service';
 
 const rewardStub = {
   id: 1,
@@ -112,6 +113,20 @@ describe('RewardComponent', () => {
       expect(component.isButtonEnable).toBe(false);
     }));
 
+    it('should call rewards service and set isButtonEnable to false if macaron is null', fakeAsync(() => {
+      const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
+      const rewardsServiceSpy = spyOn(rewardsService, 'getReward').and.returnValue(
+        of(rewardStub)
+      );
+      const macaronService: MacaronService = fixture.debugElement.injector.get<MacaronService>(MacaronService as Type<MacaronService>);
+      const macaronServiceSpy = spyOn(macaronService, 'getMacaron').and.returnValue(null);
+      component.ngOnInit();
+      tick();
+      expect(rewardsServiceSpy).toHaveBeenCalled();
+      expect(macaronServiceSpy).toHaveBeenCalled();
+      expect(component.isButtonEnable).toBe(false);
+    }));
+
     it('should call rewards service and isButtonEnable should be true', fakeAsync(() => {
       const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
       const rewardsServiceSpy = spyOn(rewardsService, 'getReward').and.returnValue(
@@ -129,17 +144,22 @@ describe('RewardComponent', () => {
           termsAndConditions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           howToRedeem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           merchantId: 2,
+          categoryTags: [{id: 1, title: 'test'}]
         })
       );
       const macaronService: MacaronService = fixture.debugElement.injector.get<MacaronService>(MacaronService as Type<MacaronService>);
       const macaronServiceSpy = spyOn(macaronService, 'getMacaron').and.returnValue(
         macaronTrueStub
       );
+      const analyticsService: AnalyticsService = fixture.debugElement.injector.get<AnalyticsService>(
+        AnalyticsService as Type<AnalyticsService>);
+      const analyticsServiceSpy = spyOn(analyticsService, 'addEvent');
       component.ngOnInit();
       tick();
       expect(rewardsServiceSpy).toHaveBeenCalled();
       expect(macaronServiceSpy).toHaveBeenCalled();
       expect(component.isButtonEnable).toBe(true);
+      expect(analyticsServiceSpy).toHaveBeenCalled();
     }));
   });
 
@@ -155,12 +175,39 @@ describe('RewardComponent', () => {
     const vouchersService: IVoucherService = fixture.debugElement.injector
       .get<IVoucherService>(IVoucherService as Type<IVoucherService>);
     const vouchersServiceSpy = spyOn(vouchersService, 'issueReward').and.returnValue(
-      of()
+      of({
+        id: 1,
+        reward: {
+          id: 1,
+          name: '',
+          description: '',
+          subtitle: '',
+          validFrom: new Date(),
+          validTo: new Date(),
+          sellingFrom: new Date(),
+          rewardThumbnail: '',
+          rewardBanner: '',
+          merchantImg: '',
+          rewardPrice: [],
+          merchantId: 1,
+          merchantName: '',
+          merchantWebsite: '',
+          termsAndConditions: '',
+          howToRedeem: '',
+          redemptionType: undefined,
+          categoryTags: [],
+          inventory: undefined,
+        },
+        state: VoucherState.issued,
+        code: 'GFY2019',
+        expiry: new Date('2019-09-05T03:24:00'),
+      })
     );
     const router: Router = fixture.debugElement.injector.get(Router);
-    spyOn(router, 'navigate');
+    const routerSpy = spyOn(router, 'navigate');
     component.save();
     expect(vouchersServiceSpy).toHaveBeenCalled();
+    expect(routerSpy).toHaveBeenCalledWith(['/home/vouchers']);
   });
 
 });

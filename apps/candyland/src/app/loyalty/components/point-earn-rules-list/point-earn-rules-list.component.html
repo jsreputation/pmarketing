@@ -1,0 +1,72 @@
+<script src="../../containers/loyalty-review-page/loyalty-review-page.component.ts"></script>
+<div class="table-wrap">
+  <table class="table rule-list"
+         [class.rule-list-only-view]="!editable"
+         *ngIf="rules?.length > 0"
+         mat-table
+         [dataSource]="rules"
+         cdkDropList
+         [cdkDropListData]="rules"
+         (cdkDropListDropped)="dropTable($event)">
+
+    <ng-container matColumnDef="priority">
+      <th mat-header-cell *matHeaderCellDef>{{'LOYALTY_FEATURE.PRIORITY' | translate}}</th>
+      <td mat-cell *matCellDef="let element; let index = index;">
+        <div class="rule-list-row input-group">
+          <mat-icon *ngIf="editable"
+                    class="rule-list-drag-icon"
+                    cdkDragHandle>
+            <i class="icon drag-icon"></i>
+          </mat-icon>
+          <span>{{index + 1}}.</span>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>{{'LOYALTY_FEATURE.RULE_NAME' | translate}}</th>
+      <td mat-cell *matCellDef="let element">
+        <span>{{element?.name}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="conditions">
+      <th mat-header-cell *matHeaderCellDef>{{'LOYALTY_FEATURE.CONDITIONS' | translate}}</th>
+      <td mat-cell *matCellDef="let element">
+        <span class="rule-conditions">{{element?.conditions | clConditionInfo}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="pointsEarned">
+      <th mat-header-cell *matHeaderCellDef>{{'LOYALTY_FEATURE.POINTS_EARNED' | translate}}</th>
+      <td mat-cell *matCellDef="let element">
+        <span>{{element?.result | clPointsEarnedInfo  }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef class="column-menu"></th>
+      <td mat-cell *matCellDef="let element" class="column-menu">
+        <button class="rule-list-action-button"
+                mat-icon-button
+                [matMenuTriggerFor]="itemMenu"
+                aria-label="Campaign menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #itemMenu="matMenu">
+          <button mat-menu-item (click)="editItem(element)">{{'BTN_EDIT' | translate}}</button>
+          <!--<button mat-menu-item (click)="duplicateItem(element?.id)">{{'BTN_DUPLICATE' | translate}}</button>-->
+          <button mat-menu-item (click)="deleteItem(element)">{{'BTN_DELETE' | translate}}</button>
+        </mat-menu>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsWithEdit"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsWithEdit;"
+        cdkDrag
+        class="rule-list-only-view"
+        [cdkDragData]="row">
+    </tr>
+  </table>
+  <ng-content *ngIf="rules?.length === 0" select=".rule-list-no-data"></ng-content>
+</div>

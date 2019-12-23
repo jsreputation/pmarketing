@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ApiConfig } from '@cl-core/api-config';
 import { combineLatest, Observable } from 'rxjs';
 import { UploadFileHttpService } from '@cl-core/http-services/upload-file-http.service';
 import { map } from 'rxjs/operators';
@@ -9,11 +8,10 @@ import { FileUploadAdapter } from '@cl-core/http-adapters/file-upload-adapter';
   providedIn: 'root'
 })
 export class UploadFileService {
-
   constructor(private uploadFileHttpService: UploadFileHttpService) {
   }
 
-  public uploadImage(file: File): Observable<any> {
+  public uploadImage(file: File): Observable<IUploadedFile> {
     const formData = this.prepareFormData(file);
     return this.uploadFileHttpService.uploadImage(formData)
       .pipe(
@@ -21,21 +19,26 @@ export class UploadFileService {
       );
   }
 
-  public uploadFile(file: any): Observable<any> {
+  public uploadFile(file: File): Observable<IUploadedFile> {
     const formData = this.prepareFormData(file);
     return this.uploadFileHttpService.uploadFile(formData)
       .pipe(
-        map(res => FileUploadAdapter.transformToUploadedFile(res.data, ApiConfig.uploadFilePath))
-        // switchMap(() => this.uploadFileHttpService.downloadFile('4'))
+        map(res => FileUploadAdapter.transformToUploadedFile(res.data))
       );
   }
 
-  public uploadMultipleFile(files: any[]): Observable<any> {
-    const arrayRequest: Observable<any>[] = files.map(file => this.uploadImage(file));
+  public getFile(id: string): Observable<IUploadedFile> {
+    return this.uploadFileHttpService.getFile(id).pipe(
+      map(res => FileUploadAdapter.transformToUploadedFile(res.data))
+    );
+  }
+
+  public uploadMultipleFile(files: File[]): Observable<IUploadedFile[]> {
+    const arrayRequest: Observable<IUploadedFile>[] = files.map(file => this.uploadImage(file));
     return combineLatest(...arrayRequest);
   }
 
-  private prepareFormData(file: any): FormData {
+  private prepareFormData(file: File): FormData {
     const formData = new FormData();
     formData.append('file', file);
     return formData;

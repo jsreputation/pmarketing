@@ -1,0 +1,33 @@
+@import "variables";
+
+:host {
+  font-size: $base-font-size;
+  background-color: $background-color;
+}
+
+.date-field {
+  position: relative;
+
+  &-error {
+    @include typo-caption;
+
+    display: flex;
+    width: max-content;
+    flex-flow: row nowrap;
+    position: absolute;
+    bottom: -0.5rem;
+  }
+}
+
+.loyalty-loader {
+  position: relative;
+  height: 1.5rem;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+
+  &-bar {
+    width: 98%;
+  }
+}

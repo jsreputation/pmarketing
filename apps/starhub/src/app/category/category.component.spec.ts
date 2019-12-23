@@ -15,12 +15,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategorySelectComponent } from './category-select/category-select.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { CategorySortComponent } from './category-sort/category-sort.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 describe('CategoryComponent', () => {
   let component: CategoryComponent;
   let fixture: ComponentFixture<CategoryComponent>;
   const rewardsServiceStub = {
-    getAllRewards: () => of(rewards),
+    getRewards: () => of(rewards),
     getCatalog: () => of(catalogs[0])
   };
   const activatedRouteStub = {
@@ -53,7 +54,8 @@ describe('CategoryComponent', () => {
         MatToolbarModule,
         MatBottomSheetModule,
         MatCardModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        InfiniteScrollModule,
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
@@ -172,5 +174,18 @@ describe('CategoryComponent', () => {
     tick();
     expect(bottomSheetSpy).toHaveBeenCalled();
   }));
+
+  describe('onScroll', () => {
+    it('should be undefined', () => {
+      const onScroll = component.onScroll();
+      expect(onScroll).toBe(undefined);
+    });
+
+    it('should increment catalogsPageId', () => {
+      component.rewardsEnded = false;
+      component.onScroll();
+      expect(component['rewardsPageId']).toBe(2);
+    });
+  });
 
 });

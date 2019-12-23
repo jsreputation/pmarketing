@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import {
   AuthenticationService,
   NotificationService,
@@ -11,7 +11,9 @@ import {
   IReward,
   // IGameService,
   IGame,
-  TokenStorage
+  TokenStorage,
+  ThemesService,
+  ITheme
 } from '@perx/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -57,7 +59,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   public reward?: IReward;
   public game?: IGame;
   private token: string;
-
+  public theme: ITheme;
   constructor(
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
@@ -68,7 +70,8 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     private snackBar: MatSnackBar,
     // private gameService: IGameService,
     private tokenStorage: TokenStorage,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    private themeService: ThemesService
   ) {
     this.data.pageName = '';
     this.data.channel = 'msa';
@@ -89,9 +92,11 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   }
 
   public ngOnInit(): void {
+    this.themeService.getThemeSetting().subscribe((theme) => this.theme = theme);
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) =>
-        this.dialog.open(PopupComponent, { data, ... data.panelClass && {panelClass: data.panelClass }
+        this.dialog.open(PopupComponent, {
+          data, ...data.panelClass && { panelClass: data.panelClass }
         }));
 
     this.notificationService.$snack.subscribe((msg: string) => this.snackBar.open(msg, 'x', { duration: 2000 }));
@@ -132,6 +137,17 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         _satellite.track('msa-rewards-virtual-page');
       }
     );
+  }
+
+  @HostListener('document:click', ['$event'])
+  public onDocumentClick(e: any): void {
+    const isIpad = navigator.userAgent.match(/iPad/i) != null;
+    const isIphone = (navigator.userAgent.match(/iPhone/i) != null) || (navigator.userAgent.match(/iPod/i) != null);
+    const url = e && e.target && (e.target.href || e.target.parentNode && e.target.parentNode.href || null);
+    if ((isIpad || isIphone) && url) {
+      window.open(url, '_blank');
+      e.stopPropagation();
+    }
   }
 
   private fetchCampaigns(): void {

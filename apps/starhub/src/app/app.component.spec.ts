@@ -12,7 +12,8 @@ import {
   ICampaign,
   // IGame,
   // GameType,
-  TokenStorage
+  TokenStorage,
+  ThemesService
 } from '@perx/core';
 import { of, throwError, BehaviorSubject } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -130,7 +131,8 @@ describe('AppComponent', () => {
         { provide: Router, useValue: routerStub },
         { provide: MatSnackBar, useValue: matSnackBarStub },
         { provide: TokenStorage, useValue: tokenStorageStub },
-        { provide: AnalyticsService, useValue: analyticsServiceStub }
+        { provide: AnalyticsService, useValue: analyticsServiceStub },
+        { provide: ThemesService, useValue: { getThemeSetting: () => of({}) } }
       ],
     });
     TestBed.overrideModule(BrowserDynamicTestingModule, {
@@ -284,4 +286,18 @@ describe('AppComponent', () => {
       tick();
       expect(spy).toHaveBeenCalled();
     })));
+
+  it('should not open window', () => {
+    const eventMock = {
+      target: {
+        href: 'test',
+        parentNode: {
+          href: 'test'
+        }
+      }
+    };
+    spyOn( window, 'open' );
+    component.onDocumentClick(eventMock);
+    expect(window.open).not.toHaveBeenCalled();
+  });
 });
