@@ -1,5 +1,6 @@
 import {Component, Input, OnChanges, AfterViewInit, SimpleChanges, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
 import { ISlice } from '../game.model';
+import { getImageCors } from '../../utils/getImageCors';
 
 interface ImageForPattern {
   id: string;
@@ -49,7 +50,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   public size: number;
   private patternImg: Pattern[] = [];
   private spinTime: number;
-  private dragging: boolean = false;
+  public dragging: boolean = false;
   private spinTimeTotal: number = 0;
   private spinAngleStart: number = 0;
   private spinTimeout: number;
@@ -64,7 +65,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   private get canvas(): HTMLCanvasElement { return this.canvasEl.nativeElement; }
   // private get canvasWheelWrap(): HTMLCanvasElement { return this.canvasWheelWrapEl.nativeElement; }
   private get wheel(): HTMLDivElement { return this.wheelEl.nativeElement; }
-  private get ctx(): CanvasRenderingContext2D {
+  public get ctx(): CanvasRenderingContext2D {
     if (!this.ctx_ && this.canvas.getContext) {
       this.ctx_ = this.canvas.getContext('2d') as CanvasRenderingContext2D;
     }
@@ -140,8 +141,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     this.fillWheelWrapStyle();
 
     slicesWithImg.forEach((item) => {
-      const image: HTMLImageElement = new Image();
-      image.src = item.backgroundImage ? item.backgroundImage : '';
+      const image: HTMLImageElement = getImageCors(item.backgroundImage);
       images.push({ id: item.id, image });
       image.onload = () => {
         count++;
@@ -242,8 +242,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private fillWheelWrapStyle(): void {
-    const wheelImg: HTMLImageElement = new Image(); // this.canvasWheelWrap.width, this.canvasWheelWrap.height
-    wheelImg.src = this.wheelImg; // this.wheelImg suppose
+    const wheelImg: HTMLImageElement = getImageCors(this.wheelImg);
     wheelImg.onload = () => {
       if (this.wheelImgLoaded !== wheelImg) {
         this.wheelImgLoaded = wheelImg;
@@ -306,16 +305,16 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   private stopRotateWheel(): void {
     if (!this.ctx) { return; }
     clearTimeout(this.spinTimeout);
-    // this.ctx.save();
-    // this.ctx.font = 'bold 20px Helvetica, Arial';
-    // this.ctx.fillStyle = 'black';
-    // const text = this.slices[this.slotToLand].label || '';
-    // this.ctx.fillText(
-    //   text,
-    //   this.size / 2 - this.ctx.measureText(text).width / 2,
-    //   this.size / 2 + 10
-    // );
-    // this.ctx.restore();
+    this.ctx.save();
+    this.ctx.font = 'bold 20px Helvetica, Arial';
+    this.ctx.fillStyle = 'black';
+    const text = this.slices[this.slotToLand].label || '';
+    this.ctx.fillText(
+      text,
+      this.size / 2 - this.ctx.measureText(text).width / 2,
+      this.size / 2 + 10
+    );
+    this.ctx.restore();
   }
 
   private handleStart(): void {

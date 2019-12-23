@@ -9,7 +9,7 @@ import { UserService } from '@cl-core/services/user.service';
 import { Observable, of } from 'rxjs';
 import { AuthHttpAdapter } from '@cl-core/http-adapters/auth-http-adapter';
 import { catchError, map, tap, filter } from 'rxjs/operators';
-import { IWLoginAttributes } from '@perx/whistler';
+import { IWLoginAttributes, IJsonApiItemPayload } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +50,7 @@ export class AuthService {
       );
   }
 
-  public signIn(data: ILogin): Observable<IJsonApiPayload<IWLoginAttributes>> {
+  public signIn(data: ILogin): Observable<IJsonApiItemPayload<IWLoginAttributes>> {
     const sendData = AuthHttpAdapter.transformFromLogin(data);
     return this.http.signIn(sendData).pipe(
       tap(res => {
@@ -89,5 +89,9 @@ export class AuthService {
 
   public resetPassword(accountId: string, username: string): Observable<any> {
     return this.http.resetPassword(accountId, username);
+  }
+
+  public changePassword(password: string, token: string): Observable<void> {
+    return this.http.changePassword(password, token);
   }
 }

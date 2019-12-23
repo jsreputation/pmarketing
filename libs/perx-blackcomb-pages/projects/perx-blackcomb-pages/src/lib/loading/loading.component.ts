@@ -17,6 +17,7 @@ import {
   of,
   iif,
   Subject,
+  throwError,
 } from 'rxjs';
 
 import {
@@ -24,7 +25,9 @@ import {
   Config,
   NotificationService,
   ICampaign,
-  ICampaignService
+  ICampaignService,
+  IConfig,
+  ConfigService
 } from '@perx/core';
 
 import * as uuid from 'uuid';
@@ -42,63 +45,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
   private campaignData: ICampaign | null = null;
 
   private destroy$: Subject<any> = new Subject();
-
-  public get isCampaignEnded(): boolean {
-    if (!this.campaignData) {
-      return true;
-    }
-    if (!this.campaignData.endsAt) {
-      return false;
-    }
-    const now: number = (new Date()).getTime();
-    const endDate = (new Date(this.campaignData.endsAt)).getTime();
-    return endDate < now;
-  }
-
-  private goWallet(): void {
-    this.router.navigate(['/wallet']);
-  }
-
-  private getCampaignData(): void {
-    if (this.campaignId) {
-      this.campaignSvc.getCampaign(this.campaignId)
-        .pipe(
-          tap((campaignData: ICampaign) => { this.campaignData = campaignData; }),
-          takeUntil(this.destroy$)
-        )
-        .subscribe(
-          () => this.redirectAfterLogin(),
-          () => this.goWallet()
-        );
-    } else {
-      this.goWallet();
-    }
-  }
-
-  private initCampaignEndedPopup(): void {
-    this.notificationService.addPopup({
-      title: `Oops, the Campaign has ended`,
-      text: `We'll be in touch soon.`,
-      imageUrl: `assets/beer_and_tea.png`,
-      buttonTxt: 'Back To Wallet',
-    });
-  }
-
-  private redirectAfterLogin(): void {
-    if (this.campaignData && !this.isCampaignEnded) {
-      this.redirectToEngagementPage(this.campaignData.type);
-    } else if (this.campaignId && this.isCampaignEnded) {
-      this.initCampaignEndedPopup();
-    } else {
-      this.goWallet();
-    }
-  }
-
-  private redirectToEngagementPage(type: string): void {
-    this.router.navigateByUrl(
-      this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${this.campaignId}`
-    );
-  }
+  private appConfig: IConfig;
 
   constructor(
     private router: Router,
@@ -106,6 +53,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
     private authService: AuthenticationService,
     private campaignSvc: ICampaignService,
     private config: Config,
+    private configService: ConfigService,
     private notificationService: NotificationService,
     @Inject(PLATFORM_ID) private platformId: object,
   ) {
@@ -113,19 +61,19 @@ export class LoadingComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.configService.readAppConfig().subscribe((conf) => this.appConfig = conf);
+    const params = this.route.snapshot.queryParams;
+    (window as any).primaryIdentifier = params.pi;
+    const cid: string | null = params.cid;
+    this.campaignId = cid ? Number.parseInt(cid, 10) : (window as any).campaignId;
+    (window as any).campaignId = this.campaignId;
     if (this.preAuth && isPlatformBrowser(this.platformId)) {
-      const params = this.route.snapshot.queryParams;
-      (window as any).primaryIdentifier = params.pi;
-      const cid: string | null = params.cid;
-      this.campaignId = cid ? Number.parseInt(cid, 10) : (window as any).campaignId;
-      (window as any).campaignId = this.campaignId;
       /*
-      * Later when API ready, the logic is:
+      * The logic is:
       * 1. check PI, then will call autoLogin
       * 2. check hasToken,then go to next page based on campaign id. Then need to finish refreshToken function to handle 401 from API return
       * 3. If no PI and no token found, then call autoLoginWithoutPI to create new account and auto login
       * */
-
       const PIHandler$ = this.authService.autoLogin();
       const createUserAndAutoLogin$ = pi => this.authService.createUserAndAutoLogin(pi, undefined, true);
       const autoLoginWithoutPI$ = of(uuid.v4()).pipe(
@@ -150,11 +98,77 @@ export class LoadingComponent implements OnInit, OnDestroy {
         () => this.getCampaignData(),
         () => this.router.navigate(['/login'])
       );
+    } else {
+      this.authService.getAccessToken().pipe(
+        switchMap(localToken => iif(() => !!localToken, of(localToken), throwError('no token'))),
+        takeUntil(this.destroy$)
+      )
+        .subscribe(
+          () => this.getCampaignData(),
+          () => this.router.navigate(['/login'])
+        );
     }
   }
 
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  public get isCampaignEnded(): boolean {
+    if (!this.campaignData) {
+      return true;
+    }
+    if (!this.campaignData.endsAt) {
+      return false;
+    }
+    const now: number = (new Date()).getTime();
+    const endDate = (new Date(this.campaignData.endsAt)).getTime();
+    return endDate < now;
+  }
+
+  private goToRouteFromConfig(): void {
+    this.router.navigate([this.appConfig && this.appConfig.redirectAfterLogin || 'wallet']);
+  }
+
+  private getCampaignData(): void {
+    if (this.campaignId) {
+      this.campaignSvc.getCampaign(this.campaignId)
+        .pipe(
+          tap((campaignData: ICampaign) => { this.campaignData = campaignData; }),
+          takeUntil(this.destroy$)
+        )
+        .subscribe(
+          () => this.redirectAfterLogin(),
+          () => this.goToRouteFromConfig()
+        );
+    } else {
+      this.goToRouteFromConfig();
+    }
+  }
+
+  private initCampaignEndedPopup(): void {
+    this.notificationService.addPopup({
+      title: `Oops, the Campaign has ended`,
+      text: `We'll be in touch soon.`,
+      imageUrl: `assets/beer_and_tea.png`,
+      buttonTxt: 'Back To Wallet',
+    });
+  }
+
+  private redirectAfterLogin(): void {
+    if (this.campaignData && !this.isCampaignEnded) {
+      this.redirectToEngagementPage(this.campaignData.type);
+    } else if (this.campaignId && this.isCampaignEnded) {
+      this.initCampaignEndedPopup();
+    } else {
+      this.goToRouteFromConfig();
+    }
+  }
+
+  private redirectToEngagementPage(type: string): void {
+    this.router.navigateByUrl(
+      this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${this.campaignId}`
+    );
   }
 }

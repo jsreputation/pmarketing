@@ -24,6 +24,10 @@ export {
   IWAssignRequestAttributes
 } from './lib/voucher/assigneds';
 export {
+  IWDocumentAttributes,
+  IWDocumentBlob
+} from './lib/storage/documents';
+export {
   IWRewardEntityAttributes,
   IWMetaData,
   IWTierRewardCostsAttributes,
@@ -45,7 +49,15 @@ export {
   IWCommTemplateAttributes,
   IWCommEventAttributes
 } from './lib/comm/comm';
-export { IWCampaignAttributes, IWCampaignDisplayProperties, WInformationCollectionSettingType } from './lib/campaign/campaign';
+export {
+  IWCampaignAttributes,
+  IWCampaignDisplayProperties,
+  WInformationCollectionSettingType,
+  WCampaignStatus,
+  IWAudienceFilter
+} from './lib/campaign/campaign';
+
+export { IWNotificationAttributes } from './lib/campaign/notification';
 export {
   IWAudiences,
   IWPools,
@@ -75,7 +87,14 @@ export {
   IWLoyaltyAttributes,
   IWBasicTierAttributes,
   IWCustomTierAttributes,
-  IWJoinMethod
+  IWJoinMethod,
+  IWLoyaltyRuleSetAttributes,
+  IWLoyaltyRuleAttributes,
+  IWLoyaltyRuleConditionValueType,
+  IWLoyaltyRuleConditionSign,
+  IWLoyaltyRuleConditionAttributes,
+  IWLoyaltyRulePointApplierType,
+  IWLoyaltyRulePointAttributes
 } from './lib/loyalty/loyalty';
 
 export {

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatCardModule,
   MatFormFieldModule,
@@ -11,7 +11,7 @@ import {
   MatDialogModule,
   MatOptionModule,
   MatSelectModule,
-  MatTabsModule
+  MatTabsModule, MatProgressBarModule
 } from '@angular/material';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
@@ -23,11 +23,10 @@ import { LoyaltyListPageComponent } from './containers/loyalty-list-page/loyalty
 import { LoyaltyComponent } from './containers/loyalty/loyalty.component';
 import { LoyaltyRoutingModule } from './loyalty-routing.module';
 import { LoyaltyFormsService } from './services/loyalty-forms.service';
-import { NewLoyaltyComponent } from './containers/new-loyalty/new-loyalty.component';
+import { ManageLoyaltyPageComponent } from './containers/manage-loyalty-page/manage-loyalty-page.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { LoyaltyFormStepDetailsComponent } from './components/loyalty-form-step-details/loyalty-form-step-details.component';
 import { LoyaltyFormStepTiersConversionsComponent } from './components/loyalty-form-step-tiers-conversions/loyalty-form-step-tiers-conversions.component';
-import { LoyaltyFormStepReviewComponent } from './components/loyalty-form-step-review/loyalty-form-step-review.component';
 import { PointsInfoComponent } from './components/points-info/points-info.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProgramMainImageComponent } from './components/program-main-image/program-main-image.component';
@@ -41,12 +40,29 @@ import { GlobalBurnRuleGroupComponent } from './components/global-burn-rule-grou
 import { PointsExpiryGroupComponent } from './components/points-expiry-group/points-expiry-group.component';
 import { TiersGroupComponent } from './components/tiers-group/tiers-group.component';
 import { MatTableModule } from '@angular/material/table';
-import { AddRulePopupComponent } from './components/add-rule-popup/add-rule-popup.component';
 import { ViewSchemeInfoComponent } from './components/view-scheme-info/view-scheme-info.component';
 import { ViewLoyaltyComponent } from './components/view-loyalty/view-loyalty.component';
 import { ViewGlobalEarnBurnRulesComponent } from './components/view-global-earn-burn-rules/view-global-earn-burn-rules.component';
-import { LoyaltyReviewComponent } from './containers/loyalty-review/loyalty-review.component';
+import { LoyaltyReviewPageComponent } from './containers/loyalty-review-page/loyalty-review-page.component';
+import { LoyaltyFormStepEarnRulesComponent } from './components/loyalty-form-step-earn-rules/loyalty-form-step-earn-rules.component';
+import { PointEarnRulesListComponent } from './components/point-earn-rules-list/point-earn-rules-list.component';
+import { RuleSetupPopupComponent } from './containers/rule-setup-popup/rule-setup-popup.component';
+import { LoyaltyCustomTierFormsService } from './services/loyalty-custom-tier-forms.service';
+import { LoyaltyEarnRulesFormsService } from './services/loyalty-earn-rules-forms.service';
+import { DateConditionGroupComponent } from './components/date-condition-group/date-condition-group.component';
+import { AmountConditionGroupComponent } from './components/amount-condition-group/amount-condition-group.component';
+import { TransactionConditionGroupComponent } from './components/transaction-condition-group/transaction-condition-group.component';
+import { DynamicFormGroupDirective } from './dynamic-field.directive';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TranslateModule } from '@ngx-translate/core';
+import { LoyaltyRuleCardComponent } from './components/loyalty-rules-card/loyalty-rule-card.component';
+import { CurrencyConditionGroupComponent } from './components/currency-condition-group/currency-condition-group.component';
+import { ConditionInfoPipe } from './condition-info.pipe';
+import { LoyaltyConfigService } from './services/loyalty-config.service';
+import { MultiplierResultGroupComponent } from './components/multiplier-result-group/multiplier-result-group.component';
+import { BonusResultGroupComponent } from './components/bonus-result-group/bonus-result-group.component';
+import { PointsEarnedInfoPipe } from './points-earned-info.pipe';
+import { PointsExpiredInfoPipe } from './points-expired-info.pipe';
 
 @NgModule({
   declarations: [
@@ -54,15 +70,13 @@ import { TranslateModule } from '@ngx-translate/core';
     LoyaltyListPageComponent,
     LoyaltyGridComponent,
     LoyaltyItemComponent,
-    NewLoyaltyComponent,
+    ManageLoyaltyPageComponent,
     LoyaltyFormStepDetailsComponent,
     LoyaltyFormStepTiersConversionsComponent,
-    LoyaltyFormStepReviewComponent,
     PointsInfoComponent,
     ProgramMainImageComponent,
     UserJoinMethodComponent,
     SelectAudienceComponent,
-    AddRulePopupComponent,
     TierSetupPopupComponent,
     GlobalEarnRuleGroupComponent,
     GlobalBurnRuleGroupComponent,
@@ -72,7 +86,21 @@ import { TranslateModule } from '@ngx-translate/core';
     ViewSchemeInfoComponent,
     ViewLoyaltyComponent,
     ViewGlobalEarnBurnRulesComponent,
-    LoyaltyReviewComponent,
+    LoyaltyReviewPageComponent,
+    LoyaltyFormStepEarnRulesComponent,
+    PointEarnRulesListComponent,
+    RuleSetupPopupComponent,
+    DateConditionGroupComponent,
+    AmountConditionGroupComponent,
+    TransactionConditionGroupComponent,
+    CurrencyConditionGroupComponent,
+    DynamicFormGroupDirective,
+    LoyaltyRuleCardComponent,
+    ConditionInfoPipe,
+    MultiplierResultGroupComponent,
+    BonusResultGroupComponent,
+    PointsEarnedInfoPipe,
+    PointsExpiredInfoPipe
   ],
   imports: [
     CommonModule,
@@ -81,7 +109,6 @@ import { TranslateModule } from '@ngx-translate/core';
     ButtonModule,
     UploadGraphicModule,
     UploadFileModule,
-
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
@@ -99,19 +126,30 @@ import { TranslateModule } from '@ngx-translate/core';
     StatusLabelModule,
     MatDialogModule,
     UploadFileModule,
-    UploadGraphicModule,
     MatTabsModule,
     MatTableModule,
     DatePickerModule,
     PipesModule,
-    TranslateModule
+    TranslateModule,
+    DragDropModule,
+    MatProgressBarModule,
+    FormsModule
   ],
   providers: [
-    LoyaltyFormsService
+    LoyaltyFormsService,
+    LoyaltyCustomTierFormsService,
+    LoyaltyEarnRulesFormsService,
+    LoyaltyConfigService
   ],
   entryComponents: [
-    AddRulePopupComponent,
-    TierSetupPopupComponent
+    TierSetupPopupComponent,
+    RuleSetupPopupComponent,
+    DateConditionGroupComponent,
+    AmountConditionGroupComponent,
+    TransactionConditionGroupComponent,
+    CurrencyConditionGroupComponent,
+    MultiplierResultGroupComponent,
+    BonusResultGroupComponent
   ]
 })
 export class LoyaltyModule {

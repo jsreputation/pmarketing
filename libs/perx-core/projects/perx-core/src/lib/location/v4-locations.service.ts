@@ -54,7 +54,6 @@ export class V4LocationsService extends LocationsService {
         }
 
         filteredMerchants = filteredMerchants ? filteredMerchants : merchants;
-
         return filteredMerchants.map((merchant: IMerchant) => this.getFromMerchant(merchant.id));
       }),
       mergeAll(5),
@@ -84,9 +83,7 @@ export class V4LocationsService extends LocationsService {
             return found;
           });
         }
-
         filteredMerchants = filteredMerchants ? filteredMerchants : merchants;
-
         return filteredMerchants.map((merchant: IMerchant) => this.getFromMerchant(merchant.id));
       }),
       mergeAll(5),

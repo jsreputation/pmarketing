@@ -25,6 +25,7 @@ import { PhoneComponent } from './question/phone/phone.component';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
+import { PasswordComponent } from './question/password/password.component';
 
 export function surveyServiceFactory(http: HttpClient, campaignService: ICampaignService, config: Config): SurveyService {
   // Make decision on what to instantiate base on config
@@ -40,7 +41,8 @@ const components = [
   SelectComponent,
   GroupComponent,
   DateComponent,
-  PhoneComponent
+  PhoneComponent,
+  PasswordComponent
 ];
 
 @NgModule({

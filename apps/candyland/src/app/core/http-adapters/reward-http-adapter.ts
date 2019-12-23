@@ -1,6 +1,5 @@
-import * as moment from 'moment';
-
-import { IWRewardEntityAttributes, IWTierRewardCostsAttributes } from '@perx/whistler';
+import { IWRewardEntityAttributes, IWTierRewardCostsAttributes, IJsonApiItem, IJsonApiPostData } from '@perx/whistler';
+import { DateTimeParser } from '@cl-helpers/date-time-parser';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
@@ -61,9 +60,9 @@ export class RewardHttpAdapter {
           type: voucher_properties.validity.type,
           period: {
             startDate: voucher_properties.validity.start_date,
-            startTime: moment(voucher_properties.validity.start_date).format('HH:mm'),
+            startTime: DateTimeParser.getTime(voucher_properties.validity.start_date, 'HH:mm'),
             endDate: voucher_properties.validity.end_date,
-            endTime: moment(voucher_properties.validity.end_date).format('HH:mm')
+            endTime: DateTimeParser.getTime(voucher_properties.validity.end_date, 'HH:mm')
           },
           issuanceDate: {
             times: voucher_properties.validity.times,
@@ -101,7 +100,7 @@ export class RewardHttpAdapter {
     };
   }
 
-  public static transformFromRewardForm(data: IRewardEntityForm, loyalties?: any): IJsonApiItem<IWRewardEntityAttributes> {
+  public static transformFromRewardForm(data: IRewardEntityForm, loyalties?: any): IJsonApiPostData<IWRewardEntityAttributes> {
     return {
       type: 'entities',
       attributes: {
@@ -166,20 +165,15 @@ export class RewardHttpAdapter {
 
   public static getRewardDate(period: any): { [key: string]: any } {
     const res: any = {
-      start_date: RewardHttpAdapter.setTime(period.startDate, period.startTime)
+      start_date: DateTimeParser.setTime(period.startDate, period.startTime)
     };
     if (!period.disabledEndDate) {
-      res.end_date = RewardHttpAdapter.setTime(period.endDate, period.endTime);
+      res.end_date = DateTimeParser.setTime(period.endDate, period.endTime);
     }
     return res;
   }
 
-  public static setTime(date: string, time: any): any {
-    const [hours, minutes] = time.split(':');
-    return moment(date).set({ hours, minutes }).utc().toDate();
-  }
-
-  public static transformFromReward(data: IRewardEntity): IJsonApiItem<IWRewardEntityAttributes> {
+  public static transformFromReward(data: IRewardEntity): IJsonApiPostData<IWRewardEntityAttributes> {
     return {
       type: 'entities',
       attributes: {
@@ -214,9 +208,8 @@ export class RewardHttpAdapter {
   public static transformFromLoyaltyForm(
     tier: ILoyaltyTiersFormGroup | IBasicTier,
     rewardId: string
-  ): IJsonApiItem<Partial<IWTierRewardCostsAttributes>> {
-
-    const result: IJsonApiItem<Partial<IWTierRewardCostsAttributes>> = {
+  ): IJsonApiPostData<IWTierRewardCostsAttributes> {
+    return {
       type: 'tier_reward_costs',
       attributes: {
         apply_tier_discount: tier.statusDiscount ? tier.statusDiscount : false,
@@ -226,17 +219,9 @@ export class RewardHttpAdapter {
         tier_type: tier.tierType
       }
     };
-
-    if (tier.tierRewardCostsId) {
-      result['id'] = tier.tierRewardCostsId;
-    }
-
-    return result;
   }
 
-  public static transformToLoyaltyCost(data: IJsonApiItem<Partial<IWTierRewardCostsAttributes>>)
-    : ITierRewardCost {
-
+  public static transformToLoyaltyCost(data: IJsonApiItem<Partial<IWTierRewardCostsAttributes>>): ITierRewardCost {
     return {
       tierRewardCostsId: +data.id,
       statusDiscount: data.attributes.apply_tier_discount,

@@ -1,0 +1,36 @@
+@import "variables";
+
+.notification {
+  &-wrap {
+    border-radius: 4px;
+    background-color: #fafafa;
+    padding: 2.4rem 1.2rem;
+
+    .card-title {
+      font-weight: normal;
+      margin-bottom: 3rem;
+    }
+  }
+
+  &-date-time {
+    font-size: $base-font-size;
+    color: rgba(0, 0, 0, 0.6);
+    margin-top: 2.4rem;
+  }
+
+  &-actions {
+    margin-top: 2.8rem;
+  }
+
+  &-message {
+    margin-top: 4rem;
+  }
+
+  &-row .notification-type {
+    max-width: inherit;
+  }
+
+  &-medium-select {
+    max-width: 9rem !important;
+  }
+}

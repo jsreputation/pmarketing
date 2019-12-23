@@ -36,6 +36,8 @@
   "ERROR_REQUIRED": "Обязательное поле",
   "ERROR_MIN_LENGTH": "Минимальная длина",
   "ERROR_MAX_LENGTH": "Максимальная длина",
+  "ERROR_MIN": "Минимальное значение",
+  "ERROR_MAX": "Максимальное значение",
   "ERROR_PATTERN": "Только буквенно-цифровые символы",
   "RECOMMENDED_FORMAT:_.JPG,_.PNG_OR_.GIF": "Рекомендуемый формат:.JPG, .PNG или .GIF",
   "WRONG_PATTERN_WEB_LINK": "Неправильный формат ссылки",

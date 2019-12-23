@@ -11,6 +11,7 @@ import {
   Voucher,
   VouchersModule,
   VoucherState,
+  RedemptionType,
 } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -40,11 +41,11 @@ describe('RedemptionComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: null,
       categoryTags: [],
       inventory: null,
     },
     state: VoucherState.issued,
+    redemptionType: RedemptionType.none,
     code: 'string;',
     expiry: null,
   };

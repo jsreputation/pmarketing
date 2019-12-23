@@ -7,7 +7,9 @@ import {
   Config,
   IGameService,
   InstantOutcomeService,
-  SurveyService
+  SurveyService,
+  ThemesService,
+  ConfigService
 } from '@perx/core';
 import { SignUpComponent } from './sign-up.component';
 import { of } from 'rxjs';
@@ -20,6 +22,10 @@ import { IWAppAccessTokenResponse } from '@perx/whistler';
 
 const configStub: Partial<Config> = {
   preAuth: false
+};
+
+const configServiceStub: Partial<ConfigService> = {
+  readAppConfig: () => of({ redirectAfterLogin: '/home' })
 };
 
 const gameServiceStub: Partial<IGameService> = {
@@ -49,6 +55,9 @@ const authServiceStub: Partial<AuthenticationService> = {
   getAppToken: () => of({} as IWAppAccessTokenResponse),
   getAppAccessToken: () => 'token'
 };
+const themeServiceStub: Partial<ThemesService> = {
+  getThemeSetting: () => of()
+};
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
@@ -72,24 +81,20 @@ describe('SignUpComponent', () => {
         TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([
           { path: 'wallet', redirectTo: '/' },
+          { path: 'login', redirectTo: '/' }
         ]),
       ],
       providers: [
-        {
-          provide: IFormsService, useValue: formSvcStub
-        },
-        {
-          provide: MatSnackBar, useValue: matSnackStub
-        },
-        {
-          provide: AuthenticationService, useValue: {}
-        },
+        { provide: IFormsService, useValue: formSvcStub },
+        { provide: MatSnackBar, useValue: matSnackStub },
         { provide: Config, useValue: configStub },
         { provide: IGameService, useValue: gameServiceStub },
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: InstantOutcomeService, useValue: instantOutcomeServiceStub },
         { provide: Location, useValue: locationStub },
         { provide: SurveyService, useValue: surveyServiceStub },
+        { provide: ThemesService, useValue: themeServiceStub },
+        { provide: ConfigService, useValue: configServiceStub}
       ]
     })
       .compileComponents();

@@ -1,6 +1,7 @@
 import {
   Voucher,
   VoucherState,
+  RedemptionType,
 } from '@perx/core';
 
 // @ts-ignore
@@ -23,11 +24,11 @@ export const vouchers: Voucher[] = Array.from({length: 6}, (voucher, id) => ({
     merchantWebsite: '',
     termsAndConditions: '',
     howToRedeem: '',
-    redemptionType: undefined,
     categoryTags: [],
     inventory: undefined,
   },
-  state: VoucherState.issued,
+  redemptionType: RedemptionType.none,
+  state: VoucherState.redeemed,
   code: '',
   expiry: new Date(),
 }));

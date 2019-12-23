@@ -15,9 +15,13 @@ import { themes } from './ctrl/themes';
 import { manifest } from './ctrl/manifest';
 import { language } from './ctrl/language';
 import { getCredentials } from './utils/credentials';
+import { getCredential } from './utils/autoGenerateTenantToken';
 
+// import * as Sentry from '@sentry/node';
 // Express server
 const app = express();
+// Sentry.init({ dsn: 'https://394598311c2749ea9114efb557297005@sentry.io/1857840' });
+// app.use(Sentry.Handlers.requestHandler());
 app.use(compression());
 const cors = require('cors');
 app.use(cors());
@@ -26,29 +30,31 @@ app.use('/static', express.static('static'));
 
 const PORT = process.env.PORT || 4000;
 const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
-const BASE_HREF = process.env.BASE_HREF || '/';
+const appPath = join(EXPRESS_DIST_FOLDER, '../../perx-microsite');
 
+const BASE_HREF = process.env.BASE_HREF || '/';
+const IS_WHISTLER = process.env.IS_WHISTLER;
+const getTokens = IS_WHISTLER ? getCredential : getCredentials;
 app.options('*', cors());
 
-app.get('/preauth', preauth(getCredentials));
+app.get('/preauth', preauth(getTokens));
 
-app.post(`${BASE_HREF}v4/oauth/token`, v4Token(getCredentials));
+app.post(`${BASE_HREF}v4/oauth/token`, v4Token(getTokens));
 
-app.post(`${BASE_HREF}v2/oauth/token`, v2Token(getCredentials));
+app.post(`${BASE_HREF}v2/oauth/token`, v2Token(getTokens));
 
-app.post(`${BASE_HREF}cognito/login`, login(getCredentials));
+app.post(`${BASE_HREF}cognito/login`, login(getTokens));
 
-app.post(`${BASE_HREF}cognito/users`, users(getCredentials));
+app.post(`${BASE_HREF}cognito/users`, users(getTokens));
 
-app.post(`${BASE_HREF}themes`, themes(getCredentials));
+app.post(`${BASE_HREF}themes`, themes(getTokens));
 
-app.get(`${BASE_HREF}manifest.webmanifest`, manifest(getCredentials));
+app.get(`${BASE_HREF}manifest.webmanifest`, manifest(getTokens, appPath));
 
 app.get(`${BASE_HREF}lang`, language());
 
 if (process.env.PRODUCTION) {
-  const appPath = join(EXPRESS_DIST_FOLDER, '../../perx-microsite');
-  console.log('production mode ON');
+  console.log('production mode ON', appPath);
   app.set('view engine', 'html');
   app.set('views', appPath);
   // Serve static files from /../../perx-microsite
@@ -61,9 +67,14 @@ if (process.env.PRODUCTION) {
   });
 }
 app.use('/assets', express.static('assets'));
+// app.use(Sentry.Handlers.errorHandler());
+if (IS_WHISTLER) {
+  getTokens('').then(() => console.log('Init token list table.'));
+}
 // Start up the Node server
 const server = app.listen(PORT, () => {
   console.log(`Node server listening on http://localhost:${PORT}`);
+  console.log(`Node server is whistler: ${IS_WHISTLER}`);
 });
 
 const processInterruption = (signals: NodeJS.Signals) => {

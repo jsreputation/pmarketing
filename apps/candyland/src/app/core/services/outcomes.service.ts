@@ -4,9 +4,9 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 import { OutcomesHttpsService } from '@cl-core/http-services/outcomes-https.service';
 import { map } from 'rxjs/operators';
 import { OutcomesHttpAdapter } from '@cl-core/http-adapters/outcomes-http-adapter';
-import { IWOutcomeAttributes } from '@perx/whistler';
+import { IWOutcomeAttributes, IJsonApiItem, IJsonApiListPayload, IJsonApiItemPayload } from '@perx/whistler';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
-import { ICampaignOutcome } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,7 @@ export class OutcomesService {
   public updateOutcome(
     data: ICampaignOutcome,
     campaignId: string,
-  ): Observable<IJsonApiPayload<IWOutcomeAttributes>> {
+  ): Observable<IJsonApiItemPayload<IWOutcomeAttributes>> {
     const sendData = OutcomesHttpAdapter.transformFromOutcomes(
       data,
       campaignId,
@@ -39,7 +39,7 @@ export class OutcomesService {
   public createOutcome(
     data: ICampaignOutcome,
     campaignId: string,
-  ): Observable<IJsonApiPayload<IWOutcomeAttributes>> {
+  ): Observable<IJsonApiItemPayload<IWOutcomeAttributes>> {
     const sendData = OutcomesHttpAdapter.transformFromOutcomes(data, campaignId);
     return this.outcomesHttpsService.createOutcome({ data: sendData });
   }
