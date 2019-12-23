@@ -4,6 +4,7 @@ import { BeforeRewardExpiresFormGroupComponent } from './before-reward-expires-f
 // tslint:disable-next-line
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('BeforeRewardExpiresFormGroupComponent', () => {
   let component: BeforeRewardExpiresFormGroupComponent;
@@ -12,6 +13,9 @@ describe('BeforeRewardExpiresFormGroupComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BeforeRewardExpiresFormGroupComponent ],
+      imports: [
+        TranslateModule.forRoot()
+      ],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
