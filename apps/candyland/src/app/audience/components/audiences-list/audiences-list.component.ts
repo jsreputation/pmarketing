@@ -8,9 +8,8 @@ import {
 } from '@angular/core';
 import { MatSort } from '@angular/material';
 
-import { IWAudiences } from '@perx/whistler';
-
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
+import { IAudience } from '@cl-core/models/audiences/audiences';
 
 @Component({
   selector: 'cl-audiences-list',
@@ -20,7 +19,7 @@ import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-sourc
 })
 export class AudiencesListComponent implements AfterViewInit, OnDestroy {
   public DATE_FORMAT: string = 'mediumDate';
-  @Input() public dataSource: CustomDataSource<IWAudiences>;
+  @Input() public dataSource: CustomDataSource<IAudience>;
   @Input() public displayedColumns: string[] = ['name', 'updated', 'numberUsers']; // 'format' 'status'
   @ViewChild(MatSort, { static: false }) private sort: MatSort;
 
