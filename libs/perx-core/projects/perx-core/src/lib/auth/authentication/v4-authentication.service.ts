@@ -17,7 +17,6 @@ import { Config } from '../../config/config';
 import { IV4ProfileResponse, V4ProfileService } from '../../profile/v4-profile.service';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { oc } from 'ts-optchain';
-import { Router } from '@angular/router';
 
 interface IV4SignUpData {
   first_name?: string;
@@ -62,8 +61,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     config: Config,
     private http: HttpClient,
     private tokenStorage: TokenStorage,
-    private profileService: ProfileService,
-    private router: Router
+    private profileService: ProfileService
   ) {
     super();
     if (!config.production) {
@@ -73,7 +71,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       this.appAuthEndPoint = config.baseHref + 'v2/oauth';
       this.userAuthEndPoint = config.baseHref + 'v4/oauth';
     }
-    if(config.preAuth) {
+    if (config.preAuth) {
       this.preauth = config.preAuth;
     }
     this.customersEndPoint = config.apiHost + '/v4/customers';
@@ -92,13 +90,14 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   public refreshToken(): Observable<any> {
-    if(!this.preauth) {
-      this.autoLogin().pipe(tap(()=>this.router.navigate(['home'])))
+    if (this.preauth && this.retries < this.maxRetries) {
+      this.retries++;
+      this.autoLogin().subscribe(() => console.log('finished refresh token'));
       return of(true);
-    } 
+    }
+    this.retries = 0;
     this.logout();
-    this.router.navigate(['login']);
-    return of(null);
+    return of(false);
   }
 
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
