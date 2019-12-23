@@ -7,7 +7,7 @@
 
   <div class="card-content" *ngIf="ruleSet">
     <label class="card-label">{{'LOYALTY_FEATURE.RULES_APPLICATION' | translate}}</label>
-    <div class="card-row" [class.match-type-field-only-view]="!editable">
+    <div class="card-row" [class.match-type-field-only-view]="!editable || ruleSet?.rules?.length < 2">
       <mat-form-field>
         <mat-select [value]="ruleSet.matchType" (valueChange)="changeMatchType($event)">
           <ng-container *ngFor="let matchTypeOption of config?.matchType">

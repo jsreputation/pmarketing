@@ -73,6 +73,10 @@
     "SPECIALS_RULES": "Special Rules",
     "SPECIALS_RULES_NO_DATA": "There are currently no special rules for the ",
     "CREATE_RULE": "+ Create new rule",
+    "APPLY": "Apply",
+    "AWARD": "Award",
+    "POINTS": "Points",
+    "MULTIPLIER_TO_POINT": "Multiplier to points",
     "MATCH_TYPE": {
       "MATCH_FIRST": "Apply First Matching Rule",
       "MATCH_ALL": "Apply All Matching Rule",
