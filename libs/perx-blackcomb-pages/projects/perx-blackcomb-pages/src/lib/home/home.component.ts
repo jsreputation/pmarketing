@@ -265,7 +265,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.pageSize,
       undefined,
       stTab.rewardsType ? [stTab.rewardsType] : undefined), stTab.rewardsList
-    ).subscribe((val) => stTab.rewardsList = of([...val[0], ...val[1]]));
+    ).subscribe((val) => stTab.rewardsList = of([...val[1], ...val[0]]));
   }
 
   public tabChanged(event: MatTabChangeEvent): void {
