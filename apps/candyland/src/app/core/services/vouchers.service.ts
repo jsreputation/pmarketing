@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 import { IWVouchersApi, IJsonApiPostData } from '@perx/whistler';
 import { WCodeType } from '@perx/whistler';
 import { SOURCE_TYPE } from 'src/app/app.constants';
-import { IJsonApiItemPayload, IJsonApiItem } from '@perx/whistler';
+import { IJsonApiItemPayload } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -25,12 +25,13 @@ export class VouchersService {
   }
 
   public createVoucher(data: IWVouchersApi): Observable<IJsonApiItemPayload<IWVouchersApi>> {
-    const formattedVoucher: IJsonApiItem<IWVouchersApi> = VouchersHttpAdapter.transformCreateVoucher(data);
+    const formattedVoucher: IJsonApiPostData<IWVouchersApi> = VouchersHttpAdapter.transformCreateVoucher(data);
     return this.vouchersHttp.createVoucher({ data: formattedVoucher });
   }
 
   public uploadVouchers(url: string, rewardId: number): Observable<IJsonApiItemPayload<IWVouchersApi>> {
     const data: IJsonApiPostData<IWVouchersApi> = {
+      type: 'batch',
       attributes: {
         source_type: SOURCE_TYPE,
         source_id: rewardId,
