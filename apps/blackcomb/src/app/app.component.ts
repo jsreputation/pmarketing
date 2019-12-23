@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { PopupComponent, NotificationService, IPopupConfig, ITheme, AuthenticationService } from '@perx/core';
+import { PopupComponent, NotificationService, IPopupConfig, ITheme, AuthenticationService, ConfigService } from '@perx/core';
 import {
   HomeComponent,
   HistoryComponent,
@@ -10,8 +10,9 @@ import {
 } from '@perx/blackcomb-pages';
 import { Location } from '@angular/common';
 import { Router, NavigationEnd, Event } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,7 @@ export class AppComponent implements OnInit {
   public leftIcon: string = '';
   public preAuth: boolean;
   public theme: ITheme;
+  public translationLoaded: boolean = false;
 
   constructor(
     private notificationService: NotificationService,
@@ -32,12 +34,19 @@ export class AppComponent implements OnInit {
     private router: Router,
     private authService: AuthenticationService,
     private cd: ChangeDetectorRef,
-    private snack: MatSnackBar
+    private snack: MatSnackBar,
+    private config: ConfigService,
+    private translate: TranslateService
   ) {
     this.preAuth = environment.preAuth;
   }
 
   public ngOnInit(): void {
+    this.config.readAppConfig()
+      .pipe(switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
+      .subscribe(() => {
+        this.translationLoaded = true;
+      });
     this.authService.$failedAuth.subscribe(
       res => {
         if (res) {

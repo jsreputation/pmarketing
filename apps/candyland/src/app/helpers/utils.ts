@@ -24,7 +24,7 @@ export default class Utils {
     return ret;
   }
 
-  static updateAtArray(array: any[], current: number, updated: any): any[] {
+  static updateAtArray<T = any>(array: T[], current: T, updated: T): T[] {
     const index = array.findIndex(item => Utils.isEqual(item, current));
     return Utils.replaceAt(array, index, updated);
   }
@@ -172,11 +172,19 @@ export default class Utils {
   static getFiles<T>(model: T): Partial<T> {
     const partialModel: Partial<T> = {};
     Object.keys(model).forEach((key: string) => {
-        if (model[key] && model[key].hasOwnProperty('image')) {
-          partialModel[key] = model[key];
-        }
+      if (model[key] && model[key].hasOwnProperty('image')) {
+        partialModel[key] = model[key];
       }
+    }
     );
     return partialModel;
+  }
+
+  static transformMailTo(email: string): string | null {
+    return email ? `mailto:${email}` : null;
+  }
+
+  static transformTelTo(tel: string): string | null {
+    return tel ? `tel:${tel}` : null;
   }
 }

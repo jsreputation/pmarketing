@@ -5,5 +5,6 @@
   "isWhistler": false,
   "baseHref": "/",
   "sourceType": "",
-  "comingSoon": "true"
+  "comingSoon": "true",
+  "redirectAfterLogin": "/wallet"
 }

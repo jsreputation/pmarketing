@@ -1,4 +1,4 @@
-import { IWRewardEntityAttributes, IWTierRewardCostsAttributes } from '@perx/whistler';
+import { IWRewardEntityAttributes, IWTierRewardCostsAttributes, IJsonApiItem, IJsonApiPostData } from '@perx/whistler';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
@@ -100,7 +100,7 @@ export class RewardHttpAdapter {
     };
   }
 
-  public static transformFromRewardForm(data: IRewardEntityForm, loyalties?: any): IJsonApiItem<IWRewardEntityAttributes> {
+  public static transformFromRewardForm(data: IRewardEntityForm, loyalties?: any): IJsonApiPostData<IWRewardEntityAttributes> {
     return {
       type: 'entities',
       attributes: {
@@ -173,7 +173,7 @@ export class RewardHttpAdapter {
     return res;
   }
 
-  public static transformFromReward(data: IRewardEntity): IJsonApiItem<IWRewardEntityAttributes> {
+  public static transformFromReward(data: IRewardEntity): IJsonApiPostData<IWRewardEntityAttributes> {
     return {
       type: 'entities',
       attributes: {
@@ -208,9 +208,8 @@ export class RewardHttpAdapter {
   public static transformFromLoyaltyForm(
     tier: ILoyaltyTiersFormGroup | IBasicTier,
     rewardId: string
-  ): IJsonApiItem<Partial<IWTierRewardCostsAttributes>> {
-
-    const result: IJsonApiItem<Partial<IWTierRewardCostsAttributes>> = {
+  ): IJsonApiPostData<IWTierRewardCostsAttributes> {
+    return {
       type: 'tier_reward_costs',
       attributes: {
         apply_tier_discount: tier.statusDiscount ? tier.statusDiscount : false,
@@ -220,17 +219,9 @@ export class RewardHttpAdapter {
         tier_type: tier.tierType
       }
     };
-
-    if (tier.tierRewardCostsId) {
-      result['id'] = tier.tierRewardCostsId;
-    }
-
-    return result;
   }
 
-  public static transformToLoyaltyCost(data: IJsonApiItem<Partial<IWTierRewardCostsAttributes>>)
-    : ITierRewardCost {
-
+  public static transformToLoyaltyCost(data: IJsonApiItem<Partial<IWTierRewardCostsAttributes>>): ITierRewardCost {
     return {
       tierRewardCostsId: +data.id,
       statusDiscount: data.attributes.apply_tier_discount,

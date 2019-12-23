@@ -18,7 +18,10 @@ describe('RedeemComponent', () => {
     TestBed.configureTestingModule({
       declarations: [RedeemComponent],
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([{
+          path: 'login',
+          component: RedeemComponent
+        }]),
         VouchersModule,
         TranslateModule.forRoot()
       ],

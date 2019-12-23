@@ -15,6 +15,7 @@ import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TierSetupPopupComponent implements OnInit, OnDestroy {
+  public loading: boolean = false;
   public form: FormGroup;
   protected destroy$: Subject<void> = new Subject();
   public pointsExpirePeriodType: typeof PeriodType = PeriodType;
@@ -23,8 +24,9 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<TierSetupPopupComponent>,
     private customTierFormsService: LoyaltyCustomTierFormsService,
     private customTierService: LoyaltyCustomTierService,
-    @Inject(MAT_DIALOG_DATA) public data: { basicTierId: string, tier: ICustomTireForm | null }
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: { basicTierId: string, tier: ICustomTireForm | null, config: any }
+  ) {
+  }
 
   public get pointsThreshold(): AbstractControl {
     return this.form.get('joinMethod.pointsThreshold') || null;
@@ -79,12 +81,16 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
       return;
     }
     let request;
+    this.loading = true;
     if (this.data.tier) {
       request = this.customTierService.updateCustomTier(this.data.tier.id, this.form.value, this.data.basicTierId);
     } else {
       request = this.customTierService.createCustomTier(this.form.value, this.data.basicTierId);
     }
-    request.subscribe(data => this.dialogRef.close(data));
+    request.subscribe(
+      data => this.dialogRef.close(data),
+      () => this.loading = false
+    );
   }
 
   private initForm(): void {
@@ -102,12 +108,12 @@ export class TierSetupPopupComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$),
     ).subscribe((value: boolean) => {
       if (value) {
-        this.points.enable({ onlySelf: true, emitEvent: false });
+        this.points.enable({onlySelf: true, emitEvent: false});
       } else {
-        this.points.reset(null, { onlySelf: true, emitEvent: false });
-        this.points.disable({ onlySelf: true, emitEvent: false });
+        this.points.reset(null, {onlySelf: true, emitEvent: false});
+        this.points.disable({onlySelf: true, emitEvent: false});
       }
-      this.points.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+      this.points.updateValueAndValidity({onlySelf: true, emitEvent: false});
     });
   }
 }
