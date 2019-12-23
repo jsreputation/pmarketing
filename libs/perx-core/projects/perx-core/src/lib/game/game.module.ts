@@ -43,6 +43,7 @@ export function gameServiceFactory(http: HttpClient, config: Config, vouchSvc: I
     PinataComponent,
     ScratchCardComponent,
     SpinTheWheelComponent,
+    SnakeComponent
   ]
 })
 export class GameModule {

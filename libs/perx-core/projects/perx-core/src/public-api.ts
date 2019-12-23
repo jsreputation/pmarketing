@@ -98,7 +98,7 @@ export { ShakeTreeComponent } from './lib/game/shake-tree/shake-tree.component';
 export { PinataComponent } from './lib/game/pinata/pinata.component';
 export { ScratchCardComponent } from './lib/game/scratch-card/scratch-card.component';
 export { SpinTheWheelComponent } from './lib/game/spin-the-wheel/spin-the-wheel.component';
-
+export { SnakeComponent } from './lib/game/snake/snake.component';
 /**
  * Profile
  */

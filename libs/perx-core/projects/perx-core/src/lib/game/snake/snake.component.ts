@@ -1,7 +1,7 @@
 import { Number2 } from './number2';
 import {Input} from '@angular/core';
 // https://codepen.io/mexitalian/pen/pNQgae // not very useful, not hammer js
-export class Snake {
+export class SnakeComponent {
   @Input()
   public target: string;
   @Input()

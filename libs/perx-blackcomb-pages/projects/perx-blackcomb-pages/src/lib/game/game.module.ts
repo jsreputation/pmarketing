@@ -6,7 +6,8 @@ import {
   PinataComponent,
   ShakeTreeComponent,
   ScratchCardComponent,
-  SpinTheWheelComponent
+  SpinTheWheelComponent,
+  SnakeComponent
 } from '@perx/core';
 
 import { TapComponent } from './tap/tap.component';
