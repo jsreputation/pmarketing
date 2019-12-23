@@ -1,9 +1,9 @@
-import { getEndPoints } from './getEndPoints';
-import { getTenantsList } from './tenantsList';
+import { getEndPoints } from '../ctrl/getEndPoints';
+import { getTenantsList } from '../ctrl/tenantsList';
 import cacheManager from 'cache-manager';
 import { ICredentials } from '../types/apiConfig';
-import { getRootCredentials } from '../utils/credentialsWhistler';
-import { createToken } from './createToken';
+import { getRootCredentials } from './credentialsWhistler';
+import { createToken } from '../ctrl/createToken';
 import { IJsonApiItem, IWCognitoEndpointAttributes } from '@perx/whistler';
 
 const cache = cacheManager.caching({ store: 'memory', max: 100, ttl: 0 });
@@ -64,12 +64,17 @@ async function updateMapping(rootToken: ICredentials): Promise<void> {
   return Promise.resolve();
 }
 
-export const getCredential = (url: string): Promise<ICredentials> => {
+const getTargetUrl = (url: string) => {
   if (url.includes('localhost')) {
     url = 'https://generic-blackcomb-dev1.uat.whistler.perxtech.io/';
   } else {
-    url += '/';
+    url = 'https://' + url + '/';
   }
+  return url;
+};
+
+export const getCredential = (url: string): Promise<ICredentials> => {
+  url = getTargetUrl(url);
 
   const credential: ICredentials = {
     target_url: '',
