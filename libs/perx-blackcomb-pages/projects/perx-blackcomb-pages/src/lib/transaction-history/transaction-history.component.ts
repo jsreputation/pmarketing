@@ -10,12 +10,14 @@ import {
   TransactionPipe
 } from '@perx/core';
 
+import { ShowTitleInHeader } from '../layout/layout.component';
+
 @Component({
   selector: 'perx-blackcomb-pages-transaction-history',
   templateUrl: './transaction-history.component.html',
   styleUrls: ['./transaction-history.component.scss']
 })
-export class TransactionHistoryComponent implements OnInit {
+export class TransactionHistoryComponent implements OnInit, ShowTitleInHeader {
 
   public transactions: Observable<ITransactionHistory[]>;
   public purchasesTitleFn: (tr: ITransactionHistory) => string;
@@ -47,5 +49,9 @@ export class TransactionHistoryComponent implements OnInit {
 
     this.subTitleFn = (tr: ITransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
     this.priceLabelFn = (tr: ITransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount || 0)}`;
+  }
+
+  public getTitle(): string {
+    return 'Transaction History';
   }
 }
