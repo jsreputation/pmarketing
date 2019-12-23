@@ -34,6 +34,8 @@
   "ERROR_REQUIRED": "Required field",
   "ERROR_MIN_LENGTH": "Min length",
   "ERROR_MAX_LENGTH": "Max length",
+  "ERROR_MIN": "Min value",
+  "ERROR_MAX": "Max value",
   "ERROR_PATTERN": "Only alphanumerics",
   "RECOMMENDED_FORMAT:_.JPG,_.PNG_OR_.GIF": "Recommended format: .JPG, .PNG or .GIF",
   "WRONG_PATTERN_WEB_LINK": "Wrong pattern web link",
