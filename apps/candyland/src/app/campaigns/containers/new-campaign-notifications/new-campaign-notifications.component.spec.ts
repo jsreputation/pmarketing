@@ -6,6 +6,7 @@ import { CampaignChannelsFormService } from '../../services/campaign-channels-fo
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormGroup } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NewCampaignNotificationsComponent', () => {
   let component: NewCampaignNotificationsComponent;
@@ -16,7 +17,8 @@ describe('NewCampaignNotificationsComponent', () => {
       declarations: [ NewCampaignNotificationsComponent ],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         CampaignChannelsFormService,
