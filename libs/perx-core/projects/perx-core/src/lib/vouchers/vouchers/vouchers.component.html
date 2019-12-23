@@ -1,34 +1,47 @@
 <ng-container *ngIf="isVoucherQueryComplete(vouchers$ | async); else elseBlock">
-  <div class="card-list-container">
-    <ng-container *ngFor="let voucher of vouchers$ | async">
-      <mat-card *ngIf="filter === undefined || filter.includes(voucher.state)" mat-ripple
-        [matRippleDisabled]="notClickable(voucher)" (click)="onClick(voucher)">
-        <div [ngClass]="'voucher-content ' + imageSize">
-          <div class="voucher-img__wrapper">
-            <img class="voucher-thumbnail" src="{{voucher?.reward?.rewardThumbnail}}">
+  <div class="card-list-container" *ngIf="vouchers$ | async as vouchers">
+    <div *ngIf="vouchers.length > 0; then hasVouchersBlock else noVouchersBlock"></div>
+    <ng-template #hasVouchersBlock>
+      <ng-container *ngFor="let voucher of vouchers$ | async">
+        <mat-card *ngIf="filter === undefined || filter.includes(voucher.state)" mat-ripple
+          [matRippleDisabled]="notClickable(voucher)" (click)="onClick(voucher)">
+          <div [ngClass]="'voucher-content ' + imageSize">
+            <div class="voucher-img__wrapper">
+              <img class="voucher-thumbnail" src="{{voucher?.reward?.rewardThumbnail}}">
+            </div>
+            <div class="voucher-details">
+              <h1 *ngIf="showTitle">
+                {{voucher?.reward?.name}}
+              </h1>
+              <p *ngIf="showMerchant">
+                {{voucher?.reward?.merchantName}}
+              </p>
+              <p *ngIf="showExpireDate && voucher.expiry && voucher.expiry !== null">
+                {{expiryLabelFn(voucher)}}
+              </p>
+              <p *ngIf="showRedeemedDate && voucher.redemptionDate">
+                Redeemed on {{voucher.redemptionDate | date: 'shortDate'}}
+              </p>
+              <div [ngClass]="'ribbon ' + voucher.state" *ngIf="showRedeemedIcon && mapping && mapping[voucher.state]">
+                {{mapping[voucher.state]}}</div>
+            </div>
           </div>
-          <div class="voucher-details">
-            <h1 *ngIf="showTitle">
-              {{voucher?.reward?.name}}
-            </h1>
-            <p *ngIf="showMerchant">
-              {{voucher?.reward?.merchantName}}
-            </p>
-            <p *ngIf="showExpireDate && voucher.expiry && voucher.expiry !== null">
-              {{expiryLabelFn(voucher)}}
-            </p>
-            <p *ngIf="showRedeemedDate && voucher.redemptionDate">
-              Redeemed on {{voucher.redemptionDate | date: 'shortDate'}}
-            </p>
-            <div [ngClass]="'ribbon ' + voucher.state" *ngIf="showRedeemedIcon && mapping && mapping[voucher.state]">
-              {{mapping[voucher.state]}}</div>
+          <mat-icon *ngIf="iconDisplay && voucher.state !== 'redeemed'">
+            {{iconDisplay}}
+          </mat-icon>
+        </mat-card>
+      </ng-container>
+    </ng-template>
+    <ng-template #noVouchersBlock>
+      <div class="vouchers-content">
+        <div class="no-vouchers">
+          <h3>No vouchers in this category!</h3>
+          <div class="img-container">
+            <img src="assets/empty_list.svg" />
           </div>
         </div>
-        <mat-icon *ngIf="iconDisplay && voucher.state !== 'redeemed'">
-          {{iconDisplay}}
-        </mat-icon>
-      </mat-card>
-    </ng-container>
+      </div>
+    </ng-template>
   </div>
 </ng-container>
 <ng-template #elseBlock>

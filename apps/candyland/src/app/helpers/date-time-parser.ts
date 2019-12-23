@@ -33,7 +33,27 @@ export class DateTimeParser {
     return stringDate ? new Date(stringDate) : null;
   }
 
+  public static dateToString(date: Date): string {
+    return date.toISOString().substring(0, 10);
+  }
+
   public static stringToTime(date?: string, format?: string): string {
     return date ? DateTimeParser.getTime(date, format) : '';
+  }
+
+  public static getDateMountsAgo(numberMonth: number = 1): Date {
+    const date = new Date();
+    date.setMonth(date.getMonth() - numberMonth);
+    return date;
+  }
+
+  public static getNextDay( numberDays: number = 1, date: Date = null): Date {
+    const resDate = date || new Date();
+    resDate.setDate(resDate.getDate() + numberDays);
+    return resDate;
+  }
+
+  public static getPreviousDay(numberDays: number = 1, date: Date = null): Date {
+    return DateTimeParser.getNextDay(-1 * numberDays, date);
   }
 }

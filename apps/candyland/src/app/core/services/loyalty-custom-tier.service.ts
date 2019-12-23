@@ -6,7 +6,6 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 import { map } from 'rxjs/operators';
 import { LoyaltyHttpAdapter } from '@cl-core/http-adapters/loyalty-http-adapter';
 import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { IWCustomTierAttributes } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +31,7 @@ export class LoyaltyCustomTierService implements ITableService {
 
   public createCustomTier(data: any, basicTierId: string): Observable<ICustomTireForm> {
     const sendData: any = LoyaltyHttpAdapter.transformFromCustomTierForm(data, basicTierId);
-    return this.loyaltyHttpService.createCustomTier({data: sendData}).pipe(
+    return this.loyaltyHttpService.createCustomTier({ data: sendData }).pipe(
       map((response: any) => LoyaltyHttpAdapter.transformToCustomTierForm(response.data))
     );
   }
@@ -40,12 +39,12 @@ export class LoyaltyCustomTierService implements ITableService {
   public updateCustomTier(customTierId: string, data: any, basicTierId: string): Observable<ICustomTireForm> {
     const sendData: any = LoyaltyHttpAdapter.transformFromCustomTierForm(data, basicTierId);
     sendData.id = customTierId;
-    return this.loyaltyHttpService.updateCustomTier(customTierId, {data: sendData}).pipe(
+    return this.loyaltyHttpService.updateCustomTier(customTierId, { data: sendData }).pipe(
       map((response: any) => LoyaltyHttpAdapter.transformToCustomTierForm(response.data))
     );
   }
 
-  public deleteCustomTier(id: string): Observable<IJsonApiPayload<IWCustomTierAttributes>> {
+  public deleteCustomTier(id: string): Observable<void> {
     return this.loyaltyHttpService.deleteCustomTier(id);
   }
 }

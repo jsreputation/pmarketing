@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 
 @Component({
   selector: 'cl-button',
@@ -10,5 +10,8 @@ export class ButtonComponent {
   @Input() public formId: string = 'primary';
   @Input() public disable: boolean;
   @Input() public disableRipple: boolean = false;
+  @HostBinding('class.disable') public get disabledStatus(): boolean {
+    return this.disable;
+  }
 
 }

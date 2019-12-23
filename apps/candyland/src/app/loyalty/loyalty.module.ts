@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatCardModule,
   MatFormFieldModule,
@@ -27,7 +27,6 @@ import { ManageLoyaltyPageComponent } from './containers/manage-loyalty-page/man
 import { MatStepperModule } from '@angular/material/stepper';
 import { LoyaltyFormStepDetailsComponent } from './components/loyalty-form-step-details/loyalty-form-step-details.component';
 import { LoyaltyFormStepTiersConversionsComponent } from './components/loyalty-form-step-tiers-conversions/loyalty-form-step-tiers-conversions.component';
-import { LoyaltyFormStepReviewComponent } from './components/loyalty-form-step-review/loyalty-form-step-review.component';
 import { PointsInfoComponent } from './components/points-info/points-info.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProgramMainImageComponent } from './components/program-main-image/program-main-image.component';
@@ -59,6 +58,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LoyaltyRuleCardComponent } from './components/loyalty-rules-card/loyalty-rule-card.component';
 import { CurrencyConditionGroupComponent } from './components/currency-condition-group/currency-condition-group.component';
 import { ConditionInfoPipe } from './condition-info.pipe';
+import { LoyaltyConfigService } from './services/loyalty-config.service';
+import { MultiplierResultGroupComponent } from './components/multiplier-result-group/multiplier-result-group.component';
+import { BonusResultGroupComponent } from './components/bonus-result-group/bonus-result-group.component';
+import { PointsEarnedInfoPipe } from './points-earned-info.pipe';
+import { PointsExpiredInfoPipe } from './points-expired-info.pipe';
 
 @NgModule({
   declarations: [
@@ -69,7 +73,6 @@ import { ConditionInfoPipe } from './condition-info.pipe';
     ManageLoyaltyPageComponent,
     LoyaltyFormStepDetailsComponent,
     LoyaltyFormStepTiersConversionsComponent,
-    LoyaltyFormStepReviewComponent,
     PointsInfoComponent,
     ProgramMainImageComponent,
     UserJoinMethodComponent,
@@ -94,6 +97,10 @@ import { ConditionInfoPipe } from './condition-info.pipe';
     DynamicFormGroupDirective,
     LoyaltyRuleCardComponent,
     ConditionInfoPipe,
+    MultiplierResultGroupComponent,
+    BonusResultGroupComponent,
+    PointsEarnedInfoPipe,
+    PointsExpiredInfoPipe
   ],
   imports: [
     CommonModule,
@@ -125,12 +132,14 @@ import { ConditionInfoPipe } from './condition-info.pipe';
     PipesModule,
     TranslateModule,
     DragDropModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    FormsModule
   ],
   providers: [
     LoyaltyFormsService,
     LoyaltyCustomTierFormsService,
     LoyaltyEarnRulesFormsService,
+    LoyaltyConfigService
   ],
   entryComponents: [
     TierSetupPopupComponent,
@@ -138,7 +147,9 @@ import { ConditionInfoPipe } from './condition-info.pipe';
     DateConditionGroupComponent,
     AmountConditionGroupComponent,
     TransactionConditionGroupComponent,
-    CurrencyConditionGroupComponent
+    CurrencyConditionGroupComponent,
+    MultiplierResultGroupComponent,
+    BonusResultGroupComponent
   ]
 })
 export class LoyaltyModule {
