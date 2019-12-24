@@ -45,7 +45,11 @@
   <div class="loyalty-loader">
     <mat-progress-bar class="loyalty-loader-bar" *ngIf="loading" mode="indeterminate"></mat-progress-bar>
   </div>
-  <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0" [disableRipple]="loading">
+  <mat-horizontal-stepper
+                          labelPosition="bottom"
+                          #stepper
+                          (select)="triggerClick($event)"
+                          [selectedIndex]="0">
     <!--step 1-->
     <mat-step completed="false">
       <ng-template matStepLabel>{{'LOYALTY_FEATURE.LOYALTY_DETAILS' | translate}}</ng-template>

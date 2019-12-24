@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { concatMap, filter, finalize, last, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TierSetupPopupComponent } from 'src/app/loyalty/containers/tier-setup-popup/tier-setup-popup.component';
@@ -29,11 +29,11 @@ import { LoyaltyConfigService } from '../../services/loyalty-config.service';
   templateUrl: './manage-loyalty-page.component.html',
   styleUrls: ['./manage-loyalty-page.component.scss'],
   providers: [{
-    provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
+    provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
   }]
 })
 
-export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
+export class ManageLoyaltyPageComponent implements OnInit, AfterViewInit, OnDestroy {
   public loyaltyId: string;
   public basicTierId: string;
   public form: FormGroup;
@@ -50,7 +50,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   public viewConfig: any;
   public isEditPage: boolean = false;
   public showDraftButton: boolean = true;
-  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
+  @ViewChild('stepper', {static: false}) private stepper: MatStepper;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
   protected destroy$: Subject<void> = new Subject();
 
@@ -108,26 +108,38 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
         }
       );
     this.stepProgress$.pipe(
-      takeUntil(this.destroy$),
+      takeUntil(this.destroy$)
     ).subscribe(stepProgress => {
-      switch (stepProgress) {
-        case 1:
-          this.initCustomTiersDataSource();
-          break;
-        case 2:
-          this.initAllRuleSet();
-          break;
+        switch (stepProgress) {
+          case 1:
+            this.initCustomTiersDataSource();
+            break;
+          case 2:
+            this.initAllRuleSet();
+            break;
+        }
+        this.stepProgress = stepProgress;
       }
-      this.stepProgress = stepProgress;
-    }
     );
 
     this.loading$.pipe(
-      takeUntil(this.destroy$),
+      takeUntil(this.destroy$)
     ).subscribe(loading => {
       this.loading = loading;
       this.cd.detectChanges();
     });
+  }
+
+  public ngAfterViewInit(): void {
+    this.stepper._stepHeader.forEach((header, index) => header._getHostElement().addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log(e, index);
+
+      if (this.currentStep + 1 === index) {
+        this.clickGoNext();
+      }
+
+    }, true));
   }
 
   public ngOnDestroy(): void {
@@ -136,6 +148,10 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   // events
+  public triggerClick($event: any): void {
+    console.log('click', $event);
+  }
+
   public clickCancel(): void {
     this.setLoading(true);
     if (!this.loyaltyId) {
@@ -380,7 +396,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
       this.customTierDataSource = new CustomDataSource<ICustomTireForm>(
         this.customTierService,
         20,
-        { 'filter[program_id]': this.loyaltyId });
+        {'filter[program_id]': this.loyaltyId});
     }
   }
 
@@ -402,7 +418,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   private getCustomTierRuleSet(id: string): Observable<ILoyaltyRuleSet> {
     return this.ruleService.findAndCreateRuleSet('Perx::Loyalty::CustomTier', id)
       .pipe(
-        tap(ruleSet => this.customTierRuleSetMap[id] = ruleSet),
+        tap(ruleSet => this.customTierRuleSetMap[id] = ruleSet)
       );
   }
 
@@ -474,7 +490,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   private getAllCustomTierRuleSet(): Observable<ILoyaltyRuleSet> {
     const customTierIds = this.customTierDataSource.data.map(item => item.id);
     return from(customTierIds).pipe(
-      concatMap(id => this.getCustomTierRuleSet(id)),
+      concatMap(id => this.getCustomTierRuleSet(id))
     );
   }
 
