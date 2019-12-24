@@ -1,8 +1,8 @@
 import { IAdvancedUploadFileService, IUploadFileStatus, UploadStatus } from './iadvanced-upload-file.service';
-import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
+import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
 import { Injectable } from '@angular/core';
 import { UploadFileService } from '@cl-core-services';
-import { switchMap, retryWhen, mergeMap, delay } from 'rxjs/operators';
+import {switchMap, retryWhen, mergeMap, delay, publishReplay, refCount, finalize} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class UsersUploadService extends IAdvancedUploadFileService {
     const maxRetryTimes = 60;
     const delayUnitTime = 1000;
     let retryTimes = 0;
-    this.uploadService.uploadFile(file)
+    const uploadSvc$ = this.uploadService.uploadFile(file)
       .pipe(
         switchMap(
           (res: IUploadedFile) => this.uploadService.getFile(res.id).pipe(
@@ -62,7 +62,13 @@ export class UsersUploadService extends IAdvancedUploadFileService {
         },
         () => { subject.complete(); }
       );
-    return subject;
+    return subject.pipe(
+      finalize(() => {
+        uploadSvc$.unsubscribe();
+      }),
+      publishReplay(1), // https://itnext.io/the-magic-of-rxjs-sharing-operators-and-their-differences-3a03d699d255
+      refCount() // https://github.com/ReactiveX/rxjs/issues/3786
+    );
   }
 
 }

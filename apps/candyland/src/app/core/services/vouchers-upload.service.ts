@@ -3,12 +3,10 @@ import { Observable, BehaviorSubject, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { UploadFileService } from '@cl-core-services';
 import { VouchersService } from './vouchers.service';
-import { map, switchMap, retryWhen, mergeMap, delay } from 'rxjs/operators';
+import {map, switchMap, retryWhen, mergeMap, delay, finalize, publishReplay, refCount} from 'rxjs/operators';
 import { IWVouchersApi, WStatus, IJsonApiItemPayload } from '@perx/whistler';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class VouchersUploadService extends IAdvancedUploadFileService {
   constructor(
     private uploadService: UploadFileService,
@@ -22,10 +20,11 @@ export class VouchersUploadService extends IAdvancedUploadFileService {
     const subject: BehaviorSubject<IUploadFileStatus> = new BehaviorSubject<IUploadFileStatus>(
       { fileName: file.name, status: UploadStatus.UPLOADING }
     );
+    console.log('vouchers service options', options);
     const maxRetryTimes = 60;
     const delayUnitTime = 1000;
     let retryTimes = 0;
-    this.uploadService.uploadFile(file)
+    const uploadSvc$ = this.uploadService.uploadFile(file)
       .pipe(
         map((res: IUploadedFile) => res.url),
         switchMap((url: string) => this.vouchersService.uploadVouchers(url, options.rewardId)),
@@ -69,6 +68,12 @@ export class VouchersUploadService extends IAdvancedUploadFileService {
         },
         () => { subject.complete(); }
       );
-    return subject;
+    return subject.pipe(
+      finalize(() => {
+        uploadSvc$.unsubscribe();
+      }),
+      publishReplay(1), // https://itnext.io/the-magic-of-rxjs-sharing-operators-and-their-differences-3a03d699d255
+      refCount() // https://github.com/ReactiveX/rxjs/issues/3786
+    );
   }
 }
