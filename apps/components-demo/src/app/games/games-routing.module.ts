@@ -5,6 +5,7 @@ import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
 import { ScratchComponent } from './scratch/scratch.component';
 import { SpinComponent } from './spin/spin.component';
+import {SnakeComponent} from './snake/snake.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: 'tap', component: TapComponent },
       { path: 'scratch', component: ScratchComponent },
       { path: 'spin', component: SpinComponent },
+      { path: 'snake', component: SnakeComponent }
     ],
   },
 ];
