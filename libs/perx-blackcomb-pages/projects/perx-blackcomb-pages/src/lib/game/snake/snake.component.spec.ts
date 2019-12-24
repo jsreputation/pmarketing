@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import {SnakeGameComponent} from '@perx/core';
 import { SnakeComponent } from './snake.component';
 
 describe('SnakeComponent', () => {
@@ -8,7 +8,10 @@ describe('SnakeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SnakeComponent ]
+      declarations: [
+        SnakeComponent,
+        SnakeGameComponent
+      ]
     })
       .compileComponents();
   }));

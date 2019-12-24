@@ -1,8 +1,4 @@
 <div class="main-puzzle-container">
-  <div class="game-header">
-    <h1>{{game.texts.title}}</h1>
-    <h3>{{game.texts.subTitle}}</h3>
-  </div>
   <div class="game-wrapper">
     <div class="snake-wrapper">
       <perx-core-snake-game>
@@ -10,16 +6,6 @@
         [snake]="config.snakeColor"
         [background]="config.backgroundColor"
       </perx-core-snake-game>
-
-      <div class="game-footer">
-        <button class="js-play"
-                [hidden]="isEnabled"
-                mat-flat-button
-                color="primary"
-                (click)="isEnabled = true">
-          {{ game.texts.button }}
-        </button>
-      </div>
     </div>
   </div>
 

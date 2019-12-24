@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SnakeComponent } from './snake.component';
+import { SnakeGameComponent } from '@perx/core';
 
 describe('SnakeComponent', () => {
   let component: SnakeComponent;
@@ -8,9 +9,12 @@ describe('SnakeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SnakeComponent ]
+      declarations: [
+        SnakeComponent,
+        SnakeGameComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
