@@ -34,7 +34,6 @@ export interface IWCampaignAttributes {
 export interface IWCampaignDisplayProperties {
   informationCollectionSetting?: WInformationCollectionSettingType;
   weblink: boolean;
-  sms: boolean;
   noRewardsPopUp?: IWProperties;
   successPopUp?: IWProperties;
 }
