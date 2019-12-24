@@ -1,5 +1,5 @@
 <div [class]=" rewards$ ? 'card-list-container' : 'card-list-container loading'">
-  <div *ngIf="rewards$; then thenBlock else elseBlock"></div>
+  <div *ngIf="isRewardQueryComplete(rewards$ | async); then thenBlock else elseBlock"></div>
   <ng-template #thenBlock>
     <ng-container *ngIf="rewards$ | async as rewards">
       <div *ngIf="rewards.length > 0; then hasRewardsBlock else noRewardsBlock"></div>
