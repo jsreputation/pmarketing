@@ -2,7 +2,6 @@ import { RewardsService } from '@cl-core/services/rewards.service';
 import {
   CampaignsService,
   EngagementsService,
-  CommsService,
   OutcomesService,
   LimitsService,
   SettingsService
@@ -15,7 +14,6 @@ import { switchMap, map, catchError, takeUntil } from 'rxjs/operators';
 import { combineLatest, of, Observable, Subject } from 'rxjs';
 
 import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign';
-import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
@@ -39,7 +37,6 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     private router: Router,
     private campaignsService: CampaignsService,
     private rewardsService: RewardsService,
-    private commsService: CommsService,
     private outcomesService: OutcomesService,
     private limitsService: LimitsService,
     private engagementsService: EngagementsService,
@@ -76,30 +73,18 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   // TODO: it need for get right data from back end in the future
   private getCampaignData(): void {
     const campaignId = this.route.snapshot.params.id;
-    const params: HttpParamsOptions = {
-      'filter[owner_id]': campaignId,
-      'filter[owner_type]': 'Perx::Campaign::Entity',
-      include: 'template'
-    };
     const paramsPO: HttpParamsOptions = {
       'filter[domain_id]': campaignId
     };
     if (campaignId) {
       combineLatest(
         this.campaignsService.getCampaign(campaignId).pipe(catchError(() => of(null))),
-        this.commsService.getCommsEvent(params).pipe(catchError(() => of(null))),
         this.outcomesService.getOutcomes(paramsPO).pipe(catchError(() => of(null)))
       ).pipe(
         map(
-          ([campaign, commEvent, outcomes]:
-            [ICampaign | null, IComm | null, IOutcome[] | null]) => ({
+          ([campaign, outcomes]:
+            [ICampaign | null, IOutcome[] | null]) => ({
               ...campaign,
-              audience: { select: commEvent && commEvent.poolId || null },
-              channel: {
-                type: commEvent && commEvent.channel || 'weblink',
-                message: commEvent && commEvent.message,
-                schedule: commEvent && { ...commEvent.schedule }
-              },
               outcomes: this.outcomeToRewardCollection(outcomes)
             })
         ),
