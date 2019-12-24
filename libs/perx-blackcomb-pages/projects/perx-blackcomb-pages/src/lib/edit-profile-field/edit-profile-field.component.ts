@@ -5,6 +5,7 @@ import {
 } from '@perx/core';
 
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { ShowTitleInHeader } from '../layout/layout.component';
 
 export enum FieldType {
   email = 'email',
@@ -16,7 +17,7 @@ export enum FieldType {
   templateUrl: './edit-profile-field.component.html',
   styleUrls: ['./edit-profile-field.component.scss']
 })
-export class EditProfileFieldComponent implements OnInit {
+export class EditProfileFieldComponent implements OnInit, ShowTitleInHeader {
 
   public fieldType: FieldType;
   public changeEmailForm: FormGroup;
@@ -59,4 +60,7 @@ export class EditProfileFieldComponent implements OnInit {
     }
   }
 
+  public getTitle(): string {
+    return 'Edit Profile';
+  }
 }
