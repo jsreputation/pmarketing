@@ -59,8 +59,8 @@ export class CampaignCreationStoreService {
       { title: 'CAMPAIGN.SALUTATION', value: '[salutation]' },
     ],
     channelTypes: [
-      { title: 'CAMPAIGN.ChannelTypes.WEBLINK', value: 'weblink' },
-      { title: 'CAMPAIGN.ChannelTypes.SMS', value: 'sms' },
+      { title: 'CAMPAIGN.CHANNEL_TYPES.WEBLINK', value: 'weblink' },
+      { title: 'CAMPAIGN.CHANNEL_TYPES.SMS', value: 'sms' },
     ],
     informationCollectionSettingTypes: [
       { title: 'CAMPAIGN.InformationCollectionSettingTypes.NO_INFORMATION', value: 'not_required' },

@@ -415,3 +415,18 @@ h1, h2, h3, h4, h5, p {
     display: none;
   }
 }
+
+.date-field {
+  position: relative;
+
+  &-error {
+    @include typo-caption;
+
+    font-size: 1.1rem;
+    display: flex;
+    width: max-content;
+    flex-flow: row nowrap;
+    position: absolute;
+    bottom: -0.5rem;
+  }
+}
