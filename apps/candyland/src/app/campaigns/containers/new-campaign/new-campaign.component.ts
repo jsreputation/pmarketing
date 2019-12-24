@@ -141,7 +141,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    this.handlerNotification();
 
     let saveCampaign$: Observable<IJsonApiItemPayload<IWCampaignAttributes>>;
     this.store.updateCampaign(this.form.value);
@@ -160,7 +159,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
             of(campaign),
             this.generateLimitData(campaign).pipe(catchError(() => of(null))),
             this.updateOutcomes(campaign).pipe(catchError(() => of(null))),
-            this.updateComm(campaign).pipe(catchError(() => of(null)))
+            of(this.handlerNotification(campaign)).pipe(catchError(() => of(null))),
           ];
           return combineLatest(...data);
         }
@@ -205,26 +204,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       Number.parseInt(campaign.id, 10),
       campaign.template.id
     );
-  }
-
-  private updateComm(campaign: ICampaign): Observable<any> {
-    const channelInfo = Object.assign({}, this.store.currentCampaign.channel);
-
-    if (channelInfo.eventId && channelInfo['status'] === 'remove') {
-      return this.deleteCommsEvent(channelInfo.eventId);
-    }
-
-    if (channelInfo.eventId) {
-      return this.commsService.updateCommsEvent(this.store.currentCampaign, null, campaign.id);
-    }
-    if (channelInfo['status'] !== 'remove') {
-      return this.commsService.createCommsEvent(this.store.currentCampaign, null, campaign.id);
-    }
-    return of(null);
-  }
-
-  private deleteCommsEvent(id: string): Observable<any> {
-    return this.commsService.deleteCommsEvent(id);
   }
 
   private updateOutcomes(campaign: ICampaign): Observable<any> {
@@ -384,10 +363,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private handleRouteParams(): void {
     this.campaignId = this.route.snapshot.params.id;
-    const paramsComm: HttpParamsOptions = {
-      'filter[owner_id]': this.campaignId,
-      include: 'template'
-    };
     const paramsPO: HttpParamsOptions = {
       'filter[domain_id]': this.campaignId
     };
@@ -397,19 +372,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
       combineLatest(
         this.campaignsService.getCampaign(this.campaignId).pipe(catchError(() => of(null))),
-        this.commsService.getCommsEvent(paramsComm).pipe(catchError(() => of(null))),
         this.outcomesService.getOutcomes(paramsPO).pipe(catchError(() => of(null)))
       ).pipe(
         map(
-          ([campaign, commEvent, outcomes]:
-            [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => {
+          ([campaign, outcomes]:
+            [ICampaign | null, IOutcome[] | null]): ICampaign => {
             return ({
               ...campaign,
-              audience: { select: commEvent && commEvent.poolId || campaign && campaign.audience.select || null },
-              channel: {
-                type: commEvent && commEvent.channel || null,
-                ...commEvent
-              },
               outcomes: this.outcomeToRewardCollection(outcomes)
             });
           })
@@ -442,7 +411,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private patchNotificationWebLink(data: any): void {
     const channel = data['channel'];
-    if (channel.channel === 'weblink' && channel.eventId) {
+    if (channel.type === 'weblink') {
       this.channelForm.get('webNotification')
         .patchValue({
           webLink: true,
@@ -478,7 +447,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   }
 
-  private handlerNotification(): void {
+  private handlerNotification(campaign: ICampaign): void {
 
     const notifications: IChannel = this.channelForm.value;
     Object.keys(notifications)
@@ -487,7 +456,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         const defaultNotification: ICampaignNotificationGroup[] = this.currentNotifications[key];
 
         if (Utils.isArray(notification)) {
-          const result = this.getNotificationRequests(defaultNotification, notification);
+          const result = this.getNotificationRequests(defaultNotification, notification, campaign);
           combineLatest(result)
             .subscribe(() => { });
         }
@@ -502,26 +471,35 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.commsService.updateCommsTemplate(data);
   }
 
-  public manageNotification(data: ICampaignNotificationGroup): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+  public manageNotification(
+    data: ICampaignNotificationGroup,
+    campaignId: string
+  ): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
     return this.createTemplate(data.template)
       .pipe(
         switchMap((res: IJsonApiItemPayload<IWCommTemplateAttributes>) => {
           data['templateId'] = res.data.id;
-          return this.createNotification(data);
+          return this.createNotification(data, campaignId);
         }));
   }
 
-  public createNotification(data: ICampaignNotificationGroup): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
-    return this.notificationService.createNotification(data, this.campaignId);
+  public createNotification(
+    data: ICampaignNotificationGroup,
+    campaignId: string
+  ): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+    return this.notificationService.createNotification(data, campaignId);
 
   }
 
-  public updateNotification(data: ICampaignNotificationGroup): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+  public updateNotification(
+    data: ICampaignNotificationGroup,
+    campaignId: string
+  ): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
     return this.updateTemplate(data.template)
       .pipe(
         switchMap(res => {
           data['templateId'] = res.data.id;
-          return this.notificationService.updateNotification(data, this.campaignId);
+          return this.notificationService.updateNotification(data, campaignId);
         })
       );
   }
@@ -530,14 +508,17 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.notificationService.deleteNotification(id);
   }
 
-  private getNotificationRequests(currentConditions: ICampaignNotificationGroup[], updatedConditions: ICampaignNotificationGroup[])
-    : Observable<IJsonApiListPayload<IWNotificationAttributes>>[] {
+  private getNotificationRequests(
+    currentConditions: ICampaignNotificationGroup[],
+    updatedConditions: ICampaignNotificationGroup[],
+    campaign: ICampaign
+  ): Observable<IJsonApiListPayload<IWNotificationAttributes>>[] {
     return CRUDParser.buildRequestList(currentConditions, updatedConditions, (type, data) => {
       switch (type) {
         case RequestType.CREATE:
-          return this.manageNotification(data);
+          return this.manageNotification(data, campaign.id);
         case RequestType.UPDATE:
-          return this.updateNotification(data);
+          return this.updateNotification(data, campaign.id);
         case RequestType.DELETE:
           return this.deleteNotification(data.id);
       }
