@@ -57,14 +57,6 @@ export class CommsService {
     );
   }
 
-  public updateCommsEvent(data: ICampaign, templateId: string, campaignId: string): Observable<IJsonApiItemPayload<IWCommEventAttributes>> {
-    const sendData: IJsonApiPatchData<IWCommEventAttributes> = {
-      ...CommsHttpAdapter.transformFromCommsEvents(data, templateId, campaignId),
-      id: data.channel.eventId
-    };
-    return this.commsHttpsService.updateCommsEvent(data.channel.eventId, { data: sendData });
-  }
-
   public createCommsEvent(data: ICampaign, templateId: string, campaignId: string): Observable<IJsonApiItemPayload<IWCommEventAttributes>> {
     const sendData: IJsonApiPostData<IWCommEventAttributes> = CommsHttpAdapter.transformFromCommsEvents(data, templateId, campaignId);
     return this.commsHttpsService.createCommsEvent({ data: sendData });
