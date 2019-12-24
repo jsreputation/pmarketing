@@ -56,6 +56,8 @@ export class SnakeGameComponent implements  AfterViewInit, OnChanges {
 
   public get ctx(): CanvasRenderingContext2D {
     if (!this.ctx_ && this.canv.getContext) {
+      this.canv.width = 400; // set as input this.inputtedHeight(if) || 400 also need update tc and gs etc
+      this.canv.height = 400;
       this.ctx_ = this.canv.getContext('2d') as CanvasRenderingContext2D;
     }
     return this.ctx_;
@@ -173,21 +175,18 @@ export class SnakeGameComponent implements  AfterViewInit, OnChanges {
   }
 
   private keyPush(evt: KeyboardEvent): void {
-    switch (Number.parseInt(evt.key, 10)) {
-      // left
-      case 37:
+    switch (evt.key) {
+      case 'ArrowLeft':
+        console.log('left is pressed');
         this.left();
         break;
-      // down
-      case 38:
+      case 'ArrowUp':
         this.up();
         break;
-      // right
-      case 39:
+      case 'ArrowRight':
         this.right();
         break;
-      // up
-      case 40:
+      case 'ArrowDown':
         this.down();
         break;
     }
