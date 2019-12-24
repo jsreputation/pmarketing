@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { PeriodType } from '@cl-core/models/period-type.enum';
 
 @Component({
@@ -16,6 +16,18 @@ export class CampaignNotCompletedFormGroupComponent {
   public periodType: typeof PeriodType = PeriodType;
   public sendTestSms(): void {
     this.sendSms.emit({group: this.group, index: this.index});
+  }
+
+  public get numberPeriod(): AbstractControl {
+    return this.group.get('numberPeriod');
+  }
+
+  public get type(): AbstractControl {
+    return this.group.get('type');
+  }
+
+  public get time(): AbstractControl {
+    return this.group.get('time');
   }
 
   public deleteCompletedGroup(): void {

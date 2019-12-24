@@ -1,19 +1,37 @@
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { ITheme, DARK, LIGHT } from './themes.model';
-import { IWSetting, IWTenant, } from '@perx/whistler';
 import { HttpClient } from '@angular/common/http';
-import { Config } from '../../config/config';
-import { map, tap, share } from 'rxjs/operators';
-import { ThemesService } from './themes.service';
+
+import {
+  Observable,
+  of,
+} from 'rxjs';
+import {
+  map,
+  tap,
+  share,
+} from 'rxjs/operators';
 
 import { IJsonApiListPayload } from '@perx/whistler';
+import {
+  IWSetting,
+  IWTenant,
+} from '@perx/whistler';
+
+import {
+  ITheme,
+  DARK,
+  LIGHT,
+} from './themes.model';
+import { ThemesService } from './themes.service';
+
+import { Config } from '../../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WhistlerThemesService extends ThemesService {
   private themeSettingEndpoint: string;
+  private responseCache: Map<string, ITheme> = new Map();
 
   constructor(
     private http: HttpClient,
@@ -56,15 +74,22 @@ export class WhistlerThemesService extends ThemesService {
   }
 
   public getThemeSetting(): Observable<ITheme> {
+    const themeSettingFromCache: ITheme | undefined  = this.responseCache.get(this.themeSettingEndpoint);
+    if (themeSettingFromCache) {
+      return of(themeSettingFromCache);
+    }
+
     const themesRequest: { url: string } = {
       url: location.host
     };
-
-    return this.http.post<IJsonApiListPayload<IWTenant>>(this.themeSettingEndpoint, themesRequest).pipe(
+    const response: Observable<ITheme> = this.http.post<IJsonApiListPayload<IWTenant>>(
+      this.themeSettingEndpoint, themesRequest).pipe(
       map(res => res.data && res.data[0].attributes.display_properties),
-      map((setting) => WhistlerThemesService.WThemeToTheme(setting)),
-      tap((theme) => this.setActiveTheme(theme)),
+      map((setting: IWSetting) => WhistlerThemesService.WThemeToTheme(setting)),
+      tap((theme: ITheme) => this.setActiveTheme(theme)),
       share()
     );
+    response.subscribe((themeSetting: ITheme) => this.responseCache.set(this.themeSettingEndpoint, themeSetting));
+    return response;
   }
 }
