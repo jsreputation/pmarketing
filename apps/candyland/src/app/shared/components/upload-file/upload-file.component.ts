@@ -2,7 +2,8 @@ import {ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnDestroy
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IAdvancedUploadFileService, IUploadFileStatus, UploadStatus } from '@cl-core/services/iadvanced-upload-file.service';
-import {Subscription} from 'rxjs';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'cl-upload-file',
@@ -31,7 +32,7 @@ export class UploadFileComponent implements ControlValueAccessor, OnDestroy {
   public message: string;
   public loadedFile: boolean = false;
   public loadingFile: boolean = false;
-  public toBeUnsubd: Subscription;
+  private destroy$: Subject<void> = new Subject();
 
   public onChange: any = () => { };
 
@@ -44,7 +45,8 @@ export class UploadFileComponent implements ControlValueAccessor, OnDestroy {
   ) { }
 
   public ngOnDestroy(): void {
-    this.toBeUnsubd.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public preview(files: FileList): void {
@@ -101,7 +103,8 @@ export class UploadFileComponent implements ControlValueAccessor, OnDestroy {
   }
 
   private fetchFile(file: File): void {
-    this.toBeUnsubd = this.uploadFileService.uploadFile(file, this.options)
+    this.uploadFileService.uploadFile(file, this.options)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         (res: IUploadFileStatus) => {
           switch (res.status) {
