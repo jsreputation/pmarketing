@@ -31,6 +31,7 @@ export interface ICampaign {
   outcomes?: ICampaignOutcome[];
   limits?: any;
   displayProperties?: any;
+  notification?: IChannel;
 }
 
 export interface ICampaignOutcome {

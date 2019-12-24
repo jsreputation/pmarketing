@@ -3,15 +3,15 @@
     <!--select channel-->
     <mat-expansion-panel-header class="card-header">
       <h2 class="card-title">
-        Select channel
+        {{'CAMPAIGN.SELECT_CHANNEL' | translate}}
       </h2>
     </mat-expansion-panel-header>
     <!--channel type-->
     <div class="card-content">
       <div class="card-row">
         <section>
-          <mat-checkbox color="primary" class="channels-margin" [formControl]="getWebLink()">Weblink</mat-checkbox>
-          <mat-checkbox color="primary" class="channels-margin" formControlName="sms">SMS</mat-checkbox>
+          <mat-checkbox color="primary" (change)="triggerWeblink($event.checked)" class="channels-margin" [formControl]="getWebLink()">{{'CAMPAIGN.CHANNEL_TYPES.WEBLINK' | translate}}</mat-checkbox>
+          <mat-checkbox color="primary" class="channels-margin" formControlName="sms">{{'CAMPAIGN.CHANNEL_TYPES.SMS' | translate}}</mat-checkbox>
         </section>
       </div>
     </div>
@@ -22,16 +22,16 @@
   <!--Weblink options-->
   <mat-expansion-panel-header class="card-header">
     <h2 class="card-title">
-      Select channel
+      {{'CAMPAIGN.INFORMATION_COLLECTION' | translate}}
     </h2>
   </mat-expansion-panel-header>
   <!--web link options-->
   <div class="card-content">
     <div class="card-row">
       <mat-radio-group color="primary" [formControl]="channelForm.get('webNotification.webLinkOptions')">
-        <mat-radio-button value="pi_required">Collect Identifier</mat-radio-button>
-        <mat-radio-button value="signup_required">Enable Sign-up</mat-radio-button>
-        <mat-radio-button value="not_required">No sign-up/identifier</mat-radio-button>
+        <mat-radio-button value="not_required">{{ 'CAMPAIGN.InformationCollectionSettingTypes.NO_INFORMATION' | translate}}</mat-radio-button>
+        <mat-radio-button value="pi_required">{{ 'CAMPAIGN.InformationCollectionSettingTypes.PI_INFORMATION' | translate }}</mat-radio-button>
+        <mat-radio-button value="signup_required">{{'CAMPAIGN.InformationCollectionSettingTypes.SIGNUP_INFORMATION' | translate}}</mat-radio-button>
       </mat-radio-group>
     </div>
   </div>
@@ -43,7 +43,7 @@
     <!--Weblink options-->
     <mat-expansion-panel-header class="card-header">
       <h2 class="card-title">
-        SMS Notifications
+        {{'CAMPAIGN.SMS_NOTIFICATIONS' | translate}}
       </h2>
     </mat-expansion-panel-header>
     <!--sms block-->
@@ -57,7 +57,7 @@
                          (selectMenu)="selectMenu($event)"
             >
               <h2 class="title card-title">
-                Message Triggers
+               {{'CAMPAIGN.MESSAGE_TRIGGERS' | translate}}
               </h2>
             </cl-sub-menu>
           </div>
@@ -75,7 +75,7 @@
                                           (sendSms)="onSendSms($event)"
               ></cl-campaign-launch-message>
               <cl-button classList="tertiary ph-0" (click)="addNewLaunchGroup()">
-                + Add another message
+                {{'BTN_ADD_QUESTION' | translate}}
               </cl-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.campaignNotCompleted">
@@ -89,7 +89,7 @@
               >
               </cl-campaign-not-completed-form-group>
               <cl-button classList="tertiary ph-0" (click)="addNewCompletedGroup()">
-                + Add another message
+                {{'BTN_ADD_QUESTION' | translate}}
               </cl-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.beforeCampaignEnds">
@@ -103,7 +103,7 @@
               >
               </cl-before-campaign-ends-form-group>
               <cl-button classList="tertiary ph-0" (click)="addNewCampaignEndsGroup()">
-                + Add another message
+                {{'BTN_ADD_QUESTION' | translate}}
               </cl-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.beforeRewardExpires">
@@ -116,7 +116,7 @@
               >
               </cl-before-reward-expires-form-group>
               <cl-button classList="tertiary ph-0" (click)="addNewRewardExpiresGroup()">
-                + Add another message
+                {{'BTN_ADD_QUESTION' | translate}}
               </cl-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.noOfStampsToNextReward">
@@ -130,7 +130,7 @@
               >
               </cl-no-stamps-to-next-reward-form-group>
               <cl-button classList="tertiary ph-0" (click)="addNewNoStampsRewardGroup()">
-                + Add another message
+                {{'BTN_ADD_QUESTION' | translate}}
               </cl-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.earnedStamp">
@@ -144,7 +144,7 @@
               >
               </cl-earned-stamp-form-group>
               <cl-button classList="tertiary ph-0" (click)="addNewEarnedStampGroup()">
-                + Add another message
+                {{'BTN_ADD_QUESTION' | translate}}
               </cl-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.earnedReward">
@@ -159,7 +159,7 @@
               >
               </cl-earned-reward-form-group>
               <cl-button classList="tertiary ph-0" (click)="addNewEarnedRewardGroup()">
-                + Add another message
+                {{'BTN_ADD_QUESTION' | translate}}
               </cl-button>
             </ng-container>
           </section>
