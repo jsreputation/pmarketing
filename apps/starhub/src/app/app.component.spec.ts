@@ -8,7 +8,7 @@ import {
   ICampaignService,
   NotificationService,
   PopupComponent,
-  // IGameService,
+  IGameService,
   ICampaign,
   // IGame,
   // GameType,
@@ -91,6 +91,9 @@ describe('AppComponent', () => {
     getCampaigns: () => of(campaigns),
     getCampaign: () => of(campaigns[0])
   };
+  const gameServiceStub: Partial<IGameService> = {
+    getGamesFromCampaign: () => of(game)
+  };
   const routerStub: Partial<Router> = {
     navigate: () => Promise.resolve(true),
     navigateByUrl: () => Promise.resolve(true),
@@ -126,6 +129,7 @@ describe('AppComponent', () => {
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: IGameService, useValue: gameServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: ActivatedRoute, useValue: { queryParams: of({ token: 'starhub' }) } },
         { provide: Router, useValue: routerStub },
@@ -178,31 +182,31 @@ describe('AppComponent', () => {
       expect(campaignsServiceSpy).toHaveBeenCalled();
     }));
 
-    // it('should call ICampaignService.getCampaign and filter CampaignType.give_reward', fakeAsync(() => {
-    //   const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-    //   const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
+    it('should call ICampaignService.getCampaign and filter CampaignType.give_reward', fakeAsync(() => {
+      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
+      const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
 
-    //   const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-    //   const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[1]));
-    //   component.ngOnInit();
-    //   tick();
-    //   expect(campaignsServiceSpy).toHaveBeenCalled();
-    //   expect(campaignServiceSpy).toHaveBeenCalled();
-    //   // expect(component.rewar).toBe(campaigns[1]);
-    // }));
+      const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
+      const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[1]));
+      component.ngOnInit();
+      tick();
+      expect(campaignsServiceSpy).toHaveBeenCalled();
+      expect(campaignServiceSpy).toHaveBeenCalled();
+      // expect(component.rewar).toBe(campaigns[1]);
+    }));
 
-    // it('should call ICampaignService.getCampaign and filter CampaignType.game', fakeAsync(() => {
-    //   const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-    //   const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
+    it('should call ICampaignService.getCampaign and filter CampaignType.game', fakeAsync(() => {
+      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
+      const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
 
-    //   const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-    //   const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[0]));
-    //   component.ngOnInit();
-    //   tick();
-    //   expect(campaignsServiceSpy).toHaveBeenCalled();
-    //   expect(campaignServiceSpy).toHaveBeenCalled();
-    //   // expect(component.selectedCampaign).toBe(campaigns[0]);
-    // }));
+      const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
+      const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[0]));
+      component.ngOnInit();
+      tick();
+      expect(campaignsServiceSpy).toHaveBeenCalled();
+      expect(campaignServiceSpy).toHaveBeenCalled();
+      // expect(component.selectedCampaign).toBe(campaigns[0]);
+    }));
 
     it('should redirect to error screen', fakeAsync(() => {
       const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
