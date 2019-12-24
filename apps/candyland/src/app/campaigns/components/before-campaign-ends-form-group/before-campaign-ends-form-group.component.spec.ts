@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BeforeCampaignEndsFormGroupComponent } from './before-campaign-ends-form-group.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('BeforeCampaignEndsFormGroupComponent', () => {
   let component: BeforeCampaignEndsFormGroupComponent;
@@ -11,6 +12,9 @@ describe('BeforeCampaignEndsFormGroupComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BeforeCampaignEndsFormGroupComponent ],
+      imports: [
+        TranslateModule.forRoot()
+      ],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
@@ -24,7 +28,10 @@ describe('BeforeCampaignEndsFormGroupComponent', () => {
       numberPeriod: new FormControl(null, [Validators.required, Validators.min(1)]),
       type: new FormControl(null, [Validators.required]),
       time: new FormControl(null, [Validators.required]),
-      message: new FormControl(null, [Validators.required]),
+      template: new FormGroup({
+        message: new FormControl(null, [Validators.required]),
+        templateId: new FormControl(null),
+      }),
     });
     component.shortCodes = [
       {title: 'Campaign Url', value: '[campaignUrl]'},
