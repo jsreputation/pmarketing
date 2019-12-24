@@ -4,10 +4,10 @@
 <div class="sub-menu-wrap">
   <div class="sub-group-menu">
     <p class="sub-menu-group-title">
-      Launch
+      {{'CAMPAIGN.LAUNCH' | translate}}
     </p>
     <cl-sub-menu-item [count]="getCount(menuType.onCampaignLaunch)"
-                      title="On Campaign Launch"
+                      [title]="'CAMPAIGN.ON_CAMPAIGN_LAUNCH' | translate"
                       [class.active]="checkActiveMenu(menuType.onCampaignLaunch)"
                       (click)="clickOnMenu(menuType.onCampaignLaunch)"
     >
@@ -16,29 +16,29 @@
 
   <div class="sub-group-menu">
     <p class="sub-menu-group-title">
-      Reminders
+      {{'CAMPAIGN.REMINDERS' | translate}}
     </p>
     <cl-sub-menu-item [count]="getCount(menuType.campaignNotCompleted)"
-                      title="Campaign not completed"
+                      [title]="'CAMPAIGN.CAMPAIGN_NOT_COMPLETED' | translate"
                       [class.active]="checkActiveMenu(menuType.campaignNotCompleted)"
                       (click)="clickOnMenu(menuType.campaignNotCompleted)"
     >
     </cl-sub-menu-item>
     <cl-sub-menu-item [count]="getCount(menuType.beforeCampaignEnds)"
-                      title="Before Campaign ends"
+                      [title]="'CAMPAIGN.BEFORE_CAMPAIGN_ENDS' | translate"
                       [class.active]="checkActiveMenu(menuType.beforeCampaignEnds)"
                       (click)="clickOnMenu(menuType.beforeCampaignEnds)"
     >
     </cl-sub-menu-item>
     <!--<cl-sub-menu-item [count]="getCount(menuType.beforeRewardExpires)"-->
-                      <!--title="Before Reward expires"-->
+                      <!--[title]="'CAMPAIGN.BEFORE_REWARD_EXPIRES' | translate"-->
                       <!--[class.active]="checkActiveMenu(menuType.beforeRewardExpires)"-->
                       <!--(click)="clickOnMenu(menuType.beforeRewardExpires)"-->
     <!--&gt;-->
     <!--</cl-sub-menu-item>-->
     <!--<cl-sub-menu-item *ngIf="showSlotItem()"-->
                       <!--[count]="getCount(menuType.noOfStampsToNextReward)"-->
-                      <!--title="No. of Stamps to Next Reward"-->
+                      <!--[title]="'CAMPAIGN.NO_STAMPS_TO_NEXT_REWARD' | translate"-->
                       <!--[class.active]="checkActiveMenu(menuType.noOfStampsToNextReward)"-->
                       <!--(click)="clickOnMenu(menuType.noOfStampsToNextReward)"-->
     <!--&gt;-->
@@ -46,17 +46,17 @@
   </div>
   <!--<div class="sub-group-menu">-->
     <!--<p class="sub-menu-group-title">-->
-      <!--Thank You-->
+      <!--{{'CAMPAIGN.THANK_YOU' | translate}}-->
     <!--</p>-->
     <!--<cl-sub-menu-item *ngIf="showSlotItem()"-->
                       <!--[count]="getCount(menuType.earnedStamp)"-->
-                      <!--title="Earned a Stamp"-->
+                      <!--[title]="'CAMPAIGN.EARNED_A_STAMP' | translate"-->
                       <!--[class.active]="checkActiveMenu(menuType.earnedStamp)"-->
                       <!--(click)="clickOnMenu(menuType.earnedStamp)"-->
     <!--&gt;-->
     <!--</cl-sub-menu-item>-->
     <!--<cl-sub-menu-item [count]="getCount(menuType.earnedReward)"-->
-                      <!--title="Earned a Reward"-->
+                      <!--[title]="'CAMPAIGN.EARNED_A_REWARD' | translate"-->
                       <!--[class.active]="checkActiveMenu(menuType.earnedReward)"-->
                       <!--(click)="clickOnMenu(menuType.earnedReward)"-->
     <!--&gt;-->
