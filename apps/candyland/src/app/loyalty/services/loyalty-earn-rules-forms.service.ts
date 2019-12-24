@@ -31,15 +31,10 @@ export class LoyaltyEarnRulesFormsService {
 
   public getRuleConditionsForm(): FormGroup {
     return new FormGroup({
-      // priority: new FormControl(null),
       name: new FormControl(null,
         [Validators.required, Validators.minLength(1), Validators.maxLength(60)]),
       conditions: new FormArray([]),
-      result: new FormGroup({
-        id: new FormControl(null),
-        amount: new FormControl(null, [Validators.required, Validators.min(1)]),
-        applierType: new FormControl(null, [Validators.required]),
-      })
+      result: this.createResultFormField(RulePointType.bonus)
     });
   }
 
@@ -57,7 +52,7 @@ export class LoyaltyEarnRulesFormsService {
       }],
       result: {
         id: null,
-        amount: 0,
+        amount: 1,
         applierType: RulePointType.bonus
       }
     };
@@ -125,9 +120,9 @@ export class LoyaltyEarnRulesFormsService {
     return new FormGroup({
       id: new FormControl(null),
       applierType: new FormControl(type),
-      amount: new FormControl(0, [
+      amount: new FormControl(1, [
         Validators.required,
-        Validators.min(0)
+        Validators.min(1)
       ]),
     });
   }

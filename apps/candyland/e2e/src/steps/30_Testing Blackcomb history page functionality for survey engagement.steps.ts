@@ -2,7 +2,6 @@ import {
   Given,
   When,
   Then,
-  Before,
 } from 'cucumber';
 import {
   browser,
@@ -18,17 +17,12 @@ import {
 
 const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 const Element = ElementApp;
-let BlackcombWalletApp: BlackcombWalletAppPage;
-
-Before( () => {
-  BlackcombWalletApp = new BlackcombWalletAppPage();
-});
 
 Given(/^16_I am at the blackcomb wallet page$/, async () => {
   await BlackcombHistoryAppPage.navigateToBlackcombHistoryApp();
   await browser.sleep(3000);
 
-  await BlackcombWalletApp.navigateBlackcombWalletApp();
+  await BlackcombWalletAppPage.navigateBlackcombWalletApp();
   await browser.sleep(3000);
 });
 
@@ -48,7 +42,7 @@ Given(/^17_I am at the blackcomb wallet page$/, async () => {
   await BlackcombHistoryAppPage.navigateToBlackcombHistoryApp();
   await browser.sleep(3000);
 
-  await BlackcombWalletApp.navigateBlackcombWalletApp();
+  await BlackcombWalletAppPage.navigateBlackcombWalletApp();
   await browser.sleep(3000);
 });
 
@@ -65,7 +59,7 @@ Given(/^18_I am at the blackcomb wallet page$/, async () => {
   await BlackcombHistoryAppPage.navigateToBlackcombHistoryApp();
   await browser.sleep(3000);
 
-  await BlackcombWalletApp.navigateBlackcombWalletApp();
+  await BlackcombWalletAppPage.navigateBlackcombWalletApp();
   await browser.sleep(3000);
 });
 

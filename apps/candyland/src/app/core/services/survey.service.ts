@@ -7,7 +7,7 @@ import {
   ICountries,
   ISurveyForm,
 } from '@cl-core/models/survey/survey-common.interface';
-import { IWSurveyEngagementAttributes } from '@perx/whistler';
+import { IWSurveyEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -49,15 +49,15 @@ export class SurveyService {
       );
   }
 
-  public createSurvey(data: ISurveyForm): Observable<IJsonApiPayload<IWSurveyEngagementAttributes>> {
+  public createSurvey(data: ISurveyForm): Observable<IJsonApiItemPayload<IWSurveyEngagementAttributes>> {
     const sendData = SurveyHttpAdapter.transformSurvey(data);
-    return this.surveyHttp.createSurvey({data: sendData});
+    return this.surveyHttp.createSurvey({ data: sendData });
   }
 
-  public updateSurvey(id: string, data: ISurveyForm): Observable<IJsonApiPayload<IWSurveyEngagementAttributes>> {
+  public updateSurvey(id: string, data: ISurveyForm): Observable<IJsonApiItemPayload<IWSurveyEngagementAttributes>> {
     const sendData = SurveyHttpAdapter.transformSurvey(data);
     sendData.id = id;
-    return this.surveyHttp.updateSurvey(id, {data: sendData});
+    return this.surveyHttp.updateSurvey(id, { data: sendData });
   }
 
   public getSurveyReport(id: string): Observable<IBaseQuestionReport> {

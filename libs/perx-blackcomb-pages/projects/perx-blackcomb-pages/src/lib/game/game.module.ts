@@ -6,7 +6,8 @@ import {
   PinataComponent,
   ShakeTreeComponent,
   ScratchCardComponent,
-  SpinTheWheelComponent
+  SpinTheWheelComponent,
+  SnakeGameComponent
 } from '@perx/core';
 
 import { TapComponent } from './tap/tap.component';
@@ -14,6 +15,7 @@ import { ShakeComponent } from './shake/shake.component';
 import { ScratchComponent } from './scratch/scratch.component';
 import { GameComponent } from './game.component';
 import {ConfigToMappedSlotPipe, ConfigToSlicesPipe, SpinComponent} from './spin/spin.component';
+import { SnakeComponent } from './snake/snake.component';
 
 @NgModule({
   declarations: [
@@ -24,10 +26,12 @@ import {ConfigToMappedSlotPipe, ConfigToSlicesPipe, SpinComponent} from './spin/
     ShakeTreeComponent,
     ScratchCardComponent,
     SpinTheWheelComponent,
+    SnakeGameComponent,
     GameComponent,
     SpinComponent,
     ConfigToSlicesPipe,
-    ConfigToMappedSlotPipe
+    ConfigToMappedSlotPipe,
+    SnakeComponent
   ],
   exports: [
     TapComponent,
