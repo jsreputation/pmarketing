@@ -494,7 +494,7 @@ export class AudienceAppPage {
 }
 
 export class BlackcombWalletAppPage {
-  public navigateBlackcombWalletApp(): Promise<string> {
+  public static navigateBlackcombWalletApp(): Promise<string> {
     return browser.get('https://generic-blackcomb-dev1.uat.whistler.perxtech.io/wallet') as Promise<string> ;
   }
 }

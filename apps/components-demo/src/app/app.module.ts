@@ -24,6 +24,19 @@ import { HomeComponent } from './home/home.component';
 import { LocationModule } from './location/location.module';
 import { HttpClientModule } from '@angular/common/http';
 
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import * as Hammer from 'hammerjs';
+
+// https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
+// to override default settings
+export class MyHammerConfig extends HammerGestureConfig {
+  public overrides: any =  {
+    swipe: { direction: Hammer.DIRECTION_ALL }, // in order to swipe up and down
+    pinch: { enable: false },
+    rotate: { enable: false }
+  };
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +66,12 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     MatDialogModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
