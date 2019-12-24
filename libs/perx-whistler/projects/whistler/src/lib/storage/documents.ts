@@ -8,7 +8,11 @@ export interface IWDocumentAttributes {
     blob: IWDocumentBlob;
     platform_event_state: string | null;
     url: string;
-    record_count?: number;
+    status?: WFileUploadStatus | null;
+    processed_amount?: number | null;
+    success_amount?: number | null;
+    fail_amount?: number | null;
+    processed_details?: string | null;
 }
 
 export interface IWDocumentBlob {
@@ -24,4 +28,11 @@ export interface IWDocumentBlob {
 
 interface IWDocumentMetadata {
     identified: boolean;
+}
+
+export enum WFileUploadStatus {
+    pending = 'pending',
+    processing = 'processing',
+    success = 'success',
+    error = 'error'
 }

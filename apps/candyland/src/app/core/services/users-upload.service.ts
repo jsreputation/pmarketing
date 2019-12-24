@@ -25,7 +25,7 @@ export class UsersUploadService extends IAdvancedUploadFileService {
           switchMap(
             (res: IUploadedFile) => this.uploadService.getFile(res.id).pipe(
               switchMap((fileRes: IUploadedFile) => {
-                if (!fileRes.record_count) {
+                if (!fileRes.status === FileUploadStatus.success) {
                   throw of(new Error('users are not ready'));
                 }
                 return of(fileRes);

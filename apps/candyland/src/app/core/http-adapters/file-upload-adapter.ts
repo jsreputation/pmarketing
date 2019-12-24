@@ -1,4 +1,4 @@
-import { IWDocumentAttributes, IJsonApiItem } from '@perx/whistler';
+import { IWDocumentAttributes, IJsonApiItem, WFileUploadStatus } from '@perx/whistler';
 export class FileUploadAdapter {
   public static transformToUploadedImage(data: any): IUploadedFile {
     return {
@@ -11,6 +11,10 @@ export class FileUploadAdapter {
     };
   }
 
+  public static transformFileUploadStatus(data: IJsonAPIItem<WFileUploadStatus>): FileUploadStatus {
+    return FileUploadStatus[data]
+  }
+
   public static transformToUploadedFile(data: IJsonApiItem<IWDocumentAttributes>): IUploadedFile {
     const attr = data.attributes;
     return {
@@ -18,7 +22,11 @@ export class FileUploadAdapter {
       updated_at: attr.updated_at,
       url: attr.url,
       name: attr.blob.filename,
-      record_count: attr.record_count,
+      status: FileUploadAdapter.transformFileUploadStatus(attr.status),
+      processed_amount: attr.processed_amount,
+      success_amount: attr.success_amount,
+      fail_amount: attr.fail_amount,
+      processed_details: attr.processed_details,
       key: attr.blob.key,
       id: data.id,
       type: data.type
