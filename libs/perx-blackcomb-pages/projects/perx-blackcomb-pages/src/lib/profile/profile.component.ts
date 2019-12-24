@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService, IProfile } from '@perx/core';
 import { Router } from '@angular/router';
+import { ShowTitleInHeader } from '../layout/layout.component';
 
 @Component({
   selector: 'perx-blackcomb-pages-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, ShowTitleInHeader {
   public profile: IProfile;
 
   constructor(
@@ -29,5 +30,9 @@ export class ProfileComponent implements OnInit {
 
   public onEditPostcodeClicked(): void {
     this.router.navigateByUrl('edit-profile/postcode');
+  }
+
+  public getTitle(): string {
+    return 'Profile';
   }
 }
