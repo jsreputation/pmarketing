@@ -19,7 +19,7 @@ import {
   ICampaignService,
   CampaignType,
   ICampaign,
-  StampService,
+  StampService
 } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
@@ -37,7 +37,7 @@ export class WalletComponent implements OnInit {
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => string) | undefined;
 
-  public sourceType: string = 'puzzle';
+  public sourceType: string;
   public puzzleTextFn: (puzzle: IStampCard) => string;
   public titleFn: (index?: number) => string;
   public campaignId: number | null | undefined;
@@ -48,7 +48,7 @@ export class WalletComponent implements OnInit {
     private translate: TranslateService,
     private configService: ConfigService,
     private campaignService: ICampaignService,
-    private stampService: StampService
+    private stampService: StampService,
   ) { }
 
   public ngOnInit(): void {
@@ -71,14 +71,16 @@ export class WalletComponent implements OnInit {
 
   private getCampaign(): void {
     this.configService.readAppConfig().pipe(tap((config: IConfig) => {
-      this.sourceType = config.sourceType as string;
+      this.sourceType = config.sourceType ? config.sourceType as string : 'puzzle';
       if (config.sourceType === 'stamp_card') {
         this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
           puzzle.stamps.filter(st => st.state === StampState.issued).length !== 1 ? 'new stamps' : 'new stamp';
         this.titleFn = (index?: number) => index !== undefined ? `Stamp Card ${this.puzzleIndex(index)} out of 12` : '';
       }
     }), mergeMap(() => this.fetchCampaign())).subscribe((card: IStampCard) => {
-      this.campaignId = card.campaignId;
+      if (card) {
+        this.campaignId = card.campaignId;
+      }
     });
   }
   private fetchCampaign() {
@@ -102,26 +104,16 @@ export class WalletComponent implements OnInit {
           )
         ),
       )
-
   }
+
   private fetchCard(id: number): Observable<IStampCard> {
     return this.stampService.getCurrentCard(id);
   }
+
   public puzzleIndex(index: number): string {
     if (index < 0) {
       return '';
     }
     return String(++index);
-  }
-  public selected(puzzle: IStampCard): void {
-    this.router.navigate([`/puzzle/${this.campaignId}/${puzzle.id}`]);
-  }
-  public completed(): void {
-    if (this.sourceType === 'puzzle') {
-      // this.notificationService.addPopup({
-      //   // tslint:disable-next-line: max-line-length
-      //   text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of puzzle pieces. Don\'t forget to redeem your earned rewards!'
-      // });
-    }
   }
 }
