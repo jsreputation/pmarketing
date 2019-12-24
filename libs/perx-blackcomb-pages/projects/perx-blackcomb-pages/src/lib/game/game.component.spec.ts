@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
 import { ScratchComponent } from './scratch/scratch.component';
@@ -114,5 +114,36 @@ describe('GameComponent', () => {
       expect(routerSpy).toHaveBeenCalledWith(['/wallet']);
       expect(getGamesFromCampaignSpy).toHaveBeenCalled();
     }));
+  });
+
+  it('should call redirectUrlAndPopup', () => {
+    component.informationCollectionSetting = WInformationCollectionSettingType.signup_required;
+    component.isAnonymousUser = false;
+    component.transactionId = 5;
+    const error = 'error';
+    const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    const spy = spyOn(gameService, 'prePlayConfirm').and.returnValue(throwError(error));
+    const router: Router = fixture.debugElement.injector.get<Router>(
+      Router as Type<Router>);
+    const routerSpy = spyOn(router, 'navigate');
+    component.gameCompleted();
+    expect(spy).toHaveBeenCalled();
+    expect(routerSpy).toHaveBeenCalledWith(['/wallet']);
+  });
+
+  it('should set willWin true value', () => {
+    const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [1, 2, 3] }));
+    component.ngOnInit();
+    expect(spy).toHaveBeenCalled();
+    expect(component.willWin).toBe(true);
+  });
+
+  it('should set willWin false value', () => {
+    const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [] }));
+    component.ngOnInit();
+    expect(spy).toHaveBeenCalled();
+    expect(component.willWin).toBe(false);
   });
 });

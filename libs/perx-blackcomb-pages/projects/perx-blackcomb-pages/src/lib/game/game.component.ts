@@ -24,12 +24,12 @@ export class GameComponent implements OnInit, OnDestroy {
   public gameData$: Observable<IGame>;
   public gt: typeof GameType = GameType;
   private campaignId: number;
-  private transactionId: number | null = null;
+  public transactionId: number | null = null;
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
   private popupData: IPopupConfig;
-  private isAnonymousUser: boolean;
-  private informationCollectionSetting: string;
+  public isAnonymousUser: boolean;
+  public informationCollectionSetting: string;
   public willWin: boolean;
   public successPopUp: IPopupConfig = {
     title: 'GAME_SUCCESS_TITLE',
