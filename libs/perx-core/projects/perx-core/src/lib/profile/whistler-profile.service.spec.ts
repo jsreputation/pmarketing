@@ -1,24 +1,48 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { ProfileModule } from './profile.module';
-import { V4ProfileService } from './v4-profile.service';
 
 import { ConfigModule } from '../config/config.module';
 import { TokenStorage } from '../utils/storage/token-storage.service';
-
-describe('ProfileService', () => {
+import { WhistlerProfileService } from './whistler-profile.service';
+import { HttpClient } from '@angular/common/http';
+import { of } from 'rxjs';
+import { IWProfileAttributes, IJsonApiItem } from '@perx/whistler';
+const tokenStorageStrud: Partial<TokenStorage> = {
+  getAppInfoProperty: () => 'test'
+}
+describe('WhistlerProfileService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientTestingModule,
       ProfileModule,
       ConfigModule.forRoot({})
     ],
-    providers: [TokenStorage]
+    providers: [
+      { provide: TokenStorage, useValue: tokenStorageStrud }
+    ]
   }));
 
   it('should be created', () => {
-    const service: V4ProfileService = TestBed.get(V4ProfileService);
+    const service: WhistlerProfileService = TestBed.get(WhistlerProfileService);
     expect(service).toBeTruthy();
   });
+
+  it('should call whoAmI', fakeAsync(inject([WhistlerProfileService, HttpClient, TokenStorage],
+    (profileService: WhistlerProfileService, http: HttpClient, storage: TokenStorage) => {
+      const spy = spyOn(http, 'get');
+      spy.and.returnValue(of({
+        data: [{
+          id: '1',
+          attributes: {}
+        } as IJsonApiItem<IWProfileAttributes>]
+      }));
+      profileService.whoAmI().subscribe(() => { });
+      tick();
+      spy.and.returnValue(of({ data: [] }));
+      spyOn(storage, 'getAppInfoProperty').and.returnValue('');
+      profileService.whoAmI().subscribe(() => { }, (er) => { expect(er.message).toEqual(`There is no user with pi ''`) });
+      tick();
+    })));
 });
