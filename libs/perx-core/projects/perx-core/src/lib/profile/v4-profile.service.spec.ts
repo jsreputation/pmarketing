@@ -25,7 +25,7 @@ describe('ProfileService', () => {
   it('should call whoAmI', fakeAsync(inject([V4ProfileService, HttpClient],
     (profileService: V4ProfileService, http: HttpClient) => {
       spyOn(http, 'get').and.returnValue(of({ data: { id: 1 } }));
-      profileService.whoAmI().subscribe((val) => { expect(val.id).toBe(1) });
+      profileService.whoAmI().subscribe((val) => expect(val.id).toBe(1));
       tick();
     })));
 
@@ -33,13 +33,13 @@ describe('ProfileService', () => {
     (profileService: V4ProfileService, http: HttpClient) => {
       spyOn(profileService, 'whoAmI').and.returnValue(of({}));
       spyOn(http, 'patch').and.returnValue(of({ id: 1 }));
-      profileService.setCustomProperties({ data: 'name' }).subscribe((val) => { expect(val).toBeTruthy() });
+      profileService.setCustomProperties({ data: 'name' }).subscribe((val) => expect(val).toBeTruthy());
       tick();
     })));
 
   it('should getCustomProperties', fakeAsync(inject([V4ProfileService], (profileService: V4ProfileService) => {
     spyOn(profileService, 'whoAmI').and.returnValue(of({}));
-    profileService.getCustomProperties().subscribe((val) => { expect(val).toBeTruthy() });
+    profileService.getCustomProperties().subscribe((val) => expect(val).toBeTruthy());
     tick();
   })));
 
@@ -47,14 +47,14 @@ describe('ProfileService', () => {
     (profileService: V4ProfileService, http: HttpClient) => {
       spyOn(profileService, 'whoAmI').and.returnValue(of({}));
       spyOn(http, 'patch').and.returnValue(of({ id: 1 }));
-      profileService.updateUserInfo({}).subscribe((val) => { expect(val).toBeTruthy() });
+      profileService.updateUserInfo({}).subscribe((val) => expect(val).toBeTruthy());
       tick();
     })));
   it('should setCardNumber', fakeAsync(inject([V4ProfileService, HttpClient],
     (profileService: V4ProfileService, http: HttpClient) => {
       spyOn(profileService, 'whoAmI').and.returnValue(of({}));
       spyOn(http, 'patch').and.returnValue(of({ id: 1 }));
-      profileService.setCardNumber({ cardNumber: 1, loyaltyProgramId: 2 }).subscribe((val) => { expect(val).toBeTruthy() });
+      profileService.setCardNumber({ cardNumber: 1, loyaltyProgramId: 2 }).subscribe((val) => expect(val).toBeTruthy());
       tick();
     })));
 });

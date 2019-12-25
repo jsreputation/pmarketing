@@ -11,7 +11,7 @@ import { of } from 'rxjs';
 import { IWProfileAttributes, IJsonApiItem } from '@perx/whistler';
 const tokenStorageStrud: Partial<TokenStorage> = {
   getAppInfoProperty: () => 'test'
-}
+};
 describe('WhistlerProfileService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
@@ -42,7 +42,7 @@ describe('WhistlerProfileService', () => {
       tick();
       spy.and.returnValue(of({ data: [] }));
       spyOn(storage, 'getAppInfoProperty').and.returnValue('');
-      profileService.whoAmI().subscribe(() => { }, (er) => { expect(er.message).toEqual(`There is no user with pi ''`) });
+      profileService.whoAmI().subscribe(() => { }, (er) => expect(er.message).toEqual(`There is no user with pi ''`));
       tick();
     })));
 });
