@@ -16,12 +16,20 @@ import {
   IWCampaignAttributes,
   IWCommTemplateAttributes,
   IWLimitAttributes,
-  IWProfileAttributes
+  IWNotificationAttributes,
+  IWProfileAttributes,
+  IJsonApiItemPayload,
+  IJsonApiListPayload,
+  IJsonApiItem
 } from '@perx/whistler';
 import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
+import { CampaignChannelsFormService } from '../../services/campaign-channels-form.service';
+import Utils from '@cl-helpers/utils';
+import { CRUDParser, RequestType } from '@cl-helpers/crud-parser';
+import { NotificationService } from '@cl-core/services/notification.service';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -30,11 +38,13 @@ import { IOutcome } from '@cl-core/models/outcome/outcome';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignComponent implements OnInit, OnDestroy {
-  // private id: string;
+  public channelForm: FormGroup;
   public form: FormGroup;
   private campaign: ICampaign;
   public tenantSettings: ITenantsProperties;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
+  public currentNotifications: Partial<IChannel>;
+  public campaignId: string;
 
   private destroy$: Subject<void> = new Subject();
 
@@ -52,7 +62,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private outcomesService: OutcomesService,
     private limitsService: LimitsService,
     private audienceService: AudiencesUserService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private campaignChannelsFormService: CampaignChannelsFormService,
+    private notificationService: NotificationService
   ) {
     store.resetCampaign();
     this.initForm();
@@ -68,12 +80,17 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       });
     this.handleCampaignNameChanges();
     this.handleRouteParams();
+    this.initChannelForm();
   }
 
   public ngOnDestroy(): void {
     this.cdr.detach();
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  public sendTestSms(data: any): void {
+    console.log('send sms', data);
   }
 
   private initForm(): void {
@@ -100,9 +117,20 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public goNext(value?: MatStepper): void {
+
+    if (this.channelForm.invalid) {
+      this.channelForm.markAllAsTouched();
+      this.cdr.markForCheck();
+      return;
+    }
+
     const stepIndex = this.stepper.selectedIndex;
     this.stepConditionService.nextEvent(stepIndex);
     this.store.updateCampaign(this.stepConditionService.getStepFormValue(stepIndex));
+    if (stepIndex === 3) {
+      this.handlerWebLinkNotification();
+      this.addNotificationToStore();
+    }
     if (!value) {
       this.stepper.next();
     }
@@ -113,7 +141,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    let saveCampaign$: Observable<IJsonApiPayload<IWCampaignAttributes>>;
+
+    let saveCampaign$: Observable<IJsonApiItemPayload<IWCampaignAttributes>>;
     this.store.updateCampaign(this.form.value);
     if (this.store.currentCampaign.id) {
       saveCampaign$ = this.campaignsService.updateCampaign(this.store.currentCampaign);
@@ -122,15 +151,18 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     }
 
     saveCampaign$.pipe(
-      // tap((res: IJsonApiPayload<IWCampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
-      map((res: IJsonApiPayload<IWCampaignAttributes>) => ({ ...this.store.currentCampaign, id: res.data.id } as ICampaign)),
+      // tap((res: IJsonApiItemPayload<IWCampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
+      map((res: IJsonApiItemPayload<IWCampaignAttributes>) => ({ ...this.store.currentCampaign, id: res.data.id } as ICampaign)),
       switchMap(
-        (campaign: ICampaign) => combineLatest(
-          of(campaign),
-          this.generateLimitData(campaign).pipe(catchError(() => of(null))),
-          this.updateOutcomes(campaign).pipe(catchError(() => of(null))),
-          this.updateComm(campaign).pipe(catchError(() => of(null)))
-        )
+        (campaign: ICampaign) => {
+          const data = [
+            of(campaign),
+            this.generateLimitData(campaign).pipe(catchError(() => of(null))),
+            this.updateOutcomes(campaign).pipe(catchError(() => of(null))),
+            of(this.handlerNotification(campaign)).pipe(catchError(() => of(null))),
+          ];
+          return combineLatest(...data);
+        }
       ),
       takeUntil(this.destroy$)
     ).subscribe(
@@ -143,7 +175,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     );
   }
 
-  private generateLimitData(campaign: ICampaign): Observable<IJsonApiPayload<IWLimitAttributes> | void> {
+  private generateLimitData(campaign: ICampaign): Observable<IJsonApiItemPayload<IWLimitAttributes> | void> {
     if (!campaign.limits) {
       return of(void 0);
     }
@@ -155,7 +187,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.createLimit(campaign);
   }
 
-  private updateLimit(campaign: ICampaign): Observable<IJsonApiPayload<IWLimitAttributes> | void> {
+  private updateLimit(campaign: ICampaign): Observable<IJsonApiItemPayload<IWLimitAttributes> | void> {
     return this.limitsService.updateLimit(
       campaign.limits.id,
       campaign.limits,
@@ -165,49 +197,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     );
   }
 
-  private createLimit(campaign: ICampaign): Observable<IJsonApiPayload<IWLimitAttributes> | void> {
+  private createLimit(campaign: ICampaign): Observable<IJsonApiItemPayload<IWLimitAttributes> | void> {
     return this.limitsService.createLimit(
       campaign.limits,
       campaign.template.attributes_type,
       Number.parseInt(campaign.id, 10),
       campaign.template.id
     );
-  }
-
-  private updateComm(campaign: ICampaign): Observable<any> {
-    let templateAction$;
-    let eventAction$;
-    const channelInfo = Object.assign({}, this.store.currentCampaign.channel);
-    const updateCommsTemplate$ = this.commsService.updateCommsTemplate(channelInfo);
-    const createCommsTemplate$ = this.commsService.createCommsTemplate(channelInfo);
-    const updateCommsEvent$ = newTemplateId =>
-      this.commsService.updateCommsEvent(this.store.currentCampaign, newTemplateId, campaign.id);
-    const createCommsEvent$ = newTemplateId =>
-      this.commsService.createCommsEvent(this.store.currentCampaign, newTemplateId, campaign.id);
-
-    if (channelInfo.type === 'sms') {
-      if (channelInfo.templateId) {
-        templateAction$ = updateCommsTemplate$;
-      } else {
-        templateAction$ = createCommsTemplate$;
-      }
-      if (channelInfo.eventId) {
-        eventAction$ = updateCommsEvent$;
-      } else {
-        eventAction$ = createCommsEvent$;
-      }
-
-      return templateAction$.pipe(
-        switchMap((template: IJsonApiPayload<IWCommTemplateAttributes>) => eventAction$(template.data.id))
-      );
-    }
-    if (channelInfo.eventId) {
-      eventAction$ = updateCommsEvent$;
-    } else {
-      eventAction$ = createCommsEvent$;
-    }
-
-    return eventAction$(null);
   }
 
   private updateOutcomes(campaign: ICampaign): Observable<any> {
@@ -366,31 +362,26 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   private handleRouteParams(): void {
-    const campaignId = this.route.snapshot.params.id;
-    const paramsComm: HttpParamsOptions = {
-      'filter[owner_id]': campaignId,
-      include: 'template'
-    };
+    this.campaignId = this.route.snapshot.params.id;
     const paramsPO: HttpParamsOptions = {
-      'filter[domain_id]': campaignId
+      'filter[domain_id]': this.campaignId
     };
-    if (campaignId) {
+    if (this.campaignId) {
+
+      this.initChannelData();
+
       combineLatest(
-        this.campaignsService.getCampaign(campaignId).pipe(catchError(() => of(null))),
-        this.commsService.getCommsEvent(paramsComm).pipe(catchError(() => of(null))),
+        this.campaignsService.getCampaign(this.campaignId).pipe(catchError(() => of(null))),
         this.outcomesService.getOutcomes(paramsPO).pipe(catchError(() => of(null)))
       ).pipe(
         map(
-          ([campaign, commEvent, outcomes]:
-            [ICampaign | null, IComm | null, IOutcome[] | null]): ICampaign => ({
+          ([campaign, outcomes]:
+            [ICampaign | null, IOutcome[] | null]): ICampaign => {
+            return ({
               ...campaign,
-              audience: { select: commEvent && commEvent.poolId || null },
-              channel: {
-                type: commEvent && commEvent.channel || 'weblink',
-                ...commEvent
-              },
               outcomes: this.outcomeToRewardCollection(outcomes)
-            }))
+            });
+          })
       ).subscribe(
         campaign => {
           this.campaign = Object.assign({}, campaign);
@@ -398,9 +389,140 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
           this.form.patchValue({
             name: this.campaign.name
           });
+          this.patchNotificationWebLink(this.campaign);
         },
         () => this.router.navigateByUrl('/campaigns')
       );
     }
   }
+
+  private initChannelData(): void {
+    this.notificationService.getNotifications(this.campaignId)
+      .subscribe((result) => {
+        this.campaignChannelsFormService.patchForm(this.channelForm, result);
+        this.currentNotifications = this.channelForm.value;
+      });
+  }
+
+  private initChannelForm(): void {
+    this.channelForm = this.campaignChannelsFormService.getForm();
+    this.currentNotifications = this.channelForm.value;
+  }
+
+  private patchNotificationWebLink(data: any): void {
+    const channel = data['channel'];
+    if (channel.type === 'weblink') {
+      this.channelForm.get('webNotification')
+        .patchValue({
+          webLink: true,
+          webLinkOptions: data.displayProperties.informationCollectionSetting
+        });
+    }
+  }
+
+  private addNotificationToStore(): void {
+    this.store.updateCampaign({notification: this.channelForm.value});
+  }
+
+  private handlerWebLinkNotification(): void {
+    const notification = this.channelForm.value['webNotification'];
+    if (this.campaign) {
+      const webLink: ICampaign = {
+        campaignInfo: {
+          ...this.store.currentCampaign.campaignInfo,
+          informationCollectionSetting: notification.webLinkOptions
+        },
+        channel: {
+          ...this.store.currentCampaign.channel,
+          type: notification.webLink ? 'weblink' : ''
+      }
+    };
+
+      if (!notification.webLink) {
+        delete webLink.campaignInfo.informationCollectionSetting;
+        webLink.channel['status'] = 'remove';
+      }
+      this.store.updateCampaign(webLink);
+    }
+
+  }
+
+  private handlerNotification(campaign: ICampaign): void {
+
+    const notifications: IChannel = this.channelForm.value;
+    Object.keys(notifications)
+      .forEach((key: string) => {
+        const notification: ICampaignNotificationGroup[] = notifications[key];
+        const defaultNotification: ICampaignNotificationGroup[] = this.currentNotifications[key];
+
+        if (Utils.isArray(notification)) {
+          const result = this.getNotificationRequests(defaultNotification, notification, campaign);
+          combineLatest(result)
+            .subscribe(() => { });
+        }
+      });
+  }
+
+  public createTemplate(data: IComm): Observable<IJsonApiItemPayload<IWCommTemplateAttributes>> {
+    return this.commsService.createCommsTemplate(data);
+  }
+
+  public updateTemplate(data: IComm): Observable<IJsonApiItemPayload<IWCommTemplateAttributes>> {
+    return this.commsService.updateCommsTemplate(data);
+  }
+
+  public manageNotification(
+    data: ICampaignNotificationGroup,
+    campaignId: string
+  ): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+    return this.createTemplate(data.template)
+      .pipe(
+        switchMap((res: IJsonApiItemPayload<IWCommTemplateAttributes>) => {
+          data['templateId'] = res.data.id;
+          return this.createNotification(data, campaignId);
+        }));
+  }
+
+  public createNotification(
+    data: ICampaignNotificationGroup,
+    campaignId: string
+  ): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+    return this.notificationService.createNotification(data, campaignId);
+
+  }
+
+  public updateNotification(
+    data: ICampaignNotificationGroup,
+    campaignId: string
+  ): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+    return this.updateTemplate(data.template)
+      .pipe(
+        switchMap(res => {
+          data['templateId'] = res.data.id;
+          return this.notificationService.updateNotification(data, campaignId);
+        })
+      );
+  }
+
+  public deleteNotification(id: string): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+    return this.notificationService.deleteNotification(id);
+  }
+
+  private getNotificationRequests(
+    currentConditions: ICampaignNotificationGroup[],
+    updatedConditions: ICampaignNotificationGroup[],
+    campaign: ICampaign
+  ): Observable<IJsonApiListPayload<IWNotificationAttributes>>[] {
+    return CRUDParser.buildRequestList(currentConditions, updatedConditions, (type, data) => {
+      switch (type) {
+        case RequestType.CREATE:
+          return this.manageNotification(data, campaign.id);
+        case RequestType.UPDATE:
+          return this.updateNotification(data, campaign.id);
+        case RequestType.DELETE:
+          return this.deleteNotification(data.id);
+      }
+    });
+  }
+
 }

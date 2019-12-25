@@ -45,7 +45,6 @@ import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
 import { SmsValidationComponent } from './auth/sms-validation/sms-validation.component';
 import { QRCodeComponent } from './qr-code/qr-code.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
-import { AppTokenInterceptor } from './auth/apptoken.interceptor';
 import { PopupComponent } from './popup/popup.component';
 
 @NgModule({
@@ -95,8 +94,7 @@ import { PopupComponent } from './popup/popup.component';
     NgxBarcodeModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: AppTokenInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true }
   ],
   entryComponents: [PopupComponent],
   bootstrap: [AppComponent]

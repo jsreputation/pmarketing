@@ -7,5 +7,6 @@ export enum NewLoyaltyActions {
   duplicateRule = 'duplicateRule',
   deleteRule = 'deleteRule',
   dropRule = 'dropRule',
-  createRule = 'createRule'
+  createRule = 'createRule',
+  updateRuleSetMatchType = 'updateRuleSetMatchMethod'
 }

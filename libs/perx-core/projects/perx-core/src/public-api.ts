@@ -15,6 +15,11 @@ export { RedemptionType } from './lib/perx-core.models';
 /**
  * Merchants
  */
+export {
+  IMerchantTransactionHistory,
+  IMerchantPurchaseTransactionHistory,
+  IMerchantRewardTransactionHistory
+} from './lib/merchant-admin/models/merchants-admin.model';
 export { MerchantsModule } from './lib/merchants/merchants.module';
 export { IMerchantsService } from './lib/merchants/imerchants.service';
 
@@ -82,6 +87,7 @@ export {
   ITree,
   IScratch,
   ISpin,
+  ISnake,
   defaultTree,
   IPlayOutcome,
   ISlice,
@@ -93,7 +99,7 @@ export { ShakeTreeComponent } from './lib/game/shake-tree/shake-tree.component';
 export { PinataComponent } from './lib/game/pinata/pinata.component';
 export { ScratchCardComponent } from './lib/game/scratch-card/scratch-card.component';
 export { SpinTheWheelComponent } from './lib/game/spin-the-wheel/spin-the-wheel.component';
-
+export { SnakeGameComponent } from './lib/game/snake/snake.component';
 /**
  * Profile
  */
@@ -158,6 +164,7 @@ export { NewsfeedComponent } from './lib/utils/newsfeed/newsfeed.component';
 export { LanguageService } from './lib/utils/language/language.service';
 export { LanguageInterceptor } from './lib/utils/language.interceptor';
 export { LocaleIdFactory } from './lib/utils/language/locale-id.factory';
+export { FeedItemPopupComponent } from './lib/utils/feed-item-popup/feed-item-popup.component';
 /**
  * Puzzles
  */
@@ -194,6 +201,7 @@ export { LongTextComponent } from './lib/survey/question/long-text/long-text.com
 export { GroupComponent } from './lib/survey/question/group/group.component';
 export { RatingComponent } from './lib/survey/question/rating/rating.component';
 export { DateComponent } from './lib/survey/question/date/date.component';
+export { PasswordComponent} from './lib/survey/question/password/password.component';
 
 /**
  * Config
