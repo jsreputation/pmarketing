@@ -1,4 +1,4 @@
-<article [formGroup]="form">
+<article *ngIf="form" [formGroup]="form">
   <header class="page-header full-with">
     <mat-form-field class="pagetitle-input" floatLabel="never">
       <input type="text" matInput formControlName="name" [placeholder]="'ENTER_TITLE_HERE' | translate">

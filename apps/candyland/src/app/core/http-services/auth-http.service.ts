@@ -36,7 +36,7 @@ export class AuthHttpService {
     return this.http.post<IJsonApiItemPayload<void>>(`${ApiConfig.IAMUsersPath}/password`, req);
   }
 
-  public changePassword(password: string, token: string): Observable<any> {
+  public changePassword(password: string, token: string): Observable<HttpResponse<any>> {
     const req = {
       data: {
         attributes: {
@@ -46,6 +46,6 @@ export class AuthHttpService {
         }
       }
     };
-    return this.http.put<IJsonApiItemPayload<void>>(`${ApiConfig.IAMUsersPath}/password`, req);
+    return this.http.put<HttpResponse<IJsonApiItemPayload<void>>>(`${ApiConfig.IAMUsersPath}/password`, req, { observe: 'response'});
   }
 }

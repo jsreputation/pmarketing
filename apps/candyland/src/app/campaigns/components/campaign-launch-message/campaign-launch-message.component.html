@@ -1,65 +1,88 @@
-<section class="notification-wrap" [formGroup]="group">
+<section class="notification-wrap" *ngIf="group" [formGroup]="group">
   <h2 class="card-title">
-    On Campaign Launch Message <span>{{index + 1}}</span>
+    {{'CAMPAIGN.ON_CAMPAIGN_LAUNCH_MESSAGE' | translate}}
+    <span>{{index + 1}}</span>
   </h2>
 
   <div class="input-group notification-row">
     <span>
-      Message will be sent on
+      {{'CAMPAIGN.MESSAGE_WILL_BE_SENT_ON' | translate}}
     </span>
     <mat-form-field class="notification-type">
       <mat-select formControlName="sentType" #notificationType (selectionChange)="changeValueTime(notificationType.value)">
-        <mat-option [value]="launchType.launchDate">Campaign launch date and time</mat-option>
-        <mat-option [value]="launchType.usersDateBirth">User’s Date of Birth</mat-option>
-        <mat-option [value]="launchType.usersMonthBirth">User’s Month of Birth</mat-option>
+        <mat-option [value]="launchType.launchDate">
+          {{'CAMPAIGN.CAMPAIGN_LAUNCH_DATE_AND_TIME' | translate}}
+        </mat-option>
+        <mat-option [value]="launchType.usersDateBirth">
+          {{'CAMPAIGN.USER_DATE_OF_BIRTH' | translate}}
+        </mat-option>
+        <mat-option [value]="launchType.usersMonthBirth">
+          {{'CAMPAIGN.USER_MONTH_OF_BIRTH' | translate}}
+        </mat-option>
       </mat-select>
+      <mat-error *ngIf="getSentType().hasError('required') && getSentType().touched">{{'ERROR_REQUIRED' | translate}}</mat-error>
     </mat-form-field>
   </div>
   <div class="notification-date-time" *ngIf="compareType(launchType.launchDate)">
-    Message will be sent on {{campaign?.campaignInfo?.startDate | date: 'dd/MM/yyyy'}} at {{campaign?.campaignInfo?.startTime}}.
+    {{'CAMPAIGN.MESSAGE_WILL_BE_SENT_ON' | translate}}
+    {{campaign?.campaignInfo?.startDate | date: 'dd/MM/yyyy'}}
+    {{'CAMPAIGN.AT' | translate}}
+    {{campaign?.campaignInfo?.startTime}}.
   </div>
 
   <section class="notification-date-time input-group notification-row" *ngIf="compareType(launchType.usersDateBirth)">
     <span>
-      Message will be sent on the user’s birthday at
+      {{'CAMPAIGN.MESSAGE_SENT_ON_BIRTHDAY' | translate}}
     </span>
     <div class="date-field">
       <cl-time-picker formControlName="birthdayTime"></cl-time-picker>
-      <mat-error class="date-field-error" *ngIf="birthdayTime.hasError('required') && birthdayTime.touched">Required field</mat-error>
+      <mat-error class="date-field-error" *ngIf="birthdayTime.hasError('required') && birthdayTime.touched">
+        {{'ERROR_REQUIRED' | translate}}
+      </mat-error>
     </div>
   </section>
 
   <section class="notification-date-time input-group notification-row" *ngIf="compareType(launchType.usersMonthBirth)">
     <span>
-      Message will be sent on day
+      {{'CAMPAIGN.MESSAGE_SENT_ON_DAY' | translate}}
     </span>
     <mat-form-field>
       <input type="number" [min]="1" matInput formControlName="monthDay">
-      <mat-error *ngIf="monthDay.hasError('required') && monthDay.touched">Required field</mat-error>
-      <mat-error *ngIf="monthDay.hasError('min') && monthDay.touched">Min value 1</mat-error>
+      <mat-error *ngIf="monthDay.hasError('required') && monthDay.touched">{{'ERROR_REQUIRED' | translate}}</mat-error>
+      <mat-error *ngIf="monthDay.hasError('min') && monthDay.touched">{{'ERROR_MIN_VALUE' | translate}} 1</mat-error>
     </mat-form-field>
     <span>
-      of the user’s birth month at
+      {{'CAMPAIGN.OF_THE_USER_BIRTH_MONTH_AT' | translate}}
     </span>
     <div class="date-field">
       <cl-time-picker formControlName="birthdayTime"></cl-time-picker>
-      <mat-error class="date-field-error" *ngIf="birthdayTime.hasError('required') && birthdayTime.touched">Required field</mat-error>
+      <mat-error class="date-field-error" *ngIf="birthdayTime.hasError('required') && birthdayTime.touched">
+        {{'ERROR_REQUIRED' | translate}}
+      </mat-error>
     </div>
   </section>
 
   <section class="notification-message">
     <h2 class="card-title">
-      Message Content
+      {{'CAMPAIGN.MESSAGE_CONTENT' | translate}}
     </h2>
-    <cl-sms-editor [options]="shortCodes" [control]="group.get('template.message')"></cl-sms-editor>
+    <cl-sms-editor [options]="shortCodes" [control]="group.get('template.message')">
+      <div class="date-field">
+        <mat-error class="date-field-error" *ngIf="group.get('template.message').hasError('required') && group.get('template.message').touched">
+          {{'ERROR_REQUIRED' | translate}}
+        </mat-error>
+      </div>
+    </cl-sms-editor>
   </section>
   <section class="notification-actions flex justify-content-between align-items-center">
-    <cl-button classList="tertiary ph-0" (click)="sendTestSms()">
-      <i class="material-icons">
-        send
-      </i>
-      Send test SMS
+    <!--<cl-button classList="tertiary ph-0" (click)="sendTestSms()">-->
+      <!--<i class="material-icons">-->
+        <!--send-->
+      <!--</i>-->
+      <!--{{'CAMPAIGN.SEND_TEST_SMS' | translate}}-->
+    <!--</cl-button>-->
+    <cl-button classList="secondary" (click)="deleteLaunchGroup()">
+      {{'BTN_DELETE' | translate}}
     </cl-button>
-    <cl-button classList="secondary" (click)="deleteLaunchGroup()">Delete</cl-button>
   </section>
 </section>

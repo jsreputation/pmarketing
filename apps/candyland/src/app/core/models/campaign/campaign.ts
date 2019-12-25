@@ -1,4 +1,3 @@
-import { ISchedule } from '../comm/schedule';
 import { InformationCollectionSettingType } from './campaign.enum';
 import { IOutcome } from '../outcome/outcome';
 import { IRewardEntity } from '../reward/reward-entity.interface';
@@ -26,16 +25,13 @@ export interface ICampaign {
     labels?: string[];
   };
   channel?: {
-    eventId?: string;
-    templateId?: string;
     type: string;
-    message?: string;
-    schedule?: ISchedule;
   };
   template?: any;
   outcomes?: ICampaignOutcome[];
   limits?: any;
   displayProperties?: any;
+  notification?: IChannel;
 }
 
 export interface ICampaignOutcome {
