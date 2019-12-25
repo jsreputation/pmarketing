@@ -5,7 +5,7 @@ import { ConfigModule } from '../../config/config.module';
 import { WhistlerThemesService } from './whistler-themes.service';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { LIGHT, DARK } from './themes.model';
+import { DARK } from './themes.model';
 
 describe('ThemesService', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -38,9 +38,7 @@ describe('ThemesService', () => {
       service.getThemeSetting().subscribe((theme) => expect(theme.name).toBe('test'));
       tick();
       spy.and.returnValue(of({ data: [{ attributes: { display_properties: null } }] }));
-      service.getThemeSetting().subscribe((theme) => expect(theme).toEqual(LIGHT));
-      tick();
-      spy.and.returnValue(of({ data: [{ attributes: { display_properties: { 'theme.style': DARK.name } } }] }));
+      spy.and.returnValue(of({ data: [{ attributes: { display_properties: { 'theme.style': DARK.properties } } }] }));
       service.getThemeSetting()
         .subscribe((theme) => expect(theme.properties['--backgroundColor']).toEqual(DARK.properties['--backgroundColor']));
       tick();
