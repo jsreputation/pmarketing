@@ -34,5 +34,6 @@ export enum WFileUploadStatus {
     pending = 'pending',
     processing = 'processing',
     success = 'success',
-    error = 'error'
+    error = 'error',
+    success_with_error = 'success_with_error'
 }

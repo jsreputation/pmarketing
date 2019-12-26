@@ -5,18 +5,26 @@ declare interface IUploadedFile {
   cdn?: string;
   name?: string;
   key?: string;
-  status: FileUploadStatus | null;
-  processed_amount: number | null;
-  success_amount: number | null;
-  fail_amount: number | null;
-  processed_details: string | null;
-  created_at: string;
-  updated_at: string;
+  status?: FileUploadStatus | null;
+  processedAmount?: number | null;
+  successAmount?: number | null;
+  failAmount?: number | null;
+  processedDetails?: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
 
 declare enum FileUploadStatus {
   pending = 'pending',
   processing = 'processing',
   success = 'success',
-  error = 'error'
+  error = 'error',
+  successWithError = 'success_with_error'
+}
+
+declare interface IUploadFileStatus {
+  fileName: string;
+  status: FileUploadStatus;
+  errorMsg?: string;
+  nbRecords?: number;
 }

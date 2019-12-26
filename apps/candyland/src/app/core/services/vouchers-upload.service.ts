@@ -1,4 +1,4 @@
-import { IAdvancedUploadFileService, IUploadFileStatus, UploadStatus } from './iadvanced-upload-file.service';
+import { IAdvancedUploadFileService } from './iadvanced-upload-file.service';
 import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { UploadFileService } from '@cl-core-services';
@@ -21,7 +21,7 @@ export class VouchersUploadService extends IAdvancedUploadFileService {
       const maxRetryTimes = 60;
       const delayUnitTime = 1000;
       let retryTimes = 0;
-      subject.next({ fileName: file.name, status: UploadStatus.UPLOADING });
+      subject.next({ fileName: file.name, status: FileUploadStatus.processing });
       const subscription = this.uploadService.uploadFile(file)
         .pipe(
           map((res: IUploadedFile) => res.url),
@@ -53,14 +53,14 @@ export class VouchersUploadService extends IAdvancedUploadFileService {
           (res: IJsonApiItemPayload<IWVouchersApi>) => {
             subject.next({
               fileName: file.name,
-              status: UploadStatus.COMPLETED,
+              status: FileUploadStatus.success,
               nbRecords: res.data.attributes.amount || null
             });
           },
           () => {
             subject.next({
               fileName: file.name,
-              status: UploadStatus.ERROR,
+              status: FileUploadStatus.error,
               errorMsg: 'Upload failed'
             });
           },
