@@ -15,6 +15,7 @@ import {
   CreateCampaignAppPage,
   EngagementAppPage,
   ElementApp,
+  LoginAppPage,
 } from '../pages/candylandApp.po';
 
 // setDefaultTimeout(60 * 1000);
@@ -22,12 +23,26 @@ const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 
 // Ensuring home page has the relevant elements
 Given(/^9_I am at the blackcomb home page$/, async () => {
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  // entering correct account id
+  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
+
   await CreateCampaignAppPage.navigateToCreateCampaign();
   // await browser.executeScript('WalkMeAPI.stopFlow()');
   // waiting for the search bar to load
   await browser.wait(ec.elementToBeClickable(ElementApp.inputTextArray().get(1)), 5000);
   // entering search criteria for survey in search bar
-  await ElementApp.inputTextArray().get(1).sendKeys('Survey 1');
+  await ElementApp.inputTextArray().get(1).sendKeys('Survey Template');
   // selecting first element
   await browser.wait(ec.elementToBeClickable(EngagementAppPage.engagementItemArray().first()), 5000);
   // asserting the presence of the card and title of the card
@@ -46,8 +61,9 @@ Given(/^9_I am at the blackcomb home page$/, async () => {
   const urlString = await ElementApp.inputTextArray().get(2).getAttribute('value');
   await browser.get(urlString);
   await browser.sleep(3000);
-  await BlackcombHomeAppPage.navigateToBlackcombHomeApp();
 
+  await BlackcombHomeAppPage.navigateToBlackcombHomeApp();
+  await browser.sleep(3000);
 });
 
 Then(/^9_I see the welcome message ,relevant headers, qr button and category tabs.$/, async () => {
