@@ -1,8 +1,8 @@
 declare interface IChannel {
   webNotification: {
     webLink: boolean;
-    webLinkOptions: string;
-    id: string;
+    webLinkOptions: InformationCollectionSettingType;
+    id?: string;
   };
   sms: boolean;
   launch: ICampaignNotificationGroup[];
@@ -32,4 +32,10 @@ declare interface ICampaignNotificationGroup {
 declare interface ITemplate {
   message: string;
   templateId: string;
+}
+
+declare enum InformationCollectionSettingType {
+  notRequired = 'not_required',
+  piRequired = 'pi_required',
+  signupRequired = 'signup_required'
 }

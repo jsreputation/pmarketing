@@ -13,7 +13,6 @@ import {
   IJsonApiPostData,
 } from '@perx/whistler';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
-import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
 import { WCampaignStatus, IWAudienceFilter } from '@perx/whistler';
 import { CampaignStatus } from '@cl-core/models/campaign/campaign-status.enum';
@@ -118,9 +117,6 @@ export class CampaignsHttpAdapter {
       status: CampaignsHttpAdapter.WStat2Stat[campaignData.status],
       engagement_id: `${campaignData.engagement_id}`,
       engagement_type: EngagementTypeFromAPIMapping[campaignData.engagement_type], campaignInfo: {
-        informationCollectionSetting: CampaignsHttpAdapter.transformInformationCollectionType(
-          campaignData.display_properties.informationCollectionSetting
-        ),
         goal: campaignData.goal,
         startDate: DateTimeParser.stringToDate(campaignData.start_date_time),
         startTime: DateTimeParser.stringToTime(campaignData.start_date_time, 'LT'),
@@ -128,9 +124,16 @@ export class CampaignsHttpAdapter {
         endTime: DateTimeParser.stringToTime(campaignData.end_date_time, 'LT'),
         disabledEndDate: !campaignData.end_date_time, labels: campaignData.labels
       },
-      channel: { type: campaignData.display_properties.weblink ? 'weblink' : '' },
       template: {},
       outcomes: [],
+      notification: {
+        webNotification: {
+          webLink: campaignData.display_properties.weblink ? true : false,
+          webLinkOptions: CampaignsHttpAdapter.transformInformationCollectionType(
+            campaignData.display_properties.informationCollectionSetting
+          )
+        }
+      } as IChannel,
       displayProperties: { ...campaignData.display_properties }
     };
   }
@@ -143,10 +146,10 @@ export class CampaignsHttpAdapter {
       : null;
     const endDate = data.campaignInfo.endDate ? moment(moment(data.campaignInfo.endDate).format('l') + ' ' + endTime).format() : null;
     // When user not select weblink, default the information collection setting back to not required. Double confirm with Nocolas
-    const informationCollectionSetting = data.channel.type === 'weblink'
-      ? data.campaignInfo.informationCollectionSetting
+    const informationCollectionSetting = data.notification.webNotification.webLink
+      ? data.notification.webNotification.webLinkOptions
       : InformationCollectionSettingType.notRequired;
-    const weblink = data.channel.type === 'weblink' ? true : false;
+    const weblink = data.notification.webNotification.webLink ? true : false;
     return {
       type: 'entities',
       attributes: {
