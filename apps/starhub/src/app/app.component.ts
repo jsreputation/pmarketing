@@ -120,11 +120,14 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
           this.data.siteSectionLevel3 = event.siteSectionLevel3;
         }
 
-        this.token = this.authenticationService.getUserAccessToken();
-        if (this.token) {
-          this.checkAuth();
-        }
-        this.data.perxID = this.token;
+        this.authenticationService.getAccessToken().subscribe((token: string) => {
+          this.token = token;
+          if (this.token) {
+            this.checkAuth();
+          }
+          this.data.perxID = this.token;
+        });
+
         if (typeof _satellite === 'undefined') {
           return;
         }
