@@ -44,6 +44,9 @@ export class CustomDataSource<T> extends DataSource<T> {
 
   public set params(value: HttpParamsOptions) {
     this.privateParams = value;
+    if (Object.keys(value).includes('page[number]')) {
+      this.loadingData();
+    }
   }
 
   public get params(): HttpParamsOptions {
