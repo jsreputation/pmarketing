@@ -7,6 +7,10 @@ import {
   IWCampaignAttributes, WEngagementType,
   IWAudiences,
   WInformationCollectionSettingType,
+  IJsonApiItem,
+  IJsonApiListPayload,
+  IJsonApiPatchData,
+  IJsonApiPostData,
 } from '@perx/whistler';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
@@ -30,9 +34,11 @@ export class CampaignsHttpAdapter {
     draft: WCampaignStatus.draft
   };
 
-  public static transformCampaignStatus(status: CampaignStatus): IJsonApiItem<Partial<IWCampaignAttributes>> {
+  public static transformCampaignStatus(status: CampaignStatus, id: string): IJsonApiPatchData<IWCampaignAttributes> {
     return {
-      type: 'entities', attributes: {
+      id,
+      type: 'entities',
+      attributes: {
         status: CampaignsHttpAdapter.Stat2WStat[status]
       }
     };
@@ -121,11 +127,15 @@ export class CampaignsHttpAdapter {
         endDate: DateTimeParser.stringToDate(campaignData.end_date_time),
         endTime: DateTimeParser.stringToTime(campaignData.end_date_time, 'LT'),
         disabledEndDate: !campaignData.end_date_time, labels: campaignData.labels
-      }, template: {}, outcomes: [], displayProperties: { ...campaignData.display_properties }
+      },
+      channel: { type: campaignData.display_properties.weblink ? 'weblink' : '' },
+      template: {},
+      outcomes: [],
+      displayProperties: { ...campaignData.display_properties }
     };
   }
 
-  public static transformFromCampaign(data: ICampaign): IJsonApiItem<IWCampaignAttributes> {
+  public static transformFromCampaign(data: ICampaign): IJsonApiPostData<IWCampaignAttributes> {
     const startTime = data.campaignInfo.startTime ? data.campaignInfo.startTime : moment().format('LT');
     const endTime = data.campaignInfo.endTime ? data.campaignInfo.endTime : moment().format('LT');
     const startDate = data.campaignInfo.startDate
@@ -136,8 +146,10 @@ export class CampaignsHttpAdapter {
     const informationCollectionSetting = data.channel.type === 'weblink'
       ? data.campaignInfo.informationCollectionSetting
       : InformationCollectionSettingType.notRequired;
+    const weblink = data.channel.type === 'weblink' ? true : false;
     return {
-      type: 'entities', attributes: {
+      type: 'entities',
+      attributes: {
         name: data.name,
         engagement_type: EngagementTypeAPIMapping[data.template.attributes_type] as WEngagementType,
         engagement_id: data.template.id,
@@ -148,7 +160,7 @@ export class CampaignsHttpAdapter {
         pool_id: data.audience.select ? Number.parseInt(data.audience.select, 10) : null,
         labels: data.campaignInfo.labels || [],
         audience_segment: data.audience.select ? CampaignsHttpAdapter.transformAudienceFilter(data.audience.filters) : {},
-        display_properties: { ...data.displayProperties, informationCollectionSetting }
+        display_properties: { ...data.displayProperties, informationCollectionSetting, weblink }
       }
     };
   }

@@ -71,9 +71,39 @@
       "PI_INFORMATION": "Требуется сбор информации PI",
       "SIGNUP_INFORMATION": "Требуется сбор регистрационной информации"
     },
-    "ChannelTypes": {
+    "CHANNEL_TYPES": {
       "WEBLINK": "Веб ссылка",
       "SMS": "CMC"
-    }
+    },
+    "CHANNELS": "Каналы",
+    "SMS_NOTIFICATIONS": "CMC Уведомления",
+    "MESSAGE_TRIGGERS": "Триггеры сообщений",
+    "LAUNCH": "Запуск",
+    "ON_CAMPAIGN_LAUNCH": "При запуске кампании",
+    "REMINDERS": "Напоминания",
+    "CAMPAIGN_NOT_COMPLETED": "Кампания не завершена",
+    "BEFORE_CAMPAIGN_ENDS": "До окончания кампании",
+    "BEFORE_REWARD_EXPIRES": "До истечения действия вознаграждения",
+    "NO_STAMPS_TO_NEXT_REWARD": "Количество марок к следующей награде",
+    "THANK_YOU": "Благодарность",
+    "EARNED_A_STAMP": "Заработал штамп",
+    "EARNED_A_REWARD": "Заработано вознаграждение",
+    "INFORMATION_COLLECTION": "Сбор информации",
+    "ON_CAMPAIGN_LAUNCH_MESSAGE": "Сообщение о запуске кампании",
+    "MESSAGE_WILL_BE_SENT_ON": "Сообщение будет отправлено",
+    "AT": "в",
+    "MESSAGE_SENT_ON_BIRTHDAY": "Сообщение будет отправлено в день рождения пользователя в",
+    "MESSAGE_SENT_ON_DAY": "Сообщение будет отправлено в день",
+    "OF_THE_USER_BIRTH_MONTH_AT": "месяца рождения пользователя в",
+    "MESSAGE_CONTENT": "Содержание сообщения",
+    "SEND_TEST_SMS": "Отправить тестовое СМС",
+    "CAMPAIGN_LAUNCH_DATE_AND_TIME": "Дата и время запуска кампании",
+    "USER_DATE_OF_BIRTH": "Дата рождения пользователя",
+    "USER_MONTH_OF_BIRTH": "Месяц рождения пользователя",
+    "CAMPAIGN_NOT_COMPLETED_MESSAGE": "Сообщение о кампании не завершено",
+    "AFTER_CAMPAIGN_STARTS": "после начала кампании",
+    "NOT_COMPLETED_CAMPAIGN": "если пользователь не завершил кампанию.",
+    "BEFORE_CAMPAIGN_ENDS_MESSAGE": "Сообщение перед окончанием кампании",
+    "": ""
   }
 }

@@ -25,7 +25,6 @@ import {
 } from 'rxjs/operators';
 
 import {
-  IWAudiences,
   IWProfileAttributes,
 } from '@perx/whistler';
 import { AudiencesService, MessageService, SettingsService } from '@cl-core/services';
@@ -41,6 +40,7 @@ import {
   IUpsertUserPopup,
   Type,
 } from '../../audience.model';
+import { IAudience } from '@cl-core/models/audiences/audiences';
 
 @Component({
   selector: 'cl-audiences-page',
@@ -56,7 +56,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public search: FormControl;
   public searchKey: string = 'query';
   public dataSource: CustomDataSource<IWProfileAttributes>;
-  public audiencesDataSource: CustomDataSource<IWAudiences>;
+  public audiencesDataSource: CustomDataSource<IAudience>;
   public dataSourceStates: typeof DataSourceStates = DataSourceStates;
 
   public tabsFilterConfig: OptionConfig[] = [
@@ -74,7 +74,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     public messageService: MessageService
   ) {
     this.dataSource = new CustomDataSource<IWProfileAttributes>(this.audiencesUserService);
-    this.audiencesDataSource = new CustomDataSource<IWAudiences>(this.audiencesService);
+    this.audiencesDataSource = new CustomDataSource<IAudience>(this.audiencesService);
     this.tabs = new FormControl('users');
     this.search = new FormControl('');
   }
@@ -124,13 +124,10 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     this.searchKey = 'query';
     switch (tab) {
       case 'audience':
-        this.audiencesDataSource = new CustomDataSource<IWAudiences>(this.audiencesService);
-        const params: HttpParamsOptions = { include: 'users' };
-        this.audiencesDataSource.params = params;
+        this.audiencesDataSource = new CustomDataSource<IAudience>(this.audiencesService);
         break;
       case 'users':
       default:
-        // this.searchKey = 'query';
         this.dataSource = new CustomDataSource<IWProfileAttributes>(this.audiencesUserService);
     }
     this.currentTab = tab;
