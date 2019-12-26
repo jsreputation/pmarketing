@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AuthenticationService,
   NotificationService,
@@ -137,17 +137,6 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         _satellite.track('msa-rewards-virtual-page');
       }
     );
-  }
-
-  @HostListener('document:click', ['$event'])
-  public onDocumentClick(e: any): void {
-    const isIpad = navigator.userAgent.match(/iPad/i) != null;
-    const isIphone = (navigator.userAgent.match(/iPhone/i) != null) || (navigator.userAgent.match(/iPod/i) != null);
-    const url = e && e.target && (e.target.href || e.target.parentNode && e.target.parentNode.href || null);
-    if ((isIpad || isIphone) && url) {
-      window.open(url, '_blank');
-      e.stopPropagation();
-    }
   }
 
   private fetchCampaigns(): void {
