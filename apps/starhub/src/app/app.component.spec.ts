@@ -290,18 +290,4 @@ describe('AppComponent', () => {
       tick();
       expect(spy).toHaveBeenCalled();
     })));
-
-  it('should not open window', () => {
-    const eventMock = {
-      target: {
-        href: 'test',
-        parentNode: {
-          href: 'test'
-        }
-      }
-    };
-    spyOn( window, 'open' );
-    component.onDocumentClick(eventMock);
-    expect(window.open).not.toHaveBeenCalled();
-  });
 });
