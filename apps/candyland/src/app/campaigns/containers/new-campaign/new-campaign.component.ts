@@ -74,7 +74,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.initTenantSettings();
     this.initForm();
-    this.store.currentCampaign$.subscribe(console.log);
     this.form.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
@@ -380,11 +379,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         this.campaignsService.getCampaign(this.campaignId).pipe(catchError(() => of(null))),
         this.outcomesService.getOutcomes(paramsPO).pipe(catchError(() => of(null)))
       ).pipe(
-        tap(([campaign, outcomes]:
-          [ICampaign | null, IOutcome[] | null]) => {
-          console.log(campaign);
-          console.log(outcomes);
-        }),
         map(
           ([campaign, outcomes]:
             [ICampaign | null, IOutcome[] | null]): ICampaign => {
@@ -395,7 +389,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
           })
       ).subscribe(
         campaign => {
-          console.log('campaign: ', campaign);
           this.campaign = Object.assign({}, campaign);
           this.store.initCampaign(campaign);
           this.form.patchValue({
