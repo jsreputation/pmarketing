@@ -135,8 +135,13 @@ export class ManageLoyaltyPageComponent implements OnInit, AfterViewInit, OnDest
       e.preventDefault();
       console.log(e, index);
 
-      if (this.currentStep + 1 === index) {
-        this.clickGoNext();
+      // if (this.currentStep + 1 === index) {
+      //       //   this.clickGoNext();
+      //       // }
+
+      if (this.currentStep !== index && index <= this.stepProgress + 1) {
+        this.stepper.selected.completed = true;
+        this.updateStepProgress();
       }
 
     }, true));
@@ -308,7 +313,9 @@ export class ManageLoyaltyPageComponent implements OnInit, AfterViewInit, OnDest
 
   private goNext(): void {
     this.stepper.selected.completed = true;   // complete the current step
-    this.stepper.next();                      // move to next step
+    // this.stepper._steps.toArray()[this.stepper.selectedIndex + 1].editable = true;
+    this.stepper.next();
+    // this.stepper.next();                      // move to next step
     // this.stepper.selectionChange.subscribe();
     this.updateStepProgress();
   }
