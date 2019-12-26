@@ -14,37 +14,66 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ConfigToMappedSlotPipe, ConfigToSlicesPipe, SpinComponent } from './spin/spin.component';
 import { WInformationCollectionSettingType } from '@perx/whistler';
 
+const gamePi: IGame = {
+  id: 1,
+  campaignId: 1,
+  type: GameType.pinata,
+  remainingNumberOfTries: 1,
+  config: {
+    stillImg: '',
+    brokenImg: '',
+    nbTaps: 1,
+  },
+  texts: {},
+  results: {},
+  displayProperties: {
+    informationCollectionSetting: WInformationCollectionSettingType.pi_required,
+    noRewardsPopUp: {
+      headLine: 'test headline',
+      subHeadLine: 'test subHeadline',
+      buttonTxt: 'btnText',
+    },
+    successPopUp: {
+      headLine: 'test headline',
+      subHeadLine: 'test subHeadline',
+      buttonTxt: 'btnText',
+    },
+  },
+};
+
+const gameSignup: IGame = {
+  id: 1,
+  campaignId: 1,
+  type: GameType.pinata,
+  remainingNumberOfTries: 1,
+  config: {
+    stillImg: '',
+    brokenImg: '',
+    nbTaps: 1,
+  },
+  texts: {},
+  results: {},
+  displayProperties: {
+    informationCollectionSetting: WInformationCollectionSettingType.signup_required,
+    noRewardsPopUp: {
+      headLine: 'test headline',
+      subHeadLine: 'test subHeadline',
+      buttonTxt: 'btnText',
+    },
+    successPopUp: {
+      headLine: 'test headline',
+      subHeadLine: 'test subHeadline',
+      buttonTxt: 'btnText',
+    },
+  },
+};
+
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
-  const game: IGame = {
-    id: 1,
-    campaignId: 1,
-    type: GameType.pinata,
-    remainingNumberOfTries: 1,
-    config: {
-      stillImg: '',
-      brokenImg: '',
-      nbTaps: 1,
-    },
-    texts: {},
-    results: {},
-    displayProperties: {
-      informationCollectionSetting: WInformationCollectionSettingType.pi_required,
-      noRewardsPopUp: {
-        headLine: 'test headline',
-        subHeadLine: 'test subHeadline',
-        buttonTxt: 'btnText',
-      },
-      successPopUp: {
-        headLine: 'test headline',
-        subHeadLine: 'test subHeadline',
-        buttonTxt: 'btnText',
-      },
-    },
-  };
+
   const gameServiceStub: Partial<IGameService> = {
-    getGamesFromCampaign: () => of([game]),
+    getGamesFromCampaign: () => of([gamePi]),
     prePlay: () => of(),
     prePlayConfirm: () => of(),
   };
@@ -117,15 +146,19 @@ describe('GameComponent', () => {
   });
 
   it('should call redirectUrlAndPopup', () => {
-    component.informationCollectionSetting = WInformationCollectionSettingType.signup_required;
-    component.isAnonymousUser = false;
-    component.transactionId = 5;
-    const error = 'error';
+    const authService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
+      AuthenticationService as Type<AuthenticationService>);
     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
+
+    spyOn(authService, 'getAnonymous').and.returnValue(false);
+    spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of([gameSignup]));
+    spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [1, 2, 3] }));
+
+    const error = 'error';
     const spy = spyOn(gameService, 'prePlayConfirm').and.returnValue(throwError(error));
-    const router: Router = fixture.debugElement.injector.get<Router>(
-      Router as Type<Router>);
     const routerSpy = spyOn(router, 'navigate');
+    component.ngOnInit();
     component.gameCompleted();
     expect(spy).toHaveBeenCalled();
     expect(routerSpy).toHaveBeenCalledWith(['/wallet']);
