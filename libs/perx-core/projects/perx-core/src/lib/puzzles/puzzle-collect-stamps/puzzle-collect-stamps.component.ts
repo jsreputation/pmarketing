@@ -23,7 +23,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   ];
 
   @Input()
-  private stamps: IStamp[] | null = [];
+  public stamps: IStamp[] | null = [];
 
   @Input()
   public showStampsCounter: boolean = false;
@@ -32,7 +32,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   private rewards: PuzzleCollectReward[] = [];
 
   @Input()
-  private nbSlots: number | null = null;
+  public nbSlots: number | null = null;
 
   @Input()
   private preStampImg: string | null = null;
