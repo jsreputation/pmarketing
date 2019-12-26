@@ -37,7 +37,7 @@ export class CommsHttpAdapter {
         owner_id: campaignId && parseInt(campaignId, 10) || null,
         owner_type: 'Perx::Campaign:Entity',
         template_id: templateId && parseInt(templateId, 10) || null,
-        channel: data.channel.type,
+        channel: 'weblink',
         target_id: data.audience.select && parseInt(data.audience.select, 10) || null,
         target_type: 'Ros::Cognito::Pool'
       }

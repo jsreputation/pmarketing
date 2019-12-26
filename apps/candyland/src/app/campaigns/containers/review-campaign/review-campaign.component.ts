@@ -17,7 +17,7 @@ import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
-import { CampaignStatus } from '@cl-core/models/campaign/campaign-status.enum';
+import { CampaignStatus } from '@cl-core/models/campaign/campaign.enum';
 
 @Component({
   selector: 'cl-review-campaign',
