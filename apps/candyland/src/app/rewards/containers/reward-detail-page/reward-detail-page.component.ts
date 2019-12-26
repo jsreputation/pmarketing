@@ -69,7 +69,19 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
       )
       .subscribe(
         () => this.messageService.show('Vouchers succesfully replenished.', 'success'),
-        () => this.messageService.show('Could not replenish vouchers. Make sure that the configuration is correct.', 'warning')
+        () => this.messageService.show('Could not replenish vouchers. Make sure that the configuration is correct.', 'warning'),
+        () => {
+          this.vouchersService.getStats(this.id).subscribe(
+            (stats: { [k: string]: number }) => {
+              this.data.vouchersStatistics = [];
+              // tslint:disable-next-line: forin
+              for (const k in stats) {
+                this.data.vouchersStatistics.push({ type: k, value: stats[k] });
+              }
+              this.cd.detectChanges();
+            }
+          );
+        }
       );
   }
 
