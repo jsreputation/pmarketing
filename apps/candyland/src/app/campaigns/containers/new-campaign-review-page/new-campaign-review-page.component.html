@@ -314,7 +314,7 @@
           Audience
         </h2>
       </div>
-      <div class="card-content" *ngIf="campaign?.audience?.select">
+      <div class="card-content" *ngIf="campaign?.audience?.select && pools.length">
         {{pools[campaign.audience.select - 1].name}}
       </div>
 
