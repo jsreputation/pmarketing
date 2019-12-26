@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   public ngOnInit(): void {
     this.configService.readAppConfig().subscribe((val) => this.comingSoon = val.comingSoon as boolean);
     this.campaigns$ = this.campaignService.getCampaigns()
-      .pipe(map((compaing) => compaing.filter(el => el.type === CampaignType.game)));
+      .pipe(map((campaign) => campaign.filter(el => el.type === CampaignType.game)));
     this.vouchers$ = this.vouchersService.getAll();
     this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
   }
