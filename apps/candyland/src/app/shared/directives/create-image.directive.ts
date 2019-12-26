@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { UploadFileService } from '@cl-core-services';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 @Directive({
   selector: '[clCreateImage]'
 })

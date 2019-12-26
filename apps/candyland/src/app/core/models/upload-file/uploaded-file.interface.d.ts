@@ -1,11 +1,17 @@
-declare interface IUploadedFile {
+import { FileUploadStatus } from "@cl-core/services/iadvanced-upload-file.service";
+
+export interface IUploadedFile {
   id: string;
   type: string;
   url: string;
   cdn?: string;
   name?: string;
   key?: string;
-  record_count?: number;
-  created_at: string;
-  updated_at: string;
+  status?: FileUploadStatus | null;
+  processedAmount?: number | null;
+  successAmount?: number | null;
+  failAmount?: number | null;
+  processedDetails?: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
