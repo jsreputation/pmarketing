@@ -43,8 +43,8 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe((val)=>{
-      if(val.token) {
+    this.activatedRoute.queryParams.subscribe((val) => {
+      if (val.token) {
         this.authService.saveUserAccessToken(val.token);
         this.authService.savePI('');
         this.authService.saveAnonymous(false);
