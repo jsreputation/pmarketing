@@ -135,6 +135,9 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
             const select = data.audience.select;
             data.audience = { ...data.audience, select };
             this.form.patchValue(data);
+            if (data.audience.filters && (data.audience.filters.agesEnabled || data.audience.filters.genderEnabled)) {
+              this.audienceFiltersEnabled = true;
+            }
             if (data.campaignInfo.labels) {
               this.triggerLabelsChip = true;
             }
