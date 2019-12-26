@@ -83,7 +83,7 @@ export class WalletComponent implements OnInit {
       }
     });
   }
-  private fetchCampaign(): void {
+  private fetchCampaign(): Observable<IStampCard> {
     return this.campaignService.getCampaigns()
       .pipe(
         map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp)),
