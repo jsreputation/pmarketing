@@ -38,14 +38,6 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     return this.form.get('campaignInfo');
   }
 
-  public get channel(): AbstractControl | null {
-    return this.form.get('channel');
-  }
-
-  public get channelType(): AbstractControl | null {
-    return this.form.get('channel.type');
-  }
-
   // public get message(): AbstractControl | null {
   //   return this.form.get('channel.message');
   // }
