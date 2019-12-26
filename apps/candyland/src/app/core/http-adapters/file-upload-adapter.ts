@@ -1,24 +1,34 @@
-import { IWDocumentAttributes, IJsonApiItem } from '@perx/whistler';
+import { IWDocumentAttributes, IJsonApiItem, WFileUploadStatus } from '@perx/whistler';
+import { FileUploadStatus } from '@cl-core/services/iadvanced-upload-file.service';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 export class FileUploadAdapter {
   public static transformToUploadedImage(data: any): IUploadedFile {
     return {
       cdn: data.attributes.cdn,
-      created_at: data.attributes.created_at,
-      updated_at: data.attributes.updated_at,
+      createdAt: data.attributes.created_at,
+      updatedAt: data.attributes.updated_at,
       url: data.attributes.url,
       id: data.id,
       type: data.type
     };
   }
 
+  public static transformFileUploadStatus(data: WFileUploadStatus): FileUploadStatus {
+    return FileUploadStatus[data];
+  }
+
   public static transformToUploadedFile(data: IJsonApiItem<IWDocumentAttributes>): IUploadedFile {
     const attr = data.attributes;
     return {
-      created_at: attr.created_at,
-      updated_at: attr.updated_at,
+      createdAt: attr.created_at,
+      updatedAt: attr.updated_at,
       url: attr.url,
       name: attr.blob.filename,
-      record_count: attr.record_count,
+      status: attr.status ? FileUploadAdapter.transformFileUploadStatus(attr.status) : null,
+      processedAmount: attr.processed_amount,
+      successAmount: attr.success_amount,
+      failAmount: attr.fail_amount,
+      processedDetails: attr.processed_details,
       key: attr.blob.key,
       id: data.id,
       type: data.type
