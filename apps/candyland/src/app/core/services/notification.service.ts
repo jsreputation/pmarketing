@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { NotificationHttpService } from '@cl-core/http-services/notification-http.service';
 import { NotificationHttpAdapter } from '@cl-core/http-adapters/notification-http-adapter';
 import { IWNotificationAttributes, IJsonApiListPayload } from '@perx/whistler';
+import { ICampaignNotificationGroup, IChannel } from '@cl-core/models/campaign/channel-interface';
 
 @Injectable({
   providedIn: 'root'
