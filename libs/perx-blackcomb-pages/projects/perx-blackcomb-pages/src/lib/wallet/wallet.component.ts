@@ -37,7 +37,7 @@ export class WalletComponent implements OnInit {
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => string) | undefined;
 
-  public sourceType: string;
+  public stampsType: string;
   public puzzleTextFn: (puzzle: IStampCard) => string;
   public titleFn: (index?: number) => string;
   public campaignId: number | null | undefined;
@@ -71,8 +71,8 @@ export class WalletComponent implements OnInit {
 
   private getCampaign(): void {
     this.configService.readAppConfig().pipe(tap((config: IConfig) => {
-      this.sourceType = config.sourceType ? config.sourceType as string : 'puzzle';
-      if (config.sourceType === 'stamp_card') {
+      this.stampsType = config.stampsType ? config.stampsType as string : 'puzzle';
+      if (config.stampsType === 'stamp_card') {
         this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
           puzzle.stamps.filter(st => st.state === StampState.issued).length !== 1 ? 'new stamps' : 'new stamp';
         this.titleFn = (index?: number) => index !== undefined ? `Stamp Card ${this.puzzleIndex(index)} out of 12` : '';
@@ -88,7 +88,7 @@ export class WalletComponent implements OnInit {
       .pipe(
         map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp)),
         map(campaigns => {
-          if (this.sourceType === 'puzzle') {
+          if (this.stampsType === 'puzzle') {
             return campaigns.filter(camp => camp.type === CampaignType.stamp).slice(0, 1);
           }
           return campaigns;
@@ -98,12 +98,12 @@ export class WalletComponent implements OnInit {
             mergeMap((campaign: ICampaign) => this.fetchCard(campaign.id)),
             toArray(),
             map((stampCards: IStampCard[]) => stampCards.filter(card =>
-              card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === this.sourceType
+              card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === this.stampsType
             )),
             map((cards: IStampCard[]) => cards[0])
           )
         ),
-      )
+      );
   }
 
   private fetchCard(id: number): Observable<IStampCard> {
