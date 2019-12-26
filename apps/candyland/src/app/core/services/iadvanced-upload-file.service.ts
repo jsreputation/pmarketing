@@ -1,13 +1,16 @@
 import { Observable } from 'rxjs';
 
-export const enum UploadStatus {
-  UPLOADING,
-  COMPLETED,
-  ERROR
+export enum FileUploadStatus {
+  pending = 'pending',
+  processing = 'processing',
+  success = 'success',
+  error = 'error',
+  successWithError = 'success_with_error'
 }
+
 export interface IUploadFileStatus {
   fileName: string;
-  status: UploadStatus;
+  status: FileUploadStatus;
   errorMsg?: string;
   nbRecords?: number;
 }

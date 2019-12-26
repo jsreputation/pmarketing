@@ -1,9 +1,9 @@
-import { IAdvancedUploadFileService, IUploadFileStatus, UploadStatus } from './iadvanced-upload-file.service';
-import {Observable, of, throwError} from 'rxjs';
+import { IAdvancedUploadFileService, IUploadFileStatus, FileUploadStatus } from './iadvanced-upload-file.service';
+import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { UploadFileService } from '@cl-core-services';
-import {switchMap, retryWhen, mergeMap, delay} from 'rxjs/operators';
-
+import { switchMap, retryWhen, mergeMap, delay } from 'rxjs/operators';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,13 +19,13 @@ export class UsersUploadService extends IAdvancedUploadFileService {
       const maxRetryTimes = 60;
       const delayUnitTime = 1000;
       let retryTimes = 0;
-      subject.next({ fileName: file.name, status: UploadStatus.UPLOADING });
+      subject.next({ fileName: file.name, status: FileUploadStatus.processing });
       const subscription = this.uploadService.uploadFile(file)
         .pipe(
           switchMap(
             (res: IUploadedFile) => this.uploadService.getFile(res.id).pipe(
               switchMap((fileRes: IUploadedFile) => {
-                if (!fileRes.record_count) {
+                if (!fileRes.status || fileRes.status === FileUploadStatus.pending || fileRes.status === FileUploadStatus.processing) {
                   throw of(new Error('users are not ready'));
                 }
                 return of(fileRes);
@@ -47,14 +47,14 @@ export class UsersUploadService extends IAdvancedUploadFileService {
           (res: IUploadedFile) => {
             subject.next({
               fileName: file.name,
-              status: UploadStatus.COMPLETED,
-              nbRecords: res.record_count || null
+              status: FileUploadStatus.success,
+              nbRecords: res.successAmount || null
             });
           },
           () => {
             subject.next({
               fileName: file.name,
-              status: UploadStatus.ERROR,
+              status: FileUploadStatus.error,
               errorMsg: 'Upload failed'
             });
           },
