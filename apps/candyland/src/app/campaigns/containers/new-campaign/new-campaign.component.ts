@@ -30,6 +30,7 @@ import { CampaignChannelsFormService } from '../../services/campaign-channels-fo
 import Utils from '@cl-helpers/utils';
 import { CRUDParser, RequestType } from '@cl-helpers/crud-parser';
 import { NotificationService } from '@cl-core/services/notification.service';
+import { IChannel, ICampaignNotificationGroup } from '@cl-core/models/campaign/channel-interface';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -379,6 +380,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         this.campaignsService.getCampaign(this.campaignId).pipe(catchError(() => of(null))),
         this.outcomesService.getOutcomes(paramsPO).pipe(catchError(() => of(null)))
       ).pipe(
+        tap(([campaign, outcomes]:
+          [ICampaign | null, IOutcome[] | null]) => {
+          console.log(campaign);
+          console.log(outcomes);
+        }),
         map(
           ([campaign, outcomes]:
             [ICampaign | null, IOutcome[] | null]): ICampaign => {
@@ -389,6 +395,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
           })
       ).subscribe(
         campaign => {
+          console.log('campaign: ', campaign);
           this.campaign = Object.assign({}, campaign);
           this.store.initCampaign(campaign);
           this.form.patchValue({

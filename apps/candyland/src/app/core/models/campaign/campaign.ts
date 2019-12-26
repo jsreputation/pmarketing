@@ -1,5 +1,6 @@
 import { IOutcome } from '../outcome/outcome';
 import { IRewardEntity } from '../reward/reward-entity.interface';
+import { IChannel } from './channel-interface';
 
 export interface ICampaign {
   id?: string;

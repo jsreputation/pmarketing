@@ -1,20 +1,22 @@
-declare interface IChannel {
+import { InformationCollectionSettingType } from "./campaign.enum";
+
+export interface IChannel {
   webNotification: {
     webLink: boolean;
     webLinkOptions: InformationCollectionSettingType;
     id?: string;
   };
   sms: boolean;
-  launch: ICampaignNotificationGroup[];
-  completed: ICampaignNotificationGroup[];
-  campaignEnds: ICampaignNotificationGroup[];
+  launch?: ICampaignNotificationGroup[];
+  completed?: ICampaignNotificationGroup[];
+  campaignEnds?: ICampaignNotificationGroup[];
   rewardExpires?: any[];
   noStampsReward?: any[];
   earnedStamp?: any[];
   earnedReward?: any[];
 }
 
-declare interface ICampaignNotificationGroup {
+export interface ICampaignNotificationGroup {
   id: string;
   sentType: string;
   template: ITemplate;
@@ -29,13 +31,7 @@ declare interface ICampaignNotificationGroup {
   monthDay?: string;
 }
 
-declare interface ITemplate {
+export interface ITemplate {
   message: string;
   templateId: string;
-}
-
-declare enum InformationCollectionSettingType {
-  notRequired = 'not_required',
-  piRequired = 'pi_required',
-  signupRequired = 'signup_required'
 }

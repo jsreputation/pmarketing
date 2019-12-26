@@ -15,7 +15,7 @@ import {
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
 import { WCampaignStatus, IWAudienceFilter } from '@perx/whistler';
-import { CampaignStatus } from '@cl-core/models/campaign/campaign-status.enum';
+import { CampaignStatus, InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
 
 export class CampaignsHttpAdapter {
   private static WStat2Stat: { [k in WCampaignStatus]: CampaignStatus } = {
@@ -132,8 +132,9 @@ export class CampaignsHttpAdapter {
           webLinkOptions: CampaignsHttpAdapter.transformInformationCollectionType(
             campaignData.display_properties.informationCollectionSetting
           )
-        }
-      } as IChannel,
+        },
+        sms: false
+      },
       displayProperties: { ...campaignData.display_properties }
     };
   }
