@@ -102,8 +102,6 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         this.authenticationService.saveUserAccessToken(token);
       });
 
-    this.fetchPopupCampaigns();
-
     this.analytics.events$.subscribe(
       (event: IEvent) => {
         if (event.pageType === PageType.overlay) {
@@ -123,6 +121,9 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         }
 
         this.token = this.authenticationService.getUserAccessToken();
+        if (this.token) {
+          this.checkAuth();
+        }
         this.data.perxID = this.token;
         if (typeof _satellite === 'undefined') {
           return;
@@ -131,7 +132,15 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
       }
     );
   }
-  
+
+  private checkAuth(): void {
+    this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
+      if (isAuth) {
+        this.fetchPopupCampaigns();
+      }
+    });
+  }
+
   private fetchPopupCampaigns(): void {
     this.campaignService.getCampaigns()
       .pipe(
