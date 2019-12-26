@@ -83,7 +83,7 @@ export class WalletComponent implements OnInit {
       }
     });
   }
-  private fetchCampaign() {
+  private fetchCampaign(): void {
     return this.campaignService.getCampaigns()
       .pipe(
         map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp)),
