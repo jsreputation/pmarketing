@@ -38,7 +38,8 @@ describe('AppComponent', () => {
   let router: Router;
   const authenticationServiceStub = {
     saveUserAccessToken: () => { },
-    getUserAccessToken: () => 'token'
+    getUserAccessToken: () => 'token',
+    isAuthorized: () => of(true)
   };
   const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of()
