@@ -44,6 +44,7 @@ import {
 import { ControlsName } from '../../../../models/controls-name';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWScratchGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 
 @Component({
   selector: 'cl-new-scratch-page',
