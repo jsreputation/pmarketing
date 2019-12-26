@@ -12,6 +12,7 @@ import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWSpinGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { SpinService } from '@cl-core/services/spin.service';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 
 @Component({
   selector: 'cl-new-spin-page',

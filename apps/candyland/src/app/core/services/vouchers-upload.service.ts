@@ -5,6 +5,7 @@ import { UploadFileService } from '@cl-core-services';
 import { VouchersService } from './vouchers.service';
 import { map, switchMap, retryWhen, mergeMap, delay } from 'rxjs/operators';
 import { IWVouchersApi, WStatus, IJsonApiItemPayload } from '@perx/whistler';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 
 @Injectable()
 export class VouchersUploadService extends IAdvancedUploadFileService {

@@ -3,6 +3,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { UploadFileService } from '@cl-core-services';
 import { switchMap, retryWhen, mergeMap, delay } from 'rxjs/operators';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 @Injectable({
   providedIn: 'root'
 })

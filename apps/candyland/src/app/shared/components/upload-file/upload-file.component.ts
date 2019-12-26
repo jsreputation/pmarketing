@@ -4,6 +4,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IAdvancedUploadFileService, IUploadFileStatus, FileUploadStatus } from '@cl-core/services/iadvanced-upload-file.service';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 
 @Component({
   selector: 'cl-upload-file',
