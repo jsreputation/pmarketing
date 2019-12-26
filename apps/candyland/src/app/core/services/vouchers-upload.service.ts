@@ -1,9 +1,9 @@
-import { IAdvancedUploadFileService } from './iadvanced-upload-file.service';
+import { IAdvancedUploadFileService, IUploadFileStatus, FileUploadStatus } from './iadvanced-upload-file.service';
 import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { UploadFileService } from '@cl-core-services';
 import { VouchersService } from './vouchers.service';
-import {map, switchMap, retryWhen, mergeMap, delay} from 'rxjs/operators';
+import { map, switchMap, retryWhen, mergeMap, delay } from 'rxjs/operators';
 import { IWVouchersApi, WStatus, IJsonApiItemPayload } from '@perx/whistler';
 
 @Injectable()
@@ -30,7 +30,11 @@ export class VouchersUploadService extends IAdvancedUploadFileService {
             (batch: IJsonApiItemPayload<IWVouchersApi>) =>
               this.vouchersService.getVouchersBatch(Number.parseInt(batch.data.id, 10)).pipe(
                 switchMap((res: IJsonApiItemPayload<IWVouchersApi>) => {
-                  if (res.data.attributes.status !== WStatus.success) {
+                  if (
+                    !res.data.attributes.status ||
+                    res.data.attributes.status === WStatus.pending ||
+                    res.data.attributes.status === WStatus.processing
+                  ) {
                     throw of(new Error('codes are not ready'));
                   }
                   return of(res);

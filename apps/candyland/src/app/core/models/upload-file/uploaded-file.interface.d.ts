@@ -1,3 +1,5 @@
+import { FileUploadStatus } from "@cl-core/services/iadvanced-upload-file.service";
+
 declare interface IUploadedFile {
   id: string;
   type: string;
@@ -12,19 +14,4 @@ declare interface IUploadedFile {
   processedDetails?: string | null;
   createdAt: string;
   updatedAt: string;
-}
-
-declare enum FileUploadStatus {
-  pending = 'pending',
-  processing = 'processing',
-  success = 'success',
-  error = 'error',
-  successWithError = 'success_with_error'
-}
-
-declare interface IUploadFileStatus {
-  fileName: string;
-  status: FileUploadStatus;
-  errorMsg?: string;
-  nbRecords?: number;
 }

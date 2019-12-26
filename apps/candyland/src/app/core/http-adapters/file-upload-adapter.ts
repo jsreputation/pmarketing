@@ -1,4 +1,5 @@
 import { IWDocumentAttributes, IJsonApiItem, WFileUploadStatus } from '@perx/whistler';
+import { FileUploadStatus } from '@cl-core/services/iadvanced-upload-file.service';
 export class FileUploadAdapter {
   public static transformToUploadedImage(data: any): IUploadedFile {
     return {

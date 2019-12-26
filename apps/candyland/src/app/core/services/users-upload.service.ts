@@ -1,4 +1,4 @@
-import { IAdvancedUploadFileService } from './iadvanced-upload-file.service';
+import { IAdvancedUploadFileService, IUploadFileStatus, FileUploadStatus } from './iadvanced-upload-file.service';
 import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { UploadFileService } from '@cl-core-services';
@@ -24,7 +24,7 @@ export class UsersUploadService extends IAdvancedUploadFileService {
           switchMap(
             (res: IUploadedFile) => this.uploadService.getFile(res.id).pipe(
               switchMap((fileRes: IUploadedFile) => {
-                if (fileRes.status !== FileUploadStatus.success && fileRes.status !== FileUploadStatus.successWithError) {
+                if (!fileRes.status || fileRes.status === FileUploadStatus.pending || fileRes.status === FileUploadStatus.processing) {
                   throw of(new Error('users are not ready'));
                 }
                 return of(fileRes);

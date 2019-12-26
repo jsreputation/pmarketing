@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnDestroy, Output} from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { IAdvancedUploadFileService } from '@cl-core/services/iadvanced-upload-file.service';
+import { IAdvancedUploadFileService, IUploadFileStatus, FileUploadStatus } from '@cl-core/services/iadvanced-upload-file.service';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
