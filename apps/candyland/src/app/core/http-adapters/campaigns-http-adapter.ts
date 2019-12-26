@@ -127,7 +127,11 @@ export class CampaignsHttpAdapter {
         endDate: DateTimeParser.stringToDate(campaignData.end_date_time),
         endTime: DateTimeParser.stringToTime(campaignData.end_date_time, 'LT'),
         disabledEndDate: !campaignData.end_date_time, labels: campaignData.labels
-      }, template: {}, outcomes: [], displayProperties: { ...campaignData.display_properties }
+      },
+      channel: { type: campaignData.display_properties.weblink ? 'weblink' : '' },
+      template: {},
+      outcomes: [],
+      displayProperties: { ...campaignData.display_properties }
     };
   }
 
@@ -142,6 +146,7 @@ export class CampaignsHttpAdapter {
     const informationCollectionSetting = data.channel.type === 'weblink'
       ? data.campaignInfo.informationCollectionSetting
       : InformationCollectionSettingType.notRequired;
+    const weblink = data.channel.type === 'weblink' ? true : false;
     return {
       type: 'entities',
       attributes: {
@@ -155,7 +160,7 @@ export class CampaignsHttpAdapter {
         pool_id: data.audience.select ? Number.parseInt(data.audience.select, 10) : null,
         labels: data.campaignInfo.labels || [],
         audience_segment: data.audience.select ? CampaignsHttpAdapter.transformAudienceFilter(data.audience.filters) : {},
-        display_properties: { ...data.displayProperties, informationCollectionSetting }
+        display_properties: { ...data.displayProperties, informationCollectionSetting, weblink }
       }
     };
   }
