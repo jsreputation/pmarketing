@@ -1,4 +1,4 @@
-class Number2 {
+export class Number2 {
   constructor(public x: number, public y: number) { }
 
   public equals(p: Number2): boolean {
@@ -16,15 +16,15 @@ class Number2 {
   }
 }
 
-import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {getImageCors} from '../../utils/getImageCors';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, OnDestroy } from '@angular/core';
+import { getImageCors } from '../../utils/getImageCors';
 // https://codepen.io/mexitalian/pen/pNQgae // not very useful, not hammer js
 @Component({
   selector: 'perx-core-snake-game',
   templateUrl: './snake.component.html',
   styleUrls: ['./snake.component.scss']
 })
-export class SnakeGameComponent implements  AfterViewInit, OnChanges {
+export class SnakeGameComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input()
   public target: string;
   @Input()
@@ -32,7 +32,7 @@ export class SnakeGameComponent implements  AfterViewInit, OnChanges {
   @Input()
   public background: string;
 
-  @ViewChild('canvasSnake', {static: true})
+  @ViewChild('canvasSnake', { static: true })
   public canvasEl: ElementRef<HTMLCanvasElement>;
 
   // tslint:disable-next-line:variable-name
@@ -48,7 +48,7 @@ export class SnakeGameComponent implements  AfterViewInit, OnChanges {
   private a: Number2 = new Number2(15, 15);
   // direction
   private v: Number2 = new Number2(0, 0);
-
+  private intervals: any[] = [];
   private trail: Number2[] = [];
   // tail length
   private tail: number = 20;
@@ -82,7 +82,8 @@ export class SnakeGameComponent implements  AfterViewInit, OnChanges {
   }
 
   public start(): void {
-    setInterval(() => { this.game(), this.render(); }, 1000 / 15);
+    const interval = setInterval(() => { this.game(), this.render(); }, 1000 / 15);
+    this.intervals.push(interval);
   }
 
   private game(): void {
@@ -134,7 +135,7 @@ export class SnakeGameComponent implements  AfterViewInit, OnChanges {
       this.ctx.fillStyle = 'red';
       this.ctx.fillRect(this.a.x * this.gs, this.a.y * this.gs, this.gs - 2, this.gs - 2);
     } else {
-      this.ctx.drawImage(this.targetImgLoaded , this.a.x * this.gs, this.a.y * this.gs, this.gs - 2, this.gs - 2);
+      this.ctx.drawImage(this.targetImgLoaded, this.a.x * this.gs, this.a.y * this.gs, this.gs - 2, this.gs - 2);
     }
   }
 
@@ -175,6 +176,7 @@ export class SnakeGameComponent implements  AfterViewInit, OnChanges {
   }
 
   private keyPush(evt: KeyboardEvent): void {
+    console.log('4534535', evt);
     switch (evt.key) {
       case 'ArrowLeft':
         console.log('left is pressed');
@@ -190,5 +192,10 @@ export class SnakeGameComponent implements  AfterViewInit, OnChanges {
         this.down();
         break;
     }
+  }
+
+  public ngOnDestroy(): void {
+    this.intervals.forEach((interval) => clearInterval(interval));
+    this.intervals = [];
   }
 }

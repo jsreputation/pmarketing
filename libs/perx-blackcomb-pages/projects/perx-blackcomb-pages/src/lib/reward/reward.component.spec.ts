@@ -16,10 +16,34 @@ import {
   InstantOutcomeService,
   AuthenticationService,
   NotificationService,
-  ThemesService
+  ThemesService,
+  IOutcome
 } from '@perx/core';
-
+import { WInformationCollectionSettingType } from '@perx/whistler';
 import { RewardComponent } from './reward.component';
+import { Type } from '@angular/core';
+
+const mockOutcome: IOutcome = {
+  title: 'title',
+  button: 'btnTxt',
+  subTitle: 'subTitle',
+  banner: 'banner',
+  backgroundImgUrl: '',
+  cardBackgroundImgUrl: '',
+  displayProperties: {
+    informationCollectionSetting: WInformationCollectionSettingType.not_required,
+    noRewardsPopUp: {
+      headLine: 'test headline',
+      subHeadLine: 'test subHeadline',
+      buttonTxt: 'btnText',
+    },
+    successPopUp: {
+      headLine: 'test headline',
+      subHeadLine: 'test subHeadline',
+      buttonTxt: 'btnText',
+    }
+  }
+};
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
@@ -34,9 +58,9 @@ describe('RewardComponent', () => {
   };
 
   const instantOutStub: Partial<InstantOutcomeService> = {
-    getFromCampaign: () => of(),
+    getFromCampaign: () => of(mockOutcome),
     prePlayConfirm: () => of(),
-    prePlay: () => of()
+    prePlay: () => of({ id: 3, voucherIds: [1, 2, 3] })
   };
 
   const authServiceStub: Partial<AuthenticationService> = {
@@ -89,10 +113,24 @@ describe('RewardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RewardComponent);
     component = fixture.componentInstance;
+    component.title = 'title';
+    component.subTitle = 'subTitle';
+    component.button = 'btnTxt';
+    component.background = '';
+    component.cardBackground = '';
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call outcomeService.prePlayConfirm', () => {
+    const outcomeService: InstantOutcomeService = fixture.debugElement.injector.get<InstantOutcomeService>(
+      InstantOutcomeService as Type<InstantOutcomeService>);
+    spyOn(outcomeService, 'prePlayConfirm').and.returnValue(of(void 0));
+    component.rewardClickedHandler();
+    expect(outcomeService.prePlayConfirm).toHaveBeenCalled();
+  });
+
 });
