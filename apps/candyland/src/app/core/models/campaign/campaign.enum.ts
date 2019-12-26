@@ -6,7 +6,6 @@ export enum CampaignStatus {
   draft = 'draft'
 }
 
-
 export enum InformationCollectionSettingType {
   notRequired = 'not_required',
   piRequired = 'pi_required',
