@@ -49,9 +49,7 @@
                           labelPosition="bottom"
                           #stepper
                           linear
-                          (select)="triggerClick($event)"
-                          (beforeSelectionChange)="triggerClick($event)"
-                          (selectionChange)="triggerClick($event)"
+                          (beforeSelectionChange)="clickStepLabel($event)"
                           [selectedIndex]="0">
     <!--step 1-->
     <cs-step>

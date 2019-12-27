@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { concatMap, filter, finalize, last, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TierSetupPopupComponent } from 'src/app/loyalty/containers/tier-setup-popup/tier-setup-popup.component';
@@ -6,7 +6,7 @@ import { LoyaltyFormsService } from '../../services/loyalty-forms.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { LoyaltyStepForm } from '../../models/loyalty-step-form.enum';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent } from '@angular/cdk/stepper';
 import { UserService } from '@cl-core/services/user.service';
 import { BehaviorSubject, combineLatest, concat, from, Observable, of, Subject } from 'rxjs';
 import { NewLoyaltyActions } from '../../models/new-loyalty-actions.enum';
@@ -33,7 +33,7 @@ import { LoyaltyConfigService } from '../../services/loyalty-config.service';
   }]
 })
 
-export class ManageLoyaltyPageComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   public loyaltyId: string;
   public basicTierId: string;
   public form: FormGroup;
@@ -130,29 +130,12 @@ export class ManageLoyaltyPageComponent implements OnInit, AfterViewInit, OnDest
     });
   }
 
-  public ngAfterViewInit(): void {
-    this.stepper._stepHeader.forEach((header, index) => header._getHostElement().addEventListener('click', (e) => {
-      e.preventDefault();
-      console.log(e, index);
-
-      if (this.currentStep !== index && index <= this.stepProgress + 1) {
-        this.stepper.selected.completed = true;
-        this.updateStepProgress();
-      }
-
-    }, {passive: false}));
-  }
-
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
   // events
-  public triggerClick($event: any): void {
-    console.log('click', $event);
-  }
-
   public clickCancel(): void {
     this.setLoading(true);
     if (!this.loyaltyId) {
@@ -166,6 +149,29 @@ export class ManageLoyaltyPageComponent implements OnInit, AfterViewInit, OnDest
         takeUntil(this.destroy$)
       )
       .subscribe(() => this.navigateToList());
+  }
+
+  public clickStepLabel(event: StepperSelectionEvent): void {
+    console.log(event);
+    if (event.selectedIndex === event.previouslySelectedIndex || event.selectedIndex > this.stepProgress + 1) {
+      return;
+    }
+    console.log('yes');
+    this.setLoading(true);
+    this.getSaveByStep(event.previouslySelectedIndex)
+      .pipe(
+        finalize(() => this.setLoading(false)),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((isUpdated: boolean) => {
+        if (isUpdated) {
+          this.stepper.selected.completed = true;   // complete the current step
+          this.stepper.selected = event.selectedStep;
+          // if (event.previouslySelectedIndex > this.stepProgress) {
+            this.updateStepProgress();
+          // }
+        }
+      });
   }
 
   public clickGoNext(): void {
@@ -293,6 +299,7 @@ export class ManageLoyaltyPageComponent implements OnInit, AfterViewInit, OnDest
   }
 
   private getSaveOnThirdStep(): Observable<boolean> {
+    debugger
     const ruleSets = [this.basicTierRuleSet, ...Utils.convertObjToArr(this.customTierRuleSetMap)];
     const ruleSetRequests = [];
     ruleSets.forEach((ruleSet: ILoyaltyRuleSet) => {
