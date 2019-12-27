@@ -4,7 +4,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import Utils from '@cl-helpers/utils';
 
 import { of, combineLatest, Subject } from 'rxjs';
-import { map, switchMap, filter, takeUntil } from 'rxjs/operators';
+import {map, mapTo, mergeMap, switchMap, takeUntil, tap, filter} from 'rxjs/operators';
 
 import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
@@ -64,24 +64,24 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
     const dialogRef = this.dialog.open(RewardReplenishPopupComponent, { panelClass: 'reward-replenish-dialog', data: this.data });
     dialogRef.afterClosed()
       .pipe(
-        filter(Boolean),
-        switchMap((data: any) => this.vouchersService.createVoucher(data))
+        mergeMap((_: any): any => this.vouchersService.getStats(this.id)),
+        tap(
+          (stats: { [k: string]: number }) => {
+            this.data.vouchersStatistics = [];
+            // tslint:disable-next-line: forin
+            for (const k in stats) {
+              this.data.vouchersStatistics.push({ type: k, value: stats[k] });
+            }
+            this.cd.detectChanges();
+          }
+        ),
+        mapTo( false), // as is the case before
+        filter(Boolean), // what is the use of this? useless
+        switchMap((data: any) => this.vouchersService.createVoucher(data)), // this svc not working?
       )
       .subscribe(
         () => this.messageService.show('Vouchers succesfully replenished.', 'success'),
-        () => this.messageService.show('Could not replenish vouchers. Make sure that the configuration is correct.', 'warning'),
-        () => {
-          this.vouchersService.getStats(this.id).subscribe(
-            (stats: { [k: string]: number }) => {
-              this.data.vouchersStatistics = [];
-              // tslint:disable-next-line: forin
-              for (const k in stats) {
-                this.data.vouchersStatistics.push({ type: k, value: stats[k] });
-              }
-              this.cd.detectChanges();
-            }
-          );
-        }
+        () => this.messageService.show('Could not replenish vouchers. Make sure that the configuration is correct.', 'warning')
       );
   }
 
