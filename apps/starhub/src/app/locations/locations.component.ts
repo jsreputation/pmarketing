@@ -12,7 +12,8 @@ import { AnalyticsService, PageType } from '../analytics.service';
   styleUrls: ['./locations.component.scss']
 })
 export class LocationsComponent implements OnInit {
-  public locations: Observable<ILocation[]>;
+  public locations$: Observable<ILocation[]>;
+  public locations: ILocation[];
 
   constructor(
     private location: Location,
@@ -31,7 +32,8 @@ export class LocationsComponent implements OnInit {
       )
       .subscribe(
         (mid: number) => {
-          this.locations = this.locationService.getFromMerchant(mid);
+          this.locations$ = this.locationService.getFromMerchant(mid);
+          this.filterDuplicateLocations();
         }
       );
     this.activeRoute.queryParams
@@ -52,6 +54,14 @@ export class LocationsComponent implements OnInit {
           });
         }
       );
+  }
+
+  private filterDuplicateLocations(): void {
+    this.locations$.subscribe((res: ILocation[]) => {
+      this.locations = res.filter((item: ILocation, i: number, array: ILocation[]) =>
+        array.map(mapObj => mapObj.locationId).indexOf(item.locationId) === i
+      );
+    });
   }
 
   public back(): void {
