@@ -183,6 +183,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
               pageType: PageType.overlay,
               pageName: campaign.name
             });
+            this.campaignService.issueAll(campaign.id);
             return;
           }
 
@@ -225,7 +226,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
 
   public dialogClosed(): void {
     if (this.reward) {
-      this.router.navigate([`/reward`], { queryParams: { id: this.reward.id } });
+      this.router.navigate([`/home/vouchers`]);
     } else if (this.game) {
       this.router.navigate([`/game`], { queryParams: { id: this.game.id } });
     } else {
