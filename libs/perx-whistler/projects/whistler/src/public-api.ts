@@ -25,7 +25,8 @@ export {
 } from './lib/voucher/assigneds';
 export {
   IWDocumentAttributes,
-  IWDocumentBlob
+  IWDocumentBlob,
+  WFileUploadStatus
 } from './lib/storage/documents';
 export {
   IWRewardEntityAttributes,

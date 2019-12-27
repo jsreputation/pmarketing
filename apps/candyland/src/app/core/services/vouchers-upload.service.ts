@@ -1,10 +1,11 @@
-import { IAdvancedUploadFileService, IUploadFileStatus, UploadStatus } from './iadvanced-upload-file.service';
+import { IAdvancedUploadFileService, IUploadFileStatus, FileUploadStatus } from './iadvanced-upload-file.service';
 import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { UploadFileService } from '@cl-core-services';
 import { VouchersService } from './vouchers.service';
-import {map, switchMap, retryWhen, mergeMap, delay} from 'rxjs/operators';
+import { map, switchMap, retryWhen, mergeMap, delay } from 'rxjs/operators';
 import { IWVouchersApi, WStatus, IJsonApiItemPayload } from '@perx/whistler';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 
 @Injectable()
 export class VouchersUploadService extends IAdvancedUploadFileService {
@@ -21,7 +22,7 @@ export class VouchersUploadService extends IAdvancedUploadFileService {
       const maxRetryTimes = 60;
       const delayUnitTime = 1000;
       let retryTimes = 0;
-      subject.next({ fileName: file.name, status: UploadStatus.UPLOADING });
+      subject.next({ fileName: file.name, status: FileUploadStatus.processing });
       const subscription = this.uploadService.uploadFile(file)
         .pipe(
           map((res: IUploadedFile) => res.url),
@@ -30,7 +31,11 @@ export class VouchersUploadService extends IAdvancedUploadFileService {
             (batch: IJsonApiItemPayload<IWVouchersApi>) =>
               this.vouchersService.getVouchersBatch(Number.parseInt(batch.data.id, 10)).pipe(
                 switchMap((res: IJsonApiItemPayload<IWVouchersApi>) => {
-                  if (res.data.attributes.status !== WStatus.success) {
+                  if (
+                    !res.data.attributes.status ||
+                    res.data.attributes.status === WStatus.pending ||
+                    res.data.attributes.status === WStatus.processing
+                  ) {
                     throw of(new Error('codes are not ready'));
                   }
                   return of(res);
@@ -53,14 +58,14 @@ export class VouchersUploadService extends IAdvancedUploadFileService {
           (res: IJsonApiItemPayload<IWVouchersApi>) => {
             subject.next({
               fileName: file.name,
-              status: UploadStatus.COMPLETED,
+              status: FileUploadStatus.success,
               nbRecords: res.data.attributes.amount || null
             });
           },
           () => {
             subject.next({
               fileName: file.name,
-              status: UploadStatus.ERROR,
+              status: FileUploadStatus.error,
               errorMsg: 'Upload failed'
             });
           },

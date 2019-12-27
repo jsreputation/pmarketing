@@ -30,6 +30,7 @@ import { CampaignChannelsFormService } from '../../services/campaign-channels-fo
 import Utils from '@cl-helpers/utils';
 import { CRUDParser, RequestType } from '@cl-helpers/crud-parser';
 import { NotificationService } from '@cl-core/services/notification.service';
+import { IChannel, ICampaignNotificationGroup } from '@cl-core/models/campaign/channel-interface';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -259,7 +260,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   private getCampaignDoneDialogData(campaign: ICampaign): Observable<NewCampaignDonePopupComponentData> {
-    const type = ('channel' in campaign && 'type' in campaign.channel) ? campaign.channel.type : '';
+    const type = (
+      'notification' in campaign &&
+      'webNotification' in campaign.notification &&
+      campaign.notification.webNotification.webLink
+    ) ? 'weblink' : '';
     const title: string = 'Yay! You just created a campaign';
     if (type === 'weblink' && campaign.audience && campaign.audience.select) {
       return this.buildCampaignCsv(campaign)
@@ -410,8 +415,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   private patchNotificationWebLink(data: any): void {
-    const channel = data['channel'];
-    if (channel.type === 'weblink') {
+    const notification = data['notification'];
+    if (notification && notification.webNotification && notification.webNotification.webLink) {
       this.channelForm.get('webNotification')
         .patchValue({
           webLink: true,
@@ -421,7 +426,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   private addNotificationToStore(): void {
-    this.store.updateCampaign({notification: this.channelForm.value});
+    this.store.updateCampaign({ notification: this.channelForm.value });
   }
 
   private handlerWebLinkNotification(): void {
@@ -430,17 +435,19 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       const webLink: ICampaign = {
         campaignInfo: {
           ...this.store.currentCampaign.campaignInfo,
-          informationCollectionSetting: notification.webLinkOptions
         },
-        channel: {
-          ...this.store.currentCampaign.channel,
-          type: notification.webLink ? 'weblink' : ''
-      }
-    };
+        notification: {
+          ...this.store.currentCampaign.notification,
+          webNotification: {
+            webLink: notification.webLink ? true : false,
+            webLinkOptions: notification.webLinkOptions
+          }
+        }
+      };
 
       if (!notification.webLink) {
-        delete webLink.campaignInfo.informationCollectionSetting;
-        webLink.channel['status'] = 'remove';
+        delete webLink.notification.webNotification.webLinkOptions;
+        webLink.notification.webNotification['status'] = 'remove';
       }
       this.store.updateCampaign(webLink);
     }
