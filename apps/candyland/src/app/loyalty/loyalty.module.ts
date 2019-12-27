@@ -62,7 +62,7 @@ import { MultiplierResultGroupComponent } from './components/multiplier-result-g
 import { BonusResultGroupComponent } from './components/bonus-result-group/bonus-result-group.component';
 import { PointsEarnedInfoPipe } from './points-earned-info.pipe';
 import { PointsExpiredInfoPipe } from './points-expired-info.pipe';
-import { StepperModule } from '@cl-shared/components/stepper/stepper-module';
+import { StepperModule } from '@perx/candyshop';
 
 @NgModule({
   declarations: [
@@ -117,7 +117,6 @@ import { StepperModule } from '@cl-shared/components/stepper/stepper-module';
     MatIconModule,
     PaginationModule,
     NoDataModule,
-    // MatStepperModule,
     StepperModule,
     MatExpansionModule,
     MatCheckboxModule,
