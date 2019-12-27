@@ -7,7 +7,14 @@ export function getRootCredentials(): Promise<ICredentials> {
 
   const rootEndpoint = apiConfig.root;
   if (rootEndpoint === undefined) {
-    throw new Error(`No root endpoints found`);
+    // throw new Error(`No root endpoints found`);
+    console.log('No root endpoints found');
+    return Promise.resolve({
+      target_url: '',
+      basic_token: '',
+      perx_access_key_id: '',
+      perx_secret_access_key: ''
+    });
   }
   return Promise.resolve(rootEndpoint);
 }
