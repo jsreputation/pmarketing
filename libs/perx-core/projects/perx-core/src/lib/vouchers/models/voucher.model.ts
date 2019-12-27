@@ -25,6 +25,7 @@ export interface IVoucher {
   expiry: Date | null;
   redemptionDate?: Date | null;
   redemptionType?: RedemptionType | null;
+  accessoryImage?: string | null;
 }
 
 export interface IGetVoucherParams {
