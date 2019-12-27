@@ -1,6 +1,7 @@
 import { IWNotificationAttributes, IJsonApiItem } from '@perx/whistler';
 import { CampaignChannelsLaunchType } from '../../campaigns/models/campaign-channels-launch-type.enum';
 import { NotificationsMenu } from '../../campaigns/models/notifications-menu-enum';
+import { ICampaignNotificationGroup, ITemplate, IChannel } from '@cl-core/models/campaign/channel-interface';
 
 export class NotificationHttpAdapter {
   public static launchType: typeof CampaignChannelsLaunchType = CampaignChannelsLaunchType;

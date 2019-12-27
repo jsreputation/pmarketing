@@ -1,9 +1,10 @@
 import {ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnDestroy, Output} from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { IAdvancedUploadFileService, IUploadFileStatus, UploadStatus } from '@cl-core/services/iadvanced-upload-file.service';
+import { IAdvancedUploadFileService, IUploadFileStatus, FileUploadStatus } from '@cl-core/services/iadvanced-upload-file.service';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 
 @Component({
   selector: 'cl-upload-file',
@@ -108,21 +109,23 @@ export class UploadFileComponent implements ControlValueAccessor, OnDestroy {
       .subscribe(
         (res: IUploadFileStatus) => {
           switch (res.status) {
-            case UploadStatus.COMPLETED:
+            case FileUploadStatus.success:
+            case FileUploadStatus.successWithError:
               this.loadedFile = true;
               this.setSelectedFile(res.fileName);
               this.message = null;
               this.loadingFile = false;
               this.uploadFile.emit(res.nbRecords || null);
               break;
-            case UploadStatus.ERROR:
+            case FileUploadStatus.error:
               this.loadedFile = false;
               this.setSelectedFile(null);
               this.uploadFile.emit(null);
               this.message = res.errorMsg || 'File haven\'t loaded successfully!';
               this.loadingFile = false;
               break;
-            case UploadStatus.UPLOADING:
+            case FileUploadStatus.processing:
+            case FileUploadStatus.pending:
               this.loadedFile = false;
               this.setSelectedFile(res.fileName);
               this.message = null;
