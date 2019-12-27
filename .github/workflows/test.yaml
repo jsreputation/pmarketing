@@ -5,7 +5,7 @@ jobs:
     name: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
       - uses: azure/k8s-set-context@v1
         with:
           method: kubeconfig
@@ -99,8 +99,9 @@ jobs:
           WAIT_TIME=0
           for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
             until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" = "Running" ] || [ $WAIT_TIME -gt 600 ]; do
+              echo "Waiting ${WAIT_TIME} seconds for tekton task: ${TASKRUN_NAME}"
+              echo "Current task state: $(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')"
               (( WAIT_TIME+=3 ))
-              echo "Wait for tekton task: ${TASKRUN_NAME}"
               sleep 3
             done
           done
