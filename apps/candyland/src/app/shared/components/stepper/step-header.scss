@@ -1,5 +1,11 @@
-//@import '../core/style/layout-common';
-@mixin mat-fill {
+$cs-stepper-label-header-height: 24px !default;
+$cs-stepper-label-min-width: 50px !default;
+$cs-stepper-side-gap: 24px !default;
+$cs-vertical-stepper-content-margin: 36px !default;
+$cs-stepper-line-gap: 8px !default;
+$cs-step-sub-label-font-size: 12px;
+$cs-step-header-icon-size: 16px !default;
+@mixin cs-fill {
   top: 0;
   left: 0;
   right: 0;
@@ -7,15 +13,7 @@
   position: absolute;
 }
 
-$mat-stepper-label-header-height: 24px !default;
-$mat-stepper-label-min-width: 50px !default;
-$mat-stepper-side-gap: 24px !default;
-$mat-vertical-stepper-content-margin: 36px !default;
-$mat-stepper-line-gap: 8px !default;
-$mat-step-sub-label-font-size: 12px;
-$mat-step-header-icon-size: 16px !default;
-
-.mat-step-header {
+.cs-step-header {
   overflow: hidden;
   outline: none;
   cursor: pointer;
@@ -24,21 +22,21 @@ $mat-step-header-icon-size: 16px !default;
   -webkit-tap-highlight-color: transparent;
 }
 
-.mat-step-optional,
-.mat-step-sub-label-error {
-  font-size: $mat-step-sub-label-font-size;
+.cs-step-optional,
+.cs-step-sub-label-error {
+  font-size: $cs-step-sub-label-font-size;
 }
 
-.mat-step-icon {
+.cs-step-icon {
   border-radius: 50%;
-  height: $mat-stepper-label-header-height;
-  width: $mat-stepper-label-header-height;
+  height: $cs-stepper-label-header-height;
+  width: $cs-stepper-label-header-height;
   flex-shrink: 0;
   position: relative;
 }
 
-.mat-step-icon-content,
-.mat-step-icon .mat-icon {
+.cs-step-icon-content,
+.cs-step-icon .cs-icon {
   // Use absolute positioning to center the content, because it works better with text.
   position: absolute;
   top: 50%;
@@ -46,35 +44,35 @@ $mat-step-header-icon-size: 16px !default;
   transform: translate(-50%, -50%);
 }
 
-.mat-step-icon .mat-icon {
-  font-size: $mat-step-header-icon-size;
-  height: $mat-step-header-icon-size;
-  width: $mat-step-header-icon-size;
+.cs-step-icon .cs-icon {
+  font-size: $cs-step-header-icon-size;
+  height: $cs-step-header-icon-size;
+  width: $cs-step-header-icon-size;
 }
 
-.mat-step-icon-state-error .mat-icon {
-  font-size: $mat-step-header-icon-size + 8;
-  height: $mat-step-header-icon-size + 8;
-  width: $mat-step-header-icon-size + 8;
+.cs-step-icon-state-error .cs-icon {
+  font-size: $cs-step-header-icon-size + 8;
+  height: $cs-step-header-icon-size + 8;
+  width: $cs-step-header-icon-size + 8;
 }
 
-.mat-step-label {
+.cs-step-label {
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-width: $mat-stepper-label-min-width;
+  min-width: $cs-stepper-label-min-width;
   vertical-align: middle;
 }
 
-.mat-step-text-label {
+.cs-step-text-label {
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
- //Increase specificity because ripple styles are part of the `mat-core` mixin and can
+ //Increase specificity because ripple styles are part of the `cs-core` mixin and can
  //potentially overwrite the absolute position of the container.
-.mat-step-header .mat-step-header-ripple {
-  @include mat-fill;
+.cs-step-header .cs-step-header-ripple {
+  @include cs-fill;
   pointer-events: none;
 }

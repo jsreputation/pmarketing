@@ -1,11 +1,4 @@
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
+// tslint:disable:variable-name
 import { FocusMonitor } from '@angular/cdk/a11y';
 import {
   ChangeDetectionStrategy,
@@ -18,85 +11,85 @@ import {
   TemplateRef
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MatStepLabel } from './step-label';
-import { MatStepperIntl } from './stepper-intl';
-import { MatStepperIconContext } from './stepper-icon';
+import { StepLabelDirective } from './step-label';
+import { StepperIntl } from './stepper-intl';
+import { StepperIconContext } from './stepper-icon';
 import { CdkStepHeader, StepState } from '@angular/cdk/stepper';
 
 @Component({
-  // moduleId: module.id,
-  selector: 'mat-step-header',
+  selector: 'cs-step-header',
   templateUrl: 'step-header.html',
   styleUrls: ['step-header.scss'],
+  // tslint:disable-next-line:no-host-metadata-property
   host: {
-    'class': 'mat-step-header',
-    'role': 'tab'
+    class: 'cs-step-header',
+    role: 'tab'
   },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MatStepHeader extends CdkStepHeader implements OnDestroy {
+export class StepHeaderComponent extends CdkStepHeader implements OnDestroy {
   private _intlSubscription: Subscription;
 
   /** State of the given step. */
-  @Input() state: StepState;
+  @Input() public state: StepState;
 
   /** Label of the given step. */
-  @Input() label: MatStepLabel | string;
+  @Input() public label: StepLabelDirective | string;
 
   /** Error message to display when there's an error. */
-  @Input() errorMessage: string;
+  @Input() public errorMessage: string;
 
   /** Overrides for the header icons, passed in via the stepper. */
-  @Input() iconOverrides: { [key: string]: TemplateRef<MatStepperIconContext> };
+  @Input() public iconOverrides: { [key: string]: TemplateRef<StepperIconContext> };
 
   /** Index of the given step. */
-  @Input() index: number;
+  @Input() public index: number;
 
   /** Whether the given step is selected. */
-  @Input() selected: boolean;
+  @Input() public selected: boolean;
 
   /** Whether the given step label is active. */
-  @Input() active: boolean;
+  @Input() public active: boolean;
 
   /** Whether the given step is optional. */
-  @Input() optional: boolean;
+  @Input() public optional: boolean;
 
   /** Whether the ripple should be disabled. */
-  @Input() disableRipple: boolean;
+  @Input() public disableRipple: boolean;
 
   constructor(
-    public _intl: MatStepperIntl,
+    public _intl: StepperIntl,
     private _focusMonitor: FocusMonitor,
-    _elementRef: ElementRef<HTMLElement>,
+    public _elementRef: ElementRef<HTMLElement>,
     changeDetectorRef: ChangeDetectorRef) {
     super(_elementRef);
     _focusMonitor.monitor(_elementRef, true);
     this._intlSubscription = _intl.changes.subscribe(() => changeDetectorRef.markForCheck());
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy(): void {
     this._intlSubscription.unsubscribe();
     this._focusMonitor.stopMonitoring(this._elementRef);
   }
 
   /** Returns string label of given step if it is a text label. */
-  _stringLabel(): string | null {
-    return this.label instanceof MatStepLabel ? null : this.label;
+  public _stringLabel(): string | null {
+    return this.label instanceof StepLabelDirective ? null : this.label;
   }
 
   /** Returns MatStepLabel if the label of given step is a template label. */
-  _templateLabel(): MatStepLabel | null {
-    return this.label instanceof MatStepLabel ? this.label : null;
+  public _templateLabel(): StepLabelDirective | null {
+    return this.label instanceof StepLabelDirective ? this.label : null;
   }
 
   /** Returns the host HTML element. */
-  _getHostElement() {
+  public _getHostElement(): any {
     return this._elementRef.nativeElement;
   }
 
-  /** Template context variables that are exposed to the `matStepperIcon` instances. */
-  _getIconContext(): MatStepperIconContext {
+  /** Template context variables that are exposed to the `csStepperIcon` instances. */
+  public _getIconContext(): StepperIconContext {
     return {
       index: this.index,
       active: this.active,
@@ -104,20 +97,16 @@ export class MatStepHeader extends CdkStepHeader implements OnDestroy {
     };
   }
 
-  _getDefaultTextForState(state: StepState): string {
-    if (state == 'number') {
+  public _getDefaultTextForState(state: StepState): string {
+    if (state === 'number') {
       return `${this.index + 1}`;
     }
-    if (state == 'edit') {
+    if (state === 'edit') {
       return 'create';
     }
-    if (state == 'error') {
+    if (state === 'error') {
       return 'warning';
     }
     return state;
-  }
-
-  public logger(event) {
-    console.log('step click', event);
   }
 }

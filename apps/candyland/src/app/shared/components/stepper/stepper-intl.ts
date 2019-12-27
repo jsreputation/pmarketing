@@ -1,37 +1,25 @@
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
 import { Injectable, Optional, SkipSelf } from '@angular/core';
 import { Subject } from 'rxjs';
 
-
-/** Stepper data that is required for internationalization. */
 @Injectable({providedIn: 'root'})
-export class MatStepperIntl {
+export class StepperIntl {
   /**
    * Stream that emits whenever the labels here are changed. Use this to notify
    * components if the labels have changed after initialization.
    */
-  readonly changes: Subject<void> = new Subject<void>();
+  public readonly changes: Subject<void> = new Subject<void>();
 
   /** Label that is rendered below optional steps. */
-  optionalLabel: string = 'Optional';
+  public optionalLabel: string = 'Optional';
 }
 
-
-/** @docs-private */
-export function MAT_STEPPER_INTL_PROVIDER_FACTORY(parentIntl: MatStepperIntl) {
-  return parentIntl || new MatStepperIntl();
+// tslint:disable-next-line:typedef
+export function CS_STEPPER_INTL_PROVIDER_FACTORY(parentIntl: StepperIntl) {
+  return parentIntl || new StepperIntl();
 }
 
-/** @docs-private */
-export const MAT_STEPPER_INTL_PROVIDER = {
-  provide: MatStepperIntl,
-  deps: [[new Optional(), new SkipSelf(), MatStepperIntl]],
-  useFactory: MAT_STEPPER_INTL_PROVIDER_FACTORY
+export const CS_STEPPER_INTL_PROVIDER = {
+  provide: StepperIntl,
+  deps: [[new Optional(), new SkipSelf(), StepperIntl]],
+  useFactory: CS_STEPPER_INTL_PROVIDER_FACTORY
 };

@@ -1,32 +1,26 @@
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
 import {CdkStepperNext, CdkStepperPrevious} from '@angular/cdk/stepper';
-import {Directive} from '@angular/core';
+import { Directive, Input } from '@angular/core';
 
 /** Button that moves to the next step in a stepper workflow. */
 @Directive({
-  selector: 'button[matStepperNext]',
+  selector: 'button[csStepperNext]',
+  // tslint:disable-next-line:no-host-metadata-property
   host: {
     '[type]': 'type',
-  },
-  inputs: ['type']
+  }
 })
-export class MatStepperNext extends CdkStepperNext {
+export class StepperNextDirective extends CdkStepperNext {
+  @Input() public type: string;
 }
 
 /** Button that moves to the previous step in a stepper workflow. */
 @Directive({
-  selector: 'button[matStepperPrevious]',
+  selector: 'button[csStepperPrevious]',
+  // tslint:disable-next-line:no-host-metadata-property
   host: {
     '[type]': 'type',
-  },
-  inputs: ['type']
+  }
 })
-export class MatStepperPrevious extends CdkStepperPrevious {
+export class StepperPreviousDirective extends CdkStepperPrevious {
+  @Input() public type: string;
 }

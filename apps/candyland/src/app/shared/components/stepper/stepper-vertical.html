@@ -1,6 +1,6 @@
-<div class="mat-step" *ngFor="let step of steps; let i = index; let isLast = last">
-  <mat-step-header class="mat-vertical-stepper-header"
-                   (click)="step.select()"
+<div class="cs-step" *ngFor="let step of steps; let i = index; let isLast = last">
+  <cs-step-header class="cs-vertical-stepper-header"
+                   (click)="clickHeaderLabel(i)"
                    (keydown)="_onKeydown($event)"
                    [tabIndex]="_getFocusIndex() == i ? 0 : -1"
                    [id]="_getStepLabelId(i)"
@@ -19,17 +19,17 @@
                    [errorMessage]="step.errorMessage"
                    [iconOverrides]="_iconOverrides"
                    [disableRipple]="disableRipple">
-  </mat-step-header>
+  </cs-step-header>
 
-  <div class="mat-vertical-content-container" [class.mat-stepper-vertical-line]="!isLast">
-    <div class="mat-vertical-stepper-content" role="tabpanel"
+  <div class="cs-vertical-content-container" [class.cs-stepper-vertical-line]="!isLast">
+    <div class="cs-vertical-stepper-content" role="tabpanel"
          [attr.tabindex]="selectedIndex === i ? 0 : null"
          [@stepTransition]="_getAnimationDirection(i)"
          (@stepTransition.done)="_animationDone.next($event)"
          [id]="_getStepContentId(i)"
          [attr.aria-labelledby]="_getStepLabelId(i)"
          [attr.aria-expanded]="selectedIndex === i">
-      <div class="mat-vertical-content">
+      <div class="cs-vertical-content">
         <ng-container [ngTemplateOutlet]="step.content"></ng-container>
       </div>
     </div>

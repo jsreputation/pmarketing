@@ -13,12 +13,12 @@ import {NgModule} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {ErrorStateMatcher, MatCommonModule, MatRippleModule} from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
-import {MatStepHeader} from './step-header';
-import {MatStepLabel} from './step-label';
-import {MatHorizontalStepper, MatStep, MatStepper, MatVerticalStepper} from './stepper';
-import {MatStepperNext, MatStepperPrevious} from './stepper-button';
-import {MatStepperIcon} from './stepper-icon';
-import {MAT_STEPPER_INTL_PROVIDER} from './stepper-intl';
+import {StepHeaderComponent} from './step-header';
+import {StepLabelDirective} from './step-label';
+import {HorizontalStepperComponent, StepComponent, StepperDirective, VerticalStepperComponent} from './stepper';
+import {StepperNextDirective, StepperPreviousDirective} from './stepper-button';
+import {StepperIconDirective} from './stepper-icon';
+import {CS_STEPPER_INTL_PROVIDER} from './stepper-intl';
 
 @NgModule({
   imports: [
@@ -32,27 +32,27 @@ import {MAT_STEPPER_INTL_PROVIDER} from './stepper-intl';
   ],
   exports: [
     MatCommonModule,
-    MatHorizontalStepper,
-    MatVerticalStepper,
-    MatStep,
-    MatStepLabel,
-    MatStepper,
-    MatStepperNext,
-    MatStepperPrevious,
-    MatStepHeader,
-    MatStepperIcon,
+    HorizontalStepperComponent,
+    VerticalStepperComponent,
+    StepComponent,
+    StepLabelDirective,
+    StepperDirective,
+    StepperNextDirective,
+    StepperPreviousDirective,
+    StepHeaderComponent,
+    StepperIconDirective,
   ],
   declarations: [
-    MatHorizontalStepper,
-    MatVerticalStepper,
-    MatStep,
-    MatStepLabel,
-    MatStepper,
-    MatStepperNext,
-    MatStepperPrevious,
-    MatStepHeader,
-    MatStepperIcon,
+    HorizontalStepperComponent,
+    VerticalStepperComponent,
+    StepComponent,
+    StepLabelDirective,
+    StepperDirective,
+    StepperNextDirective,
+    StepperPreviousDirective,
+    StepHeaderComponent,
+    StepperIconDirective,
   ],
-  providers: [MAT_STEPPER_INTL_PROVIDER, ErrorStateMatcher],
+  providers: [CS_STEPPER_INTL_PROVIDER, ErrorStateMatcher],
 })
 export class StepperModule {}

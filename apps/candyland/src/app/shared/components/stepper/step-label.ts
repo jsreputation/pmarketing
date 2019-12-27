@@ -10,6 +10,6 @@ import {Directive} from '@angular/core';
 import {CdkStepLabel} from '@angular/cdk/stepper';
 
 @Directive({
-  selector: '[matStepLabel]',
+  selector: '[csStepLabel]',
 })
-export class MatStepLabel extends CdkStepLabel {}
+export class StepLabelDirective extends CdkStepLabel {}
