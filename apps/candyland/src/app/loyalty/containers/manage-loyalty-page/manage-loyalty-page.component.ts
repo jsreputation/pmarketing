@@ -135,16 +135,12 @@ export class ManageLoyaltyPageComponent implements OnInit, AfterViewInit, OnDest
       e.preventDefault();
       console.log(e, index);
 
-      // if (this.currentStep + 1 === index) {
-      //       //   this.clickGoNext();
-      //       // }
-
       if (this.currentStep !== index && index <= this.stepProgress + 1) {
         this.stepper.selected.completed = true;
         this.updateStepProgress();
       }
 
-    }, true));
+    }, {passive: false}));
   }
 
   public ngOnDestroy(): void {
