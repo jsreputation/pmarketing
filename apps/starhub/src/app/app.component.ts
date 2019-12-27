@@ -120,13 +120,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
           this.data.siteSectionLevel3 = event.siteSectionLevel3;
         }
 
-        this.authenticationService.getAccessToken().subscribe((token: string) => {
-          this.token = token;
-          if (this.token) {
-            this.checkAuth();
-          }
-          this.data.perxID = this.token;
-        });
+        this.getAccessToken();
 
         if (typeof _satellite === 'undefined') {
           return;
@@ -134,6 +128,16 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         _satellite.track('msa-rewards-virtual-page');
       }
     );
+  }
+
+  private getAccessToken(): void {
+    this.authenticationService.getAccessToken().subscribe((token: string) => {
+      this.token = token;
+      if (this.token) {
+        this.checkAuth();
+      }
+      this.data.perxID = this.token;
+    });
   }
 
   private checkAuth(): void {
