@@ -1,25 +1,52 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardDetailsComponent } from './reward-details.component';
-import { RewardsModule, RewardsService, VouchersModule, ConfigService, IVoucherService, LoyaltyService, ILoyalty, ThemesService } from '@perx/core';
+import {
+  RewardsModule,
+  RewardsService,
+  VouchersModule,
+  ConfigService,
+  IVoucherService,
+  LoyaltyService,
+  ILoyalty,
+  ThemesService,
+  IReward
+} from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 import { MatDialogModule, MatButtonModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ActivatedRoute } from '@angular/router';
+
+const mockReward: IReward = {
+  id: 1,
+  name: 'string;',
+  description: 'string;',
+  subtitle: 'string;',
+  validFrom: new Date(),
+  validTo: new Date(),
+  rewardBanner: 'string;',
+  merchantImg: 'string;',
+  termsAndConditions: 'string;',
+  howToRedeem: 'string;',
+  displayProperties: {
+    CTAButtonTxt: 'btnTxt'
+  }
+};
 
 describe('RewardComponent', () => {
   let component: RewardDetailsComponent;
   let fixture: ComponentFixture<RewardDetailsComponent>;
   const configServiceStub: Partial<ConfigService> = {
-    readAppConfig: () => of()
+    readAppConfig: () => of({})
   };
   const vouchersServiceStub: Partial<IVoucherService>  = {
     issueReward: () => of()
   };
 
   const rewardsServiceStub: Partial<RewardsService> = {
-    getReward: () => of()
+    getReward: () => of(mockReward)
   };
 
   const loyaltyServiceStub: Partial<LoyaltyService> = {
@@ -44,6 +71,7 @@ describe('RewardComponent', () => {
         TranslateModule.forRoot(),
       ],
       providers: [
+        { provide: ActivatedRoute, useValue: { params: of({ id: 3 }) } },
         { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
