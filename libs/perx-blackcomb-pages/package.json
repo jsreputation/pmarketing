@@ -27,6 +27,7 @@
     "@perx/core": "^0.0.0",
     "angularx-qrcode": "^1.6.4",
     "ngx-multi-line-ellipsis": "^1.0.4",
+    "ngx-infinite-scroll": "^8.0.1",
     "rxjs": "~6.4.0",
     "ts-optchain": "^0.1.8",
     "tslib": "^1.9.0",
