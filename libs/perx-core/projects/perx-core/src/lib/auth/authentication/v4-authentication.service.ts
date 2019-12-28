@@ -1,7 +1,7 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
 import { tap, mergeMap, catchError, map, switchMap } from 'rxjs/operators';
-import { Observable, of, throwError, iif } from 'rxjs';
+import { Observable, of, throwError, iif, Subject } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AuthenticationService, IMessageResponse, RequiresOtpError } from './authentication.service';
 import { IProfile } from '../../profile/profile.model';
@@ -52,11 +52,11 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   private appAuthEndPoint: string;
   private userAuthEndPoint: string;
   private customersEndPoint: string;
+  private $failedAuthObservableSubject: Subject<boolean>;
   private lastURL: string;
   private retries: number = 0;
   private maxRetries: number = 2;
-  public $failedAuthObservable: Observable<boolean>;
-
+  public preauth: boolean = false;
   constructor(
     config: Config,
     private http: HttpClient,
@@ -71,12 +71,15 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       this.appAuthEndPoint = config.baseHref + 'v2/oauth';
       this.userAuthEndPoint = config.baseHref + 'v4/oauth';
     }
+    if (config.preAuth) {
+      this.preauth = config.preAuth;
+    }
     this.customersEndPoint = config.apiHost + '/v4/customers';
-    this.$failedAuthObservable = new Observable();
+    this.$failedAuthObservableSubject = new Subject();
   }
 
   public get $failedAuth(): Observable<boolean> {
-    return this.$failedAuthObservable;
+    return this.$failedAuthObservableSubject;
   }
 
   public isAuthorized(): Observable<boolean> {
@@ -86,9 +89,17 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     return of(!!token);
   }
 
-  // To be refactor, current not in use
   public refreshToken(): Observable<any> {
-    console.log('No refresh token function required for v*, always pass true to ngx-auth');
+    if (this.preauth && this.retries < this.maxRetries) {
+      this.retries++;
+      this.autoLogin().subscribe(() =>
+        console.log('finished refresh token')
+      );
+      return of(true);
+    }
+    this.retries = 0;
+    this.logout();
+    this.$failedAuthObservableSubject.next(true);
     return of(true);
   }
 
@@ -111,7 +122,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
           this.saveUserAccessToken(userBearer);
         },
         () => {
-          this.$failedAuthObservable = of(true);
+          this.$failedAuthObservableSubject.next(true);
         }
       ),
       map(() => void 0),
@@ -143,7 +154,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
           this.saveUserAccessToken(userBearer);
         },
         () => {
-          this.$failedAuthObservable = of(true);
+          this.$failedAuthObservableSubject.next(true);
         }
       ),
       map(() => void 0),

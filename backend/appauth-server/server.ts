@@ -33,7 +33,7 @@ const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
 const appPath = join(EXPRESS_DIST_FOLDER, '../../perx-microsite');
 
 const BASE_HREF = process.env.BASE_HREF || '/';
-const IS_WHISTLER = process.env.IS_WHISTLER;
+const IS_WHISTLER: boolean = process.env.IS_WHISTLER && process.env.IS_WHISTLER === 'true' ? true : false;
 const getTokens = IS_WHISTLER ? getCredential : getCredentials;
 app.options('*', cors());
 

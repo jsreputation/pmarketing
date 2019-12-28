@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AccountComponent } from './account/account.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ContentComponent } from './content/content.component';
 import {
   MatProgressBarModule,
@@ -162,7 +163,8 @@ const comps: any[] = [
     MatDatepickerModule,
     TranslateModule.forChild(),
     MatToolbarModule,
-    MatListModule
+    MatListModule,
+    InfiniteScrollModule
   ],
   exports: [
     ...comps,
