@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { HttpParams } from '@angular/common/http';
-import { IWProfileAttributes, IWPoolsAttributes } from '@perx/whistler';
+import { IWProfileAttributes, IWPoolsAttributes, IJsonApiListPayload, IJsonApiItemPayload, IJsonApiItem, IJsonApiPatchData } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class AudiencesUserService implements ITableService {
   }
 
   public getUser(id: string): Observable<IWProfileAttributes> {
-    const params: HttpParams = ClHttpParams.createHttpParams({include: 'pools'});
+    const params: HttpParams = ClHttpParams.createHttpParams({ include: 'pools' });
     return this.http.getUser(id, params).pipe(map((res: any) => AudiencesHttpAdapter.transformUserWithPools(res)));
   }
 
@@ -26,7 +26,7 @@ export class AudiencesUserService implements ITableService {
   }
 
   public getAllPoolUser(poolId: string): Observable<IJsonApiItem<IWProfileAttributes>[]> {
-    const httpParams = ClHttpParams.createHttpParams({include: 'users'});
+    const httpParams = ClHttpParams.createHttpParams({ include: 'users' });
     return this.http.getAudience(poolId, httpParams)
       .pipe(map(res => res.included));
   }
@@ -38,7 +38,7 @@ export class AudiencesUserService implements ITableService {
       .pipe(map((res: IJsonApiListPayload<any>) => AudiencesHttpAdapter.transformUsersWithPools(res)));
   }
 
-  public createUser(user: IAudiencesUserForm): Observable<IJsonApiPayload<IWProfileAttributes>> {
+  public createUser(user: IAudiencesUserForm): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
     const formattedUser = AudiencesHttpAdapter.transformFromUserForm(user);
     if (formattedUser.attributes) {
       formattedUser.attributes.primary_identifier = `${formattedUser.attributes.first_name}identifier`;
@@ -46,9 +46,12 @@ export class AudiencesUserService implements ITableService {
     return this.http.createUser(formattedUser);
   }
 
-  public updateUser(id: string, user: IAudiencesUserForm): Observable<IJsonApiPayload<IWProfileAttributes>> {
-    const formattedUser = AudiencesHttpAdapter.transformFromUserForm(user);
-    formattedUser.id = id;
+  public updateUser(id: string, user: IAudiencesUserForm): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
+    const formattedUser: IJsonApiPatchData<IWProfileAttributes> = {
+      ...AudiencesHttpAdapter.transformFromUserForm(user),
+      type: 'users',
+      id
+    };
     return this.http.updateUser(id, formattedUser);
   }
 

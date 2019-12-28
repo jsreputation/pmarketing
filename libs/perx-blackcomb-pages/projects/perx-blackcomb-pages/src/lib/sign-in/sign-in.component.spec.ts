@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Type } from '@angular/core';
 
 import { of, Observable } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
@@ -27,6 +28,7 @@ import {
 } from '@perx/core';
 
 import { SignInComponent } from './sign-in.component';
+import { Location } from '@angular/common';
 
 describe('SignInComponent', () => {
   let component: SignInComponent;
@@ -46,13 +48,17 @@ describe('SignInComponent', () => {
   };
 
   const authServiceStub: Partial<AuthenticationService> = {
-    getUserId: () => 0,
-    autoLogin: () => of(),
-    mergeUserById: () => of(),
+    getUserId: () => 1,
+    autoLogin: () => of(void 0),
+    mergeUserById: () => of(void 0),
     getPI: () => '',
     getUserAccessToken: () => '',
     getAnonymous: () => true,
-    logout: () => { }
+    logout: () => { },
+    savePI: () => void 0,
+    saveUserId: () => void 0,
+    saveUserAccessToken: () => void 0,
+    saveAnonymous: () => void 0
   };
 
   const configServiceStub: Partial<ConfigService> = {
@@ -60,7 +66,7 @@ describe('SignInComponent', () => {
   };
 
   const surveyServiceStub: Partial<SurveyService> = {
-    postSurveyAnswer: () => of()
+    postSurveyAnswer: () => of({ hasOutcomes: true })
   };
 
   beforeEach(async(() => {
@@ -75,7 +81,9 @@ describe('SignInComponent', () => {
         NoopAnimationsModule,
         HttpClientModule,
         TranslateModule.forRoot(),
-        RouterTestingModule
+        RouterTestingModule.withRoutes([
+          { path: 'home', redirectTo: '/' },
+        ]),
       ],
       providers: [
         { provide: Config, useValue: configStub },
@@ -98,5 +106,24 @@ describe('SignInComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('onSubmit', () => {
+    const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    const location: Location = fixture.debugElement.injector.get<Location>(Location as Type<Location>);
+    spyOn(location, 'getState').and.returnValue({
+      popupData: {},
+      engagementType: 'game',
+      collectInfo: true,
+      transactionId: 3
+    });
+    component.ngOnInit();
+    component.piField.setValue('test');
+
+    const spySubmit = spyOn(component, 'onSubmit').and.callThrough();
+    spyOn(gameService, 'prePlayConfirm').and.returnValue(of(void 0));
+
+    component.onSubmit();
+    expect(spySubmit).toHaveBeenCalled();
   });
 });

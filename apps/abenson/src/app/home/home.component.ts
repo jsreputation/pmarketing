@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
       this.comingSoon = val.custom ? val.custom.comingSoon as boolean : false;
     });
     this.campaigns$ = this.campaignService.getCampaigns()
-      .pipe(map((compaing) => compaing.filter(el => el.type === CampaignType.game)));
+      .pipe(map((campaign) => campaign.filter(el => el.type === CampaignType.game)));
     this.vouchers$ = this.vouchersService.getAll();
     this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
   }

@@ -19,6 +19,10 @@ import { WalletHistoryComponent } from '../wallet-history/wallet-history.compone
 import { ProfileComponent } from '../profile/profile.component';
 import { Title } from '@angular/platform-browser';
 
+export interface ShowTitleInHeader {
+  getTitle(): string;
+}
+
 @Component({
   selector: 'perx-blackcomb-games-layout',
   templateUrl: './layout.component.html',
@@ -27,6 +31,7 @@ import { Title } from '@angular/platform-browser';
 export class LayoutComponent implements OnInit {
 
   public showHeader: boolean;
+  public headerTitle: string;
   public showToolbar: boolean;
   public leftIcon: string = '';
   public preAuth: boolean;
@@ -104,6 +109,7 @@ export class LayoutComponent implements OnInit {
       ref instanceof WalletComponent ||
       ref instanceof WalletHistoryComponent ||
       ref instanceof ProfileComponent;
+    this.headerTitle = (ref.getTitle) ? ref.getTitle() : '';
     this.cd.detectChanges();
   }
 

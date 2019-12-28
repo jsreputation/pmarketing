@@ -53,8 +53,7 @@
                 {{'CAMPAIGN.LIMIT_PER_USER' | translate}}
               </dt>
               <dd class="card-value">{{campaign?.limits?.times}}
-                {{'CAMPAIGN.TIME' | translate}}
-                {{campaign?.limits?.times > 1 ? 's' : ''}}
+                {{'CAMPAIGN.TIME' | translate}}{{campaign?.limits?.times > 1 ? 's' : ''}}
               </dd>
             </div>
             <div *ngIf="campaign?.limits?.duration">
@@ -124,67 +123,198 @@
           {{'CAMPAIGN.CHANNEL' | translate}}
         </h2>
       </div>
-      <div class="card-content">
+      <!--WebLink-->
+      <div class="card-content" *ngIf="campaign?.notification?.webNotification?.webLink">
         <h3 class="card-label">
-          {{campaign?.channel?.type | translate}}
+          {{'CAMPAIGN.INFORMATION_COLLECTION' | translate}}
         </h3>
         <!--Message-->
-        <div class="card-section" *ngIf="campaign?.campaignInfo?.informationCollectionSetting">
+        <div class="card-section" *ngIf="campaign?.notification?.webNotification?.webLink">
           <div class="card-header">
             <h3 class="card-title">
               {{ informationCollectionSettingTitle | translate}}
             </h3>
           </div>
         </div>
-        <!--Message-->
-        <div class="card-section" *ngIf="campaign?.channel?.message">
-          <div class="card-header">
-            <h3 class="card-title">
-              {{'CAMPAIGN.MESSAGE' | translate}}
-            </h3>
-          </div>
-          <div class="card-content">
-            {{campaign?.channel?.message}}
-          </div>
-        </div>
-        <!--schedule-->
-        <div class="card-section" *ngIf="campaign?.channel?.schedule?.sendDate">
-          <div class="card-header">
-            <h3 class="card-title">
-              {{'CAMPAIGN.SCHEDULE_DATE' | translate}}
-            </h3>
-          </div>
+      </div>
 
-          <div class="card-content">
-            <!--send date-->
-            <div class="card-row">
-              {{campaign?.channel?.schedule?.sendDate}}&nbsp;&nbsp;&nbsp;&nbsp;{{campaign?.channel?.schedule?.sendTime}}
-            </div>
-            <!--recurrence-->
-            <div class="card-row stretch" *ngIf="campaign?.channel?.schedule?.enableRecurrence">
-              <div class="row">
-                <div>
-                  <label class="card-label">
-                    {{'CAMPAIGN.REPEAT_EVERY' | translate}}
-                  </label>
-                  {{campaign?.channel?.schedule?.recurrence?.period}}&nbsp;{{campaign?.channel?.schedule?.recurrence?.period}}
-                </div>
-                <div>
-                  <!--repeat on-->
-                  <ng-container *ngIf="campaign?.channel?.schedule?.recurrence?.repeatOn.length > 0">
-                    <label class="card-label">
-                      {{'CAMPAIGN.REPEAT_ON' | translate}}
-                    </label>
-                    <span *ngFor="let repeatOn of campaign?.channel?.schedule?.recurrence?.repeatOn">
-                      {{repeatOn}},&nbsp;
-                    </span>
-                  </ng-container>
-                </div>
+      <div class="sms" *ngIf="checkSmsExist()">
+        <!--Message-->
+        <h3 class="card-label label-text">
+          {{ 'CAMPAIGN.CHANNEL_TYPES.SMS' | translate}}
+        </h3>
+      </div>
+
+      <ng-container *ngIf="campaign?.notification?.launch?.length">
+        <!--Message-->
+        <div class="card-content">
+          <div class="card-section" *ngFor="let launch of campaign.notification.launch; let index = index;" >
+            <div class="card-header">
+              <div class="card-title">
+                <section >
+                  <h2 class="card-title message-title">
+                    {{'CAMPAIGN.ON_CAMPAIGN_LAUNCH_MESSAGE' | translate}}
+                    <span>{{index + 1}}</span>
+                  </h2>
+                  <div class="input-group notification-row">
+                  <span>
+                    {{'CAMPAIGN.MESSAGE_WILL_BE_SENT_ON' | translate}}
+                  </span>
+                    <span>
+                    {{getSendType(launch.sentType) | translate}}
+                  </span>
+                  </div>
+                  <div *ngIf="launch.sentType === launchType.launchDate" class="notification-date-time">
+                    {{'CAMPAIGN.MESSAGE_WILL_BE_SENT_ON' | translate}}
+                    {{campaign?.campaignInfo?.startDate | date: 'dd/MM/yyyy'}}
+                    {{'CAMPAIGN.AT' | translate}}
+                    {{campaign?.campaignInfo?.startTime}}.
+                  </div>
+
+                  <section *ngIf="launch.sentType === launchType.usersDateBirth"
+                           class="notification-date-time input-group notification-row">
+                  <span>
+                    {{'CAMPAIGN.MESSAGE_SENT_ON_BIRTHDAY' | translate}}
+                  </span>
+                    <div class="date-field">
+                      {{launch.birthdayTime}}
+                    </div>
+                  </section>
+
+                  <section *ngIf="launch.sentType === launchType.usersMonthBirth"
+                           class="notification-date-time input-group notification-row">
+                  <span>
+                    {{'CAMPAIGN.MESSAGE_SENT_ON_DAY' | translate}}
+                  </span>
+                    <span>
+                    {{launch.monthDay}}
+                  </span>
+                    <span>
+                    {{'CAMPAIGN.OF_THE_USER_BIRTH_MONTH_AT' | translate}}
+                  </span>
+                    <div class="date-field">
+                      {{launch.birthdayTime}}
+                    </div>
+                  </section>
+
+                  <div class="card-section">
+                    <div class="card-header">
+                      <h3 class="card-title">
+                        {{'CAMPAIGN.MESSAGE' | translate}}
+                      </h3>
+                    </div>
+                    <div class="card-content">
+                      {{launch.template.message}}
+                    </div>
+                  </div>
+                </section>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </ng-container>
+      <ng-container *ngIf="campaign?.notification?.completed?.length">
+        <!--Message-->
+        <div class="card-content">
+          <div class="card-section" *ngFor="let completed of campaign.notification.completed; let index = index;" >
+            <div class="card-header">
+              <div class="card-title">
+                <!--start completed-->
+                <section>
+                  <h2 class="card-title message-title">
+                    {{'CAMPAIGN.CAMPAIGN_NOT_COMPLETED_MESSAGE' | translate}} <span>{{index + 1}}</span>
+                  </h2>
+                  <div class="input-group notification-row">
+                    <span>
+                      {{'CAMPAIGN.MESSAGE_WILL_BE_SENT_ON' | translate}}
+                    </span>
+                    <span>
+                      {{completed.numberPeriod }}
+                    </span>
+                    <span>
+                      {{completed.type | translate }}
+                    </span>
+                    <span>{{'CAMPAIGN.AFTER_CAMPAIGN_STARTS' | translate}} </span>
+                  </div>
+                  <div class="input-group notification-row">
+                    <span>{{'CAMPAIGN.AT' | translate}}</span>
+                    <div class="date-field">
+                      <span>
+                        {{completed.time}}
+                      </span>
+                    </div>
+                    <span>
+                      {{'CAMPAIGN.NOT_COMPLETED_CAMPAIGN' | translate}}
+                    </span>
+                  </div>
+                  <div class="card-section">
+                    <div class="card-header">
+                      <h3 class="card-title">
+                        {{'CAMPAIGN.MESSAGE' | translate}}
+                      </h3>
+                    </div>
+                    <div class="card-content">
+                      {{completed.template.message}}
+                    </div>
+                  </div>
+                </section>
+                <!--end completed-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="campaign?.notification?.campaignEnds?.length">
+        <!--Message-->
+        <div class="card-content">
+          <div class="card-section" *ngFor="let campaignEnds of campaign.notification.campaignEnds; let index = index;" >
+            <div class="card-header">
+              <div class="card-title">
+                <!--start campaignEnds-->
+                <section>
+                  <h2 class="card-title message-title">
+                    {{'CAMPAIGN.BEFORE_CAMPAIGN_ENDS_MESSAGE' | translate}} <span>{{index + 1}}</span>
+                  </h2>
+                  <div class="input-group notification-row">
+                    <span>
+                      {{'CAMPAIGN.MESSAGE_WILL_BE_SENT_ON' | translate}}
+                    </span>
+                    <span>
+                      {{campaignEnds.numberPeriod }}
+                    </span>
+
+                    <span>
+                      {{campaignEnds.type | translate }}
+                    </span>
+                    <span>
+                      {{'CAMPAIGN.BEFORE_CAMPAIGN_ENDS' | translate}},
+                    </span>
+                  </div>
+                  <div class="input-group notification-row">
+                    <span>{{'CAMPAIGN.AT' | translate}}</span>
+                    <span>{{campaignEnds.time}}</span>
+                  </div>
+                  <div class="card-section">
+                    <div class="card-header">
+                      <h3 class="card-title">
+                        {{'CAMPAIGN.MESSAGE' | translate}}
+                      </h3>
+                    </div>
+                    <div class="card-content">
+                      {{campaignEnds.template.message}}
+                    </div>
+                  </div>
+                </section>
+                <!--end campaignEnds-->
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+
+
     </mat-card>
     <!-- TODO: Audience currently we don't have the field in Figma design, hide first -->
   </div>

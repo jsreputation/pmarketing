@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AuthenticationService,
   NotificationService,
@@ -6,10 +6,10 @@ import {
   IPopupConfig,
   PopUpClosedCallBack,
   ICampaignService,
-  // ICampaign,
-  // CampaignType,
+  ICampaign,
+  CampaignType,
   IReward,
-  // IGameService,
+  IGameService,
   IGame,
   TokenStorage,
   ThemesService,
@@ -17,17 +17,9 @@ import {
 } from '@perx/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-// import { RewardPopupComponent } from './reward-popup/reward-popup.component';
-import {
-  // switchMap,
-  filter,
-  map,
-  catchError
-} from 'rxjs/operators';
-import {
-  // combineLatest,
-  of
-} from 'rxjs';
+import { RewardPopupComponent } from './reward-popup/reward-popup.component';
+import { switchMap, filter, map, catchError } from 'rxjs/operators';
+import { combineLatest, of } from 'rxjs';
 import { AnalyticsService, IEvent, PageType } from './analytics.service';
 
 export interface IdataLayerSH {
@@ -68,7 +60,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     private dialog: MatDialog,
     private router: Router,
     private snackBar: MatSnackBar,
-    // private gameService: IGameService,
+    private gameService: IGameService,
     private tokenStorage: TokenStorage,
     private analytics: AnalyticsService,
     private themeService: ThemesService
@@ -108,7 +100,6 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
       )
       .subscribe((token: string) => {
         this.authenticationService.saveUserAccessToken(token);
-        this.fetchCampaigns();
       });
 
     this.analytics.events$.subscribe(
@@ -129,8 +120,14 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
           this.data.siteSectionLevel3 = event.siteSectionLevel3;
         }
 
-        this.token = this.authenticationService.getUserAccessToken();
-        this.data.perxID = this.token;
+        this.authenticationService.getAccessToken().subscribe((token: string) => {
+          this.token = token;
+          if (this.token) {
+            this.checkAuth();
+          }
+          this.data.perxID = this.token;
+        });
+
         if (typeof _satellite === 'undefined') {
           return;
         }
@@ -139,18 +136,15 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     );
   }
 
-  @HostListener('document:click', ['$event'])
-  public onDocumentClick(e: any): void {
-    const isIpad = navigator.userAgent.match(/iPad/i) != null;
-    const isIphone = (navigator.userAgent.match(/iPhone/i) != null) || (navigator.userAgent.match(/iPod/i) != null);
-    const url = e && e.target && (e.target.href || e.target.parentNode && e.target.parentNode.href || null);
-    if ((isIpad || isIphone) && url) {
-      window.open(url, '_blank');
-      e.stopPropagation();
-    }
+  private checkAuth(): void {
+    this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
+      if (isAuth) {
+        this.fetchPopupCampaigns();
+      }
+    });
   }
 
-  private fetchCampaigns(): void {
+  private fetchPopupCampaigns(): void {
     this.campaignService.getCampaigns()
       .pipe(
         catchError(() => {
@@ -160,68 +154,74 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
       )
       .pipe(
         // for each campaign, get detailed version
-        // switchMap((cs: ICampaign[]) => combineLatest(...cs.map(campaign => this.campaignService.getCampaign(campaign.id)))),
-        // map((campaigns: ICampaign[]) => campaigns.filter(c => !this.idExistsInStorage(c.id)))
-      ).subscribe(() => { });
-    // .subscribe(
-    //   (campaigns: ICampaign[]) => {
-    //     const firstComeFirstServed: ICampaign[] = campaigns
-    //       .filter(campaign => campaign.type === CampaignType.give_reward)
-    //       .filter(campaign => campaign.rewards && campaign.rewards.length > 0);
-    //     // if there is a 1st come 1st served campaign and it has rewards, display the popup
-    //     if (firstComeFirstServed.length > 0) {
-    //       const campaign = firstComeFirstServed[0];
-    //       this.reward = campaign.rewards[0];
+        switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id)))),
+        map((campaigns: ICampaign[]) => campaigns.filter(c => !this.idExistsInStorage(c.id))),
+        map((campaigns: ICampaign[]) =>  campaigns
+          .filter(campaign => campaign.type === CampaignType.give_reward)
+          .filter(campaign => campaign.rewards && campaign.rewards.length > 0)),
+      )
+      .subscribe(
+        (campaigns: ICampaign[]) => {
+          const firstComeFirstServed: ICampaign[] = campaigns;
+          // if there is a 1st come 1st served campaign and it has rewards, display the popup
+          if (firstComeFirstServed.length > 0) {
+            const campaign = firstComeFirstServed[0];
+            // @ts-ignore
+            this.reward = campaign.rewards[0];
 
-    //       const data = {
-    //         text: campaign.name,
-    //         imageUrl: 'assets/reward.png',
-    //         buttonTxt: 'Claim!',
-    //         rewardId: this.reward.id,
-    //         afterClosedCallBack: this,
-    //         validTo: new Date(campaign.endsAt)
-    //       };
-    //       this.dialog.open(RewardPopupComponent, { data });
-    //       this.analytics.addEvent({
-    //         pageType: PageType.overlay,
-    //         pageName: campaign.name
-    //       });
-    //       return;
-    //     }
+            const data = {
+              text: campaign.name,
+              imageUrl: 'assets/reward.png',
+              buttonTxt: 'Claim!',
+              rewardId: this.reward.id,
+              afterClosedCallBack: this,
+              // @ts-ignore
+              validTo: new Date(campaign.endsAt)
+            };
+            this.dialog.open(RewardPopupComponent, { data });
+            this.analytics.addEvent({
+              pageType: PageType.overlay,
+              pageName: campaign.name
+            });
+            return;
+          }
 
-    //     // else if there is a game campaign, display the popup
-    //     const gameCampaign: ICampaign | undefined = campaigns.find(campaign => campaign.type === CampaignType.game);
-    //     if (gameCampaign) {
-    //       this.checkGame(gameCampaign);
-    //     }
-    //   }
-    // );
+          // else if there is a game campaign, display the popup
+          const gameCampaign: ICampaign | undefined = campaigns.find(campaign => campaign.type === CampaignType.game);
+          if (gameCampaign) {
+            this.checkGame(gameCampaign);
+          }
+        },
+        () => {
+          // no campaign that is popup eligible. fail silently.
+        }
+      );
   }
 
-  // private checkGame(campaign: ICampaign): void {
-  //   this.gameService.getGamesFromCampaign(campaign.id)
-  //     .pipe(
-  //       filter(games => games.length > 0),
-  //       map(games => games[0])
-  //     )
-  //     .subscribe(
-  //       (game: IGame) => {
-  //         this.game = game;
-  //         const data = {
-  //           imageUrl: './assets/tap-tap.png',
-  //           text: campaign.name, // You’ve got a “Shake the Tree” reward!
-  //           buttonTxt: 'Play now',
-  //           afterClosedCallBack: this,
-  //         };
-  //         this.analytics.addEvent({
-  //           pageType: PageType.overlay,
-  //           pageName: campaign.name
-  //         });
-  //         this.dialog.open(RewardPopupComponent, { data });
-  //       },
-  //       () => { /* nothing to do here, just fail silently */ }
-  //     );
-  // }
+  private checkGame(campaign: ICampaign): void {
+    this.gameService.getGamesFromCampaign(campaign.id)
+      .pipe(
+        filter(games => games.length > 0),
+        map(games => games[0])
+      )
+      .subscribe(
+        (game: IGame) => {
+          this.game = game;
+          const data = {
+            imageUrl: './assets/tap-tap.png',
+            text: campaign.name, // You’ve got a “Shake the Tree” reward!
+            buttonTxt: 'Play now',
+            afterClosedCallBack: this,
+          };
+          this.analytics.addEvent({
+            pageType: PageType.overlay,
+            pageName: campaign.name
+          });
+          this.dialog.open(RewardPopupComponent, { data });
+        },
+        () => { /* nothing to do here, just fail silently */ }
+      );
+  }
 
   public dialogClosed(): void {
     if (this.reward) {

@@ -6,7 +6,8 @@ export enum GameType {
   shakeTheTree = 'shake',
   pinata = 'tap',
   scratch = 'scratch',
-  spin = 'spin'
+  spin = 'spin',
+  snake = 'snake'
 }
 
 export interface IEngagementTransaction {
@@ -25,7 +26,7 @@ export interface IGame {
   campaignId?: number;
   type: GameType;
   remainingNumberOfTries: number;
-  config: ITree | IPinata | IScratch | ISpin | null;
+  config: ITree | IPinata | IScratch | ISpin | ISnake | null;
   backgroundImg?: string;
   texts: {
     title?: string;
@@ -96,6 +97,12 @@ export interface ISpin {
   wheelPosition: string;
   pointerImg: string;
   background: string;
+}
+
+export interface ISnake {
+  snakeColor: string;
+  targetImg: string;
+  backgroundColor: string;
 }
 
 export interface ITree {

@@ -7,7 +7,7 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { RewardsService } from '@cl-core-services';
 import Utils from '@cl-helpers/utils';
-import { IWAssignedAttributes } from '@perx/whistler';
+import { IWAssignedAttributes, IJsonApiItem, IJsonApiListPayload } from '@perx/whistler';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 
 @Injectable({
