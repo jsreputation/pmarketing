@@ -79,8 +79,6 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   public availableStampCount: number = 0;
 
   public ngOnInit(): void {
-    console.log(this.cardBgImage)
-
     if (!Array.isArray(this.stamps)) {
       this.stamps = [];
     }
