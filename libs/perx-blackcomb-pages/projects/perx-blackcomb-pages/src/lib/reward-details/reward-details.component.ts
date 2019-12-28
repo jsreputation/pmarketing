@@ -16,7 +16,6 @@ import { Observable, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 interface IRewardConfig {
-  showExpiryOnRewardDetail: boolean;
   showVoucherBookingFromRewardsPage: boolean;
 }
 
