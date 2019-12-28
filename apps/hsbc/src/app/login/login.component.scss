@@ -66,8 +66,16 @@
     }
   }
 
-  &.hsbc-xmas {
+  &.hsbc-xmas, &.hsbc-collect2 {
     justify-content: start;
+
+    :host ::ng-deep .mat-form-field-flex {
+      font-size: 1.6rem;
+    }
+
+    .form-field {
+      height: 4.4rem;
+    }
 
     .logo {
       min-width: 18.5rem;
@@ -83,10 +91,10 @@
       box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.15);
       border-radius: 0.8rem;
       background-color: #ffffff;
-      padding: 2.4rem 1.5rem;
+      padding: 2.4rem 1.5rem 5.6rem;
       flex: 0;
 
-      &.hsbc-xmas {
+      &.hsbc-xmas, &.hsbc-collect2 {
         position: relative;
         top: 5vh;
       }
@@ -95,6 +103,7 @@
         text-align: left;
         font-size: 3.4rem;
         margin-top: 0;
+        font-weight: 500;
       }
 
       .error_msg {
@@ -103,6 +112,10 @@
 
       mat-form-field {
         &:first-child {
+          padding-bottom: 2.2rem;
+        }
+
+        &:last-child {
           padding-bottom: 1.2rem;
         }
       }
@@ -121,3 +134,4 @@
   align-items: center;
   justify-content: center;
 }
+
