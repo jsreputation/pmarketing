@@ -100,7 +100,6 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
       )
       .subscribe((token: string) => {
         this.authenticationService.saveUserAccessToken(token);
-        this.fetchCampaigns();
       });
 
     this.analytics.events$.subscribe(
@@ -121,8 +120,14 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
           this.data.siteSectionLevel3 = event.siteSectionLevel3;
         }
 
-        this.token = this.authenticationService.getUserAccessToken();
-        this.data.perxID = this.token;
+        this.authenticationService.getAccessToken().subscribe((token: string) => {
+          this.token = token;
+          if (this.token) {
+            this.checkAuth();
+          }
+          this.data.perxID = this.token;
+        });
+
         if (typeof _satellite === 'undefined') {
           return;
         }
@@ -131,7 +136,15 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     );
   }
 
-  private fetchCampaigns(): void {
+  private checkAuth(): void {
+    this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
+      if (isAuth) {
+        this.fetchPopupCampaigns();
+      }
+    });
+  }
+
+  private fetchPopupCampaigns(): void {
     this.campaignService.getCampaigns()
       .pipe(
         catchError(() => {
