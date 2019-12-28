@@ -134,13 +134,6 @@ describe('SignUpComponent', () => {
 
   describe('onInit', () => {
     it('should call readAppConfig, getThemeSetting, getSignupForm, getPI, getUserAccessToken, getAnonymous, getAppAccessToken, getState and appAccessTokenFetched to be true', fakeAsync(() => {
-      const configService: ConfigService = fixture.debugElement.injector.get<ConfigService>(
-        ConfigService as Type<ConfigService>
-      );
-      const noticationServiceSpy = spyOn(configService, 'readAppConfig').and.returnValue(of({
-        showSubtitleLogin: true
-      }));
-
       const themesService: ThemesService = fixture.debugElement.injector.get<ThemesService>(
         ThemesService as Type<ThemesService>
       );
@@ -167,7 +160,6 @@ describe('SignUpComponent', () => {
       component.ngOnInit();
       tick();
       fixture.detectChanges();
-      expect(noticationServiceSpy).toHaveBeenCalled();
       expect(themesServiceSpy).toHaveBeenCalled();
       expect(formsServiceSpy).toHaveBeenCalled();
       expect(getPISpy).toHaveBeenCalled();
