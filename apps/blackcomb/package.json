@@ -30,6 +30,7 @@
     "@angular/service-worker": "~8.0.0",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
+    "ngx-infinite-scroll": "^8.0.1",
     "@perx/core": "^0.0.0",
     "@sentry/browser": "^5.10.1",
     "rxjs": "~6.4.0",
