@@ -23,6 +23,13 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   ];
 
   @Input()
+  public defaultCardBgImage: string = '';
+  @Input()
+  public defaultbackgroundImage: string = '';
+  @Input()
+  public defaultstampCardImage: string = '';
+
+  @Input()
   public stamps: IStamp[] | null = [];
 
   @Input()
@@ -72,6 +79,8 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   public availableStampCount: number = 0;
 
   public ngOnInit(): void {
+    console.log(this.cardBgImage)
+
     if (!Array.isArray(this.stamps)) {
       this.stamps = [];
     }
