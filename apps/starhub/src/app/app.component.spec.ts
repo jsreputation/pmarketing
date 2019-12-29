@@ -91,7 +91,8 @@ describe('AppComponent', () => {
   ];
   const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of(campaigns),
-    getCampaign: () => of(campaigns[0])
+    getCampaign: () => of(campaigns[0]),
+    issueAll: () => of()
   };
   const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of(game)
@@ -227,7 +228,7 @@ describe('AppComponent', () => {
       const routerSpy = spyOn(router, 'navigate');
       component.reward = rewards[0];
       component.dialogClosed();
-      expect(routerSpy).toHaveBeenCalledWith([`/reward`], { queryParams: { id: component.reward.id } });
+      expect(routerSpy).toHaveBeenCalledWith([`/home/vouchers`]);
       component.reward = undefined;
       component.game = game[0];
       component.dialogClosed();
