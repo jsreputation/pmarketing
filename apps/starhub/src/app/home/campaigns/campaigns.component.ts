@@ -4,13 +4,17 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
 import { IMacaron, MacaronService } from '../../services/macaron.service';
 
+interface ICampaignWithMacaron extends ICampaign {
+  macaron?: IMacaron | null;
+}
 @Component({
   selector: 'app-campaigns',
   templateUrl: './campaigns.component.html',
   styleUrls: ['./campaigns.component.scss']
 })
+
 export class CampaignsComponent implements OnInit {
-  public campaigns: ICampaign[];
+  public campaigns: ICampaignWithMacaron[];
   public games: IGame[];
 
   @Output()
@@ -40,11 +44,17 @@ export class CampaignsComponent implements OnInit {
             const isComingSoon = campaign.beginsAt && campaign.beginsAt.getTime() > currentDate.getTime();
             return isComingSoon || ((games.filter((game) => game.campaignId === campaign.id).length) > 0);
           }
-        );
+        ).map((campaign) => {
+          campaign.macaron = this.getCampaignMacaron(campaign);
+          return campaign;
+        });
       });
   }
 
-  public selected(campaign: ICampaign): void {
+  public selected(campaign: ICampaignWithMacaron): void {
+    if (campaign.macaron && campaign.macaron.class === 'coming-soon') {
+      return;
+    }
     const gameWithCampaign = this.games.find((game) => game.campaignId === campaign.id);
 
     if (gameWithCampaign) {
