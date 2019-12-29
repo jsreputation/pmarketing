@@ -5,11 +5,33 @@ jobs:
     name: build-prod
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
       - uses: azure/k8s-set-context@v1
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.BUILDER_KUBE_CONFIG }}
+      - name: Get changed folders
+        run: |
+          git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin master
+          PR=${GITHUB_REF/refs/remotes}
+          CHANGED_FILES=$(git --no-pager diff --name-only remotes/origin/master...${PR})
+          echo "Files changed:"
+          echo "${CHANGED_FILES[@]}"
+          APP_REGEX="apps\/([A-Za-z\-]+)\/"
+          APPS=()
+          for FILE in ${CHANGED_FILES[@]}; do
+            if ! [[ ${FILE} =~ ${APP_REGEX} ]]; then
+              APPS=$(cd apps; ls -d *)
+              break
+            else
+              APP=${BASH_REMATCH[1]}
+              if ! [[ ${APPS[@]} =~ ${APP} ]]; then
+                APPS+=${APP}
+              fi
+            fi
+          done
+          echo "Apps to build:"
+          echo "${APPS[@]}"
       - name: Check branch name
         run: |
           REGEX="[[:alpha:]]+-[[:digit:]]+"
@@ -93,8 +115,9 @@ jobs:
           WAIT_TIME=0
           for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
             until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" = "Running" ] || [ $WAIT_TIME -gt 600 ]; do
+              echo "Waiting ${WAIT_TIME} seconds for tekton task: ${TASKRUN_NAME}"
+              echo "Current task state: $(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')"
               (( WAIT_TIME+=3 ))
-              echo "Wait for tekton task: ${TASKRUN_NAME}"
               sleep 3
             done
           done

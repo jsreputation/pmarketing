@@ -126,12 +126,24 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         if (event.siteSectionLevel3) {
           this.data.siteSectionLevel3 = event.siteSectionLevel3;
         }
+        this.getAccessToken();
+
         if (typeof _satellite === 'undefined') {
           return;
         }
         _satellite.track('msa-rewards-virtual-page');
       }
     );
+  }
+
+  private getAccessToken(): void {
+    this.authenticationService.getAccessToken().subscribe((token: string) => {
+      this.token = token;
+      if (this.token) {
+        this.checkAuth();
+      }
+      this.data.perxID = this.token;
+    });
   }
 
   private checkAuth(): void {
@@ -181,6 +193,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
               pageType: PageType.overlay,
               pageName: campaign.name
             });
+            this.campaignService.issueAll(campaign.id);
             return;
           }
 
@@ -223,7 +236,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
 
   public dialogClosed(): void {
     if (this.reward) {
-      this.router.navigate([`/reward`], { queryParams: { id: this.reward.id } });
+      this.router.navigate([`/home/vouchers`]);
     } else if (this.game) {
       this.router.navigate([`/game`], { queryParams: { id: this.game.id } });
     } else {
