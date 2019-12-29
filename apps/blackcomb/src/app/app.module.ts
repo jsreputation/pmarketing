@@ -1,7 +1,18 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, LOCALE_ID, Injectable, ErrorHandler } from '@angular/core';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import * as Hammer from 'hammerjs';
+
+// https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
+// to override default settings
+export class MyHammerConfig extends HammerGestureConfig {
+  public overrides: any =  {
+    swipe: { direction: Hammer.DIRECTION_ALL }, // in order to swipe up and down
+    pinch: { enable: false },
+    rotate: { enable: false }
+  };
+}
 import {
   PerxCoreModule,
   AuthenticationModule,
@@ -115,7 +126,11 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
       deps: [TokenStorage],
       useFactory: LocaleIdFactory
     },
-    { provide: ErrorHandler, useClass: SentryErrorHandler }
+    { provide: ErrorHandler, useClass: SentryErrorHandler },
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig,
+    }
   ],
   entryComponents: []
 })

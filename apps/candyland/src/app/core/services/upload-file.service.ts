@@ -3,6 +3,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { UploadFileHttpService } from '@cl-core/http-services/upload-file-http.service';
 import { map } from 'rxjs/operators';
 import { FileUploadAdapter } from '@cl-core/http-adapters/file-upload-adapter';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 
 @Injectable({
   providedIn: 'root'

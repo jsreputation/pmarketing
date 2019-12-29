@@ -88,6 +88,8 @@ export class V4VouchersService implements IVoucherService {
 
   public static v4VoucherToVoucher(v: IV4Voucher): IVoucher {
     const reward: IV4Reward | null = v.reward ? v.reward : null;
+    const accessoryImage = reward && reward.images && reward.images.length ?
+      reward.images.find((image) => image.type === 'accessory_image') : null;
     return {
       id: v.id,
       reward: reward ? V4RewardsService.v4RewardToReward(reward) : null,
@@ -98,7 +100,8 @@ export class V4VouchersService implements IVoucherService {
       redemptionType:
         v.redemption_type !== null &&
           (v.redemption_type.type !== null && v.redemption_type.type !== 'offline') ? v.redemption_type.type :
-          v.voucher_type.toString() === 'code' ? RedemptionType.txtCode : v.voucher_type
+          v.voucher_type.toString() === 'code' ? RedemptionType.txtCode : v.voucher_type,
+      accessoryImage: oc(accessoryImage).url('')
     };
   }
 

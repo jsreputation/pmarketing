@@ -53,8 +53,7 @@
                 {{'CAMPAIGN.LIMIT_PER_USER' | translate}}
               </dt>
               <dd class="card-value">{{campaign?.limits?.times}}
-                {{'CAMPAIGN.TIME' | translate}}
-                {{campaign?.limits?.times > 1 ? 's' : ''}}
+                {{'CAMPAIGN.TIME' | translate}}{{campaign?.limits?.times > 1 ? 's' : ''}}
               </dd>
             </div>
             <div *ngIf="campaign?.limits?.duration">
@@ -137,60 +136,6 @@
             </h3>
           </div>
         </div>
-
-
-
-        <!--Message-->
-        <div class="card-section" *ngIf="campaign?.channel?.message">
-          <div class="card-header">
-            <h3 class="card-title">
-              {{'CAMPAIGN.MESSAGE' | translate}}
-            </h3>
-          </div>
-          <div class="card-content">
-            {{campaign?.channel?.message}}
-          </div>
-        </div>
-
-
-
-        <!--schedule-->
-        <div class="card-section" *ngIf="campaign?.channel?.schedule?.sendDate">
-          <div class="card-header">
-            <h3 class="card-title">
-              {{'CAMPAIGN.SCHEDULE_DATE' | translate}}
-            </h3>
-          </div>
-
-          <div class="card-content">
-            <!--send date-->
-            <div class="card-row">
-              {{campaign?.channel?.schedule?.sendDate}}&nbsp;&nbsp;&nbsp;&nbsp;{{campaign?.channel?.schedule?.sendTime}}
-            </div>
-            <!--recurrence-->
-            <div class="card-row stretch" *ngIf="campaign?.channel?.schedule?.enableRecurrence">
-              <div class="row">
-                <div>
-                  <label class="card-label">
-                    {{'CAMPAIGN.REPEAT_EVERY' | translate}}
-                  </label>
-                  {{campaign?.channel?.schedule?.recurrence?.period}}&nbsp;{{campaign?.channel?.schedule?.recurrence?.period}}
-                </div>
-                <div>
-                  <!--repeat on-->
-                  <ng-container *ngIf="campaign?.channel?.schedule?.recurrence?.repeatOn.length > 0">
-                    <label class="card-label">
-                      {{'CAMPAIGN.REPEAT_ON' | translate}}
-                    </label>
-                    <span *ngFor="let repeatOn of campaign?.channel?.schedule?.recurrence?.repeatOn">
-                      {{repeatOn}},
-                    </span>
-                  </ng-container>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div class="sms" *ngIf="checkSmsExist()">
@@ -200,7 +145,7 @@
         </h3>
       </div>
 
-      <ng-container *ngIf="campaign?.notification?.launch.length">
+      <ng-container *ngIf="campaign?.notification?.launch?.length">
         <!--Message-->
         <div class="card-content">
           <div class="card-section" *ngFor="let launch of campaign.notification.launch; let index = index;" >
@@ -268,7 +213,7 @@
           </div>
         </div>
       </ng-container>
-      <ng-container *ngIf="campaign?.notification?.completed.length">
+      <ng-container *ngIf="campaign?.notification?.completed?.length">
         <!--Message-->
         <div class="card-content">
           <div class="card-section" *ngFor="let completed of campaign.notification.completed; let index = index;" >
@@ -319,7 +264,7 @@
           </div>
         </div>
       </ng-container>
-      <ng-container *ngIf="campaign?.notification?.campaignEnds.length">
+      <ng-container *ngIf="campaign?.notification?.campaignEnds?.length">
         <!--Message-->
         <div class="card-content">
           <div class="card-section" *ngFor="let campaignEnds of campaign.notification.campaignEnds; let index = index;" >
