@@ -197,16 +197,7 @@
                     </div>
                   </section>
 
-                  <div class="card-section">
-                    <div class="card-header">
-                      <h3 class="card-title">
-                        {{'CAMPAIGN.MESSAGE' | translate}}
-                      </h3>
-                    </div>
-                    <div class="card-content">
-                      {{launch.template.message}}
-                    </div>
-                  </div>
+
                 </section>
               </div>
             </div>
@@ -294,7 +285,7 @@
                     <span>{{'CAMPAIGN.AT' | translate}}</span>
                     <span>{{campaignEnds.time}}</span>
                   </div>
-                  <div class="card-section">
+                  <div class="card-content">
                     <div class="card-header">
                       <h3 class="card-title">
                         {{'CAMPAIGN.MESSAGE' | translate}}
@@ -316,7 +307,55 @@
 
 
     </mat-card>
-    <!-- TODO: Audience currently we don't have the field in Figma design, hide first -->
+    <!-- Audience -->
+    <mat-card class="card">
+      <div class="card-header">
+        <h2 class="card-title">
+          Audience
+        </h2>
+      </div>
+      <div class="card-content" *ngIf="campaign?.audience?.select && pools?.length">
+        {{pools[campaign.audience.select - 1].name}}
+      </div>
+
+      <div>
+        <h3 class="card-label label-text">
+          Filter by
+        </h3>
+      </div>
+
+      <div class="card-content"> <!--*ngIf="campaign?.audience?.filters?.genderEnabled"-->
+        <div class="card-section" *ngIf="campaign?.audience?.filters?.agesEnabled">
+          <div class="card-header">
+            <h3 class="card-title">
+              Age
+            </h3>
+          </div>
+          <div class="card-content">
+            <span *ngFor="let age of campaign.audience.filters.ages">
+              <ng-container *ngIf="age.from !== null && age.to !== null">
+                <span>{{age.from + " - " + age.to}}</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </ng-container>
+            </span>
+          </div>
+        </div>
+
+        <div class="card-section" *ngIf="campaign?.audience?.filters?.genderEnabled">
+          <div class="card-header">
+            <h3 class="card-title">
+              Gender
+            </h3>
+          </div>
+          <div class="card-content">
+            {{campaign.audience.filters.gender}}
+          </div>
+        </div>
+
+      </div>
+
+    </mat-card>
+
   </div>
   <cl-campaigns-mobile-preview [storeTemplate$]="store.template$" [tenantSettings]="tenantSettings">
   </cl-campaigns-mobile-preview>
