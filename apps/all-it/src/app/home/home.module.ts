@@ -5,7 +5,7 @@ import { MatCardModule, MatButtonModule } from '@angular/material';
 import { LoyaltyModule, RewardsModule, UtilsModule } from '@perx/core';
 import { HomeComponent, GamesCollectionComponent } from '@perx/blackcomb-pages';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 @NgModule({
   declarations: [
     HomeComponent,
@@ -20,11 +20,12 @@ import { TranslateModule } from '@ngx-translate/core';
     MatCardModule,
     MatButtonModule,
     TranslateModule.forChild(),
-    UtilsModule
+    UtilsModule,
+    InfiniteScrollModule
   ],
   exports: [
     HomeComponent,
     GamesCollectionComponent
-  ]
+  ],
 })
 export class HomeModule { }

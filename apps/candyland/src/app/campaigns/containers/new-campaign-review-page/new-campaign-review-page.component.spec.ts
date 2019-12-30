@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
+import {AudiencesService} from '@cl-core-services';
 
 describe('NewCampaignReviewPageComponent', () => {
   let component: NewCampaignReviewPageComponent;
@@ -32,6 +33,7 @@ describe('NewCampaignReviewPageComponent', () => {
             updateCampaign: (data: any) => data,
             currentCampaign$: new Subject()}},
         {provide: StepConditionService, useValue: {registerStepCondition: () => ({}) }},
+        {provide: AudiencesService, useValue: {getAudiencesList: () => new Subject()}},
         {provide: LocalStorageService, useValue: {}}
       ],
       schemas: [ NO_ERRORS_SCHEMA ]

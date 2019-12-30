@@ -13,10 +13,9 @@ import {
   IJsonApiPostData,
 } from '@perx/whistler';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
-import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
 import { WCampaignStatus, IWAudienceFilter } from '@perx/whistler';
-import { CampaignStatus } from '@cl-core/models/campaign/campaign-status.enum';
+import { CampaignStatus, InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
 
 export class CampaignsHttpAdapter {
   private static WStat2Stat: { [k in WCampaignStatus]: CampaignStatus } = {
@@ -118,16 +117,25 @@ export class CampaignsHttpAdapter {
       status: CampaignsHttpAdapter.WStat2Stat[campaignData.status],
       engagement_id: `${campaignData.engagement_id}`,
       engagement_type: EngagementTypeFromAPIMapping[campaignData.engagement_type], campaignInfo: {
-        informationCollectionSetting: CampaignsHttpAdapter.transformInformationCollectionType(
-          campaignData.display_properties.informationCollectionSetting
-        ),
         goal: campaignData.goal,
         startDate: DateTimeParser.stringToDate(campaignData.start_date_time),
         startTime: DateTimeParser.stringToTime(campaignData.start_date_time, 'LT'),
         endDate: DateTimeParser.stringToDate(campaignData.end_date_time),
         endTime: DateTimeParser.stringToTime(campaignData.end_date_time, 'LT'),
         disabledEndDate: !campaignData.end_date_time, labels: campaignData.labels
-      }, template: {}, outcomes: [], displayProperties: { ...campaignData.display_properties }
+      },
+      template: {},
+      outcomes: [],
+      notification: {
+        webNotification: {
+          webLink: campaignData.display_properties.weblink ? true : false,
+          webLinkOptions: CampaignsHttpAdapter.transformInformationCollectionType(
+            campaignData.display_properties.informationCollectionSetting
+          )
+        },
+        sms: false
+      },
+      displayProperties: { ...campaignData.display_properties }
     };
   }
 
@@ -139,9 +147,10 @@ export class CampaignsHttpAdapter {
       : null;
     const endDate = data.campaignInfo.endDate ? moment(moment(data.campaignInfo.endDate).format('l') + ' ' + endTime).format() : null;
     // When user not select weblink, default the information collection setting back to not required. Double confirm with Nocolas
-    const informationCollectionSetting = data.channel.type === 'weblink'
-      ? data.campaignInfo.informationCollectionSetting
+    const informationCollectionSetting = data.notification.webNotification.webLink
+      ? data.notification.webNotification.webLinkOptions
       : InformationCollectionSettingType.notRequired;
+    const weblink = data.notification.webNotification.webLink ? true : false;
     return {
       type: 'entities',
       attributes: {
@@ -155,7 +164,7 @@ export class CampaignsHttpAdapter {
         pool_id: data.audience.select ? Number.parseInt(data.audience.select, 10) : null,
         labels: data.campaignInfo.labels || [],
         audience_segment: data.audience.select ? CampaignsHttpAdapter.transformAudienceFilter(data.audience.filters) : {},
-        display_properties: { ...data.displayProperties, informationCollectionSetting }
+        display_properties: { ...data.displayProperties, informationCollectionSetting, weblink }
       }
     };
   }
