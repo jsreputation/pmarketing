@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { IWPools } from '@perx/whistler';
+import { IPools } from '@cl-core/models/audiences/audiences';
 
 @Component({
   selector: 'cl-select-audience',
@@ -9,7 +9,7 @@ import { IWPools } from '@perx/whistler';
 })
 export class SelectAudienceComponent implements OnInit {
   @Input() public group: FormGroup;
-  @Input() public pools: IWPools;
+  @Input() public pools: IPools;
 
   public get poolId(): AbstractControl {
     return this.group.get('poolId');
