@@ -94,7 +94,7 @@ export class V4CampaignService implements ICampaignService {
   }
 
   public issueAll(id: number): Observable<IVoucher[]> {
-    return this.http.get<IV4IssueCampaignResponse>(`${this.baseUrl}/v4/campaigns/${id}/issue_all`)
+    return this.http.post<IV4IssueCampaignResponse>(`${this.baseUrl}/v4/campaigns/${id}/issue_all`, null)
       .pipe(
         map(resp => resp.data.vouchers),
         map((vouchers: IV4Voucher[]) => vouchers.map(voucher => V4VouchersService.v4VoucherToVoucher(voucher)))
