@@ -8,7 +8,6 @@ import {
   ICampaignService,
   ICampaign,
   CampaignType,
-  IReward,
   IGameService,
   IGame,
   TokenStorage,
