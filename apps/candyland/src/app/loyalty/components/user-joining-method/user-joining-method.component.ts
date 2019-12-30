@@ -10,6 +10,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class UserJoinMethodComponent implements OnInit, OnDestroy {
   @Input() public group: FormGroup;
+  @Input() public currency: string = 'SGD';
   protected destroy$: Subject<void> = new Subject();
 
   public get joinMethod(): FormGroup {
