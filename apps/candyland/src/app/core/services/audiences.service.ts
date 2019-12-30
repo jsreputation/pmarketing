@@ -8,22 +8,28 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 import { IWAudiences, IJsonApiItem, IJsonApiListPayload } from '@perx/whistler';
 import { IAudience } from '@cl-core/models/audiences/audiences';
 
+export interface IPoolUserLink {
+  name: string;
+  checked: boolean;
+  value: { id: string; type: string; };
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class AudiencesService implements ITableService {
+export class AudiencesService implements ITableService<IAudience> {
 
   constructor(private http: AudiencesHttpsService) {
   }
 
-  public getAudiences(params: HttpParamsOptions): Observable<any> {
+  public getAudiences(params: HttpParamsOptions): Observable<IJsonApiListPayload<IWAudiences>> {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.http.getAudiences(httpParams);
   }
 
   public getAudiencesList(
     params: HttpParamsOptions = {}
-  ): Observable<{ name: string, checked: boolean, value: { id: string, type: string } }[]> {
+  ): Observable<IPoolUserLink[]> {
     const defaultParams: HttpParamsOptions = {
       'page[number]': '1',
       'page[size]': '20'
@@ -33,13 +39,15 @@ export class AudiencesService implements ITableService {
       .pipe(
         map((res: IJsonApiListPayload<IWAudiences>) => {
           const poolsList = res.data;
-          return poolsList.map((pool: IJsonApiItem<IWAudiences>) => {
-            return {
-              name: pool.attributes.name,
-              checked: false,
-              value: { id: pool.id, type: pool.type }
-            };
-          });
+          return poolsList
+            .filter((pool: IJsonApiItem<IWAudiences>) => !pool.attributes.system_generated)
+            .map((pool: IJsonApiItem<IWAudiences>) => {
+              return {
+                name: pool.attributes.name,
+                checked: false,
+                value: { id: pool.id, type: pool.type }
+              };
+            });
         }));
   }
 
@@ -47,7 +55,7 @@ export class AudiencesService implements ITableService {
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.http.getAudiences(httpParams)
       .pipe(
-        map((res: any) => AudiencesHttpAdapter.transformAudiencesTableData(res))
+        map((res: IJsonApiListPayload<IWAudiences>) => AudiencesHttpAdapter.transformAudiencesTableData(res))
       );
   }
 }
