@@ -9,8 +9,8 @@ import {
   NotificationService,
   PopUpClosedCallBack, VoucherState
 } from '@perx/core';
-import {of, Subject, Subscription} from 'rxjs';
-import {filter, switchMap, takeUntil, map, tap} from 'rxjs/operators';
+import { of, Subject, Subscription } from 'rxjs';
+import { filter, switchMap, takeUntil, map, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -122,20 +122,23 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
           return of(voucher);
         }),
         takeUntil(this.destroy$)
-      ).subscribe((voucher: Voucher) => {
-        if (voucher.state === VoucherState.issued) {
-          this.status = voucher.state;
-        }
-        if (this.status === VoucherState.issued && voucher.state === VoucherState.redeemed) {
-          this.notificationService.addPopup({
-            title: 'Successfully Redeemed!',
-            text: `You have redeemed ${voucher.reward ? voucher.reward.name : ''}.`,
-            buttonTxt: 'Close',
-            imageUrl: 'assets/redeem_success.png',
-          });
-          this.router.navigate(['wallet']);
-        }
-      });
+      ).subscribe(
+        (voucher: Voucher) => {
+          if (voucher.state === VoucherState.issued) {
+            this.status = voucher.state;
+          }
+          if (this.status === VoucherState.issued && voucher.state === VoucherState.redeemed) {
+            this.notificationService.addPopup({
+              title: 'Successfully Redeemed!',
+              text: `You have redeemed ${voucher.reward ? voucher.reward.name : ''}.`,
+              buttonTxt: 'Close',
+              imageUrl: 'assets/redeem_success.png',
+            });
+            this.router.navigate(['wallet']);
+          }
+        },
+        () => { /* voucher status polling is not implemented in whistler */ }
+      );
   }
 
   public ngOnDestroy(): void {
