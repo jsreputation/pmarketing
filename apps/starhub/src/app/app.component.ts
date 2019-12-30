@@ -85,6 +85,13 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
 
   public ngOnInit(): void {
     this.themeService.getThemeSetting().subscribe((theme) => this.theme = theme);
+    this.authenticationService.getAccessToken().subscribe((token: string) => {
+      this.token = token;
+      if (this.token) {
+        this.checkAuth();
+      }
+      this.data.perxID = this.token;
+    });
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) =>
         this.dialog.open(PopupComponent, {
@@ -100,7 +107,6 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
       )
       .subscribe((token: string) => {
         this.authenticationService.saveUserAccessToken(token);
-        this.fetchCampaigns();
       });
 
     this.analytics.events$.subscribe(
@@ -120,9 +126,8 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         if (event.siteSectionLevel3) {
           this.data.siteSectionLevel3 = event.siteSectionLevel3;
         }
+        this.getAccessToken();
 
-        this.token = this.authenticationService.getUserAccessToken();
-        this.data.perxID = this.token;
         if (typeof _satellite === 'undefined') {
           return;
         }
@@ -131,7 +136,25 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     );
   }
 
-  private fetchCampaigns(): void {
+  private getAccessToken(): void {
+    this.authenticationService.getAccessToken().subscribe((token: string) => {
+      this.token = token;
+      if (this.token) {
+        this.checkAuth();
+      }
+      this.data.perxID = this.token;
+    });
+  }
+
+  private checkAuth(): void {
+    this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
+      if (isAuth) {
+        this.fetchPopupCampaigns();
+      }
+    });
+  }
+
+  private fetchPopupCampaigns(): void {
     this.campaignService.getCampaigns()
       .pipe(
         catchError(() => {
@@ -143,7 +166,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         // for each campaign, get detailed version
         switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id)))),
         map((campaigns: ICampaign[]) => campaigns.filter(c => !this.idExistsInStorage(c.id))),
-        map((campaigns: ICampaign[]) =>  campaigns
+        map((campaigns: ICampaign[]) => campaigns
           .filter(campaign => campaign.type === CampaignType.give_reward)
           .filter(campaign => campaign.rewards && campaign.rewards.length > 0)),
       )
@@ -170,6 +193,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
               pageType: PageType.overlay,
               pageName: campaign.name
             });
+            this.campaignService.issueAll(campaign.id);
             return;
           }
 
@@ -212,7 +236,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
 
   public dialogClosed(): void {
     if (this.reward) {
-      this.router.navigate([`/reward`], { queryParams: { id: this.reward.id } });
+      this.router.navigate([`/home/vouchers`]);
     } else if (this.game) {
       this.router.navigate([`/game`], { queryParams: { id: this.game.id } });
     } else {
