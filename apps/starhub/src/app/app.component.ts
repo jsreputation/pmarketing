@@ -180,7 +180,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
             this.reward = campaign.rewards[0];
 
             const data = {
-              text: campaign.name,
+              text: campaign.description,
               imageUrl: 'assets/reward.png',
               buttonTxt: 'Claim!',
               rewardId: this.reward.id,
