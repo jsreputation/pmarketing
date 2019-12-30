@@ -70,9 +70,15 @@ $cs-step-header-icon-size: 16px !default;
   overflow: hidden;
 }
 
- //Increase specificity because ripple styles are part of the `cs-core` mixin and can
- //potentially overwrite the absolute position of the container.
+//Increase specificity because ripple styles are part of the `cs-core` mixin and can
+//potentially overwrite the absolute position of the container.
 .cs-step-header .cs-step-header-ripple {
   @include cs-fill;
   pointer-events: none;
 }
+
+.cs-step-header .disable {
+  pointer-events: none;
+  cursor: default;
+}
+

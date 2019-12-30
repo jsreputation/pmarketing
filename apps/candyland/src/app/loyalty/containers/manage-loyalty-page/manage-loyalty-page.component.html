@@ -45,24 +45,24 @@
   <div class="loyalty-loader">
     <mat-progress-bar class="loyalty-loader-bar" *ngIf="loading" mode="indeterminate"></mat-progress-bar>
   </div>
-  <cs-horizontal-stepper
-                          labelPosition="bottom"
+  <cs-horizontal-stepper  labelPosition="bottom"
                           #stepper
                           linear
+                          [disable]="loading"
                           (beforeSelectionChange)="clickStepLabel($event)"
                           [selectedIndex]="0">
     <!--step 1-->
     <cs-step>
       <ng-template csStepLabel>{{'LOYALTY_FEATURE.LOYALTY_DETAILS' | translate}}</ng-template>
-      <cl-loyalty-form-step-details *ngIf="form && stepOne" [group]="stepOne"
-                                    [pools]="manageConfig?.pools">
+      <cl-loyalty-form-step-details *ngIf="form && firstStepForm" [group]="firstStepForm"
+                                    [config]="manageConfig">
       </cl-loyalty-form-step-details>
     </cs-step>
     <!--step 2-->
     <cs-step>
       <ng-template csStepLabel>{{'LOYALTY_FEATURE.TIERS_CONVERSIONS' | translate}}</ng-template>
       <cl-loyalty-form-step-tiers-conversions *ngIf="stepProgress >= 1"
-                                              [group]="stepTwo"
+                                              [group]="secondStepForm"
                                               [customTierDataSource]="customTierDataSource"
                                               (tiersConversionsAction)="handleLoyaltyActions($event)"
                                               [config]="manageConfig">

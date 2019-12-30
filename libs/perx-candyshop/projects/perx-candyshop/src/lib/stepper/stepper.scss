@@ -55,6 +55,11 @@ $cs-stepper-line-gap: 8px !default;
   align-items: center;
   padding: 0 $cs-stepper-side-gap;
 
+  &.disable {
+    pointer-events: none;
+    cursor: default;
+  }
+
   .cs-step-icon {
     margin-right: $cs-stepper-line-gap;
     flex: none;

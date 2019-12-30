@@ -55,8 +55,12 @@ export class StepHeaderComponent extends CdkStepHeader implements OnDestroy {
   /** Whether the given step is optional. */
   @Input() public optional: boolean;
 
+  /** Whether disabled label buttons. */
+  @Input() public disable: boolean;
+
   /** Whether the ripple should be disabled. */
   @Input() public disableRipple: boolean;
+
 
   constructor(
     public _intl: StepperIntl,
