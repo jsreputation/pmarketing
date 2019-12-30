@@ -240,10 +240,11 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
       this.campaignService.issueAll(this.firstComefirstServeCampaign.id).subscribe(
         () => {
           this.router.navigate([`/home/vouchers`]);
+        },
+        () => {
+          console.error('Something fishy, we should not be here, without any reward or game');
         }
       );
-    // } else {
-    //   console.error('Something fishy, we should not be here, without any reward or game');
     }
   }
 
