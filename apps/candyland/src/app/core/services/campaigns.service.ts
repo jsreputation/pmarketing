@@ -13,7 +13,7 @@ import { CampaignStatus } from '@cl-core/models/campaign/campaign.enum';
 @Injectable({
   providedIn: 'root'
 })
-export class CampaignsService implements ITableService {
+export class CampaignsService implements ITableService<ICampaignTableData> {
 
   constructor(private campaignsHttpsService: CampaignsHttpsService) {
   }
