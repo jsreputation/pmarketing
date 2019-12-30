@@ -48,7 +48,6 @@ declare const _satellite: {
 })
 export class AppComponent implements OnInit, PopUpClosedCallBack {
   // public selectedCampaign: ICampaign;
-  public reward?: IReward;
   public game?: IGame;
   private token: string;
   public theme: ITheme;
@@ -173,17 +172,14 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         (campaigns: ICampaign[]) => {
           const firstComeFirstServed: ICampaign[] = campaigns
             .filter(campaign => campaign.type === CampaignType.give_reward);
-          // if there is a 1st come 1st served campaign and it has rewards, display the popup
+          // if there is a 1st come 1st served campaign, display the popup
           if (firstComeFirstServed.length > 0) {
             this.firstComefirstServeCampaign = firstComeFirstServed[0];
-            // @ts-ignore
-            // this.reward = campaign.rewards[0];
 
             const data = {
               text: this.firstComefirstServeCampaign.name,
               imageUrl: 'assets/reward.png',
               buttonTxt: 'Claim!',
-              // rewardId: this.reward.id,
               afterClosedCallBack: this,
               // @ts-ignore
               validTo: new Date(this.firstComefirstServeCampaign.endsAt)
