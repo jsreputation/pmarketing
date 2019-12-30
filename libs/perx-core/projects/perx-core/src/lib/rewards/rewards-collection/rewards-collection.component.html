@@ -2,7 +2,7 @@
   <ng-container *ngIf="rewards$ | async as rewards; else elseBlock">
     <mat-card matRipple *ngFor="let reward of rewards" (click)="rewardClickedHandler(reward)">
       <img mat-card-image *ngIf="reward.rewardThumbnail || defaultImg" [class.no-image]="!reward.rewardThumbnail"
-        [src]="reward.rewardThumbnail || defaultImg" />
+        [src]="reward.rewardThumbnail || defaultImg" [alt]="reward.name" />
       <div class="no-default-img" mat-card-image *ngIf="!reward.rewardThumbnail && !defaultImg">
         <svg width="375" height="200" viewBox="0 0 375 200" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 0H375V200H0V0Z" fill="#4E4E4E" />
@@ -33,8 +33,7 @@
         <div
           *ngIf="reward.rewardPrice && reward.rewardPrice.length > 0"
           class="points overline"
-          [ngStyle]="{'color': themeFontColor ? themeFontColor : colorPrimary}"
-        >
+          [ngStyle]="{'color': themeFontColor ? themeFontColor : colorPrimary}">
           <div *ngFor="let rewardPrice of reward.rewardPrice">
             {{displayPriceFn(rewardPrice)}}</div>
         </div>
