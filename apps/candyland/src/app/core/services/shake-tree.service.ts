@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ShakeHttpService } from '@cl-core/http-services/shake-http.service';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
-import { IWTreeGameEngagementAttributes } from '@perx/whistler';
+import { IWTreeGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -23,14 +23,13 @@ export class ShakeTreeService {
     );
   }
 
-  public createShakeTree(data: any): Observable<IJsonApiPayload<IWTreeGameEngagementAttributes>> {
+  public createShakeTree(data: any): Observable<IJsonApiItemPayload<IWTreeGameEngagementAttributes>> {
     const sendData = EngagementHttpAdapter.transformFromShakeTheTreeForm(data);
-    return this.shakeHttpService.createShakeTree({data: sendData});
+    return this.shakeHttpService.createShakeTree({ data: sendData });
   }
 
-  public updateShakeTree(id: string, data: any): Observable<IJsonApiPayload<IWTreeGameEngagementAttributes>> {
-    const sendData = EngagementHttpAdapter.transformFromShakeTheTreeForm(data);
-    sendData.id = id;
-    return this.shakeHttpService.updateShakeTree(id, {data: sendData});
+  public updateShakeTree(id: string, data: any): Observable<IJsonApiItemPayload<IWTreeGameEngagementAttributes>> {
+    const sendData = { ...EngagementHttpAdapter.transformFromShakeTheTreeForm(data), id };
+    return this.shakeHttpService.updateShakeTree(id, { data: sendData });
   }
 }

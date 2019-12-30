@@ -88,6 +88,8 @@ export class V4VouchersService implements IVoucherService {
 
   public static v4VoucherToVoucher(v: IV4Voucher): IVoucher {
     const reward: IV4Reward | null = v.reward ? v.reward : null;
+    const accessoryImage = reward && reward.images && reward.images.length ?
+      reward.images.find((image) => image.type === 'accessory_image') : null;
     return {
       id: v.id,
       reward: reward ? V4RewardsService.v4RewardToReward(reward) : null,
@@ -98,7 +100,8 @@ export class V4VouchersService implements IVoucherService {
       redemptionType:
         v.redemption_type !== null &&
           (v.redemption_type.type !== null && v.redemption_type.type !== 'offline') ? v.redemption_type.type :
-          v.voucher_type.toString() === 'code' ? RedemptionType.txtCode : v.voucher_type
+          v.voucher_type.toString() === 'code' ? RedemptionType.txtCode : v.voucher_type,
+      accessoryImage: oc(accessoryImage).url('')
     };
   }
 
@@ -257,9 +260,11 @@ export class V4VouchersService implements IVoucherService {
       }),
       mergeAll(1),
       filter((voucher: IVoucher) => {
+        // todo: clean up this code because it creates 2 observables.
+        // workaround is to return true on first run to dispose of one observable
         if (current === 0) {
           previousState = voucher.state;
-          return false;
+          return true;
         }
 
         if (previousState === voucher.state) {
@@ -267,7 +272,6 @@ export class V4VouchersService implements IVoucherService {
         }
 
         previousState = voucher.state;
-
         return true;
       })
     );

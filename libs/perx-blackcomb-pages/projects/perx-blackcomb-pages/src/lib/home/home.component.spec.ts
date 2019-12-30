@@ -1,4 +1,6 @@
 import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
+import { Type } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,7 +14,8 @@ import {
   ProfileService,
   IGameService,
   ThemesService,
-  ConfigService
+  ConfigService,
+  IReward
 } from '@perx/core';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material';
@@ -20,9 +23,12 @@ import { GamesCollectionComponent } from './games-collection/games-collection.co
 import { TranslateModule } from '@ngx-translate/core';
 import { profile } from '../mock/profile.mock';
 import { HttpClientModule } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 const rewardsServiceStub: Partial<RewardsService> = {
-  getAllRewards: () => of([])
+  getAllRewards: () => of([]),
+  getRewards: () => of([])
 };
 
 const profileService: Partial<ProfileService> = {
@@ -39,9 +45,21 @@ const themesServiceStub = { getThemeSetting: () => of({})};
 
 const configServiceStub = { readAppConfig: () => of() };
 
+const reward: IReward = {
+  id: 1,
+  name: '',
+  description: 'Lorem ipsum',
+  subtitle: 'string',
+  validFrom: new Date('2018-12-16T03:24:00'),
+  validTo: new Date('2019-11-17T03:24:00'),
+  rewardBanner: '',
+  termsAndConditions: '',
+};
+
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
+  let router: Router;
 
   const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of([])
@@ -58,9 +76,11 @@ describe('HomeComponent', () => {
         UtilsModule,
         HttpClientModule,
         RouterTestingModule.withRoutes([]),
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        InfiniteScrollModule
       ],
       providers: [
+        Title,
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
@@ -74,6 +94,7 @@ describe('HomeComponent', () => {
   }));
 
   beforeEach(() => {
+    router = TestBed.get<Router>(Router as Type<Router>);
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -81,5 +102,11 @@ describe('HomeComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should navigate to reward detail page', () => {
+    const routerSpy = spyOn(router, 'navigate');
+    component.goToReward(reward);
+    expect(routerSpy).toHaveBeenCalledWith([`/reward-detail/${reward.id}`]);
   });
 });

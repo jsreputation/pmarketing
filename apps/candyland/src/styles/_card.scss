@@ -41,7 +41,7 @@
   }
 
   &-header {
-    height: 5.7rem;
+    min-height: 5.7rem;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
@@ -222,7 +222,7 @@
   }
 }
 
-.loyalty {
+.loyalty, .notification {
   white-space: nowrap;
   font-size: 1.4rem;
 
@@ -244,7 +244,7 @@
     justify-content: flex-start;
 
     .mat-form-field {
-      max-width: 7rem;
+      max-width: 7.4rem;
     }
 
     input {
@@ -266,6 +266,15 @@
     max-width: 17rem !important;
   }
 
+  &-rule-input {
+    max-width: 17rem !important;
+
+    input {
+      padding-left: 1rem;
+      text-align: left;
+    }
+  }
+
   &-points-input {
     margin-left: 6rem;
   }
@@ -280,5 +289,9 @@
     &:first-of-type {
       margin-bottom: 0;
     }
+  }
+
+  .dialog-content {
+    overflow-y: auto;
   }
 }

@@ -7,8 +7,9 @@ jobs:
     steps:
       # checkout is not needed since it's performed inside tekton taskrun
       # - uses: actions/checkout@master
-      - uses: azure/k8s-actions/k8s-set-context@master
+      - uses: azure/k8s-set-context@v1
         with:
+          method: kubeconfig
           kubeconfig: ${{ secrets.BUILDER_KUBE_CONFIG }}
       - name: Check branch name
         run: |
@@ -19,9 +20,9 @@ jobs:
           fi
       - name: Download tekton cli and install parallel
         run: |
-          curl -L https://github.com/tektoncd/cli/releases/download/v0.5.1/tkn_0.5.1_Linux_x86_64.tar.gz \
+          curl -L https://github.com/tektoncd/cli/releases/download/v0.6.0/tkn_0.6.0_Linux_x86_64.tar.gz \
           | sudo tar xzv -C /usr/local/bin tkn
-          sudo apt-get update && sudo apt-get install -y parallel
+          sudo apt-get --allow-releaseinfo-change update && sudo apt-get install -y parallel
       - name: Remove existing tasks
         run: |
           EXISTING_TASKS=$(kubectl -n build get taskrun -l github.ref=${GITHUB_REF//[^0-9a-zA-Z-_\.]/-},tekton.dev/task=microsite-apps-ng-lint -o=name)
@@ -32,7 +33,7 @@ jobs:
           fi
       - name: Create tekton task
         run: |
-          cat <<EOT | kubectl -n build create -f - --output=jsonpath={.metadata.name} | xargs -I {} echo "::set-env name=TASKRUN_NAME::{}"
+          TEKTON_TASK=$(cat <<EOT | kubectl -n build create -f - --output=jsonpath={.metadata.name}
           apiVersion: tekton.dev/v1alpha1
           kind: TaskRun
           metadata:
@@ -40,7 +41,7 @@ jobs:
             labels:
               github.ref: ${GITHUB_REF//[^0-9a-zA-Z-_\.]/-}
           spec:
-            serviceAccount: tekton
+            serviceAccountName: tekton
             taskRef:
               name: microsite-apps-ng-lint
             inputs:
@@ -74,11 +75,16 @@ jobs:
                           values:
                           - highcpu
           EOT
+          )
+          echo "Task: ${TEKTON_TASK}"
+          echo ::set-env name=TASKRUN_NAME::${TEKTON_TASK}
       - name: Wait for tekton task running
         run: |
           echo "Wait for tekton task: ${TASKRUN_NAME}"
           WAIT_TIME=0
           until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" = "Running" ] || [ $WAIT_TIME -gt 180 ]; do
+            echo "Waiting ${WAIT_TIME} seconds for tekton task: ${TASKRUN_NAME}"
+            echo "Current task state: $(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')"
             (( WAIT_TIME+=5 ))
             sleep 5
           done
@@ -100,3 +106,7 @@ jobs:
             echo "Taskrun ${TASKRUN_NAME} status is ${REASON}, fail the job"
             exit 1
           fi
+      - name: Taskruns cleanup
+        if: always()
+        run: |
+          tkn -n build taskrun delete ${TASKRUN_NAME}

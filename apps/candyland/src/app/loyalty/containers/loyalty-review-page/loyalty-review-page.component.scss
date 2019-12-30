@@ -1,0 +1,12 @@
+.rule-loader {
+  position: relative;
+  height: 1.5rem;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+
+  &-bar {
+    width: 98%;
+  }
+}

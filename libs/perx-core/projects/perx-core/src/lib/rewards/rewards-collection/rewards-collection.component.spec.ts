@@ -4,17 +4,13 @@ import {
   TestBed,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
 import { of } from 'rxjs';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-
 import { RewardsCollectionComponent } from './rewards-collection.component';
-
 import { IReward } from '../models/reward.model';
 import { MaterialModule } from '../../shared/material.module';
 import { UtilsModule } from '../../utils/utils.module';
 import { ThemesService } from '../../utils/themes/themes.service';
-import { RedemptionType } from '../../perx-core.models';
 
 describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;
@@ -51,7 +47,6 @@ describe('RewardsCollectionComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: RedemptionType.pin,
       categoryTags: [],
       inventory: {
         rewardTotalBalance: 1,
@@ -85,7 +80,6 @@ describe('RewardsCollectionComponent', () => {
       merchantWebsite: '',
       termsAndConditions: '',
       howToRedeem: '',
-      redemptionType: RedemptionType.pin,
       categoryTags: [],
       inventory: {
         rewardTotalBalance: 2,
@@ -178,7 +172,6 @@ describe('RewardsCollectionComponent', () => {
         merchantWebsite: '',
         termsAndConditions: '',
         howToRedeem: '',
-        redemptionType: RedemptionType.pin,
         categoryTags: [],
         inventory: {
           rewardTotalBalance: 1,
@@ -212,7 +205,6 @@ describe('RewardsCollectionComponent', () => {
         merchantWebsite: '',
         termsAndConditions: '',
         howToRedeem: '',
-        redemptionType: RedemptionType.pin,
         categoryTags: [],
         inventory: {
           rewardTotalBalance: 2,
@@ -261,7 +253,6 @@ describe('RewardsCollectionComponent', () => {
         merchantWebsite: '',
         termsAndConditions: '',
         howToRedeem: '',
-        redemptionType: RedemptionType.pin,
         categoryTags: [],
         inventory: {
           rewardTotalBalance: 1,
@@ -295,7 +286,6 @@ describe('RewardsCollectionComponent', () => {
         merchantWebsite: '',
         termsAndConditions: '',
         howToRedeem: '',
-        redemptionType: RedemptionType.pin,
         categoryTags: [],
         inventory: {
           rewardTotalBalance: 2,

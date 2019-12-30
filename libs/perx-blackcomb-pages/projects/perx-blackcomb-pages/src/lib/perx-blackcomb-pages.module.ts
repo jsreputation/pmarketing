@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AccountComponent } from './account/account.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ContentComponent } from './content/content.component';
 import {
   MatProgressBarModule,
@@ -47,7 +48,8 @@ import {
   LoyaltySummaryComponent,
   LoyaltyTransactionsListComponent,
   NewsfeedComponent,
-  PinInputComponent
+  PinInputComponent,
+  PasswordComponent
 } from '@perx/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -56,7 +58,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { NgxBarcodeModule } from 'ngx-barcode';
-import { LoginComponent } from './login/login.component';
+import { SignIn2Component } from './sign-in-2/sign-in-2.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { QRComponent } from './qr/qr.component';
 import { RedeemComponent } from './redeem/redeem.component';
@@ -76,7 +78,8 @@ import { TransactionHistoryComponent } from './transaction-history/transaction-h
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EnterPinComponent } from './enter-pin/enter-pin.component';
 import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
-import { FeedItemPopupComponent } from './feed-item-popup/feed-item-popup.component';
+import { ProfileBarcodeComponent } from './profile-barcode/profile-barcode.component';
+import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -93,7 +96,7 @@ const comps: any[] = [
   BarcodeRedemptionComponent,
   LoadingComponent,
   RedeemComponent,
-  LoginComponent,
+  SignIn2Component,
   SignInComponent,
   QRComponent,
   RewardDetailsComponent,
@@ -107,6 +110,7 @@ const comps: any[] = [
   PhoneComponent,
   GroupComponent,
   RatingComponent,
+  PasswordComponent,
   PictureSelectComponent,
   LongTextComponent,
   DateComponent,
@@ -128,7 +132,8 @@ const comps: any[] = [
   EnterPinComponent,
   PinInputComponent,
   RewardsBookingComponent,
-  FeedItemPopupComponent
+  ProfileBarcodeComponent,
+  EditProfileFieldComponent
 ];
 
 @NgModule({
@@ -156,7 +161,8 @@ const comps: any[] = [
     MatDatepickerModule,
     TranslateModule.forChild(),
     MatToolbarModule,
-    MatListModule
+    MatListModule,
+    InfiniteScrollModule
   ],
   exports: [
     ...comps,

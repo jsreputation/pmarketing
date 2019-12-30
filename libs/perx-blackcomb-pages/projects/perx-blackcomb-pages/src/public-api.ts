@@ -1,4 +1,3 @@
-export { FeedItemPopupComponent } from './lib/feed-item-popup/feed-item-popup.component';
 export { LoadingComponent } from './lib/loading/loading.component';
 export { PerxBlackcombPagesModule } from './lib/perx-blackcomb-pages.module';
 export { AccountComponent } from './lib/account/account.component';
@@ -9,12 +8,12 @@ export { TapComponent } from './lib/game/tap/tap.component';
 export { ShakeComponent } from './lib/game/shake/shake.component';
 export { ScratchComponent } from './lib/game/scratch/scratch.component';
 export { SpinComponent } from './lib/game/spin/spin.component';
-export {ConfigToSlicesPipe} from './lib/game/spin/spin.component';
-export {ConfigToMappedSlotPipe} from './lib/game/spin/spin.component';
+export { ConfigToSlicesPipe } from './lib/game/spin/spin.component';
+export { ConfigToMappedSlotPipe } from './lib/game/spin/spin.component';
 export { HistoryComponent } from './lib/history/history.component';
 export { HomeComponent } from './lib/home/home.component';
 export { RewardComponent } from './lib/reward/reward.component';
-export { LoginComponent } from './lib/login/login.component';
+export { SignIn2Component } from './lib/sign-in-2/sign-in-2.component';
 export { SignInComponent } from './lib/sign-in/sign-in.component';
 export { QRComponent } from './lib/qr/qr.component';
 export { RedeemComponent } from './lib/redeem/redeem.component';
@@ -32,3 +31,5 @@ export { TransactionHistoryComponent } from './lib/transaction-history/transacti
 export { ChangePasswordComponent } from './lib/change-password/change-password.component';
 export { EnterPinComponent } from './lib/enter-pin/enter-pin.component';
 export { RewardsBookingComponent } from './lib/rewards-booking/rewards-booking.component';
+export { ProfileBarcodeComponent } from './lib/profile-barcode/profile-barcode.component';
+export { EditProfileFieldComponent } from './lib/edit-profile-field/edit-profile-field.component';

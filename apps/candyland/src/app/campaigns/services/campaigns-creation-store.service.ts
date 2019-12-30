@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { ICampaign } from '@cl-core/models/campaign/campaign.interface';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 
 export interface ICampaignChoice {
   title: string;
@@ -15,6 +15,7 @@ export interface ICampaignConfig {
   goals: ICampaignChoice[];
   channelTypes: ICampaignChoice[];
   informationCollectionSettingTypes: ICampaignChoice[];
+  genderTypes: ICampaignChoice[];
 }
 
 @Injectable()
@@ -58,13 +59,18 @@ export class CampaignCreationStoreService {
       { title: 'CAMPAIGN.SALUTATION', value: '[salutation]' },
     ],
     channelTypes: [
-      { title: 'CAMPAIGN.ChannelTypes.WEBLINK', value: 'weblink' },
-      { title: 'CAMPAIGN.ChannelTypes.SMS', value: 'sms' },
+      { title: 'CAMPAIGN.CHANNEL_TYPES.WEBLINK', value: 'weblink' },
+      { title: 'CAMPAIGN.CHANNEL_TYPES.SMS', value: 'sms' },
     ],
     informationCollectionSettingTypes: [
       { title: 'CAMPAIGN.InformationCollectionSettingTypes.NO_INFORMATION', value: 'not_required' },
       { title: 'CAMPAIGN.InformationCollectionSettingTypes.PI_INFORMATION', value: 'pi_required' },
       { title: 'CAMPAIGN.InformationCollectionSettingTypes.SIGNUP_INFORMATION', value: 'signup_required' },
+    ],
+    genderTypes: [
+      { title: 'CAMPAIGN.GenderTypes.MALE', value: 'male' },
+      { title: 'CAMPAIGN.GenderTypes.FEMALE', value: 'female' },
+      { title: 'CAMPAIGN.GenderTypes.NOT_SPECIFY', value: 'not_specify' },
     ]
   };
 

@@ -5,10 +5,32 @@ jobs:
     name: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: azure/k8s-actions/k8s-set-context@master
+      - uses: actions/checkout@v2
+      - uses: azure/k8s-set-context@v1
         with:
+          method: kubeconfig
           kubeconfig: ${{ secrets.BUILDER_KUBE_CONFIG }}
+      - name: Get changed folders
+        run: |
+          git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin master
+          PR=${GITHUB_REF/refs/remotes}
+          CHANGED_FILES=$(git --no-pager diff --name-only remotes/origin/master...${PR})
+          echo "Files changed:"
+          echo "${CHANGED_FILES[@]}"
+          APP_REGEX="apps\/([A-Za-z\-]+)\/"
+          LIB_REGEX="libs\/([A-Za-z\-]+)\/"
+          BACKEND_REGEX="backend\/([A-Za-z\-]+)\/"
+          APPS=()
+          for FILE in ${CHANGED_FILES[@]}; do
+            if [[ ${FILE} =~ ${APP_REGEX} || ${FILE} =~ ${LIB_REGEX} || ${FILE} =~ ${BACKEND_REGEX} ]]; then
+              APP=${BASH_REMATCH[1]}
+              if ! [[ ${APPS[@]} =~ ${APP} ]]; then
+                APPS+=${APP}
+              fi
+            fi
+          done
+          echo "Apps to test:"
+          echo "${APPS[@]}"
       - name: Check branch name
         run: |
           REGEX="[[:alpha:]]+-[[:digit:]]+"
@@ -27,9 +49,9 @@ jobs:
           echo ::set-env name=BACKEND_FOLDERS::${BACKEND_FOLDERS[@]}
       - name: Download tekton cli and install parallel
         run: |
-          curl -L https://github.com/tektoncd/cli/releases/download/v0.5.1/tkn_0.5.1_Linux_x86_64.tar.gz \
+          curl -L https://github.com/tektoncd/cli/releases/download/v0.6.0/tkn_0.6.0_Linux_x86_64.tar.gz \
           | sudo tar xzv -C /usr/local/bin tkn
-          sudo apt-get update && sudo apt-get install -y parallel
+          sudo apt-get --allow-releaseinfo-change update && sudo apt-get install -y parallel
       - name: Remove existing tasks
         run: |
           EXISTING_TASKS=$(kubectl -n build get taskrun -l github.ref=${GITHUB_REF//[^0-9a-zA-Z-_\.]/-},tekton.dev/task=microsite-apps-ng-test -o=name)
@@ -51,7 +73,7 @@ jobs:
             labels:
               github.ref: ${GITHUB_REF//[^0-9a-zA-Z-_\.]/-}
           spec:
-            serviceAccount: tekton
+            serviceAccountName: tekton
             taskRef:
               name: microsite-apps-ng-test
             inputs:
@@ -91,15 +113,17 @@ jobs:
           )
           TEKTON_TASKS+=(${TEKTON_TASK})
           done
+          echo "Tasks: ${TEKTON_TASKS[@]}"
           echo ::set-env name=TEKTON_TASKS::${TEKTON_TASKS[@]}
       - name: Wait for tekton task running
         run: |
+          WAIT_TIME=0
           for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
-            echo "Wait for tekton task: ${TASKRUN_NAME}"
-            WAIT_TIME=0
-            until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" = "Running" ] || [ $WAIT_TIME -gt 180 ]; do
-              (( WAIT_TIME+=5 ))
-              sleep 5
+            until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" = "Running" ] || [ $WAIT_TIME -gt 600 ]; do
+              echo "Waiting ${WAIT_TIME} seconds for tekton task: ${TASKRUN_NAME}"
+              echo "Current task state: $(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')"
+              (( WAIT_TIME+=3 ))
+              sleep 3
             done
           done
       - name: Stream tekton logs
@@ -107,9 +131,9 @@ jobs:
           parallel tkn -n build taskrun logs -f {} ::: ${TEKTON_TASKS[@]}
       - name: Check task result
         run: |
+          WAIT_TIME=0
           for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
-            WAIT_TIME=0
-            until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" != "Running" ] || [ $WAIT_TIME -gt 30 ]; do
+            until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" != "Running" ] || [ $WAIT_TIME -gt 180 ]; do
               (( WAIT_TIME+=1 ))
               echo "Task ${TASKRUN_NAME} is still running, wait for 1 second"
               sleep 1
@@ -125,6 +149,12 @@ jobs:
         run: |
           for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
             if [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" != "Succeeded" ]; then
-              tkn -n build taskrun logs ${TASKRUN_NAME}
+              tkn -n build taskrun logs ${TASKRUN_NAME} -f
             fi
+          done
+      - name: Taskruns cleanup
+        if: always()
+        run: |
+          for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
+            tkn -n build taskrun delete ${TASKRUN_NAME}
           done

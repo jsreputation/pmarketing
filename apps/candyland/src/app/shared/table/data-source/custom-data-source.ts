@@ -59,6 +59,10 @@ export class CustomDataSource<T> extends DataSource<T> {
     return this.dataSubject.asObservable();
   }
 
+  public get state(): DataSourceStates {
+    return this.state$.value;
+  }
+
   public get hasData$(): Observable<boolean> {
     return this.dataSubject.pipe(
       map(data => data.length > 0)
@@ -147,30 +151,33 @@ export class CustomDataSource<T> extends DataSource<T> {
   }
 
   private loadingData(): void {
+    const pageNum = this.pageIndex + 1;
     const params: HttpParamsOptions = {
       ...this.params,
       ...this.prepareFilters(),
       ...this.sortPrepare(this.sort),
-      'page[number]': this.pageIndex + 1,
+      'page[number]': pageNum,
       'page[size]': this.pageSize
     };
     if (this.request) {
       this.request.unsubscribe();
     }
     this.loadingSubject.next(true);
-    this.request = this.dataService.getTableData(params)
-      .subscribe((res: ITableData<T>) => {
-        this.dataSubject.next(res.data);
-        this.lengthData.next(res.meta.record_count);
-        this.loadingSubject.next(false);
-        const status = (res.data.length > 0 && res.meta.record_count > 0) ? DataSourceStates.hasDataApi : DataSourceStates.noDataApi;
-        this.setState(status);
-      }, () => {
-        this.dataSubject.next([]);
-        this.lengthData.next(0);
-        this.loadingSubject.next(false);
-        this.setState(DataSourceStates.errorApi);
-      });
+    if (!isNaN(pageNum)) {
+      this.request = this.dataService.getTableData(params)
+        .subscribe((res: ITableData<T>) => {
+          this.dataSubject.next(res.data);
+          this.lengthData.next(res.meta.record_count);
+          this.loadingSubject.next(false);
+          const status = (res.data.length > 0 && res.meta.record_count > 0) ? DataSourceStates.hasDataApi : DataSourceStates.noDataApi;
+          this.setState(status);
+        }, () => {
+          this.dataSubject.next([]);
+          this.lengthData.next(0);
+          this.loadingSubject.next(false);
+          this.setState(DataSourceStates.errorApi);
+        });
+    }
   }
 
   private setState(state: DataSourceStates): void {
@@ -184,7 +191,7 @@ export class CustomDataSource<T> extends DataSource<T> {
       const sort = sortData.direction === 'asc'
         ? `${sortData.active}`
         : `-${sortData.active}`;
-      return { sort };
+      return {sort};
     }
     return {};
   }

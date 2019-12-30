@@ -15,6 +15,7 @@ import {
   IJsonApiListPayload,
   IJsonApiItem,
   IJsonApiItemPayload,
+  WCampaignStatus,
 } from '@perx/whistler';
 
 import {
@@ -25,6 +26,7 @@ import {
 import { ICampaignService } from './icampaign.service';
 
 import { Config } from '../config/config';
+import { IVoucher } from '../vouchers/models/voucher.model';
 
 enum WhistlerCampaignType {
   survey = 'survey',
@@ -47,6 +49,17 @@ export class WhistlerCampaignService implements ICampaignService {
     return WhistlerCampaignType[ty];
   }
 
+  private static WCStatus2CampaignState(status?: WCampaignStatus): CampaignState {
+    switch (status) {
+      case WCampaignStatus.active:
+        return CampaignState.active;
+      case undefined:
+      case WCampaignStatus.ended:
+      default:
+        return CampaignState.inactive;
+    }
+  }
+
   public static WhistlerCampaignToCampaign(campaign: IJsonApiItem<IWCampaignAttributes>): ICampaign {
     const cAttributes = campaign.attributes;
     return {
@@ -54,7 +67,7 @@ export class WhistlerCampaignService implements ICampaignService {
       name: cAttributes.name,
       description: cAttributes.goal || null,
       type: WhistlerCampaignService.WhistlerTypeToType(cAttributes.engagement_type),
-      state: cAttributes.status as CampaignState,
+      state: WhistlerCampaignService.WCStatus2CampaignState(cAttributes.status),
       endsAt: cAttributes.end_date_time ? new Date(cAttributes.end_date_time) : null,
       engagementId: cAttributes.engagement_id,
       rawPayload: cAttributes,
@@ -113,5 +126,9 @@ export class WhistlerCampaignService implements ICampaignService {
         map((campaigns: IJsonApiItemPayload<IWCampaignAttributes>) => campaigns.data),
         map((campaign: IJsonApiItem<IWCampaignAttributes>) => WhistlerCampaignService.WhistlerCampaignToCampaign(campaign)),
       );
+  }
+  // @ts-ignore
+  public issueAll(id: number): Observable<IVoucher[]> {
+    throw new Error('Method not implemented');
   }
 }

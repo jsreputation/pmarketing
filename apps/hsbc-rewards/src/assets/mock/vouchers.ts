@@ -1,4 +1,4 @@
-import { Voucher, VoucherState } from '@perx/core';
+import { Voucher, VoucherState, RedemptionType } from '@perx/core';
 
 export const voucher: Voucher[] = [{
   id: 0,
@@ -19,11 +19,11 @@ export const voucher: Voucher[] = [{
     merchantWebsite: '',
     termsAndConditions: '',
     howToRedeem: '',
-    redemptionType: undefined,
     categoryTags: [],
     inventory: undefined,
   },
   state: VoucherState.issued,
+  redemptionType: RedemptionType.none,
   expiry: new Date('09/09/2030'),
 }, {
   id: 1,
@@ -44,11 +44,11 @@ export const voucher: Voucher[] = [{
     merchantWebsite: '',
     termsAndConditions: '',
     howToRedeem: '',
-    redemptionType: undefined,
     categoryTags: [],
     inventory: undefined,
   },
   state: VoucherState.expired,
+  redemptionType: RedemptionType.none,
   expiry: new Date('09/09/2030'),
 }, {
   id: 1,
@@ -69,10 +69,10 @@ export const voucher: Voucher[] = [{
     merchantWebsite: '',
     termsAndConditions: '',
     howToRedeem: '',
-    redemptionType: undefined,
     categoryTags: [],
     inventory: undefined,
   },
   state: VoucherState.redeemed,
+  redemptionType: RedemptionType.none,
   expiry: new Date('09/09/2030'),
 }];

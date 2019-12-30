@@ -11,8 +11,11 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
 import { ProfileService } from '../../profile/profile.service';
 import { WhistlerAuthenticationService } from './whistler-authentication.service';
+
 import { IFormsService } from './iforms.service';
 import { WhistlerFormsService } from './whistler-forms.service';
+import { V4FormsService } from './v4-forms.service';
+
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { UtilsModule } from '../../utils/utils.module';
 
@@ -20,9 +23,9 @@ export function AuthServiceFactory(
   http: HttpClient,
   config: Config,
   tokenStorage: TokenStorage,
-  profileService: ProfileService,
+  profileService: ProfileService
 ): AuthenticationService {
-  // Make decision on what to instantiate base on config
+  // Make decision on what to instantiate based on config
   if (config.isWhistler) {
     return new WhistlerAuthenticationService(config, http, tokenStorage);
   }
@@ -30,7 +33,10 @@ export function AuthServiceFactory(
 }
 
 export function FormsServiceFactory(config: Config, http: HttpClient): IFormsService {
-  return new WhistlerFormsService(config, http);
+  if (config.isWhistler) {
+    return new WhistlerFormsService(config, http);
+  }
+  return new V4FormsService();
 }
 
 @NgModule({

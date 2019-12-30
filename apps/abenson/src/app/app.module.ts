@@ -37,7 +37,6 @@ import { HomeComponent } from './home/home.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { LoadingComponent } from './loading/loading.component';
 import { HistoryComponent } from './history/history.component';
 import { PromosComponent } from './promos/promos.component';
 import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
@@ -46,7 +45,6 @@ import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
 import { SmsValidationComponent } from './auth/sms-validation/sms-validation.component';
 import { QRCodeComponent } from './qr-code/qr-code.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
-import { AppTokenInterceptor } from './auth/apptoken.interceptor';
 import { PopupComponent } from './popup/popup.component';
 
 @NgModule({
@@ -55,7 +53,6 @@ import { PopupComponent } from './popup/popup.component';
     LoginComponent,
     HomeComponent,
     RedeemComponent,
-    LoadingComponent,
     HistoryComponent,
     PromosComponent,
     SignUpComponent,
@@ -97,8 +94,7 @@ import { PopupComponent } from './popup/popup.component';
     NgxBarcodeModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: AppTokenInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true }
   ],
   entryComponents: [PopupComponent],
   bootstrap: [AppComponent]

@@ -1,10 +1,21 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import {
+  map,
+  tap,
+  catchError,
+} from 'rxjs/operators';
+import {
+  Observable,
+  of,
+} from 'rxjs';
+
 import { ThemesService } from './themes.service';
 import { ITheme } from './themes.model';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { LIGHT } from './themes.model';
+
 import { Config } from '../../config/config';
-import { map, tap } from 'rxjs/operators';
 import { IConfig } from '../../config/models/config.model';
 
 @Injectable({
@@ -12,6 +23,7 @@ import { IConfig } from '../../config/models/config.model';
 })
 export class V4ThemesService extends ThemesService {
   private themeSettingEndpoint: string;
+  private responseCache: Map<string, ITheme> = new Map();
 
   constructor(private http: HttpClient, config: Config) {
     super();
@@ -23,9 +35,17 @@ export class V4ThemesService extends ThemesService {
     if (config && config.sourceType) {
       url = config.baseHref + `assets/${config.sourceType}-theme.json`;
     }
-    return this.http.get(url).pipe(
+    const themeSettingFromCache: ITheme | undefined  = this.responseCache.get(url);
+    if (themeSettingFromCache) {
+      return of(themeSettingFromCache);
+    }
+
+    const response: Observable<ITheme> = this.http.get(url).pipe(
       map((res) => res as ITheme),
-      tap((theme) => this.setActiveTheme(theme))
+      tap((theme: ITheme) => this.setActiveTheme(theme)),
+      catchError(() => of(LIGHT))
     );
+    response.subscribe((themeSetting: ITheme) => this.responseCache.set(url, themeSetting));
+    return response;
   }
 }

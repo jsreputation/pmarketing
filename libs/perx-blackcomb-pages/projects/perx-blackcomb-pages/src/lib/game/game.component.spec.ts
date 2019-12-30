@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
 import { ScratchComponent } from './scratch/scratch.component';
@@ -11,26 +11,69 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import {ConfigToMappedSlotPipe, ConfigToSlicesPipe, SpinComponent} from './spin/spin.component';
+import { ConfigToMappedSlotPipe, ConfigToSlicesPipe, SpinComponent } from './spin/spin.component';
+import { WInformationCollectionSettingType } from '@perx/whistler';
+
+const gamePi: IGame = {
+  id: 1,
+  campaignId: 1,
+  type: GameType.pinata,
+  remainingNumberOfTries: 1,
+  config: {
+    stillImg: '',
+    brokenImg: '',
+    nbTaps: 1,
+  },
+  texts: {},
+  results: {},
+  displayProperties: {
+    informationCollectionSetting: WInformationCollectionSettingType.pi_required,
+    noRewardsPopUp: {
+      headLine: 'test headline',
+      subHeadLine: 'test subHeadline',
+      buttonTxt: 'btnText',
+    },
+    successPopUp: {
+      headLine: 'test headline',
+      subHeadLine: 'test subHeadline',
+      buttonTxt: 'btnText',
+    },
+  },
+};
+
+const gameSignup: IGame = {
+  id: 1,
+  campaignId: 1,
+  type: GameType.pinata,
+  remainingNumberOfTries: 1,
+  config: {
+    stillImg: '',
+    brokenImg: '',
+    nbTaps: 1,
+  },
+  texts: {},
+  results: {},
+  displayProperties: {
+    informationCollectionSetting: WInformationCollectionSettingType.signup_required,
+    noRewardsPopUp: {
+      headLine: 'test headline',
+      subHeadLine: 'test subHeadline',
+      buttonTxt: 'btnText',
+    },
+    successPopUp: {
+      headLine: 'test headline',
+      subHeadLine: 'test subHeadline',
+      buttonTxt: 'btnText',
+    },
+  },
+};
 
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
-  const game: IGame = {
-    id: 1,
-    campaignId: 1,
-    type: GameType.pinata,
-    remainingNumberOfTries: 1,
-    config: {
-      stillImg: '',
-      brokenImg: '',
-      nbTaps: 1,
-    },
-    texts: {},
-    results: {},
-  };
+
   const gameServiceStub: Partial<IGameService> = {
-    getGamesFromCampaign: () => of([game]),
+    getGamesFromCampaign: () => of([gamePi]),
     prePlay: () => of(),
     prePlayConfirm: () => of(),
   };
@@ -100,5 +143,40 @@ describe('GameComponent', () => {
       expect(routerSpy).toHaveBeenCalledWith(['/wallet']);
       expect(getGamesFromCampaignSpy).toHaveBeenCalled();
     }));
+  });
+
+  it('should call redirectUrlAndPopup', () => {
+    const authService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
+      AuthenticationService as Type<AuthenticationService>);
+    const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
+
+    spyOn(authService, 'getAnonymous').and.returnValue(false);
+    spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of([gameSignup]));
+    spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [1, 2, 3] }));
+
+    const error = 'error';
+    const spy = spyOn(gameService, 'prePlayConfirm').and.returnValue(throwError(error));
+    const routerSpy = spyOn(router, 'navigate');
+    component.ngOnInit();
+    component.gameCompleted();
+    expect(spy).toHaveBeenCalled();
+    expect(routerSpy).toHaveBeenCalledWith(['/wallet']);
+  });
+
+  it('should set willWin true value', () => {
+    const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [1, 2, 3] }));
+    component.ngOnInit();
+    expect(spy).toHaveBeenCalled();
+    expect(component.willWin).toBe(true);
+  });
+
+  it('should set willWin false value', () => {
+    const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [] }));
+    component.ngOnInit();
+    expect(spy).toHaveBeenCalled();
+    expect(component.willWin).toBe(false);
   });
 });

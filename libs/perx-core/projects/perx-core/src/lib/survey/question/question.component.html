@@ -58,6 +58,12 @@
             [flush]="flush"
             (updateAnswers)="updateAnswer($event)"
         ></perx-core-phone>
+        <perx-core-password
+          *ngIf="question.payload.type === surveyQuestionType.password"
+          [payload]="question.payload"
+          [flush]="flush"
+          (updateAnswers)="updateAnswer($event)"
+        ></perx-core-password>
         <div
             class="error-message"
             *ngIf="question.payload.type !== surveyQuestionType.questionGroup">

@@ -43,7 +43,8 @@ import {
 
 import { ControlsName } from '../../../../models/controls-name';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
-import { IWScratchGameEngagementAttributes } from '@perx/whistler';
+import { IWScratchGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 
 @Component({
   selector: 'cl-new-scratch-page',
@@ -53,7 +54,7 @@ import { IWScratchGameEngagementAttributes } from '@perx/whistler';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewScratchPageComponent implements OnInit, OnDestroy {
-  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
+  @ViewChild(SimpleMobileViewComponent, { static: false }) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<void> = new Subject();
 
@@ -145,12 +146,12 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((imageUrl: IUploadedFile) => {
           if (this.id) {
-            return this.scratchService.updateScratch(this.id, {...this.form.value, image_url: imageUrl.url});
+            return this.scratchService.updateScratch(this.id, { ...this.form.value, image_url: imageUrl.url });
           }
-          return this.scratchService.createScratch({...this.form.value, image_url: imageUrl.url})
+          return this.scratchService.createScratch({ ...this.form.value, image_url: imageUrl.url })
             .pipe(
               tap(
-                (engagement: IJsonApiPayload<IWScratchGameEngagementAttributes>) =>
+                (engagement: IJsonApiItemPayload<IWScratchGameEngagementAttributes>) =>
                   this.availableNewEngagementService.transformAndSetNewEngagement(engagement)
               )
             );
@@ -179,8 +180,8 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
   private initScratchForm(): void {
     this.form = this.fb.group({
       name: ['Scratch the Card Template', [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: ['Scratch the Card and Win!', [
         Validators.required,

@@ -1,7 +1,10 @@
-import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnDestroy, Output} from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { IAdvancedUploadFileService, IUploadFileStatus, UploadStatus } from '@cl-core/services/iadvanced-upload-file.service';
+import { IAdvancedUploadFileService, IUploadFileStatus, FileUploadStatus } from '@cl-core/services/iadvanced-upload-file.service';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 
 @Component({
   selector: 'cl-upload-file',
@@ -15,10 +18,11 @@ import { IAdvancedUploadFileService, IUploadFileStatus, UploadStatus } from '@cl
     }
   ]
 })
-export class UploadFileComponent implements ControlValueAccessor {
+export class UploadFileComponent implements ControlValueAccessor, OnDestroy {
   public MAX_SIZE: number = 1;
   @Input() public label: string = '';
   @Input() public isRequired: boolean;
+  @Input() public downloadFile: string = 'assets/files/Users_template.csv';
   @Input() public options: any;
   @Output() public deleteFile: EventEmitter<void> = new EventEmitter();
   @Output() public uploadFile: EventEmitter<number> = new EventEmitter();
@@ -29,6 +33,7 @@ export class UploadFileComponent implements ControlValueAccessor {
   public message: string;
   public loadedFile: boolean = false;
   public loadingFile: boolean = false;
+  private destroy$: Subject<void> = new Subject();
 
   public onChange: any = () => { };
 
@@ -39,6 +44,11 @@ export class UploadFileComponent implements ControlValueAccessor {
     private uploadFileService: IAdvancedUploadFileService,
     private cd: ChangeDetectorRef
   ) { }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   public preview(files: FileList): void {
     this.message = null;
@@ -59,7 +69,6 @@ export class UploadFileComponent implements ControlValueAccessor {
       this.setError(`File\'s size is ${fileSize.toFixed(1)}Mb more than ${this.MAX_SIZE}Mb`);
       return;
     }
-
     this.fetchFile(file);
   }
 
@@ -96,24 +105,27 @@ export class UploadFileComponent implements ControlValueAccessor {
 
   private fetchFile(file: File): void {
     this.uploadFileService.uploadFile(file, this.options)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         (res: IUploadFileStatus) => {
           switch (res.status) {
-            case UploadStatus.COMPLETED:
+            case FileUploadStatus.success:
+            case FileUploadStatus.successWithError:
               this.loadedFile = true;
               this.setSelectedFile(res.fileName);
               this.message = null;
               this.loadingFile = false;
               this.uploadFile.emit(res.nbRecords || null);
               break;
-            case UploadStatus.ERROR:
+            case FileUploadStatus.error:
               this.loadedFile = false;
               this.setSelectedFile(null);
               this.uploadFile.emit(null);
               this.message = res.errorMsg || 'File haven\'t loaded successfully!';
               this.loadingFile = false;
               break;
-            case UploadStatus.UPLOADING:
+            case FileUploadStatus.processing:
+            case FileUploadStatus.pending:
               this.loadedFile = false;
               this.setSelectedFile(res.fileName);
               this.message = null;

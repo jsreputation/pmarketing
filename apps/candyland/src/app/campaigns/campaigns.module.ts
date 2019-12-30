@@ -27,8 +27,7 @@ import {
   MatSlideToggleModule,
   MatSortModule,
   MatStepperModule,
-  MatTableModule,
-  MatSnackBarModule
+  MatTableModule
 } from '@angular/material';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
@@ -78,14 +77,29 @@ import { SimpleMobileViewModule, PipesModule } from '@cl-shared';
 import { SurveyModule as PerxSurveyModule, GameModule, ConfigModule, PuzzlesModule, RewardsModule as PerxRewardsModule } from '@perx/core';
 import { environment } from '@cl-environments/environment';
 import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-preview/campaigns-mobile-preview.component';
+import { NewCampaignNotificationsComponent } from './containers/new-campaign-notifications/new-campaign-notifications.component';
+import { SubMenuComponent } from './components/sub-menu/sub-menu.component';
+import { SubMenuItemComponent } from './components/sub-menu/sub-menu-item/sub-menu-item.component';
+import { CampaignChannelsFormService } from './services/campaign-channels-form.service';
+import { CampaignLaunchMessageComponent } from './components/campaign-launch-message/campaign-launch-message.component';
+import { CampaignNotCompletedFormGroupComponent } from './components/campaign-not-completed-form-group/campaign-not-completed-form-group.component';
+import { BeforeCampaignEndsFormGroupComponent } from './components/before-campaign-ends-form-group/before-campaign-ends-form-group.component';
+import { BeforeRewardExpiresFormGroupComponent } from './components/before-reward-expires-form-group/before-reward-expires-form-group.component';
+import { NoStampsToNextRewardFormGroupComponent } from './components/no-stamps-to-next-reward-form-group/no-stamps-to-next-reward-form-group.component';
+import { EarnedStampFormGroupComponent } from './components/earned-stamp-form-group/earned-stamp-form-group.component';
+import { EarnedRewardFormGroupComponent } from './components/earned-reward-form-group/earned-reward-form-group.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { MessageService } from '@cl-core-services';
 
 @NgModule({
   providers: [
     CampaignCreationStoreService,
     StepConditionService,
     NewCampaignDetailFormService,
-    NewCampaignRewardsStampsFormService
+    NewCampaignRewardsStampsFormService,
+    MessageService,
+    NewCampaignRewardsStampsFormService,
+    CampaignChannelsFormService,
   ],
   declarations: [
     CampaignsListComponent,
@@ -105,6 +119,16 @@ import { TranslateModule } from '@ngx-translate/core';
     ReviewCampaignComponent,
     NewCampaignRewardsLimitsPageComponent,
     CampaignsMobilePreviewComponent,
+    NewCampaignNotificationsComponent,
+    SubMenuComponent,
+    SubMenuItemComponent,
+    CampaignLaunchMessageComponent,
+    CampaignNotCompletedFormGroupComponent,
+    BeforeCampaignEndsFormGroupComponent,
+    BeforeRewardExpiresFormGroupComponent,
+    NoStampsToNextRewardFormGroupComponent,
+    EarnedStampFormGroupComponent,
+    EarnedRewardFormGroupComponent,
   ],
   imports: [
     CommonModule,
@@ -121,7 +145,6 @@ import { TranslateModule } from '@ngx-translate/core';
     MatSortModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSnackBarModule,
     MatSelectModule,
     MatStepperModule,
     StatusLabelModule,

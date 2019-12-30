@@ -1,31 +1,51 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
+import {
+  MatCardModule,
+  MatIconModule,
+  MatDialogModule,
+  MatRippleModule,
+} from '@angular/material';
+import { Router } from '@angular/router';
+import { Type } from '@angular/core';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { RouterTestingModule } from '@angular/router/testing';
 
+import { of } from 'rxjs';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
+
+import {
+  GameModule,
+  RewardsService,
+  ICampaignService,
+  FeedReaderService,
+  IGameService,
+  IReward,
+} from '@perx/core';
+
+import { rewards } from 'src/app/rewards.mock';
+import { catalogs } from 'src/app/catalogs.mock';
 import { DiscoverComponent } from './discover.component';
+
 import { NewsFeedComponent } from '../news-feed/news-feed.component';
 import { CategoriesComponent } from '../categories/categories.component';
 import { RewardsCardsComponent } from '../rewards-cards/rewards-cards.component';
 import { CatalogsComponent } from '../catalogs/catalogs.component';
 import { CampaignsComponent } from '../campaigns/campaigns.component';
-import { MatCardModule, MatIconModule, MatDialogModule } from '@angular/material';
-import { RouterTestingModule } from '@angular/router/testing';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-import { GameModule, RewardsService, ICampaignService, FeedReaderService, IGameService, IReward } from '@perx/core';
-import { of } from 'rxjs';
-import { rewards } from 'src/app/rewards.mock';
-import { catalogs } from 'src/app/catalogs.mock';
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { Router } from '@angular/router';
-import { Type } from '@angular/core';
 
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
   let fixture: ComponentFixture<DiscoverComponent>;
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getAllRewards: () => of(rewards),
-    getAllCatalogs: () => of(catalogs)
+    getCatalogs: () => of(catalogs),
   };
 
-  const campaignServiceStub = {
+  const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of([])
   };
   const feedReaderServiceStub = {
@@ -55,14 +75,16 @@ describe('DiscoverComponent', () => {
         RouterTestingModule,
         NgxMultiLineEllipsisModule,
         ScrollingModule,
-        GameModule
+        GameModule,
+        InfiniteScrollModule,
+        MatRippleModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
         { provide: Router, useValue: routerStub },
-        { provide: IGameService, useValue: gameServiceStub }
+        { provide: IGameService, useValue: gameServiceStub },
       ]
     })
       .compileComponents();

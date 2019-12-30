@@ -1,4 +1,9 @@
-<div class="page" *ngIf="theme && theme.properties && appConfig">
+<div class="page" 
+  *ngIf="theme && theme.properties && appConfig" 
+  infiniteScroll  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"  
+  (scrolled)="onScroll()" 
+  [scrollWindow]="false">
   <div class="loyalty-block">
     <perx-core-loyalty-summary [titleFn]="titleFn"></perx-core-loyalty-summary>
     <div class="loyalty-item loyalty-item-qr">
@@ -7,9 +12,20 @@
         class="enlarge home-qr-button"
         routerLink="/qr"
         translate
+        *ngIf="!appConfig.showBarcodeOnHomeProfilePage"
       >
         {{ 'MY_QR' | translate }}
       </a>
+      <a
+        mat-raised-button
+        class="enlarge home-qr-button"
+        routerLink="/barcode"
+        translate
+        *ngIf="appConfig.showBarcodeOnHomeProfilePage"
+      >
+        {{ 'MY_BAR_CODE' | translate }}
+      </a>
+
     </div>
   </div>
   <perx-core-newsfeed [items$]="newsFeedItems" *ngIf="appConfig.showNewsfeedOnHomepage"></perx-core-newsfeed>
@@ -21,7 +37,7 @@
     <div class="title" translate>FEATURED_REWARDS</div>
     <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>
-  <div class="rewars-collection">
-    <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)"></perx-core-rewards-list-tabbed>
+  <div class="rewards-collection">
+    <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)" (tabChanged)="tabChanged($event)"></perx-core-rewards-list-tabbed>
   </div>
 </div>

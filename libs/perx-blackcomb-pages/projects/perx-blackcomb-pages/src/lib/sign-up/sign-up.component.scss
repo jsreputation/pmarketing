@@ -1,7 +1,19 @@
+@import "../mixins";
+
+.content-container {
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .sign-up {
+  border-radius: 0.5rem;
   margin: 2rem 1.6rem;
   padding: 1.6rem;
-  background: #fff;
+  background: white;
 
   .error_msg {
     padding-bottom: 1rem;
@@ -17,5 +29,11 @@
     box-sizing: border-box;
     padding: 1.2rem 1.5rem;
     background: #fff;
+  }
+
+  .subtitle {
+    margin-top: 1rem;
+
+    @include form-subtitle;
   }
 }

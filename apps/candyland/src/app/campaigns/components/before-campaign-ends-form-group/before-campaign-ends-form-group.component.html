@@ -1,0 +1,59 @@
+<section class="notification-wrap" *ngIf="group" [formGroup]="group">
+  <h2 class="card-title">
+    {{'CAMPAIGN.BEFORE_CAMPAIGN_ENDS_MESSAGE' | translate}} <span>{{index + 1}}</span>
+  </h2>
+  <div class="input-group notification-row">
+    <span>
+      {{'CAMPAIGN.MESSAGE_WILL_BE_SENT_ON' | translate}}
+    </span>
+    <mat-form-field>
+      <input type="number" [min]="1" matInput formControlName="numberPeriod">
+      <mat-error *ngIf="numberPeriod.hasError('required') && numberPeriod.touched">{{'ERROR_REQUIRED' | translate}}</mat-error>
+      <mat-error *ngIf="numberPeriod.hasError('min') && numberPeriod.touched">{{'ERROR_MIN_VALUE' | translate}} 1</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select formControlName="type">
+        <mat-option [value]="periodType.day">{{'DAY' | translate}}</mat-option>
+        <mat-option [value]="periodType.week">{{'WEEK' | translate}}</mat-option>
+        <mat-option [value]="periodType.month">{{'MONTH' | translate}}</mat-option>
+        <mat-option [value]="periodType.year">{{'YEAR' | translate}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="type.hasError('required') && type.touched">{{'ERROR_REQUIRED' | translate}}</mat-error>
+    </mat-form-field>
+    <span>
+      {{'CAMPAIGN.BEFORE_CAMPAIGN_ENDS' | translate}},</span>
+  </div>
+  <div class="input-group notification-row">
+    <span>{{'CAMPAIGN.AT' | translate}}</span>
+    <div class="date-field">
+      <cl-time-picker formControlName="time"></cl-time-picker>
+      <mat-error class="date-field-error" *ngIf="time.hasError('required') && time.touched">
+        {{'ERROR_REQUIRED' | translate}}
+      </mat-error>
+    </div>
+  </div>
+  <section class="notification-message">
+    <h2 class="card-title">
+      {{'CAMPAIGN.MESSAGE_CONTENT' | translate}}
+    </h2>
+    <cl-sms-editor [options]="shortCodes" [control]="group.get('template.message')">
+      <div class="date-field">
+        <mat-error *ngIf="group.get('template.message').hasError('required') && group.get('template.message').touched"
+                   class="date-field-error">
+          {{'ERROR_REQUIRED' | translate}}
+        </mat-error>
+      </div>
+    </cl-sms-editor>
+  </section>
+  <section class="notification-actions flex justify-content-between align-items-center">
+    <!--<cl-button classList="tertiary ph-0" (click)="sendTestSms()">-->
+      <!--<i class="material-icons">-->
+        <!--send-->
+      <!--</i>-->
+      <!--{{'CAMPAIGN.SEND_TEST_SMS' | translate}}-->
+    <!--</cl-button>-->
+    <cl-button classList="secondary" (click)="deleteCampaignEndsGroup()">{{'BTN_DELETE' | translate}}</cl-button>
+  </section>
+</section>
+
