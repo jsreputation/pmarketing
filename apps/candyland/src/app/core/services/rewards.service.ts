@@ -21,7 +21,7 @@ import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.int
 @Injectable({
   providedIn: 'root'
 })
-export class RewardsService implements ITableService {
+export class RewardsService implements ITableService<IRewardEntity> {
 
   constructor(private rewardHttp: RewardHttpService) {
   }
