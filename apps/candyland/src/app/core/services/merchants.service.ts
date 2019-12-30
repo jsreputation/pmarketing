@@ -11,7 +11,7 @@ import { IWMerchantAttributes, IWMerchantBranchAttributes, IJsonApiItemPayload }
 @Injectable({
   providedIn: 'root'
 })
-export class MerchantsService implements ITableService {
+export class MerchantsService implements ITableService<Merchant> {
 
   constructor(
     private merchantHttpService: MerchantHttpService,

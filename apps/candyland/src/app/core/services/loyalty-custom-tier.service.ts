@@ -10,7 +10,7 @@ import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
 @Injectable({
   providedIn: 'root'
 })
-export class LoyaltyCustomTierService implements ITableService {
+export class LoyaltyCustomTierService implements ITableService<ICustomTireForm> {
 
   constructor(private loyaltyHttpService: LoyaltyHttpService) {
   }
