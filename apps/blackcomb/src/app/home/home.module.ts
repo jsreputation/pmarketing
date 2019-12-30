@@ -5,7 +5,7 @@ import { MatCardModule, MatButtonModule } from '@angular/material';
 import { LoyaltyModule, RewardsModule, UtilsModule } from '@perx/core';
 import { HomeComponent, GamesCollectionComponent } from '@perx/blackcomb-pages';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 const routes: Routes = [{
   path: '',
   component: HomeComponent
@@ -27,6 +27,7 @@ const routes: Routes = [{
     MatButtonModule,
     TranslateModule.forChild(),
     RouterModule.forChild(routes),
+    InfiniteScrollModule
   ],
   exports: [
     HomeComponent,

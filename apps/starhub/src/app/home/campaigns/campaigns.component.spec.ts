@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { CampaignsComponent } from './campaigns.component';
-import { MatCardModule, MatIconModule } from '@angular/material';
+import { MatCardModule, MatIconModule, MatRippleModule } from '@angular/material';
 import { of } from 'rxjs';
 import { ICampaignService, CampaignType, CampaignState, IGameService, ICampaign, IGame, GameType } from '@perx/core';
 import { Type } from '@angular/core';
@@ -27,7 +27,8 @@ describe('CampaignsComponent', () => {
       declarations: [CampaignsComponent],
       imports: [
         MatCardModule,
-        MatIconModule
+        MatIconModule,
+        MatRippleModule
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },

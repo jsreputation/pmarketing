@@ -28,20 +28,16 @@ export class CommsHttpAdapter {
     templateId: string,
     campaignId: string
   ): IJsonApiPostData<IWCommEventAttributes> {
-    const sendTime = data.channel.schedule && data.channel.schedule.sendTime ? data.channel.schedule.sendTime : moment().format('LT');
-    const sendAt = data.channel.schedule ?
-      moment(moment(data.channel.schedule.sendDate).format('l') + ' ' + sendTime).format() :
-      '';
 
     return {
       type: 'events',
       attributes: {
-        send_at: sendAt,
+        send_at: '',
         provider_id: 1,
         owner_id: campaignId && parseInt(campaignId, 10) || null,
         owner_type: 'Perx::Campaign:Entity',
         template_id: templateId && parseInt(templateId, 10) || null,
-        channel: data.channel.type,
+        channel: 'weblink',
         target_id: data.audience.select && parseInt(data.audience.select, 10) || null,
         target_type: 'Ros::Cognito::Pool'
       }
