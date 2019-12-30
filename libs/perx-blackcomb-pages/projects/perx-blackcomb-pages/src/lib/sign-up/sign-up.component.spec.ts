@@ -1,5 +1,5 @@
 import { RouterTestingModule } from '@angular/router/testing';
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import {
   SurveyModule as PerxSurveyModule,
   IFormsService,
@@ -13,7 +13,7 @@ import {
   IAnswer
 } from '@perx/core';
 import { SignUpComponent } from './sign-up.component';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { MatSnackBar, MatInputModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -54,16 +54,20 @@ const surveyServiceStub: Partial<SurveyService> = {
 };
 
 const authServiceStub: Partial<AuthenticationService> = {
-  getUserId: () => 0,
+  getUserId: () => 1,
   autoLogin: () => of(),
-  mergeUserById: () => of(),
+  mergeUserById: () => of(void 0),
   getPI: () => '',
   getUserAccessToken: () => '',
   getAnonymous: () => true,
   logout: () => { },
   getAppToken: () => of({} as IWAppAccessTokenResponse),
   getAppAccessToken: () => 'token',
-  createUserAndAutoLogin: () => of()
+  createUserAndAutoLogin: () => of(),
+  saveUserId: () => void 0,
+  saveUserAccessToken: () => void 0,
+  savePI: () => void 0,
+  saveAnonymous: () => void 0
 };
 const themeServiceStub: Partial<ThemesService> = {
   getThemeSetting: () => of()
@@ -205,7 +209,7 @@ describe('SignUpComponent', () => {
       AuthenticationService as Type<AuthenticationService>
     );
 
-    const authSpy = spyOn(authenticationService, 'createUserAndAutoLogin').and.returnValue(of());
+    const authSpy = spyOn(authenticationService, 'createUserAndAutoLogin').and.returnValue(of(void 0));
 
     component.answers = answerPi;
     component.onSubmit();
@@ -217,4 +221,60 @@ describe('SignUpComponent', () => {
     component.updateErrorMessage('error');
     expect(component.errorMessage).toBe('error');
   }));
+
+  it('should call createUserAndAutoLogin onSubmit and throwError', fakeAsync(() => {
+    const answerPi: IAnswer[] = [
+      {
+        questionId: 'primary_identifier',
+        content: 'test'
+      }
+    ];
+
+    const location: Location = fixture.debugElement.injector.get<Location>(Location as Type<Location>);
+    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
+      AuthenticationService as Type<AuthenticationService>
+    );
+    spyOn(location, 'getState').and.returnValue({ popupData: {}, engagementType: 'str', collectInfo: true });
+    const error = {
+      error: {
+        message: 'error'
+      }
+    };
+
+    const authSpy = spyOn(authenticationService, 'createUserAndAutoLogin').and.returnValue(throwError(error));
+
+    component.answers = answerPi;
+    component.onSubmit();
+    tick();
+    expect(authSpy).toHaveBeenCalled();
+  }));
+
+  it('should call submitDataAndCollectInformation', () => {
+    const stateData = {
+      popupData: { title: 'test' },
+      engagementType: 'game',
+      collectInfo: true,
+    };
+    const location: Location = fixture.debugElement.injector.get<Location>(Location as Type<Location>);
+    spyOn(location, 'getState').and.returnValue(stateData);
+
+    component.answers = [
+      {
+        questionId: 'primary_identifier',
+        content: 'test'
+      }
+    ];
+
+    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
+      AuthenticationService as Type<AuthenticationService>
+    );
+    const authSpy = spyOn(authenticationService, 'createUserAndAutoLogin').and.returnValue(of(void 0));
+    spyOn(authenticationService, 'autoLogin').and.returnValue(throwError('error'));
+
+    component.ngOnInit();
+    component.onSubmit();
+
+    expect(authSpy).toHaveBeenCalled();
+  });
+
 });
