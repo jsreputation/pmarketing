@@ -18,7 +18,7 @@ import {
   LanguageService,
   ConfigService
 } from '@perx/core';
-
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
@@ -34,6 +34,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    InfiniteScrollModule,
     ConfigModule.forRoot({ ...environment }),
     BrowserModule,
     AppRoutingModule,

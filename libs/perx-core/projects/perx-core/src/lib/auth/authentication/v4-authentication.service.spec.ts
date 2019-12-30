@@ -180,7 +180,7 @@ describe('V4AuthenticationService', () => {
     spyAuth.and.returnValue(throwError(null));
     authService.login('user', 'pass').subscribe(() => { }, () => { });
     tick();
-    expect(authService.$failedAuthObservable instanceof Observable).toBeTruthy();
+    authService.$failedAuth.subscribe((val => expect(val).toBeTruthy()));
   })));
 
   it('should throw err', fakeAsync(inject([V4AuthenticationService, HttpClient],
@@ -211,7 +211,7 @@ describe('V4AuthenticationService', () => {
       spyOn(http, 'post').and.returnValue(throwError(null));
       authService.autoLogin().subscribe(() => { });
       tick();
-      expect(authService.$failedAuthObservable).toBeTruthy();
+      authService.$failedAuth.subscribe((val => expect(val).toBeTruthy()));
     })));
 
   it('sheck set and get InterruptedUrl', inject([V4AuthenticationService], (authService: V4AuthenticationService) => {
