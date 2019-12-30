@@ -511,9 +511,35 @@ export class BlackcombHistoryAppPage {
   }
 }
 
+export class BlackcombAccountAppPage {
+  public static navigateToBlackcombAccountApp(): Promise<string> {
+    return browser.get('https://generic-blackcomb-dev1.uat.whistler.perxtech.io/account') as Promise<string> ;
+  }
+
+  public static accountLinksArray(): ElementArrayFinder {
+    return element.all(by.css('.section>a'));
+  }
+
+  public static accountSection(): ElementFinder {
+    return element(by.css('.section'));
+  }
+
+  public static contentSection(): ElementFinder {
+    return element(by.css('.content>.content'));
+  }
+}
+
 export class ElementApp {
   public static h3Array(): ElementArrayFinder {
     return element.all(by.css('h3'));
+  }
+
+  public static h2Array(): ElementArrayFinder {
+    return element.all(by.css('h2'));
+  }
+
+  public static pArray(): ElementArrayFinder {
+    return element.all(by.css('p'));
   }
 
   public static h1(): ElementFinder {
