@@ -1,4 +1,4 @@
-import Utils from '@cl-helpers/utils';
+import Utils from '@es-helpers/utils';
 import { Observable } from 'rxjs';
 
 export enum RequestType {

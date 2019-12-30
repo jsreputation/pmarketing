@@ -76,7 +76,7 @@
     }
   }
 
-  > cl-button:first-child {
+  > es-button:first-child {
     margin-left: auto;
   }
 }
@@ -89,7 +89,7 @@
       padding: 0;
       margin: 0;
 
-      cl-button:not(:last-child) {
+      es-button:not(:last-child) {
         display: none;
       }
     }

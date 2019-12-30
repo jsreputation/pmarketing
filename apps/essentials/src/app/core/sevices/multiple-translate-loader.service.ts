@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ApiConfig } from '@es-core/api-config';
+import { TranslateDefaultLanguageService } from '@es-core/sevices/translate-default-language.service';
+import { environment } from '@es-environments/environment';
 import { TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from '@cl-environments/environment';
-import { ApiConfig } from '@cl-core/api-config';
 import { Injectable } from '@angular/core';
-import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
 
 export const translateLoader = (
   http: HttpClient,

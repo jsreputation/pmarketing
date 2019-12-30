@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 
-export class ClHttpParams {
+export class HttpParamsParser {
 
   public static createHttpParams(filters: any): HttpParams {
     if (filters) {

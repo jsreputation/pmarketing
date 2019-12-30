@@ -55,7 +55,7 @@
   &-content {
     position: relative;
 
-    cl-reward-item-preview:not(:last-child) {
+    es-reward-item-preview:not(:last-child) {
       display: block;
       margin-bottom: ($vertical-padding * 0.25);
     }

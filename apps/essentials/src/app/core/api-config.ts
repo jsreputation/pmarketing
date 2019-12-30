@@ -1,4 +1,4 @@
-import { environment } from '@cl-environments/environment';
+import { environment } from '@es-environments/environment';
 
 export class ApiConfig {
   public static basePath: string = environment.apiHost;

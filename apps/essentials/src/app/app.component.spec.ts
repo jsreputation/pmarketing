@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthService } from '@cl-core-services';
+import { AuthService } from '@es-core-services';
 import { AppComponent } from './app.component';
 import { TranslateModule } from '@ngx-translate/core';
 

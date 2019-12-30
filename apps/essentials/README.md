@@ -1,4 +1,4 @@
-# Candyland
+# Essentials
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.2.
 
@@ -26,7 +26,7 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
     ├── libs 
     ├── apps/ - all apps
     │   ├── … all other apps/
-    │   ├── candyland/
+    │   ├── essentials/
     |   │   ├── src/
     |   |   │   ├── app/
     |   |   │   │   ├── audience/

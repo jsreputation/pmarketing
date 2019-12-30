@@ -3,7 +3,7 @@
 
 @include mat-core();
 
-$candyland-blue: (
+$essentials-blue: (
   50: #e3f3ff,
   100: #bce1ff,
   200: #8dcfff,
@@ -36,10 +36,10 @@ $candyland-blue: (
   )
 );
 
-$candyland-theme-primary: mat-palette($candyland-blue, 800, 300, 900);
-$candyland-theme-accent: mat-palette($candyland-blue);
+$essentials-theme-primary: mat-palette($essentials-blue, 800, 300, 900);
+$essentials-theme-accent: mat-palette($essentials-blue);
 
-$candyland-theme: mat-light-theme($candyland-theme-primary, $candyland-theme-accent);
+$essentials-theme: mat-light-theme($essentials-theme-primary, $essentials-theme-accent);
 
-@include angular-material-theme($candyland-theme);
-@include cs-stepper-theme($candyland-theme);
+@include angular-material-theme($essentials-theme);
+@include cs-stepper-theme($essentials-theme);

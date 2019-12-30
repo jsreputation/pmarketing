@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { ApiConfig } from '@cl-core/api-config';
+import { ApiConfig } from '@es-core/api-config';
+
 import { Observable } from 'rxjs';
 import { IWLoginAttributes, IWProfileAttributes, IJsonApiItemPayload, IJsonApiPostData } from '@perx/whistler';
 

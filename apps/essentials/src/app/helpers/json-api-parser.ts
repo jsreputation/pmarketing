@@ -1,4 +1,4 @@
-import Utils from '@cl-helpers/utils';
+import Utils from '@es-helpers/utils';
 
 export interface TypeConfig {
   fieldName?: string;

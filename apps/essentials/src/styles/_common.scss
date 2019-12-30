@@ -116,7 +116,7 @@ h1, h2, h3, h4, h5, p {
     padding: 0;
   }
 
-  cl-tabs-filter + cl-table-filters {
+  es-tabs-filter + es-table-filters {
     display: block;
     margin-top: ($vertical-padding * 0.5);
   }
@@ -182,7 +182,7 @@ h1, h2, h3, h4, h5, p {
 }
 
 .btn-group {
-  cl-button, button, a {
+  es-button, button, a {
     margin-right: ($horizontal-padding * 0.25);
 
     &:last-of-type {

@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { AuthService } from '@cl-core-services';
-import { ApiConfig } from '@cl-core/api-config';
+import { ApiConfig } from '@es-core/api-config';
+// import { AuthService } from '@es-core/sevices/auth.service';
+import { SessionService } from '@es-core/sevices/session.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { SessionService } from '@cl-core/services/session.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private sessionService: SessionService, private authService: AuthService) {
+  constructor(private sessionService: SessionService,
+              // private authService: AuthService
+  ) {
   }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -31,7 +33,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private handle401(err: any): Observable<any> {
     if (err instanceof HttpErrorResponse && err.status === 401) {
-      this.authService.logout();
+      // this.authService.logout();
       return throwError('error 401');
     }
     return throwError(err);

@@ -2,7 +2,7 @@ import { IJsonApiItemPayload, IWDocumentAttributes } from '@perx/whistler';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiConfig } from '@cl-core/api-config';
+import { ApiConfig } from '@es-core/api-config';
 
 @Injectable({
   providedIn: 'root'

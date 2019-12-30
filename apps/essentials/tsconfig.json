@@ -22,13 +22,12 @@
       "dom"
     ],
     "paths": {
-      "@cl-core-services": ["src/app/core/services"],
-      "@cl-core/*": ["src/app/core/*"],
-      "@cl-helpers/*": ["src/app/helpers/*"],
-      "@cl-shared/*": ["src/app/shared/*"],
-      "@cl-shared": ["src/app/shared"],
-      "@cl-environments/*": ["src/environments/*"]
-
+      "@es-core/*": ["src/app/core/*"],
+      "@es-core": ["src/app/core"],
+      "@es-helpers/*": ["src/app/helpers/*"],
+      "@es-shared/*": ["src/app/shared/*"],
+      "@es-shared": ["src/app/shared"],
+      "@es-environments/*": ["src/environments/*"]
     }
   }
 }

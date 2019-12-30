@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '@cl-core-services';
+// import { AuthService } from '@es-core';
 
 @Component({
-  selector: 'cl-login-form',
+  selector: 'es-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss']
 })
@@ -14,7 +14,7 @@ export class LoginFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    // private authService: AuthService
   ) { }
 
   public ngOnInit(): void {
@@ -23,10 +23,10 @@ export class LoginFormComponent implements OnInit {
 
   public onSubmit(): void {
     if (this.formLogin.valid) {
-      this.authService.signIn(this.formLogin.value)
-        .subscribe(
-          () => this.router.navigate(['/dashboard/overview']),
-          (error: Error) => alert('The email or password is incorrect! ' + error.message));
+      // this.authService.signIn(this.formLogin.value)
+      //   .subscribe(
+      //     () => this.router.navigate(['/dashboard/overview']),
+      //     (error: Error) => alert('The email or password is incorrect! ' + error.message));
     }
   }
 
