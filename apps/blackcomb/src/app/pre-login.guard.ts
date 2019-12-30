@@ -15,7 +15,6 @@ export class PreLoginGuard implements CanActivate {
     if (token) {
       return true;
     }
-    console.log(route.queryParams.token);
     if (route.queryParams.token) {
       this.auth.saveUserAccessToken(route.queryParams.token);
       return true;
