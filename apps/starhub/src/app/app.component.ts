@@ -176,9 +176,9 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
             this.firstComefirstServeCampaign = firstComeFirstServed[0];
 
             const data = {
-              text: this.firstComefirstServeCampaign.name,
+              text: this.firstComefirstServeCampaign.description,
               imageUrl: 'assets/reward.png',
-              buttonTxt: 'Claim!',
+              buttonTxt: 'Check it out',
               afterClosedCallBack: this,
               // @ts-ignore
               validTo: new Date(this.firstComefirstServeCampaign.endsAt)
