@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ILocation, LocationsService, RewardsService, IReward } from '@perx/core';
-import { Observable } from 'rxjs';
+import { ILocation, LocationsService, RewardsService, IReward, filterDuplicateLocations } from '@perx/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { AnalyticsService, PageType } from '../analytics.service';
@@ -12,7 +11,6 @@ import { AnalyticsService, PageType } from '../analytics.service';
   styleUrls: ['./locations.component.scss']
 })
 export class LocationsComponent implements OnInit {
-  public locations$: Observable<ILocation[]>;
   public locations: ILocation[];
 
   constructor(
@@ -32,8 +30,7 @@ export class LocationsComponent implements OnInit {
       )
       .subscribe(
         (mid: number) => {
-          this.locations$ = this.locationService.getFromMerchant(mid);
-          this.filterDuplicateLocations();
+          this.fetchLocations(mid);
         }
       );
     this.activeRoute.queryParams
@@ -56,12 +53,9 @@ export class LocationsComponent implements OnInit {
       );
   }
 
-  private filterDuplicateLocations(): void {
-    this.locations$.subscribe((res: ILocation[]) => {
-      this.locations = res.filter((item: ILocation, i: number, array: ILocation[]) =>
-        array.map(mapObj => mapObj.locationId).indexOf(item.locationId) === i
-      );
-    });
+  private fetchLocations(mid: number): void {
+    this.locationService.getFromMerchant(mid).subscribe(
+      (locations: ILocation[]) => this.locations = filterDuplicateLocations(locations));
   }
 
   public back(): void {

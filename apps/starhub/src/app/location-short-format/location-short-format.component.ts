@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ILocation, LocationsService } from '@perx/core';
+import { ILocation, LocationsService, filterDuplicateLocations } from '@perx/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class LocationShortFormatComponent implements OnInit {
 
-  public locations$: Observable<ILocation[]>;
+  public locations: ILocation[];
 
   public displayLocation$: Observable<ILocation>;
 
@@ -28,10 +28,11 @@ export class LocationShortFormatComponent implements OnInit {
       return;
     }
 
-    this.locations$ = this.locationService.getFromMerchant(this.merchantId);
-
-    this.displayLocation$ = this.locations$.pipe(
-      map(x => x[0])
+    this.displayLocation$ = this.locationService.getFromMerchant(this.merchantId).pipe(
+      map((locations: ILocation[]) => {
+        this.locations = filterDuplicateLocations(locations);
+        return locations[0];
+      })
     );
   }
 }
