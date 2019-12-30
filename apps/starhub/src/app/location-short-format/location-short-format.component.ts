@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class LocationShortFormatComponent implements OnInit {
 
-  public locations: ILocation[];
+  public locations$: Observable<ILocation[]>;
 
   public displayLocation$: Observable<ILocation>;
 
@@ -28,11 +28,10 @@ export class LocationShortFormatComponent implements OnInit {
       return;
     }
 
-    this.displayLocation$ = this.locationService.getFromMerchant(this.merchantId).pipe(
-      map((locations: ILocation[]) => {
-        this.locations = filterDuplicateLocations(locations);
-        return locations[0];
-      })
+    this.locations$ = this.locationService.getFromMerchant(this.merchantId).pipe(map(filterDuplicateLocations));
+
+    this.displayLocation$ = this.locations$.pipe(
+      map(x => x[0])
     );
   }
 }

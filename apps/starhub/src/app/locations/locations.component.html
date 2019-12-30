@@ -9,7 +9,7 @@
 </mat-toolbar>
 
 <div class="content">
-  <div class="loc" *ngFor="let loc of locations">
+  <div class="loc" *ngFor="let loc of locations$ | async">
     <div class="address">
       <h1>{{loc.name}}</h1>
       <p>{{loc.address}}</p>
