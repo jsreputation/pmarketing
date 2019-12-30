@@ -103,23 +103,6 @@ describe('NewCampaignDetailPageComponent', () => {
         labels: [],
         informationCollectionSetting: ['not_required']
       }),
-      channel: fb.group({
-        eventId: [],
-        templateId: [],
-        type: ['weblink', [Validators.required]],
-        message: [],
-        schedule: fb.group({
-          sendDate: [],
-          sendTime: [],
-          enableRecurrence: [],
-          recurrence: fb.group({
-            times: [],
-            period: [],
-            repeatOn: []
-          })
-
-        })
-      }),
       audience: fb.group({
         type: ['select'],
         file: [],
