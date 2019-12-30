@@ -50,63 +50,72 @@ const stubTabs: ITabConfigExtended[] = [
     filterValue: null,
     tabName: 'ALL',
     rewardsType: null,
-    currentPage: 1
+    currentPage: 1,
+    completePagination: false
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'FOOD_BEVERAGE',
     rewardsType: 'Food & Beverage',
-    currentPage: 1
+    currentPage: 1,
+    completePagination: false
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'TRAVEL',
     rewardsType: 'Travel',
-    currentPage: 1
+    currentPage: 1,
+    completePagination: false
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'ELECTRONICS',
     rewardsType: 'Electronics',
-    currentPage: 1
+    currentPage: 1,
+    completePagination: false
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'WELLNESS',
     rewardsType: 'Wellness',
-    currentPage: 1
+    currentPage: 1,
+    completePagination: false
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'ENTERTAINMENT',
     rewardsType: 'Entertainment',
-    currentPage: 1
+    currentPage: 1,
+    completePagination: false
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'SHOPPING',
     rewardsType: 'Shopping',
-    currentPage: 1
+    currentPage: 1,
+    completePagination: false
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'MERCHANT_SELF',
     rewardsType: 'Merchant Self',
-    currentPage: 1
+    currentPage: 1,
+    completePagination: false
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'OTHERS',
     rewardsType: 'Others',
-    currentPage: 1
+    currentPage: 1,
+    completePagination: false
   },
 ];
 
@@ -253,7 +262,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public onScroll(): void {
     const stTab = this.staticTab[this.currentTabIndex];
-    if (!stTab || !stTab.rewardsList) {
+    if (!stTab || !stTab.rewardsList || stTab.completePagination) {
       return;
     }
     if (!stTab.rewardsList) {
@@ -265,7 +274,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.pageSize,
       undefined,
       stTab.rewardsType ? [stTab.rewardsType] : undefined), stTab.rewardsList
-    ).subscribe((val) => stTab.rewardsList = of([...val[1], ...val[0]]));
+    ).subscribe((val) => {
+      if (val[0].length < this.pageSize) {
+        stTab.completePagination = true;
+      }
+      stTab.rewardsList = of([...val[1], ...val[0]]);
+    });
   }
 
   public tabChanged(event: MatTabChangeEvent): void {
