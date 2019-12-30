@@ -61,7 +61,6 @@ export class StepHeaderComponent extends CdkStepHeader implements OnDestroy {
   /** Whether the ripple should be disabled. */
   @Input() public disableRipple: boolean;
 
-
   constructor(
     public _intl: StepperIntl,
     private _focusMonitor: FocusMonitor,

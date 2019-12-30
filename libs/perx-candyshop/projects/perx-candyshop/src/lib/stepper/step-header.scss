@@ -5,6 +5,7 @@ $cs-vertical-stepper-content-margin: 36px !default;
 $cs-stepper-line-gap: 8px !default;
 $cs-step-sub-label-font-size: 12px;
 $cs-step-header-icon-size: 16px !default;
+
 @mixin cs-fill {
   top: 0;
   left: 0;
@@ -74,6 +75,7 @@ $cs-step-header-icon-size: 16px !default;
 //potentially overwrite the absolute position of the container.
 .cs-step-header .cs-step-header-ripple {
   @include cs-fill;
+
   pointer-events: none;
 }
 
@@ -81,4 +83,3 @@ $cs-step-header-icon-size: 16px !default;
   pointer-events: none;
   cursor: default;
 }
-

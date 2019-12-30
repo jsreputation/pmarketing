@@ -1,3 +1,4 @@
+/* stylelint-disable */
 $cs-horizontal-stepper-header-height: 72px !default;
 $cs-stepper-label-header-height: 24px !default;
 $cs-stepper-label-position-bottom-top-gap: 16px !default;
@@ -81,12 +82,14 @@ $cs-stepper-line-gap: 8px !default;
     &:not(:last-child)::after,
     [dir='rtl'] &:not(:first-child)::after {
       @extend %cs-header-horizontal-line-label-position-bottom;
+
       right: 0;
     }
 
     &:not(:first-child)::before,
     [dir='rtl'] &:not(:last-child)::before {
       @extend %cs-header-horizontal-line-label-position-bottom;
+
       left: 0;
     }
 

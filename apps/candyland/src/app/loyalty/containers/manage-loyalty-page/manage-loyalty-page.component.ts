@@ -146,11 +146,9 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   }
 
   public clickStepLabel(event: StepperSelectionEvent): void {
-    console.log(event);
     if (event.selectedIndex === event.previouslySelectedIndex || event.selectedIndex > this.stepProgress + 1) {
       return;
     }
-    console.log('yes');
     this.setLoading(true);
     this.getSaveByStep(event.previouslySelectedIndex)
       .pipe(
