@@ -167,8 +167,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id)))),
         map((campaigns: ICampaign[]) => campaigns.filter(c => !this.idExistsInStorage(c.id))),
         map((campaigns: ICampaign[]) => campaigns
-          .filter(campaign => campaign.type === CampaignType.give_reward)
-          .filter(campaign => campaign.rewards && campaign.rewards.length > 0)),
+          .filter(campaign => campaign.type === CampaignType.give_reward)),
       )
       .subscribe(
         (campaigns: ICampaign[]) => {
@@ -177,13 +176,13 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
           if (firstComeFirstServed.length > 0) {
             const campaign = firstComeFirstServed[0];
             // @ts-ignore
-            this.reward = campaign.rewards[0];
+            // this.reward = campaign.rewards[0];
 
             const data = {
               text: campaign.name,
               imageUrl: 'assets/reward.png',
               buttonTxt: 'Claim!',
-              rewardId: this.reward.id,
+              // rewardId: this.reward.id,
               afterClosedCallBack: this,
               // @ts-ignore
               validTo: new Date(campaign.endsAt)
@@ -235,12 +234,12 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   }
 
   public dialogClosed(): void {
-    if (this.reward) {
-      this.router.navigate([`/home/vouchers`]);
-    } else if (this.game) {
+    if (this.game) {
       this.router.navigate([`/game`], { queryParams: { id: this.game.id } });
     } else {
-      console.error('Something fishy, we should not be here, without any reward or game');
+      this.router.navigate([`/home/vouchers`]);
+    // } else {
+    //   console.error('Something fishy, we should not be here, without any reward or game');
     }
   }
 
