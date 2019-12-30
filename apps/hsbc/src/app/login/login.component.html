@@ -5,15 +5,12 @@
 <div *ngIf="!isLoading" style="height:100%">
   <div class="login-bg" [ngStyle]="{backgroundImage: 'url(' + loginBackgroundUrl + ')'}"></div>
   <div [ngClass]="'content-container ' + sourceType">
-    <div *ngIf="sourceType !== 'hsbc-xmas'" class="login-image">
-      <img class="logo" src='assets/hsbc-logo-black.svg' />
-    </div>
-    <div *ngIf="sourceType === 'hsbc-xmas'" class="login-image">
+    <div>
       <img class="logo" src='assets/hsbc-logo-black.svg' />
     </div>
     <div class="form-container">
       <div [ngClass]="'login-form ' + sourceType">
-        <h1 *ngIf="sourceType === 'hsbc-xmas' || sourceType === 'hsbc-collect2'">Log In</h1>
+        <h1>Log In</h1>
         <div class="error_msg">
           <span>{{errorMessage}}</span>
         </div>
