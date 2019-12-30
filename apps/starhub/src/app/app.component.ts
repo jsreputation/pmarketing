@@ -182,7 +182,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
             const data = {
               text: campaign.description,
               imageUrl: 'assets/reward.png',
-              buttonTxt: 'Claim!',
+              buttonTxt: 'Check it out',
               rewardId: this.reward.id,
               afterClosedCallBack: this,
               // @ts-ignore
