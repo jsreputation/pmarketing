@@ -1,5 +1,5 @@
 import { RouterTestingModule } from '@angular/router/testing';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import {
   SurveyModule as PerxSurveyModule,
   IFormsService,
@@ -9,23 +9,32 @@ import {
   InstantOutcomeService,
   SurveyService,
   ThemesService,
-  ConfigService
+  ConfigService,
+  IAnswer
 } from '@perx/core';
 import { SignUpComponent } from './sign-up.component';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { MatSnackBar, MatInputModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Location } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { IWAppAccessTokenResponse } from '@perx/whistler';
+import { Type } from '@angular/core';
+
+const answers: IAnswer[] = [
+  {
+    questionId: '1',
+    content: 'test'
+  }
+];
 
 const configStub: Partial<Config> = {
   preAuth: false
 };
 
 const configServiceStub: Partial<ConfigService> = {
-  readAppConfig: () => of({ redirectAfterLogin: '/home' })
+  readAppConfig: () => of()
 };
 
 const gameServiceStub: Partial<IGameService> = {
@@ -45,15 +54,20 @@ const surveyServiceStub: Partial<SurveyService> = {
 };
 
 const authServiceStub: Partial<AuthenticationService> = {
-  getUserId: () => 0,
+  getUserId: () => 1,
   autoLogin: () => of(),
-  mergeUserById: () => of(),
+  mergeUserById: () => of(void 0),
   getPI: () => '',
   getUserAccessToken: () => '',
   getAnonymous: () => true,
   logout: () => { },
   getAppToken: () => of({} as IWAppAccessTokenResponse),
-  getAppAccessToken: () => 'token'
+  getAppAccessToken: () => 'token',
+  createUserAndAutoLogin: () => of(),
+  saveUserId: () => void 0,
+  saveUserAccessToken: () => void 0,
+  savePI: () => void 0,
+  saveAnonymous: () => void 0
 };
 const themeServiceStub: Partial<ThemesService> = {
   getThemeSetting: () => of()
@@ -109,4 +123,158 @@ describe('SignUpComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('onInit', () => {
+    it('should call readAppConfig, getThemeSetting, getSignupForm, getPI, getUserAccessToken, getAnonymous, getAppAccessToken, getState and appAccessTokenFetched to be true', fakeAsync(() => {
+      const configService: ConfigService = fixture.debugElement.injector.get<ConfigService>(
+        ConfigService as Type<ConfigService>
+      );
+      const noticationServiceSpy = spyOn(configService, 'readAppConfig').and.returnValue(of({
+        showSubtitleLogin: true
+      }));
+
+      const themesService: ThemesService = fixture.debugElement.injector.get<ThemesService>(
+        ThemesService as Type<ThemesService>
+      );
+      const themesServiceSpy = spyOn(themesService, 'getThemeSetting');
+
+      const formsService: IFormsService = fixture.debugElement.injector.get<IFormsService>(
+        IFormsService as Type<IFormsService>
+      );
+      const formsServiceSpy = spyOn(formsService, 'getSignupForm');
+
+      const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
+        AuthenticationService as Type<AuthenticationService>
+      );
+      const getPISpy = spyOn(authenticationService, 'getPI');
+      const getUserAccessTokenSpy = spyOn(authenticationService, 'getUserAccessToken');
+      const getAnonymousSpy = spyOn(authenticationService, 'getAnonymous');
+      const getAppAccessTokenSpy = spyOn(authenticationService, 'getAppAccessToken').and.returnValue('token');
+
+      const location: Location = fixture.debugElement.injector.get<Location>(
+        Location as Type<Location>
+      );
+      const locationSpy = spyOn(location, 'getState');
+
+      component.ngOnInit();
+      tick();
+      fixture.detectChanges();
+      expect(noticationServiceSpy).toHaveBeenCalled();
+      expect(themesServiceSpy).toHaveBeenCalled();
+      expect(formsServiceSpy).toHaveBeenCalled();
+      expect(getPISpy).toHaveBeenCalled();
+      expect(getUserAccessTokenSpy).toHaveBeenCalled();
+      expect(getAnonymousSpy).toHaveBeenCalled();
+      expect(getAppAccessTokenSpy).toHaveBeenCalled();
+      expect(locationSpy).toHaveBeenCalled();
+      expect(component.appAccessTokenFetched).toBe(true);
+    }));
+
+    it('should call getAppToken and set appAccessTokenFetched to true if getAppAccessToken returns empty', fakeAsync(() => {
+      const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
+        AuthenticationService as Type<AuthenticationService>
+      );
+      const getAppAccessTokenSpy = spyOn(authenticationService, 'getAppAccessToken').and.returnValue('');
+      const getAppTokenSpy = spyOn(authenticationService, 'getAppToken').and.returnValue(of({
+        access_token: 'token',
+        token_type: 'bearer',
+        expires_in: 1,
+        created_at: 1
+      }));
+
+      component.ngOnInit();
+      tick();
+      fixture.detectChanges();
+      expect(getAppAccessTokenSpy).toHaveBeenCalled();
+      expect(getAppTokenSpy).toHaveBeenCalled();
+      expect(component.appAccessTokenFetched).toBe(true);
+    }));
+  });
+
+  it('it should update answers base on the param passed', () => {
+    component.updateFormStatus(answers);
+    expect(component.answers.length).toBe(1);
+    expect(component.answers[0].content).toBe('test');
+  });
+
+  it('should call createUserAndAutoLogin onSubmit', fakeAsync(() => {
+    const answerPi: IAnswer[] = [
+      {
+        questionId: 'primary_identifier',
+        content: 'test'
+      }
+    ];
+
+    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
+      AuthenticationService as Type<AuthenticationService>
+    );
+
+    const authSpy = spyOn(authenticationService, 'createUserAndAutoLogin').and.returnValue(of(void 0));
+
+    component.answers = answerPi;
+    component.onSubmit();
+    tick();
+    expect(authSpy).toHaveBeenCalled();
+  }));
+
+  it('should set error message', fakeAsync(() => {
+    component.updateErrorMessage('error');
+    expect(component.errorMessage).toBe('error');
+  }));
+
+  it('should call createUserAndAutoLogin onSubmit and throwError', fakeAsync(() => {
+    const answerPi: IAnswer[] = [
+      {
+        questionId: 'primary_identifier',
+        content: 'test'
+      }
+    ];
+
+    const location: Location = fixture.debugElement.injector.get<Location>(Location as Type<Location>);
+    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
+      AuthenticationService as Type<AuthenticationService>
+    );
+    spyOn(location, 'getState').and.returnValue({ popupData: {}, engagementType: 'str', collectInfo: true });
+    const error = {
+      error: {
+        message: 'error'
+      }
+    };
+
+    const authSpy = spyOn(authenticationService, 'createUserAndAutoLogin').and.returnValue(throwError(error));
+
+    component.answers = answerPi;
+    component.onSubmit();
+    tick();
+    expect(authSpy).toHaveBeenCalled();
+  }));
+
+  it('should call submitDataAndCollectInformation', () => {
+    const stateData = {
+      popupData: { title: 'test' },
+      engagementType: 'game',
+      collectInfo: true,
+    };
+    const location: Location = fixture.debugElement.injector.get<Location>(Location as Type<Location>);
+    spyOn(location, 'getState').and.returnValue(stateData);
+
+    component.answers = [
+      {
+        questionId: 'primary_identifier',
+        content: 'test'
+      }
+    ];
+
+    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
+      AuthenticationService as Type<AuthenticationService>
+    );
+    const authSpy = spyOn(authenticationService, 'createUserAndAutoLogin').and.returnValue(of(void 0));
+    spyOn(authenticationService, 'autoLogin').and.returnValue(throwError('error'));
+
+    component.ngOnInit();
+    component.onSubmit();
+
+    expect(authSpy).toHaveBeenCalled();
+  });
+
 });

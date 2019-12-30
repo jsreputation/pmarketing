@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IWEngagementAttributes } from '@perx/whistler';
+import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 
@@ -14,7 +14,7 @@ export class AvailableNewEngagementService {
     this.newEngagementSubject.next(engagement);
   }
 
-  public transformAndSetNewEngagement(engagement: IJsonApiPayload<IWEngagementAttributes>): void {
+  public transformAndSetNewEngagement(engagement: IJsonApiItemPayload<IWEngagementAttributes>): void {
     const formattedEngagement = EngagementHttpAdapter.transformEngagementHandler(engagement.data);
     this.newEngagementSubject.next(formattedEngagement);
   }

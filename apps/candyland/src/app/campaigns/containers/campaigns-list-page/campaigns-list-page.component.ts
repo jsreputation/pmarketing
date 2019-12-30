@@ -10,7 +10,7 @@ import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign
 import { StatusLabelConfig } from '@cl-shared';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CampaignStatus } from '@cl-core/models/campaign/campaign-status.enum';
+import { CampaignStatus } from '@cl-core/models/campaign/campaign.enum';
 import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
 
 @Component({

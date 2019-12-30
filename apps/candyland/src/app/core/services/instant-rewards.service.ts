@@ -3,7 +3,7 @@ import { InstantRewardsHttpService } from '@cl-core/http-services/instant-reward
 import { Observable } from 'rxjs';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { map } from 'rxjs/operators';
-import { IWInstantOutcomeEngagementAttributes } from '@perx/whistler';
+import { IWInstantOutcomeEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -23,14 +23,13 @@ export class InstantRewardsService {
     );
   }
 
-  public createRewardGame(data: IRewardForm): Observable<IJsonApiPayload<IWInstantOutcomeEngagementAttributes>> {
+  public createRewardGame(data: IRewardForm): Observable<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>> {
     const sendData = EngagementHttpAdapter.transformFromInstantRewardForm(data);
-    return this.instantRewardsHttpService.createRewardGame({data: sendData});
+    return this.instantRewardsHttpService.createRewardGame({ data: sendData });
   }
 
-  public updateInstantReward(id: string, data: IRewardForm): Observable<IJsonApiPayload<IWInstantOutcomeEngagementAttributes>> {
-    const sendData = EngagementHttpAdapter.transformFromInstantRewardForm(data);
-    sendData.id = id;
-    return this.instantRewardsHttpService.updateInstantReward(id, {data: sendData});
+  public updateInstantReward(id: string, data: IRewardForm): Observable<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>> {
+    const sendData = { ...EngagementHttpAdapter.transformFromInstantRewardForm(data), id };
+    return this.instantRewardsHttpService.updateInstantReward(id, { data: sendData });
   }
 }

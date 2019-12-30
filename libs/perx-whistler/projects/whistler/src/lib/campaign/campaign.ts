@@ -33,6 +33,7 @@ export interface IWCampaignAttributes {
 
 export interface IWCampaignDisplayProperties {
   informationCollectionSetting?: WInformationCollectionSettingType;
+  weblink?: boolean;
   noRewardsPopUp?: IWProperties;
   successPopUp?: IWProperties;
 }
