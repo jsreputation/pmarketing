@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { CreateImageDirective } from '@cl-shared/directives/create-image.directive';
 import { Observable } from 'rxjs';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 
 @Component({
   selector: 'cl-simple-mobile-view',
