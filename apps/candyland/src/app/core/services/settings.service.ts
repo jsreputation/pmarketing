@@ -47,7 +47,7 @@ export const settingsFonts: ISimpleValue[] = [{
 @Injectable({
   providedIn: 'root'
 })
-export class SettingsService implements ITableService {
+export class SettingsService implements ITableService<IAMUser> {
   private tenant: Tenants;
 
   constructor(

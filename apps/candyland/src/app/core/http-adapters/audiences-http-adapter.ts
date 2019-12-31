@@ -3,9 +3,7 @@ import {
   IWAssignRequestAttributes,
   IWProfileAttributes,
   IWCustomProperties,
-  IWPoolsAttributes,
   IWAudiences,
-  IWPools,
   IJsonApiItem,
   IJsonApiPatchData,
   IJsonApiItemPayload,
@@ -14,7 +12,9 @@ import {
 } from '@perx/whistler';
 
 import { SOURCE_TYPE } from '../../app.constants';
-import { IAudience } from '@cl-core/models/audiences/audiences';
+import { IAudience, IPools } from '@cl-core/models/audiences/audiences';
+import { oc } from 'ts-optchain';
+import { ManageListPopupComponentOutput } from 'src/app/audience/containers/manage-list-popup/manage-list-popup.component';
 
 export class AudiencesHttpAdapter {
 
@@ -34,9 +34,9 @@ export class AudiencesHttpAdapter {
     return Object.assign(mainUserApiObject, optionalPool);
   }
 
-  public static transformUpdateUserPools(data: IWProfileAttributes): IJsonApiPatchData<IWProfileAttributes> {
+  public static transformUpdateUserPools(data: ManageListPopupComponentOutput): IJsonApiPatchData<IWProfileAttributes> {
     return {
-      type: data.type,
+      type: 'users',
       id: data.id,
       attributes: {},
       relationships: {
@@ -47,29 +47,34 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  public static transformUserWithPools(data: IJsonApiItemPayload<IWProfileAttributes>): IWProfileAttributes {
+  public static transformUserWithPools(data: IJsonApiItemPayload<IWProfileAttributes, IWAudiences>): IAudiencesUserForm {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const userData = AudiencesHttpAdapter.transformUser(data.data);
-    userData.pools = data.data.relationships.pools.data.map((item: IJsonApiItem<IWPoolsAttributes>) => poolMap[item.id]).sort().join(', ');
+    userData.audienceList = data.data.relationships.pools.data.map((item: IJsonApiItem<IWAudiences>) => poolMap[item.id]);
     return userData;
   }
 
-  public static transformUsersWithPools(data: IJsonApiListPayload<IWProfileAttributes>): ITableData<IWProfileAttributes> {
+  public static transformUsersWithPools(data: IJsonApiListPayload<IWProfileAttributes, IWAudiences>): ITableData<IAudiencesUserForm> {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const usersData = data.data.map((item: IJsonApiItem<IWProfileAttributes>) => {
-      const formattedUser = AudiencesHttpAdapter.transformUser(item);
-      formattedUser.pools = item.relationships.pools.data.map(
-        (pool: IJsonApiItem<IWPoolsAttributes>) => poolMap[pool.id]).sort().join(', ');
+      const formattedUser: IAudiencesUserForm = AudiencesHttpAdapter.transformUser(item);
+      formattedUser.audienceList = item.relationships.pools.data
+        .map((pool: IJsonApiItem<IWAudiences>) => poolMap[pool.id])
+        .filter((v?: string) => v !== undefined)
+        .sort();
       return formattedUser;
     });
     return {
-      data: usersData, meta: data.meta
+      data: usersData,
+      meta: data.meta
     };
   }
 
   public static transformAudiencesTableData(data: IJsonApiListPayload<IWAudiences>): ITableData<IAudience> {
     return {
-      data: data.data.map(item => AudiencesHttpAdapter.transformAudiences(item)),
+      data: data.data
+        .filter(item => !item.attributes.system_generated) // hide system generated pools
+        .map(item => AudiencesHttpAdapter.transformAudiences(item)),
       meta: data.meta
     };
   }
@@ -105,31 +110,33 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  private static transformUser(data: IJsonApiItem<IWProfileAttributes>): IWProfileAttributes {
+  private static transformUser(data: IJsonApiItem<IWProfileAttributes>): IAudiencesUserForm {
     return {
       id: data.id,
-      type: data.type,
-      self: data.links.self,
-      urn: data.attributes.urn,
-      created_at: data.attributes.created_at,
-      updated_at: data.attributes.updated_at,
-      title: data.attributes.title,
-      first_name: data.attributes.first_name,
-      last_name: data.attributes.last_name,
-      phone_number: data.attributes.phone_number,
-      email_address: data.attributes.email_address,
-      primary_identifier: data.attributes.primary_identifier,
-      properties: AudiencesHttpAdapter.transformProps(data.attributes),
-      pools: ''
+      firstName: data.attributes.first_name,
+      lastName: data.attributes.last_name,
+      email: data.attributes.email_address,
+      phone: data.attributes.phone_number,
+      gender: data.attributes.gender,
+      birthday: data.attributes.birthday ? new Date(data.attributes.birthday) : null,
+      race: oc(data).attributes.properties.race(),
+      country: oc(data).attributes.properties.country(),
+      nationality: oc(data).attributes.properties.country(),
+      city: oc(data).attributes.properties.city(),
+      state: oc(data).attributes.properties.state(),
+      audienceList: [],
+      file: '',
+      pi: data.attributes.primary_identifier
     };
   }
 
-  private static createPoolMap(data?: IJsonApiItem<IWPoolsAttributes>[]): IWPools {
+  private static createPoolMap(data?: IJsonApiItem<IWAudiences>[]): IPools {
     const mapPool = {};
     if (data) {
-      data.forEach((element: IJsonApiItem<IWPoolsAttributes>) => {
-        mapPool[element.id] = element.attributes.name;
-      });
+      data.filter((element: IJsonApiItem<IWAudiences>) => !element.attributes.system_generated)
+        .forEach((element: IJsonApiItem<IWAudiences>) => {
+          mapPool[element.id] = element.attributes.name;
+        });
     }
     return mapPool;
   }
@@ -160,26 +167,26 @@ export class AudiencesHttpAdapter {
     };
   }
 
-  private static transformProps(attributes: IWProfileAttributes | null): IWCustomProperties | null {
-    if (!attributes) {
-      return null;
-    }
+  // private static transformProps(attributes: IWProfileAttributes | null): IWCustomProperties | null {
+  //   if (!attributes) {
+  //     return null;
+  //   }
 
-    const { properties } = attributes;
-    if (!properties) {
-      return null;
-    }
+  //   const { properties } = attributes;
+  //   if (!properties) {
+  //     return null;
+  //   }
 
-    return {
-      gender: properties.gender || null,
-      birthday: properties.birthday || null,
-      race: properties.race || null,
-      country: properties.country || null,
-      nationality: properties.nationality || null,
-      city: properties.city || null,
-      state: properties.state || null,
-    };
-  }
+  //   return {
+  //     gender: properties.gender || null,
+  //     birthday: properties.birthday || null,
+  //     race: properties.race || null,
+  //     country: properties.country || null,
+  //     nationality: properties.nationality || null,
+  //     city: properties.city || null,
+  //     state: properties.state || null,
+  //   };
+  // }
 
   private static stringToDate(stringDate: string | null): Date | null {
     return stringDate ? new Date(stringDate) : null;
