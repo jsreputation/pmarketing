@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ILocation, LocationsService } from '@perx/core';
+import { ILocation, LocationsService, filterDuplicateLocations } from '@perx/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -28,7 +28,7 @@ export class LocationShortFormatComponent implements OnInit {
       return;
     }
 
-    this.locations$ = this.locationService.getFromMerchant(this.merchantId);
+    this.locations$ = this.locationService.getFromMerchant(this.merchantId).pipe(map(filterDuplicateLocations));
 
     this.displayLocation$ = this.locations$.pipe(
       map(x => x[0])
