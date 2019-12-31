@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ILocation, LocationsService, RewardsService, IReward } from '@perx/core';
+import { ILocation, LocationsService, RewardsService, IReward, filterDuplicateLocations } from '@perx/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { AnalyticsService, PageType } from '../analytics.service';
   styleUrls: ['./locations.component.scss']
 })
 export class LocationsComponent implements OnInit {
-  public locations: Observable<ILocation[]>;
+  public locations$: Observable<ILocation[]>;
 
   constructor(
     private location: Location,
@@ -31,7 +31,7 @@ export class LocationsComponent implements OnInit {
       )
       .subscribe(
         (mid: number) => {
-          this.locations = this.locationService.getFromMerchant(mid);
+          this.locations$ = this.locationService.getFromMerchant(mid).pipe(map(filterDuplicateLocations));
         }
       );
     this.activeRoute.queryParams
