@@ -10,8 +10,10 @@ import {
   IJsonApiItem,
   IJsonApiListPayload,
   IJsonApiPostData,
-  IJsonApiPatchData
+  IJsonApiPatchData,
+  IWRelationshipsDataType
 } from '@perx/whistler';
+import { relationshipsDataToItem } from '@perx/whistler';
 
 export class LoyaltyHttpAdapter {
 
@@ -132,10 +134,8 @@ export class LoyaltyHttpAdapter {
   ): ILoyaltyForm {
     if (data.included && data.included.length) {
       for (let i = 0; i <= data.included.length - 1; i++) {
-        if (item.relationships.basic_tier
-          && item.relationships.basic_tier.data
-          && item.relationships.basic_tier.data.id === data.included[i].id
-          && item.relationships.basic_tier.data.type === data.included[i].type) {
+        const d: IWRelationshipsDataType | null = relationshipsDataToItem(item.relationships.basic_tier.data);
+        if (data && d.id === data.included[i].id && d.type === data.included[i].type) {
           const detailsAndConversionsFormGroup =
             LoyaltyHttpAdapter.getDetailsAndConversionsFormGroup(data.included[i].attributes, item.attributes);
           formLoyalty = {
@@ -178,11 +178,8 @@ export class LoyaltyHttpAdapter {
     item: IJsonApiItem<IWLoyaltyAttributes>,
     index: number
   ): string {
-    if (item.relationships.pool
-      && item.relationships.pool.data
-      && item.relationships.pool.data.id
-      && item.relationships.pool.data.id === included[index].id
-      && item.relationships.pool.data.type === included[index].type) {
+    const data: IWRelationshipsDataType | null = relationshipsDataToItem(item.relationships.pool.data);
+    if (data && data.id === included[index].id && data.type === included[index].type) {
       return included[index].id;
     }
   }

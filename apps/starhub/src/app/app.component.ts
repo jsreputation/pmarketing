@@ -8,7 +8,6 @@ import {
   ICampaignService,
   ICampaign,
   CampaignType,
-  IReward,
   IGameService,
   IGame,
   TokenStorage,
@@ -48,10 +47,11 @@ declare const _satellite: {
 })
 export class AppComponent implements OnInit, PopUpClosedCallBack {
   // public selectedCampaign: ICampaign;
-  public reward?: IReward;
   public game?: IGame;
   private token: string;
   public theme: ITheme;
+  private firstComefirstServeCampaign: ICampaign;
+
   constructor(
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
@@ -165,35 +165,32 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
       .pipe(
         // for each campaign, get detailed version
         switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id)))),
-        map((campaigns: ICampaign[]) => campaigns.filter(c => !this.idExistsInStorage(c.id))),
-        map((campaigns: ICampaign[]) => campaigns
-          .filter(campaign => campaign.type === CampaignType.give_reward)
-          .filter(campaign => campaign.rewards && campaign.rewards.length > 0)),
+        map((campaigns: ICampaign[]) => campaigns.filter(c => !this.idExistsInStorage(c.id)))
       )
       .subscribe(
         (campaigns: ICampaign[]) => {
-          const firstComeFirstServed: ICampaign[] = campaigns;
-          // if there is a 1st come 1st served campaign and it has rewards, display the popup
+          const firstComeFirstServed: ICampaign[] = campaigns
+            .filter(campaign => campaign.type === CampaignType.give_reward);
+          // if there is a 1st come 1st served campaign, display the popup
           if (firstComeFirstServed.length > 0) {
-            const campaign = firstComeFirstServed[0];
-            // @ts-ignore
-            this.reward = campaign.rewards[0];
-
+            this.firstComefirstServeCampaign = firstComeFirstServed[0];
+            if (this.firstComefirstServeCampaign.rewards && this.firstComefirstServeCampaign.rewards.length > 0) {
+              // not a birthday campaign. preserve Dec 2019 functionality
+              return;
+            }
             const data = {
-              text: campaign.name,
-              imageUrl: 'assets/reward.png',
-              buttonTxt: 'Claim!',
-              rewardId: this.reward.id,
+              text: this.firstComefirstServeCampaign.description,
+              imageUrl: 'assets/bd-campaign.svg',
+              buttonTxt: 'Check it out',
               afterClosedCallBack: this,
               // @ts-ignore
-              validTo: new Date(campaign.endsAt)
+              validTo: new Date(this.firstComefirstServeCampaign.endsAt)
             };
             this.dialog.open(RewardPopupComponent, { data });
             this.analytics.addEvent({
               pageType: PageType.overlay,
-              pageName: campaign.name
+              pageName: this.firstComefirstServeCampaign.name
             });
-            this.campaignService.issueAll(campaign.id);
             return;
           }
 
@@ -235,12 +232,21 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
   }
 
   public dialogClosed(): void {
-    if (this.reward) {
-      this.router.navigate([`/home/vouchers`]);
-    } else if (this.game) {
+    if (this.game) {
       this.router.navigate([`/game`], { queryParams: { id: this.game.id } });
     } else {
-      console.error('Something fishy, we should not be here, without any reward or game');
+      this.campaignService.issueAll(this.firstComefirstServeCampaign.id).subscribe(
+        () => {
+          this.router.navigate([`/home/vouchers`]);
+        },
+        (err) => {
+          if (err.error && err.error.code === 4103) {
+            // user has already been issued voucher
+            this.router.navigate([`/home/vouchers`]);
+          }
+          console.error('Something fishy, we should not be here, without any reward or game. ERR print: ' + err);
+        }
+      );
     }
   }
 
