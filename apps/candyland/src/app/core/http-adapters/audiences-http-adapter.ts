@@ -9,6 +9,7 @@ import {
   IJsonApiItemPayload,
   IJsonApiPostData,
   IJsonApiListPayload,
+  relationshipsDataToArray,
 } from '@perx/whistler';
 
 import { SOURCE_TYPE } from '../../app.constants';
@@ -50,7 +51,8 @@ export class AudiencesHttpAdapter {
   public static transformUserWithPools(data: IJsonApiItemPayload<IWProfileAttributes, IWAudiences>): IAudiencesUserForm {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const userData = AudiencesHttpAdapter.transformUser(data.data);
-    userData.audienceList = data.data.relationships.pools.data.map((item: IJsonApiItem<IWAudiences>) => poolMap[item.id]);
+    userData.audienceList = relationshipsDataToArray(data.data.relationships.pools.data)
+      .map((item: IJsonApiItem<IWAudiences>) => poolMap[item.id]);
     return userData;
   }
 
@@ -58,7 +60,7 @@ export class AudiencesHttpAdapter {
     const poolMap = AudiencesHttpAdapter.createPoolMap(data.included);
     const usersData = data.data.map((item: IJsonApiItem<IWProfileAttributes>) => {
       const formattedUser: IAudiencesUserForm = AudiencesHttpAdapter.transformUser(item);
-      formattedUser.audienceList = item.relationships.pools.data
+      formattedUser.audienceList = relationshipsDataToArray(item.relationships.pools.data)
         .map((pool: IJsonApiItem<IWAudiences>) => poolMap[pool.id])
         .filter((v?: string) => v !== undefined)
         .sort();
@@ -131,7 +133,7 @@ export class AudiencesHttpAdapter {
   }
 
   private static createPoolMap(data?: IJsonApiItem<IWAudiences>[]): IPools {
-    const mapPool = {};
+    const mapPool: IPools = {};
     if (data) {
       data.filter((element: IJsonApiItem<IWAudiences>) => !element.attributes.system_generated)
         .forEach((element: IJsonApiItem<IWAudiences>) => {

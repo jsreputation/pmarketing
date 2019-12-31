@@ -29,8 +29,8 @@ export interface IJsonApiItem<T> {
         self: string;
         related: string;
       },
-      // data?: IWRelationshipsDataType[] | IWRelationshipsDataType
-      data?: any
+      data?: IWRelationshipsDataType[] | IWRelationshipsDataType | null
+      // data?: any
     }
   };
 }
@@ -59,4 +59,31 @@ export interface IJsonApiPostData<T> {
   type: string;
   attributes: T;
   relationships?: any;
+}
+
+export function relationshipsDataToArray(
+  data: IWRelationshipsDataType[] | IWRelationshipsDataType | null | undefined
+): IWRelationshipsDataType[] {
+  if (Array.isArray(data)) {
+    return data;
+  }
+  if (data === null || data === undefined) {
+    return [];
+  }
+  return [data];
+}
+
+export function relationshipsDataToItem(
+  data: IWRelationshipsDataType[] | IWRelationshipsDataType | null | undefined
+): IWRelationshipsDataType | null {
+  if (Array.isArray(data)) {
+    if (data.length > 0) {
+      return data[0];
+    }
+    return null;
+  }
+  if (data === undefined) {
+    return null;
+  }
+  return data;
 }

@@ -5,5 +5,5 @@ export interface IAudience {
   users_count: number;
 }
 export interface IPools {
-  [id: string]: { name: string; };
+  [id: string]: string;
 }
