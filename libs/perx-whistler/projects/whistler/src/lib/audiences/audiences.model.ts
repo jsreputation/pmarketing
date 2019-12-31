@@ -7,7 +7,3 @@ export interface IWAudiences {
   user_count?: number;
   system_generated?: boolean;
 }
-
-export interface IWPools {
-  [id: string]: { name: string };
-}

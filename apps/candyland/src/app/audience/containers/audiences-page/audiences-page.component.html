@@ -1,6 +1,7 @@
 <header class="page-header">
   <h1 class="title">{{'AUDIENCE_FEATURE.AUDIENCES' | translate}}</h1>
-  <cl-button (click)="openAddUserDialog()" classList="primary cta cta-new cta-new-adduser">{{'AUDIENCE_FEATURE.ADD_USER' | translate}}</cl-button>
+  <cl-button (click)="openAddUserDialog()" classList="primary cta cta-new cta-new-adduser">
+    {{'AUDIENCE_FEATURE.ADD_USER' | translate}}</cl-button>
 </header>
 
 <section class="content">
@@ -12,13 +13,15 @@
     <ng-container [ngSwitch]="currentTab">
       <cl-table-filters *ngSwitchDefault [dataSource]="dataSource">
         <ng-container *clTableFilter="searchKey ; let filter">
-          <cl-search-filter class="search-block" [control]="filter" [placeholder]="'AUDIENCE_FEATURE.SEARCH_FOR_USERS' | translate"></cl-search-filter>
+          <cl-search-filter class="search-block" [control]="filter"
+            [placeholder]="'AUDIENCE_FEATURE.SEARCH_FOR_USERS' | translate"></cl-search-filter>
         </ng-container>
       </cl-table-filters>
 
       <cl-table-filters *ngSwitchCase="'audience'" [dataSource]="audiencesDataSource">
         <ng-container *clTableFilter="searchKey ; let filter">
-          <cl-search-filter class="search-block" [control]="filter" [placeholder]="'AUDIENCE_FEATURE.SEARCH_FOR_AUDIENCE' | translate">
+          <cl-search-filter class="search-block" [control]="filter"
+            [placeholder]="'AUDIENCE_FEATURE.SEARCH_FOR_AUDIENCE' | translate">
           </cl-search-filter>
         </ng-container>
       </cl-table-filters>
@@ -28,18 +31,19 @@
       <!-- table-->
       <ng-container [ngSwitch]="currentTab">
         <cl-audiences-users-list *ngSwitchDefault (clickManageList)="openManageListDialog($event)"
-                                 [dataSource]="dataSource">
+          [dataSource]="dataSource">
         </cl-audiences-users-list>
         <cl-audiences-list *ngSwitchCase="'audience'"
-                           [dataSource]="audiencesDataSource">
+          [dataSource]="audiencesDataSource">
         </cl-audiences-list>
       </ng-container>
       <!-- /table-->
       <!-- paginator-->
-      <ng-container [ngSwitch]="currentTab">
-        <cl-paginator *ngSwitchDefault [dataSource]="dataSource" [pageSize]="5"
-                      [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
-        <span *ngSwitchCase="'audience'"></span>
+      <ng-container>
+        <cl-paginator
+          [dataSource]="currentTab === 'audience' ? audiencesDataSource : dataSource"
+          [pageSize]="5"
+          [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
       </ng-container>
       <!-- /paginator-->
     </div>

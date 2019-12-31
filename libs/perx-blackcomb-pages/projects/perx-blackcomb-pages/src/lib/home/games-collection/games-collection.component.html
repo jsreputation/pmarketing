@@ -1,26 +1,25 @@
 <div *ngIf="(games$ | async) as games" [@listAnimation]="!showAllGames || games.length">
   <mat-card
-  *ngFor="let game of ((showAllGames || (games.length <= defaultNbGames))
+    *ngFor="let game of ((showAllGames || (games.length <= defaultNbGames))
   ? games : (games | slice:0:defaultNbGames))"
-  [routerLink]="[ '/game', game.id ]"
-  matRipple
-  class="games-card"
->
-  <div class="img-wrapper">
-    <img class="puzzle-img" src="{{game.backgroundImg}}">
+    [routerLink]="[ '/game', game.id ]"
+    matRipple
+    class="games-card">
+    <div class="img-wrapper">
+      <img class="puzzle-img" src="{{game.imgUrl || game.backgroundImg}}" alt="Game image">
+    </div>
+    <mat-card-content class="card-content">
+      <p class="main-reward-title">{{game.texts.title}}</p>
+      <p class="reward-subtitle">{{game.texts.subTitle}}</p>
+    </mat-card-content>
+  </mat-card>
+  <div class="flex-for-button">
+    <button
+      *ngIf="!(games.length <= defaultNbGames)"
+      mat-flat-button
+      class="see-button"
+      (click)="showAllGames = !showAllGames">
+      {{ (showAllGames ? "See Less" : "SEE_MORE" ) | translate}}
+    </button>
   </div>
-  <mat-card-content class="card-content">
-    <p class="main-reward-title">{{game.texts.title}}</p>
-    <p class="reward-subtitle">{{game.texts.subTitle}}</p>
-  </mat-card-content>
-</mat-card>
-<div class="flex-for-button">
-  <button
-  *ngIf="!(games.length <= defaultNbGames)"
-  mat-flat-button
-  class="see-button"
-  (click)="showAllGames = !showAllGames">
-    {{ !showAllGames?  "SEE_MORE" : "See Less" | translate}}
-  </button>
-</div>
 </div>
