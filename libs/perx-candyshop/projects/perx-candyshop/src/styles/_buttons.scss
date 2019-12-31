@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+//@import '~@angular/material/theming';
 @import "./variables";
 
 button {
@@ -92,7 +92,7 @@ button {
 
 //FAB BUTTON RE-STYLE (!important to override WalkMe Styling)
 @mixin fab-btn($icon-color: $white) {
-  @include mat-elevation(5);
+  //@include mat-elevation(5);
 
   min-width: initial !important;
   width: $fab-btn !important;
