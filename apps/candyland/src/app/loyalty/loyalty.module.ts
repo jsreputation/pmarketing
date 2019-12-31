@@ -24,6 +24,7 @@ import { LoyaltyComponent } from './containers/loyalty/loyalty.component';
 import { LoyaltyRoutingModule } from './loyalty-routing.module';
 import { LoyaltyFormsService } from './services/loyalty-forms.service';
 import { ManageLoyaltyPageComponent } from './containers/manage-loyalty-page/manage-loyalty-page.component';
+import { MatStepperModule } from '@angular/material/stepper';
 import { LoyaltyFormStepDetailsComponent } from './components/loyalty-form-step-details/loyalty-form-step-details.component';
 import { LoyaltyFormStepTiersConversionsComponent } from './components/loyalty-form-step-tiers-conversions/loyalty-form-step-tiers-conversions.component';
 import { PointsInfoComponent } from './components/points-info/points-info.component';
@@ -62,7 +63,6 @@ import { MultiplierResultGroupComponent } from './components/multiplier-result-g
 import { BonusResultGroupComponent } from './components/bonus-result-group/bonus-result-group.component';
 import { PointsEarnedInfoPipe } from './points-earned-info.pipe';
 import { PointsExpiredInfoPipe } from './points-expired-info.pipe';
-import { StepperModule } from '@perx/candyshop';
 
 @NgModule({
   declarations: [
@@ -117,7 +117,7 @@ import { StepperModule } from '@perx/candyshop';
     MatIconModule,
     PaginationModule,
     NoDataModule,
-    StepperModule,
+    MatStepperModule,
     MatExpansionModule,
     MatCheckboxModule,
     MatRadioModule,

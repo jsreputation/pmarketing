@@ -6,6 +6,7 @@
   align-items: center;
   padding: 0 1.1rem 0 1.1rem;
   border-left: 0.4rem solid transparent;
+
 }
 
 :host(.active) {
@@ -33,10 +34,11 @@
     height: 22px;
     line-height: 22px;
   }
+
 }
 
-//.mat-badge-content {
-//  font-weight: 600;
-//  font-size: 1.2rem;
-//  font-family: Roboto;
-//}
+ //.mat-badge-content {
+ //  font-weight: 600;
+ //  font-size: 1.2rem;
+ //  font-family: Roboto;
+ //}
