@@ -1,11 +1,10 @@
 @import "variables";
 
-.range-date-filter {
+.range-date-filter{
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
-
-  &-input {
+  &-input{
     width: 23rem;
   }
 }
