@@ -10,6 +10,7 @@ import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
 import {RewardsService, MerchantsService, MessageService} from '@cl-core/services';
 import { VouchersService } from '@cl-core/services/vouchers.service';
+import {IRewardDetailData} from '@cl-core/models/reward/reward-detail-data.interface';
 
 @Component({
   selector: 'cl-reward-detail-page',
@@ -21,14 +22,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
 
   public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   public id: string;
-  public data: {
-    name?: string;
-    rewardInfo?: any;
-    merchantInfo?: any;
-    vouchers?: any;
-    limits?: any;
-    vouchersStatistics?: { type: string, value: number }[];
-  } = {};
+  public data: IRewardDetailData = {};
   public statusFilterConfig: OptionConfig[];
 
   public rewardData: any;
@@ -60,6 +54,20 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
     this.destroy$.complete();
   }
 
+  private generateNewVoucherStat(
+    stats: ({ [k: string]: number }),
+    dataObj?: IRewardDetailData): ([] | { type: string, value: number }[]) {
+    const resultData = [];
+    if (dataObj && !dataObj.vouchersStatistics && !Array.isArray(dataObj.vouchersStatistics)) {
+      return resultData;
+    }
+    // tslint:disable-next-line: forin
+    for (const k in stats) {
+      this.data.vouchersStatistics.push({ type: k, value: stats[k] });
+    }
+    return resultData;
+  }
+
   public openDialogReplenish(): void {
     const dialogRef = this.dialog.open(RewardReplenishPopupComponent, { panelClass: 'reward-replenish-dialog', data: this.data });
     dialogRef.afterClosed()
@@ -67,11 +75,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
         mergeMap((_: any): any => this.vouchersService.getStats(this.id)),
         tap(
           (stats: { [k: string]: number }) => {
-            this.data.vouchersStatistics = [];
-            // tslint:disable-next-line: forin
-            for (const k in stats) {
-              this.data.vouchersStatistics.push({ type: k, value: stats[k] });
-            }
+            this.data.vouchersStatistics = this.generateNewVoucherStat(stats);
             this.cd.detectChanges();
           }
         ),
@@ -117,13 +121,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
       );
     $id.pipe(switchMap(id => this.vouchersService.getStats(id)))
       .subscribe((stats: { [k: string]: number }) => {
-        if (!this.data.vouchersStatistics) {
-          this.data.vouchersStatistics = [];
-        }
-        // tslint:disable-next-line: forin
-        for (const k in stats) {
-          this.data.vouchersStatistics.push({ type: k, value: stats[k] });
-        }
+        this.data.vouchersStatistics = this.generateNewVoucherStat(stats, this.data);
         this.cd.detectChanges();
       });
   }
