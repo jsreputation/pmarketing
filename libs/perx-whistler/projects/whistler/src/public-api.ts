@@ -11,7 +11,9 @@ export {
   IJsonApiPatchData,
   IJsonApiPostItem,
   IJsonApiPostData,
-  IWRelationshipsDataType
+  IWRelationshipsDataType,
+  relationshipsDataToArray,
+  relationshipsDataToItem
 } from './lib/jsonapi.payload';
 export { IWRewardDisplayProperties, IWProperties, IWAttbsObjEntity } from './lib/whistler.models';
 
