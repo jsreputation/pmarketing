@@ -45,28 +45,33 @@
   <div class="loyalty-loader">
     <mat-progress-bar class="loyalty-loader-bar" *ngIf="loading" mode="indeterminate"></mat-progress-bar>
   </div>
-  <mat-horizontal-stepper linear labelPosition="bottom" #stepper [selectedIndex]="0" [disableRipple]="loading">
+  <cs-horizontal-stepper  labelPosition="bottom"
+                          #stepper
+                          linear
+                          [disable]="loading"
+                          (beforeSelectionChange)="clickStepLabel($event)"
+                          [selectedIndex]="0">
     <!--step 1-->
-    <mat-step completed="false">
-      <ng-template matStepLabel>{{'LOYALTY_FEATURE.LOYALTY_DETAILS' | translate}}</ng-template>
-      <cl-loyalty-form-step-details *ngIf="form && stepOne" [group]="stepOne"
-                                    [pools]="manageConfig?.pools">
+    <cs-step>
+      <ng-template csStepLabel>{{'LOYALTY_FEATURE.LOYALTY_DETAILS' | translate}}</ng-template>
+      <cl-loyalty-form-step-details *ngIf="form && firstStepForm" [group]="firstStepForm"
+                                    [config]="manageConfig">
       </cl-loyalty-form-step-details>
-    </mat-step>
+    </cs-step>
     <!--step 2-->
-    <mat-step completed="false">
-      <ng-template matStepLabel>{{'LOYALTY_FEATURE.TIERS_CONVERSIONS' | translate}}</ng-template>
+    <cs-step>
+      <ng-template csStepLabel>{{'LOYALTY_FEATURE.TIERS_CONVERSIONS' | translate}}</ng-template>
       <cl-loyalty-form-step-tiers-conversions *ngIf="stepProgress >= 1"
-                                              [group]="stepTwo"
+                                              [group]="secondStepForm"
                                               [customTierDataSource]="customTierDataSource"
                                               (tiersConversionsAction)="handleLoyaltyActions($event)"
                                               [config]="manageConfig">
 
       </cl-loyalty-form-step-tiers-conversions>
-    </mat-step>
+    </cs-step>
     <!--step 3-->
-    <mat-step completed="false">
-      <ng-template matStepLabel>{{'LOYALTY_FEATURE.POINT_EARN_RULES' | translate}}</ng-template>
+    <cs-step>
+      <ng-template csStepLabel>{{'LOYALTY_FEATURE.POINT_EARN_RULES' | translate}}</ng-template>
       <cl-loyalty-form-step-earn-rules *ngIf="stepProgress >= 2"
                                        [config]="manageConfig"
                                        [basicTierId]="basicTierId"
@@ -76,10 +81,10 @@
                                        (rulesAction)="handleLoyaltyActions($event)"></cl-loyalty-form-step-earn-rules>
       <div>
       </div>
-    </mat-step>
+    </cs-step>
     <!--step 4-->
-    <mat-step completed="false">
-      <ng-template matStepLabel>{{'LOYALTY_FEATURE.REVIEW' | translate}}</ng-template>
+    <cs-step>
+      <ng-template csStepLabel>{{'LOYALTY_FEATURE.REVIEW' | translate}}</ng-template>
       <cl-view-loyalty *ngIf="stepProgress >= 3"
                        [config]="viewConfig"
                        [loyaltyData]="form.value"
@@ -87,7 +92,7 @@
                        [basicTierRuleSet]="basicTierRuleSet"
                        [customTierRuleSetMap]="customTierRuleSetMap"
       ></cl-view-loyalty>
-    </mat-step>
-  </mat-horizontal-stepper>
+    </cs-step>
+  </cs-horizontal-stepper>
 </section>
 

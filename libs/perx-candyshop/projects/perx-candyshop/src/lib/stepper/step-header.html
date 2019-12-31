@@ -1,0 +1,32 @@
+<div class="cs-step-header-ripple"
+     matRipple
+     [class.disable]="disable"
+     [matRippleTrigger]="_getHostElement()"
+     [matRippleDisabled]="disableRipple"></div>
+
+<div class="cs-step-icon-state-{{state}} cs-step-icon" [class.cs-step-icon-selected]="selected">
+  <div class="cs-step-icon-content" [ngSwitch]="!!(iconOverrides && iconOverrides[state])">
+    <ng-container
+      *ngSwitchCase="true"
+      [ngTemplateOutlet]="iconOverrides[state]"
+      [ngTemplateOutletContext]="_getIconContext()"></ng-container>
+    <ng-container *ngSwitchDefault [ngSwitch]="state">
+      <span *ngSwitchCase="'number'">{{_getDefaultTextForState(state)}}</span>
+      <mat-icon *ngSwitchDefault>{{_getDefaultTextForState(state)}}</mat-icon>
+    </ng-container>
+  </div>
+</div>
+<div class="cs-step-label"
+     [class.cs-step-label-active]="active"
+     [class.cs-step-label-selected]="selected"
+     [class.cs-step-label-error]="state == 'error'">
+  <!-- If there is a label template, use it. -->
+  <ng-container *ngIf="_templateLabel()" [ngTemplateOutlet]="_templateLabel()!.template">
+  </ng-container>
+  <!-- If there is no label template, fall back to the text label. -->
+  <div class="cs-step-text-label" *ngIf="_stringLabel()">{{label}}</div>
+
+  <div class="cs-step-optional" *ngIf="optional && state != 'error'">{{_intl.optionalLabel}}</div>
+  <div class="cs-step-sub-label-error" *ngIf="state == 'error'">{{errorMessage}}</div>
+</div>
+

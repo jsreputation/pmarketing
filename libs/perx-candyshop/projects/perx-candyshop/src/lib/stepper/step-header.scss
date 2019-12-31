@@ -1,0 +1,85 @@
+$cs-stepper-label-header-height: 24px !default;
+$cs-stepper-label-min-width: 50px !default;
+$cs-stepper-side-gap: 24px !default;
+$cs-vertical-stepper-content-margin: 36px !default;
+$cs-stepper-line-gap: 8px !default;
+$cs-step-sub-label-font-size: 12px;
+$cs-step-header-icon-size: 16px !default;
+
+@mixin cs-fill {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+}
+
+.cs-step-header {
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  box-sizing: content-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cs-step-optional,
+.cs-step-sub-label-error {
+  font-size: $cs-step-sub-label-font-size;
+}
+
+.cs-step-icon {
+  border-radius: 50%;
+  height: $cs-stepper-label-header-height;
+  width: $cs-stepper-label-header-height;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.cs-step-icon-content,
+.cs-step-icon .cs-icon {
+  // Use absolute positioning to center the content, because it works better with text.
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cs-step-icon .cs-icon {
+  font-size: $cs-step-header-icon-size;
+  height: $cs-step-header-icon-size;
+  width: $cs-step-header-icon-size;
+}
+
+.cs-step-icon-state-error .cs-icon {
+  font-size: $cs-step-header-icon-size + 8;
+  height: $cs-step-header-icon-size + 8;
+  width: $cs-step-header-icon-size + 8;
+}
+
+.cs-step-label {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: $cs-stepper-label-min-width;
+  vertical-align: middle;
+}
+
+.cs-step-text-label {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+//Increase specificity because ripple styles are part of the `cs-core` mixin and can
+//potentially overwrite the absolute position of the container.
+.cs-step-header .cs-step-header-ripple {
+  @include cs-fill;
+
+  pointer-events: none;
+}
+
+.cs-step-header .disable {
+  pointer-events: none;
+  cursor: default;
+}
