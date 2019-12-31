@@ -2,6 +2,7 @@ import { PreAuthGuard } from './pre-auth.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
+import { PreLoginGuard } from './pre-login.guard';
 const routes: Routes = [
   {
     path: 'login',
@@ -21,7 +22,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./layout/layout.module').then((mod) => mod.LayoutModule),
-    canActivate: [ProtectedGuard]
+    canActivate: [PreLoginGuard, ProtectedGuard]
   },
   { path: '**', redirectTo: '/home', canActivate: [ProtectedGuard] },
   { path: '**', redirectTo: '/loading', canActivate: [PublicGuard] },
