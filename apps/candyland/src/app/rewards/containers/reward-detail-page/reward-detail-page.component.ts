@@ -4,13 +4,23 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import Utils from '@cl-helpers/utils';
 
 import { of, combineLatest, Subject } from 'rxjs';
-import {map, mapTo, mergeMap, switchMap, takeUntil, tap, filter} from 'rxjs/operators';
+import { map, switchMap, takeUntil, filter } from 'rxjs/operators';
 
 import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
-import {RewardsService, MerchantsService, MessageService} from '@cl-core/services';
+import { RewardsService, MerchantsService, MessageService } from '@cl-core/services';
 import { VouchersService } from '@cl-core/services/vouchers.service';
-import {IRewardDetailData} from '@cl-core/models/reward/reward-detail-data.interface';
+import { Merchant } from '@cl-core/http-adapters/merchant';
+import { IWVouchersApi } from '@perx/whistler';
+
+interface IRewardDetailData {
+  name?: string;
+  rewardInfo?: any;
+  merchantInfo?: Merchant | null;
+  vouchers?: any;
+  limits?: any;
+  vouchersStatistics?: { type: string, value: number }[];
+}
 
 @Component({
   selector: 'cl-reward-detail-page',
@@ -54,38 +64,32 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
     this.destroy$.complete();
   }
 
-  private generateNewVoucherStat(
-    stats: ({ [k: string]: number }),
-    dataObj?: IRewardDetailData): ([] | { type: string, value: number }[]) {
-    const resultData = [];
-    if (dataObj && !dataObj.vouchersStatistics && !Array.isArray(dataObj.vouchersStatistics)) {
-      return resultData;
-    }
-    // tslint:disable-next-line: forin
-    for (const k in stats) {
-      this.data.vouchersStatistics.push({ type: k, value: stats[k] });
-    }
-    return resultData;
+  private updateVoucherStat(): void {
+    this.vouchersService.getStats(this.id)
+      .subscribe((stats: { [k: string]: number }) => {
+        this.data.vouchersStatistics = [];
+        // tslint:disable-next-line: forin
+        for (const k in stats) {
+          this.data.vouchersStatistics.push({ type: k, value: stats[k] });
+        }
+        this.cd.detectChanges();
+      });
   }
 
   public openDialogReplenish(): void {
-    const dialogRef = this.dialog.open(RewardReplenishPopupComponent, { panelClass: 'reward-replenish-dialog', data: this.data });
-    dialogRef.afterClosed()
+    this.dialog.open<RewardReplenishPopupComponent, any, IWVouchersApi>(
+      RewardReplenishPopupComponent,
+      { panelClass: 'reward-replenish-dialog', data: this.data }
+    )
+      .afterClosed()
       .pipe(
-        mergeMap((_: any): any => this.vouchersService.getStats(this.id)),
-        tap(
-          (stats: { [k: string]: number }) => {
-            this.data.vouchersStatistics = this.generateNewVoucherStat(stats);
-            this.cd.detectChanges();
-          }
-        ),
-        mapTo( false), // as is the case before
         filter(Boolean), // what is the use of this? useless
-        switchMap((data: any) => this.vouchersService.createVoucher(data)), // this svc not working?
+        switchMap((data: IWVouchersApi) => this.vouchersService.createVoucher(data)), // this svc not working?
       )
       .subscribe(
-        () => this.messageService.show('Vouchers succesfully replenished.', 'success'),
-        () => this.messageService.show('Could not replenish vouchers. Make sure that the configuration is correct.', 'warning')
+        () => this.messageService.show('Voucher replenishing in progress.', 'success'),
+        () => this.messageService.show('Could not replenish vouchers. Make sure that the configuration is correct.', 'warning'),
+        () => this.updateVoucherStat()
       );
   }
 
@@ -102,7 +106,12 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
       map((params: ParamMap) => params.get('id')),
       takeUntil(this.destroy$),
     );
-    $id.subscribe(id => this.id = id);
+    // get the id and update voucher stats
+    $id.subscribe(id => {
+      this.id = id;
+      this.updateVoucherStat();
+    });
+    // get reward and merchant information
     $id
       .pipe(
         switchMap(id => this.rewardsService.getRewardToForm(id)),
@@ -119,10 +128,5 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
         },
         (err) => { console.error(err); this.router.navigateByUrl('/rewards'); }
       );
-    $id.pipe(switchMap(id => this.vouchersService.getStats(id)))
-      .subscribe((stats: { [k: string]: number }) => {
-        this.data.vouchersStatistics = this.generateNewVoucherStat(stats, this.data);
-        this.cd.detectChanges();
-      });
   }
 }
