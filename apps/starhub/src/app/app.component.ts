@@ -177,7 +177,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
 
             const data = {
               text: this.firstComefirstServeCampaign.description,
-              imageUrl: 'assets/reward.png',
+              imageUrl: 'assets/bd-campaign.svg',
               buttonTxt: 'Check it out',
               afterClosedCallBack: this,
               // @ts-ignore
@@ -237,6 +237,10 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
           this.router.navigate([`/home/vouchers`]);
         },
         (err) => {
+          if (err.error && err.error.code === 4103) {
+            // user has already been issued voucher
+            this.router.navigate([`/home/vouchers`]);
+          }
           console.error('Something fishy, we should not be here, without any reward or game. ERR print: ' + err);
         }
       );
