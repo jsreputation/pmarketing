@@ -237,7 +237,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
           this.router.navigate([`/home/vouchers`]);
         },
         (err) => {
-          if (err.error.code === 4103) {
+          if (err.error && err.error.code === 4103) {
             // user has already been issued voucher
             this.router.navigate([`/home/vouchers`]);
           }
