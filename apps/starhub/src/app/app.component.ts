@@ -177,7 +177,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
 
             const data = {
               text: this.firstComefirstServeCampaign.description,
-              imageUrl: 'assets/reward.png',
+              imageUrl: 'assets/bd-campaign.svg',
               buttonTxt: 'Check it out',
               afterClosedCallBack: this,
               // @ts-ignore
