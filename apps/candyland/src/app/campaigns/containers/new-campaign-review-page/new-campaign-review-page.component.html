@@ -136,60 +136,6 @@
             </h3>
           </div>
         </div>
-
-
-
-        <!--Message-->
-        <div class="card-section" *ngIf="campaign?.channel?.message">
-          <div class="card-header">
-            <h3 class="card-title">
-              {{'CAMPAIGN.MESSAGE' | translate}}
-            </h3>
-          </div>
-          <div class="card-content">
-            {{campaign?.channel?.message}}
-          </div>
-        </div>
-
-
-
-        <!--schedule-->
-        <div class="card-section" *ngIf="campaign?.channel?.schedule?.sendDate">
-          <div class="card-header">
-            <h3 class="card-title">
-              {{'CAMPAIGN.SCHEDULE_DATE' | translate}}
-            </h3>
-          </div>
-
-          <div class="card-content">
-            <!--send date-->
-            <div class="card-row">
-              {{campaign?.channel?.schedule?.sendDate}}&nbsp;&nbsp;&nbsp;&nbsp;{{campaign?.channel?.schedule?.sendTime}}
-            </div>
-            <!--recurrence-->
-            <div class="card-row stretch" *ngIf="campaign?.channel?.schedule?.enableRecurrence">
-              <div class="row">
-                <div>
-                  <label class="card-label">
-                    {{'CAMPAIGN.REPEAT_EVERY' | translate}}
-                  </label>
-                  {{campaign?.channel?.schedule?.recurrence?.period}}&nbsp;{{campaign?.channel?.schedule?.recurrence?.period}}
-                </div>
-                <div>
-                  <!--repeat on-->
-                  <ng-container *ngIf="campaign?.channel?.schedule?.recurrence?.repeatOn.length > 0">
-                    <label class="card-label">
-                      {{'CAMPAIGN.REPEAT_ON' | translate}}
-                    </label>
-                    <span *ngFor="let repeatOn of campaign?.channel?.schedule?.recurrence?.repeatOn">
-                      {{repeatOn}},
-                    </span>
-                  </ng-container>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div class="sms" *ngIf="checkSmsExist()">
@@ -199,7 +145,7 @@
         </h3>
       </div>
 
-      <ng-container *ngIf="campaign?.notification?.launch.length">
+      <ng-container *ngIf="campaign?.notification?.launch?.length">
         <!--Message-->
         <div class="card-content">
           <div class="card-section" *ngFor="let launch of campaign.notification.launch; let index = index;" >
@@ -251,23 +197,14 @@
                     </div>
                   </section>
 
-                  <div class="card-section">
-                    <div class="card-header">
-                      <h3 class="card-title">
-                        {{'CAMPAIGN.MESSAGE' | translate}}
-                      </h3>
-                    </div>
-                    <div class="card-content">
-                      {{launch.template.message}}
-                    </div>
-                  </div>
+
                 </section>
               </div>
             </div>
           </div>
         </div>
       </ng-container>
-      <ng-container *ngIf="campaign?.notification?.completed.length">
+      <ng-container *ngIf="campaign?.notification?.completed?.length">
         <!--Message-->
         <div class="card-content">
           <div class="card-section" *ngFor="let completed of campaign.notification.completed; let index = index;" >
@@ -318,7 +255,7 @@
           </div>
         </div>
       </ng-container>
-      <ng-container *ngIf="campaign?.notification?.campaignEnds.length">
+      <ng-container *ngIf="campaign?.notification?.campaignEnds?.length">
         <!--Message-->
         <div class="card-content">
           <div class="card-section" *ngFor="let campaignEnds of campaign.notification.campaignEnds; let index = index;" >
@@ -348,7 +285,7 @@
                     <span>{{'CAMPAIGN.AT' | translate}}</span>
                     <span>{{campaignEnds.time}}</span>
                   </div>
-                  <div class="card-section">
+                  <div class="card-content">
                     <div class="card-header">
                       <h3 class="card-title">
                         {{'CAMPAIGN.MESSAGE' | translate}}
@@ -370,7 +307,55 @@
 
 
     </mat-card>
-    <!-- TODO: Audience currently we don't have the field in Figma design, hide first -->
+    <!-- Audience -->
+    <mat-card class="card">
+      <div class="card-header">
+        <h2 class="card-title">
+          Audience
+        </h2>
+      </div>
+      <div class="card-content" *ngIf="campaign?.audience?.select && pools?.length">
+        {{pools[campaign.audience.select - 1].name}}
+      </div>
+
+      <div>
+        <h3 class="card-label label-text">
+          Filter by
+        </h3>
+      </div>
+
+      <div class="card-content"> <!--*ngIf="campaign?.audience?.filters?.genderEnabled"-->
+        <div class="card-section" *ngIf="campaign?.audience?.filters?.agesEnabled">
+          <div class="card-header">
+            <h3 class="card-title">
+              Age
+            </h3>
+          </div>
+          <div class="card-content">
+            <span *ngFor="let age of campaign.audience.filters.ages">
+              <ng-container *ngIf="age.from !== null && age.to !== null">
+                <span>{{age.from + " - " + age.to}}</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </ng-container>
+            </span>
+          </div>
+        </div>
+
+        <div class="card-section" *ngIf="campaign?.audience?.filters?.genderEnabled">
+          <div class="card-header">
+            <h3 class="card-title">
+              Gender
+            </h3>
+          </div>
+          <div class="card-content">
+            {{campaign.audience.filters.gender}}
+          </div>
+        </div>
+
+      </div>
+
+    </mat-card>
+
   </div>
   <cl-campaigns-mobile-preview [storeTemplate$]="store.template$" [tenantSettings]="tenantSettings">
   </cl-campaigns-mobile-preview>
