@@ -174,7 +174,10 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
           // if there is a 1st come 1st served campaign, display the popup
           if (firstComeFirstServed.length > 0) {
             this.firstComefirstServeCampaign = firstComeFirstServed[0];
-
+            if (this.firstComefirstServeCampaign.rewards && this.firstComefirstServeCampaign.rewards.length > 0) {
+              // not a birthday campaign. preserve Dec 2019 functionality
+              return;
+            }
             const data = {
               text: this.firstComefirstServeCampaign.description,
               imageUrl: 'assets/bd-campaign.svg',
