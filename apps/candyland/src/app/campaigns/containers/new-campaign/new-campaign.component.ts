@@ -31,6 +31,7 @@ import Utils from '@cl-helpers/utils';
 import { CRUDParser, RequestType } from '@cl-helpers/crud-parser';
 import { NotificationService } from '@cl-core/services/notification.service';
 import { IChannel, ICampaignNotificationGroup } from '@cl-core/models/campaign/channel-interface';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -55,6 +56,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private campaignsService: CampaignsService,
     private router: Router,
     private route: ActivatedRoute,
+    private location: Location,
     public dialog: MatDialog,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
@@ -117,8 +119,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     this.stepper.previous();
   }
 
-  public goNext(value?: MatStepper): void {
+  public quit(): void {
+    this.location.back();
+  }
 
+  public goNext(value?: MatStepper): void {
     if (this.channelForm.invalid) {
       this.channelForm.markAllAsTouched();
       this.cdr.markForCheck();
