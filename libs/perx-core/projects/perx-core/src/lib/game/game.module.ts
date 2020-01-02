@@ -10,6 +10,7 @@ import { WhistlerGameService } from './whist-game.service';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { ScratchCardComponent } from './scratch-card/scratch-card.component';
 import { SpinTheWheelComponent } from './spin-the-wheel/spin-the-wheel.component';
+import { SnakeGameComponent } from './snake/snake.component';
 
 export function gameServiceFactory(http: HttpClient, config: Config, vouchSvc: IVoucherService): IGameService {
   // Make decision on what to instantiate base on config
@@ -18,13 +19,15 @@ export function gameServiceFactory(http: HttpClient, config: Config, vouchSvc: I
   }
   return new V4GameService(http, config);
 }
-
+// https://github.com/ng-packagr/ng-packagr/issues/641
+// @dynamic
 @NgModule({
   declarations: [
     ShakeTreeComponent,
     PinataComponent,
     ScratchCardComponent,
     SpinTheWheelComponent,
+    SnakeGameComponent,
   ],
   imports: [
     CommonModule
@@ -41,6 +44,7 @@ export function gameServiceFactory(http: HttpClient, config: Config, vouchSvc: I
     PinataComponent,
     ScratchCardComponent,
     SpinTheWheelComponent,
+    SnakeGameComponent
   ]
 })
 export class GameModule {

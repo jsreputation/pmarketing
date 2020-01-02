@@ -8,12 +8,12 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 import { IWCampaignAttributes, IJsonApiListPayload, IJsonApiItemPayload, IJsonApiItem, IJsonApiPatchData } from '@perx/whistler';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
-import { CampaignStatus } from '@cl-core/models/campaign/campaign-status.enum';
+import { CampaignStatus } from '@cl-core/models/campaign/campaign.enum';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CampaignsService implements ITableService {
+export class CampaignsService implements ITableService<ICampaignTableData> {
 
   constructor(private campaignsHttpsService: CampaignsHttpsService) {
   }

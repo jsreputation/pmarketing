@@ -87,6 +87,7 @@ export {
   ITree,
   IScratch,
   ISpin,
+  ISnake,
   defaultTree,
   IPlayOutcome,
   ISlice,
@@ -98,7 +99,7 @@ export { ShakeTreeComponent } from './lib/game/shake-tree/shake-tree.component';
 export { PinataComponent } from './lib/game/pinata/pinata.component';
 export { ScratchCardComponent } from './lib/game/scratch-card/scratch-card.component';
 export { SpinTheWheelComponent } from './lib/game/spin-the-wheel/spin-the-wheel.component';
-
+export { SnakeGameComponent } from './lib/game/snake/snake.component';
 /**
  * Profile
  */
@@ -184,6 +185,7 @@ export { ILocation } from './lib/location/ilocation';
 export { IMerchant } from './lib/merchants/models/merchants.model';
 export { sortByDistance } from './lib/location/sort-by-distance';
 export { GeoLocationService } from './lib/location/geolocation.service';
+export { filterDuplicateLocations } from './lib/location/filter-duplicate-locations';
 
 /**
  * Survey

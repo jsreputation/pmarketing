@@ -33,6 +33,7 @@ export interface IWCampaignAttributes {
 
 export interface IWCampaignDisplayProperties {
   informationCollectionSetting?: WInformationCollectionSettingType;
+  weblink?: boolean;
   noRewardsPopUp?: IWProperties;
   successPopUp?: IWProperties;
 }
@@ -45,7 +46,7 @@ export enum WInformationCollectionSettingType {
 
 export interface IWAudienceFilter {
   gender?: string;
-  ages?: IWDateRange[];
+  age?: IWDateRange[];
 }
 
 interface IWDateRange {

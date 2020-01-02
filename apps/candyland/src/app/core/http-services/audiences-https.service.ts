@@ -6,7 +6,6 @@ import {
   IWAssignedAttributes,
   IWAssignRequestAttributes,
   IWProfileAttributes,
-  IWPoolsAttributes,
   IWAudiences,
   IJsonApiItemPayload,
   IJsonApiListPayload,
@@ -46,8 +45,8 @@ export class AudiencesHttpsService {
     return this.http.patch<IJsonApiItemPayload<IWProfileAttributes>>(ApiConfig.getAllUsers + '/' + id, { data });
   }
 
-  public updateUserPools(data: IJsonApiPatchData<IWProfileAttributes>): Observable<IJsonApiListPayload<IWPoolsAttributes>> {
-    return this.http.patch<IJsonApiListPayload<IWPoolsAttributes>>(`${ApiConfig.getAllUsers}/${data.id}`, { data });
+  public updateUserPools(data: IJsonApiPatchData<IWProfileAttributes>): Observable<IJsonApiListPayload<IWProfileAttributes, IWAudiences>> {
+    return this.http.patch<IJsonApiListPayload<IWProfileAttributes, IWAudiences>>(`${ApiConfig.getAllUsers}/${data.id}`, { data });
   }
 
   public getAssignedVouchers(params: HttpParams): Observable<IJsonApiListPayload<IWAssignedAttributes>> {

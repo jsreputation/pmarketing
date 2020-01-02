@@ -1,4 +1,9 @@
-<div class="page" *ngIf="theme && theme.properties && appConfig">
+<div class="page" 
+  *ngIf="theme && theme.properties && appConfig" 
+  infiniteScroll  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"  
+  (scrolled)="onScroll()" 
+  [scrollWindow]="false">
   <div class="loyalty-block">
     <perx-core-loyalty-summary [titleFn]="titleFn"></perx-core-loyalty-summary>
     <div class="loyalty-item loyalty-item-qr">
@@ -33,6 +38,6 @@
     <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>
   <div class="rewards-collection">
-    <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)"></perx-core-rewards-list-tabbed>
+    <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)" (tabChanged)="tabChanged($event)"></perx-core-rewards-list-tabbed>
   </div>
 </div>

@@ -10,6 +10,7 @@ import {
 } from '@angular/material';
 
 import * as moment from 'moment';
+import { IWVouchersApi } from '@perx/whistler';
 
 @Component({
   selector: 'cl-reward-replenish-popup',
@@ -18,12 +19,14 @@ import * as moment from 'moment';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RewardReplenishPopupComponent implements OnInit {
-  public replenishVoucherCodes: boolean = null;
+  public replenishVoucherCodes: number | null = null;
   public voucherSettings: any;
-  public rewardInfo: any;
+  public rewardInfo: Partial<IWVouchersApi>;
 
-  constructor(public dialogRef: MatDialogRef<RewardReplenishPopupComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(
+    public dialogRef: MatDialogRef<RewardReplenishPopupComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
   }
 
   public ngOnInit(): void {
@@ -35,7 +38,7 @@ export class RewardReplenishPopupComponent implements OnInit {
   }
 
   public replenish(): void {
-    if (this.replenishVoucherCodes) {
+    if (this.replenishVoucherCodes !== null) {
       this.rewardInfo = {
         amount: this.replenishVoucherCodes,
         start_date: moment().toISOString(),
@@ -50,7 +53,7 @@ export class RewardReplenishPopupComponent implements OnInit {
     }
   }
 
-  public setReplenishVoucherCodes(value: any): void {
+  public setReplenishVoucherCodes(value: number): void {
     this.replenishVoucherCodes = value;
   }
 }
