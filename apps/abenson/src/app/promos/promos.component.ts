@@ -36,10 +36,6 @@ export class PromosComponent implements OnInit {
   }
 
   public readMore(item: FeedItem): void {
-    this.analytics.addEvent({
-      pageType: PageType.overlay,
-      pageName: 'The All New Starhub Rewards'
-    });
     this.dialog.open(PopupComponent, {
       panelClass: 'app-full-bleed-dialog',
       data: item,
