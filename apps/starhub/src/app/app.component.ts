@@ -196,10 +196,10 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
           }
 
           // else if there is a game campaign, display the popup
-          const gameCampaign: ICampaign | undefined = campaigns.find(campaign => campaign.type === CampaignType.game);
-          if (gameCampaign) {
-            this.checkGame(gameCampaign);
-          }
+          // const gameCampaign: ICampaign | undefined = campaigns.find(campaign => campaign.type === CampaignType.game);
+          // if (gameCampaign) {
+          //   this.checkGame(gameCampaign);
+          // }
         },
         () => {
           // no campaign that is popup eligible. fail silently.
@@ -207,7 +207,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
       );
   }
 
-  private checkGame(campaign: ICampaign): void {
+  protected checkGame(campaign: ICampaign): void {
     this.gameService.getGamesFromCampaign(campaign.id)
       .pipe(
         filter(games => games.length > 0),
