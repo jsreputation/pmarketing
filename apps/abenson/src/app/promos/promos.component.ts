@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FeedItem, FeedReaderService } from '@perx/core';
-import { AnalyticsService, PageType } from '../analytics.service';
 import { MatDialog } from '@angular/material';
 import { PopupComponent } from '../popup/popup.component';
 import { Observable } from 'rxjs';
@@ -18,7 +17,6 @@ export class PromosComponent implements OnInit {
   public itemsGroup$: FeedItemGroup[];
   constructor(
     private reader: FeedReaderService,
-    private analytics: AnalyticsService,
     private dialog: MatDialog,
   ) { }
 
