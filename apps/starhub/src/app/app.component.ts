@@ -186,6 +186,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
               // @ts-ignore
               validTo: new Date(this.firstComefirstServeCampaign.endsAt)
             };
+            this.putIdInStorage(this.firstComefirstServeCampaign.id);
             this.dialog.open(RewardPopupComponent, { data });
             this.analytics.addEvent({
               pageType: PageType.overlay,
@@ -225,6 +226,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
             pageType: PageType.overlay,
             pageName: campaign.name
           });
+          this.putIdInStorage(campaign.id);
           this.dialog.open(RewardPopupComponent, { data });
         },
         () => { /* nothing to do here, just fail silently */ }
@@ -250,16 +252,18 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
     }
   }
 
-  protected idExistsInStorage(id: number): boolean {
-    const campaignIdsInLocalStorage = this.tokenStorage.getAppInfoProperty('campaignIdsPopup');
-    const ids: number[] = campaignIdsInLocalStorage ? JSON.parse(campaignIdsInLocalStorage) : [];
+  private idExistsInStorage(id: number): boolean {
+    return this.idsInStorage.includes(id);
+  }
 
-    if (ids.includes(id)) {
-      return true;
-    }
-
+  private putIdInStorage(id: number): void {
+    const ids: number[] = this.idsInStorage;
     ids.push(id);
     this.tokenStorage.setAppInfoProperty(JSON.stringify(ids), 'campaignIdsPopup');
-    return false;
+  }
+
+  private get idsInStorage(): number[] {
+    const campaignIdsInLocalStorage = this.tokenStorage.getAppInfoProperty('campaignIdsPopup');
+    return campaignIdsInLocalStorage ? JSON.parse(campaignIdsInLocalStorage) : [];
   }
 }
