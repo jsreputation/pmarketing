@@ -242,7 +242,7 @@ export class WhistlerGameService implements IGameService {
     return (new Observable((subject: Subscriber<IGame[]>) => {
       const gameByCid: { [cid: number]: IGame } = {};
       if (this.campaignService === undefined) {
-        console.log('this requires the campaign service to be injected');
+        console.log('getActiveGames: this requires injecting an instance of ICampaignService into WhistlerGameService to work');
         subject.complete();
         return;
       }

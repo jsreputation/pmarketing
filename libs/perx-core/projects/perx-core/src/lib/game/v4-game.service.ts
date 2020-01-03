@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, combineLatest } from 'rxjs';
 import { IGameService } from './igame.service';
 import {
   IGame,
@@ -13,7 +13,10 @@ import {
   IPlayOutcome,
   IEngagementTransaction
 } from './game.model';
-import { map } from 'rxjs/operators';
+import {
+  map,
+  switchMap,
+} from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { Config } from '../config/config';
 import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
@@ -104,6 +107,20 @@ interface IV4PlayResponse {
     state: string;
     use_account_id: number;
   };
+}
+
+interface IV4LightGameCampaign {
+  id: number;
+  name: string;
+  begins_at: string;
+  images: {
+    url: string;
+    type: string;
+  }[];
+}
+
+interface IV4GameCampaigns {
+  data: IV4LightGameCampaign[];
 }
 
 @Injectable({
@@ -234,7 +251,45 @@ export class V4GameService implements IGameService {
   }
 
   public getActiveGames(): Observable<IGame[]> {
-    console.log('not implemented yet');
-    return of([]);
+    return this.httpClient.get<IV4GameCampaigns>(`${this.hostName}/v4/campaigns?campaign_type=game`)
+      .pipe(
+        map(res => res.data),
+        map(cs => {
+          const now = (new Date()).getTime();
+          return cs.filter(c => {
+            if (c.begins_at === null) {
+              return true;
+            }
+            const beginsAt = new Date(c.begins_at);
+            return beginsAt.getTime() <= now;
+          });
+        }),
+        switchMap((cs: IV4LightGameCampaign[]) => {
+          // for each campaign, fetch associated games
+          return combineLatest([
+            ...cs.map(c => of(c)),
+            ...cs.map(c => this.getGamesFromCampaign(c.id))
+          ]);
+        }),
+        map((s: (IV4LightGameCampaign | IGame[])[]) => {
+          // split again the campaigns from the games
+          // @ts-ignore
+          const campaigns: IV4LightGameCampaign[] = s.splice(0, s.length / 2);
+          // @ts-ignore
+          const games: IGame[][] = s;
+          const res: IGame[] = [];
+          for (const i in games) {
+            // if there is no underlying game, move on to next campaign
+            if (games[i].length === 0) {
+              continue;
+            }
+            const g = games[i][0];
+            const c = campaigns[i];
+            g.imgUrl = oc(c).images[0].url();
+            res.push(g);
+          }
+          return res;
+        })
+      );
   }
 }
