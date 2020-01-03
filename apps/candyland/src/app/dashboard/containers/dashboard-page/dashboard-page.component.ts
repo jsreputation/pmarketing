@@ -53,6 +53,12 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     this.handelDateRangeChanges();
     this.dateRange.patchValue(this.defaultDateRange);
     this.renderer.addClass(this.document.body, 'no-cta');
+    if (!localStorage.getItem('hideIntro')) {
+      this.isOpen = this.isOpen;
+    } else if (localStorage.getItem('hideIntro') === 'true') {
+      this.isOpen = !this.isOpen;
+    }
+    localStorage.setItem('hideIntro', 'true');
   }
 
   public ngOnDestroy(): void {
