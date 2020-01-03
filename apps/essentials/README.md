@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4203/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -29,18 +29,15 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
     │   ├── essentials/
     |   │   ├── src/
     |   |   │   ├── app/
-    |   |   │   │   ├── audience/
     |   |   │   │   ├── auth/
-    |   |   │   │   ├── campaigns/
     |   |   │   │   ├── core/
-    |   |   │   │   ├── dashboard/
     |   |   │   │   ├── shared/
     |   |   │   │   ├── … other moduldes/
     |   |   │   │   ├── app.component
     |   |   │   │   ├── app.module
     |   |   │   │   └── app.routing.module
     |   |   │   ├── assets/
-    |   |   │   ├── enbironments/
+    |   |   │   ├── environments/
     |   |   │   ├── assets/
     |   |   │   ├── styles/
     |   |   │   └── … other config files
