@@ -275,7 +275,7 @@ export class WhistlerGameService implements IGameService {
                   ))
             );
           }),
-          // this is to make sure that we complete the observable only on the last 
+          // this is to make sure that we complete the observable only on the last
           takeLast(1)
         ).subscribe(() => subject.complete());
       return () => sub.unsubscribe();
