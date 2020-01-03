@@ -18,7 +18,8 @@ describe('AppComponent', () => {
       ],
       providers: [
         {
-          provide: AuthService, useValue: {
+          provide: AuthService,
+          useValue: {
             initAuth: () => {
             }
           }

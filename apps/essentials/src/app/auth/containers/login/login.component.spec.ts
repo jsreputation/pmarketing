@@ -16,25 +16,25 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        ButtonModule,
-        LogoModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatIconModule,
-        HttpClientModule,
-        TranslateModule.forRoot()
-      ],
-      providers: [ AuthService, LocalStorageService, SessionService ],
-      declarations: [
-        LoginComponent,
-        LoginFormComponent
-      ]
-    })
-    .compileComponents();
+        imports: [
+          RouterTestingModule,
+          ReactiveFormsModule,
+          BrowserAnimationsModule,
+          ButtonModule,
+          LogoModule,
+          MatFormFieldModule,
+          MatInputModule,
+          MatIconModule,
+          HttpClientModule,
+          TranslateModule.forRoot()
+        ],
+        providers: [AuthService, LocalStorageService, SessionService],
+        declarations: [
+          LoginComponent,
+          LoginFormComponent
+        ]
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {

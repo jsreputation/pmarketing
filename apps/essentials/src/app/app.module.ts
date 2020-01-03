@@ -21,6 +21,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { GestureConfig } from '@angular/material/core';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TestPageComponent } from './test-page/test-page.component';
+
 // import * as Sentry from '@sentry/browser';
 
 // Sentry.init({
@@ -40,7 +42,8 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 @NgModule({
   declarations: [
     AppComponent,
-    MainContainerComponent
+    MainContainerComponent,
+    TestPageComponent
   ],
   imports: [
     BrowserModule,

@@ -5,7 +5,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { SessionService } from '@es-core/sevices/session.service';
+import { SessionService } from '@es-core/services/session.service';
 
 @Injectable({
   providedIn: 'root'

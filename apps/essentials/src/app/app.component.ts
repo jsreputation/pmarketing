@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import { AuthService } from '@es-core';
+import { AuthService } from '@es-core';
 
 @Component({
   selector: 'es-root',
@@ -7,22 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  // constructor(
-    // private routingState: RoutingStateService,
-    // public authService: AuthService,
-  // ) {
-  // }
+  constructor(
+    public authService: AuthService,
+  ) {
+  }
 
   public ngOnInit(): void {
-    // this.authService.initAuth();
-    // if (this.authService.userId) {
-    //   this.authService.updateUser()
-    //     .subscribe(() => {
-    //     });
-    // }
-
-    // this.routingState.loadRouting() // what does this do?
-    //   .subscribe(() => {
-    //   });
+    this.authService.initAuth();
+    if (this.authService.userId) {
+      this.authService.updateUser()
+        .subscribe(() => {
+        });
+    }
   }
 }

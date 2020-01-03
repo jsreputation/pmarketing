@@ -3,7 +3,7 @@ import {
   Router, UrlTree
 } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { SessionService } from '@es-core/sevices/session.service';
+import { SessionService } from '@es-core/services/session.service';
 import {Observable} from 'rxjs';
 import { map, take } from 'rxjs/operators';
 

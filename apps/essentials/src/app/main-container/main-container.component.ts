@@ -1,4 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { AuthService, UserService } from '@es-core';
+import { Observable } from 'rxjs';
+import { IAMUser } from '@es-core/models/auth/IAMUser.interface';
 
 @Component({
   selector: 'es-main-container',
@@ -7,5 +10,18 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainContainerComponent {
+  constructor(
+    private authService: AuthService,
+    private userService: UserService
+  ) {
+  }
+
+  public get user$(): Observable<IAMUser> {
+    return this.userService.user$;
+  }
+
+  public handleLogout(): void {
+    this.authService.logout();
+  }
 
 }

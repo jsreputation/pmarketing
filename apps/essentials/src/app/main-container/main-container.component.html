@@ -1,3 +1,5 @@
-<cs-sidenav>
+<cs-sidenav [logOutButtonText]="'LOG_OUT' | translate"
+            [user]="user$ | async"
+            (logout)="handleLogout()">
   <router-outlet></router-outlet>
 </cs-sidenav>

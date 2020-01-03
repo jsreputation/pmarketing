@@ -5,11 +5,11 @@ import { ButtonModule, LogoModule } from '@perx/candyshop';
 import { MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthService } from '@es-core-services';
 import { LocalStorageService } from '@es-core/services/local-storage.service';
 import { SessionService } from '@es-core/services/session.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthService } from '@es-core';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;

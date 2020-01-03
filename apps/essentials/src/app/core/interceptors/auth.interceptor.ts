@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { ApiConfig } from '@es-core/api-config';
-// import { AuthService } from '@es-core/sevices/auth.service';
-import { SessionService } from '@es-core/sevices/session.service';
+import { AuthService } from '@es-core/services/auth.service';
+import { SessionService } from '@es-core/services/session.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private sessionService: SessionService,
-              // private authService: AuthService
+              private authService: AuthService
   ) {
   }
 
@@ -23,7 +23,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
     const authReq = req.clone({
       setHeaders: {
-         ...contentType,
+        ...contentType,
         'Access-Control-Allow-Origin': '*',
         Authorization: this.sessionService.token || ''
       }
@@ -33,7 +33,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private handle401(err: any): Observable<any> {
     if (err instanceof HttpErrorResponse && err.status === 401) {
-      // this.authService.logout();
+      this.authService.logout();
       return throwError('error 401');
     }
     return throwError(err);

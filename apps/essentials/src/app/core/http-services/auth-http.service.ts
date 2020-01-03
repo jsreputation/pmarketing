@@ -3,7 +3,12 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ApiConfig } from '@es-core/api-config';
 
 import { Observable } from 'rxjs';
-import { IWLoginAttributes, IWProfileAttributes, IJsonApiItemPayload, IJsonApiPostData } from '@perx/whistler';
+import {
+  IWProfileAttributes,
+  IJsonApiItemPayload,
+  IJsonApiPostData,
+  IWIAMUserAttributes
+} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +17,11 @@ export class AuthHttpService {
   constructor(private http: HttpClient) {
   }
 
-  public signIn(data: Partial<IJsonApiPostData<ILogin>>): Observable<HttpResponse<IJsonApiItemPayload<IWLoginAttributes>>> {
-    return this.http.post<IJsonApiItemPayload<IWLoginAttributes>>(
+  public signIn(data: Partial<IJsonApiPostData<ILogin>>): Observable<HttpResponse<IJsonApiItemPayload<IWIAMUserAttributes>>> {
+    return this.http.post<IJsonApiItemPayload<IWIAMUserAttributes>>(
       ApiConfig.signIn,
-      { data },
-      { observe: 'response', params: { include: 'groups,credentials' } }
+      {data},
+      {observe: 'response', params: {include: 'groups,credentials'}}
     );
   }
 
@@ -24,11 +29,11 @@ export class AuthHttpService {
     return this.http.get<IJsonApiItemPayload<IWProfileAttributes>>(ApiConfig.IAMUsersPath + '/' + id);
   }
 
-  public resetPassword(accountId: string, username: string): Observable<IJsonApiItemPayload<void>> {
+  public resetPassword(username: string): Observable<IJsonApiItemPayload<void>> {
     const req = {
       data: {
         attributes: {
-          account_id: accountId,
+          account_id: 'retail',
           username
         }
       }
@@ -47,6 +52,6 @@ export class AuthHttpService {
         }
       }
     };
-    return this.http.put<HttpResponse<IJsonApiItemPayload<void>>>(`${ApiConfig.IAMUsersPath}/password`, req, { observe: 'response'});
+    return this.http.put<HttpResponse<IJsonApiItemPayload<void>>>(`${ApiConfig.IAMUsersPath}/password`, req, {observe: 'response'});
   }
 }

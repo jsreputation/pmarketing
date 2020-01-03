@@ -2,12 +2,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UpdateUserComponent } from './update-user.component';
 import { MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
-import { ButtonModule } from '@es-shared/components/button/button.module';
-import { AuthService, MessageService } from '@es-core-services';
 import { Router, UrlTree } from '@angular/router';
 // tslint:disable-next-line: import-blacklist
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthService, MessageService } from '@es-core';
+import { ButtonModule } from '@perx/candyshop';
 
 describe('UpdateUserComponent', () => {
   let component: UpdateUserComponent;

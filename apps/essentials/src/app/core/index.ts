@@ -4,14 +4,14 @@
 // entity-services
 
 // root-services
-export * from './sevices/local-storage.service';
-export * from './sevices/auth.service';
-export * from './sevices/session.service';
-export * from './sevices/user.service';
-export * from './sevices/multiple-translate-loader.service';
-export * from './sevices/translate-default-language.service';
-export * from './sevices/window.service';
-export * from './sevices/message.service';
+export * from './services/local-storage.service';
+export * from './services/auth.service';
+export * from './services/session.service';
+export * from './services/user.service';
+export * from './services/multiple-translate-loader.service';
+export * from './services/translate-default-language.service';
+export * from './services/window.service';
+export * from './services/message.service';
 
 // guards
 export * from './guards/auth.guard';
