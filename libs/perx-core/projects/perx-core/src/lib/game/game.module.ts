@@ -11,6 +11,7 @@ import { IVoucherService } from '../vouchers/ivoucher.service';
 import { ScratchCardComponent } from './scratch-card/scratch-card.component';
 import { SpinTheWheelComponent } from './spin-the-wheel/spin-the-wheel.component';
 import { SnakeGameComponent } from './snake/snake.component';
+import { MineSweeperComponent } from './mine-sweeper/mine-sweeper.component';
 
 export function gameServiceFactory(http: HttpClient, config: Config, vouchSvc: IVoucherService): IGameService {
   // Make decision on what to instantiate base on config
@@ -28,6 +29,7 @@ export function gameServiceFactory(http: HttpClient, config: Config, vouchSvc: I
     ScratchCardComponent,
     SpinTheWheelComponent,
     SnakeGameComponent,
+    MineSweeperComponent,
   ],
   imports: [
     CommonModule
@@ -44,7 +46,8 @@ export function gameServiceFactory(http: HttpClient, config: Config, vouchSvc: I
     PinataComponent,
     ScratchCardComponent,
     SpinTheWheelComponent,
-    SnakeGameComponent
+    SnakeGameComponent,
+    MineSweeperComponent
   ]
 })
 export class GameModule {
