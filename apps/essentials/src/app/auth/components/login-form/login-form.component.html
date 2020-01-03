@@ -9,14 +9,6 @@
     id="login-form">
     <div class="login-form-control">
       <mat-form-field>
-        <input matInput formControlName="account_id" [placeholder]="'LOGIN_PAGE.ACCOUNT_ID' | translate">
-        <mat-error *ngIf="accountId.hasError('required')" translate>ERROR_REQUIRED</mat-error>
-        <mat-error *ngIf="accountId.hasError('minlength')" translate>ERROR_MIN_LENGTH </mat-error>
-        <mat-error *ngIf="accountId.hasError('pattern')" translate>ERROR_PATTERN</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="login-form-control">
-      <mat-form-field>
         <input matInput formControlName="username" [placeholder]="'LOGIN_PAGE.USER_NAME' | translate">
         <mat-error *ngIf="username.hasError('required')" translate>ERROR_REQUIRED</mat-error>
       </mat-form-field>
@@ -31,23 +23,23 @@
     </div>
 
     <div class="login-form-action">
-      <es-button [formId]="'login-form'"
+      <cs-button [formId]="'login-form'"
         [classList]="'primary btn-block'"
         [disable]="formLogin.invalid"
         class="btn-block">
         <span translate>
           LOGIN_PAGE.LOGIN_BUTTON
         </span>
-      </es-button>
+      </cs-button>
     </div>
 
     <div class="login-form-action">
-      <es-button (click)="onForget()"
+      <cs-button (click)="onForget()"
         [classList]="'tertiary ph-0'">
         <span>
           Forget Password
         </span>
-      </es-button>
+      </cs-button>
     </div>
   </form>
 </div>

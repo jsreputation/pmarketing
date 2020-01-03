@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import { AuthService, RoutingStateService } from '@es-core';
+// import { AuthService } from '@es-core';
 
 @Component({
   selector: 'es-root',
@@ -7,11 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(
+  // constructor(
     // private routingState: RoutingStateService,
     // public authService: AuthService,
-  ) {
-  }
+  // ) {
+  // }
 
   public ngOnInit(): void {
     // this.authService.initAuth();

@@ -37,17 +37,10 @@ export class LoginFormComponent implements OnInit {
 
   get username(): AbstractControl | null { return this.formLogin.get('username'); }
   get password(): AbstractControl | null { return this.formLogin.get('password'); }
-  get accountId(): AbstractControl | null { return this.formLogin.get('account_id'); }
 
   // ideally should be 9 digits or alpha numeric char
   private createForm(): void {
     this.formLogin = this.fb.group({
-      account_id: [null, [
-        Validators.required,
-        Validators.pattern(/([0-9]|[A-Z]|-)*/i),
-        Validators.minLength(3),
-        Validators.maxLength(64)
-      ]],
       username: [null, [
         Validators.required,
         Validators.minLength(1),

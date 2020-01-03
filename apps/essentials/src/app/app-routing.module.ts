@@ -6,9 +6,10 @@ import { MainContainerComponent } from './main-container/main-container.componen
 import { LoginComponent } from './auth/containers/login/login.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/dashboard/overview'},
+  { path: '', pathMatch: 'full', redirectTo: '/login'},
   { path: '',
-    component: MainContainerComponent, canActivate: [AuthGuard],
+    component: MainContainerComponent,
+    canActivate: [AuthGuard],
     children: [
       // Example:
       // {
@@ -20,7 +21,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
   {
     path: 'password',
-    canActivate: [NoAuthGuard],
+    // canActivate: [NoAuthGuard],
     loadChildren: () => import('./password/password.module').then(mod => mod.PasswordModule)
   },
   { path: '**', redirectTo: '/'}
