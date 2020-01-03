@@ -221,7 +221,7 @@ jobs:
             echo "APP_BASE: ${APP_BASE}"
 
             export APP_ENV="prod"
-            if [ $APP == 'starhub' ] && [ $TARGET_ENV != 'production' ]
+            if [[ ( $APP == 'starhub' || $APP == 'abenson' ) && $TARGET_ENV != 'production' ]]
             then
               export APP_ENV="staging"
             fi
