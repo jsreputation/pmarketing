@@ -264,13 +264,11 @@ export class V4GameService implements IGameService {
             return beginsAt.getTime() <= now;
           });
         }),
-        switchMap((cs: IV4LightGameCampaign[]) => {
-          // for each campaign, fetch associated games
-          return combineLatest([
-            ...cs.map(c => of(c)),
-            ...cs.map(c => this.getGamesFromCampaign(c.id))
-          ]);
-        }),
+        // for each campaign, fetch associated games
+        switchMap((cs: IV4LightGameCampaign[]) => combineLatest([
+          ...cs.map(c => of(c)),
+          ...cs.map(c => this.getGamesFromCampaign(c.id))
+        ])),
         map((s: (IV4LightGameCampaign | IGame[])[]) => {
           // split again the campaigns from the games
           // @ts-ignore
