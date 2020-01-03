@@ -6,10 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sweep.component.scss']
 })
 export class SweepComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 
 }
