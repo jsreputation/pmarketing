@@ -11,27 +11,21 @@ import {
   forkJoin,
   of,
   Subject,
-  combineLatest,
-  Subscriber
 } from 'rxjs';
 import {
   tap,
   takeUntil,
   map,
-  retry,
   mergeMap,
   takeLast
 } from 'rxjs/operators';
 
 import {
-  ICampaignService,
-  ICampaign,
   RewardsService,
   IReward,
   ITabConfigExtended,
   IGameService,
   IGame,
-  CampaignType,
   IProfile,
   FeedReaderService,
   FeedItem,
@@ -128,59 +122,18 @@ export class HomeComponent implements OnInit, OnDestroy {
   public staticTab: ITabConfigExtended[];
   public titleFn: (profile: IProfile) => string;
   public showGames: boolean = false;
-  private static compareGamesByCid(a: IGame, b: IGame): number {
-    if (!a.campaignId) {
-      return -1;
-    }
-    if (!b.campaignId) {
-      return 1;
-    }
-    return a.campaignId - b.campaignId;
-  }
 
   private initCampaign(): void {
-    this.games$ = (new Observable((subject: Subscriber<IGame[]>) => {
-      const gameByCid: { [cid: number]: IGame } = {};
-      this.campaingService.getCampaigns()
-        .pipe(
-          map((cs: ICampaign[]) => cs.filter(c => c.type === CampaignType.game)),
-          map((cs: ICampaign[]) => cs.filter(c => gameByCid[c.id] === undefined)),
-          mergeMap((arrOfCampaigns: ICampaign[]) => {
-            let gameIds: number[] = arrOfCampaigns.map(c => c.engagementId)
-              .filter((id: number) => id !== undefined) as number[];
-            gameIds = gameIds.filter((item, index) => gameIds.indexOf(item) === index);
-            return combineLatest(
-              ...gameIds.filter(id => id !== undefined)
-                .map((id: number) => this.gamesService.get(id)
-                  .pipe(
-                    retry(1),
-                    map((g: IGame) => {
-                      const existingCampaign = arrOfCampaigns.find(c => c.engagementId === g.id);
-                      const existingCampaignId = existingCampaign && existingCampaign.id;
-                      return { ...g, campaignId: existingCampaignId };
-                    }),
-                    tap((g: IGame) => {
-                      const matchingCampaigns = arrOfCampaigns.filter(c => c.engagementId === g.id);
-                      matchingCampaigns.forEach(c => {
-                        const campaignId = c.id;
-                        gameByCid[c.id] = { ...g, campaignId };
-                      });
-                      subject.next(Object.values(gameByCid).sort(HomeComponent.compareGamesByCid));
-                    })
-                  ))
-            );
-          }),
-          tap((games: IGame[]) => this.showGames = games.length > 0),
-          takeLast(1)
-        ).subscribe(() => subject.complete());
-    }));
+    this.games$ = this.gamesService.getActiveGames()
+      .pipe(
+        tap((games: IGame[]) => this.showGames = games.length > 0),
+        takeLast(1)
+      );
 
     this.newsFeedItems = this.feedService.getFromUrl('https://cdn.perxtech.io/content/starhub/rss.xml');
-
   }
 
   constructor(
-    private campaingService: ICampaignService,
     private rewardsService: RewardsService,
     private gamesService: IGameService,
     private router: Router,

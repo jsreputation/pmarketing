@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IGameService } from './igame.service';
 import {
   IGame,
@@ -233,4 +233,8 @@ export class V4GameService implements IGameService {
     throw new Error('Not implemented.');
   }
 
+  public getActiveGames(): Observable<IGame[]> {
+    console.log('not implemented yet');
+    return of([]);
+  }
 }
