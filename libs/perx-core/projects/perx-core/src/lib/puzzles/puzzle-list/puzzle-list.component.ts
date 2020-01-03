@@ -27,6 +27,8 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   public puzzleTextFn: (len?: string) => string;
 
+  @Input()
+  public thumbnailDefault: string = '';
   public total: number | null = null;
 
   @Output()

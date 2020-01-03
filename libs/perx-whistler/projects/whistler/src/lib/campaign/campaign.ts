@@ -46,7 +46,7 @@ export enum WInformationCollectionSettingType {
 
 export interface IWAudienceFilter {
   gender?: string;
-  ages?: IWDateRange[];
+  age?: IWDateRange[];
 }
 
 interface IWDateRange {

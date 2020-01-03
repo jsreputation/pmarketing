@@ -1,15 +1,15 @@
 <div [class]="puzzles ? 'card-list-container' : 'card-list-container loading'">
   <div *ngIf="puzzles; then thenBlock else elseBlock"></div>
   <ng-template #thenBlock>
-    <mat-card matRipple *ngFor="let puzzle of puzzles; let i=index"
-      [matRippleDisabled]="!isActive(puzzle)"
-      [class.disabled]="!isActive(puzzle)"
-      [tabindex]="isActive(puzzle) ? 0 : -1"
+    <mat-card matRipple *ngFor="let puzzle of puzzles; let i=index" [matRippleDisabled]="!isActive(puzzle)"
+      [class.disabled]="!isActive(puzzle)" [tabindex]="isActive(puzzle) ? 0 : -1"
       (click)="isActive(puzzle) && puzzleSelected(puzzle)">
       <div class="puzzle-content">
         <div class="puzzle-img__wrapper">
-          <img [ngClass]="isActive(puzzle) ? 'puzzle-img' : 'puzzle-img grayscale' "
-               src="{{puzzle.displayProperties.thumbnailImg ? puzzle.displayProperties.thumbnailImg : puzzle.displayProperties.cardImage.value.imageUrl}}">
+          <img *ngIf="puzzle.displayProperties.thumbnailImg"
+            [ngClass]="isActive(puzzle) ? 'puzzle-img' : 'puzzle-img grayscale' "
+            [src]="puzzle.displayProperties.thumbnailImg">
+          <div *ngIf="!puzzle.displayProperties.thumbnailImg" [ngStyle]="{'background-color': thumbnailDefault}" class="thumbnail-default"></div>
         </div>
         <div class="puzzle-details">
           <h1>

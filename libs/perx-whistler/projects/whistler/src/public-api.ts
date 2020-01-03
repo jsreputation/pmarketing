@@ -11,7 +11,9 @@ export {
   IJsonApiPatchData,
   IJsonApiPostItem,
   IJsonApiPostData,
-  IWRelationshipsDataType
+  IWRelationshipsDataType,
+  relationshipsDataToArray,
+  relationshipsDataToItem
 } from './lib/jsonapi.payload';
 export { IWRewardDisplayProperties, IWProperties, IWAttbsObjEntity } from './lib/whistler.models';
 
@@ -61,12 +63,10 @@ export {
 export { IWNotificationAttributes } from './lib/campaign/notification';
 export {
   IWAudiences,
-  IWPools,
 } from './lib/audiences/audiences.model';
 export {
   IWProfileAttributes,
   IWCustomProperties,
-  IWPoolsAttributes,
   IWCognitoLogin,
   IWUserJWTRequest,
 } from './lib/profile/profile';
