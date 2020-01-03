@@ -2,7 +2,7 @@
   <mat-card
     *ngFor="let game of ((showAllGames || (games.length <= defaultNbGames))
   ? games : (games | slice:0:defaultNbGames))"
-    [routerLink]="[ '/game', game.id ]"
+    [routerLink]="[ '/game', game.campaignId ]"
     matRipple
     class="games-card">
     <div class="img-wrapper">
