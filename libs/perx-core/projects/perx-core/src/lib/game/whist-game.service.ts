@@ -14,7 +14,7 @@ import {
   IEngagementTransaction, defaultSpin
 } from './game.model';
 import { Observable, combineLatest, of, Subscriber } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { IGameService } from './igame.service';
 import { Config } from '../config/config';
 import { IVoucherService } from '../vouchers/ivoucher.service';
@@ -45,7 +45,7 @@ export class WhistlerGameService implements IGameService {
     private http: HttpClient,
     config: Config,
     private voucherService: IVoucherService,
-    private campaignService?: ICampaignService
+    @Optional() private campaignService?: ICampaignService
   ) {
     this.hostName = config.apiHost as string;
   }
