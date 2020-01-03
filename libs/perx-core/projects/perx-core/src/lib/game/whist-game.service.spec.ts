@@ -24,7 +24,6 @@ describe('WhistlerGameService', () => {
     get: of({}),
     getFullVoucher: of({})
   });
-
   const environment = {
     apiHost: 'https://blabla',
     production: false,

@@ -13,6 +13,8 @@
         </ng-container>
 
         <perx-core-puzzle-collect-stamps *ngIf="card.displayProperties.displayCampaignAs === 'stamp_card'"
+            [defaultstampCardImage] = "'#eb202f'"
+            [defaultCardBgImage]="'#fff'"
             [nbSlots]="card.displayProperties.totalSlots"
             [stamps]="card.stamps"
             [rewards]="rewards"
@@ -22,8 +24,8 @@
             [rewardPostStamp]="rewardPostStamp"
             [availableStampImg]="availableStampImg"
             [availableRewardImg]="availableRewardImg"
-            [backgroundImage]="backgroundImage"
-            [cardBgImage]="cardBgImage"
+            [backgroundImage]="card.displayProperties.backgroundImg?.value.imageUrl || backgroundImage"
+            [cardBgImage]="card.displayProperties.cardImage?.value.imageUrl || cardBgImage"
             [title]="card.title || title"
             [subTitle]="card.subTitle || subTitle"
             (availableStampClicked)="stampClicked($event)"

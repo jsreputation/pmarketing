@@ -7,6 +7,7 @@
   height: 18px;
   padding: 0 0 0 ($horizontal-padding * 0.5);
   box-sizing: content-box;
+  overflow: hidden;
 
   &.full-with {
     height: 100% !important;
@@ -169,6 +170,18 @@
     mask: url("/assets/images/icons/create-merchant.svg") no-repeat 50% 50%;
     background-position: center;
     background-color: $secondary-color;
+  }
+
+  &.indicator-increase {
+    mask: url("/assets/images/icons/indicator-increase.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: $green;
+  }
+
+  &.indicator-decrease {
+    mask: url("/assets/images/icons/indicator-decrease.svg") no-repeat 50% 50%;
+    background-position: center;
+    background-color: $red;
   }
 }
 

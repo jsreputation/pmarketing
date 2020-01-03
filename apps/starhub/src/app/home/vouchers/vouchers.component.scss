@@ -107,4 +107,10 @@ h1 {
   height: 100%;
   z-index: 0;
   right: 7rem;
+  display: flex;
+  flex-direction: row;
+
+  img {
+    align-self: flex-end;
+  }
 }

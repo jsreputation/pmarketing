@@ -24,9 +24,6 @@ import {
   takeUntil,
 } from 'rxjs/operators';
 
-import {
-  IWProfileAttributes,
-} from '@perx/whistler';
 import { AudiencesService, MessageService, SettingsService } from '@cl-core/services';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import {
@@ -35,7 +32,7 @@ import {
 } from '@cl-shared/table/data-source/custom-data-source';
 
 import { UpsertUserPopupComponent } from '../upsert-user-popup/upsert-user-popup.component';
-import { ManageListPopupComponent } from '../manage-list-popup/manage-list-popup.component';
+import { ManageListPopupComponent, ManageListPopupComponentOutput } from '../manage-list-popup/manage-list-popup.component';
 import {
   IUpsertUserPopup,
   Type,
@@ -55,7 +52,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   public tabs: FormControl;
   public search: FormControl;
   public searchKey: string = 'query';
-  public dataSource: CustomDataSource<IWProfileAttributes>;
+  public dataSource: CustomDataSource<IAudiencesUserForm>;
   public audiencesDataSource: CustomDataSource<IAudience>;
   public dataSourceStates: typeof DataSourceStates = DataSourceStates;
 
@@ -73,7 +70,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     public dialog: MatDialog,
     public messageService: MessageService
   ) {
-    this.dataSource = new CustomDataSource<IWProfileAttributes>(this.audiencesUserService);
+    this.dataSource = new CustomDataSource<IAudiencesUserForm>(this.audiencesUserService);
     this.audiencesDataSource = new CustomDataSource<IAudience>(this.audiencesService);
     this.tabs = new FormControl('users');
     this.search = new FormControl('');
@@ -96,9 +93,8 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
 
   public openAddUserDialog(): void {
     const dialogData: IUpsertUserPopup = { panelClass: 'audience-dialog', data: { type: Type.Add } };
-    const dialogRef = this.dialog.open(UpsertUserPopupComponent, dialogData);
-
-    dialogRef.afterClosed()
+    this.dialog.open(UpsertUserPopupComponent, dialogData)
+      .afterClosed()
       .pipe(
         filter(Boolean),
         switchMap((newUser: any) => this.audiencesUserService.createUser(newUser))
@@ -111,11 +107,13 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   public openManageListDialog(item: number): void {
-    const dialogRef = this.dialog.open(ManageListPopupComponent, { panelClass: 'manage-list-dialog', data: item });
-    dialogRef.afterClosed()
+    this.dialog.open<ManageListPopupComponent, number, ManageListPopupComponentOutput>(
+      ManageListPopupComponent,
+      { panelClass: 'manage-list-dialog', data: item }
+    ).afterClosed()
       .pipe(
-        filter(Boolean),
-        switchMap((updateUser: any) => this.audiencesUserService.updateUserPools(updateUser))
+        filter(Boolean), // this filters out clicks on cancel
+        switchMap((updateUser: ManageListPopupComponentOutput) => this.audiencesUserService.updateUserPools(updateUser))
       )
       .subscribe(() => this.dataSource.updateData());
   }
@@ -128,7 +126,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
         break;
       case 'users':
       default:
-        this.dataSource = new CustomDataSource<IWProfileAttributes>(this.audiencesUserService);
+        this.dataSource = new CustomDataSource<IAudiencesUserForm>(this.audiencesUserService);
     }
     this.currentTab = tab;
     this.cd.detectChanges();

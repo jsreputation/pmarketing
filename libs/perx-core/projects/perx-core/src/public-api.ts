@@ -185,6 +185,7 @@ export { ILocation } from './lib/location/ilocation';
 export { IMerchant } from './lib/merchants/models/merchants.model';
 export { sortByDistance } from './lib/location/sort-by-distance';
 export { GeoLocationService } from './lib/location/geolocation.service';
+export { filterDuplicateLocations } from './lib/location/filter-duplicate-locations';
 
 /**
  * Survey
