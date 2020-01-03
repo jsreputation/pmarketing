@@ -1,15 +1,23 @@
 <div class="rewards-container" *ngIf="savedVouchers || redeemedVouchers;">
   <div class="saved-rewards" *ngIf="(savedVouchers | async) as vouchers">
     <h1 *ngIf="vouchers.length > 0">Saved rewards</h1>
-    <mat-card *ngFor="let voucher of ((hideSeeMore || (vouchers.length <= defaultNbVouchers)) ? vouchers : (vouchers | slice:0:defaultNbVouchers))" (click)="voucherSelected(voucher)" matRipple>
+    <mat-card
+      *ngFor="let voucher of ((hideSeeMore || (vouchers.length <= defaultNbVouchers)) ? vouchers : (vouchers | slice:0:defaultNbVouchers))"
+      (click)="voucherSelected(voucher)" matRipple>
       <img mat-card-avatar [src]="voucher.reward.merchantImg" *ngIf="voucher.reward.merchantImg">
       <mat-card-header>
-        <mat-card-title *ngIf="voucher.reward.name">{{(voucher.reward.name.length > 35) ? (voucher.reward.name | slice:0:35)+'...' : (voucher.reward.name)}}</mat-card-title>
+        <mat-card-title *ngIf="voucher.reward.name">
+          {{(voucher.reward.name.length > 35) ? (voucher.reward.name | slice:0:35)+'...' : (voucher.reward.name)}}
+        </mat-card-title>
         <mat-card-subtitle [ngClass]="getTextColorClass(voucher)">{{getNumberOfDays(voucher)}}</mat-card-subtitle>
       </mat-card-header>
+      <div class="accessory" *ngIf="voucher.accessoryImage">
+        <img [src]="voucher.accessoryImage" alt="">
+      </div>
       <div class="icon">
         <img src="assets/forward-arrow.svg" alt="">
       </div>
+      
     </mat-card>
     <button *ngIf="!hideSeeMore && (vouchers.length > defaultNbVouchers)" (click)="seeMoreClicked()">See more</button>
   </div>
@@ -19,7 +27,9 @@
     <mat-card *ngFor="let voucher of vouchers" (click)="voucherSelected(voucher)" matRipple>
       <img mat-card-avatar [src]="voucher.reward.merchantImg" *ngIf="voucher.reward.merchantImg">
       <mat-card-header>
-        <mat-card-title *ngIf="voucher.reward.name">{{(voucher.reward.name.length > 35) ? (voucher.reward.name | slice:0:35)+'...' : (voucher.reward.name)}}</mat-card-title>
+        <mat-card-title *ngIf="voucher.reward.name">
+          {{(voucher.reward.name.length > 35) ? (voucher.reward.name | slice:0:35)+'...' : (voucher.reward.name)}}
+        </mat-card-title>
         <mat-card-subtitle>{{voucher.state | titlecase}}</mat-card-subtitle>
       </mat-card-header>
       <div class="disabled-icon">

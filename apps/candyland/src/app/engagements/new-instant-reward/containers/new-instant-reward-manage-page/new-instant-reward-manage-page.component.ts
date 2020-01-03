@@ -21,7 +21,8 @@ import {
   AvailableNewEngagementService, InstantRewardsService, RoutingStateService, SettingsService
 } from '@cl-core/services';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
-import { IWEngagementAttributes } from '@perx/whistler';
+import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 
 @Component({
   selector: 'cl-new-instant-reward-manage-page',
@@ -30,7 +31,7 @@ import { IWEngagementAttributes } from '@perx/whistler';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
+  @ViewChild(SimpleMobileViewComponent, { static: false }) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<void> = new Subject();
 
@@ -117,12 +118,12 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
       .pipe(switchMap((imageUrl: IUploadedFile) => {
         if (this.id) {
           return this.instantRewardsService.updateInstantReward(this.id,
-            {...(this.form.value as IRewardForm), image_url: imageUrl.url});
+            { ...(this.form.value as IRewardForm), image_url: imageUrl.url });
         }
-        return this.instantRewardsService.createRewardGame({...this.form.value, image_url: imageUrl.url})
+        return this.instantRewardsService.createRewardGame({ ...this.form.value, image_url: imageUrl.url })
           .pipe(
             tap(
-              (engagement: IJsonApiPayload<IWEngagementAttributes>) =>
+              (engagement: IJsonApiItemPayload<IWEngagementAttributes>) =>
                 this.availableNewEngagementService.transformAndSetNewEngagement(engagement)
             )
           );
@@ -137,8 +138,8 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
   private initRewardForm(): void {
     this.form = this.fb.group({
       name: [null, [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: [null, [
         Validators.required,

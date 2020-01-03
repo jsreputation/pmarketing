@@ -11,7 +11,8 @@ import { ControlsName } from '../../../../models/controls-name';
 import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
-import { IWEngagementAttributes } from '@perx/whistler';
+import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 
 @Component({
   selector: 'cl-new-stamp',
@@ -20,7 +21,7 @@ import { IWEngagementAttributes } from '@perx/whistler';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewStampComponent implements OnInit, OnDestroy {
-  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
+  @ViewChild(SimpleMobileViewComponent, { static: false }) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<void> = new Subject();
 
@@ -129,11 +130,11 @@ export class NewStampComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((imageUrl: IUploadedFile) => {
           if (this.id) {
-            return this.stampsService.updateStamp(this.id, {...this.formStamp.value, image_url: imageUrl.url});
+            return this.stampsService.updateStamp(this.id, { ...this.formStamp.value, image_url: imageUrl.url });
           }
-          return this.stampsService.createStamp({...this.formStamp.value, image_url: imageUrl.url}).pipe(
+          return this.stampsService.createStamp({ ...this.formStamp.value, image_url: imageUrl.url }).pipe(
             tap(
-              (engagement: IJsonApiPayload<IWEngagementAttributes>) =>
+              (engagement: IJsonApiItemPayload<IWEngagementAttributes>) =>
                 this.availableNewEngagementService.transformAndSetNewEngagement(engagement)
             )
           );
@@ -150,8 +151,8 @@ export class NewStampComponent implements OnInit, OnDestroy {
   private createStampForm(): void {
     this.formStamp = this.fb.group({
       name: ['Stamp Card Template', [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: ['Collect stamps', [
         Validators.required,
@@ -218,7 +219,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
           return;
         }
         this.stampsSlotNumberData = value.map(
-          (item: number) => ({rewardPosition: item - 1})
+          (item: number) => ({ rewardPosition: item - 1 })
         );
       });
   }

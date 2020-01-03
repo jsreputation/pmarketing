@@ -13,7 +13,8 @@ export class UpdateUserComponent implements OnInit {
   public hide: boolean = true;
   private token: string;
 
-  constructor(private router: Router, private authService: AuthService, private messageService: MessageService) { }
+  constructor(private router: Router, private authService: AuthService, private messageService: MessageService) {
+  }
 
   public ngOnInit(): void {
     const urlTree: UrlTree = this.router.parseUrl(this.router.url);
@@ -24,9 +25,14 @@ export class UpdateUserComponent implements OnInit {
 
   public submit(password: string): void {
     this.authService.changePassword(password, this.token).subscribe(
-      () => {
-        this.messageService.show('Success, you can now login', 'warning');
-        this.router.navigate(['/']);
+      (res) => {
+        if (res) {
+          this.messageService.show('Success, you are login', 'warning');
+          this.router.navigate(['/']);
+        } else {
+          this.messageService.show('Something went wrong, you can try login again', 'warning');
+          this.router.navigate(['/login']);
+        }
       },
       () => this.messageService.show('It appears that this reset link has already been used or expired, please try again!', 'warning')
     );

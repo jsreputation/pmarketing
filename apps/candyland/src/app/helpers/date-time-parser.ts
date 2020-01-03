@@ -47,7 +47,7 @@ export class DateTimeParser {
     return date;
   }
 
-  public static getNextDay( numberDays: number = 1, date: Date = null): Date {
+  public static getNextDay(numberDays: number = 1, date: Date = null): Date {
     const resDate = date || new Date();
     resDate.setDate(resDate.getDate() + numberDays);
     return resDate;
@@ -55,5 +55,12 @@ export class DateTimeParser {
 
   public static getPreviousDay(numberDays: number = 1, date: Date = null): Date {
     return DateTimeParser.getNextDay(-1 * numberDays, date);
+  }
+
+  public static isDatepickerRangeValue(value: any): boolean {
+    if (!(value && typeof value === 'object')) {
+      return false;
+    }
+    return 'begin' in value && 'end' in value;
   }
 }

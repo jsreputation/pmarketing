@@ -5,10 +5,33 @@ jobs:
     name: build-prod
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: azure/k8s-actions/k8s-set-context@master
+      - uses: actions/checkout@v2
+      - uses: azure/k8s-set-context@v1
         with:
+          method: kubeconfig
           kubeconfig: ${{ secrets.BUILDER_KUBE_CONFIG }}
+      - name: Get changed folders
+        run: |
+          git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin master
+          PR=${GITHUB_REF/refs/remotes}
+          CHANGED_FILES=$(git --no-pager diff --name-only remotes/origin/master...${PR})
+          echo "Files changed:"
+          echo "${CHANGED_FILES[@]}"
+          APP_REGEX="apps\/([A-Za-z\-]+)\/"
+          APPS=()
+          for FILE in ${CHANGED_FILES[@]}; do
+            if ! [[ ${FILE} =~ ${APP_REGEX} ]]; then
+              APPS=$(cd apps; ls -d *)
+              break
+            else
+              APP=${BASH_REMATCH[1]}
+              if ! [[ ${APPS[@]} =~ ${APP} ]]; then
+                APPS+=${APP}
+              fi
+            fi
+          done
+          echo "Apps to build:"
+          echo "${APPS[@]}"
       - name: Check branch name
         run: |
           REGEX="[[:alpha:]]+-[[:digit:]]+"
@@ -24,8 +47,7 @@ jobs:
         run: |
           curl -L https://github.com/tektoncd/cli/releases/download/v0.6.0/tkn_0.6.0_Linux_x86_64.tar.gz \
           | sudo tar xzv -C /usr/local/bin tkn
-           #sudo apt-get --allow-releaseinfo-change update &&
-          sudo apt-get install -y parallel
+          sudo apt-get --allow-releaseinfo-change update && sudo apt-get install -y parallel
       - name: Remove existing tasks
         run: |
           EXISTING_TASKS=$(kubectl -n build get taskrun -l github.ref=${GITHUB_REF//[^0-9a-zA-Z-_\.]/-},tekton.dev/task=microsite-apps-ng-build-prod -o=name)
@@ -93,8 +115,9 @@ jobs:
           WAIT_TIME=0
           for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
             until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" = "Running" ] || [ $WAIT_TIME -gt 600 ]; do
+              echo "Waiting ${WAIT_TIME} seconds for tekton task: ${TASKRUN_NAME}"
+              echo "Current task state: $(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')"
               (( WAIT_TIME+=3 ))
-              echo "Wait for tekton task: ${TASKRUN_NAME}"
               sleep 3
             done
           done
@@ -121,6 +144,12 @@ jobs:
         run: |
           for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
             if [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" != "Succeeded" ]; then
-              tkn -n build taskrun logs ${TASKRUN_NAME}
+              tkn -n build taskrun logs ${TASKRUN_NAME} -f
             fi
+          done
+      - name: Taskruns cleanup
+        if: always()
+        run: |
+          for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
+            tkn -n build taskrun delete ${TASKRUN_NAME}
           done

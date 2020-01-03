@@ -30,7 +30,7 @@ import {
 
 import {
   IWAssignedAttributes,
-  IWProfileAttributes,
+  IJsonApiItem,
 } from '@perx/whistler';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
@@ -38,7 +38,7 @@ import { CustomDataSource } from '@cl-shared';
 import { AudiencesVouchersService } from '@cl-core/services/audiences-vouchers.service';
 import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
-import { MessageService} from '@cl-core/services';
+import { MessageService } from '@cl-core/services';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
 import { UpsertUserPopupComponent } from '../upsert-user-popup/upsert-user-popup.component';
 import {
@@ -56,11 +56,11 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   private destroy$: Subject<void> = new Subject();
 
   public userId: string;
-  public user: IWProfileAttributes;
+  public user: IAudiencesUserForm;
   public tabsFilterConfig: OptionConfig[];
   public dataSource: CustomDataSource<any>;
 
-  private async updateLocalUser(): Promise<IWProfileAttributes> {
+  private async updateLocalUser(): Promise<IAudiencesUserForm> {
     this.user = await this.audiencesUserService.getUser(this.userId).toPromise();
     this.cd.detectChanges();
     return this.user;
@@ -111,7 +111,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
           this.messageService.show('Expiry voucher date successfully changed.');
           this.dataSource.updateData();
         },
-        () =>  this.messageService.show('Failed to update voucher expiration date.')
+        () => this.messageService.show('Failed to update voucher expiration date.')
       );
   }
 
@@ -145,7 +145,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       takeUntil(this.destroy$),
     )
       .subscribe(
-        (user: IWProfileAttributes) => {
+        (user: IAudiencesUserForm) => {
           this.user = user;
           this.cd.detectChanges();
         },
