@@ -24,6 +24,7 @@ export class AudiencesService implements ITableService<IAudience> {
 
   public getAudiences(params: HttpParamsOptions): Observable<IJsonApiListPayload<IWAudiences>> {
     const httpParams = ClHttpParams.createHttpParams(params);
+    httpParams.set('filter[system_generated]', 'false');
     return this.http.getAudiences(httpParams);
   }
 
@@ -32,7 +33,8 @@ export class AudiencesService implements ITableService<IAudience> {
   ): Observable<IPoolUserLink[]> {
     const defaultParams: HttpParamsOptions = {
       'page[number]': '1',
-      'page[size]': '20'
+      'page[size]': '20',
+      'filter[system_generated]': 'false',
     };
     const httpParams = ClHttpParams.createHttpParams({ ...defaultParams, ...params });
     return this.http.getAudiences(httpParams)
@@ -53,6 +55,7 @@ export class AudiencesService implements ITableService<IAudience> {
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IAudience>> {
     const httpParams = ClHttpParams.createHttpParams(params);
+    httpParams.set('filter[system_generated]', 'false');
     return this.http.getAudiences(httpParams)
       .pipe(
         map((res: IJsonApiListPayload<IWAudiences>) => AudiencesHttpAdapter.transformAudiencesTableData(res))
