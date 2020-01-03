@@ -212,7 +212,7 @@ jobs:
             fi
             echo "after second set APP: ${APP}"
 
-            if [ $APP == 'petron-demo' || $APP == 'oracle-demo ]
+            if [ $APP == 'petron-demo' || $APP == 'oracle-demo' ]
             then
               export APP_BASE="blackcomb"
             else
