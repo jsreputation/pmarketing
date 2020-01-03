@@ -39,9 +39,11 @@ const loyaltyServiceStub: Partial<LoyaltyService> = {
   getLoyalties: () => of([])
 };
 
-const gameSvcStub: Partial<IGameService> = {};
+const gameSvcStub: Partial<IGameService> = {
+  getActiveGames: () => of([])
+};
 
-const themesServiceStub = { getThemeSetting: () => of({})};
+const themesServiceStub = { getThemeSetting: () => of({}) };
 
 const configServiceStub = { readAppConfig: () => of() };
 
