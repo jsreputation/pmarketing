@@ -2,18 +2,24 @@
   <h1 class="title" translate>PAGE_NAME</h1>
 </header>
 <section class="content">
-  <div class="dashboard-welcome">
+  <div class="dashboard-welcome {{isOpen ? '': 'dismissed'}}">
     <h1 class="title">
       {{'TITLE' | translate}} {{userName$ | async}}
     </h1>
     <p class="lead" translate>
       DESCRIPTION_DASHBOARD
     </p>
-  </div>
-  <h2 class="dashboard-title" translate>SECTION_EXPLORE</h2>
-  <div class="dashboard-explore-cards">
-    <cl-dashboard-game-card *ngFor="let gameCard of gameCard$ | async" [gameCard]="gameCard" class="game-card">
-    </cl-dashboard-game-card>
+    <h2 class="dashboard-title" translate>SECTION_EXPLORE</h2>
+    <div class="dashboard-explore-cards">
+      <cl-dashboard-game-card *ngFor="let gameCard of gameCard$ | async" [gameCard]="gameCard" class="game-card">
+      </cl-dashboard-game-card>
+    </div>
+    <cl-button (click)="toggle()"
+      [classList]="'tertiary tertiary--gray ph-0 mw-0'">
+      <span>
+        <i class="ascii-icon">{{isOpen ? '×': '+'}}</i> {{isOpen ? 'Dismiss Intro': 'Restore Intro'}}
+      </span>
+    </cl-button>
   </div>
   <h2 class="dashboard-title" translate>SECTION_BUSINESS</h2>
   <section class="dashboard-insights-card">
