@@ -1,2 +1,11 @@
-@import '~@angular/material/theming';
 @import "variables";
+
+.growth-card-set {
+  flex-basis: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  box-sizing: border-box;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+}
