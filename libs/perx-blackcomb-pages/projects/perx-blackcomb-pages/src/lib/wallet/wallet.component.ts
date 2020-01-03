@@ -116,4 +116,8 @@ export class WalletComponent implements OnInit {
     }
     return String(++index);
   }
+
+  public selected(puzzle: IStampCard): void {
+    this.router.navigate([`/stamp/${puzzle.campaignId}`]);
+  }
 }
