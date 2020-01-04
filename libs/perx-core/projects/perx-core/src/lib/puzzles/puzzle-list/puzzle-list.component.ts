@@ -26,7 +26,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   public titleFn: (index?: number) => string;
 
   @Input()
-  public puzzleTextFn: (len?: string) => string;
+  public puzzleTextFn: (puzzle?: IStampCard) => string;
 
   @Input()
   public thumbnailDefault: string = '';

@@ -72,11 +72,6 @@ export class WalletComponent implements OnInit {
   private getCampaign(): void {
     this.configService.readAppConfig().pipe(tap((config: IConfig) => {
       this.stampsType = config.stampsType ? config.stampsType as string : 'puzzle';
-      if (config.stampsType === 'stamp_card') {
-        this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
-          puzzle.stamps.filter(st => st.state === StampState.issued).length !== 1 ? 'new stamps' : 'new stamp';
-        this.titleFn = (index?: number) => index !== undefined ? `Stamp Card ${this.puzzleIndex(index)} out of 12` : '';
-      }
     }), mergeMap(() => this.fetchCampaign())).subscribe((card: IStampCard) => {
       if (card) {
         this.campaignId = card.campaignId;
@@ -100,6 +95,14 @@ export class WalletComponent implements OnInit {
             map((stampCards: IStampCard[]) => stampCards.filter(card =>
               card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === this.stampsType
             )),
+            tap((cards: IStampCard[]) => {
+              if (this.stampsType === 'stamp_card') {
+                this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
+                puzzle.stamps.filter(st => st.state === StampState.issued).length !== 1 ? 'new stamps' : 'new stamp';
+                this.titleFn = (index?: number) => index !== undefined ?
+                  `Stamp Card ${this.puzzleIndex(index)} out of ${cards.length}` : '';
+              }
+            }),
             map((cards: IStampCard[]) => cards[0])
           )
         ),
