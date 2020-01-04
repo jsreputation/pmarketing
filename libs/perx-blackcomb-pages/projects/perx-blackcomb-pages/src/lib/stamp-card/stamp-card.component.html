@@ -12,8 +12,8 @@
         [rewardPostStamp]="stampCard.displayProperties.rewardPostStamp"
         [backgroundImage]="stampCard.displayProperties.cardImage?.value.imageUrl"
         [cardBgImage]="stampCard.displayProperties.cardBackgroundImage?.value.imageUrl"
-        [title]="stampCard.title"
-        [subTitle]="stampCard.subTitle"
+        [title]="stampCard.title || 'Stamp Card'"
+        [subTitle]="stampCard.subTitle || 'Tap the stamps to earn your reward!'"
         (availableStampClicked)="handleStamp($event)">
       </perx-core-puzzle-collect-stamps>
     </div>
