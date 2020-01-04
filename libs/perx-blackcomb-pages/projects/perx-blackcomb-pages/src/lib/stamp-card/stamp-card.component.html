@@ -1,9 +1,4 @@
-<div class="main-puzzle-container" *ngIf="stampCard" [ngStyle]="{'background-image': background? 'url(' + background + ')': '' }">
-  <div class="game-wrapper" [ngStyle]="{'background-image': cardBackground? 'url(' + cardBackground + ')': '' }">
-    <div>
-      <h1>{{this.title}}</h1>
-      <h3>{{this.subTitle}}</h3>
-    </div>
+<div class="main-puzzle-container" *ngIf="stampCard">
     <div class="stamp-form">
       <perx-core-puzzle-collect-stamps
         [nbSlots]="stampCard.campaignConfig?.totalSlots || stampCard.displayProperties.totalSlots"
@@ -17,10 +12,11 @@
         [rewardPostStamp]="stampCard.displayProperties.rewardPostStamp"
         [backgroundImage]="stampCard.displayProperties.cardImage?.value.imageUrl"
         [cardBgImage]="stampCard.displayProperties.cardBackgroundImage?.value.imageUrl"
+        [title]="stampCard.title"
+        [subTitle]="stampCard.subTitle"
         (availableStampClicked)="handleStamp($event)">
       </perx-core-puzzle-collect-stamps>
     </div>
-  </div>
   <div class="game-footer">
     <button mat-raised-button [routerLink]="['/wallet']">
       {{stampCard.buttonText}}
