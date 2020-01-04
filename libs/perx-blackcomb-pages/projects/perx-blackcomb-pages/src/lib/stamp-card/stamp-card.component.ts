@@ -28,6 +28,13 @@ export class StampCardComponent implements OnInit, OnDestroy {
     buttonTxt: 'TRY_AGAIN'
   };
 
+  public v4Rewards(card: IStampCard): PuzzleCollectReward[] {
+    if (!card || !card.displayProperties.rewardPositions) {
+      throw new Error(`card or rewardPositions is required`);
+    }
+    return card.displayProperties.rewardPositions.map((el: number) => ({ rewardPosition: --el }));
+  }
+
   constructor(
     private stampService: StampService,
     private route: ActivatedRoute,

@@ -6,13 +6,16 @@
     </div>
     <div class="stamp-form">
       <perx-core-puzzle-collect-stamps
-        [nbSlots]="stampCard.campaignConfig.totalSlots"
+        [nbSlots]="stampCard.campaignConfig.totalSlots || stampCard.displayProperties.totalSlots"
         [stamps]="stampCard.stamps"
-        [rewards]="stampCard.campaignConfig.collectionRewards"
+        [rewards]="stampCard.campaignConfig.collectionRewards || v4Rewards(stampCard)"
         [preStampImg]="stampCard.displayProperties.preStampImg"
         [postStampImg]="stampCard.displayProperties.postStampImg"
         [rewardPreStamp]="stampCard.displayProperties.rewardPreStamp"
-        [rewardPostStamp]="stampCard.displayProperties.rewardPostStamp">
+        [rewardPostStamp]="stampCard.displayProperties.rewardPostStamp"
+        [backgroundImage]="stampCard.displayProperties.backgroundImg?.value.imageUrl"
+        [cardBgImage]="stampCard.displayProperties.cardImage?.value.imageUrl"
+        (availableStampClicked)="handleStamp($event)">
       </perx-core-puzzle-collect-stamps>
     </div>
   </div>
