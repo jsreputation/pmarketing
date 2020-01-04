@@ -24,11 +24,11 @@ export class PromosComponent implements OnInit {
     this.itemsGroup$ = [
       {
         label: 'Exclusives',
-        items: this.reader.getFromUrl('https://teamplusrewards.home.blog/category/Exclusives/feed/', true)
+        items: this.reader.getFromUrl('https://teamplusrewards.home.blog/category/Exclusives-Staging/feed/', true)
       },
       {
         label: 'Promotions',
-        items: this.reader.getFromUrl('https://teamplusrewards.home.blog/category/Promotions/feed/', true)
+        items: this.reader.getFromUrl('https://teamplusrewards.home.blog/category/Promotions-Staging/feed/', true)
       }
     ];
   }

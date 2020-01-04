@@ -29,7 +29,7 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
 .chart-card {
   position: relative;
   padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75);
-  flex: 1 1 28rem;
+  flex: 1 1 35rem;
   box-sizing: border-box;
   border-radius: $border-radius;
   border: 1px solid $border-color;
@@ -40,12 +40,10 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
 
   &.double-width {
     flex-basis: calc(50% - 2.4rem);
-    min-width: 32rem;
   }
 
   &.quarter-width {
     flex-basis: calc(25% - 2.4rem);
-    min-width: 32rem;
   }
 
   &-info-title {
