@@ -13,10 +13,14 @@ import {
   IStampCard,
   StampCardState,
   Voucher,
-  VoucherState
+  VoucherState,
+  PuzzlesModule,
+  ConfigService,
+  // PuzzleListComponent,
+  // RepeatTimesDirective
 } from '@perx/core';
 import { of } from 'rxjs';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule, MatRippleModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
@@ -55,7 +59,9 @@ describe('WalletComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         WalletComponent,
-        VoucherDetailComponent
+        VoucherDetailComponent,
+        // PuzzleListComponent,
+        // RepeatTimesDirective
       ],
       imports: [
         NoopAnimationsModule,
@@ -65,7 +71,10 @@ describe('WalletComponent', () => {
         RouterTestingModule.withRoutes([{
           path: 'voucher-detail/:id',
           component: VoucherDetailComponent
-        }])
+        }]),
+        MatRippleModule,
+        MatIconModule,
+        PuzzlesModule
       ],
       providers: [
         DatePipe,
@@ -73,7 +82,14 @@ describe('WalletComponent', () => {
         { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: StampService, useValue: stampServiceStub },
-        { provide: NotificationService, useValue: notificationServiceStub }
+        { provide: NotificationService, useValue: notificationServiceStub },
+        {
+          provide: ConfigService, useValue: {
+            readAppConfig: () => of({}),
+            getTenantAppSettings: (key: string) => of({ key }),
+            getAccountSettings: () => { }
+          }
+        }
       ]
     })
       .compileComponents();
