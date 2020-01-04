@@ -2,6 +2,7 @@
 
 .main-puzzle-container {
   @include main-wrap;
+
   padding: unset;
 
   perx-core-puzzle-collect-stamps {
