@@ -1,3 +1,4 @@
+
 /*
  * Public API Surface of perx-core
  */
@@ -62,7 +63,6 @@ export {
   CampaignState,
   ICampaign,
 } from './lib/campaign/models/campaign.model';
-
 /**
  * Stamps
  */
@@ -176,7 +176,7 @@ export {
   PuzzleCollectStampState,
 } from './lib/puzzles/models/puzzle-stamp.model';
 export { PuzzleCollectStampsComponent } from './lib/puzzles/puzzle-collect-stamps/puzzle-collect-stamps.component';
-
+export { PuzzleListComponent } from './lib/puzzles/puzzle-list/puzzle-list.component';
 /**
  * Locations
  */
