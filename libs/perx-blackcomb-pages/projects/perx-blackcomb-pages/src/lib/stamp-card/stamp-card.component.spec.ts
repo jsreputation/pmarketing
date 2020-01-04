@@ -6,7 +6,6 @@ import {TranslateModule} from '@ngx-translate/core';
 import {of} from 'rxjs';
 import {ActivatedRoute, convertToParamMap} from '@angular/router';
 import {Type} from '@angular/core';
-import {stampCard} from './stamp-card.mock';
 
 describe('StampCardComponent', () => {
   let component: StampCardComponent;
