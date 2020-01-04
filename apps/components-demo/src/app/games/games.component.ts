@@ -12,6 +12,7 @@ export class GamesComponent {
     { path: 'tap', label: 'Tap' },
     { path: 'scratch', label: 'Scratch' },
     { path: 'spin', label: 'Spin' },
-    { path: 'snake', label: 'Snake'}
+    { path: 'snake', label: 'Snake'},
+    { path: 'sweep', label: 'Sweep'}
   ];
 }

@@ -11,6 +11,7 @@ import { IVoucherService } from '../vouchers/ivoucher.service';
 import { ScratchCardComponent } from './scratch-card/scratch-card.component';
 import { SpinTheWheelComponent } from './spin-the-wheel/spin-the-wheel.component';
 import { SnakeGameComponent } from './snake/snake.component';
+import { MineSweeperComponent } from './mine-sweeper/mine-sweeper.component';
 import { ICampaignService } from '../campaign/icampaign.service';
 
 export function gameServiceFactory(
@@ -34,6 +35,7 @@ export function gameServiceFactory(
     ScratchCardComponent,
     SpinTheWheelComponent,
     SnakeGameComponent,
+    MineSweeperComponent,
   ],
   imports: [
     CommonModule
@@ -55,7 +57,8 @@ export function gameServiceFactory(
     PinataComponent,
     ScratchCardComponent,
     SpinTheWheelComponent,
-    SnakeGameComponent
+    SnakeGameComponent,
+    MineSweeperComponent
   ]
 })
 export class GameModule {
