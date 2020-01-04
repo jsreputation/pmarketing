@@ -99,6 +99,12 @@ interface IV4StampCard {
         image_url?: string;
       }
     };
+    //  todo: temporarily map this until v4 dashboard fixes naming
+    card_background_image?: {
+      value?: {
+        image_url?: string;
+      }
+    };
     gift_active_image?: {
       value?: {
         image_url?: string;
@@ -187,6 +193,9 @@ export class V4StampService implements StampService {
   private static v4StampCardToStampCard(stampCard: IV4StampCard): IStampCard {
     const cardImageUrl = oc(stampCard).display_properties.card_image.value.image_url();
     const cardImage = cardImageUrl ? { value: { imageUrl: cardImageUrl } } : undefined;
+    //  todo: temporarily map this until v4 dashboard fixes naming
+    const cardBackgroundImageUrl = oc(stampCard).display_properties.card_background_image.value.image_url();
+    const cardBackgroundImage = cardBackgroundImageUrl ? { value: { imageUrl: cardBackgroundImageUrl } } : undefined;
     const rewardPreStamp = oc(stampCard).display_properties.gift_inactive_image.value.image_url(undefined);
     const rewardPostStamp = oc(stampCard).display_properties.gift_active_image.value.image_url(undefined);
     const preStampImg = oc(stampCard).display_properties.stamp_inactive_image.value.image_url(undefined);
@@ -208,6 +217,8 @@ export class V4StampService implements StampService {
         numberOfCols: stampCard.display_properties.number_of_cols,
         numberOfRows: stampCard.display_properties.number_of_rows,
         cardImage,
+        // todo: temporarily map this until v4 dashboard fixes naming
+        cardBackgroundImage,
         rewardPreStamp,
         rewardPostStamp,
         preStampImg,
