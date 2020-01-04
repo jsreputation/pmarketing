@@ -132,7 +132,7 @@ interface IV4StampCard {
         image_url?: string;
       }
     };
-    thumbnail_img?: {
+    thumbnail_image?: {
       value?: {
         image_url?: string;
       }
@@ -227,7 +227,7 @@ export class V4StampService implements StampService {
         displayCampaignAs: stampCard.display_properties.display_campaign_as,
         backgroundImg,
         rewardPositions: stampCard.display_properties.reward_positions,
-        thumbnailImg: oc(stampCard).display_properties.thumbnail_img.value.image_url()
+        thumbnailImg: oc(stampCard).display_properties.thumbnail_image.value.image_url()
       },
       stamps: stampCard.stamps ? stampCard.stamps.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp)) : undefined
     };
