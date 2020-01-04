@@ -18,6 +18,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public cardBackground: string;
   public isEnabled: boolean = false;
   public stampCard$: Observable<IStampCard>;
+  public stampCard: IStampCard;
   private destroy$: Subject<any> = new Subject();
   private rewardSuccessPopUp: IPopupConfig = {
     title: 'STAMP_SUCCESS_TITLE',
@@ -74,6 +75,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
       );
     this.stampCard$.subscribe(
       (stampCard: IStampCard) => {
+        this.stampCard = stampCard;
         this.title = stampCard.title || '';
         this.subTitle = stampCard.subTitle;
         this.background = stampCard.displayProperties.bgImage || '';

@@ -1,4 +1,4 @@
-<div class="main-puzzle-container" *ngIf="stampCard$ | async as stampCard" [ngStyle]="{'background-image': background? 'url(' + background + ')': '' }">
+<div class="main-puzzle-container" *ngIf="stampCard" [ngStyle]="{'background-image': background? 'url(' + background + ')': '' }">
   <div class="game-wrapper" [ngStyle]="{'background-image': cardBackground? 'url(' + cardBackground + ')': '' }">
     <div>
       <h1>{{this.title}}</h1>
