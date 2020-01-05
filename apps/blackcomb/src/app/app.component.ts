@@ -119,7 +119,6 @@ export class AppComponent implements OnInit {
   }
 
   private fetchPopupCampaigns(): void {
-    console.log('fetching campaings');
     this.campaignService.getCampaigns()
       .pipe(
         catchError(() => {
