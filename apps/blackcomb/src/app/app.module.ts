@@ -90,9 +90,11 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
   resolve();
 });
 @NgModule({
-  declarations: [AppComponent,
+  declarations: [
+    AppComponent,
     RewardPopupComponent,
-    ExpireTimerComponent],
+    ExpireTimerComponent
+  ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
     BrowserModule,
