@@ -176,7 +176,6 @@ export class SnakeGameComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private keyPush(evt: KeyboardEvent): void {
-    console.log('4534535', evt);
     switch (evt.key) {
       case 'ArrowLeft':
         console.log('left is pressed');
