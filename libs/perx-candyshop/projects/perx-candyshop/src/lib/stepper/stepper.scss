@@ -6,6 +6,7 @@ $cs-vertical-stepper-content-margin: 36px !default;
 $cs-stepper-line-width: 1px !default;
 $cs-stepper-line-gap: 8px !default;
 
+/* stylelint-disable */
 .cs-stepper-vertical,
 .cs-stepper-horizontal {
   display: block;
@@ -76,12 +77,14 @@ $cs-stepper-line-gap: 8px !default;
     &:not(:last-child)::after,
     [dir='rtl'] &:not(:first-child)::after {
       @extend %cs-header-horizontal-line-label-position-bottom;
+
       right: 0;
     }
 
     &:not(:first-child)::before,
     [dir='rtl'] &:not(:last-child)::before {
       @extend %cs-header-horizontal-line-label-position-bottom;
+
       left: 0;
     }
 
