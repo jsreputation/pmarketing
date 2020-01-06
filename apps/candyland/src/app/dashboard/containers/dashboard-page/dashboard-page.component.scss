@@ -4,10 +4,39 @@
 .dashboard {
   &-welcome {
     margin-bottom: $vertical-padding;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    transition: all 1s ease;
+
+    .title, .lead, .dashboard-title, .dashboard-explore-cards {
+      transition: opacity 0.15s cubic-bezier(0.35, 0, 0.25, 1);
+    }
+
+    .lead, .dashboard-title, .dashboard-explore-cards {
+      width: 100%;
+    }
 
     .lead {
       color: $secondary-font-color;
       margin-top: 0.8rem;
+    }
+
+    .title {
+      order: -2;
+    }
+
+   > cl-button {
+     order: -1;
+     margin-left: auto;
+     padding-left: 0.8rem;
+     transform: none;
+     transition: transform 0.35s cubic-bezier(0.35, 0, 0.25, 1);
+    }
+
+    + .dashboard-title {
+      margin-top: 0;
     }
   }
 
@@ -16,13 +45,14 @@
 
     margin: $vertical-padding 0 ($vertical-padding * 0.75);
     color: $base-font-color;
+    transition: margin-top 0.35s cubic-bezier(0.35, 0, 0.25, 1);
   }
 
   &-explore-cards {
     display: grid;
     grid-gap: ($horizontal-padding * 0.75);
     grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
-    margin: ($vertical-padding * 0.75) 0;
+    margin: 0 0 ($vertical-padding * 0.75);
   }
 
   &-insights-card {
@@ -51,7 +81,6 @@
 
       cl-range-date-picker-filter {
         flex-shrink: 0;
-        font-size: 1.2rem;
         display: block;
         margin: 1rem $horizontal-padding -0.75rem auto;
       }
@@ -69,3 +98,29 @@
     margin-right: ($horizontal-padding * 0.5);
   }
 }
+
+@media (max-width: $desktop-width) {
+  .dashboard-welcome {
+    max-height: 100%;
+  }
+}
+
+.dashboard-welcome.dismissed {
+  margin: 0;
+  max-height: 0;
+
+  .title, .lead, .dashboard-title, .dashboard-explore-cards {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .title {
+    width: 100%;
+  }
+
+  > cl-button {
+    order: -5;
+    transform: translateY(-3.6rem);
+  }
+}
+

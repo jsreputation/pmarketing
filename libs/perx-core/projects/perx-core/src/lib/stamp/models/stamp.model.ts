@@ -67,6 +67,12 @@ export interface IStampCard {
         imageUrl: string;
       }
     };
+    //  todo: temporarily map this until v4 dashboard fixes naming
+    cardBackgroundImage?: { // made optional
+      value: {
+        imageUrl: string;
+      }
+    };
     preStampImg?: string;
     postStampImg?: string;
     rewardPreStamp?: string;

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardCampaignPageComponent } from 'src/app/dashboard/containers/dashboard-campaign-page/dashboard-campaign-page.component';
 import { DashboardOverviewPageComponent } from 'src/app/dashboard/containers/dashboard-overview-page/dashboard-overview-page.component';
 import { DashboardRewardsPageComponent } from 'src/app/dashboard/containers/dashboard-rewards-page/dashboard-rewards-page.component';
+import { DashboardLoyaltyPageComponent } from 'src/app/dashboard/containers/dashboard-loyalty-page/dashboard-loyalty-page.component';
 import { DashboardPageComponent } from './containers/dashboard-page/dashboard-page.component';
 
 const routes: Routes = [
@@ -22,6 +23,10 @@ const routes: Routes = [
       {
         path: 'campaigns',
         component: DashboardCampaignPageComponent
+      },
+      {
+        path: 'loyalty',
+        component: DashboardLoyaltyPageComponent
       },
       { path: '**', redirectTo: 'overview'}
     ]

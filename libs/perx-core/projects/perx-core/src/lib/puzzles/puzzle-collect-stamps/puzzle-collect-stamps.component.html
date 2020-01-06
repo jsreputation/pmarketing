@@ -16,7 +16,8 @@
             <img (click)="onAvailableStampClicked(i, rowNum)" [src]="getStampImage(i, rowNum)" />
           </ng-container>
           <ng-template #defaultStamp>
-            <div class="dummy-card-big" [ngStyle]="{'background-color': defaultstampCardImage }"></div>
+            <img *ngIf="getStampImage(i, rowNum) !== null" [src]="getStampImage(i, rowNum)" />
+            <div class="dummy-card-big" *ngIf="getStampImage(i, rowNum) === null" [ngStyle]="{'background-color': defaultstampCardImage }"></div>
             <div (click)="onAvailableStampClicked(i, rowNum)" *ngIf="isIssued(i, rowNum)" class="add">
               <span>+</span>
             </div>
