@@ -18,6 +18,7 @@
     background: $progress-bar-background-color;
     border-radius: 1rem;
     margin-bottom: 0.5rem;
+    overflow: hidden;
   }
 
   &-hint {
