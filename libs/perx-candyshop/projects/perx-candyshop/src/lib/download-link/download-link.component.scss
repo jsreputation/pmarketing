@@ -1,5 +1,11 @@
 @import "../../styles/variables";
 
+:host {
+  width: 100%;
+
+  @include typo-caption;
+}
+
 .download-link {
   position: relative;
   width: 100%;
@@ -33,10 +39,4 @@
       padding-bottom: 0;
     }
   }
-}
-
-:host {
-  width: 100%;
-
-  @include typo-caption;
 }
