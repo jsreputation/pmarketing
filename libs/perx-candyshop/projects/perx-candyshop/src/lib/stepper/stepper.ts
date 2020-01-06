@@ -90,6 +90,8 @@ export class StepperDirective extends CdkStepper implements AfterContentInit {
   /** Whether ripples should be disabled for the step headers. */
   @Input() public disableRipple: boolean;
 
+  @Input() public disable: boolean;
+
   /** Consumer-specified template-refs to be used to override the header icons. */
   public _iconOverrides: { [key: string]: TemplateRef<StepperIconContext> } = {};
 
