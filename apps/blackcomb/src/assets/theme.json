@@ -3,7 +3,7 @@
     "properties": {
       "--font": "Roboto",
       "--logo": "assets/header_logo.png",
-      "--title": "Petron",
+      "--title": "Oracle",
       "--font_color": "#212121"
     }
 }

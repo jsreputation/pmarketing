@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { map, switchMap, mergeMap, tap } from 'rxjs/operators';
+import { map, switchMap, mergeMap, tap, retry, takeLast } from 'rxjs/operators';
 import {
   IGame,
   GameType as TYPE,
@@ -13,8 +13,8 @@ import {
   IPlayOutcome,
   IEngagementTransaction, defaultSpin
 } from './game.model';
-import { Observable, combineLatest, of } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Observable, combineLatest, of, Subscriber } from 'rxjs';
+import { Injectable, Optional } from '@angular/core';
 import { IGameService } from './igame.service';
 import { Config } from '../config/config';
 import { IVoucherService } from '../vouchers/ivoucher.service';
@@ -33,19 +33,19 @@ import {
   IWCampaignDisplayProperties,
 } from '@perx/whistler';
 import { WhistlerVouchersService } from '../vouchers/whistler-vouchers.service';
+import { ICampaignService } from '../campaign/icampaign.service';
+import { ICampaign, CampaignType } from '../campaign/models/campaign.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WhistlerGameService implements IGameService {
-  private hostName: string;
-  // basic cache
-  private cache: { [gId: number]: IGame } = {};
 
   constructor(
     private http: HttpClient,
     config: Config,
-    private voucherService: IVoucherService
+    private voucherService: IVoucherService,
+    @Optional() private campaignService?: ICampaignService
   ) {
     this.hostName = config.apiHost as string;
   }
@@ -53,6 +53,9 @@ export class WhistlerGameService implements IGameService {
   private get whistlerVoucherService(): WhistlerVouchersService {
     return this.voucherService as WhistlerVouchersService;
   }
+  private hostName: string;
+  // basic cache
+  private cache: { [gId: number]: IGame } = {};
 
   private static WGameToGame(game: IJsonApiItem<IWGameEngagementAttributes>): IGame {
     let type = TYPE.unknown;
@@ -125,6 +128,16 @@ export class WhistlerGameService implements IGameService {
       imgUrl,
       results: {}
     };
+  }
+
+  private static compareGamesByCid(a: IGame, b: IGame): number {
+    if (!a.campaignId) {
+      return -1;
+    }
+    if (!b.campaignId) {
+      return 1;
+    }
+    return a.campaignId - b.campaignId;
   }
 
   public play(campaignId: number, gameId: number): Observable<IPlayOutcome> {
@@ -225,4 +238,47 @@ export class WhistlerGameService implements IGameService {
     );
   }
 
+  public getActiveGames(): Observable<IGame[]> {
+    return (new Observable((subject: Subscriber<IGame[]>) => {
+      const gameByCid: { [cid: number]: IGame } = {};
+      if (this.campaignService === undefined) {
+        console.log('getActiveGames: this requires injecting an instance of ICampaignService into WhistlerGameService to work');
+        subject.complete();
+        return;
+      }
+      const sub = this.campaignService.getCampaigns()
+        .pipe(
+          map((cs: ICampaign[]) => cs.filter(c => c.type === CampaignType.game)),
+          map((cs: ICampaign[]) => cs.filter(c => gameByCid[c.id] === undefined)),
+          mergeMap((arrOfCampaigns: ICampaign[]) => {
+            let gameIds: number[] = arrOfCampaigns.map(c => c.engagementId)
+              .filter((id: number) => id !== undefined) as number[];
+            gameIds = gameIds.filter((item, index) => gameIds.indexOf(item) === index);
+            return combineLatest(
+              ...gameIds.filter(id => id !== undefined)
+                .map((id: number) => this.get(id)
+                  .pipe(
+                    retry(1),
+                    map((g: IGame) => {
+                      const existingCampaign = arrOfCampaigns.find(c => c.engagementId === g.id);
+                      const existingCampaignId = existingCampaign && existingCampaign.id;
+                      return { ...g, campaignId: existingCampaignId };
+                    }),
+                    tap((g: IGame) => {
+                      const matchingCampaigns = arrOfCampaigns.filter(c => c.engagementId === g.id);
+                      matchingCampaigns.forEach(c => {
+                        const campaignId = c.id;
+                        gameByCid[c.id] = { ...g, campaignId };
+                      });
+                      subject.next(Object.values(gameByCid).sort(WhistlerGameService.compareGamesByCid));
+                    })
+                  ))
+            );
+          }),
+          // this is to make sure that we complete the observable only on the last
+          takeLast(1)
+        ).subscribe(() => subject.complete());
+      return () => sub.unsubscribe();
+    }));
+  }
 }
