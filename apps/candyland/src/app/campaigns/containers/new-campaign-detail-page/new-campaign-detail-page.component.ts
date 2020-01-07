@@ -2,14 +2,14 @@ import { ChangeDetectorRef, Component, OnInit, Input, OnDestroy } from '@angular
 import { AbstractControl, FormGroup, FormArray } from '@angular/forms';
 import { AudiencesService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
-import { debounceTime, distinctUntilChanged, takeUntil, toArray } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { ToggleControlService } from '@cl-shared/providers/toggle-control.service';
 import { NewCampaignDetailFormService } from 'src/app/campaigns/services/new-campaign-detail-form.service';
 import { StepConditionService } from 'src/app/campaigns/services/step-condition.service';
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { ActivatedRoute } from '@angular/router';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
-import { Subject, range, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import Utils from '@cl-helpers/utils';
 
 @Component({
@@ -30,29 +30,9 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   @Input()
   public pools: any;
 
-  public get ageRange(): Observable<number[]> {
-    return range(1, 100).pipe(toArray());
-  }
-
   public get campaignInfo(): AbstractControl | null {
     return this.form.get('campaignInfo');
   }
-
-  // public get message(): AbstractControl | null {
-  //   return this.form.get('channel.message');
-  // }
-
-  // public get schedule(): AbstractControl | null {
-  //   return this.form.get('channel.schedule');
-  // }
-
-  // public get scheduleSendDate(): AbstractControl | null {
-  //   return this.form.get('channel.schedule.sendDate');
-  // }
-
-  // public get recurrence(): AbstractControl | null {
-  //   return this.form.get('channel.schedule.recurrence');
-  // }
 
   public get audience(): AbstractControl | null {
     return this.form.get('audience');
