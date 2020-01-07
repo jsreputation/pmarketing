@@ -32,6 +32,7 @@ import { CRUDParser, RequestType } from '@cl-helpers/crud-parser';
 import { NotificationService } from '@cl-core/services/notification.service';
 import { IChannel, ICampaignNotificationGroup } from '@cl-core/models/campaign/channel-interface';
 import { Location } from '@angular/common';
+import { NewCampaignNotificationsComponent } from '../new-campaign-notifications/new-campaign-notifications.component';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -45,6 +46,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   private campaign: ICampaign;
   public tenantSettings: ITenantsProperties;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
+  @ViewChild(NewCampaignNotificationsComponent, { static: false }) private campaignNotification: NewCampaignNotificationsComponent;
   public currentNotifications: Partial<IChannel>;
   public campaignId: string;
 
@@ -124,13 +126,19 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   public goNext(value?: MatStepper): void {
+    const stepIndex = this.stepper.selectedIndex;
+    if (
+      (this.campaignNotification && this.campaignNotification.audience.get('select').invalid)
+      && stepIndex === 3) {
+      return this.campaignNotification.setMarkAsTouchedAudience();
+    }
+
     if (this.channelForm.invalid) {
       this.channelForm.markAllAsTouched();
       this.cdr.markForCheck();
       return;
     }
 
-    const stepIndex = this.stepper.selectedIndex;
     this.stepConditionService.nextEvent(stepIndex);
     this.store.updateCampaign(this.stepConditionService.getStepFormValue(stepIndex));
     if (stepIndex === 3) {
@@ -444,7 +452,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         notification: {
           ...this.store.currentCampaign.notification,
           webNotification: {
-            webLink: notification.webLink ? true : false,
+            webLink: !!notification.webLink,
             webLinkOptions: notification.webLinkOptions
           }
         }

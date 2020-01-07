@@ -28,7 +28,6 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   ) {
     super(1, store, stepConditionService);
     this.initForm();
-    console.log(this.form, 'gimme my form');
   }
 
   public ngOnInit(): void {
