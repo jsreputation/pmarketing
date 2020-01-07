@@ -13,6 +13,10 @@
   position: relative;
   padding: 6rem 0;
   overflow: auto;
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
   .section-heading {
     padding-left: 1rem;
@@ -49,7 +53,6 @@
 
   .rewards-carousel {
     width: 100%;
-    overflow: auto;
   }
 
   .rewards-tabbed {
