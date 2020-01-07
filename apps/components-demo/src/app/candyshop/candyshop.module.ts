@@ -33,6 +33,7 @@ import {
   UserModule,
   VouchersProgressBarModule
 } from '@perx/candyshop';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import {
     TagListModule,
     TimePickerModule,
     UserModule,
-    VouchersProgressBarModule
+    VouchersProgressBarModule,
+    MatIconModule
   ]
 })
 export class CandyshopModule {

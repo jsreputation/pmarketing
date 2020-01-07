@@ -43,7 +43,6 @@ export function fnTransition(stateChangeExpr: string, time: string): any {
 })
 export class SidenavComponent implements OnDestroy {
   @Input() public isVisible: boolean = true;
-  // @Input() public user: IamUser;
   @Input() public menus: IMenu[];
   @Input() public user: any;
   @Input() public logOutButtonText: string = 'Log Out';

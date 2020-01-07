@@ -1,20 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DownloadLinkComponent } from './download-link.component';
-import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
+import { DownloadLinkButtonDirective, DownloadLinkComponent } from './download-link.component';
+import { MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { ButtonModule } from '../button/button.module';
 
 @NgModule({
   declarations: [
-    DownloadLinkComponent
+    DownloadLinkComponent,
+    DownloadLinkButtonDirective
   ],
-  exports: [DownloadLinkComponent],
+  exports: [
+    DownloadLinkComponent,
+    DownloadLinkButtonDirective
+  ],
   imports: [
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatButtonModule,
     ButtonModule
   ]
 })

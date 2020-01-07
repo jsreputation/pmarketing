@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+//@import "~@angular/material/theming";
 @import "./variables";
 
 @mixin cell-spacing-h($h-spacer) {
@@ -78,7 +78,7 @@ $fluid-cell-6: 21% !important;
     position: relative;
 
     &::before {
-      @include mat-elevation(1);
+      //@include mat-elevation(1);
 
       content: "";
       border-radius: $border-radius-lg;
