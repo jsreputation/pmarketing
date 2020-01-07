@@ -23,7 +23,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   public iconDisplay: string;
 
   @Input()
-  public titleFn: (index?: number) => string;
+  public titleFn: (index?: number, totalCount?: number) => string;
 
   @Input()
   public puzzleTextFn: (puzzle?: IStampCard) => string;
