@@ -36,7 +36,7 @@ import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { CustomDataSource } from '@cl-shared';
 import { AudiencesVouchersService } from '@cl-core/services/audiences-vouchers.service';
-import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
+// import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { MessageService } from '@cl-core/services';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
@@ -57,7 +57,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
 
   public userId: string;
   public user: IAudiencesUserForm;
-  public tabsFilterConfig: OptionConfig[];
+  // public tabsFilterConfig: OptionConfig[];
   public dataSource: CustomDataSource<any>;
 
   private async updateLocalUser(): Promise<IAudiencesUserForm> {
@@ -159,12 +159,12 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   private initDataSource(): void {
     const params = this.userId ? { 'filter[assigned_to_id]': this.userId } : {};
     this.dataSource = new CustomDataSource<any>(this.vouchersService, undefined, params);
-    this.dataSource.data$.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe((data: any) => {
-      const counterObject = PrepareTableFilters.countFieldValue(data, 'status');
-      this.tabsFilterConfig = PrepareTableFilters.prepareTabsFilterConfig(counterObject);
-    });
+    // this.dataSource.data$.pipe(
+    //   takeUntil(this.destroy$)
+    // ).subscribe((data: any) => {
+    //   // const counterObject = PrepareTableFilters.countFieldValue(data, 'status');
+    //   // this.tabsFilterConfig = PrepareTableFilters.prepareTabsFilterConfig(counterObject);
+    // });
   }
 
   public openEditUserDialog(): void {
