@@ -21,7 +21,7 @@
   }
 
   &-btn {
-    @include typo-button;
+    @include cs-typo-button;
 
     width: 11rem;
     height: 13rem;
