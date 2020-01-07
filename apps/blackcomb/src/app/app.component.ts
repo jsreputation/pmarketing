@@ -55,14 +55,6 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.activeRoute.queryParams
-      .pipe(
-        filter((params: Params) => params.token),
-        map((params: Params) => params.token)
-      )
-      .subscribe((token: string) => {
-        this.authService.saveUserAccessToken(token);
-      });
     this.config.readAppConfig()
       .pipe(switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
       .subscribe(() => {
