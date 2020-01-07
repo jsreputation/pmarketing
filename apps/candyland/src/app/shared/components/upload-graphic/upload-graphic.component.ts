@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output }
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { UploadFileService } from '@cl-core-services';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 
 @Component({
   selector: 'cl-upload-graphic',

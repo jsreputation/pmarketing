@@ -1,7 +1,18 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, LOCALE_ID, Injectable, ErrorHandler } from '@angular/core';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import * as Hammer from 'hammerjs';
+
+// https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
+// to override default settings
+export class MyHammerConfig extends HammerGestureConfig {
+  public overrides: any =  {
+    swipe: { direction: Hammer.DIRECTION_ALL }, // in order to swipe up and down
+    pinch: { enable: false },
+    rotate: { enable: false }
+  };
+}
 import {
   PerxCoreModule,
   AuthenticationModule,
@@ -45,6 +56,9 @@ import fr from '@angular/common/locales/fr';
 import localesFrExtra from '@angular/common/locales/extra/fr';
 
 import * as Sentry from '@sentry/browser';
+import {RewardPopupComponent} from './reward-popup/reward-popup.component';
+import {ExpireTimerComponent} from './reward-popup/expire-timer/expire-timer.component';
+import {MatButtonModule} from '@angular/material/button';
 
 Sentry.init({
   dsn: 'https://736f7fc0afd74f4383fdc760f7c81e5a@sentry.io/1827240'
@@ -76,7 +90,11 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
   resolve();
 });
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    RewardPopupComponent,
+    ExpireTimerComponent
+  ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
     BrowserModule,
@@ -95,6 +113,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     PerxCampaignModule,
     HttpClientModule,
     MatDialogModule,
+    MatButtonModule,
     MatSnackBarModule,
     RewardsModule,
     TranslateModule.forRoot({
@@ -115,8 +134,12 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
       deps: [TokenStorage],
       useFactory: LocaleIdFactory
     },
-    { provide: ErrorHandler, useClass: SentryErrorHandler }
+    { provide: ErrorHandler, useClass: SentryErrorHandler },
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig,
+    }
   ],
-  entryComponents: []
+  entryComponents: [RewardPopupComponent]
 })
 export class AppModule { }

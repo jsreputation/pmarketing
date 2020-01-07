@@ -11,7 +11,7 @@ import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 @Injectable({
   providedIn: 'root'
 })
-export class LoyaltyService implements ITableService {
+export class LoyaltyService implements ITableService<ILoyaltyForm> {
 
   constructor(private loyaltyHttpService: LoyaltyHttpService) {
   }

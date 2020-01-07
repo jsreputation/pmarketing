@@ -24,9 +24,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { profile } from '../mock/profile.mock';
 import { HttpClientModule } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 const rewardsServiceStub: Partial<RewardsService> = {
-  getAllRewards: () => of([])
+  getAllRewards: () => of([]),
+  getRewards: () => of([])
 };
 
 const profileService: Partial<ProfileService> = {
@@ -37,9 +39,11 @@ const loyaltyServiceStub: Partial<LoyaltyService> = {
   getLoyalties: () => of([])
 };
 
-const gameSvcStub: Partial<IGameService> = {};
+const gameSvcStub: Partial<IGameService> = {
+  getActiveGames: () => of([])
+};
 
-const themesServiceStub = { getThemeSetting: () => of({})};
+const themesServiceStub = { getThemeSetting: () => of({}) };
 
 const configServiceStub = { readAppConfig: () => of() };
 
@@ -74,7 +78,8 @@ describe('HomeComponent', () => {
         UtilsModule,
         HttpClientModule,
         RouterTestingModule.withRoutes([]),
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        InfiniteScrollModule
       ],
       providers: [
         Title,

@@ -26,6 +26,7 @@ Given(/^9_I am at the blackcomb home page$/, async () => {
   // login process
   await LoginAppPage.navigateToLogin();
   // Waiting for account id field to load
+
   await browser.wait(ec.elementToBeClickable(ElementApp.inputArray().first()), 5000);
   // entering correct account id
   await ElementApp.inputArray().first().sendKeys(LoginAppPage.getAccountId());

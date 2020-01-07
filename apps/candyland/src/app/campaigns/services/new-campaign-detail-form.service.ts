@@ -23,7 +23,7 @@ export class NewCampaignDetailFormService {
       audience: this.fb.group({
         type: ['select'],
         file: [],
-        select: [null, [Validators.required]],
+        select: [null],
         filters: this.fb.group({
           agesEnabled: [false],
           genderEnabled: [false],

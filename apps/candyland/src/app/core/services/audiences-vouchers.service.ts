@@ -13,7 +13,7 @@ import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 @Injectable({
   providedIn: 'root'
 })
-export class AudiencesVouchersService implements ITableService {
+export class AudiencesVouchersService implements ITableService<IAudienceVoucher> {
   constructor(
     private audiencesHttpsService: AudiencesHttpsService,
     private rewardsService: RewardsService

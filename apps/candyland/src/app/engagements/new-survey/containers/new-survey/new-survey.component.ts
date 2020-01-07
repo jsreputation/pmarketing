@@ -12,6 +12,7 @@ import { QuestionFormFieldService, SimpleMobileViewComponent } from '@cl-shared'
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { IWEngagementAttributes, IWQuestion, WSurveyQuestionType, IJsonApiItemPayload } from '@perx/whistler';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 
 @Component({
   selector: 'cl-new-survey',

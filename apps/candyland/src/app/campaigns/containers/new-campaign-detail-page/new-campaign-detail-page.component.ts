@@ -38,29 +38,21 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     return this.form.get('campaignInfo');
   }
 
-  public get channel(): AbstractControl | null {
-    return this.form.get('channel');
-  }
+  // public get message(): AbstractControl | null {
+  //   return this.form.get('channel.message');
+  // }
 
-  public get channelType(): AbstractControl | null {
-    return this.form.get('channel.type');
-  }
+  // public get schedule(): AbstractControl | null {
+  //   return this.form.get('channel.schedule');
+  // }
 
-  public get message(): AbstractControl | null {
-    return this.form.get('channel.message');
-  }
+  // public get scheduleSendDate(): AbstractControl | null {
+  //   return this.form.get('channel.schedule.sendDate');
+  // }
 
-  public get schedule(): AbstractControl | null {
-    return this.form.get('channel.schedule');
-  }
-
-  public get scheduleSendDate(): AbstractControl | null {
-    return this.form.get('channel.schedule.sendDate');
-  }
-
-  public get recurrence(): AbstractControl | null {
-    return this.form.get('channel.schedule.recurrence');
-  }
+  // public get recurrence(): AbstractControl | null {
+  //   return this.form.get('channel.schedule.recurrence');
+  // }
 
   public get audience(): AbstractControl | null {
     return this.form.get('audience');
@@ -143,6 +135,9 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
             const select = data.audience.select;
             data.audience = { ...data.audience, select };
             this.form.patchValue(data);
+            if (data.audience.filters && (data.audience.filters.agesEnabled || data.audience.filters.genderEnabled)) {
+              this.audienceFiltersEnabled = true;
+            }
             if (data.campaignInfo.labels) {
               this.triggerLabelsChip = true;
             }

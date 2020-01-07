@@ -1,9 +1,26 @@
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { StampService, IStampCard, IPopupConfig, NotificationService } from '@perx/core';
+import {
+  StampService,
+  IStampCard,
+  IPopupConfig,
+  NotificationService,
+  PuzzleCollectReward,
+  IStamp,
+  StampState
+} from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { filter, switchMap, takeUntil, map } from 'rxjs/operators';
+import {filter, switchMap, takeUntil, map} from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+
+export interface IRewardPopupConfig extends IPopupConfig {
+  afterClosedCallBackRedirect?: PopUpClosedCallBack;
+  url?: string;
+}
+
+export interface PopUpClosedCallBack {
+  closeAndRedirect(url: string): void;
+}
 
 @Component({
   selector: 'perx-blackcomb-stamp-card',
@@ -18,6 +35,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public cardBackground: string;
   public isEnabled: boolean = false;
   public stampCard$: Observable<IStampCard>;
+  public stampCard: IStampCard;
   private destroy$: Subject<any> = new Subject();
   private rewardSuccessPopUp: IPopupConfig = {
     title: 'STAMP_SUCCESS_TITLE',
@@ -27,6 +45,13 @@ export class StampCardComponent implements OnInit, OnDestroy {
     title: 'STAMP_ERROR_TITLE',
     buttonTxt: 'TRY_AGAIN'
   };
+
+  public v4Rewards(card: IStampCard): PuzzleCollectReward[] {
+    if (!card || !card.displayProperties.rewardPositions) {
+      throw new Error(`card or rewardPositions is required`);
+    }
+    return card.displayProperties.rewardPositions.map((el: number) => ({ rewardPosition: --el }));
+  }
 
   constructor(
     private stampService: StampService,
@@ -67,6 +92,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
       );
     this.stampCard$.subscribe(
       (stampCard: IStampCard) => {
+        this.stampCard = stampCard;
         this.title = stampCard.title || '';
         this.subTitle = stampCard.subTitle;
         this.background = stampCard.displayProperties.bgImage || '';
@@ -96,13 +122,103 @@ export class StampCardComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public handleStamp(): void {
-    this.stampService.play().subscribe((res) => {
-      if (res) {
-        this.notificationService.addPopup(this.rewardSuccessPopUp);
-      } else {
-        this.notificationService.addPopup(this.errorPopUp);
+  public async handleStamp(stamp: IStamp): Promise<void> {
+    if (!this.stampCard || !this.stampCard.stamps) {
+      throw new Error(`card or stamps is required`);
+    }
+
+    // build ordered list of stamps to be stamped
+    const stamps: IStamp[] = this.stampCard.stamps.filter(s => s.state === StampState.issued);
+    for (const st of stamps) {
+      await this.redeemStamp(st.id);
+      if (st.id === stamp.id) {
+        break;
       }
-    });
+    }
+  }
+
+  private redeemStamp(stampId: number): Promise<void> {
+    return this.stampService.putStamp(stampId)
+      .toPromise()
+      .then(
+        (stamp: IStamp) => {
+          if (stamp.state === StampState.redeemed) {
+            if (!this.stampCard || !this.stampCard.stamps) {
+              throw new Error(`card or stamps is required`);
+            }
+
+            // if (!this.cols || !this.rows) {
+            //   throw new Error(`cols or rows is required`);
+            // }
+
+            const redeemedCard = this.stampCard.stamps.map((cardStamp: IStamp) => {
+              if (cardStamp.id === stampId) {
+                return { ...cardStamp, state: StampState.redeemed };
+              }
+              return cardStamp;
+            });
+            this.stampCard = { ...this.stampCard, stamps: redeemedCard };
+
+            const redeemedTransactionsCount = this.stampCard.stamps &&
+              this.stampCard.stamps.filter(s => s.state === StampState.redeemed).length;
+
+            if (this.stampCard.displayProperties.displayCampaignAs === 'stamp_card'
+              && redeemedTransactionsCount === (this.stampCard.campaignConfig && this.stampCard.campaignConfig.totalSlots)) {
+              this.notificationService.addPopup({
+                // tslint:disable-next-line: max-line-length
+                text: 'Thank you for playing! You have already received the maximum number of stamps. Don\'t forget to redeem your earned rewards!'
+              });
+            }
+
+            if (stamp.vouchers && stamp.vouchers.length > 0) {
+              const voucherId = stamp.vouchers[0].id;
+              const data: IRewardPopupConfig = {
+                title: 'Congratulations!',
+                text: 'Here is a reward for you.',
+                imageUrl: 'assets/gift-image.svg',
+                disableOverlayClose: true,
+                url: `/voucher/${voucherId}`,
+                afterClosedCallBackRedirect: this,
+                buttonTxt: 'View Reward',
+              };
+              this.notificationService.addPopup(data);
+            }
+
+          } else {
+            if (!this.stampCard || !this.stampCard.stamps) {
+              throw new Error(`card or stamps is required`);
+            }
+
+            const issuedLeft = this.stampCard.stamps.filter(s => s.state === StampState.issued);
+            if (issuedLeft.length === 0) {
+              // all redeemed but no voucher
+              const data: IPopupConfig = {
+                title: 'No Reward Received',
+                text: 'Try again next time',
+                disableOverlayClose: true,
+                afterClosedCallBack: this,
+                buttonTxt: 'Close',
+              };
+              this.notificationService.addPopup(data);
+            }
+          }
+        })
+      .catch(
+        () => {
+          this.notificationService.addPopup({
+            title: 'Something went wrong, with our server',
+            text: 'We notified our team. Sorry about the inconvenience.'
+          });
+          this.router.navigateByUrl('/home');
+        }
+      );
+  }
+
+  public dialogClosed(): void {
+    this.router.navigate(['/home']);
+  }
+
+  public closeAndRedirect(url: string): void {
+    this.router.navigateByUrl(url);
   }
 }

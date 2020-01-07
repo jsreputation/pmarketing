@@ -3,12 +3,10 @@
 .main-puzzle-container {
   @include main-wrap;
 
-  h1 {
-    @include game-headline;
-  }
+  padding: unset;
 
-  h3 {
-    @include game-subheadline;
+  perx-core-puzzle-collect-stamps {
+    flex: 1;
   }
 }
 
@@ -25,6 +23,8 @@
   &-form {
     height: 100%;
     width: 100%;
+    display: flex;
+    flex: 1;
 
     .contain-child {
       display: block;

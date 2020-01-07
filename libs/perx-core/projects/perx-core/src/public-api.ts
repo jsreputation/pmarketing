@@ -1,3 +1,4 @@
+
 /*
  * Public API Surface of perx-core
  */
@@ -62,7 +63,6 @@ export {
   CampaignState,
   ICampaign,
 } from './lib/campaign/models/campaign.model';
-
 /**
  * Stamps
  */
@@ -87,6 +87,7 @@ export {
   ITree,
   IScratch,
   ISpin,
+  ISnake,
   defaultTree,
   IPlayOutcome,
   ISlice,
@@ -98,7 +99,8 @@ export { ShakeTreeComponent } from './lib/game/shake-tree/shake-tree.component';
 export { PinataComponent } from './lib/game/pinata/pinata.component';
 export { ScratchCardComponent } from './lib/game/scratch-card/scratch-card.component';
 export { SpinTheWheelComponent } from './lib/game/spin-the-wheel/spin-the-wheel.component';
-
+export { SnakeGameComponent } from './lib/game/snake/snake.component';
+export { MineSweeperComponent } from './lib/game/mine-sweeper/mine-sweeper.component';
 /**
  * Profile
  */
@@ -174,7 +176,7 @@ export {
   PuzzleCollectStampState,
 } from './lib/puzzles/models/puzzle-stamp.model';
 export { PuzzleCollectStampsComponent } from './lib/puzzles/puzzle-collect-stamps/puzzle-collect-stamps.component';
-
+export { PuzzleListComponent } from './lib/puzzles/puzzle-list/puzzle-list.component';
 /**
  * Locations
  */
@@ -184,6 +186,7 @@ export { ILocation } from './lib/location/ilocation';
 export { IMerchant } from './lib/merchants/models/merchants.model';
 export { sortByDistance } from './lib/location/sort-by-distance';
 export { GeoLocationService } from './lib/location/geolocation.service';
+export { filterDuplicateLocations } from './lib/location/filter-duplicate-locations';
 
 /**
  * Survey

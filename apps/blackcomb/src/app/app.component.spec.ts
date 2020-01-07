@@ -1,4 +1,4 @@
-import { AuthenticationService, ConfigService } from '@perx/core';
+import {AuthenticationService, ConfigService, ICampaignService, TokenStorage} from '@perx/core';
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
@@ -7,6 +7,15 @@ import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
 const authServiceStub = {};
+const campaignServiceStub: Partial<ICampaignService> = {
+  getCampaigns: () => of(),
+  getCampaign: () => of(),
+  issueAll: () => of()
+};
+const tokenStorageStub: Partial<TokenStorage> = {
+  getAppInfoProperty: () => undefined,
+  setAppInfoProperty: () => { }
+};
 
 describe('AppComponent', () => {
 
@@ -39,7 +48,10 @@ describe('AppComponent', () => {
           useValue: {
             readAppConfig: () => of()
           }
-        }
+        },
+        { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: TokenStorage, useValue: tokenStorageStub },
+
       ]
     }).compileComponents();
   }));
