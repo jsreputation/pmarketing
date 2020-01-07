@@ -4,7 +4,7 @@ import {
   OnDestroy,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
-  Input, OnChanges, SimpleChanges,
+  Input
 } from '@angular/core';
 import {
   AbstractControl,
@@ -35,14 +35,14 @@ import { SOURCE_TYPE } from '../../../app.constants';
   styleUrls: ['./new-campaign-rewards-form-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, OnChanges {
+export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy {
   @Input() public title: string = 'CAMPAIGN.REWARDS';
   @Input() public slotNumber: number = 0;
+  @Input() public enableProbability: boolean = false;
 
   private destroy$: Subject<void> = new Subject();
 
   @Input() public formParent: FormGroup | AbstractControl; // turn into an input
-  @Input() public enableProbability: boolean = false;
   @Input() public isSpinEngagement: boolean = false;
 
   public outcomes: ICampaignOutcome[] = [];
@@ -54,8 +54,9 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       limit: null,
       probability: 0,
       slotNumber: -1
-    },
-    enableProbability: false
+    }
+    // ,
+    // enableProbability: false
   };
 
   constructor(
@@ -72,6 +73,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
 
   public ngOnInit(): void {
     this.isFirstInit = true;
+    this.updateOutcomesInCampaign();
     this.store.currentCampaign$
       .asObservable()
       .pipe(takeUntil(this.destroy$))
@@ -81,16 +83,11 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
         if (isCreateNew || isFirstTimeRenderFromEdit) {
           this.isFirstInit = false;
           this.initOutcomesList();
+          this.updateOutcomes();
+          // this.updateOutcomeProbabilitySetting();
           this.cd.detectChanges();
         }
       });
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (this.outcomes.length !== 0 && changes.enableProbability !== undefined &&
-      (changes.enableProbability.currentValue !== changes.enableProbability.previousValue)) {
-      this.updateOutcomes();
-    }
   }
 
   public ngOnDestroy(): void {
@@ -105,6 +102,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       .afterClosed()
       .subscribe((reward: IRewardEntity) => {
         if (reward) {
+          // enableProbability: this.enableProbability,
           this.addOutcome({
             outcome: {
               probability: 0,
@@ -113,7 +111,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
               resultType: SOURCE_TYPE,
               slotNumber: this.slotNumber
             },
-            enableProbability: this.enableProbability,
             reward
           });
           this.isSpinEngagement ?
@@ -127,14 +124,9 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     const noOutcomeData = this.campaign.outcomes && this.campaign.outcomes.find(
       data => data.outcome.slotNumber === this.slotNumber && !data.outcome.resultId);
     if (noOutcomeData && noOutcomeData.outcome) {
-      noOutcomeData.enableProbability = true;
       this.outcomes = [noOutcomeData];
-      this.enableProbability = true;
     } else {
-      this.outcomes = [
-        this.noOutcome
-      ];
-      this.enableProbability = false;
+      this.outcomes = [this.noOutcome];
     }
 
     const possibleOutcomes = this.campaign.outcomes && this.campaign.outcomes.filter(
@@ -163,12 +155,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
 
   public addOutcome(value: ICampaignOutcome): void {
-    value.enableProbability = this.enableProbability;
     this.outcomes.push(value);
-    if (value.outcome.probability > 0 && !this.enableProbability) {
-      this.enableProbability = true;
-      this.updateOutcomeProbabilitySetting();
-    }
     this.cd.detectChanges();
   }
   public updateOutcomesInCampaign(): void {
@@ -176,16 +163,18 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       this.campaign.outcomes.filter(
         outcomeData => outcomeData.outcome.slotNumber !== this.slotNumber && outcomeData.outcome.slotNumber >= 0
       ) : [];
+    this.campaign.enabledProb = this.enableProbability;
     this.campaign.outcomes = [...otherSlotOutcomes, ...this.outcomes];
+    this.store.currentCampaign = {...this.campaign};
   }
 
   public updateSlotCount(): this {
     const checkedOutcomes = this.outcomes.filter(outcome => outcome.outcome.slotNumber >= 0 && outcome.reward);
     if (checkedOutcomes.length === 0) {
-      this.formParent.patchValue({[`notEmpty-${this.slotNumber}`]: 0});
+      this.formParent.get('totalFilledAllSlots').get(`notEmpty-${this.slotNumber}`).patchValue(0);
     }
     if (checkedOutcomes.length > 0) {
-      this.formParent.patchValue({[`notEmpty-${this.slotNumber}`]: 1});
+      this.formParent.get('totalFilledAllSlots').get(`notEmpty-${this.slotNumber}`).patchValue(1);
     }
     this.formParent.updateValueAndValidity();
     return this;
@@ -198,9 +187,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       }
       return total;
     }, 0);
-    this.formParent.patchValue({
-      [`totalProbability-${this.slotNumber}`]: totalNum
-    });
+    this.formParent.get('totalProbAllSlots').get(`totalProbability-${this.slotNumber}`).patchValue(totalNum);
     this.formParent.updateValueAndValidity();
     return totalNum > 100;
   }
@@ -229,14 +216,10 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     } else {
       this.outcomes[0].outcome.slotNumber = -1;
     }
-    this.updateOutcomeProbabilitySetting();
     this.updateOutcomesInCampaign();
     this.isSpinEngagement ?
       (this.updateSlotCount().updateSumMoreThanCheck()) : (this.sumMoreThanError = this.updateSumMoreThanCheck());
     this.cd.detectChanges();
   }
 
-  private updateOutcomeProbabilitySetting(): void {
-    this.outcomes.forEach(outcomeData => outcomeData.enableProbability = this.enableProbability);
-  }
 }

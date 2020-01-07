@@ -24,6 +24,7 @@ export interface ICampaign {
     labels?: string[];
   };
   template?: any;
+  enableProb?: boolean;
   outcomes?: ICampaignOutcome[];
   limits?: any;
   displayProperties?: any;
