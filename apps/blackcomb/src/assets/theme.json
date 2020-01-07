@@ -4,6 +4,13 @@
       "--font": "Roboto",
       "--logo": "assets/header_logo.png",
       "--title": "Oracle",
-      "--font_color": "#212121"
+      "--accent": "#082B2F",
+      "--primary": "#C54839",
+      "--button_text_color": "#ffffff",
+      "--button_background_color": "#C54839",
+      "--header_color": "#C54839",
+      "--background": "#ffffff",
+      "--font_color": "#212121",
+      "--login_background_colour": "#000"
     }
 }

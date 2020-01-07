@@ -14,7 +14,7 @@
         <div class="puzzle-details">
           <h1>
             <ng-container>
-              {{titleFn(i)}}
+              {{titleFn(i, puzzles?.length)}}
             </ng-container>
             <span class="badge-warn">
               {{nbPlacedStamps(puzzle)}}/{{total}}

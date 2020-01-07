@@ -95,12 +95,12 @@ export class WalletComponent implements OnInit {
             map((stampCards: IStampCard[]) => stampCards.filter(card =>
               card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === this.stampsType
             )),
-            tap((cards: IStampCard[]) => {
+            tap(() => {
               if (this.stampsType === 'stamp_card') {
                 this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
                 puzzle.stamps.filter(st => st.state === StampState.issued).length !== 1 ? 'new stamps' : 'new stamp';
-                this.titleFn = (index?: number) => index !== undefined ?
-                  `Stamp Card ${this.puzzleIndex(index)} out of ${cards.length}` : '';
+                this.titleFn = (index?: number, totalCount?: number) => index !== undefined ?
+                  `Stamp Card ${this.puzzleIndex(index)} out of ${totalCount}` : '';
               }
             }),
             map((cards: IStampCard[]) => cards[0])
