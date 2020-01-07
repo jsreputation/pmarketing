@@ -1,93 +1,10 @@
-//@import '~@angular/material/theming';
 @import "../../styles/variables";
-@import "../../styles/buttons";
 
 :host {
   display: inline-flex;
   height: initial;
 }
 
-.btn {
-  @include btn;
-}
-
-@media (max-width: $tablet-width) {
-  @keyframes cta-btn-enter {
-    from {
-      transform: scale(0.8);
-      opacity: 0;
-    }
-
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-
-  .cta {
-    @include fab-btn();
-
-    transform: scale(1);
-    opacity: 1;
-    animation-name: cta-btn-enter;
-    animation-duration: 0.4s;
-    animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
-    animation-fill-mode: forwards;
-
-    &.cta-save {
-      &::before {
-        mask: url("/assets/images/icons/cta-save.svg") no-repeat 50% 50%;
-      }
-
-      &:hover {
-        width: 11rem !important;
-      }
-
-      &.cta-save-launch:hover {
-        width: 13rem !important;
-      }
-    }
-
-    &.cta-edit {
-      &::before {
-        mask: url("/assets/images/icons/cta-edit.svg") no-repeat 50% 50%;
-      }
-
-      &:hover {
-        width: 10.5rem !important;
-      }
-
-      &.cta-edit-comeback:hover {
-        width: 15.75rem !important;
-      }
-    }
-
-    &.cta-next {
-      &::before {
-        mask: url("/assets/images/icons/cta-next.svg") no-repeat 50% 50%;
-      }
-
-      &:hover {
-        width: 11rem !important;
-      }
-    }
-
-    &.cta-new {
-      &::before {
-        mask: url("/assets/images/icons/cta-new.svg") no-repeat 50% 50%;
-      }
-
-      &:hover {
-        width: 16.5rem !important;
-      }
-
-      &.cta-new-adduser:hover {
-        width: 14.5rem !important;
-      }
-
-      &.cta-new-invitenew:hover {
-        width: 20rem !important;
-      }
-    }
-  }
+:host(.disable) {
+  pointer-events: none;
 }

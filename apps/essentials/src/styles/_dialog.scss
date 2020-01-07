@@ -1,0 +1,182 @@
+@import "variables";
+
+.cdk-overlay-pane {
+  max-width: initial !important;
+
+  @include typo-body2;
+}
+
+.dialog {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+
+  .mat-tab-header {
+    padding: 0 ($horizontal-padding * 0.75);
+  }
+
+  &-content {
+    flex: 1;
+    max-height: 65vh;
+    padding: 0 ($horizontal-padding * 0.75);
+  }
+
+  &-header-wrap {
+    height: ($vertical-padding * 2);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: ($horizontal-padding * 0.75);
+    padding-right: ($horizontal-padding * 0.75);
+    box-sizing: border-box;
+  }
+
+  &-title {
+    @include typo-h6;
+
+    margin: 0;
+    color: $secondary-color;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &-input-group {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    &.last {
+      margin-bottom: 1.5rem;
+    }
+
+    & > * {
+      width: 332px;
+      box-sizing: content-box;
+
+      @media (max-width: 780px) {
+        width: 100%;
+      }
+    }
+  }
+
+  &-row {
+    margin-top: ($vertical-padding * 0.5);
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    color: $base-font-color;
+
+    @include typo-body2;
+  }
+
+  &-closed {
+    color: $secondary-color;
+    position: absolute; // start here for fixed
+    right: ($horizontal-padding * 0.5);
+    top: ($vertical-padding * 0.5);
+  }
+
+  &-tab-content {
+    padding: $vertical-padding ($horizontal-padding * 0.75);
+    overflow-y: auto;
+  }
+
+  &-content-title {
+    @include typo-subtitle2;
+
+    color: $secondary-color;
+    margin: 0;
+  }
+
+  &-actions {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: ($vertical-padding * 0.75) ($horizontal-padding * 0.75);
+    background: $white;
+
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+  }
+
+  .confirm {
+    &-body {
+      padding: $vertical-padding $horizontal-padding;
+    }
+
+    &-img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: ($vertical-padding * 0.5) auto;
+    }
+
+    &-header {
+      @include typo-h6;
+
+      color: $secondary-color;
+      text-align: center;
+    }
+
+    &-copy {
+      @include typo-subtitle1;
+
+      margin: ($vertical-padding * 0.25) auto 0;
+      color: $secondary-color;
+      text-align: center;
+      max-width: 26em; //used ems because this has to do with character length / readability
+    }
+  }
+}
+
+.actions-close {
+  display: block;
+  margin-right: 1.2rem;
+}
+
+.mat-dialog-container {
+  padding: 0 !important;
+  overflow: hidden !important;
+  border-radius: $border-radius-lg !important;
+}
+
+.mat-dialog-content {
+  flex: 1;
+  display: block;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-height: 65vh;
+  overflow-x: hidden !important;
+}
+
+.audience-dialog {
+  @include modal-size($modal-lg);
+}
+
+.manage-list-dialog {
+  @include modal-size($modal-sm);
+}
+
+.change-expiry-date-dialog {
+  @include modal-size($modal-md);
+}
+
+.reward-replenish-dialog {
+  @include modal-size($modal-md);
+}
+
+.tier-setup-dialog {
+  @include modal-size($modal-lg);
+}
+
+.invite-new-users-dialog .mat-dialog-container {
+  @include modal-size($modal-lg);
+}

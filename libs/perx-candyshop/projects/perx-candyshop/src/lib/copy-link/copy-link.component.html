@@ -3,9 +3,16 @@
     <mat-icon matPrefix color="md-dark">link</mat-icon>
     <input #linkInput matInput type="text" [value]="link" readonly>
   </mat-form-field>
-  <div (click)="copyInputMessage(linkInput)">
+  <a (click)="copyInputMessage(linkInput)">
+    <ng-container *ngTemplateOutlet="button ? button.template : defaultButtonTemplate"></ng-container>
     <ng-content></ng-content>
 <!--    <cs-button classList="primary" class="copy-link-btn" (click)="copyInputMessage(linkInput)">Copy</cs-button>-->
-  </div>
+  </a>
 <!--  <cs-button classList="primary" class="copy-link-btn" (click)="copyInputMessage(linkInput)">Copy</cs-button>-->
 </div>
+
+<ng-template #defaultButtonTemplate>
+  <cs-button classList="primary" class="copy-link-btn">
+    <ng-content></ng-content>
+  </cs-button>
+</ng-template>

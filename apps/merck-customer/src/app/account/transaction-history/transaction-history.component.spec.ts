@@ -8,6 +8,7 @@ import { LoyaltyModule, LoyaltyService } from '@perx/core';
 import { of } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {mockLoyalty, mockTransactions, mockTransactionsHistory} from './loyalty-mock';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 describe('TransactionHistoryComponent', () => {
   let component: TransactionHistoryComponent;
@@ -24,7 +25,8 @@ describe('TransactionHistoryComponent', () => {
         MatToolbarModule,
         MatTabsModule,
         LoyaltyModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        InfiniteScrollModule
       ],
       providers: [
         {

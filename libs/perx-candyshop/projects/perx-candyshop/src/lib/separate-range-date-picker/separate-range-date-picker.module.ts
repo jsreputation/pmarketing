@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import {
-  MatDatepickerModule,
-  MatInputModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatOptionModule, MatSelectModule
-} from '@angular/material';
+// import { ReactiveFormsModule } from '@angular/forms';
+// import {
+//   MatDatepickerModule,
+//   MatInputModule,
+//   MatFormFieldModule,
+//   MatIconModule,
+//   MatOptionModule, MatSelectModule
+// } from '@angular/material';
 import {SepareteRangeDatePickerComponent} from './separate-range-date-picker.component';
+import { DatePickerModule } from '../date-picker/date-picker.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,12 +22,13 @@ import {SepareteRangeDatePickerComponent} from './separate-range-date-picker.com
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatDatepickerModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatOptionModule,
-    MatSelectModule
+    // MatDatepickerModule,
+    // MatInputModule,
+    // MatFormFieldModule,
+    // MatIconModule,
+    // MatOptionModule,
+    // MatSelectModule,
+    DatePickerModule
   ]
 })
 export class SeparateRangeDatePickerModule {

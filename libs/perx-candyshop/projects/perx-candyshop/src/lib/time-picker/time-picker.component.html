@@ -1,4 +1,5 @@
-<mat-form-field class="time-picker">
+<mat-form-field class="time-picker"
+                [appearance]="appearance">
   <input
     class="time-picker-toggle"
     [class.disable]="disabledState"
@@ -13,9 +14,15 @@
                                   [class.disable]="disabledState"
                                   matSuffix
                                   [for]="toggleTimepicker">
-    <mat-icon class="time-button" ngxMaterialTimepickerToggleIcon>
-      <i class="icon full-with time-icon"></i>
-    </mat-icon>
+<!--    <mat-icon class="time-button" ngxMaterialTimepickerToggleIcon>-->
+      <svg viewBox="0 0 24 24" fill="none">
+      <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M11.99 2C6.47 2 2 6.48 2 12C2 17.52 6.47 22 11.99 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 11.99 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20ZM11 7H12.5V12.25L17 14.92L16.25 16.15L11 13V7Z"
+            fill="#3E4E73"/>
+    </svg>
+
+<!--      <i class="icon full-with time-icon"></i>-->
+<!--    </mat-icon>-->
   </ngx-material-timepicker-toggle>
   <ngx-material-timepicker
     #toggleTimepicker
