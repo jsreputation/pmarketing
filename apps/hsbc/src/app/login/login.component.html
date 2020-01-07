@@ -5,15 +5,12 @@
 <div *ngIf="!isLoading" style="height:100%">
   <div class="login-bg" [ngStyle]="{backgroundImage: 'url(' + loginBackgroundUrl + ')'}"></div>
   <div [ngClass]="'content-container ' + sourceType">
-    <div *ngIf="sourceType !== 'hsbc-xmas'" class="login-image">
+    <div>
       <img class="logo" src='assets/hsbc-logo-black.svg' />
     </div>
-
     <div class="form-container">
-      <h2 *ngIf="sourceType === 'hsbc-xmas'">Have a Merry Christmas!</h2>
-
       <div [ngClass]="'login-form ' + sourceType">
-        <h1 *ngIf="sourceType === 'hsbc-xmas'">Log In</h1>
+        <h1>Log In</h1>
         <div class="error_msg">
           <span>{{errorMessage}}</span>
         </div>
@@ -27,7 +24,7 @@
             </mat-error>
           </mat-form-field>
           <mat-form-field appearance="fill" class="full-width__input">
-            <mat-label>Last 4 digits of your HSBC Credit Card</mat-label>
+            <mat-label>Card last 4 digits</mat-label>
             <input matInput placeholder="Enter your HSBC card last 4 digits"
                    formControlName="hsbcCardLastFourDigits" required perxCoreNumericCharacter minlength="4" maxlength="4">
             <mat-error *ngIf="loginForm.hasError('hsbcCardLastFourDigits')">

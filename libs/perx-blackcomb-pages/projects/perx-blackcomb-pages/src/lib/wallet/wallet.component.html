@@ -1,24 +1,9 @@
 <div class="tab-group__content">
-    <div *ngIf="stampCards$ && (stampCards$ | async) as stampCards">
-        <h1 *ngIf="stampCards.length > 0" translate>STAMP_CARDS</h1>
-        <a *ngFor="let stampCard of stampCards" [routerLink]="['/stamp/' + stampCard.campaignId]">
-            <mat-card matRipple>
-                <div class="puzzle-content">
-                    <div class="puzzle-img__wrapper">
-                        <img class="puzzle-img" src="{{stampCard.displayProperties.rewardPostStamp}}">
-                    </div>
-                    <div class="puzzle-details">
-                        <span class='main-reward-title'>
-                            {{stampCard.title}}
-                        </span>
-                        <span class="reward-subtitle">{{stampCard.subTitle}}</span>
-                    </div>
-                </div>
-            </mat-card>
-        </a>
-    </div>
-    <h1>{{rewardsHeadline}}</h1>
-    <perx-core-vouchers (tapped)="voucherSelected($event)" [data]="vouchers$" [filter]="filter"
-        [showRedeemedIcon]="false" [expiryLabelFn]="expiryLabelFn">
-    </perx-core-vouchers>
+  <perx-core-puzzle-list *ngIf="campaignId" [campaignId]="campaignId" [repeatGhostCount]="1"
+    [puzzleTextFn]="puzzleTextFn" [titleFn]="titleFn" (selected)="selected($event)">
+  </perx-core-puzzle-list>
+  <h1>{{rewardsHeadline}}</h1>
+  <perx-core-vouchers (tapped)="voucherSelected($event)" [data]="vouchers$" [filter]="filter" [showRedeemedIcon]="false"
+    [expiryLabelFn]="expiryLabelFn">
+  </perx-core-vouchers>
 </div>
