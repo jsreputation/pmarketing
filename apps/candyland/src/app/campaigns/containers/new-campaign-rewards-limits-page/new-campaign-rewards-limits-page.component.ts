@@ -81,7 +81,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
           }
           if (this.templateID !== data.template.id) {
             this.templateID = data.template.id;
-            this.patchedCheck = !this.patchedCheck;
+            this.patchedCheck = false;
             this.initForm();
           }
           if (this.store.currentCampaign.enabledProb && !this.patchedCheck) {
