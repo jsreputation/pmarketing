@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CopyLinkComponent } from './copy-link.component';
+import { CopyLinkButtonDirective, CopyLinkComponent } from './copy-link.component';
 import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { ButtonModule } from '../button/button.module';
 
 @NgModule({
-  declarations: [CopyLinkComponent],
-  exports: [CopyLinkComponent],
+  declarations: [CopyLinkComponent, CopyLinkButtonDirective],
+  exports: [CopyLinkComponent, CopyLinkButtonDirective],
   imports: [
     CommonModule,
     MatFormFieldModule,

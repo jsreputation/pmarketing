@@ -26,15 +26,16 @@ Given(/^9_I am at the blackcomb home page$/, async () => {
   // login process
   await LoginAppPage.navigateToLogin();
   // Waiting for account id field to load
-  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+
+  await browser.wait(ec.elementToBeClickable(ElementApp.inputArray().first()), 5000);
   // entering correct account id
-  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  await ElementApp.inputArray().first().sendKeys(LoginAppPage.getAccountId());
   // entering correct testUserAccount
-  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  await ElementApp.inputArray().get(1).sendKeys(LoginAppPage.getUserAccount());
   // entering correct pw
-  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  await ElementApp.inputArray().get(2).sendKeys(LoginAppPage.getPassword());
   // pressing the enter key on the accountID field to log in
-  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await ElementApp.inputArray().first().sendKeys(protractor.Key.ENTER);
   await browser.sleep(3000);
 
   await CreateCampaignAppPage.navigateToCreateCampaign();

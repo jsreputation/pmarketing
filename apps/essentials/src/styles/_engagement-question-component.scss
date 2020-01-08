@@ -1,0 +1,26 @@
+@import "variables";
+
+.view {
+  &-group-label {
+    .mat-optgroup-label {
+      color: $secondary-color;
+      padding-left: $horizontal-padding;
+    }
+  }
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.drag-list.cdk-drop-list-dragging .es-question-form-field:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.7;
+}
+
+.question-container .question-content .error-message {
+  height: auto !important;//question error message fixed height clipping override
+}

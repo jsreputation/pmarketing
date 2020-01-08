@@ -29,7 +29,7 @@
   }
 
   &-download {
-    @include typo-button;
+    @include cs-typo-button;
 
     position: relative;
     display: flex;
@@ -71,7 +71,7 @@
   }
 
   &-btn {
-    @include typo-button;
+    @include cs-typo-button;
 
     height: 100%;
     width: 100%;

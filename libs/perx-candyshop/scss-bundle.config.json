@@ -1,0 +1,12 @@
+{
+  "bundlerOptions": {
+    "entryFile": "./projects/perx-candyshop/src/_theme.scss",
+    "rootDir": "./projects/perx-candyshop/src/",
+    "includePaths": [
+      "./styles"
+    ],
+    "outFile": "./dist/perx-candyshop/_theming.scss",
+    "ignoreImports": ["~@angular/.*"],
+    "logLevel": "debug"
+  }
+}
