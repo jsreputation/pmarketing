@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+//@import '~@angular/material/theming';
 @import "./variables";
 
 .select-color {
@@ -34,7 +34,7 @@
 
 // Color Picker Pop-up
 .color-picker {
-  @include mat-elevation(3);
+  //@include mat-elevation(3);
 
   border: none !important;
   border-radius: $border-radius-lg;

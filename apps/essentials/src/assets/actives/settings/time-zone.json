@@ -1,0 +1,147 @@
+[
+  {
+    "id": 1,
+    "country": "Hong Kong Time",
+    "zone": "GMT+8:00"
+  },
+  {
+    "id": 2,
+    "country": "China Standard Time",
+    "zone": "GMT+8:00"
+  },
+  {
+    "id": 3,
+    "country": "Indonesia Western Standard Time",
+    "zone": "GMT+7:00"
+  },
+  {
+    "id": 4,
+    "country": "Indonesia Central Standard Time",
+    "zone": "GMT+8:00"
+  },
+  {
+    "id": 5,
+    "country": "Indonesia Eastern Standard Time",
+    "zone": "GMT+9:00"
+  },
+  {
+    "id": 7,
+    "country": "Indian Standard Time",
+    "zone": "GMT+5:30"
+  },
+  {
+    "id": 8,
+    "country": "Japan Standard Time",
+    "zone": "GMT+9:00"
+  },
+  {
+    "id": 9,
+    "country": "Malaysia Standard Time",
+    "zone": "GMT+8:00"
+  },
+  {
+    "id": 10,
+    "country": "Philippine Standard Time",
+    "zone": "GMT+8:00"
+  },
+  {
+    "id": 11,
+    "country": "Singapore Standard Time",
+    "zone": "GMT+8:00"
+  },
+  {
+    "id": 12,
+    "country": "Korea Standard time",
+    "zone": "GMT+9:00"
+  },
+  {
+    "id": 13,
+    "country": "Taiwan Standard Time",
+    "zone": "GMT+8:00"
+  },
+  {
+    "id": 14,
+    "country": "Thailand Standard Time",
+    "zone": "GMT+7:00"
+  },
+  {
+    "id": 15,
+    "country": "Vietnam Standard Time",
+    "zone": "GMT+7:00"
+  },
+  {
+    "id": 16,
+    "country": "Eastern Standard Time",
+    "zone": "GMT-5:00"
+  },
+  {
+    "id": 17,
+    "country": "Central Standard Time",
+    "zone": "GMT-6:00"
+  },
+  {
+    "id": 18,
+    "country": "Mountain Standard Time",
+    "zone": "GMT-7:00"
+  },
+  {
+    "id": 19,
+    "country": "Pacific Standard Time",
+    "zone": "GMT-8:00"
+  },
+  {
+    "id": 20,
+    "country": "Alaskan Standard Time",
+    "zone": "GMT-9:00"
+  },
+  {
+    "id": 20,
+    "country": "Hawaii-Aleutian Standard Time",
+    "zone": "GMT-10:00"
+  },
+  {
+    "id": 21,
+    "country": "Greenwich Mean Time",
+    "zone": "GMT+0:00"
+  },
+  {
+    "id": 22,
+    "country": "Australian Eastern Standard Time",
+    "zone": "GMT+10:00"
+  },
+  {
+    "id": 23,
+    "country": "Australian Central Standard Time",
+    "zone": "GMT+9:30"
+  },
+  {
+    "id": 24,
+    "country": "Australian Western Time",
+    "zone": "GMT+8:00"
+  },
+  {
+    "id": 25,
+    "country": "Atlantic Standard Time",
+    "zone": "GMT-4:00"
+  },
+  {
+    "id": 26,
+    "country": "Newfoundland Daylight Time",
+    "zone": "GMT-2:30"
+  },
+  {
+    "id": 27,
+    "country": "Western European Time",
+    "zone": "GMT+0:00"
+  },
+  {
+    "id": 28,
+    "country": "Central European Time",
+    "zone": "GMT+1:00"
+  },
+  {
+    "id": 29,
+    "country": "Eastern European Time",
+    "zone": "GMT+2:00"
+  }
+]

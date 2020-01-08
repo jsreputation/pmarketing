@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+//@import '~@angular/material/theming';
 @import "./variables";
 
 .item-tab-view {
@@ -37,7 +37,7 @@
   }
 
   .mat-radio-checked {
-    @include mat-elevation(4);
+    //@include mat-elevation(4);
 
     &.mat-radio-button {
       background: $lightest-gray;
