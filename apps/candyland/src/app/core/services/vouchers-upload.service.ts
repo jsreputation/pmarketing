@@ -52,7 +52,13 @@ export class VouchersUploadService extends IAdvancedUploadFileService {
                   )
                 )
               )
-          )
+          ),
+          switchMap((res: IJsonApiItemPayload<IWVouchersApi>) => {
+            if (res.data.attributes.status === WStatus.error) {
+              throw of(new Error('Error uploading voucher'));
+            }
+            return of(res);
+          })
         )
         .subscribe(
           (res: IJsonApiItemPayload<IWVouchersApi>) => {
