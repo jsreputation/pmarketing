@@ -56,7 +56,8 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
 
   public userId: string;
   public user: IAudiencesUserForm;
-  public dataSource: CustomDataSource<any>;
+  public dataSourceVouchers: CustomDataSource<any>;
+  public dataSourceCommunication: CustomDataSource<any>;
 
   private async updateLocalUser(): Promise<IAudiencesUserForm> {
     this.user = await this.audiencesUserService.getUser(this.userId).toPromise();
@@ -107,7 +108,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       .subscribe(
         () => {
           this.messageService.show('Expiry voucher date successfully changed.');
-          this.dataSource.updateData();
+          this.dataSourceVouchers.updateData();
         },
         () => this.messageService.show('Failed to update voucher expiration date.')
       );
@@ -127,7 +128,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       .subscribe(
         () => {
           this.messageService.show('Voucher assigned to user.');
-          this.dataSource.updateData();
+          this.dataSourceVouchers.updateData();
         },
         () => this.messageService.show('Could not assign voucher to user. Make sure that the reward has enough stock.')
       );
@@ -156,7 +157,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
 
   private initDataSource(): void {
     const params = this.userId ? { 'filter[assigned_to_id]': this.userId } : {};
-    this.dataSource = new CustomDataSource<any>(this.vouchersService, undefined, params);
+    this.dataSourceVouchers = new CustomDataSource<any>(this.vouchersService, undefined, params);
     // this.dataSource.data$.pipe(
     //   takeUntil(this.destroy$)
     // ).subscribe((data: any) => {

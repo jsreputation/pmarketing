@@ -10,28 +10,51 @@
 <cl-audiences-user-info [user]="user"></cl-audiences-user-info>
 
 <section class="content">
-  <!--filters-->
-  <cl-table-filters [dataSource]="dataSource" classList="block">
-    <ng-container *clTableFilter="'rewardName'; let filter">
-      <cl-search-filter class="search-block" [control]="filter"
-        [placeholder]="'AUDIENCE_FEATURE.SEARCH_VOUCHERS' | translate"></cl-search-filter>
-      <cl-button [classList]="'primary'"
-        (click)="openSelectRewardPopup()">
-        <span>{{'AUDIENCE_FEATURE.ISSUE_VOUCHER' | translate}}</span>
-      </cl-button>
-    </ng-container>
-  </cl-table-filters>
+    <mat-tab-group>
+      <mat-tab label="Vouchers">
+        <div  class="audience-list-content">
+          <!--filters-->
+          <cl-table-filters [dataSource]="dataSourceVouchers" classList="block">
+            <ng-container *clTableFilter="'rewardName'; let filter">
+              <cl-search-filter class="search-block" [control]="filter"
+                [placeholder]="'AUDIENCE_FEATURE.SEARCH_VOUCHERS' | translate"></cl-search-filter>
+              <cl-button [classList]="'primary'"
+                (click)="openSelectRewardPopup()">
+                <span>{{'AUDIENCE_FEATURE.ISSUE_VOUCHER' | translate}}</span>
+              </cl-button>
+            </ng-container>
+          </cl-table-filters>
 
-  <div class="table-card">
-    <!--table-->
-    <cl-audiences-vouchers-list [dataSource]="dataSource"
-      (clickChangeExpiryDate)="openChangeExpiryDateDialog($event)">
-    </cl-audiences-vouchers-list>
-    <!--/table-->
-    <!--paginator-->
-    <cl-paginator [dataSource]="dataSource"
-      [pageSize]="5"
-      [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
-    <!--/paginator-->
-  </div>
+          <div class="table-card">
+            <!--table-->
+            <cl-audiences-vouchers-list [dataSource]="dataSourceVouchers"
+              (clickChangeExpiryDate)="openChangeExpiryDateDialog($event)">
+            </cl-audiences-vouchers-list>
+            <!--/table-->
+            <!--paginator-->
+            <cl-paginator [dataSource]="dataSourceVouchers"
+              [pageSize]="5"
+              [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
+            <!--/paginator-->
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Communications" class="audience-list-content">
+        <div  class="audience-list-content">
+          <div class="table-card">
+            <!--table-->
+            <cl-audiences-vouchers-list [dataSource]="dataSourceVouchers"
+              (clickChangeExpiryDate)="openChangeExpiryDateDialog($event)">
+            </cl-audiences-vouchers-list>
+            <!--/table-->
+            <!--paginator-->
+            <cl-paginator [dataSource]="dataSourceVouchers"
+              [pageSize]="5"
+              [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
+            <!--/paginator-->
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+ 
 </section>
