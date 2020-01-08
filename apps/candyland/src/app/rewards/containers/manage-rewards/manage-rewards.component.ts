@@ -179,8 +179,10 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
         debounceTime(500),
         filter(Boolean),
         tap(() => this.selectedMerchant = null),
+        // use mergeMap to make sure, we do not subscribing to valueChanges after one call
         mergeMap(
           (id: string) => this.merchantsService.getMerchant(id)
+            // catchError is done here, to make sure that 404 errors do not stop subscribing to valueChanges on errors
             .pipe(catchError(err => (oc(err).errors[0].code() === '404') ? of(null) : throwError(err)))
         ),
         takeUntil(this.destroy$),
