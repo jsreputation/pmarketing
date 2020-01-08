@@ -37,7 +37,7 @@ $cs-step-header-icon-size: 16px !default;
 }
 
 .cs-step-icon-content,
-.cs-step-icon .cs-icon {
+.cs-step-icon .mat-icon {
   // Use absolute positioning to center the content, because it works better with text.
   position: absolute;
   top: 50%;
@@ -45,13 +45,13 @@ $cs-step-header-icon-size: 16px !default;
   transform: translate(-50%, -50%);
 }
 
-.cs-step-icon .cs-icon {
+.cs-step-icon .mat-icon {
   font-size: $cs-step-header-icon-size;
   height: $cs-step-header-icon-size;
   width: $cs-step-header-icon-size;
 }
 
-.cs-step-icon-state-error .cs-icon {
+.cs-step-icon-state-error .mat-icon {
   font-size: $cs-step-header-icon-size + 8;
   height: $cs-step-header-icon-size + 8;
   width: $cs-step-header-icon-size + 8;
