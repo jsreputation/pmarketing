@@ -11,8 +11,8 @@
 
   .background_img_url {
     position: absolute;
-    z-index: -1;
     width: 100%;
+    height: 100%;
     //offset the padding
     transform: translateY(-1rem);
   }
@@ -37,6 +37,7 @@
     min-width: 34rem;
     max-width: 80%;
     margin-top: 2rem;
+    z-index: 1;
 
     h1 {
       font-style: normal;
