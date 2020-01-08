@@ -38,19 +38,23 @@ function resolveTenant(accountId: string, rootToken: ICredentials): Promise<void
       } else {
         tenantCredential.basic_token = result.token;
       }
-      const tenantEndPointRawData = await getEndPoints(tenantCredential);
-      const tenantURLs = tenantEndPointRawData.data.data;
-      tenantURLs.forEach((tenantURLData: IJsonApiItem<IWCognitoEndpointAttributes>) => {
-        const tenantUrl = getTargetEndPoint(tenantURLData.attributes.url);
-        // @ts-ignore
-        cache.get(tenantUrl, (urlErr: Error, resultURL: IURLTableRowData) => {
-          if (!resultURL) {
-            cache.set(tenantUrl, {
-              accountId
-            }, 0);
-          }
-        });
-      });
+      if (tenantCredential.basic_token) {
+        const tenantEndPointRawData = await getEndPoints(tenantCredential);
+        const tenantURLs = tenantEndPointRawData.data.data;
+        if (Array.isArray(tenantURLs) && tenantURLs.length > 0) {
+          tenantURLs.forEach((tenantURLData: IJsonApiItem<IWCognitoEndpointAttributes>) => {
+            const tenantUrl = getTargetEndPoint(tenantURLData.attributes.url);
+            // @ts-ignore
+            cache.get(tenantUrl, (urlErr: Error, resultURL: IURLTableRowData) => {
+              if (!resultURL) {
+                cache.set(tenantUrl, {
+                  accountId
+                }, 0);
+              }
+            });
+          });
+        }
+      }
       resolve();
     });
   });
@@ -102,25 +106,25 @@ export const getCredential = (url: string): Promise<ICredentials> => {
     // @ts-ignore
     cache.get(url, async (urlErr: Error, result: IURLTableRowData) => {
       const rootToken: ICredentials = await getRootCredentials();
-
-      if (!result || !result.accountId) {
-        try {
+      try {
+        if (!result || !result.accountId) {
           await updateMapping(rootToken);
-        } catch (err) { reject(err); }
-        // @ts-ignore
-        cache.get(url, (urlErrNest: Error, newResult: IURLTableRowData) => {
-          if (newResult && newResult.accountId) {
-            cache.get(newResult.accountId, (__: Error, newTokenResult: ITokenTableRowData) => {
-              resolve(cbFn(newTokenResult, rootToken.target_url));
-            });
-          }
-        });
-      } else {
-        // @ts-ignore
-        cache.get(result.accountId, (urlErrNest: Error, tokenResult: ITokenTableRowData) => {
-          resolve(cbFn(tokenResult, rootToken.target_url));
-        });
-      }
+          // @ts-ignore
+          cache.get(url, (urlErrNest: Error, newResult: IURLTableRowData) => {
+            if (newResult && newResult.accountId) {
+              cache.get(newResult.accountId, (__: Error, newTokenResult: ITokenTableRowData) => {
+                resolve(cbFn(newTokenResult, rootToken.target_url));
+              });
+            }
+          });
+        } else {
+          // @ts-ignore
+          cache.get(result.accountId, (urlErrNest: Error, tokenResult: ITokenTableRowData) => {
+            resolve(cbFn(tokenResult, rootToken.target_url));
+          });
+        }
+      } catch (err) { reject(err); }
+
     });
   });
 };
