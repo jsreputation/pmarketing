@@ -2,7 +2,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, Injectable, NgModule } from '@angular/core';
 import {
   MatDialogModule,
   MatIconModule,
@@ -52,7 +52,23 @@ import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.compone
 import { ErrorComponent } from './error/error.component';
 
 import { environment } from '../environments/environment';
+import * as Sentry from '@sentry/browser';
 
+Sentry.init({
+  dsn: 'https://b7939e78d33d483685b1c82e9c076384@sentry.io/1873560'
+});
+
+@Injectable()
+export class SentryErrorHandler implements ErrorHandler {
+  public handleError(error: any): void {
+    // const eventId =
+    Sentry.captureException(error.originalError || error);
+    if (!environment.production) {
+      console.error(error);
+    }
+    // Sentry.showReportDialog({ eventId });
+  }
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -109,7 +125,7 @@ import { environment } from '../environments/environment';
     CategorySortComponent,
     RewardPopupComponent
   ],
-  providers: [],
+  providers: [{ provide: ErrorHandler, useClass: SentryErrorHandler }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
