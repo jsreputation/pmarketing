@@ -1,12 +1,13 @@
 <header class="page-header full-with">
   <h1 class="title">{{data?.name}}</h1>
   <div class="btn-group">
-    <cl-button classList="secondary" routerLink="/rewards/">
+    <cs-button classList="secondary" routerLink="/rewards/">
       {{'BTN_CLOSE' | translate}}
-    </cl-button>
-    <cl-button classList="primary cta cta-edit" [routerLink]="'/rewards/edit/'+ id">
+    </cs-button>
+    <cs-button classList="primary cs-btn-mobile" [routerLink]="'/rewards/edit/'+ id">
+      <i class="cs-btn-mobile-icon icon edit-icon"></i>
       {{'BTN_EDIT' | translate}}
-    </cl-button>
+    </cs-button>
   </div>
 </header>
 
@@ -22,9 +23,9 @@
             {{'AVAILABLE_VOUCHERS' | translate}}
           </small>
         </h2>
-        <cl-button classList="tertiary opaque" (click)="openDialogReplenish()">
+        <cs-button classList="tertiary opaque" (click)="openDialogReplenish()">
           {{'REPLENISH' | translate}}
-        </cl-button>
+        </cs-button>
       </div>
       <cl-vouchers-progress-bar [options]="data?.vouchersStatistics"></cl-vouchers-progress-bar>
     </div>

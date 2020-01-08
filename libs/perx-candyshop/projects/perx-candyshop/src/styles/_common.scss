@@ -228,7 +228,7 @@
   border-radius: $border-radius;
 
   &::before {
-    @include typo-caption;
+    @include cs-typo-caption;
 
     content: '!';
     margin-right: 10px;

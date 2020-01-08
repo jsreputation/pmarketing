@@ -14,7 +14,7 @@ import { QuestionPictureChoiceFieldModule } from '@cl-shared/questions/question-
 import {
   QuestionMultipleChoiceFieldModule
 } from '@cl-shared/questions/question-multiple-choice-field/question-multiple-choice-field.module';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule } from '@perx/candyshop';
 import { MatFormFieldModule, MatInputModule, MatSlideToggleModule } from '@angular/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { QuestionFormFieldService } from '@cl-shared/questions/question-form-field/shared/services/question-form-field.service';

@@ -179,8 +179,40 @@
 
   &.indicator-decrease {
     mask: url("/assets/images/icons/indicator-decrease.svg") no-repeat 50% 50%;
-    background-position: center;
+    //background-position: center;
     background-color: $red;
+  }
+
+ &.save-icon {
+   mask: url("/assets/images/icons/cta-save.svg") no-repeat 50% 50%;
+   height: 2.4rem;
+   width: 2.4rem;
+   background-position: center;
+   background-color: $white;
+  }
+
+  &.edit-icon {
+    mask: url("/assets/images/icons/cta-edit.svg") no-repeat 50% 50%;
+    height: 2.4rem;
+    width: 2.4rem;
+    background-position: center;
+    background-color: $white;
+  }
+
+  &.next-icon {
+    mask: url("/assets/images/icons/cta-next.svg") no-repeat 50% 50%;
+    height: 2.4rem;
+    width: 2.4rem;
+    background-position: center;
+    background-color: $white;
+  }
+
+  &.new-icon {
+    mask: url("/assets/images/icons/cta-new.svg") no-repeat 50% 50%;
+    height: 2.4rem;
+    width: 2.4rem;
+    background-position: center;
+    background-color: $white;
   }
 }
 

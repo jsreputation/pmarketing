@@ -9,7 +9,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA
 } from '@angular/material';
-import { ButtonModule } from '@cl-shared';
+import { ButtonModule } from '@perx/candyshop';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
 

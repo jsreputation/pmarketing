@@ -41,7 +41,7 @@ import { RewardInfoPreviewComponent } from './components/reward-info-preview/rew
 import { RewardVouchersPreviewComponent } from './components/reward-vouchers-preview/reward-vouchers-preview.component';
 import { RewardReplenishPopupComponent } from './containers/reward-replenish-popup/reward-replenish-popup.component';
 import {
-  ButtonModule, CreateMerchantPopupModule,
+  CreateMerchantPopupModule,
   DatePickerModule, DownloadButtonModule,
   ItemListModule, NoDataModule,
   ProgressBarModule, SearchFilterModule, SelectMerchantPopupModule,
@@ -49,6 +49,7 @@ import {
   TimePickerModule,
   UploadFileModule, UploadGraphicModule, VouchersProgressBarModule
 } from '@cl-shared';
+import { ButtonModule } from '@perx/candyshop';
 import { TagListModule } from '@cl-shared/components/tag-list/tag-list.module';
 import { RewardLoyaltyFormGroupComponent } from './components/reward-loyalty-form-group/reward-loyalty-form-group.component';
 import { MatTabsModule } from '@angular/material/tabs';

@@ -1,5 +1,5 @@
 <aside class="dialog" role="dialog" aria-labelledby="dialogTitle-campaignConfirm">
-  <button class="dialog-closed btn-transparent" (click)="closeDialog()">
+  <button class="dialog-closed cs-btn-transparent" (click)="closeDialog()">
     <mat-icon>close</mat-icon>
   </button>
   <div class="confirm-body">
@@ -11,6 +11,6 @@
   <div class="dialog-actions" [ngSwitch]="data?.type">
     <cl-copy-link *ngSwitchCase="'weblink'" [link]="data.url"></cl-copy-link>
     <cl-download-link *ngSwitchCase="'download'" file="Weblink.csv" [link]="data?.url"></cl-download-link>
-    <cl-button *ngSwitchDefault classList="primary" class="copy-link-btn" (click)="closeDialog()">Close</cl-button>
+    <cs-button *ngSwitchDefault classList="primary" class="copy-link-btn" (click)="closeDialog()">Close</cs-button>
   </div>
 </aside>

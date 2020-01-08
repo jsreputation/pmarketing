@@ -74,9 +74,9 @@
                                           (deleteGroup)="deleteLaunchGroup($event)"
                                           (sendSms)="onSendSms($event)"
               ></cl-campaign-launch-message>
-              <cl-button classList="tertiary ph-0" (click)="addNewLaunchGroup()">
+              <cs-button classList="tertiary ph-0" (click)="addNewLaunchGroup()">
                 {{'BTN_ADD_QUESTION' | translate}}
-              </cl-button>
+              </cs-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.campaignNotCompleted">
               <cl-campaign-not-completed-form-group *ngFor="let group of getCompletedGroup().controls; let index = index;"
@@ -88,9 +88,9 @@
                                                     (sendSms)="onSendSms($event)"
               >
               </cl-campaign-not-completed-form-group>
-              <cl-button classList="tertiary ph-0" (click)="addNewCompletedGroup()">
+              <cs-button classList="tertiary ph-0" (click)="addNewCompletedGroup()">
                 {{'BTN_ADD_QUESTION' | translate}}
-              </cl-button>
+              </cs-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.beforeCampaignEnds">
               <cl-before-campaign-ends-form-group *ngFor="let group of getCampaignEndsGroup().controls; let index = index;"
@@ -102,9 +102,9 @@
                                                     (sendSms)="onSendSms($event)"
               >
               </cl-before-campaign-ends-form-group>
-              <cl-button classList="tertiary ph-0" (click)="addNewCampaignEndsGroup()">
+              <cs-button classList="tertiary ph-0" (click)="addNewCampaignEndsGroup()">
                 {{'BTN_ADD_QUESTION' | translate}}
-              </cl-button>
+              </cs-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.beforeRewardExpires">
               <cl-before-reward-expires-form-group *ngFor="let group of getRewardExpiresGroup().controls; let index = index;"
@@ -115,9 +115,9 @@
                                                   (deleteGroup)="deleteRewardExpiresGroup($event)"
               >
               </cl-before-reward-expires-form-group>
-              <cl-button classList="tertiary ph-0" (click)="addNewRewardExpiresGroup()">
+              <cs-button classList="tertiary ph-0" (click)="addNewRewardExpiresGroup()">
                 {{'BTN_ADD_QUESTION' | translate}}
-              </cl-button>
+              </cs-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.noOfStampsToNextReward">
               <cl-no-stamps-to-next-reward-form-group *ngFor="let group of getNoStampsRewardGroup().controls; let index = index;"
@@ -129,9 +129,9 @@
                                                   (deleteGroup)="deleteNoStampsRewardGroup($event)"
               >
               </cl-no-stamps-to-next-reward-form-group>
-              <cl-button classList="tertiary ph-0" (click)="addNewNoStampsRewardGroup()">
+              <cs-button classList="tertiary ph-0" (click)="addNewNoStampsRewardGroup()">
                 {{'BTN_ADD_QUESTION' | translate}}
-              </cl-button>
+              </cs-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.earnedStamp">
               <cl-earned-stamp-form-group *ngFor="let group of getEarnedStampGroup().controls; let index = index;"
@@ -143,9 +143,9 @@
                                                   (deleteGroup)="deleteEarnedStampGroup($event)"
               >
               </cl-earned-stamp-form-group>
-              <cl-button classList="tertiary ph-0" (click)="addNewEarnedStampGroup()">
+              <cs-button classList="tertiary ph-0" (click)="addNewEarnedStampGroup()">
                 {{'BTN_ADD_QUESTION' | translate}}
-              </cl-button>
+              </cs-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.earnedReward">
               <cl-earned-reward-form-group *ngFor="let group of getEarnedRewardGroup().controls; let index = index;"
@@ -158,9 +158,9 @@
                                           (deleteGroup)="deleteEarnedRewardGroup($event)"
               >
               </cl-earned-reward-form-group>
-              <cl-button classList="tertiary ph-0" (click)="addNewEarnedRewardGroup()">
+              <cs-button classList="tertiary ph-0" (click)="addNewEarnedRewardGroup()">
                 {{'BTN_ADD_QUESTION' | translate}}
-              </cl-button>
+              </cs-button>
             </ng-container>
           </section>
         </ng-container>

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionTypeComponent } from 'src/app/shared/questions/question-type/question-type.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule } from '@perx/candyshop';
 import { MatIconModule, MatSelectModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';

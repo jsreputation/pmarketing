@@ -7,7 +7,7 @@ import {
   MatIconModule,
   MatTableModule
 } from '@angular/material';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule } from '@perx/candyshop';
 import { RewardsListModule } from '@cl-shared/components/rewards-list/rewards-list.module';
 import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';

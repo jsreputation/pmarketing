@@ -19,8 +19,9 @@
             </mat-form-field>
           </ng-container>
         </cl-table-filters>
-        <cl-button classList="primary cta cta-new cta-new-invitenew" (click)="openDialogInviteNewUsers()">
-          {{'SETTINGS_FEATURE.INVITE_NEW_USER' | translate}}</cl-button>
+        <cs-button classList="primary cs-btn-mobile" (click)="openDialogInviteNewUsers()">
+          <i class="cs-btn-mobile-icon icon new-icon"></i>
+          {{'SETTINGS_FEATURE.INVITE_NEW_USER' | translate}}</cs-button>
       </div>
       <div class="table-card">
         <!--table-->

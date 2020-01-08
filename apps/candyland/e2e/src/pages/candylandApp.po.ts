@@ -212,10 +212,10 @@ export class CreateSurveyAppPage {
     return element(by.className('btn mat-flat-button primary'));
   }
   public questionButton(): ElementFinder {
-    return element.all(by.css('cl-button')).last();
+    return element.all(by.css('cs-button')).last();
   }
   public loadQuestionButton(): ElementFinder {
-    return element.all(by.css('cl-button>button')).last();
+    return element.all(by.css('cs-button>button')).last();
   }
   public headerByIdField(): ElementFinder {
     return element(by.id('mat-input-0'));
@@ -579,11 +579,11 @@ export class ElementApp {
   }
 
   public static clButton(): ElementFinder {
-    return element(by.css('cl-button'));
+    return element(by.css('cs-button'));
   }
 
   public static clButtonArray(): ElementArrayFinder {
-    return element.all(by.css('cl-button'));
+    return element.all(by.css('cs-button'));
   }
 
   public static matSelectCountry(): ElementFinder {

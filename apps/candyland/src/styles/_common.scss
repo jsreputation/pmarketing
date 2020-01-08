@@ -186,7 +186,7 @@ textarea {
 }
 
 .btn-group {
-  cl-button, button, a {
+  cs-button, button, a {
     margin-right: ($horizontal-padding * 0.25);
 
     &:last-of-type {

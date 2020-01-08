@@ -13,7 +13,7 @@ import {
   MatSelectModule,
   MatTabsModule, MatProgressBarModule
 } from '@angular/material';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule } from '@perx/candyshop';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { NoDataModule, PaginationModule } from '@cl-shared/table';
 import { LoyaltyGridComponent } from 'src/app/loyalty/components/loyalty-grid/loyalty-grid.component';

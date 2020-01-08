@@ -4,13 +4,13 @@ import { AudiencesPageComponent } from './audiences-page.component';
 import {SettingsService, AudiencesService, AuthService, MessageService} from '@cl-core-services';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import {
-  ButtonModule,
   PaginationModule,
   TableFiltersModule,
   SearchFilterModule,
   NoDataModule,
   StatusLabelModule
 } from '@cl-shared';
+import { ButtonModule } from '@perx/candyshop';
 import { TabsFilterModule } from '../../../shared/table/tabs-filter/tabs-filter.module';
 import {
   MatIconModule,

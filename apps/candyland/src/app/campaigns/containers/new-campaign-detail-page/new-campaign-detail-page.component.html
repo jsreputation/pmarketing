@@ -179,7 +179,7 @@
             <div class="card-row" *ngFor="let age of ages.controls">
               <mat-form-field>
                 <mat-select [formControl]="age.get('from')">
-                  <mat-option *ngFor="let fromAge of ageRange | async;" [value]="fromAge">{{fromAge}} 
+                  <mat-option *ngFor="let fromAge of ageRange | async;" [value]="fromAge">{{fromAge}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -192,7 +192,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <cl-button classList="tertiary ph-0" (click)="addAge()">{{'CAMPAIGN.ADD_AGE_RANGE' | translate}}</cl-button>
+            <cs-button classList="tertiary ph-0" (click)="addAge()">{{'CAMPAIGN.ADD_AGE_RANGE' | translate}}</cs-button>
           </div>
         </div>
         <div class="card-section">
