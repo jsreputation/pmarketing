@@ -156,14 +156,18 @@ When(/^26_I upload a file with the appropriate format for background$/, async ()
 Then(/^26_background reflects the file upload.$/, async () => {
   // initializing variables for attributes src
   const srcUploadField = await ElementApp.imageWrap().getAttribute('src');
-  const srcElementPreviewStyle = await ElementApp.mobilePreviewBackground().getAttribute('style');
+  const srcElementPreviewStyle = await ElementApp.imgArray().get(7).getAttribute('src');
   // get background-image url from style
-  const bgUrl = srcElementPreviewStyle.split('"')[1];
+  // const bgUrl = srcElementPreviewStyle.split('"')[1];
   // initializing regex looking for ','
-  const regex = /,/;
+  const regex = /333333333/;
   // doing a substring matching the first 6 characters of src attr
-  const srcUploadFieldSubstr = srcUploadField.substring(srcUploadField.search(regex), srcUploadField.search(regex) + 5);
-  const srcElementPreviewSubstr = bgUrl.substring(bgUrl.search(regex), bgUrl.search(regex) + 5);
+  const srcUploadFieldSubstr = srcUploadField.substring(srcUploadField.search(regex));
+  console.log(srcUploadFieldSubstr);
+  // , srcUploadField.search(regex) + 5);
+  const srcElementPreviewSubstr = srcElementPreviewStyle.substring(srcElementPreviewStyle.search(regex));
+  console.log(srcElementPreviewSubstr);
+  // ,srcElementPreviewStyle.search(regex) + 5);
   // doing an assertion matching the src substring
   expect(await srcUploadFieldSubstr).to.contain(srcElementPreviewSubstr);
 });
