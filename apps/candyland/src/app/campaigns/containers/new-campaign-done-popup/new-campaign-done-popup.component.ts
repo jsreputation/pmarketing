@@ -1,11 +1,11 @@
 import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MessageService } from '@cl-core-services';
-import { TranslateService } from '@ngx-translate/core';
 
 export interface NewCampaignDonePopupComponentData {
   title: string;
   subTitle?: string;
+  copyMessage?: string;
   type?: string;
   url?: string;
   img?: string;
@@ -22,7 +22,6 @@ export class NewCampaignDonePopupComponent {
     public dialogRef: MatDialogRef<NewCampaignDonePopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: NewCampaignDonePopupComponentData,
     private messageService: MessageService,
-    private translate: TranslateService
   ) { }
 
   public closeDialog(): void {
@@ -30,7 +29,7 @@ export class NewCampaignDonePopupComponent {
   }
 
   public copyMessage(): void {
-    const copyMessage = this.translate.instant('CAMPAIGN.COPY_MESSAGE');
+    const copyMessage = ('copyMessage' in this.data) ? this.data.copyMessage : 'Link copied';
     this.messageService.show(copyMessage, 'success');
   }
 }
