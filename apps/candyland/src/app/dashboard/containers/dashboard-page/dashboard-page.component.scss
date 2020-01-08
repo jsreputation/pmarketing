@@ -2,6 +2,21 @@
 @import "variables";
 
 .dashboard {
+  &-title {
+    @include typo-h6;
+
+    margin: $vertical-padding 0 ($vertical-padding * 0.75);
+    color: $base-font-color;
+    transition: margin-top 0.35s cubic-bezier(0.35, 0, 0.25, 1);
+  }
+
+  &-explore-cards {
+    display: grid;
+    grid-gap: ($horizontal-padding * 0.75);
+    grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+    margin: 0 0 ($vertical-padding * 0.75);
+  }
+
   &-welcome {
     margin-bottom: $vertical-padding;
     position: relative;
@@ -27,32 +42,17 @@
       order: -2;
     }
 
-   > cl-button {
-     order: -1;
-     margin-left: auto;
-     padding-left: 0.8rem;
-     transform: none;
-     transition: transform 0.35s cubic-bezier(0.35, 0, 0.25, 1);
+    > cl-button {
+      order: -1;
+      margin-left: auto;
+      padding-left: 0.8rem;
+      transform: none;
+      transition: transform 0.35s cubic-bezier(0.35, 0, 0.25, 1);
     }
 
     + .dashboard-title {
       margin-top: 0;
     }
-  }
-
-  &-title {
-    @include typo-h6;
-
-    margin: $vertical-padding 0 ($vertical-padding * 0.75);
-    color: $base-font-color;
-    transition: margin-top 0.35s cubic-bezier(0.35, 0, 0.25, 1);
-  }
-
-  &-explore-cards {
-    display: grid;
-    grid-gap: ($horizontal-padding * 0.75);
-    grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
-    margin: 0 0 ($vertical-padding * 0.75);
   }
 
   &-insights-card {
@@ -123,4 +123,3 @@
     transform: translateY(-3.6rem);
   }
 }
-

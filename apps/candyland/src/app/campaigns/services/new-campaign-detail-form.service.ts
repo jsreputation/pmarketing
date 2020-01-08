@@ -48,6 +48,14 @@ export class NewCampaignDetailFormService {
         controls: [form.get('campaignInfo.endDate'), form.get('campaignInfo.endTime')],
         resetValue: true
       },
+      {
+        condition: form.get('audience.filters.agesEnabled').value === true,
+        controls: [form.get('audience.filters.ages')]
+      },
+      {
+        condition: form.get('audience.filters.genderEnabled').value === true,
+        controls: [form.get('audience.filters.gender')]
+      },
       // {
       //   condition: form.get('channel.type').value === 'sms',
       //   controls: [form.get('channel.message'), form.get('channel.schedule')]

@@ -17,7 +17,7 @@
             <mat-error *ngIf="amount.hasError('min') && amount.touched">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
           </mat-form-field>
           <p>
-            SGD
+            {{currency || 'SGD'}}
           </p>
         </div>
       </section>
