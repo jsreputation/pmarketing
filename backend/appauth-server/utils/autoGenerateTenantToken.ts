@@ -44,7 +44,6 @@ function resolveTenant(accountId: string, rootToken: ICredentials): Promise<void
         if (Array.isArray(tenantURLs) && tenantURLs.length > 0) {
           tenantURLs.forEach((tenantURLData: IJsonApiItem<IWCognitoEndpointAttributes>) => {
             const tenantUrl = getTargetEndPoint(tenantURLData.attributes.url);
-            console.log('tenantUrl: ', tenantUrl);
             // @ts-ignore
             cache.get(tenantUrl, (urlErr: Error, resultURL: IURLTableRowData) => {
               if (!resultURL) {
