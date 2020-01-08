@@ -32,6 +32,7 @@
   "BTN_ADD_QUESTION": "+ Add another message",
   "DESCRIPTION": "Description",
   "POINTS": "points",
+  "ERROR_WRONG_EMAIL_PASSWORD": "The email or password is incorrect!",
   "ERROR_REQUIRED": "Required field",
   "ERROR_MIN_LENGTH": "Min length",
   "ERROR_MAX_LENGTH": "Max length",
