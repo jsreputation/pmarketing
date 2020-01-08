@@ -3,6 +3,7 @@ import { AudiencesVouchersListComponent } from './audiences-vouchers-list.compon
 import { MatTableModule, MatMenuModule, MatIconModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
+import { PipesModule } from '@cl-shared/pipes/pipes.module';
 
 describe('AudiencesVouchersListComponent', () => {
   let component: AudiencesVouchersListComponent;
@@ -15,6 +16,7 @@ describe('AudiencesVouchersListComponent', () => {
         MatMenuModule,
         MatIconModule,
         RouterTestingModule,
+        PipesModule,
         TranslateModule.forRoot(),
       ],
       providers: [],
