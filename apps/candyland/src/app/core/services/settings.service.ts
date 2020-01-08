@@ -13,7 +13,6 @@ import { Groups } from '@cl-core/http-adapters/iam-groups';
 import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { Role } from '@cl-helpers/role.enum';
-import { IamUser } from '@cl-core/http-adapters/iam-user';
 import { IWIAMUserAttributes, IJsonApiItemPayload, IJsonApiPatchData, IJsonApiPostData } from '@perx/whistler';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { IReward } from '@perx/core';
@@ -183,7 +182,7 @@ export class SettingsService implements ITableService<IAMUser> {
       );
   }
 
-  public updateTenants(value: ITenantsProperties): Observable<IamUser> {
+  public updateTenants(value: ITenantsProperties): Observable<IAMUser> {
     const newProperties = { ...this.tenant.display_properties, ...value };
     this.tenant.display_properties = { ...newProperties };
     return this.tenant.save().pipe(

@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
 import { IWLoginAttributes, IWProfileAttributes, IJsonApiItemPayload, IJsonApiPostData } from '@perx/whistler';
+import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class AuthHttpService {
 
   public getUser(id: string): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
     return this.http.get<IJsonApiItemPayload<IWProfileAttributes>>(ApiConfig.IAMUsersPath + '/' + id);
+  }
+
+  public getUserByName(params: any): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
+    return this.http.get<IJsonApiItemPayload<IWProfileAttributes>>(ApiConfig.IAMUsersPath, { params });
   }
 
   public resetPassword(accountId: string, username: string): Observable<IJsonApiItemPayload<void>> {
@@ -47,5 +52,9 @@ export class AuthHttpService {
       }
     };
     return this.http.put<HttpResponse<IJsonApiItemPayload<void>>>(`${ApiConfig.IAMUsersPath}/password`, req, { observe: 'response'});
+  }
+
+  public patchUser(user: IAMUser, id: string): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
+    return this.http.patch<IJsonApiItemPayload<IWProfileAttributes>>(`${ApiConfig.IAMUsersPath}/${id}`, user);
   }
 }
