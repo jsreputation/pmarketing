@@ -4,7 +4,7 @@
     <mat-card class="card">
       <div class="card-header">
         <!--DummyToRemove Error-->
-        <form [formGroup]="form1pt1">
+        <form [formGroup]="limitRewardForm">
           <mat-checkbox color="primary" formControlName="enableProbability">
             {{'CAMPAIGN.INCLUDE_PROBABILITY' | translate}}
           </mat-checkbox>
@@ -15,9 +15,9 @@
         <cl-new-campaign-rewards-form-group
           [enableProbability]="enableProbability"
           [isSpinEngagement]="isSpinEngagement"
-          [formParent]="form1pt1"
+          [formParent]="limitRewardForm"
           [slotNumber]="slot"
-          [title]="('CAMPAIGN.REWARDS_FOR_SLOT' | translate) + ' ' + (slot + 1)">
+          [title]="('CAMPAIGN.REWARDS_FOR_SLOT' | translate) + ' ' + slot">
         </cl-new-campaign-rewards-form-group>
       </ng-container>
       <mat-error class="error" *ngIf="probAllGroup.hasError('sumMoreThan')">

@@ -20,7 +20,7 @@ export class RewardItemComponent implements OnInit {
     new EventEmitter<{ probability: number, limit: number }>();
 
   public group: FormGroup = new FormGroup({
-    probability: new FormControl(0, {updateOn: 'blur'}),
+    probability: new FormControl(null, {updateOn: 'blur'}),
     limit: new FormControl(null , {updateOn: 'blur'})
   });
   private destroy$: Subject<void> = new Subject();

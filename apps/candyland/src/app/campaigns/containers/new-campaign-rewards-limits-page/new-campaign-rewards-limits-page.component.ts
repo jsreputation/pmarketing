@@ -21,7 +21,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
   public isSpinEngagement: boolean = false;
   public firstInit: boolean = false;
   public patchedCheck: boolean = false;
-  public form1pt1: FormGroup;
+  public limitRewardForm: FormGroup;
   // Slot 0 for those outcomes not categorized, -1 for those outcomes need to be deleted
   public slots: number[] = [0];
   private destroyed: boolean = false;
@@ -34,7 +34,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
     private fb: FormBuilder
   ) {
     super(1.1, store, stepConditionService);
-    this.form1pt1 = this.fb.group({
+    this.limitRewardForm = this.fb.group({
       enableProbability: [false],
       totalProbAllSlots: this.fb.group( {}), // no show up, main for validation
       totalFilledAllSlots: this.fb.group({}) // doesn't show up in the template
@@ -42,15 +42,15 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
   }
 
   public get probAllGroup(): FormGroup {
-    return this.form1pt1.get('totalProbAllSlots') as FormGroup;
+    return this.limitRewardForm.get('totalProbAllSlots') as FormGroup;
   }
 
   public get fillAllGroup(): FormGroup {
-    return this.form1pt1.get('totalFilledAllSlots') as FormGroup;
+    return this.limitRewardForm.get('totalFilledAllSlots') as FormGroup;
   }
 
   private initForm(): void {
-    this.form1pt1.clearValidators();
+    this.limitRewardForm.clearValidators();
     this.slots.forEach((slotIndex) => {
       this.probAllGroup.addControl(`totalProbability-${slotIndex}`, this.fb.control(0));
       if (this.isSpinEngagement) {
@@ -61,8 +61,8 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
       this.probAllGroup.setValidators(ClValidators.sumMoreThan());
       this.fillAllGroup.setValidators(ClValidators.rewardPatched(this.slots.length)); // slot validator dynamically set
     }
-    this.form1pt1.updateValueAndValidity();
-    this.stepConditionService.registerStepCondition(1.1, this.form1pt1);
+    this.limitRewardForm.updateValueAndValidity();
+    this.stepConditionService.registerStepCondition(1.1, this.limitRewardForm);
   }
 
   public ngOnInit(): void {
@@ -85,15 +85,15 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
           }
           if (this.store.currentCampaign.enabledProb && !this.patchedCheck) {
             this.patchedCheck = true;
-            this.form1pt1.get('enableProbability').patchValue(this.store.currentCampaign.enabledProb);
+            this.limitRewardForm.get('enableProbability').patchValue(this.store.currentCampaign.enabledProb);
           }
-          this.form1pt1.updateValueAndValidity();
+          this.limitRewardForm.updateValueAndValidity();
           if (!this.destroyed) {
             this.cd.detectChanges();
           }
         }
       });
-    this.form1pt1.get('enableProbability').valueChanges
+    this.limitRewardForm.get('enableProbability').valueChanges
       .subscribe(
         (probBoolean) => {
           this.enableProbability = probBoolean;
