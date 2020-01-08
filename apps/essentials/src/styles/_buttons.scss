@@ -1,0 +1,182 @@
+@import '~@angular/material/theming';
+@import "variables";
+
+button {
+  outline: none;
+}
+
+@mixin btn {
+  @include typo-button;
+
+  position: relative;
+  min-width: 10rem;
+  height: 4.4rem;
+  line-height: 4.4rem;
+  border-radius: $border-radius;
+  color: $white;
+  padding: 0 ($horizontal-padding * 0.75);
+  box-shadow: none;
+
+  &.ph-0 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    transition: padding 0.15s ease;
+
+    &:active,
+    &:focus {
+      padding-left: ($horizontal-padding * 0.75) !important;
+      padding-right: ($horizontal-padding * 0.75) !important;
+    }
+  }
+
+  &.primary {
+    background-color: $primary-color;
+
+    &:hover {
+      background-color: $primary-hover;
+    }
+  }
+
+  &.secondary {
+    background-color: $white;
+    border: 1px solid $light-gray;
+    color: $primary-color;
+
+    &:hover {
+      background-color: $light-gray;
+    }
+  }
+
+  &.tertiary {
+    background-color: transparent;
+    color: $primary-color;
+
+    &.opaque {
+      background-color: $white;
+    }
+
+    &:hover {
+      color: $primary-hover;
+    }
+  }
+
+  &.disable {
+    pointer-events: none;
+    color: $disable-color !important;
+    background-color: $light-gray !important;
+
+    &:hover {
+      color: $disable-color !important;
+      background-color: $light-gray !important;
+    }
+  }
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-transparent {
+  display: flex;
+  position: relative;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.mat-menu-item {
+  line-height: 4rem;
+  height: 4rem;
+}
+
+//FAB BUTTON RE-STYLE (!important to override WalkMe Styling)
+@mixin fab-btn($icon-color: $white) {
+  @include mat-elevation(5);
+
+  min-width: initial !important;
+  width: $fab-btn !important;
+  height: $fab-btn !important;
+  border-radius: $fab-btn !important;
+  position: fixed !important;
+  bottom: $vertical-padding !important;
+  right: $horizontal-padding !important;
+  overflow: hidden !important;
+  transition: 0.15s cubic-bezier(0.35, 0, 0.25, 1) !important;
+
+  &::before {
+    content: "";
+    display: block;
+    width: ($horizontal-padding * 0.75);
+    height: ($horizontal-padding * 0.75);
+    padding: 0;
+    box-sizing: content-box;
+    background-position: center;
+    background-color: $icon-color;
+    position: absolute;
+    top: 50%;
+    left: ($fab-btn * 0.5);
+    transform: translate(-50%, -50%);
+  }
+
+  @media (max-width: $tablet-width) {
+    bottom: ($vertical-padding * 0.5) !important;
+    right: ($horizontal-padding * 0.5) !important;
+  }
+}
+
+// WALKME FAB RE-STYLE
+.walkme-player.walkme-css-reset.walkme-zambezi.walkme-california.walkme-theme-white-blue.walkme-position-major-bottom.walkme-position-minor-right_corner {
+  @include fab-btn($secondary-font-color);
+
+  background: $white !important;
+
+  &::before {
+    mask: url("/assets/images/icons/cta-help.svg") no-repeat 50% 50%;
+  }
+
+  &::after {
+    @include typo-button;
+
+    content: "Help";
+    text-transform: uppercase;
+    color: $secondary-font-color;
+    display: inline-block;
+    line-height: 5.6rem;
+    padding-left: 4.8rem;
+    transition: 0.15s cubic-bezier(0.35, 0, 0.25, 1);
+    opacity: 0;
+  }
+
+  &:hover {
+    background: $light-gray !important;
+    width: 11rem !important;
+
+    &::after {
+      opacity: 1;
+    }
+  }
+}
+
+@media (max-width: $tablet-width) {
+  // CTA MOBILE
+  .cta {
+    span.mat-button-wrapper {
+      display: block;
+      text-transform: uppercase;
+      padding-left: 2.4rem;
+      transition: 0.15s cubic-bezier(0.35, 0, 0.25, 1);
+      opacity: 0;
+    }
+
+    &:hover span.mat-button-wrapper {
+      opacity: 1;
+    }
+  }
+
+  // WALKME RE-POSITION HELP
+  body:not(.no-cta) .walkme-player.walkme-css-reset.walkme-zambezi.walkme-california.walkme-theme-white-blue.walkme-position-major-bottom.walkme-position-minor-right_corner {
+    bottom: ($vertical-padding * 0.5) + $fab-btn + ($vertical-padding * 0.5) !important;
+  }
+}

@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IPools } from '@cl-core/models/audiences/audiences';
 
 @Component({
   selector: 'cl-loyalty-form-step-details',
@@ -9,5 +8,5 @@ import { IPools } from '@cl-core/models/audiences/audiences';
 })
 export class LoyaltyFormStepDetailsComponent {
   @Input() public group: FormGroup;
-  @Input() public pools: IPools;
+  @Input() public config: any;
 }

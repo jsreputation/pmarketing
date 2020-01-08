@@ -1,0 +1,18 @@
+/*
+@media (max-width: $desktop-width) {
+
+}
+
+@media (max-width: $tablet-width) {
+
+}
+*/
+@media (max-width: $mobile-width) {
+  .col-customer-info {
+    display: none;
+  }
+
+  .col-login-form {
+    width: 100%;
+  }
+}

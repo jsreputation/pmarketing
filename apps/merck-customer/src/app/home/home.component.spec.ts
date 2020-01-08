@@ -9,7 +9,7 @@ import { Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -63,7 +63,8 @@ describe('HomeComponent', () => {
         LoyaltyModule,
         RewardsModule,
         BrowserAnimationsModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        InfiniteScrollModule
       ],
       providers: [
         {

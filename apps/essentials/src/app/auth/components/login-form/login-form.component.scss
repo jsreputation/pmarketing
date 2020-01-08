@@ -1,0 +1,38 @@
+@import "variables";
+
+:host {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.login-form {
+  &-wrap {
+    width: 100%;
+    background-color: $white;
+  }
+
+  &-title {
+    @include typo-h4;
+
+    color: $base-font-color;
+    margin-bottom: $vertical-padding;
+  }
+
+  &-control {
+    @include typo-input;
+
+    padding-bottom: $vertical-padding;
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    mat-icon {
+      cursor: pointer;
+    }
+  }
+
+  &-action {
+    margin-bottom: $vertical-padding;
+  }
+}
