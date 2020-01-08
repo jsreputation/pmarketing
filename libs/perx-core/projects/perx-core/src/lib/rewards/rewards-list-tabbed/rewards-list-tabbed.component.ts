@@ -14,6 +14,7 @@ export interface ITabConfig {
 export interface ITabConfigExtended extends ITabConfig {
   rewardsType: string | null;
   currentPage?: number | null;
+  completePagination?: boolean;
 }
 
 @Component({

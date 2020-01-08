@@ -1,14 +1,9 @@
 @import "../../styles/variables";
-@import "../../styles/buttons";
 
 :host {
   width: 100%;
 
   @include typo-caption;
-}
-
-.btn {
-  @include btn;
 }
 
 .download-link {
@@ -17,7 +12,7 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: stretch;
-  align-items: flex-start;
+  align-items: center;
 
   &-field {
     @include typo-input-alt;
@@ -37,5 +32,11 @@
   ::ng-deep .mat-form-field-outline-start,
   ::ng-deep .mat-form-field-outline-end {
     border-color: transparent;
+  }
+
+  ::ng-deep {
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
   }
 }

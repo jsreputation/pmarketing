@@ -166,7 +166,7 @@ $icon-font-size: 1.6rem;
 }
 
 //Buttons
-@mixin typo-button {
+@mixin cs-typo-button {
   font-weight: 500;
   font-size: $base-font-size;
   letter-spacing: 0.075rem;

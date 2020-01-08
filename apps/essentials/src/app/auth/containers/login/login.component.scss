@@ -1,0 +1,78 @@
+@import "variables";
+
+.login-wrap {
+  display: flex;
+  position: relative;
+  background: $loginpage-color;
+}
+
+.col {
+  &-login-form {
+    width: 43.1rem;
+    min-height: 100vh;
+    padding-left: $horizontal-padding;
+    padding-right: $horizontal-padding;
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    background-color: $white;
+  }
+
+  &-customer-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-grow: 1;
+    padding: ($vertical-padding * 2) $horizontal-padding $vertical-padding;
+    text-align: center;
+  }
+}
+
+.router-actions {
+  margin-top: 0.8rem;
+}
+
+.copyright {
+  @include typo-caption;
+
+  margin-top: ($vertical-padding * 2);
+  margin-bottom: 1rem;
+  color: $secondary-font-color;
+}
+
+.customer-info {
+  &-title {
+    @include typo-h3;
+
+    color: $secondary-color;
+    margin: 0 0 ($vertical-padding * 0.5);
+    justify-self: flex-start;
+  }
+
+  &-description {
+    @include typo-body1;
+
+    color: $secondary-color;
+    max-width: 40em; //this has to be in `em`s because paragraph width should be relative to font-size
+    margin: 0 auto ($vertical-padding * 1.5);
+  }
+
+  &-picture {
+    width: 100%;
+    max-width: 58.1rem;
+    height: auto;
+    margin: 0 auto;
+
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+}
+
+cs-logo {
+  margin-top: $vertical-padding;
+  margin-bottom: $vertical-padding * 2;
+}
+
+@import "resize";
