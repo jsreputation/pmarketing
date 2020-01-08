@@ -1,3 +1,4 @@
+/* stylelint-disable */
 $cs-horizontal-stepper-header-height: 72px !default;
 $cs-stepper-label-header-height: 24px !default;
 $cs-stepper-label-position-bottom-top-gap: 16px !default;
@@ -6,7 +7,6 @@ $cs-vertical-stepper-content-margin: 36px !default;
 $cs-stepper-line-width: 1px !default;
 $cs-stepper-line-gap: 8px !default;
 
-/* stylelint-disable */
 .cs-stepper-vertical,
 .cs-stepper-horizontal {
   display: block;
@@ -55,6 +55,11 @@ $cs-stepper-line-gap: 8px !default;
   overflow: hidden;
   align-items: center;
   padding: 0 $cs-stepper-side-gap;
+
+  &.disable {
+    pointer-events: none;
+    cursor: default;
+  }
 
   .cs-step-icon {
     margin-right: $cs-stepper-line-gap;

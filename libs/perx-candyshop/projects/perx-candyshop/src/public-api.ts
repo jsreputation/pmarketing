@@ -95,3 +95,9 @@ export { VouchersProgressBarComponent } from './lib/vouchers-progress-bar/vouche
 
 export { SepareteRangeDatePickerComponent } from './lib/separate-range-date-picker/separate-range-date-picker.component';
 export { SeparateRangeDatePickerModule } from './lib/separate-range-date-picker/separate-range-date-picker.module';
+
+export { StepLabelDirective } from './lib/stepper/step-label';
+export { StepperDirective } from './lib/stepper/stepper';
+export { StepperNextDirective, StepperPreviousDirective } from './lib/stepper/stepper-button';
+export { StepperIconDirective } from './lib/stepper/stepper-icon';
+export { StepperModule } from './lib/stepper/stepper-module';

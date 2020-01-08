@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AudiencesService, ConfigService, SettingsService } from '@cl-core-services';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
 import { PeriodType } from '@cl-core/models/period-type.enum';
 import { LoyaltyPointsExpireTrigger } from '../models/loyalty-points-expire-trigger.enum';
@@ -8,6 +8,7 @@ import { RulePointType } from '@cl-core/models/loyalty/rule-point-type.enum';
 import { RuleSetMatchType } from '@cl-core/models/loyalty/rule-set-match-type.enum';
 import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.enum';
 import { RuleOperatorType } from '@cl-core/models/loyalty/rule-operator-type.enum';
+import { UserService } from '@cl-core/services/user.service';
 
 const matchType: OptionConfig[] = [
   {value: RuleSetMatchType.first, title: 'LOYALTY_FEATURE.MATCH_TYPE.MATCH_FIRST'},
@@ -57,22 +58,25 @@ const rulePointsType: OptionConfig[] = [
 @Injectable()
 export class LoyaltyConfigService {
   constructor(private configService: ConfigService,
+              private userService: UserService,
               private settingsService: SettingsService,
               private audiencesService: AudiencesService) {
 
   }
 
   public getLoyaltyManageConfig(): Observable<any> {
-    return combineLatest(
+    return combineLatest([
       this.audiencesService.getAudiencesList(),
-      this.configService.prepareStatusesLabel(),
-    ).pipe(
-      map(([pools]) => ({
+      this.userService.currency$
+    ]).pipe(
+      map(([pools, currency]) => ({
         pools,
+        currency,
         matchType,
         pointsExpirePeriodType,
         pointsExpireTrigger
-      }))
+      })),
+      tap(data => console.log(data))
     );
   }
 
