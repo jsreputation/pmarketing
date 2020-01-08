@@ -63,6 +63,7 @@ import { TransactionPipe } from './account/transaction-history/transaction.pipe'
 import { TransactionHistoryPipe } from './account/transaction-history/transaction-history.pipe';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PerxTranslateLoader } from './custom-translate.service';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
   translateService.setDefaultLang(environment.defaultLang);
@@ -126,6 +127,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     QRCodeModule,
     LocationModule,
     HttpClientModule,
+    InfiniteScrollModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

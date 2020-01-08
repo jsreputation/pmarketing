@@ -1,9 +1,10 @@
-<mat-form-field class="date-picker">
+<mat-form-field class="date-picker" [appearance]="appearance">
   <input
     class="date-picker-toggle"
     [class.disable]="disabledState"
     matInput
     [min]="min"
+    [max]="max"
     [matDatepickerFilter]="minMaxFilter"
     [matDatepicker]="datePicker"
     [placeholder]="placeholder"
@@ -15,9 +16,9 @@
     [class.disable]="disabledState"
     matSuffix
     [for]="datePicker">
-    <mat-icon class="date-button" matDatepickerToggleIcon>
-      <i class="icon full-with date-icon"></i>
-    </mat-icon>
+<!--    <mat-icon class="date-button" matDatepickerToggleIcon>-->
+<!--&lt;!&ndash;      <i class="icon full-with date-icon"></i>&ndash;&gt;-->
+<!--    </mat-icon>-->
   </mat-datepicker-toggle>
   <mat-datepicker #datePicker></mat-datepicker>
 </mat-form-field>
