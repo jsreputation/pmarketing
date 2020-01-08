@@ -19,9 +19,8 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
   public campaignEngagementType: string;
   public templateID: string;
   public isSpinEngagement: boolean = false;
-  public sumMoreThanError: boolean = false;
-  // public rewardNotAllPatchedError: boolean = true;
   public firstInit: boolean = false;
+  public patchedCheck: boolean = false;
   public form1pt1: FormGroup;
   // Slot 0 for those outcomes not categorized, -1 for those outcomes need to be deleted
   public slots: number[] = [0];
@@ -50,32 +49,20 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
     return this.form1pt1.get('totalFilledAllSlots') as FormGroup;
   }
 
-  public revealForm(): void {
-    console.log(this.form1pt1, 'hey look at me i am the form');
-  }
-
-  private initForm(): void { // data?: ICampaign
+  private initForm(): void {
     this.form1pt1.clearValidators();
-    // if (typeof(data.enableProb) === 'boolean') {
-    //   // if in the campaign store, current enableProb value
-    //   this.form1pt1.get('enableProbability').patchValue(data.enableProb);
-    // }
-    // need some way to prefill the stuff if it alrdy exists
-    this.probAllGroup.setValidators(ClValidators.sumMoreThan());
     this.slots.forEach((slotIndex) => {
-      // should add them from within a form group, the validator on the form group
       this.probAllGroup.addControl(`totalProbability-${slotIndex}`, this.fb.control(0));
       if (this.isSpinEngagement) {
-        // should add them from within a form group, the validator on the form group
         this.fillAllGroup.addControl(`notEmpty-${slotIndex}`, this.fb.control(0));
       }
     });
     if (this.isSpinEngagement) {
-      this.fillAllGroup.setValidators(ClValidators.rewardPatched(this.slots.length));
+      this.probAllGroup.setValidators(ClValidators.sumMoreThan());
+      this.fillAllGroup.setValidators(ClValidators.rewardPatched(this.slots.length)); // slot validator dynamically set
     }
-    // i am counting on the registerStepCondition overwriting the previous 1.1
-    this.stepConditionService.registerStepCondition(1.1, this.form1pt1);
     this.form1pt1.updateValueAndValidity();
+    this.stepConditionService.registerStepCondition(1.1, this.form1pt1);
   }
 
   public ngOnInit(): void {
@@ -83,7 +70,6 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
     this.store.currentCampaign$
       .asObservable()
       .subscribe((data: ICampaign) => {
-        console.log('i am bbeing called bbecause campaign is changing', data);
         const hasTemplate = data && data.template;
         if (hasTemplate) {
           this.slots = this.store.currentCampaign.template.slots || [0];
@@ -97,18 +83,22 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
             this.templateID = data.template.id;
             this.initForm();
           }
-          this.form1pt1.get('enableProbability').valueChanges
-            .subscribe(
-              (probBoolean) => {
-                this.enableProbability = probBoolean;
-                console.log(this.enableProbability, 'i am here, lets see enableProb');
-              }
-            );
+          if (this.store.currentCampaign.enabledProb && !this.patchedCheck) {
+            this.patchedCheck = true;
+            this.form1pt1.get('enableProbability').patchValue(this.store.currentCampaign.enabledProb);
+          }
+          this.form1pt1.updateValueAndValidity();
           if (!this.destroyed) {
             this.cd.detectChanges();
           }
         }
       });
+    this.form1pt1.get('enableProbability').valueChanges
+      .subscribe(
+        (probBoolean) => {
+          this.enableProbability = probBoolean;
+        }
+      );
   }
 
   public ngOnDestroy(): void {

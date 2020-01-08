@@ -1,6 +1,5 @@
 <div class="phonepreview-wrapper">
   <div class="forms-container">
-    <button (click)="revealForm()">Click Me to See current form details</button>
     <!--Rewards-->
     <mat-card class="card">
       <div class="card-header">
@@ -21,10 +20,10 @@
           [title]="('CAMPAIGN.REWARDS_FOR_SLOT' | translate) + ' ' + (slot + 1)">
         </cl-new-campaign-rewards-form-group>
       </ng-container>
-      <mat-error class="error" *ngIf="!form1pt1.pristine && probAllGroup.invalid">
+      <mat-error class="error" *ngIf="probAllGroup.hasError('sumMoreThan')">
         {{'CAMPAIGN.THE_TOTAL_PROBABILITY' | translate}}
       </mat-error>
-      <mat-error class="error" *ngIf="isSpinEngagement && !form1pt1.pristine && fillAllGroup.invalid">
+      <mat-error class="error" *ngIf="isSpinEngagement && fillAllGroup.hasError('unpatchedSlot')">
         Please fill in rewards for all slots
       </mat-error>
     </mat-card>
