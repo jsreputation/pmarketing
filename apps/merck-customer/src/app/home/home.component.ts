@@ -1,29 +1,36 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
-import { IReward, RewardsService, ITabConfig, IProfile, ILoyalty } from '@perx/core';
+import { IReward, RewardsService, IProfile, ILoyalty, ITabConfigExtended } from '@perx/core';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
 import { flatMap, map } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { MatTabChangeEvent } from '@angular/material';
 
-const tabs: ITabConfig[] = [
+const tabs: ITabConfigExtended[] = [
   {
     filterKey: null,
     filterValue: null,
     tabName: 'Diabetes',
-    rewardsList: undefined
+    rewardsType: 'Diabetes',
+    rewardsList: undefined,
+    currentPage: 1
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'Category 2',
-    rewardsList: undefined
+    rewardsType: 'Category 2',
+    rewardsList: undefined,
+    currentPage: 1
   },
   {
     filterKey: null,
     filterValue: null,
     tabName: 'Category 3',
-    rewardsList: undefined
+    rewardsType: 'Category 3',
+    rewardsList: undefined,
+    currentPage: 1
   }
 ];
 
@@ -35,10 +42,11 @@ const tabs: ITabConfig[] = [
 export class HomeComponent implements OnInit, PageAppearence {
   public titleFn: (profile: IProfile) => string;
   public rewards: Observable<IReward[]>;
-  public tabs: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
-  public staticTab: ITabConfig[];
+  public tabs: Subject<ITabConfigExtended[]> = new Subject<ITabConfigExtended[]>();
+  public staticTab: ITabConfigExtended[];
   public subTitleFn: (loyalty: ILoyalty) => string;
-
+  public currentTabIndex: number = 0;
+  private pageSize: number = 10;
   public constructor(
     private rewardsService: RewardsService,
     private router: Router,
@@ -67,7 +75,7 @@ export class HomeComponent implements OnInit, PageAppearence {
   }
 
   private getRewards(): void {
-    this.getTags().pipe(flatMap((tags: ITabConfig[]) => {
+    this.getTags().pipe(flatMap((tags: ITabConfigExtended[]) => {
       this.tabs.next(tags);
       return forkJoin(tags.map((tab) => {
         return this.rewardsService.getAllRewards(undefined, [tab.tabName])
@@ -85,7 +93,7 @@ export class HomeComponent implements OnInit, PageAppearence {
     });
   }
 
-  private getTags(): Observable<ITabConfig[]> {
+  private getTags(): Observable<ITabConfigExtended[]> {
     // todo: service not implemented yet
     // this.rewardsService.getTags();
     this.staticTab = tabs;
@@ -109,5 +117,26 @@ export class HomeComponent implements OnInit, PageAppearence {
       bottomSelectedItem: BarSelectedItem.HOME,
       pageTitle: ''
     };
+  }
+
+  public tabChanged(event: MatTabChangeEvent): void {
+    this.currentTabIndex = event.index;
+  }
+
+  public onScroll(): void {
+    const stTab = this.staticTab[this.currentTabIndex];
+    if (!stTab || !stTab.rewardsList) {
+      return;
+    }
+    if (!stTab.rewardsList) {
+      stTab.rewardsList = of([]);
+    }
+    stTab.currentPage = stTab.currentPage ? ++stTab.currentPage : 1;
+    forkJoin(this.rewardsService.getRewards(
+      stTab.currentPage,
+      this.pageSize,
+      undefined,
+      stTab.tabName !== 'All' ? [stTab.tabName] : undefined), stTab.rewardsList
+    ).subscribe((val) => stTab.rewardsList = of([...val[1], ...val[0]]));
   }
 }

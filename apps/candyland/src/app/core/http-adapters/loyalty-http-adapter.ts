@@ -16,17 +16,15 @@ import {
 import { relationshipsDataToItem } from '@perx/whistler';
 
 export class LoyaltyHttpAdapter {
-
-  public static transformToLoyalties(data: any): { data: ILoyaltyForm[] } {
+  public static transformToLoyalties(data: IJsonApiListPayload<IWLoyaltyAttributes>): { data: ILoyaltyForm[] } {
     const formatData = data.data.map((item) => {
-      let formLoyalty = LoyaltyHttpAdapter.transformToLoyaltyForm(item);
-      formLoyalty = LoyaltyHttpAdapter.setIncludedToLoyaltyForm(data, item, formLoyalty);
-      return formLoyalty;
+      const formLoyalty = LoyaltyHttpAdapter.transformToLoyaltyForm(item);
+      return LoyaltyHttpAdapter.setIncludedToLoyaltyForm(data, item, formLoyalty);
     });
     return { data: formatData };
   }
 
-  public static transformToTableData(data: any): ITableData<ILoyaltyForm> {
+  public static transformToTableData(data: IJsonApiListPayload<IWLoyaltyAttributes>): ITableData<ILoyaltyForm> {
     const formatData = data.data.map((item) => {
       let formLoyalty = LoyaltyHttpAdapter.transformToLoyaltyForm(item);
       formLoyalty = LoyaltyHttpAdapter.setIncludedToLoyaltyForm(data, item, formLoyalty);
@@ -128,14 +126,14 @@ export class LoyaltyHttpAdapter {
   }
 
   public static setIncludedToLoyaltyForm(
-    data: IJsonApiItemPayload<IWLoyaltyAttributes>,
+    data: IJsonApiItemPayload<IWLoyaltyAttributes> | IJsonApiListPayload<IWLoyaltyAttributes>,
     item: IJsonApiItem<IWLoyaltyAttributes>,
     formLoyalty: ILoyaltyForm
   ): ILoyaltyForm {
     if (data.included && data.included.length) {
+      const d: IWRelationshipsDataType | null = relationshipsDataToItem(item.relationships.basic_tier.data);
       for (let i = 0; i <= data.included.length - 1; i++) {
-        const d: IWRelationshipsDataType | null = relationshipsDataToItem(item.relationships.basic_tier.data);
-        if (data && 'id' in d && d.id === data.included[i].id && d.type === data.included[i].type) {
+        if (d && 'id' in d && d.id === data.included[i].id && d.type === data.included[i].type) {
           const detailsAndConversionsFormGroup =
             LoyaltyHttpAdapter.getDetailsAndConversionsFormGroup(data.included[i].attributes, item.attributes);
           formLoyalty = {

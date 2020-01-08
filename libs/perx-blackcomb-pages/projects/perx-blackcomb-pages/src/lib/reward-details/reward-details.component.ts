@@ -73,7 +73,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
           if (reward.displayProperties) {
             this.buttonLabel = reward.displayProperties.CTAButtonTxt || this.buttonLabel;
           }
-          this.maxRewardCost = reward.rewardPrice ? reward.rewardPrice
+          this.maxRewardCost = reward.rewardPrice && reward.rewardPrice.length > 0 ? reward.rewardPrice
             .map((price) => price.points)
             .reduce((acc = 0, points) => acc >= (points || 0) ? acc : points) : 0;
         }),

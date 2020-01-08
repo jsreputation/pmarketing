@@ -2,8 +2,7 @@
   <h1 class="title">{{'AUDIENCE_FEATURE.AUDIENCES' | translate}}</h1>
   <cs-button
     classList="primary cs-btn-mobile"
-    (click)="openEditUserDialog()"
-  >
+    (click)="openEditUserDialog()">
     <i class="cs-btn-mobile-icon icon edit-icon"></i>
     {{'BTN_EDIT' | translate}}
   </cs-button>
@@ -15,28 +14,25 @@
   <!--filters-->
   <cl-table-filters [dataSource]="dataSource" classList="block">
     <ng-container *clTableFilter="'rewardName'; let filter">
-      <cl-search-filter class="search-block" [control]="filter" [placeholder]="'AUDIENCE_FEATURE.SEARCH_VOUCHERS' | translate"></cl-search-filter>
-      <cs-button [classList]="'primary'"
+      <cl-search-filter class="search-block" [control]="filter"
+        [placeholder]="'AUDIENCE_FEATURE.SEARCH_VOUCHERS' | translate"></cl-search-filter>
+      <cs-button classList="primary"
         (click)="openSelectRewardPopup()">
         <span>{{'AUDIENCE_FEATURE.ISSUE_VOUCHER' | translate}}</span>
       </cs-button>
-    </ng-container>
-    <ng-container *clTableFilter="'status'; let filter">
-      <cl-tabs-filter [formControl]="filter" [tabs]="tabsFilterConfig" class="full-block"></cl-tabs-filter>
     </ng-container>
   </cl-table-filters>
 
   <div class="table-card">
     <!--table-->
     <cl-audiences-vouchers-list [dataSource]="dataSource"
-                                (clickChangeExpiryDate)="openChangeExpiryDateDialog($event)">
+      (clickChangeExpiryDate)="openChangeExpiryDateDialog($event)">
     </cl-audiences-vouchers-list>
     <!--/table-->
     <!--paginator-->
     <cl-paginator [dataSource]="dataSource"
-                  [pageSize]="5"
-                  [pageSizeOptions]="[5, 10, 20]"
-    ></cl-paginator>
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
     <!--/paginator-->
   </div>
 </section>
