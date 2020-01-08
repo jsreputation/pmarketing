@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, AbstractControl, FormGroup } from '@angular/forms';
+import { FormArray, AbstractControl, FormGroup, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject, combineLatest, forkJoin, Observable, of, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, forkJoin, Observable, of, Subject, throwError } from 'rxjs';
+import { filter, map, switchMap, tap, takeUntil, distinctUntilChanged, debounceTime, catchError, mergeMap } from 'rxjs/operators';
 import { RewardsService, MerchantsService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { NewRewardFormService } from '../../services/new-reward-form.service';
@@ -14,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
 import { IWTierRewardCostsAttributes, IJsonApiItem } from '@perx/whistler';
+import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'cl-manage-rewards',
@@ -27,18 +28,19 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public reward: IRewardEntityForm;
   public form: FormGroup;
   public config: OptionConfig[];
-  public selectedMerchant: Merchant;
+  public selectedMerchant: Merchant | null;
   public loyalties: ILoyaltyForm[];
   public rewardLoyaltyForm: FormArray;
   public getRewardLoyaltyData$: BehaviorSubject<ILoyaltyFormGroup[] | null> = new BehaviorSubject<ILoyaltyFormGroup[] | null>(null);
-  public tierForSent: any = {
+
+  private tierForSent: any = {
     update: [],
     delete: [],
     create: []
   };
 
-  public get merchantId(): AbstractControl {
-    return this.form.get('rewardInfo.merchantId');
+  private get merchantId(): FormControl {
+    return this.form.get('rewardInfo.merchantId') as FormControl;
   }
 
   constructor(
@@ -53,8 +55,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     private loyaltyService: LoyaltyService,
     private readonly translate: TranslateService,
     private translateDefaultLanguage: TranslateDefaultLanguageService
-  ) {
-  }
+  ) { }
 
   public ngOnInit(): void {
     this.initConfig();
@@ -120,32 +121,29 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   }
 
   public openDialogCreateMerchant(): void {
-    const dialogRef = this.dialog.open(CreateMerchantPopupComponent);
-
-    dialogRef.afterClosed()
+    this.dialog.open(CreateMerchantPopupComponent)
+      .afterClosed()
       .pipe(
         filter(Boolean),
         switchMap((merchant: any) => this.merchantsService.createMerchant(merchant)),
         filter(Boolean),
         takeUntil(this.destroy$),
       )
-      .subscribe((id) => {
-        this.merchantId.patchValue(id);
-      });
+      .subscribe((id) => this.merchantId.setValue(id));
   }
 
   public openDialogSelectMerchant(): void {
-    const dialogRef = this.dialog.open(SelectMerchantPopupComponent);
-
-    dialogRef.afterClosed().subscribe((merchant) => {
-      if (merchant) {
-        this.merchantId.patchValue(merchant.id);
-      }
-    });
+    this.dialog.open<SelectMerchantPopupComponent, void, IMerchant>(SelectMerchantPopupComponent)
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((merchant: IMerchant) => this.merchantId.setValue(Number.parseInt(merchant.id, 10)));
   }
 
   public deleteMerchant(): void {
-    this.merchantId.patchValue(null);
+    this.merchantId.setValue(null);
     this.selectedMerchant = null;
   }
 
@@ -180,10 +178,14 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         debounceTime(500),
         filter(Boolean),
-        switchMap((id: string) => this.merchantsService.getMerchant(id)),
+        tap(() => this.selectedMerchant = null),
+        mergeMap(
+          (id: string) => this.merchantsService.getMerchant(id)
+            .pipe(catchError(err => (oc(err).errors[0].code() === '404') ? of(null) : throwError(err)))
+        ),
         takeUntil(this.destroy$),
       )
-      .subscribe((merchant) => {
+      .subscribe((merchant: Merchant | null) => {
         this.selectedMerchant = merchant;
         this.updateForm();
       });
@@ -255,8 +257,10 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     return this.rewardsService.getRewardTierList(id);
   }
 
-  private createRewardTiers(rewardLoyaltyForm: ILoyaltyFormGroup[], id: string)
-    : Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>[]> {
+  private createRewardTiers(
+    rewardLoyaltyForm: ILoyaltyFormGroup[],
+    id: string
+  ): Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>[]> {
     const result: Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>>[] = [];
     rewardLoyaltyForm.forEach((item: ILoyaltyFormGroup) => {
 
@@ -275,9 +279,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     return forkJoin(result);
   }
 
-  private updateRewardTiers(rewardLoyaltyForm: ILoyaltyFormGroup[])
-    : Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>[]> {
-
+  private updateRewardTiers(rewardLoyaltyForm: ILoyaltyFormGroup[]): Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>[]> {
     rewardLoyaltyForm.forEach((item) => {
       // this need for update basicTier
       this.handlerTierUpdate(item.basicTier);
