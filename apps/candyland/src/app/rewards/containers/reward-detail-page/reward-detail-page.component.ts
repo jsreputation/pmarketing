@@ -3,8 +3,8 @@ import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import Utils from '@cl-helpers/utils';
 
-import { of, combineLatest, Subject } from 'rxjs';
-import { map, switchMap, takeUntil, filter } from 'rxjs/operators';
+import { of, combineLatest, Subject, throwError } from 'rxjs';
+import { map, switchMap, takeUntil, filter, catchError } from 'rxjs/operators';
 
 import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
@@ -12,6 +12,8 @@ import { RewardsService, MerchantsService, MessageService } from '@cl-core/servi
 import { VouchersService } from '@cl-core/services/vouchers.service';
 import { Merchant } from '@cl-core/http-adapters/merchant';
 import { IWVouchersApi } from '@perx/whistler';
+import { oc } from 'ts-optchain';
+import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
 
 interface IRewardDetailData {
   name?: string;
@@ -35,7 +37,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
   public data: IRewardDetailData = {};
   public statusFilterConfig: OptionConfig[];
 
-  public rewardData: any;
+  // public rewardData: any;
 
   @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
 
@@ -116,12 +118,23 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
       .pipe(
         switchMap(id => this.rewardsService.getRewardToForm(id)),
         switchMap(reward => {
-          const merchantQuery = reward.rewardInfo.merchantId !== null ?
-            this.merchantsService.getMerchant(reward.rewardInfo.merchantId) : of(null);
+
+          let merchantQuery = null;
+          if (reward.rewardInfo.merchantId !== null) {
+            merchantQuery = this.merchantsService.getMerchant(reward.rewardInfo.merchantId)
+              .pipe(catchError((err) => {
+                if (oc(err).errors[0].code() === '404') {
+                  return of(null);
+                }
+                return throwError(err);
+              }));
+          } else {
+            merchantQuery = of(null);
+          }
           return combineLatest(of(reward), merchantQuery);
         }),
       ).subscribe(
-        ([reward, merchant]) => {
+        ([reward, merchant]: [IRewardEntityForm, Merchant | null]) => {
           this.data = Utils.nestedObjectAssign(this.data, reward);
           this.data.merchantInfo = merchant;
           this.cd.detectChanges();
