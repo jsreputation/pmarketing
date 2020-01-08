@@ -1,6 +1,6 @@
-/*
-* Public API Surface of whistler
-*/
+/**
+ * Public API Surface of whistler
+ */
 export * from './lib/whistler.module';
 export {
   IJsonApiListPayload,
@@ -50,7 +50,9 @@ export {
 export { IWAttbsObjStamp } from './lib/stamp/stamp';
 export {
   IWCommTemplateAttributes,
-  IWCommEventAttributes
+  IWCommEventAttributes,
+  IWCommMessageAttributes,
+  WMessageChannel
 } from './lib/comm/comm';
 export {
   IWCampaignAttributes,
