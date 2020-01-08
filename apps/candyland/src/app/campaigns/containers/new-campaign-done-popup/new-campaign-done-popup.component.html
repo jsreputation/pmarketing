@@ -4,13 +4,21 @@
   </button>
   <div class="confirm-body">
     <img class="confirm-img" [src]="data?.img || 'assets/images/campaigns/new-campaign-figure.png'">
-    <h2 class="confirm-header" id="dialogTitle-campaignConfirm">{{data?.title || 'Yay! You just created a campaign'}}
+    <h2 class="confirm-header" id="dialogTitle-campaignConfirm">{{data?.title || ('CAMPAIGN.DONE_MESSAGE' | translate)}}
     </h2>
     <p class="confirm-copy">{{data?.subTitle}}</p>
   </div>
   <div class="dialog-actions" [ngSwitch]="data?.type">
-    <cl-copy-link *ngSwitchCase="'weblink'" [link]="data.url"></cl-copy-link>
-    <cl-download-link *ngSwitchCase="'download'" file="Weblink.csv" [link]="data?.url"></cl-download-link>
-    <cs-button *ngSwitchDefault classList="primary" class="copy-link-btn" (click)="closeDialog()">Close</cs-button>
+<!--    <cl-copy-link *ngSwitchCase="'weblink'" [link]="data.url"></cl-copy-link>-->
+    <cs-copy-link *ngSwitchCase="'weblink'" [link]="data.url" (copied)="copyMessage()">
+      {{'COPY' | translate}}
+    </cs-copy-link>
+<!--    <cl-download-link *ngSwitchCase="'download'" file="Weblink.csv" [link]="data?.url"></cl-download-link>-->
+    <cs-download-link *ngSwitchCase="'download'" fileName="Weblink.csv" [link]="data?.url">
+      {{'DOWNLOAD' | translate}}
+    </cs-download-link>
+    <cs-button *ngSwitchDefault classList="primary" class="copy-link-btn" (click)="closeDialog()">
+      {{'CLOSE' | translate}}
+    </cs-button>
   </div>
 </aside>

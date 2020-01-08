@@ -131,6 +131,8 @@
     "AUDIENCE_FILTER": "Filter Audience",
     "AGE": "Age",
     "GENDER": "Gender",
-    "ADD_AGE_RANGE": "+ Add Age Range"
+    "ADD_AGE_RANGE": "+ Add Age Range",
+    "DONE_MESSAGE": "Yay! You just created a campaign",
+    "COPY_MESSAGE": "Link copied to clipboard!"
   }
 }

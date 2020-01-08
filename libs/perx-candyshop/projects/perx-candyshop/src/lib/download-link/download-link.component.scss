@@ -29,6 +29,10 @@
     flex-grow: 0;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   ::ng-deep .mat-form-field-outline-start,
   ::ng-deep .mat-form-field-outline-end {
     border-color: transparent;
