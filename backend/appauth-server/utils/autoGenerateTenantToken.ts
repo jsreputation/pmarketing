@@ -44,6 +44,7 @@ function resolveTenant(accountId: string, rootToken: ICredentials): Promise<void
         if (Array.isArray(tenantURLs) && tenantURLs.length > 0) {
           tenantURLs.forEach((tenantURLData: IJsonApiItem<IWCognitoEndpointAttributes>) => {
             const tenantUrl = getTargetEndPoint(tenantURLData.attributes.url);
+            console.log('tenantUrl: ', tenantUrl);
             // @ts-ignore
             cache.get(tenantUrl, (urlErr: Error, resultURL: IURLTableRowData) => {
               if (!resultURL) {
@@ -70,10 +71,10 @@ async function updateMapping(rootToken: ICredentials): Promise<void> {
 
 const getTargetEndPoint = (url: string) => {
   if (url.startsWith('https://')) {
-    url = url.split('https://')[1];
+    url = url.split('https://')[1].split('/')[0];
   }
   if (url.startsWith('http://')) {
-    url = url.split('http://')[1];
+    url = url.split('http://')[1].split('/')[0];
   }
 
   return url;
