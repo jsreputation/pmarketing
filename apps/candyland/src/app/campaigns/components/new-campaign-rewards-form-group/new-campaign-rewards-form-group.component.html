@@ -1,5 +1,7 @@
 <div class="card-header">
-  <h2 class="card-title"><span *ngIf="slotNumber > 0">{{title | translate}}</span></h2>
+  <h2 class="card-title">
+    <span *ngIf="slotNumber > 0">{{title | translate}}</span>
+  </h2>
   <cl-button classList="tertiary ph-0" (click)="openDialogSelectReward()">{{'CAMPAIGN.ADD_REWARDS' | translate}}</cl-button>
 </div>
 <div class="card-content" *ngIf="outcomes && outcomes.length > 0">
