@@ -1,13 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AudiencesVouchersListComponent } from './audiences-vouchers-list.component';
+
+import { AudiencesCommunicationsListComponent } from './audiences-communications-list.component';
 import { MatTableModule, MatMenuModule, MatIconModule } from '@angular/material';
-import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PipesModule } from '@cl-shared/pipes/pipes.module';
+import { TranslateModule } from '@ngx-translate/core';
 
-describe('AudiencesVouchersListComponent', () => {
-  let component: AudiencesVouchersListComponent;
-  let fixture: ComponentFixture<AudiencesVouchersListComponent>;
+describe('AudiencesCommunicationsListComponent', () => {
+  let component: AudiencesCommunicationsListComponent;
+  let fixture: ComponentFixture<AudiencesCommunicationsListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -21,14 +22,14 @@ describe('AudiencesVouchersListComponent', () => {
       ],
       providers: [],
       declarations: [
-        AudiencesVouchersListComponent,
+        AudiencesCommunicationsListComponent,
       ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AudiencesVouchersListComponent);
+    fixture = TestBed.createComponent(AudiencesCommunicationsListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

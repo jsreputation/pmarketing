@@ -1,7 +1,19 @@
-import { Given, Then, When } from 'cucumber';
+import {
+  Given,
+  Then,
+  When,
+} from 'cucumber';
+import {
+  browser,
+  protractor,
+  ProtractorExpectedConditions,
+} from 'protractor';
 import { expect } from 'chai';
-import { browser, protractor, ProtractorExpectedConditions } from 'protractor';
-import { BlackcombWalletAppPage, ElementApp } from '../pages/candylandApp.po';
+
+import {
+  BlackcombWalletAppPage,
+  ElementApp,
+} from '../pages/candylandApp.po';
 
 const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 

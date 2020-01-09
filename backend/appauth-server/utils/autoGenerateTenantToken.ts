@@ -43,7 +43,7 @@ function resolveTenant(accountId: string, rootToken: ICredentials): Promise<void
         const tenantURLs = tenantEndPointRawData.data.data;
         if (Array.isArray(tenantURLs) && tenantURLs.length > 0) {
           tenantURLs.forEach((tenantURLData: IJsonApiItem<IWCognitoEndpointAttributes>) => {
-            const tenantUrl = tenantURLData.attributes.url;
+            const tenantUrl = getTargetEndPoint(tenantURLData.attributes.url);
             // @ts-ignore
             cache.get(tenantUrl, (urlErr: Error, resultURL: IURLTableRowData) => {
               if (!resultURL) {
@@ -68,12 +68,22 @@ async function updateMapping(rootToken: ICredentials): Promise<void> {
   return Promise.resolve();
 }
 
+const getTargetEndPoint = (url: string) => {
+  if (url.startsWith('https://')) {
+    url = url.split('https://')[1].split('/')[0];
+  }
+  if (url.startsWith('http://')) {
+    url = url.split('http://')[1].split('/')[0];
+  }
+
+  return url;
+};
+
 const getTargetUrl = (url: string) => {
   if (url.includes('localhost')) {
-    url = 'https://generic-blackcomb-dev1.uat.whistler.perxtech.io/';
-  } else {
-    url = 'https://' + url + '/';
+    url = 'generic-blackcomb-dev1.uat.whistler.perxtech.io';
   }
+
   return url;
 };
 

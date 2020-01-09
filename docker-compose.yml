@@ -1,0 +1,27 @@
+---
+version: '3.2'
+services:
+  candyland:
+    build:
+      context: .
+      args:
+        app: 'candyland'
+        apihost: 'http://localhost:3000'
+    ports:
+      - "3000:8000"
+  blackcomb:
+    build:
+      context: .
+      args:
+        app: blackcomb
+        apihost: 'http://localhost:3000'
+        iswhistler: 'true'
+    environment:
+      API_CONFIG_PATH: '/config.json'
+    ports:
+      - "3000:8000"
+    volumes:
+      - "./config.json:/config.json"
+    networks:
+      whistler_some-net:
+        external: true
