@@ -16,8 +16,6 @@ export * from './components/create-merchant-form/create-merchant-form.module';
 export * from './components/create-merchant-form/create-merchant-form.component';
 export * from './components/date-picker/date-picker.module';
 export * from './components/date-time-picker/date-time-picker.module';
-export * from './components/download-button/download-button.module';
-export * from './components/download-link/download-link.module';
 export * from './components/engagement-item/engagement-item.module';
 export * from './components/game-mobile-preview/game-mobile-preview.module';
 export * from './components/game-mobile-preview-stamp/game-mobile-preview-stamp.module';
@@ -57,8 +55,6 @@ export * from './components/cl-color-picker/cl-color-picker.component';
 export * from './components/copy-link/copy-link.component';
 export * from './components/date-picker/date-picker.component';
 export * from './components/date-time-picker/date-time-picker.component';
-export * from './components/download-button/download-button.component';
-export * from './components/download-link/download-link.component';
 export * from './components/engagement-item/engagement-item.component';
 export * from './components/game-mobile-preview/game-mobile-preview.component';
 export * from './components/game-mobile-preview-stamp/game-mobile-preview-stamp.component';
@@ -123,6 +119,3 @@ export * from './questions/question-form-field/shared/services/question-form-fie
 export * from './providers/toggle-control.service';
 
 export * from './table';
-
-export * from './components/custom-line-progress/custom-line-progress.module';
-export * from './components/custom-line-progress/custom-line-progress.component';

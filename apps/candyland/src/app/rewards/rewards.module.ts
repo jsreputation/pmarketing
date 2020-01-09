@@ -42,7 +42,7 @@ import { RewardVouchersPreviewComponent } from './components/reward-vouchers-pre
 import { RewardReplenishPopupComponent } from './containers/reward-replenish-popup/reward-replenish-popup.component';
 import {
   CreateMerchantPopupModule,
-  DatePickerModule, DownloadButtonModule,
+  DatePickerModule,
   ItemListModule, NoDataModule,
   ProgressBarModule, SearchFilterModule, SelectMerchantPopupModule,
   StatusLabelModule, TableFiltersModule,
@@ -58,6 +58,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { VouchersUploadService } from '@cl-core/services/vouchers-upload.service';
 import { IAdvancedUploadFileService } from '@cl-core/services/iadvanced-upload-file.service';
 import {MessageService} from '@cl-core-services';
+import { DownloadButtonModule } from '@perx/candyshop';
 
 @NgModule({
   providers: [

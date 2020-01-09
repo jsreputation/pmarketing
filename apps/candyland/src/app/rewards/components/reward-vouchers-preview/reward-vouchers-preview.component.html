@@ -17,7 +17,7 @@
   </label>
   <p>{{'VOUCHER_CODE_OPTIONS.UNIQUE_CODES:_SYSTEM_GENERATED' | translate}}</p>
   <p class="card-value">{{data?.voucherCode?.uniqueGeneratedCode?.prefix}} ({{data?.voucherCode?.uniqueGeneratedCode?.codeFormat}})</p>
-  <!-- <cl-download-button [file]="data?.voucherCode?.uniqueGeneratedCode?.file">Download voucher codes</cl-download-button> -->
+  <!-- <cs-download-button [link]="data?.voucherCode?.uniqueGeneratedCode?.file">Download voucher codes</cs-download-button> -->
 </ng-container>
 <!--/ Unique codes: System generated-->
 
@@ -39,8 +39,8 @@
   </div>
   <div class="card-content">
     <time class="card-value" *ngIf="data?.voucherValidity?.type === 'period'">
-      <span>{{data?.voucherValidity?.period?.startDate | date: DATE_FORMAT}} 
-        <span *ngIf="data?.voucherValidity?.period?.endDate">- {{data?.voucherValidity?.period?.endDate | date: DATE_FORMAT}}</span> 
+      <span>{{data?.voucherValidity?.period?.startDate | date: DATE_FORMAT}}
+        <span *ngIf="data?.voucherValidity?.period?.endDate">- {{data?.voucherValidity?.period?.endDate | date: DATE_FORMAT}}</span>
       </span>
     </time>
     <p class="card-value" *ngIf="data?.voucherValidity?.type === 'issuance_date'">
