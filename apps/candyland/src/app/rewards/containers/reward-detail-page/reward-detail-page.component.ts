@@ -96,7 +96,6 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   get availableVouchers(): number {
-    console.log(JSON.stringify(this.data.vouchersStatistics));
     if (!this.data.vouchersStatistics) {
       this.data.vouchersStatistics = [];
     }

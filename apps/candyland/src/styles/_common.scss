@@ -139,13 +139,21 @@ h1, h2, h3, h4, h5, p {
   width: 100%;
 }
 
-.control-img_asset {
-  padding-bottom: $vertical-padding;
-  overflow-x: auto;
+//.control-img_asset {
+//  padding-bottom: $vertical-padding;
+//  overflow-x: auto;
+//
+//  .card-fieldset-label {
+//    position: sticky;
+//    left: 0;
+//  }
+//}
 
-  .card-fieldset-label {
-    position: sticky;
-    left: 0;
+.control-img_asset {
+
+  .game-gift-box_field{
+    overflow-x: auto;
+    padding-bottom: $vertical-padding;
   }
 }
 
