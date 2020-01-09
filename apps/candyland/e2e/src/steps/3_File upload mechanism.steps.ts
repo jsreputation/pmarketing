@@ -163,10 +163,8 @@ Then(/^26_background reflects the file upload.$/, async () => {
   const regex = /333333333/;
   // doing a substring matching the first 6 characters of src attr
   const srcUploadFieldSubstr = srcUploadField.substring(srcUploadField.search(regex));
-  console.log(srcUploadFieldSubstr);
   // , srcUploadField.search(regex) + 5);
   const srcElementPreviewSubstr = srcElementPreviewStyle.substring(srcElementPreviewStyle.search(regex));
-  console.log(srcElementPreviewSubstr);
   // ,srcElementPreviewStyle.search(regex) + 5);
   // doing an assertion matching the src substring
   expect(await srcUploadFieldSubstr).to.contain(srcElementPreviewSubstr);
