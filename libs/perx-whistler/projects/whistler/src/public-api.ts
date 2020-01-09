@@ -1,7 +1,6 @@
 /**
  * Public API Surface of whistler
  */
-export * from './lib/whistler.module';
 export {
   IJsonApiListPayload,
   IMeta,
