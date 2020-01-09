@@ -78,6 +78,7 @@ module.exports = {
     //         ]
     //     }
     // ],
+    "prefer-template": "error",
     "no-debugger": "error",
     "no-empty": "off",
     "no-empty-functions": "off",

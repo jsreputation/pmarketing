@@ -23,6 +23,6 @@ export class PinService {
   }
 
   public generatePinCode(rewardId: string): string {
-    return ('0000' + rewardId).slice(-4);
+    return (`0000${rewardId}`).slice(-4);
   }
 }

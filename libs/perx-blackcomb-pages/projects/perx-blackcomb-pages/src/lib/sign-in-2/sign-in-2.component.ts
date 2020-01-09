@@ -55,7 +55,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error('Error' + err);
+        console.error(`Error${err}`);
       });
     }
   }

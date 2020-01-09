@@ -426,7 +426,6 @@ export class ElementApp {
   public static h4(): ElementFinder {
     return element(by.css('h4'));
   }
-
   public static inputText(): ElementFinder {
     return element(by.css('input[type=text]'));
   }

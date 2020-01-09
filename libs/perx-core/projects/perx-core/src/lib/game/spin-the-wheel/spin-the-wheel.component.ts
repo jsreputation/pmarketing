@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, AfterViewInit, SimpleChanges, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
+import { Component, Input, OnChanges, AfterViewInit, SimpleChanges, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { ISlice } from '../game.model';
 import { getImageCors } from '../../utils/getImageCors';
 
@@ -57,9 +57,9 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   private wheelImgLoaded!: HTMLImageElement;
   private angleToBeSpun: number;
 
-  @ViewChild('canvas', {static: true})
+  @ViewChild('canvas', { static: true })
   private canvasEl: ElementRef<HTMLCanvasElement>;
-  @ViewChild('wheel', {static: true})
+  @ViewChild('wheel', { static: true })
   private wheelEl: ElementRef<HTMLDivElement>;
 
   private get canvas(): HTMLCanvasElement { return this.canvasEl.nativeElement; }
@@ -109,16 +109,16 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   private attachListeners(): void {
     this.canvas.style.cursor = 'move';
-    this.canvas.addEventListener('touchstart', this.handleStart.bind(this), {once: true});
-    this.canvas.addEventListener('mousedown', this.handleStart.bind(this), {once: true});
+    this.canvas.addEventListener('touchstart', this.handleStart.bind(this), { once: true });
+    this.canvas.addEventListener('mousedown', this.handleStart.bind(this), { once: true });
 
     // listen while dragging
-    this.canvas.addEventListener('touchend', this.handleEnd.bind(this), {once: true});
-    this.canvas.addEventListener('mouseup', this.handleEnd.bind(this), {once: true});
+    this.canvas.addEventListener('touchend', this.handleEnd.bind(this), { once: true });
+    this.canvas.addEventListener('mouseup', this.handleEnd.bind(this), { once: true });
 
     // listen after dragging is complete
-    this.canvas.addEventListener('touchmove', this.handleMove.bind(this), {once: true});
-    this.canvas.addEventListener('mousemove', this.handleMove.bind(this), {once: true});
+    this.canvas.addEventListener('touchmove', this.handleMove.bind(this), { once: true });
+    this.canvas.addEventListener('mousemove', this.handleMove.bind(this), { once: true });
   }
 
   private init(): void {
@@ -129,7 +129,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
     this.spinTimeout = 0;
     // the latter part after angleToBeSpun makes it spin for x amt more rounds;
-    this.angleToBeSpun = angleNeeded + (Math.floor(Math.random() * 5) + 1)  * 360;
+    this.angleToBeSpun = angleNeeded + (Math.floor(Math.random() * 5) + 1) * 360;
     this.loadImg();
   }
 
@@ -153,12 +153,11 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private createPatterns(arr: ImageForPattern[]): void {
-    const patternImg = arr.filter(({id, image}) => id  && image)
-      .map(item => (
-        {
-          id: item.id,
-          pattern: this.ctx && this.ctx.createPattern(item.image, 'no-repeat')
-        })).filter((imagePattern) => {
+    const patternImg = arr.filter(({ id, image }) => id && image)
+      .map(item => ({
+        id: item.id,
+        pattern: this.ctx && this.ctx.createPattern(item.image, 'no-repeat')
+      })).filter((imagePattern) => {
         if (imagePattern.pattern) {
           return imagePattern;
         }
@@ -177,8 +176,8 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
       this.ctx.translate(-(this.canvas.width / 2), -(this.canvas.width / 2));
       this.ctx
         .drawImage(this.wheelImgLoaded,
-          0 , 0,
-          this.canvas.width , this.canvas.height);
+          0, 0,
+          this.canvas.width, this.canvas.height);
       this.ctx.restore();
     }
 
@@ -197,16 +196,16 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
         const currentPattern: Pattern | undefined = this.patternImg.find(item => item.id === slice.id);
         if (currentPattern) {
           this.ctx.save();
-          this.ctx.rotate(angle  + this.arc / 2);
+          this.ctx.rotate(angle + this.arc / 2);
 
           const stampSize: number = 500 / this.slices.length; // *** dynamic rectangle
-          this.ctx.translate(outsideRadius / 1.8,  - (Math.floor(outsideRadius / 5)) ); // 25 looks okay
+          this.ctx.translate(outsideRadius / 1.8, - (Math.floor(outsideRadius / 5))); // 25 looks okay
 
           this.ctx.globalCompositeOperation = 'source-atop';
 
           this.ctx.fillStyle = currentPattern.pattern;
           this.ctx.beginPath();
-          this.ctx.rect(0, 0 , stampSize, stampSize);
+          this.ctx.rect(0, 0, stampSize, stampSize);
           this.ctx.fill();
           this.ctx.restore();
         }
@@ -343,9 +342,9 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
       // add css to rotate
       let styleString = '';
-      styleString += '-webkit-transform: rotate(' + angle + 'deg);';
-      styleString += '-moz-transform: rotate(' + angle + 'deg);';
-      styleString += 'transform: rotate(' + angle + 'deg);';
+      styleString += `-webkit-transform: rotate(${angle}deg);`;
+      styleString += `-moz-transform: rotate(${angle}deg);`;
+      styleString += `transform: rotate(${angle}deg);`;
 
       this.canvas.setAttribute('style', styleString);
     }
@@ -362,13 +361,13 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     // create css to rotate the wheel back to how it was
     const degree = 0;
     let styleString = '';
-    styleString += '-moz-transform: rotate(' + degree + 'deg);';
+    styleString += `-moz-transform: rotate(${degree}deg);`;
     styleString += '-moz-transform-origin: 50% 50%;';
-    styleString += '-webkit-transform: rotate(' + degree + 'deg);';
+    styleString += `-webkit-transform: rotate(${degree}deg);`;
     styleString += '-webkit-transform-origin: 50% 50%;';
-    styleString += '-o-transform: rotate(' + degree + 'deg);';
+    styleString += `-o-transform: rotate(${degree}deg);`;
     styleString += '-o-transform-origin: 50% 50%;';
-    styleString += '-ms-transform: rotate(' + degree + 'deg);';
+    styleString += `-ms-transform: rotate(${degree}deg);`;
     styleString += '-ms-transform-origin: 50% 50%;';
 
     this.canvas.setAttribute('style', styleString);
