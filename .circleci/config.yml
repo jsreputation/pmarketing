@@ -62,6 +62,7 @@ commands:
                 then
                   APIHOST="https://api-hsbc.perxtech.net"
                 elif [ $APP == 'starhub' ]
+                then
                   APIHOST="https://api-starhub.perxtech.net"
                 else
                   APIHOST="https://api.getperx.net"
