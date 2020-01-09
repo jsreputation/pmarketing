@@ -11,10 +11,12 @@ import {
   IJsonApiItem,
   IJsonApiItemPayload,
   IJsonApiPatchData,
-  IJsonApiPostData
+  IJsonApiPostData,
+  IJsonApiPostItem
 } from '@perx/whistler';
-import { IComm } from '@cl-core/models/comm/schedule';
+import { IComm, ICommMessage } from '@cl-core/models/comm/schedule';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
+import { IWCommMessageAttributes } from '@perx/whistler/dist/whistler/lib/comm/comm';
 
 @Injectable({
   providedIn: 'root'
@@ -81,5 +83,10 @@ export class CommsService {
 
   public deleteCommsTemplate(id: string): Observable<void> {
     return this.commsHttpsService.deleteCommsTemplate(id);
+  }
+
+  public createMessage(data: ICommMessage): Observable<IJsonApiItemPayload<IWCommMessageAttributes>> {
+    const sendData: IJsonApiPostItem<IWCommMessageAttributes> = CommsHttpAdapter.transformFromCommsMessage(data);
+    return this.commsHttpsService.createMessage({ data: sendData });
   }
 }

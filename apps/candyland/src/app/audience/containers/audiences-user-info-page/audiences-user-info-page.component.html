@@ -43,12 +43,11 @@
         <div  class="audience-list-content">
           <div class="table-card">
             <!--table-->
-            <cl-audiences-vouchers-list [dataSource]="dataSourceVouchers"
-              (clickChangeExpiryDate)="openChangeExpiryDateDialog($event)">
+            <cl-audiences-vouchers-list [dataSource]="dataSourceCommunications">
             </cl-audiences-vouchers-list>
             <!--/table-->
             <!--paginator-->
-            <cl-paginator [dataSource]="dataSourceVouchers"
+            <cl-paginator [dataSource]="dataSourceCommunications"
               [pageSize]="5"
               [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
             <!--/paginator-->

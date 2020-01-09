@@ -57,7 +57,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   public userId: string;
   public user: IAudiencesUserForm;
   public dataSourceVouchers: CustomDataSource<any>;
-  public dataSourceCommunication: CustomDataSource<any>;
+  public dataSourceCommunications: CustomDataSource<any>;
 
   private async updateLocalUser(): Promise<IAudiencesUserForm> {
     this.user = await this.audiencesUserService.getUser(this.userId).toPromise();
