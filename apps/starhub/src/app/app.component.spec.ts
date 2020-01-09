@@ -1,4 +1,4 @@
-import { TestBed, async, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture} from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule, MatSnackBar } from '@angular/material';
@@ -15,10 +15,9 @@ import {
   TokenStorage,
   ThemesService
 } from '@perx/core';
-import { of, throwError, BehaviorSubject } from 'rxjs';
+import { of, BehaviorSubject } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Type } from '@angular/core';
 import { CampaignType } from '@perx/core';
 import { CampaignState } from '@perx/core';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
@@ -34,7 +33,6 @@ describe('AppComponent', () => {
   };
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let router: Router;
   const authenticationServiceStub = {
     saveUserAccessToken: () => { },
     getUserAccessToken: () => 'token',
@@ -152,7 +150,6 @@ describe('AppComponent', () => {
     // @ts-ignore
     global.dataLayerSH = {};
     fixture = TestBed.createComponent(AppComponent);
-    router = TestBed.get<Router>(Router as Type<Router>);
     component = fixture.debugElement.componentInstance;
   });
 
@@ -176,52 +173,7 @@ describe('AppComponent', () => {
     //   expect(authSpy).toHaveBeenCalled();
     // });
 
-    it('should call ICampaignService.getCampaigns', fakeAsync(() => {
-      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-      const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
-      component.ngOnInit();
-      tick();
-      expect(campaignsServiceSpy).toHaveBeenCalled();
-    }));
 
-    it('should call ICampaignService.getCampaign and filter CampaignType.give_reward', fakeAsync(() => {
-      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-      const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
-
-      const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-      const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[1]));
-      component.ngOnInit();
-      tick();
-      expect(campaignsServiceSpy).toHaveBeenCalled();
-      expect(campaignServiceSpy).toHaveBeenCalled();
-      // expect(component.rewar).toBe(campaigns[1]);
-    }));
-
-    it('should call ICampaignService.getCampaign and filter CampaignType.game', fakeAsync(() => {
-      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-      const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
-
-      const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-      const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[0]));
-      component.ngOnInit();
-      tick();
-      expect(campaignsServiceSpy).toHaveBeenCalled();
-      expect(campaignServiceSpy).toHaveBeenCalled();
-      // expect(component.selectedCampaign).toBe(campaigns[0]);
-    }));
-
-    it('should redirect to error screen', fakeAsync(() => {
-      const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-      const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(
-        throwError({ code: 500, message: 'server failed' })
-      );
-
-      const routerSpy = spyOn(router, 'navigateByUrl').and.callThrough();
-      component.ngOnInit();
-      tick();
-      expect(campaignsServiceSpy).toHaveBeenCalled();
-      expect(routerSpy).toHaveBeenCalledWith('error');
-    }));
 
     // it('should navigate', () => {
     //   const routerSpy = spyOn(router, 'navigate');
