@@ -31,7 +31,7 @@ export class NewsFeedComponent implements OnInit {
   }
 
   public updateScrollIndex(index: number): void {
-    this.newsBeforeScroll = Array(index);
+    this.newsBeforeScroll = Array(index >= 0 ? index : 0 );
     if (this.items && this.items.length > 0) {
       this.newsAfterScroll = Array(this.items.length - index - 1);
     } else {
