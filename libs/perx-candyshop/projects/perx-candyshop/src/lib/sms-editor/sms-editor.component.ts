@@ -13,8 +13,7 @@ export class SmsEditorComponent {
   @Input() public control: FormControl = new FormControl('');
 
   public selectShortCode(value: string): void {
-    const newValue = this.control.value + ` ${value} `;
+    const newValue = `${this.control.value} ${value} `;
     this.control.patchValue(newValue);
   }
-
 }

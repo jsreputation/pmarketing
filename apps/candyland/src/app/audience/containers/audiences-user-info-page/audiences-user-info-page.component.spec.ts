@@ -21,6 +21,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MessageService } from '@cl-core-services';
+import { AudiencesCommunicationsListComponent } from '../../components/audiences-communications-list/audiences-communications-list.component';
 
 describe('AudiencesUserInfoPageComponent', () => {
   let component: AudiencesUserInfoPageComponent;
@@ -71,6 +72,7 @@ describe('AudiencesUserInfoPageComponent', () => {
         AudiencesUserInfoPageComponent,
         AudiencesUserInfoComponent,
         AudiencesVouchersListComponent,
+        AudiencesCommunicationsListComponent,
         AudiencesUsersListComponent,
         AudiencesListComponent
       ]

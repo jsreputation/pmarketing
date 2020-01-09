@@ -24,6 +24,7 @@ export interface ICampaign {
     labels?: string[];
   };
   template?: any;
+  enabledProb?: boolean;
   outcomes?: ICampaignOutcome[];
   limits?: any;
   displayProperties?: any;
@@ -32,7 +33,6 @@ export interface ICampaign {
 
 export interface ICampaignOutcome {
   outcome?: IOutcome;
-  enableProbability?: boolean;
   reward?: IRewardEntity;
 }
 

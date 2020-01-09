@@ -18,11 +18,11 @@ import {
 } from '@perx/blackcomb-pages';
 import { Location } from '@angular/common';
 import { Router, NavigationEnd, Event } from '@angular/router';
-import {catchError, filter, map, switchMap} from 'rxjs/operators';
+import { catchError, filter, map, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
-import {combineLatest, of} from 'rxjs';
-import {RewardPopupComponent} from './reward-popup/reward-popup.component';
+import { combineLatest, of } from 'rxjs';
+import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 
 @Component({
   selector: 'app-root',
@@ -182,7 +182,7 @@ export class AppComponent implements OnInit {
           // user has already been issued voucher
           this.router.navigate([`/home/vouchers`]);
         }
-        console.error('Something fishy, we should not be here, without any reward or game. ERR print: ' + err.error.message);
+        console.error(`Something fishy, we should not be here, without any reward or game. ERR print: ${err.error.message}`);
       }
     );
   }

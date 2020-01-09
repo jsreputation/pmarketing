@@ -246,7 +246,7 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
             // user has already been issued voucher
             this.router.navigate([`/home/vouchers`]);
           }
-          console.error('Something fishy, we should not be here, without any reward or game. ERR print: ' + err);
+          console.error(`Something fishy, we should not be here, without any reward or game. ERR print: ${err}`);
         }
       );
     }
