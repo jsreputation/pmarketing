@@ -1,7 +1,6 @@
-import { ISchedule } from '../comm/schedule';
-import { InformationCollectionSettingType } from './campaign.enum';
 import { IOutcome } from '../outcome/outcome';
 import { IRewardEntity } from '../reward/reward-entity.interface';
+import { IChannel } from './channel-interface';
 
 export interface ICampaign {
   id?: string;
@@ -11,11 +10,11 @@ export interface ICampaign {
     // type: string;
     select: string;
     // file: string;
+    filters?: IAudienceFilter;
   };
   engagement_type?: string;
   engagement_id?: string;
   campaignInfo?: {
-    informationCollectionSetting?: InformationCollectionSettingType;
     goal: string;
     startDate: Date;
     startTime: string;
@@ -24,22 +23,16 @@ export interface ICampaign {
     disabledEndDate: boolean;
     labels?: string[];
   };
-  channel?: {
-    eventId?: string;
-    templateId?: string;
-    type: string;
-    message?: string;
-    schedule?: ISchedule;
-  };
   template?: any;
+  enabledProb?: boolean;
   outcomes?: ICampaignOutcome[];
   limits?: any;
   displayProperties?: any;
+  notification?: IChannel;
 }
 
 export interface ICampaignOutcome {
   outcome?: IOutcome;
-  enableProbability?: boolean;
   reward?: IRewardEntity;
 }
 
@@ -52,4 +45,16 @@ export interface ICampaignTableData {
   audience: string;
   goal: string;
   engagementType: string;
+}
+
+export interface IDateRange {
+  from: number | null;
+  to: number | null;
+}
+
+export interface IAudienceFilter {
+  agesEnabled: boolean;
+  genderEnabled: boolean;
+  gender: string | null;
+  ages: IDateRange[] | null;
 }

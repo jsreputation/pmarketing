@@ -14,7 +14,7 @@ import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { Role } from '@cl-helpers/role.enum';
 import { IamUser } from '@cl-core/http-adapters/iam-user';
-import { IWIAMUserAttributes } from '@perx/whistler';
+import { IWIAMUserAttributes, IJsonApiItemPayload, IJsonApiPatchData, IJsonApiPostData } from '@perx/whistler';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { IReward } from '@perx/core';
 import { RoleLabelConfig } from '@cl-shared';
@@ -47,7 +47,7 @@ export const settingsFonts: ISimpleValue[] = [{
 @Injectable({
   providedIn: 'root'
 })
-export class SettingsService implements ITableService {
+export class SettingsService implements ITableService<IAMUser> {
   private tenant: Tenants;
 
   constructor(
@@ -138,28 +138,28 @@ export class SettingsService implements ITableService {
       );
   }
 
-  public inviteNewUser(newUser: IAMUser): Observable<IJsonApiPayload<IWIAMUserAttributes>> {
-    const formattedNewUser = SettingsHttpAdapter.transformInviteUser(newUser);
+  public inviteNewUser(newUser: IAMUser): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
+    const formattedNewUser: IJsonApiPostData<IWIAMUserAttributes> = SettingsHttpAdapter.transformInviteUser(newUser);
     return this.settingsHttpService.inviteNewUser(formattedNewUser);
   }
 
-  public patchUser(currentUser: IAMUser, updatedUser: IAMUser): Observable<IJsonApiPayload<IWIAMUserAttributes>> {
+  public patchUser(currentUser: IAMUser, updatedUser: IAMUser): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
     const id = currentUser.id;
     const userChanges = Utils.nestedObjectAssign(currentUser, updatedUser);
-    const formattedUserChanges = SettingsHttpAdapter.transformInviteUser(userChanges);
+    const formattedUserChanges: IJsonApiPatchData<IWIAMUserAttributes> = { ...SettingsHttpAdapter.transformInviteUser(userChanges), id };
     return this.settingsHttpService.patchUser(id, formattedUserChanges);
   }
 
-  public deleteUser(id: string): Observable<IJsonApiPayload<IWIAMUserAttributes>> {
+  public deleteUser(id: string): Observable<void> {
     return this.settingsHttpService.deleteUser(id);
   }
 
   public getAllGroups(): Observable<JsonApiQueryData<Groups>> {
-    return this.dataStore.findAll(Groups, {page: {size: 10, number: 1}});
+    return this.dataStore.findAll(Groups, { page: { size: 10, number: 1 } });
   }
 
   public findTenant(): Observable<Tenants> {
-    return this.dataStore.findAll(Tenants, {page: {size: 10, number: 1}})
+    return this.dataStore.findAll(Tenants, { page: { size: 10, number: 1 } })
       .pipe(
         map(tenants => tenants.getModels()[0]),
         tap(tenant => this.tenant = tenant)
@@ -177,7 +177,7 @@ export class SettingsService implements ITableService {
   }
 
   public getTenantsSettings(): Observable<ITenantsProperties> {
-    return this.dataStore.findAll(Tenants, {page: {size: 10, number: 1}})
+    return this.dataStore.findAll(Tenants, { page: { size: 10, number: 1 } })
       .pipe(
         map(response => SettingsHttpAdapter.getTenantsSettings(response))
       );
@@ -238,13 +238,13 @@ export class SettingsService implements ITableService {
 
   public createCognitoEndpoint(data: ICognitoEndpoint = null): Observable<ICognitoEndpoint> {
     const sendData = SettingsHttpAdapter.transformFromCognitoEndpoint(data);
-    return this.settingsHttpService.createCognitoEndpoint({data: sendData}).pipe(
+    return this.settingsHttpService.createCognitoEndpoint({ data: sendData }).pipe(
       map(response => SettingsHttpAdapter.transformToCognitoEndpoint(response.data))
     );
   }
 
   public findAndCreateCognitoEndpoint(): Observable<ICognitoEndpoint> {
-    const params: HttpParamsOptions = {'page[number]': '1', 'page[size]': '1'};
+    const params: HttpParamsOptions = { 'page[number]': '1', 'page[size]': '1' };
     return this.getCognitoEndpoints(params).pipe(
       switchMap(data => {
         if (data && data.length > 0) {

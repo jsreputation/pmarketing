@@ -10,7 +10,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { AudiencesVouchersService } from '@cl-core/services/audiences-vouchers.service';
 import { AudiencesVouchersListComponent } from '../../components/audiences-vouchers-list/audiences-vouchers-list.component';
-import { TableFiltersModule, SearchFilterModule, ButtonModule, PaginationModule, StatusLabelModule } from '@cl-shared';
+import { TableFiltersModule, SearchFilterModule, ButtonModule, PaginationModule, StatusLabelModule, PipesModule } from '@cl-shared';
 import { TabsFilterModule } from '../../../shared/table/tabs-filter/tabs-filter.module';
 import { AudiencesUsersListComponent } from '../../components/audiences-users-list/audiences-users-list.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
@@ -19,62 +19,63 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import {MessageService} from '@cl-core-services';
+import { MessageService } from '@cl-core-services';
+import { AudiencesCommunicationsListComponent } from '../../components/audiences-communications-list/audiences-communications-list.component';
 
 describe('AudiencesUserInfoPageComponent', () => {
   let component: AudiencesUserInfoPageComponent;
   let fixture: ComponentFixture<AudiencesUserInfoPageComponent>;
+  const messageServiceStub: Partial<MessageService> = {
+    show: () => ({})
+  };
+  const matDialodRefStub = {
+    close: () => { }
+  };
+  const matDialogDataStub = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          MatFormFieldModule,
-          MatInputModule,
-          NoopAnimationsModule,
-          MatTableModule,
-          MatSortModule,
-          PaginationModule,
-          TableFiltersModule,
-          SearchFilterModule,
-          ButtonModule,
-          TabsFilterModule,
-          MatTabsModule,
-          BrowserDynamicTestingModule,
-          FormsModule,
-          ReactiveFormsModule,
-          MatIconModule,
-          MatMenuModule,
-          StatusLabelModule,
-          RouterTestingModule,
-          HttpClientTestingModule,
-          MatDialogModule,
-          BrowserDynamicTestingModule,
-          TranslateModule.forRoot(),
-        ],
-        providers: [
-          {
-            provide: MessageService, useValue: {
-              show: () => ({})
-            }
-          },
-          AudiencesUserService,
-          AudiencesVouchersService,
-          {
-            provide: MatDialogRef, useValue: {
-              close: () => {
-              }
-            }
-          },
-          {provide: MAT_DIALOG_DATA, useValue: {}}
-        ],
-        declarations: [
-          AudiencesUserInfoPageComponent,
-          AudiencesUserInfoComponent,
-          AudiencesVouchersListComponent,
-          AudiencesUsersListComponent,
-          AudiencesListComponent
-        ]
-      })
+      imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        NoopAnimationsModule,
+        MatTableModule,
+        MatSortModule,
+        PaginationModule,
+        TableFiltersModule,
+        SearchFilterModule,
+        ButtonModule,
+        TabsFilterModule,
+        MatTabsModule,
+        BrowserDynamicTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatMenuModule,
+        StatusLabelModule,
+        RouterTestingModule,
+        HttpClientTestingModule,
+        MatDialogModule,
+        BrowserDynamicTestingModule,
+        PipesModule,
+        TranslateModule.forRoot(),
+      ],
+      providers: [
+        { provide: MessageService, useValue: messageServiceStub },
+        AudiencesUserService,
+        AudiencesVouchersService,
+        { provide: MatDialogRef, useValue: matDialodRefStub },
+        { provide: MAT_DIALOG_DATA, useValue: matDialogDataStub }
+      ],
+      declarations: [
+        AudiencesUserInfoPageComponent,
+        AudiencesUserInfoComponent,
+        AudiencesVouchersListComponent,
+        AudiencesCommunicationsListComponent,
+        AudiencesUsersListComponent,
+        AudiencesListComponent
+      ]
+    })
       .compileComponents();
   }));
 

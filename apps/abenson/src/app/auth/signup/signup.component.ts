@@ -10,7 +10,10 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from '@perx/core';
+import {
+  AuthenticationService,
+  ISignUpData,
+} from '@perx/core';
 
 @Component({
   selector: 'app-signup',
@@ -83,13 +86,13 @@ export class SignUpComponent implements OnInit {
     this.errorMessage = undefined;
     const profile = this.signUpForm.value;
     delete profile.acceptTerms;
-    profile.password_confirmation = password;
+    (profile as ISignUpData).passwordConfirmation = password;
 
     this.authService.signup(profile).subscribe(() => {
       this.router.navigate(['sms-validation'], { queryParams: { identifier: profile.phone } });
     },
-      (e) => {
-        console.log(e);
-      });
+    (e) => {
+      console.log(e);
+    });
   }
 }

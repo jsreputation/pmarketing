@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup, FormArray } from '@angular/forms';
 import { AudiencesService } from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
@@ -24,6 +24,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
   public isFirstInit: boolean;
   public triggerLabelsChip: boolean;
   public campaignId: string;
+  public audienceFiltersEnabled: boolean = false;
   protected destroy$: Subject<void> = new Subject();
 
   @Input()
@@ -33,32 +34,16 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     return this.form.get('campaignInfo');
   }
 
-  public get channel(): AbstractControl | null {
-    return this.form.get('channel');
-  }
-
-  public get channelType(): AbstractControl | null {
-    return this.form.get('channel.type');
-  }
-
-  public get message(): AbstractControl | null {
-    return this.form.get('channel.message');
-  }
-
-  public get schedule(): AbstractControl | null {
-    return this.form.get('channel.schedule');
-  }
-
-  public get scheduleSendDate(): AbstractControl | null {
-    return this.form.get('channel.schedule.sendDate');
-  }
-
-  public get recurrence(): AbstractControl | null {
-    return this.form.get('channel.schedule.recurrence');
-  }
-
   public get audience(): AbstractControl | null {
     return this.form.get('audience');
+  }
+
+  public get filters(): FormGroup | null {
+    return this.form.get('audience.filters') as FormGroup;
+  }
+
+  public get ages(): FormArray | null {
+    return this.form.get('audience.filters.ages') as FormArray;
   }
 
   public get pool(): AbstractControl | null {
@@ -130,6 +115,9 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
             const select = data.audience.select;
             data.audience = { ...data.audience, select };
             this.form.patchValue(data);
+            if (data.audience.filters && (data.audience.filters.agesEnabled || data.audience.filters.genderEnabled)) {
+              this.audienceFiltersEnabled = true;
+            }
             if (data.campaignInfo.labels) {
               this.triggerLabelsChip = true;
             }
@@ -151,5 +139,9 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
       .subscribe((data: any) => {
         this.pools = data;
       });
+  }
+
+  public addAge(): void {
+    this.ages.push(this.newCampaignDetailFormService.createAge());
   }
 }

@@ -1,3 +1,4 @@
+import { IAudienceFilter } from './../models/campaign/campaign';
 import * as moment from 'moment';
 import {
   EngagementTypeAPIMapping, EngagementTypeFromAPIMapping
@@ -6,12 +7,15 @@ import {
   IWCampaignAttributes, WEngagementType,
   IWAudiences,
   WInformationCollectionSettingType,
+  IJsonApiItem,
+  IJsonApiListPayload,
+  IJsonApiPatchData,
+  IJsonApiPostData,
 } from '@perx/whistler';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
-import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
-import { WCampaignStatus } from '@perx/whistler';
-import { CampaignStatus } from '@cl-core/models/campaign/campaign-status.enum';
+import { WCampaignStatus, IWAudienceFilter } from '@perx/whistler';
+import { CampaignStatus, InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
 
 export class CampaignsHttpAdapter {
   private static WStat2Stat: { [k in WCampaignStatus]: CampaignStatus } = {
@@ -29,11 +33,31 @@ export class CampaignsHttpAdapter {
     draft: WCampaignStatus.draft
   };
 
-  public static transformCampaignStatus(status: CampaignStatus): IJsonApiItem<Partial<IWCampaignAttributes>> {
+  public static transformCampaignStatus(status: CampaignStatus, id: string): IJsonApiPatchData<IWCampaignAttributes> {
     return {
-      type: 'entities', attributes: {
+      id,
+      type: 'entities',
+      attributes: {
         status: CampaignsHttpAdapter.Stat2WStat[status]
       }
+    };
+  }
+
+  public static transformAudienceFilter(audienceFilter: IAudienceFilter): IWAudienceFilter {
+    const gender = audienceFilter.genderEnabled ? audienceFilter.gender || undefined : undefined;
+    const age = audienceFilter.agesEnabled ? [...audienceFilter.ages] || undefined : undefined;
+    return {
+      gender,
+      age
+    };
+  }
+
+  public static transformAudienceFilterFromAPI(audienceFilter: IWAudienceFilter): IAudienceFilter {
+    return {
+      agesEnabled: !!(audienceFilter.age && audienceFilter.age.length > 0),
+      genderEnabled: !!audienceFilter.gender,
+      gender: audienceFilter.gender || null,
+      ages: audienceFilter.age ? [...audienceFilter.age] : [],
     };
   }
 
@@ -87,27 +111,37 @@ export class CampaignsHttpAdapter {
     const campaignData = data.attributes;
     return {
       audience: {
-        select: '' + data.attributes.pool_id
+        select: '' + data.attributes.pool_id,
+        filters: CampaignsHttpAdapter.transformAudienceFilterFromAPI(data.attributes.audience_segment || {})
       },
       id: data.id,
       name: campaignData.name,
       status: CampaignsHttpAdapter.WStat2Stat[campaignData.status],
       engagement_id: `${campaignData.engagement_id}`,
       engagement_type: EngagementTypeFromAPIMapping[campaignData.engagement_type], campaignInfo: {
-        informationCollectionSetting: CampaignsHttpAdapter.transformInformationCollectionType(
-          campaignData.display_properties.informationCollectionSetting
-        ),
         goal: campaignData.goal,
         startDate: DateTimeParser.stringToDate(campaignData.start_date_time),
         startTime: DateTimeParser.stringToTime(campaignData.start_date_time, 'LT'),
         endDate: DateTimeParser.stringToDate(campaignData.end_date_time),
         endTime: DateTimeParser.stringToTime(campaignData.end_date_time, 'LT'),
         disabledEndDate: !campaignData.end_date_time, labels: campaignData.labels
-      }, template: {}, outcomes: [], displayProperties: { ...campaignData.display_properties }
+      },
+      template: {},
+      outcomes: [],
+      notification: {
+        webNotification: {
+          webLink: campaignData.display_properties.weblink ? true : false,
+          webLinkOptions: CampaignsHttpAdapter.transformInformationCollectionType(
+            campaignData.display_properties.informationCollectionSetting
+          )
+        },
+        sms: false
+      },
+      displayProperties: { ...campaignData.display_properties }
     };
   }
 
-  public static transformFromCampaign(data: ICampaign): IJsonApiItem<IWCampaignAttributes> {
+  public static transformFromCampaign(data: ICampaign): IJsonApiPostData<IWCampaignAttributes> {
     const startTime = data.campaignInfo.startTime ? data.campaignInfo.startTime : moment().format('LT');
     const endTime = data.campaignInfo.endTime ? data.campaignInfo.endTime : moment().format('LT');
     const startDate = data.campaignInfo.startDate
@@ -115,16 +149,24 @@ export class CampaignsHttpAdapter {
       : null;
     const endDate = data.campaignInfo.endDate ? moment(moment(data.campaignInfo.endDate).format('l') + ' ' + endTime).format() : null;
     // When user not select weblink, default the information collection setting back to not required. Double confirm with Nocolas
-    const informationCollectionSetting = data.channel.type === 'weblink'
-      ? data.campaignInfo.informationCollectionSetting
+    const informationCollectionSetting = data.notification.webNotification.webLink
+      ? data.notification.webNotification.webLinkOptions
       : InformationCollectionSettingType.notRequired;
+    const weblink = data.notification.webNotification.webLink ? true : false;
     return {
-      type: 'entities', attributes: {
-        name: data.name, engagement_type: EngagementTypeAPIMapping[data.template.attributes_type] as WEngagementType,
-        engagement_id: data.template.id, status: WCampaignStatus.scheduled, start_date_time: startDate, end_date_time: endDate,
-        goal: data.campaignInfo.goal, pool_id: data.audience.select ? Number.parseInt(data.audience.select, 10) : null,
+      type: 'entities',
+      attributes: {
+        name: data.name,
+        engagement_type: EngagementTypeAPIMapping[data.template.attributes_type] as WEngagementType,
+        engagement_id: data.template.id,
+        status: WCampaignStatus.scheduled,
+        start_date_time: startDate,
+        end_date_time: endDate,
+        goal: data.campaignInfo.goal,
+        pool_id: data.audience.select ? Number.parseInt(data.audience.select, 10) : null,
         labels: data.campaignInfo.labels || [],
-        display_properties: { ...data.displayProperties, informationCollectionSetting }
+        audience_segment: data.audience.select ? CampaignsHttpAdapter.transformAudienceFilter(data.audience.filters) : {},
+        display_properties: { ...data.displayProperties, informationCollectionSetting, weblink }
       }
     };
   }

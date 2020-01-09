@@ -21,6 +21,20 @@ const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 
 // Inputting the url link leads to the webpage
 Given(/^1_I am on the launch page with the url generated$/, async () => {
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(ElementApp.inputArray().first()), 5000);
+  // entering correct account id
+  await ElementApp.inputArray().first().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await ElementApp.inputArray().get(1).sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await ElementApp.inputArray().get(2).sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await ElementApp.inputArray().first().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
+
   await CreateCampaignAppPage.navigateToCreateCampaign();
   // await browser.executeScript('WalkMeAPI.stopFlow()');
   // waiting for the search bar to load
@@ -135,7 +149,7 @@ Given(/^4_I am on the blackcomb page$/, async () => {
   // waiting for the search bar to load
   await browser.wait(ec.elementToBeClickable(ElementApp.inputTextArray().get(1)), 6000);
   // entering search criteria for survey in search bar
-  await ElementApp.inputTextArray().get(1).sendKeys('Survey 1');
+  await ElementApp.inputTextArray().get(1).sendKeys('Survey Template');
   // selecting first element
   await browser.wait(ec.elementToBeClickable(EngagementAppPage.engagementItemArray().first()), 5000);
   // asserting the presence of the card and title of the card
@@ -173,7 +187,7 @@ Given(/^5_I am on the campaign review page$/, async () => {
   // waiting for the search bar to load
   await browser.wait(ec.elementToBeClickable(ElementApp.inputTextArray().get(1)), 6000);
   // entering search criteria for survey in search bar
-  await ElementApp.inputTextArray().get(1).sendKeys('Survey 1');
+  await ElementApp.inputTextArray().get(1).sendKeys('Survey Template');
   // selecting first element
   await browser.wait(ec.elementToBeClickable(EngagementAppPage.engagementItemArray().first()), 5000);
   // asserting the presence of the card and title of the card

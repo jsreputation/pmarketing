@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AccountComponent } from './account/account.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ContentComponent } from './content/content.component';
 import {
   MatProgressBarModule,
@@ -48,7 +49,8 @@ import {
   LoyaltyTransactionsListComponent,
   NewsfeedComponent,
   PinInputComponent,
-  PasswordComponent
+  PasswordComponent,
+  PuzzleListComponent
 } from '@perx/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -132,7 +134,8 @@ const comps: any[] = [
   PinInputComponent,
   RewardsBookingComponent,
   ProfileBarcodeComponent,
-  EditProfileFieldComponent
+  EditProfileFieldComponent,
+  PuzzleListComponent
 ];
 
 @NgModule({
@@ -161,6 +164,7 @@ const comps: any[] = [
     TranslateModule.forChild(),
     MatToolbarModule,
     MatListModule,
+    InfiniteScrollModule
   ],
   exports: [
     ...comps,

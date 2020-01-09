@@ -1,17 +1,27 @@
 <div class="cover"></div>
-<div class="main-container">
-	<div class="loyalty-section">
-      <perx-core-loyalty-summary [titleFn]="titleFn" class="loyalty-item" [subTitleFn]="subTitleFn">
-      </perx-core-loyalty-summary>
-      <button mat-flat-button (click)="myQrClicked()">{{"STATIC_MY_QR" | translate}}</button>
+<div class="main-container" 
+  infiniteScroll 
+  [infiniteScrollDistance]="2" 
+  [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll()" 
+  [scrollWindow]="false">
+  <div class="loyalty-section">
+    <perx-core-loyalty-summary [titleFn]="titleFn" class="loyalty-item" [subTitleFn]="subTitleFn">
+    </perx-core-loyalty-summary>
+    <button mat-flat-button (click)="myQrClicked()">{{"STATIC_MY_QR" | translate}}</button>
   </div>
   <div class="section-heading">
     <h4 translate>STATIC_FEATURED_REWARDS</h4>
   </div>
   <div class="rewards-carousel">
-    <perx-core-rewards-collection [rewardsList]="rewards" (tapped)="rewardClicked($event)"></perx-core-rewards-collection>
+    <perx-core-rewards-collection [rewardsList]="rewards" (tapped)="rewardClicked($event)">
+    </perx-core-rewards-collection>
   </div>
   <div class="rewards-tabbed">
-    <perx-core-rewards-list-tabbed [tabs$]="tabs" (tapped)="rewardClicked($event)"></perx-core-rewards-list-tabbed>
+    <perx-core-rewards-list-tabbed 
+      [tabs$]="tabs" 
+      (tapped)="rewardClicked($event)" 
+      (tabChanged)="tabChanged($event)">
+    </perx-core-rewards-list-tabbed>
   </div>
 </div>

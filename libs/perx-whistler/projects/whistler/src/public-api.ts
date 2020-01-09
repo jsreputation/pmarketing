@@ -1,6 +1,6 @@
-/*
-* Public API Surface of whistler
-*/
+/**
+ * Public API Surface of whistler
+ */
 export * from './lib/whistler.module';
 export {
   IJsonApiListPayload,
@@ -11,7 +11,9 @@ export {
   IJsonApiPatchData,
   IJsonApiPostItem,
   IJsonApiPostData,
-  IWRelationshipsDataType
+  IWRelationshipsDataType,
+  relationshipsDataToArray,
+  relationshipsDataToItem
 } from './lib/jsonapi.payload';
 export { IWRewardDisplayProperties, IWProperties, IWAttbsObjEntity } from './lib/whistler.models';
 
@@ -25,7 +27,8 @@ export {
 } from './lib/voucher/assigneds';
 export {
   IWDocumentAttributes,
-  IWDocumentBlob
+  IWDocumentBlob,
+  WFileUploadStatus
 } from './lib/storage/documents';
 export {
   IWRewardEntityAttributes,
@@ -47,24 +50,25 @@ export {
 export { IWAttbsObjStamp } from './lib/stamp/stamp';
 export {
   IWCommTemplateAttributes,
-  IWCommEventAttributes
+  IWCommEventAttributes,
+  IWCommMessageAttributes,
+  WMessageChannel
 } from './lib/comm/comm';
 export {
   IWCampaignAttributes,
   IWCampaignDisplayProperties,
   WInformationCollectionSettingType,
-  WCampaignStatus
+  WCampaignStatus,
+  IWAudienceFilter
 } from './lib/campaign/campaign';
 
 export { IWNotificationAttributes } from './lib/campaign/notification';
 export {
   IWAudiences,
-  IWPools,
 } from './lib/audiences/audiences.model';
 export {
   IWProfileAttributes,
   IWCustomProperties,
-  IWPoolsAttributes,
   IWCognitoLogin,
   IWUserJWTRequest,
 } from './lib/profile/profile';

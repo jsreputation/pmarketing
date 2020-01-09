@@ -7,4 +7,5 @@ export abstract class IGameService {
     public abstract prePlayConfirm(transactionId: number): Observable<void>;
     public abstract getGamesFromCampaign(campaignId: number): Observable<IGame[]>;
     public abstract get(gameId: number, campaignId?: number): Observable<IGame>;
+    public abstract getActiveGames(): Observable<IGame[]>;
 }

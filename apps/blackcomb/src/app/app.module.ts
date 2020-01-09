@@ -6,14 +6,23 @@ import {
   ErrorHandler,
 } from '@angular/core';
 import {
+  BrowserModule,
+  HammerGestureConfig,
+  HAMMER_GESTURE_CONFIG,
+} from '@angular/platform-browser';
+import {
+  HttpClientModule,
+  HttpClient,
+} from '@angular/common/http';
+import {
   MatDialogModule,
   MatSnackBarModule,
 } from '@angular/material';
-import { BrowserModule } from '@angular/platform-browser';
+import { MatButtonModule } from '@angular/material/button';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
+
 import enGb from '@angular/common/locales/en-GB';
 import localesEnGbExtra from '@angular/common/locales/extra/en-GB';
 import zh from '@angular/common/locales/zh';
@@ -32,7 +41,6 @@ import {
   TranslateLoader,
   TranslateService,
 } from '@ngx-translate/core';
-import * as Sentry from '@sentry/browser';
 
 import {
   PerxCoreModule,
@@ -49,14 +57,29 @@ import {
   LanguageService,
   TokenStorage,
   ConfigService,
-  LocaleIdFactory
+  LocaleIdFactory,
 } from '@perx/core';
 
+import * as Hammer from 'hammerjs';
+import * as Sentry from '@sentry/browser';
+
 import { AppRoutingModule } from './app-routing.module';
-import { SignUpModule } from './sign-up/sign-up.module';
 import { AppComponent } from './app.component';
+import { SignUpModule } from './sign-up/sign-up.module';
+import { RewardPopupComponent } from './reward-popup/reward-popup.component';
+import { ExpireTimerComponent } from './reward-popup/expire-timer/expire-timer.component';
 
 import { environment } from '../environments/environment';
+
+// https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
+// to override default settings
+export class MyHammerConfig extends HammerGestureConfig {
+  public overrides: any =  {
+    swipe: { direction: Hammer.DIRECTION_ALL }, // in order to swipe up and down
+    pinch: { enable: false },
+    rotate: { enable: false }
+  };
+}
 
 Sentry.init({
   dsn: 'https://736f7fc0afd74f4383fdc760f7c81e5a@sentry.io/1827240'
@@ -88,7 +111,11 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
   resolve();
 });
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    RewardPopupComponent,
+    ExpireTimerComponent
+  ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
     BrowserModule,
@@ -107,6 +134,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     PerxCampaignModule,
     HttpClientModule,
     MatDialogModule,
+    MatButtonModule,
     MatSnackBarModule,
     RewardsModule,
     TranslateModule.forRoot({
@@ -127,8 +155,12 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
       deps: [TokenStorage],
       useFactory: LocaleIdFactory
     },
-    { provide: ErrorHandler, useClass: SentryErrorHandler }
+    { provide: ErrorHandler, useClass: SentryErrorHandler },
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig,
+    }
   ],
-  entryComponents: []
+  entryComponents: [RewardPopupComponent]
 })
 export class AppModule { }

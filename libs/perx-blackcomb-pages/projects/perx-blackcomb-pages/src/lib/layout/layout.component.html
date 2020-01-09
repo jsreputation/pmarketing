@@ -1,7 +1,8 @@
 <div class="main-app-container" *ngIf="theme && theme.properties && appConfig">
   <mat-toolbar class="toolbar mat-elevation-z3" *ngIf="showHeader">
     <mat-icon class="backArrow" (click)="leftClick()">{{leftIcon}}</mat-icon>
-    <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
+    <img *ngIf="!headerTitle" class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
+    <span *ngIf="headerTitle" class="header-title">{{headerTitle}}</span>
     <!-- ghost stuff-->
     <span></span>
   </mat-toolbar>
@@ -27,7 +28,7 @@
         <span translate>HISTORY</span>
       </div>
     </a>
-    <a [routerLink]="[ '/account' ]" routerLinkActive="active">
+    <a [routerLink]="[ '/account' ]" routerLinkActive="active" *ngIf="appConfig.showAccountsPage">
       <div class="nav-item">
         <mat-icon aria-hidden="false">account_circle</mat-icon>
         <span translate>ACCOUNT</span>

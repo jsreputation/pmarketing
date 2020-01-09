@@ -8,6 +8,8 @@ import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { oc } from 'ts-optchain';
 import {getEngagementRouterLink} from '@cl-helpers/get-engagement-router-link';
 import {Router} from '@angular/router';
+import { CampaignChannelsLaunchType } from '../../models/campaign-channels-launch-type.enum';
+import {AudiencesService} from '@cl-core-services';
 
 @Component({
   selector: 'cl-new-campaign-review-page',
@@ -17,11 +19,12 @@ import {Router} from '@angular/router';
 })
 export class NewCampaignReviewPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   @Input() public tenantSettings: ITenantsProperties;
-
+  public pools: any[];
   public stampsHasRewards: boolean = false;
-
+  public launchType: typeof CampaignChannelsLaunchType = CampaignChannelsLaunchType;
   constructor(
     public store: CampaignCreationStoreService,
+    public audSvc: AudiencesService,
     public cd: ChangeDetectorRef,
     public router: Router
   ) {
@@ -36,10 +39,14 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
       .subscribe((data: ICampaign) => {
         this.checkStampsHasRewards(data);
       });
+    this.audSvc.getAudiencesList()
+        .subscribe((data) => {
+          this.pools = data;
+        });
   }
 
   public get informationCollectionSettingTitle(): string {
-    const informationCollectionSetting = oc(this.campaign).campaignInfo.informationCollectionSetting();
+    const informationCollectionSetting = oc(this.campaign).notification.webNotification.webLinkOptions();
     if (informationCollectionSetting) {
       return this.config.informationCollectionSettingTypes.find(types => types.value === informationCollectionSetting).title;
     }

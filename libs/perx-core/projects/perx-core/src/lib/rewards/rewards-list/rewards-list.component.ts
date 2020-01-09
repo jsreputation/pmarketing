@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import {
   IPrice,
@@ -15,6 +15,7 @@ import {
 import { Colors } from '../../perx-core.constants';
 import { ITheme } from '../../utils/themes/themes.model';
 import { ThemesService } from '../../utils/themes/themes.service';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-rewards-list',
@@ -26,6 +27,7 @@ export class RewardsListComponent implements OnInit {
   public repeatGhostCount: number = 10;
   public theme: ITheme | null = null;
   public colorPrimary: Colors = Colors.Primary;
+  public ghostTimeOut: boolean;
 
   @Input('rewardsList')
   public rewards$: Observable<IReward[]>;
@@ -68,6 +70,13 @@ export class RewardsListComponent implements OnInit {
         return '0 points'; // is actually 0 or invalid value default
       };
     }
+    of(true).pipe(delay(2000)).subscribe(
+      () => this.ghostTimeOut = true
+    );
+  }
+
+  public isRewardQueryComplete(rewards: IReward[] | null): boolean {
+    return Array.isArray(rewards) || this.ghostTimeOut;
   }
 
   public rewardClickedHandler(reward: IReward): void {

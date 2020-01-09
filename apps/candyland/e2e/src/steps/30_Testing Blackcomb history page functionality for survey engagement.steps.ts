@@ -2,33 +2,28 @@ import {
   Given,
   When,
   Then,
-  Before,
 } from 'cucumber';
 import {
   browser,
   ProtractorExpectedConditions,
   protractor,
 } from 'protractor';
+
 import { expect } from 'chai';
 import {
+  ElementApp,
   BlackcombHistoryAppPage,
   BlackcombWalletAppPage,
-  ElementApp,
 } from '../pages/candylandApp.po';
 
 const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 const Element = ElementApp;
-let BlackcombWalletApp: BlackcombWalletAppPage;
-
-Before( () => {
-  BlackcombWalletApp = new BlackcombWalletAppPage();
-});
 
 Given(/^16_I am at the blackcomb wallet page$/, async () => {
   await BlackcombHistoryAppPage.navigateToBlackcombHistoryApp();
   await browser.sleep(3000);
 
-  await BlackcombWalletApp.navigateBlackcombWalletApp();
+  await BlackcombWalletAppPage.navigateBlackcombWalletApp();
   await browser.sleep(3000);
 });
 
@@ -48,7 +43,7 @@ Given(/^17_I am at the blackcomb wallet page$/, async () => {
   await BlackcombHistoryAppPage.navigateToBlackcombHistoryApp();
   await browser.sleep(3000);
 
-  await BlackcombWalletApp.navigateBlackcombWalletApp();
+  await BlackcombWalletAppPage.navigateBlackcombWalletApp();
   await browser.sleep(3000);
 });
 
@@ -65,7 +60,7 @@ Given(/^18_I am at the blackcomb wallet page$/, async () => {
   await BlackcombHistoryAppPage.navigateToBlackcombHistoryApp();
   await browser.sleep(3000);
 
-  await BlackcombWalletApp.navigateBlackcombWalletApp();
+  await BlackcombWalletAppPage.navigateBlackcombWalletApp();
   await browser.sleep(3000);
 });
 

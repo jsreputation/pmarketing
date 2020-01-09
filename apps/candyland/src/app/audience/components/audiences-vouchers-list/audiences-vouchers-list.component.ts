@@ -13,6 +13,7 @@ export class AudiencesVouchersListComponent implements AfterViewInit {
   @Input() public dataSource: CustomDataSource<any>;
   @Input() public displayedColumns: string[] = [
     'rewardName',
+    'status',
     'merchant',
     'issuedDate',
     'expiryDate',

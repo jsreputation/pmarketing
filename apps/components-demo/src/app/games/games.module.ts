@@ -16,9 +16,11 @@ import {
   MatButtonModule
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
+import { SnakeComponent } from './snake/snake.component';
+import { SweepComponent } from './sweep/sweep.component';
 
 @NgModule({
-  declarations: [ShakeComponent, TapComponent, GamesComponent, ScratchComponent, SpinComponent],
+  declarations: [ShakeComponent, TapComponent, GamesComponent, ScratchComponent, SpinComponent, SnakeComponent, SweepComponent],
   imports: [
     CommonModule,
     GamesRoutingModule,
@@ -28,7 +30,7 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     MatInputModule,
     MatSliderModule,
-    FormsModule
+    FormsModule,
   ]
 })
 export class GamesModule { }

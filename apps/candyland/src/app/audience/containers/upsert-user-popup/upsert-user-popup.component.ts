@@ -14,6 +14,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { oc } from 'ts-optchain';
 
 import { Observable } from 'rxjs';
 
@@ -42,8 +43,27 @@ export class UpsertUserPopupComponent implements OnInit {
     { title: 'Female', value: 'female' }
   ];
 
+  private initAudienceList(): void {
+    if (!(this.data && this.data.formData)) {
+      return;
+    }
+
+    const userPools: string[] = this.data.formData.audienceList;
+    const userAudienceList: any[] = this.pools.filter((pool) => userPools.includes(pool.name));
+    const valuesAudienceList: string[] = userAudienceList.map((audience) => audience.value);
+    this.audienceList.setValue(valuesAudienceList);
+  }
+
   private loadCountries(): void {
     this.countriesList$ = this.surveyService.getDefaultCountryCode();
+  }
+
+  private loadPools(): void {
+    this.audiencesService.getAudiencesList()
+      .subscribe((data) => {
+        this.pools = data;
+        this.initAudienceList();
+      });
   }
 
   constructor(
@@ -51,8 +71,9 @@ export class UpsertUserPopupComponent implements OnInit {
     private fb: FormBuilder,
     private audiencesService: AudiencesService,
     private surveyService: SurveyService,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: { type: Type, formData: IAudiencesUserForm }
+  ) {
+  }
 
   public get title(): string | null {
     switch (this.data.type) {
@@ -98,7 +119,7 @@ export class UpsertUserPopupComponent implements OnInit {
   public ngOnInit(): void {
     this.loadCountries();
     this.initForm();
-    this.getPools();
+    this.loadPools();
   }
 
   public close(): void {
@@ -118,21 +139,21 @@ export class UpsertUserPopupComponent implements OnInit {
     if (this.data.type === Type.Edit && this.data.formData) {
       const { formData } = this.data;
       controlsConfig = {
-        firstName: [formData.first_name, Validators.required],
-        lastName: [formData.last_name, Validators.required],
-        email: [formData.email_address, [
+        firstName: [formData.firstName, Validators.required],
+        lastName: [formData.lastName, Validators.required],
+        email: [formData.email, [
           Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(50),
+          Validators.minLength(3),
+          Validators.maxLength(320),
           ClValidators.email]],
-        phone: [formData.phone_number, Validators.required],
-        gender: [formData.properties ? formData.properties.gender : null, null],
-        birthday: [formData.properties && formData.properties.birthday ? new Date(formData.properties.birthday) : null, null],
-        race: [formData.properties ? formData.properties.race : null, null],
-        country: [formData.properties ? formData.properties.country : null, null],
-        nationality: [formData.properties ? formData.properties.nationality : null, null],
-        city: [formData.properties ? formData.properties.city : null, null],
-        state: [formData.properties ? formData.properties.state : null, null],
+        phone: [formData.phone, Validators.required],
+        gender: [oc(formData).gender()],
+        birthday: [oc(formData).birthday() ? new Date(formData.birthday) : null, null],
+        race: [oc(formData).race(), null],
+        country: [oc(formData).country(), null],
+        nationality: [oc(formData).nationality(), null],
+        city: [oc(formData).city(), null],
+        state: [oc(formData).state(), null],
         audienceList: [],
         file: [null, [
           // Validators.required
@@ -144,8 +165,8 @@ export class UpsertUserPopupComponent implements OnInit {
         lastName: [null, Validators.required],
         email: [null, [
           Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(50),
+          Validators.minLength(3),
+          Validators.maxLength(320),
           ClValidators.email]],
         phone: [null, Validators.required],
         gender: [],
@@ -162,10 +183,5 @@ export class UpsertUserPopupComponent implements OnInit {
       };
     }
     this.form = this.fb.group(controlsConfig);
-  }
-
-  private getPools(): void {
-    this.audiencesService.getAudiencesList()
-      .subscribe((data) => this.pools = data);
   }
 }

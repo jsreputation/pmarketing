@@ -1,64 +1,58 @@
 import {
   Component,
-  OnInit,
-  OnDestroy,
+  OnInit
 } from '@angular/core';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 import {
-  Observable,
-  combineLatest,
-  Subject,
+  Observable, from
 } from 'rxjs';
-import {
-  map,
-  mergeMap,
-} from 'rxjs/operators';
 
 import {
-  ICampaign,
-  ICampaignService,
   IVoucherService,
   VoucherState,
   Voucher,
-  CampaignType,
-  StampService,
   IStampCard,
+  ConfigService,
+  IConfig,
+  StampState,
+  ICampaignService,
+  CampaignType,
+  ICampaign,
+  StampService
 } from '@perx/core';
-import {TranslateService} from '@ngx-translate/core';
-import {DatePipe} from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
+import { tap, mergeMap, map, toArray } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-pages-wallet',
   templateUrl: './wallet.component.html',
   styleUrls: ['./wallet.component.scss']
 })
-export class WalletComponent implements OnInit, OnDestroy {
+export class WalletComponent implements OnInit {
   public stampCards$: Observable<IStampCard[]>;
   public vouchers$: Observable<Voucher[]>;
-  private destroy$: Subject<void> = new Subject();
   public filter: string[];
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => string) | undefined;
 
+  public stampsType: string;
+  public puzzleTextFn: (puzzle: IStampCard) => string;
+  public titleFn: (index?: number) => string;
+  public campaignId: number | null | undefined;
   constructor(
     private router: Router,
     private vouchersService: IVoucherService,
-    private stampService: StampService,
-    private campaignService: ICampaignService,
     private datePipe: DatePipe,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private configService: ConfigService,
+    private campaignService: ICampaignService,
+    private stampService: StampService,
   ) { }
 
   public ngOnInit(): void {
-    this.stampCards$ = this.campaignService.getCampaigns()
-      .pipe(
-        map((campaigns: ICampaign[]) => campaigns.filter(c => c.type === CampaignType.stamp)),
-        mergeMap((res) => combineLatest(
-          ...res.map(c => this.stampService.getCurrentCard(c.id))
-        )),
-        map((stampCard: IStampCard[]) => stampCard.filter(c => c.title && c.title !== ''))
-      );
+    this.getCampaign();
     this.translate.get('MY_WALLET').subscribe(text => this.rewardsHeadline = text);
     this.vouchers$ = this.vouchersService.getAll();
     this.filter = [VoucherState.issued, VoucherState.released];
@@ -75,8 +69,58 @@ export class WalletComponent implements OnInit, OnDestroy {
     this.router.navigate([`/voucher-detail/${voucher.id}`]);
   }
 
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  private getCampaign(): void {
+    this.configService.readAppConfig().pipe(tap((config: IConfig) => {
+      this.stampsType = config.stampsType ? config.stampsType as string : 'puzzle';
+    }), mergeMap(() => this.fetchCampaign())).subscribe((card: IStampCard) => {
+      if (card) {
+        this.campaignId = card.campaignId;
+      }
+    });
+  }
+  private fetchCampaign(): Observable<IStampCard> {
+    return this.campaignService.getCampaigns()
+      .pipe(
+        map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp)),
+        map(campaigns => {
+          if (this.stampsType === 'puzzle') {
+            return campaigns.filter(camp => camp.type === CampaignType.stamp).slice(0, 1);
+          }
+          return campaigns;
+        }),
+        mergeMap(
+          (campaigns: ICampaign[]) => from(campaigns).pipe(
+            mergeMap((campaign: ICampaign) => this.fetchCard(campaign.id)),
+            toArray(),
+            map((stampCards: IStampCard[]) => stampCards.filter(card =>
+              card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === this.stampsType
+            )),
+            tap(() => {
+              if (this.stampsType === 'stamp_card') {
+                this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
+                puzzle.stamps.filter(st => st.state === StampState.issued).length !== 1 ? 'new stamps' : 'new stamp';
+                this.titleFn = (index?: number, totalCount?: number) => index !== undefined ?
+                  `Stamp Card ${this.puzzleIndex(index)} out of ${totalCount}` : '';
+              }
+            }),
+            map((cards: IStampCard[]) => cards[0])
+          )
+        ),
+      );
+  }
+
+  private fetchCard(id: number): Observable<IStampCard> {
+    return this.stampService.getCurrentCard(id);
+  }
+
+  public puzzleIndex(index: number): string {
+    if (index < 0) {
+      return '';
+    }
+    return String(++index);
+  }
+
+  public selected(puzzle: IStampCard): void {
+    this.router.navigate([`/stamp/${puzzle.campaignId}`]);
   }
 }

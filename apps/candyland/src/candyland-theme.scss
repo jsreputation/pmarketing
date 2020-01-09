@@ -1,4 +1,5 @@
 @import '~@angular/material/theming';
+@import "~@perx/candyshop/dist/perx-candyshop/_theming.scss";
 
 @include mat-core();
 
@@ -41,3 +42,4 @@ $candyland-theme-accent: mat-palette($candyland-blue);
 $candyland-theme: mat-light-theme($candyland-theme-primary, $candyland-theme-accent);
 
 @include angular-material-theme($candyland-theme);
+@include cs-stepper-theme($candyland-theme);

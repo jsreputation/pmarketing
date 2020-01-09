@@ -1,17 +1,18 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AvailableNewEngagementService, RoutingStateService, SettingsService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
-import {combineLatest, Observable, of, Subject} from 'rxjs';
-import {tap, map, switchMap, takeUntil } from 'rxjs/operators';
+import { combineLatest, Observable, of, Subject } from 'rxjs';
+import { tap, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { ControlsName } from '../../../../models/controls-name';
 import { ISlice } from '@perx/core';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
-import { IWSpinGameEngagementAttributes } from '@perx/whistler';
-import {SpinService} from '@cl-core/services/spin.service';
+import { IWSpinGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { SpinService } from '@cl-core/services/spin.service';
+import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 
 @Component({
   selector: 'cl-new-spin-page',
@@ -20,7 +21,7 @@ import {SpinService} from '@cl-core/services/spin.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewSpinPageComponent implements OnInit, OnDestroy {
-  @ViewChild(SimpleMobileViewComponent, {static: false}) public simpleMobileViewComponent: SimpleMobileViewComponent;
+  @ViewChild(SimpleMobileViewComponent, { static: false }) public simpleMobileViewComponent: SimpleMobileViewComponent;
 
   private destroy$: Subject<void> = new Subject();
   public MAX_WEDGES: number = 10;
@@ -132,8 +133,8 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
   private createSpinForm(): void {
     this.formSpin = this.fb.group({
       name: ['Spin Wheel Template', [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: ['Spin the Wheel', [
         Validators.required,
@@ -160,7 +161,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     });
   }
   // generates an array of color controls
-  private generateColorCtrls(): ({[key: string]: AbstractControl}) {
+  private generateColorCtrls(): ({ [key: string]: AbstractControl }) {
     const rainbowColors = this.rainbowGenerator(this.MAX_WEDGES);
     return rainbowColors.reduce((obj, item, index) => {
       obj[index] = this.fb.control(item, [Validators.required]);
@@ -169,12 +170,12 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
   }
 
   private rainbowGenerator(length: number): string[] {
-    const size    = length; // change later on
+    const size = length; // change later on
     const rainbow = new Array(size);
 
-    for (let i = 0; i < size; i++) {
-      const red   = sin_to_hex(i, 0 / 3); // 0   deg
-      const blue  = sin_to_hex(i, Math.PI * 2 / 3); // 120 deg
+    for (let i = 1; i <= size; i++) {
+      const red = sin_to_hex(i, 0 / 3); // 0   deg
+      const blue = sin_to_hex(i, Math.PI * 2 / 3); // 120 deg
       const green = sin_to_hex(i, 2 * Math.PI * 2 / 3); // 240 deg
 
       rainbow[i] = '#' + red + green + blue;
@@ -198,8 +199,8 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     Object.keys(this.colorCtrls.controls).forEach(key => {
       this.colorCtrls.get(key).valueChanges.pipe(takeUntil(this.destroy$)).
         subscribe((value) => {
-          if (this.iSlices && (key < this.numberOfWedges.value)) {
-            this.iSlices[key].backgroundColor = value;
+          if (this.iSlices && (key <= this.numberOfWedges.value)) {
+            this.iSlices[+key - 1].backgroundColor = value; // is an array to access the correct one need - 1
           }
           this.iSlices = [...this.iSlices];
         });
@@ -228,13 +229,13 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       .subscribe(
         value => {
           const tempISlices: ISlice[] = [];
-          for (let i = 0; i < value; i++) {
+          for (let i = 1; i <= value; i++) {
             tempISlices.push({
               id: `${i}`,
               backgroundColor: this.colorCtrls.get(`${i}`).value,
             });
           }
-          this.rewardSlotNumbers = this.allRewardSlotNumbers.filter((slot) => +slot.value < value);
+          this.rewardSlotNumbers = this.allRewardSlotNumbers.filter((slot) => +slot.value <= value);
           this.iSlices = tempISlices;
           this.formSpin.get('rewardSlots').patchValue([]);
           this.patchForm('rewardSlots', [this.rewardSlotNumbers[this.rewardSlotNumbers.length - 1].value]);
@@ -244,31 +245,31 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
   private subscribeSpinSlotChanges(): void {
     combineLatest(
       [this.formSpin.get(ControlsName.rewardSlots).valueChanges, this.formSpin.get(ControlsName.rewardIcon).valueChanges]).pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(([slots, _]) => {
-      if (!slots) {
-        return;
-      }
-      this.rewardSlotNumberData = slots.map(
-        (item: number) => ({rewardPosition: item})
-      );
-      const tempISlices = [];
-
-      if (this.iSlices.length) {
-        for (let i = 0; i < this.numberOfWedges.value; i++) {
-          tempISlices.push({
-            id: `${i}`,
-            // label: `${i}win`, // hard code for testing
-            backgroundColor: this.colorCtrls.get(`${i}`).value,
-          });
+        takeUntil(this.destroy$)
+      ).subscribe(([slots, _]) => {
+        if (!slots) {
+          return;
         }
+        this.rewardSlotNumberData = slots.map(
+          (item: number) => ({ rewardPosition: item })
+        );
+        const tempISlices = [];
 
-        this.rewardSlotNumberData.forEach(({rewardPosition}) => {
-          tempISlices[rewardPosition].backgroundImage = ImageControlValue.getImgLink(this.rewardIcon);
-        });
-      }
-      this.iSlices = tempISlices;
-    });
+        if (this.iSlices.length) {
+          for (let i = 1; i <= this.numberOfWedges.value; i++) {
+            const probRewardProp = this.rewardSlotNumberData.map(slotData => slotData.rewardPosition)
+              .includes(i) ?
+              {backgroundImage: ImageControlValue.getImgLink(this.rewardIcon)} : {};
+            tempISlices.push({
+              ...probRewardProp,
+              id: `${i}`,
+              backgroundColor: this.colorCtrls.get(`${i}`).value
+              // label: `${i}win`, // hard code for testing
+            });
+          }
+        }
+        this.iSlices = tempISlices;
+      });
   }
 
   /*** END subscription to form value Changes ***/
@@ -291,7 +292,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
 
   private getDefaultValue(data: ISpinDefaultValue): Partial<ISpinEntityForm> {
     return {
-      rewardSlots: [data.rewardSlots[data.rewardSlots.length - 6].value],
+      rewardSlots: [data.rewardSlots[data.rewardSlots.length - 5].value],
       numberOfWedges: data.numberOfWedges[data.numberOfWedges.length - 6].value, // start with 4 color controls
       wheelPosition: data.wheelPosition[0],
       wheelImg: data.wheelImg[0],
@@ -310,11 +311,11 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((imageUrl: IUploadedFile) => {
           if (this.id) {
-            return this.spinService.updateSpin(this.id, {...this.formSpin.value, image_url: imageUrl.url});
+            return this.spinService.updateSpin(this.id, { ...this.formSpin.value, image_url: imageUrl.url });
           }
-          return this.spinService.createSpin({...this.formSpin.value, image_url: imageUrl.url}).pipe(
+          return this.spinService.createSpin({ ...this.formSpin.value, image_url: imageUrl.url }).pipe(
             tap(
-              (engagement: IJsonApiPayload<IWSpinGameEngagementAttributes>) =>
+              (engagement: IJsonApiItemPayload<IWSpinGameEngagementAttributes>) =>
                 this.availableNewEngagementService.transformAndSetNewEngagement(engagement)
             )
           );

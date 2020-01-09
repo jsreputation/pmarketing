@@ -271,8 +271,8 @@ pre {
           <a class="navbar-brand">Cucumberjs Report</a>
           <div class="project-name visible-md visible-lg">@perx/candyland</div>
           <div class="label-container">
-            <span class="label label-success" title=scenarios>Passed: 13</span>
-            <span class="label label-danger" title=scenarios>Failed: 5</span>
+            <span class="label label-success" title=scenarios>Passed: 4</span>
+            <span class="label label-danger" title=scenarios>Failed: 14</span>
           </div>
         </div>
       </div>
@@ -280,7 +280,7 @@ pre {
 
     <div class="container">
 
-      <div class="generated-on">Mon Dec 02 2019 19:41:36 GMT+0800 (Singapore Standard Time)</div>
+      <div class="generated-on">Wed Dec 11 2019 14:31:32 GMT+0300 (Moscow Standard Time)</div>
 
       <div class="row">
         <div class="chart col-lg-6 col-md-6" id="piechart_features"></div>
@@ -374,9 +374,9 @@ pre {
                         <i class="glyphicon glyphicon-chevron-down"></i>
                         <b>Feature:</b>Initiate creation of engagement campaign
                         <span class="label-container">
-              <span class="label label-success"
-                                                         title="1 Scenarios Passed">1</span>
               
+              <span class="label label-danger"
+                                                         title="1 Scenarios Failed">1</span>
               
               
               
@@ -404,19 +404,20 @@ pre {
                                    href="#collapseScenario_perx_candyland0_0">
                                     <div>
 
-                                        <div style="padding-right: 30px">
+                                        <div style="padding-right: 50px">
                                             <i class="glyphicon glyphicon-chevron-right"></i>
                                             <i class="glyphicon glyphicon-chevron-down"></i>
                                             <b>Scenario:</b>Engagements tab is visible to customer.
                                         </div>
                                         <div>
                             <span class="label-container">
-                              <span class="label label-success"
-                                                               title="3 Steps Passed">3</span>
                               
                               
                               
-                              
+                              <span class="label label-warning"
+                                                                title="2 Steps Skipped">2</span>
+                              <span class="label label-danger"
+                                                               title="1 Steps Failed">1</span>
                               
                             </span>
                                         </div>
@@ -434,36 +435,12 @@ pre {
                                 
                                 
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 <p class="scenario-container">
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-danger" title="Failed"><i
+                                            class="glyphicon glyphicon-remove"></i></span>
                                     
                                     
                                     <span class="text">
@@ -472,7 +449,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               10s 162ms
+                               10s 223ms
                               </span>
                             
                          
@@ -483,6 +460,64 @@ pre {
                       </span>
                                 
                                 
+
+                                    
+                                    <a href="#error0_01"
+                                       data-toggle="collapse" class="toggle">Show Error +</a>
+                                    <div id="error0_01"
+                                         class="collapse">
+                                        <pre class="info show-modal"
+                                             data-toggle="modal"
+                                             style="cursor: pointer"
+                                             data-target="#error-modal-0_01">
+                                            <br> Error: Angular could not be found on the page http://localhost:4200/login. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                    </div>
+
+                                <div class="modal fade" id="error-modal-0_01" tabindex="-1" role="dialog"
+                                     aria-labelledby="stacktraceModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" id="error-modal-title">
+                                                    Error
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5>
+                                                    <pre><br>Error: Angular could not be found on the page http://localhost:4200/login. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                                </h5>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                     
 
@@ -500,8 +535,8 @@ pre {
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
                                     
                                     
                                     <span class="text">
@@ -510,7 +545,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               1ms
+                               0s
                               </span>
                             
                          
@@ -538,8 +573,8 @@ pre {
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
                                     
                                     
                                     <span class="text">
@@ -548,7 +583,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               102ms
+                               0s
                               </span>
                             
                          
@@ -597,9 +632,9 @@ pre {
                         <i class="glyphicon glyphicon-chevron-down"></i>
                         <b>Feature:</b>Testing Initiate creating survey campaign flow.
                         <span class="label-container">
-              <span class="label label-success"
-                                                         title="4 Scenarios Passed">4</span>
               
+              <span class="label label-danger"
+                                                         title="4 Scenarios Failed">4</span>
               
               
               
@@ -627,19 +662,20 @@ pre {
                                    href="#collapseScenario_perx_candyland1_0">
                                     <div>
 
-                                        <div style="padding-right: 30px">
+                                        <div style="padding-right: 50px">
                                             <i class="glyphicon glyphicon-chevron-right"></i>
                                             <i class="glyphicon glyphicon-chevron-down"></i>
                                             <b>Scenario:</b>Ensure that campaign tab is present
                                         </div>
                                         <div>
                             <span class="label-container">
-                              <span class="label label-success"
-                                                               title="3 Steps Passed">3</span>
                               
                               
                               
-                              
+                              <span class="label label-warning"
+                                                                title="2 Steps Skipped">2</span>
+                              <span class="label label-danger"
+                                                               title="1 Steps Failed">1</span>
                               
                             </span>
                                         </div>
@@ -657,36 +693,12 @@ pre {
                                 
                                 
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 <p class="scenario-container">
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-danger" title="Failed"><i
+                                            class="glyphicon glyphicon-remove"></i></span>
                                     
                                     
                                     <span class="text">
@@ -695,7 +707,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               1s 930ms
+                               10s 193ms
                               </span>
                             
                          
@@ -706,6 +718,64 @@ pre {
                       </span>
                                 
                                 
+
+                                    
+                                    <a href="#error1_01"
+                                       data-toggle="collapse" class="toggle">Show Error +</a>
+                                    <div id="error1_01"
+                                         class="collapse">
+                                        <pre class="info show-modal"
+                                             data-toggle="modal"
+                                             style="cursor: pointer"
+                                             data-target="#error-modal-1_01">
+                                            <br> Error: Angular could not be found on the page http://localhost:4200/login. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                    </div>
+
+                                <div class="modal fade" id="error-modal-1_01" tabindex="-1" role="dialog"
+                                     aria-labelledby="stacktraceModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" id="error-modal-title">
+                                                    Error
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5>
+                                                    <pre><br>Error: Angular could not be found on the page http://localhost:4200/login. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                                </h5>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                     
 
@@ -723,8 +793,8 @@ pre {
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
                                     
                                     
                                     <span class="text">
@@ -761,8 +831,8 @@ pre {
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
                                     
                                     
                                     <span class="text">
@@ -771,7 +841,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               827ms
+                               0s
                               </span>
                             
                          
@@ -813,19 +883,20 @@ pre {
                                    href="#collapseScenario_perx_candyland1_1">
                                     <div>
 
-                                        <div style="padding-right: 30px">
+                                        <div style="padding-right: 50px">
                                             <i class="glyphicon glyphicon-chevron-right"></i>
                                             <i class="glyphicon glyphicon-chevron-down"></i>
                                             <b>Scenario:</b>Ensure that clicking on the campaign tab leads to the campaign page
                                         </div>
                                         <div>
                             <span class="label-container">
-                              <span class="label label-success"
-                                                               title="3 Steps Passed">3</span>
                               
                               
                               
-                              
+                              <span class="label label-warning"
+                                                                title="2 Steps Skipped">2</span>
+                              <span class="label label-danger"
+                                                               title="1 Steps Failed">1</span>
                               
                             </span>
                                         </div>
@@ -843,36 +914,12 @@ pre {
                                 
                                 
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 <p class="scenario-container">
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-danger" title="Failed"><i
+                                            class="glyphicon glyphicon-remove"></i></span>
                                     
                                     
                                     <span class="text">
@@ -881,7 +928,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               1s 846ms
+                               10s 189ms
                               </span>
                             
                          
@@ -892,6 +939,64 @@ pre {
                       </span>
                                 
                                 
+
+                                    
+                                    <a href="#error1_11"
+                                       data-toggle="collapse" class="toggle">Show Error +</a>
+                                    <div id="error1_11"
+                                         class="collapse">
+                                        <pre class="info show-modal"
+                                             data-toggle="modal"
+                                             style="cursor: pointer"
+                                             data-target="#error-modal-1_11">
+                                            <br> Error: Angular could not be found on the page http://localhost:4200/dashboard. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                    </div>
+
+                                <div class="modal fade" id="error-modal-1_11" tabindex="-1" role="dialog"
+                                     aria-labelledby="stacktraceModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" id="error-modal-title">
+                                                    Error
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5>
+                                                    <pre><br>Error: Angular could not be found on the page http://localhost:4200/dashboard. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                                </h5>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                     
 
@@ -909,8 +1014,8 @@ pre {
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
                                     
                                     
                                     <span class="text">
@@ -919,7 +1024,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               6s 971ms
+                               0s
                               </span>
                             
                          
@@ -947,8 +1052,8 @@ pre {
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
                                     
                                     
                                     <span class="text">
@@ -957,7 +1062,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               9ms
+                               0s
                               </span>
                             
                          
@@ -999,19 +1104,20 @@ pre {
                                    href="#collapseScenario_perx_candyland1_2">
                                     <div>
 
-                                        <div style="padding-right: 30px">
+                                        <div style="padding-right: 50px">
                                             <i class="glyphicon glyphicon-chevron-right"></i>
                                             <i class="glyphicon glyphicon-chevron-down"></i>
                                             <b>Scenario:</b>Ensure that campaign page have relevant element
                                         </div>
                                         <div>
                             <span class="label-container">
-                              <span class="label label-success"
-                                                               title="3 Steps Passed">3</span>
                               
                               
                               
-                              
+                              <span class="label label-warning"
+                                                                title="2 Steps Skipped">2</span>
+                              <span class="label label-danger"
+                                                               title="1 Steps Failed">1</span>
                               
                             </span>
                                         </div>
@@ -1029,36 +1135,12 @@ pre {
                                 
                                 
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 <p class="scenario-container">
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-danger" title="Failed"><i
+                                            class="glyphicon glyphicon-remove"></i></span>
                                     
                                     
                                     <span class="text">
@@ -1067,7 +1149,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               3s 365ms
+                               10s 176ms
                               </span>
                             
                          
@@ -1078,6 +1160,64 @@ pre {
                       </span>
                                 
                                 
+
+                                    
+                                    <a href="#error1_21"
+                                       data-toggle="collapse" class="toggle">Show Error +</a>
+                                    <div id="error1_21"
+                                         class="collapse">
+                                        <pre class="info show-modal"
+                                             data-toggle="modal"
+                                             style="cursor: pointer"
+                                             data-target="#error-modal-1_21">
+                                            <br> Error: Angular could not be found on the page http://localhost:4200/campaigns. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                    </div>
+
+                                <div class="modal fade" id="error-modal-1_21" tabindex="-1" role="dialog"
+                                     aria-labelledby="stacktraceModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" id="error-modal-title">
+                                                    Error
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5>
+                                                    <pre><br>Error: Angular could not be found on the page http://localhost:4200/campaigns. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                                </h5>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                     
 
@@ -1095,8 +1235,8 @@ pre {
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
                                     
                                     
                                     <span class="text">
@@ -1105,7 +1245,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               1ms
+                               0s
                               </span>
                             
                          
@@ -1133,8 +1273,8 @@ pre {
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
                                     
                                     
                                     <span class="text">
@@ -1143,7 +1283,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               519ms
+                               0s
                               </span>
                             
                          
@@ -1185,19 +1325,20 @@ pre {
                                    href="#collapseScenario_perx_candyland1_3">
                                     <div>
 
-                                        <div style="padding-right: 30px">
+                                        <div style="padding-right: 50px">
                                             <i class="glyphicon glyphicon-chevron-right"></i>
                                             <i class="glyphicon glyphicon-chevron-down"></i>
                                             <b>Scenario:</b>Ensure that create new campaign button is functional
                                         </div>
                                         <div>
                             <span class="label-container">
-                              <span class="label label-success"
-                                                               title="3 Steps Passed">3</span>
                               
                               
                               
-                              
+                              <span class="label label-warning"
+                                                                title="2 Steps Skipped">2</span>
+                              <span class="label label-danger"
+                                                               title="1 Steps Failed">1</span>
                               
                             </span>
                                         </div>
@@ -1215,36 +1356,12 @@ pre {
                                 
                                 
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 <p class="scenario-container">
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-danger" title="Failed"><i
+                                            class="glyphicon glyphicon-remove"></i></span>
                                     
                                     
                                     <span class="text">
@@ -1253,7 +1370,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               6s 104ms
+                               10s 188ms
                               </span>
                             
                          
@@ -1264,6 +1381,64 @@ pre {
                       </span>
                                 
                                 
+
+                                    
+                                    <a href="#error1_31"
+                                       data-toggle="collapse" class="toggle">Show Error +</a>
+                                    <div id="error1_31"
+                                         class="collapse">
+                                        <pre class="info show-modal"
+                                             data-toggle="modal"
+                                             style="cursor: pointer"
+                                             data-target="#error-modal-1_31">
+                                            <br> Error: Angular could not be found on the page http://localhost:4200/campaigns. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                    </div>
+
+                                <div class="modal fade" id="error-modal-1_31" tabindex="-1" role="dialog"
+                                     aria-labelledby="stacktraceModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" id="error-modal-title">
+                                                    Error
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5>
+                                                    <pre><br>Error: Angular could not be found on the page http://localhost:4200/campaigns. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                                </h5>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                     
 
@@ -1281,8 +1456,8 @@ pre {
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
                                     
                                     
                                     <span class="text">
@@ -1291,7 +1466,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               3s 348ms
+                               0s
                               </span>
                             
                          
@@ -1319,8 +1494,8 @@ pre {
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
                                     
                                     
                                     <span class="text">
@@ -1329,7 +1504,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               7ms
+                               0s
                               </span>
                             
                          
@@ -1382,9 +1557,9 @@ pre {
                         <i class="glyphicon glyphicon-chevron-down"></i>
                         <b>Feature:</b>Functionality flow for campaign info form.
                         <span class="label-container">
-              <span class="label label-success"
-                                                         title="1 Scenarios Passed">1</span>
               
+              <span class="label label-danger"
+                                                         title="1 Scenarios Failed">1</span>
               
               
               
@@ -1412,19 +1587,20 @@ pre {
                                    href="#collapseScenario_perx_candyland2_0">
                                     <div>
 
-                                        <div style="padding-right: 30px">
+                                        <div style="padding-right: 50px">
                                             <i class="glyphicon glyphicon-chevron-right"></i>
                                             <i class="glyphicon glyphicon-chevron-down"></i>
                                             <b>Scenario:</b>Verifying that functionality of launch button
                                         </div>
                                         <div>
                             <span class="label-container">
-                              <span class="label label-success"
-                                                               title="3 Steps Passed">3</span>
                               
                               
                               
-                              
+                              <span class="label label-warning"
+                                                                title="2 Steps Skipped">2</span>
+                              <span class="label label-danger"
+                                                               title="1 Steps Failed">1</span>
                               
                             </span>
                                         </div>
@@ -1442,36 +1618,12 @@ pre {
                                 
                                 
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 <p class="scenario-container">
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-danger" title="Failed"><i
+                                            class="glyphicon glyphicon-remove"></i></span>
                                     
                                     
                                     <span class="text">
@@ -1480,7 +1632,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               11s 566ms
+                               10s 183ms
                               </span>
                             
                          
@@ -1491,6 +1643,64 @@ pre {
                       </span>
                                 
                                 
+
+                                    
+                                    <a href="#error2_01"
+                                       data-toggle="collapse" class="toggle">Show Error +</a>
+                                    <div id="error2_01"
+                                         class="collapse">
+                                        <pre class="info show-modal"
+                                             data-toggle="modal"
+                                             style="cursor: pointer"
+                                             data-target="#error-modal-2_01">
+                                            <br> Error: Angular could not be found on the page http://localhost:4200/campaigns/new-campaign. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                    </div>
+
+                                <div class="modal fade" id="error-modal-2_01" tabindex="-1" role="dialog"
+                                     aria-labelledby="stacktraceModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" id="error-modal-title">
+                                                    Error
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5>
+                                                    <pre><br>Error: Angular could not be found on the page http://localhost:4200/campaigns/new-campaign. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                                </h5>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                     
 
@@ -1508,8 +1718,8 @@ pre {
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
                                     
                                     
                                     <span class="text">
@@ -1518,7 +1728,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               3s 220ms
+                               0s
                               </span>
                             
                          
@@ -1546,8 +1756,8 @@ pre {
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
                                     
                                     
                                     <span class="text">
@@ -1556,7 +1766,7 @@ pre {
                             
                           
                               <span class="step-duration">
-                               780ms
+                               0s
                               </span>
                             
                          
@@ -1642,11 +1852,11 @@ pre {
                                         </div>
                                         <div>
                             <span class="label-container">
-                              <span class="label label-success"
-                                                               title="3 Steps Passed">3</span>
                               
                               
                               
+                              <span class="label label-warning"
+                                                                title="3 Steps Skipped">3</span>
                               <span class="label label-danger"
                                                                title="1 Steps Failed">1</span>
                               
@@ -1666,144 +1876,6 @@ pre {
                                 
                                 
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                <p class="scenario-container">
-                                <div class="row steps">
-                                    
-                                    
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
-                                    
-                                    
-                                    <span class="text">
-                        <span class="keyword highlight">Given </span>
-                          <span> 1_I am on engagement page</span>
-                            
-                          
-                              <span class="step-duration">
-                               4s 557ms
-                              </span>
-                            
-                         
-                            
-                          
-                          <!-- Adding data table data-->
-                               
-                      </span>
-                                
-                                
-
-                                    
-
-                                    
-
-                                    
-
-                                    
-                                </div>
-                                </p>
-                                
-                                
-                                
-                                <p class="scenario-container">
-                                <div class="row steps">
-                                    
-                                    
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
-                                    
-                                    
-                                    <span class="text">
-                        <span class="keyword highlight">And </span>
-                          <span> 1_I click on the create new button</span>
-                            
-                          
-                              <span class="step-duration">
-                               155ms
-                              </span>
-                            
-                         
-                            
-                          
-                          <!-- Adding data table data-->
-                               
-                      </span>
-                                
-                                
-
-                                    
-
-                                    
-
-                                    
-
-                                    
-                                </div>
-                                </p>
-                                
-                                
-                                
-                                <p class="scenario-container">
-                                <div class="row steps">
-                                    
-                                    
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
-                                    
-                                    
-                                    <span class="text">
-                        <span class="keyword highlight">When </span>
-                          <span> 1_I Click on the game option.</span>
-                            
-                          
-                              <span class="step-duration">
-                               142ms
-                              </span>
-                            
-                         
-                            
-                          
-                          <!-- Adding data table data-->
-                               
-                      </span>
-                                
-                                
-
-                                    
-
-                                    
-
-                                    
-
-                                    
-                                </div>
-                                </p>
-                                
-                                
-                                
                                 <p class="scenario-container">
                                 <div class="row steps">
                                     
@@ -1813,12 +1885,12 @@ pre {
                                     
                                     
                                     <span class="text">
-                        <span class="keyword highlight">Then </span>
-                          <span> 1_The hit the pinata game should be present.</span>
+                        <span class="keyword highlight">Given </span>
+                          <span> 1_I am on engagement page</span>
                             
                           
                               <span class="step-duration">
-                               27ms
+                               10s 212ms
                               </span>
                             
                          
@@ -1831,50 +1903,27 @@ pre {
                                 
 
                                     
-                                    <a href="#error3_016"
+                                    <a href="#error3_01"
                                        data-toggle="collapse" class="toggle">Show Error +</a>
-                                    <div id="error3_016"
+                                    <div id="error3_01"
                                          class="collapse">
                                         <pre class="info show-modal"
                                              data-toggle="modal"
                                              style="cursor: pointer"
-                                             data-target="#error-modal-3_016">
-                                            <br> TypeError: Invalid locator
-    at Object.check [as checkedLocator] (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/by.js:275:9)
-    at Driver.findElements (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:1041:18)
-    at ptor.waitForAngular.then (/usr/local/lib/node_modules/protractor/built/element.js:159:44)
-    at ManagedPromise.invokeCallback_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1376:14)
-    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)
-    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)
-    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2927:27)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7
-    at process._tickCallback (internal/process/next_tick.js:68:7)
-From: Task: (anonymous)
-    at pollCondition (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2195:19)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2191:7
-    at new ManagedPromise (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1077:7)
-    at ControlFlow.promise (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2505:12)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2190:22
-    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)
-    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)
-    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2974:25)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7
-From: Task: (anonymous wait)
-    at scheduleWait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2188:20)
-    at ControlFlow.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2517:12)
-    at Driver.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:934:29)
-    at run (/usr/local/lib/node_modules/protractor/built/browser.js:59:33)
-    at ProtractorBrowser.to.(anonymous function) [as wait] (/usr/local/lib/node_modules/protractor/built/browser.js:67:16)
-    at Object.(anonymous) (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/20_Testing Initiate creation of pinata game.steps.ts:37:17)
-    at step (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
-    at Object.next (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
-    at /Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:110:75
-    at new Promise ((anonymous))
-    at Object.__awaiter (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:106:16)
-    at World.(anonymous) (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/20_Testing Initiate creation of pinata game.steps.ts:34:56)</pre>
+                                             data-target="#error-modal-3_01">
+                                            <br> Error: Angular could not be found on the page http://localhost:4200/login. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
                                     </div>
 
-                                <div class="modal fade" id="error-modal-3_016" tabindex="-1" role="dialog"
+                                <div class="modal fade" id="error-modal-3_01" tabindex="-1" role="dialog"
                                      aria-labelledby="stacktraceModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -1888,39 +1937,16 @@ From: Task: (anonymous wait)
                                             </div>
                                             <div class="modal-body">
                                                 <h5>
-                                                    <pre><br>TypeError: Invalid locator
-    at Object.check [as checkedLocator] (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/by.js:275:9)
-    at Driver.findElements (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:1041:18)
-    at ptor.waitForAngular.then (/usr/local/lib/node_modules/protractor/built/element.js:159:44)
-    at ManagedPromise.invokeCallback_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1376:14)
-    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)
-    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)
-    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2927:27)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7
-    at process._tickCallback (internal/process/next_tick.js:68:7)
-From: Task: (anonymous)
-    at pollCondition (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2195:19)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2191:7
-    at new ManagedPromise (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1077:7)
-    at ControlFlow.promise (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2505:12)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2190:22
-    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)
-    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)
-    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2974:25)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7
-From: Task: (anonymous wait)
-    at scheduleWait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2188:20)
-    at ControlFlow.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2517:12)
-    at Driver.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:934:29)
-    at run (/usr/local/lib/node_modules/protractor/built/browser.js:59:33)
-    at ProtractorBrowser.to.(anonymous function) [as wait] (/usr/local/lib/node_modules/protractor/built/browser.js:67:16)
-    at Object.(anonymous) (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/20_Testing Initiate creation of pinata game.steps.ts:37:17)
-    at step (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
-    at Object.next (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
-    at /Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:110:75
-    at new Promise ((anonymous))
-    at Object.__awaiter (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:106:16)
-    at World.(anonymous) (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/20_Testing Initiate creation of pinata game.steps.ts:34:56)</pre>
+                                                    <pre><br>Error: Angular could not be found on the page http://localhost:4200/login. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
                                                 </h5>
                                             </div>
 
@@ -1933,6 +1959,120 @@ From: Task: (anonymous wait)
                                     </div>
                                 </div>
 
+
+                                    
+
+                                    
+
+                                    
+
+                                    
+                                </div>
+                                </p>
+                                
+                                
+                                
+                                <p class="scenario-container">
+                                <div class="row steps">
+                                    
+                                    
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
+                                    
+                                    
+                                    <span class="text">
+                        <span class="keyword highlight">And </span>
+                          <span> 1_I click on the create new button</span>
+                            
+                          
+                              <span class="step-duration">
+                               0s
+                              </span>
+                            
+                         
+                            
+                          
+                          <!-- Adding data table data-->
+                               
+                      </span>
+                                
+                                
+
+                                    
+
+                                    
+
+                                    
+
+                                    
+                                </div>
+                                </p>
+                                
+                                
+                                
+                                <p class="scenario-container">
+                                <div class="row steps">
+                                    
+                                    
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
+                                    
+                                    
+                                    <span class="text">
+                        <span class="keyword highlight">When </span>
+                          <span> 1_I Click on the game option.</span>
+                            
+                          
+                              <span class="step-duration">
+                               0s
+                              </span>
+                            
+                         
+                            
+                          
+                          <!-- Adding data table data-->
+                               
+                      </span>
+                                
+                                
+
+                                    
+
+                                    
+
+                                    
+
+                                    
+                                </div>
+                                </p>
+                                
+                                
+                                
+                                <p class="scenario-container">
+                                <div class="row steps">
+                                    
+                                    
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
+                                    
+                                    
+                                    <span class="text">
+                        <span class="keyword highlight">Then </span>
+                          <span> 1_The hit the pinata game should be present.</span>
+                            
+                          
+                              <span class="step-duration">
+                               0s
+                              </span>
+                            
+                         
+                            
+                          
+                          <!-- Adding data table data-->
+                               
+                      </span>
+                                
+                                
 
                                     
 
@@ -1975,9 +2115,9 @@ From: Task: (anonymous wait)
                         <i class="glyphicon glyphicon-chevron-down"></i>
                         <b>Feature:</b>Functionality flow for hit the pinata engagement.
                         <span class="label-container">
-              <span class="label label-success"
-                                                         title="1 Scenarios Passed">1</span>
               
+              <span class="label label-danger"
+                                                         title="1 Scenarios Failed">1</span>
               
               
               
@@ -2005,19 +2145,20 @@ From: Task: (anonymous wait)
                                    href="#collapseScenario_perx_candyland4_0">
                                     <div>
 
-                                        <div style="padding-right: 30px">
+                                        <div style="padding-right: 50px">
                                             <i class="glyphicon glyphicon-chevron-right"></i>
                                             <i class="glyphicon glyphicon-chevron-down"></i>
                                             <b>Scenario:</b>Ensure functionality of headline and and sub-headline message
                                         </div>
                                         <div>
                             <span class="label-container">
-                              <span class="label label-success"
-                                                               title="3 Steps Passed">3</span>
                               
                               
                               
-                              
+                              <span class="label label-warning"
+                                                                title="2 Steps Skipped">2</span>
+                              <span class="label label-danger"
+                                                               title="1 Steps Failed">1</span>
                               
                             </span>
                                         </div>
@@ -2035,36 +2176,12 @@ From: Task: (anonymous wait)
                                 
                                 
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 <p class="scenario-container">
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-danger" title="Failed"><i
+                                            class="glyphicon glyphicon-remove"></i></span>
                                     
                                     
                                     <span class="text">
@@ -2073,7 +2190,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               5s 223ms
+                               10s 202ms
                               </span>
                             
                          
@@ -2084,6 +2201,64 @@ From: Task: (anonymous wait)
                       </span>
                                 
                                 
+
+                                    
+                                    <a href="#error4_01"
+                                       data-toggle="collapse" class="toggle">Show Error +</a>
+                                    <div id="error4_01"
+                                         class="collapse">
+                                        <pre class="info show-modal"
+                                             data-toggle="modal"
+                                             style="cursor: pointer"
+                                             data-target="#error-modal-4_01">
+                                            <br> Error: Angular could not be found on the page http://localhost:4200/login. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                    </div>
+
+                                <div class="modal fade" id="error-modal-4_01" tabindex="-1" role="dialog"
+                                     aria-labelledby="stacktraceModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" id="error-modal-title">
+                                                    Error
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5>
+                                                    <pre><br>Error: Angular could not be found on the page http://localhost:4200/login. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                                </h5>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                     
 
@@ -2101,17 +2276,17 @@ From: Task: (anonymous wait)
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
                                     
                                     
                                     <span class="text">
                         <span class="keyword highlight">When </span>
-                          <span> 4_I input a test string in the headlline and sub headline field.</span>
+                          <span> 4_I input a test string in the headline and sub headline field.</span>
                             
                           
                               <span class="step-duration">
-                               444ms
+                               0s
                               </span>
                             
                          
@@ -2139,8 +2314,8 @@ From: Task: (anonymous wait)
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-warning" title="Skipped"><i
+                                            class="glyphicon glyphicon-minus"></i></span>
                                     
                                     
                                     <span class="text">
@@ -2149,7 +2324,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               77ms
+                               0s
                               </span>
                             
                          
@@ -2199,9 +2374,9 @@ From: Task: (anonymous wait)
                         <b>Feature:</b>29_Testing Blackcomb home page functionality for survey engagement.
                         <span class="label-container">
               <span class="label label-success"
-                                                         title="3 Scenarios Passed">3</span>
+                                                         title="1 Scenarios Passed">1</span>
               <span class="label label-danger"
-                                                         title="4 Scenarios Failed">4</span>
+                                                         title="6 Scenarios Failed">6</span>
               
               
               
@@ -2258,30 +2433,6 @@ From: Task: (anonymous wait)
                                 
                                 
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 <p class="scenario-container">
                                 <div class="row steps">
                                     
@@ -2296,7 +2447,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               9s 851ms
+                               10s 195ms
                               </span>
                             
                          
@@ -2309,36 +2460,27 @@ From: Task: (anonymous wait)
                                 
 
                                     
-                                    <a href="#error5_013"
+                                    <a href="#error5_01"
                                        data-toggle="collapse" class="toggle">Show Error +</a>
-                                    <div id="error5_013"
+                                    <div id="error5_01"
                                          class="collapse">
                                         <pre class="info show-modal"
                                              data-toggle="modal"
                                              style="cursor: pointer"
-                                             data-target="#error-modal-5_013">
-                                            <br> TimeoutError: Wait timed out after 5002ms
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2201:17
-    at ManagedPromise.invokeCallback_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1376:14)
-    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)
-    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)
-    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2927:27)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7
-    at process._tickCallback (internal/process/next_tick.js:68:7)
-From: Task: (anonymous wait)
-    at scheduleWait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2188:20)
-    at ControlFlow.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2517:12)
-    at Driver.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:934:29)
-    at run (/usr/local/lib/node_modules/protractor/built/browser.js:59:33)
-    at ProtractorBrowser.to.(anonymous function) [as wait] (/usr/local/lib/node_modules/protractor/built/browser.js:67:16)
-    at Object.(anonymous) (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:32:17)
-    at step (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
-    at Object.next (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
-    at fulfilled (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:107:62)
+                                             data-target="#error-modal-5_01">
+                                            <br> Error: Angular could not be found on the page http://localhost:4200/login. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
     at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
                                     </div>
 
-                                <div class="modal fade" id="error-modal-5_013" tabindex="-1" role="dialog"
+                                <div class="modal fade" id="error-modal-5_01" tabindex="-1" role="dialog"
                                      aria-labelledby="stacktraceModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -2352,24 +2494,15 @@ From: Task: (anonymous wait)
                                             </div>
                                             <div class="modal-body">
                                                 <h5>
-                                                    <pre><br>TimeoutError: Wait timed out after 5002ms
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2201:17
-    at ManagedPromise.invokeCallback_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1376:14)
-    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)
-    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)
-    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2927:27)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7
-    at process._tickCallback (internal/process/next_tick.js:68:7)
-From: Task: (anonymous wait)
-    at scheduleWait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2188:20)
-    at ControlFlow.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2517:12)
-    at Driver.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:934:29)
-    at run (/usr/local/lib/node_modules/protractor/built/browser.js:59:33)
-    at ProtractorBrowser.to.(anonymous function) [as wait] (/usr/local/lib/node_modules/protractor/built/browser.js:67:16)
-    at Object.(anonymous) (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:32:17)
-    at step (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
-    at Object.next (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
-    at fulfilled (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:107:62)
+                                                    <pre><br>Error: Angular could not be found on the page http://localhost:4200/login. If this is not an Angular application, you may need to turn off waiting for Angular.
+                          Please see 
+                          https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+    at executeAsyncScript_.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:720:27)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
     at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
                                                 </h5>
                                             </div>
@@ -2522,30 +2655,6 @@ From: Task: (anonymous wait)
                                 
                                 
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 <p class="scenario-container">
                                 <div class="row steps">
                                     
@@ -2560,7 +2669,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               1s 480ms
+                               4s 295ms
                               </span>
                             
                          
@@ -2598,7 +2707,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               6s 2ms
+                               11s 818ms
                               </span>
                             
                          
@@ -2611,38 +2720,38 @@ From: Task: (anonymous wait)
                                 
 
                                     
-                                    <a href="#error5_114"
+                                    <a href="#error5_12"
                                        data-toggle="collapse" class="toggle">Show Error +</a>
-                                    <div id="error5_114"
+                                    <div id="error5_12"
                                          class="collapse">
                                         <pre class="info show-modal"
                                              data-toggle="modal"
                                              style="cursor: pointer"
-                                             data-target="#error-modal-5_114">
-                                            <br> TimeoutError: Wait timed out after 6000ms
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2201:17
-    at ManagedPromise.invokeCallback_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1376:14)
-    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)
-    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)
-    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2927:27)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7
+                                             data-target="#error-modal-5_12">
+                                            <br> TimeoutError: Wait timed out after 11815ms
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2201:17
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
     at process._tickCallback (internal/process/next_tick.js:68:7)
 From: Task: (anonymous wait)
-    at scheduleWait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2188:20)
-    at ControlFlow.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2517:12)
-    at Driver.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:934:29)
-    at run (/usr/local/lib/node_modules/protractor/built/browser.js:59:33)
-    at ProtractorBrowser.to.(anonymous function) [as wait] (/usr/local/lib/node_modules/protractor/built/browser.js:67:16)
-    at Object.(anonymous) (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:80:17)
-    at step (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
-    at Object.next (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
-    at /Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:110:75
+    at scheduleWait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2188:20)
+    at ControlFlow.wait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2517:12)
+    at Driver.wait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/webdriver.js:934:29)
+    at run (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:59:33)
+    at ProtractorBrowser.to.(anonymous function) [as wait] (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:67:16)
+    at Object.(anonymous) (/Users/vitaliilysak/Projects/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:96:17)
+    at step (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
+    at Object.next (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:110:75
     at new Promise ((anonymous))
-    at Object.__awaiter (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:106:16)
-    at World.(anonymous) (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:78:39)</pre>
+    at Object.__awaiter (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:106:16)
+    at World.(anonymous) (/Users/vitaliilysak/Projects/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:94:39)</pre>
                                     </div>
 
-                                <div class="modal fade" id="error-modal-5_114" tabindex="-1" role="dialog"
+                                <div class="modal fade" id="error-modal-5_12" tabindex="-1" role="dialog"
                                      aria-labelledby="stacktraceModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -2656,27 +2765,27 @@ From: Task: (anonymous wait)
                                             </div>
                                             <div class="modal-body">
                                                 <h5>
-                                                    <pre><br>TimeoutError: Wait timed out after 6000ms
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2201:17
-    at ManagedPromise.invokeCallback_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1376:14)
-    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)
-    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)
-    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2927:27)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7
+                                                    <pre><br>TimeoutError: Wait timed out after 11815ms
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2201:17
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
     at process._tickCallback (internal/process/next_tick.js:68:7)
 From: Task: (anonymous wait)
-    at scheduleWait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2188:20)
-    at ControlFlow.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2517:12)
-    at Driver.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:934:29)
-    at run (/usr/local/lib/node_modules/protractor/built/browser.js:59:33)
-    at ProtractorBrowser.to.(anonymous function) [as wait] (/usr/local/lib/node_modules/protractor/built/browser.js:67:16)
-    at Object.(anonymous) (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:80:17)
-    at step (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
-    at Object.next (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
-    at /Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:110:75
+    at scheduleWait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2188:20)
+    at ControlFlow.wait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2517:12)
+    at Driver.wait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/webdriver.js:934:29)
+    at run (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:59:33)
+    at ProtractorBrowser.to.(anonymous function) [as wait] (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:67:16)
+    at Object.(anonymous) (/Users/vitaliilysak/Projects/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:96:17)
+    at step (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
+    at Object.next (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:110:75
     at new Promise ((anonymous))
-    at Object.__awaiter (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:106:16)
-    at World.(anonymous) (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:78:39)</pre>
+    at Object.__awaiter (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:106:16)
+    at World.(anonymous) (/Users/vitaliilysak/Projects/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:94:39)</pre>
                                                 </h5>
                                             </div>
 
@@ -2789,30 +2898,6 @@ From: Task: (anonymous wait)
                                 
                                 
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 <p class="scenario-container">
                                 <div class="row steps">
                                     
@@ -2827,7 +2912,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               31s 576ms
+                               31s 951ms
                               </span>
                             
                          
@@ -2840,56 +2925,56 @@ From: Task: (anonymous wait)
                                 
 
                                     
-                                    <a href="#error5_213"
+                                    <a href="#error5_21"
                                        data-toggle="collapse" class="toggle">Show Error +</a>
-                                    <div id="error5_213"
+                                    <div id="error5_21"
                                          class="collapse">
                                         <pre class="info show-modal"
                                              data-toggle="modal"
                                              style="cursor: pointer"
-                                             data-target="#error-modal-5_213">
+                                             data-target="#error-modal-5_21">
                                             <br> ScriptTimeoutError: script timeout
   (Session info: headless chrome=78.0.3904.108)
-  (Driver info: chromedriver=78.0.3904.70 (edb9c9f3de0247fd912a77b7f6cae7447f6d3ad5-refs/branch-heads/3904@{#800}),platform=Mac OS X 10.13.6 x86_64)
-    at Object.checkLegacyResponse (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/error.js:546:15)
-    at parseHttpResponse (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/http.js:509:13)
-    at doSend.then.response (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/http.js:441:30)
+  (Driver info: chromedriver=78.0.3904.70 (edb9c9f3de0247fd912a77b7f6cae7447f6d3ad5-refs/branch-heads/3904@{#800}),platform=Mac OS X 10.15.1 x86_64)
+    at Object.checkLegacyResponse (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/error.js:546:15)
+    at parseHttpResponse (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/http.js:509:13)
+    at doSend.then.response (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/http.js:441:30)
     at process._tickCallback (internal/process/next_tick.js:68:7)
 From: Task: Protractor.waitForAngular() - Locator: By(css selector, div.mat-button-ripple)
-    at Driver.schedule (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:807:17)
-    at ProtractorBrowser.executeAsyncScript_ (/usr/local/lib/node_modules/protractor/built/browser.js:425:28)
-    at angularAppRoot.then (/usr/local/lib/node_modules/protractor/built/browser.js:456:33)
-    at ManagedPromise.invokeCallback_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1376:14)
-    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)
-    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)
-    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2927:27)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at Driver.schedule (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/webdriver.js:807:17)
+    at ProtractorBrowser.executeAsyncScript_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:425:28)
+    at angularAppRoot.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:456:33)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
     at process._tickCallback (internal/process/next_tick.js:68:7)
 From: Task: (anonymous)
-    at pollCondition (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2195:19)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2191:7
-    at new ManagedPromise (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1077:7)
-    at ControlFlow.promise (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2505:12)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2190:22
-    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)
-    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)
-    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2974:25)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at pollCondition (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2195:19)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2191:7
+    at new ManagedPromise (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1077:7)
+    at ControlFlow.promise (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2505:12)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2190:22
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2974:25)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
     at process._tickCallback (internal/process/next_tick.js:68:7)
 From: Task: (anonymous wait)
-    at scheduleWait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2188:20)
-    at ControlFlow.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2517:12)
-    at Driver.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:934:29)
-    at run (/usr/local/lib/node_modules/protractor/built/browser.js:59:33)
-    at ProtractorBrowser.to.(anonymous function) [as wait] (/usr/local/lib/node_modules/protractor/built/browser.js:67:16)
-    at Object.(anonymous) (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:94:17)
-    at step (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
-    at Object.next (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
-    at fulfilled (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:107:62)
+    at scheduleWait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2188:20)
+    at ControlFlow.wait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2517:12)
+    at Driver.wait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/webdriver.js:934:29)
+    at run (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:59:33)
+    at ProtractorBrowser.to.(anonymous function) [as wait] (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:67:16)
+    at Object.(anonymous) (/Users/vitaliilysak/Projects/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:110:17)
+    at step (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
+    at Object.next (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
+    at fulfilled (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:107:62)
     at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
                                     </div>
 
-                                <div class="modal fade" id="error-modal-5_213" tabindex="-1" role="dialog"
+                                <div class="modal fade" id="error-modal-5_21" tabindex="-1" role="dialog"
                                      aria-labelledby="stacktraceModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -2905,42 +2990,42 @@ From: Task: (anonymous wait)
                                                 <h5>
                                                     <pre><br>ScriptTimeoutError: script timeout
   (Session info: headless chrome=78.0.3904.108)
-  (Driver info: chromedriver=78.0.3904.70 (edb9c9f3de0247fd912a77b7f6cae7447f6d3ad5-refs/branch-heads/3904@{#800}),platform=Mac OS X 10.13.6 x86_64)
-    at Object.checkLegacyResponse (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/error.js:546:15)
-    at parseHttpResponse (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/http.js:509:13)
-    at doSend.then.response (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/http.js:441:30)
+  (Driver info: chromedriver=78.0.3904.70 (edb9c9f3de0247fd912a77b7f6cae7447f6d3ad5-refs/branch-heads/3904@{#800}),platform=Mac OS X 10.15.1 x86_64)
+    at Object.checkLegacyResponse (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/error.js:546:15)
+    at parseHttpResponse (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/http.js:509:13)
+    at doSend.then.response (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/http.js:441:30)
     at process._tickCallback (internal/process/next_tick.js:68:7)
 From: Task: Protractor.waitForAngular() - Locator: By(css selector, div.mat-button-ripple)
-    at Driver.schedule (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:807:17)
-    at ProtractorBrowser.executeAsyncScript_ (/usr/local/lib/node_modules/protractor/built/browser.js:425:28)
-    at angularAppRoot.then (/usr/local/lib/node_modules/protractor/built/browser.js:456:33)
-    at ManagedPromise.invokeCallback_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1376:14)
-    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)
-    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)
-    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2927:27)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at Driver.schedule (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/webdriver.js:807:17)
+    at ProtractorBrowser.executeAsyncScript_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:425:28)
+    at angularAppRoot.then (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:456:33)
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
     at process._tickCallback (internal/process/next_tick.js:68:7)
 From: Task: (anonymous)
-    at pollCondition (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2195:19)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2191:7
-    at new ManagedPromise (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:1077:7)
-    at ControlFlow.promise (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2505:12)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2190:22
-    at TaskQueue.execute_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3084:14)
-    at TaskQueue.executeNext_ (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:3067:27)
-    at asyncRun (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2974:25)
-    at /usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at pollCondition (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2195:19)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2191:7
+    at new ManagedPromise (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1077:7)
+    at ControlFlow.promise (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2505:12)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2190:22
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2974:25)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
     at process._tickCallback (internal/process/next_tick.js:68:7)
 From: Task: (anonymous wait)
-    at scheduleWait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2188:20)
-    at ControlFlow.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/promise.js:2517:12)
-    at Driver.wait (/usr/local/lib/node_modules/protractor/node_modules/selenium-webdriver/lib/webdriver.js:934:29)
-    at run (/usr/local/lib/node_modules/protractor/built/browser.js:59:33)
-    at ProtractorBrowser.to.(anonymous function) [as wait] (/usr/local/lib/node_modules/protractor/built/browser.js:67:16)
-    at Object.(anonymous) (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:94:17)
-    at step (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
-    at Object.next (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
-    at fulfilled (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:107:62)
+    at scheduleWait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2188:20)
+    at ControlFlow.wait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2517:12)
+    at Driver.wait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/webdriver.js:934:29)
+    at run (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:59:33)
+    at ProtractorBrowser.to.(anonymous function) [as wait] (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:67:16)
+    at Object.(anonymous) (/Users/vitaliilysak/Projects/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:110:17)
+    at step (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
+    at Object.next (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
+    at fulfilled (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:107:62)
     at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
                                                 </h5>
                                             </div>
@@ -3091,30 +3176,6 @@ From: Task: (anonymous wait)
                                 
                                 
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 <p class="scenario-container">
                                 <div class="row steps">
                                     
@@ -3129,7 +3190,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               13s 635ms
+                               13s 822ms
                               </span>
                             
                          
@@ -3167,7 +3228,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               1s 115ms
+                               1s 93ms
                               </span>
                             
                          
@@ -3205,7 +3266,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               9s 63ms
+                               1s 681ms
                               </span>
                             
                          
@@ -3278,30 +3339,6 @@ From: Task: (anonymous wait)
                                 
                                 
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 <p class="scenario-container">
                                 <div class="row steps">
                                     
@@ -3316,7 +3353,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               1s 48ms
+                               1s 474ms
                               </span>
                             
                          
@@ -3354,7 +3391,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               10s 781ms
+                               7s 46ms
                               </span>
                             
                          
@@ -3392,7 +3429,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               113ms
+                               6s 8ms
                               </span>
                             
                          
@@ -3405,23 +3442,38 @@ From: Task: (anonymous wait)
                                 
 
                                     
-                                    <a href="#error5_415"
+                                    <a href="#error5_43"
                                        data-toggle="collapse" class="toggle">Show Error +</a>
-                                    <div id="error5_415"
+                                    <div id="error5_43"
                                          class="collapse">
                                         <pre class="info show-modal"
                                              data-toggle="modal"
                                              style="cursor: pointer"
-                                             data-target="#error-modal-5_415">
-                                            <br> AssertionError: expected 'disintermediate next-generation users' to include 'e-enable sticky architectures'
-    at Object.(anonymous) (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:153:46)
-    at step (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
-    at Object.next (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
-    at fulfilled (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:107:62)
-    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                             data-target="#error-modal-5_43">
+                                            <br> TimeoutError: Wait timed out after 6006ms
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2201:17
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+From: Task: (anonymous wait)
+    at scheduleWait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2188:20)
+    at ControlFlow.wait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2517:12)
+    at Driver.wait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/webdriver.js:934:29)
+    at run (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:59:33)
+    at ProtractorBrowser.to.(anonymous function) [as wait] (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:67:16)
+    at Object.(anonymous) (/Users/vitaliilysak/Projects/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:166:17)
+    at step (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
+    at Object.next (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:110:75
+    at new Promise ((anonymous))
+    at Object.__awaiter (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:106:16)
+    at World.(anonymous) (/Users/vitaliilysak/Projects/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:164:68)</pre>
                                     </div>
 
-                                <div class="modal fade" id="error-modal-5_415" tabindex="-1" role="dialog"
+                                <div class="modal fade" id="error-modal-5_43" tabindex="-1" role="dialog"
                                      aria-labelledby="stacktraceModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -3435,12 +3487,27 @@ From: Task: (anonymous wait)
                                             </div>
                                             <div class="modal-body">
                                                 <h5>
-                                                    <pre><br>AssertionError: expected 'disintermediate next-generation users' to include 'e-enable sticky architectures'
-    at Object.(anonymous) (/Users/perx/Documents/GitHub/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:153:46)
-    at step (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
-    at Object.next (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
-    at fulfilled (/Users/perx/Documents/GitHub/microsite-apps-ng/node_modules/tslib/tslib.js:107:62)
-    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                                    <pre><br>TimeoutError: Wait timed out after 6006ms
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2201:17
+    at ManagedPromise.invokeCallback_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:1376:14)
+    at TaskQueue.execute_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3084:14)
+    at TaskQueue.executeNext_ (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:3067:27)
+    at asyncRun (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2927:27)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:668:7
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+From: Task: (anonymous wait)
+    at scheduleWait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2188:20)
+    at ControlFlow.wait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/promise.js:2517:12)
+    at Driver.wait (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/selenium-webdriver/lib/webdriver.js:934:29)
+    at run (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:59:33)
+    at ProtractorBrowser.to.(anonymous function) [as wait] (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/protractor/built/browser.js:67:16)
+    at Object.(anonymous) (/Users/vitaliilysak/Projects/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:166:17)
+    at step (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
+    at Object.next (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
+    at /Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:110:75
+    at new Promise ((anonymous))
+    at Object.__awaiter (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:106:16)
+    at World.(anonymous) (/Users/vitaliilysak/Projects/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:164:68)</pre>
                                                 </h5>
                                             </div>
 
@@ -3484,7 +3551,7 @@ From: Task: (anonymous wait)
                                    href="#collapseScenario_perx_candyland5_5">
                                     <div>
 
-                                        <div style="padding-right: 30px">
+                                        <div style="padding-right: 50px">
                                             <i class="glyphicon glyphicon-chevron-right"></i>
                                             <i class="glyphicon glyphicon-chevron-down"></i>
                                             <b>Scenario:</b>Ensuring functionality of feature rewards card
@@ -3492,11 +3559,12 @@ From: Task: (anonymous wait)
                                         <div>
                             <span class="label-container">
                               <span class="label label-success"
-                                                               title="3 Steps Passed">3</span>
+                                                               title="2 Steps Passed">2</span>
                               
                               
                               
-                              
+                              <span class="label label-danger"
+                                                               title="1 Steps Failed">1</span>
                               
                             </span>
                                         </div>
@@ -3509,30 +3577,6 @@ From: Task: (anonymous wait)
                              class="panel-collapse collapse">
                             <div class="panel-body">
                                 <div></div>
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 
                                 
                                 
@@ -3552,7 +3596,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               1s 117ms
+                               1s 123ms
                               </span>
                             
                          
@@ -3590,7 +3634,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               13s 244ms
+                               7s 884ms
                               </span>
                             
                          
@@ -3618,8 +3662,8 @@ From: Task: (anonymous wait)
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-danger" title="Failed"><i
+                                            class="glyphicon glyphicon-remove"></i></span>
                                     
                                     
                                     <span class="text">
@@ -3628,7 +3672,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               15ms
+                               9ms
                               </span>
                             
                          
@@ -3639,6 +3683,56 @@ From: Task: (anonymous wait)
                       </span>
                                 
                                 
+
+                                    
+                                    <a href="#error5_53"
+                                       data-toggle="collapse" class="toggle">Show Error +</a>
+                                    <div id="error5_53"
+                                         class="collapse">
+                                        <pre class="info show-modal"
+                                             data-toggle="modal"
+                                             style="cursor: pointer"
+                                             data-target="#error-modal-5_53">
+                                            <br> AssertionError: expected 'https://generic-blackcomb-dev1.uat.whistler.perxtech.io/home' to include 'reward-detail'
+    at Object.(anonymous) (/Users/vitaliilysak/Projects/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:186:44)
+    at step (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
+    at Object.next (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
+    at fulfilled (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:107:62)
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                    </div>
+
+                                <div class="modal fade" id="error-modal-5_53" tabindex="-1" role="dialog"
+                                     aria-labelledby="stacktraceModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" id="error-modal-title">
+                                                    Error
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5>
+                                                    <pre><br>AssertionError: expected 'https://generic-blackcomb-dev1.uat.whistler.perxtech.io/home' to include 'reward-detail'
+    at Object.(anonymous) (/Users/vitaliilysak/Projects/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:186:44)
+    at step (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
+    at Object.next (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
+    at fulfilled (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:107:62)
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                                </h5>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                     
 
@@ -3670,7 +3764,7 @@ From: Task: (anonymous wait)
                                    href="#collapseScenario_perx_candyland5_6">
                                     <div>
 
-                                        <div style="padding-right: 30px">
+                                        <div style="padding-right: 50px">
                                             <i class="glyphicon glyphicon-chevron-right"></i>
                                             <i class="glyphicon glyphicon-chevron-down"></i>
                                             <b>Scenario:</b>Ensuring functionality of rewards card
@@ -3678,11 +3772,12 @@ From: Task: (anonymous wait)
                                         <div>
                             <span class="label-container">
                               <span class="label label-success"
-                                                               title="3 Steps Passed">3</span>
+                                                               title="2 Steps Passed">2</span>
                               
                               
                               
-                              
+                              <span class="label label-danger"
+                                                               title="1 Steps Failed">1</span>
                               
                             </span>
                                         </div>
@@ -3695,30 +3790,6 @@ From: Task: (anonymous wait)
                              class="panel-collapse collapse">
                             <div class="panel-body">
                                 <div></div>
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 
                                 
                                 
@@ -3738,7 +3809,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               1s 146ms
+                               1s 72ms
                               </span>
                             
                          
@@ -3776,7 +3847,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               10s 571ms
+                               7s 835ms
                               </span>
                             
                          
@@ -3804,8 +3875,8 @@ From: Task: (anonymous wait)
                                 <div class="row steps">
                                     
                                     
-                                    <span class="label label-success" title="Success"><i
-                                            class="glyphicon glyphicon-ok"></i></span>
+                                    <span class="label label-danger" title="Failed"><i
+                                            class="glyphicon glyphicon-remove"></i></span>
                                     
                                     
                                     <span class="text">
@@ -3814,7 +3885,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               14ms
+                               9ms
                               </span>
                             
                          
@@ -3825,6 +3896,56 @@ From: Task: (anonymous wait)
                       </span>
                                 
                                 
+
+                                    
+                                    <a href="#error5_63"
+                                       data-toggle="collapse" class="toggle">Show Error +</a>
+                                    <div id="error5_63"
+                                         class="collapse">
+                                        <pre class="info show-modal"
+                                             data-toggle="modal"
+                                             style="cursor: pointer"
+                                             data-target="#error-modal-5_63">
+                                            <br> AssertionError: expected 'https://generic-blackcomb-dev1.uat.whistler.perxtech.io/home' to include 'reward-detail'
+    at Object.(anonymous) (/Users/vitaliilysak/Projects/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:203:44)
+    at step (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
+    at Object.next (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
+    at fulfilled (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:107:62)
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                    </div>
+
+                                <div class="modal fade" id="error-modal-5_63" tabindex="-1" role="dialog"
+                                     aria-labelledby="stacktraceModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" id="error-modal-title">
+                                                    Error
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5>
+                                                    <pre><br>AssertionError: expected 'https://generic-blackcomb-dev1.uat.whistler.perxtech.io/home' to include 'reward-detail'
+    at Object.(anonymous) (/Users/vitaliilysak/Projects/microsite-apps-ng/apps/candyland/e2e/src/steps/29_Testing Blackcomb home page functionality for survey engagement.steps.ts:203:44)
+    at step (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:136:27)
+    at Object.next (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:117:57)
+    at fulfilled (/Users/vitaliilysak/Projects/microsite-apps-ng/node_modules/tslib/tslib.js:107:62)
+    at process._tickCallback (internal/process/next_tick.js:68:7)</pre>
+                                                </h5>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                     
 
@@ -3927,30 +4048,6 @@ From: Task: (anonymous wait)
                                 
                                 
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 <p class="scenario-container">
                                 <div class="row steps">
                                     
@@ -3965,7 +4062,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               8s 140ms
+                               8s 31ms
                               </span>
                             
                          
@@ -4003,7 +4100,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               3s 90ms
+                               6s 461ms
                               </span>
                             
                          
@@ -4041,7 +4138,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               12ms
+                               13ms
                               </span>
                             
                          
@@ -4113,30 +4210,6 @@ From: Task: (anonymous wait)
                                 
                                 
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 <p class="scenario-container">
                                 <div class="row steps">
                                     
@@ -4151,7 +4224,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               8s 61ms
+                               8s 103ms
                               </span>
                             
                          
@@ -4227,7 +4300,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               42ms
+                               3s 520ms
                               </span>
                             
                          
@@ -4299,30 +4372,6 @@ From: Task: (anonymous wait)
                                 
                                 
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                                 <p class="scenario-container">
                                 <div class="row steps">
                                     
@@ -4337,7 +4386,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               8s 184ms
+                               8s 107ms
                               </span>
                             
                          
@@ -4375,7 +4424,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               3s 92ms
+                               6s 351ms
                               </span>
                             
                          
@@ -4413,7 +4462,7 @@ From: Task: (anonymous wait)
                             
                           
                               <span class="step-duration">
-                               56ms
+                               37ms
                               </span>
                             
                          
@@ -4474,8 +4523,8 @@ From: Task: (anonymous wait)
         google.load("visualization", "1", {packages: ["corechart"]});
         google.setOnLoadCallback(function() {drawChart({
                                                             "title" : "Features",
-                                                            "failed" : 2,
-                                                            "passed" : 5,
+                                                            "failed" : 6,
+                                                            "passed" : 1,
                                                             "notdefined" : 0,
                                                             "pending" : 0,
                                                             "skipped" : 0,
@@ -4484,8 +4533,8 @@ From: Task: (anonymous wait)
                                             });
         google.setOnLoadCallback(function() {drawChart({
                                                             "title" : "Scenarios",
-                                                            "failed" : 5,
-                                                            "passed" : 13,
+                                                            "failed" : 14,
+                                                            "passed" : 4,
                                                             "notdefined" : 0,
                                                             "pending" : 0,
                                                             "skipped" : 0,

@@ -8,8 +8,10 @@ import { SessionService } from '@cl-core/services/session.service';
 import { UserService } from '@cl-core/services/user.service';
 import { Observable, of } from 'rxjs';
 import { AuthHttpAdapter } from '@cl-core/http-adapters/auth-http-adapter';
-import { catchError, map, tap, filter } from 'rxjs/operators';
-import { IWLoginAttributes } from '@perx/whistler';
+import { catchError, map, tap, filter, switchMap } from 'rxjs/operators';
+import { IWLoginAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { parseJwt } from '@cl-helpers/parse-jwt';
+import { HttpResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +30,7 @@ export class AuthService {
   public get userId(): string {
     return this.userService.userId || this.localStorage.get('userId');
   }
+
   public initAuth(): void {
     const localToken = this.localStorage.get('authToken');
     const localUserId = this.localStorage.get('userId');
@@ -50,7 +53,7 @@ export class AuthService {
       );
   }
 
-  public signIn(data: ILogin): Observable<IJsonApiPayload<IWLoginAttributes>> {
+  public signIn(data: ILogin): Observable<IJsonApiItemPayload<IWLoginAttributes>> {
     const sendData = AuthHttpAdapter.transformFromLogin(data);
     return this.http.signIn(sendData).pipe(
       tap(res => {
@@ -69,9 +72,18 @@ export class AuthService {
   }
 
   private login(token: string, user: IamUser): void {
+    this.saveToken(token);
+    this.saveUser(user);
+
+  }
+
+  private saveToken(token: string): void {
     this.sessionService.token = token;
-    this.userService.user = user;
     this.localStorage.set('authToken', token);
+  }
+
+  private saveUser(user: IamUser): void {
+    this.userService.user = user;
     this.localStorage.set('userId', user.id);
   }
 
@@ -91,7 +103,23 @@ export class AuthService {
     return this.http.resetPassword(accountId, username);
   }
 
-  public changePassword(password: string, token: string): Observable<void> {
-    return this.http.changePassword(password, token);
+  public changePassword(password: string, token: string): Observable<any> {
+    return this.http.changePassword(password, token).pipe(
+      switchMap((res: HttpResponse<any>) => {
+          if (res.headers.get('authorization')) {
+            const tokenString: string = res.headers.get('authorization');
+            this.saveToken(tokenString);
+            const tokenObj = parseJwt(tokenString);
+            const userName = tokenObj.sub.split('/').pop();
+            return this.dataStore.findAll(IamUser, {'filter[username]': userName}).pipe(
+              map(users => users.getModels()[0]),
+              tap((user: IamUser) => this.saveUser(user))
+            );
+          }
+          return of(null);
+        }
+      )
+    );
   }
+
 }

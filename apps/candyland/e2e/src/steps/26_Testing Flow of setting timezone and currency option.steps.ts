@@ -20,6 +20,20 @@ const ec: ProtractorExpectedConditions = protractor.ExpectedConditions;
 
 // Ensure the options for timezone is correct
 Given(/^1_I am on general setting page$/, async () => {
+  // login process
+  await LoginAppPage.navigateToLogin();
+  // Waiting for account id field to load
+  await browser.wait(ec.elementToBeClickable(ElementApp.inputArray().first()), 5000);
+  // entering correct account id
+  await ElementApp.inputArray().first().sendKeys(LoginAppPage.getAccountId());
+  // entering correct testUserAccount
+  await ElementApp.inputArray().get(1).sendKeys(LoginAppPage.getUserAccount());
+  // entering correct pw
+  await ElementApp.inputArray().get(2).sendKeys(LoginAppPage.getPassword());
+  // pressing the enter key on the accountID field to log in
+  await ElementApp.inputArray().first().sendKeys(protractor.Key.ENTER);
+  await browser.sleep(3000);
+
   await GeneralSettingsAppPage.navigateToGeneralSettings();
 });
 
@@ -85,7 +99,7 @@ Given(/^3_I click on the engagement tab$/, async () => {
 });
 
 When(/^3_I click on the setting tab$/, async () => {
-  await ElementApp.h3Array().get(6).click();
+  await ElementApp.h3Array().get(7).click();
   await browser.sleep(3000);
 });
 
@@ -133,20 +147,20 @@ Given(/^4_I logout of candyland$/, async () => {
 
 Given(/^4_I re-login$/, async () => {
   // Waiting for account id field to load
-  await browser.wait(ec.elementToBeClickable(LoginAppPage.accountIDField()), 5000);
+  await browser.wait(ec.elementToBeClickable(ElementApp.inputArray().first()), 5000);
   // entering correct account id
-  await LoginAppPage.accountIDField().sendKeys(LoginAppPage.getAccountId());
+  await ElementApp.inputArray().first().sendKeys(LoginAppPage.getAccountId());
   // entering correct testUserAccount
-  await LoginAppPage.userAccountField().sendKeys(LoginAppPage.getUserAccount());
+  await ElementApp.inputArray().get(1).sendKeys(LoginAppPage.getUserAccount());
   // entering correct pw
-  await LoginAppPage.pwField().sendKeys(LoginAppPage.getPassword());
+  await ElementApp.inputArray().get(2).sendKeys(LoginAppPage.getPassword());
   // pressing the enter key on the accountID field to log in
-  await LoginAppPage.accountIDField().sendKeys(protractor.Key.ENTER);
+  await ElementApp.inputArray().first().sendKeys(protractor.Key.ENTER);
   await browser.sleep(3000);
 });
 
 When(/^4_I click on the settings button.$/, async () => {
-  await ElementApp.h3Array().get(6).click();
+  await ElementApp.h3Array().get(7).click();
 });
 
 Then(/^4_I should see that the settings remains unchanged.$/, async () => {

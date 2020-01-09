@@ -126,17 +126,17 @@ describe('LocationsComponent', () => {
 
   describe('onInit', () => {
     it('should location be undefined if mid is not present in the queryParams', () => {
-      const defVal = component.locations;
+      const defVal = component.locations$;
       params.next({ mid: null });
       component.ngOnInit();
-      expect(component.locations).toBe(defVal);
+      expect(component.locations$).toBe(defVal);
     });
 
     it('should set locations based on the mid queryParams', () => {
       params.next({ mid: 1 });
       params.next({ rid: 2 });
       component.ngOnInit();
-      component.locations.subscribe(res => {
+      component.locations$.subscribe(res => {
         expect(res[0].merchantId).toBe(1);
         expect(res[0].merchantName).toBe('abc');
         expect(res[0].locationId).toBe(1);
