@@ -61,7 +61,7 @@ commands:
                 if [ $APP == 'hsbc' ] || [ $APP == 'hsbc-rewards' ] || [ $APP == 'hsbc-xmas' ]
                 then
                   APIHOST="https://api-hsbc.perxtech.net"
-                elif [ $APP == 'starhub' ]
+                elif [ $APP == 'starhub' ]; then
                   APIHOST="https://api-starhub.perxtech.net"
                 else
                   APIHOST="https://api.getperx.net"
@@ -142,7 +142,7 @@ commands:
       - run:
           name: Setup REDIRECT_AFTER_LOGIN var
           command: |
-            if [[ $APP == 'petron-demo' || $APP == 'oracle-demo' ]]
+            if [[ $APP == 'petron-demo' || $APP == 'oracle-demo' || $APP == 'feature-demo' ]]
             then
               REDIRECT_AFTER_LOGIN="/home"
             elif [ $APP == 'blackcomb' ]
@@ -214,7 +214,7 @@ jobs:
             fi
             echo "after second set APP: ${APP}"
 
-            if [[ $APP == 'petron-demo' || $APP == 'oracle-demo' ]]
+            if [[ $APP == 'petron-demo' || $APP == 'oracle-demo' || $APP == 'feature-demo' ]]
             then
               export APP_BASE="blackcomb"
             else
