@@ -36,10 +36,12 @@ import { UsersUploadService } from '@cl-core/services/users-upload.service';
 import { MessageService } from '@cl-core-services';
 import { PipesModule } from '@cl-shared/pipes/pipes.module';
 import { AudiencesCommunicationsListComponent } from './components/audiences-communications-list/audiences-communications-list.component';
+import { SendMessagePopupComponent } from './containers/send-message-popup/send-message-popup.component';
 
 @NgModule({
   declarations: [
     ChangeExpiryDatePopupComponent,
+    SendMessagePopupComponent,
     UpsertUserPopupComponent,
     ManageListPopupComponent,
     AudiencesListComponent,
@@ -48,7 +50,8 @@ import { AudiencesCommunicationsListComponent } from './components/audiences-com
     AudiencesUserInfoPageComponent,
     AudiencesVouchersListComponent,
     AudiencesUserInfoComponent,
-    AudiencesCommunicationsListComponent
+    AudiencesCommunicationsListComponent,
+    SendMessagePopupComponent
   ],
   imports: [
     CommonModule,
@@ -82,6 +85,7 @@ import { AudiencesCommunicationsListComponent } from './components/audiences-com
   ],
   entryComponents: [
     ChangeExpiryDatePopupComponent,
+    SendMessagePopupComponent,
     UpsertUserPopupComponent,
     ManageListPopupComponent,
   ],

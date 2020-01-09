@@ -41,6 +41,12 @@
       </mat-tab>
       <mat-tab label="Communications" class="audience-list-content">
         <div  class="audience-list-content">
+          <div class="send-message-container">
+            <cl-button [classList]="'primary'"
+              (click)="openSendMessagePopup()">
+              <span>{{'AUDIENCE_FEATURE.SEND_MESSAGE' | translate}}</span>
+            </cl-button>
+          </div>
           <div class="table-card">
             <!--table-->
             <cl-audiences-communications-list [dataSource]="dataSourceCommunications">

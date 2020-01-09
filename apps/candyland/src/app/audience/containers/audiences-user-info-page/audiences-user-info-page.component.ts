@@ -44,6 +44,7 @@ import {
   IUpsertUserPopup,
   Type,
 } from '../../audience.model';
+import { SendMessagePopupComponent } from '../send-message-popup/send-message-popup.component';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -112,6 +113,23 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
           this.dataSourceVouchers.updateData();
         },
         () => this.messageService.show('Failed to update voucher expiration date.')
+      );
+  }
+
+  public openSendMessagePopup(): void {
+    this.dialog
+      .open<SendMessagePopupComponent, void, IRewardEntity>(SendMessagePopupComponent)
+      .afterClosed()
+      .pipe(
+        filter(Boolean)
+      )
+      .subscribe(
+        (message: string) => {
+          console.log(message);
+          this.messageService.show('Message sent to user.');
+          this.dataSourceCommunications.updateData();
+        },
+        () => this.messageService.show('Could not send message to user. Please try again later.')
       );
   }
 
