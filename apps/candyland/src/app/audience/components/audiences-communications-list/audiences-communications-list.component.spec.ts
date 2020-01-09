@@ -5,7 +5,6 @@ import { MatTableModule, MatMenuModule, MatIconModule } from '@angular/material'
 import { RouterTestingModule } from '@angular/router/testing';
 import { PipesModule } from '@cl-shared/pipes/pipes.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { AudiencesVouchersListComponent } from '../audiences-vouchers-list/audiences-vouchers-list.component';
 
 describe('AudiencesCommunicationsListComponent', () => {
   let component: AudiencesCommunicationsListComponent;
@@ -23,7 +22,7 @@ describe('AudiencesCommunicationsListComponent', () => {
       ],
       providers: [],
       declarations: [
-        AudiencesVouchersListComponent,
+        AudiencesCommunicationsListComponent,
       ]
     })
       .compileComponents();
