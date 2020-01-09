@@ -1,3 +1,5 @@
+import { Attribute } from 'angular2-jsonapi';
+import { ICommMessage } from './../models/comm/schedule';
 import * as moment from 'moment';
 import { IWCommTemplateAttributes, IWCommEventAttributes, IJsonApiItem, IJsonApiPostData } from '@perx/whistler';
 import { IComm } from '@cl-core/models/comm/schedule';
@@ -51,5 +53,15 @@ export class CommsHttpAdapter {
         content: data.message
       }
     };
+  }
+
+  public static transformFromCommsMessage(data: ICommMessage): IJsonApiPostItem<IWCommMessageAttributes> {
+    return {
+      type: 'messages',
+      attributes: {
+        body: data.message,
+        
+      }
+    }
   }
 }

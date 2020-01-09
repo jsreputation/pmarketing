@@ -22,6 +22,9 @@ export interface ISchedule {
 
 export interface ICommMessage {
     id?: string;
+    from: string;
+    to: string;
+    provider_id: number;
     message: string;
     sendDate: Date;
     sender?: string;
