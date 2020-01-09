@@ -82,8 +82,8 @@ export class WhistlerThemesService extends ThemesService {
     const themesRequest: { url: string } = {
       url: location.host
     };
-    const response: Observable<ITheme> = this.http.post<IJsonApiListPayload<IWTenant>>(
-      this.themeSettingEndpoint, themesRequest).pipe(
+    const response: Observable<ITheme> = this.http.post<IJsonApiListPayload<IWTenant>>(this.themeSettingEndpoint, themesRequest)
+      .pipe(
         map(res => res.data && res.data[0].attributes.display_properties),
         map((setting: IWSetting) => WhistlerThemesService.WThemeToTheme(setting)),
         tap((theme: ITheme) => this.setActiveTheme(theme)),

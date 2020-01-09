@@ -154,15 +154,14 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   private createPatterns(arr: ImageForPattern[]): void {
     const patternImg = arr.filter(({ id, image }) => id && image)
-      .map(item => (
-        {
-          id: item.id,
-          pattern: this.ctx && this.ctx.createPattern(item.image, 'no-repeat')
-        })).filter((imagePattern) => {
-          if (imagePattern.pattern) {
-            return imagePattern;
-          }
-        });
+      .map(item => ({
+        id: item.id,
+        pattern: this.ctx && this.ctx.createPattern(item.image, 'no-repeat')
+      })).filter((imagePattern) => {
+        if (imagePattern.pattern) {
+          return imagePattern;
+        }
+      });
     this.patternImg = (patternImg as Pattern[]);
     this.drawWheel();
   }
