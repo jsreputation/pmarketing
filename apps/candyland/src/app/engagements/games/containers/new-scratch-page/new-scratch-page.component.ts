@@ -38,13 +38,13 @@ import {
   AvailableNewEngagementService,
   ScratchService,
   RoutingStateService,
-  SettingsService
 } from '@cl-core/services';
 
 import { ControlsName } from '../../../../models/controls-name';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWScratchGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
+import { TenantService } from '@cl-core/services/tenant.service';
 
 @Component({
   selector: 'cl-new-scratch-page',
@@ -109,7 +109,7 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private settingsService: SettingsService
+    private tenantService: TenantService
   ) {
   }
 
@@ -223,7 +223,7 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
   }
 
   private initTenantSettings(): void {
-    this.settingsService.getTenant()
+    this.tenantService.getSettings()
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: ITenantsProperties) => {
         this.tenantSettings = res;

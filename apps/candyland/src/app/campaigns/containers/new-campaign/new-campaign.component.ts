@@ -33,6 +33,7 @@ import { NotificationService } from '@cl-core/services/notification.service';
 import { IChannel, ICampaignNotificationGroup } from '@cl-core/models/campaign/channel-interface';
 import { Location } from '@angular/common';
 import { NewCampaignNotificationsComponent } from '../new-campaign-notifications/new-campaign-notifications.component';
+import { TenantService } from '@cl-core/services/tenant.service';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -63,6 +64,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private settingsService: SettingsService,
+    private tenantService: TenantService,
     private commsService: CommsService,
     private outcomesService: OutcomesService,
     private limitsService: LimitsService,
@@ -341,7 +343,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   private initTenantSettings(): void {
-    this.settingsService.getTenant()
+    this.tenantService.getSettings()
       .pipe(takeUntil(this.destroy$))
       .subscribe((tenantSettings: ITenantsProperties) => {
         this.tenantSettings = tenantSettings;

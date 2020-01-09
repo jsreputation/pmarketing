@@ -4,7 +4,6 @@ import {
   EngagementsService,
   OutcomesService,
   LimitsService,
-  SettingsService
 } from '@cl-core/services';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
@@ -18,6 +17,7 @@ import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 import { CampaignStatus } from '@cl-core/models/campaign/campaign.enum';
+import { TenantService } from '@cl-core/services/tenant.service';
 
 @Component({
   selector: 'cl-review-campaign',
@@ -40,7 +40,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     private outcomesService: OutcomesService,
     private limitsService: LimitsService,
     private engagementsService: EngagementsService,
-    private settingsService: SettingsService,
+    private tenantService: TenantService,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef
   ) {
@@ -62,7 +62,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   }
 
   private initTenantSettings(): void {
-    this.settingsService.getTenant()
+    this.tenantService.getSettings()
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: ITenantsProperties) => {
         this.tenantSettings = res;

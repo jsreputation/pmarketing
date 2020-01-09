@@ -20,14 +20,6 @@ export class AuthHttpService {
     );
   }
 
-  public getUser(id: string): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
-    return this.http.get<IJsonApiItemPayload<IWProfileAttributes>>(ApiConfig.IAMUsersPath + '/' + id);
-  }
-
-  public getUserByName(params: any): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
-    return this.http.get<IJsonApiItemPayload<IWProfileAttributes>>(ApiConfig.IAMUsersPath, { params });
-  }
-
   public resetPassword(accountId: string, username: string): Observable<IJsonApiItemPayload<void>> {
     const req = {
       data: {

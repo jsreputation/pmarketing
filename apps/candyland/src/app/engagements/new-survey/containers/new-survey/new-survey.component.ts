@@ -7,12 +7,13 @@ import { debounceTime, tap, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { NewSurveyForm } from 'src/app/engagements/new-survey/new-survey-form';
 import { ControlsName } from '../../../../models/controls-name';
-import { AvailableNewEngagementService, RoutingStateService, SettingsService, SurveyService } from '@cl-core/services';
+import { AvailableNewEngagementService, RoutingStateService, SurveyService } from '@cl-core/services';
 import { QuestionFormFieldService, SimpleMobileViewComponent } from '@cl-shared';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { IWEngagementAttributes, IWQuestion, WSurveyQuestionType, IJsonApiItemPayload } from '@perx/whistler';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
+import { TenantService } from '@cl-core/services/tenant.service';
 
 @Component({
   selector: 'cl-new-survey',
@@ -79,7 +80,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
     private router: Router,
     private routingState: RoutingStateService,
     private cd: ChangeDetectorRef,
-    private settingsService: SettingsService
+    private tenantService: TenantService
   ) {
   }
 
@@ -246,7 +247,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   }
 
   private initTenant(): void {
-    this.settingsService.getTenant()
+    this.tenantService.getSettings()
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: ITenantsProperties) => {
         this.tenantSettings = res;

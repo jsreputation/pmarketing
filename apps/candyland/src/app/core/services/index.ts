@@ -21,3 +21,4 @@ export * from './upload-file.service';
 export * from './message.service';
 export * from './config.service';
 export * from './csv-report.service';
+export * from './tenant-store.service';
