@@ -12,7 +12,7 @@ Scenario: Ensuring that the loyalty tab is functional
   When  2_I click on the loyalty tab.
   Then  2_I should be navigated to the loyalty page.
 
-Scenario: Ensure that instant reward page have relevant elements
+Scenario: Ensure that loyalty page have relevant elements
   Given 3_I am on the loyalty page
   When  3_I do nothing
   Then  3_I should see the relevant elements of the loyalty page.

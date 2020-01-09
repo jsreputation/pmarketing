@@ -31,7 +31,7 @@ Then(/^2_I should be navigated to the loyalty page.$/, async () => {
   await browser.wait(ec.urlContains('loyalty'), 5000);
 });
 
-// Ensure that instant reward page have relevant elements
+// Ensure that loyalty page have relevant elements
 Given(/^3_I am on the loyalty page$/, async () => {
   await LoyaltyAppPage.navigateToLoyalty();
 });
