@@ -13,7 +13,7 @@
       </mat-form-field>
       <mat-form-field appearance="fill" class="full-width__input">
         <mat-label>PIN Code</mat-label>
-        <input matInput placeholder="PIN Code" formControlName="pinCode">
+        <input type="password" matInput placeholder="PIN Code" formControlName="pinCode">
         <mat-error *ngIf="pinCode && pinCode.hasError('required')">
           PIN Code is <strong>required</strong>
         </mat-error>
