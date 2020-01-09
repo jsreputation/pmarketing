@@ -11,8 +11,7 @@ import {
   IJsonApiItem,
   IJsonApiItemPayload,
   IJsonApiPatchData,
-  IJsonApiPostData,
-  IJsonApiPostItem
+  IJsonApiPostData
 } from '@perx/whistler';
 import { IComm, ICommMessage } from '@cl-core/models/comm/schedule';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
@@ -86,7 +85,24 @@ export class CommsService {
   }
 
   public createMessage(data: ICommMessage): Observable<IJsonApiItemPayload<IWCommMessageAttributes>> {
-    const sendData: IJsonApiPostItem<IWCommMessageAttributes> = CommsHttpAdapter.transformFromCommsMessage(data);
+    const sendData: IJsonApiPostData<IWCommMessageAttributes> = CommsHttpAdapter.transformFromCommsMessage(data);
     return this.commsHttpsService.createMessage({ data: sendData });
   }
+
+  public getMessages(params: HttpParamsOptions): Observable<ICommMessage[]> {
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.commsHttpsService.getMessages(httpParams).pipe(
+      map((response: IJsonApiListPayload<IWCommMessageAttributes>) => response.data),
+      map((response: IJsonApiItem<IWCommMessageAttributes>[]) =>
+        response.map((message: IJsonApiItem<IWCommMessageAttributes>) => CommsHttpAdapter.transformMessageAPIResponse(message)))
+    );
+  }
+
+  public getMessage(id: string): Observable<ICommMessage> {
+    return this.commsHttpsService.getMessage(id).pipe(
+      map((response: IJsonApiItemPayload<IWCommMessageAttributes>) => response.data),
+      map((response: IJsonApiItem<IWCommMessageAttributes>) => CommsHttpAdapter.transformMessageAPIResponse(response))
+    );
+  }
+
 }

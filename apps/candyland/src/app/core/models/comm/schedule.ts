@@ -26,7 +26,8 @@ export interface ICommMessage {
     to: string;
     provider_id: number;
     message: string;
-    sendDate: Date;
-    sender?: string;
+    sendDate: Date | null;
+    owner_id?: string | null;
+    owner_type?: string | null;
     channel: WMessageChannel;
 }

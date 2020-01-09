@@ -1,8 +1,6 @@
-import { Attribute } from 'angular2-jsonapi';
-import { ICommMessage } from './../models/comm/schedule';
 import * as moment from 'moment';
-import { IWCommTemplateAttributes, IWCommEventAttributes, IJsonApiItem, IJsonApiPostData } from '@perx/whistler';
-import { IComm } from '@cl-core/models/comm/schedule';
+import { IWCommTemplateAttributes, IWCommEventAttributes, IJsonApiItem, IJsonApiPostData, IWCommMessageAttributes } from '@perx/whistler';
+import { IComm, ICommMessage } from '@cl-core/models/comm/schedule';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
 
 export class CommsHttpAdapter {
@@ -22,6 +20,21 @@ export class CommsHttpAdapter {
         sendDate: data.attributes.send_at ? new Date(data.attributes.send_at) : null,
         sendTime: data.attributes.send_at ? moment(data.attributes.send_at).format('LT') : null
       }
+    };
+  }
+
+  public static transformMessageAPIResponse(data: IJsonApiItem<IWCommMessageAttributes>): ICommMessage {
+    const attr = data.attributes;
+    return {
+      id: data.id,
+      from: attr.from,
+      to: attr.to,
+      provider_id: attr.provider_id,
+      message: attr.body,
+      sendDate: attr.created_at ? new Date(attr.created_at) : null,
+      owner_id: attr.owner_id,
+      owner_type: attr.owner_type,
+      channel: attr.channel
     };
   }
 
@@ -55,12 +68,17 @@ export class CommsHttpAdapter {
     };
   }
 
-  public static transformFromCommsMessage(data: ICommMessage): IJsonApiPostItem<IWCommMessageAttributes> {
+  public static transformFromCommsMessage(data: ICommMessage): IJsonApiPostData<IWCommMessageAttributes> {
     return {
       type: 'messages',
       attributes: {
         body: data.message,
-        
+        from: data.from,
+        to: data.to,
+        provider_id: data.provider_id,
+        owner_id: data.owner_id,
+        owner_type: data.owner_type,
+        channel: data.channel
       }
     }
   }
