@@ -3,8 +3,8 @@ Feature: 32_Initiate creation of loyalty program
 This is for testing flow for initiating the creation of the loyalty program.
 
 Scenario: Ensuring the the loyalty tab is present.
-  Given 1_I am on the dashboard page
-  When  1_do nothing
+  Given 1_I am on the dashboard page.
+  When  1_I do nothing
   Then  1_I should see the loyalty tab.
 
 Scenario: Ensuring that the loyalty tab is functional
