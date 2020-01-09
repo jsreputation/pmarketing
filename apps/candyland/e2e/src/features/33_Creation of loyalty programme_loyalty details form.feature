@@ -25,3 +25,8 @@ Scenario: Ensure that the user joing method field is essential
   Given 9_I am on the loyalty creation page - loyalty details form.
   When  9_I uncheck all the the checkboxes for user joining method.
   Then  9_I should see the error message for user joining method.
+
+Scenario: Ensure that the select audience dropdown field is present
+  Given 10_I am on the loyalty creation page - loyalty details form.
+  When  10_I do nothing
+  Then  10_I should see the drop down field for audience.
