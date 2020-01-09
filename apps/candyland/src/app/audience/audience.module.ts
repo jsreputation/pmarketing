@@ -35,6 +35,7 @@ import { IAdvancedUploadFileService } from '@cl-core/services/iadvanced-upload-f
 import { UsersUploadService } from '@cl-core/services/users-upload.service';
 import { MessageService } from '@cl-core-services';
 import { PipesModule } from '@cl-shared/pipes/pipes.module';
+import { AudiencesCommunicationsListComponent } from './components/audiences-communications-list/audiences-communications-list.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { PipesModule } from '@cl-shared/pipes/pipes.module';
     AudiencesUsersListComponent,
     AudiencesUserInfoPageComponent,
     AudiencesVouchersListComponent,
-    AudiencesUserInfoComponent
+    AudiencesUserInfoComponent,
+    AudiencesCommunicationsListComponent
   ],
   imports: [
     CommonModule,
