@@ -25,9 +25,7 @@ export class NewsFeedComponent implements OnInit {
     this.reader.getFromUrl('https://cdn.perxtech.io/content/starhub/rss.xml')
       .subscribe(items => {
         this.items = items;
-        const lengthModifier = 1;
-        const length = items.length - lengthModifier;
-        this.newsAfterScroll = Array.from(Array(length > 0 ? length : 1).keys());
+        this.newsAfterScroll = Array.from(Array(items.length > 0 ? items.length - 1 : 1).keys());
       });
     this.itemSize = window.innerWidth;
   }
