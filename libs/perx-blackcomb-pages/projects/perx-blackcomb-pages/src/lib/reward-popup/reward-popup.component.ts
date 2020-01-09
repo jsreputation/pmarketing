@@ -12,7 +12,7 @@ export interface TimerCallBack {
 }
 
 @Component({
-  selector: 'app-reward-popup',
+  selector: 'perx-blackcomb-pages-reward-popup',
   templateUrl: './reward-popup.component.html',
   styleUrls: ['./reward-popup.component.scss']
 })

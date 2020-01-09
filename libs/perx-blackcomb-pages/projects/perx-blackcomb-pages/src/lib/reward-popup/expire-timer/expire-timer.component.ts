@@ -9,7 +9,7 @@ interface ITime {
   seconds: number;
 }
 @Component({
-  selector: 'app-expire-timer',
+  selector: 'perx-blackcomb-pages-expire-timer',
   templateUrl: './expire-timer.component.html',
   styleUrls: ['./expire-timer.component.scss']
 })
