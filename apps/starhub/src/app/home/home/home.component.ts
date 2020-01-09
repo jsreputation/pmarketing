@@ -17,7 +17,6 @@ import { catchError, switchMap, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { of, combineLatest } from 'rxjs';
 import { RewardPopupComponent } from '../../reward-popup/reward-popup.component';
-import { AnalyticsService, PageType } from '../../analytics.service';
 import { IdataLayerSH } from 'src/app/app.component';
 
 declare var dataLayerSH: IdataLayerSH; // eslint-disable-line
@@ -48,8 +47,7 @@ export class HomeComponent implements OnInit {
     private campaignService: ICampaignService,
     private router: Router,
     private dialog: MatDialog,
-    private tokenStorage: TokenStorage,
-    private analytics: AnalyticsService
+    private tokenStorage: TokenStorage
   ) { }
 
   public ngOnInit(): void {
@@ -166,7 +164,7 @@ export class HomeComponent implements OnInit {
             // user has already been issued voucher
             this.router.navigate([`/home/vouchers`]);
           }
-          console.error(`Something fishy, we should not be here, without any reward or game. ERR print: ${err}`);
+          console.error(`Something fishy, we should not be here, without any reward or game. ERR print: ${err.error.message}`);
         }
       );
     }
