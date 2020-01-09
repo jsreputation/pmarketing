@@ -49,7 +49,8 @@ import {
   LoyaltyTransactionsListComponent,
   NewsfeedComponent,
   PinInputComponent,
-  PasswordComponent
+  PasswordComponent,
+  PuzzleListComponent
 } from '@perx/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -133,7 +134,8 @@ const comps: any[] = [
   PinInputComponent,
   RewardsBookingComponent,
   ProfileBarcodeComponent,
-  EditProfileFieldComponent
+  EditProfileFieldComponent,
+  PuzzleListComponent
 ];
 
 @NgModule({

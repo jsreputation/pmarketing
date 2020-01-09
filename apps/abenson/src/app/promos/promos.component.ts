@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FeedItem, FeedReaderService } from '@perx/core';
-import { AnalyticsService, PageType } from '../analytics.service';
 import { MatDialog } from '@angular/material';
 import { PopupComponent } from '../popup/popup.component';
 import { Observable } from 'rxjs';
@@ -18,7 +17,6 @@ export class PromosComponent implements OnInit {
   public itemsGroup$: FeedItemGroup[];
   constructor(
     private reader: FeedReaderService,
-    private analytics: AnalyticsService,
     private dialog: MatDialog,
   ) { }
 
@@ -26,20 +24,16 @@ export class PromosComponent implements OnInit {
     this.itemsGroup$ = [
       {
         label: 'Exclusives',
-        items: this.reader.getFromUrl('https://teamplusrewards.home.blog/feed/', true)
+        items: this.reader.getFromUrl('https://teamplusrewards.home.blog/category/Exclusives/feed/', true)
       },
       {
         label: 'Promotions',
-        items: this.reader.getFromUrl('https://lucasabensontest.wordpress.com/feed/', true)
+        items: this.reader.getFromUrl('https://teamplusrewards.home.blog/category/Promotions/feed/', true)
       }
     ];
   }
 
   public readMore(item: FeedItem): void {
-    this.analytics.addEvent({
-      pageType: PageType.overlay,
-      pageName: 'The All New Starhub Rewards'
-    });
     this.dialog.open(PopupComponent, {
       panelClass: 'app-full-bleed-dialog',
       data: item,

@@ -33,7 +33,9 @@ import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { IAdvancedUploadFileService } from '@cl-core/services/iadvanced-upload-file.service';
 import { UsersUploadService } from '@cl-core/services/users-upload.service';
-import {MessageService} from '@cl-core-services';
+import { MessageService } from '@cl-core-services';
+import { PipesModule } from '@cl-shared/pipes/pipes.module';
+import { AudiencesCommunicationsListComponent } from './components/audiences-communications-list/audiences-communications-list.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import {MessageService} from '@cl-core-services';
     AudiencesUsersListComponent,
     AudiencesUserInfoPageComponent,
     AudiencesVouchersListComponent,
-    AudiencesUserInfoComponent
+    AudiencesUserInfoComponent,
+    AudiencesCommunicationsListComponent
   ],
   imports: [
     CommonModule,
@@ -75,6 +78,7 @@ import {MessageService} from '@cl-core-services';
     SelectRewardPopupModule,
     PaginationModule,
     TranslateModule,
+    PipesModule
   ],
   entryComponents: [
     ChangeExpiryDatePopupComponent,

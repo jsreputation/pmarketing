@@ -1,0 +1,97 @@
+@import "variables";
+
+:host {
+  margin: ($vertical-padding * 0.375) ($horizontal-padding * 0.375);
+  flex: 1 1 24rem;
+}
+
+.growth-card {
+  position: relative;
+  padding: $vertical-padding ($horizontal-padding * 0.75);
+  box-sizing: border-box;
+  border-radius: $border-radius;
+  border: 1px solid $border-color;
+}
+
+h3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: ($vertical-padding * 0.75);
+}
+
+.growth {
+  &-label {
+    @include typo-body2;
+
+    text-align: center;
+    color: $secondary-font-color;
+  }
+
+  &-value {
+    @include typo-h5;
+
+    order: -1;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    color: $secondary-color;
+
+    &__prefix {
+      @include typo-caption;
+
+      position: absolute;
+      right: 100%;
+      top: 0;
+      transform: translateX(-0.4rem);
+    }
+  }
+
+  &-info {
+    @include typo-subtitle1;
+
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    grid-gap: 1.2rem;
+    margin-top: auto;
+
+    small {
+      @include typo-caption;
+
+      display: block;
+      color: $secondary-font-color;
+    }
+
+    &__prev {
+      text-align: right;
+    }
+
+    &__now {
+      .icon {
+        display: inline-block;
+        vertical-align: text-bottom;
+        padding: 0;
+        width: 1.6rem;
+        height: 1.6rem;
+        background-size: 1.6rem;
+      }
+
+      &.increase {
+        color: $green;
+        background-position: 0 0;
+      }
+
+      &.decrease {
+        color: $green;
+        background-position: 0 100%;
+      }
+    }
+
+    &__divider {
+      height: 100%;
+      width: 1px;
+      background: $light-gray;
+    }
+  }
+}

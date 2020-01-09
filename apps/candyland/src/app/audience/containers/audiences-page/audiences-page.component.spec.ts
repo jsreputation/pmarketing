@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AudiencesPageComponent } from './audiences-page.component';
-import {SettingsService, AudiencesService, AuthService, MessageService} from '@cl-core-services';
+import { SettingsService, AudiencesService, AuthService, MessageService } from '@cl-core-services';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import {
   ButtonModule,
@@ -39,46 +39,46 @@ describe('AudiencesPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          ButtonModule,
-          MatIconModule,
-          MatTableModule,
-          MatSortModule,
-          PaginationModule,
-          TableFiltersModule,
-          SearchFilterModule,
-          BrowserDynamicTestingModule,
-          HttpClientTestingModule,
-          TabsFilterModule,
-          MatTabsModule,
-          MatIconModule,
-          MatMenuModule,
-          FormsModule,
-          ReactiveFormsModule,
-          NoDataModule,
-          StatusLabelModule,
-          RouterTestingModule,
-          MatDialogModule,
-          BrowserAnimationsModule,
-          NoopAnimationsModule,
-          TranslateModule.forRoot(),
-        ],
-        providers: [
-          SettingsService,
-          AudiencesService,
-          AudiencesUserService,
-          LocalStorageService,
-          {
-            provide: MessageService, useValue:  msgSvcStub
-          },
-          AuthService
-        ],
-        declarations: [
-          AudiencesPageComponent,
-          AudiencesListComponent,
-          AudiencesUsersListComponent
-        ]
-      })
+      imports: [
+        ButtonModule,
+        MatIconModule,
+        MatTableModule,
+        MatSortModule,
+        PaginationModule,
+        TableFiltersModule,
+        SearchFilterModule,
+        BrowserDynamicTestingModule,
+        HttpClientTestingModule,
+        TabsFilterModule,
+        MatTabsModule,
+        MatIconModule,
+        MatMenuModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NoDataModule,
+        StatusLabelModule,
+        RouterTestingModule,
+        MatDialogModule,
+        BrowserAnimationsModule,
+        NoopAnimationsModule,
+        TranslateModule.forRoot(),
+      ],
+      providers: [
+        SettingsService,
+        AudiencesService,
+        AudiencesUserService,
+        LocalStorageService,
+        {
+          provide: MessageService, useValue: msgSvcStub
+        },
+        AuthService
+      ],
+      declarations: [
+        AudiencesPageComponent,
+        AudiencesListComponent,
+        AudiencesUsersListComponent
+      ]
+    })
       .compileComponents();
   }));
 

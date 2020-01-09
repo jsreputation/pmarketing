@@ -23,6 +23,13 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   ];
 
   @Input()
+  public defaultCardBgImage: string = '';
+  @Input()
+  public defaultbackgroundImage: string = '';
+  @Input()
+  public defaultstampCardImage: string = '';
+
+  @Input()
   public stamps: IStamp[] | null = [];
 
   @Input()

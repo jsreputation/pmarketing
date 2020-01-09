@@ -1,19 +1,18 @@
-@import '~@angular/material/theming';
 @import "./variables";
 
 button {
   outline: none;
 }
 
-@mixin btn {
-  @include typo-button;
+@mixin cs-btn {
+  @include cs-typo-button;
 
   position: relative;
   min-width: 10rem;
   height: 4.4rem;
   line-height: 4.4rem;
   border-radius: $border-radius;
-  color: $white;
+  color: $base-font-color;
   padding: 0 ($horizontal-padding * 0.75);
   box-shadow: none;
 
@@ -30,6 +29,7 @@ button {
   }
 
   &.primary {
+    color: $white;
     background-color: $primary-color;
 
     &:hover {
@@ -61,6 +61,7 @@ button {
   }
 
   &.disable {
+    pointer-events: none;
     color: $disable-color !important;
     background-color: $light-gray !important;
 
@@ -71,28 +72,14 @@ button {
   }
 }
 
-.btn-block {
-  width: 100%;
-}
-
-.btn-transparent {
-  display: flex;
-  position: relative;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #ffffff;
-  cursor: pointer;
-}
-
 .mat-menu-item {
   line-height: 4rem;
   height: 4rem;
 }
 
 //FAB BUTTON RE-STYLE (!important to override WalkMe Styling)
-@mixin fab-btn($icon-color: $white) {
-  @include mat-elevation(5);
+@mixin cs-fab-btn($icon-color: $white) {
+  //@include mat-elevation(5);
 
   min-width: initial !important;
   width: $fab-btn !important;
@@ -125,57 +112,96 @@ button {
   }
 }
 
-// WALKME FAB RE-STYLE
-.walkme-player.walkme-css-reset.walkme-zambezi.walkme-california.walkme-theme-white-blue.walkme-position-major-bottom.walkme-position-minor-right_corner {
-  @include fab-btn($secondary-font-color);
+.cs-btn {
+  @include cs-btn;
 
-  background: $white !important;
-
-  &::before {
-    mask: url("/assets/images/icons/cta-help.svg") no-repeat 50% 50%;
+  .mat-button-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
   }
 
-  &::after {
-    @include typo-button;
-
-    content: "Help";
-    text-transform: uppercase;
-    color: $secondary-font-color;
-    display: inline-block;
-    line-height: 5.6rem;
-    padding-left: 4.8rem;
-    transition: 0.15s cubic-bezier(0.35, 0, 0.25, 1);
-    opacity: 0;
+  &-mobile-icon {
+    display: none;
   }
 
-  &:hover {
-    background: $light-gray !important;
-    width: 11rem !important;
+  &-block {
+    width: 100%;
+  }
 
-    &::after {
-      opacity: 1;
-    }
+  &-transparent {
+    display: flex;
+    position: relative;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: $white;
+    cursor: pointer;
   }
 }
 
 @media (max-width: $tablet-width) {
-  // CTA MOBILE
-  .cta {
-    span.mat-button-wrapper {
-      display: block;
-      text-transform: uppercase;
-      padding-left: 2.4rem;
-      transition: 0.15s cubic-bezier(0.35, 0, 0.25, 1);
+  @keyframes cs-btn-enter-animation {
+    from {
+      transform: scale(0.8);
       opacity: 0;
     }
 
-    &:hover span.mat-button-wrapper {
+    to {
+      transform: scale(1);
       opacity: 1;
     }
   }
 
-  // WALKME RE-POSITION HELP
-  body:not(.no-cta) .walkme-player.walkme-css-reset.walkme-zambezi.walkme-california.walkme-theme-white-blue.walkme-position-major-bottom.walkme-position-minor-right_corner {
-    bottom: ($vertical-padding * 0.5) + $fab-btn + ($vertical-padding * 0.5) !important;
+  // CTA MOBILE
+  .cs-btn-mobile {
+    @include cs-fab-btn();
+
+    width: auto !important;
+    min-width: 5.6rem !important;
+    z-index: 1000;
+    animation-name: cs-btn-enter-animation;
+    animation-duration: 0.4s;
+    animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
+    animation-fill-mode: forwards;
+
+    &::before {
+      display: none;
+    }
+
+    .cs-btn-mobile-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 !important;
+    }
+
+    .cs-btn-content {
+      box-sizing: border-box;
+      display: inline-flex;
+      flex-flow: row nowrap;
+      text-transform: uppercase;
+      max-width: 0;
+      width: auto;
+      visibility: hidden;
+      opacity: 0;
+      transition:
+        max-width 0.6s cubic-bezier(0.35, 0, 0.25, 1),
+        opacity 0.4s,
+        visibility 0.4s;
+
+      &::before {
+        content: '';
+        padding-left: 2.4rem;
+      }
+    }
+
+    &:hover {
+      .cs-btn-content {
+        opacity: 1;
+        max-width: 40rem;
+        visibility: visible;
+      }
+    }
   }
 }

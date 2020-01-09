@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule, MatIconModule } from '@angular/material';
-import { DownloadButtonComponent } from './download-button.component';
+import { DownloadButtonComponent, DownloadIconDirective } from './download-button.component';
 import { ButtonModule } from '../button/button.module';
 
 @NgModule({
   declarations: [
-    DownloadButtonComponent
+    DownloadButtonComponent,
+    DownloadIconDirective
   ],
   exports: [
-    DownloadButtonComponent
+    DownloadButtonComponent,
+    DownloadIconDirective
   ],
   imports: [
     CommonModule,

@@ -24,7 +24,6 @@ import { CampaignState } from '@perx/core';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
-import { rewards } from './rewards.mock';
 import { game } from './game.mock';
 import { AnalyticsService, PageType } from './analytics.service';
 
@@ -91,7 +90,8 @@ describe('AppComponent', () => {
   ];
   const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of(campaigns),
-    getCampaign: () => of(campaigns[0])
+    getCampaign: () => of(campaigns[0]),
+    issueAll: () => of()
   };
   const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of(game)
@@ -223,21 +223,21 @@ describe('AppComponent', () => {
       expect(routerSpy).toHaveBeenCalledWith('error');
     }));
 
-    it('should navigate', () => {
-      const routerSpy = spyOn(router, 'navigate');
-      component.reward = rewards[0];
-      component.dialogClosed();
-      expect(routerSpy).toHaveBeenCalledWith([`/reward`], { queryParams: { id: component.reward.id } });
-      component.reward = undefined;
-      component.game = game[0];
-      component.dialogClosed();
-      expect(routerSpy).toHaveBeenCalledWith([`/game`], { queryParams: { id: 1 } });
-      component.reward = undefined;
-      component.game = undefined;
-      const spyLog = spyOn(console, 'error');
-      component.dialogClosed();
-      expect(spyLog).toHaveBeenCalledWith('Something fishy, we should not be here, without any reward or game');
-    });
+    // it('should navigate', () => {
+    //   const routerSpy = spyOn(router, 'navigate');
+    //   component.reward = rewards[0];
+    //   component.dialogClosed();
+    //   expect(routerSpy).toHaveBeenCalledWith([`/home/vouchers`]);
+    //   component.reward = undefined;
+    //   component.game = game[0];
+    //   component.dialogClosed();
+    //   expect(routerSpy).toHaveBeenCalledWith([`/game`], { queryParams: { id: 1 } });
+    //   component.reward = undefined;
+    //   component.game = undefined;
+    //   const spyLog = spyOn(console, 'error');
+    //   component.dialogClosed();
+    //   expect(spyLog).toHaveBeenCalledWith('Something fishy, we should not be here, without any reward or game');
+    // });
   });
 
   // describe('dialogClosed', () => {

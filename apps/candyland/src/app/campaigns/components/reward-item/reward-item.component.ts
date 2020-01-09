@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ICampaignOutcome } from '@cl-core/models/campaign/campaign';
@@ -21,7 +21,7 @@ export class RewardItemComponent implements OnInit {
 
   public group: FormGroup = new FormGroup({
     probability: new FormControl(null, {updateOn: 'blur'}),
-    limit: new FormControl(null, {updateOn: 'blur'})
+    limit: new FormControl(null , {updateOn: 'blur'})
   });
   private destroy$: Subject<void> = new Subject();
 

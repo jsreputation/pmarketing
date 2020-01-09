@@ -33,7 +33,9 @@ import { Location } from '@angular/common';
 describe('SignInComponent', () => {
   let component: SignInComponent;
   let fixture: ComponentFixture<SignInComponent>;
-  const notificationServiceStub: Partial<NotificationService> = {};
+  const notificationServiceStub: Partial<NotificationService> = {
+    addPopup: () => { }
+  };
 
   const configStub: Partial<Config> = {
     preAuth: false

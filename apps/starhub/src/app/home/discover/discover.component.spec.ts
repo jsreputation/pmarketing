@@ -7,6 +7,7 @@ import {
   MatCardModule,
   MatIconModule,
   MatDialogModule,
+  MatRippleModule,
 } from '@angular/material';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';
@@ -76,6 +77,7 @@ describe('DiscoverComponent', () => {
         ScrollingModule,
         GameModule,
         InfiniteScrollModule,
+        MatRippleModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
