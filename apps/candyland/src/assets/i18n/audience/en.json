@@ -51,6 +51,10 @@
     "CURRENT_EXPIRY_DATE": "Current Expiry Date",
     "TO": "To",
     "NEW": "New",
+    "MESSAGE": "Message",
+    "SEND_DATE": "Sent Date",
+    "SENDER": "Sender",
+    "CHANNEL": "Channel",
     "ENTER_NEW_EXPIRY_DATE": "Enter New Expiry Date"
   }
 }

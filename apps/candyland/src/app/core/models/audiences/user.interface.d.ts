@@ -1,5 +1,6 @@
 declare interface IAudiencesUserForm {
   id?: string;
+  pi?: string;
   firstName: string;
   lastName: string;
   email: string;

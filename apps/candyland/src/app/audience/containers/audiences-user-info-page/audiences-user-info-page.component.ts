@@ -1,3 +1,4 @@
+import { CommsService, AudiencesVouchersService, AudiencesUserService } from '@cl-core-services';
 import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
@@ -30,14 +31,11 @@ import {
 
 import {
   IWAssignedAttributes,
-  IWProfileAttributes,
   IJsonApiItem,
 } from '@perx/whistler';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
-import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { CustomDataSource } from '@cl-shared';
-import { AudiencesVouchersService } from '@cl-core/services/audiences-vouchers.service';
-import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
+import { } from '@cl-core/services/audiences-vouchers.service';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { MessageService } from '@cl-core/services';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
@@ -57,11 +55,11 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   private destroy$: Subject<void> = new Subject();
 
   public userId: string;
-  public user: IWProfileAttributes;
-  public tabsFilterConfig: OptionConfig[];
-  public dataSource: CustomDataSource<any>;
+  public user: IAudiencesUserForm;
+  public dataSourceVouchers: CustomDataSource<any>;
+  public dataSourceCommunications: CustomDataSource<any>;
 
-  private async updateLocalUser(): Promise<IWProfileAttributes> {
+  private async updateLocalUser(): Promise<IAudiencesUserForm> {
     this.user = await this.audiencesUserService.getUser(this.userId).toPromise();
     this.cd.detectChanges();
     return this.user;
@@ -74,6 +72,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     private router: Router,
     public cd: ChangeDetectorRef,
     public dialog: MatDialog,
+    private commsService: CommsService,
     private messageService: MessageService,
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
@@ -110,7 +109,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       .subscribe(
         () => {
           this.messageService.show('Expiry voucher date successfully changed.');
-          this.dataSource.updateData();
+          this.dataSourceVouchers.updateData();
         },
         () => this.messageService.show('Failed to update voucher expiration date.')
       );
@@ -130,7 +129,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       .subscribe(
         () => {
           this.messageService.show('Voucher assigned to user.');
-          this.dataSource.updateData();
+          this.dataSourceVouchers.updateData();
         },
         () => this.messageService.show('Could not assign voucher to user. Make sure that the reward has enough stock.')
       );
@@ -146,7 +145,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       takeUntil(this.destroy$),
     )
       .subscribe(
-        (user: IWProfileAttributes) => {
+        (user: IAudiencesUserForm) => {
           this.user = user;
           this.cd.detectChanges();
         },
@@ -159,13 +158,14 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
 
   private initDataSource(): void {
     const params = this.userId ? { 'filter[assigned_to_id]': this.userId } : {};
-    this.dataSource = new CustomDataSource<any>(this.vouchersService, undefined, params);
-    this.dataSource.data$.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe((data: any) => {
-      const counterObject = PrepareTableFilters.countFieldValue(data, 'status');
-      this.tabsFilterConfig = PrepareTableFilters.prepareTabsFilterConfig(counterObject);
-    });
+    this.dataSourceVouchers = new CustomDataSource<any>(this.vouchersService, undefined, params);
+    this.dataSourceCommunications = new CustomDataSource<any>(this.commsService, undefined, {});
+    // this.dataSource.data$.pipe(
+    //   takeUntil(this.destroy$)
+    // ).subscribe((data: any) => {
+    //   // const counterObject = PrepareTableFilters.countFieldValue(data, 'status');
+    //   // this.tabsFilterConfig = PrepareTableFilters.prepareTabsFilterConfig(counterObject);
+    // });
   }
 
   public openEditUserDialog(): void {

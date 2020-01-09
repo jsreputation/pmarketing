@@ -42,7 +42,13 @@ export class UsersUploadService extends IAdvancedUploadFileService {
                 )
               )
             )
-          )
+          ),
+          switchMap((fileRes: IUploadedFile) => {
+            if (fileRes.status === FileUploadStatus.error) {
+              throw throwError('Error uploading audience');
+            }
+            return of(fileRes);
+          })
         ).subscribe(
           (res: IUploadedFile) => {
             subject.next({

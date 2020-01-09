@@ -1,55 +1,57 @@
 FROM node:lts-alpine as builder
 
+# Run the commands that are least likely to change first to bust the cache at the latest stage possible
+
 COPY . /service
 WORKDIR /service
+RUN yarn
 
 ARG apihost='https://api.getperx.io'
 ARG basehref='/'
 ARG preauth='false'
+# iswhistler is used by all microsites
 ARG iswhistler='false'
+# sourcetype is for HSBC PH only; ignonored by all other app values
 ARG sourcetype
 ARG app
 ARG env='prod'
+# redirectdest is used only for blackcomb
 ARG redirectdest
 
-RUN echo "apihost: ${apihost}"
-RUN echo "basehref: ${basehref}"
-RUN echo "preauth: ${preauth}"
-RUN echo "iswhistler: ${iswhistler}"
+RUN SOURCE_TYPE=${sourcetype} APIHOST=${apihost} BASE_HREF=${basehref} PREAUTH=${preauth} \
+    IS_WHISTLER=${iswhistler} REDIRECT_AFTER_LOGIN=${redirectdest} \
+    yarn build:${app}:${env} --base-href ${basehref} --rebase-root-relative-css-urls=true
 
-RUN yarn
-RUN SOURCE_TYPE=${sourcetype} APIHOST=${apihost} BASE_HREF=${basehref} PREAUTH=${preauth} IS_WHISTLER=${iswhistler} REDIRECT_AFTER_LOGIN=${redirectdest} yarn build:${app}:${env} --base-href ${basehref} --rebase-root-relative-css-urls=true
 RUN BASE_HREF=${basehref} yarn build:backend
 
+RUN echo -e "\n--- Build Args ---\napihost: ${apihost}\nbasehref: ${basehref}\npreauth: ${preauth}\n" \
+           "iswhistler: ${iswhistler}\nsourcetype: ${sourcetype}\napp: ${app}\nenv: ${env}\n" \
+           "redirectdest: ${redirectdest}\n"
+
+# Stage 2
 FROM node:lts-alpine
 
-ARG app
-ARG appbase=${app}
-ARG iswhistler='false'
-RUN echo "stage 2:"
-RUN echo "app: ${app}"
-RUN echo "appbase: ${appbase}"
-RUN echo "iswhistler: ${iswhistler}"
-
-COPY --from=builder /service/apps/$appbase/dist/$appbase /service/perx-microsite/
-COPY --from=builder /service/backend/appauth-server /service/express/
-
-RUN cat /service/perx-microsite/index.html
-
 WORKDIR /service/express
-ARG basehref='/'
-ARG iswhistler='false'
-
-ENV PORT=8000
-ENV PRODUCTION='true'
-ENV BASE_HREF=${basehref}
-ENV IS_WHISTLER=${iswhistler}
-RUN echo "IS_WHISTLER: ${IS_WHISTLER}"
-
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
     && ln -s /usr/local/bin/docker-entrypoint.sh / # backwards compat
-ENTRYPOINT ["docker-entrypoint.sh"]
 
-EXPOSE 8000
+ENTRYPOINT ["docker-entrypoint.sh"]
+ARG port=8000
+EXPOSE ${port}
 CMD ["run"]
+
+COPY --from=builder /service/backend/appauth-server /service/express/
+
+ARG app
+ARG appbase=${app}
+
+COPY --from=builder /service/apps/$appbase/dist/$appbase /service/perx-microsite/
+
+ARG iswhistler='false'
+ARG basehref='/'
+
+RUN echo -e "\n--- Stage 2 Build Args ---\napp: ${app}\nappbase: ${appbase}\n" \
+            "port: ${port}\niswhistler: ${iswhistler}\nbasehref: ${basehref}\n"
+
+ENV IS_WHISTLER=${iswhistler} BASE_HREF=${basehref} PORT=${port} PRODUCTION='true'

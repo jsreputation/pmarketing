@@ -1,0 +1,179 @@
+<div class="dashboard-group-graphics">
+  <div class="chard-card-list">
+
+    <div class="tabs-list-wrap business-insights-tabs-list-wrap">
+      <mat-radio-group color="primary" class="tabs-list business-insights-tabs-list" [value]="activeTab"
+        (change)="selectedTab($event.value)">
+        <ng-container *ngFor="let tab of tabs; let index = index">
+          <mat-radio-button [value]="tab?.name">
+            <cl-tab-item-view [data]="tab" [value]="getTabValue(index)"></cl-tab-item-view>
+          </mat-radio-button>
+        </ng-container>
+      </mat-radio-group>
+    </div>
+
+    <ng-container [ngSwitch]="activeTab">
+      <ng-container *ngSwitchCase="'points'">
+        <article class="chart-card">
+          <h3 class="chart-card-title sr-only">Points</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="'loyalty_Points_breakdown'" [cardType]="ct.line" [params]="params">
+            </cl-chart-card>
+          </div>
+        </article>
+      </ng-container>
+      <ng-container *ngSwitchCase="'views'">
+        <article class="chart-card">
+          <h3 class="chart-card-title sr-only">Views</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="'loyalty_views_breakdown'" [cardType]="ct.line" [params]="params">
+            </cl-chart-card>
+          </div>
+        </article>
+      </ng-container>
+      <ng-container *ngSwitchCase="'purchases'">
+        <article class="chart-card">
+          <h3 class="chart-card-title sr-only">Purchases</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="'loyalty_programs_purchases'" [cardType]="ct.line" [params]="params">
+            </cl-chart-card>
+          </div>
+        </article>
+      </ng-container>
+      <ng-container *ngSwitchCase="'revenue'">
+        <article class="chart-card">
+          <h3 class="chart-card-title sr-only">Revenue</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="'loyalty_revenue_breakdown'" [cardType]="ct.line" [params]="params">
+            </cl-chart-card>
+          </div>
+        </article>
+      </ng-container>
+      <ng-container *ngSwitchCase="'new_members'">
+        <article class="chart-card">
+          <h3 class="chart-card-title sr-only">New Members</h3>
+          <div class="chart-card-content">
+            <cl-chart-card [id]="'loyalty_programs_new_members'" [cardType]="ct.line" [params]="params">
+            </cl-chart-card>
+          </div>
+        </article>
+      </ng-container>
+    </ng-container>
+
+    <section class="growth-card-set">
+      <cl-growth-card class="growth-card"></cl-growth-card>
+      <cl-growth-card class="growth-card"></cl-growth-card>
+      <cl-growth-card class="growth-card"></cl-growth-card>
+      <cl-growth-card class="growth-card"></cl-growth-card>
+      <cl-growth-card class="growth-card"></cl-growth-card>
+    </section>
+
+    <article class="chart-card">
+      <h3 class="chart-card-title">Age</h3>
+      <div class="chart-card-content">
+        <cl-chart-card [id]="'loyalty_age'" [cardType]="ct.verticalBar" [params]="params"></cl-chart-card>
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <h3 class="chart-card-title">Gender</h3>
+      <div class="chart-card-content">
+        <cl-chart-card [id]="'loyalty_gender'" [cardType]="ct.advancedPie" [params]="params">
+        </cl-chart-card>
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <h3 class="chart-card-title">Race</h3>
+      <div class="chart-card-content">
+        <cl-chart-card [id]="'loyalty_race'" [cardType]="ct.advancedPie" [params]="params"></cl-chart-card>
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <h3 class="chart-card-title">Loyalty Tiers</h3>
+      <div class="chart-card-content">
+        <cl-chart-card [id]="'loyalty_tiers'" [cardType]="ct.advancedPie" [params]="params"></cl-chart-card>
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <h3 class="chart-card-title">Viewing Channel</h3>
+      <div class="chart-card-content">
+        <cl-chart-card [id]="'loyalty_viewing_channel'" [cardType]="ct.advancedPie" [params]="params"></cl-chart-card>
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <h3 class="chart-card-title">User Plans</h3>
+      <div class="chart-card-content">
+        <cl-chart-card [id]="'loyalty_user_plans'" [cardType]="ct.advancedPie" [params]="params"></cl-chart-card>
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <h3 class="chart-card-title">Primary States</h3>
+      <div class="chart-card-content">
+        <cl-chart-card [id]="'loyalty_primary_states'" [cardType]="ct.table" [params]="params"></cl-chart-card>
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <h3 class="chart-card-title">Primary Clusters</h3>
+      <div class="chart-card-content">
+        <cl-chart-card [id]="'loyalty_primary_clusters'" [cardType]="ct.table" [params]="params"></cl-chart-card>
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <h3 class="chart-card-title">Promotion Time (Yellow to Gold)</h3>
+      <div class="chart-card-content">
+        <cl-chart-card [id]="'loyalty_promotion_time_1'" [cardType]="ct.verticalBar" [params]="params"></cl-chart-card>
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <h3 class="chart-card-title">Promotion Time (Gold to Platinum)</h3>
+      <div class="chart-card-content">
+        <cl-chart-card [id]="'loyalty_promotion_time_2'" [cardType]="ct.verticalBar" [params]="params"></cl-chart-card>
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <h3 class="chart-card-title">Days with Most Points Earned</h3>
+      <div class="chart-card-content">
+        <cl-chart-card [id]="'loyalty_days_with_most_points_earned'" [cardType]="ct.calendarHeatmap" [params]="params">
+        </cl-chart-card>
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <h3 class="chart-card-title">Popular Rewards</h3>
+      <div class="chart-card-content">
+        <cl-chart-card [id]="'loyalty_top_rewards'" [cardType]="ct.horizontalBar" [params]="params"></cl-chart-card>
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <h3 class="chart-card-title">Popular Merchants</h3>
+      <div class="chart-card-content">
+        <cl-chart-card [id]="'loyalty_top_merchants'" [cardType]="ct.horizontalBar" [params]="params"></cl-chart-card>
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <h3 class="chart-card-title">Popular Categories</h3>
+      <div class="chart-card-content">
+        <cl-chart-card [id]="'loyalty_top_categories'" [cardType]="ct.horizontalBar" [params]="params"></cl-chart-card>
+      </div>
+    </article>
+
+    <article class="chart-card">
+      <h3 class="chart-card-title">Popular Campaigns</h3>
+      <div class="chart-card-content">
+        <cl-chart-card [id]="'loyalty_top_campaigns'" [cardType]="ct.horizontalBar" [params]="params"></cl-chart-card>
+      </div>
+    </article>
+
+  </div>
+</div>

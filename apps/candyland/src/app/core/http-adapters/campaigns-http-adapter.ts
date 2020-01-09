@@ -44,18 +44,20 @@ export class CampaignsHttpAdapter {
   }
 
   public static transformAudienceFilter(audienceFilter: IAudienceFilter): IWAudienceFilter {
+    const gender = audienceFilter.genderEnabled ? audienceFilter.gender || undefined : undefined;
+    const age = audienceFilter.agesEnabled ? [...audienceFilter.ages] || undefined : undefined;
     return {
-      gender: audienceFilter.genderEnabled ? audienceFilter.gender || null : null,
-      ages: audienceFilter.agesEnabled ? [...audienceFilter.ages] || null : null,
+      gender,
+      age
     };
   }
 
   public static transformAudienceFilterFromAPI(audienceFilter: IWAudienceFilter): IAudienceFilter {
     return {
-      agesEnabled: !!(audienceFilter.ages && audienceFilter.ages.length > 0),
+      agesEnabled: !!(audienceFilter.age && audienceFilter.age.length > 0),
       genderEnabled: !!audienceFilter.gender,
       gender: audienceFilter.gender || null,
-      ages: audienceFilter.ages ? [...audienceFilter.ages] : [],
+      ages: audienceFilter.age ? [...audienceFilter.age] : [],
     };
   }
 

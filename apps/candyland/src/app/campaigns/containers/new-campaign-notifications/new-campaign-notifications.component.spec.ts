@@ -5,24 +5,56 @@ import { NewCampaignNotificationsComponent } from './new-campaign-notifications.
 import { CampaignChannelsFormService } from '../../services/campaign-channels-form.service';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { NewCampaignDetailFormService } from '../../services/new-campaign-detail-form.service';
+import { StepConditionService } from '../../services/step-condition.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
+import { MatCheckboxModule, MatSelectModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('NewCampaignNotificationsComponent', () => {
   let component: NewCampaignNotificationsComponent;
   let fixture: ComponentFixture<NewCampaignNotificationsComponent>;
-
+  const campaignCreationStoreServiceStub: Partial<CampaignCreationStoreService> = {
+    updateCampaign: (data: any) => data,
+    resetCampaign: () => {
+    },
+    currentCampaign$: new BehaviorSubject<ICampaign>(null)
+  };
+  const stepConditionServiceStub: Partial<StepConditionService> = {
+    registerStepCondition: () => ({})
+  };
+  const activatedRouteStub = {
+    snapshot: {
+      params: {
+        id: 42
+      }
+    }
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ NewCampaignNotificationsComponent ],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [
+        BrowserAnimationsModule,
         HttpClientTestingModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        ReactiveFormsModule,
+        FormsModule,
+        MatCheckboxModule,
+        MatSelectModule,
       ],
       providers: [
         CampaignChannelsFormService,
-        CampaignCreationStoreService,
+        NewCampaignDetailFormService,
+        RouterTestingModule,
+        { provide: CampaignCreationStoreService, useValue: campaignCreationStoreServiceStub },
+        { provide: StepConditionService, useValue: stepConditionServiceStub },
+        { provide: ActivatedRoute, useValue: activatedRouteStub }
       ]
     })
     .compileComponents();
@@ -31,7 +63,17 @@ describe('NewCampaignNotificationsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NewCampaignNotificationsComponent);
     component = fixture.componentInstance;
-    component.channelForm = new FormGroup({});
+    component.channelForm = new FormGroup({
+      webNotification: new FormGroup({
+        webLink: new FormControl(null),
+        webLinkOptions: new FormControl(null),
+        id: new FormControl(null),
+      }),
+      sms: new FormControl(null),
+      launch: new FormArray([]),
+      completed: new FormArray([]),
+      campaignEnds: new FormArray([]),
+    });
     fixture.detectChanges();
   });
 

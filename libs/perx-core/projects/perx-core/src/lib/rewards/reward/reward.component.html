@@ -1,10 +1,10 @@
 <ng-container *ngIf="reward$ | async as reward">
   <div class="reward-container">
     <div class="reward-image-container" *ngIf="reward.rewardBanner">
-      <img class="reward-image" src="{{reward.rewardBanner}}">
+      <img class="reward-image" src="{{reward.rewardBanner}}" [alt]="reward.name">
     </div>
     <div class="merchant-image-container" *ngIf="reward.merchantImg">
-      <img class="merchant-image" src="{{reward.merchantImg}}">
+      <img class="merchant-image" src="{{reward.merchantImg}}" [alt]="reward.merchantName">
     </div>
     <div class="details">
       <div class="reward-name">
