@@ -1,3 +1,5 @@
+import { WMessageChannel } from '@perx/whistler/dist/whistler/lib/comm/comm';
+
 export interface IComm {
     message?: string;
     schedule?: ISchedule;
@@ -16,4 +18,16 @@ export interface ISchedule {
         period: string;
         repeatOn: string[];
     };
+}
+
+export interface ICommMessage {
+    id?: string;
+    from: string;
+    to: string;
+    provider_id: number;
+    message: string;
+    sendDate: Date | null;
+    owner_id?: string | null;
+    owner_type?: string | null;
+    channel: WMessageChannel;
 }
