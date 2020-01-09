@@ -34,7 +34,7 @@ import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { TabsFilterModule } from '@cl-shared/table/tabs-filter/tabs-filter.module';
 import { RangeDatePickerFilterModule } from '@cl-shared/components/range-date-picker-filter/range-date-picker-filter.module';
-import { ButtonModule, CopyLinkModule, DownloadLinkModule } from '@perx/candyshop';
+import { ButtonModule, CopyLinkModule, DownloadLinkModule, ProgressBarModule } from '@perx/candyshop';
 import {
   SeparateRangeDatePickerFilterModule
 } from '@cl-shared/table/separate-range-date-picker-filter/separate-range-date-picker-filter.module';
@@ -44,7 +44,6 @@ import { NewCampaignRewardsPageComponent } from './containers/new-campaign-rewar
 import { EngagementItemModule } from '@cl-shared/components/engagement-item/engagement-item.module';
 import { ItemListModule } from '@cl-shared/components/item-list/item-list.module';
 import { RewardItemComponent } from './components/reward-item/reward-item.component';
-import { ProgressBarModule } from '@cl-shared/components/progress-bar/progress-bar.module';
 import { DateTimePickerModule } from '@cl-shared/components/date-time-picker/date-time-picker.module';
 import { TimePickerModule } from '@cl-shared/components/time-picker/time-picker.module';
 import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';

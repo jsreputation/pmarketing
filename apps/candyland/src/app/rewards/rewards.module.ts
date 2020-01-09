@@ -44,12 +44,12 @@ import {
   CreateMerchantPopupModule,
   DatePickerModule,
   ItemListModule, NoDataModule,
-  ProgressBarModule, SearchFilterModule, SelectMerchantPopupModule,
+  SearchFilterModule, SelectMerchantPopupModule,
   StatusLabelModule, TableFiltersModule,
   TimePickerModule,
   UploadFileModule, UploadGraphicModule, VouchersProgressBarModule
 } from '@cl-shared';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule, ProgressBarModule } from '@perx/candyshop';
 import { TagListModule } from '@cl-shared/components/tag-list/tag-list.module';
 import { RewardLoyaltyFormGroupComponent } from './components/reward-loyalty-form-group/reward-loyalty-form-group.component';
 import { MatTabsModule } from '@angular/material/tabs';

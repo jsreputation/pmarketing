@@ -40,7 +40,7 @@
     <ng-container matColumnDef="balance">
       <th mat-header-cell *matHeaderCellDef mat-sort-header="cost_of_reward"><span translate>BALANCE</span></th>
       <td mat-cell *matCellDef="let element">
-        <cl-progress-bar [current]="element?.current" [total]="element?.total"></cl-progress-bar>
+        <cs-progress-bar [current]="element?.current" [total]="element?.total"></cs-progress-bar>
       </td>
     </ng-container>
 

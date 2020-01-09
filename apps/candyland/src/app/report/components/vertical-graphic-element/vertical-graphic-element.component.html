@@ -1,7 +1,8 @@
 <div class="graphic-suffix" *ngIf="item">
   <div class="graphic-percent">
     <p class="graphic-value">{{item.amount}}&nbsp;</p>
-    <p class="graphic-percent-value" *ngIf="item.amount">({{item.amount * 100 / graphicData.total | number:'0.1-3'}}%)</p>
+    <p class="graphic-percent-value" *ngIf="item.amount">({{item.amount * 100 / graphicData.total | number:'0.1-3'}}
+      %)</p>
     <p class="graphic-recent-value" *ngIf="!item.amount">(0%)</p>
   </div>
 </div>

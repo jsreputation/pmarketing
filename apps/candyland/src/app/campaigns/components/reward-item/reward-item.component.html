@@ -9,11 +9,11 @@
         <p class="reward-item-name">{{data?.name || ('CAMPAIGN.NO_REWARD' | translate)}}</p>
         <p class="reward-item-type" *ngIf="data?.merchantName">{{data?.merchantName}}</p>
       </div>
-      <!-- <cl-progress-bar class="reward-item-progress"
+      <!-- <cs-progress-bar class="reward-item-progress"
                       *ngIf="data?.current && data?.total"
                       [current]="data?.current"
                       [total]="data?.total">
-      </cl-progress-bar> -->
+      </cs-progress-bar> -->
       <div class="reward-item-limit">
           <span class="reward-item-limit-label">
               {{'CAMPAIGN.LIMIT' | translate}}
@@ -44,7 +44,7 @@
           [formControl]="probability">
         <span matSuffix>%</span>
       </mat-form-field>
-    </div>    
+    </div>
   </div>
   <div class="reward-item-actions">
     <button mat-icon-button *ngIf="data?.name" (click)="delete()">
