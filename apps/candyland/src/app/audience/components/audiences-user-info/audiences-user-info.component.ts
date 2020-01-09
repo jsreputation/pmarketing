@@ -4,7 +4,6 @@ import {
   Input,
 } from '@angular/core';
 
-import { IWCustomProperties } from '@perx/whistler';
 import Utils from '@cl-helpers/utils';
 
 @Component({
@@ -15,15 +14,7 @@ import Utils from '@cl-helpers/utils';
 })
 
 export class AudiencesUserInfoComponent {
-  @Input() public user: any;
-
-  public get properties(): IWCustomProperties | null {
-    if (!this.user) {
-      return null;
-    }
-
-    return this.user.properties || null;
-  }
+  @Input() public user: IAudiencesUserForm;
 
   public transformMailTo(email: string): string {
     return Utils.transformMailTo(email);
