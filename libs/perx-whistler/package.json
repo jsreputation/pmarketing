@@ -8,7 +8,7 @@
     "lint": "ng lint && eslint \"projects/**/*.ts\"",
     "lint:fix": "eslint \"projects/**/*.ts\" --fix",
     "e2e": "ng e2e",
-    "test": "jest"
+    "test~": "jest"
   },
   "private": true,
   "dependencies": {
@@ -26,7 +26,6 @@
     "@angular/compiler-cli": "~8.0.3",
     "@angular/language-service": "~8.0.3",
     "@types/node": "~8.9.4",
-    "karma": "~4.1.0",
     "codelyzer": "^5.0.0",
     "ng-packagr": "^5.1.0",
     "protractor": "~5.4.0",
@@ -47,13 +46,5 @@
   "fesm5": "./dist/whistler/fesm5/whistler.js",
   "fesm2015": "./dist/whistler/fesm2015/whistler.js",
   "typings": "./dist/whistler/whistler.d.ts",
-  "metadata": "./dist/whistler/whistler.metadata.json",
-  "jest": {
-    "preset": "ts-jest",
-    "globals": {
-      "ts-jest": {
-        "diagnostics": true
-      }
-    }
-  }
+  "metadata": "./dist/whistler/whistler.metadata.json"
 }
