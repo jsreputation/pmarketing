@@ -61,8 +61,7 @@ commands:
                 if [ $APP == 'hsbc' ] || [ $APP == 'hsbc-rewards' ] || [ $APP == 'hsbc-xmas' ]
                 then
                   APIHOST="https://api-hsbc.perxtech.net"
-                elif [ $APP == 'starhub' ]
-                then
+                elif [ $APP == 'starhub' ]; then
                   APIHOST="https://api-starhub.perxtech.net"
                 else
                   APIHOST="https://api.getperx.net"
