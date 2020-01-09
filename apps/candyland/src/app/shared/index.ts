@@ -47,7 +47,6 @@ export * from './components/time-picker/time-picker.module';
 export * from './components/upload-file/upload-file.module';
 export * from './components/upload-graphic/upload-graphic.module';
 export * from './components/user/user.module';
-export * from './components/vouchers-progress-bar/vouchers-progress-bar.module';
 export * from './components/checkbox-group/checkbox-group.component';
 export * from './components/chip-list/chip-list.component';
 export * from './components/cl-color-picker/cl-color-picker.component';
@@ -85,7 +84,6 @@ export * from './components/time-picker/time-picker.component';
 export * from './components/upload-file/upload-file.component';
 export * from './components/upload-graphic/upload-graphic.component';
 export * from './components/user/user.component';
-export * from './components/vouchers-progress-bar/vouchers-progress-bar.component';
 export * from './components/checkbox-group/checkbox-group.component';
 export * from './components/checkbox-group/checkbox-group.module';
 
