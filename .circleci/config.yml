@@ -483,7 +483,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^(?!blackcomb|candyland)(\w+-)+staging-\d+\.\d+\.\d+.*/
+              only: /^(?!blackcomb|candyland|oracle-demo)(\w+-)+staging-\d+\.\d+\.\d+.*/
       - deploy:
           name: deploy_to_production
           docker_tag: "${CIRCLE_TAG}"
@@ -499,7 +499,7 @@ workflows:
               ignore: /.*/
             tags:
               # semver v2
-              only: /^(?!blackcomb|candyland)(\w+-)+production-\d+\.\d+\.\d+.*/
+              only: /^(?!blackcomb|candyland|oracle-demo)(\w+-)+production-\d+\.\d+\.\d+.*/
       - build_proxy_docker_image:
           filters:
             # need to sepcify this otherwise the job will run even if there's no tag
