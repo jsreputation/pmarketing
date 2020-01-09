@@ -18,9 +18,7 @@ ARG env='prod'
 # redirectdest is used only for blackcomb
 ARG redirectdest
 
-RUN SOURCE_TYPE=${sourcetype} APIHOST=${apihost} BASE_HREF=${basehref} PREAUTH=${preauth} \
-    IS_WHISTLER=${iswhistler} REDIRECT_AFTER_LOGIN=${redirectdest} \
-    yarn build:${app}:${env} --base-href ${basehref} --rebase-root-relative-css-urls=true
+RUN SOURCE_TYPE=${sourcetype} APIHOST=${apihost} BASE_HREF=${basehref} PREAUTH=${preauth} IS_WHISTLER=${iswhistler} REDIRECT_AFTER_LOGIN=${redirectdest} yarn build:${app}:${env} --base-href ${basehref} --rebase-root-relative-css-urls=true
 
 RUN BASE_HREF=${basehref} yarn build:backend
 
