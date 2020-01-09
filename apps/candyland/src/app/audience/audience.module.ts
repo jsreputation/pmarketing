@@ -17,11 +17,10 @@ import {
   MatInputModule,
   MatMenuModule, MatPaginatorModule, MatSelectModule, MatSortModule, MatTableModule, MatTabsModule
 } from '@angular/material';
-import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { TabsFilterModule } from '@cl-shared/table/tabs-filter/tabs-filter.module';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule, StatusLabelModule } from '@perx/candyshop';
 import { UploadFileModule } from '@cl-shared/components/upload-file/upload-file.module';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { AudiencesUserInfoComponent } from './components/audiences-user-info/audiences-user-info.component';

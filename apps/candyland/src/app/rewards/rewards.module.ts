@@ -43,16 +43,19 @@ import { RewardReplenishPopupComponent } from './containers/reward-replenish-pop
 import {
   CreateMerchantPopupModule,
   DatePickerModule,
-  ItemListModule, NoDataModule,
-  SearchFilterModule, SelectMerchantPopupModule,
-  StatusLabelModule, TableFiltersModule,
+  ItemListModule,
+  NoDataModule,
+  SearchFilterModule,
+  SelectMerchantPopupModule,
+  TableFiltersModule,
   TimePickerModule,
   UploadFileModule, UploadGraphicModule
 } from '@cl-shared';
 import {
   ButtonModule,
   ProgressBarModule,
-  StatisticsProgressBarModule
+  StatisticsProgressBarModule,
+  StatusLabelModule
 } from '@perx/candyshop';
 import { TagListModule } from '@cl-shared/components/tag-list/tag-list.module';
 import { RewardLoyaltyFormGroupComponent } from './components/reward-loyalty-form-group/reward-loyalty-form-group.component';

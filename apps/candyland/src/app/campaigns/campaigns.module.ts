@@ -29,12 +29,17 @@ import {
   MatStepperModule,
   MatTableModule
 } from '@angular/material';
-import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { TabsFilterModule } from '@cl-shared/table/tabs-filter/tabs-filter.module';
 import { RangeDatePickerFilterModule } from '@cl-shared/components/range-date-picker-filter/range-date-picker-filter.module';
-import { ButtonModule, CopyLinkModule, DownloadLinkModule, ProgressBarModule } from '@perx/candyshop';
+import {
+  ButtonModule,
+  CopyLinkModule,
+  DownloadLinkModule,
+  ProgressBarModule,
+  StatusLabelModule
+} from '@perx/candyshop';
 import {
   SeparateRangeDatePickerFilterModule
 } from '@cl-shared/table/separate-range-date-picker-filter/separate-range-date-picker-filter.module';

@@ -7,10 +7,9 @@ import {
   PaginationModule,
   TableFiltersModule,
   SearchFilterModule,
-  NoDataModule,
-  StatusLabelModule
+  NoDataModule
 } from '@cl-shared';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule, StatusLabelModule } from '@perx/candyshop';
 import { TabsFilterModule } from '../../../shared/table/tabs-filter/tabs-filter.module';
 import {
   MatIconModule,

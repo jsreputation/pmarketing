@@ -11,9 +11,9 @@ import {
   MatSortModule,
   MatTableModule
 } from '@angular/material';
-import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { StatusLabelModule } from '@perx/candyshop';
 
 @NgModule({
   declarations: [

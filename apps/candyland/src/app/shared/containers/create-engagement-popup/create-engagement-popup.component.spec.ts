@@ -12,7 +12,7 @@ import {
   MatTableModule
 } from '@angular/material';
 import { InkModule } from '../../components/ink/ink.module';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule, StatusLabelModule } from '@perx/candyshop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EngagementTypeComponent } from './engagement-type/engagement-type.component';
 import { EngagementsListPageComponent } from '../../../engagements/containers/engagements-list-page/engagements-list-page.component';
@@ -25,7 +25,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TableFiltersModule } from '../../table/table-filters/table-filters.module';
 import { SearchFilterModule } from '../../table/search-filter/search-filter.module';
 import { TabsFilterModule } from '../../table/tabs-filter/tabs-filter.module';
-import { StatusLabelModule } from '../../components/status-label/status-label.module';
 import { NoDataModule } from '../../table/no-data/no-data.module';
 import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
