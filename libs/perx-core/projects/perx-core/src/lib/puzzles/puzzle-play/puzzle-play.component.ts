@@ -3,12 +3,9 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnChanges,
   ElementRef,
   ViewChild,
-  // SimpleChanges
 } from '@angular/core';
-//  import { Observable, Observer } from 'rxjs';
 
 interface DrawTile {
   puzzleLocation: number;
@@ -20,7 +17,7 @@ interface DrawTile {
   templateUrl: './puzzle-play.component.html',
   styleUrls: ['./puzzle-play.component.scss']
 })
-export class PuzzlePlayComponent implements OnChanges {
+export class PuzzlePlayComponent {
   @Input()
   public img: string;
 
@@ -65,37 +62,6 @@ export class PuzzlePlayComponent implements OnChanges {
 
   @ViewChild('puzzleBoard', { static: false }) public puzzleView: ElementRef;
 
-  public ngOnChanges(
-  // changes: SimpleChanges
-  ): void {
-    // if (this.img) {
-
-    // if (this.nbAvailablePieces !== 0 && this.showHint) {
-    // this.imageReady = true;
-    // }
-    // this.getImageSizeRatioFromURL(this.img).subscribe(ratio => {
-    //     this.imageHeight = this.imageWidth * ratio;
-    /*
-          this.tileWidth = this.imageWidth / this.cols;
-          this.tileHeight = this.imageHeight / this.rows;
-          this.totalPieces = this.rows * this.cols;
-
-          for (let x = 0; x < this.totalPieces; x++) {
-            this.boardPuzzleTiles[x] = { puzzleLocation: x, isSelected: (x < this.nbPlayedPieces) };
-          }
-          for (let i = 0; i < this.nbAvailablePieces; i++) {
-            const location = this.nbPlayedPieces + i;
-            this.remainingPuzzleTiles[i] = { puzzleLocation: location, isSelected: false };
-          }
-          for (let i = 0; i < this.totalPieces; i++) {
-            this.staticPuzzleDummyTiles[i] = [i];
-          }*/
-
-    // },
-    // err => console.error('Observer got an error: ' + err));
-    // }
-  }
-
   public nextStampClicked(): void {
 
     if (this.isAllPuzzleCompleted()) {
@@ -115,11 +81,11 @@ export class PuzzlePlayComponent implements OnChanges {
     if (tile.isSelected) {
       return {
         // tslint:disable: object-literal-key-quotes
-        width: this.tileWidth + 'px',
-        height: this.tileHeight + 'px',
-        'background-position': (-leftPosition) + 'px ' + (-topPosition) + 'px',
-        'background-image': 'url(' + this.img + ')',
-        'background-size': this.imageWidth + 'px ' + this.imageHeight + 'px',
+        width: `${this.tileWidth}px`,
+        height: `${this.tileHeight}px`,
+        'background-position': `${-leftPosition}px ${-topPosition}px`,
+        'background-image': `url(${this.img})`,
+        'background-size': `${this.imageWidth}px ${this.imageHeight}px`,
         'background-repeat': 'no-repeat',
         '-webkit-filter': 'none',
         filter: 'none',
@@ -127,11 +93,11 @@ export class PuzzlePlayComponent implements OnChanges {
       };
     }
     return {
-      width: this.tileWidth + 'px',
-      height: this.tileHeight + 'px',
-      'background-position': (-leftPosition) + 'px ' + (-topPosition) + 'px',
-      'background-image': 'url(' + this.img + ')',
-      'background-size': this.imageWidth + 'px ' + this.imageHeight + 'px',
+      width: `${this.tileWidth}px`,
+      height: `${this.tileHeight}px`,
+      'background-position': `${-leftPosition}px ${-topPosition}px`,
+      'background-image': `url(${this.img})`,
+      'background-size': `${this.imageWidth}px ${this.imageHeight}px`,
       'background-repeat': 'no-repeat',
       '-webkit-filter': 'grayscale(100%)',
       filter: 'grayscale(100%)',
@@ -149,11 +115,11 @@ export class PuzzlePlayComponent implements OnChanges {
       const topPosition = topPositionIndex * this.tileHeight;
 
       return {
-        width: this.tileWidth + 'px',
-        height: this.tileHeight + 'px',
-        'background-position': (-leftPosition) + 'px ' + (-topPosition) + 'px',
-        'background-image': 'url(' + this.img + ')',
-        'background-size': this.imageWidth + 'px ' + this.imageHeight + 'px',
+        width: `${this.tileWidth}px`,
+        height: `${this.tileHeight}px`,
+        'background-position': `${-leftPosition}px ${-topPosition}px`,
+        'background-image': `url(${this.img})`,
+        'background-size': `${this.imageWidth}px ${this.imageHeight}px`,
         'background-repeat': 'no-repeat'
       };
     }
@@ -164,21 +130,21 @@ export class PuzzlePlayComponent implements OnChanges {
 
   public getImageSize(): any {
     return {
-      width: (this.imageWidth) + 'px',
-      height: (this.imageHeight) + 'px'
+      width: `${this.imageWidth}px`,
+      height: `${this.imageHeight}px`
     };
   }
 
   public getTileSize(): any {
     return {
-      width: (this.tileWidth) + 'px',
-      height: (this.tileHeight) + 'px'
+      width: `${this.tileWidth}px`,
+      height: `${this.tileHeight}px`
     };
   }
 
   public getWidthHeightRatio(): string {
     const ratioValue = (this.tileWidth / this.tileHeight);
-    return ratioValue.toString() + ':1';
+    return `${ratioValue.toString()}:1`;
   }
 
   public isAllPuzzleCompleted(): boolean {

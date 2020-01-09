@@ -134,10 +134,6 @@ export class HomeComponent implements OnInit {
           // if there is a 1st come 1st served campaign, display the popup
           if (firstComeFirstServed.length > 0) {
             this.firstComefirstServeCampaign = firstComeFirstServed[0];
-            // if (this.firstComefirstServeCampaign.rewards && this.firstComefirstServeCampaign.rewards.length > 0) {
-            //   // not a birthday campaign. preserve Dec 2019 functionality
-            //   return;
-            // }
             const data = {
               text: this.firstComefirstServeCampaign.description,
               imageUrl: 'assets/bd-campaign.svg',
@@ -148,18 +144,8 @@ export class HomeComponent implements OnInit {
             };
             this.putIdInStorage(this.firstComefirstServeCampaign.id);
             this.dialog.open(RewardPopupComponent, { data });
-            this.analytics.addEvent({
-              pageType: PageType.overlay,
-              pageName: this.firstComefirstServeCampaign.name
-            });
             return;
           }
-
-          // else if there is a game campaign, display the popup
-          // const gameCampaign: ICampaign | undefined = campaigns.find(campaign => campaign.type === CampaignType.game);
-          // if (gameCampaign) {
-          //   this.checkGame(gameCampaign);
-          // }
         },
         () => {
           // no campaign that is popup eligible. fail silently.
@@ -180,7 +166,7 @@ export class HomeComponent implements OnInit {
             // user has already been issued voucher
             this.router.navigate([`/home/vouchers`]);
           }
-          console.error('Something fishy, we should not be here, without any reward or game. ERR print: ' + err);
+          console.error(`Something fishy, we should not be here, without any reward or game. ERR print: ${err}`);
         }
       );
     }
