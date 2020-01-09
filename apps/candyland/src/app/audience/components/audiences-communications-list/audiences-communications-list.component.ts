@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { CustomDataSource } from '@cl-shared/';
 import { MatSort } from '@angular/material';
+import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 
 @Component({
   selector: 'cl-audiences-communications-list',

@@ -16,13 +16,21 @@ import {
 import { IComm, ICommMessage } from '@cl-core/models/comm/schedule';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { IWCommMessageAttributes } from '@perx/whistler/dist/whistler/lib/comm/comm';
+import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CommsService {
+export class CommsService implements ITableService<ICommMessage>{
 
   constructor(private commsHttpsService: CommsHttpsService) {
+  }
+
+  public getTableData(params: HttpParamsOptions): Observable<ITableData<ICommMessage>> {
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.commsHttpsService.getMessages(httpParams).pipe(
+      map((response: IJsonApiListPayload<IWCommMessageAttributes>) => CommsHttpAdapter.transformTableData(response))
+    );
   }
 
   public getCommsTemplate(params: HttpParamsOptions): Observable<IComm[]> {

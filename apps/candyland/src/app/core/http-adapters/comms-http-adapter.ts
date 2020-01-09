@@ -1,5 +1,12 @@
 import * as moment from 'moment';
-import { IWCommTemplateAttributes, IWCommEventAttributes, IJsonApiItem, IJsonApiPostData, IWCommMessageAttributes } from '@perx/whistler';
+import {
+  IWCommTemplateAttributes,
+  IWCommEventAttributes,
+  IJsonApiItem,
+  IJsonApiPostData,
+  IWCommMessageAttributes,
+  IJsonApiListPayload
+} from '@perx/whistler';
 import { IComm, ICommMessage } from '@cl-core/models/comm/schedule';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
 
@@ -20,6 +27,12 @@ export class CommsHttpAdapter {
         sendDate: data.attributes.send_at ? new Date(data.attributes.send_at) : null,
         sendTime: data.attributes.send_at ? moment(data.attributes.send_at).format('LT') : null
       }
+    };
+  }
+
+  public static transformTableData(data: IJsonApiListPayload<IWCommMessageAttributes>): ITableData<ICommMessage> {
+    return {
+      data: data.data.map(item => CommsHttpAdapter.transformMessageAPIResponse(item)), meta: data.meta
     };
   }
 
