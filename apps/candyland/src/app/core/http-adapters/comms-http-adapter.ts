@@ -93,6 +93,6 @@ export class CommsHttpAdapter {
         owner_type: data.owner_type,
         channel: data.channel
       }
-    }
+    };
   }
 }

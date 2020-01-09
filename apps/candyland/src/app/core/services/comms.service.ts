@@ -21,7 +21,7 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 @Injectable({
   providedIn: 'root'
 })
-export class CommsService implements ITableService<ICommMessage>{
+export class CommsService implements ITableService<ICommMessage> {
 
   constructor(private commsHttpsService: CommsHttpsService) {
   }
