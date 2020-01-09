@@ -1,8 +1,25 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { FeedItem, FeedReaderService } from '@perx/core';
+import {
+  Component,
+  OnInit,
+  HostListener,
+} from '@angular/core';
 import { MatDialog } from '@angular/material';
+
+import {
+  FeedItem,
+  FeedReaderService,
+} from '@perx/core';
+
+import {
+  AnalyticsService,
+  PageType,
+} from 'src/app/analytics.service';
 import { PopupComponent } from './popup/popup.component';
-import { AnalyticsService, PageType } from 'src/app/analytics.service';
+
+import { environment } from '../../../environments/environment';
+
+export const URL_PROD: string = 'https://cdn.perxtech.net/content/starhub/rss.xml';
+export const URL = 'https://cdn.perxtech.io/content/starhub/rss.xml';
 
 @Component({
   selector: 'app-news-feed',
@@ -15,6 +32,10 @@ export class NewsFeedComponent implements OnInit {
   public newsBeforeScroll: number[];
   public newsAfterScroll: number[];
 
+  public get url(): string {
+    return environment.production ? URL_PROD : URL;
+  }
+
   constructor(
     private reader: FeedReaderService,
     private dialog: MatDialog,
@@ -22,7 +43,7 @@ export class NewsFeedComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.reader.getFromUrl('https://cdn.perxtech.io/content/starhub/rss.xml')
+    this.reader.getFromUrl(this.url)
       .subscribe(items => {
         this.items = items;
         this.newsAfterScroll = Array.from(Array(items.length > 0 ? items.length - 1 : 1).keys());
