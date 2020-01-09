@@ -6,6 +6,10 @@ import { Config } from '../config/config';
 import { ICampaignService } from './icampaign.service';
 import { WhistlerCampaignService } from './whistler-campaign.service';
 
+import { RewardPopupComponent } from './reward-popup/reward-popup.component';
+import { ExpireTimerComponent } from './reward-popup/expire-timer/expire-timer.component';
+import { MatDialogModule } from '@angular/material';
+
 export function campaignServiceFactory(http: HttpClient, config: Config): ICampaignService {
   if (config.isWhistler) {
     return new WhistlerCampaignService(http, config);
@@ -16,9 +20,12 @@ export function campaignServiceFactory(http: HttpClient, config: Config): ICampa
 
 @NgModule({
   declarations: [
+    RewardPopupComponent,
+    ExpireTimerComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatDialogModule
   ],
   providers: [
     {
@@ -28,6 +35,8 @@ export function campaignServiceFactory(http: HttpClient, config: Config): ICampa
     }
   ],
   exports: [
+    RewardPopupComponent,
+    ExpireTimerComponent
   ]
 })
 export class CampaignModule {
