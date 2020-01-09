@@ -29,7 +29,7 @@ export interface IWCommMessageAttributes {
   to: string;
   body: string;
   provider_id: number;
-  owner_id?: null;
-  owner_type?: null;
+  owner_id?: string | null;
+  owner_type?: string | null;
   channel: WMessageChannel;
 }
