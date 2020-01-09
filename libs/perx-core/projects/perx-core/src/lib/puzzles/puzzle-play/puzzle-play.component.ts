@@ -66,7 +66,7 @@ export class PuzzlePlayComponent implements OnChanges {
   @ViewChild('puzzleBoard', { static: false }) public puzzleView: ElementRef;
 
   public ngOnChanges(
-  // changes: SimpleChanges
+    // changes: SimpleChanges
   ): void {
     // if (this.img) {
 
@@ -115,11 +115,11 @@ export class PuzzlePlayComponent implements OnChanges {
     if (tile.isSelected) {
       return {
         // tslint:disable: object-literal-key-quotes
-        width: this.tileWidth + 'px',
-        height: this.tileHeight + 'px',
-        'background-position': (-leftPosition) + 'px ' + (-topPosition) + 'px',
-        'background-image': 'url(' + this.img + ')',
-        'background-size': this.imageWidth + 'px ' + this.imageHeight + 'px',
+        width: `${this.tileWidth}px`,
+        height: `${this.tileHeight}px`,
+        'background-position': `${-leftPosition}px ${-topPosition}px`,
+        'background-image': `url(${this.img})`,
+        'background-size': `${this.imageWidth}px ${this.imageHeight}px`,
         'background-repeat': 'no-repeat',
         '-webkit-filter': 'none',
         filter: 'none',
@@ -127,11 +127,11 @@ export class PuzzlePlayComponent implements OnChanges {
       };
     }
     return {
-      width: this.tileWidth + 'px',
-      height: this.tileHeight + 'px',
-      'background-position': (-leftPosition) + 'px ' + (-topPosition) + 'px',
-      'background-image': 'url(' + this.img + ')',
-      'background-size': this.imageWidth + 'px ' + this.imageHeight + 'px',
+      width: `${this.tileWidth}px`,
+      height: `${this.tileHeight}px`,
+      'background-position': `${-leftPosition}px ${-topPosition}px`,
+      'background-image': `url(${this.img})`,
+      'background-size': `${this.imageWidth}px ${this.imageHeight}px`,
       'background-repeat': 'no-repeat',
       '-webkit-filter': 'grayscale(100%)',
       filter: 'grayscale(100%)',
@@ -149,11 +149,11 @@ export class PuzzlePlayComponent implements OnChanges {
       const topPosition = topPositionIndex * this.tileHeight;
 
       return {
-        width: this.tileWidth + 'px',
-        height: this.tileHeight + 'px',
-        'background-position': (-leftPosition) + 'px ' + (-topPosition) + 'px',
-        'background-image': 'url(' + this.img + ')',
-        'background-size': this.imageWidth + 'px ' + this.imageHeight + 'px',
+        width: `${this.tileWidth}px`,
+        height: `${this.tileHeight}px`,
+        'background-position': `${-leftPosition}px ${-topPosition}px`,
+        'background-image': `url(${this.img})`,
+        'background-size': `${this.imageWidth}px ${this.imageHeight}px`,
         'background-repeat': 'no-repeat'
       };
     }
@@ -164,21 +164,21 @@ export class PuzzlePlayComponent implements OnChanges {
 
   public getImageSize(): any {
     return {
-      width: (this.imageWidth) + 'px',
-      height: (this.imageHeight) + 'px'
+      width: `${this.imageWidth}px`,
+      height: `${this.imageHeight}px`
     };
   }
 
   public getTileSize(): any {
     return {
-      width: (this.tileWidth) + 'px',
-      height: (this.tileHeight) + 'px'
+      width: `${this.tileWidth}px`,
+      height: `${this.tileHeight}px`
     };
   }
 
   public getWidthHeightRatio(): string {
     const ratioValue = (this.tileWidth / this.tileHeight);
-    return ratioValue.toString() + ':1';
+    return `${ratioValue.toString()}:1`;
   }
 
   public isAllPuzzleCompleted(): boolean {
