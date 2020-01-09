@@ -21,25 +21,38 @@ export class ClValidators extends Validators {
     return null;
   }
 
-  public static sumMoreThan(control: AbstractControl): { [key: string]: boolean } | null {
-    if (!control || !control.value) {
+  public static sumMoreThan(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      const controlTyped: FormGroup = control as FormGroup;
+      if (!control || !control.value) {
+        return null;
+      }
+      let totalNum = 0;
+      Object.keys(controlTyped.controls).forEach(key => {
+        totalNum += controlTyped.controls[key].value;
+      });
+      if (totalNum > 100) {
+        return {sumMoreThan: true};
+      }
       return null;
-    }
-    const total = control.value;
-    if (total > 100) {
-      return {sumMoreThan: true};
-    }
-    return null;
+    };
   }
 
-  public static rewardSlotted(control: AbstractControl): { [key: string]: boolean } | null {
-    if (!control) {
+  public static rewardPatched(slots: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      const controlTyped: FormGroup = control as FormGroup;
+      if (!control || !control.value) {
+        return null;
+      }
+      let totalSlotted = 0;
+      Object.keys(controlTyped.controls).forEach(key => {
+        totalSlotted += controlTyped.controls[key].value;
+      });
+      if (totalSlotted !== slots) {
+        return {unpatchedSlot: true};
+      }
       return null;
-    }
-    if (control.value === 0) {
-      return {rewardsUnfilledError: true};
-    }
-    return null;
+    };
   }
 
   public static sumLessThan(options: any): ValidatorFn {
