@@ -27,7 +27,7 @@
           {{'REPLENISH' | translate}}
         </cs-button>
       </div>
-      <cs-vouchers-progress-bar [options]="data?.vouchersStatistics"></cs-vouchers-progress-bar>
+      <cs-statistics-progress-bar [options]="data?.vouchersStatistics" [itemName]="'VOUCHERS' | translate | lowercase"></cs-statistics-progress-bar>
     </div>
   </mat-card>
   <!--/ Available Vouchers-->

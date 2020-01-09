@@ -49,7 +49,11 @@ import {
   TimePickerModule,
   UploadFileModule, UploadGraphicModule
 } from '@cl-shared';
-import { ButtonModule, ProgressBarModule, VouchersProgressBarModule } from '@perx/candyshop';
+import {
+  ButtonModule,
+  ProgressBarModule,
+  StatisticsProgressBarModule
+} from '@perx/candyshop';
 import { TagListModule } from '@cl-shared/components/tag-list/tag-list.module';
 import { RewardLoyaltyFormGroupComponent } from './components/reward-loyalty-form-group/reward-loyalty-form-group.component';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -118,7 +122,7 @@ import { DownloadButtonModule } from '@perx/candyshop';
     DownloadButtonModule,
     CreateMerchantPopupModule,
     SelectMerchantPopupModule,
-    VouchersProgressBarModule,
+    StatisticsProgressBarModule,
     PaginationModule,
     PipesModule,
     TagListModule,

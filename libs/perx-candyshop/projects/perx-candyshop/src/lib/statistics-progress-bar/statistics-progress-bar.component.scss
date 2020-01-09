@@ -1,6 +1,6 @@
 @import "../../styles/variables";
 
-.vouchers-progress-bar {
+.cs-statistics-progress-bar {
   padding-top: 2rem;
   position: relative;
   width: 100%;
@@ -91,5 +91,9 @@
 
   .redeemed {
     background-color: $pending-color;
+  }
+
+  .reserved {
+    background-color: $secondary-font-color;
   }
 }
