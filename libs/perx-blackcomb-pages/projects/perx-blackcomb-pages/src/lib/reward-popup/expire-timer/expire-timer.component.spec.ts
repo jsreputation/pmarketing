@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
-
 import { ExpireTimerComponent } from './expire-timer.component';
 
 describe('ExpireTimerComponent', () => {
@@ -8,9 +7,9 @@ describe('ExpireTimerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExpireTimerComponent ]
+      declarations: [ExpireTimerComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,5 +1,16 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { ILoyalty, LoyaltyService, ProfileService, IProfile, AuthenticationService, ICampaignService, ICampaign, TokenStorage, CampaignType, IGame } from '@perx/core';
+import {
+  ILoyalty,
+  LoyaltyService,
+  ProfileService,
+  IProfile,
+  AuthenticationService,
+  ICampaignService,
+  ICampaign,
+  TokenStorage,
+  CampaignType,
+  IGame
+} from '@perx/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
 import { MatToolbar, MatDialog } from '@angular/material';
 import { catchError, switchMap, map } from 'rxjs/operators';
