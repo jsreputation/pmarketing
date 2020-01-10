@@ -4,7 +4,6 @@ import { NewShakePageComponent } from './new-shake-page.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ImagesPreviewModule } from '@cl-shared/components/images-preview/images-preview.module';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import {
@@ -22,6 +21,7 @@ import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
 import { WINDOW } from '@cl-core/services/window.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { ButtonModule } from '@perx/candyshop';
 
 describe('NewShakePageComponent', () => {
   let component: NewShakePageComponent;

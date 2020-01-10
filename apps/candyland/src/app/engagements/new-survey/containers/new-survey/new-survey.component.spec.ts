@@ -7,7 +7,6 @@ import { RoutingStateService } from '@cl-core/services';
 import { StampDataService } from '../../../new-stamp/shared/stamp-data.service';
 import { QuestionTypeModule } from '@cl-shared/questions/question-type/question-type.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { QuestionFormFieldModule } from '@cl-shared/questions/question-form-field/question-form-field.module';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import { MatCardModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
@@ -20,6 +19,8 @@ import { ConfirmModalModule, SimpleMobileViewModule } from '@cl-shared';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { ButtonModule } from '@perx/candyshop';
+
 describe('NewSurveyPageComponent', () => {
   let component: NewSurveyComponent;
   let fixture: ComponentFixture<NewSurveyComponent>;

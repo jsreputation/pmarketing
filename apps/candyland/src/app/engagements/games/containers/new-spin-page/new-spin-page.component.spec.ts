@@ -5,7 +5,6 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {RouterTestingModule} from '@angular/router/testing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ImagesPreviewModule} from '@cl-shared/components/images-preview/images-preview.module';
-import {ButtonModule} from '@cl-shared/components/button/button.module';
 import {SelectGraphicModule} from '@cl-shared/components/select-graphic/select-graphic.module';
 import {SelectGraphicWrapModule} from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import {GameModule} from '@perx/core';
@@ -18,6 +17,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 import {ClColorPickerModule} from '@cl-shared/components/cl-color-picker/cl-color-picker.module';
 import {LocalStorageService} from '@cl-core/services/local-storage.service';
+import { ButtonModule } from '@perx/candyshop';
 
 describe('NewSpinPageComponent', () => {
   let component: NewSpinPageComponent;

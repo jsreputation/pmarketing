@@ -183,12 +183,12 @@
     background-color: $red;
   }
 
- &.save-icon {
-   mask: url("/assets/images/icons/cta-save.svg") no-repeat 50% 50%;
-   height: 2.4rem;
-   width: 2.4rem;
-   background-position: center;
-   background-color: $white;
+  &.save-icon {
+    mask: url("/assets/images/icons/cta-save.svg") no-repeat 50% 50%;
+    height: 2.4rem;
+    width: 2.4rem;
+    background-position: center;
+    background-color: $white;
   }
 
   &.edit-icon {
