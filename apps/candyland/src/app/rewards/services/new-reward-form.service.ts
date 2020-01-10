@@ -21,7 +21,7 @@ export class NewRewardFormService {
         image: ['http://www.transparentpng.com/thumb/free-images/-badge-icon-free-commerce-icons-10.png', [Validators.required]],
         rewardType: this.fb.control(null, [Validators.required]),
         category: this.fb.control(null, [Validators.required]),
-        redemptionType: [],
+        redemptionType: this.fb.control(null, [Validators.required]),
         cost: this.fb.control(null, [Validators.required]),
         description: [],
         termsAndCondition: [],
@@ -174,7 +174,7 @@ export class NewRewardFormService {
       statusDiscount: new FormControl(null),
       tierType: new FormControl(this.tierTypes.customType),
       tierValue: new FormControl(1, [Validators.min(0)]),
-      tireDiscountValue: new FormControl({disabled: true, value: 1}, )
+      tireDiscountValue: new FormControl({ disabled: true, value: 1 })
     });
   }
 

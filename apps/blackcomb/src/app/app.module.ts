@@ -66,8 +66,6 @@ import * as Sentry from '@sentry/browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignUpModule } from './sign-up/sign-up.module';
-import { RewardPopupComponent } from './reward-popup/reward-popup.component';
-import { ExpireTimerComponent } from './reward-popup/expire-timer/expire-timer.component';
 
 import { environment } from '../environments/environment';
 
@@ -112,9 +110,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
 });
 @NgModule({
   declarations: [
-    AppComponent,
-    RewardPopupComponent,
-    ExpireTimerComponent
+    AppComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -160,7 +156,6 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig,
     }
-  ],
-  entryComponents: [RewardPopupComponent]
+  ]
 })
 export class AppModule { }

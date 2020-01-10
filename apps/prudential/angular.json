@@ -92,7 +92,7 @@
               "src/styles.scss"
             ],
             "scripts": [],
-            "codeCoverage": true
+            "codeCoverage": false
           }
         },
         "lint": {
@@ -121,6 +121,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "prudential"
 }
