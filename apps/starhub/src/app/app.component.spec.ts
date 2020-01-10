@@ -13,7 +13,9 @@ import {
   // IGame,
   // GameType,
   TokenStorage,
-  ThemesService
+  ThemesService,
+  CampaignModule,
+  RewardPopupComponent
 } from '@perx/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,7 +23,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CampaignType } from '@perx/core';
 import { CampaignState } from '@perx/core';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
 import { game } from './game.mock';
 import { AnalyticsService, PageType } from './analytics.service';
@@ -117,12 +118,12 @@ describe('AppComponent', () => {
       imports: [
         RouterTestingModule,
         MatDialogModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        CampaignModule
       ],
       declarations: [
         AppComponent,
         PopupComponent,
-        RewardPopupComponent,
         ExpireTimerComponent
       ],
       providers: [
