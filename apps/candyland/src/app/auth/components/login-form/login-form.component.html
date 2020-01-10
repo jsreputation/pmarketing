@@ -8,6 +8,9 @@
     (ngSubmit)="onSubmit()"
     id="login-form">
     <div class="login-form-control">
+      <mat-error *ngIf="incorrectInfo" translate>ERROR_WRONG_CREDENTIALS</mat-error>
+    </div>
+    <div class="login-form-control">
       <mat-form-field>
         <input matInput formControlName="account_id" [placeholder]="'LOGIN_PAGE.ACCOUNT_ID' | translate">
         <mat-error *ngIf="accountId.hasError('required')" translate>ERROR_REQUIRED</mat-error>

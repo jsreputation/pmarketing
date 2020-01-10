@@ -34,6 +34,7 @@
   "BTN_ADD_QUESTION": "+ Add another message",
   "DESCRIPTION": "Description",
   "POINTS": "points",
+  "ERROR_WRONG_CREDENTIALS": "The credentials are incorrect!",
   "ERROR_REQUIRED": "Required field",
   "ERROR_MIN_LENGTH": "Min length",
   "ERROR_MAX_LENGTH": "Max length",
