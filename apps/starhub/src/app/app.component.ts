@@ -9,11 +9,11 @@ import {
   IGame,
   TokenStorage,
   ThemesService,
-  ITheme
+  ITheme,
+  RewardPopupComponent
 } from '@perx/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Params } from '@angular/router';
-import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { filter, map } from 'rxjs/operators';
 import { AnalyticsService, IEvent, PageType } from './analytics.service';
 

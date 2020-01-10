@@ -18,6 +18,8 @@ import {
   UtilsModule,
   LoyaltyModule,
   ConfigModule,
+  CampaignModule,
+  PopupComponent,
 } from '@perx/core';
 
 import { environment } from 'src/environments/environment';
@@ -31,7 +33,6 @@ import { RewardsCardsComponent } from './rewards-cards/rewards-cards.component';
 import { CatalogsComponent } from './catalogs/catalogs.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
 import { NoRenewaleInNamePipe } from './no-renewale-in-name.pipe';
-import { PopupComponent } from './news-feed/popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -43,8 +44,7 @@ import { PopupComponent } from './news-feed/popup/popup.component';
     RewardsCardsComponent,
     CatalogsComponent,
     CampaignsComponent,
-    NoRenewaleInNamePipe,
-    PopupComponent,
+    NoRenewaleInNamePipe
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -62,6 +62,7 @@ import { PopupComponent } from './news-feed/popup/popup.component';
     ScrollingModule,
     LoyaltyModule,
     InfiniteScrollModule,
+    CampaignModule
   ],
   bootstrap: [
   ],
