@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { IPopupConfig } from '@perx/core';
+import { IPopupConfig } from '../../utils/popup/popup.component';
 
 export interface IRewardPopupConfig extends IPopupConfig {
     validTo?: Date;
@@ -12,7 +12,7 @@ export interface TimerCallBack {
 }
 
 @Component({
-  selector: 'perx-blackcomb-pages-reward-popup',
+  selector: 'perx-core-reward-popup',
   templateUrl: './reward-popup.component.html',
   styleUrls: ['./reward-popup.component.scss']
 })
