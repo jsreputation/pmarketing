@@ -11,6 +11,7 @@ import { AuthService } from '@es-core';
 export class LoginFormComponent implements OnInit {
   public formLogin: FormGroup;
   public hide: boolean = true;
+  public incorrectInfo: boolean = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -26,7 +27,8 @@ export class LoginFormComponent implements OnInit {
       this.authService.signIn(this.formLogin.value)
         .subscribe(
           () => this.router.navigate(['/']),
-          (error: Error) => alert('The email or password is incorrect! ' + error.message));
+          () => this.incorrectInfo = true
+        );
     }
   }
 
