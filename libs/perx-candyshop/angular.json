@@ -22,7 +22,7 @@
             "main": "projects/perx-candyshop/src/test.ts",
             "tsConfig": "projects/perx-candyshop/tsconfig.spec.json",
             "karmaConfig": "projects/perx-candyshop/karma.conf.js",
-            "codeCoverage": true
+            "codeCoverage": false
           }
         },
         "lint": {

@@ -11,6 +11,7 @@ import { AuthService } from '@cl-core-services';
 export class LoginFormComponent implements OnInit {
   public formLogin: FormGroup;
   public hide: boolean = true;
+  public incorrectInfo: boolean = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -26,13 +27,14 @@ export class LoginFormComponent implements OnInit {
       this.authService.signIn(this.formLogin.value)
         .subscribe(
           () => this.router.navigate(['/dashboard/overview']),
-          (error: Error) => alert('The email or password is incorrect! ' + error.message));
+          () => this.incorrectInfo = true
+        );
     }
   }
 
   public onForget(): void {
     const data = this.formLogin.value;
-    this.router.navigate(['/password/forget'], {state: {id: data.account_id, user: data.username}});
+    this.router.navigate(['/password/forget'], { state: { id: data.account_id, user: data.username } });
   }
 
   get username(): AbstractControl | null { return this.formLogin.get('username'); }
