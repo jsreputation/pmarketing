@@ -7,7 +7,6 @@ import {
   Input, OnChanges, SimpleChanges
 } from '@angular/core';
 import {
-  AbstractControl,
   FormGroup
 } from '@angular/forms';
 import { MatDialog } from '@angular/material';
@@ -42,7 +41,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
 
   private destroy$: Subject<void> = new Subject();
 
-  @Input() public formParent: FormGroup | AbstractControl; // turn into an input
+  @Input() public formParent: FormGroup; // turn into an input
   @Input() public isSpinEngagement: boolean = false;
 
   public outcomes: ICampaignOutcome[] = [];
@@ -72,7 +71,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   public ngOnChanges(changes: SimpleChanges): void {
     if (!this.isFirstInit && this.outcomes.length !== 0 && changes.enableProbability !== undefined &&
       (changes.enableProbability.currentValue !== changes.enableProbability.previousValue)) {
-      this.updateOutcomes();
+      this.updateOutcomesInCampaign();
     }
   }
 
@@ -87,7 +86,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
         if (isCreateNew || isFirstTimeRenderFromEdit) {
           this.isFirstInit = false;
           this.initOutcomesList();
-          this.updateOutcomes();
+          this.updateOutcomesInCampaign();
           this.cd.detectChanges();
         }
       });
@@ -107,7 +106,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
         if (reward) {
           this.addOutcome({
             outcome: {
-              probability: 0,
+              probability: null,
               limit: null,
               resultId: Number.parseInt(reward.id, 10),
               resultType: SOURCE_TYPE,
@@ -123,12 +122,14 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
 
   public initOutcomesList(): void {
-    const noOutcomeData = this.campaign.outcomes && this.campaign.outcomes.find(
-      data => data.outcome.slotNumber === this.slotNumber && !data.outcome.resultId);
-    if (noOutcomeData && noOutcomeData.outcome) {
-      this.outcomes = [noOutcomeData];
-    } else {
-      this.outcomes = [this.noOutcome];
+    if (!this.isSpinEngagement || this.slotNumber === -1) {
+      const noOutcomeData = this.campaign.outcomes && this.campaign.outcomes.find(
+        data => data.outcome.slotNumber === this.slotNumber && !data.outcome.resultId);
+      if (noOutcomeData && noOutcomeData.outcome) {
+        this.outcomes = [noOutcomeData];
+      } else {
+        this.outcomes = [this.noOutcome];
+      }
     }
 
     const possibleOutcomes = this.campaign.outcomes && this.campaign.outcomes.filter(
@@ -161,6 +162,13 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     this.cd.detectChanges();
   }
   public updateOutcomesInCampaign(): void {
+    if (!this.isSpinEngagement) {
+      if (!this.enableProbability) { // false
+        this.outcomes[0].outcome.slotNumber = -1;
+      } else {
+        this.outcomes[0].outcome.slotNumber = this.slotNumber;
+      }
+    }
     const otherSlotOutcomes = this.campaign.outcomes && this.campaign.outcomes.length > 0 ?
       this.campaign.outcomes.filter(
         outcomeData => outcomeData.outcome.slotNumber !== this.slotNumber && outcomeData.outcome.slotNumber >= 0
@@ -170,8 +178,11 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     // if set to true enableProbability then just true, (from checkbbox)
     this.campaign.enabledProb = this.enableProbability || this.campaign.outcomes.some(({outcome}) => outcome.probability);
     this.store.currentCampaign = {...this.campaign};
+    console.log(this.campaign.outcomes, 'i am the current campaign outcomes');
     this.isSpinEngagement ?
       (this.updateSlotCount().updateSumMoreThanCheck()) : (this.sumMoreThanError = this.updateSumMoreThanCheck());
+    this.formParent.updateValueAndValidity();
+    this.cd.detectChanges();
   }
 
   public updateSlotCount(): this {
@@ -182,28 +193,34 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     if (checkedOutcomes.length > 0) {
       this.formParent.get('totalFilledAllSlots').get(`notEmpty-${this.slotNumber}`).patchValue(1);
     }
-    this.formParent.updateValueAndValidity();
     return this;
   }
   // called for non spin campaigns
   public updateSumMoreThanCheck(): boolean {
+    const slotProbControl = this.formParent.get('totalProbAllSlots').get(`totalProbability-${this.slotNumber}`);
+    if (!this.enableProbability && slotProbControl) {
+      if (slotProbControl) {
+        slotProbControl.reset();
+      }
+      return;
+    }
     const totalNum = this.outcomes.reduce((total, item) => {
       if (item.outcome.probability) {
         total += item.outcome.probability;
       }
       return total;
     }, 0);
-    const slotProbControl = this.formParent.get('totalProbAllSlots').get(`totalProbability-${this.slotNumber}`);
     if (slotProbControl) {
       slotProbControl.patchValue(totalNum);
     }
-    this.formParent.updateValueAndValidity();
     return totalNum > 100;
   }
 
   public updateOutcomeData(index: number, value: { probability: number, limit: number }): void {
-    this.outcomes[index].outcome.probability = value.probability;
-    this.outcomes[index].outcome.limit = value.limit;
+    if (this.outcomes) {
+      this.outcomes[index].outcome.probability = value.probability;
+      this.outcomes[index].outcome.limit = value.limit;
+    }
     this.updateOutcomesInCampaign();
   }
 
@@ -213,18 +230,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       this.outcomes[index].outcome.probability = 0;
     }
     this.updateOutcomesInCampaign();
-  }
-
-  public updateOutcomes(): void {
-    if (!this.enableProbability) {
-      if (this.outcomes.length) {
-        this.outcomes[0].outcome.slotNumber = -1;
-      }
-    } else {
-      this.outcomes[0].outcome.slotNumber = this.slotNumber;
-    }
-    this.updateOutcomesInCampaign();
-    this.cd.detectChanges();
   }
 
 }

@@ -11,6 +11,15 @@
         </form>
         <!--DummyToRemove Error-->
       </div>
+      <!--      && notAllSlotted-->
+      <cl-new-campaign-rewards-form-group
+        *ngIf="addNoRewardGroup"
+        [enableProbability]="enableProbability"
+        [formParent]="limitRewardForm"
+        [slotNumber]="-1"
+        >
+      </cl-new-campaign-rewards-form-group>
+
       <ng-container *ngFor="let slot of slots;">
         <cl-new-campaign-rewards-form-group
           [enableProbability]="enableProbability"
