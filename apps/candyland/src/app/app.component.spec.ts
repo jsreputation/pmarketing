@@ -4,6 +4,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '@cl-core-services';
 import { AppComponent } from './app.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { TenantService } from '@cl-core/services/tenant.service';
+import { Observable, of } from 'rxjs';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -20,6 +22,14 @@ describe('AppComponent', () => {
         {
           provide: AuthService, useValue: {
             initAuth: () => {
+            }
+          }
+        },
+        {
+          provide: TenantService,
+          useValue: {
+            getSettings(): Observable<any> {
+              return of({});
             }
           }
         }

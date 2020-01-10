@@ -18,12 +18,11 @@ import { ControlsName } from '../../../../models/controls-name';
 import { IReward } from '@perx/core';
 import { MockRewardsMobilePreview } from '../../../../../assets/actives/reward/reward-mock';
 import {
-  AvailableNewEngagementService, InstantRewardsService, RoutingStateService
+  AvailableNewEngagementService, InstantRewardsService, RoutingStateService, TenantStoreService
 } from '@cl-core/services';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
-import { TenantService } from '@cl-core/services/tenant.service';
 
 @Component({
   selector: 'cl-new-instant-reward-manage-page',
@@ -76,7 +75,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
     private route: ActivatedRoute,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private tenantService: TenantService
+    private tenantStoreService: TenantStoreService
   ) {
   }
 
@@ -181,7 +180,7 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
   }
 
   private initTenants(): void {
-    this.tenantService.getSettings()
+    this.tenantStoreService.tenant$
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: ITenantsProperties) => {
         this.tenantSettings = res;

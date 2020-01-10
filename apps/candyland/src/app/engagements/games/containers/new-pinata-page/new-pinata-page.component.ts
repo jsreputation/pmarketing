@@ -7,13 +7,12 @@ import { tap, map, switchMap, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ControlsName } from '../../../../models/controls-name';
 import {
-  AvailableNewEngagementService, PinataService, RoutingStateService
+  AvailableNewEngagementService, PinataService, RoutingStateService, TenantStoreService
 } from '@cl-core/services';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
-import { TenantService } from '@cl-core/services/tenant.service';
 
 @Component({
   selector: 'cl-new-pinata-page',
@@ -63,7 +62,7 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private tenantService: TenantService
+    private tenantStoreService: TenantStoreService
   ) {
   }
 
@@ -163,7 +162,7 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   }
 
   private initTenantSettings(): void {
-    this.tenantService.getSettings()
+    this.tenantStoreService.tenant$
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: ITenantsProperties) => {
         this.tenantSettings = res;

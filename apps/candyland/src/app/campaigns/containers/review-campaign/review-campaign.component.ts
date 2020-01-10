@@ -1,9 +1,6 @@
 import { RewardsService } from '@cl-core/services/rewards.service';
 import {
-  CampaignsService,
-  EngagementsService,
-  OutcomesService,
-  LimitsService,
+  CampaignsService, EngagementsService, OutcomesService, LimitsService, TenantStoreService,
 } from '@cl-core/services';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
@@ -17,7 +14,6 @@ import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 import { CampaignStatus } from '@cl-core/models/campaign/campaign.enum';
-import { TenantService } from '@cl-core/services/tenant.service';
 
 @Component({
   selector: 'cl-review-campaign',
@@ -40,7 +36,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
     private outcomesService: OutcomesService,
     private limitsService: LimitsService,
     private engagementsService: EngagementsService,
-    private tenantService: TenantService,
+    private tenantStoreService: TenantStoreService,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef
   ) {
@@ -62,7 +58,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   }
 
   private initTenantSettings(): void {
-    this.tenantService.getSettings()
+    this.tenantStoreService.tenant$
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: ITenantsProperties) => {
         this.tenantSettings = res;

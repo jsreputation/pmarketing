@@ -1,6 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CampaignsService, SettingsService, OutcomesService, CommsService, LimitsService, MessageService } from '@cl-core-services';
+import {
+  CampaignsService,
+  SettingsService,
+  OutcomesService,
+  CommsService,
+  LimitsService,
+  MessageService, TenantStoreService
+} from '@cl-core-services';
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { MatDialog, MatStepper } from '@angular/material';
 import {
@@ -33,7 +40,6 @@ import { NotificationService } from '@cl-core/services/notification.service';
 import { IChannel, ICampaignNotificationGroup } from '@cl-core/models/campaign/channel-interface';
 import { Location } from '@angular/common';
 import { NewCampaignNotificationsComponent } from '../new-campaign-notifications/new-campaign-notifications.component';
-import { TenantService } from '@cl-core/services/tenant.service';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -64,7 +70,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private settingsService: SettingsService,
-    private tenantService: TenantService,
+    private tenantStoreService: TenantStoreService,
     private commsService: CommsService,
     private outcomesService: OutcomesService,
     private limitsService: LimitsService,
@@ -343,7 +349,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   private initTenantSettings(): void {
-    this.tenantService.getSettings()
+    this.tenantStoreService.tenant$
       .pipe(takeUntil(this.destroy$))
       .subscribe((tenantSettings: ITenantsProperties) => {
         this.tenantSettings = tenantSettings;

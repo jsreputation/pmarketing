@@ -1,6 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AvailableNewEngagementService, RoutingStateService, StampsService } from '@cl-core/services';
+import {
+  AvailableNewEngagementService,
+  RoutingStateService,
+  StampsService, TenantStoreService
+} from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { combineLatest, Observable, of, Subject } from 'rxjs';
@@ -13,7 +17,6 @@ import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
-import { TenantService } from '@cl-core/services/tenant.service';
 
 @Component({
   selector: 'cl-new-stamp',
@@ -88,7 +91,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
     private availableNewEngagementService: AvailableNewEngagementService,
     private stampsService: StampsService,
     private cd: ChangeDetectorRef,
-    private tenantService: TenantService
+    private tenantStoreService: TenantStoreService
   ) {
   }
 
@@ -243,7 +246,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
   }
 
   private initTenantsSettings(): void {
-    this.tenantService.getSettings()
+    this.tenantStoreService.tenant$
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: ITenantsProperties) => {
         this.tenantSettings = res;

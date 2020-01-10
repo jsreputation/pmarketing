@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AvailableNewEngagementService, RoutingStateService } from '@cl-core/services';
+import { AvailableNewEngagementService, RoutingStateService, TenantStoreService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { combineLatest, Observable, of, Subject } from 'rxjs';
@@ -13,7 +13,6 @@ import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-v
 import { IWSpinGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { SpinService } from '@cl-core/services/spin.service';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
-import { TenantService } from '@cl-core/services/tenant.service';
 
 @Component({
   selector: 'cl-new-spin-page',
@@ -92,7 +91,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     private spinService: SpinService,
     private cd: ChangeDetectorRef,
     private availableNewEngagementService: AvailableNewEngagementService,
-    private tenantService: TenantService
+    private tenantStoreService: TenantStoreService
   ) {
   }
 
@@ -331,7 +330,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
   }
 
   private initTenantsSettings(): void {
-    this.tenantService.getSettings()
+    this.tenantStoreService.tenant$
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: ITenantsProperties) => {
         this.tenantSettings = res;
