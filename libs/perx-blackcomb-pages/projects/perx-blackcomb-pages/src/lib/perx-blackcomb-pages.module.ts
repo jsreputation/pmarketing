@@ -82,8 +82,6 @@ import { EnterPinComponent } from './enter-pin/enter-pin.component';
 import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
 import { ProfileBarcodeComponent } from './profile-barcode/profile-barcode.component';
 import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
-import { RewardPopupComponent } from './reward-popup/reward-popup.component';
-import { ExpireTimerComponent } from './reward-popup/expire-timer/expire-timer.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -138,9 +136,7 @@ const comps: any[] = [
   RewardsBookingComponent,
   ProfileBarcodeComponent,
   EditProfileFieldComponent,
-  PuzzleListComponent,
-  RewardPopupComponent,
-  ExpireTimerComponent
+  PuzzleListComponent
 ];
 
 @NgModule({

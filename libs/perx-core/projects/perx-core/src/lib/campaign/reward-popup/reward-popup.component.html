@@ -1,6 +1,6 @@
 <div class="content">
-	<perx-blackcomb-pages-expire-timer [timerEndDate]="validTo" (hasExpired)="onTimerExpired()" (isExpiring)="onExpiring()">
-	</perx-blackcomb-pages-expire-timer>
+	<perx-core-expire-timer [timerEndDate]="validTo" (hasExpired)="onTimerExpired()" (isExpiring)="onExpiring()">
+	</perx-core-expire-timer>
 	<div *ngIf="imageUrl" class="img-wrapper">
 		<img [src]="imageUrl" />
 	</div>
