@@ -7,6 +7,6 @@
       <p>{{location.address2}}</p>
     </div>
   </div>
-  <a mat-button color="primary" [routerLink]="['/locations']" [queryParams]="{mid:merchantId, rid:rewardId}"
-    *ngIf="(locations$ | async)?.length > 1">See All {{(locations$ | async)?.length}} Locations</a>
+  <a mat-button color="primary" [routerLink]="['/locations']" [queryParams]="{mid:merchantId, rid:voucherId}"
+    *ngIf="(locations$ | async)?.length > 1 && voucherId">See All {{(locations$ | async)?.length}} Locations</a>
 </div>
