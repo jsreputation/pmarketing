@@ -5,7 +5,6 @@
     "esModuleInterop": true,
     "types": [
       "jest",
-      "jasmine",
       "node"
     ]
   },

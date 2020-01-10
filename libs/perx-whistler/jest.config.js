@@ -10,7 +10,7 @@ module.exports = {
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths /*, { prefix: '<rootDir>/' } */),
   globals: {
     'ts-jest': {
-      tsConfig: '<rootDir>/projects/whistler/tsconfig.lib.json'
+      tsConfig: '<rootDir>/projects/whistler/tsconfig.spec.json'
     }
   }
 };
