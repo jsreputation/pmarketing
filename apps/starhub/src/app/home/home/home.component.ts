@@ -12,7 +12,7 @@ import {
 } from '@perx/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
 import { MatToolbar, MatDialog } from '@angular/material';
-import { catchError, switchMap, map } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { of, combineLatest } from 'rxjs';
 import { RewardPopupComponent } from '../../reward-popup/reward-popup.component';
@@ -120,8 +120,7 @@ export class HomeComponent implements OnInit {
       )
       .pipe(
         // for each campaign, get detailed version
-        switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id)))),
-        map((campaigns: ICampaign[]) => campaigns.filter(c => c.rewards && c.rewards.length))
+        switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id))))
       )
       .subscribe(
         (campaigns: ICampaign[]) => {
