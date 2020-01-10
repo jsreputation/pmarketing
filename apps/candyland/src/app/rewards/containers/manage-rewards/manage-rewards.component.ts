@@ -354,6 +354,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       this.patchWithSavedLoyalties(rewardTierMap, this.rewardLoyaltyForm);
     }
 
+    console.log('first read value: ', this.rewardLoyaltyForm.value);
     this.loyalties = loyalties.data;
     this.cd.detectChanges();
   }

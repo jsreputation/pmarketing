@@ -153,7 +153,7 @@ export class NewRewardFormService {
   public getLoyaltyFormGroup(): FormGroup {
     return new FormGroup({
       programId: new FormControl(null),
-
+      programStatus: new FormControl(null),
       tiers: new FormArray([]),
       basicTier: new FormGroup({
         tierRewardCostsId: new FormControl(null),
