@@ -21,6 +21,7 @@ import {
   UtilsModule,
   ConfigModule,
   RewardsModule,
+  RewardPopupComponent,
 
   // ICampaignService,
   // ConfigService
@@ -51,7 +52,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NavigateToolbarComponent } from './navigate-toolbar/navigate-toolbar.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { AccountComponent } from './account/account.component';
-import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { ContentModule } from './content/content.module';
 import { UnauthorizedInterceptor } from './login/unauthorized.interceptor';
 
@@ -116,9 +116,7 @@ import { UnauthorizedInterceptor } from './login/unauthorized.interceptor';
     ProfileComponent,
     NavigateToolbarComponent,
     WalletComponent,
-    AccountComponent,
-    RewardPopupComponent
-
+    AccountComponent
     // PuzzleListComponent, // mock service/component
   ],
   imports: [
