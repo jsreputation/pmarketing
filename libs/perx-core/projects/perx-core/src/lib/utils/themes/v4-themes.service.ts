@@ -27,15 +27,15 @@ export class V4ThemesService extends ThemesService {
 
   constructor(private http: HttpClient, config: Config) {
     super();
-    this.themeSettingEndpoint = config.baseHref + `assets/theme.json`;
+    this.themeSettingEndpoint = `${config.baseHref}assets/theme.json`;
   }
 
   public getThemeSetting(config?: IConfig): Observable<ITheme> {
     let url: string = this.themeSettingEndpoint;
     if (config && config.sourceType) {
-      url = config.baseHref + `assets/${config.sourceType}-theme.json`;
+      url = `${config.baseHref}assets/${config.sourceType}-theme.json`;
     }
-    const themeSettingFromCache: ITheme | undefined  = this.responseCache.get(url);
+    const themeSettingFromCache: ITheme | undefined = this.responseCache.get(url);
     if (themeSettingFromCache) {
       return of(themeSettingFromCache);
     }

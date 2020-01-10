@@ -19,7 +19,8 @@ import {
   MatSelectModule,
   MatDatepickerModule,
   MatToolbarModule,
-  MatListModule
+  MatListModule,
+  MatDialogModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
@@ -81,6 +82,8 @@ import { EnterPinComponent } from './enter-pin/enter-pin.component';
 import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
 import { ProfileBarcodeComponent } from './profile-barcode/profile-barcode.component';
 import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
+import { RewardPopupComponent } from './reward-popup/reward-popup.component';
+import { ExpireTimerComponent } from './reward-popup/expire-timer/expire-timer.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -135,7 +138,9 @@ const comps: any[] = [
   RewardsBookingComponent,
   ProfileBarcodeComponent,
   EditProfileFieldComponent,
-  PuzzleListComponent
+  PuzzleListComponent,
+  RewardPopupComponent,
+  ExpireTimerComponent
 ];
 
 @NgModule({
@@ -164,7 +169,8 @@ const comps: any[] = [
     TranslateModule.forChild(),
     MatToolbarModule,
     MatListModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    MatDialogModule
   ],
   exports: [
     ...comps,
