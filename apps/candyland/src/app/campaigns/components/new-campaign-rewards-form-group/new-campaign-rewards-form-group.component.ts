@@ -178,7 +178,6 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     // if set to true enableProbability then just true, (from checkbbox)
     this.campaign.enabledProb = this.enableProbability || this.campaign.outcomes.some(({outcome}) => outcome.probability);
     this.store.currentCampaign = {...this.campaign};
-    console.log(this.campaign.outcomes, 'i am the current campaign outcomes');
     this.isSpinEngagement ?
       (this.updateSlotCount().updateSumMoreThanCheck()) : (this.sumMoreThanError = this.updateSumMoreThanCheck());
     this.formParent.updateValueAndValidity();
