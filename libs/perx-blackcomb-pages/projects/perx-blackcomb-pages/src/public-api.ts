@@ -1,3 +1,5 @@
+export { ExpireTimerComponent } from './lib/reward-popup/expire-timer/expire-timer.component';
+export { RewardPopupComponent } from './lib/reward-popup/reward-popup.component';
 export { LoadingComponent } from './lib/loading/loading.component';
 export { PerxBlackcombPagesModule } from './lib/perx-blackcomb-pages.module';
 export { AccountComponent } from './lib/account/account.component';

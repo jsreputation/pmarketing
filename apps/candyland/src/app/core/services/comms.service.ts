@@ -13,15 +13,24 @@ import {
   IJsonApiPatchData,
   IJsonApiPostData
 } from '@perx/whistler';
-import { IComm } from '@cl-core/models/comm/schedule';
+import { IComm, ICommMessage } from '@cl-core/models/comm/schedule';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
+import { IWCommMessageAttributes } from '@perx/whistler/dist/whistler/lib/comm/comm';
+import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CommsService {
+export class CommsService implements ITableService<ICommMessage> {
 
   constructor(private commsHttpsService: CommsHttpsService) {
+  }
+
+  public getTableData(params: HttpParamsOptions): Observable<ITableData<ICommMessage>> {
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.commsHttpsService.getMessages(httpParams).pipe(
+      map((response: IJsonApiListPayload<IWCommMessageAttributes>) => CommsHttpAdapter.transformTableData(response))
+    );
   }
 
   public getCommsTemplate(params: HttpParamsOptions): Observable<IComm[]> {
@@ -82,4 +91,26 @@ export class CommsService {
   public deleteCommsTemplate(id: string): Observable<void> {
     return this.commsHttpsService.deleteCommsTemplate(id);
   }
+
+  public createMessage(data: ICommMessage): Observable<IJsonApiItemPayload<IWCommMessageAttributes>> {
+    const sendData: IJsonApiPostData<IWCommMessageAttributes> = CommsHttpAdapter.transformFromCommsMessage(data);
+    return this.commsHttpsService.createMessage({ data: sendData });
+  }
+
+  public getMessages(params: HttpParamsOptions): Observable<ICommMessage[]> {
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.commsHttpsService.getMessages(httpParams).pipe(
+      map((response: IJsonApiListPayload<IWCommMessageAttributes>) => response.data),
+      map((response: IJsonApiItem<IWCommMessageAttributes>[]) =>
+        response.map((message: IJsonApiItem<IWCommMessageAttributes>) => CommsHttpAdapter.transformMessageAPIResponse(message)))
+    );
+  }
+
+  public getMessage(id: string): Observable<ICommMessage> {
+    return this.commsHttpsService.getMessage(id).pipe(
+      map((response: IJsonApiItemPayload<IWCommMessageAttributes>) => response.data),
+      map((response: IJsonApiItem<IWCommMessageAttributes>) => CommsHttpAdapter.transformMessageAPIResponse(response))
+    );
+  }
+
 }

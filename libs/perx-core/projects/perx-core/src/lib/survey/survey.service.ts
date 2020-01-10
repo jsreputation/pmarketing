@@ -87,7 +87,7 @@ export class SurveyService {
       }
     };
 
-    return this.http.post<IJsonApiItemPayload<IWPostAnswerAttributes>>(this.baseUrl + '/survey/answers', body, {
+    return this.http.post<IJsonApiItemPayload<IWPostAnswerAttributes>>(`${this.baseUrl}/survey/answers`, body, {
       headers: { 'Content-Type': 'application/vnd.api+json' }
     }).pipe(
       map((res) => {

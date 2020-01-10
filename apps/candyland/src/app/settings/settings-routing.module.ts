@@ -19,10 +19,6 @@ const routes: Routes = [
         path: 'branding',
         component: BrandingComponent
       },
-      // {
-      //  path: 'communications',
-      //  component: CommunicationsComponent
-      // },
       {
         path: 'users-roles',
         component: UsersRolesComponent
