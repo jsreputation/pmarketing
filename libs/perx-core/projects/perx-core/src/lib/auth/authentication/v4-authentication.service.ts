@@ -68,13 +68,13 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       this.appAuthEndPoint = 'http://localhost:4000/v2/oauth';
       this.userAuthEndPoint = 'http://localhost:4000/v4/oauth';
     } else {
-      this.appAuthEndPoint = config.baseHref + 'v2/oauth';
-      this.userAuthEndPoint = config.baseHref + 'v4/oauth';
+      this.appAuthEndPoint = `${config.baseHref}v2/oauth`;
+      this.userAuthEndPoint = `${config.baseHref}v4/oauth`;
     }
     if (config.preAuth) {
       this.preauth = config.preAuth;
     }
-    this.customersEndPoint = config.apiHost + '/v4/customers';
+    this.customersEndPoint = `${config.apiHost}/v4/customers`;
     this.$failedAuthObservableSubject = new Subject();
   }
 
@@ -139,7 +139,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       ...campaignId && { campaign_id: campaignId },
       ...scope && { scope }
     };
-    return this.http.post<IWLoginResponse>(this.userAuthEndPoint + '/token', authenticateBody);
+    return this.http.post<IWLoginResponse>(`${this.userAuthEndPoint}/token`, authenticateBody);
   }
 
   public autoLogin(): Observable<void> {
@@ -168,7 +168,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       identifier: user
     };
 
-    return this.http.post<IWLoginResponse>(this.userAuthEndPoint + '/token', authenticatePiRequest);
+    return this.http.post<IWLoginResponse>(`${this.userAuthEndPoint}/token`, authenticatePiRequest);
   }
 
   public getAppToken(): Observable<IWAppAccessTokenResponse> {
@@ -176,7 +176,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       url: location.host
     };
 
-    return this.http.post<IWAppAccessTokenResponse>(this.appAuthEndPoint + '/token', authenticateRequest).pipe(
+    return this.http.post<IWAppAccessTokenResponse>(`${this.appAuthEndPoint}/token`, authenticateRequest).pipe(
       tap((resp) => {
         this.saveAppAccessToken(resp.access_token);
       })
@@ -226,7 +226,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   public resendOTP(phone: string): Observable<IMessageResponse> {
     const encodedURIPhone = encodeURIComponent(phone);
     // using the options.param argument prepends extra encoded characters, no idea why
-    return this.http.get<IMessageResponse>(`${this.customersEndPoint}/resend_confirmation?phone=` + encodedURIPhone)
+    return this.http.get<IMessageResponse>(`${this.customersEndPoint}/resend_confirmation?phone=${encodedURIPhone}`)
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
@@ -317,7 +317,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     return this.profileService.whoAmI().pipe(
       mergeMap(
         (profile: IProfile) => this.http.get<void>(
-          `${this.customersEndPoint}/${profile.id}/request_verification_token${phone ? '?phone=' + phone : ''}`
+          `${this.customersEndPoint}/${profile.id}/request_verification_token${phone ? `?phone=${phone}` : ''}`
         )
       )
     );

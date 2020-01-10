@@ -19,7 +19,7 @@ export class WhistlerConfigService extends ConfigService {
     if (!this.config.production) {
       this.endpoint = 'http://localhost:4000/themes';
     } else {
-      this.endpoint = this.config.baseHref + 'themes';
+      this.endpoint = `${this.config.baseHref}themes`;
     }
   }
 

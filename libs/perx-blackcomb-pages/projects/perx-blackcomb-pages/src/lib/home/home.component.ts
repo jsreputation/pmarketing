@@ -11,13 +11,16 @@ import {
   forkJoin,
   of,
   Subject,
+  combineLatest,
 } from 'rxjs';
 import {
   tap,
   takeUntil,
   map,
   mergeMap,
-  takeLast
+  takeLast,
+  catchError,
+  switchMap
 } from 'rxjs/operators';
 
 import {
@@ -32,11 +35,17 @@ import {
   ThemesService,
   ITheme,
   IConfig,
-  ConfigService
+  ConfigService,
+  AuthenticationService,
+  ICampaignService,
+  ICampaign,
+  TokenStorage,
+  CampaignType
 } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
-import { MatTabChangeEvent } from '@angular/material';
+import { MatTabChangeEvent, MatDialog } from '@angular/material';
+import { RewardPopupComponent } from '../reward-popup/reward-popup.component';
 
 const stubTabs: ITabConfigExtended[] = [
   {
@@ -131,7 +140,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public staticTab: ITabConfigExtended[];
   public titleFn: (profile: IProfile) => string;
   public showGames: boolean = false;
-
+  private firstComefirstServeCampaign: ICampaign;
   private initCampaign(): void {
     this.games$ = this.gamesService.getActiveGames()
       .pipe(
@@ -150,7 +159,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private feedService: FeedReaderService,
     private themesService: ThemesService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private authService: AuthenticationService,
+    private campaignService: ICampaignService,
+    private tokenStorage: TokenStorage,
+    private dialog: MatDialog
   ) {
   }
 
@@ -174,6 +187,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.configService.readAppConfig().subscribe(
       (config: IConfig) => this.appConfig = config
     );
+
+    this.authService.isAuthorized().subscribe((isAuth: boolean) => {
+      if (isAuth) {
+        this.fetchPopupCampaigns();
+      }
+    });
   }
 
   public ngOnDestroy(): void {
@@ -237,5 +256,74 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public tabChanged(event: MatTabChangeEvent): void {
     this.currentTabIndex = event.index;
+  }
+
+  private fetchPopupCampaigns(): void {
+    this.campaignService.getCampaigns()
+      .pipe(
+        catchError(() => {
+          this.router.navigateByUrl('error');
+          return of([]);
+        })
+      )
+      .pipe(
+        // for each campaign, get detailed version
+        switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id)))),
+        map((campaigns: ICampaign[]) => campaigns.filter(c => !this.idExistsInStorage(c.id)))
+      )
+      .subscribe(
+        (campaigns: ICampaign[]) => {
+          const firstComeFirstServed: ICampaign[] = campaigns
+            .filter(campaign => campaign.type === CampaignType.give_reward);
+          // if there is a 1st come 1st served campaign, display the popup
+          if (firstComeFirstServed.length > 0) {
+            this.firstComefirstServeCampaign = firstComeFirstServed[0];
+            const data = {
+              text: this.firstComefirstServeCampaign.description,
+              imageUrl: 'assets/bd-campaign.svg',
+              buttonTxt: 'Check it out',
+              afterClosedCallBack: this,
+              // @ts-ignore
+              validTo: new Date(this.firstComefirstServeCampaign.endsAt)
+            };
+            this.putIdInStorage(this.firstComefirstServeCampaign.id);
+            this.dialog.open(RewardPopupComponent, { data });
+            return;
+          }
+        },
+        () => {
+          // no campaign that is popup eligible. fail silently.
+        }
+      );
+  }
+
+  private idExistsInStorage(id: number): boolean {
+    return this.idsInStorage.includes(id);
+  }
+
+  private putIdInStorage(id: number): void {
+    const ids: number[] = this.idsInStorage;
+    ids.push(id);
+    this.tokenStorage.setAppInfoProperty(JSON.stringify(ids), 'campaignIdsPopup');
+  }
+
+  private get idsInStorage(): number[] {
+    const campaignIdsInLocalStorage = this.tokenStorage.getAppInfoProperty('campaignIdsPopup');
+    return campaignIdsInLocalStorage ? JSON.parse(campaignIdsInLocalStorage) : [];
+  }
+
+  public dialogClosed(): void {
+    this.campaignService.issueAll(this.firstComefirstServeCampaign.id).subscribe(
+      () => {
+        this.router.navigate([`/wallet`]);
+      },
+      (err) => {
+        if (err.error && err.error.code === 4103) {
+          // user has already been issued voucher
+          this.router.navigate([`/home/vouchers`]);
+        }
+        console.error(`Something fishy, we should not be here, without any reward or game. ERR print: ${err.error.message}`);
+      }
+    );
   }
 }
