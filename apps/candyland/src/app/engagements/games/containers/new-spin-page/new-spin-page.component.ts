@@ -173,7 +173,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     const size = length; // change later on
     const rainbow = new Array(size);
 
-    for (let i = 0; i < size; i++) {
+    for (let i = 1; i <= size; i++) {
       const red = sin_to_hex(i, 0 / 3); // 0   deg
       const blue = sin_to_hex(i, Math.PI * 2 / 3); // 120 deg
       const green = sin_to_hex(i, 2 * Math.PI * 2 / 3); // 240 deg
@@ -199,8 +199,8 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     Object.keys(this.colorCtrls.controls).forEach(key => {
       this.colorCtrls.get(key).valueChanges.pipe(takeUntil(this.destroy$)).
         subscribe((value) => {
-          if (this.iSlices && (key < this.numberOfWedges.value)) {
-            this.iSlices[key].backgroundColor = value;
+          if (this.iSlices && (key <= this.numberOfWedges.value)) {
+            this.iSlices[+key - 1].backgroundColor = value; // is an array to access the correct one need - 1
           }
           this.iSlices = [...this.iSlices];
         });
@@ -229,13 +229,13 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       .subscribe(
         value => {
           const tempISlices: ISlice[] = [];
-          for (let i = 0; i < value; i++) {
+          for (let i = 1; i <= value; i++) {
             tempISlices.push({
               id: `${i}`,
               backgroundColor: this.colorCtrls.get(`${i}`).value,
             });
           }
-          this.rewardSlotNumbers = this.allRewardSlotNumbers.filter((slot) => +slot.value < value);
+          this.rewardSlotNumbers = this.allRewardSlotNumbers.filter((slot) => +slot.value <= value);
           this.iSlices = tempISlices;
           this.formSpin.get('rewardSlots').patchValue([]);
           this.patchForm('rewardSlots', [this.rewardSlotNumbers[this.rewardSlotNumbers.length - 1].value]);
@@ -256,17 +256,17 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
         const tempISlices = [];
 
         if (this.iSlices.length) {
-          for (let i = 0; i < this.numberOfWedges.value; i++) {
+          for (let i = 1; i <= this.numberOfWedges.value; i++) {
+            const probRewardProp = this.rewardSlotNumberData.map(slotData => slotData.rewardPosition)
+              .includes(i) ?
+              {backgroundImage: ImageControlValue.getImgLink(this.rewardIcon)} : {};
             tempISlices.push({
+              ...probRewardProp,
               id: `${i}`,
+              backgroundColor: this.colorCtrls.get(`${i}`).value
               // label: `${i}win`, // hard code for testing
-              backgroundColor: this.colorCtrls.get(`${i}`).value,
             });
           }
-
-          this.rewardSlotNumberData.forEach(({ rewardPosition }) => {
-            tempISlices[rewardPosition].backgroundImage = ImageControlValue.getImgLink(this.rewardIcon);
-          });
         }
         this.iSlices = tempISlices;
       });
@@ -292,7 +292,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
 
   private getDefaultValue(data: ISpinDefaultValue): Partial<ISpinEntityForm> {
     return {
-      rewardSlots: [data.rewardSlots[data.rewardSlots.length - 6].value],
+      rewardSlots: [data.rewardSlots[data.rewardSlots.length - 5].value],
       numberOfWedges: data.numberOfWedges[data.numberOfWedges.length - 6].value, // start with 4 color controls
       wheelPosition: data.wheelPosition[0],
       wheelImg: data.wheelImg[0],

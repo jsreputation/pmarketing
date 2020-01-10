@@ -1,29 +1,29 @@
 <div class="phonepreview-wrapper">
   <div class="forms-container">
-    <!--DummyToRemove Error-->
-    <form [formGroup]="form1pt1">
-    </form>
-    <!--DummyToRemove Error-->
     <!--Rewards-->
     <mat-card class="card">
       <div class="card-header">
-        <mat-checkbox color="primary" [(ngModel)]="enableProbability">
-          {{'CAMPAIGN.INCLUDE_PROBABILITY' | translate}}
-        </mat-checkbox>
+        <!--DummyToRemove Error-->
+        <form [formGroup]="limitRewardForm">
+          <mat-checkbox color="primary" formControlName="enableProbability">
+            {{'CAMPAIGN.INCLUDE_PROBABILITY' | translate}}
+          </mat-checkbox>
+        </form>
+        <!--DummyToRemove Error-->
       </div>
       <ng-container *ngFor="let slot of slots;">
         <cl-new-campaign-rewards-form-group
-          [isSpinEngagement]="isSpinEngagement"
           [enableProbability]="enableProbability"
-          [formParent]="form1pt1"
+          [isSpinEngagement]="isSpinEngagement"
+          [formParent]="limitRewardForm"
           [slotNumber]="slot"
           [title]="('CAMPAIGN.REWARDS_FOR_SLOT' | translate) + ' ' + slot">
         </cl-new-campaign-rewards-form-group>
       </ng-container>
-      <mat-error class="error" *ngIf="sumMoreThanError">
+      <mat-error class="error" *ngIf="probAllGroup.hasError('sumMoreThan')">
         {{'CAMPAIGN.THE_TOTAL_PROBABILITY' | translate}}
       </mat-error>
-      <mat-error class="error" *ngIf="rewardNotAllPatchedError && isSpinEngagement">
+      <mat-error class="error" *ngIf="isSpinEngagement && fillAllGroup.hasError('unpatchedSlot')">
         Please fill in rewards for all slots
       </mat-error>
     </mat-card>

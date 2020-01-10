@@ -57,7 +57,7 @@ describe('V4AuthenticationService', () => {
         done();
       });
     const url = location.host;
-    const req = httpTestingController.expectOne(baseUrlForAppAccessToken + 'v2/oauth/token');
+    const req = httpTestingController.expectOne(`${baseUrlForAppAccessToken}v2/oauth/token`);
     expect(req.request.body).toEqual({ url });
     expect(req.request.method).toEqual('POST');
 
@@ -78,7 +78,7 @@ describe('V4AuthenticationService', () => {
         done();
       });
 
-    const req = httpTestingController.expectOne(baseUrl + 'v4/customers/forget_password?phone=6398898888');
+    const req = httpTestingController.expectOne(`${baseUrl}v4/customers/forget_password?phone=6398898888`);
 
     expect(req.request.method).toEqual('GET');
 
@@ -94,7 +94,7 @@ describe('V4AuthenticationService', () => {
         done();
       });
 
-    const req = httpTestingController.expectOne(baseUrl + 'v4/customers/reset_password');
+    const req = httpTestingController.expectOne(`${baseUrl}v4/customers/reset_password`);
 
     expect(req.request.method).toEqual('PATCH');
 
