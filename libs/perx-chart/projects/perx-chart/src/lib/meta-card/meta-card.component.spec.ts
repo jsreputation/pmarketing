@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MetaCardComponent } from './meta-card.component';
 import { Component, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { IData } from 'perx-chart/public-api';
+import { IData } from '../data.model';
 import { DataService } from '../data.service';
 import { MatProgressSpinnerModule, MatButtonModule, MatIconModule } from '@angular/material';
 
