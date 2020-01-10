@@ -297,6 +297,7 @@ export class EngagementHttpAdapter {
       attributes_type: engagementType,
       created_at: data.attributes.created_at,
       updated_at: data.attributes.updated_at,
+      background_img_url: data.attributes.display_properties.background_img_url,
       closed_pinata_img_url:
         data.attributes.display_properties.closed_pinata_img_url,
       opened_pinata_img_url:
