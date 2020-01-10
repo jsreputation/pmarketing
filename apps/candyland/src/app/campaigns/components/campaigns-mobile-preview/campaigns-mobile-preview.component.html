@@ -47,6 +47,11 @@
                 [openedImg]="'assets/images/games/pinata/opened-pinata.png'" [nbTaps]="5">
               </perx-core-pinata>
             </ng-container>
+            <ng-container *ngSwitchCase="'spin'">
+              <div class="img-ss">
+                <img alt="spin-pic" [src]="engagement.image_url"/>
+              </div>
+            </ng-container>
           </ng-container>
         </ng-container>
         <ng-container *ngSwitchCase="'stamps'">

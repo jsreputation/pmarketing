@@ -225,7 +225,8 @@ export class EngagementHttpAdapter {
       reward_icon: data.attributes.display_properties.reward_icon,
       wheel_img: data.attributes.display_properties.wheel_img,
       wheel_position: data.attributes.display_properties.wheel_position,
-      pointer_img: data.attributes.display_properties.pointer_img
+      pointer_img: data.attributes.display_properties.pointer_img,
+      background_img_url: data.attributes.display_properties.background_img_url
     };
   }
 
