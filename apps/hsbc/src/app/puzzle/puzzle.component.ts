@@ -35,12 +35,22 @@ import {
   PuzzleCollectReward,
   ThemesService,
   ITheme,
+  RewardPopupComponent,
+  IPopupConfig
 } from '@perx/core';
 
 import { SoundService } from '../sound/sound.service';
-import { RewardPopupComponent, IRewardPopupConfig } from '../reward-popup/reward-popup.component';
 import { MatDialog } from '@angular/material';
 
+export interface IRewardPopupConfig extends IPopupConfig {
+  afterClosedCallBackRedirect?: PopUpClosedCallBack;
+  url?: string;
+  didWin?: boolean;
+}
+
+export interface PopUpClosedCallBack {
+  closeAndRedirect(url: string, didWin: boolean): void;
+}
 @Component({
   selector: 'app-puzzle',
   templateUrl: './puzzle.component.html',
