@@ -3,8 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardPopupComponent } from './reward-popup.component';
 import { ExpireTimerComponent } from './expire-timer/expire-timer.component';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { IPopupConfig } from '@perx/core';
 import { Type } from '@angular/core';
+import { IPopupConfig } from '../../utils/popup/popup.component';
 
 interface IRewardPopupConfig extends IPopupConfig {
   validTo?: Date;
