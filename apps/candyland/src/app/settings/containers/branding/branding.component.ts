@@ -5,11 +5,9 @@ import { Observable, of, Subject } from 'rxjs';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 
 import { settingsFonts, SettingsService, settingsStyles } from '@cl-core/services';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
-import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
 import { IReward } from '@perx/core';
-import { IWTenantDisplayProperties } from '@perx/whistler';
 import { TranslateService } from '@ngx-translate/core';
+import { TenantService } from '@cl-core/services/tenant.service';
 
 @Component({
   selector: 'cl-branding',
@@ -24,14 +22,16 @@ export class BrandingComponent implements OnInit, OnDestroy {
   public listColorsText: {
     labelView: string, color: string
   }[];
-  public tenants: Tenants;
+  public tenants: ITenant;
   public mockReward: IReward = this.settingsService.getMockReward();
   public reward$: Observable<IReward> = of(this.mockReward);
   public rewards$: Observable<IReward[]> = of([this.mockReward, this.mockReward]);
   public tabsLabels: string[];
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private settingsService: SettingsService, private translate: TranslateService) { }
+  constructor(private settingsService: SettingsService,
+              private translate: TranslateService,
+              private tenantService: TenantService) { }
 
   public get headerNavbarColor(): AbstractControl {
     return this.formBranding.get('headerNavbarColor');
@@ -97,7 +97,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
   }
 
   private createFormBranding(): void {
-    this.formBranding = this.settingsService.getFormBranding();
+    this.formBranding = this.tenantService.getFormBranding();
   }
 
   private patchValue(data: Partial<IBrandingForm>): void {
@@ -116,10 +116,10 @@ export class BrandingComponent implements OnInit, OnDestroy {
   }
 
   private getTenant(): void {
-    this.settingsService.findTenant()
-      .subscribe((res: Tenants) => {
+    this.tenantService.findTenant()
+      .subscribe((res: ITenant) => {
         this.tenants = res;
-        this.handlerValue(res.display_properties);
+        this.handlerValue(res);
       });
   }
 
@@ -129,20 +129,28 @@ export class BrandingComponent implements OnInit, OnDestroy {
       .pipe(
         debounceTime(300),
         switchMap((value => {
-          return this.formBranding.valid ?
-            this.settingsService.updateTenants(SettingsHttpAdapter.transformSettingsBrandingFormToAPI(value)) : of([]);
+
+          if (this.formBranding.valid) {
+            this.tenants = this.tenantService.prepareTenant(this.tenants, value);
+            return this.updateTenant();
+          }
+          return of([]);
         })),
         takeUntil(this.destroy$),
       )
-      .subscribe(() => { });
+      .subscribe(() => {});
   }
 
-  private handlerValue(data: IWTenantDisplayProperties): void {
+  private updateTenant(): Observable<ITenant> {
+    return this.tenantService.updateTenant(this.tenants);
+  }
+
+  private handlerValue(data: ITenant): void {
     if (!data['theme.primary'] || !data['theme.style']) {
       this.setDefaultValue(data);
     } else {
       this.changeDefaultColors(data);
-      const patchFormValue = SettingsHttpAdapter.transformSettingsBrandingToForm(data, this.listColors, this.listColorsText);
+      const patchFormValue = this.tenantService.prepareDataToBrandingForm(data, this.listColors, this.listColorsText);
       this.patchValue(patchFormValue);
       this.subscribeFormChanges();
     }
@@ -150,13 +158,15 @@ export class BrandingComponent implements OnInit, OnDestroy {
 
   private setDefaultValue(data: any): void {
     const defaultValue = this.prepareDefaultValue(data);
-    this.tenants.display_properties = { ...this.tenants.display_properties, ...defaultValue };
-    this.tenants.save()
-      .subscribe(() => this.subscribeFormChanges());
+    this.tenants = { ...this.tenants, ...defaultValue };
+    this.updateTenant()
+      .subscribe(() => {
+        this.subscribeFormChanges();
+      });
   }
 
   private prepareDefaultValue(data: any): any {
-    return this.settingsService.prepareDefaultValue(data);
+    return this.tenantService.prepareDefaultValue(data);
   }
 
   private changeDefaultColors(data: any): void {

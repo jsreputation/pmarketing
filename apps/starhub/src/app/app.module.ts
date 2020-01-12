@@ -30,6 +30,7 @@ import {
   ConfigModule,
   CampaignModule,
   MerchantsModule,
+  RewardPopupComponent,
 } from '@perx/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -47,7 +48,6 @@ import { LocationShortFormatComponent } from './location-short-format/location-s
 import { RewardDetailComponent } from './reward/reward-detail/reward-detail.component';
 import { GameComponent } from './game/game.component';
 import { CongratsComponent } from './congrats/congrats.component';
-import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
 import { ErrorComponent } from './error/error.component';
 
@@ -85,7 +85,6 @@ export class SentryErrorHandler implements ErrorHandler {
     RewardDetailComponent,
     GameComponent,
     CongratsComponent,
-    RewardPopupComponent,
     ExpireTimerComponent,
     ErrorComponent,
   ],
@@ -118,7 +117,7 @@ export class SentryErrorHandler implements ErrorHandler {
     MerchantsModule,
     QRCodeModule,
     NgxBarcodeModule,
-    InfiniteScrollModule,
+    InfiniteScrollModule
   ],
   entryComponents: [
     CategorySelectComponent,

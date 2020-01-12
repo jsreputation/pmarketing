@@ -18,6 +18,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 import {ClColorPickerModule} from '@cl-shared/components/cl-color-picker/cl-color-picker.module';
 import {LocalStorageService} from '@cl-core/services/local-storage.service';
+import { TenantStoreService } from '@cl-core-services';
+import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
 
 describe('NewSpinPageComponent', () => {
   let component: NewSpinPageComponent;
@@ -49,7 +51,8 @@ describe('NewSpinPageComponent', () => {
         TranslateModule.forRoot(),
       ],
       providers: [
-        LocalStorageService
+        LocalStorageService,
+        { provide: TenantStoreService, useClass: TenantMockStore }
       ]
     }).compileComponents();
   }));

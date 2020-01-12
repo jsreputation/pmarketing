@@ -20,6 +20,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { TenantStoreService } from '@cl-core-services';
+import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
 
 describe('NewStampPageComponent', () => {
   let component: NewStampComponent;
@@ -54,7 +56,8 @@ describe('NewStampPageComponent', () => {
       ],
       declarations: [ NewStampComponent ],
       providers: [
-        {provide: LocalStorageService, useValue: {}}
+        {provide: LocalStorageService, useValue: {}},
+        { provide: TenantStoreService, useClass: TenantMockStore }
       ]
     })
     .compileComponents();
