@@ -40,12 +40,12 @@ import {
   ICampaignService,
   ICampaign,
   TokenStorage,
-  CampaignType
+  CampaignType,
+  RewardPopupComponent
 } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
 import { MatTabChangeEvent, MatDialog } from '@angular/material';
-import { RewardPopupComponent } from '../reward-popup/reward-popup.component';
 
 const stubTabs: ITabConfigExtended[] = [
   {
@@ -291,8 +291,8 @@ export class HomeComponent implements OnInit, OnDestroy {
             return;
           }
         },
-        () => {
-          // no campaign that is popup eligible. fail silently.
+        (err) => {
+          console.error(`Something fishy, we should not be here, without any reward or game. ERR print: ${err.error.message}`);
         }
       );
   }
