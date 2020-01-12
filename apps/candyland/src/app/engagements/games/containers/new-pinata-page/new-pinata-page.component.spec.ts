@@ -21,6 +21,8 @@ import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view
 import { ConfirmModalModule } from '@cl-shared';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { TenantStoreService } from '@cl-core-services';
+import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
 
 describe('NewPinataPageComponent', () => {
   let component: NewPinataPageComponent;
@@ -50,7 +52,8 @@ describe('NewPinataPageComponent', () => {
       ],
       declarations: [ NewPinataPageComponent ],
       providers: [
-        {provide: LocalStorageService, useValue: {}}
+        {provide: LocalStorageService, useValue: {}},
+        { provide: TenantStoreService, useClass: TenantMockStore }
       ]
     })
     .compileComponents();
