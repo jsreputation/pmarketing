@@ -7,7 +7,7 @@ import { tap, map, switchMap, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ControlsName } from '../../../../models/controls-name';
 import {
-  AvailableNewEngagementService, RoutingStateService, SettingsService, ShakeTreeService
+  AvailableNewEngagementService, RoutingStateService, ShakeTreeService, TenantStoreService
 } from '@cl-core/services';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
@@ -77,7 +77,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
     private router: Router,
     private availableNewEngagementService: AvailableNewEngagementService,
     private cd: ChangeDetectorRef,
-    private settingsService: SettingsService
+    private tenantStoreService: TenantStoreService
   ) {
   }
 
@@ -190,7 +190,7 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
   }
 
   private initTenantSettings(): void {
-    this.settingsService.getTenant()
+    this.tenantStoreService.tenant$
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: ITenantsProperties) => {
         this.tenantSettings = res;

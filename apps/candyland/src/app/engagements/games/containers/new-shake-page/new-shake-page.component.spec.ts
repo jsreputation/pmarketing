@@ -15,13 +15,14 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GameModule } from '@perx/core';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
-import { ShakeTreeService } from '@cl-core/services';
+import { ShakeTreeService, TenantStoreService } from '@cl-core/services';
 import { ConfirmModalModule } from '@cl-shared';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
 import { WINDOW } from '@cl-core/services/window.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
 
 describe('NewShakePageComponent', () => {
   let component: NewShakePageComponent;
@@ -95,7 +96,8 @@ describe('NewShakePageComponent', () => {
         { provide: WINDOW, useValue: {
             scrollTo(a: any, b: any): any { return {a, b}; }
           }
-        }
+        },
+        { provide: TenantStoreService, useClass: TenantMockStore }
       ]
     })
     .compileComponents();

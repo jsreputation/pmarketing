@@ -1,6 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AvailableNewEngagementService, RoutingStateService, SettingsService, StampsService } from '@cl-core/services';
+import {
+  AvailableNewEngagementService,
+  RoutingStateService,
+  StampsService, TenantStoreService
+} from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { combineLatest, Observable, of, Subject } from 'rxjs';
@@ -87,7 +91,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
     private availableNewEngagementService: AvailableNewEngagementService,
     private stampsService: StampsService,
     private cd: ChangeDetectorRef,
-    private settingsService: SettingsService
+    private tenantStoreService: TenantStoreService
   ) {
   }
 
@@ -242,7 +246,7 @@ export class NewStampComponent implements OnInit, OnDestroy {
   }
 
   private initTenantsSettings(): void {
-    this.settingsService.getTenant()
+    this.tenantStoreService.tenant$
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: ITenantsProperties) => {
         this.tenantSettings = res;
