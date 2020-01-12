@@ -11,7 +11,7 @@
 <div
   *ngIf="(rewards$ | rewardsSort: selectedSortingCraeteria | async) as rewards"
   class="content"
-  cdkScrollable
+  #contentScroll
 >
   <h1 class="catergory-title">{{selectedCategory}}</h1>
   <div
