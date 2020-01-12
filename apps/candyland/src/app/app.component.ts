@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService, RoutingStateService } from '@cl-core/services';
+import { TenantService } from '@cl-core/services/tenant.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'cl-root',
@@ -10,6 +12,7 @@ export class AppComponent implements OnInit {
   constructor(
     private routingState: RoutingStateService,
     public authService: AuthService,
+    private tenantService: TenantService
   ) {
   }
 
@@ -17,6 +20,9 @@ export class AppComponent implements OnInit {
     this.authService.initAuth();
     if (this.authService.userId) {
       this.authService.updateUser()
+        .pipe(
+          switchMap(() => this.tenantService.getSettings()),
+        )
         .subscribe(() => {
         });
     }
