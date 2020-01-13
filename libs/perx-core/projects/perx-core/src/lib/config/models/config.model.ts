@@ -11,11 +11,13 @@ export interface IConfig<T> {
   sourceType?: string;
   custom?: T;
   displayProperties?: IWSetting;
+  showAccountsPage?: boolean;
   showHistoryPage?: boolean;
   showHomePage?: boolean;
   showExpiryOnRewardDetail?: boolean;
   showNewsfeedOnHomepage?: boolean;
   showQrPageSubtitle?: boolean;
+  showUserQR?: boolean;
   showBarcodeOnHomeProfilePage?: boolean;
   showSubtitleLogin?: boolean;
   redirectAfterLogin?: string;
