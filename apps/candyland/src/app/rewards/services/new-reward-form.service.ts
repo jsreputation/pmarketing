@@ -181,7 +181,6 @@ export class NewRewardFormService {
 
   public handlerTierUpdate(tier: ILoyaltyTiersFormGroup | IBasicTier, tiersMap: any): void {
     const tempTier = this.defaultRewardTiers[tier.tierId];
-    // Missing when toggle the loyalty program checkbox
     if (
       tempTier
       && !tier.statusTiers
