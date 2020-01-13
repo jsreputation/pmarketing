@@ -297,7 +297,6 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
         this.handlerTierUpdate(tier);
       });
     });
-
     const result: Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>>[] = this.sendTiers();
 
     return result.length ? forkJoin(result) : of(null);
@@ -344,7 +343,6 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       });
       this.rewardLoyaltyForm.push(loyaltyFormGroup);
     });
-
     // patch with if exist savedLoyalties
     if (rewardTierMap) {
       this.patchWithSavedLoyalties(rewardTierMap, this.rewardLoyaltyForm);
