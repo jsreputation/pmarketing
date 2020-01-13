@@ -7,7 +7,11 @@ import { debounceTime, tap, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { NewSurveyForm } from 'src/app/engagements/new-survey/new-survey-form';
 import { ControlsName } from '../../../../models/controls-name';
-import { AvailableNewEngagementService, RoutingStateService, SettingsService, SurveyService } from '@cl-core/services';
+import {
+  AvailableNewEngagementService,
+  RoutingStateService,
+  SurveyService, TenantStoreService
+} from '@cl-core/services';
 import { QuestionFormFieldService, SimpleMobileViewComponent } from '@cl-shared';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
@@ -79,7 +83,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
     private router: Router,
     private routingState: RoutingStateService,
     private cd: ChangeDetectorRef,
-    private settingsService: SettingsService
+    private tenantStoreService: TenantStoreService
   ) {
   }
 
@@ -246,7 +250,7 @@ export class NewSurveyComponent implements OnInit, OnDestroy {
   }
 
   private initTenant(): void {
-    this.settingsService.getTenant()
+    this.tenantStoreService.tenant$
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: ITenantsProperties) => {
         this.tenantSettings = res;

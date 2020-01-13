@@ -2,11 +2,12 @@ import {
   Component,
   OnInit,
   NgZone,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  Renderer2,
 } from '@angular/core';
-import {
-  ScrollDispatcher,
-  CdkScrollable,
-} from '@angular/cdk/scrolling';
+
 import {
   Router,
   ActivatedRoute,
@@ -54,8 +55,9 @@ const REQ_PAGE_SIZE: number = 10;
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallBack, SortBottomSheetClosedCallBack {
-
+export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallBack, SortBottomSheetClosedCallBack, AfterViewInit {
+  @ViewChild('contentScroll', { static: false })
+  public contentScroll: ElementRef;
   public rewards$: Observable<IReward[]>;
   public rewardsLoaded: boolean = false;
   public rewardsEnded: boolean = false;
@@ -95,10 +97,10 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
     private bottomSheet: MatBottomSheet,
     private rewardsService: RewardsService,
     private activeRoute: ActivatedRoute,
-    private scrollDispatcher: ScrollDispatcher,
     private zone: NgZone,
     private macaronService: MacaronService,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    private renderer: Renderer2
   ) {
     this.initRewardsScan();
   }
@@ -133,9 +135,6 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
         })
       );
     }
-    this.scrollDispatcher.scrolled().subscribe((cdkScrollable: CdkScrollable) => {
-      this.checkScrolledPosition(cdkScrollable.getElementRef().nativeElement.scrollTop);
-    });
   }
 
   private checkScrolledPosition(scrollValue: number): void {
@@ -192,5 +191,11 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
 
     this.rewardsPageId++;
     this.fetchRewards();
+  }
+
+  public ngAfterViewInit(): void {
+    this.renderer.listen(this.contentScroll.nativeElement, 'scroll', () => {
+      this.checkScrolledPosition(this.contentScroll.nativeElement.scrollTop);
+    });
   }
 }

@@ -35,10 +35,7 @@ import {
 
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import {
-  AvailableNewEngagementService,
-  ScratchService,
-  RoutingStateService,
-  SettingsService
+  AvailableNewEngagementService, ScratchService, RoutingStateService, TenantStoreService,
 } from '@cl-core/services';
 
 import { ControlsName } from '../../../../models/controls-name';
@@ -109,7 +106,7 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private settingsService: SettingsService
+    private tenantStoreService: TenantStoreService
   ) {
   }
 
@@ -223,7 +220,7 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
   }
 
   private initTenantSettings(): void {
-    this.settingsService.getTenant()
+    this.tenantStoreService.tenant$
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: ITenantsProperties) => {
         this.tenantSettings = res;
