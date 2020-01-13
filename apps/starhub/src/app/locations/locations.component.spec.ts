@@ -1,14 +1,21 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 
 import { LocationsComponent } from './locations.component';
 import { MatIconModule, MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { UtilsModule, LocationsService, GeoLocationService, RewardsService, IMerchantsService } from '@perx/core';
+import { UtilsModule, LocationsService, GeoLocationService, RewardsService, IMerchantsService, IVoucherService } from '@perx/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { of, Subject } from 'rxjs';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';
 import { AnalyticsService } from '../analytics.service';
+import { vouchers } from '../vouchers.mock';
+import { rewards } from '../rewards.mock';
+import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.model';
+
+const vouchersServiceStub = {
+  get: () => of(vouchers[0])
+};
 
 describe('LocationsComponent', () => {
   let component: LocationsComponent;
@@ -108,7 +115,8 @@ describe('LocationsComponent', () => {
         { provide: GeoLocationService, useValue: geoLocationServiceStub },
         { provide: Location, useValue: locationStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
-        { provide: AnalyticsService, useValue: analyticsServiceStub }
+        { provide: AnalyticsService, useValue: analyticsServiceStub },
+        { provide: IVoucherService, useValue: vouchersServiceStub }
       ]
     })
       .compileComponents();
@@ -132,10 +140,12 @@ describe('LocationsComponent', () => {
       expect(component.locations$).toBe(defVal);
     });
 
-    it('should set locations based on the mid queryParams', () => {
-      params.next({ mid: 1 });
-      params.next({ rid: 2 });
+    it('should set locations based on the mid queryParams', fakeAsync(inject([IVoucherService], (vouchersService: IVoucherService) => {
+      spyOn(vouchersService, 'get').and.returnValue(of({ reward: rewards[0] } as IVoucher));
+      params.next({ merchantId: 1 });
+      params.next({ voucherId: 2 });
       component.ngOnInit();
+      tick();
       component.locations$.subscribe(res => {
         expect(res[0].merchantId).toBe(1);
         expect(res[0].merchantName).toBe('abc');
@@ -144,7 +154,7 @@ describe('LocationsComponent', () => {
         expect(res[0].latitude).toBe(1);
         expect(res[0].longitude).toBe(2);
       });
-    });
+    })));
   });
 
   it('should navigate back', () => {
