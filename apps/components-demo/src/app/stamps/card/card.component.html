@@ -32,10 +32,29 @@
   [rewardPreStamp]="'assets/stamps/pre_reward.png'"
   [rewardPostStamp]="'assets/stamps/post_reward.png'"
   [rewards]="rewardArr"
-  [showStampsCounter]="showCounter"
->
-</perx-core-puzzle-collect-stamps>
+  [showStampsCounter]="showCounter">
 
+</perx-core-puzzle-collect-stamps>
+<!-- <perx-core-puzzle-collect-stamps
+  [nbSlots]="nbSlots.value"
+  [stamps]="stamps"
+  [preStampImg]="'assets/stamps/pre_stamp.png'"
+  [postStampImg]="'assets/stamps/post_stamp_redeemed.png'"
+  [rewardPreStamp]="'assets/stamps/pre_reward.png'"
+  [rewardPostStamp]="'assets/stamps/post_reward.png'"
+  [rewards]="rewardArr"
+  [showStampsCounter]="showCounter"
+
+  [availableStampImg]="stampCard.displayProperties.preStampImg"
+  [availableRewardImg]="stampCard.displayProperties.rewardPreStamp"
+  [backgroundImage]="stampCard.displayProperties.cardImage?.value.imageUrl"
+  [cardBgImage]="stampCard.displayProperties.cardBackgroundImage?.value.imageUrl"
+  [showStampsCounter]="true"
+  [title]="stampCard.title || 'Stamp Card'"
+  [subTitle]="stampCard.subTitle || 'Tap the stamps to earn your reward!'"
+  (availableStampClicked)="handleStamp($event)">
+
+</perx-core-puzzle-collect-stamps> -->
 <p>Reward Position</p>
 <div #cbContainer class="checkboxContainer">
   <mat-checkbox
