@@ -10,6 +10,8 @@ import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 import { of, Subject } from 'rxjs';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { TenantStoreService } from '@cl-core-services';
+import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
 
 describe('LoyaltyReviewComponent', () => {
   let component: LoyaltyReviewPageComponent;
@@ -41,7 +43,8 @@ describe('LoyaltyReviewComponent', () => {
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: LoyaltyRuleService, useValue: loyaltyRuleServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
-        { provide: Router, useValue: routerStub }
+        { provide: Router, useValue: routerStub },
+        { provide: TenantStoreService, useClass: TenantMockStore }
       ],
       declarations: [LoyaltyReviewPageComponent],
       schemas: [NO_ERRORS_SCHEMA]
