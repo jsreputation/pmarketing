@@ -12,6 +12,9 @@ export interface IWProfileAttributes {
   anonymous?: boolean;
   birthday?: string | null;
   gender?: string;
+  time_zone?: string;
+  email?: string;
+  username?: string;
 }
 
 export interface IWCognitoLogin {
