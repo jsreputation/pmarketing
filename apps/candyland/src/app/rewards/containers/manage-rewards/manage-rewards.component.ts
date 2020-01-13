@@ -79,10 +79,11 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public save(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      return;
     }
     if (this.rewardLoyaltyForm.invalid) {
       this.rewardLoyaltyForm.markAllAsTouched();
+    }
+    if (this.form.invalid && this.rewardLoyaltyForm.invalid) {
       return;
     }
 
@@ -273,7 +274,10 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       if (!item.basicTier.tierId) {
         return;
       }
-      result.push(this.rewardsService.createRewardTier(item.basicTier, id));
+
+      if (item.basicTier.statusTiers) {
+        result.push(this.rewardsService.createRewardTier(item.basicTier, id));
+      }
 
       item.tiers.forEach((tier: ILoyaltyTiersFormGroup) => {
         if (tier.statusTiers) {
@@ -347,7 +351,6 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       this.patchWithSavedLoyalties(rewardTierMap, this.rewardLoyaltyForm);
     }
 
-    console.log('first read value: ', this.rewardLoyaltyForm.value);
     this.loyalties = loyalties.data;
     this.cd.detectChanges();
   }
@@ -355,15 +358,11 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   private patchWithSavedLoyalties(rewardTierMap: { [key: string]: ITierRewardCost }, rewardLoyaltyForm: FormArray): void {
     for (let index = 0; index < rewardLoyaltyForm.controls.length - 1; index++) {
       const loyaltyGroup: AbstractControl = rewardLoyaltyForm.at(index);
-      // console.log('rewardLoyaltyForm: ', rewardLoyaltyForm.value);
-      // console.log('rewardTierMap: ', rewardTierMap);
       if (rewardTierMap) {
         let hasSelectedCustomTier = false;
         (loyaltyGroup.get('tiers') as FormArray).controls.forEach((tier) => {
           const rewardTier = rewardTierMap[tier.value.tierId];
-          console.log('rewardTier: ', rewardTier);
           if (rewardTier && rewardTier.tierType === this.newRewardFormService.tierTypes.customType) {
-            console.log('is custom tier');
             // add to object for know what to do next remove or update
             hasSelectedCustomTier = true;
             rewardTier['statusTiers'] = true;
