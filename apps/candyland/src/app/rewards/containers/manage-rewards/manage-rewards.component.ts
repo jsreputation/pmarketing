@@ -94,7 +94,6 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       rewardEntityForm.displayProperties = this.reward.displayProperties;
       request = this.rewardsService.updateReward(this.id, rewardEntityForm, this.rewardLoyaltyForm.value);
     } else {
-      // Todo, only create those selected
       request = this.rewardsService.createReward(rewardEntityForm, this.rewardLoyaltyForm.value);
     }
 
