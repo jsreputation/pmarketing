@@ -1,5 +1,5 @@
 // https://github.com/angular/angular-cli/issues/4318#issuecomment-464160213
-// import { writeFile } from 'fs'; 
+// import { writeFile } from 'fs';
 const fs = require('fs');
 const async = require('async');
 // Configure Angular `environment.ts` file path
@@ -17,7 +17,8 @@ const envConfigFile = `export const environment = {
   production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : false},
   isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
-  baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}'
+  baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}',
+  custom: {comingSoon: '${process.env.COMING_SOON ? process.env.COMING_SOON : true}'}
 };
 `;
 

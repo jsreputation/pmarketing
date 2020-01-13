@@ -7,22 +7,12 @@
     "clean": "rm -rf ./dist ./node_modules",
     "lint": "ng lint && eslint \"projects/**/*.ts\"",
     "lint:fix": "eslint \"projects/**/*.ts\" --fix",
-    "e2e": "ng e2e",
-    "test": "jest"
+    "test~": "jest",
+    "test": "echo \"no test!\""
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~8.0.3",
-    "@angular/common": "~8.0.3",
-    "@angular/compiler": "~8.0.3",
-    "@angular/core": "~8.0.3",
-    "@angular/forms": "~8.0.3",
-    "@angular/platform-browser": "~8.0.3",
-    "@angular/platform-browser-dynamic": "~8.0.3",
-    "@angular/router": "~8.0.3",
-    "rxjs": "~6.4.0",
-    "tslib": "^1.9.0",
-    "zone.js": "~0.9.1"
+    "tslib": "^1.9.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.800.6",
@@ -33,15 +23,16 @@
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "ng-packagr": "^5.1.0",
-    "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
-    "tsickle": "^0.35.0",
     "tslint": "~5.19.0",
     "typescript": "~3.4.3",
     "rxjs-tslint-rules": "^4.25.0",
     "@types/jest": "^24.0.25",
     "jest": "^24.9.0",
-    "ts-jest": "^24.3.0"
+    "ts-jest": "^24.3.0",
+    "eslint-plugin-import": "^2.19.1",
+    "@typescript-eslint/parser": "^2.3.3",
+    "eslint-import-resolver-typescript": "^2.0.0"
   },
   "main": "./dist/whistler/bundles/whistler.umd.js",
   "module": "./dist/whistler/fesm5/whistler.js",
@@ -51,13 +42,5 @@
   "fesm5": "./dist/whistler/fesm5/whistler.js",
   "fesm2015": "./dist/whistler/fesm2015/whistler.js",
   "typings": "./dist/whistler/whistler.d.ts",
-  "metadata": "./dist/whistler/whistler.metadata.json",
-  "jest": {
-    "preset": "ts-jest",
-    "globals": {
-      "ts-jest": {
-        "diagnostics": true
-      }
-    }
-  }
+  "metadata": "./dist/whistler/whistler.metadata.json"
 }

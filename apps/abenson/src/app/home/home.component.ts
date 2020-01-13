@@ -3,6 +3,7 @@ import { ICampaign, ICampaignService, IVoucherService, VoucherState, Voucher, Ca
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { IAbensonConfig } from '../model/IAbenson.model';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +23,9 @@ export class HomeComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig().subscribe((val) => this.comingSoon = val.comingSoon as boolean);
+    this.configService.readAppConfig<IAbensonConfig>().subscribe((val) => {
+      this.comingSoon = val.custom ? val.custom.comingSoon as boolean : false;
+    });
     this.campaigns$ = this.campaignService.getCampaigns()
       .pipe(map((campaign) => campaign.filter(el => el.type === CampaignType.game)));
     this.vouchers$ = this.vouchersService.getAll();

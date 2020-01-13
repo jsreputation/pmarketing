@@ -4,21 +4,17 @@ import {
   NotificationService,
   PopupComponent,
   IPopupConfig,
-  PopUpClosedCallBack,
-  ICampaignService,
   ICampaign,
-  CampaignType,
   IGameService,
   IGame,
   TokenStorage,
   ThemesService,
-  ITheme
+  ITheme,
+  RewardPopupComponent
 } from '@perx/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { RewardPopupComponent } from './reward-popup/reward-popup.component';
-import { switchMap, filter, map, catchError } from 'rxjs/operators';
-import { combineLatest, of } from 'rxjs';
+import { ActivatedRoute, Params } from '@angular/router';
+import { filter, map } from 'rxjs/operators';
 import { AnalyticsService, IEvent, PageType } from './analytics.service';
 
 export interface IdataLayerSH {
@@ -45,20 +41,16 @@ declare const _satellite: {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, PopUpClosedCallBack {
+export class AppComponent implements OnInit {
   // public selectedCampaign: ICampaign;
   public game?: IGame;
-  private token: string;
   public theme: ITheme;
-  private firstComefirstServeCampaign: ICampaign;
 
   constructor(
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
     private activeRoute: ActivatedRoute,
-    private campaignService: ICampaignService,
     private dialog: MatDialog,
-    private router: Router,
     private snackBar: MatSnackBar,
     private gameService: IGameService,
     private tokenStorage: TokenStorage,
@@ -85,13 +77,6 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
 
   public ngOnInit(): void {
     this.themeService.getThemeSetting().subscribe((theme) => this.theme = theme);
-    this.authenticationService.getAccessToken().subscribe((token: string) => {
-      this.token = token;
-      if (this.token) {
-        this.checkAuth();
-      }
-      this.data.perxID = this.token;
-    });
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) =>
         this.dialog.open(PopupComponent, {
@@ -126,7 +111,6 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         if (event.siteSectionLevel3) {
           this.data.siteSectionLevel3 = event.siteSectionLevel3;
         }
-        this.getAccessToken();
 
         if (typeof _satellite === 'undefined') {
           return;
@@ -134,77 +118,6 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         _satellite.track('msa-rewards-virtual-page');
       }
     );
-  }
-
-  private getAccessToken(): void {
-    this.authenticationService.getAccessToken().subscribe((token: string) => {
-      this.token = token;
-      if (this.token) {
-        this.checkAuth();
-      }
-      this.data.perxID = this.token;
-    });
-  }
-
-  private checkAuth(): void {
-    this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
-      if (isAuth) {
-        this.fetchPopupCampaigns();
-      }
-    });
-  }
-
-  private fetchPopupCampaigns(): void {
-    this.campaignService.getCampaigns()
-      .pipe(
-        catchError(() => {
-          this.router.navigateByUrl('error');
-          return of([]);
-        })
-      )
-      .pipe(
-        // for each campaign, get detailed version
-        switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id)))),
-        map((campaigns: ICampaign[]) => campaigns.filter(c => !this.idExistsInStorage(c.id)))
-      )
-      .subscribe(
-        (campaigns: ICampaign[]) => {
-          const firstComeFirstServed: ICampaign[] = campaigns
-            .filter(campaign => campaign.type === CampaignType.give_reward);
-          // if there is a 1st come 1st served campaign, display the popup
-          if (firstComeFirstServed.length > 0) {
-            this.firstComefirstServeCampaign = firstComeFirstServed[0];
-            // if (this.firstComefirstServeCampaign.rewards && this.firstComefirstServeCampaign.rewards.length > 0) {
-            //   // not a birthday campaign. preserve Dec 2019 functionality
-            //   return;
-            // }
-            const data = {
-              text: this.firstComefirstServeCampaign.description,
-              imageUrl: 'assets/bd-campaign.svg',
-              buttonTxt: 'Check it out',
-              afterClosedCallBack: this,
-              // @ts-ignore
-              validTo: new Date(this.firstComefirstServeCampaign.endsAt)
-            };
-            this.putIdInStorage(this.firstComefirstServeCampaign.id);
-            this.dialog.open(RewardPopupComponent, { data });
-            this.analytics.addEvent({
-              pageType: PageType.overlay,
-              pageName: this.firstComefirstServeCampaign.name
-            });
-            return;
-          }
-
-          // else if there is a game campaign, display the popup
-          // const gameCampaign: ICampaign | undefined = campaigns.find(campaign => campaign.type === CampaignType.game);
-          // if (gameCampaign) {
-          //   this.checkGame(gameCampaign);
-          // }
-        },
-        () => {
-          // no campaign that is popup eligible. fail silently.
-        }
-      );
   }
 
   protected checkGame(campaign: ICampaign): void {
@@ -231,29 +144,6 @@ export class AppComponent implements OnInit, PopUpClosedCallBack {
         },
         () => { /* nothing to do here, just fail silently */ }
       );
-  }
-
-  public dialogClosed(): void {
-    if (this.game) {
-      this.router.navigate([`/game`], { queryParams: { id: this.game.id } });
-    } else {
-      this.campaignService.issueAll(this.firstComefirstServeCampaign.id).subscribe(
-        () => {
-          this.router.navigate([`/home/vouchers`]);
-        },
-        (err) => {
-          if (err.error && err.error.code === 4103) {
-            // user has already been issued voucher
-            this.router.navigate([`/home/vouchers`]);
-          }
-          console.error('Something fishy, we should not be here, without any reward or game. ERR print: ' + err);
-        }
-      );
-    }
-  }
-
-  private idExistsInStorage(id: number): boolean {
-    return this.idsInStorage.includes(id);
   }
 
   private putIdInStorage(id: number): void {

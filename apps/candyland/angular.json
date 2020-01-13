@@ -112,7 +112,7 @@
               ]
             },
             "scripts": [],
-            "codeCoverage": true
+            "codeCoverage": false
           }
         },
         "lint": {

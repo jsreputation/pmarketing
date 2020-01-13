@@ -14,7 +14,13 @@ describe('WalletComponent', () => {
     getAll: (): Observable<Voucher[]> => of([])
   };
   const configServiceStub: Partial<ConfigService> = {
-    readAppConfig: () => of({})
+    readAppConfig: () => of({
+      apiHost: '',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: ''
+    })
   };
   beforeEach(async(() => {
     TestBed.configureTestingModule({

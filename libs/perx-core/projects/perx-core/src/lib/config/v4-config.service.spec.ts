@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { IWAppAccessTokenResponse } from '@perx/whistler';
 import { HttpClient } from '@angular/common/http';
 import { IConfig } from './models/config.model';
+import { ITheme } from '../utils/themes/themes.model';
 
 const authenticationServiceStub = {
   getAppToken: () => of()
@@ -36,7 +37,11 @@ describe('V4ConfigService', () => {
   it('should readAppConfig', (done: DoneFn) => {
     service.readAppConfig()
       .subscribe((res) => {
-        expect(res.test).toBe('test');
+        expect(res.apiHost).toBe('http://test.com');
+        expect(res.production).toBe(false);
+        expect(res.preAuth).toBe(false);
+        expect(res.isWhistler).toBe(false);
+        expect(res.baseHref).toBe('/');
         done();
       });
 
@@ -45,7 +50,11 @@ describe('V4ConfigService', () => {
     expect(req.request.method).toEqual('GET');
 
     req.flush({
-      test: 'test'
+      apiHost: 'http://test.com',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: '/',
     });
 
     httpTestingController.verify();
@@ -65,7 +74,7 @@ describe('V4ConfigService', () => {
   it('getTenantAppSettings', fakeAsync(inject([V4ConfigService, AuthenticationService, HttpClient],
     (config: V4ConfigService, auth: AuthenticationService, http: HttpClient) => {
       const spyHttpGet = spyOn(http, 'get');
-      spyHttpGet.and.returnValue(of({ apiHost: '11' } as IConfig));
+      spyHttpGet.and.returnValue(of({ apiHost: '11' } as IConfig<ITheme>));
       config.readAppConfig().subscribe(() => { });
       tick();
       const spy = spyOn(V4ConfigService, 'v4MicrositeSettingsToMicrositeSettings');
@@ -79,7 +88,7 @@ describe('V4ConfigService', () => {
   it('getAccountSettings', fakeAsync(inject([V4ConfigService, HttpClient],
     (config: V4ConfigService, http: HttpClient) => {
       const spy = spyOn(http, 'get').and.returnValue(of({
-        display_properties: {
+        displayProperties: {
           account: null
         }
       }));
