@@ -83,7 +83,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     if (this.rewardLoyaltyForm.invalid) {
       this.rewardLoyaltyForm.markAllAsTouched();
     }
-    if (this.form.invalid && this.rewardLoyaltyForm.invalid) {
+    if (this.form.invalid || this.rewardLoyaltyForm.invalid) {
       return;
     }
 
