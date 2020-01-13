@@ -25,6 +25,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { tap, mergeMap, map, toArray } from 'rxjs/operators';
 
+interface IStampCardConfig {
+  stampsType: string;
+}
+
 @Component({
   selector: 'perx-blackcomb-pages-wallet',
   templateUrl: './wallet.component.html',
@@ -70,8 +74,8 @@ export class WalletComponent implements OnInit {
   }
 
   private getCampaign(): void {
-    this.configService.readAppConfig().pipe(tap((config: IConfig<void>) => {
-      this.stampsType = config.stampsType ? config.stampsType as string : 'puzzle';
+    this.configService.readAppConfig<IStampCardConfig>().pipe(tap((config: IConfig<IStampCardConfig>) => {
+      this.stampsType = config.custom && config.custom.stampsType ? config.custom.stampsType as string : 'puzzle';
     }), mergeMap(() => this.fetchCampaign())).subscribe((card: IStampCard) => {
       if (card) {
         this.campaignId = card.campaignId;

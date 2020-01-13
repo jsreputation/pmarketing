@@ -9,7 +9,6 @@ export interface IConfig<T> {
   baseHref: string;
   defaultLang?: string;
   sourceType?: string;
-  stampsType?: string;
   custom?: T;
   displayProperties?: IWSetting;
   showAccountsPage?: boolean;
