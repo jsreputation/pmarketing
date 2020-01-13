@@ -406,6 +406,20 @@ export class BlackcombAccountAppPage {
   }
 }
 
+export class LoyaltyAppPage {
+  public static navigateToLoyalty(): Promise<string> {
+    return browser.get('loyalty') as Promise<string> ;
+  }
+
+  public static paginator(): ElementFinder {
+    return element(by.css('.mat-paginator-container'));
+  }
+
+  public static itemList(): ElementFinder {
+    return element(by.css('.item-list'));
+  }
+}
+
 export class ElementApp {
   public static h3Array(): ElementArrayFinder {
     return element.all(by.css('h3'));
