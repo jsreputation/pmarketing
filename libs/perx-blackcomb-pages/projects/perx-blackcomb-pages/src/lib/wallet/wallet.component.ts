@@ -70,7 +70,7 @@ export class WalletComponent implements OnInit {
   }
 
   private getCampaign(): void {
-    this.configService.readAppConfig().pipe(tap((config: IConfig) => {
+    this.configService.readAppConfig().pipe(tap((config: IConfig<void>) => {
       this.stampsType = config.stampsType ? config.stampsType as string : 'puzzle';
     }), mergeMap(() => this.fetchCampaign())).subscribe((card: IStampCard) => {
       if (card) {
