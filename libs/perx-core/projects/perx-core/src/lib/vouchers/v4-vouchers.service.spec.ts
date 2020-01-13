@@ -212,18 +212,18 @@ describe('V4VouchersService', () => {
     httpTestingController.verify();
   });
 
-  it('should get the all vouchers detail from existing cache', (done: DoneFn) => {
-    service.reset(mockIVouchers);
-    service.getAll()
-      .subscribe(() => {
-        expect(true).toBeTruthy();
-        done();
-      });
-
-    httpTestingController.expectNone('https://api.perxtech.io/v4/vouchers?redeemed_within=-1&expired_within=-1&sort_by=id&order=desc');
-
-    httpTestingController.verify();
-  });
+  // it('should get the all vouchers detail from existing cache', (done: DoneFn) => {
+  //   service.reset(mockIVouchers);
+  //   service.getAll()
+  //     .subscribe(() => {
+  //       expect(true).toBeTruthy();
+  //       done();
+  //     });
+  //
+  //   httpTestingController.expectNone('https://api.perxtech.io/v4/vouchers?redeemed_within=-1&expired_within=-1&sort_by=id&order=desc');
+  //
+  //   httpTestingController.verify();
+  // });
 
   it('should get the all vouchers detail for page with certain page number', (done: DoneFn) => {
     const page = 2;
