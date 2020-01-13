@@ -44,6 +44,12 @@ import {
   IUpsertUserPopup,
   Type,
 } from '../../audience.model';
+import { LoyaltyCardService } from '@cl-core/services/loyalty-card.service';
+import { IEngagementItemMenuOption } from '../../../loyalty/components/loyalty-item/loyalty-item.component';
+import { AudiencesUserInfoActions } from '../../audience-user-info-actions';
+import { AddLoyaltyPopupComponent } from '../add-loyalty-popup/add-loyalty-popup.component';
+import { AdjustLoyaltyTierPopupComponent } from '../adjust-loyalty-tier-popup/adjust-loyalty-tier-popup.component';
+import { AdjustBalancePointsPopupComponent } from '../adjust-balance-points-popup/adjust-balance-points-popup.component';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -56,8 +62,14 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
 
   public userId: string;
   public user: IAudiencesUserForm;
-  public dataSourceVouchers: CustomDataSource<any>;
-  public dataSourceCommunications: CustomDataSource<any>;
+  public vouchersDataSource: CustomDataSource<any>;
+  public CommunicationsDataSource: CustomDataSource<any>;
+  public loyaltyDataSource: CustomDataSource<any>;
+  public loyaltyMenuOptions: IEngagementItemMenuOption[] = [
+    {action: AudiencesUserInfoActions.adjustLoyaltyTier, label: 'AUDIENCE_FEATURE.ADJUST_TIER'},
+    {action: AudiencesUserInfoActions.adjustBalancePoints, label: 'AUDIENCE_FEATURE.ADJUST_POINTS'},
+    {action: AudiencesUserInfoActions.deleteLoyaltyCard, label: 'BTN_DELETE'},
+  ];
 
   private async updateLocalUser(): Promise<IAudiencesUserForm> {
     this.user = await this.audiencesUserService.getUser(this.userId).toPromise();
@@ -67,6 +79,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
 
   constructor(
     private audiencesUserService: AudiencesUserService,
+    private loyaltyCardService: LoyaltyCardService,
     private vouchersService: AudiencesVouchersService,
     private route: ActivatedRoute,
     private router: Router,
@@ -109,7 +122,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       .subscribe(
         () => {
           this.messageService.show('Expiry voucher date successfully changed.');
-          this.dataSourceVouchers.updateData();
+          this.vouchersDataSource.updateData();
         },
         () => this.messageService.show('Failed to update voucher expiration date.')
       );
@@ -129,10 +142,90 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       .subscribe(
         () => {
           this.messageService.show('Voucher assigned to user.');
-          this.dataSourceVouchers.updateData();
+          this.vouchersDataSource.updateData();
         },
         () => this.messageService.show('Could not assign voucher to user. Make sure that the reward has enough stock.')
       );
+  }
+
+  public openAddLoyaltyPopup(): void {
+    const dialogRef = this.dialog.open(AddLoyaltyPopupComponent, {
+      panelClass: 'change-expiry-date-dialog',
+      data: ''
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy$))
+      .pipe(
+        filter(Boolean),
+        // switchMap((entity: string) => {
+        //   return this.vouchersService.updateVoucherExpiry(item.id, entity);
+        // })
+      )
+      .subscribe(
+        () => {
+          this.messageService.show('Expiry voucher date successfully changed.');
+          this.vouchersDataSource.updateData();
+        },
+        () => this.messageService.show('Failed to update voucher expiration date.')
+      );
+  }
+
+  public openAdjustLoyaltyTierPopup(item: IJsonApiItem<Partial<IWAssignedAttributes>>): void {
+    const dialogRef = this.dialog.open(AdjustLoyaltyTierPopupComponent, {
+      panelClass: 'change-expiry-date-dialog',
+      data: item
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy$))
+      .pipe(
+        filter(Boolean),
+        // switchMap((entity: string) => {
+        //   return this.vouchersService.updateVoucherExpiry(item.id, entity);
+        // })
+      )
+      .subscribe(
+        () => {
+          this.messageService.show('Expiry voucher date successfully changed.');
+          this.vouchersDataSource.updateData();
+        },
+        () => this.messageService.show('Failed to update voucher expiration date.')
+      );
+  }
+
+  public openAdjustBalancePointsPopup(item: IJsonApiItem<Partial<IWAssignedAttributes>>): void {
+    const dialogRef = this.dialog.open(AdjustBalancePointsPopupComponent, {
+      panelClass: 'change-expiry-date-dialog',
+      data: item
+    });
+
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy$))
+      .pipe(
+        filter(Boolean),
+        // switchMap((entity: string) => {
+        //   return this.vouchersService.updateVoucherExpiry(item.id, entity);
+        // })
+      )
+      .subscribe(
+        () => {
+          this.messageService.show('Expiry voucher date successfully changed.');
+          this.vouchersDataSource.updateData();
+        },
+        () => this.messageService.show('Failed to update voucher expiration date.')
+      );
+  }
+
+  public handleAudiencesUserInfoActions(data: { action: AudiencesUserInfoActions, payload?: any }): void {
+    switch (data.action) {
+      case AudiencesUserInfoActions.adjustLoyaltyTier:
+        this.openAdjustLoyaltyTierPopup(data.payload);
+        break;
+      case AudiencesUserInfoActions.adjustBalancePoints:
+        this.openAdjustLoyaltyTierPopup(data.payload);
+        break;
+      case AudiencesUserInfoActions.deleteLoyaltyCard:
+        console.log(data);
+        break;
+    }
   }
 
   private handleRouteParams(): void {
@@ -157,9 +250,11 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   }
 
   private initDataSource(): void {
-    const params = this.userId ? { 'filter[assigned_to_id]': this.userId } : {};
-    this.dataSourceVouchers = new CustomDataSource<any>(this.vouchersService, undefined, params);
-    this.dataSourceCommunications = new CustomDataSource<any>(this.commsService, undefined, {});
+    const vouchersDataSourceParams = this.userId ? { 'filter[assigned_to_id]': this.userId } : {};
+    this.vouchersDataSource = new CustomDataSource<any>(this.vouchersService, 5, vouchersDataSourceParams);
+    const loyaltyDataSourceParams = this.userId ? { 'filter[user_id]': this.userId } : {};
+    this.loyaltyDataSource = new CustomDataSource<any>(this.loyaltyCardService, 20, loyaltyDataSourceParams);
+    this.CommunicationsDataSource = new CustomDataSource<any>(this.commsService, 5, {});
     // this.dataSource.data$.pipe(
     //   takeUntil(this.destroy$)
     // ).subscribe((data: any) => {

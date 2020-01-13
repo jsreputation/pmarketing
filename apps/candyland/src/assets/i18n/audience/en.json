@@ -55,6 +55,17 @@
     "SEND_DATE": "Sent Date",
     "SENDER": "Sender",
     "CHANNEL": "Channel",
-    "ENTER_NEW_EXPIRY_DATE": "Enter New Expiry Date"
+    "ENTER_NEW_EXPIRY_DATE": "Enter New Expiry Date",
+    "ADD_LOYALTY": "Add Loyalty",
+    "ADD_TO_LOYALTY_PROGRAM": "Add To Loyalty Program",
+    "ADJUST_TIER": "Adjust Loyalty Tier",
+    "ADJUST_TIER_BTN_APPLY": "Adjust Tier & Notify Recipient",
+    "ADJUST_POINTS": "Adjust Balance Points",
+    "ADJUST_POINTS_BTN_APPLY": "Adjust Balance & Notify Recipient",
+    "ADD_REMOVE_POINTS": "Add / Remove Points",
+    "ADJUST_DESCRIPTION": "Adjustment Description",
+    "PROGRAM_PICTURE": "Loyalty program picture",
+    "POINTS_BALANCE": "Points Balance",
+    "POINTS_TO_NEXT_TIER": "Points to Next Tier"
   }
 }

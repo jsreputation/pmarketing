@@ -14,7 +14,7 @@
       <mat-tab label="Vouchers">
         <div  class="audience-list-content">
           <!--filters-->
-          <cl-table-filters [dataSource]="dataSourceVouchers" classList="block">
+          <cl-table-filters [dataSource]="vouchersDataSource" classList="block">
             <ng-container *clTableFilter="'rewardName'; let filter">
               <cl-search-filter class="search-block" [control]="filter"
                 [placeholder]="'AUDIENCE_FEATURE.SEARCH_VOUCHERS' | translate"></cl-search-filter>
@@ -27,14 +27,34 @@
 
           <div class="table-card">
             <!--table-->
-            <cl-audiences-vouchers-list [dataSource]="dataSourceVouchers"
+            <cl-audiences-vouchers-list [dataSource]="vouchersDataSource"
               (clickChangeExpiryDate)="openChangeExpiryDateDialog($event)">
             </cl-audiences-vouchers-list>
             <!--/table-->
             <!--paginator-->
-            <cl-paginator [dataSource]="dataSourceVouchers"
+            <cl-paginator [dataSource]="vouchersDataSource"
               [pageSize]="5"
               [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
+            <!--/paginator-->
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Loyalty" class="audience-list-content">
+        <div  class="audience-list-content">
+          <div class="table-card">
+            <!--table-->
+            <cl-button classList="primary" (click)="openAddLoyaltyPopup()">Add Loyalty</cl-button>
+            <cl-audiences-loyalty-grid
+              [dataSource]="loyaltyDataSource"
+              [menuOptions]="loyaltyMenuOptions"
+              (menuTapped)="handleAudiencesUserInfoActions($event)"
+            >
+            </cl-audiences-loyalty-grid>
+            <!--/table-->
+            <!--paginator-->
+<!--            <cl-paginator [dataSource]="dataSourceCommunications"-->
+<!--                          [pageSize]="5"-->
+<!--                          [pageSizeOptions]="[5, 10, 20]"></cl-paginator>-->
             <!--/paginator-->
           </div>
         </div>
@@ -43,11 +63,11 @@
         <div  class="audience-list-content">
           <div class="table-card">
             <!--table-->
-            <cl-audiences-communications-list [dataSource]="dataSourceCommunications">
+            <cl-audiences-communications-list [dataSource]="CommunicationsDataSource">
             </cl-audiences-communications-list>
             <!--/table-->
             <!--paginator-->
-            <cl-paginator [dataSource]="dataSourceCommunications"
+            <cl-paginator [dataSource]="CommunicationsDataSource"
               [pageSize]="5"
               [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
             <!--/paginator-->
@@ -55,5 +75,5 @@
         </div>
       </mat-tab>
     </mat-tab-group>
- 
+
 </section>

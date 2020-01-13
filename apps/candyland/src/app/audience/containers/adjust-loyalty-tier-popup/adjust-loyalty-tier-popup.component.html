@@ -1,0 +1,57 @@
+<aside class="dialog" role="dialog" aria-labelledby="dialogTitle-changeExpiryDate">
+  <header class="dialog-header-wrap">
+    <h2 class="dialog-title" id="dialogTitle-changeExpiryDate">{{'AUDIENCE_FEATURE.CHANGE_EXPIRY_DATE' | translate}}</h2>
+    <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+  <mat-dialog-content>
+    <div class="dialog-content">
+      <div class="change-expiry-row">
+        <div class="change-expiry-card disable">
+          <span>
+            {{'AUDIENCE_FEATURE.FROM' | translate}}
+          </span>
+          <h4>
+            {{'AUDIENCE_FEATURE.OLD' | translate}}
+          </h4>
+          <span>
+            {{'AUDIENCE_FEATURE.CURRENT_EXPIRY_DATE' | translate}}
+          </span>
+          <cl-date-picker [value]="data?.expiryDate"
+                          [disabled]="true">
+          </cl-date-picker>
+        </div>
+
+        <div class="change-expiry-card">
+          <span>
+            {{'AUDIENCE_FEATURE.TO' | translate}}
+          </span>
+          <h4>
+            {{'AUDIENCE_FEATURE.NEW' | translate}}
+          </h4>
+          <span>
+            {{'AUDIENCE_FEATURE.ENTER_NEW_EXPIRY_DATE' | translate}}
+          </span>
+          <cl-date-picker [formControl]="newDate"></cl-date-picker>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content> 
+  <footer class="dialog-actions">
+    <cl-button classList="secondary"
+               class="actions-close"
+               (click)="close()"
+               [disableRipple]="true">
+        <span>{{'BTN_CANCEL' | translate}}</span>
+    </cl-button>
+
+    <cl-button classList="primary"
+               (click)="save()"
+               [disableRipple]="true">
+        <span>{{'BTN_ADD' | translate}}</span>
+    </cl-button>
+  </footer>
+</aside>
+
+
