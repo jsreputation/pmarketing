@@ -24,12 +24,12 @@ export const getTenantsList = async (endpointCredential: ICredentials) => {
 
 const updateTenantsList = async (tenantsListData: ITenantListData[] | [], pageRawData: IJsonApiListPayload<IWTenant>) => {
   const pageData = pageRawData.data
-    .filter((tenant: IJsonApiItem<IWTenant>) => tenant.attributes.account_id !== 0)
+    .filter((tenant: IJsonApiItem<IWTenant>) => tenant.attributes.account_id !== 0 && tenant.attributes.alias)
     .map((tenant: IJsonApiItem<IWTenant>) => transformToTenantListData(tenant));
   return [...tenantsListData, ...pageData];
 };
 
 const transformToTenantListData = (tenantsRawData: IJsonApiItem<IWTenant>): ITenantListData => ({
   id: tenantsRawData.id,
-  accountId: tenantsRawData.attributes.alias
+  accountId: tenantsRawData.attributes.alias || ''
 });
