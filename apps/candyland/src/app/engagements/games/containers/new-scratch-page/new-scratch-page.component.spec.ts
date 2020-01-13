@@ -23,6 +23,8 @@ import { NewScratchPageComponent } from './new-scratch-page.component';
 
 import { SettingsMobilePreviewModule } from '../../../../settings/components/settings-mobile-preview/settings-mobile-preview.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { TenantStoreService } from '@cl-core-services';
+import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
 
 describe('NewScratchComponent', () => {
   let component: NewScratchPageComponent;
@@ -51,7 +53,8 @@ describe('NewScratchComponent', () => {
         NewScratchPageComponent,
       ],
       providers: [
-        {provide: LocalStorageService, useValue: {}}
+        {provide: LocalStorageService, useValue: {}},
+        { provide: TenantStoreService, useClass: TenantMockStore }
       ]
     })
       .compileComponents();

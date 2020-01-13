@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataStore } from '@cl-core/http-adapters/datastore';
-import { IamUser } from '@cl-core/http-adapters/iam-user';
 import { AuthHttpService } from '@cl-core/http-services/auth-http.service';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { SessionService } from '@cl-core/services/session.service';
@@ -12,6 +10,8 @@ import { catchError, map, tap, filter, switchMap } from 'rxjs/operators';
 import { IWLoginAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { parseJwt } from '@cl-helpers/parse-jwt';
 import { HttpResponse } from '@angular/common/http';
+import { IamUserService } from './iam-user.service';
+import { IamUserHttpAdapter } from '@cl-core/http-adapters/iam-user-http-adapter';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +21,9 @@ export class AuthService {
     private http: AuthHttpService,
     private localStorage: LocalStorageService,
     private sessionService: SessionService,
-    private dataStore: DataStore,
     private userService: UserService,
-    private router: Router
+    private iamUserService: IamUserService,
+    private router: Router,
   ) {
   }
 
@@ -34,6 +34,7 @@ export class AuthService {
   public initAuth(): void {
     const localToken = this.localStorage.get('authToken');
     const localUserId = this.localStorage.get('userId');
+
     if (!localToken || !localUserId) {
       this.clearCache();
       return;
@@ -41,8 +42,8 @@ export class AuthService {
     this.sessionService.token = localToken;
   }
 
-  public updateUser(): Observable<IamUser> {
-    return this.dataStore.findRecord(IamUser, this.userId)
+  public updateUser(): Observable<IAMUser> {
+    return this.iamUserService.getUser(this.userId)
       .pipe(
         filter(Boolean),
         tap(user => this.userService.user = user),
@@ -59,11 +60,11 @@ export class AuthService {
       tap(res => {
         if (res.headers.get('authorization')) {
           const token: string = res.headers.get('authorization');
-          let dat = res.body.data;
+          let dat: any = res.body.data;
           if (Array.isArray(dat)) {
             dat = dat[0];
           }
-          const user: IamUser = this.dataStore.deserializeModel(IamUser, dat);
+          const user: IAMUser = IamUserHttpAdapter.transformToIAMUser(dat);
           this.login(token, user);
         }
       }),
@@ -71,7 +72,7 @@ export class AuthService {
     );
   }
 
-  private login(token: string, user: IamUser): void {
+  private login(token: string, user: IAMUser): void {
     this.saveToken(token);
     this.saveUser(user);
 
@@ -82,7 +83,7 @@ export class AuthService {
     this.localStorage.set('authToken', token);
   }
 
-  private saveUser(user: IamUser): void {
+  private saveUser(user: IAMUser): void {
     this.userService.user = user;
     this.localStorage.set('userId', user.id);
   }
@@ -111,9 +112,10 @@ export class AuthService {
             this.saveToken(tokenString);
             const tokenObj = parseJwt(tokenString);
             const userName = tokenObj.sub.split('/').pop();
-            return this.dataStore.findAll(IamUser, {'filter[username]': userName}).pipe(
-              map(users => users.getModels()[0]),
-              tap((user: IamUser) => this.saveUser(user))
+            return this.iamUserService.getUsers({'filter[username]': userName})
+            .pipe(
+              map(users => users[0]),
+              tap((user: IAMUser) => this.saveUser(user))
             );
           }
           return of(null);
