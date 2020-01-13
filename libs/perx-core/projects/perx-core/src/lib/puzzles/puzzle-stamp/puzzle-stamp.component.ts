@@ -109,7 +109,7 @@ export class PuzzleStampComponent implements OnInit {
 
   public stampStyle(): IStyleObject {
     return this.bgImage && !this.isCompleted ?
-      { 'background-image': 'url(' + this.bgImage + ')', 'background-color': '#000' } :
+      { 'background-image': `url(${this.bgImage})`, 'background-color': '#000' } :
       { 'background-image': 'none', 'background-color': 'transparent' };
   }
 
