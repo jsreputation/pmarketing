@@ -88,9 +88,10 @@ export class CommsHttpAdapter {
         body: data.message,
         from: data.from,
         to: data.to,
-        provider_id: data.provider_id,
-        owner_id: data.owner_id,
-        owner_type: data.owner_type,
+        recipient_id: data.recipientId,
+        provider_id: data.providerId,
+        owner_id: data.ownerId,
+        owner_type: data.ownerType,
         channel: data.channel
       }
     };

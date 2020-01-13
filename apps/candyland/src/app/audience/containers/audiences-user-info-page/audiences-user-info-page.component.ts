@@ -32,6 +32,9 @@ import {
 import {
   IWAssignedAttributes,
   IJsonApiItem,
+  WMessageChannel,
+  IJsonApiItemPayload,
+  IWCommMessageAttributes,
 } from '@perx/whistler';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { CustomDataSource } from '@cl-shared';
@@ -45,6 +48,7 @@ import {
   Type,
 } from '../../audience.model';
 import { SendMessagePopupComponent } from '../send-message-popup/send-message-popup.component';
+import { ICommMessage } from '@cl-core/models/comm/schedule';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -121,16 +125,39 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       .open<SendMessagePopupComponent, void, IRewardEntity>(SendMessagePopupComponent)
       .afterClosed()
       .pipe(
-        filter(Boolean)
+        filter(Boolean),
+        tap((message: string) => {
+          if (message && message.length > 0) {
+            this.sendMessage(message);
+          }
+        })
       )
       .subscribe(
-        (message: string) => {
-          console.log(message);
-          this.messageService.show('Message sent to user.');
-          this.dataSourceCommunications.updateData();
+        () => { },
+        () => { }
+      );
+  }
+
+  public sendMessage(message: string): void {
+    if (message && message.length > 0) {
+      const msgBody: ICommMessage = {
+        from: "PerxTest",
+        recipientId: this.userId ? parseInt(this.userId, 10) : undefined,
+        providerId: 2,
+        message,
+        channel: WMessageChannel.sms
+      };
+
+      this.commsService.createMessage(msgBody).subscribe(
+        (res: IJsonApiItemPayload<IWCommMessageAttributes>) => {
+          if (res.data.id) {
+            this.messageService.show('Message sent to user.');
+            this.dataSourceCommunications.updateData();
+          }
         },
         () => this.messageService.show('Could not send message to user. Please try again later.')
       );
+    }
   }
 
   public openSelectRewardPopup(): void {

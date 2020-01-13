@@ -26,8 +26,9 @@ export interface IWCommMessageAttributes {
   created_at?: string;
   updated_at?: string;
   from: string;
-  to: string;
+  to?: string;
   body: string;
+  recipient_id?: number;
   provider_id: number;
   owner_id?: string | null;
   owner_type?: string | null;

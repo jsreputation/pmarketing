@@ -1,9 +1,9 @@
 .message-body-wrapper {
     display: block;
     height: 20rem;
-    width: 20rem;
+    min-width: 20rem;
 
     textarea {
-        height: 100%;
+        height: calc(100% - 0.2rem);
     }
 }
