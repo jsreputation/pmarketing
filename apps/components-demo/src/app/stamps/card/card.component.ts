@@ -6,6 +6,7 @@ import {
 import {
   MatSlider,
   MatCheckboxChange,
+  MatDialog,
 } from '@angular/material';
 
 import { combineLatest, from, Observable } from 'rxjs';
@@ -28,8 +29,17 @@ import {
   IStamp,
   StampCardState,
   NotificationService,
+  IPopupConfig,
+  PopUpClosedCallBack,
+  RewardPopupComponent,
 } from '@perx/core';
 import { Router } from '@angular/router';
+
+export interface IRewardPopupConfig extends IPopupConfig {
+  afterClosedCallBackRedirect?: PopUpClosedCallBack;
+  url?: string;
+  didWin?: boolean;
+}
 
 @Component({
   selector: 'app-card',
@@ -63,6 +73,7 @@ export class CardComponent implements OnInit {
   public availablePieces: number = 0;
   public totalAvailablePieces: number = 0;
   public image: string = '';
+  public cardsCount: number;
   @ViewChild('nbStamps', { static: true }) public nbStamps: MatSlider;
   @ViewChild('nbStampsRedeemed', { static: true }) public nbStampsRedeemed: MatSlider;
 
@@ -84,6 +95,7 @@ export class CardComponent implements OnInit {
     private stampService: StampService,
     private notificationService: NotificationService,
     private router: Router,
+    private dialog: MatDialog
 
   ) {
     this.stamps = [];
@@ -167,7 +179,6 @@ export class CardComponent implements OnInit {
         if (!card || !card.campaignId) {
           throw new Error(`card or campaignId is required`);
         }
-
         this.fetchStampTransactionCount(card.campaignId);
         this.cardId = card.id;
         this.card = card;
@@ -176,14 +187,12 @@ export class CardComponent implements OnInit {
         if (!this.cols || !this.rows) {
           throw new Error(`cols or rows is required`);
         }
-
         this.playedPieces = card.stamps ? card.stamps.filter(stamp => stamp.state === StampState.redeemed).length : 0;
         const availablePieces = card.stamps ? card.stamps.filter(stamp => stamp.state === StampState.issued).length : 0;
         this.availablePieces = Math.min(this.rows * this.cols - this.playedPieces, availablePieces);
         if (!card.displayProperties.cardImage) {
           throw new Error(`cardImage is required`);
         }
-
         this.image = card.displayProperties.cardImage.value.imageUrl;
         if (this.availablePieces === 0 && card.state === StampCardState.inactive) {
           this.notificationService.addPopup({
@@ -199,7 +208,6 @@ export class CardComponent implements OnInit {
     if (!this.campaignId) {
       throw new Error(`campaignId is required`);
     }
-
     this.currentCard(this.campaignId).subscribe(
       (card: IStampCard) => {
         if (!this.campaignId) {
@@ -209,10 +217,10 @@ export class CardComponent implements OnInit {
         this.card = card;
         this.cardId = card.id;
         this.fetchStampTransactionCount(this.campaignId);
+        this.fetchCardsCount(this.campaignId);
       }
     );
   }
-
 
   private fetchStampTransactionCount(campaignId: number): void {
     this.stampService.getStamps(campaignId)
@@ -223,5 +231,114 @@ export class CardComponent implements OnInit {
 
   private currentCard(campaignId: number): Observable<IStampCard> {
     return this.stampService.getCurrentCard(campaignId);
+  }
+
+  public async stampClicked(stamp: IStamp): Promise<void> {
+    if (!this.card || !this.card.stamps) {
+      throw new Error(`card or stamps is required`);
+    }
+
+    // build ordered list of stamps to be stamped
+    const stamps: IStamp[] = this.card.stamps.filter(s => s.state === StampState.issued);
+    for (const st of stamps) {
+      await this.stampCard(st.id);
+      if (st.id === stamp.id) {
+        break;
+      }
+    }
+  }
+
+  private stampCard(stampId: number): Promise<void> {
+    return this.stampService.putStamp(stampId)
+      .toPromise()
+      .then(
+        (stamp: IStamp) => {
+          if (stamp.state === StampState.redeemed) {
+            if (!this.card || !this.card.stamps) {
+              throw new Error(`card or stamps is required`);
+            }
+
+            if (!this.cols || !this.rows) {
+              throw new Error(`cols or rows is required`);
+            }
+
+            const redeemedCard = this.card.stamps.map((cardStamp: IStamp) => {
+              if (cardStamp.id === stampId) {
+                return { ...cardStamp, state: StampState.redeemed };
+              }
+              return cardStamp;
+            });
+            this.card = { ...this.card, stamps: redeemedCard };
+
+            if (this.card.cardNumber === this.cardsCount) { // we are on the last card
+              if (!this.card || !this.card.stamps) {
+                throw new Error(`card or stamps is required`);
+              }
+
+              if (!this.card || !this.card.campaignConfig) {
+                throw new Error(`card or campaignConfig is required`);
+              }
+              this.notificationService.addPopup({
+                // tslint:disable-next-line: max-line-length
+                text: 'Thank you for joining the HSBC Collect V2.0 Promo! You have already received the maximum number of stamps. Don\'t forget to redeem your earned rewards!'
+              });
+            }
+            if (stamp.vouchers && stamp.vouchers.length > 0) {
+              const voucherId = stamp.vouchers[0].id;
+              const data: IRewardPopupConfig = {
+                title: 'Congratulations!',
+                text: 'Here is a reward for you.',
+                imageUrl: 'assets/gift-image.svg',
+                disableOverlayClose: true,
+                url: `/voucher/${voucherId}`,
+                afterClosedCallBackRedirect: this,
+                didWin: false,
+                buttonTxt: 'View Reward',
+              };
+              this.dialog.open(RewardPopupComponent, { data });
+            }
+          } else {
+            if (!this.card || !this.card.stamps) {
+              throw new Error(`card or stamps is required`);
+            }
+
+            const issuedLeft = this.card.stamps.filter(s => s.state === StampState.issued);
+            if (issuedLeft.length === 0) {
+              const data: IRewardPopupConfig = {
+                title: 'No Reward Received',
+                text: 'Try again next time',
+                disableOverlayClose: true,
+                url: '/home',
+                afterClosedCallBackRedirect: this,
+                didWin: false,
+                buttonTxt: 'Close',
+              };
+              this.dialog.open(RewardPopupComponent, { data });
+            }
+          }
+        })
+      .catch(
+        () => {
+          this.notificationService.addPopup({
+            title: 'Something went wrong, with our server',
+            text: 'We notified our team. Sorry about the inconvenience.'
+          });
+          this.router.navigateByUrl('/home');
+        }
+      );
+  }
+  public dialogClosed(): void {
+    this.router.navigate(['/home']);
+  }
+
+  private fetchCardsCount(campaignId: number): void {
+    if (campaignId === null) {
+      return;
+    }
+    this.stampService.getCards(campaignId)
+      .subscribe(
+        (cards: IStampCard[]) => { this.cardsCount = cards.length; },
+        () => { }
+      );
   }
 }

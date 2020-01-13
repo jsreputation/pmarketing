@@ -1,4 +1,6 @@
-export const stampTheme = {
+import { ITheme } from '@perx/core';
+
+const stampCard = {
   "--pre_stamp_image": "assets/hsbc-prestamp.png",
   "--post_stamp_image": "assets/hsbc-stamped.png",
   "--reward_pre_stamp_image": "assets/hsbc-prestamp.png",
@@ -7,4 +9,13 @@ export const stampTheme = {
   "--available_reward_image": "assets/hsbc-stamp-available.png",
   "--background_image": "",
   "--card_background_image": ""
+}
+
+export const mockTheme: ITheme = {
+  name: 'demo',
+  properties: {
+    '--background': '#fff',
+    '--font_color': '#000',
+    stampCard
+  }
 }

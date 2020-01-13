@@ -4,11 +4,23 @@ import { CommonModule } from '@angular/common';
 import { StampsRoutingModule } from './stamps-routing.module';
 import { CardComponent } from './card/card.component';
 import { StampsComponent } from './stamps/stamps.component';
-import { PuzzlesModule, RewardsModule, ThemesService } from '@perx/core';
+import { PuzzlesModule, RewardsModule, ThemesService, CampaignModule, StampModule, ICampaignService, StampService } from '@perx/core';
 import { MatSliderModule, MatCheckboxModule, MatTabsModule, MatIconModule } from '@angular/material';
+import { mockTheme } from './theme';
+import { of } from 'rxjs';
+import { campaigns } from './campaign.mock';
+import { stampCard, stamp } from './stamps.mock';
 
-const themesServiceSTUB = {}
+const themesServiceStub: Partial<ThemesService> = {
+  getThemeSetting: () => of(mockTheme)
+};
 
+const campaignServiceStub: Partial<ICampaignService> = { getCampaigns: () => of(campaigns) };
+const stampsServiceStub: Partial<StampService> = {
+  getCurrentCard: () => of(stampCard),
+  getStamps: () => of(),
+  putStamp: () => of(stamp)
+};
 @NgModule({
   declarations: [CardComponent, StampsComponent, StampsListComponent],
   imports: [
@@ -19,10 +31,14 @@ const themesServiceSTUB = {}
     MatIconModule,
     PuzzlesModule,
     MatTabsModule,
-    RewardsModule
+    RewardsModule,
+    CampaignModule,
+    StampModule
   ],
   providers: [
-    { provide: ThemesService, useValue: themesServiceSTUB }
+    { provide: ThemesService, useValue: themesServiceStub },
+    { provide: ICampaignService, useValue: campaignServiceStub },
+    { provide: StampService, useValue: stampsServiceStub }
   ]
 })
 export class StampsModule { }
