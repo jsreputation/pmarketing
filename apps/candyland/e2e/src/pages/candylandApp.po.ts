@@ -411,9 +411,11 @@ export class LoyaltyAppPage {
     return browser.get('loyalty') as Promise<string> ;
   }
 
+
   public static navigateToNewLoyalty(): Promise<string> {
     return browser.get('loyalty/new') as Promise<string> ;
   }
+
 
   public static paginator(): ElementFinder {
     return element(by.css('.mat-paginator-container'));

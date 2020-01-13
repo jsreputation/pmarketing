@@ -107,9 +107,9 @@ export class V4VouchersService implements IVoucherService {
 
   public getAll(voucherParams?: IGetVoucherParams, locale: string = 'en'): Observable<IVoucher[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
-    if (this.vouchers.length > 0) {
-      return of(this.vouchers);
-    }
+    // if (this.vouchers.length > 0) {
+    //   return of(this.vouchers);
+    // }
     let params = new HttpParams()
       .set('sort_by', 'id')
       .set('order', 'desc');
