@@ -17,12 +17,12 @@ const displayProperties = `"display_properties": {
             {
                 "key": "contact-us",
                 "title": "Contact Us",
-                "content_url": "https://cdn.uat.whistler.perxtech.io/dev1/tenants/222222222/762b80fa-e4b3-11e9-81b4-2a2ae2dbcce4"
+                "content_url": ""
             },
             {
                 "key": "tnc",
                 "title": "Terms and Conditions",
-                "content_url": "https://cdn.uat.whistler.perxtech.io/dev1/tenants/222222222/762b84ba-e4b3-11e9-81b4-2a2ae2dbcce4"
+                "content_url": ""
             }
         ]
     },
