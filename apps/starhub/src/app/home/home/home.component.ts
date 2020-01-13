@@ -8,14 +8,14 @@ import {
   ICampaignService,
   ICampaign,
   CampaignType,
-  IGame
+  IGame,
+  RewardPopupComponent
 } from '@perx/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
 import { MatToolbar, MatDialog } from '@angular/material';
 import { catchError, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { of, combineLatest } from 'rxjs';
-import { RewardPopupComponent } from '../../reward-popup/reward-popup.component';
 import { IdataLayerSH } from 'src/app/app.component';
 
 declare var dataLayerSH: IdataLayerSH; // eslint-disable-line
