@@ -28,7 +28,7 @@ const appConfigFile = `{
   "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
   "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
   "sourceType": "${process.env.SOURCE_TYPE ? process.env.SOURCE_TYPE : ''}",
-  "campaignId": "${process.env.CAMPAIGN_ID ? process.env.CAMPAIGN_ID : ''}"
+  "custom": {"campaignId": ${process.env.CAMPAIGN_ID ? process.env.CAMPAIGN_ID : ''}}
 }
 `;
 

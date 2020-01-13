@@ -8,6 +8,11 @@ import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 
+interface ISigninConfig {
+  redirectAfterLogin: string;
+  showSubtitleLogin: boolean;
+}
+
 @Component({
   selector: 'perx-blackcomb-pages-login',
   templateUrl: './sign-in-2.component.html',
@@ -20,7 +25,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public failedAuth: boolean;
   private destroy$: Subject<any> = new Subject();
   public theme: Observable<ITheme>;
-  public appConfig: IConfig;
+  public appConfig: IConfig<ISigninConfig>;
   public appAccessTokenFetched: boolean;
   private custId: string;
 
@@ -42,7 +47,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.initForm();
     this.theme = this.themesService.getThemeSetting();
-    this.configService.readAppConfig().subscribe((conf) => this.appConfig = conf);
+    this.configService.readAppConfig<ISigninConfig>().subscribe((conf) => this.appConfig = conf);
     const token = this.authService.getAppAccessToken();
     if (token) {
       this.appAccessTokenFetched = true;
@@ -62,7 +67,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   public redirectAfterLogin(): void {
     this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl()
-      : this.appConfig && this.appConfig.redirectAfterLogin as string || 'wallet');
+      : this.appConfig.custom && this.appConfig.custom.redirectAfterLogin as string || 'wallet');
   }
 
   public initForm(): void {

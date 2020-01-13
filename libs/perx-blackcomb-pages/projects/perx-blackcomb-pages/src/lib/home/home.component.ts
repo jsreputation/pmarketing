@@ -131,7 +131,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private currentTabIndex: number = 0;
   private destroy$: Subject<void> = new Subject();
   public theme: ITheme;
-  public appConfig: IConfig;
+  public appConfig: IConfig<void>;
   public newsFeedItems: Observable<FeedItem[]>;
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
@@ -182,8 +182,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig) => this.appConfig = config
+    this.configService.readAppConfig<void>().subscribe(
+      (config: IConfig<void>) => this.appConfig = config
     );
 
     this.authService.isAuthorized().subscribe((isAuth: boolean) => {
