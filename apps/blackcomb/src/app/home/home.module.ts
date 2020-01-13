@@ -2,11 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { MatCardModule, MatButtonModule, MatDialogModule } from '@angular/material';
-import { LoyaltyModule, RewardsModule, UtilsModule } from '@perx/core';
-import { HomeComponent,
-  GamesCollectionComponent,
+import {
+  LoyaltyModule,
+  RewardsModule,
+  UtilsModule,
   RewardPopupComponent,
-  ExpireTimerComponent
+  CampaignModule
+} from '@perx/core';
+import {
+  HomeComponent,
+  GamesCollectionComponent
 } from '@perx/blackcomb-pages';
 import { TranslateModule } from '@ngx-translate/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -18,9 +23,7 @@ const routes: Routes = [{
 @NgModule({
   declarations: [
     HomeComponent,
-    GamesCollectionComponent,
-    RewardPopupComponent,
-    ExpireTimerComponent
+    GamesCollectionComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +37,8 @@ const routes: Routes = [{
     TranslateModule.forChild(),
     RouterModule.forChild(routes),
     InfiniteScrollModule,
-    MatDialogModule
+    MatDialogModule,
+    CampaignModule
   ],
   exports: [
     HomeComponent,

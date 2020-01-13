@@ -39,7 +39,7 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
   public getBackgroundPlugin(): string {
 
     if (this.engagement && this.engagement.background_img_url) {
-      return this.engagement.background_img_url;
+      return `${this.engagement.background_img_url}?v=${new Date().getTime()}`; // for cache-busting
     }
 
     return '/assets/images/stamps/card-background/card-bg-1.png';

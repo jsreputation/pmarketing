@@ -22,7 +22,7 @@
             "main": "projects/perx-blackcomb-pages/src/test.ts",
             "tsConfig": "projects/perx-blackcomb-pages/tsconfig.spec.json",
             "karmaConfig": "projects/perx-blackcomb-pages/karma.conf.js",
-            "codeCoverage": true
+            "codeCoverage": false
           }
         },
         "lint": {
