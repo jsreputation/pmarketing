@@ -10,6 +10,7 @@ export class NewRewardFormService {
 
   public setDefaultRewardTiers(tier: any): void {
     this.defaultRewardTiers[tier.tierId] = tier;
+    console.log(this.defaultRewardTiers);
   }
   constructor(private fb: FormBuilder) {
   }
@@ -180,7 +181,7 @@ export class NewRewardFormService {
 
   public handlerTierUpdate(tier: ILoyaltyTiersFormGroup | IBasicTier, tiersMap: any): void {
     const tempTier = this.defaultRewardTiers[tier.tierId];
-
+    // Missing when toggle the loyalty program checkbox
     if (
       tempTier
       && !tier.statusTiers
@@ -201,6 +202,7 @@ export class NewRewardFormService {
     // update custom tier
     if (
       tempTier
+      && tier.statusTiers
       && tier.tierRewardCostsId
       && tier.tierType === this.tierTypes.customType
       && (

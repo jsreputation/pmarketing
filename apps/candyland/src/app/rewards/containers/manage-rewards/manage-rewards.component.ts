@@ -93,6 +93,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       rewardEntityForm.displayProperties = this.reward.displayProperties;
       request = this.rewardsService.updateReward(this.id, rewardEntityForm, this.rewardLoyaltyForm.value);
     } else {
+      // Todo, only create those selected
       request = this.rewardsService.createReward(rewardEntityForm, this.rewardLoyaltyForm.value);
     }
 
@@ -321,31 +322,23 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.rewardLoyaltyForm = this.newRewardFormService.getRewardLoyaltyForm();
     loyalties.data.forEach((loyalty: ILoyaltyForm) => {
       const loyaltyFormGroup = this.newRewardFormService.getLoyaltyFormGroup();
-
+      let programStatus;
       const basicTier = rewardTierMap[loyalty.basicTierId];
       // handler of custom tears
       this.setCustomTiers(loyalty, loyaltyFormGroup);
-
-      if (basicTier) {
+      if (basicTier && basicTier.tierType === this.newRewardFormService.tierTypes.basicType) {
         this.newRewardFormService.setDefaultRewardTiers(basicTier);
-
-        loyaltyFormGroup.patchValue({
-          programId: loyalty.id,
-          basicTier: {
-            ...basicTier,
-            tierId: loyalty.basicTierId,
-            entityId: this.id,
-          }
-        });
+        programStatus = true;
       }
       loyaltyFormGroup.patchValue({
         programId: loyalty.id,
+        programStatus,
         basicTier: {
+          ...(basicTier || {}),
           tierId: loyalty.basicTierId,
           entityId: this.id,
         }
       });
-
       this.rewardLoyaltyForm.push(loyaltyFormGroup);
     });
 
@@ -359,20 +352,28 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.cd.detectChanges();
   }
 
-  private patchWithSavedLoyalties(rewardTierMap: { [key: string]: ITierRewardCost }, form: FormArray): void {
-    for (let index = 0; index < form.controls.length - 1; index++) {
-      const loyaltyGroup: AbstractControl = form.at(index);
+  private patchWithSavedLoyalties(rewardTierMap: { [key: string]: ITierRewardCost }, rewardLoyaltyForm: FormArray): void {
+    for (let index = 0; index < rewardLoyaltyForm.controls.length - 1; index++) {
+      const loyaltyGroup: AbstractControl = rewardLoyaltyForm.at(index);
+      // console.log('rewardLoyaltyForm: ', rewardLoyaltyForm.value);
+      // console.log('rewardTierMap: ', rewardTierMap);
       if (rewardTierMap) {
+        let hasSelectedCustomTier = false;
         (loyaltyGroup.get('tiers') as FormArray).controls.forEach((tier) => {
           const rewardTier = rewardTierMap[tier.value.tierId];
-          if (rewardTier) {
+          console.log('rewardTier: ', rewardTier);
+          if (rewardTier && rewardTier.tierType === this.newRewardFormService.tierTypes.customType) {
+            console.log('is custom tier');
             // add to object for know what to do next remove or update
-
+            hasSelectedCustomTier = true;
             rewardTier['statusTiers'] = true;
             this.newRewardFormService.setDefaultRewardTiers(rewardTier);
             tier.patchValue({ ...rewardTier });
           }
         });
+        if (hasSelectedCustomTier) {
+          loyaltyGroup.get('programStatus').patchValue(true);
+        }
       }
     }
   }
