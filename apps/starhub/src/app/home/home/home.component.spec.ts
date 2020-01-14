@@ -172,7 +172,7 @@ describe('HomeComponent', () => {
     const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
 
     const campaignService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-    const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[1]));
+    const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[0]));
     component.ngOnInit();
     tick();
     expect(campaignsServiceSpy).toHaveBeenCalled();

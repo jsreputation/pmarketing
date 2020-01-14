@@ -41,7 +41,7 @@ export class AccountComponent implements OnInit {
   public pages!: AccountPageObject[];
   public preAuth: boolean = false;
   public theme: Observable<ITheme>;
-  public appConfig: Observable<IConfig>;
+  public appConfig: Observable<IConfig<void>>;
 
   constructor(
     public config: Config,
