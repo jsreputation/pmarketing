@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     this.configService.readAppConfig().subscribe(
-      (config: IConfig) => {
+      (config: IConfig<void>) => {
         this.preAuth = config.preAuth as boolean;
       }
     );

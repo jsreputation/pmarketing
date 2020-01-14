@@ -60,7 +60,7 @@ export class AppComponent implements OnInit {
       this.store.setAppInfoProperty(change.lang, 'merck-customer');
     });
     this.configService.readAppConfig().subscribe(
-      (config: IConfig) => {
+      (config: IConfig<void>) => {
         this.preAuth = config.preAuth as boolean;
       }
     );

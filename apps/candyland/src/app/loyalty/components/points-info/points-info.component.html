@@ -8,7 +8,7 @@
   <div class="card-content">
     <div class="card-row">
       <mat-form-field *ngIf="group" [formGroup]="group">
-        <input matInput [formControl]="pointsName" [placeholder]="'LOYALTY_FEATURE.POINTS_NAME' | translate">
+        <input type="text" matInput [formControl]="pointsName" [placeholder]="'LOYALTY_FEATURE.POINTS_NAME' | translate">
         <mat-error *ngIf="pointsName.hasError('required')">{{'ERROR_REQUIRED' | translate}}</mat-error>
         <mat-error *ngIf="pointsName.hasError('minlength')">{{'ERROR_MIN_LENGTH' | translate}} 1</mat-error>
       </mat-form-field>
