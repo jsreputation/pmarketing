@@ -63,6 +63,9 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
     });
     if (this.isSpinEngagement) {
       this.probAllGroup.setValidators(ClValidators.sumMoreThan());
+      if (!this.addNoRewardGroup) {
+        this.probAllGroup.setValidators([ClValidators.sumMoreThan(), ClValidators.minPercent(100)]);
+      }
       this.fillAllGroup.setValidators(ClValidators.rewardPatched(this.slots.length)); // slot validator dynamically set
       if (this.addNoRewardGroup) {
         this.limitRewardForm.addControl(`totalProbability-${-1}`, new FormControl({value: null, disabled: true}));

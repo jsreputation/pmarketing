@@ -13,6 +13,7 @@
       </div>
       <!--      && notAllSlotted-->
       <cl-new-campaign-rewards-form-group
+        [hidden]="!enableProbability"
         *ngIf="addNoRewardGroup"
         [enableProbability]="enableProbability"
         [formParent]="limitRewardForm"
@@ -31,6 +32,9 @@
       </ng-container>
       <mat-error class="error" *ngIf="probAllGroup.hasError('sumMoreThan')">
         {{'CAMPAIGN.THE_TOTAL_PROBABILITY' | translate}}
+      </mat-error>
+      <mat-error class="error" *ngIf="probAllGroup.hasError('percentNotMet')">
+        The slots probability should add up to 100
       </mat-error>
       <mat-error class="error" *ngIf="isSpinEngagement && fillAllGroup.hasError('unpatchedSlot')">
         Please fill in rewards for all slots
