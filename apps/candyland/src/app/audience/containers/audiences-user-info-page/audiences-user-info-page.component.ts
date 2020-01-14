@@ -216,17 +216,17 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
-        switchMap((entity: string) => {
-          return this.vouchersService.updateVoucherExpiry(item.id, entity);
+        switchMap((updatedCard: any) => {
+          return this.loyaltyCardService.updateLoyaltyCard(updatedCard.id, updatedCard);
         }),
         takeUntil(this.destroy$)
       )
       .subscribe(
         () => {
-          this.messageService.show('Expiry voucher date successfully changed.');
+          this.messageService.show('Loyalty Card Tier successfully changed.');
           this.vouchersDataSource.updateData();
         },
-        () => this.messageService.show('Failed to update voucher expiration date.')
+        () => this.messageService.show('Failed to update Loyalty Card Tier.')
       );
   }
 

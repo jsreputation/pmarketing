@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Inject, DoCheck, ChangeDetectorRef, } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject, ChangeDetectorRef, AfterViewInit, OnInit, } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -8,18 +8,15 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
   styleUrls: ['./adjust-balance-points-popup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdjustBalancePointsPopupComponent implements OnInit, DoCheck {
-  public form = new FormGroup({
-    balance: new FormControl(0, [Validators.required, Validators.min(0)]),
-    // description: new FormControl('')
-  });
+export class AdjustBalancePointsPopupComponent implements OnInit, AfterViewInit {
+  public form: FormGroup;
 
   public get balance(): AbstractControl {
-    return this.form.get('balance');
+    return this.form ? this.form.get('balance') : null;
   }
 
   public get description(): AbstractControl {
-    return this.form.get('description');
+    return this.form ? this.form.get('description') : null;
   }
 
   constructor(public dialogRef: MatDialogRef<AdjustBalancePointsPopupComponent>,
@@ -27,19 +24,28 @@ export class AdjustBalancePointsPopupComponent implements OnInit, DoCheck {
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
+  public ngOnInit(): void {
+    this.form = new FormGroup({
+      balance: new FormControl(0, [Validators.required, Validators.min(0)]),
+      // description: new FormControl('')
+    });
+  }
+
+  public ngAfterViewInit(): void {
+    this.balance.patchValue(this.data.card.balance);
+    this.cd.detectChanges();
+  }
+
   public close(): void {
     this.dialogRef.close(null);
   }
 
   public save(): void {
-    this.dialogRef.close();
+    if (this.form.invalid) {
+      this.form.markAsTouched();
+      return;
+    }
+    const updatedCard = {id: this.data.card.id, balance: this.balance.value};
+    this.dialogRef.close(updatedCard);
   }
-
-  public ngOnInit(): void {
-  }
-
-  public ngDoCheck(): void {
-    this.cd.detectChanges();
-  }
-
 }
