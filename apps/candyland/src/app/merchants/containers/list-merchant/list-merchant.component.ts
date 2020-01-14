@@ -11,7 +11,6 @@ import { TranslateDefaultLanguageService } from '@cl-core/translate-services/tra
 import { TranslateService } from '@ngx-translate/core';
 import { CRUDParser, RequestType } from '@cl-helpers/crud-parser';
 import { IJsonApiItemPayload, IWMerchantBranchAttributes } from '@perx/whistler';
-import { MerchantBranch } from '@cl-core/http-adapters/merchant';
 
 @Component({
   selector: 'cl-list-merchant',
@@ -55,11 +54,11 @@ export class ListMerchantComponent implements OnDestroy {
     return this.merchantService.deleteMerchantBranch(branchId);
   }
 
-  public updateBranch(data: MerchantBranch, merchantId: string): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
+  public updateBranch(data: IBranch, merchantId: string): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
     return this.merchantService.updateMerchantBranch(merchantId, data);
   }
 
-  public createBranch(data: MerchantBranch, merchantId: string): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
+  public createBranch(data: IBranch, merchantId: string): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
     return this.merchantService.createMerchantBranch(merchantId, data);
   }
 

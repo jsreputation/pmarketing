@@ -1,4 +1,3 @@
-import { MerchantBranch } from './merchant';
 import { IWMerchantAttributes, IWMerchantBranchAttributes, IJsonApiPostData, IJsonApiItem } from '@perx/whistler';
 
 export class MerchantHttpAdapter {
@@ -81,7 +80,7 @@ export class MerchantHttpAdapter {
     };
   }
 
-  public static transformFromMerchantBranchForm(data: MerchantBranch, merchantId?: string): IJsonApiPostData<IWMerchantBranchAttributes> {
+  public static transformFromMerchantBranchForm(data: IBranch, merchantId?: string): IJsonApiPostData<IWMerchantBranchAttributes> {
     return {
       type: 'branches',
       attributes: {

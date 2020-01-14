@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { MerchantHttpAdapter } from '@cl-core/http-adapters/merchant-http-adapter';
-import { MerchantBranch } from '@cl-core/http-adapters/merchant';
 import { MerchantHttpService } from '@cl-core/http-services/merchant-http.service';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { combineLatest, Observable, of } from 'rxjs';
@@ -14,10 +13,7 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 })
 export class MerchantsService implements ITableService<Partial<IMerchantForm>> {
 
-  constructor(
-    private merchantHttpService: MerchantHttpService,
-  ) {
-  }
+  constructor(private merchantHttpService: MerchantHttpService) {}
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IMerchantForm>> {
     params.include = 'branches';
@@ -57,12 +53,12 @@ export class MerchantsService implements ITableService<Partial<IMerchantForm>> {
     return request.pipe(map(() => merchantId));
   }
 
-  public createMerchantBranch(merchantId: string, data: MerchantBranch): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
+  public createMerchantBranch(merchantId: string, data: IBranch): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
     const sendData = MerchantHttpAdapter.transformFromMerchantBranchForm(data, merchantId);
     return this.merchantHttpService.createMerchantBranch({ data: sendData });
   }
 
-  public updateMerchantBranch(merchantId: string, data: MerchantBranch): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
+  public updateMerchantBranch(merchantId: string, data: IBranch): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
     const sendData = { ...MerchantHttpAdapter.transformFromMerchantBranchForm(data, merchantId), id: data.id };
     return this.merchantHttpService.updateMerchantBranch(data.id, { data: sendData });
   }
