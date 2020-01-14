@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Observable, of } from 'rxjs';
 import { takeUntil, map, filter, catchError, mergeMap } from 'rxjs/operators';
 import { AuthenticationService, LoyaltyService, isEmptyArray, ILoyalty, ProfileService, NotificationService } from '@perx/core';
-import { SharedData, SharedDataService } from '../shared-data.service';
+import { SharedDataService } from 'src/app/services/shared-data.service';
 
 @Component({
   selector: 'app-sms-validation',
@@ -61,7 +61,7 @@ export class SmsValidationComponent implements OnInit {
   public onSubmit(): void {
     this.authenticationService.verifyOTP(this.identifier, this.code)
       .pipe(
-        mergeMap(() => this.sharedDataService.storedData),
+        mergeMap(() => this.sharedDataService.data),
         mergeMap((data) => this.setCardNumber(data)))
       .subscribe((result) => this.redirectToLogin(result));
   }
@@ -80,7 +80,7 @@ export class SmsValidationComponent implements OnInit {
 
   }
 
-  private setCardNumber(data?: SharedData): Observable<any> {
+  private setCardNumber(data: any): Observable<any> {
     if (!data || !data.cardNumber || !this.appAccessTokenFetched) {
       return of(false);
     }

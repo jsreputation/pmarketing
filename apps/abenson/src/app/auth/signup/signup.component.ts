@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticationService, ISignUpData } from '@perx/core';
-import { SharedDataService } from '../shared-data.service';
+import { SharedDataService } from 'src/app/services/shared-data.service';
 
 @Component({
   selector: 'app-signup',
@@ -61,7 +61,7 @@ export class SignUpComponent implements OnInit {
     this.authService.signup(profile).subscribe(() => {
       const cardNumber = this.signUpForm.value.cardNumber;
       if (this.signUpForm.value.cardNumber) {
-        this.sharedDataService.setData({
+        this.sharedDataService.addData({
           phone: profile.phone,
           password: profile.password,
           cardNumber

@@ -93,7 +93,7 @@ describe('AppComponent', () => {
     const matDialog = {} as MatDialog;
     app.onActivate(new LoginComponent(router, form, auth, notifi));
     expect(app.showHeader).toBeFalsy();
-    app.onActivate(new SignUpComponent(form, auth, router));
+    app.onActivate(new SignUpComponent(form, auth, router, shared));
     expect(app.showHeader).toBeFalsy();
     app.onActivate(new HomeComponent(router, voucherService, campaingService, configService));
     expect(app.showToolbar).toBeTruthy();
