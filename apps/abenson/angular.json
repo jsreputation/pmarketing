@@ -30,7 +30,7 @@
             ],
             "styles": [
               "src/styles.scss",
-             "../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              "../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
             ],
             "scripts": []
           },
@@ -125,7 +125,7 @@
               "../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
             ],
             "scripts": [],
-            "codeCoverage": true
+            "codeCoverage": false
           }
         },
         "lint": {
@@ -154,6 +154,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "abenson"
 }

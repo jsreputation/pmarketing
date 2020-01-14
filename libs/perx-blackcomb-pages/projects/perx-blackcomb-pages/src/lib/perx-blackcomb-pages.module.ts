@@ -19,7 +19,8 @@ import {
   MatSelectModule,
   MatDatepickerModule,
   MatToolbarModule,
-  MatListModule
+  MatListModule,
+  MatDialogModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
@@ -164,7 +165,8 @@ const comps: any[] = [
     TranslateModule.forChild(),
     MatToolbarModule,
     MatListModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    MatDialogModule
   ],
   exports: [
     ...comps,

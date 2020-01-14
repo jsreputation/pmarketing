@@ -83,6 +83,7 @@ declare interface IEngagementTapType extends IEngagementCommon {
   closed_pinata_img_url: string;
   opened_pinata_img_url: string;
   cracking_pinata_img_url: string;
+  background_img_url: string;
   attributes_type: string;
   created_at: string;
   updated_at: string;

@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AvailableNewEngagementService, RoutingStateService, SettingsService } from '@cl-core/services';
+import { AvailableNewEngagementService, RoutingStateService, TenantStoreService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { combineLatest, Observable, of, Subject } from 'rxjs';
@@ -91,7 +91,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
     private spinService: SpinService,
     private cd: ChangeDetectorRef,
     private availableNewEngagementService: AvailableNewEngagementService,
-    private settingsService: SettingsService
+    private tenantStoreService: TenantStoreService
   ) {
   }
 
@@ -330,7 +330,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
   }
 
   private initTenantsSettings(): void {
-    this.settingsService.getTenant()
+    this.tenantStoreService.tenant$
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: ITenantsProperties) => {
         this.tenantSettings = res;

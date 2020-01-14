@@ -1,8 +1,24 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { ILoyalty, LoyaltyService, ProfileService, IProfile } from '@perx/core';
+import {
+  ILoyalty,
+  LoyaltyService,
+  ProfileService,
+  IProfile,
+  AuthenticationService,
+  ICampaignService,
+  ICampaign,
+  CampaignType,
+  IGame,
+  RewardPopupComponent
+} from '@perx/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
-import { MatToolbar } from '@angular/material';
+import { MatToolbar, MatDialog } from '@angular/material';
+import { catchError, switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { of, combineLatest } from 'rxjs';
+import { IdataLayerSH } from 'src/app/app.component';
 
+declare var dataLayerSH: IdataLayerSH; // eslint-disable-line
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -19,16 +35,41 @@ export class HomeComponent implements OnInit {
   public contentScrolled: ElementRef;
   public loyalty: ILoyalty;
   public profile: IProfile;
-
+  private firstComefirstServeCampaign: ICampaign;
+  private token: string;
+  public game?: IGame;
   constructor(
     private noRenewalePipe: NoRenewaleInNamePipe,
     private loyaltyService: LoyaltyService,
     private profileService: ProfileService,
+    private authenticationService: AuthenticationService,
+    private campaignService: ICampaignService,
+    private router: Router,
+    private dialog: MatDialog,
   ) { }
 
   public ngOnInit(): void {
     this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.loyalty = loyalty);
     this.profileService.whoAmI().subscribe((p: IProfile) => this.profile = p);
+    this.getAccessToken();
+  }
+
+  private getAccessToken(): void {
+    this.authenticationService.getAccessToken().subscribe((token: string) => {
+      this.token = token;
+      if (this.token) {
+        this.checkAuth();
+      }
+      this.data.perxID = this.token;
+    });
+  }
+
+  private get data(): Partial<IdataLayerSH> {
+    // tslint:disable-next-line: no-use-before-declare
+    if (dataLayerSH === undefined) {
+      return {};
+    }
+    return dataLayerSH;
   }
 
   public getBadge(tier: string | null): string {
@@ -59,5 +100,69 @@ export class HomeComponent implements OnInit {
       }
       this.toolBar._elementRef.nativeElement.style.transform = `translateY(${this.top}px)`;
     });
+  }
+
+  private checkAuth(): void {
+    this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
+      if (isAuth) {
+        this.fetchPopupCampaigns();
+      }
+    });
+  }
+
+  private fetchPopupCampaigns(): void {
+    this.campaignService.getCampaigns()
+      .pipe(
+        catchError(() => {
+          this.router.navigateByUrl('error');
+          return of([]);
+        })
+      )
+      .pipe(
+        // for each campaign, get detailed version
+        switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id))))
+      )
+      .subscribe(
+        (campaigns: ICampaign[]) => {
+          const firstComeFirstServed: ICampaign[] = campaigns
+            .filter(campaign => campaign.type === CampaignType.give_reward);
+          // if there is a 1st come 1st served campaign, display the popup
+          if (firstComeFirstServed.length > 0) {
+            this.firstComefirstServeCampaign = firstComeFirstServed[0];
+            const data = {
+              text: this.firstComefirstServeCampaign.description,
+              imageUrl: 'assets/bd-campaign.svg',
+              buttonTxt: 'Check it out',
+              afterClosedCallBack: this,
+              // @ts-ignore
+              validTo: new Date(this.firstComefirstServeCampaign.endsAt)
+            };
+            this.dialog.open(RewardPopupComponent, { data });
+            return;
+          }
+        },
+        () => {
+          // no campaign that is popup eligible. fail silently.
+        }
+      );
+  }
+
+  public dialogClosed(): void {
+    if (this.game) {
+      this.router.navigate([`/game`], { queryParams: { id: this.game.id } });
+    } else {
+      this.campaignService.issueAll(this.firstComefirstServeCampaign.id).subscribe(
+        () => {
+          this.router.navigate([`/home/vouchers`]);
+        },
+        (err) => {
+          if (err.error && err.error.code === 4103) {
+            // user has already been issued voucher
+            this.router.navigate([`/home/vouchers`]);
+          }
+          console.error(`Something fishy, we should not be here, without any reward or game. ERR print: ${err.error.message}`);
+        }
+      );
+    }
   }
 }

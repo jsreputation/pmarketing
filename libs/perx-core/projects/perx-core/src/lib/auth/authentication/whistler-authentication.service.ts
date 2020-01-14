@@ -66,8 +66,8 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
       this.preAuthEndpoint = 'http://localhost:4000/cognito/login';
       this.createUsersEndPoint = 'http://localhost:4000/cognito/users';
     } else {
-      this.preAuthEndpoint = config.baseHref + 'cognito/login';
-      this.createUsersEndPoint = config.baseHref + 'cognito/users';
+      this.preAuthEndpoint = `${config.baseHref}cognito/login`;
+      this.createUsersEndPoint = `${config.baseHref}cognito/users`;
     }
     this.$failedAuthObservableSubject = new Subject();
   }
@@ -187,7 +187,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   private getIamUser(user: string, pass: string, mechId?: string): Observable<any> {
-    return this.http.post<any>(this.apiHost + '/iam/users/sign_in', {
+    return this.http.post<any>(`${this.apiHost}/iam/users/sign_in`, {
       data: {
         attributes: {
           tenant_id: mechId,
@@ -344,7 +344,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public mergeUserById(fromIds: number[], toId: number): Observable<void> {
-    return this.http.post<any>(this.apiHost + '/cognito/chown_requests',
+    return this.http.post<any>(`${this.apiHost}/cognito/chown_requests`,
       {
         data: {
           type: 'chown_requests',

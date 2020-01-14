@@ -41,7 +41,7 @@ export class WhistlerThemesService extends ThemesService {
     if (!config.production) {
       this.themeSettingEndpoint = 'http://localhost:4000/themes';
     } else {
-      this.themeSettingEndpoint = config.baseHref + 'themes';
+      this.themeSettingEndpoint = `${config.baseHref}themes`;
     }
   }
 
@@ -74,7 +74,7 @@ export class WhistlerThemesService extends ThemesService {
   }
 
   public getThemeSetting(): Observable<ITheme> {
-    const themeSettingFromCache: ITheme | undefined  = this.responseCache.get(this.themeSettingEndpoint);
+    const themeSettingFromCache: ITheme | undefined = this.responseCache.get(this.themeSettingEndpoint);
     if (themeSettingFromCache) {
       return of(themeSettingFromCache);
     }
@@ -82,13 +82,13 @@ export class WhistlerThemesService extends ThemesService {
     const themesRequest: { url: string } = {
       url: location.host
     };
-    const response: Observable<ITheme> = this.http.post<IJsonApiListPayload<IWTenant>>(
-      this.themeSettingEndpoint, themesRequest).pipe(
-      map(res => res.data && res.data[0].attributes.display_properties),
-      map((setting: IWSetting) => WhistlerThemesService.WThemeToTheme(setting)),
-      tap((theme: ITheme) => this.setActiveTheme(theme)),
-      share()
-    );
+    const response: Observable<ITheme> = this.http.post<IJsonApiListPayload<IWTenant>>(this.themeSettingEndpoint, themesRequest)
+      .pipe(
+        map(res => res.data && res.data[0].attributes.display_properties),
+        map((setting: IWSetting) => WhistlerThemesService.WThemeToTheme(setting)),
+        tap((theme: ITheme) => this.setActiveTheme(theme)),
+        share()
+      );
     response.subscribe((themeSetting: ITheme) => this.responseCache.set(this.themeSettingEndpoint, themeSetting));
     return response;
   }

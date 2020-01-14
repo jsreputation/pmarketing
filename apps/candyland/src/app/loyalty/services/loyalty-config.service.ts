@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AudiencesService, ConfigService, SettingsService } from '@cl-core-services';
-import { map, tap } from 'rxjs/operators';
+import { AudiencesService, ConfigService, TenantStoreService } from '@cl-core-services';
+import { map } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
 import { PeriodType } from '@cl-core/models/period-type.enum';
 import { LoyaltyPointsExpireTrigger } from '../models/loyalty-points-expire-trigger.enum';
@@ -8,7 +8,7 @@ import { RulePointType } from '@cl-core/models/loyalty/rule-point-type.enum';
 import { RuleSetMatchType } from '@cl-core/models/loyalty/rule-set-match-type.enum';
 import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.enum';
 import { RuleOperatorType } from '@cl-core/models/loyalty/rule-operator-type.enum';
-import { UserService } from '@cl-core/services/user.service';
+import { TenantService } from '@cl-core/services/tenant.service';
 
 const matchType: OptionConfig[] = [
   {value: RuleSetMatchType.first, title: 'LOYALTY_FEATURE.MATCH_TYPE.MATCH_FIRST'},
@@ -58,16 +58,16 @@ const rulePointsType: OptionConfig[] = [
 @Injectable()
 export class LoyaltyConfigService {
   constructor(private configService: ConfigService,
-              private userService: UserService,
-              private settingsService: SettingsService,
-              private audiencesService: AudiencesService) {
+              private tenantService: TenantService,
+              private audiencesService: AudiencesService,
+              private tenantStoreService: TenantStoreService) {
 
   }
 
   public getLoyaltyManageConfig(): Observable<any> {
     return combineLatest([
       this.audiencesService.getAudiencesList(),
-      this.userService.currency$
+      this.tenantStoreService.currency$
     ]).pipe(
       map(([pools, currency]) => ({
         pools,
@@ -75,14 +75,13 @@ export class LoyaltyConfigService {
         matchType,
         pointsExpirePeriodType,
         pointsExpireTrigger
-      })),
-      tap(data => console.log(data))
+      }))
     );
   }
 
   public getLoyaltySetupRuleConfig(): Observable<any> {
     return combineLatest(
-      this.settingsService.getCurrency()
+      this.tenantService.getCurrency()
     ).pipe(
       map(([currencyList]) => ({
         currencyList,

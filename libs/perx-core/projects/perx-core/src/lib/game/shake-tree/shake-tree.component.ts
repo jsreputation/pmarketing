@@ -118,8 +118,8 @@ export class ShakeTreeComponent implements OnInit, OnChanges, IGameComponent, On
 
   public getManStyle(): IManStyle {
     return {
-      left: this.distanceFromTree + '%',
-      bottom: this.bottomDistance + '%',
+      left: `${this.distanceFromTree}%`,
+      bottom: `${this.bottomDistance}%`,
     };
   }
 
