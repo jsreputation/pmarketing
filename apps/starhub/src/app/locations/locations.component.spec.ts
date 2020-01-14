@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, inject, fakeAsync, tick } from '@angu
 import { LocationsComponent } from './locations.component';
 import { MatIconModule, MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { UtilsModule, LocationsService, GeoLocationService, RewardsService, IMerchantsService, IVoucherService } from '@perx/core';
+import { Voucher as IVoucher, UtilsModule, LocationsService, GeoLocationService, RewardsService, IMerchantsService, IVoucherService } from '@perx/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { of, Subject } from 'rxjs';
 import { Location } from '@angular/common';
@@ -11,7 +11,6 @@ import { Type } from '@angular/core';
 import { AnalyticsService } from '../analytics.service';
 import { vouchers } from '../vouchers.mock';
 import { rewards } from '../rewards.mock';
-import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.model';
 
 const vouchersServiceStub = {
   get: () => of(vouchers[0])
