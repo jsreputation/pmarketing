@@ -55,7 +55,8 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
   private initForm(): void {
     this.limitRewardForm.clearValidators();
     this.slots.forEach((slotIndex) => {
-      this.probAllGroup.addControl(`totalProbability-${slotIndex}`, this.fb.control(null));
+      this.probAllGroup.addControl(`totalProbability-${slotIndex}`,
+        this.fb.control(null));
       if (this.isSpinEngagement) {
         this.fillAllGroup.addControl(`notEmpty-${slotIndex}`, this.fb.control(0));
       }
@@ -64,7 +65,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
       this.probAllGroup.setValidators(ClValidators.sumMoreThan());
       this.fillAllGroup.setValidators(ClValidators.rewardPatched(this.slots.length)); // slot validator dynamically set
       if (this.addNoRewardGroup) {
-        this.limitRewardForm.addControl(`totalProbability-${-1}`, new FormControl({value: 'Nancy', disabled: true}));
+        this.limitRewardForm.addControl(`totalProbability-${-1}`, new FormControl({value: null, disabled: true}));
         this.probAllGroup.valueChanges
           .pipe(
             map( (groupProbs: { [k: string]: number }) => Object.entries(groupProbs)

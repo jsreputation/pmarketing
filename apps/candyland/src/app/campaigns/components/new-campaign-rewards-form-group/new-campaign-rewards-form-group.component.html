@@ -6,7 +6,7 @@
 </div>
 <div class="card-content" *ngIf="outcomes && outcomes.length > 0">
   <div>
-    <div *ngFor="let outcome of outcomes; let i = index">
+    <div *ngFor="let outcome of outcomes; let i = index; let lastEle = last">
       <cl-reward-item class="item"
         *ngIf="outcome.outcome.slotNumber === slotNumber"
         [overWriteProb]="slotNumber === -1 ? formParent.get('totalProbability--1') : null"
@@ -16,6 +16,12 @@
         (updateOutcome)="updateOutcomeData(i, $event)"
         (clickDelete)="removeOutcome(i)">
       </cl-reward-item>
+      <mat-error class="error" *ngIf="
+        lastEle &&
+        outcome.outcome.slotNumber === slotNumber &&
+        minSumError">
+        Please indicate at least one probability value greater than zero for this group
+      </mat-error>
     </div>
     <mat-error class="error" *ngIf="sumMoreThanError && (slotNumber !== -1 || !isSpinEngagement)">
       {{'CAMPAIGN.THE_TOTAL_PROBABILITY' | translate}}

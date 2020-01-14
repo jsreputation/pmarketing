@@ -7,7 +7,7 @@ import {
   Input, OnChanges, SimpleChanges
 } from '@angular/core';
 import {
-  FormGroup
+  FormGroup, Validators
 } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 
@@ -47,6 +47,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   public outcomes: ICampaignOutcome[] = [];
   private isFirstInit: boolean;
   public sumMoreThanError: boolean = false;
+  public minSumError: boolean = false;
 
   public noOutcome: ICampaignOutcome = {
     outcome: {
@@ -175,7 +176,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       ) : [];
     this.campaign.outcomes = [...otherSlotOutcomes, ...this.outcomes];
     // bypasses null/undefined/0, will scan thru the campaign outcomes for final check
-    // if set to true enableProbability then just true, (from checkbbox)
+    // if set to true enableProbability then just true, (from checkbox)
     this.campaign.enabledProb = this.enableProbability || this.campaign.outcomes.some(({outcome}) => outcome.probability);
     this.store.currentCampaign = {...this.campaign};
     this.isSpinEngagement ?
@@ -200,6 +201,8 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     if (!this.enableProbability && slotProbControl) {
       if (slotProbControl) {
         slotProbControl.reset();
+        this.minSumError = false;
+        slotProbControl.clearValidators();
       }
       return;
     }
@@ -210,7 +213,11 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       return total;
     }, 0);
     if (slotProbControl) {
+      if (this.slotNumber !== -1) {
+        slotProbControl.setValidators(Validators.min(1));
+      }
       slotProbControl.patchValue(totalNum);
+      this.minSumError = totalNum <= 0;
     }
     return totalNum > 100;
   }
