@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {DatePipe} from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 
 import {
   LoyaltyService,
@@ -26,6 +26,9 @@ export class TransactionHistoryComponent implements OnInit, ShowTitleInHeader {
   public subTitleFn: (tr: ITransactionHistory) => string;
   public priceLabelFn: (tr: ITransactionHistory) => string;
 
+  private pageNumber: number = 1;
+  private pageSize: number = 10;
+  private complitePagination: boolean = false;
   constructor(
     private loyaltyService: LoyaltyService,
     private transactionPipe: TransactionPipe,
@@ -33,7 +36,7 @@ export class TransactionHistoryComponent implements OnInit, ShowTitleInHeader {
 
   }
   public ngOnInit(): void {
-    this.transactions = this.loyaltyService.getTransactionHistory();
+    this.transactions = this.loyaltyService.getTransactionHistory(this.pageNumber, this.pageSize);
 
     this.purchasesTitleFn = (tr: ITransactionHistory) =>
       `${(tr.transactionDetails && tr.transactionDetails.data) ?
@@ -49,6 +52,20 @@ export class TransactionHistoryComponent implements OnInit, ShowTitleInHeader {
 
     this.subTitleFn = (tr: ITransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
     this.priceLabelFn = (tr: ITransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount || 0)}`;
+  }
+
+  public onScroll(): void {
+    if (this.complitePagination) {
+      return;
+    }
+    forkJoin(this.transactions, this.loyaltyService.getTransactionHistory(this.pageNumber, this.pageSize))
+      .subscribe((val) => {
+        if (val[1].length < this.pageSize) {
+          this.complitePagination = true;
+        }
+        this.transactions = of([...val[0], ...val[1]]);
+      });
+    this.pageNumber++;
   }
 
   public getTitle(): string {
