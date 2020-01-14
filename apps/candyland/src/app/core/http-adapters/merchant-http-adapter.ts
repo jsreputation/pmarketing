@@ -1,5 +1,5 @@
 import { MerchantBranch } from './merchant';
-import { IWMerchantAttributes, IWMerchantBranchAttributes, IJsonApiPostData } from '@perx/whistler';
+import { IWMerchantAttributes, IWMerchantBranchAttributes, IJsonApiPostData, IJsonApiItem } from '@perx/whistler';
 
 export class MerchantHttpAdapter {
   public static transformToMerchantForm(data: IWMerchantAttributes): IMerchantForm {
@@ -7,6 +7,7 @@ export class MerchantHttpAdapter {
       name: data.name,
       type: data.type,
       id: data.id,
+      createdAt: data.created_at,
       description: data.description,
       image: data.properties.logo_image,
       countryCode: data.properties.country_code,
@@ -17,13 +18,46 @@ export class MerchantHttpAdapter {
       postalCode: data.properties.postal_code,
       weblink: data.properties.weblink,
       branches: data.branches ? data.branches.map(branch => (
-        {
-          id: branch.id,
-          name: branch.name,
-          address: branch.properties.address,
-          phone: branch.properties.phone
-        }
+        MerchantHttpAdapter.transformToBranches(branch)
       )) : []
+    };
+  }
+
+  public static transformToMerchant(merchant: IJsonApiItem<IWMerchantAttributes>): Partial<IMerchantForm> {
+    return {
+      id: merchant.id,
+      type: merchant.type,
+      name: merchant.attributes.name,
+      description: merchant.attributes.description,
+      createdAt: merchant.attributes.created_at,
+      image: merchant.attributes.properties.logo_image,
+      countryCode: merchant.attributes.properties.country_code,
+      phone: merchant.attributes.properties.phone,
+      address: merchant.attributes.properties.address,
+      city: merchant.attributes.properties.city,
+      state: merchant.attributes.properties.state,
+      postalCode: merchant.attributes.properties.postal_code,
+      weblink: merchant.attributes.properties.weblink,
+    };
+  }
+
+  public static transformToBranch(branch: IJsonApiItem<IWMerchantBranchAttributes>): any {
+    return {
+      id: branch.id,
+      type: branch.type,
+      name: branch.attributes.name,
+      properties: branch.attributes.properties,
+      address: branch.attributes.properties ? branch.attributes.properties.address : null,
+      phone: branch.attributes.properties ? branch.attributes.properties.phone : null,
+    };
+  }
+
+  public static transformToBranches(branch: any): any {
+    return {
+      id: branch.id,
+      name: branch.name,
+      address: branch.properties.address,
+      phone: branch.properties.phone
     };
   }
 
@@ -61,7 +95,7 @@ export class MerchantHttpAdapter {
         org: {
           data: {
             type: 'orgs',
-            id: merchantId || data.id
+            id: merchantId
           }
         }
       }

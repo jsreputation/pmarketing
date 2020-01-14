@@ -13,8 +13,9 @@ export class MerchantFormService {
 
   public getMerchantForm(): FormGroup {
     return this.fb.group({
+      id: [null],
       name: ['Merchant', [Validators.minLength(1), Validators.maxLength(60)]],
-      image: [null, [
+      image: ['https://static.tildacdn.com/tild6661-3337-4263-b030-356164653838/fid_dlya_google_merc.png', [ //'https://static.tildacdn.com/tild6661-3337-4263-b030-356164653838/fid_dlya_google_merc.png'
         // Validators.required
       ]],
       description: [null, [
