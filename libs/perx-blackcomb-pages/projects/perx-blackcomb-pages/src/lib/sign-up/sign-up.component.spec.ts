@@ -10,10 +10,11 @@ import {
   SurveyService,
   ThemesService,
   ConfigService,
+  IConfig,
   IAnswer
 } from '@perx/core';
 import { SignUpComponent } from './sign-up.component';
-import { of, throwError } from 'rxjs';
+import { of, Observable, throwError } from 'rxjs';
 import { MatSnackBar, MatInputModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,7 +35,14 @@ const configStub: Partial<Config> = {
 };
 
 const configServiceStub: Partial<ConfigService> = {
-  readAppConfig: () => of()
+  readAppConfig: <T>(): Observable<IConfig<T>> => of({
+    apiHost: '',
+    production: false,
+    preAuth: false,
+    isWhistler: false,
+    baseHref: '',
+    showSubtitleLogin: true
+  })
 };
 
 const gameServiceStub: Partial<IGameService> = {
@@ -126,13 +134,6 @@ describe('SignUpComponent', () => {
 
   describe('onInit', () => {
     it('should call readAppConfig, getThemeSetting, getSignupForm, getPI, getUserAccessToken, getAnonymous, getAppAccessToken, getState and appAccessTokenFetched to be true', fakeAsync(() => {
-      const configService: ConfigService = fixture.debugElement.injector.get<ConfigService>(
-        ConfigService as Type<ConfigService>
-      );
-      const noticationServiceSpy = spyOn(configService, 'readAppConfig').and.returnValue(of({
-        showSubtitleLogin: true
-      }));
-
       const themesService: ThemesService = fixture.debugElement.injector.get<ThemesService>(
         ThemesService as Type<ThemesService>
       );
@@ -159,7 +160,6 @@ describe('SignUpComponent', () => {
       component.ngOnInit();
       tick();
       fixture.detectChanges();
-      expect(noticationServiceSpy).toHaveBeenCalled();
       expect(themesServiceSpy).toHaveBeenCalled();
       expect(formsServiceSpy).toHaveBeenCalled();
       expect(getPISpy).toHaveBeenCalled();

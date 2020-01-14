@@ -87,14 +87,14 @@ export class AppComponent implements OnInit {
   public onActivate(ref: any): void {
     const dummy = () => { };
 
-    this.configService.readAppConfig()
+    this.configService.readAppConfig<ITheme>()
       .pipe(
-        tap((config: IConfig) => {
+        tap((config: IConfig<ITheme>) => {
           this.sourceType = config.sourceType as string;
           this.rightIconToShow = ref instanceof PuzzleComponent ? this.soundService.icon :
             ref instanceof HomeComponent && this.sourceType === 'hsbc-collect2' ? 'account_circle' : '';
         }),
-        flatMap((config: IConfig) => this.themesService.getThemeSetting(config))
+        flatMap((config: IConfig<ITheme>) => this.themesService.getThemeSetting(config))
       ).subscribe((res: ITheme) => {
         const title: string = res.properties['--title'] ? res.properties['--title'] : 'HSBC Collect 2.0';
         this.titleService.setTitle(title);

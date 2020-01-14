@@ -45,7 +45,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
   private campaignData: ICampaign | null = null;
 
   private destroy$: Subject<any> = new Subject();
-  private appConfig: IConfig;
+  private appConfig: IConfig<void>;
 
   constructor(
     private router: Router,
@@ -61,7 +61,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig().subscribe((conf) => this.appConfig = conf);
+    this.configService.readAppConfig<void>().subscribe((conf: IConfig<void>) => this.appConfig = conf);
     const params = this.route.snapshot.queryParams;
     (window as any).primaryIdentifier = params.pi;
     const cid: string | null = params.cid;
