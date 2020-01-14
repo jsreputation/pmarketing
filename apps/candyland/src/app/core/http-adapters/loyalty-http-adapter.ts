@@ -14,6 +14,7 @@ import {
   IWRelationshipsDataType
 } from '@perx/whistler';
 import { relationshipsDataToItem } from '@perx/whistler';
+import { IAudiencesLoyaltyOption, IAudiencesTierOption } from '@cl-core/models/audiences/audiences-loyalty.model';
 
 export class LoyaltyHttpAdapter {
   public static transformToLoyalties(data: IJsonApiListPayload<IWLoyaltyAttributes>): { data: ILoyaltyForm[] } {
@@ -259,6 +260,30 @@ export class LoyaltyHttpAdapter {
         type: data.expiry_period_type,
         trigger: data.expiry_period_trigger
       }
+    };
+  }
+
+  public static transformToLoyaltyForAudience(data: any): IAudiencesLoyaltyOption {
+    return {
+      id: data.id,
+      name: data.attributes.name,
+      tiers: [data.basicTier, ...data.customTiers]
+    };
+  }
+
+  public static transformToBasicTierForAudience(data: IJsonApiItem<IWCustomTierAttributes>): IAudiencesTierOption {
+    return {
+      id: data.id,
+      type: data.type,
+      name: 'Basic Tier'
+    };
+  }
+
+  public static transformToCustomTierForAudience(data: IJsonApiItem<IWCustomTierAttributes>): IAudiencesTierOption {
+    return {
+      id: data.id,
+      type: data.type,
+      name: data.attributes.name
     };
   }
 }

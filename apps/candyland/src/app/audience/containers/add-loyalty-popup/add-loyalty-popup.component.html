@@ -8,14 +8,49 @@
     </button>
   </header>
   <mat-dialog-content>
-    <div class="dialog-content">
+    <div class="dialog-content add-loyalty-content">
+      <div class="input-group add-loyalty-row">
+        <cl-button *ngIf="availableLoyaltyOptions?.length > 0"
+                   [classList]="'tertiary ph-0'"
+                   [matMenuTriggerFor]="addLoyaltyCartMenu">
+          + {{'AUDIENCE_FEATURE.ADD_TO_LOYALTY_PROGRAM' | translate}}
+        </cl-button>
+      </div>
 
-      <cl-button classList="secondary"
-                 class="actions-close"
-                 (click)="close()"
-                 [disableRipple]="true">
-        <span>{{'BTN_CANCEL' | translate}}</span>
-      </cl-button>
+      <ng-container *ngFor="let loyaltyCard of loyaltyCards.controls; let index = index;">
+        <div class="input-group add-loyalty-row">
+          <mat-form-field>
+            <mat-select [formControl]="loyaltyCard.get('loyalty')"
+                        (valueChange)="updateTier($event, loyaltyCard.get('tier'))">
+              <ng-container *ngFor="let loyaltyOption of availableLoyaltyOptionsArray[index]">
+                <mat-option [value]="loyaltyOption">{{loyaltyOption?.name}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select [formControl]="loyaltyCard.get('tier')">
+              <ng-container *ngFor="let tierOption of loyaltyCard.get('loyalty')?.value?.tiers">
+                <mat-option [value]="tierOption">{{tierOption?.name}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+          <button class="btn-transparent"
+                  (click)="deleteLoyaltyCard(index)">
+            <i class="icon delete"></i>
+          </button>
+        </div>
+      </ng-container>
+
+      <mat-menu #addLoyaltyCartMenu="matMenu">
+        <ng-container *ngFor="let loyaltyOption of availableLoyaltyOptions">
+          <button mat-menu-item
+                  (click)="addLoyaltyCart(loyaltyOption)">
+            {{loyaltyOption.name}}
+          </button>
+        </ng-container>
+      </mat-menu>
+
     </div>
   </mat-dialog-content>
   <footer class="dialog-actions">
@@ -23,13 +58,14 @@
                class="actions-close"
                (click)="close()"
                [disableRipple]="true">
-        <span>{{'BTN_CANCEL' | translate}}</span>
+      <span>{{'BTN_CANCEL' | translate}}</span>
     </cl-button>
 
     <cl-button classList="primary"
                (click)="save()"
+               [disable]="loyaltyCards?.value?.length === 0"
                [disableRipple]="true">
-        <span>{{'AUDIENCE_FEATURE.ADD_LOYALTY' | translate}}</span>
+      <span>{{'AUDIENCE_FEATURE.ADD_LOYALTY' | translate}}</span>
     </cl-button>
   </footer>
 </aside>

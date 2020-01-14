@@ -35,7 +35,7 @@ import {
 } from '@perx/whistler';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { CustomDataSource } from '@cl-shared';
-import { } from '@cl-core/services/audiences-vouchers.service';
+import {} from '@cl-core/services/audiences-vouchers.service';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { MessageService } from '@cl-core/services';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
@@ -50,6 +50,8 @@ import { AudiencesUserInfoActions } from '../../audience-user-info-actions';
 import { AddLoyaltyPopupComponent } from '../add-loyalty-popup/add-loyalty-popup.component';
 import { AdjustLoyaltyTierPopupComponent } from '../adjust-loyalty-tier-popup/adjust-loyalty-tier-popup.component';
 import { AdjustBalancePointsPopupComponent } from '../adjust-balance-points-popup/adjust-balance-points-popup.component';
+import { LoyaltyService } from '@cl-core/services/loyalty.service';
+import { IAudiencesLoyaltyOption } from '@cl-core/models/audiences/audiences-loyalty.model';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -70,6 +72,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     {action: AudiencesUserInfoActions.adjustBalancePoints, label: 'AUDIENCE_FEATURE.ADJUST_POINTS'},
     {action: AudiencesUserInfoActions.deleteLoyaltyCard, label: 'BTN_DELETE'},
   ];
+  public loyaltySelectOptions: IAudiencesLoyaltyOption[];
 
   private async updateLocalUser(): Promise<IAudiencesUserForm> {
     this.user = await this.audiencesUserService.getUser(this.userId).toPromise();
@@ -80,6 +83,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   constructor(
     private audiencesUserService: AudiencesUserService,
     private loyaltyCardService: LoyaltyCardService,
+    private loyaltyService: LoyaltyService,
     private vouchersService: AudiencesVouchersService,
     private route: ActivatedRoute,
     private router: Router,
@@ -94,6 +98,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
 
   public ngOnInit(): void {
     this.handleRouteParams();
+    this.initLoyaltySelectOptions();
     this.renderer.addClass(this.document.body, 'no-cta');
   }
 
@@ -151,22 +156,21 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   public openAddLoyaltyPopup(): void {
     const dialogRef = this.dialog.open(AddLoyaltyPopupComponent, {
       panelClass: 'change-expiry-date-dialog',
-      data: ''
+      data: {
+        loyaltySelectOptions: this.getFreeLoyaltySelectOptions(),
+        userId: this.userId
+      }
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.destroy$))
       .pipe(
-        filter(Boolean),
-        // switchMap((entity: string) => {
-        //   return this.vouchersService.updateVoucherExpiry(item.id, entity);
-        // })
+        filter(Boolean)
       )
       .subscribe(
         () => {
-          this.messageService.show('Expiry voucher date successfully changed.');
-          this.vouchersDataSource.updateData();
-        },
-        () => this.messageService.show('Failed to update voucher expiration date.')
+          this.messageService.show('New Loyalty Cards successfully created.');
+          this.loyaltyDataSource.updateData();
+        }
       );
   }
 
@@ -223,9 +227,15 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
         this.openAdjustLoyaltyTierPopup(data.payload);
         break;
       case AudiencesUserInfoActions.deleteLoyaltyCard:
-        console.log(data);
+        this.deleteLoyaltyCard(data.payload.id);
         break;
     }
+  }
+
+  private deleteLoyaltyCard(id: string): void {
+    this.loyaltyCardService.deleteLoyalty(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.loyaltyDataSource.updateData());
   }
 
   private handleRouteParams(): void {
@@ -250,17 +260,11 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   }
 
   private initDataSource(): void {
-    const vouchersDataSourceParams = this.userId ? { 'filter[assigned_to_id]': this.userId } : {};
+    const vouchersDataSourceParams = this.userId ? {'filter[assigned_to_id]': this.userId} : {};
     this.vouchersDataSource = new CustomDataSource<any>(this.vouchersService, 5, vouchersDataSourceParams);
-    const loyaltyDataSourceParams = this.userId ? { 'filter[user_id]': this.userId } : {};
+    const loyaltyDataSourceParams = this.userId ? {'filter[user_id]': this.userId} : {};
     this.loyaltyDataSource = new CustomDataSource<any>(this.loyaltyCardService, 20, loyaltyDataSourceParams);
     this.CommunicationsDataSource = new CustomDataSource<any>(this.commsService, 5, {});
-    // this.dataSource.data$.pipe(
-    //   takeUntil(this.destroy$)
-    // ).subscribe((data: any) => {
-    //   // const counterObject = PrepareTableFilters.countFieldValue(data, 'status');
-    //   // this.tabsFilterConfig = PrepareTableFilters.prepareTabsFilterConfig(counterObject);
-    // });
   }
 
   public openEditUserDialog(): void {
@@ -282,5 +286,16 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
         await this.updateLocalUser();
         this.messageService.show('User successfully updated.');
       });
+  }
+
+  private initLoyaltySelectOptions(): void {
+    this.loyaltyService.getAudiencesLoyaltyOption({'page[size]': '20'})
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(data => this.loyaltySelectOptions = data);
+  }
+
+  private getFreeLoyaltySelectOptions(): IAudiencesLoyaltyOption[] {
+    const idsUsedLoyalties = this.loyaltyDataSource.data.map(card => card.loyalty.id);
+    return this.loyaltySelectOptions.filter(loyalty => !idsUsedLoyalties.includes(loyalty.id));
   }
 }

@@ -18,7 +18,7 @@ export class LoyaltyCardHttpAdapter {
         tier: {
           data: {
             type: data.tier.type,
-            id: data.tierId
+            id: data.tier.id
           }
         },
         program: {
@@ -50,7 +50,7 @@ export class LoyaltyCardHttpAdapter {
     if (data.tier) {
       updatedData.relationships.tier.data = {
         type: data.tier.type,
-        id: data.tierId
+        id: data.tier.id
       };
     }
 
