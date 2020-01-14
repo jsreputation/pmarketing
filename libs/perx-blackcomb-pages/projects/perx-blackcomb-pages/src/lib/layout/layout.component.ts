@@ -36,7 +36,7 @@ export class LayoutComponent implements OnInit {
   public leftIcon: string = '';
   public preAuth: boolean;
   public theme: ITheme;
-  public appConfig: IConfig;
+  public appConfig: IConfig<void>;
 
   constructor(
     private location: Location,
@@ -63,7 +63,7 @@ export class LayoutComponent implements OnInit {
     );
 
     this.configService.readAppConfig().subscribe(
-      (config: IConfig) => this.appConfig = config
+      (config: IConfig<void>) => this.appConfig = config
     );
 
     this.authService.$failedAuth.subscribe(

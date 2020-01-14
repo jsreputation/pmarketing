@@ -9,7 +9,7 @@ import {ConfigService, IConfig, isEmptyString, IStampCard, NotificationService} 
 })
 export class PuzzlesComponent implements OnInit {
   public campaignId: number | null = null;
-  public sourceType: string;
+  public sourceType: string | null;
 
   constructor(
     private router: Router,
@@ -21,8 +21,8 @@ export class PuzzlesComponent implements OnInit {
 
   public ngOnInit(): void {
     this.configService.readAppConfig().subscribe(
-      (config: IConfig) => {
-        this.sourceType = config.sourceType.toString();
+      (config: IConfig<void>) => {
+        this.sourceType = config.sourceType ? config.sourceType.toString() : null;
       }
     );
     this.route.paramMap.subscribe(params => {

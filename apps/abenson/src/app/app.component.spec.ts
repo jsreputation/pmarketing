@@ -24,7 +24,13 @@ import { SharedDataService } from './services/shared-data.service';
 import { of } from 'rxjs';
 
 const configServiceStub: Partial<ConfigService> = {
-  readAppConfig: () => of({})
+  readAppConfig: () => of({
+    apiHost: '',
+    production: false,
+    preAuth: false,
+    isWhistler: false,
+    baseHref: ''
+  })
 };
 
 describe('AppComponent', () => {

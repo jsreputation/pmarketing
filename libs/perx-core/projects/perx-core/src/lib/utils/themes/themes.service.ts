@@ -22,5 +22,5 @@ export abstract class ThemesService {
     });
   }
 
-  public abstract getThemeSetting(config?: IConfig): Observable<ITheme>;
+  public abstract getThemeSetting(config?: IConfig<ITheme>): Observable<ITheme>;
 }
