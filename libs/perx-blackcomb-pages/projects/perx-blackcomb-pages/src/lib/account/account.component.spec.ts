@@ -54,7 +54,7 @@ describe('AccountComponent', () => {
   };
   const configServiceStub: Partial<ConfigService> = {
     getAccountSettings: (): Observable<PagesObject> => of(pagesObject),
-    readAppConfig: (): Observable<IConfig> => of({})
+    readAppConfig: <T>(): Observable<IConfig<T>> => of()
   };
   const authenticationServiceStub: Partial<AuthenticationService> = {
     logout: () => { }

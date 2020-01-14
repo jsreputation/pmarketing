@@ -39,7 +39,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public totalLength: number;
   public currentPointer: number;
   public errorMessage: string | null = null;
-  public appConfig: IConfig;
+  public appConfig: IConfig<void>;
   private stateData: IPrePlayStateData;
   private maxRetryTimes: number = 5;
   private retryTimes: number = 0;
@@ -64,7 +64,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig().subscribe((conf) => this.appConfig = conf);
+    this.configService.readAppConfig<void>().subscribe((conf: IConfig<void>) => this.appConfig = conf);
     this.theme = this.themesService.getThemeSetting();
     this.data$ = this.formSvc.getSignupForm();
     this.oldPI = this.authService.getPI();

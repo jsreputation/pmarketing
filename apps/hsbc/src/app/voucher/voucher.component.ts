@@ -31,8 +31,8 @@ export class VoucherComponent implements OnInit {
     this.expiryFn = (v: Voucher) => v.expiry ? `Expiry: ${this.datePipe.transform(v.expiry, 'mediumDate')}` : '';
 
     this.configService.readAppConfig().subscribe(
-      (config: IConfig) => {
-        this.sourceType = config.sourceType.toString();
+      (config: IConfig<void>) => {
+        this.sourceType = config.sourceType ? config.sourceType.toString() : '';
         this.fetchVouchers(this.sourceType);
       }
     );
