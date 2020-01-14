@@ -9,7 +9,22 @@
   </header>
   <mat-dialog-content>
     <div class="dialog-content">
-
+      <mat-form-field *ngIf="balance">
+        <input type="number"
+               [min]="0"
+               [step]="0.1"
+               matInput
+               [formControl]="balance"
+               [placeholder]="'AUDIENCE_FEATURE.ADD_REMOVE_POINTS' | translate">
+        <mat-error *ngIf="balance.hasError('required') && balance.touched">{{'ERROR_REQUIRED' | translate}}</mat-error>
+        <mat-error *ngIf="balance.hasError('min') && balance.touched">{{'ERROR_MIN' | translate}} 1</mat-error>
+      </mat-form-field>
+      <mat-form-field *ngIf="description">
+        <textarea matInput
+                  [placeholder]="'AUDIENCE_FEATURE.ADJUST_DESCRIPTION' | translate"
+                  [formControl]="description">
+        </textarea>
+      </mat-form-field>
     </div>
   </mat-dialog-content>
   <footer class="dialog-actions">
@@ -17,13 +32,13 @@
                class="actions-close"
                (click)="close()"
                [disableRipple]="true">
-        <span>{{'BTN_CANCEL' | translate}}</span>
+      <span>{{'BTN_CANCEL' | translate}}</span>
     </cl-button>
 
     <cl-button classList="primary"
                (click)="save()"
                [disableRipple]="true">
-        <span>{{'ADJUST_POINTS_BTN_APPLY' | translate}}</span>
+      <span>{{'AUDIENCE_FEATURE.ADJUST_POINTS_BTN_APPLY' | translate}}</span>
     </cl-button>
   </footer>
 </aside>

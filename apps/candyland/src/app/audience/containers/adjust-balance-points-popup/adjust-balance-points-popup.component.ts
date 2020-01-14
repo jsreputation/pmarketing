@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Inject, DoCheck, ChangeDetectorRef, } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { FormControl } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'cl-adjust-balance-points-popup',
@@ -9,7 +9,18 @@ import { FormControl } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdjustBalancePointsPopupComponent implements OnInit, DoCheck {
-  public newDate: FormControl = new FormControl(null);
+  public form = new FormGroup({
+    balance: new FormControl(0, [Validators.required, Validators.min(0)]),
+    // description: new FormControl('')
+  });
+
+  public get balance(): AbstractControl {
+    return this.form.get('balance');
+  }
+
+  public get description(): AbstractControl {
+    return this.form.get('description');
+  }
 
   constructor(public dialogRef: MatDialogRef<AdjustBalancePointsPopupComponent>,
               private cd: ChangeDetectorRef,
@@ -21,7 +32,7 @@ export class AdjustBalancePointsPopupComponent implements OnInit, DoCheck {
   }
 
   public save(): void {
-    this.dialogRef.close(this.newDate.value);
+    this.dialogRef.close();
   }
 
   public ngOnInit(): void {

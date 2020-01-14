@@ -31,26 +31,32 @@ export class LoyaltyCardHttpAdapter {
     };
   }
 
-  public static transformFromLoyaltyCard(data: any): IJsonApiPostData<IWLoyaltyCard> | IJsonApiPatchData<IWLoyaltyCard> {
-    const updatedData: IJsonApiPostData<IWLoyaltyCard> | IJsonApiPatchData<IWLoyaltyCard> = {
+  public static transformFromUpdateLoyaltyCard(data: any): IJsonApiPatchData<IWLoyaltyCard> {
+    const updatedData: IJsonApiPatchData<IWLoyaltyCard> = {
+      id: data.id,
       type: 'cards',
-      attributes: {
-        user_id: data.userId,
-        balance: data.balance,
-      }
+      attributes: {}
     };
 
-    if (data.loyalty) {
-      updatedData.relationships.program.data = {
-        type: 'programs',
-        id: data.loyalty.id
-      };
+    if ('balance' in data) {
+      updatedData.attributes.balance = data.balance;
     }
 
-    if (data.tier) {
-      updatedData.relationships.tier.data = {
-        type: data.tier.type,
-        id: data.tier.id
+    // if ('loyalty' in data) {
+    //   updatedData.relationships.program.data = {
+    //     type: 'programs',
+    //     id: data.loyalty.id
+    //   };
+    // }
+
+    if ('tier' in data) {
+      updatedData.relationships = {
+        tier: {
+          data: {
+            type: data.tier.type,
+            id: data.tier.id
+          }
+        }
       };
     }
 

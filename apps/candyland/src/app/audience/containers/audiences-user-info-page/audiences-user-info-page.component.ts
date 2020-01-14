@@ -51,7 +51,7 @@ import { AddLoyaltyPopupComponent } from '../add-loyalty-popup/add-loyalty-popup
 import { AdjustLoyaltyTierPopupComponent } from '../adjust-loyalty-tier-popup/adjust-loyalty-tier-popup.component';
 import { AdjustBalancePointsPopupComponent } from '../adjust-balance-points-popup/adjust-balance-points-popup.component';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
-import { IAudiencesLoyaltyOption } from '@cl-core/models/audiences/audiences-loyalty.model';
+import { IAudiencesLoyaltyOption, IAudiencesTierOption } from '@cl-core/models/audiences/audiences-loyalty.model';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -162,9 +162,10 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       }
     });
 
-    dialogRef.afterClosed().pipe(takeUntil(this.destroy$))
+    dialogRef.afterClosed()
       .pipe(
-        filter(Boolean)
+        filter(Boolean),
+        takeUntil(this.destroy$)
       )
       .subscribe(
         () => {
@@ -174,25 +175,35 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       );
   }
 
-  public openAdjustLoyaltyTierPopup(item: IJsonApiItem<Partial<IWAssignedAttributes>>): void {
+  public openAdjustLoyaltyTierPopup(card: any): void {
+    const tiers = this.getLoyaltyTiers(card);
+    if (!tiers) {
+      this.messageService.show('Cannot find tiers for loyalty.', 'danger');
+      return;
+    }
     const dialogRef = this.dialog.open(AdjustLoyaltyTierPopupComponent, {
       panelClass: 'change-expiry-date-dialog',
-      data: item
+      data: {
+        card,
+        tiers
+      }
     });
 
-    dialogRef.afterClosed().pipe(takeUntil(this.destroy$))
+    dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
-        // switchMap((entity: string) => {
-        //   return this.vouchersService.updateVoucherExpiry(item.id, entity);
-        // })
+        tap(data => console.log('update', data)),
+        switchMap((updatedCard: any) => {
+          return this.loyaltyCardService.updateLoyaltyCard(updatedCard.id, updatedCard);
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe(
         () => {
-          this.messageService.show('Expiry voucher date successfully changed.');
-          this.vouchersDataSource.updateData();
+          this.messageService.show('Loyalty Card Tier successfully changed.');
+          this.loyaltyDataSource.updateData();
         },
-        () => this.messageService.show('Failed to update voucher expiration date.')
+        () => this.messageService.show('Failed to update Loyalty Card Tier.', 'danger')
       );
   }
 
@@ -202,12 +213,13 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       data: item
     });
 
-    dialogRef.afterClosed().pipe(takeUntil(this.destroy$))
+    dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
-        // switchMap((entity: string) => {
-        //   return this.vouchersService.updateVoucherExpiry(item.id, entity);
-        // })
+        switchMap((entity: string) => {
+          return this.vouchersService.updateVoucherExpiry(item.id, entity);
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe(
         () => {
@@ -224,7 +236,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
         this.openAdjustLoyaltyTierPopup(data.payload);
         break;
       case AudiencesUserInfoActions.adjustBalancePoints:
-        this.openAdjustLoyaltyTierPopup(data.payload);
+        this.openAdjustBalancePointsPopup(data.payload);
         break;
       case AudiencesUserInfoActions.deleteLoyaltyCard:
         this.deleteLoyaltyCard(data.payload.id);
@@ -297,5 +309,10 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   private getFreeLoyaltySelectOptions(): IAudiencesLoyaltyOption[] {
     const idsUsedLoyalties = this.loyaltyDataSource.data.map(card => card.loyalty.id);
     return this.loyaltySelectOptions.filter(loyalty => !idsUsedLoyalties.includes(loyalty.id));
+  }
+
+  private getLoyaltyTiers(card: any): IAudiencesTierOption[] {
+    const findLoyalty = this.loyaltySelectOptions.find(loyalty => loyalty.id === card.loyalty.id);
+    return findLoyalty ? findLoyalty.tiers : null;
   }
 }

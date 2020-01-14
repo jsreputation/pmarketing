@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Inject, DoCheck, ChangeDetectorRef, } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject, ChangeDetectorRef, AfterViewInit, } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormControl } from '@angular/forms';
 
@@ -8,8 +8,9 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./adjust-loyalty-tier-popup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdjustLoyaltyTierPopupComponent implements OnInit, DoCheck {
-  public newDate: FormControl = new FormControl(null);
+export class AdjustLoyaltyTierPopupComponent implements AfterViewInit {
+  public tierControl: FormControl = new FormControl(null);
+  public currentTierIndex: number;
 
   constructor(public dialogRef: MatDialogRef<AdjustLoyaltyTierPopupComponent>,
               private cd: ChangeDetectorRef,
@@ -21,13 +22,19 @@ export class AdjustLoyaltyTierPopupComponent implements OnInit, DoCheck {
   }
 
   public save(): void {
-    this.dialogRef.close(this.newDate.value);
+    console.log(this.tierControl.value);
+    const selectIndex = this.tierControl.value;
+    const selectTier = this.data.tiers[selectIndex];
+    const updatedCard = {id: this.data.card.id , tier: selectTier};
+    this.dialogRef.close(updatedCard);
   }
 
-  public ngOnInit(): void {
-  }
-
-  public ngDoCheck(): void {
+  public ngAfterViewInit(): void {
+    const currentTier = this.data.card.tier;
+    this.currentTierIndex = this.data.tiers.findIndex(
+      tier => tier.id === currentTier.id && tier.type === currentTier.type
+    );
+    this.tierControl.patchValue(this.currentTierIndex);
     this.cd.detectChanges();
   }
 

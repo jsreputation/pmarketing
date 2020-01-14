@@ -43,6 +43,16 @@ export class LoyaltyCardService implements ITableService {
             programs: {fieldName: 'loyalty', adapterFunction: LoyaltyCardHttpAdapter.transformToIncludeLoyalty}
           })
       ),
+      // TODO: Hardcode Tiers in Loyalty Cards
+      map(data => {
+          data.data.forEach(item => item.tier = {
+            id: '1',
+            type: 'basic_tiers',
+            name: 'Basic Tier'
+          });
+          return data;
+        }
+      ),
       tap(data => console.log(data))
     );
   }
@@ -65,24 +75,15 @@ export class LoyaltyCardService implements ITableService {
   public createLoyaltyCard(data: any): Observable<any> {
     const sendData = LoyaltyCardHttpAdapter.transformFromCreateLoyaltyCard(data);
     return this.loyaltyCardHttpService.createLoyaltyCard({data: sendData});
-    //   .pipe(
-    //   map(response => LoyaltyCardHttpAdapter.transformFromLoyaltyCard(response.data))
-    // );
   }
 
   public updateLoyaltyCard(id: string, data: any): Observable<any> {
-    const sendData: any = LoyaltyCardHttpAdapter.transformFromLoyaltyCard(data);
-    sendData.id = id;
+    const sendData: any = LoyaltyCardHttpAdapter.transformFromUpdateLoyaltyCard(data);
+    console.log('sendData', sendData);
     return this.loyaltyCardHttpService.updateLoyaltyCard(id, {data: sendData});
-    //   .pipe(
-    //   map(response => LoyaltyCardHttpAdapter.transformToLoyaltyForm(response.data))
-    // );
   }
 
   public deleteLoyalty(id: string): Observable<any> {
     return this.loyaltyCardHttpService.deleteLoyaltyCard(id);
-    //   .pipe(
-    //   map(response => LoyaltyCardHttpAdapter.transformToLoyaltyForm(response.data))
-    // );
   }
 }
