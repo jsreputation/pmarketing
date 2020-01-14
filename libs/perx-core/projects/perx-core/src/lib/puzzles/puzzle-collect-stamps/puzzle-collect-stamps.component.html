@@ -1,7 +1,7 @@
 <div class="main-container" [ngStyle]="{'background-image': backgroundImage? 'url(' + backgroundImage + ')': '',
   'background-color': !backgroundImage && defaultbackgroundImage}">
   <div class="content">
-    <div class="stamps mat-elevation-z3" [ngStyle]="{'background-image': cardBgImage? 'url(' + cardBgImage + ')': '',
+    <div class="stamps" [ngStyle]="{'background-image': cardBgImage? 'url(' + cardBgImage + ')': '',
       'background': !cardBgImage && defaultCardBgImage }">
       <h1 *ngIf="title">{{title}}</h1>
       <p class="subtitle" *ngIf="subTitle">{{subTitle}}</p>
