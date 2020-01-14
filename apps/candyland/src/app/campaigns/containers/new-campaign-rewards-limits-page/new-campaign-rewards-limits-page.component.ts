@@ -37,7 +37,11 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
     private fb: FormBuilder
   ) {
     super(1.1, store, stepConditionService);
-    this.limitRewardForm = this.fb.group({
+    this.limitRewardForm = this.generateBaseLimitForm();
+  }
+
+  public generateBaseLimitForm(): FormGroup {
+    return this.fb.group({
       enableProbability: [false],
       totalProbAllSlots: this.fb.group( {}), // no show up, main for validation
       totalFilledAllSlots: this.fb.group({}) // doesn't show up in the template
@@ -53,6 +57,13 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
   }
 
   private initForm(): void {
+    // if i generate new form here replace, buggy behavior with ctrls not working correctly
+    // manually delete controls we re-add later just after
+    // prevent phanthom ctrls, patch value errors
+    this.limitRewardForm.removeControl('totalProbAllSlots'); // no show up, main for validation\n' +'
+    this.limitRewardForm.removeControl('totalFilledAllSlots');
+    this.limitRewardForm.addControl('totalProbAllSlots', this.fb.group({}));
+    this.limitRewardForm.addControl('totalFilledAllSlots', this.fb.group({}));
     this.limitRewardForm.clearValidators();
     this.slots.forEach((slotIndex) => {
       this.probAllGroup.addControl(`totalProbability-${slotIndex}`,

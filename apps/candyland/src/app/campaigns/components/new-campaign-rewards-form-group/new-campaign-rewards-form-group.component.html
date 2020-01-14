@@ -18,7 +18,7 @@
       </cl-reward-item>
       <mat-error class="error" *ngIf="
         lastEle &&
-        outcome.outcome.slotNumber === slotNumber &&
+        isSpinEngagement &&
         minSumError">
         Please indicate at least one probability value greater than zero for this group
       </mat-error>

@@ -38,7 +38,7 @@ export class ClValidators extends Validators {
     };
   }
 
-  public static minPercent(percent: Number): ValidatorFn {
+  public static minPercent(percent: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       const controlTyped: FormGroup = control as FormGroup;
       if (!control || !control.value) {

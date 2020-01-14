@@ -58,6 +58,7 @@ export class RewardItemComponent implements OnInit, OnChanges {
     // update parent form about its current null value when prob disabled so campaign is synced
     if (enableProbability !== undefined && enableProbability.currentValue === false) {
       this.updateOutcomeData(true);
+      this.initForm();
       if (this.overWriteProb) {
         this.updateOutcome.emit({probability: null, limit: null});
       }

@@ -4,12 +4,13 @@ import { takeUntil } from 'rxjs/operators';
 
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
-import { ICampaign } from '@cl-core/models/campaign/campaign';
+import {ICampaign, ICampaignOutcome} from '@cl-core/models/campaign/campaign';
 import { oc } from 'ts-optchain';
 import {getEngagementRouterLink} from '@cl-helpers/get-engagement-router-link';
 import {Router} from '@angular/router';
 import { CampaignChannelsLaunchType } from '../../models/campaign-channels-launch-type.enum';
 import {AudiencesService} from '@cl-core-services';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'cl-new-campaign-review-page',
@@ -22,6 +23,8 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
   public pools: any[];
   public stampsHasRewards: boolean = false;
   public launchType: typeof CampaignChannelsLaunchType = CampaignChannelsLaunchType;
+  public specialProbDisplay$: Subject<ICampaignOutcome> = new Subject<ICampaignOutcome>();
+
   constructor(
     public store: CampaignCreationStoreService,
     public audSvc: AudiencesService,
@@ -37,7 +40,10 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
       .asObservable()
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: ICampaign) => {
-        this.checkStampsHasRewards(data);
+        if (data) {
+          this.specialProbDisplay$.next(this.checkSpecialProbRemainingSlot(data));
+          this.checkStampsHasRewards(data);
+        }
       });
     this.audSvc.getAudiencesList()
         .subscribe((data) => {
@@ -76,6 +82,11 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
       });
     }
     this.cd.detectChanges();
+  }
+
+  public checkSpecialProbRemainingSlot(campaign: ICampaign): ICampaignOutcome {
+    if (!campaign.outcomes) {return; }
+    return campaign.outcomes.find(outcome => outcome.outcome.slotNumber === -1);
   }
 
   public navigateToEdit(): void {
