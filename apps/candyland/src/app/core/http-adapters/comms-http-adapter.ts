@@ -42,11 +42,11 @@ export class CommsHttpAdapter {
       id: data.id,
       from: attr.from,
       to: attr.to,
-      provider_id: attr.provider_id,
+      providerId: attr.provider_id,
       message: attr.body,
       sendDate: attr.created_at ? new Date(attr.created_at) : null,
-      owner_id: attr.owner_id,
-      owner_type: attr.owner_type,
+      ownerId: attr.owner_id,
+      ownerType: attr.owner_type,
       channel: attr.channel
     };
   }
