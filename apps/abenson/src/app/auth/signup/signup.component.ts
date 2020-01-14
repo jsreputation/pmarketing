@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import {AuthenticationService, ISignUpData} from '@perx/core';
+import { AuthenticationService, ISignUpData } from '@perx/core';
+import { SharedDataService } from '../shared-data.service';
 
 @Component({
   selector: 'app-signup',
@@ -17,6 +18,7 @@ export class SignUpComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private router: Router,
+    private sharedDataService: SharedDataService
   ) { }
 
   public ngOnInit(): void {
@@ -39,7 +41,8 @@ export class SignUpComponent implements OnInit {
       lastName: ['', Validators.required],
       phone: ['', Validators.required],
       password: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
-      accept_terms: [false, Validators.requiredTrue]
+      accept_terms: [false, Validators.requiredTrue],
+      cardNumber: ['', [Validators.minLength(16), Validators.maxLength(16)]]
     });
   }
 
@@ -51,15 +54,22 @@ export class SignUpComponent implements OnInit {
     }
 
     this.errorMessage = undefined;
-    const profile = this.signUpForm.value;
+    const profile = { ...this.signUpForm.value };
     delete profile.accept_terms;
+    delete profile.cardNumber;
     (profile as ISignUpData).passwordConfirmation = password;
-
     this.authService.signup(profile).subscribe(() => {
-      this.router.navigate(['sms-validation'], { queryParams: { identifier: profile.phone } });
-    },
-      (e) => {
-        console.log(e);
+      const cardNumber = this.signUpForm.value.cardNumber;
+      if (this.signUpForm.value.cardNumber) {
+        this.sharedDataService.setData({
+          phone: profile.phone,
+          password: profile.password,
+          cardNumber
+        });
+      }
+      this.router.navigate(['sms-validation'], {
+        queryParams: { identifier: profile.phone }
       });
+    });
   }
 }
