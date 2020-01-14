@@ -28,8 +28,8 @@ export class WalletComponent implements OnInit {
 
   public ngOnInit(): void {
     this.configService.readAppConfig().subscribe(
-      (config: IConfig) => {
-        this.sourceType = config.sourceType.toString();
+      (config: IConfig<void>) => {
+        this.sourceType = config.sourceType ? config.sourceType.toString() : null;
         this.voucherFilter = this.setVoucherFilter();
         this.canSelectRedeemed = this.setCanSelectRedeemed();
       }
