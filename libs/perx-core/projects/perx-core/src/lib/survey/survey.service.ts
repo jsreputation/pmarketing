@@ -5,7 +5,7 @@ import { ISurvey, IQuestion, MaterialColor, IAnswer, SurveyQuestionType } from '
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import {
   IWSurveyEngagementAttributes,
@@ -67,7 +67,7 @@ export class SurveyService {
             );
           }
         ),
-        tap(s => console.error('got survey', s)),
+        // tap(s => console.error('got survey', s)),
         map((res: IJsonApiItemPayload<IWSurveyEngagementAttributes>) => {
           const surveyData = SurveyService.WSurveyToSurvey(res);
           return { ...surveyData, displayProperties: { ...surveyData.displayProperties, ...disProp } };
