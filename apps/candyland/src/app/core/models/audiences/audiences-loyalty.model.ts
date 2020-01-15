@@ -1,7 +1,7 @@
 export interface IAudiencesLoyaltyCard {
   id?: string;
   userId: number;
-  balance: number,
+  balance: number;
   loyalty: IAudiencesLoyalty;
   tier?: IAudiencesTier;
 }

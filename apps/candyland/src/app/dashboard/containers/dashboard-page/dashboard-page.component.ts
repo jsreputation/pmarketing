@@ -90,7 +90,6 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   private getGameCard(): void {
-    debugger
     this.gameCard$ = this.dashboardService.getDashboardGameCard();
   }
 

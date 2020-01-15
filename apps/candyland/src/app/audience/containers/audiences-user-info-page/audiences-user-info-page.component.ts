@@ -35,7 +35,6 @@ import {
 } from '@perx/whistler';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { CustomDataSource } from '@cl-shared';
-import {} from '@cl-core/services/audiences-vouchers.service';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { MessageService } from '@cl-core/services';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
@@ -192,7 +191,6 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
-        tap(data => console.log('update', data)),
         switchMap((updatedCard: IAudiencesLoyaltyCard) => {
           return this.loyaltyCardService.updateLoyaltyCard(updatedCard.id, updatedCard);
         }),

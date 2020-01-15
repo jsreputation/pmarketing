@@ -8,12 +8,12 @@
   </header>
   <mat-dialog-content>
     <div class="dialog-content">
-      <mat-form-field *ngIf="data">
-      <mat-select [formControl]="tierControl">
-        <ng-container *ngFor="let tierOption of data?.tiers; let index = index;">
-          <mat-option [value]="index">{{tierOption?.name}}</mat-option>
-        </ng-container>
-      </mat-select>
+      <mat-form-field *ngIf="data && tierControl">
+        <mat-select [formControl]="tierControl">
+          <ng-container *ngFor="let tierOption of data?.tiers; let index = index;">
+            <mat-option [value]="index">{{tierOption?.name}}</mat-option>
+          </ng-container>
+        </mat-select>
       </mat-form-field>
     </div>
   </mat-dialog-content>

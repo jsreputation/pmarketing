@@ -30,13 +30,12 @@ export class LoyaltyService implements ITableService<ILoyaltyForm> {
     params.include = 'basic_tier,custom_tiers';
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyHttpService.getLoyalties(httpParams).pipe(
-      tap(response => console.log(response)),
       map(response => JsonApiParser.parseDataWithIncludes(
         response,
         null,
         {
-          'basic_tiers': {fieldName: 'basicTier', adapterFunction: LoyaltyHttpAdapter.transformToBasicTierForAudience},
-          'custom_tiers': {fieldName: 'customTiers', adapterFunction: LoyaltyHttpAdapter.transformToCustomTierForAudience}
+          basic_tiers: {fieldName: 'basicTier', adapterFunction: LoyaltyHttpAdapter.transformToBasicTierForAudience},
+          custom_tiers: {fieldName: 'customTiers', adapterFunction: LoyaltyHttpAdapter.transformToCustomTierForAudience}
         }
       )),
       map(data => data.map(LoyaltyHttpAdapter.transformToLoyaltyForAudience))

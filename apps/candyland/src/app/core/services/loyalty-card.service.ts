@@ -69,7 +69,6 @@ export class LoyaltyCardService implements ITableService {
 
   public updateLoyaltyCard(id: string, data: any): Observable<IJsonApiItemPayload<IWLoyaltyCard>> {
     const sendData: any = LoyaltyCardHttpAdapter.transformFromUpdateLoyaltyCard(data);
-    console.log('sendData', sendData);
     return this.loyaltyCardHttpService.updateLoyaltyCard(id, {data: sendData});
   }
 

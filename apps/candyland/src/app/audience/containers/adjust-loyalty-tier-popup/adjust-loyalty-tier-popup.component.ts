@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Inject, ChangeDetectorRef, AfterViewInit, } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Inject, ChangeDetectorRef, AfterViewInit, OnInit, } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { IAudiencesLoyaltyCard, IAudiencesTier } from '@cl-core/models/audiences/audiences-loyalty.model';
@@ -9,13 +9,13 @@ import { IAudiencesLoyaltyCard, IAudiencesTier } from '@cl-core/models/audiences
   styleUrls: ['./adjust-loyalty-tier-popup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdjustLoyaltyTierPopupComponent implements AfterViewInit {
-  public tierControl: FormControl = new FormControl(null);
+export class AdjustLoyaltyTierPopupComponent implements OnInit, AfterViewInit {
+  public tierControl: FormControl;
   public currentTierIndex: number;
 
   constructor(public dialogRef: MatDialogRef<AdjustLoyaltyTierPopupComponent>,
               private cd: ChangeDetectorRef,
-              @Inject(MAT_DIALOG_DATA) public data: {card: IAudiencesLoyaltyCard, tiers: IAudiencesTier[] }) {
+              @Inject(MAT_DIALOG_DATA) public data: { card: IAudiencesLoyaltyCard, tiers: IAudiencesTier[] }) {
   }
 
   public close(): void {
@@ -23,11 +23,14 @@ export class AdjustLoyaltyTierPopupComponent implements AfterViewInit {
   }
 
   public save(): void {
-    console.log(this.tierControl.value);
     const selectIndex = this.tierControl.value;
     const selectTier = this.data.tiers[selectIndex];
-    const updatedCard = {id: this.data.card.id , tier: selectTier};
+    const updatedCard = {id: this.data.card.id, tier: selectTier};
     this.dialogRef.close(updatedCard);
+  }
+
+  public ngOnInit(): void {
+    this.tierControl = new FormControl(null);
   }
 
   public ngAfterViewInit(): void {

@@ -33,7 +33,6 @@ export class AdjustBalancePointsPopupComponent implements OnInit, AfterViewInit 
   }
 
   public ngAfterViewInit(): void {
-    console.log('balance ', this.data);
     this.balance.patchValue(this.data.balance);
     this.cd.detectChanges();
   }
