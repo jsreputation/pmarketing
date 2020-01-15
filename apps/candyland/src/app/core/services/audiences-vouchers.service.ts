@@ -5,10 +5,10 @@ import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { RewardsService } from '@cl-core-services';
 import Utils from '@cl-helpers/utils';
 import { IWAssignedAttributes, IJsonApiItem, IJsonApiListPayload } from '@perx/whistler';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
+import { RewardsService } from './rewards.service';
 
 @Injectable({
   providedIn: 'root'

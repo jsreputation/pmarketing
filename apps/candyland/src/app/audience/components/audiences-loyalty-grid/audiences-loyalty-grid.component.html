@@ -1,0 +1,10 @@
+<div class="item-list">
+  <ng-container *ngIf="(dataSource.data$ | async) as items">
+    <div class="item shadow" *ngFor="let item of items">
+      <cl-audiences-loyalty-item [data]="item"
+                       [menuOptions]="menuOptions"
+                       (menuTapped)="menuOptTapped($event)">
+      </cl-audiences-loyalty-item>
+    </div>
+  </ng-container>
+</div>
