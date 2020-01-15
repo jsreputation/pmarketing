@@ -1,26 +1,6 @@
 import { IWMerchantAttributes, IWMerchantBranchAttributes, IJsonApiPostData, IJsonApiItem } from '@perx/whistler';
 
 export class MerchantHttpAdapter {
-  public static transformToMerchantForm(data: IWMerchantAttributes): IMerchantForm {
-    return {
-      name: data.name,
-      type: data.type,
-      id: data.id,
-      createdAt: data.created_at,
-      description: data.description,
-      image: data.properties.logo_image,
-      countryCode: data.properties.country_code,
-      phone: data.properties.phone,
-      address: data.properties.address,
-      city: data.properties.city,
-      state: data.properties.state,
-      postalCode: data.properties.postal_code,
-      weblink: data.properties.weblink,
-      branches: data.branches ? data.branches.map(branch => (
-        MerchantHttpAdapter.transformToBranches(branch)
-      )) : []
-    };
-  }
 
   public static transformToMerchant(merchant: IJsonApiItem<IWMerchantAttributes>): Partial<IMerchantForm> {
     return {
@@ -48,15 +28,6 @@ export class MerchantHttpAdapter {
       properties: branch.attributes.properties,
       address: branch.attributes.properties ? branch.attributes.properties.address : null,
       phone: branch.attributes.properties ? branch.attributes.properties.phone : null,
-    };
-  }
-
-  public static transformToBranches(branch: any): any {
-    return {
-      id: branch.id,
-      name: branch.name,
-      address: branch.properties.address,
-      phone: branch.properties.phone
     };
   }
 

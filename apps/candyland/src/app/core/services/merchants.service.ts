@@ -4,7 +4,12 @@ import { MerchantHttpService } from '@cl-core/http-services/merchant-http.servic
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { IWMerchantAttributes, IWMerchantBranchAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import {
+  IWMerchantAttributes,
+  IWMerchantBranchAttributes,
+  IJsonApiItemPayload,
+  IJsonApiListPayload
+} from '@perx/whistler';
 import { JsonApiParser } from '@cl-helpers/json-api-parser';
 import { ClHttpParams } from '@cl-helpers/http-params';
 
@@ -83,7 +88,9 @@ export class MerchantsService implements ITableService<Partial<IMerchantForm>> {
     return this.createMerchant(merchant);
   }
 
-  private getTransformMerchant(data: any): IMerchantForm[] {
+  private getTransformMerchant(data:
+   IJsonApiItemPayload<IWMerchantAttributes> | IJsonApiListPayload<IWMerchantAttributes>
+  ): IMerchantForm[] {
     return JsonApiParser.parseDataWithIncludes(
       data,
       MerchantHttpAdapter.transformToMerchant, {
