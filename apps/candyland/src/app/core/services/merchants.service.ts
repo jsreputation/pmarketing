@@ -55,7 +55,7 @@ export class MerchantsService implements ITableService<Merchant> {
   }
 
   public updateMerchantBranch(id: string, data: MerchantBranch): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
-    const sendData = { ...MerchantHttpAdapter.transformFromMerchantBranchForm(data, id), id };
+    const sendData = { ...MerchantHttpAdapter.transformFromMerchantBranchForm(data, id), id: data.id };
     return this.merchantHttpService.updateMerchantBranch(data.id, { data: sendData });
   }
 
