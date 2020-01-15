@@ -5,7 +5,7 @@ import { IWLoginAttributes, IWProfileAttributes, IJsonApiItemPayload, IJsonApiPo
 import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()
-export class AuthHttpTestService {
+export class AuthHttpService {
   constructor(private http: HttpClient,
               private apiConfig: ApiConfigServices
               ) {

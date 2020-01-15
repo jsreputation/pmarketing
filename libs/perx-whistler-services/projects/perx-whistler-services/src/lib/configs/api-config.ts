@@ -1,13 +1,14 @@
-import { Inject, Injectable } from '@angular/core';
-import { BASE_CDN_URL_WS, BASE_URL_WS } from '../http-services/http-services.module';
+import { Injectable } from '@angular/core';
+// import { BASE_CDN_URL_WS, BASE_URL_WS } from '../http-services/http-services.module';
 
 @Injectable()
 export class ApiConfigServices {
-
-  constructor(
-    @Inject(BASE_URL_WS) public baseApiPath: string,
-    @Inject(BASE_CDN_URL_WS) public baseCDNPath: string,
-              ) {
+  public baseApiPath: string | null = null;
+  public baseCDNPath: string | null = null;
+  constructor() {
+    console.log('55555555555');
+    // this.baseApiPath = this.injector.get(BASE_URL_WS); private injector: Injector
+    // this.baseCDNPath = this.injector.get(BASE_CDN_URL_WS);
   }
 
   public get baseAPIPath(): string {

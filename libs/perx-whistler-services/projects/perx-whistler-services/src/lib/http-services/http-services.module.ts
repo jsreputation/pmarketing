@@ -1,7 +1,8 @@
 import { InjectionToken, ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VouchersHttpService } from './vouchers-https.service';
-import { AuthHttpTestService } from './auth-http.service';
+import { AuthHttpService } from './auth-http.service';
+import { HttpClientModule } from '@angular/common/http';
 
 export const BASE_URL_WS = new InjectionToken<string>('BaseUrl');
 export const BASE_CDN_URL_WS = new InjectionToken<string>('BaseCDNUrl');
@@ -10,17 +11,16 @@ const providers: any[] = [
   // {provide: BASE_URL_WS, useValue: 'http://localhost'},
   // {provide: BASE_CDN_URL_WS, useValue: 'https://cdn.uat.whistler.perxtech.io/dev1/'},
 
-
-
   VouchersHttpService,
-  AuthHttpTestService,
+  AuthHttpService,
 
   ];
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+    HttpClientModule
   ],
   providers: [
   ]

@@ -11,16 +11,13 @@ import { parseJwt } from '@cl-helpers/parse-jwt';
 import { HttpResponse } from '@angular/common/http';
 import { IamUserService } from './iam-user.service';
 import { IamUserHttpAdapter } from '@cl-core/http-adapters/iam-user-http-adapter';
-import { AuthHttpService } from '@cl-core/http-services/auth-http.service';
-import { AuthHttpTestService } from '@perx/whistler-services';
-// import { AuthHttpService } from '../../../../../../libs/perx-whistler-services/projects/whistler-services/src/public-api';
+import { AuthHttpService } from '@perx/whistler-services';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   constructor(
-    private authHttpTestService: AuthHttpTestService,
     private http: AuthHttpService,
     private localStorage: LocalStorageService,
     private sessionService: SessionService,
@@ -28,8 +25,7 @@ export class AuthService {
     private iamUserService: IamUserService,
     private router: Router,
   ) {
-    console.log('constructor');
-    console.log('tasdfasdf', this.authHttpTestService);
+    // console.log(injector.get(AuthHttpService))
   }
 
   public get userId(): string {
