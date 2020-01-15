@@ -32,6 +32,9 @@ import {
 import {
   IWAssignedAttributes,
   IJsonApiItem,
+  WMessageChannel,
+  IJsonApiItemPayload,
+  IWCommMessageAttributes,
 } from '@perx/whistler';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { CustomDataSource } from '@cl-shared';
@@ -43,6 +46,8 @@ import {
   IUpsertUserPopup,
   Type,
 } from '../../audience.model';
+import { SendMessagePopupComponent } from '../send-message-popup/send-message-popup.component';
+import { ICommMessage } from '@cl-core/models/comm/schedule';
 import { LoyaltyCardService } from '@cl-core/services/loyalty-card.service';
 import { IEngagementItemMenuOption } from '../../../loyalty/components/loyalty-item/loyalty-item.component';
 import { AudiencesUserInfoActions } from '../../audience-user-info-actions';
@@ -64,7 +69,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   public userId: string;
   public user: IAudiencesUserForm;
   public vouchersDataSource: CustomDataSource<any>;
-  public CommunicationsDataSource: CustomDataSource<any>;
+  public communicationsDataSource: CustomDataSource<any>;
   public loyaltyDataSource: CustomDataSource<IAudiencesLoyaltyCard>;
   public loyaltyMenuOptions: IEngagementItemMenuOption[] = [
     {action: AudiencesUserInfoActions.deleteLoyaltyCard, label: 'BTN_DELETE'},
@@ -130,6 +135,46 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
         },
         () => this.messageService.show('Failed to update voucher expiration date.')
       );
+  }
+
+  public openSendMessagePopup(): void {
+    this.dialog
+      .open<SendMessagePopupComponent, void, IRewardEntity>(SendMessagePopupComponent)
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        tap((message: string) => {
+          if (message && message.length > 0) {
+            this.sendMessage(message);
+          }
+        })
+      )
+      .subscribe(
+        () => { },
+        () => { }
+      );
+  }
+
+  public sendMessage(message: string): void {
+    if (message && message.length > 0) {
+      const msgBody: ICommMessage = {
+        from: 'PerxTest',
+        recipientId: this.userId ? parseInt(this.userId, 10) : undefined,
+        providerId: 2,
+        message,
+        channel: WMessageChannel.sms
+      };
+
+      this.commsService.createMessage(msgBody).subscribe(
+        (res: IJsonApiItemPayload<IWCommMessageAttributes>) => {
+          if (res.data.id) {
+            this.messageService.show('Message sent to user.');
+            this.communicationsDataSource.updateData();
+          }
+        },
+        () => this.messageService.show('Could not send message to user. Please try again later.')
+      );
+    }
   }
 
   public openSelectRewardPopup(): void {
@@ -274,7 +319,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     this.vouchersDataSource = new CustomDataSource<any>(this.vouchersService, 5, vouchersDataSourceParams);
     const loyaltyDataSourceParams = this.userId ? {'filter[user_id]': this.userId} : {};
     this.loyaltyDataSource = new CustomDataSource<IAudiencesLoyaltyCard>(this.loyaltyCardService, 20, loyaltyDataSourceParams);
-    this.CommunicationsDataSource = new CustomDataSource<any>(this.commsService, 5, {});
+    this.communicationsDataSource = new CustomDataSource<any>(this.commsService, 5, {});
   }
 
   public openEditUserDialog(): void {

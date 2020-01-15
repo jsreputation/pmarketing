@@ -41,6 +41,8 @@
     "EXPIRY_DATE": "Expiry Date",
     "REDEMPTION_TYPE": "Redemption Type",
     "CHANGE_EXPIRY_DATE": "Change expiry date",
+    "SEND_MESSAGE": "Send a message",
+    "MESSAGE_BODY": "Enter your message here",
     "MERCHANT": "Merchant",
     "CAMPAIGN": "Campaign",
     "SEARCH_VOUCHERS": "Search vouchers",
