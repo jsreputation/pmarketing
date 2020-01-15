@@ -33,6 +33,7 @@
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
     "@perx/candyshop": "^0.0.0",
+    "@perx/whistler-services": "^0.0.0",
     "@perx/chart": "^0.0.0",
     "@perx/core": "^0.0.0",
     "@perx/whistler": "^0.0.0",

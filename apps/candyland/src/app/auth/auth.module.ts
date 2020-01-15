@@ -7,6 +7,7 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { MatFormFieldModule, MatIconModule, MatInputModule, MatToolbarModule} from '@angular/material';
 import { LogoModule } from '../shared/components/logo/logo.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { HttpServicesModule } from '@perx/whistler-services';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MatInputModule,
     MatIconModule,
     MatToolbarModule,
-    TranslateModule
+    TranslateModule,
+    HttpServicesModule
   ],
   exports: [
     LoginComponent,
