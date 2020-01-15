@@ -42,11 +42,11 @@ export class CommsHttpAdapter {
       id: data.id,
       from: attr.from,
       to: attr.to,
-      provider_id: attr.provider_id,
+      providerId: attr.provider_id,
       message: attr.body,
       sendDate: attr.created_at ? new Date(attr.created_at) : null,
-      owner_id: attr.owner_id,
-      owner_type: attr.owner_type,
+      ownerId: attr.owner_id,
+      ownerType: attr.owner_type,
       channel: attr.channel
     };
   }
@@ -88,9 +88,10 @@ export class CommsHttpAdapter {
         body: data.message,
         from: data.from,
         to: data.to,
-        provider_id: data.provider_id,
-        owner_id: data.owner_id,
-        owner_type: data.owner_type,
+        recipient_id: data.recipientId,
+        provider_id: data.providerId,
+        owner_id: data.ownerId,
+        owner_type: data.ownerType,
         channel: data.channel
       }
     };
