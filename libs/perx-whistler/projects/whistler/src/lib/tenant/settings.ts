@@ -14,6 +14,8 @@ export interface IWSetting {
   'theme.color'?: string;
   account: IWPagesObject;
   showHistoryPage?: boolean;
+  showAccountsPage?: boolean;
+  showUserInfoOnAccountsPage?: boolean;
   showHomePage?: boolean;
   campaign_base_url?: string;
 }
