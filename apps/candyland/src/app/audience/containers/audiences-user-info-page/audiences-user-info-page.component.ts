@@ -37,7 +37,7 @@ import {
   IWCommMessageAttributes,
 } from '@perx/whistler';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
-import { CustomDataSource } from '@cl-shared';
+import { CustomDataSource, DataSourceStates } from '@cl-shared';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { MessageService } from '@cl-core/services';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
@@ -65,16 +65,17 @@ import { IAudiencesLoyalty, IAudiencesLoyaltyCard, IAudiencesTier } from '@cl-co
 })
 export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
+  public dataSourceStates: typeof DataSourceStates = DataSourceStates;
 
   public userId: string;
   public user: IAudiencesUserForm;
-  public vouchersDataSource: CustomDataSource<any>;
-  public communicationsDataSource: CustomDataSource<any>;
+  public vouchersDataSource: CustomDataSource<IAudienceVoucher>;
+  public communicationsDataSource: CustomDataSource<ICommMessage>;
   public loyaltyDataSource: CustomDataSource<IAudiencesLoyaltyCard>;
   public loyaltyMenuOptions: IEngagementItemMenuOption[] = [
-    {action: AudiencesUserInfoActions.deleteLoyaltyCard, label: 'BTN_DELETE'},
-    {action: AudiencesUserInfoActions.adjustLoyaltyTier, label: 'AUDIENCE_FEATURE.ADJUST_TIER'},
-    {action: AudiencesUserInfoActions.adjustBalancePoints, label: 'AUDIENCE_FEATURE.ADJUST_POINTS'},
+    { action: AudiencesUserInfoActions.deleteLoyaltyCard, label: 'BTN_DELETE' },
+    { action: AudiencesUserInfoActions.adjustLoyaltyTier, label: 'AUDIENCE_FEATURE.ADJUST_TIER' },
+    { action: AudiencesUserInfoActions.adjustBalancePoints, label: 'AUDIENCE_FEATURE.ADJUST_POINTS' },
   ];
   public loyaltySelectOptions: IAudiencesLoyalty[];
 
@@ -150,8 +151,10 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
         })
       )
       .subscribe(
-        () => { },
-        () => { }
+        () => {
+        },
+        () => {
+        }
       );
   }
 
@@ -198,10 +201,16 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   }
 
   public openAddLoyaltyPopup(): void {
+    const freeLoyaltySelectOptions = this.getFreeLoyaltySelectOptions();
+    if (freeLoyaltySelectOptions.length === 0) {
+      this.messageService.show('You do not have any active loyalty program.', 'warning', 4000);
+      return;
+    }
+
     const dialogRef = this.dialog.open(AddLoyaltyPopupComponent, {
       panelClass: 'change-expiry-date-dialog',
       data: {
-        loyaltySelectOptions: this.getFreeLoyaltySelectOptions(),
+        loyaltySelectOptions: freeLoyaltySelectOptions,
         userId: this.userId
       }
     });
@@ -273,7 +282,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       );
   }
 
-  public handleAudiencesUserInfoActions(data: { action: AudiencesUserInfoActions, payload?: IAudiencesLoyaltyCard }): void {
+  public handleAudiencesUserInfoActions(data: { action: AudiencesUserInfoActions, payload?: any }): void {
     switch (data.action) {
       case AudiencesUserInfoActions.adjustLoyaltyTier:
         this.openAdjustLoyaltyTierPopup(data.payload);
@@ -315,11 +324,11 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   }
 
   private initDataSource(): void {
-    const vouchersDataSourceParams = this.userId ? {'filter[assigned_to_id]': this.userId} : {};
-    this.vouchersDataSource = new CustomDataSource<any>(this.vouchersService, 5, vouchersDataSourceParams);
-    const loyaltyDataSourceParams = this.userId ? {'filter[user_id]': this.userId} : {};
+    const vouchersDataSourceParams = this.userId ? { 'filter[assigned_to_id]': this.userId } : {};
+    this.vouchersDataSource = new CustomDataSource<IAudienceVoucher>(this.vouchersService, 5, vouchersDataSourceParams);
+    const loyaltyDataSourceParams = this.userId ? { 'filter[user_id]': this.userId } : {};
     this.loyaltyDataSource = new CustomDataSource<IAudiencesLoyaltyCard>(this.loyaltyCardService, 20, loyaltyDataSourceParams);
-    this.communicationsDataSource = new CustomDataSource<any>(this.commsService, 5, {});
+    this.communicationsDataSource = new CustomDataSource<ICommMessage>(this.commsService, 5, { 'filter[user_id]': this.userId });
   }
 
   public openEditUserDialog(): void {
@@ -344,7 +353,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   }
 
   private initLoyaltySelectOptions(): void {
-    this.loyaltyService.getAudiencesLoyaltyOption({'page[size]': '20'})
+    this.loyaltyService.getAudiencesLoyaltyOption({ 'page[size]': '20' })
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => this.loyaltySelectOptions = data);
   }
