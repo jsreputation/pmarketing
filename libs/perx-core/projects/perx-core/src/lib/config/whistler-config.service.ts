@@ -28,6 +28,7 @@ export class WhistlerConfigService extends ConfigService {
       showHistoryPage: setting.showHistoryPage || true,
       showHomePage: setting.showHomePage || false,
       showAccountsPage: setting.showAccountsPage || false,
+      showUserInfoOnAccountsPage: setting.showUserInfoOnAccountsPage || false,
       // showSubtitleLogin: setting.showSubtitleLogin || false,
       // showNewsfeedOnHomepage: setting.showNewsfeedOnHomepage || false,
       // showQrPageSubtitle: setting.showQrPageSubtitle || false,

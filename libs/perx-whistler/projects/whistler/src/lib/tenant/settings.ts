@@ -15,6 +15,7 @@ export interface IWSetting {
   account: IWPagesObject;
   showHistoryPage?: boolean;
   showAccountsPage?: boolean;
+  showUserInfoOnAccountsPage?: boolean;
   showHomePage?: boolean;
   campaign_base_url?: string;
 }
