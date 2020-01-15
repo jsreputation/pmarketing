@@ -39,7 +39,6 @@ import {
   AuthenticationService,
   ICampaignService,
   ICampaign,
-  TokenStorage,
   CampaignType,
   RewardPopupComponent
 } from '@perx/core';
@@ -132,7 +131,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private currentTabIndex: number = 0;
   private destroy$: Subject<void> = new Subject();
   public theme: ITheme;
-  public appConfig: IConfig;
+  public appConfig: IConfig<void>;
   public newsFeedItems: Observable<FeedItem[]>;
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
@@ -162,7 +161,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     private configService: ConfigService,
     private authService: AuthenticationService,
     private campaignService: ICampaignService,
-    private tokenStorage: TokenStorage,
     private dialog: MatDialog
   ) {
   }
@@ -184,8 +182,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig) => this.appConfig = config
+    this.configService.readAppConfig<void>().subscribe(
+      (config: IConfig<void>) => this.appConfig = config
     );
 
     this.authService.isAuthorized().subscribe((isAuth: boolean) => {
@@ -269,7 +267,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .pipe(
         // for each campaign, get detailed version
         switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id)))),
-        map((campaigns: ICampaign[]) => campaigns.filter(c => !this.idExistsInStorage(c.id)))
       )
       .subscribe(
         (campaigns: ICampaign[]) => {
@@ -286,7 +283,6 @@ export class HomeComponent implements OnInit, OnDestroy {
               // @ts-ignore
               validTo: new Date(this.firstComefirstServeCampaign.endsAt)
             };
-            this.putIdInStorage(this.firstComefirstServeCampaign.id);
             this.dialog.open(RewardPopupComponent, { data });
             return;
           }
@@ -295,21 +291,6 @@ export class HomeComponent implements OnInit, OnDestroy {
           console.error(`Something fishy, we should not be here, without any reward or game. ERR print: ${err.error.message}`);
         }
       );
-  }
-
-  private idExistsInStorage(id: number): boolean {
-    return this.idsInStorage.includes(id);
-  }
-
-  private putIdInStorage(id: number): void {
-    const ids: number[] = this.idsInStorage;
-    ids.push(id);
-    this.tokenStorage.setAppInfoProperty(JSON.stringify(ids), 'campaignIdsPopup');
-  }
-
-  private get idsInStorage(): number[] {
-    const campaignIdsInLocalStorage = this.tokenStorage.getAppInfoProperty('campaignIdsPopup');
-    return campaignIdsInLocalStorage ? JSON.parse(campaignIdsInLocalStorage) : [];
   }
 
   public dialogClosed(): void {
