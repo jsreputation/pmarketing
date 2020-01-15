@@ -1,8 +1,7 @@
 <div class="main-container" [ngStyle]="{'background-image': backgroundImage? 'url(' + backgroundImage + ')': '',
   'background-color': !backgroundImage && defaultbackgroundImage}">
   <div class="content">
-    <div class="stamps" [ngStyle]="{'background-image': cardBgImage? 'url(' + cardBgImage + ')': '',
-      'background': !cardBgImage && defaultCardBgImage }">
+    <div class="stamps">
       <h1 *ngIf="title">{{title}}</h1>
       <p class="subtitle" *ngIf="subTitle">{{subTitle}}</p>
       <div class="available-stamp" *ngIf="showStampsCounter">
