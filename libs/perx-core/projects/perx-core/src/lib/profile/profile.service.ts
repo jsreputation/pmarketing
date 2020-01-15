@@ -17,4 +17,6 @@ export abstract class ProfileService {
   public abstract updateUserInfo(data: IProfile): Observable<void>;
 
   public abstract setCardNumber(data: ICardNumber): Observable<void>;
+
+  public abstract verifyCardNumber(cardNumber: string, userName: string, loyaltyId: string): Observable<boolean>;
 }
