@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import {AuthenticationService, ISignUpData} from '@perx/core';
+import { AuthenticationService, ISignUpData } from '@perx/core';
 
 @Component({
   selector: 'app-signup',
@@ -13,6 +13,7 @@ export class SignUpComponent implements OnInit {
   public errorMessage?: string;
   public hide: boolean = true;
   public appAccessTokenFetched: boolean;
+  public isSignUpEnded: boolean = true;
   constructor(
     private fb: FormBuilder,
     private authService: AuthenticationService,
@@ -44,6 +45,11 @@ export class SignUpComponent implements OnInit {
   }
 
   public onSubmit(): void {
+    if (!this.isSignUpEnded) {
+      return;
+    }
+
+    this.isSignUpEnded = false;
     const password: string = this.signUpForm.value.password;
     const termsConditions = this.signUpForm.value.accept_terms as boolean;
     if (!termsConditions) {
@@ -56,9 +62,11 @@ export class SignUpComponent implements OnInit {
     (profile as ISignUpData).passwordConfirmation = password;
 
     this.authService.signup(profile).subscribe(() => {
+      this.isSignUpEnded = true;
       this.router.navigate(['sms-validation'], { queryParams: { identifier: profile.phone } });
     },
       (e) => {
+        this.isSignUpEnded = true;
         console.log(e);
       });
   }

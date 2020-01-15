@@ -14,6 +14,7 @@ export class SignupComponent implements PageAppearence {
   public signupForm: FormGroup;
   public selectedCountry: string = '+852';
   public appAccessTokenFetched: boolean;
+  public isSignUpEnded: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -58,7 +59,11 @@ export class SignupComponent implements PageAppearence {
   }
 
   public onSubmit(): void {
-
+    if (!this.isSignUpEnded) {
+      return;
+    }
+    
+    this.isSignUpEnded = false;
     try {
       const passwordString = this.signupForm.value.password as string;
       const confirmPassword = this.signupForm.value.confirmPassword as string;
@@ -101,9 +106,11 @@ export class SignupComponent implements PageAppearence {
 
       this.authService.signup(signUpData).subscribe(
         () => {
+          this.isSignUpEnded = true;
           this.router.navigate(['enter-pin/register'], { state: { mobileNo: cleanedMobileNo } });
         },
         err => {
+          this.isSignUpEnded = true;
           this.notificationService.addSnack(err.error.message);
         });
     } catch (error) {

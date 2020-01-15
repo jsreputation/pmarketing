@@ -14,6 +14,7 @@ export class RegistrationComponent implements OnInit {
   /* istanbul ignore next */
   public countryCodes: ICountryCode[];
   public appAccessTokenFetched: boolean;
+  public isSignUpEnded: boolean = true;
   constructor(
     private auth: AuthenticationService,
     private router: Router,
@@ -33,7 +34,13 @@ export class RegistrationComponent implements OnInit {
     this.generalStaticDataService.getCountriesList(countries).subscribe((codes) => this.countryCodes = codes);
   }
   public submitHandler(data: ISignUpData): void {
+    if (!this.isSignUpEnded) {
+      return;
+    }
+
+    this.isSignUpEnded = false;
     this.auth.signup(data).subscribe((profile: IProfile) => {
+      this.isSignUpEnded = true;
       this.router.navigate(['sms-validation'], { queryParams: { identifier: profile.phone } });
     });
   }

@@ -13,6 +13,7 @@ export class SignupComponent {
   public signupForm: FormGroup;
   public errorMessage: string | null;
   public appAccessTokenFetched: boolean = false;
+  public isSignUpEnded: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -54,7 +55,11 @@ export class SignupComponent {
   }
 
   public onSubmit(): void {
-
+    if (!this.isSignUpEnded) {
+      return;
+    }
+    
+    this.isSignUpEnded = false;
     if (!this.appAccessTokenFetched) {
       this.errorMessage = 'Unknown error occurerd.';
       return;
@@ -93,9 +98,11 @@ export class SignupComponent {
     this.authService.signup(signUpData)
     .subscribe(
       () => {
+        this.isSignUpEnded = true;
         this.router.navigateByUrl('enter-pin/register', { state: { mobileNo: codeAndMobile } });
       },
       err => {
+        this.isSignUpEnded = true;
         this.notificationService.addSnack(err.error.message);
       });
   }
