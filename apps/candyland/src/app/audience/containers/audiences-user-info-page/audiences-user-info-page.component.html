@@ -49,11 +49,11 @@
           </div>
           <div class="table-card">
             <!--table-->
-            <cl-audiences-communications-list [dataSource]="dataSourceCommunications">
+            <cl-audiences-communications-list [dataSource]="communicationsDataSource">
             </cl-audiences-communications-list>
             <!--/table-->
             <!--paginator-->
-            <cl-paginator [dataSource]="dataSourceCommunications"
+            <cl-paginator [dataSource]="communicationsDataSource"
               [pageSize]="5"
               [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
             <!--/paginator-->

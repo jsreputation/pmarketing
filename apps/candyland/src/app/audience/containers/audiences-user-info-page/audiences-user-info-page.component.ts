@@ -69,7 +69,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   public userId: string;
   public user: IAudiencesUserForm;
   public vouchersDataSource: CustomDataSource<any>;
-  public CommunicationsDataSource: CustomDataSource<any>;
+  public communicationsDataSource: CustomDataSource<any>;
   public loyaltyDataSource: CustomDataSource<IAudiencesLoyaltyCard>;
   public loyaltyMenuOptions: IEngagementItemMenuOption[] = [
     {action: AudiencesUserInfoActions.deleteLoyaltyCard, label: 'BTN_DELETE'},
@@ -169,7 +169,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
         (res: IJsonApiItemPayload<IWCommMessageAttributes>) => {
           if (res.data.id) {
             this.messageService.show('Message sent to user.');
-            this.dataSourceCommunications.updateData();
+            this.communicationsDataSource.updateData();
           }
         },
         () => this.messageService.show('Could not send message to user. Please try again later.')
