@@ -4,7 +4,7 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { Observable } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { LoyaltyHttpAdapter } from '@cl-core/http-adapters/loyalty-http-adapter';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { IWBasicTierAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { JsonApiParser } from '@cl-helpers/json-api-parser';
