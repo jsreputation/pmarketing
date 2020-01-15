@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticationService, ISignUpData, ProfileService } from '@perx/core';
 import { SharedDataService } from 'src/app/services/shared-data.service';
-import { combineLatest, of } from 'rxjs';
+import { of, throwError } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signup',
@@ -61,20 +62,20 @@ export class SignUpComponent implements OnInit {
     delete profile.cardNumber;
     const cardNumber: string = this.signUpForm.value.cardNumber;
     (profile as ISignUpData).passwordConfirmation = password;
-    combineLatest(
-      this.authService.signup(profile),
-      cardNumber && cardNumber.length ? this.profileService.verifyCardNumber(cardNumber, profile.lastName, '') : of(false)
-    ).subscribe(([_, b]) => {
-      if (this.signUpForm.value.cardNumber && b) {
-        this.sharedDataService.addData({
-          phone: profile.phone,
-          password: profile.password,
-          cardNumber
+    (cardNumber && cardNumber.length ? this.profileService.verifyCardNumber(cardNumber, profile.lastName, '') : of(true))
+      .pipe(mergeMap((success) => success ? this.authService.signup(profile) : throwError(('err-or')))).subscribe(() => {
+        if (this.signUpForm.value.cardNumber) {
+          this.sharedDataService.addData({
+            phone: profile.phone,
+            password: profile.password,
+            cardNumber
+          });
+        }
+        this.router.navigate(['sms-validation'], {
+          queryParams: { identifier: profile.phone }
         });
-      }
-      this.router.navigate(['sms-validation'], {
-        queryParams: { identifier: profile.phone }
+      }, () => {
+        // card error handling
       });
-    });
   }
 }
