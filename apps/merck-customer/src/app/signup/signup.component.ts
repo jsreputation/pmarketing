@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import { AuthenticationService, NotificationService, IProfile } from '@perx/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 
 @Component({
@@ -14,7 +14,6 @@ export class SignupComponent implements PageAppearence {
   public signupForm: FormGroup;
   public selectedCountry: string = '+852';
   public appAccessTokenFetched: boolean;
-  public isSignUpEnded: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -59,11 +58,6 @@ export class SignupComponent implements PageAppearence {
   }
 
   public onSubmit(): void {
-    if (!this.isSignUpEnded) {
-      return;
-    }
-    
-    this.isSignUpEnded = false;
     try {
       const passwordString = this.signupForm.value.password as string;
       const confirmPassword = this.signupForm.value.confirmPassword as string;
@@ -105,12 +99,14 @@ export class SignupComponent implements PageAppearence {
       };
 
       this.authService.signup(signUpData).subscribe(
-        () => {
-          this.isSignUpEnded = true;
+        (data: IProfile | null) => {
+          if (!data) {
+            return;
+          }
+
           this.router.navigate(['enter-pin/register'], { state: { mobileNo: cleanedMobileNo } });
         },
         err => {
-          this.isSignUpEnded = true;
           this.notificationService.addSnack(err.error.message);
         });
     } catch (error) {

@@ -1,7 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService, ISignUpData } from '@perx/core';
+
+import { Observable } from 'rxjs';
+
+import {
+  AuthenticationService,
+  ISignUpData,
+  IProfile,
+} from '@perx/core';
 
 @Component({
   selector: 'app-signup',
@@ -13,7 +27,6 @@ export class SignUpComponent implements OnInit {
   public errorMessage?: string;
   public hide: boolean = true;
   public appAccessTokenFetched: boolean;
-  public isSignUpEnded: boolean = true;
   constructor(
     private fb: FormBuilder,
     private authService: AuthenticationService,
@@ -45,11 +58,6 @@ export class SignUpComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    if (!this.isSignUpEnded) {
-      return;
-    }
-
-    this.isSignUpEnded = false;
     const password: string = this.signUpForm.value.password;
     const termsConditions = this.signUpForm.value.accept_terms as boolean;
     if (!termsConditions) {
@@ -60,14 +68,17 @@ export class SignUpComponent implements OnInit {
     const profile = this.signUpForm.value;
     delete profile.accept_terms;
     (profile as ISignUpData).passwordConfirmation = password;
+    const profileData: Observable<IProfile | null> = this.authService.signup(profile);
 
-    this.authService.signup(profile).subscribe(() => {
-      this.isSignUpEnded = true;
+    profileData.subscribe((data: IProfile | null) => {
+      if (!data) {
+        return;
+      }
+
       this.router.navigate(['sms-validation'], { queryParams: { identifier: profile.phone } });
     },
-      (e) => {
-        this.isSignUpEnded = true;
-        console.log(e);
-      });
+    (e) => {
+      console.log(e);
+    });
   }
 }
