@@ -37,6 +37,7 @@ export class RegistrationComponent implements OnInit {
       if (!profile) {
         return;
       }
+
       this.router.navigate(['sms-validation'], { queryParams: { identifier: profile.phone } });
     });
   }
