@@ -45,7 +45,7 @@ export class GameComponent implements OnInit {
 
   public ngOnInit(): void {
     this.configService.readAppConfig().subscribe(
-      (config: IConfig) => {
+      (config: IConfig<void>) => {
         this.isWhistler = config.isWhistler as boolean;
       }
     );
