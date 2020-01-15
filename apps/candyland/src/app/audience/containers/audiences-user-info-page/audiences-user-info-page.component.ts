@@ -32,10 +32,12 @@ import {
 import {
   IWAssignedAttributes,
   IJsonApiItem,
+  WMessageChannel,
+  IJsonApiItemPayload,
+  IWCommMessageAttributes,
 } from '@perx/whistler';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { CustomDataSource } from '@cl-shared';
-import { } from '@cl-core/services/audiences-vouchers.service';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { MessageService } from '@cl-core/services';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
@@ -44,6 +46,16 @@ import {
   IUpsertUserPopup,
   Type,
 } from '../../audience.model';
+import { SendMessagePopupComponent } from '../send-message-popup/send-message-popup.component';
+import { ICommMessage } from '@cl-core/models/comm/schedule';
+import { LoyaltyCardService } from '@cl-core/services/loyalty-card.service';
+import { IEngagementItemMenuOption } from '../../../loyalty/components/loyalty-item/loyalty-item.component';
+import { AudiencesUserInfoActions } from '../../audience-user-info-actions';
+import { AddLoyaltyPopupComponent } from '../add-loyalty-popup/add-loyalty-popup.component';
+import { AdjustLoyaltyTierPopupComponent } from '../adjust-loyalty-tier-popup/adjust-loyalty-tier-popup.component';
+import { AdjustBalancePointsPopupComponent } from '../adjust-balance-points-popup/adjust-balance-points-popup.component';
+import { LoyaltyService } from '@cl-core/services/loyalty.service';
+import { IAudiencesLoyalty, IAudiencesLoyaltyCard, IAudiencesTier } from '@cl-core/models/audiences/audiences-loyalty.model';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -56,8 +68,15 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
 
   public userId: string;
   public user: IAudiencesUserForm;
-  public dataSourceVouchers: CustomDataSource<any>;
-  public dataSourceCommunications: CustomDataSource<any>;
+  public vouchersDataSource: CustomDataSource<IAudienceVoucher>;
+  public communicationsDataSource: CustomDataSource<ICommMessage>;
+  public loyaltyDataSource: CustomDataSource<IAudiencesLoyaltyCard>;
+  public loyaltyMenuOptions: IEngagementItemMenuOption[] = [
+    { action: AudiencesUserInfoActions.deleteLoyaltyCard, label: 'BTN_DELETE' },
+    { action: AudiencesUserInfoActions.adjustLoyaltyTier, label: 'AUDIENCE_FEATURE.ADJUST_TIER' },
+    { action: AudiencesUserInfoActions.adjustBalancePoints, label: 'AUDIENCE_FEATURE.ADJUST_POINTS' },
+  ];
+  public loyaltySelectOptions: IAudiencesLoyalty[];
 
   private async updateLocalUser(): Promise<IAudiencesUserForm> {
     this.user = await this.audiencesUserService.getUser(this.userId).toPromise();
@@ -67,6 +86,8 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
 
   constructor(
     private audiencesUserService: AudiencesUserService,
+    private loyaltyCardService: LoyaltyCardService,
+    private loyaltyService: LoyaltyService,
     private vouchersService: AudiencesVouchersService,
     private route: ActivatedRoute,
     private router: Router,
@@ -81,6 +102,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
 
   public ngOnInit(): void {
     this.handleRouteParams();
+    this.initLoyaltySelectOptions();
     this.renderer.addClass(this.document.body, 'no-cta');
   }
 
@@ -109,10 +131,50 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       .subscribe(
         () => {
           this.messageService.show('Expiry voucher date successfully changed.');
-          this.dataSourceVouchers.updateData();
+          this.vouchersDataSource.updateData();
         },
         () => this.messageService.show('Failed to update voucher expiration date.')
       );
+  }
+
+  public openSendMessagePopup(): void {
+    this.dialog
+      .open<SendMessagePopupComponent, void, IRewardEntity>(SendMessagePopupComponent)
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        tap((message: string) => {
+          if (message && message.length > 0) {
+            this.sendMessage(message);
+          }
+        })
+      )
+      .subscribe(
+        () => { },
+        () => { }
+      );
+  }
+
+  public sendMessage(message: string): void {
+    if (message && message.length > 0) {
+      const msgBody: ICommMessage = {
+        from: 'PerxTest',
+        recipientId: this.userId ? parseInt(this.userId, 10) : undefined,
+        providerId: 2,
+        message,
+        channel: WMessageChannel.sms
+      };
+
+      this.commsService.createMessage(msgBody).subscribe(
+        (res: IJsonApiItemPayload<IWCommMessageAttributes>) => {
+          if (res.data.id) {
+            this.messageService.show('Message sent to user.');
+            this.communicationsDataSource.updateData();
+          }
+        },
+        () => this.messageService.show('Could not send message to user. Please try again later.')
+      );
+    }
   }
 
   public openSelectRewardPopup(): void {
@@ -129,10 +191,106 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       .subscribe(
         () => {
           this.messageService.show('Voucher assigned to user.');
-          this.dataSourceVouchers.updateData();
+          this.vouchersDataSource.updateData();
         },
         () => this.messageService.show('Could not assign voucher to user. Make sure that the reward has enough stock.')
       );
+  }
+
+  public openAddLoyaltyPopup(): void {
+    const dialogRef = this.dialog.open(AddLoyaltyPopupComponent, {
+      panelClass: 'change-expiry-date-dialog',
+      data: {
+        loyaltySelectOptions: this.getFreeLoyaltySelectOptions(),
+        userId: this.userId
+      }
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        filter(Boolean),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        () => {
+          this.messageService.show('New Loyalty Cards successfully created.');
+          this.loyaltyDataSource.updateData();
+        }
+      );
+  }
+
+  public openAdjustLoyaltyTierPopup(card: IAudiencesLoyaltyCard): void {
+    const tiers = this.getLoyaltyTiers(card);
+    if (!tiers) {
+      this.messageService.show('Cannot find tiers for loyalty.', 'danger');
+      return;
+    }
+    const dialogRef = this.dialog.open(AdjustLoyaltyTierPopupComponent, {
+      panelClass: 'change-expiry-date-dialog',
+      data: {
+        card,
+        tiers
+      }
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap((updatedCard: IAudiencesLoyaltyCard) => {
+          return this.loyaltyCardService.updateLoyaltyCard(updatedCard.id, updatedCard);
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        () => {
+          this.messageService.show('Loyalty Card Tier successfully changed.');
+          this.loyaltyDataSource.updateData();
+        },
+        () => this.messageService.show('Failed to update Loyalty Card Tier.', 'danger')
+      );
+  }
+
+  public openAdjustBalancePointsPopup(card: IAudiencesLoyaltyCard): void {
+    const dialogRef = this.dialog.open(AdjustBalancePointsPopupComponent, {
+      panelClass: 'change-expiry-date-dialog',
+      data: card
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap((updatedCard: IAudiencesLoyaltyCard) => {
+          return this.loyaltyCardService.updateLoyaltyCard(updatedCard.id, updatedCard);
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        () => {
+          this.messageService.show('Loyalty Card Tier successfully changed.');
+          this.loyaltyDataSource.updateData();
+        },
+        () => this.messageService.show('Failed to update Loyalty Card Tier.')
+      );
+  }
+
+  public handleAudiencesUserInfoActions(data: { action: AudiencesUserInfoActions, payload?: IAudiencesLoyaltyCard }): void {
+    switch (data.action) {
+      case AudiencesUserInfoActions.adjustLoyaltyTier:
+        this.openAdjustLoyaltyTierPopup(data.payload);
+        break;
+      case AudiencesUserInfoActions.adjustBalancePoints:
+        this.openAdjustBalancePointsPopup(data.payload);
+        break;
+      case AudiencesUserInfoActions.deleteLoyaltyCard:
+        this.deleteLoyaltyCard(data.payload.id);
+        break;
+    }
+  }
+
+  private deleteLoyaltyCard(id: string): void {
+    this.loyaltyCardService.deleteLoyalty(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.loyaltyDataSource.updateData());
   }
 
   private handleRouteParams(): void {
@@ -157,15 +315,11 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   }
 
   private initDataSource(): void {
-    const params = this.userId ? { 'filter[assigned_to_id]': this.userId } : {};
-    this.dataSourceVouchers = new CustomDataSource<any>(this.vouchersService, undefined, params);
-    this.dataSourceCommunications = new CustomDataSource<any>(this.commsService, undefined, {});
-    // this.dataSource.data$.pipe(
-    //   takeUntil(this.destroy$)
-    // ).subscribe((data: any) => {
-    //   // const counterObject = PrepareTableFilters.countFieldValue(data, 'status');
-    //   // this.tabsFilterConfig = PrepareTableFilters.prepareTabsFilterConfig(counterObject);
-    // });
+    const vouchersDataSourceParams = this.userId ? { 'filter[assigned_to_id]': this.userId } : {};
+    this.vouchersDataSource = new CustomDataSource<IAudienceVoucher>(this.vouchersService, 5, vouchersDataSourceParams);
+    const loyaltyDataSourceParams = this.userId ? { 'filter[user_id]': this.userId } : {};
+    this.loyaltyDataSource = new CustomDataSource<IAudiencesLoyaltyCard>(this.loyaltyCardService, 20, loyaltyDataSourceParams);
+    this.communicationsDataSource = new CustomDataSource<ICommMessage>(this.commsService, 5, { 'filter[user_id]': this.userId });
   }
 
   public openEditUserDialog(): void {
@@ -187,5 +341,21 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
         await this.updateLocalUser();
         this.messageService.show('User successfully updated.');
       });
+  }
+
+  private initLoyaltySelectOptions(): void {
+    this.loyaltyService.getAudiencesLoyaltyOption({ 'page[size]': '20' })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(data => this.loyaltySelectOptions = data);
+  }
+
+  private getFreeLoyaltySelectOptions(): IAudiencesLoyalty[] {
+    const idsUsedLoyalties = this.loyaltyDataSource.data.map(card => card.loyalty.id);
+    return this.loyaltySelectOptions.filter(loyalty => !idsUsedLoyalties.includes(loyalty.id));
+  }
+
+  private getLoyaltyTiers(card: IAudiencesLoyaltyCard): IAudiencesTier[] {
+    const findLoyalty = this.loyaltySelectOptions.find(loyalty => loyalty.id === card.loyalty.id);
+    return findLoyalty ? findLoyalty.tiers : null;
   }
 }

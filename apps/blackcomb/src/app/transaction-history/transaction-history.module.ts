@@ -4,6 +4,7 @@ import { TransactionHistoryComponent } from '@perx/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { LoyaltyModule } from '@perx/core';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 const routes: Routes = [{
   path: '',
@@ -18,7 +19,8 @@ const routes: Routes = [{
     MatButtonModule,
     CommonModule,
     LoyaltyModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    InfiniteScrollModule
   ]
 })
 export class TransactionHistoryModule { }

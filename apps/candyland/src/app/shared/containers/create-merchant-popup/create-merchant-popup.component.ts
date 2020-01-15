@@ -42,7 +42,7 @@ export class CreateMerchantPopupComponent implements OnInit {
 
   public removeBranches(i?: number): void {
     const branches = this.formMerchant.get('branches') as FormArray;
-    if (!i) {
+    if (i === null) {
       branches.clear();
       this.formMerchant.updateValueAndValidity();
       return;

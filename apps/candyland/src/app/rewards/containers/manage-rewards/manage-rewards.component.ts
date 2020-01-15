@@ -77,12 +77,13 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    if (this.form.invalid) {
+    if (this.form && this.form.invalid) {
       this.form.markAllAsTouched();
-      return;
     }
-    if (this.rewardLoyaltyForm.invalid) {
+    if (this.rewardLoyaltyForm && this.rewardLoyaltyForm.invalid) {
       this.rewardLoyaltyForm.markAllAsTouched();
+    }
+    if (!(this.form && this.form.valid && this.rewardLoyaltyForm && this.rewardLoyaltyForm.valid)) {
       return;
     }
 
@@ -272,7 +273,10 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       if (!item.basicTier.tierId) {
         return;
       }
-      result.push(this.rewardsService.createRewardTier(item.basicTier, id));
+
+      if (item.basicTier.statusTiers) {
+        result.push(this.rewardsService.createRewardTier(item.basicTier, id));
+      }
 
       item.tiers.forEach((tier: ILoyaltyTiersFormGroup) => {
         if (tier.statusTiers) {
@@ -310,7 +314,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     const result: { [key: string]: ITierRewardCost } = {};
     rewardTierList.forEach((rewardTier) => {
       if ('' + this.id === '' + rewardTier.rewardId) {
-        result[rewardTier.tierId] = rewardTier;
+        const prefix = rewardTier.tierType === this.newRewardFormService.tierTypes.basicType ? 'basic' : 'custom';
+        result[prefix + rewardTier.tierId] = rewardTier;
       }
     });
     return result;
@@ -320,56 +325,53 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.rewardLoyaltyForm = this.newRewardFormService.getRewardLoyaltyForm();
     loyalties.data.forEach((loyalty: ILoyaltyForm) => {
       const loyaltyFormGroup = this.newRewardFormService.getLoyaltyFormGroup();
-
-      const basicTier = rewardTierMap[loyalty.basicTierId];
+      let programStatus;
+      const basicTier = rewardTierMap['basic' + loyalty.basicTierId];
       // handler of custom tears
       this.setCustomTiers(loyalty, loyaltyFormGroup);
 
-      if (basicTier) {
+      if (basicTier && basicTier.tierType === this.newRewardFormService.tierTypes.basicType) {
+        programStatus = true;
+        basicTier['statusTiers'] = true;
         this.newRewardFormService.setDefaultRewardTiers(basicTier);
-
-        loyaltyFormGroup.patchValue({
-          programId: loyalty.id,
-          basicTier: {
-            ...basicTier,
-            tierId: loyalty.basicTierId,
-            entityId: this.id,
-          }
-        });
       }
       loyaltyFormGroup.patchValue({
         programId: loyalty.id,
+        programStatus,
         basicTier: {
+          ...(basicTier || {}),
           tierId: loyalty.basicTierId,
           entityId: this.id,
         }
       });
-
       this.rewardLoyaltyForm.push(loyaltyFormGroup);
     });
     // patch with if exist savedLoyalties
     if (rewardTierMap) {
       this.patchWithSavedLoyalties(rewardTierMap, this.rewardLoyaltyForm);
     }
-
     this.loyalties = loyalties.data;
     this.cd.detectChanges();
   }
 
-  private patchWithSavedLoyalties(rewardTierMap: { [key: string]: ITierRewardCost }, form: FormArray): void {
-    for (let index = 0; index < form.controls.length - 1; index++) {
-      const loyaltyGroup: AbstractControl = form.at(index);
+  private patchWithSavedLoyalties(rewardTierMap: { [key: string]: ITierRewardCost }, rewardLoyaltyForm: FormArray): void {
+    for (let index = 0; index < rewardLoyaltyForm.controls.length; index++) {
+      const loyaltyGroup: AbstractControl = rewardLoyaltyForm.at(index);
       if (rewardTierMap) {
+        let hasSelectedCustomTier = false;
         (loyaltyGroup.get('tiers') as FormArray).controls.forEach((tier) => {
-          const rewardTier = rewardTierMap[tier.value.tierId];
-          if (rewardTier && rewardTier.tierType === 'Perx::Loyalty::CustomTier') {
+          const rewardTier = rewardTierMap['custom' + tier.value.tierId];
+          if (rewardTier && rewardTier.tierType === this.newRewardFormService.tierTypes.customType) {
             // add to object for know what to do next remove or update
-
+            hasSelectedCustomTier = true;
             rewardTier['statusTiers'] = true;
             this.newRewardFormService.setDefaultRewardTiers(rewardTier);
             tier.patchValue({ ...rewardTier });
           }
         });
+        if (hasSelectedCustomTier) {
+          loyaltyGroup.get('programStatus').patchValue(true);
+        }
       }
     }
   }
