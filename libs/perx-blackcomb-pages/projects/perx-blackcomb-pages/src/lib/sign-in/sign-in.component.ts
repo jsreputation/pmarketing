@@ -42,6 +42,10 @@ import {
   ConfigService,
 } from '@perx/core';
 
+interface ISigninConfig {
+  redirectAfterLogin: string;
+}
+
 @Component({
   selector: 'perx-blackcomb-pages-sign-in',
   templateUrl: './sign-in.component.html',
@@ -59,7 +63,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   private oldPI: string;
   private oldToken: string;
   private oldAnonymousStatus: boolean;
-  private appConfig: IConfig;
+  private appConfig: IConfig<ISigninConfig>;
 
   private initForm(): void {
     this.PIForm = this.fb.group({
@@ -84,7 +88,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig().subscribe((conf) => this.appConfig = conf);
+    this.configService.readAppConfig<ISigninConfig>().subscribe((conf) => this.appConfig = conf);
     this.initForm();
     this.oldPI = this.authService.getPI();
     this.oldToken = this.authService.getUserAccessToken();
@@ -178,7 +182,7 @@ export class SignInComponent implements OnInit, OnDestroy {
         }),
       ).subscribe(
         () => {
-          this.router.navigate([this.appConfig && this.appConfig.redirectAfterLogin || 'wallet']);
+          this.router.navigate([this.appConfig.custom && this.appConfig.custom.redirectAfterLogin || 'wallet']);
           if (this.stateData.popupData) {
             this.notificationService.addPopup(this.stateData.popupData);
           }

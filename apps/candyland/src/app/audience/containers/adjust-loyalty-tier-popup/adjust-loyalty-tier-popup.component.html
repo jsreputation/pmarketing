@@ -1,0 +1,37 @@
+<aside class="dialog" role="dialog" aria-labelledby="dialogTitle-changeExpiryDate">
+  <header class="dialog-header-wrap">
+    <h2 class="dialog-title"
+        id="dialogTitle-changeExpiryDate">{{'AUDIENCE_FEATURE.ADJUST_TIER' | translate}}</h2>
+    <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+  <mat-dialog-content>
+    <div class="dialog-content">
+      <mat-form-field *ngIf="data && tierControl">
+        <mat-select [formControl]="tierControl">
+          <ng-container *ngFor="let tierOption of data?.tiers; let index = index;">
+            <mat-option [value]="index">{{tierOption?.name}}</mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <footer class="dialog-actions">
+    <cl-button classList="secondary"
+               class="actions-close"
+               (click)="close()"
+               [disableRipple]="true">
+      <span>{{'BTN_CANCEL' | translate}}</span>
+    </cl-button>
+
+    <cl-button classList="primary"
+               (click)="save()"
+               [disable]="currentTierIndex === tierControl.value"
+               [disableRipple]="true">
+      <span>{{'AUDIENCE_FEATURE.ADJUST_TIER_BTN_APPLY' | translate}}</span>
+    </cl-button>
+  </footer>
+</aside>
+
+

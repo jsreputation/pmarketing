@@ -33,9 +33,10 @@ import { MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/mat
     RewardsBookingComponent
   ],
   imports: [
+    // LayoutRoutingModule must be listed first to use its '' routing paths
+    LayoutRoutingModule,
     WalletModule,
     CommonModule,
-    LayoutRoutingModule,
     HomeModule,
     ReactiveFormsModule,
     FormsModule,
@@ -48,7 +49,6 @@ import { MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/mat
     MatCheckboxModule,
     MatRadioModule,
     LocationModule
-
   ]
 })
 export class LayoutModule { }
