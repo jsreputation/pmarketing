@@ -11,7 +11,7 @@
   <p class="loyalty-label tier-label" translate>ELIGIBLE_TIERS</p>
 
   <section class="list-checkbox flex align-items-center tier-form-group" *ngFor="let item of tiers; let index = index;" [formGroup]="item">
-    <mat-checkbox [color]="'primary'" class="tier-name" [formControl]="item.get('statusTiers')" >{{item.get('name').value}}</mat-checkbox>
+    <mat-checkbox [disabled]="!group.get('programStatus').value" [color]="'primary'" class="tier-name" [formControl]="item.get('statusTiers')" >{{item.get('name').value}}</mat-checkbox>
 
     <div class="tier-points">
       <div class="loyalty-row input-group" *ngIf="!item.get('statusDiscount').value">
@@ -29,7 +29,7 @@
     </div>
 
     <div class="flex align-items-center">
-      <mat-checkbox [color]="'primary'"
+      <mat-checkbox [disabled]="!group.get('programStatus').value" [color]="'primary'"
                     (change)="getPercentCalculate(item, index)"
                     class="transaction-amount" [formControl]="item.get('statusDiscount')" > {{'APPLY_TIER_DISCOUNT' | translate}} {{ calculateDiscount(index)  +'%)'}}</mat-checkbox>
 

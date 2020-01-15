@@ -41,6 +41,8 @@
     "EXPIRY_DATE": "Expiry Date",
     "REDEMPTION_TYPE": "Redemption Type",
     "CHANGE_EXPIRY_DATE": "Change expiry date",
+    "SEND_MESSAGE": "Send a message",
+    "MESSAGE_BODY": "Enter your message here",
     "MERCHANT": "Merchant",
     "CAMPAIGN": "Campaign",
     "SEARCH_VOUCHERS": "Search vouchers",
@@ -55,6 +57,17 @@
     "SEND_DATE": "Sent Date",
     "SENDER": "Sender",
     "CHANNEL": "Channel",
-    "ENTER_NEW_EXPIRY_DATE": "Enter New Expiry Date"
+    "ENTER_NEW_EXPIRY_DATE": "Enter New Expiry Date",
+    "ADD_LOYALTY": "Add Loyalty",
+    "ADD_TO_LOYALTY_PROGRAM": "Add To Loyalty Program",
+    "ADJUST_TIER": "Adjust Loyalty Tier",
+    "ADJUST_TIER_BTN_APPLY": "Adjust Tier & Notify Recipient",
+    "ADJUST_POINTS": "Adjust Balance Points",
+    "ADJUST_POINTS_BTN_APPLY": "Adjust Balance & Notify Recipient",
+    "ADD_REMOVE_POINTS": "Add / Remove Points",
+    "ADJUST_DESCRIPTION": "Adjustment Description",
+    "PROGRAM_PICTURE": "Loyalty program picture",
+    "POINTS_BALANCE": "Pts Balance",
+    "POINTS_TO_NEXT_TIER": "Pts to Next Tier"
   }
 }

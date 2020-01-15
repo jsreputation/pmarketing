@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AudiencesUserInfoPageComponent } from './audiences-user-info-page.component';
 import { AudiencesUserInfoComponent } from '../../components/audiences-user-info/audiences-user-info.component';
 import {
@@ -8,7 +7,6 @@ import {
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
-import { AudiencesVouchersService } from '@cl-core/services/audiences-vouchers.service';
 import { AudiencesVouchersListComponent } from '../../components/audiences-vouchers-list/audiences-vouchers-list.component';
 import { TableFiltersModule, SearchFilterModule, ButtonModule, PaginationModule, StatusLabelModule, PipesModule } from '@cl-shared';
 import { TabsFilterModule } from '../../../shared/table/tabs-filter/tabs-filter.module';
@@ -19,8 +17,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { MessageService } from '@cl-core-services';
+import { AudiencesVouchersService, MessageService } from '@cl-core-services';
 import { AudiencesCommunicationsListComponent } from '../../components/audiences-communications-list/audiences-communications-list.component';
+import { AudiencesLoyaltyGridComponent } from '../../components/audiences-loyalty-grid/audiences-loyalty-grid.component';
+// tslint:disable-next-line
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('AudiencesUserInfoPageComponent', () => {
   let component: AudiencesUserInfoPageComponent;
@@ -73,8 +74,10 @@ describe('AudiencesUserInfoPageComponent', () => {
         AudiencesVouchersListComponent,
         AudiencesCommunicationsListComponent,
         AudiencesUsersListComponent,
-        AudiencesListComponent
-      ]
+        AudiencesListComponent,
+        AudiencesLoyaltyGridComponent
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));
