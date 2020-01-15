@@ -35,7 +35,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public cardBackground: string;
   public isEnabled: boolean = false;
   public stampCard$: Observable<IStampCard>;
-  public stampCard: IStampCard;
+  public stampCard: IStampCard | null;
   private destroy$: Subject<any> = new Subject();
   private rewardSuccessPopUp: IPopupConfig = {
     title: 'STAMP_SUCCESS_TITLE',

@@ -20,4 +20,15 @@ export class RewardLoyaltyFormGroupComponent implements OnInit {
     return (this.form.controls as any)[index];
   }
 
+  public updateLoyaltySelectedStatus(checked: boolean, index: number): void {
+    const loyaltyFormItem = this.getRewardLoyaltyFormItem(index);
+    loyaltyFormItem.get('basicTier.statusTiers').patchValue(checked);
+    if (!checked) {
+      const tiers = loyaltyFormItem.get('tiers');
+      tiers.value.forEach(tier => {
+        tier.statusTiers = false;
+      });
+      tiers.patchValue(tiers.value);
+    }
+  }
 }
