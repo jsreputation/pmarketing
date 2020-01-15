@@ -77,13 +77,13 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    if (this.form.invalid) {
+    if (this.form && this.form.invalid) {
       this.form.markAllAsTouched();
     }
-    if (this.rewardLoyaltyForm.invalid) {
+    if (this.rewardLoyaltyForm && this.rewardLoyaltyForm.invalid) {
       this.rewardLoyaltyForm.markAllAsTouched();
     }
-    if (this.form.invalid || this.rewardLoyaltyForm.invalid) {
+    if (!(this.form && this.form.valid && this.rewardLoyaltyForm && this.rewardLoyaltyForm.valid)) {
       return;
     }
 
@@ -314,7 +314,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     const result: { [key: string]: ITierRewardCost } = {};
     rewardTierList.forEach((rewardTier) => {
       if ('' + this.id === '' + rewardTier.rewardId) {
-        result[rewardTier.tierId] = rewardTier;
+        const prefix = rewardTier.tierType === this.newRewardFormService.tierTypes.basicType ? 'basic' : 'custom';
+        result[prefix + rewardTier.tierId] = rewardTier;
       }
     });
     return result;
@@ -325,12 +326,14 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     loyalties.data.forEach((loyalty: ILoyaltyForm) => {
       const loyaltyFormGroup = this.newRewardFormService.getLoyaltyFormGroup();
       let programStatus;
-      const basicTier = rewardTierMap[loyalty.basicTierId];
+      const basicTier = rewardTierMap['basic' + loyalty.basicTierId];
       // handler of custom tears
       this.setCustomTiers(loyalty, loyaltyFormGroup);
+
       if (basicTier && basicTier.tierType === this.newRewardFormService.tierTypes.basicType) {
-        this.newRewardFormService.setDefaultRewardTiers(basicTier);
         programStatus = true;
+        basicTier['statusTiers'] = true;
+        this.newRewardFormService.setDefaultRewardTiers(basicTier);
       }
       loyaltyFormGroup.patchValue({
         programId: loyalty.id,
@@ -347,18 +350,17 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     if (rewardTierMap) {
       this.patchWithSavedLoyalties(rewardTierMap, this.rewardLoyaltyForm);
     }
-
     this.loyalties = loyalties.data;
     this.cd.detectChanges();
   }
 
   private patchWithSavedLoyalties(rewardTierMap: { [key: string]: ITierRewardCost }, rewardLoyaltyForm: FormArray): void {
-    for (let index = 0; index < rewardLoyaltyForm.controls.length - 1; index++) {
+    for (let index = 0; index < rewardLoyaltyForm.controls.length; index++) {
       const loyaltyGroup: AbstractControl = rewardLoyaltyForm.at(index);
       if (rewardTierMap) {
         let hasSelectedCustomTier = false;
         (loyaltyGroup.get('tiers') as FormArray).controls.forEach((tier) => {
-          const rewardTier = rewardTierMap[tier.value.tierId];
+          const rewardTier = rewardTierMap['custom' + tier.value.tierId];
           if (rewardTier && rewardTier.tierType === this.newRewardFormService.tierTypes.customType) {
             // add to object for know what to do next remove or update
             hasSelectedCustomTier = true;
