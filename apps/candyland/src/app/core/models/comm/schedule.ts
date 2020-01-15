@@ -23,11 +23,12 @@ export interface ISchedule {
 export interface ICommMessage {
     id?: string;
     from: string;
-    to: string;
-    provider_id: number;
+    to?: string;
+    recipientId?: number;
+    providerId: number;
     message: string;
-    sendDate: Date | null;
-    owner_id?: string | null;
-    owner_type?: string | null;
+    sendDate?: Date | null;
+    ownerId?: string | null;
+    ownerType?: string | null;
     channel: WMessageChannel;
 }

@@ -22,6 +22,7 @@ export class VoucherValidityFormGroupComponent implements OnInit {
             }
           });
       }
+      this.formGroup.markAsUntouched();
     });
   }
 

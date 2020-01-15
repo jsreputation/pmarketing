@@ -40,7 +40,7 @@ export class MerchantHttpAdapter {
     };
   }
 
-  public static transformToBranch(branch: IJsonApiItem<IWMerchantBranchAttributes>): any {
+  public static transformToBranch(branch: IJsonApiItem<IWMerchantBranchAttributes>): IBranch {
     return {
       id: branch.id,
       type: branch.type,

@@ -54,7 +54,7 @@ export class SettingsService {
     return this.settingsHttpService.getAllCredential(data);
   }
 
-  public getGroups(params: HttpParamsOptions = {}): Observable<any> {
+  public getGroups(params: HttpParamsOptions = {}): Observable<IAMGroup[]> {
     params = {
       ...params,
       'page[number]': '1',
