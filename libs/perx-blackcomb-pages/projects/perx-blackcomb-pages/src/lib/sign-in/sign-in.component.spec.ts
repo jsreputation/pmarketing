@@ -64,7 +64,9 @@ describe('SignInComponent', () => {
   };
 
   const configServiceStub: Partial<ConfigService> = {
-    readAppConfig: <T>(): Observable<IConfig<T>> => of()
+    readAppConfig: <T>(): Observable<IConfig<T>> => of({
+      custom: {}
+    } as IConfig<T>)
   };
 
   const surveyServiceStub: Partial<SurveyService> = {
