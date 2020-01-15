@@ -2,4 +2,27 @@
 
 .audience-list-content {
   margin-top: $vertical-padding;
+
+  .send-message-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: $vertical-padding;
+  }
+}
+
+.audience-list {
+  &-content {
+    margin-top: $vertical-padding;
+  }
+
+  &-loyalty-panel {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+::ng-deep {
+  .item-list {
+    padding: 1.6rem 2.4rem 2.4rem;
+  }
 }

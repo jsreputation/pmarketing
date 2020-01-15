@@ -8,6 +8,8 @@ export interface IWLoyalty {
 export interface IWLoyaltyCard {
   balance: number;
   user_id: number;
+  tier_id?: number;
+  tier_type?: string;
 }
 
 export interface IWLoyaltyAttributes {
