@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, Inject, ChangeDetectorRef, AfterViewInit, } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormControl } from '@angular/forms';
+import { IAudiencesLoyaltyCard, IAudiencesTier } from '@cl-core/models/audiences/audiences-loyalty.model';
 
 @Component({
   selector: 'cl-adjust-loyalty-tier-popup',
@@ -14,7 +15,7 @@ export class AdjustLoyaltyTierPopupComponent implements AfterViewInit {
 
   constructor(public dialogRef: MatDialogRef<AdjustLoyaltyTierPopupComponent>,
               private cd: ChangeDetectorRef,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+              @Inject(MAT_DIALOG_DATA) public data: {card: IAudiencesLoyaltyCard, tiers: IAudiencesTier[] }) {
   }
 
   public close(): void {

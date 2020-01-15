@@ -51,7 +51,7 @@ import { AddLoyaltyPopupComponent } from '../add-loyalty-popup/add-loyalty-popup
 import { AdjustLoyaltyTierPopupComponent } from '../adjust-loyalty-tier-popup/adjust-loyalty-tier-popup.component';
 import { AdjustBalancePointsPopupComponent } from '../adjust-balance-points-popup/adjust-balance-points-popup.component';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
-import { IAudiencesLoyaltyOption, IAudiencesTierOption } from '@cl-core/models/audiences/audiences-loyalty.model';
+import { IAudiencesLoyalty, IAudiencesLoyaltyCard, IAudiencesTier } from '@cl-core/models/audiences/audiences-loyalty.model';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -66,13 +66,13 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   public user: IAudiencesUserForm;
   public vouchersDataSource: CustomDataSource<any>;
   public CommunicationsDataSource: CustomDataSource<any>;
-  public loyaltyDataSource: CustomDataSource<any>;
+  public loyaltyDataSource: CustomDataSource<IAudiencesLoyaltyCard>;
   public loyaltyMenuOptions: IEngagementItemMenuOption[] = [
+    {action: AudiencesUserInfoActions.deleteLoyaltyCard, label: 'BTN_DELETE'},
     {action: AudiencesUserInfoActions.adjustLoyaltyTier, label: 'AUDIENCE_FEATURE.ADJUST_TIER'},
     {action: AudiencesUserInfoActions.adjustBalancePoints, label: 'AUDIENCE_FEATURE.ADJUST_POINTS'},
-    {action: AudiencesUserInfoActions.deleteLoyaltyCard, label: 'BTN_DELETE'},
   ];
-  public loyaltySelectOptions: IAudiencesLoyaltyOption[];
+  public loyaltySelectOptions: IAudiencesLoyalty[];
 
   private async updateLocalUser(): Promise<IAudiencesUserForm> {
     this.user = await this.audiencesUserService.getUser(this.userId).toPromise();
@@ -175,7 +175,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       );
   }
 
-  public openAdjustLoyaltyTierPopup(card: any): void {
+  public openAdjustLoyaltyTierPopup(card: IAudiencesLoyaltyCard): void {
     const tiers = this.getLoyaltyTiers(card);
     if (!tiers) {
       this.messageService.show('Cannot find tiers for loyalty.', 'danger');
@@ -193,7 +193,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       .pipe(
         filter(Boolean),
         tap(data => console.log('update', data)),
-        switchMap((updatedCard: any) => {
+        switchMap((updatedCard: IAudiencesLoyaltyCard) => {
           return this.loyaltyCardService.updateLoyaltyCard(updatedCard.id, updatedCard);
         }),
         takeUntil(this.destroy$)
@@ -207,16 +207,16 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       );
   }
 
-  public openAdjustBalancePointsPopup(item: IJsonApiItem<Partial<IWAssignedAttributes>>): void {
+  public openAdjustBalancePointsPopup(card: IAudiencesLoyaltyCard): void {
     const dialogRef = this.dialog.open(AdjustBalancePointsPopupComponent, {
       panelClass: 'change-expiry-date-dialog',
-      data: item
+      data: card
     });
 
     dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
-        switchMap((updatedCard: any) => {
+        switchMap((updatedCard: IAudiencesLoyaltyCard) => {
           return this.loyaltyCardService.updateLoyaltyCard(updatedCard.id, updatedCard);
         }),
         takeUntil(this.destroy$)
@@ -224,13 +224,13 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       .subscribe(
         () => {
           this.messageService.show('Loyalty Card Tier successfully changed.');
-          this.vouchersDataSource.updateData();
+          this.loyaltyDataSource.updateData();
         },
         () => this.messageService.show('Failed to update Loyalty Card Tier.')
       );
   }
 
-  public handleAudiencesUserInfoActions(data: { action: AudiencesUserInfoActions, payload?: any }): void {
+  public handleAudiencesUserInfoActions(data: { action: AudiencesUserInfoActions, payload?: IAudiencesLoyaltyCard }): void {
     switch (data.action) {
       case AudiencesUserInfoActions.adjustLoyaltyTier:
         this.openAdjustLoyaltyTierPopup(data.payload);
@@ -275,7 +275,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     const vouchersDataSourceParams = this.userId ? {'filter[assigned_to_id]': this.userId} : {};
     this.vouchersDataSource = new CustomDataSource<any>(this.vouchersService, 5, vouchersDataSourceParams);
     const loyaltyDataSourceParams = this.userId ? {'filter[user_id]': this.userId} : {};
-    this.loyaltyDataSource = new CustomDataSource<any>(this.loyaltyCardService, 20, loyaltyDataSourceParams);
+    this.loyaltyDataSource = new CustomDataSource<IAudiencesLoyaltyCard>(this.loyaltyCardService, 20, loyaltyDataSourceParams);
     this.CommunicationsDataSource = new CustomDataSource<any>(this.commsService, 5, {});
   }
 
@@ -306,12 +306,12 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       .subscribe(data => this.loyaltySelectOptions = data);
   }
 
-  private getFreeLoyaltySelectOptions(): IAudiencesLoyaltyOption[] {
+  private getFreeLoyaltySelectOptions(): IAudiencesLoyalty[] {
     const idsUsedLoyalties = this.loyaltyDataSource.data.map(card => card.loyalty.id);
     return this.loyaltySelectOptions.filter(loyalty => !idsUsedLoyalties.includes(loyalty.id));
   }
 
-  private getLoyaltyTiers(card: any): IAudiencesTierOption[] {
+  private getLoyaltyTiers(card: IAudiencesLoyaltyCard): IAudiencesTier[] {
     const findLoyalty = this.loyaltySelectOptions.find(loyalty => loyalty.id === card.loyalty.id);
     return findLoyalty ? findLoyalty.tiers : null;
   }

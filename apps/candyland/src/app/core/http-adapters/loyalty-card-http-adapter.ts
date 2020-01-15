@@ -4,10 +4,11 @@ import {
   IJsonApiPostData,
   IWLoyaltyCard, IJsonApiPatchData
 } from '@perx/whistler';
+import { IAudiencesLoyalty, IAudiencesLoyaltyCard } from '@cl-core/models/audiences/audiences-loyalty.model';
 
 export class LoyaltyCardHttpAdapter {
 
-  public static transformFromCreateLoyaltyCard(data: any): IJsonApiPostData<IWLoyaltyCard> {
+  public static transformFromCreateLoyaltyCard(data: IAudiencesLoyaltyCard): IJsonApiPostData<IWLoyaltyCard> {
     return {
       type: 'cards',
       attributes: {
@@ -31,7 +32,7 @@ export class LoyaltyCardHttpAdapter {
     };
   }
 
-  public static transformFromUpdateLoyaltyCard(data: any): IJsonApiPatchData<IWLoyaltyCard> {
+  public static transformFromUpdateLoyaltyCard(data: IAudiencesLoyaltyCard): IJsonApiPatchData<IWLoyaltyCard> {
     const updatedData: IJsonApiPatchData<IWLoyaltyCard> = {
       id: data.id,
       type: 'cards',
@@ -71,11 +72,13 @@ export class LoyaltyCardHttpAdapter {
       tier: {
         id: data.attributes.tier_id,
         type: data.attributes.tier_type,
+        name: 'Basic Tier',
+        imageUrl: 'https://cdn.uat.whistler.perxtech.io/dev1/tenants/222222222/skv1sie9ddcytyt7v7wqst9u7g61'
       }
     };
   }
 
-  public static transformToIncludeLoyalty(data: IJsonApiItem<IWLoyaltyAttributes>): any {
+  public static transformToIncludeLoyalty(data: IJsonApiItem<IWLoyaltyAttributes>): IAudiencesLoyalty {
     return {
       id: data.id,
       name: data.attributes.name,

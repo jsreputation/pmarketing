@@ -3,6 +3,7 @@
 .loyalty-item {
   display: flex;
   flex-flow: row nowrap;
+  align-items: flex-start;
   box-sizing: border-box;
   width: 100%;
   padding: ($vertical-padding * 0.5) ($horizontal-padding * 0.5);
@@ -35,7 +36,7 @@
   }
 
   &-name {
-    @include typo-body1;
+    @include typo-subtitle2;
 
     font-size: 1.4rem;
     color: $base-font-color;
@@ -45,8 +46,8 @@
     @include typo-body2;
 
     flex: 1;
-    font-size: 1.4rem;
-    color: $secondary-color;
+    font-size: 1.2rem;
+    color: $secondary-font-color;
     overflow-wrap: break-word;
     word-wrap: break-word;
     hyphens: auto;
@@ -64,7 +65,7 @@
     flex-direction: column;
     justify-content: flex-end;
     margin-right: -($horizontal-padding  * 0.5);
-    margin-bottom: -($vertical-padding * 0.5);
+    margin-top: -($vertical-padding * 0.5);
 
     .btn-icon {
       min-width: auto;

@@ -8,7 +8,7 @@
   <div class="loyalty-item-info">
     <p class="loyalty-item-name">{{data?.loyalty?.name}} | {{data?.tier?.name}}</p>
     <p class="loyalty-item-group">{{'AUDIENCE_FEATURE.POINTS_BALANCE' | translate}}: {{data?.balance}}</p>
-    <p class="loyalty-item-group">{{'AUDIENCE_FEATURE.POINTS_TO_NEXT_TIER' | translate}}: {{data?.balance}}</p>
+    <p class="loyalty-item-group">{{'AUDIENCE_FEATURE.POINTS_TO_NEXT_TIER' | translate}}: {{500 - data?.balance}}</p>
   </div>
   <div class="loyalty-item-actions" *ngIf="menuOptions.length > 0">
     <button mat-button [matMenuTriggerFor]="menu" class="btn-icon" aria-label="Loyalty program menu">

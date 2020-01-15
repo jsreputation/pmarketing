@@ -14,7 +14,7 @@ import {
   IWRelationshipsDataType
 } from '@perx/whistler';
 import { relationshipsDataToItem } from '@perx/whistler';
-import { IAudiencesLoyaltyOption, IAudiencesTierOption } from '@cl-core/models/audiences/audiences-loyalty.model';
+import { IAudiencesLoyalty, IAudiencesTier } from '@cl-core/models/audiences/audiences-loyalty.model';
 
 export class LoyaltyHttpAdapter {
   public static transformToLoyalties(data: IJsonApiListPayload<IWLoyaltyAttributes>): { data: ILoyaltyForm[] } {
@@ -263,7 +263,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformToLoyaltyForAudience(data: any): IAudiencesLoyaltyOption {
+  public static transformToLoyaltyForAudience(data: any): IAudiencesLoyalty {
     return {
       id: data.id,
       name: data.attributes.name,
@@ -271,7 +271,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformToBasicTierForAudience(data: IJsonApiItem<IWCustomTierAttributes>): IAudiencesTierOption {
+  public static transformToBasicTierForAudience(data: IJsonApiItem<IWCustomTierAttributes>): IAudiencesTier {
     return {
       id: data.id,
       type: data.type,
@@ -279,7 +279,7 @@ export class LoyaltyHttpAdapter {
     };
   }
 
-  public static transformToCustomTierForAudience(data: IJsonApiItem<IWCustomTierAttributes>): IAudiencesTierOption {
+  public static transformToCustomTierForAudience(data: IJsonApiItem<IWCustomTierAttributes>): IAudiencesTier {
     return {
       id: data.id,
       type: data.type,

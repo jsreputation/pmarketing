@@ -1,7 +1,7 @@
 <aside class="dialog" role="dialog" aria-labelledby="dialogTitle-changeExpiryDate">
   <header class="dialog-header-wrap">
     <h2 class="dialog-title"
-        id="dialogTitle-changeExpiryDate">{{'AUDIENCE_FEATURE.CHANGE_EXPIRY_DATE' | translate}}</h2>
+        id="dialogTitle-changeExpiryDate">{{'AUDIENCE_FEATURE.ADJUST_TIER' | translate}}</h2>
     <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
       <mat-icon>close</mat-icon>
     </button>
@@ -29,7 +29,7 @@
                (click)="save()"
                [disable]="currentTierIndex === tierControl.value"
                [disableRipple]="true">
-      <span>{{'BTN_ADD' | translate}}</span>
+      <span>{{'AUDIENCE_FEATURE.ADJUST_TIER_BTN_APPLY' | translate}}</span>
     </cl-button>
   </footer>
 </aside>

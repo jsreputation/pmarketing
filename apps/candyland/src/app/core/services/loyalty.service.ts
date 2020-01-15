@@ -8,7 +8,7 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import { IWBasicTierAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { JsonApiParser } from '@cl-helpers/json-api-parser';
-import { IAudiencesLoyaltyOption } from '@cl-core/models/audiences/audiences-loyalty.model';
+import { IAudiencesLoyalty } from '@cl-core/models/audiences/audiences-loyalty.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class LoyaltyService implements ITableService<ILoyaltyForm> {
     );
   }
 
-  public getAudiencesLoyaltyOption(params: HttpParamsOptions = {}): Observable<IAudiencesLoyaltyOption[]> {
+  public getAudiencesLoyaltyOption(params: HttpParamsOptions = {}): Observable<IAudiencesLoyalty[]> {
     params.include = 'basic_tier,custom_tiers';
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyHttpService.getLoyalties(httpParams).pipe(

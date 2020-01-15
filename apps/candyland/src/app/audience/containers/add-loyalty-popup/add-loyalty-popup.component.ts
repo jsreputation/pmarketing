@@ -4,7 +4,7 @@ import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/for
 import { distinctUntilChanged, map, startWith, takeUntil } from 'rxjs/operators';
 import Utils from '@cl-helpers/utils';
 import { combineLatest, Subject } from 'rxjs';
-import { IAudiencesLoyaltyOption, IAudiencesTierOption } from '@cl-core/models/audiences/audiences-loyalty.model';
+import { IAudiencesLoyalty, IAudiencesLoyaltyCard } from '@cl-core/models/audiences/audiences-loyalty.model';
 import { LoyaltyCardService } from '@cl-core/services/loyalty-card.service';
 import { MessageService } from '@cl-core-services';
 
@@ -17,12 +17,12 @@ import { MessageService } from '@cl-core-services';
 export class AddLoyaltyPopupComponent implements OnInit, OnDestroy {
 
   public loyaltyCards: FormArray = new FormArray([]);
-  public availableLoyaltyOptions: any[];
-  public availableLoyaltyOptionsArray: any[];
+  public availableLoyaltyOptions: IAudiencesLoyalty[];
+  public availableLoyaltyOptionsArray: IAudiencesLoyalty[][];
   private destroy$: Subject<void> = new Subject();
 
   constructor(public dialogRef: MatDialogRef<AddLoyaltyPopupComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any,
+              @Inject(MAT_DIALOG_DATA) public data: { userId: number, loyaltySelectOptions: IAudiencesLoyalty[] },
               private messageService: MessageService,
               private loyaltyCardService: LoyaltyCardService) {
   }
@@ -32,16 +32,16 @@ export class AddLoyaltyPopupComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    const cardLoyaltyAndTiers: { loyalty: IAudiencesLoyaltyOption[], tier: IAudiencesTierOption[] }[] = this.loyaltyCards.value;
+    const cardLoyaltyAndTiers: IAudiencesLoyaltyCard[] = this.loyaltyCards.value;
     if (cardLoyaltyAndTiers.length === 0) {
       return;
     }
-    const cardData = {
+    const cardData: Partial<IAudiencesLoyaltyCard> = {
       userId: this.data.userId,
       balance: 0,
     };
-    const sendRequests = cardLoyaltyAndTiers.map(sendLoyaltyAndTiers =>
-      this.loyaltyCardService.createLoyaltyCard({...cardData, ...sendLoyaltyAndTiers})
+    const sendRequests = cardLoyaltyAndTiers.map((sendLoyaltyAndTiers: IAudiencesLoyaltyCard) =>
+      this.loyaltyCardService.createLoyaltyCard({...cardData, ...sendLoyaltyAndTiers} as IAudiencesLoyaltyCard)
     );
     combineLatest(sendRequests)
       .pipe(takeUntil(this.destroy$))
@@ -60,19 +60,19 @@ export class AddLoyaltyPopupComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public addLoyaltyCart(loyalty: any): void {
+  public addLoyaltyCart(loyalty: IAudiencesLoyalty): void {
     this.loyaltyCards.push(this.getLoyaltyCardsGroup(loyalty));
   }
 
-  public getLoyaltyCardsGroup(loyalty: any): FormGroup {
+  public getLoyaltyCardsGroup(loyalty: IAudiencesLoyalty): FormGroup {
     return new FormGroup({
       loyalty: new FormControl(loyalty),
       tier: new FormControl(loyalty.tiers[0])
     });
   }
 
-  public updateTier(event: any, tier: AbstractControl): void {
-    tier.patchValue(event.tiers[0]);
+  public updateTier(loyalty: IAudiencesLoyalty, tier: AbstractControl): void {
+    tier.patchValue(loyalty.tiers[0]);
   }
 
   public deleteLoyaltyCard(index: number): void {
@@ -87,7 +87,7 @@ export class AddLoyaltyPopupComponent implements OnInit, OnDestroy {
         distinctUntilChanged(Utils.isEqual),
         takeUntil(this.destroy$)
       )
-      .subscribe((selectedLoyalties: IAudiencesLoyaltyOption[]) => {
+      .subscribe((selectedLoyalties: IAudiencesLoyalty[]) => {
         this.availableLoyaltyOptions = this.data.loyaltySelectOptions.filter(x => !selectedLoyalties.includes(x));
         this.availableLoyaltyOptionsArray = selectedLoyalties.map(
           selected => this.data.loyaltySelectOptions.filter(

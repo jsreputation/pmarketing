@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { map, tap } from 'rxjs/operators';
-import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
+import { map } from 'rxjs/operators';
 import { LoyaltyCardHttpService } from '@cl-core/http-services/loyalty-cards-http.service';
 import { ITableService } from '@cl-shared/table';
 import { JsonApiParser } from '@cl-helpers/json-api-parser';
 import { LoyaltyCardHttpAdapter } from '@cl-core/http-adapters/loyalty-card-http-adapter';
+import { IAudiencesLoyaltyCard } from '@cl-core/models/audiences/audiences-loyalty.model';
+import { IJsonApiItemPayload, IWLoyaltyCard } from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class LoyaltyCardService implements ITableService {
   constructor(private loyaltyCardHttpService: LoyaltyCardHttpService) {
   }
 
-  public getLoyaltyCards(params: HttpParamsOptions): Observable<{ data: ILoyaltyForm[] }> {
+  public getLoyaltyCards(params: HttpParamsOptions): Observable<IAudiencesLoyaltyCard[]> {
     params.include = 'program';
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyCardHttpService.getLoyaltyCards(httpParams).pipe(
@@ -31,7 +32,7 @@ export class LoyaltyCardService implements ITableService {
     );
   }
 
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<ILoyaltyForm>> {
+  public getTableData(params: HttpParamsOptions): Observable<ITableData<IAudiencesLoyaltyCard>> {
     params.include = 'program';
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyCardHttpService.getLoyaltyCards(httpParams).pipe(
@@ -42,22 +43,11 @@ export class LoyaltyCardService implements ITableService {
           {
             programs: {fieldName: 'loyalty', adapterFunction: LoyaltyCardHttpAdapter.transformToIncludeLoyalty}
           })
-      ),
-      // TODO: Hardcode Tiers in Loyalty Cards
-      map(data => {
-          data.data.forEach(item => item.tier = {
-            id: '1',
-            type: 'basic_tiers',
-            name: 'Basic Tier'
-          });
-          return data;
-        }
-      ),
-      tap(data => console.log(data))
+      )
     );
   }
 
-  public getLoyaltyCard(id: string, params: HttpParamsOptions = {}): Observable<any> {
+  public getLoyaltyCard(id: string, params: HttpParamsOptions = {}): Observable<IAudiencesLoyaltyCard> {
     params.include = 'program';
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyCardHttpService.getLoyaltyCard(id, httpParams).pipe(
@@ -72,18 +62,18 @@ export class LoyaltyCardService implements ITableService {
     );
   }
 
-  public createLoyaltyCard(data: any): Observable<any> {
+  public createLoyaltyCard(data: IAudiencesLoyaltyCard): Observable<IJsonApiItemPayload<IWLoyaltyCard>> {
     const sendData = LoyaltyCardHttpAdapter.transformFromCreateLoyaltyCard(data);
     return this.loyaltyCardHttpService.createLoyaltyCard({data: sendData});
   }
 
-  public updateLoyaltyCard(id: string, data: any): Observable<any> {
+  public updateLoyaltyCard(id: string, data: any): Observable<IJsonApiItemPayload<IWLoyaltyCard>> {
     const sendData: any = LoyaltyCardHttpAdapter.transformFromUpdateLoyaltyCard(data);
     console.log('sendData', sendData);
     return this.loyaltyCardHttpService.updateLoyaltyCard(id, {data: sendData});
   }
 
-  public deleteLoyalty(id: string): Observable<any> {
+  public deleteLoyalty(id: string): Observable<void> {
     return this.loyaltyCardHttpService.deleteLoyaltyCard(id);
   }
 }

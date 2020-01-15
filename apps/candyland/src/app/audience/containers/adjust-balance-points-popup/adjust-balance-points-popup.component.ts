@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, Inject, ChangeDetectorRef, AfterViewInit, OnInit, } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { IAudiencesLoyaltyCard } from '@cl-core/models/audiences/audiences-loyalty.model';
 
 @Component({
   selector: 'cl-adjust-balance-points-popup',
@@ -21,7 +22,7 @@ export class AdjustBalancePointsPopupComponent implements OnInit, AfterViewInit 
 
   constructor(public dialogRef: MatDialogRef<AdjustBalancePointsPopupComponent>,
               private cd: ChangeDetectorRef,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+              @Inject(MAT_DIALOG_DATA) public data: IAudiencesLoyaltyCard) {
   }
 
   public ngOnInit(): void {
@@ -32,7 +33,8 @@ export class AdjustBalancePointsPopupComponent implements OnInit, AfterViewInit 
   }
 
   public ngAfterViewInit(): void {
-    this.balance.patchValue(this.data.card.balance);
+    console.log('balance ', this.data);
+    this.balance.patchValue(this.data.balance);
     this.cd.detectChanges();
   }
 
@@ -45,7 +47,7 @@ export class AdjustBalancePointsPopupComponent implements OnInit, AfterViewInit 
       this.form.markAsTouched();
       return;
     }
-    const updatedCard = {id: this.data.card.id, balance: this.balance.value};
+    const updatedCard = {id: this.data.id, balance: this.balance.value};
     this.dialogRef.close(updatedCard);
   }
 }
