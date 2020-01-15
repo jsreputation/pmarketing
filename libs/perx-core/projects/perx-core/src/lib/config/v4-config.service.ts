@@ -23,7 +23,7 @@ interface IV4MicrositeSettings {
   providedIn: 'root'
 })
 export class V4ConfigService extends ConfigService {
-  private appConfig: IConfig;
+  private appConfig: IConfig<{}>;
   private settings: any;
 
   constructor(
@@ -42,9 +42,9 @@ export class V4ConfigService extends ConfigService {
     };
   }
 
-  public readAppConfig(): Observable<IConfig> {
-    return this.http.get<IConfig>('assets/config/app-config.json').pipe(
-      tap((appConfig: IConfig) => this.appConfig = appConfig)
+  public readAppConfig<T>(): Observable<IConfig<T>> {
+    return this.http.get<IConfig<T>>('assets/config/app-config.json').pipe(
+      tap((appConfig: IConfig<T>) => this.appConfig = appConfig)
     );
   }
 
@@ -62,9 +62,9 @@ export class V4ConfigService extends ConfigService {
     );
   }
 
-  public getAccountSettings(): Observable<PagesObject> {
-    return this.http.get<IConfig>('assets/config/app-config.json').pipe(
-      map(res => res.display_properties),
+  public getAccountSettings<T>(): Observable<PagesObject> {
+    return this.http.get<IConfig<T>>('assets/config/app-config.json').pipe(
+      map(res => res.displayProperties),
       map((displayProps: IWSetting) => displayProps && displayProps.account ? displayProps.account : { pages: [] }),
       map((account) => this.settings = account)
     );

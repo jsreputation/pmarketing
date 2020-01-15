@@ -31,6 +31,9 @@ export class RewardDetailComponent {
   @Input()
   public reward: IReward;
 
+  @Input()
+  public voucherId?: number;
+
   constructor(
     private location: Location
   ) { }
