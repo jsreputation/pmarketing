@@ -18,7 +18,7 @@ export class LoyaltyCardService implements ITableService {
   }
 
   public getLoyaltyCards(params: HttpParamsOptions): Observable<IAudiencesLoyaltyCard[]> {
-    params.include = 'program';
+    params.include = 'program,tier';
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyCardHttpService.getLoyaltyCards(httpParams).pipe(
       map(response =>
@@ -33,7 +33,7 @@ export class LoyaltyCardService implements ITableService {
   }
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IAudiencesLoyaltyCard>> {
-    params.include = 'program';
+    params.include = 'program,tier';
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyCardHttpService.getLoyaltyCards(httpParams).pipe(
       map(response =>
@@ -41,7 +41,8 @@ export class LoyaltyCardService implements ITableService {
           response,
           LoyaltyCardHttpAdapter.transformToLoyaltyCard,
           {
-            programs: {fieldName: 'loyalty', adapterFunction: LoyaltyCardHttpAdapter.transformToIncludeLoyalty}
+            programs: {fieldName: 'loyalty', adapterFunction: LoyaltyCardHttpAdapter.transformToIncludeLoyalty},
+            tiers: {fieldName: 'tier', adapterFunction: LoyaltyCardHttpAdapter.transformToIncludeLoyaltyTier}
           })
       )
     );
