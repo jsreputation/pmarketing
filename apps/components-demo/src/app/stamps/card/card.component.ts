@@ -104,7 +104,7 @@ export class CardComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig()
+    this.configService.readAppConfig<ITheme>()
       .pipe(
         tap(() => {
           if (this.campaignId === null) {
@@ -113,7 +113,7 @@ export class CardComponent implements OnInit {
             this.fetchCard();
           }
         }),
-        flatMap((config: IConfig) => this.themesService.getThemeSetting(config))
+        flatMap((config: IConfig<ITheme>) => this.themesService.getThemeSetting(config))
       ).subscribe((res: ITheme) => {
         if (res.properties.stampCard) {
           this.preStampImg = res.properties.stampCard['--pre_stamp_image'];
