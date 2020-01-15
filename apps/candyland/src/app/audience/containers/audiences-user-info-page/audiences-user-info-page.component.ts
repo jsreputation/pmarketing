@@ -319,7 +319,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     this.vouchersDataSource = new CustomDataSource<any>(this.vouchersService, 5, vouchersDataSourceParams);
     const loyaltyDataSourceParams = this.userId ? {'filter[user_id]': this.userId} : {};
     this.loyaltyDataSource = new CustomDataSource<IAudiencesLoyaltyCard>(this.loyaltyCardService, 20, loyaltyDataSourceParams);
-    this.CommunicationsDataSource = new CustomDataSource<any>(this.commsService, 5, {});
+    this.communicationsDataSource = new CustomDataSource<any>(this.commsService, 5, {});
   }
 
   public openEditUserDialog(): void {
