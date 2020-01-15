@@ -216,5 +216,20 @@ export class JsonApiParser {
     return target;
   }
 
+  public static mergeFields(targetValue, relationResult) {
+    if(Utils.isArray(targetValue) && Utils.isArray(relationResult)) {
+      return [...targetValue, ...relationResult]
+    }
+    if(Utils.isObject(targetValue) && Utils.isArray(relationResult)) {
+      return [targetValue, ...relationResult]
+    }
+    if(Utils.isArray(targetValue) && Utils.isObject(relationResult)) {
+      return [...targetValue, relationResult]
+    }
+    if(Utils.isObject(targetValue) && Utils.isObject(relationResult)) {
+      return {...targetValue, ...relationResult}
+    }
+    return relationResult;
+  }
 }
 
