@@ -118,7 +118,8 @@ export class V4ProfileService extends ProfileService {
         (profile: IProfile) => this.http.patch<void>(
           `${this.apiHost}/v4/customers/${profile.id}/map_cardnumber`,
           {
-            data
+            card_number: data.cardNumber.toString(),
+            loyalty_program_id: data.loyaltyProgramId
           })
       )
     );
