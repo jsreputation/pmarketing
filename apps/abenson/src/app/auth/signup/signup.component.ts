@@ -62,7 +62,7 @@ export class SignUpComponent implements OnInit {
     delete profile.cardNumber;
     const cardNumber: string = this.signUpForm.value.cardNumber;
     (profile as ISignUpData).passwordConfirmation = password;
-    (cardNumber && cardNumber.length ? this.profileService.verifyCardNumber(cardNumber, profile.lastName, '') : of(true))
+    (cardNumber && cardNumber.length ? this.profileService.verifyCardNumber(cardNumber, profile.lastName, '1') : of(true))
       .pipe(mergeMap((success) => success ? this.authService.signup(profile) : throwError(('err-or')))).subscribe(() => {
         if (this.signUpForm.value.cardNumber) {
           this.sharedDataService.addData({
