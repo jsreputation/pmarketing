@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpErrorResponse, HttpParams } from '@angular/common/http';
 
 import {
   map,
   mergeMap,
+  catchError,
 } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
 import {
   IProfile,
@@ -121,5 +122,16 @@ export class V4ProfileService extends ProfileService {
           })
       )
     );
+  }
+
+  public verifyCardNumber(cardNumber: string, userName: string, loyaltyId: string = '1'): Observable<boolean> {
+    const url = `${this.apiHost}/v4/customers/verify_cardnumber`;
+    const params = new HttpParams()
+      .set('card_number', cardNumber)
+      .set('loyalty_program_id', loyaltyId)
+      .set('last_name', userName);
+    return this.http.get(url, { observe: 'response', params }).pipe(
+      map((response: HttpResponse<any>) => response.status === 200 ? true : false),
+      catchError((error: HttpErrorResponse) => error.status === 404 ? of(false) : throwError(error)));
   }
 }

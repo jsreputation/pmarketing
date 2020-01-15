@@ -78,4 +78,7 @@ export class WhistlerProfileService extends ProfileService {
   public setCardNumber(): Observable<void> {
     return throwError('Not implement yet');
   }
+  public verifyCardNumber(): Observable<boolean> {
+    return throwError('Not implement yet');
+  }
 }
