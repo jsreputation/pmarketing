@@ -141,7 +141,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   public sendMessage(message: string): void {
     if (message && message.length > 0) {
       const msgBody: ICommMessage = {
-        from: "PerxTest",
+        from: 'PerxTest',
         recipientId: this.userId ? parseInt(this.userId, 10) : undefined,
         providerId: 2,
         message,
