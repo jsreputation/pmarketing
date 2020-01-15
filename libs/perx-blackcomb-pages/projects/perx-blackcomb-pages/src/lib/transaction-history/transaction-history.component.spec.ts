@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TransactionHistoryComponent } from './transaction-history.component';
 import { LoyaltyModule, LoyaltyService } from '@perx/core';
 import { of } from 'rxjs';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 describe('TransactionHistoryComponent', () => {
   let component: TransactionHistoryComponent;
@@ -11,7 +12,8 @@ describe('TransactionHistoryComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        LoyaltyModule
+        LoyaltyModule,
+        InfiniteScrollModule
       ],
       declarations: [ TransactionHistoryComponent ],
       providers: [
