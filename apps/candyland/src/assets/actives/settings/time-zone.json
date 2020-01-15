@@ -1,147 +1,112 @@
 [
   {
-    "id": 1,
+    "id": "Asia/Hong_Kong",
     "country": "Hong Kong Time",
     "zone": "GMT+8:00"
   },
   {
-    "id": 2,
+    "id": "Asia/Shanghai",
     "country": "China Standard Time",
     "zone": "GMT+8:00"
   },
   {
-    "id": 3,
+    "id": "Asia/Jakarta",
     "country": "Indonesia Western Standard Time",
     "zone": "GMT+7:00"
   },
   {
-    "id": 4,
+    "id": "Asia/Makassar",
     "country": "Indonesia Central Standard Time",
     "zone": "GMT+8:00"
   },
   {
-    "id": 5,
+    "id": "Asia/Jayapura",
     "country": "Indonesia Eastern Standard Time",
     "zone": "GMT+9:00"
   },
   {
-    "id": 7,
+    "id": "Asia/Kolkata",
     "country": "Indian Standard Time",
     "zone": "GMT+5:30"
   },
   {
-    "id": 8,
+    "id": "Asia/Tokyo",
     "country": "Japan Standard Time",
     "zone": "GMT+9:00"
   },
   {
-    "id": 9,
+    "id": "Asia/Kuala_Lumpur",
     "country": "Malaysia Standard Time",
     "zone": "GMT+8:00"
   },
   {
-    "id": 10,
+    "id": "Asia/Manila",
     "country": "Philippine Standard Time",
     "zone": "GMT+8:00"
   },
   {
-    "id": 11,
+    "id": "Asia/Singapore",
     "country": "Singapore Standard Time",
     "zone": "GMT+8:00"
   },
   {
-    "id": 12,
+    "id": "Asia/Seoul",
     "country": "Korea Standard time",
     "zone": "GMT+9:00"
   },
   {
-    "id": 13,
+    "id": "Asia/Taipei",
     "country": "Taiwan Standard Time",
     "zone": "GMT+8:00"
   },
   {
-    "id": 14,
+    "id": "Asia/Bangkok",
     "country": "Thailand Standard Time",
     "zone": "GMT+7:00"
   },
   {
-    "id": 15,
+    "id": "Asia/Ho_Chi_Minh",
     "country": "Vietnam Standard Time",
     "zone": "GMT+7:00"
   },
   {
-    "id": 16,
+    "id": "America/New_York",
     "country": "Eastern Standard Time",
     "zone": "GMT-5:00"
   },
   {
-    "id": 17,
+    "id": "America/Chicago",
     "country": "Central Standard Time",
     "zone": "GMT-6:00"
   },
   {
-    "id": 18,
+    "id": "America/Denver",
     "country": "Mountain Standard Time",
     "zone": "GMT-7:00"
   },
   {
-    "id": 19,
+    "id": "America/Los_Angeles",
     "country": "Pacific Standard Time",
     "zone": "GMT-8:00"
   },
   {
-    "id": 20,
+    "id": "America/Anchorage",
     "country": "Alaskan Standard Time",
     "zone": "GMT-9:00"
   },
   {
-    "id": 20,
+    "id": "Pacific/Honolulu",
     "country": "Hawaii-Aleutian Standard Time",
     "zone": "GMT-10:00"
   },
   {
-    "id": 21,
+    "id": "Etc/GMT",
     "country": "Greenwich Mean Time",
     "zone": "GMT+0:00"
   },
   {
-    "id": 22,
-    "country": "Australian Eastern Standard Time",
-    "zone": "GMT+10:00"
-  },
-  {
-    "id": 23,
-    "country": "Australian Central Standard Time",
-    "zone": "GMT+9:30"
-  },
-  {
-    "id": 24,
+    "id": "Australia/Perth",
     "country": "Australian Western Time",
     "zone": "GMT+8:00"
-  },
-  {
-    "id": 25,
-    "country": "Atlantic Standard Time",
-    "zone": "GMT-4:00"
-  },
-  {
-    "id": 26,
-    "country": "Newfoundland Daylight Time",
-    "zone": "GMT-2:30"
-  },
-  {
-    "id": 27,
-    "country": "Western European Time",
-    "zone": "GMT+0:00"
-  },
-  {
-    "id": 28,
-    "country": "Central European Time",
-    "zone": "GMT+1:00"
-  },
-  {
-    "id": 29,
-    "country": "Eastern European Time",
-    "zone": "GMT+2:00"
   }
 ]

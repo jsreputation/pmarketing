@@ -2,9 +2,12 @@ import {
   IWLoyaltyAttributes,
   IJsonApiItem,
   IJsonApiPostData,
-  IWLoyaltyCard, IJsonApiPatchData
+  IWLoyaltyCard,
+  IJsonApiPatchData,
+  IWCustomTierAttributes,
+  IWBasicTierAttributes
 } from '@perx/whistler';
-import { IAudiencesLoyalty, IAudiencesLoyaltyCard } from '@cl-core/models/audiences/audiences-loyalty.model';
+import { IAudiencesLoyalty, IAudiencesLoyaltyCard, IAudiencesTier } from '@cl-core/models/audiences/audiences-loyalty.model';
 
 export class LoyaltyCardHttpAdapter {
 
@@ -69,12 +72,6 @@ export class LoyaltyCardHttpAdapter {
       id: data.id,
       userId: data.attributes.user_id,
       balance: data.attributes.balance,
-      tier: {
-        id: data.attributes.tier_id,
-        type: data.attributes.tier_type,
-        name: 'Basic Tier',
-        imageUrl: 'https://cdn.uat.whistler.perxtech.io/dev1/tenants/222222222/skv1sie9ddcytyt7v7wqst9u7g61'
-      }
     };
   }
 
@@ -82,6 +79,15 @@ export class LoyaltyCardHttpAdapter {
     return {
       id: data.id,
       name: data.attributes.name,
+    };
+  }
+
+  public static transformToIncludeLoyaltyTier(data: IJsonApiItem<IWBasicTierAttributes | IWCustomTierAttributes>): IAudiencesTier {
+    return {
+      id: data.id,
+      type: data.type,
+      name: ('name' in data.attributes) ? data.attributes.name : 'Basic Tier',
+      imageUrl: data.attributes.image_url
     };
   }
 }

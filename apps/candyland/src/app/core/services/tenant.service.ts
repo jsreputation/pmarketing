@@ -7,15 +7,18 @@ import { TenantHttpAdapterService } from '@cl-core/http-adapters/tenant-http-ada
 import { DefaultSetting, TenantStoreService } from '@cl-core-services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
+import { ITimeZone } from '@cl-core/models/settings/time-zone';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TenantService {
   private tenant: ITenant;
-  constructor(private tenantHttpService: TenantHttpService,
-              private fb: FormBuilder,
-              private tenantStoreService: TenantStoreService) { }
+  constructor(
+    private tenantHttpService: TenantHttpService,
+    private fb: FormBuilder,
+    private tenantStoreService: TenantStoreService
+  ) { }
 
   public findTenant(params: HttpParamsOptions = {}): Observable<ITenant> {
     params = {
@@ -76,13 +79,13 @@ export class TenantService {
 
   public getCurrency(): Observable<Currency[]> {
     return this.tenantHttpService.getCurrency()
-    .pipe(
-      map((data: Currency[]) => data.sort((a, b) => {
-        const nameA = a.country.toLowerCase();
-        const nameB = b.country.toLowerCase();
-        return (nameA < nameB) ? -1 : 1;
-      }))
-    );
+      .pipe(
+        map((data: Currency[]) => data.sort((a, b) => {
+          const nameA = a.country.toLowerCase();
+          const nameB = b.country.toLowerCase();
+          return (nameA < nameB) ? -1 : 1;
+        }))
+      );
   }
 
   public prepareDefaultValue(data: IBrandingForm): { [key: string]: string } {
