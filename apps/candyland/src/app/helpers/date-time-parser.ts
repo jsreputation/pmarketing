@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import { ITimeZone } from '@cl-core/models/settings/time-zone';
 
 export class DateTimeParser {
 
@@ -22,7 +23,7 @@ export class DateTimeParser {
 
   public static setTime(date: string, time: any): any {
     const [hours, minutes] = time.split(':');
-    return moment(date).set({hours, minutes}).utc().toDate();
+    return moment(date).set({ hours, minutes }).utc().toDate();
   }
 
   public static getTime(date?: string, format?: string): any {
