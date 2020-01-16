@@ -33,7 +33,7 @@
       <mat-error class="error" *ngIf="probAllGroup.hasError('sumMoreThan')">
         {{'CAMPAIGN.THE_TOTAL_PROBABILITY' | translate}}
       </mat-error>
-      <mat-error class="error" *ngIf="probAllGroup.hasError('percentNotMet')">
+      <mat-error class="error" *ngIf="isSpinEngagement && enableProbability && probAllGroup.hasError('percentNotMet')">
         The slots probability should add up to 100
       </mat-error>
       <mat-error class="error" *ngIf="isSpinEngagement && fillAllGroup.hasError('unpatchedSlot')">

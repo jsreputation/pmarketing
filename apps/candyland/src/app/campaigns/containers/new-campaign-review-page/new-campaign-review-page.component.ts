@@ -24,6 +24,7 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
   public stampsHasRewards: boolean = false;
   public launchType: typeof CampaignChannelsLaunchType = CampaignChannelsLaunchType;
   public specialProbDisplay$: Subject<ICampaignOutcome> = new Subject<ICampaignOutcome>();
+  public nullOutcome: ICampaignOutcome;
 
   constructor(
     public store: CampaignCreationStoreService,
@@ -41,14 +42,15 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: ICampaign) => {
         if (data) {
+          console.log('take a look at ny data first', data);
           this.specialProbDisplay$.next(this.checkSpecialProbRemainingSlot(data));
           this.checkStampsHasRewards(data);
         }
       });
     this.audSvc.getAudiencesList()
-        .subscribe((data) => {
-          this.pools = data;
-        });
+      .subscribe((data) => {
+        this.pools = data;
+      });
   }
 
   public get informationCollectionSettingTitle(): string {
@@ -85,14 +87,24 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
   }
 
   public checkSpecialProbRemainingSlot(campaign: ICampaign): ICampaignOutcome {
-    if (!campaign.outcomes) {return; }
-    return campaign.outcomes.find(outcome => outcome.outcome.slotNumber === -1);
+    // saves configuring extra special slot to map with current interface of passing down valid outcomes,
+    // reduces bugs, send it in when finalised time
+    if (!campaign.enabledProb || campaign.template.game_type !== 'spin') {return; }
+    const campaignOutcomesProb: number[] = campaign
+      .outcomes.filter(outcome => outcome.outcome.slotNumber !== 0).map(outcome => outcome.outcome.probability || 0);
+    // not add up to 100 means there is a special ctrl
+    const checkSpecialSlot = campaignOutcomesProb.reduce((acc, curr) => acc + curr , 0);
+    if (checkSpecialSlot !== 100) {
+      this.nullOutcome = { outcome: { probability: 100 - checkSpecialSlot, slotNumber: 0, limit: null }};
+      return this.nullOutcome; // slotNumber 0 to be standardized
+    }
+    return;
   }
 
   public navigateToEdit(): void {
     const gameType = 'game_type' in this.campaign.template ? this.campaign.template.game_type : null;
     let path = getEngagementRouterLink(this.campaign.engagement_type, gameType);
-    path += '/' + this.campaign.template.id;
+    path += `/${  this.campaign.template.id}`;
     this.router.navigate([path]);
   }
 

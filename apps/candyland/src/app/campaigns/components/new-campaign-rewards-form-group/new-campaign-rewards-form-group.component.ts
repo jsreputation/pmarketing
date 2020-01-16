@@ -4,7 +4,7 @@ import {
   OnDestroy,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
-  Input, OnChanges, SimpleChanges
+  Input, OnChanges, SimpleChanges, ViewChildren, QueryList
 } from '@angular/core';
 import {
   FormGroup, Validators
@@ -27,6 +27,7 @@ import { RewardsService } from '@cl-core/services/rewards.service';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { SOURCE_TYPE } from '../../../app.constants';
+import {RewardItemComponent} from '../reward-item/reward-item.component';
 
 @Component({
   selector: 'cl-new-campaign-rewards-form-group',
@@ -36,8 +37,9 @@ import { SOURCE_TYPE } from '../../../app.constants';
 })
 export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, OnChanges {
   @Input() public title: string = 'CAMPAIGN.REWARDS';
-  @Input() public slotNumber: number = 0;
+  @Input() public slotNumber: number = 0; // slotNumber -1 interfaces with probNoRewards, see limit page for details
   @Input() public enableProbability: boolean = false;
+  @ViewChildren(RewardItemComponent) public viewItemChildren !: QueryList<RewardItemComponent>;
 
   private destroy$: Subject<void> = new Subject();
 
@@ -177,7 +179,8 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     this.campaign.outcomes = [...otherSlotOutcomes, ...this.outcomes];
     // bypasses null/undefined/0, will scan thru the campaign outcomes for final check
     // if set to true enableProbability then just true, (from checkbox)
-    this.campaign.enabledProb = this.enableProbability || this.campaign.outcomes.some(({outcome}) => outcome.probability);
+    this.campaign.enabledProb = this.enableProbability ||
+      this.campaign.outcomes.some(({outcome}) => outcome.probability);
     this.store.currentCampaign = {...this.campaign};
     this.isSpinEngagement ?
       (this.updateSlotCount().updateSumMoreThanCheck()) : (this.sumMoreThanError = this.updateSumMoreThanCheck());
@@ -187,10 +190,10 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
 
   public updateSlotCount(): this {
     const checkedOutcomes = this.outcomes.filter(outcome => outcome.outcome.slotNumber >= 0 && outcome.reward);
-    if (checkedOutcomes.length === 0) {
+    if (checkedOutcomes.length === 0 && this.formParent.get('totalFilledAllSlots').get(`notEmpty-${this.slotNumber}`)) {
       this.formParent.get('totalFilledAllSlots').get(`notEmpty-${this.slotNumber}`).patchValue(0);
     }
-    if (checkedOutcomes.length > 0) {
+    if (checkedOutcomes.length > 0 && this.formParent.get('totalFilledAllSlots').get(`notEmpty-${this.slotNumber}`)) {
       this.formParent.get('totalFilledAllSlots').get(`notEmpty-${this.slotNumber}`).patchValue(1);
     }
     return this;

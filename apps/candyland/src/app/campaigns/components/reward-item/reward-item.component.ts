@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ICampaignOutcome } from '@cl-core/models/campaign/campaign';
@@ -11,9 +11,10 @@ import {takeUntil} from 'rxjs/operators';
   templateUrl: './reward-item.component.html',
   styleUrls: ['./reward-item.component.scss'],
 })
-export class RewardItemComponent implements OnInit, OnChanges {
+export class RewardItemComponent implements OnInit {
+  @Input() public templateID: number;
   @Input() public outcomeData: ICampaignOutcome;
-  @Input() public enableProbability: boolean = false;
+  @Input() public enableProbability: boolean;
   @Input() public isInvalid: boolean;
   @Input() public overWriteProb: AbstractControl;
 
@@ -54,26 +55,6 @@ export class RewardItemComponent implements OnInit, OnChanges {
     );
   }
 
-  public ngOnChanges({enableProbability}: SimpleChanges): void {
-    // update parent form about its current null value when prob disabled so campaign is synced
-    if (enableProbability !== undefined && enableProbability.currentValue === false) {
-      this.updateOutcomeData(true);
-      this.initForm();
-      if (this.overWriteProb) {
-        this.updateOutcome.emit({probability: null, limit: null});
-      }
-    }
-    if (this.overWriteProb) {
-      this.overWriteProb.valueChanges.pipe(
-        takeUntil(this.destroy$)
-      ).subscribe(
-        (value) => {
-          this.updateOutcome.emit({probability: value, limit: null});
-        }
-      );
-    }
-  }
-
   private initForm(): void {
     this.group.patchValue({ probability: this.outcome.probability, limit: this.outcome.limit });
   }
@@ -88,4 +69,5 @@ export class RewardItemComponent implements OnInit, OnChanges {
   public delete(): void {
     this.clickDelete.emit(this.outcomeData);
   }
+
 }

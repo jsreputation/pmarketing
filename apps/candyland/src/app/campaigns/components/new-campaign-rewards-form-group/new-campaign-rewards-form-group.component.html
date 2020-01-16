@@ -9,7 +9,7 @@
     <div *ngFor="let outcome of outcomes; let i = index; let lastEle = last">
       <cl-reward-item class="item"
         *ngIf="outcome.outcome.slotNumber === slotNumber"
-        [overWriteProb]="slotNumber === -1 ? formParent.get('totalProbability--1') : null"
+        [overWriteProb]="slotNumber === -1 ? formParent.get('probNoRewards') : null"
         [outcomeData]="outcome"
         [enableProbability]="enableProbability"
         [isInvalid]="sumMoreThanError"
