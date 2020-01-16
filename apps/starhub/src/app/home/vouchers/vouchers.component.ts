@@ -4,7 +4,7 @@ import { Observable, forkJoin, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { PageType, AnalyticsService } from 'src/app/analytics.service';
 import { map } from 'rxjs/operators';
-//@ts-ignore
+
 const REQ_PAGE_SIZE: number = 10;
 
 @Component({
@@ -17,8 +17,8 @@ export class VouchersComponent implements OnInit {
   public redeemedVouchers: Observable<Voucher[]>;
   public defaultNbVouchers: number = 5;
   public hideSeeMore: boolean = false;
-  private currentPage = 1;
-  private complited = false;
+  private currentPage: number = 1;
+  private complited: boolean = false;
   @Output()
   public tapped: EventEmitter<Voucher> = new EventEmitter();
 
@@ -71,7 +71,7 @@ export class VouchersComponent implements OnInit {
     return daysToDisplay > daysElapsed;
   }
 
-  public onScroll() {
+  public onScroll(): void {
     if (this.complited) {
       return;
     }
@@ -81,10 +81,10 @@ export class VouchersComponent implements OnInit {
       this.vouchersService.getFromPage(this.currentPage, { type: 'active' })
     )
       .subscribe(val => {
-        if (!val[1].length) {
+        if (!val[1].length && val[1].length < REQ_PAGE_SIZE) {
           this.complited = true;
         }
-        this.issuedVoucher = of([...val[0], ...val[1]])
+        this.issuedVoucher = of([...val[0], ...val[1]]);
       });
   }
 }
