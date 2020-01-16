@@ -37,7 +37,7 @@ export class DashboardRewardsPageComponent implements OnInit, OnDestroy {
       switchMap(params => this.dashboardService.getTabValues('rewards_total_rewards', params)),
       map(value => value.flat()
         .filter(v => typeof v === 'number')
-        .reduce((acc, curr) => acc + curr, 0)
+        .reduce((acc: number, curr: number) => acc + curr, 0)
       ),
       takeUntil(this.destroy$)
     ).subscribe((value: number) => this.rewardTabValue = value);
