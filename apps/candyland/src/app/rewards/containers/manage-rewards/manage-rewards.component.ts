@@ -100,7 +100,6 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   }
 
   public subscribeToSaveRequest(request: Observable<any>): void {
-    let id: string;
     request
       .pipe(
         switchMap(res => {
@@ -109,15 +108,15 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
           }
 
           if (res && res.data.id) {
-            id = res.data.id;
-            return this.createRewardTiers(this.rewardLoyaltyForm.value, id);
+            this.id = res.data.id;
+            return this.createRewardTiers(this.rewardLoyaltyForm.value, this.id);
           }
         })
       )
       .subscribe(
         () => {
-          if (id || this.id) {
-            this.router.navigateByUrl(`/rewards/detail/${id ? id : this.id}`);
+          if (this.id) {
+            this.router.navigateByUrl(`/rewards/detail/${this.id}`);
           }
         },
         error => console.warn('error', error));
@@ -268,7 +267,6 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   ): Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>[]> {
     const result: Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>>[] = [];
     rewardLoyaltyForm.forEach((item: ILoyaltyFormGroup) => {
-
       if (!item.basicTier.tierId) {
         return;
       }
@@ -284,17 +282,15 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       });
     });
 
-    return forkJoin(result);
+    return result.length ? forkJoin(result) : of(void 0);
   }
 
   private updateRewardTiers(rewardLoyaltyForm: ILoyaltyFormGroup[]): Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>[]> {
     rewardLoyaltyForm.forEach((item) => {
       // this need for update basicTier
       this.handlerTierUpdate(item.basicTier);
-      item.tiers.forEach((tier) => {
-        // this need for update customTier
-        this.handlerTierUpdate(tier);
-      });
+      // this need for update customTier
+      item.tiers.forEach((tier) => this.handlerTierUpdate(tier));
     });
     const result: Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>>[] = this.sendTiers();
 

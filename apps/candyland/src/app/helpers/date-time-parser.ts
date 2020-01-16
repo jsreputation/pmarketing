@@ -42,7 +42,7 @@ export class DateTimeParser {
     return date ? DateTimeParser.getTime(date, format) : '';
   }
 
-  public static getDateMountsAgo(numberMonth: number = 1): Date {
+  public static getDateMonthsAgo(numberMonth: number = 1): Date {
     const date = new Date();
     date.setMonth(date.getMonth() - numberMonth);
     return date;
