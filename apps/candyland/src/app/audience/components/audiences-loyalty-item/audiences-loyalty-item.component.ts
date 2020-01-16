@@ -17,6 +17,13 @@ export class AudiencesLoyaltyItemComponent {
   @Output() public menuTapped: EventEmitter<{ action: string, payload: any }> = new EventEmitter();
 
   public tapped(option: IEngagementItemMenuOption): void {
-    this.menuTapped.emit({action: option.action, payload: this.data});
+    this.menuTapped.emit({ action: option.action, payload: this.data });
+  }
+
+  public get pointsToNextTier(): string | null {
+    if (!this.data || !this.data.balance) {
+      return null;
+    }
+    return this.data.balance < 500 ? `${500 - this.data.balance}` : '~';
   }
 }

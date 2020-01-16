@@ -76,8 +76,8 @@ export class UsersRolesComponent implements AfterViewInit {
   }
 
   private getAllGroups(): void {
-    this.settingsService.getAllGroups()
-      .subscribe((res) => this.groups = res.getModels());
+    this.settingsService.getGroups()
+      .subscribe(groups => this.groups = groups);
   }
 
   public resetPassword(user: IAMUser): void {
