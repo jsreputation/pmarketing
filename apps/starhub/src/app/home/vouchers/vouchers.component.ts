@@ -1,8 +1,9 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { Voucher, IVoucherService, VoucherState } from '@perx/core';
+import { Voucher, IVoucherService } from '@perx/core';
 import { Observable, forkJoin, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { PageType, AnalyticsService } from 'src/app/analytics.service';
+import { map } from 'rxjs/operators';
 //@ts-ignore
 const REQ_PAGE_SIZE: number = 10;
 
@@ -12,11 +13,11 @@ const REQ_PAGE_SIZE: number = 10;
   styleUrls: ['./vouchers.component.scss']
 })
 export class VouchersComponent implements OnInit {
-  public allVouchers: Observable<Voucher[]>;
+  public issuedVoucher: Observable<Voucher[]>;
+  public redeemedVouchers: Observable<Voucher[]>;
   public defaultNbVouchers: number = 5;
   public hideSeeMore: boolean = false;
   private currentPage = 1;
-  //@ts-ignore
   private complited = false;
   @Output()
   public tapped: EventEmitter<Voucher> = new EventEmitter();
@@ -30,29 +31,11 @@ export class VouchersComponent implements OnInit {
       siteSectionLevel2: 'rewards:vouchers',
       siteSectionLevel3: 'rewards:vouchers'
     });
-    this.allVouchers = of([]);
-    this.addVouchers();
+    this.issuedVoucher = this.vouchersService.getFromPage(this.currentPage, { type: 'active' });
+    this.redeemedVouchers = this.vouchersService.getAll({ type: 'redeemed' })
+    .pipe(map((vouchers: Voucher[]) => vouchers.filter(voucher => voucher.redemptionDate && this.daysSince(voucher.redemptionDate))));
   }
-  public addVouchers() {
-    ++this.currentPage;
-    forkJoin(
-      this.allVouchers,
-      this.vouchersService.getFromPage(this.currentPage)
-    )
-      .subscribe(val => {
-        const allVouchers = [...val[0], ...val[1]];
-        const savedVouchersLenth = allVouchers
-        .filter(voucher => voucher.state === VoucherState.issued)
-        .filter(voucher => voucher.redemptionDate && this.daysSince(voucher.redemptionDate)).length;
-        const redeemedVouchers = allVouchers
-        .filter(voucher => voucher.state !== VoucherState.issued)
-        .filter(voucher => voucher.redemptionDate && this.daysSince(voucher.redemptionDate)).length;
-        if (savedVouchersLenth + redeemedVouchers < 15) {
-          this.addVouchers();
-        }
-        this.allVouchers = of([...val[0], ...val[1]])
-      });
-  }
+
   public voucherSelected(voucher: Voucher): void {
     this.router.navigate(['/voucher'], { queryParams: { id: voucher.id } });
   }
@@ -89,6 +72,19 @@ export class VouchersComponent implements OnInit {
   }
 
   public onScroll() {
-    this.addVouchers();
+    if (this.complited) {
+      return;
+    }
+    ++this.currentPage;
+    forkJoin(
+      this.issuedVoucher,
+      this.vouchersService.getFromPage(this.currentPage, { type: 'active' })
+    )
+      .subscribe(val => {
+        if (!val[1].length) {
+          this.complited = true;
+        }
+        this.issuedVoucher = of([...val[0], ...val[1]])
+      });
   }
 }
