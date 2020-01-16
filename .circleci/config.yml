@@ -142,7 +142,7 @@ commands:
       - run:
           name: Setup REDIRECT_AFTER_LOGIN var
           command: |
-            if [[ $APP == 'petron-demo' || $APP == 'oracle-demo' || $APP == 'feature-demo' ]]
+            if [[ $APP == 'petron-demo' || $APP == 'oracle-demo' || $APP == 'feature-demo' || $APP == 'all-it' ]]
             then
               REDIRECT_AFTER_LOGIN="/home"
             elif [ $APP == 'blackcomb' ]

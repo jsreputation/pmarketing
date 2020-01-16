@@ -22,7 +22,7 @@ export interface IWTreeDisplayProperties extends IWGameDisplayProperties {
 
 export interface IWPinataDisplayProperties extends IWGameDisplayProperties {
   closed_pinata_img_url: string;
-  cracking_pinata_img_url: string;
+  cracking_pinata_img_url?: string;
   opened_pinata_img_url: string;
 }
 
@@ -32,7 +32,7 @@ export interface IWScratchDisplayProperties extends IWGameDisplayProperties {
   post_scratch_fail_img_url: string;
 }
 
-export interface IWSpinDisplayProperties extends  IWGameDisplayProperties {
+export interface IWSpinDisplayProperties extends IWGameDisplayProperties {
   nb_of_wedges: number;
   slots: number[];
   wedge_colors: string[];

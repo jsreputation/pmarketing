@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { IConfig, IMicrositeSettings, PagesObject } from './models/config.model';
 import { ConfigService } from './config.service';
 import { HttpClient } from '@angular/common/http';
-import { IJsonApiListPayload, IWSetting, IWTenant } from '@perx/whistler';
+import { IJsonApiListPayload, IWTenant, IWSetting } from '@perx/whistler';
 import { map } from 'rxjs/operators';
 import { Config } from './config';
 
@@ -23,10 +23,12 @@ export class WhistlerConfigService extends ConfigService {
     }
   }
 
-  private static WTenantToConfig(setting: IWSetting, config: Config): IConfig {
+  private static WTenantToConfig<T>(setting: IWSetting, config: Config): IConfig<T> {
     return {
       showHistoryPage: setting.showHistoryPage || true,
       showHomePage: setting.showHomePage || false,
+      showAccountsPage: setting.showAccountsPage || false,
+      showUserInfoOnAccountsPage: setting.showUserInfoOnAccountsPage || false,
       // showSubtitleLogin: setting.showSubtitleLogin || false,
       // showNewsfeedOnHomepage: setting.showNewsfeedOnHomepage || false,
       // showQrPageSubtitle: setting.showQrPageSubtitle || false,
@@ -34,11 +36,14 @@ export class WhistlerConfigService extends ConfigService {
       // showUserInfoOnAccountsPage: setting.showUserInfoOnAccountsPage || false,
       // showTransactionHistoryOnAccountsPage: setting.showTransactionHistoryOnAccountsPage || false
       production: config.production || false,
-      baseHref: config.baseHref || '/'
+      baseHref: config.baseHref || '/',
+      apiHost: config.apiHost || '',
+      preAuth: config.preAuth || false,
+      isWhistler: config.isWhistler || false,
     };
   }
 
-  public readAppConfig(): Observable<IConfig> {
+  public readAppConfig<T>(): Observable<IConfig<T>> {
     // mostly copy from theme service
     const themesRequest: { url: string } = {
       url: location.host

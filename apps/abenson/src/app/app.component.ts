@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
-import { PopupComponent, NotificationService, IPopupConfig, ITheme, ThemesService, ConfigService } from '@perx/core';
+import {
+  PopupComponent,
+  NotificationService,
+  IPopupConfig,
+  ITheme,
+  ThemesService,
+  ConfigService,
+  IConfig
+} from '@perx/core';
 import { LoginComponent } from './auth/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HistoryComponent } from './history/history.component';
@@ -45,8 +53,8 @@ export class AppComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig()
-      .pipe(flatMap((config) => this.themeService.getThemeSetting(config)));
+    this.configService.readAppConfig<ITheme>()
+      .pipe(flatMap((config: IConfig<ITheme>) => this.themeService.getThemeSetting(config)));
     this.themeService.getThemeSetting().subscribe(
       theme => this.theme = theme
     );

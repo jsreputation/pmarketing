@@ -13,7 +13,7 @@ export class ProfileBarcodeComponent implements OnInit {
 
   public userProfile: IProfile;
   public theme: ITheme;
-  public appConfig: IConfig;
+  public appConfig: IConfig<void>;
 
   constructor(
     private location: Location,

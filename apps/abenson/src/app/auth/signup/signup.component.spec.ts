@@ -1,20 +1,20 @@
-import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { SignUpComponent } from './signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatIconModule, MatCheckboxModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, ProfileService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import {Type} from '@angular/core';
+import { Type } from '@angular/core';
 
 describe('SignupComponent', () => {
   let component: SignUpComponent;
   let fixture: ComponentFixture<SignUpComponent>;
   let auth: AuthenticationService;
   const authenticationServiceStub = { getAppToken: () => of({}), getAppAccessToken: () => 'token' };
-
+  const profileServiceStub = { verifyCardNumber: () => of(true) };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SignUpComponent],
@@ -29,7 +29,8 @@ describe('SignupComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        { provide: AuthenticationService, useValue: authenticationServiceStub }
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: ProfileService, useValue: profileServiceStub }
       ]
     })
       .compileComponents();
