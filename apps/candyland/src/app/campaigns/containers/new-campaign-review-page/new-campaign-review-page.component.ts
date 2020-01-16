@@ -42,7 +42,6 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: ICampaign) => {
         if (data) {
-          console.log('take a look at ny data first', data);
           this.specialProbDisplay$.next(this.checkSpecialProbRemainingSlot(data));
           this.checkStampsHasRewards(data);
         }
@@ -104,7 +103,7 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
   public navigateToEdit(): void {
     const gameType = 'game_type' in this.campaign.template ? this.campaign.template.game_type : null;
     let path = getEngagementRouterLink(this.campaign.engagement_type, gameType);
-    path += `/${  this.campaign.template.id}`;
+    path += `/${this.campaign.template.id}`;
     this.router.navigate([path]);
   }
 

@@ -125,7 +125,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
 
   public initOutcomesList(): void {
-    if (!this.isSpinEngagement || this.slotNumber === -1) {
+    if (!this.isSpinEngagement) {
       const noOutcomeData = this.campaign.outcomes && this.campaign.outcomes.find(
         data => data.outcome.slotNumber === this.slotNumber && !data.outcome.resultId);
       if (noOutcomeData && noOutcomeData.outcome) {

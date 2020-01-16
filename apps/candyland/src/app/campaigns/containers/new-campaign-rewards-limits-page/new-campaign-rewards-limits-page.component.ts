@@ -124,6 +124,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
       tap(value => {
         if (typeof value === 'number') {
           //  template changed, go inside item's group controls and reset everything
+          // see condition above only next to here if template id is different
           this.viewFormChildren.forEach((form) => {
             form.viewItemChildren.forEach((item => {
               item.group.reset();
