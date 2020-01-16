@@ -1,10 +1,10 @@
 <div class="merchant-item" *ngIf="merchant">
-  <div class="merchant-item-img" *ngIf="merchant?.properties.logo_image">
-    <img [src]="merchant?.properties.logo_image">
+  <div class="merchant-item-img" *ngIf="merchant?.image">
+    <img [src]="merchant?.image">
   </div>
   <div class="merchant-item-info">
     <span>{{merchant?.name || '-'}}</span>
-    <span>{{merchant?.properties.phone || '-'}}</span>
+    <span>{{merchant?.phone || '-'}}</span>
     <span>{{merchant?.branches ? merchant?.branches.length + ' ' + ('BRANCHES' | translate) : '-'}}</span>
     <div class="merchant-item-action" *ngIf="enableActions">
       <button mat-icon-button (click)="clickDeleteMerchant()">

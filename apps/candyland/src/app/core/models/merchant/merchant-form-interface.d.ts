@@ -13,4 +13,5 @@ declare interface IMerchantForm {
   weblink: string;
   branches?: any;
   deletedBranches?: any;
+  createdAt: string;
 }
