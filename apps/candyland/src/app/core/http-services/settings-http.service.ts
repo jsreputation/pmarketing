@@ -38,8 +38,8 @@ export class SettingsHttpService {
     return this.http.get<IJsonApiListPayload<IWIAMUserAttributes>>(ApiConfig.IAMUsersPath, { params });
   }
 
-  public getAllGroups(): Observable<IJsonApiListPayload<any>> {
-    return this.http.get<IJsonApiListPayload<any>>(ApiConfig.IAMGroupsPath);
+  public getAllGroups(params?: HttpParams ): Observable<IJsonApiListPayload<any>> {
+    return this.http.get<IJsonApiListPayload<any>>(ApiConfig.IAMGroupsPath, { params });
   }
 
   public patchSettings(data: IJsonApiPatchData<any>): Observable<any> {

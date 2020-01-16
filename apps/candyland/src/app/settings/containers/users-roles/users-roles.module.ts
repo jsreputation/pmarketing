@@ -26,7 +26,6 @@ import { InviteNewUsersLoyaltyComponent } from './components/invite-new-users-lo
 import { InviteNewUsersInsightComponent } from './components/invite-new-users-insight/invite-new-users-insight.component';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 import { PaginationModule } from '@cl-shared/table/paginator/paginator.module';
-import { JsonApiModule } from 'angular2-jsonapi';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
@@ -70,7 +69,6 @@ import { TranslateModule } from '@ngx-translate/core';
     MatCheckboxModule,
     CheckboxGroupModule,
     PaginationModule,
-    JsonApiModule,
     TranslateModule,
   ],
   entryComponents: [

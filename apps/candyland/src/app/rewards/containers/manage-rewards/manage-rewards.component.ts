@@ -7,7 +7,6 @@ import { RewardsService, MerchantsService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { NewRewardFormService } from '../../services/new-reward-form.service';
 import { CreateMerchantPopupComponent, SelectMerchantPopupComponent, ToggleControlService } from '@cl-shared';
-import { Merchant } from '@cl-core/http-adapters/merchant';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { TranslateService } from '@ngx-translate/core';
@@ -28,7 +27,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public reward: IRewardEntityForm;
   public form: FormGroup;
   public config: OptionConfig[];
-  public selectedMerchant: Merchant | null;
+  public selectedMerchant: IMerchantForm | null;
   public loyalties: ILoyaltyForm[];
   public rewardLoyaltyForm: FormArray;
   public getRewardLoyaltyData$: BehaviorSubject<ILoyaltyFormGroup[] | null> = new BehaviorSubject<ILoyaltyFormGroup[] | null>(null);
@@ -190,7 +189,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
         ),
         takeUntil(this.destroy$),
       )
-      .subscribe((merchant: Merchant | null) => {
+      .subscribe((merchant: IMerchantForm | null) => {
         this.selectedMerchant = merchant;
         this.updateForm();
       });
