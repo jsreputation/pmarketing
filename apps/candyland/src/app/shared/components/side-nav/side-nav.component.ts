@@ -4,7 +4,6 @@ import {
   trigger, state, style, animate, transition
 } from '@angular/animations';
 import { AuthService } from '@cl-core-services';
-import { IamUser } from '@cl-core/http-adapters/iam-user';
 import { UserService } from '@cl-core/services/user.service';
 import { Observable } from 'rxjs';
 
@@ -43,7 +42,7 @@ export function fnTransition(stateChangeExpr: string, time: string): any {
 })
 export class SideNavComponent implements OnInit, OnDestroy {
   @Input() public isVisible: boolean = true;
-  public user$: Observable<IamUser>;
+  public user$: Observable<IAMUser>;
   public isOpen: boolean = true;
   public visibility: string = 'shown';
   public sideNavOpened: boolean = true;

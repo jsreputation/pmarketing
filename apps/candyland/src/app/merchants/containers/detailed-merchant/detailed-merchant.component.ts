@@ -25,16 +25,19 @@ export class DetailedMerchantComponent {
     weblink: 'https://www.starbucks.com.sg/',
     branches: [
       {
+        id: '1',
         name: 'P.s Cafe at Harding',
         address: '28B Harding Rd, Singapore 249549',
         phone: '9070 8782'
       },
       {
+        id: '2',
         name: 'P.s Cafe at Harding',
         address: '28B Harding Rd, Singapore 249549',
         phone: '9070 8782'
       },
       {
+        id: '3',
         name: 'P.s Cafe at Harding',
         address: '28B Harding Rd, Singapore 249549',
         phone: '9070 8782'
