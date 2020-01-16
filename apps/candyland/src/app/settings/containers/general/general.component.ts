@@ -5,6 +5,7 @@ import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TenantService } from '@cl-core/services/tenant.service';
+import { ITimeZone } from '@cl-core/models/settings/time-zone';
 
 @Component({
   selector: 'cl-general',
@@ -43,7 +44,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
       .pipe(
         debounceTime(300),
         switchMap((value => {
-          this.tenants  = {
+          this.tenants = {
             ...this.tenants,
             ...value
           };
