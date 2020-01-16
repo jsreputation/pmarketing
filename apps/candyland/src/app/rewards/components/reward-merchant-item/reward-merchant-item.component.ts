@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import { Merchant } from '@cl-core/http-adapters/merchant';
 
 @Component({
   selector: 'cl-reward-merchant-item',
@@ -7,7 +6,7 @@ import { Merchant } from '@cl-core/http-adapters/merchant';
   styleUrls: ['./reward-merchant-item.component.scss']
 })
 export class RewardMerchantItemComponent {
-  @Input() public merchant: Merchant;
+  @Input() public merchant: IMerchantForm;
   @Input() public enableActions: boolean = false;
   @Output() public deleteMerchant: EventEmitter<void> = new EventEmitter<void>();
 
