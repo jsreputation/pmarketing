@@ -1,9 +1,10 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { Voucher, VoucherState, IVoucherService } from '@perx/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Voucher, IVoucherService, VoucherState } from '@perx/core';
+import { Observable, forkJoin, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { PageType, AnalyticsService } from 'src/app/analytics.service';
+//@ts-ignore
+const REQ_PAGE_SIZE: number = 10;
 
 @Component({
   selector: 'app-vouchers',
@@ -11,14 +12,12 @@ import { PageType, AnalyticsService } from 'src/app/analytics.service';
   styleUrls: ['./vouchers.component.scss']
 })
 export class VouchersComponent implements OnInit {
-  public savedVouchers: Observable<Voucher[]>;
-
-  public redeemedVouchers: Observable<Voucher[]>;
-
+  public allVouchers: Observable<Voucher[]>;
   public defaultNbVouchers: number = 5;
-
   public hideSeeMore: boolean = false;
-
+  private currentPage = 1;
+  //@ts-ignore
+  private complited = false;
   @Output()
   public tapped: EventEmitter<Voucher> = new EventEmitter();
 
@@ -31,20 +30,29 @@ export class VouchersComponent implements OnInit {
       siteSectionLevel2: 'rewards:vouchers',
       siteSectionLevel3: 'rewards:vouchers'
     });
-    const feed = this.vouchersService.getAll();
-    this.savedVouchers = feed
-      .pipe(
-        map((vouchs: Voucher[]) => {
-          return vouchs.filter(voucher => voucher.state === VoucherState.issued);
-        }));
-
-    this.redeemedVouchers = feed
-      .pipe(
-        map((vouchers: Voucher[]) => vouchers.filter(voucher => voucher.state !== VoucherState.issued)),
-        map((vouchers: Voucher[]) => vouchers.filter(voucher => voucher.redemptionDate && this.daysSince(voucher.redemptionDate)))
-      );
+    this.allVouchers = of([]);
+    this.addVouchers();
   }
-
+  public addVouchers() {
+    ++this.currentPage;
+    forkJoin(
+      this.allVouchers,
+      this.vouchersService.getFromPage(this.currentPage)
+    )
+      .subscribe(val => {
+        const allVouchers = [...val[0], ...val[1]];
+        const savedVouchersLenth = allVouchers
+        .filter(voucher => voucher.state === VoucherState.issued)
+        .filter(voucher => voucher.redemptionDate && this.daysSince(voucher.redemptionDate)).length;
+        const redeemedVouchers = allVouchers
+        .filter(voucher => voucher.state !== VoucherState.issued)
+        .filter(voucher => voucher.redemptionDate && this.daysSince(voucher.redemptionDate)).length;
+        if (savedVouchersLenth + redeemedVouchers < 15) {
+          this.addVouchers();
+        }
+        this.allVouchers = of([...val[0], ...val[1]])
+      });
+  }
   public voucherSelected(voucher: Voucher): void {
     this.router.navigate(['/voucher'], { queryParams: { id: voucher.id } });
   }
@@ -74,9 +82,13 @@ export class VouchersComponent implements OnInit {
     return daysDifference < 0 ? '' : `Expires in ${daysDifference} days`;
   }
 
-  private daysSince(expiryDate: Date): boolean {
+  public daysSince(expiryDate: Date): boolean {
     const daysElapsed = Math.abs(this.getDifferenceWithCurrentInDays(expiryDate));
     const daysToDisplay = 30;
     return daysToDisplay > daysElapsed;
+  }
+
+  public onScroll() {
+    this.addVouchers();
   }
 }
