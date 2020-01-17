@@ -16,7 +16,7 @@ export const translateLoader = (
 @Injectable()
 export class MultiTranslateHttpLoader implements TranslateLoader {
 
-  public hostUrl: string = `http://localhost:4200`;
+  public hostUrl: string = `http://localhost:4203`;
   public contentHeader: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
@@ -32,7 +32,7 @@ export class MultiTranslateHttpLoader implements TranslateLoader {
 
   public getTranslation(lang: string): any {
     const queryList: Observable<any>[] = this.resources.map(config => {
-      return this.http.get(`${config.prefix}${lang}${config.suffix}`, { headers: this.contentHeader });
+      return this.http.get(`${config.prefix}${lang}${config.suffix}`, {headers: this.contentHeader});
     });
     return forkJoin(queryList)
       .pipe(map(response => {
@@ -45,14 +45,11 @@ export class MultiTranslateHttpLoader implements TranslateLoader {
 
 export const getDefaultLanguage = () => {
   const listLanguages = ['en', 'ru'];
-  let language: string;
-  if (navigator) {
-    language = (navigator.language || (navigator as any).userLanguage).slice(0, 3);
-    if (!listLanguages.includes(language)) {
-      language = 'en';
-    }
+  const language = (navigator && (navigator.language || (navigator as any).userLanguage)).slice(0, 3);
+  if (listLanguages.includes(language)) {
+    return language;
   }
-  return language;
+  return 'en';
 };
 
 export const setLanguage = (

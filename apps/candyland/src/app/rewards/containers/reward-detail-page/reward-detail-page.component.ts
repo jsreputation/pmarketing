@@ -117,12 +117,12 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
       .pipe(
         switchMap(id => this.rewardsService.getRewardToForm(id)),
         switchMap(reward => {
-
           let merchantQuery = null;
           if (reward.rewardInfo.merchantId !== null) {
             merchantQuery = this.merchantsService.getMerchant(reward.rewardInfo.merchantId)
               .pipe(catchError((err) => {
-                if (oc(err).errors[0].code() === '404') {
+                const errCode = oc(err).errors[0].code(oc(err).status(0));
+                if (['404', 404].includes(errCode)) {
                   return of(null);
                 }
                 return throwError(err);

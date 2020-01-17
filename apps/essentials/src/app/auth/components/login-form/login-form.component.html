@@ -13,14 +13,14 @@
     <div class="login-form-control">
       <mat-form-field>
         <input matInput formControlName="username" [placeholder]="'LOGIN_PAGE.USER_NAME' | translate">
-        <mat-error *ngIf="username.hasError('required')" translate>ERROR_REQUIRED</mat-error>
+        <mat-error *ngIf="username?.hasError('required')" translate>ERROR_REQUIRED</mat-error>
       </mat-form-field>
     </div>
     <div class="login-form-control">
       <mat-form-field>
         <input matInput formControlName="password" [placeholder]="'LOGIN_PAGE.PASSWORD' | translate"
           [type]="hide ? 'password' : 'text'">
-        <mat-error *ngIf="password.hasError('required')" translate>ERROR_REQUIRED</mat-error>
+        <mat-error *ngIf="password?.hasError('required')" translate>ERROR_REQUIRED</mat-error>
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
     </div>
