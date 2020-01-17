@@ -32,7 +32,6 @@ describe('RewardPopupComponent', () => {
       declarations: [RewardPopupComponent, ExpireTimerComponent],
       imports: [MatDialogModule],
       providers: [
-        { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: dataMock },
         { provide: MatDialogRef, useValue: { close: () => { } } }
       ]

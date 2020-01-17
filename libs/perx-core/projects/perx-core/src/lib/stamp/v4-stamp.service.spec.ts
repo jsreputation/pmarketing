@@ -7,14 +7,14 @@ import { IVoucherService } from '../vouchers/ivoucher.service';
 import { ConfigModule } from '../config/config.module';
 
 describe('StampService', () => {
-  const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', ['']);
+  const vouchersServiceStub: Partial<IVoucherService> = {};
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientTestingModule,
       ConfigModule.forRoot({})
     ],
     providers: [
-      { provide: IVoucherService, useValue: vouchersServiceMock }
+      { provide: IVoucherService, useValue: vouchersServiceStub }
     ]
   }));
 
