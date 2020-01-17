@@ -1,7 +1,12 @@
 import { IWRewardEntityAttributes, IWTierRewardCostsAttributes, IJsonApiItem, IJsonApiPostData } from '@perx/whistler';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
-import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
+import {
+  IRewardEntityForm,
+  IRewardEntityValidityPeriodForm,
+  IRewardVoucherForm
+} from '@cl-core/models/reward/reward-entity-form.interface';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
+import { oc } from 'ts-optchain';
 
 export class RewardHttpAdapter {
   public static transformToTableData(data: any): ITableData<IRewardEntity> {
@@ -41,7 +46,7 @@ export class RewardHttpAdapter {
   }
 
   public static transformToRewardForm(data: IJsonApiItem<IWRewardEntityAttributes>): IRewardEntityForm {
-    let vouchers;
+    let vouchers: IRewardVoucherForm;
     if (data.attributes.display_properties.voucher_properties) {
       const voucher_properties = data.attributes.display_properties.voucher_properties;
       vouchers = {
@@ -62,7 +67,8 @@ export class RewardHttpAdapter {
             startDate: voucher_properties.validity.start_date,
             startTime: DateTimeParser.getTime(voucher_properties.validity.start_date, 'HH:mm'),
             endDate: voucher_properties.validity.end_date,
-            endTime: DateTimeParser.getTime(voucher_properties.validity.end_date, 'HH:mm')
+            endTime: DateTimeParser.getTime(voucher_properties.validity.end_date, 'HH:mm'),
+            disabledEndDate: oc(voucher_properties).validity.disabled_end_date(false)
           },
           issuanceDate: {
             times: voucher_properties.validity.times,
@@ -73,8 +79,10 @@ export class RewardHttpAdapter {
     } else {
       vouchers = {
         voucherValidity: {
-          duration: 'day',
-          times: 30,
+          issuanceDate: {
+            duration: 'day',
+            times: '30',
+          },
           type: 'issuance_date'
         }
       };
@@ -147,7 +155,7 @@ export class RewardHttpAdapter {
     return { code_type: data.vouchers.voucherCode.type };
   }
 
-  public static getRewardValidity(data: any): { [key: string]: any } {
+  public static getRewardValidity(data: IRewardEntityForm): { [key: string]: any } {
     switch (data.vouchers.voucherValidity.type) {
       case 'period':
         return {
@@ -163,13 +171,14 @@ export class RewardHttpAdapter {
     }
   }
 
-  public static getRewardDate(period: any): { [key: string]: any } {
-    const res: any = {
+  public static getRewardDate(period: IRewardEntityValidityPeriodForm): { [key: string]: any } {
+    const res: { [key: string]: any } = {
       start_date: DateTimeParser.setTime(period.startDate, period.startTime)
     };
     if (!period.disabledEndDate) {
       res.end_date = DateTimeParser.setTime(period.endDate, period.endTime);
     }
+    res.disabled_end_date = period.disabledEndDate;
     return res;
   }
 
