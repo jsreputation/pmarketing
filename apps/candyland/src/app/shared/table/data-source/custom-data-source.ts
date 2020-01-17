@@ -165,18 +165,21 @@ export class CustomDataSource<T> extends DataSource<T> {
     this.loadingSubject.next(true);
     if (!isNaN(pageNum)) {
       this.request = this.dataService.getTableData(params)
-        .subscribe((res: ITableData<T>) => {
-          this.dataSubject.next(res.data);
-          this.lengthData.next(res.meta.record_count);
-          this.loadingSubject.next(false);
-          const status = (res.data.length > 0 && res.meta.record_count > 0) ? DataSourceStates.hasDataApi : DataSourceStates.noDataApi;
-          this.setState(status);
-        }, () => {
-          this.dataSubject.next([]);
-          this.lengthData.next(0);
-          this.loadingSubject.next(false);
-          this.setState(DataSourceStates.errorApi);
-        });
+        .subscribe(
+          (res: ITableData<T>) => {
+            this.dataSubject.next(res.data);
+            this.lengthData.next(res.meta.record_count);
+            this.loadingSubject.next(false);
+            const status = (res.data.length > 0 && res.meta.record_count > 0) ? DataSourceStates.hasDataApi : DataSourceStates.noDataApi;
+            this.setState(status);
+          },
+          () => {
+            this.dataSubject.next([]);
+            this.lengthData.next(0);
+            this.loadingSubject.next(false);
+            this.setState(DataSourceStates.errorApi);
+          }
+        );
     }
   }
 
@@ -188,10 +191,8 @@ export class CustomDataSource<T> extends DataSource<T> {
 
   private sortPrepare(sortData: SortModel): SortModel | {} {
     if (sortData && sortData.direction !== '') {
-      const sort = sortData.direction === 'asc'
-        ? `${sortData.active}`
-        : `-${sortData.active}`;
-      return {sort};
+      const sort = sortData.direction === 'asc' ? `${sortData.active}` : `-${sortData.active}`;
+      return { sort };
     }
     return {};
   }
