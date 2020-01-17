@@ -16,13 +16,15 @@ import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { WhistlerVouchersService } from '../vouchers/whistler-vouchers.service';
 import { RewardsService } from '../rewards/rewards.service';
+import { IVoucher, VoucherState } from '../vouchers/models/voucher.model';
 
 describe('WhistlerGameService', () => {
   let httpTestingController: HttpTestingController;
   let service: WhistlerGameService;
-  const vouchersServiceMock: Partial<IVoucherService> = {
-    get: of({}),
-    getFullVoucher: of({})
+  const mockVoucher: IVoucher = { id: 0, reward: null, state: VoucherState.issued, expiry: null };
+  const vouchersServiceMock: Partial<WhistlerVouchersService> = {
+    get: () => of(mockVoucher),
+    getFullVoucher: () => of(mockVoucher)
   };
   const environment = {
     apiHost: 'https://blabla',
@@ -221,9 +223,10 @@ describe('WhistlerGameService', () => {
           }
         }
       }));
+      const spy = spyOn(vouchersServiceMock, 'getFullVoucher');
       gameService.play(500, 500).subscribe(() => { });
       tick();
-      expect(vouchersServiceMock.getFullVoucher).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalled();
     })));
 
   it('getGamesFromCampaign', fakeAsync(inject([WhistlerGameService, HttpClient],
@@ -261,7 +264,7 @@ describe('WhistlerGameService', () => {
     })));
 
   it('play full workflow', fakeAsync(inject([WhistlerGameService, HttpClient, WhistlerVouchersService],
-    (gameService: WhistlerGameService, http: HttpClient, voucherService: WhistlerVouchersService) => {
+    (gameService: WhistlerGameService, http: HttpClient) => {
       spyOn(http, 'post').and.returnValue(of({
         data: {
           attributes: {
@@ -271,7 +274,7 @@ describe('WhistlerGameService', () => {
           }
         }
       }));
-      spyOn(voucherService, 'getFullVoucher').and.returnValue(of());
+      // spyOn(voucherService, 'getVoucher').and.returnValue(of());
       gameService.play(1, 1).subscribe((val) => expect(val.vouchers.length).toBe(1));
       tick();
     })));

@@ -60,8 +60,9 @@ describe('SnakeGameComponent', () => {
         return true;
       }
     });
-    const funcSpy = jasmine.createSpy('getImageCors').and.returnValue(spyObj);
-    spyOnProperty(GetImageCors, 'getImageCors', 'get').and.returnValue(funcSpy);
+    const funcSpy = jest.fn().mockReturnValue(spyObj);
+    spyOn(GetImageCors, 'getImageCors').and.returnValue(funcSpy);
+    // spyOn(GetImageCors, 'get').and.returnValue(funcSpy);
     component.ngOnChanges({
       target: {
         previousValue: 1,

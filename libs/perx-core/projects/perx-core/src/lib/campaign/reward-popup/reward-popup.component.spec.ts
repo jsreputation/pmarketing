@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardPopupComponent } from './reward-popup.component';
 import { ExpireTimerComponent } from './expire-timer/expire-timer.component';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Type } from '@angular/core';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+// import { Type } from '@angular/core';
 import { IPopupConfig } from '../../utils/popup/popup.component';
 
 interface IRewardPopupConfig extends IPopupConfig {
@@ -18,7 +18,7 @@ interface TimerCallBack {
 describe('RewardPopupComponent', () => {
   let component: RewardPopupComponent;
   let fixture: ComponentFixture<RewardPopupComponent>;
-  let dialogRef: MatDialogRef<RewardPopupComponent>;
+  const dialogRef: Partial<MatDialogRef<RewardPopupComponent>> = { close: () => { } };
 
   const dataMock: IRewardPopupConfig = {
     timerCallbacks: {
@@ -33,7 +33,7 @@ describe('RewardPopupComponent', () => {
       imports: [MatDialogModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: dataMock },
-        { provide: MatDialogRef, useValue: { close: () => { } } }
+        { provide: MatDialogRef, useValue: dialogRef }
       ]
     })
       .compileComponents();
@@ -41,7 +41,6 @@ describe('RewardPopupComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RewardPopupComponent);
-    dialogRef = TestBed.get<MatDialogRef<RewardPopupComponent>>(MatDialogRef as Type<MatDialogRef<RewardPopupComponent>>);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
