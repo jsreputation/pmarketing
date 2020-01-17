@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'cl-voucher-validity-form-group',
@@ -13,10 +13,10 @@ export class VoucherValidityFormGroupComponent implements OnInit {
   public ngOnInit(): void {
     this.formGroup.valueChanges.subscribe(value => {
       if (value.type === 'period') {
-        Object.values((this.formGroup.get('period') as FormGroup ).controls)
+        Object.values((this.formGroup.get('period') as FormGroup).controls)
           .forEach((control: FormControl, index: number) => {
-          // know that the last control is the checkbox never end, dw it required
-          // length of control is 5 : start(date,time) x2 , end(date,time)*2, checkbox
+            // know that the last control is the checkbox never end, dw it required
+            // length of control is 5 : start(date,time) x2 , end(date,time)*2, checkbox
             if (index !== 4) {
               control.setValidators(Validators.required);
             }
@@ -25,5 +25,4 @@ export class VoucherValidityFormGroupComponent implements OnInit {
       this.formGroup.markAsUntouched();
     });
   }
-
 }

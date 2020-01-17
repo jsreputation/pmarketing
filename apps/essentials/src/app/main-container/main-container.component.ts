@@ -16,7 +16,7 @@ export class MainContainerComponent {
   ) {
   }
 
-  public get user$(): Observable<IAMUser> {
+  public get user$(): Observable<IAMUser | null> {
     return this.userService.user$;
   }
 
