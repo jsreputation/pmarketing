@@ -16,9 +16,9 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 @Injectable({
   providedIn: 'root'
 })
-export class MerchantsService implements ITableService<Partial<IMerchantForm>> {
+export class MerchantsService implements ITableService<IMerchantForm> {
 
-  constructor(private merchantHttpService: MerchantHttpService) {}
+  constructor(private merchantHttpService: MerchantHttpService) { }
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IMerchantForm>> {
     params.include = 'branches';
@@ -26,7 +26,7 @@ export class MerchantsService implements ITableService<Partial<IMerchantForm>> {
       .pipe(map((data) => {
         const res = this.getTransformMerchant(data);
         return { data: res, meta: data.meta };
-    }));
+      }));
   }
 
   public getMerchant(id: string): Observable<IMerchantForm | null> {
@@ -89,15 +89,15 @@ export class MerchantsService implements ITableService<Partial<IMerchantForm>> {
   }
 
   private getTransformMerchant(data:
-   IJsonApiItemPayload<IWMerchantAttributes> | IJsonApiListPayload<IWMerchantAttributes>
+    IJsonApiItemPayload<IWMerchantAttributes> | IJsonApiListPayload<IWMerchantAttributes>
   ): IMerchantForm[] {
     return JsonApiParser.parseDataWithIncludes(
       data,
       MerchantHttpAdapter.transformToMerchant, {
-        branches: {
-          fieldName: 'branches',
-          adapterFunction: MerchantHttpAdapter.transformToBranch
-        }
-      });
+      branches: {
+        fieldName: 'branches',
+        adapterFunction: MerchantHttpAdapter.transformToBranch
+      }
+    });
   }
 }
