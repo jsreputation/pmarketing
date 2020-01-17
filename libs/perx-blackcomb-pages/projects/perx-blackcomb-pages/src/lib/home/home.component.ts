@@ -148,6 +148,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         takeLast(1)
       );
     const appConfig: IConfig<void> = await this.configService.readAppConfig().toPromise();
+    if (!appConfig.rssFeeds) {
+      return ;
+    }
+
     this.newsFeedItems = this.feedService.getFromUrl(appConfig.rssFeeds);
   }
 
