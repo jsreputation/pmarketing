@@ -1,6 +1,11 @@
 <div class="main-app-container" *ngIf="theme && theme.properties && appConfig">
   <mat-toolbar class="toolbar mat-elevation-z3" *ngIf="showHeader">
-    <mat-icon class="backArrow" (click)="leftClick()">{{leftIcon}}</mat-icon>
+    <mat-icon
+      class="backArrow"
+      (click)="backArrowClick()"
+    >
+      {{backArrowIcon}}
+    </mat-icon>
     <img *ngIf="!headerTitle" class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
     <span *ngIf="headerTitle" class="header-title">{{headerTitle}}</span>
     <!-- ghost stuff-->
