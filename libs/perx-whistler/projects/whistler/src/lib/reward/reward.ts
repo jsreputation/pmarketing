@@ -32,6 +32,7 @@ export interface IWRewardEntityAttributes {
         end_date?: string;
         times?: string;
         duration?: string;
+        disabled_end_date?: boolean;
       }
     },
     merchantPinText?: IWProperties;
