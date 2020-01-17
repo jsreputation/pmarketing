@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { NewsFeedComponent } from './news-feed.component';
 import { MatCardModule, MatButtonModule, MatDialogModule, MatDialog } from '@angular/material';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-import { FeedReaderService } from '@perx/core';
+import {ConfigService, FeedReaderService} from '@perx/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
@@ -11,8 +11,20 @@ import { Type } from '@angular/core';
 describe('NewsFeedComponent', () => {
   let component: NewsFeedComponent;
   let fixture: ComponentFixture<NewsFeedComponent>;
+
   const feedReaderServiceStub = {
     getFromUrl: () => of([])
+  };
+
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({
+      apiHost: '',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: '',
+      rssFeeds: '',
+    })
   };
 
   const items = [
@@ -44,7 +56,8 @@ describe('NewsFeedComponent', () => {
         ScrollingModule
       ],
       providers: [
-        { provide: FeedReaderService, useValue: feedReaderServiceStub }
+        { provide: FeedReaderService, useValue: feedReaderServiceStub },
+        { provide: ConfigService, useValue: configServiceStub},
       ]
     })
       .compileComponents();
