@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewsFeedComponent } from './news-feed.component';
 import { MatCardModule, MatButtonModule, MatDialogModule, MatDialog } from '@angular/material';
@@ -6,7 +6,6 @@ import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import {ConfigService, FeedReaderService} from '@perx/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { of } from 'rxjs';
-import { Type } from '@angular/core';
 
 describe('NewsFeedComponent', () => {
   let component: NewsFeedComponent;
@@ -72,14 +71,6 @@ describe('NewsFeedComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('onInit', fakeAsync(() => {
-    const feedReaderService = TestBed.get<FeedReaderService>(FeedReaderService as Type<FeedReaderService>);
-    const feedReaderServiceSpy = spyOn(feedReaderService, 'getFromUrl').and.returnValue(of(items));
-    component.ngOnInit();
-    tick();
-    expect(feedReaderServiceSpy).toHaveBeenCalled();
-  }));
 
   describe('updateScrollIndex', () => {
     it('should update newsAfterScroll to Array(0) on updateScrollIndex', () => {
