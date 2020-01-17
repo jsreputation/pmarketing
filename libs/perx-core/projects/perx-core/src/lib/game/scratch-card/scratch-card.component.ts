@@ -62,7 +62,7 @@ export class ScratchCardComponent implements AfterViewInit {
     };
   }
 
-  private scratch(e: TouchEvent, lastPoint: Coords = this.lastPoint): void {
+  private scratch(e: TouchEvent | MouseEvent, lastPoint: Coords = this.lastPoint): void {
     if (!this.isDrawing || !this.enabled || !this.canvas) {
       return;
     }
@@ -168,7 +168,7 @@ export class ScratchCardComponent implements AfterViewInit {
 
   }
 
-  public getMouse(e: any, canvas: HTMLElement): Coords {
+  private getMouse(e: TouchEvent | MouseEvent, canvas: HTMLElement): Coords {
     let offsetX: number = 0;
     let offsetY: number = 0;
 
@@ -195,13 +195,13 @@ export class ScratchCardComponent implements AfterViewInit {
     }
   }
 
-  public handleMouseDown(e: TouchEvent): void {
+  public handleMouseDown(e: TouchEvent | MouseEvent): void {
     this.isDrawing = true;
     this.lastPoint = this.getMouse(e, this.canvas);
     this.scratch(e, this.lastPointOffset);
   }
 
-  public handleMouseMove(e: TouchEvent): void {
+  public handleMouseMove(e: TouchEvent | MouseEvent): void {
     this.scratch(e);
   }
 

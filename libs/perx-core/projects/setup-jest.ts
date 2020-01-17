@@ -28,5 +28,10 @@ Object.defineProperty(document.body.style, 'transform', {
 
 Object.defineProperty(window, 'ClipboardEvent', {});
 
+class Touch {
+  // constructor() { }
+}
+Object.defineProperty(window, 'Touch', { value: Touch });
+
 /* output shorter and more meaningful Zone error stack traces */
 // Error.stackTraceLimit = 2;
