@@ -4,7 +4,8 @@
     <div class="mobile-preview-header"
          *ngIf="engagement?.attributes_type !== 'stamps'
          && engagement?.game_type !== 'spin'
-         && engagement?.attributes_type !== 'survey'"
+         && engagement?.attributes_type !== 'survey'
+         && engagement?.game_type !== 'scratch'"
     >
       <p class="mobile-preview-headline">
         {{engagement?.title}}
@@ -50,6 +51,11 @@
                 [stillImg]=" engagement?.closed_pinata_img_url"
                 [openedImg]="'assets/images/games/pinata/opened-pinata.png'" [nbTaps]="5">
               </perx-core-pinata>
+            </ng-container>
+            <ng-container *ngSwitchCase="'scratch'">
+              <div class="img-ss">
+                <img alt="scratch-pic" [src]="engagement.image_url"/>
+              </div>
             </ng-container>
             <ng-container *ngSwitchCase="'spin'">
               <div class="img-ss">
