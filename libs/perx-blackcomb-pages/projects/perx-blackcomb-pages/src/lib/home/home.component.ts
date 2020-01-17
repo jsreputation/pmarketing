@@ -140,14 +140,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   public titleFn: (profile: IProfile) => string;
   public showGames: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
-  private initCampaign(): void {
+
+  private async initCampaign(): Promise<void> {
     this.games$ = this.gamesService.getActiveGames()
       .pipe(
         tap((games: IGame[]) => this.showGames = games.length > 0),
         takeLast(1)
       );
-
-    this.newsFeedItems = this.feedService.getFromUrl('https://cdn.perxtech.io/content/starhub/rss.xml');
+    const appConfig: IConfig<void> = await this.configService.readAppConfig().toPromise();
+    this.newsFeedItems = this.feedService.getFromUrl(appConfig.rssFeeds);
   }
 
   constructor(

@@ -24,6 +24,7 @@ export interface IConfig<T> {
   showUserInfoOnAccountsPage?: boolean;
   showTransactionHistoryOnAccountsPage?: boolean;
   showVoucherBookingFromRewardsPage?: boolean;
+  rssFeeds?: string;
 }
 
 export interface IMicrositeSettings {
